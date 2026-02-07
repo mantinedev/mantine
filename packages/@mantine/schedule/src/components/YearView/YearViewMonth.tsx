@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { ScheduleLabelsOverride } from '../../labels';
-import { DateLabelFormat, DayOfWeek, ScheduleMode } from '../../types';
+import { DateLabelFormat, DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
 import {
   formatDate,
   getMonthDays,
@@ -42,19 +42,19 @@ export interface YearViewMonthSettings {
   weekendDays?: DayOfWeek[];
 
   /** Props passed down to the week number button */
-  getWeekNumberProps?: (weekStartDate: Date) => Record<string, any>;
+  getWeekNumberProps?: (weekStartDate: DateStringValue) => Record<string, any>;
 
   /** Props passed down to the day button */
-  getDayProps?: (date: Date) => Record<string, any>;
+  getDayProps?: (date: DateStringValue) => Record<string, any>;
 
   /** Called when day is clicked */
-  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Called with first day of the week when week number is clicked */
-  onWeekNumberClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onWeekNumberClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Called with the first day of the month when month label is clicked */
-  onMonthClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onMonthClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
@@ -148,7 +148,7 @@ export function YearViewMonth({
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
 
-      const dayProps = getDayProps?.(new Date(date)) || {};
+      const dayProps = getDayProps?.(dayjs(date).format('YYYY-MM-DD')) || {};
       const isToday = dayjs(date).isSame(today, 'day') && highlightToday;
       const dayEvents = groupedEvents?.[dayjs(date).format('YYYY-MM-DD')] || [];
 
@@ -190,7 +190,7 @@ export function YearViewMonth({
             mode === 'static'
               ? undefined
               : (event) => {
-                  onDayClick?.(dayjs(date).startOf('day').toDate(), event);
+                  onDayClick?.(dayjs(date).format('YYYY-MM-DD'), event);
                   dayProps.onClick?.(event);
                 }
           }
@@ -202,7 +202,7 @@ export function YearViewMonth({
       );
     });
 
-    const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
+    const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
 
     return (
@@ -216,7 +216,7 @@ export function YearViewMonth({
               mode === 'static'
                 ? undefined
                 : (event) => {
-                    onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+                    onWeekNumberClick?.(dayjs(week[0]).format('YYYY-MM-DD'), event);
                     weekNumberProps.onClick?.(event);
                   }
             }
@@ -251,7 +251,7 @@ export function YearViewMonth({
         onClick={
           mode === 'static'
             ? undefined
-            : (event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)
+            : (event) => onMonthClick?.(dayjs(month).startOf('month').format('YYYY-MM-DD'), event)
         }
         mod={{ static: mode === 'static' }}
         tabIndex={mode === 'static' ? -1 : 0}

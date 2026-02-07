@@ -173,14 +173,14 @@ describe('@mantine/schedule/MonthView', () => {
     const spy = jest.fn();
     render(<MonthView {...defaultProps} onDayClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'November 1, 2025' }));
-    expect(spy).toHaveBeenCalledWith(new Date('2025-11-01 00:00:00'), expect.any(Object));
+    expect(spy).toHaveBeenCalledWith('2025-11-01', expect.any(Object));
   });
 
   it('supports onWeekNumberClick prop', async () => {
     const spy = jest.fn();
     render(<MonthView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'Week 44' }));
-    expect(spy).toHaveBeenCalledWith(new Date('2025-10-27 00:00:00'), expect.any(Object));
+    expect(spy).toHaveBeenCalledWith('2025-10-27', expect.any(Object));
   });
 
   it('supports getDayProps prop', () => {
@@ -340,7 +340,7 @@ describe('@mantine/schedule/MonthView', () => {
   it('calls onViewChange when view button is clicked', async () => {
     const spy = jest.fn();
     render(<MonthView {...defaultProps} onViewChange={spy} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
     expect(spy).toHaveBeenCalledWith('day');
   });
 
@@ -363,7 +363,7 @@ describe('@mantine/schedule/MonthView', () => {
     expect(screen.getByRole('button', { name: 'Hoy' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Anterior' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Ver día' })).toBeInTheDocument();
   });
 
   it('supports scrollAreaProps', () => {
@@ -564,7 +564,7 @@ describe('@mantine/schedule/MonthView', () => {
       await userEvent.click(day);
 
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Object));
+      expect(spy).toHaveBeenCalledWith(expect.any(String), expect.any(Object));
     });
 
     it('calls onEventClick when event is clicked', async () => {

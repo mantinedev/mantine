@@ -1,6 +1,7 @@
+import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
 import { DragContextValue } from '../components/DragContext/DragContext';
-import { ScheduleEventData, ScheduleMode } from '../types';
+import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { useDragState } from './use-drag-state';
 
 export interface UseDragDropHandlersOptions<T = any> {
@@ -11,7 +12,11 @@ export interface UseDragDropHandlersOptions<T = any> {
   mode: ScheduleMode;
 
   /** Called when event is dropped at new location */
-  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+  onEventDrop?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue
+  ) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -122,7 +127,11 @@ export function useDragDropHandlers<T = any>(
       }
 
       const { start, end } = calculateDropTarget(target, dragState.state.draggedEvent);
-      onEventDrop(dragState.state.draggedEventId!, start, end);
+      onEventDrop(
+        dragState.state.draggedEventId!,
+        dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
+        dayjs(end).format('YYYY-MM-DD HH:mm:ss')
+      );
       handleDragEnd();
     },
     [enabled, dragState.state, onEventDrop, calculateDropTarget, handleDragEnd]

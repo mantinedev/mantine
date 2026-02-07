@@ -12,7 +12,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { getLabel, ScheduleLabelsOverride } from '../../../labels';
+import { getLabel, ScheduleLabels, ScheduleLabelsOverride } from '../../../labels';
 import { ScheduleViewLevel } from '../../../types';
 import { HeaderControl } from '../HeaderControl/HeaderControl';
 import classes from './ViewSelect.module.css';
@@ -130,6 +130,13 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     }
   };
 
+  const switchToLabelKeys: Record<ScheduleViewLevel, keyof ScheduleLabels> = {
+    day: 'switchToDayView',
+    week: 'switchToWeekView',
+    month: 'switchToMonthView',
+    year: 'switchToYearView',
+  };
+
   const items = views!.map((view, index) => {
     const isSelected = value === view;
     return (
@@ -147,6 +154,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
         __staticSelector={__staticSelector}
         radius={radius}
         role="tab"
+        aria-label={getLabel(switchToLabelKeys[view], labels) as string}
         aria-selected={isSelected}
         tabIndex={isSelected ? 0 : -1}
       >

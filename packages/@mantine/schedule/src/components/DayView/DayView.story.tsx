@@ -280,7 +280,7 @@ export function DragAndDrop() {
 
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
       prev.map((event) => {
         if (event.id === eventId) {
@@ -427,7 +427,7 @@ export function DragAndDropWithOverlappingEvents() {
     },
   ]);
 
-  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
       prev.map((event) => {
         if (event.id === eventId) {

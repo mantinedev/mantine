@@ -76,7 +76,7 @@ describe('@mantine/schedule/ScheduleHeaderBase', () => {
   it('accepts onViewChange callback', async () => {
     const onViewChange = jest.fn();
     render(<ScheduleHeaderBase {...defaultProps} onViewChange={onViewChange} />);
-    await userEvent.click(screen.getByRole('button', { name: /week/i }));
+    await userEvent.click(screen.getByRole('tab', { name: /week/i }));
     expect(onViewChange).toHaveBeenCalledWith('week');
   });
 

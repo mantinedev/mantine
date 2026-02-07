@@ -26,21 +26,21 @@ describe('@mantine/schedule/ViewSelect', () => {
     const partialViews = ['day', 'month'] as const;
 
     const { rerender } = render(<ViewSelect {...defaultProps} views={allViews} />);
-    expect(screen.getAllByRole('button', { name: /Switch to/ })).toHaveLength(allViews.length);
+    expect(screen.getAllByRole('tab', { name: /Switch to/ })).toHaveLength(allViews.length);
     allViews.forEach((view) => {
-      expect(screen.getByRole('button', { name: `Switch to ${view} view` })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: `Switch to ${view} view` })).toBeInTheDocument();
     });
 
     rerender(<ViewSelect {...defaultProps} views={partialViews} />);
-    expect(screen.getAllByRole('button', { name: /Switch to/ })).toHaveLength(partialViews.length);
+    expect(screen.getAllByRole('tab', { name: /Switch to/ })).toHaveLength(partialViews.length);
     partialViews.forEach((view) => {
-      expect(screen.getByRole('button', { name: `Switch to ${view} view` })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: `Switch to ${view} view` })).toBeInTheDocument();
     });
   });
 
   it('highlights the selected view control', () => {
     render(<ViewSelect {...defaultProps} views={['day', 'week', 'month']} value="week" />);
-    const weekControl = screen.getByRole('button', { name: 'Switch to week view' });
+    const weekControl = screen.getByRole('tab', { name: 'Switch to week view' });
     expect(weekControl).toHaveAttribute('data-active');
   });
 
@@ -50,7 +50,7 @@ describe('@mantine/schedule/ViewSelect', () => {
       <ViewSelect {...defaultProps} views={['day', 'week', 'month']} value="day" onChange={spy} />
     );
 
-    const weekControl = screen.getByRole('button', { name: 'Switch to week view' });
+    const weekControl = screen.getByRole('tab', { name: 'Switch to week view' });
     weekControl.click();
     expect(spy).toHaveBeenCalledWith('week');
   });

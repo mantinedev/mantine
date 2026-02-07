@@ -152,14 +152,14 @@ describe('@mantine/schedule/MobileMonthView', () => {
     const spy = jest.fn();
     render(<MobileMonthView {...defaultProps} onDayClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'November 1, 2025' }));
-    expect(spy).toHaveBeenCalledWith(new Date('2025-11-01 00:00:00'), expect.any(Object));
+    expect(spy).toHaveBeenCalledWith('2025-11-01', expect.any(Object));
   });
 
   it('supports onWeekNumberClick prop', async () => {
     const spy = jest.fn();
     render(<MobileMonthView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'Week 45' }));
-    expect(spy).toHaveBeenCalledWith(new Date('2025-11-03 00:00:00'), expect.any(Object));
+    expect(spy).toHaveBeenCalledWith('2025-11-03', expect.any(Object));
   });
 
   it('supports getDayProps prop', () => {

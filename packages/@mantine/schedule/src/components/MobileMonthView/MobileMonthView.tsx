@@ -106,16 +106,16 @@ export interface MobileMonthViewProps
   weekendDays?: DayOfWeek[];
 
   /** Props passed down to the week number button */
-  getWeekNumberProps?: (weekStartDate: Date) => Record<string, any>;
+  getWeekNumberProps?: (weekStartDate: DateStringValue) => Record<string, any>;
 
   /** Props passed down to the day button */
-  getDayProps?: (date: Date) => Record<string, any>;
+  getDayProps?: (date: DateStringValue) => Record<string, any>;
 
   /** Called when day is clicked */
-  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Called with first day of the week when week number is clicked */
-  onWeekNumberClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onWeekNumberClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** If set, always renders 6 weeks in the month view @default true */
   consistentWeeks?: boolean;
@@ -264,7 +264,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
 
-      const dayProps = getDayProps?.(new Date(dayDate)) || {};
+      const dayProps = getDayProps?.(dayjs(dayDate).format('YYYY-MM-DD')) || {};
       const isToday = dayjs(dayDate).isSame(today, 'day') && highlightToday;
       const isSelected = _selectedDate && dayjs(dayDate).isSame(dayjs(_selectedDate), 'day');
       const dayEvents = groupedEvents[dayjs(dayDate).format('YYYY-MM-DD')] || [];
@@ -289,9 +289,9 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       ));
 
       const handleDayClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const newDate = dayjs(dayDate).startOf('day').toDate();
-        _setSelectedDate(toDateString(newDate));
-        onDayClick?.(newDate, event);
+        const dateStr = dayjs(dayDate).format('YYYY-MM-DD');
+        _setSelectedDate(dateStr);
+        onDayClick?.(dateStr, event);
         dayProps.onClick?.(event);
       };
 
@@ -343,7 +343,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       );
     });
 
-    const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
+    const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
 
     return (
@@ -357,7 +357,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
               mode === 'static'
                 ? undefined
                 : (event) => {
-                    onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+                    onWeekNumberClick?.(dayjs(week[0]).format('YYYY-MM-DD'), event);
                     weekNumberProps.onClick?.(event);
                   }
             }

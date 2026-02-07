@@ -72,13 +72,13 @@ describe('@mantine/schedule/Schedule', () => {
     const spy = jest.fn();
     render(<Schedule {...defaultProps} defaultView="week" onViewChange={spy} />);
 
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
     expect(spy).toHaveBeenCalledWith('day');
 
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to month view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
     expect(spy).toHaveBeenCalledWith('month');
 
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to year view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to year view' }));
     expect(spy).toHaveBeenCalledWith('year');
   });
 
@@ -86,13 +86,13 @@ describe('@mantine/schedule/Schedule', () => {
     const { container } = render(<Schedule {...defaultProps} defaultView="week" />);
     expect(container.querySelector('.mantine-WeekView-weekView')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
     expect(container.querySelector('.mantine-DayView-dayView')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to month view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
     expect(container.querySelector('.mantine-MonthView-monthView')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to year view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to year view' }));
     expect(container.querySelector('.mantine-YearView-yearView')).toBeInTheDocument();
   });
 
@@ -317,7 +317,7 @@ describe('@mantine/schedule/Schedule', () => {
       />
     );
 
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
     expect(onViewChangeSpy).toHaveBeenCalledWith('day');
 
     // In controlled mode, parent needs to update the prop

@@ -65,7 +65,7 @@ const initialEvents: ScheduleEventData[] = [
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -90,7 +90,7 @@ function Demo() {
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event

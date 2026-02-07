@@ -25,6 +25,7 @@ import { ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
+  DateTimeStringValue,
   DayOfWeek,
   ScheduleEventData,
   ScheduleMode,
@@ -96,16 +97,16 @@ export interface MonthViewProps
   weekendDays?: DayOfWeek[];
 
   /** Props passed down to the week number button */
-  getWeekNumberProps?: (weekStartDate: Date) => Record<string, any>;
+  getWeekNumberProps?: (weekStartDate: DateStringValue) => Record<string, any>;
 
   /** Props passed down to the day button */
-  getDayProps?: (date: Date) => Record<string, any>;
+  getDayProps?: (date: DateStringValue) => Record<string, any>;
 
   /** Called when day is clicked */
-  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Called with first day of the week when week number is clicked */
-  onWeekNumberClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onWeekNumberClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** If set, always renders 6 weeks in the month view @default true */
   consistentWeeks?: boolean;
@@ -156,7 +157,11 @@ export interface MonthViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped on new date */
-  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+  onEventDrop?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue
+  ) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -174,7 +179,7 @@ export interface MonthViewProps
   withDragSlotSelect?: boolean;
 
   /** Called when a day range is selected by dragging */
-  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
+  onSlotDragEnd?: (rangeStart: DateTimeStringValue, rangeEnd: DateTimeStringValue) => void;
 
   /** Labels override for i18n */
   labels?: ScheduleLabelsOverride;
@@ -328,7 +333,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       const startDay = flatDaysRef.current[startIndex];
       const endDay = flatDaysRef.current[endIndex];
       if (startDay && endDay) {
-        onSlotDragEnd(dayjs(startDay).startOf('day').toDate(), dayjs(endDay).endOf('day').toDate());
+        onSlotDragEnd(
+          dayjs(startDay).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          dayjs(endDay).endOf('day').format('YYYY-MM-DD HH:mm:ss')
+        );
       }
     },
   });
@@ -382,7 +390,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
 
-      const dayProps = getDayProps?.(new Date(day)) || {};
+      const dayProps = getDayProps?.(dayjs(day).format('YYYY-MM-DD')) || {};
       const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday;
 
       if (outside && !withOutsideDays) {
@@ -418,7 +426,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             mode === 'static'
               ? undefined
               : (event) => {
-                  onDayClick?.(dayjs(day).startOf('day').toDate(), event);
+                  onDayClick?.(dayjs(day).format('YYYY-MM-DD'), event);
                   dayProps.onClick?.(event);
                 }
           }
@@ -475,7 +483,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       );
     });
 
-    const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
+    const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
 
     const events = (monthEvents.groupedByWeek[weekIndex] || [])
@@ -551,7 +559,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
                 : (event) => {
                     onViewChange?.('week');
                     onDateChange?.(toDateString(week[0]));
-                    onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+                    onWeekNumberClick?.(dayjs(week[0]).format('YYYY-MM-DD'), event);
                     weekNumberProps.onClick?.(event);
                   }
             }

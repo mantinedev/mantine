@@ -210,7 +210,7 @@ describe('@mantine/schedule/DayView', () => {
   it('calls onViewChange when view button is clicked', async () => {
     const spy = jest.fn();
     render(<DayView {...defaultProps} onViewChange={spy} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to week view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to week view' }));
     expect(spy).toHaveBeenCalledWith('week');
   });
 
@@ -397,7 +397,7 @@ describe('@mantine/schedule/DayView', () => {
     expect(screen.getByRole('button', { name: 'Hoy' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Anterior' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Ver día' })).toBeInTheDocument();
   });
 
   describe('keyboard navigation', () => {
@@ -490,12 +490,12 @@ describe('@mantine/schedule/DayView', () => {
       await userEvent.click(slot);
 
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Date), expect.any(Object));
+      expect(spy).toHaveBeenCalledWith(expect.any(String), expect.any(String), expect.any(Object));
 
       const [start, end] = spy.mock.calls[0];
-      expect(start).toBeInstanceOf(Date);
-      expect(end).toBeInstanceOf(Date);
-      expect(end.getTime()).toBeGreaterThan(start.getTime());
+      expect(start).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+      expect(end).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+      expect(end > start).toBe(true);
     });
 
     it('calls onAllDaySlotClick when all-day slot is clicked', async () => {
@@ -506,7 +506,7 @@ describe('@mantine/schedule/DayView', () => {
       await userEvent.click(allDaySlot);
 
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Object));
+      expect(spy).toHaveBeenCalledWith(expect.any(String), expect.any(Object));
     });
 
     it('calls onEventClick when event is clicked', async () => {

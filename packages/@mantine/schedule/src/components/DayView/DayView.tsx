@@ -26,6 +26,7 @@ import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
+  DateTimeStringValue,
   ScheduleEventData,
   ScheduleMode,
   ScheduleViewLevel,
@@ -171,7 +172,11 @@ export interface DayViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped at new time */
-  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+  onEventDrop?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue
+  ) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -184,13 +189,13 @@ export interface DayViewProps
 
   /** Called when time slot is clicked */
   onTimeSlotClick?: (
-    slotStart: Date,
-    slotEnd: Date,
+    slotStart: DateTimeStringValue,
+    slotEnd: DateTimeStringValue,
     event: React.MouseEvent<HTMLButtonElement>
   ) => void;
 
   /** Called when all-day slot is clicked */
-  onAllDaySlotClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onAllDaySlotClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -199,7 +204,7 @@ export interface DayViewProps
   withDragSlotSelect?: boolean;
 
   /** Called when a time slot range is selected by dragging */
-  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
+  onSlotDragEnd?: (rangeStart: DateTimeStringValue, rangeEnd: DateTimeStringValue) => void;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
@@ -343,9 +348,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
         return;
       }
       const slotDate = dayjs(date).format('YYYY-MM-DD');
-      const rangeStart = dayjs(`${slotDate} ${slots[startIndex].startTime}`).toDate();
-      const rangeEnd = dayjs(`${slotDate} ${slots[endIndex].endTime}`).toDate();
-      onSlotDragEnd(rangeStart, rangeEnd);
+      onSlotDragEnd(
+        `${slotDate} ${slots[startIndex].startTime}`,
+        `${slotDate} ${slots[endIndex].endTime}`
+      );
     },
   });
 
@@ -458,9 +464,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
             ? undefined
             : (event) => {
                 const slotDate = dayjs(date).format('YYYY-MM-DD');
-                const start = dayjs(`${slotDate} ${slot.startTime}`).toDate();
-                const end = dayjs(`${slotDate} ${slot.endTime}`).toDate();
-                onTimeSlotClick(start, end, event);
+                onTimeSlotClick(
+                  `${slotDate} ${slot.startTime}`,
+                  `${slotDate} ${slot.endTime}`,
+                  event
+                );
               }
         }
         onDragOver={
@@ -577,8 +585,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                     mode === 'static' || !onAllDaySlotClick
                       ? undefined
                       : (e) => {
-                          const slotDate = dayjs(date).toDate();
-                          onAllDaySlotClick(slotDate, e);
+                          onAllDaySlotClick(dayjs(date).format('YYYY-MM-DD'), e);
                         }
                   }
                 />

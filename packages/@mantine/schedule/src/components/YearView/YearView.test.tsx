@@ -141,21 +141,21 @@ describe('@mantine/schedule/YearView', () => {
     const spy = jest.fn();
     render(<YearView {...defaultProps} onDayClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'January 1, 2025' }));
-    expect(spy).toHaveBeenCalledWith(new Date('2025-01-01 00:00:00'), expect.any(Object));
+    expect(spy).toHaveBeenCalledWith('2025-01-01', expect.any(Object));
   });
 
   it('supports onMonthClick prop', async () => {
     const spy = jest.fn();
     render(<YearView {...defaultProps} onMonthClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'January' }));
-    expect(spy).toHaveBeenCalledWith(new Date('2025-01-01 00:00:00'), expect.any(Object));
+    expect(spy).toHaveBeenCalledWith('2025-01-01', expect.any(Object));
   });
 
   it('supports onWeekNumberClick prop', async () => {
     const spy = jest.fn();
     render(<YearView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'Week 3' }));
-    expect(spy).toHaveBeenCalledWith(new Date('2025-01-13 00:00:00'), expect.any(Object));
+    expect(spy).toHaveBeenCalledWith('2025-01-13', expect.any(Object));
   });
 
   it('supports getDayProps prop', () => {
@@ -305,7 +305,7 @@ describe('@mantine/schedule/YearView', () => {
   it('calls onViewChange when view button is clicked', async () => {
     const spy = jest.fn();
     render(<YearView {...defaultProps} onViewChange={spy} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
     expect(spy).toHaveBeenCalledWith('day');
   });
 
@@ -436,7 +436,7 @@ describe('@mantine/schedule/YearView', () => {
     expect(screen.getByRole('button', { name: 'Hoy' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Anterior' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Ver día' })).toBeInTheDocument();
   });
 
   it('hides outside days when withOutsideDays is false', () => {

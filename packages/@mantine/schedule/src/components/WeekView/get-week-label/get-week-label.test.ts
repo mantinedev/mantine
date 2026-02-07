@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { getWeekLabel } from './get-week-label';
 
 describe('@mantine/schedule/get-week-label', () => {
@@ -35,11 +34,11 @@ describe('@mantine/schedule/get-week-label', () => {
     ).toBe('Custom Label');
 
     expect(renderWeekLabel).toHaveBeenCalledWith({
-      weekStart: expect.any(Date),
-      weekEnd: expect.any(Date),
+      weekStart: expect.any(String),
+      weekEnd: expect.any(String),
     });
 
-    expect(dayjs(renderWeekLabel.mock.calls[0][0].weekStart).isSame(weekdays[0])).toBe(true);
-    expect(dayjs(renderWeekLabel.mock.calls[0][0].weekEnd).isSame(weekdays[6])).toBe(true);
+    expect(renderWeekLabel.mock.calls[0][0].weekStart).toBe('2025-11-03');
+    expect(renderWeekLabel.mock.calls[0][0].weekEnd).toBe('2025-11-09');
   });
 });

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -26,6 +26,7 @@ import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
+  DateTimeStringValue,
   DayOfWeek,
   ScheduleEventData,
   ScheduleMode,
@@ -47,7 +48,7 @@ import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
-import { DragContext } from '../DragContext/DragContext';
+import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -194,7 +195,11 @@ export interface WeekViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped at new time */
-  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+  onEventDrop?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue
+  ) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -207,13 +212,13 @@ export interface WeekViewProps
 
   /** Called when time slot is clicked */
   onTimeSlotClick?: (
-    slotStart: Date,
-    slotEnd: Date,
+    slotStart: DateTimeStringValue,
+    slotEnd: DateTimeStringValue,
     event: React.MouseEvent<HTMLButtonElement>
   ) => void;
 
   /** Called when all-day slot is clicked */
-  onAllDaySlotClick?: (day: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onAllDaySlotClick?: (day: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -222,13 +227,16 @@ export interface WeekViewProps
   withDragSlotSelect?: boolean;
 
   /** Called when a time slot range is selected by dragging */
-  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
+  onSlotDragEnd?: (rangeStart: DateTimeStringValue, rangeEnd: DateTimeStringValue) => void;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 
   /** Function to customize week label in the header */
-  renderWeekLabel?: (params: { weekStart: Date; weekEnd: Date }) => React.ReactNode;
+  renderWeekLabel?: (params: {
+    weekStart: DateStringValue;
+    weekEnd: DateStringValue;
+  }) => React.ReactNode;
 }
 
 export type WeekViewFactory = Factory<{
@@ -381,6 +389,20 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     },
   });
 
+  const allDayDragDrop = useDragDropHandlers<string>({
+    enabled: withEventsDragAndDrop,
+    mode,
+    onEventDrop,
+    canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
+    calculateDropTarget: (targetDay: string, draggedEvent: ScheduleEventData) => {
+      const eventDuration = dayjs(draggedEvent.end).diff(dayjs(draggedEvent.start), 'millisecond');
+      const newStart = dayjs(targetDay).startOf('day');
+      return { start: newStart.toDate(), end: newStart.add(eventDuration, 'millisecond').toDate() };
+    },
+  });
+
   const slotDragSelect = useSlotDragSelect({
     enabled: withDragSlotSelect && mode !== 'static',
     onDragEnd: (startIndex, endIndex, group) => {
@@ -388,9 +410,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         return;
       }
       const slotDate = dayjs(group).format('YYYY-MM-DD');
-      const rangeStart = dayjs(`${slotDate} ${slots[startIndex].startTime}`).toDate();
-      const rangeEnd = dayjs(`${slotDate} ${slots[endIndex].endTime}`).toDate();
-      onSlotDragEnd(rangeStart, rangeEnd);
+      onSlotDragEnd(
+        `${slotDate} ${slots[startIndex].startTime}`,
+        `${slotDate} ${slots[endIndex].endTime}`
+      );
     },
   });
 
@@ -427,9 +450,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     }
 
     const slot = slots[slotIndex];
-    const start = dayjs(`${slotDate} ${slot.startTime}`).toDate();
-    const end = dayjs(`${slotDate} ${slot.endTime}`).toDate();
-    onTimeSlotClick(start, end, e);
+    onTimeSlotClick(`${slotDate} ${slot.startTime}`, `${slotDate} ${slot.endTime}`, e);
   };
 
   const weekEvents = getWeekViewEvents({
@@ -643,11 +664,30 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       onClick={
         mode === 'static' || !onAllDaySlotClick
           ? undefined
-          : (e) => onAllDaySlotClick(dayjs(day).startOf('day').toDate(), e)
+          : (e) => onAllDaySlotClick(dayjs(day).format('YYYY-MM-DD'), e)
+      }
+      onDragOver={
+        withEventsDragAndDrop && mode !== 'static'
+          ? (e) => allDayDragDrop.handleDragOver(e, day)
+          : undefined
+      }
+      onDragLeave={
+        withEventsDragAndDrop && mode !== 'static' ? allDayDragDrop.handleDragLeave : undefined
+      }
+      onDrop={
+        withEventsDragAndDrop && mode !== 'static'
+          ? (e) => allDayDragDrop.handleDrop(e, day)
+          : undefined
       }
       {...getStyles('weekViewDaySlot')}
+      mod={{ 'drop-target': allDayDragDrop.isDropTarget(day) }}
     />
   ));
+
+  const allDayEventIds = useMemo(
+    () => new Set(weekEvents.allDayEvents.map((e) => e.id)),
+    [weekEvents.allDayEvents]
+  );
 
   const allDayEvents = weekEvents.allDayEvents.map((event) => (
     <ScheduleEvent
@@ -656,6 +696,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       autoSize
       nowrap
       hanging={event.position.hanging}
+      draggable={allDayDragDrop.isDraggableEvent(event)}
       renderEvent={renderEvent}
       mode={mode}
       onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
@@ -783,8 +824,34 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     </Box>
   );
 
+  const mergedDragContextValue = useMemo<DragContextValue>(
+    () => ({
+      isDragging:
+        dragDrop.dragContextValue.isDragging || allDayDragDrop.dragContextValue.isDragging,
+      draggedEventId:
+        dragDrop.dragContextValue.draggedEventId ?? allDayDragDrop.dragContextValue.draggedEventId,
+      draggedEvent:
+        dragDrop.dragContextValue.draggedEvent ?? allDayDragDrop.dragContextValue.draggedEvent,
+      dropTarget:
+        dragDrop.dragContextValue.dropTarget ?? allDayDragDrop.dragContextValue.dropTarget,
+      onDragStart: (event: ScheduleEventData) => {
+        if (allDayEventIds.has(event.id)) {
+          allDayDragDrop.handleDragStart(event);
+        } else {
+          dragDrop.handleDragStart(event);
+        }
+      },
+      onDragEnd: () => {
+        dragDrop.handleDragEnd();
+        allDayDragDrop.handleDragEnd();
+      },
+      setDropTarget: dragDrop.dragContextValue.setDropTarget,
+    }),
+    [dragDrop.dragContextValue, allDayDragDrop.dragContextValue, allDayEventIds]
+  );
+
   if (withEventsDragAndDrop) {
-    return <DragContext.Provider value={dragDrop.dragContextValue}>{content}</DragContext.Provider>;
+    return <DragContext.Provider value={mergedDragContextValue}>{content}</DragContext.Provider>;
   }
 
   return content;

@@ -11,7 +11,13 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { ScheduleLabelsOverride } from '../../labels';
-import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
+import {
+  DateStringValue,
+  DateTimeStringValue,
+  ScheduleEventData,
+  ScheduleMode,
+  ScheduleViewLevel,
+} from '../../types';
 import { DayView, DayViewProps, DayViewStylesNames } from '../DayView/DayView';
 import {
   MobileMonthView,
@@ -102,7 +108,11 @@ export interface ScheduleProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped */
-  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+  onEventDrop?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue
+  ) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -115,22 +125,22 @@ export interface ScheduleProps
 
   /** Called when time slot is clicked in DayView/WeekView */
   onTimeSlotClick?: (
-    slotStart: Date,
-    slotEnd: Date,
+    slotStart: DateTimeStringValue,
+    slotEnd: DateTimeStringValue,
     event: React.MouseEvent<HTMLButtonElement>
   ) => void;
 
   /** Called when all-day slot is clicked in DayView/WeekView */
-  onAllDaySlotClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onAllDaySlotClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Called when day is clicked in MonthView */
-  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** If set, enables drag-to-select slot ranges @default false */
   withDragSlotSelect?: boolean;
 
   /** Called when a slot range is selected by dragging */
-  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
+  onSlotDragEnd?: (rangeStart: DateTimeStringValue, rangeEnd: DateTimeStringValue) => void;
 
   /** Called when event is clicked in any view */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;

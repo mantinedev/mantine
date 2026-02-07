@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { DateValue } from '@mantine/dates';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { _eventFormCode, EventData, EventForm } from '../_EventForm';
@@ -11,7 +10,7 @@ function Demo() {
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
 
-  const handleDayClick = (date: DateValue) => {
+  const handleDayClick = (date: string) => {
     setSelectedEventData({
       title: '',
       start: dayjs(date).startOf('day').toDate(),
@@ -67,11 +66,11 @@ function Demo() {
     }
   };
 
-  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+  const handleSlotDragEnd = (rangeStart: string, rangeEnd: string) => {
     setSelectedEventData({
       title: '',
-      start: rangeStart,
-      end: rangeEnd,
+      start: new Date(rangeStart),
+      end: new Date(rangeEnd),
       color: 'blue',
     });
     setFormOpened(true);
@@ -102,9 +101,7 @@ function Demo() {
 
 const code = `import dayjs from 'dayjs';
 import { useState } from 'react';
-import { DateValue } from '@mantine/dates';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
-import { MantineDemo } from '@mantinex/demo';
 import { EventData, EventForm } from './_EventForm';
 import { events } from './events';
 
@@ -113,7 +110,7 @@ function Demo() {
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
 
-  const handleDayClick = (date: DateValue) => {
+  const handleDayClick = (date: string) => {
     setSelectedEventData({
       title: '',
       start: dayjs(date).startOf('day').toDate(),
@@ -163,11 +160,11 @@ function Demo() {
     }
   };
 
-  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+  const handleSlotDragEnd = (rangeStart: string, rangeEnd: string) => {
     setSelectedEventData({
       title: '',
-      start: rangeStart,
-      end: rangeEnd,
+      start: new Date(rangeStart),
+      end: new Date(rangeEnd),
       color: 'blue',
     });
     setFormOpened(true);

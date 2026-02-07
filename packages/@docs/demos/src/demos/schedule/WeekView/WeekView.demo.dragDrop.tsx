@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { ScheduleEventData, WeekView } from '@mantine/schedule';
+import { getStartOfWeek, ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
 const today = dayjs().format('YYYY-MM-DD');
@@ -27,6 +27,24 @@ const initialEvents: ScheduleEventData[] = [
     start: `${today} 14:00:00`,
     end: `${today} 15:00:00`,
     color: 'violet',
+  },
+  {
+    id: 4,
+    title: 'Company Holiday',
+    start: getStartOfWeek({ date: today, firstDayOfWeek: 1 }),
+    end: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 }))
+      .add(1, 'day')
+      .format('YYYY-MM-DD HH:mm:ss'),
+    color: 'red',
+  },
+  {
+    id: 5,
+    title: 'Release Day',
+    start: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 })).format('YYYY-MM-DD HH:mm:ss'),
+    end: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 }))
+      .add(2, 'day')
+      .format('YYYY-MM-DD HH:mm:ss'),
+    color: 'orange',
   },
 ];
 
@@ -60,12 +78,26 @@ const initialEvents: ScheduleEventData[] = [
     end: \`\${today} 15:00:00\`,
     color: 'violet',
   },
+  {
+    id: 4,
+    title: 'Company Holiday',
+    start: dayjs(today).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'red',
+  },
+  {
+    id: 5,
+    title: 'Release Day',
+    start: dayjs(tomorrow).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    end: dayjs(tomorrow).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'orange',
+  },
 ];
 
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -89,7 +121,7 @@ function Demo() {
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event

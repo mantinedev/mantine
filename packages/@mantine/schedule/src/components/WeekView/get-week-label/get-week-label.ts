@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 import type { ReactNode } from 'react';
-import { DateLabelFormat } from '../../../types';
+import { DateLabelFormat, DateStringValue } from '../../../types';
 import { formatDate } from '../../../utils';
 
 interface GetWeekLabelInput {
   weekdays: Date[] | string[];
   locale: string;
   weekLabelFormat: DateLabelFormat;
-  renderWeekLabel?: (params: { weekStart: Date; weekEnd: Date }) => ReactNode;
+  renderWeekLabel?: (params: { weekStart: DateStringValue; weekEnd: DateStringValue }) => ReactNode;
 }
 
 export function getWeekLabel({
@@ -18,8 +18,8 @@ export function getWeekLabel({
 }: GetWeekLabelInput) {
   if (renderWeekLabel) {
     return renderWeekLabel({
-      weekStart: dayjs(weekdays[0]).toDate(),
-      weekEnd: dayjs(weekdays[weekdays.length - 1]).toDate(),
+      weekStart: dayjs(weekdays[0]).format('YYYY-MM-DD'),
+      weekEnd: dayjs(weekdays[weekdays.length - 1]).format('YYYY-MM-DD'),
     });
   }
 

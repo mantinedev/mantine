@@ -274,7 +274,7 @@ export function DragAndDrop() {
   ]);
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEventsData((prev) =>
       prev.map((event) => {
         if (event.id === eventId) {

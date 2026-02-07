@@ -49,17 +49,11 @@ const initialEvents: ScheduleEventData[] = [
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (eventId: string | number, newDate: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
-      prev.map((event) => {
-        if (event.id === eventId) {
-          const duration = dayjs(event.end).diff(dayjs(event.start));
-          const newStart = dayjs(newDate);
-          const newEnd = newStart.add(duration, 'millisecond');
-          return { ...event, start: newStart.toDate(), end: newEnd.toDate() };
-        }
-        return event;
-      })
+      prev.map((event) =>
+        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
+      )
     );
   };
 
@@ -70,17 +64,11 @@ function Demo() {
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (eventId: string | number, newDate: Date) => {
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
     setEvents((prev) =>
-      prev.map((event) => {
-        if (event.id === eventId) {
-          const duration = dayjs(event.end).diff(dayjs(event.start));
-          const newStart = dayjs(newDate);
-          const newEnd = newStart.add(duration, 'millisecond');
-          return { ...event, start: newStart.toDate(), end: newEnd.toDate() };
-        }
-        return event;
-      })
+      prev.map((event) =>
+        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
+      )
     );
   };
 
