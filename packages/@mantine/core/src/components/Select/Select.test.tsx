@@ -174,6 +174,42 @@ describe('@mantine/core/Select', () => {
     expect(screen.getByRole('textbox')).toHaveValue('new-label');
   });
 
+  it('opens dropdown on focus when openOnFocus is true and searchable', async () => {
+    render(<Select {...defaultProps} searchable openOnFocus />);
+    expect(screen.queryByRole('listbox')).toBe(null);
+    await userEvent.click(screen.getByRole('textbox'));
+    expect(screen.getByRole('listbox')).toBeVisible();
+  });
+
+  it('does not open dropdown on focus when openOnFocus is false', async () => {
+    render(<Select {...defaultProps} searchable openOnFocus={false} />);
+    await userEvent.tab();
+    expect(screen.getByRole('textbox')).toHaveFocus();
+    expect(screen.queryByRole('listbox')).toBe(null);
+  });
+
+  it('does not open dropdown on focus when openOnFocus is true but not searchable', async () => {
+    render(<Select {...defaultProps} openOnFocus />);
+    const input = screen.getByRole('textbox');
+    await userEvent.tab();
+    expect(input).toHaveFocus();
+    expect(screen.queryByRole('listbox')).toBe(null);
+  });
+
+  it('selects highlighted option on blur when autoSelectOnBlur is true', async () => {
+    render(<Select {...defaultProps} searchable autoSelectOnBlur />);
+    const input = screen.getByRole('textbox');
+    await userEvent.click(input);
+    await userEvent.keyboard('{ArrowDown}');
+    await userEvent.tab();
+    expect(input).toHaveValue('test-1');
+  });
+
+  it('renders loading indicator when loading prop is set', () => {
+    const { container } = render(<Select {...defaultProps} loading />);
+    expect(container.querySelector('.mantine-Loader-root')).toBeInTheDocument();
+  });
+
   it('allows to change controlled search value when value is controlled and selected', async () => {
     const Wrapper: React.FunctionComponent = () => {
       const [value, setValue] = useState<string | null>('Angular');

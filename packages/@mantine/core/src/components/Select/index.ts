@@ -1,5 +1,5 @@
-import type { SelectFactory, SelectProps, SelectStylesNames } from './Select';
 import type { Primitive } from '../../core';
+import type { SelectFactory, SelectProps, SelectStylesNames } from './Select';
 
 export { Select } from './Select';
 
