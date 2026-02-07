@@ -120,6 +120,7 @@
 .statValue {
   font-weight: 600;
   font-size: 28px;
+  color: var(--mantine-color-bright);
 
   @mixin smaller-than $mantine-breakpoint-md {
     font-size: 20px;
