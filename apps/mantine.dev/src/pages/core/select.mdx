@@ -16,14 +16,14 @@ Unlike [Autocomplete](/core/autocomplete/), `Select` does not allow entering cus
 ## Loading state
 
 Set `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.
-You can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:
+This is useful for async operations like API calls, searches, or validations:
 
 <Demo data={SelectDemos.loading} />
 
 ## Controlled
 
-The `Select` value must be a string, other types are not supported.
-The `onChange` function is called with a string value as a single argument.
+The `Select` value must be a primitive type (string, number, or boolean).
+The `onChange` function is called with a primitive value as a single argument.
 
 ```tsx
 import { useState } from 'react';
@@ -63,7 +63,7 @@ function Demo() {
 ## autoSelectOnBlur
 
 Set the `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.
-To see this feature in action: select an option with the up/down arrows, then click outside the input:
+Note: This prop only has an effect when `searchable` is set to `true`. To see this feature in action: select an option with the up/down arrows, then click outside the input:
 
 <Demo data={SelectDemos.autoSelectOnBlur} />
 
@@ -88,6 +88,13 @@ The `allowDeselect` prop determines whether the value should be deselected when 
 By default, `allowDeselect` is `true`:
 
 <Demo data={SelectDemos.allowDeselect} />
+
+## Open on focus
+
+Set the `openOnFocus` prop to open the dropdown when the input receives focus.
+Note: This prop only has an effect when `searchable` is set to `true`:
+
+<Demo data={SelectDemos.openOnFocus} />
 
 ## Searchable
 
