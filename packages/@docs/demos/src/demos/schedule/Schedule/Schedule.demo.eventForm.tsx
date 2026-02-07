@@ -122,51 +122,42 @@ function Demo() {
 
 const code = `import dayjs from 'dayjs';
 import { useState } from 'react';
+import { DateValue } from '@mantine/dates';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
-import { EventForm } from './EventForm';
-import { events } from './data';
+import { EventData, EventForm } from './EventForm';
+import { events } from './events';
 
 function Demo() {
   const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);
   const [formOpened, setFormOpened] = useState(false);
-  const [selectedEventData, setSelectedEventData] = useState<{
-    id?: string | number;
-    title: string;
-    start: Date;
-    end: Date;
-    color: string;
-    isAllDay?: boolean;
-  } | null>(null);
+  const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
 
-  const handleTimeSlotClick = (slotStart: Date, slotEnd: Date) => {
+  const handleTimeSlotClick = (slotStart: DateValue, slotEnd: DateValue) => {
     setSelectedEventData({
       title: '',
       start: slotStart,
       end: slotEnd,
       color: 'blue',
-      isAllDay: false,
     });
     setFormOpened(true);
   };
 
-  const handleAllDaySlotClick = (slotDate: Date) => {
+  const handleAllDaySlotClick = (slotDate: DateValue) => {
     setSelectedEventData({
       title: '',
       start: dayjs(slotDate).startOf('day').toDate(),
       end: dayjs(slotDate).endOf('day').toDate(),
       color: 'blue',
-      isAllDay: true,
     });
     setFormOpened(true);
   };
 
-  const handleDayClick = (date: Date) => {
+  const handleDayClick = (date: DateValue) => {
     setSelectedEventData({
       title: '',
       start: dayjs(date).startOf('day').toDate(),
       end: dayjs(date).endOf('day').toDate(),
       color: 'blue',
-      isAllDay: true,
     });
     setFormOpened(true);
   };
@@ -178,31 +169,23 @@ function Demo() {
       start: new Date(event.start),
       end: new Date(event.end),
       color: event.color || 'blue',
-      isAllDay: false,
     });
     setFormOpened(true);
   };
 
-  const handleSaveEvent = (formData: {
-    id?: string | number;
-    title: string;
-    start: Date;
-    end: Date;
-    color: string;
-    isAllDay?: boolean;
-  }) => {
-    if (formData.id) {
+  const handleSubmit = (values: EventData) => {
+    if (values.id) {
       setAllEvents((prev) =>
-        prev.map((e) =>
-          e.id === formData.id
+        prev.map((event) =>
+          event.id === values.id
             ? {
-                ...e,
-                title: formData.title,
-                start: formData.start.toISOString(),
-                end: formData.end.toISOString(),
-                color: formData.color,
+                ...event,
+                title: values.title,
+                start: dayjs(values.start).toISOString(),
+                end: dayjs(values.end).toISOString(),
+                color: values.color || 'blue',
               }
-            : e
+            : event
         )
       );
     } else {
@@ -210,14 +193,13 @@ function Demo() {
         ...prev,
         {
           id: Math.random().toString(36).substring(2, 11),
-          title: formData.title,
-          start: formData.start.toISOString(),
-          end: formData.end.toISOString(),
-          color: formData.color,
+          title: values.title,
+          start: dayjs(values.start).toISOString(),
+          end: dayjs(values.end).toISOString(),
+          color: values.color || 'blue',
         },
       ]);
     }
-    setSelectedEventData(null);
   };
 
   const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
@@ -240,7 +222,6 @@ function Demo() {
     <>
       <Schedule
         events={allEvents}
-        withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onAllDaySlotClick={handleAllDaySlotClick}
         onDayClick={handleDayClick}
@@ -266,5 +247,6 @@ export const eventForm: MantineDemo = {
   code: [
     { code, language: 'tsx', fileName: 'Demo.tsx' },
     { code: _eventFormCode, language: 'tsx', fileName: 'EventForm.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'events.ts' },
   ],
 };
