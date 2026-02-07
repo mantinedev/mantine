@@ -8,8 +8,6 @@ interface CalculateAllDayEventWidthInput {
   weekEndDate: Dayjs;
   weekDays: DateStringValue[];
   visibleDaysCount: number;
-  isMultiday: boolean;
-  rowCount: number;
 }
 
 export function calculateAllDayEventWidth({
@@ -19,28 +17,22 @@ export function calculateAllDayEventWidth({
   weekEndDate,
   weekDays,
   visibleDaysCount,
-  isMultiday,
-  rowCount,
 }: CalculateAllDayEventWidthInput): number {
-  if (isMultiday) {
-    let displayStartDate = eventStartDate;
-    if (eventStartDate.isBefore(weekStartDate)) {
-      displayStartDate = weekStartDate;
-    }
-
-    let displayEndDate = actualEndDate;
-    if (actualEndDate.isAfter(weekEndDate)) {
-      displayEndDate = weekEndDate;
-    }
-
-    const visibleDaysSpanned = weekDays.filter(
-      (day) =>
-        (dayjs(day).isAfter(displayStartDate) || dayjs(day).isSame(displayStartDate, 'day')) &&
-        (dayjs(day).isBefore(displayEndDate) || dayjs(day).isSame(displayEndDate, 'day'))
-    ).length;
-
-    return (visibleDaysSpanned / visibleDaysCount) * 100;
+  let displayStartDate = eventStartDate;
+  if (eventStartDate.isBefore(weekStartDate)) {
+    displayStartDate = weekStartDate;
   }
 
-  return 100 / rowCount;
+  let displayEndDate = actualEndDate;
+  if (actualEndDate.isAfter(weekEndDate)) {
+    displayEndDate = weekEndDate;
+  }
+
+  const visibleDaysSpanned = weekDays.filter(
+    (day) =>
+      (dayjs(day).isAfter(displayStartDate) || dayjs(day).isSame(displayStartDate, 'day')) &&
+      (dayjs(day).isBefore(displayEndDate) || dayjs(day).isSame(displayEndDate, 'day'))
+  ).length;
+
+  return (visibleDaysSpanned / visibleDaysCount) * 100;
 }

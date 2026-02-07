@@ -169,7 +169,6 @@ export function getWeekPositionedEvents({
     for (const event of grouped.allDayEvents) {
       const eventStartDate = dayjs(event.start).startOf('day');
       const actualEndDate = getEventEndDate(event);
-      const isMultiday = actualEndDate.isAfter(eventStartDate);
 
       event.position.width = calculateAllDayEventWidth({
         eventStartDate,
@@ -178,8 +177,6 @@ export function getWeekPositionedEvents({
         weekEndDate,
         weekDays,
         visibleDaysCount,
-        isMultiday,
-        rowCount,
       });
 
       event.position.overlaps = rowCount;

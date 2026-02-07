@@ -135,7 +135,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       expect(result.allDayEvents[2].position.row).toBe(0);
     });
 
-    it('calculates width for single-day all-day events based on row count', () => {
+    it('calculates width for single-day all-day events based on days spanned', () => {
       const events = [
         testUtils.createEvent({
           id: 1,
@@ -154,8 +154,9 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
         events,
       });
 
-      expect(result.allDayEvents[0].position.width).toBe(50);
-      expect(result.allDayEvents[1].position.width).toBe(50);
+      const expectedWidth = (1 / 7) * 100;
+      expect(result.allDayEvents[0].position.width).toBeCloseTo(expectedWidth, 2);
+      expect(result.allDayEvents[1].position.width).toBeCloseTo(expectedWidth, 2);
       expect(result.allDayEvents[0].position.overlaps).toBe(2);
       expect(result.allDayEvents[1].position.overlaps).toBe(2);
     });
@@ -736,6 +737,43 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
       expect(result.regularEvents['2025-01-13 00:00:00']).toHaveLength(1);
       expect(result.regularEvents['2025-01-19 00:00:00']).toHaveLength(1);
+    });
+
+    it('positions consecutive all-day events side by side without overlap', () => {
+      const events = [
+        testUtils.createEvent({
+          id: 4,
+          title: 'Company Holiday',
+          start: '2025-01-13 00:00:00',
+          end: '2025-01-14 00:00:00',
+          color: 'red',
+        }),
+        testUtils.createEvent({
+          id: 5,
+          title: 'Release Day',
+          start: '2025-01-14 00:00:00',
+          end: '2025-01-16 00:00:00',
+          color: 'orange',
+        }),
+      ];
+
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        events,
+      });
+
+      expect(result.allDayEvents).toHaveLength(2);
+
+      const holiday = result.allDayEvents.find((e) => e.id === 4)!;
+      const release = result.allDayEvents.find((e) => e.id === 5)!;
+
+      expect(holiday.position.width).toBeCloseTo((1 / 7) * 100, 2);
+      expect(holiday.position.offset).toBe(0);
+      expect(holiday.position.row).toBe(0);
+
+      expect(release.position.width).toBeCloseTo((2 / 7) * 100, 2);
+      expect(release.position.offset).toBeCloseTo((1 / 7) * 100, 2);
+      expect(release.position.row).toBe(0);
     });
 
     it('handles Date objects as start and end times', () => {

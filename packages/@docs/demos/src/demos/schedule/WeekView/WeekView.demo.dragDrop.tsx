@@ -31,9 +31,9 @@ const initialEvents: ScheduleEventData[] = [
   {
     id: 4,
     title: 'Company Holiday',
-    start: getStartOfWeek({ date: today, firstDayOfWeek: 1 }),
+    start: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 })).format('YYYY-MM-DD HH:mm:ss'),
     end: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 }))
-      .add(1, 'day')
+      .add(2, 'day')
       .format('YYYY-MM-DD HH:mm:ss'),
     color: 'red',
   },
@@ -81,15 +81,19 @@ const initialEvents: ScheduleEventData[] = [
   {
     id: 4,
     title: 'Company Holiday',
-    start: dayjs(today).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    start: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 })).format('YYYY-MM-DD HH:mm:ss'),
+    end: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 }))
+      .add(2, 'day')
+      .format('YYYY-MM-DD HH:mm:ss'),
     color: 'red',
   },
   {
     id: 5,
     title: 'Release Day',
-    start: dayjs(tomorrow).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-    end: dayjs(tomorrow).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    start: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 })).format('YYYY-MM-DD HH:mm:ss'),
+    end: dayjs(getStartOfWeek({ date: today, firstDayOfWeek: 1 }))
+      .add(2, 'day')
+      .format('YYYY-MM-DD HH:mm:ss'),
     color: 'orange',
   },
 ];
