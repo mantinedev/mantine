@@ -52,3 +52,8 @@ export const Demo_staticMode = {
   name: '⭐ Demo: staticMode',
   render: renderDemo(demos.staticMode),
 };
+
+export const Demo_eventForm = {
+  name: '⭐ Demo: eventForm',
+  render: renderDemo(demos.eventForm),
+};

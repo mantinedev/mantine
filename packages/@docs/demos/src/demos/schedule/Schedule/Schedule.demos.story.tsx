@@ -13,3 +13,8 @@ export const Demo_defaultView = {
   name: '⭐ Demo: defaultView',
   render: renderDemo(demos.defaultView),
 };
+
+export const Demo_eventForm = {
+  name: '⭐ Demo: eventForm',
+  render: renderDemo(demos.eventForm),
+};

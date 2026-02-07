@@ -102,3 +102,8 @@ export const Demo_viewChange = {
   name: '⭐ Demo: viewChange',
   render: renderDemo(demos.viewChange),
 };
+
+export const Demo_eventForm = {
+  name: '⭐ Demo: eventForm',
+  render: renderDemo(demos.eventForm),
+};
