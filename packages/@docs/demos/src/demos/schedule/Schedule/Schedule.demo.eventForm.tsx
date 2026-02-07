@@ -106,6 +106,7 @@ function Demo() {
         onDayClick={handleDayClick}
         onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
+        withDragSlotSelect
       />
 
       <EventForm
@@ -227,6 +228,7 @@ function Demo() {
         onDayClick={handleDayClick}
         onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
+        withDragSlotSelect
       />
 
       <EventForm
