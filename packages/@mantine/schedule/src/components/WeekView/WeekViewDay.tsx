@@ -71,6 +71,19 @@ export interface WeekViewDayProps {
 
   /** Called when Arrow Up is pressed on the first slot, used to navigate to all-day slot */
   onFirstSlotArrowUp?: (dayIndex: number) => void;
+
+  /** If set, enables drag-to-select time slot ranges */
+  withDragSlotSelect?: boolean;
+
+  /** Called when pointer down on a slot for drag selection */
+  onSlotPointerDown?: (
+    event: React.PointerEvent<HTMLButtonElement>,
+    index: number,
+    group: string
+  ) => void;
+
+  /** Function to check if a slot is drag-selected */
+  isSlotDragSelected?: (index: number, group: string) => boolean;
 }
 
 export function WeekViewDay({
@@ -94,15 +107,21 @@ export function WeekViewDay({
   firstSlotIndex,
   onSlotKeyDown,
   onFirstSlotArrowUp,
+  withDragSlotSelect,
+  onSlotPointerDown,
+  isSlotDragSelected,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
   const today = dayjs(day).isSame(dayjs(), 'day');
 
+  const dayGroup = dayjs(day).format('YYYY-MM-DD');
+
   const items = slots.map((slot, slotIndex) => {
     const isDropTarget = dropTargetSlotIndex === slotIndex;
     const isFirstSlot =
       firstSlotIndex?.dayIndex === dayIndex && firstSlotIndex?.slotIndex === slotIndex;
+    const isDragSelected = isSlotDragSelected?.(slotIndex, dayGroup) || false;
 
     return (
       <UnstyledButton
@@ -124,10 +143,13 @@ export function WeekViewDay({
             highlightBusinessHours,
           }),
           'drop-target': isDropTarget,
+          'drag-selected': isDragSelected,
           static: mode === 'static',
         }}
-        aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
+        aria-label={`${getLabel('timeSlot', labels)} ${dayGroup} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
+        data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? slotIndex : undefined}
+        data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? dayGroup : undefined}
         onKeyDown={(e) => {
           if (slotIndex === 0 && e.key === 'ArrowUp' && onFirstSlotArrowUp) {
             e.preventDefault();
@@ -136,6 +158,11 @@ export function WeekViewDay({
             onSlotKeyDown(e, dayIndex, slotIndex);
           }
         }}
+        onPointerDown={
+          withDragSlotSelect && mode !== 'static'
+            ? (e) => onSlotPointerDown?.(e, slotIndex, dayGroup)
+            : undefined
+        }
         onClick={
           mode === 'static' || !onSlotClick
             ? undefined

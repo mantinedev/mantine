@@ -87,6 +87,16 @@ function Demo() {
     }
   };
 
+  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+    setSelectedEventData({
+      title: '',
+      start: rangeStart,
+      end: rangeEnd,
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   return (
     <>
       <Schedule
@@ -94,6 +104,7 @@ function Demo() {
         onTimeSlotClick={handleTimeSlotClick}
         onAllDaySlotClick={handleAllDaySlotClick}
         onDayClick={handleDayClick}
+        onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
       />
 
@@ -209,6 +220,16 @@ function Demo() {
     setSelectedEventData(null);
   };
 
+  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+    setSelectedEventData({
+      title: '',
+      start: rangeStart,
+      end: rangeEnd,
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   const handleDeleteEvent = () => {
     if (selectedEventData?.id) {
       setAllEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
@@ -219,9 +240,11 @@ function Demo() {
     <>
       <Schedule
         events={allEvents}
+        withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onAllDaySlotClick={handleAllDaySlotClick}
         onDayClick={handleDayClick}
+        onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
       />
 

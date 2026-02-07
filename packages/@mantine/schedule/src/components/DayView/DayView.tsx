@@ -21,6 +21,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
@@ -194,6 +195,12 @@ export interface DayViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
+  /** If set, enables drag-to-select time slot ranges @default false */
+  withDragSlotSelect?: boolean;
+
+  /** Called when a time slot range is selected by dragging */
+  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
+
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 }
@@ -218,6 +225,7 @@ const defaultProps = {
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
   withEventsDragAndDrop: false,
+  withDragSlotSelect: false,
   mode: 'default',
 } satisfies Partial<DayViewProps>;
 
@@ -278,6 +286,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     onTimeSlotClick,
     onAllDaySlotClick,
     onEventClick,
+    withDragSlotSelect,
+    onSlotDragEnd,
     mode,
     ...others
   } = props;
@@ -325,6 +335,19 @@ export const DayView = factory<DayViewFactory>((_props) => {
       slotsRef.current[slotIndex - 1]?.focus();
     }
   };
+
+  const slotDragSelect = useSlotDragSelect({
+    enabled: withDragSlotSelect && mode !== 'static',
+    onDragEnd: (startIndex, endIndex) => {
+      if (!onSlotDragEnd) {
+        return;
+      }
+      const slotDate = dayjs(date).format('YYYY-MM-DD');
+      const rangeStart = dayjs(`${slotDate} ${slots[startIndex].startTime}`).toDate();
+      const rangeEnd = dayjs(`${slotDate} ${slots[endIndex].endTime}`).toDate();
+      onSlotDragEnd(rangeStart, rangeEnd);
+    },
+  });
 
   const eventsData = getDayViewEvents({ events, date, startTime, endTime });
 
@@ -395,8 +418,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
       />
     ));
 
+  const dayGroup = dayjs(date).format('YYYY-MM-DD');
+
   const items = slots.map((slot, index) => {
     const isDropTarget = dragDrop.isDropTarget(index);
+    const isDragSelected = slotDragSelect.isSlotSelected(index, dayGroup);
 
     return (
       <UnstyledButton
@@ -413,12 +439,20 @@ export const DayView = factory<DayViewFactory>((_props) => {
             highlightBusinessHours,
           }),
           'drop-target': isDropTarget,
+          'drag-selected': isDragSelected,
           static: mode === 'static',
         }}
         __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
         aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : index === 0 ? 0 : -1}
+        data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? index : undefined}
+        data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? dayGroup : undefined}
         onKeyDown={mode === 'static' ? undefined : (e) => handleSlotKeyDown(e, index)}
+        onPointerDown={
+          withDragSlotSelect && mode !== 'static'
+            ? (e) => slotDragSelect.handleSlotPointerDown(e, index, dayGroup)
+            : undefined
+        }
         onClick={
           mode === 'static' || !onTimeSlotClick
             ? undefined
@@ -473,7 +507,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
   }, []);
 
   const content = (
-    <Box {...getStyles('dayView')} mod={{ static: mode === 'static' }} {...others}>
+    <Box
+      {...getStyles('dayView')}
+      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging }}
+      {...others}
+    >
       {withHeader && (
         <ScheduleHeaderBase
           view="day"

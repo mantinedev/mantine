@@ -20,6 +20,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
@@ -169,6 +170,12 @@ export interface MonthViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
+  /** If set, enables drag-to-select day ranges @default false */
+  withDragSlotSelect?: boolean;
+
+  /** Called when a day range is selected by dragging */
+  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
+
   /** Labels override for i18n */
   labels?: ScheduleLabelsOverride;
 
@@ -199,6 +206,7 @@ const defaultProps = {
   withHeader: true,
   weekdayFormat: 'ddd',
   withEventsDragAndDrop: false,
+  withDragSlotSelect: false,
   mode: 'default',
 } satisfies Partial<MonthViewProps>;
 
@@ -247,6 +255,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     onEventDragStart,
     onEventDragEnd,
     onEventClick,
+    withDragSlotSelect,
+    onSlotDragEnd,
     labels,
     mode,
     scrollAreaProps,
@@ -307,6 +317,22 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     },
   });
 
+  const flatDaysRef = useRef<string[]>([]);
+
+  const slotDragSelect = useSlotDragSelect({
+    enabled: withDragSlotSelect && mode !== 'static',
+    onDragEnd: (startIndex, endIndex) => {
+      if (!onSlotDragEnd) {
+        return;
+      }
+      const startDay = flatDaysRef.current[startIndex];
+      const endDay = flatDaysRef.current[endIndex];
+      if (startDay && endDay) {
+        onSlotDragEnd(dayjs(startDay).startOf('day').toDate(), dayjs(endDay).endOf('day').toDate());
+      }
+    },
+  });
+
   const daysRef: MonthViewControlsRef = useRef<HTMLButtonElement[][]>([]);
 
   const monthDays = getMonthDays({
@@ -341,6 +367,9 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       ))
     : null;
 
+  const monthGroup = 'month';
+  flatDaysRef.current = monthDays.flat();
+
   const weeks = monthDays.map((week, weekIndex) => {
     if (!daysRef.current[weekIndex]) {
       daysRef.current[weekIndex] = [];
@@ -366,6 +395,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         weekIndex === firstDayIndex.weekIndex && dayIndex === firstDayIndex.dayIndex;
 
       const isDropTarget = dragDrop.isDropTarget(day);
+      const flatIndex = weekIndex * 7 + dayIndex;
+      const isDragSelected = slotDragSelect.isSlotSelected(flatIndex, monthGroup);
 
       return (
         <UnstyledButton
@@ -381,6 +412,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
               daysRef.current[weekIndex][dayIndex] = node;
             }
           }}
+          data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? flatIndex : undefined}
+          data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? monthGroup : undefined}
           onClick={
             mode === 'static'
               ? undefined
@@ -388,6 +421,16 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
                   onDayClick?.(dayjs(day).startOf('day').toDate(), event);
                   dayProps.onClick?.(event);
                 }
+          }
+          onPointerDown={
+            withDragSlotSelect && mode !== 'static'
+              ? (e) =>
+                  slotDragSelect.handleSlotPointerDown(
+                    e as React.PointerEvent<HTMLButtonElement>,
+                    flatIndex,
+                    monthGroup
+                  )
+              : undefined
           }
           onKeyDown={(event) => {
             handleMonthViewKeyDown({
@@ -399,7 +442,14 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             dayProps.onKeyDown?.(event);
           }}
           mod={[
-            { outside, weekend, today, 'drop-target': isDropTarget, static: mode === 'static' },
+            {
+              outside,
+              weekend,
+              today,
+              'drop-target': isDropTarget,
+              'drag-selected': isDragSelected,
+              static: mode === 'static',
+            },
             dayProps.mod,
           ]}
           data-outside={outside || undefined}
@@ -533,6 +583,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           'with-week-numbers': withWeekNumbers,
           'with-weekdays': withWeekDays,
           static: mode === 'static',
+          'slot-dragging': slotDragSelect.isDragging,
         },
         mod,
       ]}

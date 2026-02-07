@@ -78,14 +78,26 @@ function Demo() {
     }
   };
 
+  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+    setSelectedEventData({
+      title: '',
+      start: rangeStart,
+      end: rangeEnd,
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   return (
     <>
       <DayView
         date={date}
         onDateChange={setDate}
         events={events}
+        withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onAllDaySlotClick={handleAllDaySlotClick}
+        onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
         startTime="08:00:00"
         endTime="18:00:00"
@@ -176,6 +188,16 @@ function Demo() {
     }
   };
 
+  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+    setSelectedEventData({
+      title: '',
+      start: rangeStart,
+      end: rangeEnd,
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   const handleDeleteEvent = () => {
     if (selectedEventData?.id) {
       setEvents((prev) => prev.filter((event) => event.id !== selectedEventData.id));
@@ -188,8 +210,10 @@ function Demo() {
         date={date}
         onDateChange={setDate}
         events={events}
+        withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onAllDaySlotClick={handleAllDaySlotClick}
+        onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
         startTime="08:00:00"
         endTime="18:00:00"

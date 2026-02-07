@@ -50,6 +50,15 @@ The following props are shared across all views:
 These props are automatically passed to all views. For view-specific customization, use the
 `dayViewProps`, `weekViewProps`, `monthViewProps`, and `yearViewProps` props.
 
+## Create and update events
+
+Set `withDragSlotSelect` prop to allow users to drag across time slots or day cells to select a range.
+When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
+Combined with `onTimeSlotClick`, `onAllDaySlotClick`, `onDayClick`, and `onEventClick` callbacks,
+this enables a complete event creation and editing experience across all views.
+
+<Demo data={ScheduleDemos.eventForm} />
+
 ## View components
 
 For more control over individual views, use the view components directly:

@@ -53,6 +53,8 @@ type ScheduleCommonProps =
   | 'onAllDaySlotClick'
   | 'onEventClick'
   | 'onDayClick'
+  | 'withDragSlotSelect'
+  | 'onSlotDragEnd'
   | 'view'
   | 'onViewChange'
   | 'mode';
@@ -123,6 +125,12 @@ export interface ScheduleProps
 
   /** Called when day is clicked in MonthView */
   onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** If set, enables drag-to-select slot ranges @default false */
+  withDragSlotSelect?: boolean;
+
+  /** Called when a slot range is selected by dragging */
+  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
 
   /** Called when event is clicked in any view */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -196,6 +204,8 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     onAllDaySlotClick,
     onDayClick,
     onEventClick,
+    withDragSlotSelect,
+    onSlotDragEnd,
     mode,
     layout,
     dayViewProps,
@@ -260,6 +270,8 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     onAllDaySlotClick,
     onDayClick,
     onEventClick,
+    withDragSlotSelect,
+    onSlotDragEnd,
     mode,
   };
 

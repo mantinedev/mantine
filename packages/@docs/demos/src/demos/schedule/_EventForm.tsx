@@ -61,17 +61,15 @@ export function EventForm({
     });
   }, [values]);
 
-  const handleSave = () => {
-    if (!form.validate().hasErrors) {
-      onSubmit({
-        id: form.values.id,
-        title: form.values.title,
-        start: form.values.start,
-        end: form.values.end,
-        color: form.values.color,
-      });
-      onClose();
-    }
+  const handleSubmit = (values: EventData) => {
+    onSubmit({
+      id: values.id,
+      title: values.title,
+      start: values.start,
+      end: values.end,
+      color: values.color,
+    });
+    onClose();
   };
 
   const handleDelete = () => {
@@ -87,33 +85,40 @@ export function EventForm({
       radius="md"
       {...others}
     >
-      <Stack gap="md">
-        <TextInput
-          label="Event Title"
-          placeholder="Enter event title"
-          radius="md"
-          data-autofocus
-          {...form.getInputProps('title')}
-        />
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Stack gap="md">
+          <TextInput
+            label="Event Title"
+            placeholder="Enter event title"
+            radius="md"
+            data-autofocus
+            {...form.getInputProps('title')}
+          />
 
-        <DateTimePicker label="Start Time" clearable radius="md" {...form.getInputProps('start')} />
-        <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable radius="md" />
+          <DateTimePicker
+            label="Start Time"
+            clearable
+            radius="md"
+            {...form.getInputProps('start')}
+          />
+          <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable radius="md" />
 
-        <Group justify="flex-end" gap="sm">
-          {form.values.id && onDelete && (
-            <Button color="red" onClick={handleDelete} mie="auto" radius="md">
-              Delete
+          <Group justify="flex-end" gap="sm">
+            {form.values.id && onDelete && (
+              <Button color="red" onClick={handleDelete} mie="auto" radius="md">
+                Delete
+              </Button>
+            )}
+
+            <Button variant="default" onClick={onClose} radius="md">
+              Cancel
             </Button>
-          )}
-
-          <Button variant="default" onClick={onClose} radius="md">
-            Cancel
-          </Button>
-          <Button onClick={handleSave} radius="md">
-            {form.values.id ? 'Update' : 'Create'}
-          </Button>
-        </Group>
-      </Stack>
+            <Button type="submit" radius="md">
+              {form.values.id ? 'Update' : 'Create'}
+            </Button>
+          </Group>
+        </Stack>
+      </form>
     </Modal>
   );
 }
@@ -143,25 +148,31 @@ interface EventFormProps {
 export function EventForm({
   opened,
   onClose,
-  initialData,
-  onSave,
+  values,
+  onSubmit,
   onDelete,
+  ...others
 }: EventFormProps) {
   const form = useForm({
-    values: {
-      id: initialData?.id,
-      title: initialData?.title || '',
-      start: initialData?.start || new Date(),
-      end: initialData?.end || new Date(),
-      color: initialData?.color || 'blue',
-      isAllDay: initialData?.isAllDay || false,
+    initialValues: {
+      id: values?.id,
+      title: values?.title || '',
+      start: values?.start || new Date(),
+      end: values?.end || new Date(),
+      color: values?.color || 'blue',
     },
     validate: {
-      title: (value) => (value.trim().length === 0 ? 'Event title is required' : null),
-      start: (value) => (!value ? 'Start time is required' : null),
+      title: isNotEmpty('Event title is required'),
+      start: isNotEmpty('Start time is required'),
       end: (value, { start }) => {
-        if (!value) return 'End time is required';
-        if (value < start) return 'End time must be after start time';
+        if (!value) {
+          return 'End time is required';
+        }
+
+        if (dayjs(value).isBefore(dayjs(start))) {
+          return 'End time must be after start time';
+        }
+
         return null;
       },
     },
@@ -169,35 +180,28 @@ export function EventForm({
 
   useEffect(() => {
     form.setValues({
-      id: initialData?.id,
-      title: initialData?.title || '',
-      start: initialData?.start || new Date(),
-      end: initialData?.end || new Date(),
-      color: initialData?.color || 'blue',
-      isAllDay: initialData?.isAllDay || false,
+      id: values?.id,
+      title: values?.title || '',
+      start: values?.start || new Date(),
+      end: values?.end || new Date(),
+      color: values?.color || 'blue',
     });
-    form.resetTouched();
-  }, [opened, initialData]);
+  }, [values]);
 
-  const handleSave = () => {
-    if (!form.validate().hasErrors) {
-      onSave({
-        id: form.values.id,
-        title: form.values.title,
-        start: form.values.start,
-        end: form.values.end,
-        color: form.values.color,
-        isAllDay: form.values.isAllDay,
-      });
-      onClose();
-    }
+  const handleSubmit = (values: EventData) => {
+    onSubmit({
+      id: values.id,
+      title: values.title,
+      start: values.start,
+      end: values.end,
+      color: values.color,
+    });
+    onClose();
   };
 
   const handleDelete = () => {
-    if (onDelete && confirm('Are you sure you want to delete this event?')) {
-      onDelete();
-      onClose();
-    }
+    onDelete?.();
+    onClose();
   };
 
   return (
@@ -205,64 +209,43 @@ export function EventForm({
       opened={opened}
       onClose={onClose}
       title={form.values.id ? 'Edit Event' : 'Create Event'}
-      centered
+      radius="md"
+      {...others}
     >
-      <Stack gap="md">
-        <TextInput
-          label="Event Title"
-          placeholder="Enter event title"
-          data-autofocus
-          {...form.getInputProps('title')}
-        />
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Stack gap="md">
+          <TextInput
+            label="Event Title"
+            placeholder="Enter event title"
+            radius="md"
+            data-autofocus
+            {...form.getInputProps('title')}
+          />
 
-        {!form.values.isAllDay && (
-          <>
-            <DateTimePicker
-              label="Start Time"
-              value={form.values.start}
-              onChange={(value) => {
-                if (value) {
-                  form.setFieldValue('start', new Date(value));
-                }
-              }}
-              clearable
-              error={form.errors.start}
-            />
+          <DateTimePicker
+            label="Start Time"
+            clearable
+            radius="md"
+            {...form.getInputProps('start')}
+          />
+          <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable radius="md" />
 
-            <DateTimePicker
-              label="End Time"
-              value={form.values.end}
-              onChange={(value) => {
-                if (value) {
-                  form.setFieldValue('end', new Date(value));
-                }
-              }}
-              clearable
-              error={form.errors.end}
-            />
-          </>
-        )}
+          <Group justify="flex-end" gap="sm">
+            {form.values.id && onDelete && (
+              <Button color="red" onClick={handleDelete} mie="auto" radius="md">
+                Delete
+              </Button>
+            )}
 
-        <Checkbox
-          label="All-day event"
-          checked={form.values.isAllDay}
-          onChange={(e) => form.setFieldValue('isAllDay', e.currentTarget.checked)}
-        />
-
-        <Group justify="flex-end" gap="sm">
-          {form.values.id && onDelete && (
-            <Button color="red" onClick={handleDelete} variant="light">
-              Delete
+            <Button variant="default" onClick={onClose} radius="md">
+              Cancel
             </Button>
-          )}
-          <Button variant="default" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleSave}>
-            {form.values.id ? 'Update' : 'Create'}
-          </Button>
-        </Group>
-      </Stack>
+            <Button type="submit" radius="md">
+              {form.values.id ? 'Update' : 'Create'}
+            </Button>
+          </Group>
+        </Stack>
+      </form>
     </Modal>
   );
 }`;

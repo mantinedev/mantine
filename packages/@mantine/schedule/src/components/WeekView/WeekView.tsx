@@ -21,6 +21,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
@@ -217,6 +218,12 @@ export interface WeekViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
+  /** If set, enables drag-to-select time slot ranges @default false */
+  withDragSlotSelect?: boolean;
+
+  /** Called when a time slot range is selected by dragging */
+  onSlotDragEnd?: (rangeStart: Date, rangeEnd: Date) => void;
+
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 
@@ -248,6 +255,7 @@ const defaultProps = {
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
   withEventsDragAndDrop: false,
+  withDragSlotSelect: false,
   mode: 'default',
 } satisfies Partial<WeekViewProps>;
 
@@ -313,6 +321,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     onTimeSlotClick,
     onAllDaySlotClick,
     onEventClick,
+    withDragSlotSelect,
+    onSlotDragEnd,
     mode,
     renderWeekLabel,
     ...others
@@ -368,6 +378,19 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         targetSlotTime: slotTime,
         intervalMinutes,
       });
+    },
+  });
+
+  const slotDragSelect = useSlotDragSelect({
+    enabled: withDragSlotSelect && mode !== 'static',
+    onDragEnd: (startIndex, endIndex, group) => {
+      if (!onSlotDragEnd) {
+        return;
+      }
+      const slotDate = dayjs(group).format('YYYY-MM-DD');
+      const rangeStart = dayjs(`${slotDate} ${slots[startIndex].startTime}`).toDate();
+      const rangeEnd = dayjs(`${slotDate} ${slots[endIndex].endTime}`).toDate();
+      onSlotDragEnd(rangeStart, rangeEnd);
     },
   });
 
@@ -599,6 +622,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         dropTargetSlotIndex={
           dragDrop.dropTarget?.day === day ? dragDrop.dropTarget.slotIndex : undefined
         }
+        withDragSlotSelect={withDragSlotSelect}
+        onSlotPointerDown={slotDragSelect.handleSlotPointerDown}
+        isSlotDragSelected={slotDragSelect.isSlotSelected}
       >
         {dayEvents}
       </WeekViewDay>
@@ -649,7 +675,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const extraRows = Math.max(...weekEvents.allDayEvents.map((event) => event.position.row), 1) - 1;
 
   const content = (
-    <Box {...getStyles('weekView')} mod={{ static: mode === 'static' }} {...others}>
+    <Box
+      {...getStyles('weekView')}
+      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging }}
+      {...others}
+    >
       {withHeader && (
         <ScheduleHeaderBase
           view="week"

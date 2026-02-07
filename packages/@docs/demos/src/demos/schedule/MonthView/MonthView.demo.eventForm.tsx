@@ -67,12 +67,24 @@ function Demo() {
     }
   };
 
+  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+    setSelectedEventData({
+      title: '',
+      start: rangeStart,
+      end: rangeEnd,
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   return (
     <>
       <MonthView
         date={new Date()}
         events={events}
+        withDragSlotSelect
         onDayClick={handleDayClick}
+        onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
       />
 
@@ -151,6 +163,16 @@ function Demo() {
     }
   };
 
+  const handleSlotDragEnd = (rangeStart: Date, rangeEnd: Date) => {
+    setSelectedEventData({
+      title: '',
+      start: rangeStart,
+      end: rangeEnd,
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   const handleDeleteEvent = () => {
     if (selectedEventData?.id) {
       setEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
@@ -162,7 +184,9 @@ function Demo() {
       <MonthView
         date={new Date()}
         events={events}
+        withDragSlotSelect
         onDayClick={handleDayClick}
+        onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
       />
 

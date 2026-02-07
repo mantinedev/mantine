@@ -127,4 +127,8 @@
       background-color: var(--event-bg);
     }
   }
+
+  :where([data-slot-dragging]) & {
+    pointer-events: none;
+  }
 }

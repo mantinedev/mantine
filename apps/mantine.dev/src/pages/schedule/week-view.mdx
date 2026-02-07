@@ -125,8 +125,10 @@ Set `mode="static"` to disable all interactions.
 
 ## Create and update events
 
-Create a modal form to allow users to create and update events by clicking on time slots or existing events.
-The form is integrated with the view's click callbacks to manage event creation and editing across different days and times.
+Set `withDragSlotSelect` prop to allow users to drag across time slots to select a time range.
+When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
+The drag is constrained to a single day column. Combined with `onTimeSlotClick`, `onAllDaySlotClick`,
+and `onEventClick` callbacks, this enables a complete event creation and editing experience.
 
 <Demo data={WeekViewDemos.eventForm} />
 
