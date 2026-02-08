@@ -43,6 +43,48 @@ const user = userEvent.setup();
 await user.click(button);
 ```
 
+### Handling act() Warnings
+
+If you see an `act()` warning in test output, it must be fixed. These warnings indicate state updates that aren't properly wrapped.
+
+Common fix: wrap state-triggering operations (like `focus()` on components with focus handlers) in `act()`:
+
+```tsx
+import { act } from '@testing-library/react';
+
+it('handles keyboard navigation after focus', async () => {
+  render(<Component />);
+  const element = screen.getByRole('slider');
+
+  await act(async () => {
+    element.focus();
+  });
+
+  await userEvent.keyboard('{ArrowRight}');
+  expect(element).toHaveValue('10');
+});
+```
+
+### Rerender Pattern
+
+Use `rerender` from the initial render call instead of creating multiple render calls:
+
+```tsx
+// ❌ Bad - creates multiple containers
+const { container } = render(<Component prop="value1" />);
+expect(container).toHaveTextContent('value1');
+
+const { container: container2 } = render(<Component prop="value2" />);
+expect(container2).toHaveTextContent('value2');
+
+// ✅ Good - reuses the same container
+const { container, rerender } = render(<Component prop="value1" />);
+expect(container).toHaveTextContent('value1');
+
+rerender(<Component prop="value2" />);
+expect(container).toHaveTextContent('value2');
+```
+
 ### Test Assertions
 
 Write meaningful assertions that verify actual behavior:

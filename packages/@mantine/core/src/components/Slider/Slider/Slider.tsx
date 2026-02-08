@@ -302,7 +302,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value + step, min), max),
+            Math.min(Math.max(_value + step, domainMin), domainMax),
             precision
           );
           setValue(nextValue);
@@ -323,7 +323,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value - step : _value + step, min), max),
+            Math.min(Math.max(dir === 'rtl' ? _value - step : _value + step, domainMin), domainMax),
             precision
           );
           setValue(nextValue);
@@ -343,7 +343,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value - step, min), max),
+            Math.min(Math.max(_value - step, domainMin), domainMax),
             precision
           );
           setValue(nextValue);
@@ -364,7 +364,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value + step : _value - step, min), max),
+            Math.min(Math.max(dir === 'rtl' ? _value + step : _value - step, domainMin), domainMax),
             precision
           );
           setValue(nextValue);
@@ -449,6 +449,7 @@ export const Slider = factory<SliderFactory>((_props) => {
             showLabelOnHover={showLabelOnHover}
             isHovered={hovered}
             disabled={disabled}
+            orientation={orientation}
             {...thumbProps}
           >
             {thumbChildren}

@@ -19,6 +19,7 @@ export interface ThumbProps extends Omit<React.ComponentProps<'div'>, 'value'> {
   isHovered?: boolean;
   children?: React.ReactNode;
   disabled: boolean | undefined;
+  orientation?: 'horizontal' | 'vertical';
   className?: string;
   style?: React.CSSProperties;
 }
@@ -41,6 +42,7 @@ export function Thumb({
   isHovered,
   children = null,
   disabled,
+  orientation = 'horizontal',
   ref,
 }: ThumbProps) {
   const { getStyles } = useSliderContext();
@@ -51,12 +53,14 @@ export function Thumb({
 
   return (
     <Box<'div'>
-      tabIndex={0}
+      tabIndex={disabled ? -1 : 0}
       role="slider"
       aria-label={thumbLabel}
       aria-valuemax={max}
       aria-valuemin={min}
       aria-valuenow={value}
+      aria-disabled={disabled}
+      aria-orientation={orientation}
       ref={ref}
       __vars={{ '--slider-thumb-offset': `${position}%` }}
       {...getStyles('thumb', { focusable: true })}

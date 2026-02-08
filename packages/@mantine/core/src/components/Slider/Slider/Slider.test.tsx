@@ -158,4 +158,126 @@ describe('@mantine/core/Slider', () => {
       endSpy.mock.calls[endSpy.mock.calls.length - 1][0]
     );
   });
+
+  it('supports restrictToMarks prop', async () => {
+    const spy = jest.fn();
+    render(
+      <Slider
+        defaultValue={50}
+        marks={[{ value: 0 }, { value: 25 }, { value: 50 }, { value: 75 }, { value: 100 }]}
+        restrictToMarks
+        onChange={spy}
+      />
+    );
+
+    await pressArrow('right');
+    expect(spy).toHaveBeenLastCalledWith(75);
+    await pressArrow('right');
+    expect(spy).toHaveBeenLastCalledWith(100);
+    await pressArrow('left');
+    expect(spy).toHaveBeenLastCalledWith(75);
+    await pressArrow('left');
+    expect(spy).toHaveBeenLastCalledWith(50);
+  });
+
+  it('domain prop restricts keyboard navigation', async () => {
+    const { container } = render(
+      <Slider defaultValue={50} min={0} max={100} domain={[30, 70]} step={10} />
+    );
+    expectInputValue('50', container);
+
+    await pressArrow('left');
+    expectInputValue('40', container);
+
+    await pressArrow('left');
+    expectInputValue('30', container);
+
+    await pressArrow('left');
+    expectInputValue('30', container);
+
+    await pressArrow('right');
+    await pressArrow('right');
+    await pressArrow('right');
+    expectInputValue('60', container);
+
+    await pressArrow('right');
+    expectInputValue('70', container);
+
+    await pressArrow('right');
+    expectInputValue('70', container);
+  });
+
+  it('renders marks with labels', () => {
+    const { container } = render(
+      <Slider
+        marks={[
+          { value: 0, label: 'Start' },
+          { value: 50, label: 'Middle' },
+          { value: 100, label: 'End' },
+        ]}
+      />
+    );
+    expect(screen.getByText('Start')).toBeInTheDocument();
+    expect(screen.getByText('Middle')).toBeInTheDocument();
+    expect(screen.getByText('End')).toBeInTheDocument();
+    expect(container.querySelectorAll('.mantine-Slider-mark')).toHaveLength(3);
+  });
+
+  it('renders marks without labels', () => {
+    const { container } = render(
+      <Slider marks={[{ value: 0 }, { value: 25 }, { value: 50 }, { value: 75 }, { value: 100 }]} />
+    );
+    expect(container.querySelectorAll('.mantine-Slider-mark')).toHaveLength(5);
+  });
+
+  it('renders thumbChildren inside thumb', () => {
+    render(
+      <Slider defaultValue={50} thumbChildren={<div data-testid="thumb-content">Custom</div>} />
+    );
+    expect(screen.getByTestId('thumb-content')).toBeInTheDocument();
+    expect(screen.getByText('Custom')).toBeInTheDocument();
+  });
+
+  it('supports Home and End keys', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={50} min={0} max={100} onChange={spy} />);
+
+    await userEvent.type(screen.getByRole('slider'), '{End}');
+    expect(spy).toHaveBeenLastCalledWith(100);
+
+    await userEvent.type(screen.getByRole('slider'), '{Home}');
+    expect(spy).toHaveBeenLastCalledWith(0);
+  });
+
+  it('automatically calculates precision based on step', async () => {
+    const { container } = render(<Slider defaultValue={5} step={0.1} />);
+    await pressArrow('right');
+    expectInputValue('5.1', container);
+
+    await pressArrow('right');
+    expectInputValue('5.2', container);
+  });
+
+  it('respects explicit precision prop', async () => {
+    const { container, rerender } = render(<Slider defaultValue={5} step={1} precision={2} />);
+    await pressArrow('right');
+    expectInputValue('6', container);
+
+    rerender(<Slider defaultValue={5.12} step={0.1} precision={3} />);
+    await userEvent.type(screen.getByRole('slider'), '{arrowright}');
+    expectInputValue('5.22', container);
+  });
+
+  it('sets aria-disabled when disabled', () => {
+    render(<Slider defaultValue={50} disabled />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('sets aria-orientation', () => {
+    const { rerender } = render(<Slider defaultValue={50} />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-orientation', 'horizontal');
+
+    rerender(<Slider defaultValue={50} orientation="vertical" />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-orientation', 'vertical');
+  });
 });

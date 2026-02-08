@@ -21,8 +21,8 @@ import {
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
 import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
-import { SliderMark } from '../SliderMark';
 import classes from '../Slider.module.css';
+import { SliderMark } from '../SliderMark';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
 import { Track } from '../Track/Track';
@@ -452,7 +452,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           const nextValue =
             restrictToMarks && marks
               ? getNextMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max);
+              : Math.min(Math.max(valueRef.current[focusedIndex] + step, domainMin), domainMax);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -473,9 +473,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
                     dir === 'rtl'
                       ? valueRef.current[focusedIndex] - step
                       : valueRef.current[focusedIndex] + step,
-                    min
+                    domainMin
                   ),
-                  max
+                  domainMax
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
@@ -489,7 +489,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           const nextValue =
             restrictToMarks && marks
               ? getPreviousMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max);
+              : Math.min(Math.max(valueRef.current[focusedIndex] - step, domainMin), domainMax);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -510,9 +510,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
                     dir === 'rtl'
                       ? valueRef.current[focusedIndex] + step
                       : valueRef.current[focusedIndex] - step,
-                    min
+                    domainMin
                   ),
-                  max
+                  domainMax
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
@@ -532,6 +532,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     size,
     labelTransitionProps,
     labelAlwaysOn,
+    orientation,
     onBlur: () => setFocused(-1),
   };
 
