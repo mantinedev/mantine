@@ -84,3 +84,46 @@ function Demo() {
   );
 }
 ```
+
+## Accessibility
+
+The Spoiler component implements proper ARIA attributes for screen reader support:
+
+- Toggle button has `aria-expanded` indicating the expanded/collapsed state
+- Content region has `role="region"` and is associated with the button via `aria-controls`
+- Keyboard support: Space or Enter key toggles the spoiler when the button is focused
+
+### Best practices for label text
+
+Provide descriptive labels for `showLabel` and `hideLabel` props that clearly indicate the action:
+
+```tsx
+// Good - clear, descriptive labels
+<Spoiler showLabel="Show full article" hideLabel="Hide article" />
+<Spoiler showLabel="Expand details" hideLabel="Collapse details" />
+
+// Avoid vague labels
+<Spoiler showLabel="More" hideLabel="Less" />
+<Spoiler showLabel="..." hideLabel="..." />
+```
+
+### Custom accessibility labels
+
+If your button labels don't clearly describe the action for screen reader users, use the `showAriaLabel` and `hideAriaLabel` props to provide custom ARIA labels:
+
+```tsx
+import { Spoiler } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Spoiler
+      showLabel="👁️"
+      hideLabel="👁️"
+      showAriaLabel="Show discussion comments"
+      hideAriaLabel="Hide discussion comments"
+    >
+      {/* Comments content */}
+    </Spoiler>
+  );
+}
+```

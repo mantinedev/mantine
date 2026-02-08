@@ -241,6 +241,32 @@ function Demo() {
 }
 ```
 
+## Spoiler initialState -> defaultExpanded
+
+The [Spoiler](/core/spoiler) component's `initialState` prop was renamed to `defaultExpanded` for consistency with other Mantine components:
+
+```tsx
+import { Spoiler } from '@mantine/core';
+
+// ❌ No longer works
+function Demo() {
+  return (
+    <Spoiler initialState={false} showLabel="Show" hideLabel="Hide">
+      {/* ... */}
+    </Spoiler>
+  );
+}
+
+// ✅ Use the defaultExpanded prop
+function Demo() {
+  return (
+    <Spoiler defaultExpanded={false} showLabel="Show" hideLabel="Hide">
+      {/* ... */}
+    </Spoiler>
+  );
+}
+```
+
 ## Grid gutter -> gap
 
 The [Grid](/core/grid) component `gutter` prop was renamed to `gap` for consistency with other layout components
