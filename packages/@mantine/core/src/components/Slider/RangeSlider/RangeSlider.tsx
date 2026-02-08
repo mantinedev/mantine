@@ -27,7 +27,7 @@ import { Thumb } from '../Thumb/Thumb';
 import { Track } from '../Track/Track';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
-import { getFloatingValue } from '../utils/get-floating-value/get-gloating-value';
+import { getFloatingValue } from '../utils/get-floating-value/get-floating-value';
 import { getPosition } from '../utils/get-position/get-position';
 import { getPrecision } from '../utils/get-precision/get-precision';
 import {
@@ -59,7 +59,7 @@ export interface RangeSliderProps
   /** Maximum possible value @default 100 */
   max?: number;
 
-  /** Domain of the slider, defines the full range of possible values @default [min, max] */
+  /** Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). @default [min, max] */
   domain?: [number, number];
 
   /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 */
@@ -113,11 +113,14 @@ export interface RangeSliderProps
   /** Determines whether track values representation should be inverted @default false */
   inverted?: boolean;
 
-  /** Minimal range interval @default 10 */
+  /** Minimal range interval between the two thumbs. Consider this value relative to the total range (max - min). @default 10 */
   minRange?: number;
 
   /** Maximum range interval @default Infinity */
   maxRange?: number;
+
+  /** `aria-label` for both thumbs (overridden by thumbFromLabel/thumbToLabel if provided) */
+  thumbLabel?: string;
 
   /** First thumb `aria-label` */
   thumbFromLabel?: string;

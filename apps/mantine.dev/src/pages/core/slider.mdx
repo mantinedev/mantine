@@ -22,9 +22,9 @@ function Demo() {
 
 ## Uncontrolled
 
-`Slider` can be used with uncontrolled forms the same way as a native input element.
-Set the `name` attribute to include slider value in `FormData` object on form submission.
-To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+`Slider` can be used in uncontrolled forms the same way as a native input element.
+Set the `name` attribute to include the slider value in the `FormData` object on form submission.
+To set the initial value in uncontrolled mode, use the `defaultValue` prop.
 
 Example usage of uncontrolled `Slider` with `FormData`:
 
@@ -74,9 +74,13 @@ To change label behavior and appearance, set the following props:
 
 ## Domain
 
-By default, `min` and `max` values define the possible range of values.
-The `domain` prop allows setting the possible range of values independently of the
-`min` and `max` values:
+By default, the `min` and `max` props define both the visual range (track display) and
+the selectable range (possible values). The `domain` prop allows you to independently
+control the selectable range. This is useful when you want to display a wider track
+(for context) but restrict the actual selection to a subset.
+
+In the example below, the track displays from 0 to 100 (`min`/`max`), but the thumb
+can only be dragged between 20 and 80 (`domain`):
 
 <Demo data={SliderDemos.domain} />
 

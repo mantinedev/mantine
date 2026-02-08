@@ -26,7 +26,7 @@ import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
 import { Track } from '../Track/Track';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
-import { getFloatingValue } from '../utils/get-floating-value/get-gloating-value';
+import { getFloatingValue } from '../utils/get-floating-value/get-floating-value';
 import { getPosition } from '../utils/get-position/get-position';
 import { getPrecision } from '../utils/get-precision/get-precision';
 import {
@@ -53,7 +53,7 @@ export interface SliderProps
   /** Maximum possible value @default 100 */
   max?: number;
 
-  /** Domain of the slider, defines the full range of possible values @default [min, max] */
+  /** Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). @default [min, max] */
   domain?: [number, number];
 
   /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 */

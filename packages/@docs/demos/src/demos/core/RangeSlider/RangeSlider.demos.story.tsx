@@ -52,3 +52,13 @@ export const Demo_step = {
   name: '⭐ Demo: step',
   render: renderDemo(demos.step),
 };
+
+export const Demo_minRange = {
+  name: '⭐ Demo: minRange',
+  render: renderDemo(demos.minRange),
+};
+
+export const Demo_maxRange = {
+  name: '⭐ Demo: maxRange',
+  render: renderDemo(demos.maxRange),
+};

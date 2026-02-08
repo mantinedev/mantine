@@ -87,10 +87,17 @@ To use `RangeSlider` with decimal values, set the `min`, `max`, and `step` props
 ## minRange
 
 Use the `minRange` prop to control the minimum range between `from` and `to` values
-in `RangeSlider`. The default value is `10`. The example below shows how to
-use the `minRange` prop to capture decimal values from the user:
+in `RangeSlider`. The default value is `10`. This ensures the thumbs must be at least
+the specified distance apart:
 
-<Demo data={RangeSliderDemos.decimal} />
+<Demo data={RangeSliderDemos.minRange} />
+
+## maxRange
+
+Use the `maxRange` prop to control the maximum range between `from` and `to` values.
+This limits how wide the selection can be. By default, `maxRange` is set to `Infinity`:
+
+<Demo data={RangeSliderDemos.maxRange} />
 
 ## pushOnOverlap
 
@@ -164,7 +171,5 @@ function Demo() {
       key: 'ArrowLeft/ArrowDown',
       description: 'Decreases slider value by one step',
     },
-    { key: 'Home', description: 'Sets slider value to min value' },
-    { key: 'End', description: 'Sets slider value to max value' },
   ]}
 />
