@@ -26,7 +26,17 @@ const getColumnFlexBasis = (colSpan: ColSpan | undefined, columns: number) => {
     return '0rem';
   }
 
-  return colSpan ? `${100 / (columns / colSpan)}%` : undefined;
+  if (!colSpan) {
+    return undefined;
+  }
+
+  if (colSpan === columns) {
+    return '100%';
+  }
+
+  const percentage = (100 * colSpan) / columns;
+  const gapFactor = (columns - colSpan) / columns;
+  return `calc(${percentage}% - ${gapFactor} * var(--grid-column-gap))`;
 };
 
 const getColumnMaxWidth = (
@@ -53,8 +63,19 @@ const getColumnFlexGrow = (colSpan: ColSpan | undefined, grow: boolean | undefin
   return colSpan === 'auto' || grow ? '1' : 'auto';
 };
 
-const getColumnOffset = (offset: number | undefined, columns: number) =>
-  offset === 0 ? '0' : offset ? `${100 / (columns / offset)}%` : undefined;
+const getColumnOffset = (offset: number | undefined, columns: number) => {
+  if (offset === 0) {
+    return '0';
+  }
+
+  if (!offset) {
+    return undefined;
+  }
+
+  const percentage = (100 * offset) / columns;
+  const gapFactor = offset / columns;
+  return `calc(${percentage}% + ${gapFactor} * var(--grid-column-gap))`;
+};
 
 export function GridColVariables({ span, order, offset, align, selector }: GridColVariablesProps) {
   const theme = useMantineTheme();

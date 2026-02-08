@@ -6,20 +6,16 @@
   --grid-overflow: visible;
   --grid-column-gap: var(--grid-gap);
   --grid-row-gap: var(--grid-gap);
-  --grid-margin: calc(var(--grid-column-gap) / -2);
-  --grid-col-padding-x: calc(var(--grid-column-gap) / 2);
-  --grid-col-padding-y: calc(var(--grid-row-gap) / 2);
 
   overflow: var(--grid-overflow);
 }
 
 .inner {
-  width: calc(100% + var(--grid-column-gap));
   display: flex;
   flex-wrap: wrap;
   justify-content: var(--grid-justify);
   align-items: var(--grid-align);
-  margin: var(--grid-margin);
+  gap: var(--grid-row-gap) var(--grid-column-gap);
 }
 
 .col {
@@ -33,7 +29,5 @@
   max-width: var(--col-max-width);
   flex-grow: var(--col-flex-grow);
   margin-inline-start: var(--col-offset);
-  padding-inline: var(--grid-col-padding-x);
-  padding-block: var(--grid-col-padding-y);
   align-self: var(--col-align-self);
 }

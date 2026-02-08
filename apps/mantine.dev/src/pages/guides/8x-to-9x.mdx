@@ -280,3 +280,33 @@ function Demo() {
   );
 }
 ```
+
+## Grid overflow="hidden" no longer required
+
+The [Grid](/core/grid) component no longer uses negative margins for spacing between columns.
+It now uses native CSS `gap` property, so you can safely remove `overflow="hidden"` from your
+`Grid` components — it is no longer needed to prevent content overflow:
+
+```tsx
+import { Grid } from '@mantine/core';
+
+// ❌ overflow="hidden" is no longer needed
+function Demo() {
+  return (
+    <Grid overflow="hidden">
+      <Grid.Col span={6}>1</Grid.Col>
+      <Grid.Col span={6}>2</Grid.Col>
+    </Grid>
+  );
+}
+
+// ✅ Remove overflow="hidden"
+function Demo() {
+  return (
+    <Grid>
+      <Grid.Col span={6}>1</Grid.Col>
+      <Grid.Col span={6}>2</Grid.Col>
+    </Grid>
+  );
+}
+```

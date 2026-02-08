@@ -266,6 +266,12 @@ the pagination range will be from 5 to 15:
 
 <Demo data={PaginationDemos.startValue} />
 
+## Grid improvements
+
+[Grid](/core/grid) component no longer uses negative margins for spacing between columns.
+Instead, it now uses native CSS `gap` property, which means you no longer need to use
+`overflow="hidden"` to prevent content overflow caused by negative margins.
+
 ## SimpleGrid improvements
 
 [SimpleGrid](/core/simple-grid) component now supports `minColWidth` prop to use CSS Grid `auto-fill`/`auto-fit`

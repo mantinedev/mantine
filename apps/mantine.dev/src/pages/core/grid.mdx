@@ -124,29 +124,9 @@ with the resize handle located at the bottom right corner of the demo:
 
 <Demo data={GridDemos.container} />
 
-## overflow: hidden
-
-By default, `Grid` has `overflow: visible` style on the root element. In some cases
-you might want to change it to `overflow: hidden` to prevent negative margins from
-overflowing the grid container. For example, if you use `Grid` without parent container
-which has padding.
-
-```tsx
-import { Grid } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Grid overflow="hidden">
-      <Grid.Col span={6}>1</Grid.Col>
-      <Grid.Col span={6}>2</Grid.Col>
-    </Grid>
-  );
-}
-```
-
 ## Browser support
 
-Grid component uses flexbox for layout, which is supported in all modern browsers.
+Grid component uses flexbox with native `gap` for layout, which is supported in all modern browsers.
 
 ### Container queries
 
