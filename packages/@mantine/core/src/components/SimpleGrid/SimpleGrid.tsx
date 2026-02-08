@@ -35,6 +35,9 @@ export interface SimpleGridProps
 
   /** Grid repeat type when minColWidth is set @default 'auto-fill' */
   autoFlow?: 'auto-fit' | 'auto-fill';
+
+  /** Sets the size of implicitly created grid rows */
+  autoRows?: string;
 }
 
 export type SimpleGridFactory = Factory<{
@@ -64,6 +67,7 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props) => {
     type,
     minColWidth,
     autoFlow,
+    autoRows,
     attributes,
     ...others
   } = props;

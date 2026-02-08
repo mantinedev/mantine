@@ -33,6 +33,7 @@ export function SimpleGridMediaVariables({
   verticalSpacing,
   cols,
   minColWidth,
+  autoRows,
   selector,
 }: SimpleGridVariablesProps) {
   const theme = useMantineTheme();
@@ -42,6 +43,7 @@ export function SimpleGridMediaVariables({
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--sg-spacing-x': getSpacing(getBaseValue(spacing)),
     '--sg-spacing-y': getSpacing(getBaseValue(_verticalSpacing)),
+    '--sg-auto-rows': autoRows,
     ...(useAutoColumns
       ? { '--sg-min-col-width': getMinColWidthValue(minColWidth) }
       : { '--sg-cols': getBaseValue(cols)?.toString() }),
@@ -116,6 +118,7 @@ export function SimpleGridContainerVariables({
   verticalSpacing,
   cols,
   minColWidth,
+  autoRows,
   selector,
 }: SimpleGridVariablesProps) {
   const _verticalSpacing = verticalSpacing === undefined ? spacing : verticalSpacing;
@@ -124,6 +127,7 @@ export function SimpleGridContainerVariables({
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--sg-spacing-x': getSpacing(getBaseValue(spacing)),
     '--sg-spacing-y': getSpacing(getBaseValue(_verticalSpacing)),
+    '--sg-auto-rows': autoRows,
     ...(useAutoColumns
       ? { '--sg-min-col-width': getMinColWidthValue(minColWidth) }
       : { '--sg-cols': getBaseValue(cols)?.toString() }),

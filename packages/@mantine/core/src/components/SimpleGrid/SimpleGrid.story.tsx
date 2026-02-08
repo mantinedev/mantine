@@ -109,6 +109,61 @@ export function AutoFillVsAutoFit() {
   );
 }
 
+export function AutoRowsFixed() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Text fw={700} mb="md">
+        Fixed row height: autoRows=200px
+      </Text>
+      <SimpleGrid cols={3} autoRows="200px" spacing="md">
+        {Array(9)
+          .fill(0)
+          .map((_, index) => (
+            <GridItem key={index}>Item {index + 1}</GridItem>
+          ))}
+      </SimpleGrid>
+    </div>
+  );
+}
+
+export function AutoRowsMinmax() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Text fw={700} mb="md">
+        Min row height with auto expand: autoRows=minmax(100px, auto)
+      </Text>
+      <SimpleGrid cols={3} autoRows="minmax(100px, auto)" spacing="md">
+        <GridItem>Short</GridItem>
+        <GridItem>
+          Tall content that should expand the row beyond the 100px minimum height to fit everything
+          inside
+        </GridItem>
+        <GridItem>Short</GridItem>
+        <GridItem>Short</GridItem>
+        <GridItem>Short</GridItem>
+        <GridItem>Short</GridItem>
+      </SimpleGrid>
+    </div>
+  );
+}
+
+export function AutoRowsWithAutoFill() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Text fw={700} mb="md">
+        autoRows combined with minColWidth (auto-fill)
+      </Text>
+      <SimpleGrid minColWidth="250px" autoRows="150px" spacing="md">
+        {Array(8)
+          .fill(0)
+          .map((_, index) => (
+            <GridItem key={index}>Item {index + 1}</GridItem>
+          ))}
+      </SimpleGrid>
+    </div>
+  );
+}
+
 export function AutoFillContainerQueries() {
   return (
     <div style={{ padding: 40 }}>
