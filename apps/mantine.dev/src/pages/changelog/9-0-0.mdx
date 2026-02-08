@@ -13,6 +13,7 @@ import {
   MarqueeDemos,
   ScrollerDemos,
   DatePickerInputDemos,
+  SimpleGridDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -264,6 +265,20 @@ to define the starting page number. For example, with `startValue={5}` and `tota
 the pagination range will be from 5 to 15:
 
 <Demo data={PaginationDemos.startValue} />
+
+## SimpleGrid improvements
+
+[SimpleGrid](/core/simple-grid) component now supports `minColWidth` prop to use CSS Grid `auto-fill`/`auto-fit`
+to automatically adjust the number of columns based on available space and minimum column width.
+When `minColWidth` is set, the `cols` prop is ignored. Use `autoFlow` prop to switch between
+`auto-fill` (default) and `auto-fit` behavior.
+
+<Demo data={SimpleGridDemos.minColWidth} />
+
+[SimpleGrid](/core/simple-grid) also now supports `autoRows` prop to control the size of
+implicitly created grid rows:
+
+<Demo data={SimpleGridDemos.autoRows} />
 
 ## Documentation updates
 

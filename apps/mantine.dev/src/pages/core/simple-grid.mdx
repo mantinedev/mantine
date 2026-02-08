@@ -61,6 +61,31 @@ with the resize handle located at the bottom right corner of the demo:
 
 <Demo data={SimpleGridDemos.container} />
 
+## Auto-fill columns
+
+Set the `minColWidth` prop to use CSS Grid `auto-fill` to automatically adjust the number
+of columns based on available space and minimum column width. When `minColWidth` is set,
+the `cols` prop is ignored.
+
+<Demo data={SimpleGridDemos.minColWidth} />
+
+## auto-fill vs auto-fit
+
+By default, `minColWidth` uses `auto-fill` behavior. You can change it to `auto-fit` with the
+`autoFlow` prop. The difference between the two:
+
+- `auto-fill` creates as many tracks as possible without overflowing the container, leaving empty tracks if items don't fill the row
+- `auto-fit` works the same way but collapses empty tracks, allowing items to stretch and fill the remaining space
+
+<Demo data={SimpleGridDemos.autoFlow} />
+
+## Auto rows
+
+Set the `autoRows` prop to control the size of implicitly created grid rows.
+This is useful when you need all rows to have equal height or a minimum height.
+
+<Demo data={SimpleGridDemos.autoRows} />
+
 ## Browser support
 
 `SimpleGrid` uses [CSS Grid Layout](https://caniuse.com/css-grid), it is supported in all modern browsers.
