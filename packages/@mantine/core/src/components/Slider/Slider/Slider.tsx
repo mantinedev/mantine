@@ -21,8 +21,8 @@ import {
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
 import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
-import { SliderMark } from '../SliderMark';
 import classes from '../Slider.module.css';
+import { SliderMark } from '../SliderMark';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
 import { Track } from '../Track/Track';

@@ -1,9 +1,7 @@
 import { tests } from '@mantine-tests/core';
 import { SimpleGrid, SimpleGridProps, SimpleGridStylesNames } from './SimpleGrid';
 
-const defaultProps: SimpleGridProps = {
-  type: 'container',
-};
+const defaultProps: SimpleGridProps = {};
 
 describe('@mantine/core/SimpleGrid', () => {
   tests.itSupportsSystemProps<SimpleGridProps, SimpleGridStylesNames>({
@@ -11,6 +9,6 @@ describe('@mantine/core/SimpleGrid', () => {
     props: defaultProps,
     children: true,
     displayName: '@mantine/core/SimpleGrid',
-    stylesApiSelectors: ['root', 'container'],
+    stylesApiSelectors: ['root'],
   });
 });

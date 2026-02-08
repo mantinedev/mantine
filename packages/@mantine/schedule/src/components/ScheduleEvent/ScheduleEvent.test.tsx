@@ -85,7 +85,7 @@ describe('@mantine/schedule/ScheduleEvent', () => {
       <ScheduleEvent
         {...defaultProps}
         renderEvent={(event, props) => (
-          <button data-testid="custom-event" {...props}>
+          <button data-testid="custom-event" type="button" {...props}>
             <span>Fully custom render</span>
             <span>Event: {event.title}</span>
             {props.children}
