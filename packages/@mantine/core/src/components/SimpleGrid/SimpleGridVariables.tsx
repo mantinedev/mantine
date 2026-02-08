@@ -7,6 +7,7 @@ import {
   keys,
   MantineBreakpoint,
   px,
+  rem,
   useMantineTheme,
 } from '../../core';
 import type { SimpleGridProps } from './SimpleGrid';
@@ -15,19 +16,35 @@ interface SimpleGridVariablesProps extends SimpleGridProps {
   selector: string;
 }
 
+function getMinColWidthValue(value: string | number | undefined): string | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (typeof value === 'number') {
+    return rem(value);
+  }
+
+  return value;
+}
+
 export function SimpleGridMediaVariables({
   spacing,
   verticalSpacing,
   cols,
+  minColWidth,
   selector,
 }: SimpleGridVariablesProps) {
   const theme = useMantineTheme();
   const _verticalSpacing = verticalSpacing === undefined ? spacing : verticalSpacing;
+  const useAutoColumns = minColWidth !== undefined;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--sg-spacing-x': getSpacing(getBaseValue(spacing)),
     '--sg-spacing-y': getSpacing(getBaseValue(_verticalSpacing)),
-    '--sg-cols': getBaseValue(cols)?.toString(),
+    ...(useAutoColumns
+      ? { '--sg-min-col-width': getMinColWidthValue(minColWidth) }
+      : { '--sg-cols': getBaseValue(cols)?.toString() }),
   });
 
   const queries = keys(theme.breakpoints).reduce<Record<string, Record<string, any>>>(
@@ -44,7 +61,7 @@ export function SimpleGridMediaVariables({
         acc[breakpoint]['--sg-spacing-y'] = getSpacing(_verticalSpacing[breakpoint]);
       }
 
-      if (typeof cols === 'object' && cols[breakpoint] !== undefined) {
+      if (!useAutoColumns && typeof cols === 'object' && cols[breakpoint] !== undefined) {
         acc[breakpoint]['--sg-cols'] = cols[breakpoint];
       }
 
@@ -81,12 +98,13 @@ function getUniqueBreakpoints({
   spacing,
   verticalSpacing,
   cols,
+  minColWidth,
 }: Omit<SimpleGridVariablesProps, 'selector'>) {
   const breakpoints = Array.from(
     new Set([
       ...getBreakpoints(spacing),
       ...getBreakpoints(verticalSpacing),
-      ...getBreakpoints(cols),
+      ...(minColWidth !== undefined ? [] : getBreakpoints(cols)),
     ])
   );
 
@@ -97,17 +115,21 @@ export function SimpleGridContainerVariables({
   spacing,
   verticalSpacing,
   cols,
+  minColWidth,
   selector,
 }: SimpleGridVariablesProps) {
   const _verticalSpacing = verticalSpacing === undefined ? spacing : verticalSpacing;
+  const useAutoColumns = minColWidth !== undefined;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--sg-spacing-x': getSpacing(getBaseValue(spacing)),
     '--sg-spacing-y': getSpacing(getBaseValue(_verticalSpacing)),
-    '--sg-cols': getBaseValue(cols)?.toString(),
+    ...(useAutoColumns
+      ? { '--sg-min-col-width': getMinColWidthValue(minColWidth) }
+      : { '--sg-cols': getBaseValue(cols)?.toString() }),
   });
 
-  const uniqueBreakpoints = getUniqueBreakpoints({ spacing, verticalSpacing, cols });
+  const uniqueBreakpoints = getUniqueBreakpoints({ spacing, verticalSpacing, cols, minColWidth });
 
   const queries = uniqueBreakpoints.reduce<Record<string, Record<string, any>>>(
     (acc, breakpoint) => {
@@ -123,7 +145,7 @@ export function SimpleGridContainerVariables({
         acc[breakpoint]['--sg-spacing-y'] = getSpacing(_verticalSpacing[breakpoint]);
       }
 
-      if (typeof cols === 'object' && cols[breakpoint] !== undefined) {
+      if (!useAutoColumns && typeof cols === 'object' && cols[breakpoint] !== undefined) {
         acc[breakpoint]['--sg-cols'] = cols[breakpoint];
       }
 

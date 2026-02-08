@@ -29,6 +29,12 @@ export interface SimpleGridProps
 
   /** Determines type of queries that are used for responsive styles @default 'media' */
   type?: 'media' | 'container';
+
+  /** Minimum column width when using auto-fit/auto-fill. When set, cols prop is ignored */
+  minColWidth?: string | number;
+
+  /** Grid repeat type when minColWidth is set @default 'auto-fill' */
+  autoFlow?: 'auto-fit' | 'auto-fill';
 }
 
 export type SimpleGridFactory = Factory<{
@@ -56,6 +62,8 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props) => {
     verticalSpacing,
     spacing,
     type,
+    minColWidth,
+    autoFlow,
     attributes,
     ...others
   } = props;
@@ -75,12 +83,18 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props) => {
 
   const responsiveClassName = useRandomClassName();
 
+  const autoColsAttr = minColWidth !== undefined ? autoFlow || 'auto-fill' : undefined;
+
   if (type === 'container') {
     return (
       <>
         <SimpleGridContainerVariables {...props} selector={`.${responsiveClassName}`} />
         <div {...getStyles('container')}>
-          <Box {...getStyles('root', { className: responsiveClassName })} {...others} />
+          <Box
+            {...getStyles('root', { className: responsiveClassName })}
+            {...others}
+            data-auto-cols={autoColsAttr}
+          />
         </div>
       </>
     );
@@ -89,7 +103,11 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props) => {
   return (
     <>
       <SimpleGridMediaVariables {...props} selector={`.${responsiveClassName}`} />
-      <Box {...getStyles('root', { className: responsiveClassName })} {...others} />
+      <Box
+        {...getStyles('root', { className: responsiveClassName })}
+        {...others}
+        data-auto-cols={autoColsAttr}
+      />
     </>
   );
 });
