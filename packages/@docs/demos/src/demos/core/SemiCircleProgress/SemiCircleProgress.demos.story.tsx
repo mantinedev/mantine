@@ -22,3 +22,18 @@ export const Demo_transitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
 };
+
+export const Demo_orientations = {
+  name: '⭐ Demo: orientations',
+  render: renderDemo(demos.orientations),
+};
+
+export const Demo_batteryIndicator = {
+  name: '⭐ Demo: batteryIndicator',
+  render: renderDemo(demos.batteryIndicator),
+};
+
+export const Demo_skillRating = {
+  name: '⭐ Demo: skillRating',
+  render: renderDemo(demos.skillRating),
+};

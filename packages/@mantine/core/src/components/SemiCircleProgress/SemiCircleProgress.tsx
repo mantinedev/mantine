@@ -36,10 +36,10 @@ export interface SemiCircleProgressProps
   /** Progress value from `0` to `100` */
   value: number;
 
-  /** Diameter of the svg in px @default 200 */
+  /** Width of the component and diameter of the full circle in px. The visible SVG height will be size/2 @default 200 */
   size?: number;
 
-  /** Circle thickness in px @default 12 */
+  /** Stroke width of the circle segments in px @default 12 */
   thickness?: number;
 
   /** Orientation of the circle @default 'up' */
@@ -51,10 +51,10 @@ export interface SemiCircleProgressProps
   /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
   filledSegmentColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color value, by default the value is determined based on the color scheme value */
+  /** Key of `theme.colors` or any valid CSS color value @default 'gray.2' in light mode, 'dark.4' in dark mode */
   emptySegmentColor?: MantineColor;
 
-  /** Transition duration of filled section styles changes in ms @default 0 */
+  /** Transition duration for the filled segment progress changes in ms. Does not affect color transitions @default 0 */
   transitionDuration?: number;
 
   /** Label rendered inside the circle */
@@ -167,9 +167,9 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
   return (
     <Box size={size} {...getStyles('root')} {...others}>
       {label && (
-        <p {...getStyles('label')} data-position={labelPosition} data-orientation={orientation}>
+        <div {...getStyles('label')} data-position={labelPosition} data-orientation={orientation}>
           {label}
-        </p>
+        </div>
       )}
 
       <svg width={size} height={size / 2} {...getStyles('svg')}>
