@@ -113,6 +113,9 @@ export interface RangeSliderProps
   /** Determines whether track values representation should be inverted @default false */
   inverted?: boolean;
 
+  /** Slider orientation @default 'horizontal' */
+  orientation?: 'horizontal' | 'vertical';
+
   /** Minimal range interval between the two thumbs. Consider this value relative to the total range (max - min). @default 10 */
   minRange?: number;
 
@@ -207,6 +210,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     unstyled,
     scale,
     inverted,
+    orientation,
     className,
     style,
     vars,
@@ -379,7 +383,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
   };
 
   const { ref: useMoveRef, active } = useMove(
-    ({ x }) => handleChange(x),
+    ({ x, y }) => handleChange(orientation === 'vertical' ? 1 - y : x),
     { onScrubEnd: () => !disabled && onChangeEnd?.(valueRef.current) },
     dir
   );
@@ -394,18 +398,35 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     if (containerRef.current) {
       containerRef.current.focus();
       const rect = containerRef.current.getBoundingClientRect();
-      const changePosition = getClientPosition(event.nativeEvent);
-      const changeValue = getChangeValue({
-        value: changePosition - rect.left,
-        max,
-        min,
-        step,
-        containerWidth: rect.width,
-      });
+      const changePosition = getClientPosition(event.nativeEvent, orientation);
+
+      const changeValue =
+        orientation === 'vertical'
+          ? getChangeValue({
+              value: rect.bottom - changePosition,
+              max,
+              min,
+              step,
+              containerWidth: rect.height,
+            })
+          : getChangeValue({
+              value: changePosition - rect.left,
+              max,
+              min,
+              step,
+              containerWidth: rect.width,
+            });
 
       const nearestHandle =
         Math.abs(_value[0] - changeValue) > Math.abs(_value[1] - changeValue) ? 1 : 0;
-      const _nearestHandle = dir === 'ltr' ? nearestHandle : nearestHandle === 1 ? 0 : 1;
+      const _nearestHandle =
+        orientation === 'vertical'
+          ? nearestHandle
+          : dir === 'ltr'
+            ? nearestHandle
+            : nearestHandle === 1
+              ? 0
+              : 1;
 
       thumbIndex.current = _nearestHandle;
     }
@@ -522,6 +543,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
         size={size}
         ref={useMergedRef(ref, root)}
         disabled={disabled}
+        orientation={orientation}
         onMouseDownCapture={() => root.current?.focus()}
         onKeyDownCapture={() => {
           if (thumbs.current[0]?.parentElement?.contains(document.activeElement)) {

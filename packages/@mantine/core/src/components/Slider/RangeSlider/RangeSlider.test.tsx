@@ -37,6 +37,22 @@ describe('@mantine/core/RangeSlider', () => {
     ],
   });
 
+  it('sets data-orientation attribute on root element', () => {
+    const { container, rerender } = render(
+      <RangeSlider {...defaultProps} orientation="vertical" />
+    );
+    expect(container.querySelector('.mantine-RangeSlider-root')).toHaveAttribute(
+      'data-orientation',
+      'vertical'
+    );
+
+    rerender(<RangeSlider {...defaultProps} />);
+    expect(container.querySelector('.mantine-RangeSlider-root')).not.toHaveAttribute(
+      'data-orientation',
+      'vertical'
+    );
+  });
+
   it('provides name and value to hidden inputs', () => {
     const { container } = render(<RangeSlider name="test-input" value={[10, 20]} />);
     expectInputValue('10', container, 0);

@@ -1,4 +1,4 @@
-import { getFloatingValue } from './get-gloating-value';
+import { getFloatingValue } from './get-floating-value';
 
 describe('@mantine/core/Slider/get-floating-value', () => {
   it('returns floating value with given precision', () => {

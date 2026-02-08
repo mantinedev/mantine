@@ -16,6 +16,7 @@ export interface SliderRootProps extends BoxProps, ElementProps<'div'> {
   variant?: string;
   thumbSize?: string | number;
   radius?: MantineRadius;
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export function SliderRoot({
@@ -25,10 +26,20 @@ export function SliderRoot({
   color,
   thumbSize,
   radius,
+  orientation,
   ...others
 }: SliderRootProps) {
   const { getStyles } = useSliderContext();
-  return <Box tabIndex={-1} variant={variant} size={size} {...getStyles('root')} {...others} />;
+  return (
+    <Box
+      tabIndex={-1}
+      variant={variant}
+      size={size}
+      {...getStyles('root')}
+      mod={{ orientation }}
+      {...others}
+    />
+  );
 }
 
 SliderRoot.displayName = '@mantine/core/SliderRoot';

@@ -110,6 +110,9 @@ export interface SliderProps
   /** Determines whether track value representation should be inverted @default false */
   inverted?: boolean;
 
+  /** Slider orientation @default 'horizontal' */
+  orientation?: 'horizontal' | 'vertical';
+
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentProps<'input'>;
 
@@ -180,6 +183,7 @@ export const Slider = factory<SliderFactory>((_props) => {
     unstyled,
     scale,
     inverted,
+    orientation,
     className,
     style,
     vars,
@@ -267,7 +271,11 @@ export const Slider = factory<SliderFactory>((_props) => {
     }
   }, [disabled, marks, restrictToMarks]);
 
-  const { ref: container, active } = useMove(handleChange, { onScrubEnd: handleScrubEnd }, dir);
+  const { ref: container, active } = useMove(
+    ({ x, y }) => handleChange({ x: orientation === 'vertical' ? 1 - y : x }),
+    { onScrubEnd: handleScrubEnd },
+    dir
+  );
 
   const callOnChangeEnd = useCallback(
     (value: number) => {
@@ -409,6 +417,7 @@ export const Slider = factory<SliderFactory>((_props) => {
         onMouseDownCapture={() => root.current?.focus()}
         size={size}
         disabled={disabled}
+        orientation={orientation}
       >
         <Track
           inverted={inverted}

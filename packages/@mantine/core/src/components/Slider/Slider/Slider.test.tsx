@@ -122,6 +122,20 @@ describe('@mantine/core/Slider', () => {
     expectInputValue('100', container);
   });
 
+  it('sets data-orientation attribute on root element', () => {
+    const { container, rerender } = render(<Slider {...defaultProps} orientation="vertical" />);
+    expect(container.querySelector('.mantine-Slider-root')).toHaveAttribute(
+      'data-orientation',
+      'vertical'
+    );
+
+    rerender(<Slider {...defaultProps} />);
+    expect(container.querySelector('.mantine-Slider-root')).not.toHaveAttribute(
+      'data-orientation',
+      'vertical'
+    );
+  });
+
   it('will call onChange before onChangeEvent', async () => {
     const changeSpy = jest.fn();
     const endSpy = jest.fn();

@@ -158,6 +158,38 @@ export function Sizes() {
   );
 }
 
+export function VerticalUsage() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <Slider defaultValue={45} orientation="vertical" />
+    </div>
+  );
+}
+
+export function VerticalWithMarks() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <Slider defaultValue={45} marks={marks} orientation="vertical" labelAlwaysOn />
+    </div>
+  );
+}
+
+export function VerticalRange() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <RangeSlider defaultValue={[25, 65]} marks={marks} orientation="vertical" labelAlwaysOn />
+    </div>
+  );
+}
+
+export function VerticalInverted() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <Slider defaultValue={80} orientation="vertical" inverted />
+    </div>
+  );
+}
+
 export function WithDecimalValue() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>

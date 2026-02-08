@@ -1,5 +1,5 @@
-import { RangeSlider, Text } from '@mantine/core';
 import { useState } from 'react';
+import { RangeSlider, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
@@ -35,11 +35,7 @@ function Demo() {
       <Text size="sm" mb="xs">
         Maximum range: 50 (selection cannot be wider than 50 units)
       </Text>
-      <RangeSlider
-        value={value}
-        onChange={setValue}
-        maxRange={50}
-      />
+      <RangeSlider value={value} onChange={setValue} maxRange={50} />
       <Text size="sm" mt="xs">
         Value: [{value[0]}, {value[1]}] - Range: {value[1] - value[0]}
       </Text>

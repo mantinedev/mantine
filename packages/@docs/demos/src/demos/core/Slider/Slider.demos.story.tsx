@@ -82,3 +82,8 @@ export const Demo_domain = {
   name: '⭐ Demo: domain',
   render: renderDemo(demos.domain),
 };
+
+export const Demo_vertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
+};
