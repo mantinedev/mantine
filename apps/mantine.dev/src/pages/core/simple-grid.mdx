@@ -14,7 +14,9 @@ It uses CSS grid layout. If you need to set different widths for columns, use
 
 ## spacing and verticalSpacing props
 
-`spacing` prop is used both for horizontal and vertical spacing if `verticalSpacing` is not set:
+The `spacing` prop controls horizontal spacing between columns. By default, it is also used
+for vertical spacing between rows. If you want different vertical spacing, set the
+`verticalSpacing` prop explicitly:
 
 ```tsx
 import { SimpleGrid } from '@mantine/core';

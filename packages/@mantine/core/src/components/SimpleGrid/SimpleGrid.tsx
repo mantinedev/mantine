@@ -24,10 +24,10 @@ export interface SimpleGridProps
   /** Spacing between columns @default 'md' */
   spacing?: StyleProp<MantineSpacing>;
 
-  /** Spacing between rows @default 'md' */
+  /** Spacing between rows. When not set, falls back to spacing value @default undefined */
   verticalSpacing?: StyleProp<MantineSpacing>;
 
-  /** Determines typeof of queries that are used for responsive styles @default 'media' */
+  /** Determines type of queries that are used for responsive styles @default 'media' */
   type?: 'media' | 'container';
 }
 
