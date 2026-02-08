@@ -21,6 +21,7 @@ import {
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
 import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
+import { SliderMark } from '../SliderMark';
 import classes from '../Slider.module.css';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
@@ -78,7 +79,7 @@ export interface SliderProps
   name?: string;
 
   /** Marks displayed on the track */
-  marks?: { value: number; label?: React.ReactNode }[];
+  marks?: SliderMark[];
 
   /** Function to generate label or any react node to render instead, set to null to disable label */
   label?: React.ReactNode | ((value: number) => React.ReactNode);

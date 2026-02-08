@@ -349,7 +349,7 @@ implicitly created grid rows:
 - [JsonInput](/core/json-input) component now supports `indentSpaces` prop to control the number of spaces used for formatting JSON
 - [Rating](/core/rating) component now supports `allowClear` prop to reset rating to 0 by clicking the same value
 - [ScrollArea](/core/scroll-area) component now supports `onLeftReached` and `onRightReached` callbacks for horizontal scroll boundaries
-- [use-tree](/core/tree) no longer provides `hoveredNode` and `setHoveredNode` in the returned value
+- [Slider](/core/slider) and [RangeSlider](/core/range-slider) now support hidden marks with `hidden: true` property. Hidden marks allow snapping to specific values without displaying them visually, useful with `restrictToMarks` prop.
 - [use-tree](/core/tree) no longer supports callback state setters for `setExpandedState`, `setSelectedState`, and `setCheckedState` functions
 - [use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`
 - [use-media-query](/hooks/use-media-query) hook no longer includes fallback for old Safari versions (iOS 13 and earlier, released before 2019)

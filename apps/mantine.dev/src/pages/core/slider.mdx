@@ -149,6 +149,14 @@ the minimum value is at the bottom and the maximum value is at the top.
 
 <Demo data={SliderDemos.vertical} />
 
+## Hidden marks
+
+Hidden marks allow you to snap to specific values without displaying them visually on the track.
+This is useful when you want to create a "sticky" snapping behavior to certain values that
+you don't want to show to the user. Use this feature together with `restrictToMarks` prop:
+
+<Demo data={SliderDemos.hiddenMarks} />
+
 ## Build custom slider
 
 If the `Slider` component does not meet your requirements, you can build a custom slider with the [use-move](/hooks/use-move/) hook:

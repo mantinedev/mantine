@@ -5,6 +5,7 @@ import type {
 } from './RangeSlider/RangeSlider';
 import type { SliderCssVariables, SliderStylesNames } from './Slider.context';
 import type { SliderFactory, SliderProps } from './Slider/Slider';
+import type { SliderMark } from './SliderMark';
 
 export { Slider } from './Slider/Slider';
 export { RangeSlider } from './RangeSlider/RangeSlider';
@@ -17,6 +18,7 @@ export type {
   RangeSliderProps,
   RangeSliderValue,
   RangeSliderFactory,
+  SliderMark,
 };
 
 export namespace Slider {
@@ -24,6 +26,7 @@ export namespace Slider {
   export type StylesNames = SliderStylesNames;
   export type CssVariables = SliderCssVariables;
   export type Factory = SliderFactory;
+  export type Mark = SliderMark;
 }
 
 export namespace RangeSlider {
@@ -32,4 +35,5 @@ export namespace RangeSlider {
   export type Factory = RangeSliderFactory;
   export type StylesNames = SliderStylesNames;
   export type CssVariables = SliderCssVariables;
+  export type Mark = SliderMark;
 }
