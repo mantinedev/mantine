@@ -21,8 +21,8 @@ import type { TimePickerAmPmLabels, TimePickerFormat } from '../TimePicker';
 import { isSameTime } from '../TimePicker/utils/is-same-time/is-same-time';
 import { isTimeAfter, isTimeBefore } from './compare-time';
 import { TimeGridProvider } from './TimeGrid.context';
-import { TimeGridControl } from './TimeGridControl';
 import classes from './TimeGrid.module.css';
+import { TimeGridControl } from './TimeGridControl';
 
 export type TimeGridStylesNames = 'root' | 'control' | 'simpleGrid';
 export type TimeGridCssVariables = {

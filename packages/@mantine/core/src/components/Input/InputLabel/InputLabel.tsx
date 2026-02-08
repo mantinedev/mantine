@@ -11,8 +11,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useInputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';
+import { useInputWrapperContext } from '../InputWrapper.context';
 
 export type InputLabelStylesNames = 'label' | 'required';
 export type InputLabelCssVariables = {

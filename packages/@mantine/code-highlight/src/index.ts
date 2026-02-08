@@ -38,3 +38,5 @@ export type {
 } from './CodeHighlight/InlineCodeHighlight';
 
 export type { CodeHighlightControlProps } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
+
+export type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';

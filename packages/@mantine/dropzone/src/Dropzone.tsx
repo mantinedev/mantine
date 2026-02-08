@@ -24,9 +24,9 @@ import {
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import { DropzoneProvider } from './Dropzone.context';
+import classes from './Dropzone.module.css';
 import type { DropzoneFullScreenType } from './DropzoneFullScreen';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
-import classes from './Dropzone.module.css';
 
 export type DropzoneStylesNames = 'root' | 'inner';
 export type DropzoneVariant = 'filled' | 'light';

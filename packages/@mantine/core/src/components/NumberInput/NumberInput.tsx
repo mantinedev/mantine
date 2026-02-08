@@ -18,8 +18,8 @@ import {
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 import { UnstyledButton } from '../UnstyledButton';
-import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
+import { NumberInputChevron } from './NumberInputChevron';
 
 // Re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
 // And for positive 0., 0.0, 0.00, 0.000 ... strings
@@ -30,6 +30,9 @@ const leadingZerosPattern = /^-?0\d+(\.\d+)?\.?$/;
 
 // Re for decimal numbers with trailing zeros like 13.0, 13.00, 5.10 ... strings
 const trailingZerosPattern = /\.\d*0$/;
+
+// Re for numbers with trailing decimal separator like 10. or -3.
+const trailingDecimalSeparatorPattern = /^-?\d+\.$/;
 
 export interface NumberInputHandlers {
   increment: () => void;
@@ -201,14 +204,28 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
 }));
 
 function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, min?: number) {
-  const replaced = sanitizedValue.toString().replace(/^0+(?=\d)/, '');
+  const stringValue = sanitizedValue.toString();
+  const hasTrailingDecimalSeparator = trailingDecimalSeparatorPattern.test(stringValue);
+
+  const replaced = stringValue.replace(/^0+(?=\d)/, '');
   const parsedValue = parseFloat(replaced);
+
   if (Number.isNaN(parsedValue)) {
     return replaced;
-  } else if (parsedValue > Number.MAX_SAFE_INTEGER) {
+  }
+
+  if (parsedValue > Number.MAX_SAFE_INTEGER) {
     return max !== undefined ? max : replaced;
   }
-  return clamp(parsedValue, min, max);
+
+  const clamped = clamp(parsedValue, min, max);
+
+  if (hasTrailingDecimalSeparator) {
+    const clampedString = clamped.toString().replace(/^0+(?=\d)/, '');
+    return `${clampedString}.`;
+  }
+
+  return clamped;
 }
 
 export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
@@ -289,7 +306,8 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         isValidNumber(payload.floatValue, payload.value) &&
           !leadingDecimalZeroPattern.test(payload.value) &&
           !(allowLeadingZeros ? leadingZerosPattern.test(payload.value) : false) &&
-          !trailingZerosPattern.test(payload.value)
+          !trailingZerosPattern.test(payload.value) &&
+          !trailingDecimalSeparatorPattern.test(payload.value)
           ? payload.floatValue
           : payload.value
       );

@@ -15,12 +15,12 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import classes from './Avatar.module.css';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { getInitialsColor } from './get-initials-color/get-initials-color';
 import { getInitials } from './get-initials/get-initials';
-import classes from './Avatar.module.css';
 
 export type AvatarStylesNames = 'root' | 'placeholder' | 'image';
 export type AvatarVariant =

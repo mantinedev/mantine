@@ -31,8 +31,8 @@ import {
   PickerInputBaseStylesNames,
 } from '../PickerInputBase';
 import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
-import { getMaxTime, getMinTime } from './get-min-max-time/get-min-max-time';
 import classes from './DateTimePicker.module.css';
+import { getMaxTime, getMinTime } from './get-min-max-time/get-min-max-time';
 
 export type DateTimePickerStylesNames =
   | 'timeWrapper'

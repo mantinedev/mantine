@@ -21,6 +21,7 @@ import {
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
 import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
+import classes from '../Slider.module.css';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
 import { Track } from '../Track/Track';
@@ -35,7 +36,6 @@ import {
   getNextMarkValue,
   getPreviousMarkValue,
 } from '../utils/get-step-mark-value/get-step-mark-value';
-import classes from '../Slider.module.css';
 
 export type RangeSliderValue = [number, number];
 
@@ -215,7 +215,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   } = props;
 
   const getStyles = useStyles<RangeSliderFactory>({
-    name: 'Slider',
+    name: 'RangeSlider',
     props,
     classes,
     classNames,

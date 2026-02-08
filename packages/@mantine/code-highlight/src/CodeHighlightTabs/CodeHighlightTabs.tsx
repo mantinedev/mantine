@@ -13,13 +13,13 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import classes from '../CodeHighlight.module.css';
 import {
   CodeHighlight,
   CodeHighlightSettings,
   CodeHighlightStylesNames,
 } from '../CodeHighlight/CodeHighlight';
 import { FileIcon } from './FileIcon';
-import classes from '../CodeHighlight.module.css';
 
 /** Available shiki languages for default Mantine shiki instance.
  *  Should be used only with *.mantine.dev projects */

@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core';
-import { IconProps } from './types';
 import classes from './icons.module.css';
+import { IconProps } from './types';
 
 export function NextIcon({ size = 40, ...others }: IconProps) {
   return (

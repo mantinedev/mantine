@@ -222,4 +222,26 @@ describe('@mantine/core/NumberInput', () => {
     blurInput();
     expectValue(String(MAX));
   });
+
+  it('treats values with trailing decimal separator as strings', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+
+    focusInput();
+    await enterText('10.');
+
+    expect(spy).toHaveBeenLastCalledWith('10.');
+    expectValue('10.');
+  });
+
+  it('treats values with digits after decimal separator as numbers', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+
+    focusInput();
+    await enterText('10.1');
+
+    expect(spy).toHaveBeenLastCalledWith(10.1);
+    expectValue('10.1');
+  });
 });
