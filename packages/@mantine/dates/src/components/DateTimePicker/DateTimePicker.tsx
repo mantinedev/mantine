@@ -38,6 +38,7 @@ export type DateTimePickerStylesNames =
   | 'timeWrapper'
   | 'timeInput'
   | 'submitButton'
+  | 'placeholder'
   | PickerInputBaseStylesNames
   | CalendarStylesNames;
 
