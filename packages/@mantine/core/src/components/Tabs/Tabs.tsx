@@ -72,7 +72,7 @@ export interface TabsProps
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Determines whether tabs should have inverted styles @default false */

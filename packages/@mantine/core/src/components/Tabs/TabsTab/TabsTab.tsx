@@ -33,7 +33,7 @@ export interface TabsTabProps
   /** Content displayed on the left side of the label */
   leftSection?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color, controls control color based on `variant` */
+  /** Key of `theme.colors` or any valid CSS color, controls tab color based on `variant` */
   color?: MantineColor;
 }
 
