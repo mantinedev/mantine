@@ -62,6 +62,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
   const [isDragging, setIsDragging] = useState(false);
 
   const isDraggingRef = useRef(false);
+  const hasDraggedRef = useRef(false);
   const startX = useRef(0);
   const scrollLeftStart = useRef(0);
 
@@ -134,6 +135,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       const container = containerRef.current;
       if (container) {
         isDraggingRef.current = true;
+        hasDraggedRef.current = false;
         setIsDragging(true);
         startX.current = event.pageX - container.offsetLeft;
         scrollLeftStart.current = container.scrollLeft;
@@ -153,17 +155,31 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
     if (container) {
       const x = event.pageX - container.offsetLeft;
       const walk = x - startX.current;
+      if (Math.abs(walk) > 5) {
+        hasDraggedRef.current = true;
+      }
       container.scrollLeft = scrollLeftStart.current - walk;
     }
   }, []);
 
   const handleMouseUp = useCallback(() => {
+    const wasDragged = hasDraggedRef.current;
     isDraggingRef.current = false;
+    hasDraggedRef.current = false;
     setIsDragging(false);
     const container = containerRef.current;
     if (container) {
       container.style.cursor = '';
       container.style.userSelect = '';
+
+      if (wasDragged) {
+        const suppressClick = (event: MouseEvent) => {
+          event.stopPropagation();
+          event.preventDefault();
+          container.removeEventListener('click', suppressClick, true);
+        };
+        container.addEventListener('click', suppressClick, true);
+      }
     }
   }, []);
 
