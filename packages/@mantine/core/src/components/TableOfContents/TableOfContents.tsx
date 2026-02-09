@@ -17,6 +17,7 @@ import {
   MantineColor,
   MantineRadius,
   MantineSize,
+  noop,
   rem,
   StylesApiProps,
   useProps,
@@ -78,7 +79,7 @@ export interface TableOfContentsProps
   /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
   depthOffset?: number | string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */
@@ -169,10 +170,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
   const controls = headingsData.map((data, index) => {
     const controlProps = getControlProps?.({
       active: index === spy.active,
-      data: {
-        ...data,
-        getNode: data.getNode || (() => {}),
-      },
+      data: { ...data, getNode: data.getNode || noop },
     });
 
     return (
