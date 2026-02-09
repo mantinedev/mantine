@@ -84,7 +84,7 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs */
   verticalSpacing?: MantineSpacing;
 
-  /** If set, every odd/even row background changes to `strippedColor`, if set to `true`, then `odd` value will be used @default false  */
+  /** If set, every odd/even row background changes to `stripedColor`, if set to `true`, then `odd` value will be used @default false  */
   striped?: boolean | 'odd' | 'even';
 
   /** Background color of striped rows, key of `theme.colors` or any valid CSS color */
