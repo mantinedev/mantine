@@ -91,6 +91,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props) => {
     styles,
     unstyled,
     attributes,
+    rootSelector: 'legend',
   });
 
   if (!payload) {
@@ -126,3 +127,4 @@ export const ChartLegend = factory<ChartLegendFactory>((_props) => {
 });
 
 ChartLegend.displayName = '@mantine/charts/ChartLegend';
+ChartLegend.classes = classes;
