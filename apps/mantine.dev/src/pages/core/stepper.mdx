@@ -159,3 +159,13 @@ function Demo() {
   );
 }
 ```
+
+## Keyboard Navigation
+
+Stepper supports full keyboard navigation:
+
+- **Tab / Shift+Tab** - Move focus between clickable steps
+- **Space / Enter** - Activate the focused step
+- Each step is a button element with proper ARIA attributes
+
+Inactive steps that are not clickable are skipped during Tab navigation. The tabIndex is automatically managed based on whether a step is clickable or not.

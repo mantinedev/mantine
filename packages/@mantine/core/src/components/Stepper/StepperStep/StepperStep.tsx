@@ -41,16 +41,16 @@ export type StepperStepStylesNames =
 
 export interface StepperStepProps
   extends BoxProps, CompoundStylesApiProps<StepperStepFactory>, ElementProps<'button'> {
-  /** Step index, controlled by Stepper component */
+  /** 0-based step index, automatically set by Stepper component */
   step?: number;
 
-  /** Step state, controlled by Stepper component */
+  /** Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed */
   state?: 'stepInactive' | 'stepProgress' | 'stepCompleted';
 
   /** Key of `theme.colors`, by default controlled by Stepper component */
   color?: MantineColor;
 
-  /** Determines whether the icon should be displayed */
+  /** When false, hides the step icon. Useful for creating compact steppers with only labels @default true */
   withIcon?: boolean;
 
   /** Step icon, defaults to `step index + 1` when rendered within Stepper */
