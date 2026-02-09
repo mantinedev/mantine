@@ -64,4 +64,15 @@ describe('@mantine/core/Switch', () => {
     render(<Switch {...defaultProps} rootRef={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
+
+  it('renders thumb indicator based on withThumbIndicator prop', () => {
+    const { container: withIndicator } = render(<Switch withThumbIndicator />);
+    const { container: withoutIndicator } = render(<Switch withThumbIndicator={false} />);
+
+    const thumbWithIndicator = withIndicator.querySelector('[data-with-thumb-indicator]');
+    const thumbWithoutIndicator = withoutIndicator.querySelector('[data-with-thumb-indicator]');
+
+    expect(thumbWithIndicator).toBeInTheDocument();
+    expect(thumbWithoutIndicator).not.toBeInTheDocument();
+  });
 });

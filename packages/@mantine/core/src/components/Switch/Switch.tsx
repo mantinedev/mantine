@@ -47,7 +47,7 @@ export interface SwitchProps
   /** Id used to bind input and label, if not passed, unique id will be generated instead */
   id?: string;
 
-  /** Content of the `label` associated with the radio */
+  /** Content of the label associated with the switch */
   label?: React.ReactNode;
 
   /** Inner label when the `Switch` is in unchecked state */
@@ -62,7 +62,7 @@ export interface SwitchProps
   /** Controls size of all elements */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
@@ -83,7 +83,7 @@ export interface SwitchProps
   /** Assigns ref of the root element */
   rootRef?: React.Ref<HTMLDivElement>;
 
-  /** If set, the indicator will be displayed inside thumb @default true */
+  /** If set, displays a colored dot inside the thumb that matches the track background color @default true */
   withThumbIndicator?: boolean;
 }
 
