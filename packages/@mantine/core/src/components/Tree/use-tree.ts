@@ -31,7 +31,10 @@ function getInitialTreeExpandedState(
   return acc;
 }
 
-export function getTreeExpandedState(data: TreeNodeData[], expandedNodesValues: string[] | '*') {
+export function getTreeExpandedState(
+  data: TreeNodeData[],
+  expandedNodesValues: string[] | '*'
+): Record<string, boolean> {
   const state = getInitialTreeExpandedState({}, data, []);
 
   if (expandedNodesValues === '*') {
