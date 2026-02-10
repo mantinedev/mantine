@@ -188,7 +188,7 @@ it('applies custom className to control buttons', () => {
 
 ### Callback Testing
 
-Test that callbacks are invoked with correct arguments:
+Test that callbacks are invoked with correct arguments using `toHaveBeenCalledWith`:
 
 ```tsx
 it('calls onDateChange with correct date when next button is clicked', async () => {
@@ -207,6 +207,24 @@ it('calls onDateChange with correct date when next button is clicked', async () 
 });
 ```
 
+Use `expect.objectContaining` for callbacks with complex payloads:
+
+```tsx
+it('passes correct payload to renderNode', () => {
+  const renderNode = jest.fn(({ node }) => <div>{node.label}</div>);
+
+  render(<Tree data={data} renderNode={renderNode} />);
+
+  expect(renderNode).toHaveBeenCalledWith(
+    expect.objectContaining({
+      node: expect.any(Object),
+      level: expect.any(Number),
+      expanded: expect.any(Boolean),
+    })
+  );
+});
+```
+
 ### Conditional Rendering
 
 Test both presence and absence of elements:
@@ -218,6 +236,30 @@ it('renders month selector only when withMonths is true', () => {
 
   rerender(<YearPicker withMonths={false} />);
   expect(screen.queryByLabelText(/select month/i)).not.toBeInTheDocument();
+});
+```
+
+### Verifying Element State Changes
+
+When testing that an element appears after an action, always verify it wasn't present before:
+
+```tsx
+// ❌ Bad - doesn't prove the action caused the change
+it('expands node on click', async () => {
+  render(<Tree data={data} expandOnClick />);
+  await userEvent.click(screen.getByText('Node 1'));
+  expect(screen.getByText('Child 1.1')).toBeInTheDocument();
+});
+
+// ✅ Good - proves the element appeared as result of the action
+it('expands node on click', async () => {
+  render(<Tree data={data} expandOnClick />);
+
+  expect(screen.queryByText('Child 1.1')).not.toBeInTheDocument();
+
+  await userEvent.click(screen.getByText('Node 1'));
+
+  expect(screen.getByText('Child 1.1')).toBeInTheDocument();
 });
 ```
 

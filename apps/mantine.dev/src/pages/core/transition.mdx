@@ -72,3 +72,81 @@ You can create your own transition. `transition` is an object with 4 properties:
 Use the `enterDelay` and `exitDelay` props to delay the transition start. Values are in milliseconds:
 
 <Demo data={TransitionDemos.delay} />
+
+## Reduced motion
+
+Transition respects the `prefers-reduced-motion` media query and your theme's
+`respectReducedMotion` setting. When reduced motion is preferred, all
+transitions complete instantly:
+
+```tsx
+import { createTheme, MantineProvider, Transition } from '@mantine/core';
+
+const theme = createTheme({
+  respectReducedMotion: true, // default
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Transition mounted transition="fade" duration={400}>
+        {(styles) => <div style={styles}>Content</div>}
+      </Transition>
+    </MantineProvider>
+  );
+}
+```
+
+This improves accessibility for users with vestibular disorders who may
+experience motion sickness from animations.
+
+## Lifecycle callbacks
+
+Use lifecycle callbacks to perform actions at different stages of the transition:
+
+- `onEnter` - Called when enter transition starts
+- `onEntered` - Called when enter transition completes
+- `onExit` - Called when exit transition starts
+- `onExited` - Called when exit transition completes
+
+```tsx
+import { Transition } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Transition
+      mounted
+      transition="fade"
+      duration={200}
+      onEnter={() => console.log('Enter started')}
+      onEntered={() => console.log('Enter completed')}
+      onExit={() => console.log('Exit started')}
+      onExited={() => console.log('Exit completed')}
+    >
+      {(styles) => <div style={styles}>Content</div>}
+    </Transition>
+  );
+}
+```
+
+## Keep mounted
+
+By default, the element is unmounted from the DOM when the transition is
+complete. Use `keepMounted` to keep the element mounted with `display: none`:
+
+```tsx
+import { Transition } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Transition mounted={false} keepMounted transition="fade">
+      {(styles) => <div style={styles}>Content</div>}
+    </Transition>
+  );
+}
+```
+
+This is useful when you want to:
+- Preserve element state during hide/show
+- Avoid remounting overhead
+- Maintain focus/scroll position

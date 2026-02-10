@@ -178,7 +178,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     target,
     ref,
     ...others
-  } = useProps('Tooltip', defaultProps, props);
+  } = props;
 
   const { dir } = useDirection();
   const arrowRef = useRef<HTMLDivElement>(null);
