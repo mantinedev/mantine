@@ -75,6 +75,34 @@ function Demo() {
 }
 ```
 
+## New @mantine/schedule package
+
+New [`@mantine/schedule`](/schedule/getting-started) package provides a complete set of
+calendar scheduling components for React applications. It includes multiple view levels,
+drag-and-drop event management, and extensive customization options.
+
+Components included:
+
+- [Schedule](/schedule/schedule) – unified container component that combines all views with built-in navigation and view switching
+- [DayView](/schedule/day-view) – single day view with configurable time slots, all-day event section, current time indicator, and business hours highlighting
+- [WeekView](/schedule/week-view) – weekly calendar grid with time slots, week numbers, weekend day toggling, and multi-day event spanning
+- [MonthView](/schedule/month-view) – monthly calendar grid with event overflow handling, outside days display, and week numbers
+- [YearView](/schedule/year-view) – 12-month year overview organized by quarters with day-level event indicators
+- [MobileMonthView](/schedule/mobile-month-view) – mobile-optimized month view with event details panel for the selected day
+
+Key features:
+
+- **Drag and drop** – drag events to reschedule them across time slots and days. Supports conditional dragging with `canDragEvent` callback, and drag-to-select time ranges with `withDragSlotSelect`
+- **Multiple interaction modes** – `default` mode enables all interactions (click, drag, navigation), `static` mode renders a read-only calendar
+- **Responsive layout** – `layout="responsive"` automatically switches to `YearView` and `MobileMonthView` on smaller screens
+- **Custom event rendering** – use `renderEventBody` or `renderEvent` to fully customize how events are displayed in all views
+- **Time configuration** – configurable start/end times, time slot intervals, time label formats, and business hours highlighting
+- **Internationalization** – full label customization through the `labels` prop, locale-aware date formatting via dayjs
+- **Click handlers** – `onTimeSlotClick`, `onAllDaySlotClick`, `onDayClick`, and `onEventClick` for building interactive scheduling interfaces
+- **Styles API** – full support for `classNames`, `styles`, and `unstyled` props, along with CSS variables for theming
+
+To get started, follow the [getting started guide](/schedule/getting-started).
+
 ## Collapse horizontal orientation
 
 [Collapse](/core/collapse) component now supports horizontal orientation:
