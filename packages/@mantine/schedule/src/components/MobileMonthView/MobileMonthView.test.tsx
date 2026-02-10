@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import React from 'react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
@@ -76,8 +77,10 @@ describe('@mantine/schedule/MobileMonthView', () => {
       'mobileMonthViewEventsList',
       'mobileMonthViewEventsHeader',
       'mobileMonthViewEvent',
-      'mobileMonthViewEventTime',
       'mobileMonthViewEventColor',
+      'mobileMonthViewEventBody',
+      'mobileMonthViewEventTitle',
+      'mobileMonthViewEventTime',
     ],
   });
 
@@ -399,6 +402,97 @@ describe('@mantine/schedule/MobileMonthView', () => {
     render(<MobileMonthView {...defaultProps} onDayClick={spy} mode="static" />);
     await userEvent.click(screen.getByRole('button', { name: 'November 1, 2025' }));
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('calls onEventClick when event is clicked', async () => {
+    const spy = jest.fn();
+    render(<MobileMonthView {...defaultProps} onEventClick={spy} />);
+    await userEvent.click(screen.getByText('Event 1'));
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ id: '1', title: 'Event 1' }),
+      expect.any(Object)
+    );
+  });
+
+  it('does not call onEventClick in static mode', async () => {
+    const spy = jest.fn();
+    render(<MobileMonthView {...defaultProps} onEventClick={spy} mode="static" />);
+    await userEvent.click(screen.getByText('Event 1'));
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('renders event title by default', () => {
+    render(<MobileMonthView {...defaultProps} />);
+    expect(screen.getByText('Event 1')).toBeInTheDocument();
+    expect(screen.getByText('Event 2')).toBeInTheDocument();
+  });
+
+  it('supports renderEvent to customize event rendering', () => {
+    render(
+      <MobileMonthView
+        {...defaultProps}
+        renderEvent={(event, props) => (
+          <button type="button" {...props} data-testid="custom-event">
+            Custom: {event.title}
+          </button>
+        )}
+      />
+    );
+
+    expect(screen.getAllByTestId('custom-event')).toHaveLength(2);
+    expect(screen.getByText('Custom: Event 1')).toBeInTheDocument();
+  });
+
+  it('passes onClick to renderEvent props', async () => {
+    const spy = jest.fn();
+    render(
+      <MobileMonthView
+        {...defaultProps}
+        onEventClick={spy}
+        renderEvent={(_event, props) => (
+          <button type="button" {...props} data-testid="custom-event" />
+        )}
+      />
+    );
+
+    await userEvent.click(screen.getAllByTestId('custom-event')[0]);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ id: '1', title: 'Event 1' }),
+      expect.any(Object)
+    );
+  });
+
+  it('supports renderHeader to customize header', () => {
+    render(
+      <MobileMonthView
+        {...defaultProps}
+        renderHeader={(defaultHeader) => (
+          <div data-testid="custom-header">
+            {defaultHeader}
+            <button type="button">+</button>
+          </div>
+        )}
+      />
+    );
+
+    expect(screen.getByTestId('custom-header')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '+' })).toBeInTheDocument();
+  });
+
+  it('renders default header when renderHeader is not provided', () => {
+    const { container } = render(<MobileMonthView {...defaultProps} />);
+    expect(
+      container.querySelector('.mantine-MobileMonthView-mobileMonthViewHeader')
+    ).toBeInTheDocument();
+  });
+
+  it('passes default header to renderHeader function', () => {
+    const spy = jest.fn((header: React.ReactNode) => <div data-testid="wrapper">{header}</div>);
+    const { container } = render(<MobileMonthView {...defaultProps} renderHeader={spy} />);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(
+      container.querySelector('.mantine-MobileMonthView-mobileMonthViewHeader')
+    ).toBeInTheDocument();
   });
 
   describe('keyboard navigation', () => {

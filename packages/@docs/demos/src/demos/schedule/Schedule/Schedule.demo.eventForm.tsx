@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { ActionIcon, Box } from '@mantine/core';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { _eventFormCode, EventData, EventForm } from '../_EventForm';
@@ -96,8 +97,18 @@ function Demo() {
     setFormOpened(true);
   };
 
+  const handleCreateEvent = () => {
+    setSelectedEventData({
+      title: '',
+      start: dayjs().startOf('hour').toDate(),
+      end: dayjs().startOf('hour').add(1, 'hour').toDate(),
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   return (
-    <>
+    <Box style={{ resize: 'horizontal', overflow: 'auto', minWidth: 300, maxWidth: '100%' }}>
       <Schedule
         events={allEvents}
         onTimeSlotClick={handleTimeSlotClick}
@@ -106,6 +117,17 @@ function Demo() {
         onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
         withDragSlotSelect
+        layout="responsive"
+        mobileMonthViewProps={{
+          renderHeader: (defaultHeader) => (
+            <Box style={{ display: 'flex', alignItems: 'center' }}>
+              <Box style={{ flex: 1 }}>{defaultHeader}</Box>
+              <ActionIcon variant="default" mx="sm" onClick={handleCreateEvent}>
+                +
+              </ActionIcon>
+            </Box>
+          ),
+        }}
       />
 
       <EventForm
@@ -116,12 +138,13 @@ function Demo() {
         onSubmit={handleSubmit}
         onDelete={selectedEventData?.id ? handleDeleteEvent : undefined}
       />
-    </>
+    </Box>
   );
 }
 
 const code = `import dayjs from 'dayjs';
 import { useState } from 'react';
+import { ActionIcon, Box } from '@mantine/core';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
 import { EventData, EventForm } from './EventForm';
 import { events } from './events';
@@ -217,8 +240,18 @@ function Demo() {
     }
   };
 
+  const handleCreateEvent = () => {
+    setSelectedEventData({
+      title: '',
+      start: dayjs().startOf('hour').toDate(),
+      end: dayjs().startOf('hour').add(1, 'hour').toDate(),
+      color: 'blue',
+    });
+    setFormOpened(true);
+  };
+
   return (
-    <>
+    <Box style={{ resize: 'horizontal', overflow: 'auto', minWidth: 300, maxWidth: '100%' }}>
       <Schedule
         events={allEvents}
         onTimeSlotClick={handleTimeSlotClick}
@@ -227,6 +260,17 @@ function Demo() {
         onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
         withDragSlotSelect
+        layout="responsive"
+        mobileMonthViewProps={{
+          renderHeader: (defaultHeader) => (
+            <Box style={{ display: 'flex', alignItems: 'center' }}>
+              <Box style={{ flex: 1 }}>{defaultHeader}</Box>
+              <ActionIcon variant="default" mx="sm" onClick={handleCreateEvent}>
+                +
+              </ActionIcon>
+            </Box>
+          ),
+        }}
       />
 
       <EventForm
@@ -237,7 +281,7 @@ function Demo() {
         onSubmit={handleSubmit}
         onDelete={selectedEventData?.id ? handleDeleteEvent : undefined}
       />
-    </>
+    </Box>
   );
 }`;
 

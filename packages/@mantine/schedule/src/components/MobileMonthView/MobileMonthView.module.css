@@ -231,19 +231,40 @@
 }
 
 .mobileMonthViewEvent {
-  display: flex;
-  gap: var(--mantine-spacing-sm);
-  padding: var(--mantine-spacing-xs) 0;
+  display: block;
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
 
   &:where(:not(:last-child)) {
     border-bottom: 1px solid var(--mobile-month-view-border-color);
   }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+}
+
+.mobileMonthViewEventBody {
+  display: flex;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) 0;
 }
 
 .mobileMonthViewEventColor {
   width: 4px;
   border-radius: 2px;
   flex-shrink: 0;
+}
+
+.mobileMonthViewEventTitle {
+  /* empty */
 }
 
 .mobileMonthViewEventTime {

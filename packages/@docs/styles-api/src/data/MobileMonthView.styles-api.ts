@@ -18,9 +18,11 @@ export const MobileMonthViewStylesApi: StylesApiData<MobileMonthViewFactory> = {
     mobileMonthViewDayIndicator: 'Individual day indicator dot',
     mobileMonthViewEventsList: 'Events list container',
     mobileMonthViewEventsHeader: 'Events list header (selected date)',
-    mobileMonthViewEvent: 'Event item container',
-    mobileMonthViewEventTime: 'Event time label',
+    mobileMonthViewEvent: 'Event item button',
     mobileMonthViewEventColor: 'Event color indicator',
+    mobileMonthViewEventBody: 'Event body layout container',
+    mobileMonthViewEventTitle: 'Event title text',
+    mobileMonthViewEventTime: 'Event time label',
     mobileMonthViewNoEvents: 'No events message',
   },
 

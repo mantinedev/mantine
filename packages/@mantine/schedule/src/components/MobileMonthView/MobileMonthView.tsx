@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import {
   AccordionChevron,
   Box,
@@ -42,7 +42,7 @@ import {
   handleMonthViewKeyDown,
   MonthViewControlsRef,
 } from '../MonthView/handle-month-view-key-down';
-import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEvent } from '../ScheduleEvent/ScheduleEvent';
 import { getMobileMonthViewEvents } from './get-mobile-month-view-events';
 import classes from './MobileMonthView.module.css';
 
@@ -63,8 +63,10 @@ export type MobileMonthViewStylesNames =
   | 'mobileMonthViewEventsList'
   | 'mobileMonthViewEventsHeader'
   | 'mobileMonthViewEvent'
-  | 'mobileMonthViewEventTime'
   | 'mobileMonthViewEventColor'
+  | 'mobileMonthViewEventBody'
+  | 'mobileMonthViewEventTitle'
+  | 'mobileMonthViewEventTime'
   | 'mobileMonthViewNoEvents';
 
 export type MobileMonthViewCssVariables = {
@@ -141,8 +143,8 @@ export interface MobileMonthViewProps
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default 'default' */
   mode?: ScheduleMode;
 
-  /** Custom event body renderer */
-  renderEventBody?: RenderEventBody;
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
 
   /** Format for the events list header date @default 'dddd, MMMM D' */
   eventsHeaderFormat?: DateLabelFormat;
@@ -152,6 +154,12 @@ export interface MobileMonthViewProps
 
   /** Called when the year back button in the header is clicked */
   onYearClick?: () => void;
+
+  /** Called when event is clicked */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Custom header renderer, receives default header element as argument */
+  renderHeader?: (defaultHeader: React.ReactNode) => React.ReactNode;
 }
 
 export type MobileMonthViewFactory = Factory<{
@@ -210,10 +218,12 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     events,
     labels,
     mode,
-    renderEventBody,
+    renderEvent,
     eventsHeaderFormat,
     noEventsText,
     onYearClick,
+    onEventClick,
+    renderHeader,
     ...others
   } = props;
 
@@ -392,28 +402,39 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     const endTime = dayjs(event.end).format('HH:mm');
     const isAllDay = startTime === '00:00' && endTime === '00:00';
 
-    return (
-      <Box {...getStyles('mobileMonthViewEvent')} key={event.id}>
+    const eventChildren = (
+      <Box {...getStyles('mobileMonthViewEventBody')}>
         <div
           {...getStyles('mobileMonthViewEventColor', {
             style: { backgroundColor: getThemeColor(event.color, theme) },
           })}
         />
         <div>
-          <ScheduleEvent
-            event={event}
-            size="md"
-            radius={radius}
-            renderEventBody={renderEventBody}
-            mode={mode}
-            style={{ padding: 0 }}
-          />
+          <Text {...getStyles('mobileMonthViewEventTitle')}>{event.title}</Text>
           <Text {...getStyles('mobileMonthViewEventTime')} size="xs" c="dimmed">
             {isAllDay ? 'All day' : `${startTime} – ${endTime}`}
           </Text>
         </div>
       </Box>
     );
+
+    const rootProps: React.ComponentPropsWithoutRef<'button'> & { children: React.ReactNode } = {
+      ...getStyles('mobileMonthViewEvent'),
+      onClick:
+        mode === 'static'
+          ? undefined
+          : (e: React.MouseEvent<HTMLButtonElement>) => {
+              onEventClick?.(event, e);
+            },
+      tabIndex: mode === 'static' ? -1 : 0,
+      children: eventChildren,
+    };
+
+    if (typeof renderEvent === 'function') {
+      return <React.Fragment key={event.id}>{renderEvent(event, rootProps)}</React.Fragment>;
+    }
+
+    return <UnstyledButton {...rootProps} key={event.id} />;
   });
 
   const eventsHeader = _selectedDate
@@ -438,20 +459,39 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       mod={{ 'with-week-numbers': withWeekNumbers }}
       {...others}
     >
-      <div {...getStyles('mobileMonthViewHeader')}>
-        <UnstyledButton
-          {...getStyles('mobileMonthViewHeaderBackButton')}
-          onClick={onYearClick}
-          mod={{ static: mode === 'static' }}
-          tabIndex={mode === 'static' ? -1 : 0}
-        >
-          <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
-          {dayjs(date).format('YYYY')}
-        </UnstyledButton>
-        <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
-          {headerLabel}
-        </Text>
-      </div>
+      {typeof renderHeader === 'function' ? (
+        renderHeader(
+          <div {...getStyles('mobileMonthViewHeader')}>
+            <UnstyledButton
+              {...getStyles('mobileMonthViewHeaderBackButton')}
+              onClick={onYearClick}
+              mod={{ static: mode === 'static' }}
+              tabIndex={mode === 'static' ? -1 : 0}
+            >
+              <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
+              {dayjs(date).format('YYYY')}
+            </UnstyledButton>
+            <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
+              {headerLabel}
+            </Text>
+          </div>
+        )
+      ) : (
+        <div {...getStyles('mobileMonthViewHeader')}>
+          <UnstyledButton
+            {...getStyles('mobileMonthViewHeaderBackButton')}
+            onClick={onYearClick}
+            mod={{ static: mode === 'static' }}
+            tabIndex={mode === 'static' ? -1 : 0}
+          >
+            <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
+            {dayjs(date).format('YYYY')}
+          </UnstyledButton>
+          <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
+            {headerLabel}
+          </Text>
+        </div>
+      )}
 
       <Box {...getStyles('mobileMonthViewCalendar')} mod={{ 'with-weekdays': withWeekDays }}>
         {weekdays && (

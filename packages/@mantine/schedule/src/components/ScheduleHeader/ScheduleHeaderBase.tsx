@@ -8,8 +8,10 @@ import { ViewSelectProps } from './ViewSelect/ViewSelect';
 interface NavigationHandlers {
   /** Handler for previous button click, returns new date */
   previous: () => DateStringValue;
+
   /** Handler for next button click, returns new date */
   next: () => DateStringValue;
+
   /** Handler for today button click, returns new date */
   today: () => DateStringValue;
 }

@@ -313,9 +313,10 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             locale={locale}
             radius={radius}
             labels={labels}
-            renderEventBody={renderEventBody}
             mode={mode}
             onYearClick={() => handleViewChange('year')}
+            onEventClick={onEventClick}
+            onDayClick={onDayClick}
             {...mobileMonthViewProps}
           />
         );
