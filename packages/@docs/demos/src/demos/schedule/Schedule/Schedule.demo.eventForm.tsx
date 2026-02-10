@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { IconPlus } from '@tabler/icons-react';
 import { ActionIcon, Box, Group } from '@mantine/core';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
@@ -11,6 +11,7 @@ function Demo() {
   const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
+  const mobileSelectedDate = useRef<string>(dayjs().format('YYYY-MM-DD'));
 
   const handleTimeSlotClick = (slotStart: string, slotEnd: string) => {
     setSelectedEventData({
@@ -99,10 +100,11 @@ function Demo() {
   };
 
   const handleCreateEvent = () => {
+    const selectedDate = mobileSelectedDate.current;
     setSelectedEventData({
       title: '',
-      start: dayjs().startOf('hour').toDate(),
-      end: dayjs().startOf('hour').add(1, 'hour').toDate(),
+      start: dayjs(selectedDate).startOf('day').toDate(),
+      end: dayjs(selectedDate).endOf('day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -120,7 +122,12 @@ function Demo() {
         withDragSlotSelect
         layout="responsive"
         mobileMonthViewProps={{
-          renderHeader: (defaultHeader) => (
+          onSelectedDateChange: (date) => {
+            if (date) {
+              mobileSelectedDate.current = date;
+            }
+          },
+          renderHeader: ({ defaultHeader }) => (
             <Group justify="space-between" w="100%">
               <Group justify="space-between" flex="1">
                 {defaultHeader}
@@ -153,8 +160,9 @@ function Demo() {
 }
 
 const code = `import dayjs from 'dayjs';
-import { useState } from 'react';
-import { ActionIcon, Box } from '@mantine/core';
+import { useRef, useState } from 'react';
+import { IconPlus } from '@tabler/icons-react';
+import { ActionIcon, Box, Group } from '@mantine/core';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
 import { EventData, EventForm } from './EventForm';
 import { events } from './events';
@@ -163,6 +171,7 @@ function Demo() {
   const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
+  const mobileSelectedDate = useRef<string>(dayjs().format('YYYY-MM-DD'));
 
   const handleTimeSlotClick = (slotStart: string, slotEnd: string) => {
     setSelectedEventData({
@@ -251,10 +260,11 @@ function Demo() {
   };
 
   const handleCreateEvent = () => {
+    const selectedDate = mobileSelectedDate.current;
     setSelectedEventData({
       title: '',
-      start: dayjs().startOf('hour').toDate(),
-      end: dayjs().startOf('hour').add(1, 'hour').toDate(),
+      start: dayjs(selectedDate).startOf('day').toDate(),
+      end: dayjs(selectedDate).endOf('day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -272,7 +282,12 @@ function Demo() {
         withDragSlotSelect
         layout="responsive"
         mobileMonthViewProps={{
-          renderHeader: (defaultHeader) => (
+          onSelectedDateChange: (date) => {
+            if (date) {
+              mobileSelectedDate.current = date;
+            }
+          },
+          renderHeader: ({ defaultHeader }) => (
             <Group justify="space-between" w="100%">
               <Group justify="space-between" flex="1">
                 {defaultHeader}

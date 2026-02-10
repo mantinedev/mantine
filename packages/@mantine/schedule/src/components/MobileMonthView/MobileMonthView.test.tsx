@@ -466,7 +466,7 @@ describe('@mantine/schedule/MobileMonthView', () => {
     render(
       <MobileMonthView
         {...defaultProps}
-        renderHeader={(defaultHeader) => (
+        renderHeader={({ defaultHeader }) => (
           <div data-testid="custom-header">
             {defaultHeader}
             <button type="button">+</button>
@@ -486,10 +486,20 @@ describe('@mantine/schedule/MobileMonthView', () => {
     ).toBeInTheDocument();
   });
 
-  it('passes default header to renderHeader function', () => {
-    const spy = jest.fn((header: React.ReactNode) => <div data-testid="wrapper">{header}</div>);
+  it('passes mode and date to renderHeader function', () => {
+    const spy = jest.fn(
+      ({ defaultHeader }: { defaultHeader: React.ReactNode }) =>
+        (<div data-testid="wrapper">{defaultHeader}</div>) as React.ReactElement
+    );
     const { container } = render(<MobileMonthView {...defaultProps} renderHeader={spy} />);
     expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mode: 'default',
+        date: '2025-11-01',
+        defaultHeader: expect.anything(),
+      })
+    );
     expect(
       container.querySelector('.mantine-MobileMonthView-mobileMonthViewHeader')
     ).toBeInTheDocument();

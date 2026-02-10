@@ -151,6 +151,24 @@ describe('@mantine/schedule/YearView', () => {
     expect(spy).toHaveBeenCalledWith('2025-01-01', expect.any(Object));
   });
 
+  it('calls onViewChange and onDateChange when month is clicked with both handlers', async () => {
+    const dateSpy = jest.fn();
+    const viewSpy = jest.fn();
+    render(
+      <YearView
+        {...defaultProps}
+        onDateChange={dateSpy}
+        onMonthClick={(date) => {
+          dateSpy(date);
+          viewSpy('month');
+        }}
+      />
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'March' }));
+    expect(dateSpy).toHaveBeenCalledWith('2025-03-01');
+    expect(viewSpy).toHaveBeenCalledWith('month');
+  });
+
   it('supports onWeekNumberClick prop', async () => {
     const spy = jest.fn();
     render(<YearView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);

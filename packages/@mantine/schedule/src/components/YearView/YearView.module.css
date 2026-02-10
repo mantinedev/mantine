@@ -18,6 +18,10 @@
 .yearViewQuarter {
   display: flex;
 
+  @container (width <= 500px) {
+    flex-direction: column;
+  }
+
   &:where(:first-of-type) :where(.yearViewMonth:first-of-type) {
     border-start-start-radius: var(--year-view-radius);
   }

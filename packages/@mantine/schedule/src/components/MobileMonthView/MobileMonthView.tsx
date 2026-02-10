@@ -73,6 +73,15 @@ export type MobileMonthViewCssVariables = {
   mobileMonthView: '--mobile-month-view-radius';
 };
 
+export interface MobileMonthViewRenderHeaderInput {
+  /** Current interaction mode */
+  mode: ScheduleMode;
+  /** Current date displayed in the view */
+  date: Date | string;
+  /** Default header element */
+  defaultHeader: React.ReactNode;
+}
+
 export interface MobileMonthViewProps
   extends BoxProps, StylesApiProps<MobileMonthViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
@@ -158,8 +167,8 @@ export interface MobileMonthViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Custom header renderer, receives default header element as argument */
-  renderHeader?: (defaultHeader: React.ReactNode) => React.ReactNode;
+  /** Custom header renderer, receives object with mode, date, and default header element */
+  renderHeader?: (input: MobileMonthViewRenderHeaderInput) => React.ReactNode;
 }
 
 export type MobileMonthViewFactory = Factory<{
@@ -473,7 +482,9 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       {...others}
     >
       <div {...getStyles('mobileMonthViewHeader')}>
-        {typeof renderHeader === 'function' ? renderHeader(defaultHeader) : defaultHeader}
+        {typeof renderHeader === 'function'
+          ? renderHeader({ mode: mode!, date, defaultHeader })
+          : defaultHeader}
       </div>
 
       <Box {...getStyles('mobileMonthViewCalendar')} mod={{ 'with-weekdays': withWeekDays }}>

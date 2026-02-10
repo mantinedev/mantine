@@ -4,4 +4,5 @@ export type {
   MobileMonthViewFactory,
   MobileMonthViewStylesNames,
   MobileMonthViewCssVariables,
+  MobileMonthViewRenderHeaderInput,
 } from './MobileMonthView';

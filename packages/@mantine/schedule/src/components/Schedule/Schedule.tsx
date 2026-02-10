@@ -59,6 +59,7 @@ type ScheduleCommonProps =
   | 'onAllDaySlotClick'
   | 'onEventClick'
   | 'onDayClick'
+  | 'onMonthClick'
   | 'withDragSlotSelect'
   | 'onSlotDragEnd'
   | 'view'
@@ -261,6 +262,11 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     onViewChange?.(newView);
   };
 
+  const handleMonthClick = (monthDate: DateStringValue) => {
+    handleDateChange(monthDate);
+    handleViewChange('month');
+  };
+
   const commonProps = {
     date: _date,
     onDateChange: handleDateChange,
@@ -294,7 +300,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
       case 'month':
         return <MonthView {...commonProps} {...monthViewProps} />;
       case 'year':
-        return <YearView {...commonProps} {...yearViewProps} />;
+        return <YearView {...commonProps} onMonthClick={handleMonthClick} {...yearViewProps} />;
       default:
         return null;
     }
@@ -316,12 +322,11 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             mode={mode}
             onYearClick={() => handleViewChange('year')}
             onEventClick={onEventClick}
-            onDayClick={onDayClick}
             {...mobileMonthViewProps}
           />
         );
       case 'year':
-        return <YearView {...commonProps} {...yearViewProps} />;
+        return <YearView {...commonProps} onMonthClick={handleMonthClick} {...yearViewProps} />;
       default:
         return null;
     }
