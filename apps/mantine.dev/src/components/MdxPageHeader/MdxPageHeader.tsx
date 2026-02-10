@@ -1,4 +1,4 @@
-import { IconCalendar, IconLicense, IconPencil, IconSwitch2 } from '@tabler/icons-react';
+import { IconCalendar, IconLicense, IconPencil, IconRobot, IconSwitch2 } from '@tabler/icons-react';
 import { Text, Title } from '@mantine/core';
 import { GithubIcon, NpmIcon } from '@mantinex/dev-icons';
 import { DOCS_BASE, SOURCE_BASE } from '@/links';
@@ -46,6 +46,16 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
             link={`${SOURCE_BASE}/${meta.source}`}
           >
             View source code
+          </LinkItem>
+        )}
+
+        {Array.isArray(meta.props) && (
+          <LinkItem
+            label="LLM docs"
+            icon={<IconRobot size={14} stroke={1.5} />}
+            link={`https://mantine.dev/llms/${meta.slug.slice(1).replace(/\//g, '-')}.md`}
+          >
+            LLM documentation
           </LinkItem>
         )}
 
