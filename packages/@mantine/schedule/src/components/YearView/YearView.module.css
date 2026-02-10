@@ -20,6 +20,7 @@
 
   @container (width <= 500px) {
     flex-direction: column;
+    --year-view-font-size: clamp(6px, 3.5cqw, 22px);
   }
 
   &:where(:first-of-type) :where(.yearViewMonth:first-of-type) {
