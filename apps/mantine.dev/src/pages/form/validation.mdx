@@ -18,6 +18,7 @@ Each form rule receives the following arguments:
 - `value` – value of the field
 - `values` – all form values
 - `path` – field path, for example `user.email` or `cart.0.price`
+- `signal` – an `AbortSignal` that is aborted when a newer validation supersedes the current one (useful for cancelling in-flight async requests)
 
 The `path` argument can be used to get information about the field location relative to other fields.
 For example, you can get the index of an array element:
@@ -162,7 +163,7 @@ For example, you can show a notification:
 ## isValid handler
 
 `form.isValid` performs form validation with the given validation functions, rules object, or schema, but unlike
-`form.validate`, it does not set `form.errors` and just returns a boolean value that indicates whether the form is valid.
+`form.validate`, it does not set `form.errors` and just returns a promise that resolves to a boolean value indicating whether the form is valid.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -177,11 +178,31 @@ const form = useForm({
 });
 
 // get the validation status of all values
-form.isValid(); // -> false
+await form.isValid(); // -> false
 
 // get the validation status of a field
-form.isValid('name'); // -> false
+await form.isValid('name'); // -> false
 ```
+
+## Async validation
+
+Validation rules can be async – return a `Promise` that resolves to an error message or `null`.
+When any rule is async, `form.validate()`, `form.validateField()` and `form.isValid()` all return promises.
+The `form.validating` property is `true` while any async validation is in progress, and `form.isValidating(path)` can be used to check individual fields.
+
+Each rule receives an `AbortSignal` as the fourth argument. The signal is aborted when a newer validation
+supersedes the current one, which you can use to cancel in-flight HTTP requests and avoid race conditions.
+
+<Demo data={FormDemos.asyncValidation} />
+
+## Async validation with debounce
+
+When using async validation with `validateInputOnChange`, you can set `validateDebounce` to avoid
+firing an API call on every keystroke. The debounce applies only to field-level validation triggered
+by `validateInputOnChange` and `validateInputOnBlur` – it does not affect explicit `form.validate()` calls
+or `form.onSubmit()`.
+
+<Demo data={FormDemos.asyncValidationDebounce} />
 
 ## Focus the first invalid field
 

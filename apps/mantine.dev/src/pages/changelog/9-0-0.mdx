@@ -1,5 +1,6 @@
 import {
   HooksDemos,
+  FormDemos,
   FloatingWindowDemos,
   OverflowListDemos,
   CardDemos,
@@ -236,6 +237,23 @@ function Demo() {
 }
 ```
 
+## use-form async validation
+
+[use-form](/form/use-form) validation rules can now be async – return a `Promise` that resolves to an
+error message or `null`. When any rule is async, `form.validate()`, `form.validateField()` and
+`form.isValid()` all return promises. The `form.validating` property is `true` while any async
+validation is in progress, and `form.isValidating(path)` checks individual fields.
+
+Each rule receives an `AbortSignal` as the fourth argument. The signal is aborted when a newer
+validation supersedes the current one, which you can use to cancel in-flight HTTP requests.
+
+<Demo data={FormDemos.asyncValidation} />
+
+When using async validation with `validateInputOnChange`, set `validateDebounce` to avoid
+firing an API call on every keystroke:
+
+<Demo data={FormDemos.asyncValidationDebounce} />
+
 ## Generic components
 
 [SegmentedControl](/core/segmented-control), [Select](/core/select), [MultiSelect](/core/multi-select),
@@ -336,6 +354,7 @@ implicitly created grid rows:
 - `light` variant in all components now uses different colors values without transparency to improve contrast
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead
+- `@mantine/form` validation is now natively async – `form.validate()`, `form.validateField()` and `form.isValid()` return promises. New `form.validating`, `form.isValidating(path)`, `validateDebounce` and `resolveValidationError` options were added.
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
 - All Mantine components now use `font-weight: 600` instead of `font-weight: 500` for better readability
 - All Mantine components now support logical margin and padding style props:

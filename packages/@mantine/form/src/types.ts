@@ -23,7 +23,12 @@ export interface ReorderPayload {
   to: number;
 }
 
-type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
+type Rule<Value, Values> = (
+  value: Value,
+  values: Values,
+  path: string,
+  signal?: AbortSignal
+) => React.ReactNode | Promise<React.ReactNode>;
 
 type SetSubmitting = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -46,7 +51,9 @@ export type FormRulesRecord<Values, InitValues = Values> = Partial<{
   [Key in keyof Values]: FormRule<Values[Key], InitValues>;
 }> & { [formRootRule]?: Rule<Values, InitValues> };
 
-export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
+export type FormValidateInput<Values> =
+  | FormRulesRecord<Values>
+  | ((values: Values) => FormErrors | Promise<FormErrors>);
 
 export type SetValues<Values> = React.Dispatch<React.SetStateAction<Partial<Values>>>;
 export type SetInitialValues<Values> = (values: Values) => void;
@@ -107,10 +114,10 @@ export type ClearFieldError = (path: unknown) => void;
 export type ClearFieldDirty = (path: unknown) => void;
 export type ClearErrors = () => void;
 export type Reset = () => void;
-export type Validate = () => FormValidationResult;
+export type Validate = () => Promise<FormValidationResult>;
 export type ValidateField<Values> = <Field extends LooseKeys<Values>>(
   path: Field
-) => FormFieldValidationResult;
+) => Promise<FormFieldValidationResult>;
 
 export type SetFieldError<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -160,7 +167,8 @@ export type ResetStatus = () => void;
 export type GetStatus = () => FormStatus;
 
 export type ResetDirty<Values> = (values?: Values) => void;
-export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
+export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => Promise<boolean>;
+export type IsValidating<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 export type Initialize<Values> = (values: Values) => void;
 
 export type FormFieldSubscriber<Values, Field extends LooseKeys<Values>> = (input: {
@@ -203,6 +211,8 @@ export interface UseFormInput<Values, TransformedValues = Values> {
   onSubmitPreventDefault?: 'always' | 'never' | 'validation-failed';
   touchTrigger?: 'focus' | 'change';
   cascadeUpdates?: boolean;
+  validateDebounce?: number;
+  resolveValidationError?: (error: unknown) => React.ReactNode;
 }
 
 export interface UseFormReturnType<Values, TransformedValues = Values> {
@@ -236,6 +246,8 @@ export interface UseFormReturnType<Values, TransformedValues = Values> {
   resetTouched: ResetStatus;
   resetDirty: ResetDirty<Values>;
   isValid: IsValid<Values>;
+  validating: boolean;
+  isValidating: IsValidating<Values>;
   getTransformedValues: GetTransformedValues<Values, TransformedValues>;
   getValues: () => Values;
   getInitialValues: () => Values;

@@ -3,7 +3,7 @@ import { FormMode } from '../../types';
 import { useForm } from '../../use-form';
 
 function tests(mode: FormMode) {
-  it('validates root property on change', () => {
+  it('validates root property on change', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -18,13 +18,17 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
 
-    act(() => hook.result.current.setFieldValue('a', '1'));
+    await act(async () => {
+      hook.result.current.setFieldValue('a', '1');
+    });
     expect(hook.result.current.errors).toStrictEqual({ a: 'error-a' });
 
-    act(() => hook.result.current.setFieldValue('b', '1'));
+    await act(async () => {
+      hook.result.current.setFieldValue('b', '1');
+    });
     expect(hook.result.current.errors).toStrictEqual({ a: 'error-a', b: 'error-b' });
 
-    act(() => {
+    await act(async () => {
       hook.result.current.setFieldValue('a', 'valid');
       hook.result.current.setFieldValue('b', 'valid');
     });
@@ -32,7 +36,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.errors).toStrictEqual({});
   });
 
-  it('validates only specified fields', () => {
+  it('validates only specified fields', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -47,13 +51,17 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
 
-    act(() => hook.result.current.setFieldValue('a', '1'));
+    await act(async () => {
+      hook.result.current.setFieldValue('a', '1');
+    });
     expect(hook.result.current.errors).toStrictEqual({ a: 'error-a' });
 
-    act(() => hook.result.current.setFieldValue('b', '1'));
+    await act(async () => {
+      hook.result.current.setFieldValue('b', '1');
+    });
     expect(hook.result.current.errors).toStrictEqual({ a: 'error-a' });
 
-    act(() => {
+    await act(async () => {
       hook.result.current.setFieldValue('a', 'valid');
       hook.result.current.setFieldValue('b', 'valid');
     });
@@ -61,7 +69,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.errors).toStrictEqual({});
   });
 
-  it('validates nested property on change', () => {
+  it('validates nested property on change', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -78,16 +86,20 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
 
-    act(() => hook.result.current.setFieldValue('nested.a', '1'));
+    await act(async () => {
+      hook.result.current.setFieldValue('nested.a', '1');
+    });
     expect(hook.result.current.errors).toStrictEqual({ 'nested.a': 'error-a' });
 
-    act(() => hook.result.current.setFieldValue('nested.b', '1'));
+    await act(async () => {
+      hook.result.current.setFieldValue('nested.b', '1');
+    });
     expect(hook.result.current.errors).toStrictEqual({
       'nested.a': 'error-a',
       'nested.b': 'error-b',
     });
 
-    act(() => {
+    await act(async () => {
       hook.result.current.setFieldValue('nested.a', 'valid');
       hook.result.current.setFieldValue('nested.b', 'valid');
     });

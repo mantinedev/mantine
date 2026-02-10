@@ -50,7 +50,7 @@ const form = useForm({
   validate: zodResolver(schema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  name: 'Name should have at least 2 letters',
@@ -84,7 +84,7 @@ const form = useForm({
   validate: zodResolver(nestedSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'nested.field': 'Field should have at least 2 letters',
@@ -116,7 +116,7 @@ const form = useForm({
   validate: zodResolver(listSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'list.0.name': 'Name should have at least 2 letters',
@@ -188,7 +188,7 @@ const form = useForm({
   validate: yupResolver(schema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  name: 'Name should have at least 2 letters',
@@ -222,7 +222,7 @@ const form = useForm({
   validate: yupResolver(nestedSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'nested.field': 'Field should have at least 2 letters',
@@ -254,7 +254,7 @@ const form = useForm({
   validate: yupResolver(listSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'list.0.name': 'Name should have at least 2 letters',
@@ -300,7 +300,7 @@ const form = useForm({
   validate: joiResolver(schema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  name: 'Name should have at least 2 letters',
@@ -334,7 +334,7 @@ const form = useForm({
   validate: joiResolver(nestedSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'nested.field': 'Field should have at least 2 letters',
@@ -367,7 +367,7 @@ const form = useForm({
   validate: joiResolver(listSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'list.0.name': 'Name should have at least 2 letters',
@@ -405,7 +405,7 @@ const form = useForm({
   validate: superstructResolver(schema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //   name: 'name: Expected a string with a length between `2` and `30` but received one with a length of `0`',
@@ -437,7 +437,7 @@ const form = useForm({
   validate: superstructResolver(nestedSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'nested.field': 'nested field: Expected a string with a length between `2` and `30` but received one with a length of `0`',
@@ -467,7 +467,7 @@ const form = useForm({
   validate: superstructResolver(listSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'list 0 name: Expected a string with a length between `2` and `30` but received one with a length of `0`',
@@ -508,7 +508,7 @@ const form = useForm({
   validate: valibotResolver(schema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  name: 'Name should have at least 2 letters',
@@ -542,7 +542,7 @@ const form = useForm({
   validate: valibotResolver(nestedSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'nested.field': 'Field should have at least 2 letters',
@@ -574,7 +574,7 @@ const form = useForm({
   validate: valibotResolver(listSchema),
 });
 
-form.validate();
+await form.validate();
 form.errors;
 // -> {
 //  'list.0.name': 'Name should have at least 2 letters',

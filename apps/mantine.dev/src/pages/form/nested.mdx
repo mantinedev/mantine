@@ -40,7 +40,7 @@ form.getInputProps('user.firstName');
 form.setFieldValue('fruits.1.name', 'Carrot');
 
 // Validate deeply nested field
-form.validateField('deeply.nested.object.0.item');
+await form.validateField('deeply.nested.object.0.item');
 ```
 
 ## Nested objects
@@ -94,7 +94,7 @@ const form = useForm({
   },
 });
 
-form.validate();
+await form.validate();
 form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occupation is too short' }
 ```
 
@@ -138,10 +138,10 @@ const form = useForm({
 });
 
 // Validate a list item field
-form.validateField('users.1.name');
+await form.validateField('users.1.name');
 
 // Or validate with all other fields
-form.validate();
+await form.validate();
 console.log(form.errors);
 // {
 //  'users.0.age': 'User must be 18 or older',

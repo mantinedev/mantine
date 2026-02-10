@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useFormActions } from './actions';
 import { getInputOnChange } from './get-input-on-change';
 import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
 import { useFormList } from './hooks/use-form-list/use-form-list';
 import { useFormStatus } from './hooks/use-form-status/use-form-status';
+import { useFormValidating } from './hooks/use-form-validating/use-form-validating';
 import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getDataPath, getPath } from './paths';
@@ -13,6 +14,7 @@ import {
   GetTransformedValues,
   Initialize,
   IsValid,
+  IsValidating,
   Key,
   OnReset,
   OnSubmit,
@@ -46,21 +48,26 @@ export function useForm<
   onSubmitPreventDefault = 'always',
   touchTrigger = 'change',
   cascadeUpdates = false,
+  validateDebounce = 0,
+  resolveValidationError = (err: unknown) => (err instanceof Error ? err.message : String(err)),
 }: UseFormInput<Values, TransformedValues> = {}): UseFormReturnType<Values, TransformedValues> {
   const $errors = useFormErrors<Values>(initialErrors);
   const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
   const $list = useFormList<Values>({ $values, $errors, $status });
   const $watch = useFormWatch<Values>({ $status, cascadeUpdates });
+  const $validating = useFormValidating();
   const [formKey, setFormKey] = useState(0);
   const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
   const [submitting, setSubmitting] = useState(false);
+  const validateGeneration = useRef(0);
 
   const reset: Reset = useCallback(() => {
     $values.resetValues();
     $errors.clearErrors();
     $status.resetDirty();
     $status.resetTouched();
+    $validating.clearValidating();
     mode === 'uncontrolled' && setFormKey((key) => key + 1);
   }, []);
 
@@ -92,6 +99,51 @@ export function useForm<
     [handleValuesChanges]
   );
 
+  const debouncedValidateField = useMemo(() => {
+    const timers: Record<string, ReturnType<typeof setTimeout>> = {};
+
+    return (path: string) => {
+      clearTimeout(timers[path]);
+      if (validateDebounce > 0) {
+        timers[path] = setTimeout(() => {
+          const signal = $validating.getAbortSignal(path);
+          $validating.setFieldValidating(path, true);
+          validateFieldValue(path, rules, $values.refValues.current, resolveValidationError, signal)
+            .then((results) => {
+              if (signal.aborted) {
+                return;
+              }
+              results.hasError
+                ? $errors.setFieldError(path as any, results.error)
+                : $errors.clearFieldError(path);
+            })
+            .finally(() => {
+              if (!signal.aborted) {
+                $validating.setFieldValidating(path, false);
+              }
+            });
+        }, validateDebounce);
+      } else {
+        const signal = $validating.getAbortSignal(path);
+        $validating.setFieldValidating(path, true);
+        validateFieldValue(path, rules, $values.refValues.current, resolveValidationError, signal)
+          .then((results) => {
+            if (signal.aborted) {
+              return;
+            }
+            results.hasError
+              ? $errors.setFieldError(path as any, results.error)
+              : $errors.clearFieldError(path);
+          })
+          .finally(() => {
+            if (!signal.aborted) {
+              $validating.setFieldValidating(path, false);
+            }
+          });
+      }
+    };
+  }, [validateDebounce, rules, resolveValidationError]);
+
   const setFieldValue: SetFieldValue<Values> = useCallback(
     (path, value, options) => {
       const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
@@ -108,14 +160,7 @@ export function useForm<
         updateState: mode === 'controlled',
         subscribers: [
           ...$watch.getFieldSubscribers(path),
-          shouldValidate
-            ? (payload) => {
-                const validationResults = validateFieldValue(path, rules, payload.updatedValues);
-                validationResults.hasError
-                  ? $errors.setFieldError(path, validationResults.error)
-                  : $errors.clearFieldError(path);
-              }
-            : null,
+          shouldValidate ? () => debouncedValidateField(String(path)) : null,
           options?.forceUpdate !== false && mode !== 'controlled'
             ? () =>
                 setFieldKeys((keys) => ({
@@ -126,7 +171,7 @@ export function useForm<
         ],
       });
     },
-    [onValuesChange, rules]
+    [onValuesChange, rules, debouncedValidateField]
   );
 
   const setValues: SetValues<Values> = useCallback(
@@ -138,19 +183,59 @@ export function useForm<
     [onValuesChange, handleValuesChanges]
   );
 
-  const validate: Validate = useCallback(() => {
-    const results = validateValues(rules, $values.refValues.current);
-    $errors.setErrors(results.errors);
-    return results;
-  }, [rules]);
+  const validate: Validate = useCallback(async () => {
+    const generation = ++validateGeneration.current;
+    const signal = $validating.getAbortSignal('__form__');
+    $validating.setFormValidating(true);
+    try {
+      const results = await validateValues(
+        rules,
+        $values.refValues.current,
+        resolveValidationError,
+        signal
+      );
+      if (generation !== validateGeneration.current) {
+        return { hasErrors: false, errors: {} };
+      }
+      $errors.setErrors(results.errors);
+      return results;
+    } finally {
+      if (generation === validateGeneration.current) {
+        $validating.setFormValidating(false);
+      }
+    }
+  }, [rules, resolveValidationError]);
 
   const validateField: ValidateField<Values> = useCallback(
-    (path) => {
-      const results = validateFieldValue(path, rules, $values.refValues.current);
-      results.hasError ? $errors.setFieldError(path, results.error) : $errors.clearFieldError(path);
-      return results;
+    async (path) => {
+      const signal = $validating.getAbortSignal(String(path));
+      $validating.setFieldValidating(String(path), true);
+
+      try {
+        const results = await validateFieldValue(
+          path,
+          rules,
+          $values.refValues.current,
+          resolveValidationError,
+          signal
+        );
+
+        if (signal.aborted) {
+          return { hasError: false, error: null };
+        }
+
+        results.hasError
+          ? $errors.setFieldError(path, results.error)
+          : $errors.clearFieldError(path);
+
+        return results;
+      } finally {
+        if (!signal.aborted) {
+          $validating.setFieldValidating(String(path), false);
+        }
+      }
     },
-    [rules]
+    [rules, resolveValidationError]
   );
 
   const getInputProps: GetInputProps<Values> = (
@@ -183,11 +268,7 @@ export function useForm<
       payload.onFocus = () => $status.setFieldTouched(path, true);
       payload.onBlur = () => {
         if (shouldValidateOnChange(path, validateInputOnBlur)) {
-          const validationResults = validateFieldValue(path, rules, $values.refValues.current);
-
-          validationResults.hasError
-            ? $errors.setFieldError(path, validationResults.error)
-            : $errors.clearFieldError(path);
+          debouncedValidateField(String(path));
         }
       };
     }
@@ -209,25 +290,33 @@ export function useForm<
         event?.preventDefault();
       }
 
-      const results = validate();
+      setSubmitting(true);
 
-      if (results.hasErrors) {
-        if (onSubmitPreventDefault === 'validation-failed') {
-          event?.preventDefault();
-        }
+      validate()
+        .then((results) => {
+          if (results.hasErrors) {
+            if (onSubmitPreventDefault === 'validation-failed') {
+              event?.preventDefault();
+            }
 
-        handleValidationFailure?.(results.errors, $values.refValues.current, event);
-      } else {
-        const submitResult = handleSubmit?.(
-          transformValues($values.refValues.current) as any,
-          event
-        );
+            handleValidationFailure?.(results.errors, $values.refValues.current, event);
+            setSubmitting(false);
+          } else {
+            const submitResult = handleSubmit?.(
+              transformValues($values.refValues.current) as any,
+              event
+            );
 
-        if (submitResult instanceof Promise) {
-          setSubmitting(true);
-          submitResult.finally(() => setSubmitting(false));
-        }
-      }
+            if (submitResult instanceof Promise) {
+              submitResult.finally(() => setSubmitting(false));
+            } else {
+              setSubmitting(false);
+            }
+          }
+        })
+        .catch(() => {
+          setSubmitting(false);
+        });
     };
 
   const getTransformedValues: GetTransformedValues<Values, TransformedValues> = (input) =>
@@ -239,11 +328,27 @@ export function useForm<
   }, []);
 
   const isValid: IsValid<Values> = useCallback(
-    (path) =>
-      path
-        ? !validateFieldValue(path, rules, $values.refValues.current).hasError
-        : !validateValues(rules, $values.refValues.current).hasErrors,
-    [rules]
+    async (path) => {
+      const signal = new AbortController().signal;
+      if (path) {
+        const result = await validateFieldValue(
+          path,
+          rules,
+          $values.refValues.current,
+          resolveValidationError,
+          signal
+        );
+        return !result.hasError;
+      }
+      const result = await validateValues(
+        rules,
+        $values.refValues.current,
+        resolveValidationError,
+        signal
+      );
+      return !result.hasErrors;
+    },
+    [rules, resolveValidationError]
   );
 
   const key: Key<Values> = (path) => `${formKey}-${String(path)}-${fieldKeys[String(path)] || 0}`;
@@ -283,6 +388,9 @@ export function useForm<
 
     submitting,
     setSubmitting,
+
+    validating: $validating.validating,
+    isValidating: $validating.isValidating as IsValidating<Values>,
 
     errors: $errors.errorsState,
     setErrors: $errors.setErrors,

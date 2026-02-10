@@ -3,7 +3,7 @@ import { FormMode } from '../../types';
 import { useForm } from '../../use-form';
 
 function tests(mode: FormMode) {
-  it('returns correct form validation state', () => {
+  it('returns correct form validation state', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -14,14 +14,14 @@ function tests(mode: FormMode) {
       })
     );
 
-    expect(hook.result.current.isValid()).toBe(false);
+    expect(await hook.result.current.isValid()).toBe(false);
     expect(hook.result.current.errors).toStrictEqual({});
 
     act(() => hook.result.current.setFieldValue('a', 2));
-    expect(hook.result.current.isValid()).toBe(true);
+    expect(await hook.result.current.isValid()).toBe(true);
   });
 
-  it('returns correct field validation state', () => {
+  it('returns correct field validation state', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -32,13 +32,13 @@ function tests(mode: FormMode) {
       })
     );
 
-    expect(hook.result.current.isValid('a')).toBe(false);
-    expect(hook.result.current.isValid('b')).toBe(true);
+    expect(await hook.result.current.isValid('a')).toBe(false);
+    expect(await hook.result.current.isValid('b')).toBe(true);
     expect(hook.result.current.errors).toStrictEqual({});
 
     act(() => hook.result.current.setFieldValue('a', 2));
-    expect(hook.result.current.isValid('a')).toBe(true);
-    expect(hook.result.current.isValid('b')).toBe(true);
+    expect(await hook.result.current.isValid('a')).toBe(true);
+    expect(await hook.result.current.isValid('b')).toBe(true);
   });
 }
 

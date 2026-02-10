@@ -98,6 +98,67 @@ const form = useForm({
 });
 ```
 
+## Async form validation
+
+`form.validate()`, `form.validateField()` and `form.isValid()` now return promises. If your code
+uses return values from these methods, you need to `await` them:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: '' },
+  validate: {
+    name: (value) => (value.trim().length < 2 ? 'Too short' : null),
+  },
+});
+
+// ❌ No longer works – validate() returns a Promise
+const result = form.validate();
+if (result.hasErrors) { /* ... */ }
+
+// ✅ Await the result
+const result = await form.validate();
+if (result.hasErrors) { /* ... */ }
+
+// ❌ No longer works – isValid() returns a Promise
+if (form.isValid()) { /* ... */ }
+
+// ✅ Await isValid()
+if (await form.isValid()) { /* ... */ }
+```
+
+Validation rules now receive an `AbortSignal` as the fourth argument. Rules can be async –
+return a `Promise<ReactNode | null>` instead of `ReactNode | null`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { username: '' },
+  validate: {
+    // ✅ Async rule with AbortSignal
+    username: async (value, _values, _path, signal) => {
+      const res = await fetch(`/api/check?u=${value}`, { signal });
+      const data = await res.json();
+      return data.taken ? 'Username is taken' : null;
+    },
+  },
+});
+```
+
+New properties and options:
+
+- `form.validating` – `true` while any async validation is running
+- `form.isValidating(path)` – `true` while a specific field is being validated
+- `validateDebounce` option – debounces field-level validation triggered by `validateInputOnChange` / `validateInputOnBlur`
+- `resolveValidationError` option – custom function to resolve validation errors from rejected promises
+
+> **Note:** `form.onSubmit` does not require changes – it already handles the async validation
+> internally and calls the success/error callbacks after validation completes.
+
 ## TypographyStylesProvider
 
 - The [TypographyStylesProvider](/core/typography) component was renamed to [Typography](/core/typography):

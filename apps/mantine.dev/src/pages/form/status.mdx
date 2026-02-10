@@ -145,3 +145,33 @@ form.submitting; // -> true
 form.setSubmitting(false);
 form.submitting; // -> false
 ```
+
+## Validating state
+
+The `form.validating` property is `true` while any async validation is in
+progress. This applies to `form.validate()`, `form.validateField()`,
+`form.isValid()`, and the validation triggered by `form.onSubmit`.
+
+`form.isValidating(path)` returns `true` if a specific field is currently being
+validated. When `form.validate()` or `form.onSubmit` runs all rules, every field
+with a rule is considered validating. When `form.validateField(path)` is called,
+only the targeted field is considered validating.
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { username: '' },
+  validate: {
+    username: async (value) => {
+      // simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      return value === 'admin' ? 'Username is taken' : null;
+    },
+  },
+});
+
+form.validating; // -> false while idle, true during validation
+form.isValidating('username'); // -> true while `username` rule is running
+```

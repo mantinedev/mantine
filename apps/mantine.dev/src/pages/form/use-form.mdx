@@ -123,14 +123,20 @@ const form = useForm({
 });
 
 // Validates all fields with the specified `validate` function or schema, sets form.errors
-form.validate();
+await form.validate();
 
 // Validates a single field at the specified path, sets form.errors
-form.validateField('user.firstName');
+await form.validateField('user.firstName');
 
-// Works the same way as form.validate but does not set form.errors
-form.isValid();
-form.isValid('user.firstName');
+// Works the same way as form.validate but does not set form.errors, returns Promise<boolean>
+await form.isValid();
+await form.isValid('user.firstName');
+
+// true while any async validation is running
+form.validating;
+
+// true while async validation is running for a specific field
+form.isValidating('email');
 ```
 
 ### Errors

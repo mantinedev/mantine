@@ -15,7 +15,6 @@ import type {
   SetInitialValues,
   SetValues,
   UseFormReturnType,
-  ValidateField,
 } from '../types';
 
 function dispatchEvent(type: string, detail?: any): any {
@@ -60,7 +59,7 @@ export function createFormActions<FormValues extends Record<string, any> = Recor
 
   const validate: () => void = () => dispatchEvent(`mantine-form:${name}:validate`);
 
-  const validateField: ValidateField<FormValues> = (path) =>
+  const validateField: (path: any) => void = (path) =>
     dispatchEvent(`mantine-form:${name}:validate-field`, path);
 
   const reorderListItem: ReorderListItem<FormValues> = (path, payload) =>

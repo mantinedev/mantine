@@ -182,3 +182,13 @@ export const Demo_cascadeUpdates = {
   name: '⭐ Demo: cascadeUpdates',
   render: renderDemo(demos.cascadeUpdates),
 };
+
+export const Demo_asyncValidation = {
+  name: '⭐ Demo: asyncValidation',
+  render: renderDemo(demos.asyncValidation),
+};
+
+export const Demo_asyncValidationDebounce = {
+  name: '⭐ Demo: asyncValidationDebounce',
+  render: renderDemo(demos.asyncValidationDebounce),
+};
