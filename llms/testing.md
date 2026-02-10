@@ -11,7 +11,7 @@ npx jest packages/@mantine/core/src/components/Button/Button.test.tsx
 # ✅ Good - run tests matching a pattern
 npx jest --testNamePattern="Button"
 
-# ❌ Bad - never run npm test
+# ❌ Bad - NEVER RUN ALL TESTS, NEVER!!!
 npm test -- Button.test.tsx
 ```
 

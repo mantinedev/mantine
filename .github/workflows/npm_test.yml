@@ -28,4 +28,4 @@ jobs:
       - name: Build public packages
         run: npm run build all
       - name: Run tests
-        run: npm test
+        run: npm test:all

@@ -39,8 +39,8 @@ npm run hc
 
 ### Testing
 ```bash
-# Run all tests (includes prettier, syncpack, typecheck, lint, jest)
-npm test
+# Run all tests (includes prettier, syncpack, typecheck, lint, jest), NEVER DO THIS!!!!!
+npm test:all
 
 # Run tests for specific package
 npm run jest @mantine/charts
@@ -500,9 +500,6 @@ npx eslint packages/@mantine/[package]/src/ComponentName
 
 # Fix formatting on all files
 npm run prettier:write
-
-# Optional: Run all tests (takes longer)
-npm test
 ```
 
 **IMPORTANT:** After completing any task (component development, refactoring, bug fixes, etc.), always run ESLint on the files you changed, fix any errors, and then run prettier to ensure consistent formatting before considering the task complete. Use `npx eslint` with specific paths to the changed files/directories for faster execution.
