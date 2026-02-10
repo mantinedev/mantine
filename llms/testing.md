@@ -1,5 +1,22 @@
 # Testing Guidelines
 
+## Running Tests
+
+Always run tests using `npx jest` with the direct path to the test file:
+
+```bash
+# ✅ Good - run specific test file, prefer this
+npx jest packages/@mantine/core/src/components/Button/Button.test.tsx
+
+# ✅ Good - run tests matching a pattern
+npx jest --testNamePattern="Button"
+
+# ❌ Bad - never run npm test
+npm test -- Button.test.tsx
+```
+
+The `npm test` command runs multiple checks (prettier, syncpack, typecheck, lint) before running tests, which is slow and unnecessary when you just want to run tests.
+
 ## General Principles
 
 ### Use Testing Library Best Practices
