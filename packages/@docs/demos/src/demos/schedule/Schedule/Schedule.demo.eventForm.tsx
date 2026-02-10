@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { ActionIcon, Box } from '@mantine/core';
+import { IconPlus } from '@tabler/icons-react';
+import { ActionIcon, Box, Group } from '@mantine/core';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { _eventFormCode, EventData, EventForm } from '../_EventForm';
@@ -120,12 +121,21 @@ function Demo() {
         layout="responsive"
         mobileMonthViewProps={{
           renderHeader: (defaultHeader) => (
-            <Box style={{ display: 'flex', alignItems: 'center' }}>
-              <Box style={{ flex: 1 }}>{defaultHeader}</Box>
-              <ActionIcon variant="default" mx="sm" onClick={handleCreateEvent}>
-                +
+            <Group justify="space-between" w="100%">
+              <Group justify="space-between" flex="1">
+                {defaultHeader}
+              </Group>
+              <ActionIcon
+                variant="default"
+                mx="sm"
+                size="lg"
+                radius="md"
+                onClick={handleCreateEvent}
+                aria-label="Create new event"
+              >
+                <IconPlus size={18} stroke={3} />
               </ActionIcon>
-            </Box>
+            </Group>
           ),
         }}
       />
@@ -263,12 +273,21 @@ function Demo() {
         layout="responsive"
         mobileMonthViewProps={{
           renderHeader: (defaultHeader) => (
-            <Box style={{ display: 'flex', alignItems: 'center' }}>
-              <Box style={{ flex: 1 }}>{defaultHeader}</Box>
-              <ActionIcon variant="default" mx="sm" onClick={handleCreateEvent}>
-                +
+            <Group justify="space-between" w="100%">
+              <Group justify="space-between" flex="1">
+                {defaultHeader}
+              </Group>
+              <ActionIcon
+                variant="default"
+                mx="sm"
+                size="lg"
+                radius="md"
+                onClick={handleCreateEvent}
+                aria-label="Create new event"
+              >
+                <IconPlus size={18} stroke={3} />
               </ActionIcon>
-            </Box>
+            </Group>
           ),
         }}
       />

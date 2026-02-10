@@ -447,11 +447,24 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
 
   const { dir } = useDirection();
 
-  const headerLabel = formatDate({
-    locale: ctx.getLocale(locale),
-    date,
-    format: 'MMMM YYYY',
-  });
+  const headerLabel = formatDate({ locale: ctx.getLocale(locale), date, format: 'MMMM YYYY' });
+
+  const defaultHeader = (
+    <>
+      <UnstyledButton
+        {...getStyles('mobileMonthViewHeaderBackButton')}
+        onClick={onYearClick}
+        mod={{ static: mode === 'static' }}
+        tabIndex={mode === 'static' ? -1 : 0}
+      >
+        <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} size={20} />
+        {dayjs(date).format('YYYY')}
+      </UnstyledButton>
+      <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
+        {headerLabel}
+      </Text>
+    </>
+  );
 
   return (
     <Box
@@ -459,39 +472,9 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       mod={{ 'with-week-numbers': withWeekNumbers }}
       {...others}
     >
-      {typeof renderHeader === 'function' ? (
-        renderHeader(
-          <div {...getStyles('mobileMonthViewHeader')}>
-            <UnstyledButton
-              {...getStyles('mobileMonthViewHeaderBackButton')}
-              onClick={onYearClick}
-              mod={{ static: mode === 'static' }}
-              tabIndex={mode === 'static' ? -1 : 0}
-            >
-              <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
-              {dayjs(date).format('YYYY')}
-            </UnstyledButton>
-            <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
-              {headerLabel}
-            </Text>
-          </div>
-        )
-      ) : (
-        <div {...getStyles('mobileMonthViewHeader')}>
-          <UnstyledButton
-            {...getStyles('mobileMonthViewHeaderBackButton')}
-            onClick={onYearClick}
-            mod={{ static: mode === 'static' }}
-            tabIndex={mode === 'static' ? -1 : 0}
-          >
-            <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
-            {dayjs(date).format('YYYY')}
-          </UnstyledButton>
-          <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
-            {headerLabel}
-          </Text>
-        </div>
-      )}
+      <div {...getStyles('mobileMonthViewHeader')}>
+        {typeof renderHeader === 'function' ? renderHeader(defaultHeader) : defaultHeader}
+      </div>
 
       <Box {...getStyles('mobileMonthViewCalendar')} mod={{ 'with-weekdays': withWeekDays }}>
         {weekdays && (

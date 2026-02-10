@@ -36,6 +36,7 @@
   font-weight: 600;
   cursor: pointer;
   user-select: none;
+  font-size: var(--mobile-month-view-font-size);
 
   &:where([data-static]) {
     cursor: default;
@@ -263,14 +264,6 @@
   flex-shrink: 0;
 }
 
-.mobileMonthViewEventTitle {
-  /* empty */
-}
-
 .mobileMonthViewEventTime {
   margin-top: 2px;
-}
-
-.mobileMonthViewNoEvents {
-  /* empty */
 }
