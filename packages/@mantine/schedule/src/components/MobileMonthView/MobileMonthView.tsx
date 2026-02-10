@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { useRef } from 'react';
 import {
+  AccordionChevron,
   Box,
   BoxProps,
   createVarsResolver,
@@ -10,10 +11,10 @@ import {
   getRadius,
   getThemeColor,
   MantineRadius,
-  ScrollArea,
   StylesApiProps,
   Text,
   UnstyledButton,
+  useDirection,
   useMantineTheme,
   useProps,
   useStyles,
@@ -47,6 +48,9 @@ import classes from './MobileMonthView.module.css';
 
 export type MobileMonthViewStylesNames =
   | 'mobileMonthView'
+  | 'mobileMonthViewHeader'
+  | 'mobileMonthViewHeaderBackButton'
+  | 'mobileMonthViewHeaderLabel'
   | 'mobileMonthViewCalendar'
   | 'mobileMonthViewWeekdays'
   | 'mobileMonthViewWeekday'
@@ -58,7 +62,6 @@ export type MobileMonthViewStylesNames =
   | 'mobileMonthViewDayIndicator'
   | 'mobileMonthViewEventsList'
   | 'mobileMonthViewEventsHeader'
-  | 'mobileMonthViewEventsScrollArea'
   | 'mobileMonthViewEvent'
   | 'mobileMonthViewEventTime'
   | 'mobileMonthViewEventColor'
@@ -146,6 +149,9 @@ export interface MobileMonthViewProps
 
   /** Placeholder text when no events for selected date @default 'No events' */
   noEventsText?: string;
+
+  /** Called when the year back button in the header is clicked */
+  onYearClick?: () => void;
 }
 
 export type MobileMonthViewFactory = Factory<{
@@ -207,6 +213,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     renderEventBody,
     eventsHeaderFormat,
     noEventsText,
+    onYearClick,
     ...others
   } = props;
 
@@ -417,12 +424,35 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       })
     : '';
 
+  const { dir } = useDirection();
+
+  const headerLabel = formatDate({
+    locale: ctx.getLocale(locale),
+    date,
+    format: 'MMMM YYYY',
+  });
+
   return (
     <Box
       {...getStyles('mobileMonthView')}
       mod={{ 'with-week-numbers': withWeekNumbers }}
       {...others}
     >
+      <div {...getStyles('mobileMonthViewHeader')}>
+        <UnstyledButton
+          {...getStyles('mobileMonthViewHeaderBackButton')}
+          onClick={onYearClick}
+          mod={{ static: mode === 'static' }}
+          tabIndex={mode === 'static' ? -1 : 0}
+        >
+          <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
+          {dayjs(date).format('YYYY')}
+        </UnstyledButton>
+        <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
+          {headerLabel}
+        </Text>
+      </div>
+
       <Box {...getStyles('mobileMonthViewCalendar')} mod={{ 'with-weekdays': withWeekDays }}>
         {weekdays && (
           <div {...getStyles('mobileMonthViewWeekdays')}>
@@ -438,15 +468,13 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
           {eventsHeader}
         </Text>
 
-        <ScrollArea {...getStyles('mobileMonthViewEventsScrollArea')}>
-          {eventsList.length > 0 ? (
-            eventsList
-          ) : (
-            <Text {...getStyles('mobileMonthViewNoEvents')} c="dimmed" ta="center" py="xl">
-              {noEventsText}
-            </Text>
-          )}
-        </ScrollArea>
+        {eventsList.length > 0 ? (
+          eventsList
+        ) : (
+          <Text {...getStyles('mobileMonthViewNoEvents')} c="dimmed" ta="center" py="xl">
+            {noEventsText}
+          </Text>
+        )}
       </Box>
     </Box>
   );

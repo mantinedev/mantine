@@ -315,6 +315,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             labels={labels}
             renderEventBody={renderEventBody}
             mode={mode}
+            onYearClick={() => handleViewChange('year')}
             {...mobileMonthViewProps}
           />
         );

@@ -18,3 +18,8 @@ export const Demo_eventForm = {
   name: '⭐ Demo: eventForm',
   render: renderDemo(demos.eventForm),
 };
+
+export const Demo_responsiveLayout = {
+  name: '⭐ Demo: responsiveLayout',
+  render: renderDemo(demos.responsiveLayout),
+};

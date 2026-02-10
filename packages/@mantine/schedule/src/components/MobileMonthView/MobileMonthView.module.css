@@ -21,7 +21,36 @@
   }
 }
 
+.mobileMonthViewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--mantine-spacing-sm);
+  border-bottom: 1px solid var(--mobile-month-view-border-color);
+}
+
+.mobileMonthViewHeaderBackButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.mobileMonthViewHeaderLabel {
+  user-select: none;
+}
+
 .mobileMonthViewCalendar {
+  --mobile-month-view-font-size: clamp(6px, 3.5cqw, 22px);
+
+  container-type: inline-size;
   padding: var(--mantine-spacing-sm);
   border-bottom: 1px solid var(--mobile-month-view-border-color);
 }
@@ -37,7 +66,7 @@
 
 .mobileMonthViewWeekday {
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
-  font-size: var(--mantine-font-size-xs);
+  font-size: var(--mobile-month-view-font-size);
   font-weight: 600;
   text-align: center;
   text-transform: capitalize;
@@ -86,9 +115,10 @@
 
 .mobileMonthViewDay {
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
-  aspect-ratio: 1;
+  height: 48px;
   padding: 4px;
-  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+  font-size: var(--mobile-month-view-font-size);
   color: var(--day-base-color);
   cursor: pointer;
   user-select: none;
@@ -96,8 +126,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 100%;
   position: relative;
+  z-index: 0;
+
+  &::before {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: calc(50% - 16px);
+    z-index: -1;
+    pointer-events: none;
+  }
 
   &:focus {
     z-index: 1;
@@ -117,33 +159,40 @@
   }
 
   @mixin hover {
-    &:where(:not([data-today]):not([data-selected])) {
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-0);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-6);
-      }
-    }
-  }
-
-  &:where([data-today]) {
-    background-color: var(--mantine-primary-color-filled);
-    color: var(--mantine-primary-color-contrast);
-
-    @mixin hover {
-      background-color: var(--mantine-primary-color-filled-hover);
-    }
-  }
-
-  &:where([data-selected]:not([data-today])) {
     @mixin where-light {
-      background-color: var(--mantine-color-gray-2);
+      background-color: var(--mantine-color-gray-0);
     }
 
     @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-today]:not([data-selected])) {
+    @mixin where-light {
+      &::before {
+        background-color: var(--mantine-color-gray-2);
+      }
+    }
+
+    @mixin where-dark {
+      &::before {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+
+  &:where([data-selected]) {
+    color: var(--mantine-primary-color-contrast);
+
+    &::before {
+      background-color: var(--mantine-primary-color-filled);
+    }
+
+    @mixin hover {
+      &::before {
+        background-color: var(--mantine-primary-color-filled-hover);
+      }
     }
   }
 
@@ -179,10 +228,6 @@
 
 .mobileMonthViewEventsHeader {
   margin-bottom: var(--mantine-spacing-sm);
-}
-
-.mobileMonthViewEventsScrollArea {
-  flex: 1;
 }
 
 .mobileMonthViewEvent {

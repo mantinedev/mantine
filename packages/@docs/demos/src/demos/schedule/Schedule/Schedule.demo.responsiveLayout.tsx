@@ -11,7 +11,7 @@ import { events } from './data';
 function Demo() {
   return (
     <Box style={{ resize: 'horizontal', overflow: 'auto', minWidth: 300, maxWidth: '100%' }}>
-      <Schedule events={events} layout="responsive" style={{ height: 600 }} />
+      <Schedule events={events} layout="responsive" />
     </Box>
   );
 }
@@ -20,7 +20,7 @@ function Demo() {
 function Demo() {
   return (
     <Box style={{ resize: 'horizontal', overflow: 'auto', minWidth: 300, maxWidth: '100%' }}>
-      <Schedule events={events} layout="responsive" style={{ height: 600 }} />
+      <Schedule events={events} layout="responsive" />
     </Box>
   );
 }

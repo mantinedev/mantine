@@ -61,6 +61,9 @@ describe('@mantine/schedule/MobileMonthView', () => {
     displayName: '@mantine/schedule/MobileMonthView',
     stylesApiSelectors: [
       'mobileMonthView',
+      'mobileMonthViewHeader',
+      'mobileMonthViewHeaderBackButton',
+      'mobileMonthViewHeaderLabel',
       'mobileMonthViewCalendar',
       'mobileMonthViewWeekdays',
       'mobileMonthViewWeekday',
@@ -72,7 +75,6 @@ describe('@mantine/schedule/MobileMonthView', () => {
       'mobileMonthViewDayIndicator',
       'mobileMonthViewEventsList',
       'mobileMonthViewEventsHeader',
-      'mobileMonthViewEventsScrollArea',
       'mobileMonthViewEvent',
       'mobileMonthViewEventTime',
       'mobileMonthViewEventColor',
