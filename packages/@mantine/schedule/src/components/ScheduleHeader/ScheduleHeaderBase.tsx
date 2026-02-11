@@ -1,8 +1,9 @@
-import { StylesApiProps } from '@mantine/core';
-import { ScheduleLabelsOverride } from '../../labels';
+import { NativeSelect, StylesApiProps } from '@mantine/core';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, ScheduleViewLevel } from '../../types';
 import { MonthYearSelectProps } from './MonthYearSelect/MonthYearSelect';
 import { ScheduleHeader } from './ScheduleHeader';
+import classes from './ScheduleHeader.module.css';
 import { ViewSelectProps } from './ViewSelect/ViewSelect';
 
 interface NavigationHandlers {
@@ -66,11 +67,8 @@ export interface ScheduleHeaderBaseProps {
   stylesApiProps?: StylesApiProps<any>;
 }
 
-/**
- * Component for rendering a consistent schedule header across all views
- * Handles navigation controls (previous, next, today), central control
- * (title or month/year select), and view selector
- */
+const VIEW_LEVELS: ScheduleViewLevel[] = ['day', 'week', 'month', 'year'];
+
 export function ScheduleHeaderBase({
   view,
   navigationHandlers,
@@ -92,39 +90,59 @@ export function ScheduleHeaderBase({
     </ScheduleHeader.Control>
   );
 
+  const views = viewSelectProps?.views || VIEW_LEVELS;
+  const compactViewSelectData = views.map((v) => ({
+    value: v,
+    label: getLabel(v, labels) as string,
+  }));
+
   return (
     <ScheduleHeader {...stylesApiProps}>
-      <ScheduleHeader.Previous
-        {...stylesApiProps}
-        onClick={() => onDateChange?.(navigationHandlers.previous())}
-        labels={labels}
-        {...previousControlProps}
-      />
+      <div className={classes.navigationGroup}>
+        <ScheduleHeader.Previous
+          {...stylesApiProps}
+          onClick={() => onDateChange?.(navigationHandlers.previous())}
+          labels={labels}
+          {...previousControlProps}
+        />
 
-      {centralControl}
+        {centralControl}
 
-      <ScheduleHeader.Next
-        {...stylesApiProps}
-        onClick={() => onDateChange?.(navigationHandlers.next())}
-        labels={labels}
-        {...nextControlProps}
-      />
+        <ScheduleHeader.Next
+          {...stylesApiProps}
+          onClick={() => onDateChange?.(navigationHandlers.next())}
+          labels={labels}
+          {...nextControlProps}
+        />
+      </div>
 
-      <ScheduleHeader.Today
-        {...stylesApiProps}
-        onClick={() => onDateChange?.(navigationHandlers.today())}
-        labels={labels}
-        {...todayControlProps}
-      />
+      <div className={classes.todayControl}>
+        <ScheduleHeader.Today
+          {...stylesApiProps}
+          onClick={() => onDateChange?.(navigationHandlers.today())}
+          labels={labels}
+          {...todayControlProps}
+        />
+      </div>
 
-      <ScheduleHeader.ViewSelect
+      <NativeSelect
+        className={classes.compactViewSelect}
+        data={compactViewSelectData}
         value={view}
-        onChange={onViewChange}
-        ml="auto"
-        labels={labels}
-        {...stylesApiProps}
-        {...viewSelectProps}
+        onChange={(event) => onViewChange?.(event.currentTarget.value as ScheduleViewLevel)}
+        aria-label={getLabel('viewSelectLabel', labels) as string}
+        size="sm"
       />
+
+      <div className={classes.viewSelect} style={{ marginInlineStart: 'auto' }}>
+        <ScheduleHeader.ViewSelect
+          value={view}
+          onChange={onViewChange}
+          labels={labels}
+          {...stylesApiProps}
+          {...viewSelectProps}
+        />
+      </div>
     </ScheduleHeader>
   );
 }
