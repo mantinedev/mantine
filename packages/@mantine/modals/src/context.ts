@@ -41,9 +41,15 @@ export interface ModalsContextProps {
 
 export interface MantineModalsOverride {}
 
-export type MantineModals = MantineModalsOverride extends { modals: infer M }
-  ? M
-  : Record<string, React.FC<ContextModalProps<any>>>;
+export type MantineModalsOverwritten = MantineModalsOverride extends {
+  modals: Record<string, React.FC<ContextModalProps<any>>>;
+}
+  ? MantineModalsOverride
+  : {
+      modals: Record<string, React.FC<ContextModalProps<any>>>;
+    };
+
+export type MantineModals = MantineModalsOverwritten['modals'];
 
 export type MantineModal = keyof MantineModals;
 
