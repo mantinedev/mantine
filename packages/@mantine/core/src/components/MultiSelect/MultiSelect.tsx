@@ -162,6 +162,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     onDropdownClose,
     selectFirstOptionOnChange,
     selectFirstOptionOnDropdownOpen,
+    selectFirstOptionOnDataChange,
     onOptionSubmit,
     comboboxProps,
     filter,
@@ -321,6 +322,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
       combobox.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, _searchValue]);
+
+  useEffect(() => {
+    if (selectFirstOptionOnDataChange) {
+      combobox.selectFirstOption();
+    }
+  }, [selectFirstOptionOnDataChange, optionsLockup]);
 
   useEffect(() => {
     _value.forEach((val) => {

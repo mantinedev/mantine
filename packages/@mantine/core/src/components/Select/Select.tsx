@@ -136,6 +136,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     defaultValue,
     selectFirstOptionOnChange,
     selectFirstOptionOnDropdownOpen,
+    selectFirstOptionOnDataChange,
     onOptionSubmit,
     comboboxProps,
     readOnly,
@@ -238,6 +239,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       combobox.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, search]);
+
+  useEffect(() => {
+    if (selectFirstOptionOnDataChange) {
+      combobox.selectFirstOption();
+    }
+  }, [selectFirstOptionOnDataChange, optionsLockup]);
 
   useEffect(() => {
     if (value === null) {
