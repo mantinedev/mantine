@@ -11,14 +11,20 @@ function Demo() {
     <BarsList
       data={data}
       barHeight={48}
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }
 `;
 
 function Demo() {
-  return <BarsList data={data} barHeight={48} valueFormatter={(value) => value.toLocaleString()} />;
+  return (
+    <BarsList
+      data={data}
+      barHeight={48}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
+    />
+  );
 }
 
 export const barHeight: MantineDemo = {

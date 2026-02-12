@@ -2,13 +2,13 @@ import { BarsList } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 
 const data = [
-  { name: 'Google', value: 1200000, color: 'blue.6' },
-  { name: 'Direct', value: 100000, color: 'green.6' },
-  { name: 'Bing', value: 200000, color: 'yellow.6' },
-  { name: 'Yahoo', value: 20000, color: 'red.6' },
-  { name: 'ChatGPT', value: 1345000, color: 'teal.6' },
-  { name: 'Github', value: 100000, color: 'gray.8' },
-  { name: 'Yandex', value: 100000, color: 'orange.6' },
+  { name: 'React', value: 850000, color: 'blue.6' },
+  { name: 'Vue', value: 620000, color: 'green.6' },
+  { name: 'Angular', value: 540000, color: 'yellow.6' },
+  { name: 'Svelte', value: 380000, color: 'red.6' },
+  { name: 'Next.js', value: 920000, color: 'teal.6' },
+  { name: 'Nuxt', value: 410000, color: 'gray.8' },
+  { name: 'Remix', value: 295000, color: 'orange.6' },
 ];
 
 const dataCode = `export const data = ${JSON.stringify(data, null, 2)};`;
@@ -23,7 +23,8 @@ function Demo() {
       data={data}
       barsLabel="Traffic Source"
       valueLabel="Visits"
-      valueFormatter={(value) => value.toLocaleString()}
+      variant="filled"
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }
@@ -35,7 +36,8 @@ function Demo() {
       data={data}
       barsLabel="Traffic Source"
       valueLabel="Visits"
-      valueFormatter={(value) => value.toLocaleString()}
+      variant="filled"
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }

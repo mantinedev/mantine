@@ -11,7 +11,7 @@ function Demo() {
     <BarsList
       data={data}
       minBarSize={200}
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }
@@ -19,7 +19,11 @@ function Demo() {
 
 function Demo() {
   return (
-    <BarsList data={data} minBarSize={200} valueFormatter={(value) => value.toLocaleString()} />
+    <BarsList
+      data={data}
+      minBarSize={200}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
+    />
   );
 }
 

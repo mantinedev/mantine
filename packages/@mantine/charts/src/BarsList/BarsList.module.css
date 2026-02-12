@@ -10,15 +10,14 @@
   justify-content: space-between;
   font-size: var(--mantine-font-size-sm);
   font-weight: 600;
-  color: var(--mantine-color-dimmed);
-  padding-bottom: var(--mantine-spacing-xs);
+  padding-bottom: var(--bars-list-gap);
 }
 
 .bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--mantine-spacing-sm);
+  gap: var(--mantine-spacing-md);
 }
 
 .barLabel {

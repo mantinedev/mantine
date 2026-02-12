@@ -38,11 +38,6 @@ export const Demo_barColor = {
   render: renderDemo(demos.barColor),
 };
 
-export const Demo_barTextColor = {
-  name: '⭐ Demo: barTextColor',
-  render: renderDemo(demos.barTextColor),
-};
-
 export const Demo_autoContrast = {
   name: '⭐ Demo: autoContrast',
   render: renderDemo(demos.autoContrast),

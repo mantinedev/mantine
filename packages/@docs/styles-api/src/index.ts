@@ -14,6 +14,7 @@ export * from './data/Avatar.styles-api';
 export * from './data/BackgroundImage.styles-api';
 export * from './data/Badge.styles-api';
 export * from './data/BarChart.styles-api';
+export * from './data/BarsList.styles-api';
 export * from './data/Blockquote.styles-api';
 export * from './data/Breadcrumbs.styles-api';
 export * from './data/BubbleChart.styles-api';

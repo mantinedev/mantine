@@ -10,7 +10,8 @@ function Demo() {
   return (
     <BarsList
       data={data}
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
+      barTextColor="white"
       getBarProps={(barData) => ({
         style: {
           backgroundColor: barData.value > 500000 ? '#10a37f' : undefined,
@@ -26,7 +27,8 @@ function Demo() {
   return (
     <BarsList
       data={data}
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
+      barTextColor="white"
       getBarProps={(barData) => ({
         style: {
           backgroundColor: barData.value > 500000 ? '#10a37f' : undefined,

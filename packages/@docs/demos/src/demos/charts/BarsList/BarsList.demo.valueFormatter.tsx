@@ -7,12 +7,12 @@ import { BarsList } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <BarsList data={data} valueFormatter={(value) => value.toLocaleString()} />;
+  return <BarsList data={data} valueFormatter={(value) => value.toLocaleString('en-US')} />;
 }
 `;
 
 function Demo() {
-  return <BarsList data={data} valueFormatter={(value) => value.toLocaleString()} />;
+  return <BarsList data={data} valueFormatter={(value) => value.toLocaleString('en-US')} />;
 }
 
 export const valueFormatter: MantineDemo = {

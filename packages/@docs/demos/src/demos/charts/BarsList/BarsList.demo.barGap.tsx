@@ -11,14 +11,16 @@ function Demo() {
     <BarsList
       data={data}
       barGap="xl"
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }
 `;
 
 function Demo() {
-  return <BarsList data={data} barGap="xl" valueFormatter={(value) => value.toLocaleString()} />;
+  return (
+    <BarsList data={data} barGap="xl" valueFormatter={(value) => value.toLocaleString('en-US')} />
+  );
 }
 
 export const barGap: MantineDemo = {

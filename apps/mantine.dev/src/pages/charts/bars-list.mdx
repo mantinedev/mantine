@@ -17,10 +17,10 @@ The only required prop is `data` – an array of objects with `name` and `value`
 
 ```tsx
 export const data = [
-  { name: 'Google', value: 1200000 },
-  { name: 'Direct', value: 100000 },
-  { name: 'Bing', value: 200000 },
-  { name: 'Yahoo', value: 20000 },
+  { name: 'React', value: 950000 },
+  { name: 'Vue', value: 320000 },
+  { name: 'Angular', value: 580000 },
+  { name: 'Svelte', value: 145000 },
 ];
 ```
 
@@ -57,15 +57,9 @@ Control the height of bars with the `barHeight` prop:
 
 ## Bar color
 
-Use `barColor` prop to set the default background color for all bars:
+Use `barColor` and `barTextColor` props to set the default background and text colors for all bars:
 
 <Demo data={BarsListDemos.barColor} />
-
-## Bar text color
-
-Use `barTextColor` prop to set the text color inside bars:
-
-<Demo data={BarsListDemos.barTextColor} />
 
 ## Auto contrast
 

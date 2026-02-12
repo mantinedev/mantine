@@ -12,7 +12,7 @@ function Demo() {
       data={data}
       barsLabel="Traffic Source"
       valueLabel="Visits"
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }
@@ -24,7 +24,7 @@ function Demo() {
       data={data}
       barsLabel="Traffic Source"
       valueLabel="Visits"
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }

@@ -19,15 +19,23 @@ function Demo() {
   return (
     <BarsList
       data={data}
+      variant="filled"
       autoContrast
-      valueFormatter={(value) => value.toLocaleString()}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }
 `;
 
 function Demo() {
-  return <BarsList data={data} autoContrast valueFormatter={(value) => value.toLocaleString()} />;
+  return (
+    <BarsList
+      data={data}
+      variant="filled"
+      autoContrast
+      valueFormatter={(value) => value.toLocaleString('en-US')}
+    />
+  );
 }
 
 export const autoContrast: MantineDemo = {

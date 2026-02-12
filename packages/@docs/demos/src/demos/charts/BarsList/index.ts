@@ -5,7 +5,6 @@ export { barGap } from './BarsList.demo.barGap';
 export { minBarSize } from './BarsList.demo.minBarSize';
 export { barHeight } from './BarsList.demo.barHeight';
 export { barColor } from './BarsList.demo.barColor';
-export { barTextColor } from './BarsList.demo.barTextColor';
 export { autoContrast } from './BarsList.demo.autoContrast';
 export { customColors } from './BarsList.demo.customColors';
 export { getBarProps } from './BarsList.demo.getBarProps';

@@ -11,7 +11,8 @@ function Demo() {
     <BarsList
       data={data}
       barColor="teal.6"
-      valueFormatter={(value) => value.toLocaleString()}
+      barTextColor="white"
+      valueFormatter={(value) => value.toLocaleString('en-barsUS')}
     />
   );
 }
@@ -19,7 +20,12 @@ function Demo() {
 
 function Demo() {
   return (
-    <BarsList data={data} barColor="teal.6" valueFormatter={(value) => value.toLocaleString()} />
+    <BarsList
+      data={data}
+      barColor="teal.6"
+      barTextColor="white"
+      valueFormatter={(value) => value.toLocaleString('en-US')}
+    />
   );
 }
 
