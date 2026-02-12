@@ -1,6 +1,6 @@
 {
   "name": "@mantine/form",
-  "version": "8.3.13",
+  "version": "9.0.0-alpha.0",
   "description": "Mantine form management library",
   "homepage": "https://mantine.dev",
   "license": "MIT",
