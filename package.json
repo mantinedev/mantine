@@ -23,7 +23,6 @@
     "setup": "npm run docs:docgen && npm run docs:sponsors && tsx scripts/docs/generate-css-exports",
     "plop": "tsx scripts/plop",
     "generate-css-variables": "tsx scripts/codegen/generate-default-css-variables && prettier --write packages/@mantine/core/src/core/MantineProvider/default-css-variables.css",
-    "format-changelogs": "tsx scripts/docs/format-changelogs",
     "generate-changelog": "tsx scripts/docs/generate-changelog",
     "changelog": "tsx scripts/docs/changelog",
     "storybook": "storybook dev -p 2356",

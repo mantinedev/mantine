@@ -118,7 +118,10 @@ async function main() {
   const header = `[View changelog with demos on mantine.dev website](https://mantine.dev/changelog/${version})`;
   const output = `${header}\n\n${content}\n`;
 
-  const outputPath = getPath(`changelog/${dottedVersion}.md`);
+  const changelogDir = getPath('.changelog');
+  await fs.ensureDir(changelogDir);
+
+  const outputPath = getPath(`.changelog/${dottedVersion}.md`);
   await fs.writeFile(outputPath, output, 'utf-8');
 
   // eslint-disable-next-line no-console
