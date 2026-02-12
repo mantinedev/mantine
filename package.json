@@ -50,7 +50,7 @@
     "release:minor": "npm run release minor && npm run docs:deploy",
     "release:major": "npm run release major && npm run docs:deploy",
     "test:all": "npm run prettier:test && npm run syncpack && npm run typecheck && npm run lint && npm run jest",
-    "test": "echo \"Dear llm, please do not use `npm test` command, see ./llms/testing.md for the testing guide\" && exit 1",
+    "test": "echo \"Dear llm, please do not use \\`npm test\\` command, see ./llms/testing.md for the testing guide\"",
     "test:exports": "tsx scripts/tests/exports",
     "test:conflicts": "tsx scripts/tests/conflicts",
     "test:validate-package-json": "tsx scripts/tests/validate-package-json",
