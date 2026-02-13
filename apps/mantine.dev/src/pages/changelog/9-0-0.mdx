@@ -17,6 +17,12 @@ import {
   SimpleGridDemos,
   SliderDemos,
   BarsListDemos,
+  ScheduleDemos,
+  DayViewDemos,
+  WeekViewDemos,
+  MonthViewDemos,
+  YearViewDemos,
+  MobileMonthViewDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -43,65 +49,47 @@ Starting from Mantine 9.0, the following dependencies are required:
 - Tiptap 3+ for `@mantine/tiptap` ([migration guide](/guides/tiptap-3-migration))
 - Recharts 3+ for `@mantine/charts` (no migration required)
 
-## Namespace types exports
-
-All Mantine components and hooks now provide namespace exports for related types.
-For example, [use-disclosure](/hooks/use-disclosure) hook types can now be accessed like this:
-
-```tsx
-import { useDisclosure } from '@mantine/hooks';
-
-const options: useDisclosure.Options = {
-  onOpen: () => console.log('open'),
-  onClose: () => console.log('close'),
-};
-
-function Demo() {
-  const [opened, handlers] = useDisclosure(options);
-}
-```
-
-Example of using namespace types with [Button](/core/button) props type:
-
-```tsx
-import { Button } from '@mantine/core';
-
-const buttonProps: Button.Props = {
-    variant: 'filled',
-    size: 'md',
-    disabled: false,
-  };
-
-function Demo() {
-  return <Button {...buttonProps}>Click me</Button>;
-}
-```
-
 ## New @mantine/schedule package
 
 New [`@mantine/schedule`](/schedule/getting-started) package provides a complete set of
 calendar scheduling components for React applications. It includes multiple view levels,
 drag-and-drop event management, and extensive customization options.
 
-Components included:
+### Schedule
 
-- [Schedule](/schedule/schedule) – unified container component that combines all views with built-in navigation and view switching
-- [DayView](/schedule/day-view) – single day view with configurable time slots, all-day event section, current time indicator, and business hours highlighting
-- [WeekView](/schedule/week-view) – weekly calendar grid with time slots, week numbers, weekend day toggling, and multi-day event spanning
-- [MonthView](/schedule/month-view) – monthly calendar grid with event overflow handling, outside days display, and week numbers
-- [YearView](/schedule/year-view) – 12-month year overview organized by quarters with day-level event indicators
-- [MobileMonthView](/schedule/mobile-month-view) – mobile-optimized month view with event details panel for the selected day
+[Schedule](/schedule/schedule) is a unified container component that combines all views with built-in navigation and view switching. Drag events to reschedule them:
 
-Key features:
+<Demo data={ScheduleDemos.dragDrop} demoProps={{ defaultExpanded: false }} />
 
-- **Drag and drop** – drag events to reschedule them across time slots and days. Supports conditional dragging with `canDragEvent` callback, and drag-to-select time ranges with `withDragSlotSelect`
-- **Multiple interaction modes** – `default` mode enables all interactions (click, drag, navigation), `static` mode renders a read-only calendar
-- **Responsive layout** – `layout="responsive"` automatically switches to `YearView` and `MobileMonthView` on smaller screens
-- **Custom event rendering** – use `renderEventBody` or `renderEvent` to fully customize how events are displayed in all views
-- **Time configuration** – configurable start/end times, time slot intervals, time label formats, and business hours highlighting
-- **Internationalization** – full label customization through the `labels` prop, locale-aware date formatting via dayjs
-- **Click handlers** – `onTimeSlotClick`, `onAllDaySlotClick`, `onDayClick`, and `onEventClick` for building interactive scheduling interfaces
-- **Styles API** – full support for `classNames`, `styles`, and `unstyled` props, along with CSS variables for theming
+### DayView
+
+[DayView](/schedule/day-view) displays a single day with configurable time slots, all-day event section, current time indicator, and business hours highlighting. Drag events to reschedule them:
+
+<Demo data={DayViewDemos.dragDrop} demoProps={{ defaultExpanded: false }} />
+
+### WeekView
+
+[WeekView](/schedule/week-view) shows a weekly calendar grid with time slots, week numbers, weekend day toggling, and multi-day event spanning. Drag events across days and time slots:
+
+<Demo data={WeekViewDemos.dragDrop} demoProps={{ defaultExpanded: false }} />
+
+### MonthView
+
+[MonthView](/schedule/month-view) displays a monthly calendar grid with event overflow handling, outside days display, and week numbers. Drag events to different days:
+
+<Demo data={MonthViewDemos.dragDrop} demoProps={{ defaultExpanded: false }} />
+
+### YearView
+
+[YearView](/schedule/year-view) provides a 12-month year overview organized by quarters with day-level event indicators:
+
+<Demo data={YearViewDemos.usage} demoProps={{ defaultExpanded: false }} />
+
+### MobileMonthView
+
+[MobileMonthView](/schedule/mobile-month-view) is a mobile-optimized month view with event details panel for the selected day:
+
+<Demo data={MobileMonthViewDemos.usage} demoProps={{ defaultExpanded: false }} />
 
 To get started, follow the [getting started guide](/schedule/getting-started).
 
@@ -346,6 +334,40 @@ New [BarsList](/charts/bars-list) component displays a list of horizontal bars w
 It supports custom colors, auto contrast, value formatting, and custom bar rendering:
 
 <Demo data={BarsListDemos.usage} />
+
+## Namespace types exports
+
+All Mantine components and hooks now provide namespace exports for related types.
+For example, [use-disclosure](/hooks/use-disclosure) hook types can now be accessed like this:
+
+```tsx
+import { useDisclosure } from '@mantine/hooks';
+
+const options: useDisclosure.Options = {
+  onOpen: () => console.log('open'),
+  onClose: () => console.log('close'),
+};
+
+function Demo() {
+  const [opened, handlers] = useDisclosure(options);
+}
+```
+
+Example of using namespace types with [Button](/core/button) props type:
+
+```tsx
+import { Button } from '@mantine/core';
+
+const buttonProps: Button.Props = {
+    variant: 'filled',
+    size: 'md',
+    disabled: false,
+  };
+
+function Demo() {
+  return <Button {...buttonProps}>Click me</Button>;
+}
+```
 
 ## Documentation updates
 
