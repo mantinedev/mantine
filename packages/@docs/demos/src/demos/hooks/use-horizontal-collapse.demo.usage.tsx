@@ -16,7 +16,7 @@ function Demo() {
         {expanded ? 'Collapse' : 'Expand'}
       </Button>
 
-      <div {...getCollapseProps()}>
+      <div {...getCollapseProps({ style: { width: 200 } })}>
         <Typography bg="var(--mantine-color-blue-light)" p="xs" bdrs="md" w={200}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua.
@@ -37,7 +37,7 @@ function Demo() {
         {expanded ? 'Collapse' : 'Expand'}
       </Button>
 
-      <div {...getCollapseProps()}>
+      <div {...getCollapseProps({ style: { width: 200 } })}>
         <Typography bg="var(--mantine-color-blue-light)" p="xs" bdrs="md" w={200}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua.
