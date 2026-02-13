@@ -20,7 +20,6 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['DayView'],
     source: '@mantine/schedule/src/components/DayView/DayView.tsx',
     docs: 'schedule/day-view.mdx',
-    hideTableOfContents: true,
   },
 
   MonthView: {
@@ -32,7 +31,6 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['MonthView'],
     source: '@mantine/schedule/src/components/MonthView/MonthView.tsx',
     docs: 'schedule/month-view.mdx',
-    hideTableOfContents: true,
   },
 
   WeekView: {
@@ -44,7 +42,6 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['WeekView'],
     source: '@mantine/schedule/src/components/WeekView/WeekView.tsx',
     docs: 'schedule/week-view.mdx',
-    hideTableOfContents: true,
   },
 
   YearView: {
@@ -56,7 +53,6 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['YearView'],
     source: '@mantine/schedule/src/components/YearView/YearView.tsx',
     docs: 'schedule/year-view.mdx',
-    hideTableOfContents: true,
   },
 
   MobileMonthView: {
@@ -68,7 +64,6 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['MobileMonthView'],
     source: '@mantine/schedule/src/components/MobileMonthView/MobileMonthView.tsx',
     docs: 'schedule/mobile-month-view.mdx',
-    hideTableOfContents: true,
   },
 
   Schedule: {
@@ -80,6 +75,5 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['Schedule'],
     source: '@mantine/schedule/src/components/Schedule/Schedule.tsx',
     docs: 'schedule/schedule.mdx',
-    hideTableOfContents: true,
   },
 };
