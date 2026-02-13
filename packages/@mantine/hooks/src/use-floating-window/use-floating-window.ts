@@ -143,6 +143,7 @@ export function useFloatingWindow<T extends HTMLElement>(
 
       setDragging(true);
       document.body.style.userSelect = 'none';
+      document.body.style.webkitUserSelect = 'none';
 
       const rect = el.getBoundingClientRect();
 
@@ -196,6 +197,7 @@ export function useFloatingWindow<T extends HTMLElement>(
       if (isDraggingRef.current) {
         setDragging(false);
         document.body.style.userSelect = '';
+        document.body.style.webkitUserSelect = '';
         options.onDragEnd?.();
       }
     };
