@@ -1,5 +1,4 @@
 import React from 'react';
-import { ref } from 'process';
 
 export interface CloseIconProps extends React.ComponentProps<'svg'> {
   /** Icon width and height, `var(--icon-size)` by default */
@@ -13,7 +12,6 @@ export function CloseIcon({ size = 'var(--cb-icon-size, 70%)', style, ...others 
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ ...style, width: size, height: size }}
-      ref={ref}
       {...others}
     >
       <path

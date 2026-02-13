@@ -39,4 +39,5 @@ export const vertical: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
 };

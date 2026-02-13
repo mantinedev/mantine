@@ -1,4 +1,3 @@
-import { ref } from 'process';
 import { useTimePickerContext } from '../TimePicker.context';
 
 interface AmPmInputProps extends Omit<React.ComponentProps<'select'>, 'value' | 'onChange'> {
@@ -77,7 +76,6 @@ export function AmPmInput({
     return (
       <input
         {...ctx.getStyles('field', { className, style })}
-        ref={ref as any}
         value={displayValue}
         size={inputSize}
         onChange={(event) => !readOnly && onChange(event.target.value || null)}
