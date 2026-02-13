@@ -56,14 +56,22 @@
   padding-inline: var(--docs-inline-spacing);
   width: 100%;
   padding-inline-end: 0;
+  max-width: 994px;
+
+  @mixin smaller-than 1750px {
+    max-width: 914px;
+  }
+
+  @mixin smaller-than 1450px {
+    max-width: calc(100vw - var(--docs-navbar-width) - 48px);
+  }
+
+  @media (hover: none) and (max-width: 750px) {
+    max-width: calc(100vw - var(--docs-navbar-width) - 28px);
+  }
 
   &[data-with-toc] {
-    max-width: 994px;
     padding-inline-end: var(--docs-inline-spacing);
-
-    @mixin smaller-than 1750px {
-      max-width: 914px;
-    }
 
     @mixin smaller-than 1450px {
       max-width: calc(
