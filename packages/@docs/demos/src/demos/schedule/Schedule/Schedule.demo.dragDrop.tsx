@@ -136,13 +136,7 @@ function Demo() {
     );
   };
 
-  return (
-    <Schedule
-      events={events}
-      withEventsDragAndDrop
-      onEventDrop={handleEventDrop}
-    />
-  );
+  return <Schedule events={events} withEventsDragAndDrop onEventDrop={handleEventDrop} />;
 }
 
 export const dragDrop: MantineDemo = {
