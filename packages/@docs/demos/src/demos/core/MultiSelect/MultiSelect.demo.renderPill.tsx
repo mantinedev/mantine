@@ -12,6 +12,8 @@ const users = [
   { value: 'Mason Taylor', label: 'Mason Taylor', image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png' },
 ];
 
+const usersMap = new Map(users.map((user) => [user.value.toString(), user]));
+
 function Demo() {
   return (
     <MultiSelect
@@ -20,7 +22,7 @@ function Demo() {
       placeholder="Select candidates"
       defaultValue={['Emily Johnson', 'Ava Rodriguez']}
       renderPill={({ option, onRemove }) => {
-        const user = users.find((u) => u.value === option?.value);
+        const user = usersMap.get(option?.value.toString());
         return (
           <Pill withRemoveButton onRemove={onRemove}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -63,6 +65,8 @@ const users = [
   },
 ];
 
+const usersMap = new Map(users.map((user) => [user.value.toString(), user]));
+
 function Demo() {
   return (
     <MultiSelect
@@ -71,7 +75,7 @@ function Demo() {
       placeholder="Select candidates"
       defaultValue={['Emily Johnson', 'Ava Rodriguez']}
       renderPill={({ option, onRemove }) => {
-        const user = users.find((u) => u.value === option?.value);
+        const user = usersMap.get(option?.value.toString());
         return (
           <Pill withRemoveButton onRemove={onRemove} style={{ paddingInlineStart: 2 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

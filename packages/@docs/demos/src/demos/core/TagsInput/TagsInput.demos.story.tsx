@@ -157,3 +157,8 @@ export const Demo_loading = {
   name: '⭐ Demo: loading',
   render: renderDemo(demos.loading),
 };
+
+export const Demo_renderPill = {
+  name: '⭐ Demo: renderPill',
+  render: renderDemo(demos.renderPill),
+};
