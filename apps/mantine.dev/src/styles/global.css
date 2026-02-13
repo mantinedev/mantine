@@ -1,4 +1,3 @@
-html,
-body {
-  overscroll-behavior: none;
+html {
+  overscroll-behavior-y: none;
 }
