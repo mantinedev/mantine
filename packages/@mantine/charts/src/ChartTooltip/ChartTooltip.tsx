@@ -100,7 +100,7 @@ export interface ChartTooltipProps
   series?: ChartSeries[];
 
   /** A function to format values */
-  valueFormatter?: (value: number) => string;
+  valueFormatter?: (value: number) => React.ReactNode;
 
   /** Determines whether the color swatch should be visible @default `true` */
   showColor?: boolean;
