@@ -10,7 +10,7 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 87 15"
-      className={classes.icon}
+      className={classes.viteIcon}
       {...others}
     >
       <path
@@ -185,15 +185,15 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
       </g>
       <path
         d="M64.2894 0C61.3405 4.22097 61.3233 10.7637 64.2894 14.9999H66.2818C63.3164 10.7637 63.3336 4.22097 66.2818 0H64.2894Z"
-        fill="#08060D"
+        fill="currentColor"
       />
       <path
         d="M84.302 1.52588e-05H82.3096C85.2584 4.22098 85.2757 10.7638 82.3096 14.9999H84.302C87.2674 10.7638 87.2501 4.22098 84.302 1.52588e-05Z"
-        fill="#08060D"
+        fill="currentColor"
       />
       <path
         d="M9.13672 10.6901L12.9072 0.248688H18.0664L12.3477 14.7516H5.71777L0 0.248688H5.30371L9.13672 10.6901ZM24.7578 14.7516H19.7861V0.248688H24.7578V14.7516ZM42.8174 3.81216H37.2441V14.7516H32.2715V3.81216H26.6982V0.248688H42.8174V3.81216ZM59.0742 3.77115H49.7305V5.71841H58.9287V9.13638H49.7305V11.2292H59.3438V14.7516H44.7578V0.248688H59.0742V3.77115Z"
-        fill="#08060D"
+        fill="currentColor"
       />
       <defs>
         <filter
