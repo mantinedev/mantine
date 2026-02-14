@@ -54,6 +54,9 @@ export interface ComboboxLikeProps {
   /** If set, the first option is selected when dropdown opens, `false` by default */
   selectFirstOptionOnDropdownOpen?: boolean;
 
+  /** If set, the first option is selected when `data` changes, `false` by default */
+  selectFirstOptionOnDataChange?: boolean;
+
   /** Called when option is submitted from dropdown with mouse click or `Enter` key */
   onOptionSubmit?: (value: string) => void;
 

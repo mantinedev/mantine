@@ -151,6 +151,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onDropdownClose,
     selectFirstOptionOnChange,
     selectFirstOptionOnDropdownOpen,
+    selectFirstOptionOnDataChange,
     onOptionSubmit,
     comboboxProps,
     filter,
@@ -377,6 +378,12 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       combobox.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, _value, _searchValue]);
+
+  useEffect(() => {
+    if (selectFirstOptionOnDataChange) {
+      combobox.selectFirstOption();
+    }
+  }, [selectFirstOptionOnDataChange, optionsLockup]);
 
   const clearButton = (
     <Combobox.ClearButton
