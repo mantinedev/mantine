@@ -1,0 +1,60 @@
+.banner {
+  position: fixed;
+  bottom: 0;
+  inset-inline: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, var(--mantine-color-blue-6), var(--mantine-color-cyan-5));
+  color: var(--mantine-color-white);
+  z-index: 200;
+  padding-inline: var(--mantine-spacing-md);
+  gap: var(--mantine-spacing-md);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mantine-spacing-xs);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+}
+
+.link {
+  color: var(--mantine-color-white);
+  text-decoration: underline;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.closeButton {
+  flex-shrink: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: var(--mantine-radius-sm);
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--mantine-color-white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 100ms ease;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.closeButton svg {
+  width: 14px;
+  height: 14px;
+}
