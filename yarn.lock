@@ -5892,7 +5892,7 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
-    react-dropzone: "npm:14.3.8"
+    react-dropzone: "npm:15.0.0"
   peerDependencies:
     "@mantine/core": 8.3.14
     "@mantine/hooks": 8.3.14
@@ -12210,7 +12210,7 @@ __metadata:
     next-sitemap: "npm:^4.2.3"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
-    react-dropzone: "npm:14.3.8"
+    react-dropzone: "npm:15.0.0"
     react-number-format: "npm:^5.4.4"
     recharts: "npm:^2.13.3"
     rehype-slug: "npm:^6.0.0"
@@ -17952,7 +17952,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
-    react-dropzone: "npm:14.3.8"
+    react-dropzone: "npm:15.0.0"
     react-imask: "npm:^7.6.1"
     react-number-format: "npm:^5.4.4"
     react-remove-scroll: "npm:^2.7.1"
@@ -21387,16 +21387,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:14.3.8":
-  version: 14.3.8
-  resolution: "react-dropzone@npm:14.3.8"
+"react-dropzone@npm:15.0.0":
+  version: 15.0.0
+  resolution: "react-dropzone@npm:15.0.0"
   dependencies:
     attr-accept: "npm:^2.2.4"
     file-selector: "npm:^2.1.0"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ">= 16.8 || 18.0.0"
-  checksum: 10c0/e17b1832783cda7b8824fe9370e99185d1abbdd5e4980b2985d6321c5768c8de18ff7b9ad550c809ee9743269dea608ff74d5208062754ce8377ad022897b278
+  checksum: 10c0/fb7b48a709fdd26273707f7aca5c0e77fce2b9c9201122645d3ecfb07ecfbb89e2495273ea141994f0ed0838ee79f27832c0855b2c598b377b342c3965608b54
   languageName: node
   linkType: hard
 
