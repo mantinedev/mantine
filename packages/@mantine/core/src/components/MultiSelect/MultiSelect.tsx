@@ -38,6 +38,14 @@ import { PillsInput } from '../PillsInput';
 import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedValues } from './filter-picked-values';
 
+const clearSectionOffset: Record<string, number> = {
+  xs: 41,
+  sm: 50,
+  md: 60,
+  lg: 72,
+  xl: 89,
+};
+
 export type MultiSelectStylesNames =
   | __InputStylesNames
   | ComboboxLikeStylesNames
@@ -376,6 +384,9 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
   const filteredData = filterPickedValues({ data: parsedData, value: _value });
   const _clearable = clearable && _value.length > 0 && !disabled && !readOnly;
+  const pillsListStyle = _clearable
+    ? { paddingInlineEnd: clearSectionOffset[size] ?? clearSectionOffset.sm }
+    : undefined;
 
   return (
     <>
@@ -451,7 +462,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
             withErrorStyles={withErrorStyles}
             __stylesApiProps={{
               ...props,
-              rightSectionPointerEvents: rightSectionPointerEvents || (_clearable ? 'all' : 'none'),
+              rightSectionPointerEvents: rightSectionPointerEvents || 'none',
               multiline: true,
             }}
             pointer={!searchable}
@@ -466,7 +477,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
               attributes={attributes}
               disabled={disabled}
               unstyled={unstyled}
-              {...getStyles('pillsList')}
+              {...getStyles('pillsList', { style: pillsListStyle })}
             >
               {values}
               <Combobox.EventsTarget autoComplete={autoComplete}>

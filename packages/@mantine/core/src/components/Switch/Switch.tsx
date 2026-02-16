@@ -205,6 +205,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
       ref={rootRef}
       mod={mod}
       attributes={attributes}
+      inert={rest.inert}
       {...styleProps}
       {...wrapperProps}
     >
@@ -221,6 +222,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
         id={uuid}
         type="checkbox"
         role="switch"
+        inert={rest.inert}
         {...getStyles('input')}
       />
 

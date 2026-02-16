@@ -12,7 +12,7 @@ function getPreviousRelease(message: string) {
 
 function formatForDiscord(markdown: string) {
   const nextVersion = packageJson.version;
-  return `Patch ${nextVersion} is out:\n\n${markdown.replace(/\(#\d+\)/g, '').trim()}\n\nView on GitHub – https://github.com/mantinedev/mantine/releases/tag/${packageJson.version}`;
+  return `Patch ${nextVersion} is out:\n\n${markdown.replace(/\(#\d+(?:,\s*#\d+)*\)/g, '').trim()}\n\nView on GitHub – https://github.com/mantinedev/mantine/releases/tag/${packageJson.version}`;
 }
 
 async function getChangelog() {

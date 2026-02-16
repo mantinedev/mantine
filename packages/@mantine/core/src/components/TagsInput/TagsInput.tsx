@@ -295,6 +295,10 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
     if (isDuplicated) {
       onDuplicate?.(val);
+      if (!allowDuplicates) {
+        handleSearchChange('');
+        return;
+      }
     }
 
     if (_value.length >= maxTags) {
@@ -302,12 +306,10 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       return;
     }
 
-    if ((!isDuplicated || (isDuplicated && allowDuplicates)) && _value.length < maxTags) {
-      onOptionSubmit?.(val);
-      handleSearchChange('');
-      if (val.length > 0) {
-        setValue([..._value, val]);
-      }
+    onOptionSubmit?.(val);
+    handleSearchChange('');
+    if (val.length > 0) {
+      setValue([..._value, val]);
     }
   };
 
@@ -329,6 +331,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
           maxTags,
           value: _searchValue,
           currentTags: _value,
+          isDuplicate,
+          onDuplicate,
         })
       );
       handleSearchChange('');
@@ -374,6 +378,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
           maxTags,
           value: `${_searchValue}${pastedText}`,
           currentTags: _value,
+          isDuplicate,
+          onDuplicate,
         })
       );
       handleSearchChange('');

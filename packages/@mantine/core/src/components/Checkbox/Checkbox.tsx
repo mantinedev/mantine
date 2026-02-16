@@ -231,6 +231,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
       ref={rootRef}
       mod={mod}
       attributes={attributes}
+      inert={rest.inert}
       {...styleProps}
       {...wrapperProps}
     >
@@ -244,6 +245,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           {...rest}
           {...withContextProps}
           disabled={finalDisabled}
+          inert={rest.inert}
           type="checkbox"
           onClick={(event) => {
             if (readOnly) {
