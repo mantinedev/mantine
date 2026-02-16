@@ -1,23 +1,9 @@
-<div align="center">
-	<a href="https://go.warp.dev/mantine" target="_blank">
-		<sup>Special thanks to:</sup>
-		<br>
-		<img alt="Warp sponsorship" width="400" src="https://github.com/warpdotdev/brand-assets/blob/main/Github/Sponsor/Warp-Github-LG-02.png">
-		<br>
-		<h>Warp, built for coding with multiple AI agents</b>
-		<br>
-		<sup>Available for macOS, Linux and Windows</sup>
-	</a>
-</div>
-
-<br>
-
 <br>
 <div align="center">
 	<a href="https://formengine.io/?utm_source=github&utm_medium=hero-banner&utm_campaign=mantine-readme" target="_blank">
 		<sup>Special thanks to:</sup>
 		<br>
-		<img alt="Warp sponsorship" width="400" src="https://formengine.io/ads-images/banner2.png?v=1">
+		<img alt="Formengine sponsorship" width="400" src="https://formengine.io/ads-images/banner2.png?v=1">
 		<br>
 		<h>Drag and Drop React Complex Form Builder Library</b>
 		<br>
