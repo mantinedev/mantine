@@ -1,13 +1,15 @@
-export { factory, getWithProps } from './factory';
-export { polymorphicFactory } from './polymorphic-factory';
+export type { Factory, PolymorphicFactory } from './create-factory';
 export { createPolymorphicComponent } from './create-polymorphic-component';
+export type { PolymorphicComponentProps, PolymorphicRef } from './create-polymorphic-component';
+export { factory, getWithProps } from './factory';
 export type {
-  FactoryPayload,
+  ComponentClasses,
   ExtendComponent,
+  FactoryComponentWithProps,
+  FactoryPayload,
   MantineComponent,
   MantineComponentStaticProperties,
-  FactoryComponentWithProps,
+  ThemeExtend,
 } from './factory';
+export { polymorphicFactory, type PolymorphicComponentWithProps } from './polymorphic-factory';
 export type { MantinePolymorphicComponent } from './polymorphic-factory';
-export type { PolymorphicComponentProps, PolymorphicRef } from './create-polymorphic-component';
-export type { Factory, PolymorphicFactory } from './create-factory';
