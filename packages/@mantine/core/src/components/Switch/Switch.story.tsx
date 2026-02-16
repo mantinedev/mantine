@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { IconBadge } from '@tabler/icons-react';
 import { Box } from '../../core';
 import { Group } from '../Group';
@@ -146,5 +147,28 @@ export function Shrinking() {
         label="Testing if its also broken when the label is  long. Yep, seems a small."
       />
     </Box>
+  );
+}
+
+export function Inert() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack>
+        <Switch
+          label="Inert switch (cannot be changed by clicking label or input)"
+          checked={checked}
+          onChange={(event) => setChecked(event.currentTarget.checked)}
+          inert
+        />
+        <Switch
+          label="Normal switch for comparison"
+          checked={checked}
+          onChange={(event) => setChecked(event.currentTarget.checked)}
+        />
+        <p>Checked state: {checked ? 'true' : 'false'}</p>
+      </Stack>
+    </div>
   );
 }

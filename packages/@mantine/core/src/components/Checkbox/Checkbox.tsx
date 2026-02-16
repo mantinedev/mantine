@@ -220,6 +220,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       variant={variant}
       ref={rootRef}
       mod={mod}
+      inert={rest.inert}
       {...styleProps}
       {...wrapperProps}
     >
@@ -232,6 +233,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           {...getStyles('input', { focusable: true, variant })}
           {...rest}
           {...withContextProps}
+          inert={rest.inert}
           type="checkbox"
         />
 
