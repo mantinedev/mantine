@@ -21,6 +21,9 @@ export interface YearLevelGroupProps
   /** Number of columns displayed next to each other */
   numberOfColumns?: number;
 
+  /** Number of rows to display */
+  numberOfRows?: number;
+
   /** Displayed year */
   year: DateStringValue;
 
@@ -39,6 +42,7 @@ export type YearLevelGroupFactory = Factory<{
 
 const defaultProps = {
   numberOfColumns: 1,
+  numberOfRows: 1,
 } satisfies Partial<YearLevelGroupProps>;
 
 export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
@@ -70,12 +74,14 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
     headerControlsOrder,
 
     // Other settings
+    style,
     classNames,
     styles,
     unstyled,
     __staticSelector,
     __stopPropagation,
     numberOfColumns,
+    numberOfRows,
     levelControlAriaLabel,
     yearLabelFormat,
     size,
@@ -87,7 +93,9 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
 
   const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
-  const years = Array(numberOfColumns)
+  const totalYears = numberOfColumns * numberOfRows;
+
+  const years = Array(totalYears)
     .fill(0)
     .map((_, yearIndex) => {
       const currentYear = dayjs(year).add(yearIndex, 'years').format('YYYY-MM-DD');
@@ -98,7 +106,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
           size={size}
           monthsListFormat={monthsListFormat}
           year={currentYear}
-          withNext={yearIndex === numberOfColumns - 1}
+          withNext={yearIndex === totalYears - 1}
           withPrevious={yearIndex === 0}
           yearLabelFormat={yearLabelFormat}
           __stopPropagation={__stopPropagation}
@@ -158,6 +166,11 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
 
   return (
     <LevelsGroup
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${numberOfColumns}, max-content)`,
+        ...style,
+      }}
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'YearLevelGroup'}
