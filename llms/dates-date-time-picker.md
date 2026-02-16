@@ -346,6 +346,7 @@ DateTimePicker component supports Styles API. With Styles API, you can customize
 | datePickerRoot | .mantine-DateTimePicker-datePickerRoot | Date picker root element, contains calendar and presets |
 | presetsList | .mantine-DateTimePicker-presetsList | Presets wrapper element |
 | presetButton | .mantine-DateTimePicker-presetButton | Preset button |
+| placeholder | .mantine-DateTimePicker-placeholder | Placeholder element |
 | timeWrapper | .mantine-DateTimePicker-timeWrapper | Wrapper around time input and submit button |
 | timeInput | .mantine-DateTimePicker-timeInput | TimeInput |
 | submitButton | .mantine-DateTimePicker-submitButton | Submit button |
