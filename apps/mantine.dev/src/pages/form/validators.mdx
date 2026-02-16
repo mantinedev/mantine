@@ -194,6 +194,66 @@ const form = useForm({
 });
 ```
 
+## isUrl
+
+`isUrl` checks whether the form value is a valid URL. By default, only `http` and `https` protocols are allowed
+and `localhost` is rejected. You can customize this behavior by passing options as the first argument.
+
+```tsx
+import { isUrl, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    website: '',
+    internalUrl: '',
+    ftpServer: '',
+  },
+
+  validate: {
+    // Basic URL validation
+    website: isUrl('Invalid URL'),
+
+    // Allow localhost URLs
+    internalUrl: isUrl(
+      { allowLocalhost: true },
+      'Invalid URL'
+    ),
+
+    // Allow custom protocols
+    ftpServer: isUrl(
+      { protocols: ['ftp', 'https'] },
+      'Invalid FTP or HTTPS URL'
+    ),
+  },
+});
+```
+
+## isOneOf
+
+`isOneOf` checks whether the form value is included in the given list of allowed values.
+Uses strict equality for comparison.
+
+```tsx
+import { isOneOf, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    role: '',
+    priority: 0,
+  },
+
+  validate: {
+    role: isOneOf(
+      ['admin', 'user', 'moderator'],
+      'Invalid role'
+    ),
+    priority: isOneOf([1, 2, 3], 'Priority must be 1, 2, or 3'),
+  },
+});
+```
+
 ## isNotEmptyHTML
 
 `isNotEmptyHTML` checks that the form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
