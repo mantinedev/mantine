@@ -13,7 +13,7 @@
   color: var(--mantine-color-default-color);
   background: var(--mantine-color-default);
   font-size: var(--mantine-font-size-sm);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
 
   &:where([data-interactive]) {
     cursor: pointer;

@@ -3,7 +3,7 @@
   text-decoration: none;
   font-size: var(--text-fz, var(--mantine-font-size-md));
   line-height: var(--text-lh, var(--mantine-line-height-md));
-  font-weight: normal;
+  font-weight: var(--mantine-font-weight-regular);
   margin: 0;
   padding: 0;
 

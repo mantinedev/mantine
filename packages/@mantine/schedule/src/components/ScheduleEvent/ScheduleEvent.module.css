@@ -84,7 +84,7 @@
   color: var(--event-color);
   pointer-events: all;
   border-radius: var(--event-radius);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   font-size: 12px;
   line-height: 1;
   padding: 3px 4px;

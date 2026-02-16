@@ -105,7 +105,7 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   user-select: none;
   cursor: pointer;
   flex: 1;
@@ -263,7 +263,7 @@
 }
 
 .weekViewWeekNumber {
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   text-align: center;
   font-size: var(--mantine-font-size-lg);
 }

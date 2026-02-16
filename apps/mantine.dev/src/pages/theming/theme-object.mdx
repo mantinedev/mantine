@@ -105,6 +105,9 @@ interface MantineTheme {
   /** Object of values that are used to control `line-height` property in `Text` component */
   lineHeights: MantineLineHeightValues;
 
+  /** Object of values that are used to control `font-weight` property in components */
+  fontWeights: MantineFontWeightsValues;
+
   /** Object of values that are used to control breakpoints in all components;
    *  values are expected to be defined in em
    * */
@@ -299,6 +302,32 @@ that do not have `cursor: pointer` styles by default. For example, [Checkbox](/c
 ([Button](/core/button), [ActionIcon](/core/action-icon), [Badge](/core/badge), etc.).
 
 <Demo data={ThemingDemos.defaultGradient} />
+
+### fontWeights
+
+`theme.fontWeights` controls `font-weight` values used in all components.
+The default values are `regular: 400`, `medium: 600`, `bold: 700`.
+Each value is mapped to a CSS variable: `--mantine-font-weight-regular`, `--mantine-font-weight-medium`, `--mantine-font-weight-bold`.
+
+For example, to revert the medium font weight from `600` back to `500` (the default in Mantine 8):
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  fontWeights: {
+    medium: '500',
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
 
 ### components
 

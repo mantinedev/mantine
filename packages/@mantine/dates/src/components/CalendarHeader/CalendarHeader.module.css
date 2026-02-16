@@ -51,7 +51,7 @@
 .calendarHeaderLevel {
   flex: 1;
   font-size: var(--dch-fz, var(--mantine-font-size-sm));
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   text-transform: capitalize;
 }
 

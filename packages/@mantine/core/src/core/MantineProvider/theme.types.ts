@@ -97,6 +97,9 @@ export interface MantineTheme {
   /** Object of values that are used to control `line-height` property in `Text` component */
   lineHeights: MantineLineHeightValues;
 
+  /** Object of values that are used to control `font-weight` property in components */
+  fontWeights: MantineFontWeightsValues;
+
   /** Object of values that are used to control breakpoints in all components,
    *  values are expected to be defined in em
    * */
@@ -212,6 +215,15 @@ export type MantineLineHeight =
       : MantineSize)
   | (string & {});
 export type MantineLineHeightValues = Record<MantineLineHeight, string>;
+
+export type MantineFontWeight =
+  | (MantineThemeSizesOverride extends {
+      fontWeights: Record<infer CustomFontWeight, string>;
+    }
+      ? CustomFontWeight
+      : 'regular' | 'medium' | 'bold')
+  | (string & {});
+export type MantineFontWeightsValues = Record<MantineFontWeight, string>;
 
 export interface MantineThemeOther {
   [key: string]: any;

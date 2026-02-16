@@ -100,7 +100,7 @@
   font-size: var(--year-view-font-size);
   border-radius: var(--year-view-radius);
   padding: 4px;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   cursor: pointer;
   user-select: none;
   color: var(--day-dimmed-color);
@@ -131,7 +131,7 @@
   height: 36px;
   min-width: 36px;
   font-size: var(--year-view-font-size);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   text-align: center;
   text-transform: capitalize;
   display: flex;
@@ -218,7 +218,7 @@
   padding-block: 0.2cqw;
   margin-bottom: 0.5cqw;
   font-size: var(--year-view-font-size);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   text-transform: capitalize;
   border-radius: var(--year-view-radius);
 

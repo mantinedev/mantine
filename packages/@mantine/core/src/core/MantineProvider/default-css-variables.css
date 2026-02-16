@@ -87,6 +87,9 @@
   --mantine-radius-md: calc(0.5rem * var(--mantine-scale));
   --mantine-radius-lg: calc(1rem * var(--mantine-scale));
   --mantine-radius-xl: calc(2rem * var(--mantine-scale));
+  --mantine-font-weight-regular: 400;
+  --mantine-font-weight-medium: 600;
+  --mantine-font-weight-bold: 700;
   --mantine-primary-color-0: var(--mantine-color-blue-0);
   --mantine-primary-color-1: var(--mantine-color-blue-1);
   --mantine-primary-color-2: var(--mantine-color-blue-2);

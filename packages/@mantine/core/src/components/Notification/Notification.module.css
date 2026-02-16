@@ -80,7 +80,7 @@
   text-overflow: ellipsis;
   font-size: var(--mantine-font-size-sm);
   line-height: var(--mantine-line-height-sm);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
 
   @mixin where-light {
     color: var(--mantine-color-gray-9);

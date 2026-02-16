@@ -26,7 +26,7 @@
   align-items: center;
   justify-content: center;
   font-size: var(--mantine-font-size-sm);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
 }
 
 .dayViewInner {

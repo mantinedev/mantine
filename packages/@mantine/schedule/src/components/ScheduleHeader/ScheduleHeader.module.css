@@ -36,7 +36,7 @@
 
 .compactViewSelect {
   display: none;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
 
   @container (width <= 600px) {
     display: block;

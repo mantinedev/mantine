@@ -140,7 +140,7 @@
     content: var(--spotlight-label);
     text-transform: uppercase;
     font-size: var(--mantine-font-size-xs);
-    font-weight: 700;
+    font-weight: var(--mantine-font-weight-bold);
     color: var(--mantine-color-dimmed);
     padding-inline-start: var(--mantine-spacing-md);
   }

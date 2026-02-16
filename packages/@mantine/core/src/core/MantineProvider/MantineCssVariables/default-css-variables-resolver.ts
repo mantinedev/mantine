@@ -96,6 +96,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
   assignSizeVariables(result.variables, theme.lineHeights, 'line-height');
   assignSizeVariables(result.variables, theme.shadows, 'shadow');
   assignSizeVariables(result.variables, theme.radius, 'radius');
+  assignSizeVariables(result.variables, theme.fontWeights, 'font-weight');
 
   theme.colors[theme.primaryColor].forEach((_, index) => {
     result.variables[`--mantine-primary-color-${index}`] =

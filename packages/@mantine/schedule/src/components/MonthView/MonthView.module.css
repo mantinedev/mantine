@@ -39,7 +39,7 @@
   border-block-end: none;
   border-inline-start: var(--month-view-border);
   border-inline-end: none;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   cursor: pointer;
   user-select: none;
 
@@ -81,7 +81,7 @@
   border-block-end: none;
   border-inline-start: var(--month-view-border);
   border-inline-end: none;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   text-align: center;
   text-transform: capitalize;
   display: flex;
@@ -116,7 +116,7 @@
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   height: 100px;
   padding: 4px;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   border-block-start: var(--month-view-border);
   border-block-end: none;
   border-inline-start: var(--month-view-border);

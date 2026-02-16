@@ -190,7 +190,7 @@
 }
 
 .stepLabel {
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   font-size: var(--stepper-fz);
   line-height: 1;
 }

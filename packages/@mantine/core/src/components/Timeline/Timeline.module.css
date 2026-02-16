@@ -15,7 +15,7 @@
 }
 
 .itemTitle {
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   line-height: 1;
   margin-bottom: calc(var(--mantine-spacing-xs) / 2);
 }

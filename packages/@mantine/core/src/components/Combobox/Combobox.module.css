@@ -136,7 +136,7 @@
   color: var(--mantine-color-dimmed);
   font-size: calc(var(--combobox-option-fz, var(--mantine-font-size-sm)) * 0.85);
   padding: var(--combobox-option-padding);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   position: relative;
   display: flex;
   align-items: center;

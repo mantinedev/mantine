@@ -94,7 +94,7 @@
   margin-bottom: 4px;
   color: var(--mantine-color-dimmed);
   font-size: calc(var(--control-font-size, var(--mantine-font-size-sm)) - 2px);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   display: flex;
   align-items: center;
   padding-inline-start: 7px;

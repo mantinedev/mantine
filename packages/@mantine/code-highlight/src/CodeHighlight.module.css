@@ -213,7 +213,7 @@
   gap: 7px;
   padding: 5px 9px;
   font-family: var(--mantine-font-family-monospace);
-  font-weight: 700;
+  font-weight: var(--mantine-font-weight-bold);
   line-height: 1;
   user-select: none;
   cursor: pointer;

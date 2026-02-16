@@ -51,7 +51,7 @@
   background-color: var(--_indicator-color);
   color: var(--mantine-color-white);
   font-size: var(--mantine-font-size-xs);
-  font-weight: 700;
+  font-weight: var(--mantine-font-weight-bold);
   box-shadow: var(--mantine-shadow-sm);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;

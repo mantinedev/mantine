@@ -56,13 +56,13 @@
 
 .dayMonth {
   font-size: 0.75em;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   opacity: 0.65;
 }
 
 .dayNumber {
   font-size: 0.9em;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
 }
 
 .control {

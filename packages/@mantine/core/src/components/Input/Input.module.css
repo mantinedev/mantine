@@ -307,7 +307,7 @@
 
 .label {
   display: inline-block;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   overflow-wrap: break-word;
   cursor: default;
   -webkit-tap-highlight-color: transparent;

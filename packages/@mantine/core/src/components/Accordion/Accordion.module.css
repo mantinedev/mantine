@@ -56,7 +56,7 @@
 
 .label {
   color: inherit;
-  font-weight: 400;
+  font-weight: var(--mantine-font-weight-regular);
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;

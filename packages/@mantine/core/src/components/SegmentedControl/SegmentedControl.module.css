@@ -60,7 +60,7 @@
 
 .label {
   -webkit-tap-highlight-color: transparent;
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   display: block;
   text-align: center;
   white-space: nowrap;

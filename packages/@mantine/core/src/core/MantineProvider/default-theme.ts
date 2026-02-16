@@ -58,6 +58,12 @@ export const DEFAULT_THEME: MantineTheme = {
     xl: '1.65',
   },
 
+  fontWeights: {
+    regular: '400',
+    medium: '600',
+    bold: '700',
+  },
+
   radius: {
     xs: rem(2),
     sm: rem(4),

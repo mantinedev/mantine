@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   font-size: var(--mantine-font-size-sm);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   padding-bottom: var(--bars-list-gap);
 }
 
@@ -43,7 +43,7 @@
 
 .barValue {
   font-size: var(--mantine-font-size-sm);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   white-space: nowrap;
   color: var(--mantine-color-text);
 }

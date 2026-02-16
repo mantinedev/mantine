@@ -22,7 +22,7 @@
 }
 
 .monthYearSelectLabel {
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   font-size: var(--mantine-font-size-sm);
   padding-inline: 8px;
   margin-bottom: 6px;

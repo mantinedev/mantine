@@ -135,7 +135,7 @@
 
     font-family: var(--mantine-font-family-monospace);
     line-height: var(--mantine-line-height);
-    font-weight: 700;
+    font-weight: var(--mantine-font-weight-bold);
     padding: var(--kbd-padding);
     font-size: var(--kbd-fz);
     border-radius: var(--mantine-radius-sm);

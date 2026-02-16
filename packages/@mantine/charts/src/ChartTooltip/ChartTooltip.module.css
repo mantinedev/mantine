@@ -16,7 +16,7 @@
 .tooltipLabel {
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-md);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
 }
 
