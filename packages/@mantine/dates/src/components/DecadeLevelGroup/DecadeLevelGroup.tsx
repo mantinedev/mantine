@@ -24,6 +24,9 @@ export interface DecadeLevelGroupProps
   /** Number of columns to display next to each other */
   numberOfColumns?: number;
 
+  /** Number of rows to display */
+  numberOfRows?: number;
+
   /** Displayed decade */
   decade: DateStringValue;
 
@@ -39,6 +42,7 @@ export type DecadeLevelGroupFactory = Factory<{
 
 const defaultProps = {
   numberOfColumns: 1,
+  numberOfRows: 1,
 } satisfies Partial<DecadeLevelGroupProps>;
 
 export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
@@ -68,12 +72,14 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
     headerControlsOrder,
 
     // Other settings
+    style,
     classNames,
     styles,
     unstyled,
     __staticSelector,
     __stopPropagation,
     numberOfColumns,
+    numberOfRows,
     levelControlAriaLabel,
     decadeLabelFormat,
     size,
@@ -84,7 +90,9 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
 
   const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
-  const decades = Array(numberOfColumns)
+  const totalDecades = numberOfColumns * numberOfRows;
+
+  const decades = Array(totalDecades)
     .fill(0)
     .map((_, decadeIndex) => {
       const currentDecade = dayjs(decade)
@@ -97,7 +105,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
           size={size}
           yearsListFormat={yearsListFormat}
           decade={currentDecade}
-          withNext={decadeIndex === numberOfColumns - 1}
+          withNext={decadeIndex === totalDecades - 1}
           withPrevious={decadeIndex === 0}
           decadeLabelFormat={decadeLabelFormat}
           __onControlClick={__onControlClick}
@@ -154,6 +162,11 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
 
   return (
     <LevelsGroup
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${numberOfColumns}, max-content)`,
+        ...style,
+      }}
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'DecadeLevelGroup'}

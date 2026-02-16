@@ -21,6 +21,9 @@ export interface MonthLevelGroupProps
   /** Number of columns to display next to each other */
   numberOfColumns?: number;
 
+  /** Number of rows to display */
+  numberOfRows?: number;
+
   /** Month to display */
   month: DateStringValue;
 
@@ -39,6 +42,7 @@ export type MonthLevelGroupFactory = Factory<{
 
 const defaultProps = {
   numberOfColumns: 1,
+  numberOfRows: 1,
 } satisfies Partial<MonthLevelGroupProps>;
 
 export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
@@ -79,10 +83,12 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     headerControlsOrder,
 
     // Other settings
+    style,
     classNames,
     styles,
     unstyled,
     numberOfColumns,
+    numberOfRows,
     levelControlAriaLabel,
     monthLabelFormat,
     __staticSelector,
@@ -96,7 +102,9 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
 
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
 
-  const months = Array(numberOfColumns)
+  const totalMonths = numberOfColumns * numberOfRows;
+
+  const months = Array(totalMonths)
     .fill(0)
     .map((_, monthIndex) => {
       const currentMonth = dayjs(month).add(monthIndex, 'months').format('YYYY-MM-DD');
@@ -105,7 +113,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
         <MonthLevel
           key={monthIndex}
           month={currentMonth}
-          withNext={monthIndex === numberOfColumns - 1}
+          withNext={monthIndex === totalMonths - 1}
           withPrevious={monthIndex === 0}
           monthLabelFormat={monthLabelFormat}
           __stopPropagation={__stopPropagation}
@@ -176,6 +184,11 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
 
   return (
     <LevelsGroup
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${numberOfColumns}, max-content)`,
+        ...style,
+      }}
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'MonthLevelGroup'}
