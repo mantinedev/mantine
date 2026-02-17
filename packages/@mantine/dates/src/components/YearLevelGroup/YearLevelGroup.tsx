@@ -26,6 +26,9 @@ export interface YearLevelGroupProps
 
   /** Function that returns level control `aria-label` */
   levelControlAriaLabel?: ((year: DateStringValue) => string) | string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type YearLevelGroupFactory = Factory<{
@@ -76,6 +79,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
     levelControlAriaLabel,
     yearLabelFormat,
     size,
+    fullWidth,
     vars,
     attributes,
     ...others
@@ -146,6 +150,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
           __staticSelector={__staticSelector || 'YearLevelGroup'}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           attributes={attributes}
         />
       );
@@ -158,6 +163,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
       __staticSelector={__staticSelector || 'YearLevelGroup'}
       size={size}
       unstyled={unstyled}
+      fullWidth={fullWidth}
       attributes={attributes}
       {...others}
     >

@@ -1,6 +1,10 @@
 .yearsList {
   border-collapse: collapse;
   border-width: 0;
+
+  &[data-full-width] {
+    width: 100%;
+  }
 }
 
 .yearsListCell {

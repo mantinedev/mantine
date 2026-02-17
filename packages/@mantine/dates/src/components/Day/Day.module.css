@@ -92,6 +92,13 @@
     border-radius: var(--mantine-radius-default);
   }
 
+  &:where([data-full-width]) {
+    width: 100%;
+    height: auto;
+    min-height: var(--day-size);
+    aspect-ratio: 1;
+  }
+
   &:where([data-selected]) {
     background-color: var(--mantine-primary-color-filled);
     color: var(--mantine-primary-color-contrast);

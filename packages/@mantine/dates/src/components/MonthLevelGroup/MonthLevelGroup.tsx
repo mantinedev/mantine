@@ -29,6 +29,9 @@ export interface MonthLevelGroupProps
 
   /** Passed as `isStatic` prop to `Month` component */
   static?: boolean;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type MonthLevelGroupFactory = Factory<{
@@ -89,6 +92,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     __stopPropagation,
     size,
     static: isStatic,
+    fullWidth,
     vars,
     attributes,
     ...others
@@ -169,6 +173,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           attributes={attributes}
         />
       );
@@ -180,6 +185,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
       styles={styles}
       __staticSelector={__staticSelector || 'MonthLevelGroup'}
       size={size}
+      fullWidth={fullWidth}
       attributes={attributes}
       {...others}
     >

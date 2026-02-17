@@ -45,6 +45,9 @@ export interface DecadeLevelProps
 
   /** Level control `aria-label` */
   levelControlAriaLabel?: string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type DecadeLevelFactory = Factory<{
@@ -96,6 +99,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props) => {
     __staticSelector,
     __stopPropagation,
     size,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -157,6 +161,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
 
@@ -174,6 +179,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props) => {
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         withCellSpacing={withCellSpacing}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
     </Box>

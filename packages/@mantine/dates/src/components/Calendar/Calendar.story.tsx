@@ -76,6 +76,26 @@ export function InitialLevelDecade() {
   );
 }
 
+export function FullWidth() {
+  return (
+    <div style={{ padding: 40, width: '100%', maxWidth: 1000 }}>
+      <div style={{ marginBottom: 20, fontWeight: 'bold' }}>Month level</div>
+      <Calendar fullWidth />
+
+      <div style={{ marginBottom: 20, marginTop: 40, fontWeight: 'bold' }}>Year level</div>
+      <Calendar fullWidth defaultLevel="year" />
+
+      <div style={{ marginBottom: 20, marginTop: 40, fontWeight: 'bold' }}>Decade level</div>
+      <Calendar fullWidth defaultLevel="decade" />
+
+      <div style={{ marginBottom: 20, marginTop: 40, fontWeight: 'bold' }}>Multiple columns</div>
+      <div style={{ maxWidth: 1000 }}>
+        <Calendar fullWidth numberOfColumns={3} />
+      </div>
+    </div>
+  );
+}
+
 export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <Calendar size={size} key={size} mt="xl" />

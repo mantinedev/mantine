@@ -1,6 +1,10 @@
 .month {
   border-collapse: collapse;
   table-layout: fixed;
+
+  &[data-full-width] {
+    width: 100%;
+  }
 }
 
 .monthCell {

@@ -12,3 +12,4 @@ export { minMax } from './MonthPicker.demo.minMax';
 export { listFormat } from './MonthPicker.demo.listFormat';
 export { maxLevel } from './MonthPicker.demo.maxLevel';
 export { locale } from './MonthPicker.demo.locale';
+export { fullWidth } from './MonthPicker.demo.fullWidth';

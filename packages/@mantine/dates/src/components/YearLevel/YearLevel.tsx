@@ -41,6 +41,9 @@ export interface YearLevelProps
 
   /** `aria-label` for change level control */
   levelControlAriaLabel?: string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type YearLevelFactory = Factory<{
@@ -94,6 +97,7 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
     classNames,
     styles,
     unstyled,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -149,6 +153,7 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
 
@@ -166,6 +171,7 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         withCellSpacing={withCellSpacing}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
     </Box>

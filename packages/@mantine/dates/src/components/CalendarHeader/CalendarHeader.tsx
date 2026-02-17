@@ -72,6 +72,9 @@ export interface CalendarHeaderSettings {
 
   /** Controls order @default ['previous', 'level', 'next'] */
   headerControlsOrder?: ('previous' | 'next' | 'level')[];
+
+  /** Determines whether the header should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface CalendarHeaderProps
@@ -134,6 +137,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     withNext,
     withPrevious,
     headerControlsOrder,
+    fullWidth,
     __staticSelector,
     __preventFocus,
     __stopPropagation,
@@ -240,7 +244,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
   });
 
   return (
-    <Box {...getStyles('calendarHeader')} {...others}>
+    <Box {...getStyles('calendarHeader')} data-full-width={fullWidth || undefined} {...others}>
       {controls}
     </Box>
   );

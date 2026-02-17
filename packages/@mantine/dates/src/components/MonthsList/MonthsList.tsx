@@ -35,6 +35,9 @@ export interface MonthsListSettings extends ControlsGroupSettings {
 
   /** Determines whether controls should be separated @default true */
   withCellSpacing?: boolean;
+
+  /** Determines whether the list should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface MonthsListProps
@@ -88,6 +91,7 @@ export const MonthsList = factory<MonthsListFactory>((_props) => {
     __preventFocus,
     __stopPropagation,
     withCellSpacing,
+    fullWidth,
     size,
     attributes,
     ...others
@@ -133,6 +137,7 @@ export const MonthsList = factory<MonthsListFactory>((_props) => {
             {...getStyles('monthsListControl')}
             size={size}
             unstyled={unstyled}
+            fullWidth={fullWidth}
             __staticSelector={__staticSelector || 'MonthsList'}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isMonthDisabled({
@@ -179,7 +184,13 @@ export const MonthsList = factory<MonthsListFactory>((_props) => {
   });
 
   return (
-    <Box component="table" size={size} {...getStyles('monthsList')} {...others}>
+    <Box
+      component="table"
+      size={size}
+      {...getStyles('monthsList')}
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       <tbody>{rows}</tbody>
     </Box>
   );

@@ -29,6 +29,9 @@ export interface DecadeLevelGroupProps
 
   /** Function that returns level control `aria-label` based on year date */
   levelControlAriaLabel?: ((decade: DateStringValue) => string) | string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type DecadeLevelGroupFactory = Factory<{
@@ -77,6 +80,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
     levelControlAriaLabel,
     decadeLabelFormat,
     size,
+    fullWidth,
     vars,
     attributes,
     ...others
@@ -147,6 +151,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
           unstyled={unstyled}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           attributes={attributes}
         />
       );
@@ -159,6 +164,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
       __staticSelector={__staticSelector || 'DecadeLevelGroup'}
       size={size}
       unstyled={unstyled}
+      fullWidth={fullWidth}
       attributes={attributes}
       {...others}
     >
