@@ -43,6 +43,9 @@ export interface PickerControlProps
 
   /** Component size */
   size?: MantineSize;
+
+  /** Determines whether the control should take the full width of its cell @default false */
+  fullWidth?: boolean;
 }
 
 export type PickerControlFactory = Factory<{
@@ -74,6 +77,7 @@ export const PickerControl = factory<PickerControlFactory>((_props) => {
     __staticSelector,
     selected,
     disabled,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -98,6 +102,7 @@ export const PickerControl = factory<PickerControlFactory>((_props) => {
       {...getStyles('pickerControl')}
       unstyled={unstyled}
       data-picker-control
+      data-full-width={fullWidth || undefined}
       data-selected={(selected && !disabled) || undefined}
       data-disabled={disabled || undefined}
       data-in-range={(inRange && !disabled && !selected) || undefined}

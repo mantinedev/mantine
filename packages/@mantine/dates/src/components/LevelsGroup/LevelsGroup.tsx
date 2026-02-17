@@ -17,6 +17,9 @@ export interface LevelsGroupProps
   extends BoxProps, StylesApiProps<LevelsGroupFactory>, ElementProps<'div'> {
   __staticSelector?: string;
   size?: MantineSize;
+
+  /** Determines whether the group should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type LevelsGroupFactory = Factory<{
@@ -35,6 +38,7 @@ export const LevelsGroup = factory<LevelsGroupFactory>((_props) => {
     unstyled,
     vars,
     __staticSelector,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -53,7 +57,7 @@ export const LevelsGroup = factory<LevelsGroupFactory>((_props) => {
     rootSelector: 'levelsGroup',
   });
 
-  return <Box {...getStyles('levelsGroup')} {...others} />;
+  return <Box {...getStyles('levelsGroup')} data-full-width={fullWidth || undefined} {...others} />;
 });
 
 LevelsGroup.classes = classes;

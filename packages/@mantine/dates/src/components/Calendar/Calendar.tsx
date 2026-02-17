@@ -123,6 +123,9 @@ export interface CalendarBaseProps {
   /** Previous button `aria-label` */
   previousLabel?: string;
 
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
+
   /** Called when the next decade button is clicked */
   onNextDecade?: (date: DateStringValue) => void;
 
@@ -253,6 +256,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     onPreviousMonth,
     static: isStatic,
     enableKeyboardNavigation,
+    fullWidth,
     attributes,
     ref,
     ...others
@@ -404,7 +408,13 @@ export const Calendar = factory<CalendarFactory>((_props) => {
   ]);
 
   return (
-    <Box ref={useMergedRef(calendarRef, ref)} size={size} data-calendar {...others}>
+    <Box
+      ref={useMergedRef(calendarRef, ref)}
+      size={size}
+      data-calendar
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       {_level === 'month' && (
         <MonthLevelGroup
           month={currentDate}
@@ -441,6 +451,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           {...stylesApiProps}
         />
       )}
@@ -475,6 +486,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           {...stylesApiProps}
         />
       )}
@@ -506,6 +518,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           {...stylesApiProps}
         />
       )}

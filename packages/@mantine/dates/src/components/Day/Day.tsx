@@ -60,6 +60,9 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
 
   /** Determines whether today should be highlighted with a border @default false */
   highlightToday?: boolean;
+
+  /** Determines whether the day should take the full width of its cell @default false */
+  fullWidth?: boolean;
 }
 
 export type DayFactory = Factory<{
@@ -97,6 +100,7 @@ export const Day = factory<DayFactory>((_props) => {
     hidden,
     static: isStatic,
     highlightToday,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -132,6 +136,7 @@ export const Day = factory<DayFactory>((_props) => {
       data-first-in-range={(firstInRange && !disabled) || undefined}
       data-last-in-range={(lastInRange && !disabled) || undefined}
       data-static={isStatic || undefined}
+      data-full-width={fullWidth || undefined}
       unstyled={unstyled}
       {...others}
     >

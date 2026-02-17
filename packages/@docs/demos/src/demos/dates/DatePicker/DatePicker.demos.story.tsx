@@ -132,3 +132,8 @@ export const Demo_headerControlsOrder = {
   name: '⭐ Demo: headerControlsOrder',
   render: renderDemo(demos.headerControlsOrder),
 };
+
+export const Demo_fullWidth = {
+  name: '⭐ Demo: fullWidth',
+  render: renderDemo(demos.fullWidth),
+};

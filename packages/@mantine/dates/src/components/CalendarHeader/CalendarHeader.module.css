@@ -9,6 +9,11 @@
   display: flex;
   max-width: calc(var(--dch-control-size) * 8 + rem(7px));
   margin-bottom: var(--mantine-spacing-xs);
+
+  &[data-full-width] {
+    max-width: none;
+    width: 100%;
+  }
 }
 
 .calendarHeaderLevel,

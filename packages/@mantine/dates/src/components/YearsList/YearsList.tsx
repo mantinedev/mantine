@@ -43,6 +43,9 @@ export interface YearsListSettings extends ControlsGroupSettings {
 
   /** Determines whether controls should be separated @default true */
   withCellSpacing?: boolean;
+
+  /** Determines whether the list should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface YearsListProps
@@ -87,6 +90,7 @@ export const YearsList = factory<YearsListFactory>((_props) => {
     __preventFocus,
     __stopPropagation,
     withCellSpacing,
+    fullWidth,
     size,
     attributes,
     ...others
@@ -131,6 +135,7 @@ export const YearsList = factory<YearsListFactory>((_props) => {
             {...getStyles('yearsListControl')}
             size={size}
             unstyled={unstyled}
+            fullWidth={fullWidth}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isYearDisabled({ year, minDate, maxDate })}
             ref={(node) => {
@@ -172,7 +177,13 @@ export const YearsList = factory<YearsListFactory>((_props) => {
   });
 
   return (
-    <Box component="table" size={size} {...getStyles('yearsList')} {...others}>
+    <Box
+      component="table"
+      size={size}
+      {...getStyles('yearsList')}
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       <tbody>{rows}</tbody>
     </Box>
   );

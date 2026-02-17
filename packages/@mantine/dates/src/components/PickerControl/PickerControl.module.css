@@ -70,4 +70,8 @@
   &:where([data-first-in-range][data-last-in-range]) {
     border-radius: var(--mantine-radius-default);
   }
+
+  &:where([data-full-width]) {
+    width: 100%;
+  }
 }

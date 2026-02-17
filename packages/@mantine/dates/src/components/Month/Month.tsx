@@ -115,6 +115,9 @@ export interface MonthSettings {
 
   /** Determines whether week numbers should be displayed @default false */
   withWeekNumbers?: boolean;
+
+  /** Determines whether the month should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface MonthProps
@@ -180,6 +183,7 @@ export const Month = factory<MonthFactory>((_props) => {
     size,
     highlightToday,
     withWeekNumbers,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -255,6 +259,7 @@ export const Month = factory<MonthFactory>((_props) => {
             hidden={hideOutsideDates ? outside : false}
             aria-label={ariaLabel}
             static={isStatic}
+            fullWidth={fullWidth}
             disabled={
               excludeDate?.(date) ||
               !isBeforeMaxDate(date, toDateString(maxDate)!) ||
@@ -298,7 +303,13 @@ export const Month = factory<MonthFactory>((_props) => {
   });
 
   return (
-    <Box component="table" {...getStyles('month')} size={size} {...others}>
+    <Box
+      component="table"
+      {...getStyles('month')}
+      size={size}
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       {!hideWeekdays && (
         <thead {...getStyles('monthThead')}>
           <WeekdaysRow

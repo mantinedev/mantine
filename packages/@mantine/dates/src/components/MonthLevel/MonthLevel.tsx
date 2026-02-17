@@ -44,6 +44,9 @@ export interface MonthLevelProps
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
   static?: boolean;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type MonthLevelFactory = Factory<{
@@ -107,6 +110,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
     __staticSelector,
     size,
     static: isStatic,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -162,6 +166,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
 
@@ -189,6 +194,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         withCellSpacing={withCellSpacing}
         highlightToday={highlightToday}
         withWeekNumbers={withWeekNumbers}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
     </Box>

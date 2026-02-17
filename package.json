@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "9.0.0-alpha.0",
+  "version": "9.0.0-alpha.1",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.12.0",
   "license": "MIT",

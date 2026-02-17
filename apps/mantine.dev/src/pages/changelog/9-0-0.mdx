@@ -17,6 +17,7 @@ import {
   SimpleGridDemos,
   SliderDemos,
   BarsListDemos,
+  CalendarDemos,
   ScheduleDemos,
   DayViewDemos,
   WeekViewDemos,
@@ -26,6 +27,7 @@ import {
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
+import packageJson from '../../../../../package.json';
 
 export default Layout(MDX_DATA.Changelog900);
 
@@ -35,6 +37,16 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Alpha version
+
+Update to the latest alpha version by changing the version of
+all `@mantine/*` in your `package.json` to {packageJson.version}.
+Then install dependencies with your package manager.
+
+The final release is planned for May 26th, 2026. Until then, you can
+influence the development by trying out the alpha version and providing feedback
+on GitHub or Discord.
 
 ## Migration guide
 
@@ -334,6 +346,13 @@ New [BarsList](/charts/bars-list) component displays a list of horizontal bars w
 It supports custom colors, auto contrast, value formatting, and custom bar rendering:
 
 <Demo data={BarsListDemos.usage} />
+
+## Calendar fullWidth prop
+
+[Calendar](/dates/calendar), [DatePicker](/dates/date-picker), [MonthPicker](/dates/month-picker) and [YearPicker](/dates/year-picker)
+components now support `fullWidth` prop to make the calendar stretch to fill 100% of its parent container width:
+
+<Demo data={CalendarDemos.fullWidth} />
 
 ## Namespace types exports
 
