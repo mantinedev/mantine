@@ -163,7 +163,8 @@ For example, you can show a notification:
 ## isValid handler
 
 `form.isValid` performs form validation with the given validation functions, rules object, or schema, but unlike
-`form.validate`, it does not set `form.errors` and just returns a promise that resolves to a boolean value indicating whether the form is valid.
+`form.validate`, it does not set `form.errors` and just returns a boolean value indicating whether the form is valid.
+If any of the validation rules are async, `form.isValid` returns a `Promise<boolean>` instead.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -177,18 +178,20 @@ const form = useForm({
   },
 });
 
-// get the validation status of all values
-await form.isValid(); // -> false
-
-// get the validation status of a field
-await form.isValid('name'); // -> false
+// With sync rules, returns boolean directly
+form.isValid(); // -> false
+form.isValid('name'); // -> false
 ```
 
 ## Async validation
 
 Validation rules can be async – return a `Promise` that resolves to an error message or `null`.
-When any rule is async, `form.validate()`, `form.validateField()` and `form.isValid()` all return promises.
+When all rules are synchronous, `form.validate()`, `form.validateField()` and `form.isValid()` return
+their results directly (not wrapped in a `Promise`). When any rule is async, these methods return promises instead.
+TypeScript infers the correct return type based on your validation rules, so you get precise types without manual annotations.
+
 The `form.validating` property is `true` while any async validation is in progress, and `form.isValidating(path)` can be used to check individual fields.
+The `validating` state is never set for forms with only synchronous rules.
 
 Each rule receives an `AbortSignal` as the fourth argument. The signal is aborted when a newer validation
 supersedes the current one, which you can use to cancel in-flight HTTP requests and avoid race conditions.

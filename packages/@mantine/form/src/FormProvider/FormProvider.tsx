@@ -7,8 +7,8 @@ export interface FormProviderProps<Form> {
   children: React.ReactNode;
 }
 
-export function createFormContext<Values, TransformedValues = Values>() {
-  type Form = UseFormReturnType<Values, TransformedValues>;
+export function createFormContext<Values, TransformedValues = Values, Rules = any>() {
+  type Form = UseFormReturnType<Values, TransformedValues, Rules>;
 
   const FormContext = createContext<Form | null>(null);
 
@@ -28,6 +28,6 @@ export function createFormContext<Values, TransformedValues = Values>() {
   return [FormProvider, useFormContext, useForm] as [
     React.FC<FormProviderProps<Form>>,
     () => Form,
-    UseForm<Values, TransformedValues>,
+    UseForm<Values, TransformedValues, Rules>,
   ];
 }

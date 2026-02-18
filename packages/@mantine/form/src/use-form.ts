@@ -9,11 +9,12 @@ import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getDataPath, getPath } from './paths';
 import {
+  FormErrors,
+  FormRulesRecord,
   GetInputNode,
   GetInputProps,
   GetTransformedValues,
   Initialize,
-  IsValid,
   IsValidating,
   Key,
   OnReset,
@@ -23,10 +24,31 @@ import {
   SetValues,
   UseFormInput,
   UseFormReturnType,
-  Validate,
-  ValidateField,
 } from './types';
 import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
+
+export function useForm<
+  Values extends Record<string, any>,
+  TransformedValues = Values,
+  R extends FormErrors | Promise<FormErrors> = FormErrors,
+>(
+  input: UseFormInput<Values, TransformedValues> & { validate: (values: Values) => R }
+): UseFormReturnType<Values, TransformedValues, (values: Values) => R>;
+
+export function useForm<
+  Values extends Record<string, any>,
+  TransformedValues = Values,
+  Rules extends FormRulesRecord<Values> = FormRulesRecord<Values>,
+>(
+  input: UseFormInput<Values, TransformedValues> & { validate: Rules }
+): UseFormReturnType<Values, TransformedValues, Rules>;
+
+export function useForm<
+  Values extends Record<string, any> = Record<string, any>,
+  TransformedValues = Values,
+>(
+  input?: UseFormInput<Values, TransformedValues>
+): UseFormReturnType<Values, TransformedValues, undefined>;
 
 export function useForm<
   Values extends Record<string, any> = Record<string, any>,
@@ -102,44 +124,47 @@ export function useForm<
   const debouncedValidateField = useMemo(() => {
     const timers: Record<string, ReturnType<typeof setTimeout>> = {};
 
+    const handleValidation = (path: string) => {
+      const signal = $validating.getAbortSignal(path);
+      const result = validateFieldValue(
+        path,
+        rules,
+        $values.refValues.current,
+        resolveValidationError,
+        signal
+      );
+
+      const applyResult = (results: { hasError: boolean; error: React.ReactNode }) => {
+        if (signal.aborted) {
+          return;
+        }
+        if (results.hasError) {
+          $errors.setFieldError(path as any, results.error);
+        } else {
+          $errors.clearFieldError(path);
+        }
+      };
+
+      const cleanup = () => {
+        if (!signal.aborted) {
+          $validating.setFieldValidating(path, false);
+        }
+      };
+
+      if (result instanceof Promise) {
+        $validating.setFieldValidating(path, true);
+        result.then(applyResult).finally(cleanup);
+      } else {
+        applyResult(result);
+      }
+    };
+
     return (path: string) => {
       clearTimeout(timers[path]);
       if (validateDebounce > 0) {
-        timers[path] = setTimeout(() => {
-          const signal = $validating.getAbortSignal(path);
-          $validating.setFieldValidating(path, true);
-          validateFieldValue(path, rules, $values.refValues.current, resolveValidationError, signal)
-            .then((results) => {
-              if (signal.aborted) {
-                return;
-              }
-              results.hasError
-                ? $errors.setFieldError(path as any, results.error)
-                : $errors.clearFieldError(path);
-            })
-            .finally(() => {
-              if (!signal.aborted) {
-                $validating.setFieldValidating(path, false);
-              }
-            });
-        }, validateDebounce);
+        timers[path] = setTimeout(() => handleValidation(path), validateDebounce);
       } else {
-        const signal = $validating.getAbortSignal(path);
-        $validating.setFieldValidating(path, true);
-        validateFieldValue(path, rules, $values.refValues.current, resolveValidationError, signal)
-          .then((results) => {
-            if (signal.aborted) {
-              return;
-            }
-            results.hasError
-              ? $errors.setFieldError(path as any, results.error)
-              : $errors.clearFieldError(path);
-          })
-          .finally(() => {
-            if (!signal.aborted) {
-              $validating.setFieldValidating(path, false);
-            }
-          });
+        handleValidation(path);
       }
     };
   }, [validateDebounce, rules, resolveValidationError]);
@@ -183,57 +208,70 @@ export function useForm<
     [onValuesChange, handleValuesChanges]
   );
 
-  const validate: Validate = useCallback(async () => {
+  const validate = useCallback(() => {
     const generation = ++validateGeneration.current;
     const signal = $validating.getAbortSignal('__form__');
-    $validating.setFormValidating(true);
-    try {
-      const results = await validateValues(
-        rules,
-        $values.refValues.current,
-        resolveValidationError,
-        signal
-      );
+
+    const handleResult = (results: { hasErrors: boolean; errors: Record<string, any> }) => {
       if (generation !== validateGeneration.current) {
         return { hasErrors: false, errors: {} };
       }
       $errors.setErrors(results.errors);
       return results;
-    } finally {
+    };
+
+    const cleanup = () => {
       if (generation === validateGeneration.current) {
         $validating.setFormValidating(false);
       }
+    };
+
+    const result = validateValues(rules, $values.refValues.current, resolveValidationError, signal);
+
+    if (result instanceof Promise) {
+      $validating.setFormValidating(true);
+      return result.then(handleResult).finally(cleanup);
     }
+
+    return handleResult(result);
   }, [rules, resolveValidationError]);
 
-  const validateField: ValidateField<Values> = useCallback(
-    async (path) => {
+  const validateField = useCallback(
+    (path: string) => {
       const signal = $validating.getAbortSignal(String(path));
-      $validating.setFieldValidating(String(path), true);
 
-      try {
-        const results = await validateFieldValue(
-          path,
-          rules,
-          $values.refValues.current,
-          resolveValidationError,
-          signal
-        );
-
+      const applyResult = (results: { hasError: boolean; error: React.ReactNode }) => {
         if (signal.aborted) {
           return { hasError: false, error: null };
         }
-
-        results.hasError
-          ? $errors.setFieldError(path, results.error)
-          : $errors.clearFieldError(path);
-
+        if (results.hasError) {
+          $errors.setFieldError(path, results.error);
+        } else {
+          $errors.clearFieldError(path);
+        }
         return results;
-      } finally {
+      };
+
+      const cleanup = () => {
         if (!signal.aborted) {
           $validating.setFieldValidating(String(path), false);
         }
+      };
+
+      const result = validateFieldValue(
+        path,
+        rules,
+        $values.refValues.current,
+        resolveValidationError,
+        signal
+      );
+
+      if (result instanceof Promise) {
+        $validating.setFieldValidating(String(path), true);
+        return result.then(applyResult).finally(cleanup);
       }
+
+      return applyResult(result);
     },
     [rules, resolveValidationError]
   );
@@ -279,7 +317,7 @@ export function useForm<
         inputProps: payload,
         field: path,
         options: { type, withError, withFocus, ...otherOptions },
-        form,
+        form: form as any,
       })
     );
   };
@@ -292,31 +330,36 @@ export function useForm<
 
       setSubmitting(true);
 
-      validate()
-        .then((results) => {
-          if (results.hasErrors) {
-            if (onSubmitPreventDefault === 'validation-failed') {
-              event?.preventDefault();
-            }
-
-            handleValidationFailure?.(results.errors, $values.refValues.current, event);
-            setSubmitting(false);
-          } else {
-            const submitResult = handleSubmit?.(
-              transformValues($values.refValues.current) as any,
-              event
-            );
-
-            if (submitResult instanceof Promise) {
-              submitResult.finally(() => setSubmitting(false));
-            } else {
-              setSubmitting(false);
-            }
+      const handleValidation = (results: { hasErrors: boolean; errors: Record<string, any> }) => {
+        if (results.hasErrors) {
+          if (onSubmitPreventDefault === 'validation-failed') {
+            event?.preventDefault();
           }
-        })
-        .catch(() => {
+
+          handleValidationFailure?.(results.errors, $values.refValues.current, event);
+          setSubmitting(false);
+        } else {
+          const submitResult = handleSubmit?.(
+            transformValues($values.refValues.current) as any,
+            event
+          );
+
+          if (submitResult instanceof Promise) {
+            submitResult.finally(() => setSubmitting(false));
+          } else {
+            setSubmitting(false);
+          }
+        }
+      };
+
+      const result = validate();
+      if (result instanceof Promise) {
+        result.then(handleValidation).catch(() => {
           setSubmitting(false);
         });
+      } else {
+        handleValidation(result);
+      }
     };
 
   const getTransformedValues: GetTransformedValues<Values, TransformedValues> = (input) =>
@@ -327,25 +370,31 @@ export function useForm<
     reset();
   }, []);
 
-  const isValid: IsValid<Values> = useCallback(
-    async (path) => {
+  const isValid = useCallback(
+    (path?: string) => {
       const signal = new AbortController().signal;
       if (path) {
-        const result = await validateFieldValue(
+        const result = validateFieldValue(
           path,
           rules,
           $values.refValues.current,
           resolveValidationError,
           signal
         );
+        if (result instanceof Promise) {
+          return result.then((r) => !r.hasError);
+        }
         return !result.hasError;
       }
-      const result = await validateValues(
+      const result = validateValues(
         rules,
         $values.refValues.current,
         resolveValidationError,
         signal
       );
+      if (result instanceof Promise) {
+        return result.then((r) => !r.hasErrors);
+      }
       return !result.hasErrors;
     },
     [rules, resolveValidationError]
@@ -373,7 +422,7 @@ export function useForm<
     [$values.resetField, mode, setFieldKeys]
   );
 
-  const form: UseFormReturnType<Values, TransformedValues> = {
+  const form = {
     watch: $watch.watch,
 
     initialized: $values.initialized.current,
@@ -425,7 +474,7 @@ export function useForm<
     getInputNode,
   };
 
-  useFormActions(name, form);
+  useFormActions(name, form as any);
 
-  return form;
+  return form as any;
 }

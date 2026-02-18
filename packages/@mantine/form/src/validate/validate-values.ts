@@ -1,27 +1,34 @@
 import { filterErrors } from '../hooks/use-form-errors/filter-errors/filter-errors';
 import { getPath } from '../paths';
-import { FormErrors, FormRule, FormRulesRecord, FormValidateInput } from '../types';
+import {
+  FormErrors,
+  FormRule,
+  FormRulesRecord,
+  FormValidateInput,
+  FormValidationResult,
+} from '../types';
 
 export const formRootRule = Symbol('root-rule');
 
-function getValidationResults(errors: FormErrors) {
+function getValidationResults(errors: FormErrors): FormValidationResult {
   const filteredErrors = filterErrors(errors);
   return { hasErrors: Object.keys(filteredErrors).length > 0, errors: filteredErrors };
 }
 
-async function validateRulesRecordAsync<T>(
+function validateRulesRecord<T>(
   rules: FormRulesRecord<T> | undefined,
   values: T,
   resolveValidationError: (error: unknown) => React.ReactNode,
   signal: AbortSignal,
   path = '',
   errors: FormErrors = {}
-): Promise<FormErrors> {
+): FormErrors | Promise<FormErrors> {
   if (typeof rules !== 'object' || rules === null) {
     return errors;
   }
 
   const asyncTasks: Array<{ rulePath: string; promise: Promise<React.ReactNode> }> = [];
+  const pendingRecursions: Array<Promise<FormErrors>> = [];
 
   for (const ruleKey of Object.keys(rules)) {
     const rule: FormRule<any, any> = (rules as any)[ruleKey];
@@ -41,7 +48,7 @@ async function validateRulesRecordAsync<T>(
     if (typeof rule === 'object' && Array.isArray(value)) {
       arrayValidation = true;
       for (let index = 0; index < value.length; index++) {
-        await validateRulesRecordAsync(
+        const recursionResult = validateRulesRecord(
           rule,
           values,
           resolveValidationError,
@@ -49,6 +56,9 @@ async function validateRulesRecordAsync<T>(
           `${rulePath}.${index}`,
           errors
         );
+        if (recursionResult instanceof Promise) {
+          pendingRecursions.push(recursionResult);
+        }
       }
 
       if (formRootRule in rule) {
@@ -63,7 +73,7 @@ async function validateRulesRecordAsync<T>(
 
     if (typeof rule === 'object' && typeof value === 'object' && value !== null) {
       if (!arrayValidation) {
-        await validateRulesRecordAsync(
+        const recursionResult = validateRulesRecord(
           rule,
           values,
           resolveValidationError,
@@ -71,6 +81,9 @@ async function validateRulesRecordAsync<T>(
           rulePath,
           errors
         );
+        if (recursionResult instanceof Promise) {
+          pendingRecursions.push(recursionResult);
+        }
       }
 
       if (formRootRule in rule) {
@@ -84,36 +97,49 @@ async function validateRulesRecordAsync<T>(
     }
   }
 
-  if (asyncTasks.length > 0) {
-    const settled = await Promise.allSettled(asyncTasks.map((t) => t.promise));
-    settled.forEach((result, index) => {
-      const { rulePath } = asyncTasks[index];
-      if (result.status === 'fulfilled') {
-        errors[rulePath] = result.value;
-      } else {
-        errors[rulePath] = resolveValidationError(result.reason);
-      }
-    });
+  if (asyncTasks.length === 0 && pendingRecursions.length === 0) {
+    return errors;
   }
 
-  return errors;
+  return (async () => {
+    await Promise.all(pendingRecursions);
+
+    if (asyncTasks.length > 0) {
+      const settled = await Promise.allSettled(asyncTasks.map((t) => t.promise));
+      settled.forEach((result, index) => {
+        const { rulePath } = asyncTasks[index];
+        if (result.status === 'fulfilled') {
+          errors[rulePath] = result.value;
+        } else {
+          errors[rulePath] = resolveValidationError(result.reason);
+        }
+      });
+    }
+
+    return errors;
+  })();
 }
 
 const defaultResolveError = (err: unknown): React.ReactNode =>
   err instanceof Error ? err.message : String(err);
 
-export async function validateValues<T>(
+export function validateValues<T>(
   validate: FormValidateInput<T> | undefined,
   values: T,
   resolveValidationError: (error: unknown) => React.ReactNode = defaultResolveError,
   signal: AbortSignal = new AbortController().signal
-) {
+): FormValidationResult | Promise<FormValidationResult> {
   if (typeof validate === 'function') {
     const result = validate(values);
-    const errors = result instanceof Promise ? await result : result;
-    return getValidationResults(errors);
+    if (result instanceof Promise) {
+      return result.then(getValidationResults);
+    }
+    return getValidationResults(result);
   }
 
-  const errors = await validateRulesRecordAsync(validate, values, resolveValidationError, signal);
-  return getValidationResults(errors);
+  const errorsResult = validateRulesRecord(validate, values, resolveValidationError, signal);
+  if (errorsResult instanceof Promise) {
+    return errorsResult.then(getValidationResults);
+  }
+  return getValidationResults(errorsResult);
 }

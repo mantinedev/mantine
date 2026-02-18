@@ -114,7 +114,7 @@ function useFormEvent(eventKey: string | undefined, handler: (event: any) => voi
 
 export function useFormActions<Values = Record<string, unknown>, TransformedValues = Values>(
   name: string | undefined,
-  form: UseFormReturnType<Values, TransformedValues>
+  form: UseFormReturnType<Values, TransformedValues, any>
 ) {
   if (name) {
     validateFormName(name);
