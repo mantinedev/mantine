@@ -79,6 +79,7 @@
     "@emotion/server": "^11.11.0",
     "@emotion/utils": "^1.4.2",
     "@floating-ui/react": "^0.27.16",
+    "@phosphor-icons/react": "^2.1.10",
     "@shikijs/transformers": "^3.19.0",
     "@tabler/icons-react": "^3.35.0",
     "@tiptap/core": "^3.13.0",
