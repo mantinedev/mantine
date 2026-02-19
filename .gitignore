@@ -68,3 +68,5 @@ apps/mantine.dev/public/mcp
 .claude/reviews
 .claude/plans
 claude/
+.claude/skills
+.agents/
