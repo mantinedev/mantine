@@ -38,14 +38,14 @@ export interface WeekViewDayProps {
   /** If true, slots are drop targets for drag and drop */
   withEventsDragAndDrop?: boolean;
 
-  /** Called when dragging over a slot */
-  onSlotDragOver?: (e: React.DragEvent<HTMLButtonElement>, day: string, slotIndex: number) => void;
+  /** Called when dragging over day slots container */
+  onDaySlotsDragOver?: (e: React.DragEvent<HTMLDivElement>, day: string, dayIndex: number) => void;
 
-  /** Called when dragging leaves a slot */
-  onSlotDragLeave?: () => void;
+  /** Called when dragging leaves day slots container */
+  onDaySlotsDragLeave?: () => void;
 
-  /** Called when dropping on a slot */
-  onSlotDrop?: (e: React.DragEvent<HTMLButtonElement>, day: string, slotTime: string) => void;
+  /** Called when dropping on day slots container */
+  onDaySlotsDrop?: (e: React.DragEvent<HTMLDivElement>, day: string, dayIndex: number) => void;
 
   /** Called when slot is clicked */
   onSlotClick?: (day: string, slotTime: string, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -97,9 +97,9 @@ export function WeekViewDay({
   highlightBusinessHours,
   businessHours,
   withEventsDragAndDrop,
-  onSlotDragOver,
-  onSlotDragLeave,
-  onSlotDrop,
+  onDaySlotsDragOver,
+  onDaySlotsDragLeave,
+  onDaySlotsDrop,
   onSlotClick,
   dropTargetSlotIndex,
   mode,
@@ -169,15 +169,7 @@ export function WeekViewDay({
             : (e) => onSlotClick(String(day), slot.startTime, e)
         }
         onDragOver={
-          withEventsDragAndDrop && mode !== 'static'
-            ? (e) => onSlotDragOver?.(e, String(day), slotIndex)
-            : undefined
-        }
-        onDragLeave={withEventsDragAndDrop && mode !== 'static' ? onSlotDragLeave : undefined}
-        onDrop={
-          withEventsDragAndDrop && mode !== 'static'
-            ? (e) => onSlotDrop?.(e, String(day), slot.startTime)
-            : undefined
+          withEventsDragAndDrop && mode !== 'static' ? (e) => e.preventDefault() : undefined
         }
       />
     );
@@ -185,7 +177,23 @@ export function WeekViewDay({
 
   return (
     <Box {...getStyles('weekViewDay')} mod={{ today, weekend }}>
-      <Box mod={{ today }} {...getStyles('weekViewDaySlots')}>
+      <Box
+        mod={{ today }}
+        {...getStyles('weekViewDaySlots')}
+        onDragOver={
+          withEventsDragAndDrop && mode !== 'static'
+            ? (e) => onDaySlotsDragOver?.(e, String(day), dayIndex)
+            : undefined
+        }
+        onDragLeave={
+          withEventsDragAndDrop && mode !== 'static' ? onDaySlotsDragLeave : undefined
+        }
+        onDrop={
+          withEventsDragAndDrop && mode !== 'static'
+            ? (e) => onDaySlotsDrop?.(e, String(day), dayIndex)
+            : undefined
+        }
+      >
         {children}
         {items}
       </Box>

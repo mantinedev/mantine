@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -417,23 +417,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     },
   });
 
-  const handleSlotDragOver = (
-    e: React.DragEvent<HTMLButtonElement>,
-    day: string,
-    slotIndex: number
-  ) => {
-    dragDrop.handleDragOver(e, { day, slotIndex });
-  };
-
-  const handleSlotDrop = (
-    e: React.DragEvent<HTMLButtonElement>,
-    day: string,
-    _slotTime: string,
-    slotIndex: number
-  ) => {
-    dragDrop.handleDrop(e, { day, slotIndex });
-  };
-
   const handleTimeSlotClick = (
     day: string,
     slotTime: string,
@@ -500,6 +483,45 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
   const weekdaysRef = useRef<HTMLButtonElement[]>([]);
   const firstSlotIndex = { dayIndex: 0, slotIndex: 0 };
+
+  const getSlotIndexFromDragPoint = useCallback(
+    (event: React.DragEvent, dayIndex: number) => {
+      const daySlots = slotsRef.current[dayIndex] ?? [];
+      const slotIndex = daySlots.findIndex((slotNode) => {
+        if (!slotNode) {
+          return false;
+        }
+
+        const rect = slotNode.getBoundingClientRect();
+        return event.clientY >= rect.top && event.clientY <= rect.bottom;
+      });
+
+      if (slotIndex >= 0) {
+        return slotIndex;
+      }
+
+      const firstSlot = daySlots[0];
+      const lastSlot = daySlots[daySlots.length - 1];
+
+      if (!firstSlot || !lastSlot) {
+        return null;
+      }
+
+      const firstRect = firstSlot.getBoundingClientRect();
+      const lastRect = lastSlot.getBoundingClientRect();
+
+      if (event.clientY < firstRect.top) {
+        return 0;
+      }
+
+      if (event.clientY > lastRect.bottom) {
+        return daySlots.length - 1;
+      }
+
+      return null;
+    },
+    []
+  );
 
   const handleSlotKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -634,11 +656,18 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               }
             : undefined
         }
-        onSlotDragOver={handleSlotDragOver}
-        onSlotDragLeave={dragDrop.handleDragLeave}
-        onSlotDrop={(e, dayStr, slotTime) => {
-          const slotIndex = slots.findIndex((s) => s.startTime === slotTime);
-          handleSlotDrop(e, dayStr, slotTime, slotIndex);
+        onDaySlotsDragOver={(event, dayStr, dayIdx) => {
+          const slotIndex = getSlotIndexFromDragPoint(event, dayIdx);
+          if (slotIndex !== null) {
+            dragDrop.handleDragOver(event, { day: dayStr, slotIndex });
+          }
+        }}
+        onDaySlotsDragLeave={dragDrop.handleDragLeave}
+        onDaySlotsDrop={(event, dayStr, dayIdx) => {
+          const slotIndex = getSlotIndexFromDragPoint(event, dayIdx);
+          if (slotIndex !== null) {
+            dragDrop.handleDrop(event, { day: dayStr, slotIndex });
+          }
         }}
         dropTargetSlotIndex={
           dragDrop.dropTarget?.day === day ? dragDrop.dropTarget.slotIndex : undefined
