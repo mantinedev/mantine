@@ -1,10 +1,10 @@
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { TextInputStylesApi } from '@docs/styles-api';
 
 const code = `
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { TextInput } from '@mantine/core';
 
 function Demo() {
@@ -15,7 +15,7 @@ function Demo() {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconAt size={18} />}
+      leftSection={<AtIcon size={18} />}
       {{props}}
     />
   );
@@ -30,7 +30,7 @@ function Demo(props: any) {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconAt size={18} />}
+      leftSection={<AtIcon size={18} />}
       {...props}
     />
   );

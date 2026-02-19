@@ -1,24 +1,24 @@
-import { IconHeart, IconPhoto, IconSettings } from '@tabler/icons-react';
+import { GearSixIcon, HeartIcon, ImageIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon } from '@mantine/core';
-import { IconPhoto, IconSettings, IconHeart } from '@tabler/icons-react';
+import { ImageIcon, GearSixIcon, HeartIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <ActionIcon.Group{{props}}>
       <ActionIcon variant="default" size="lg" aria-label="Gallery">
-        <IconPhoto size={20} stroke={1.5} />
+        <ImageIcon size={20} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Settings">
-        <IconSettings size={20} stroke={1.5} />
+        <GearSixIcon size={20} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Likes">
-        <IconHeart size={20} stroke={1.5} />
+        <HeartIcon size={20} />
       </ActionIcon>
     </ActionIcon.Group>
   );
@@ -29,15 +29,15 @@ function Wrapper(props: any) {
   return (
     <ActionIcon.Group {...props}>
       <ActionIcon variant="default" size="lg" aria-label="Gallery">
-        <IconPhoto size={20} stroke={1.5} />
+        <ImageIcon size={20} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Settings">
-        <IconSettings size={20} stroke={1.5} />
+        <GearSixIcon size={20} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Likes">
-        <IconHeart size={20} stroke={1.5} />
+        <HeartIcon size={20} />
       </ActionIcon>
     </ActionIcon.Group>
   );

@@ -1,9 +1,9 @@
 import {
-  IconGitBranch,
-  IconGitCommit,
-  IconGitPullRequest,
-  IconMessageDots,
-} from '@tabler/icons-react';
+  ChatCircleDotsIcon,
+  GitBranchIcon,
+  GitCommitIcon,
+  GitPullRequestIcon,
+} from '@phosphor-icons/react';
 import { Text } from '../Text';
 import { Timeline } from './Timeline';
 
@@ -13,7 +13,7 @@ export function Usage() {
   return (
     <div style={{ margin: 40 }}>
       <Timeline active={1}>
-        <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">
+        <Timeline.Item bullet={<GitBranchIcon size={12} />} title="New branch">
           <Text c="dimmed" size="sm">
             You&apos;ve created new branch{' '}
             <Text variant="link" component="span" inherit>
@@ -26,7 +26,7 @@ export function Usage() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item bullet={<IconGitCommit size={12} />} title="Commits">
+        <Timeline.Item bullet={<GitCommitIcon size={12} />} title="Commits">
           <Text c="dimmed" size="sm">
             You&apos;ve pushed 23 commits to
             <Text variant="link" component="span" inherit>
@@ -40,7 +40,7 @@ export function Usage() {
 
         <Timeline.Item
           title="Pull request"
-          bullet={<IconGitPullRequest size={12} />}
+          bullet={<GitPullRequestIcon size={12} />}
           lineVariant="dashed"
         >
           <Text c="dimmed" size="sm">
@@ -54,7 +54,7 @@ export function Usage() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="Code review" bullet={<IconMessageDots size={12} />}>
+        <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -74,7 +74,7 @@ export function AutoContrast() {
   return (
     <div style={{ margin: 40 }}>
       <Timeline active={1} autoContrast color="lime.3">
-        <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">
+        <Timeline.Item bullet={<GitBranchIcon size={12} />} title="New branch">
           <Text c="dimmed" size="sm">
             You&apos;ve created new branch{' '}
             <Text variant="link" component="span" inherit>
@@ -87,7 +87,7 @@ export function AutoContrast() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item bullet={<IconGitCommit size={12} />} title="Commits">
+        <Timeline.Item bullet={<GitCommitIcon size={12} />} title="Commits">
           <Text c="dimmed" size="sm">
             You&apos;ve pushed 23 commits to
             <Text variant="link" component="span" inherit>
@@ -101,7 +101,7 @@ export function AutoContrast() {
 
         <Timeline.Item
           title="Pull request"
-          bullet={<IconGitPullRequest size={12} />}
+          bullet={<GitPullRequestIcon size={12} />}
           lineVariant="dashed"
         >
           <Text c="dimmed" size="sm">
@@ -115,7 +115,7 @@ export function AutoContrast() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="Code review" bullet={<IconMessageDots size={12} />}>
+        <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -135,7 +135,7 @@ export function Unstyled() {
   return (
     <div style={{ margin: 40 }}>
       <Timeline active={1} bulletSize={24} lineWidth={2} unstyled>
-        <Timeline.Item bullet={<IconGitBranch size={12} />} title="New branch">
+        <Timeline.Item bullet={<GitBranchIcon size={12} />} title="New branch">
           <Text c="dimmed" size="sm">
             You&apos;ve created new branch{' '}
             <Text variant="link" component="span" inherit>
@@ -148,7 +148,7 @@ export function Unstyled() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item bullet={<IconGitCommit size={12} />} title="Commits">
+        <Timeline.Item bullet={<GitCommitIcon size={12} />} title="Commits">
           <Text c="dimmed" size="sm">
             You&apos;ve pushed 23 commits to
             <Text variant="link" component="span" inherit>
@@ -162,7 +162,7 @@ export function Unstyled() {
 
         <Timeline.Item
           title="Pull request"
-          bullet={<IconGitPullRequest size={12} />}
+          bullet={<GitPullRequestIcon size={12} />}
           lineVariant="dashed"
         >
           <Text c="dimmed" size="sm">
@@ -176,7 +176,7 @@ export function Unstyled() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="Code review" bullet={<IconMessageDots size={12} />}>
+        <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -233,7 +233,7 @@ export function WithoutIcons() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="Code review">
+        <Timeline.Item title="CodeIcon review">
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -290,7 +290,7 @@ export function AlignRight() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="Code review">
+        <Timeline.Item title="CodeIcon review">
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker

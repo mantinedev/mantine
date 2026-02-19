@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { ScrollArea, Text, TextInput } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { COMBOBOX_EXAMPLES_DATA } from '../../combobox-examples-data';
@@ -64,7 +64,7 @@ export function ComboboxNavbar({ opened, onClose }: ComboboxNavbarProps) {
       <TextInput
         placeholder="Ctrl + Shift + K to search"
         classNames={{ root: classes.search, input: classes.searchInput }}
-        leftSection={<IconSearch className={classes.searchIcon} stroke={1.5} />}
+        leftSection={<MagnifyingGlassIcon className={classes.searchIcon} />}
         radius="md"
         size="md"
         value={search}

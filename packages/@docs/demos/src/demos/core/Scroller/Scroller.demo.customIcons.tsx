@@ -1,16 +1,16 @@
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react';
 import { Badge, Group, Scroller } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react';
 import { Badge, Group, Scroller } from '@mantine/core';
 
 function Demo() {
   return (
     <Scroller
-      startControlIcon={<IconArrowLeft size={16} />}
-      endControlIcon={<IconArrowRight size={16} />}
+      startControlIcon={<ArrowLeftIcon size={16} />}
+      endControlIcon={<ArrowRightIcon size={16} />}
     >
       <Group gap="xs" wrap="nowrap">
         {Array.from({ length: 20 }).map((_, index) => (
@@ -27,8 +27,8 @@ function Demo() {
 function Demo() {
   return (
     <Scroller
-      startControlIcon={<IconArrowLeft size={16} />}
-      endControlIcon={<IconArrowRight size={16} />}
+      startControlIcon={<ArrowLeftIcon size={16} />}
+      endControlIcon={<ArrowRightIcon size={16} />}
     >
       <Group gap="xs" wrap="nowrap">
         {Array.from({ length: 20 }).map((_, index) => (

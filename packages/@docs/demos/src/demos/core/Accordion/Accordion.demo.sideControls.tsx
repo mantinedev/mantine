@@ -1,17 +1,17 @@
-import { IconDots } from '@tabler/icons-react';
+import { DotsThreeIcon } from '@phosphor-icons/react';
 import { Accordion, AccordionControlProps, ActionIcon, Center } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Accordion, ActionIcon, AccordionControlProps, Center } from '@mantine/core';
-import { IconDots } from '@tabler/icons-react';
+import { DotsThreeIcon } from '@phosphor-icons/react';
 
 function AccordionControl(props: AccordionControlProps) {
   return (
     <Center>
       <Accordion.Control {...props} />
       <ActionIcon size="lg" variant="subtle" color="gray" aria-label="More options">
-        <IconDots size={20} />
+        <DotsThreeIcon size={20} />
       </ActionIcon>
     </Center>
   );
@@ -44,7 +44,7 @@ function AccordionControl(props: AccordionControlProps) {
     <Center>
       <Accordion.Control {...props} />
       <ActionIcon size="lg" variant="subtle" color="gray" aria-label="More options">
-        <IconDots size={20} />
+        <DotsThreeIcon size={20} />
       </ActionIcon>
     </Center>
   );

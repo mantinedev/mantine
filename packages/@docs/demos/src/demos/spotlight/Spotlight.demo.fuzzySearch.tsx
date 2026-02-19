@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { IconDashboard, IconFileText, IconHome, IconSearch } from '@tabler/icons-react';
+import { FileTextIcon, GaugeIcon, HouseIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';
 import Fuse from 'fuse.js';
 import { SpotlightActionData, SpotlightFilterFunction } from '@mantine/spotlight';
 import { MantineDemo } from '@mantinex/demo';
@@ -12,28 +12,28 @@ const actions: SpotlightActionData[] = [
     label: 'Home',
     description: 'Get to home page',
     onClick: () => console.log('Home'),
-    leftSection: <IconHome size={24} stroke={1.5} />,
+    leftSection: <HouseIcon size={24} />,
   },
   {
     id: 'dashboard',
     label: 'Dashboard',
     description: 'Get full information about current system status',
     onClick: () => console.log('Dashboard'),
-    leftSection: <IconDashboard size={24} stroke={1.5} />,
+    leftSection: <GaugeIcon size={24} />,
   },
   {
     id: 'documentation',
     label: 'Documentation',
     description: 'Visit documentation to learn more about all features',
     onClick: () => console.log('Documentation'),
-    leftSection: <IconFileText size={24} stroke={1.5} />,
+    leftSection: <FileTextIcon size={24} />,
   },
   {
     id: 'settings',
     label: 'Settings',
     description: 'Manage application preferences and configurations',
     onClick: () => console.log('Settings'),
-    leftSection: <IconHome size={24} stroke={1.5} />,
+    leftSection: <HouseIcon size={24} />,
   },
 ];
 
@@ -87,7 +87,7 @@ import {
   SpotlightFilterFunction,
   spotlight,
 } from '@mantine/spotlight';
-import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons-react';
+import { HouseIcon, GaugeIcon, FileTextIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 const actions: SpotlightActionData[] = [
   {
@@ -95,28 +95,28 @@ const actions: SpotlightActionData[] = [
     label: 'Home',
     description: 'Get to home page',
     onClick: () => console.log('Home'),
-    leftSection: <IconHome size={24} stroke={1.5} />,
+    leftSection: <HouseIcon size={24} />,
   },
   {
     id: 'dashboard',
     label: 'Dashboard',
     description: 'Get full information about current system status',
     onClick: () => console.log('Dashboard'),
-    leftSection: <IconDashboard size={24} stroke={1.5} />,
+    leftSection: <GaugeIcon size={24} />,
   },
   {
     id: 'documentation',
     label: 'Documentation',
     description: 'Visit documentation to learn more about all features',
     onClick: () => console.log('Documentation'),
-    leftSection: <IconFileText size={24} stroke={1.5} />,
+    leftSection: <FileTextIcon size={24} />,
   },
   {
     id: 'settings',
     label: 'Settings',
     description: 'Manage application preferences and configurations',
     onClick: () => console.log('Settings'),
-    leftSection: <IconHome size={24} stroke={1.5} />,
+    leftSection: <HouseIcon size={24} />,
   },
 ];
 
@@ -171,7 +171,7 @@ function Demo() {
         nothingFound="Nothing found..."
         highlightQuery
         searchProps={{
-          leftSection: <IconSearch size={20} stroke={1.5} />,
+          leftSection: <MagnifyingGlassIcon size={20} />,
           placeholder: 'Search...',
         }}
       />
@@ -189,7 +189,7 @@ function Demo() {
       highlightQuery
       shortcut={null}
       searchProps={{
-        leftSection: <IconSearch size={20} stroke={1.5} />,
+        leftSection: <MagnifyingGlassIcon size={20} />,
         placeholder: 'Search...',
       }}
     />

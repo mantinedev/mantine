@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { IconCheck, IconSearch } from '@tabler/icons-react';
+import { CheckIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { Carousel } from '@mantine/carousel';
 import { Button, Group, Image, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
@@ -102,7 +102,7 @@ export function HomePageExtensions() {
                           radius: 'md',
                           message:
                             'Notification will close in 2 seconds, you can close this notification now',
-                          icon: <IconCheck size={18} />,
+                          icon: <CheckIcon size={18} />,
                           loading: false,
                           autoClose: 2000,
                         });
@@ -126,7 +126,7 @@ export function HomePageExtensions() {
                     variant="default"
                     onClick={searchHandlers.open}
                     rightSection={
-                      <IconSearch stroke={1.5} size={20} color="var(--mantine-color-dimmed)" />
+                      <MagnifyingGlassIcon size={20} color="var(--mantine-color-dimmed)" />
                     }
                     miw={300}
                     justify="space-between"

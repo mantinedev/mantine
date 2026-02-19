@@ -1,20 +1,20 @@
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { ButtonStylesApi } from '@docs/styles-api';
 
 const code = `
 import { Button } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  return <Button{{props}} leftSection={<IconAt size={16} />}>Your email</Button>;
+  return <Button{{props}} leftSection={<AtIcon size={16} />}>Your email</Button>;
 }
 `;
 
 function Demo(props: any) {
   return (
-    <Button leftSection={<IconAt size={16} />} {...props}>
+    <Button leftSection={<AtIcon size={16} />} {...props}>
       Your email
     </Button>
   );

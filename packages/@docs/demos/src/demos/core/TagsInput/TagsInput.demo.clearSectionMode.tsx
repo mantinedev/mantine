@@ -1,9 +1,9 @@
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Stack, TagsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Stack, TagsInput } from '@mantine/core';
 
 function Demo() {
@@ -15,7 +15,7 @@ function Demo() {
         data={['React', 'Angular', 'Vue', 'Svelte']}
         defaultValue={['React']}
         clearable
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         clearSectionMode="both"
       />
 
@@ -25,7 +25,7 @@ function Demo() {
         data={['React', 'Angular', 'Vue', 'Svelte']}
         defaultValue={['React']}
         clearable
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         clearSectionMode="rightSection"
       />
 
@@ -35,7 +35,7 @@ function Demo() {
         data={['React', 'Angular', 'Vue', 'Svelte']}
         defaultValue={['React']}
         clearable
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         clearSectionMode="clear"
       />
     </Stack>
@@ -52,7 +52,7 @@ function Demo() {
         data={['React', 'Angular', 'Vue', 'Svelte']}
         defaultValue={['React']}
         clearable
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         clearSectionMode="both"
       />
 
@@ -62,7 +62,7 @@ function Demo() {
         data={['React', 'Angular', 'Vue', 'Svelte']}
         defaultValue={['React']}
         clearable
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         clearSectionMode="rightSection"
       />
 
@@ -72,7 +72,7 @@ function Demo() {
         data={['React', 'Angular', 'Vue', 'Svelte']}
         defaultValue={['React']}
         clearable
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         clearSectionMode="clear"
       />
     </Stack>

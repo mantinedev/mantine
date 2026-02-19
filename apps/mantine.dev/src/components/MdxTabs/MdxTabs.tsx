@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { IconAdjustments, IconCode, IconFileText } from '@tabler/icons-react';
+import { CodeIcon, FileTextIcon, SlidersHorizontalIcon } from '@phosphor-icons/react';
 import { Tabs } from '@mantine/core';
 import { MdxSiblings } from '@/components/MdxSiblings';
 import { PageBase } from '@/components/PageBase';
@@ -50,14 +50,14 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
           <Tabs.List>
             <Tabs.Tab value="docs">
               <div className={classes.tabInner}>
-                <IconFileText size={20} stroke={1.5} className={classes.tabIcon} />
+                <FileTextIcon size={20} className={classes.tabIcon} />
                 Documentation
               </div>
             </Tabs.Tab>
             {hasProps && (
               <Tabs.Tab value="props">
                 <div className={classes.tabInner}>
-                  <IconCode size={20} stroke={1.5} className={classes.tabIcon} />
+                  <CodeIcon size={20} className={classes.tabIcon} />
                   Props
                 </div>
               </Tabs.Tab>
@@ -65,7 +65,7 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
             {hasStyles && (
               <Tabs.Tab value="styles-api">
                 <div className={classes.tabInner}>
-                  <IconAdjustments size={20} stroke={1.5} className={classes.tabIcon} />
+                  <SlidersHorizontalIcon size={20} className={classes.tabIcon} />
                   Styles API
                 </div>
               </Tabs.Tab>

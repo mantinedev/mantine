@@ -1,15 +1,15 @@
-import { IconX } from '@tabler/icons-react';
+import { XIcon } from '@phosphor-icons/react';
 import { Chip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Chip } from '@mantine/core';
-import { IconX } from '@tabler/icons-react';
+import { XIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Chip
-      icon={<IconX size={16} />}
+      icon={<XIcon size={16} />}
       color="red"
       variant="filled"
       defaultChecked
@@ -22,7 +22,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Chip icon={<IconX size={16} />} color="red" variant="filled" defaultChecked>
+    <Chip icon={<XIcon size={16} />} color="red" variant="filled" defaultChecked>
       Forbidden
     </Chip>
   );

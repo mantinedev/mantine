@@ -1,16 +1,16 @@
 import {
-  IconActivity,
-  IconChevronRight,
-  IconCircleOff,
-  IconGauge,
-  IconHome2,
-} from '@tabler/icons-react';
+  CaretRightIcon,
+  GaugeIcon,
+  HeartbeatIcon,
+  HouseIcon,
+  ProhibitIcon,
+} from '@phosphor-icons/react';
 import { Badge, NavLink } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Badge, NavLink } from '@mantine/core';
-import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } from '@tabler/icons-react';
+import { HouseIcon, GaugeIcon, CaretRightIcon, HeartbeatIcon, ProhibitIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -18,20 +18,20 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="With icon"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
       />
       <NavLink
         href="#required-for-focus"
         label="With right section"
-        leftSection={<IconGauge size={16} stroke={1.5} />}
+        leftSection={<GaugeIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
       />
       <NavLink
         href="#required-for-focus"
         label="Disabled"
-        leftSection={<IconCircleOff size={16} stroke={1.5} />}
+        leftSection={<ProhibitIcon size={16} />}
         disabled
       />
       <NavLink
@@ -47,9 +47,9 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Active subtle"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
+        leftSection={<HeartbeatIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
         variant="subtle"
         active
@@ -57,18 +57,18 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Active light"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
+        leftSection={<HeartbeatIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
         active
       />
       <NavLink
         href="#required-for-focus"
         label="Active filled"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
+        leftSection={<HeartbeatIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
         variant="filled"
         active
@@ -81,21 +81,17 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <NavLink
-        href="#required-for-focus"
-        label="With icon"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-      />
+      <NavLink href="#required-for-focus" label="With icon" leftSection={<HouseIcon size={16} />} />
       <NavLink
         href="#required-for-focus"
         label="With right section"
-        leftSection={<IconGauge size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />}
+        leftSection={<GaugeIcon size={16} />}
+        rightSection={<CaretRightIcon size={12} className="mantine-rotate-rtl" />}
       />
       <NavLink
         href="#required-for-focus"
         label="Disabled"
-        leftSection={<IconCircleOff size={16} stroke={1.5} />}
+        leftSection={<ProhibitIcon size={16} />}
         disabled
       />
       <NavLink
@@ -111,23 +107,23 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Active subtle"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />}
+        leftSection={<HeartbeatIcon size={16} />}
+        rightSection={<CaretRightIcon size={12} className="mantine-rotate-rtl" />}
         variant="subtle"
         active
       />
       <NavLink
         href="#required-for-focus"
         label="Active light"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />}
+        leftSection={<HeartbeatIcon size={16} />}
+        rightSection={<CaretRightIcon size={12} className="mantine-rotate-rtl" />}
         active
       />
       <NavLink
         href="#required-for-focus"
         label="Active filled"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />}
+        leftSection={<HeartbeatIcon size={16} />}
+        rightSection={<CaretRightIcon size={12} className="mantine-rotate-rtl" />}
         variant="filled"
         active
       />

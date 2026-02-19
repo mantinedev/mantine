@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IconX } from '@tabler/icons-react';
+import { XIcon } from '@phosphor-icons/react';
 import classes from './Banner.module.css';
 
 export interface BannerProps {
@@ -48,7 +48,7 @@ export function Banner({ id, children }: BannerProps) {
         onClick={handleClose}
         aria-label="Close banner"
       >
-        <IconX />
+        <XIcon />
       </button>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconBadge } from '@tabler/icons-react';
+import { MedalIcon } from '@phosphor-icons/react';
 import { Box } from '../../core';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
@@ -57,7 +57,7 @@ export function WithLabels() {
 }
 
 export function IconInsideThumb() {
-  return <Switch size="lg" thumbIcon={<IconBadge color="black" size={12} />} label="Hello" />;
+  return <Switch size="lg" thumbIcon={<MedalIcon color="black" size={12} />} label="Hello" />;
 }
 
 export function SwitchGroup() {

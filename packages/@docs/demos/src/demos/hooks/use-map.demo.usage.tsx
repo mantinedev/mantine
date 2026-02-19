@@ -1,10 +1,10 @@
-import { IconPlus, IconTrash } from '@tabler/icons-react';
+import { PlusIcon, TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Group, Table } from '@mantine/core';
 import { useMap } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconPlus, IconTrash } from '@tabler/icons-react';
+import { PlusIcon, TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Group, Table } from '@mantine/core';
 import { useMap } from '@mantine/hooks';
 
@@ -22,10 +22,10 @@ function Demo() {
       <Table.Td>
         <Group>
           <ActionIcon variant="default" onClick={() => map.set(key, value + 1)} fw={500}>
-            <IconPlus stroke={1.5} size={18} />
+            <PlusIcon size={18} />
           </ActionIcon>
           <ActionIcon variant="default" onClick={() => map.delete(key)} c="red">
-            <IconTrash stroke={1.5} size={18} />
+            <TrashIcon size={18} />
           </ActionIcon>
         </Group>
       </Table.Td>
@@ -61,10 +61,10 @@ function Demo() {
       <Table.Td>
         <Group>
           <ActionIcon variant="default" onClick={() => map.set(key, value + 1)} fw={500}>
-            <IconPlus stroke={1.5} size={18} />
+            <PlusIcon size={18} />
           </ActionIcon>
           <ActionIcon variant="default" onClick={() => map.delete(key)} c="red">
-            <IconTrash stroke={1.5} size={18} />
+            <TrashIcon size={18} />
           </ActionIcon>
         </Group>
       </Table.Td>

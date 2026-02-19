@@ -1,4 +1,4 @@
-import { IconMoodSmile } from '@tabler/icons-react';
+import { SmileyIcon } from '@phosphor-icons/react';
 import { render, tests } from '@mantine-tests/core';
 import { Notification, NotificationProps, NotificationStylesNames } from './Notification';
 
@@ -6,7 +6,7 @@ const defaultProps: NotificationProps = {
   title: 'test-notification',
   children: 'test-description',
   closeButtonProps: { title: 'test-close' },
-  icon: <IconMoodSmile size={18} />,
+  icon: <SmileyIcon size={18} />,
 };
 
 describe('@mantine/core/Notification', () => {

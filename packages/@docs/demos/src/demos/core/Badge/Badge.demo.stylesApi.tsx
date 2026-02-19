@@ -1,14 +1,14 @@
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { Badge } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { BadgeStylesApi } from '@docs/styles-api';
 
 const code = `
 import { Badge } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconAt size={12} />;
+  const icon = <AtIcon size={12} />;
 
   return (
     <Badge leftSection={icon} rightSection={icon}{{props}}>
@@ -19,7 +19,7 @@ function Demo() {
 `;
 
 function Demo(props: any) {
-  const icon = <IconAt size={12} />;
+  const icon = <AtIcon size={12} />;
 
   return (
     <Badge leftSection={icon} rightSection={icon} {...props}>

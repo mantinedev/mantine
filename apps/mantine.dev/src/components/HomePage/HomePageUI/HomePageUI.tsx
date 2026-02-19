@@ -1,4 +1,4 @@
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { Button, Container, Overlay, Text, Title } from '@mantine/core';
 import banner from './banner.webp';
 import classes from './HomePageUI.module.css';
@@ -31,7 +31,7 @@ export function HomePageUI() {
               size="lg"
               component="a"
               href="https://ui.mantine.dev/"
-              rightSection={<IconArrowUpRight />}
+              rightSection={<ArrowUpRightIcon />}
               justify="space-between"
               miw={300}
             >

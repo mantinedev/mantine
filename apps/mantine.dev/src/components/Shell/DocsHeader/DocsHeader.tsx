@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon, CaretDownIcon } from '@phosphor-icons/react';
 import { Burger, Container, Group, Menu, Text, UnstyledButton } from '@mantine/core';
 import {
   ColorSchemeControl,
@@ -72,9 +72,7 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
       c="bright"
       href={item.link}
       target="_blank"
-      rightSection={
-        <IconExternalLink size={16} className={classes.versionExternalIcon} stroke={1.5} />
-      }
+      rightSection={<ArrowSquareOutIcon size={16} className={classes.versionExternalIcon} />}
     >
       <b>{item.v}.x</b>{' '}
       <Text span c="dimmed" fz="xs">
@@ -115,7 +113,7 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
               <Menu.Target>
                 <UnstyledButton className={classes.versionControl}>
                   <span>v{packageJson.version}</span>
-                  <IconChevronDown size={16} className={classes.versionChevron} stroke={1.5} />
+                  <CaretDownIcon size={16} className={classes.versionChevron} />
                 </UnstyledButton>
               </Menu.Target>
 

@@ -1,16 +1,16 @@
-import { IconAdjustments } from '@tabler/icons-react';
+import { SlidersHorizontalIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { interactiveVariantsControl } from '../../../shared';
 
 const code = `
 import { ActionIcon } from '@mantine/core';
-import { IconAdjustments } from '@tabler/icons-react';
+import { SlidersHorizontalIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <ActionIcon{{props}} aria-label="Settings">
-      <IconAdjustments style={{ width: '70%', height: '70%' }} stroke={1.5} />
+      <SlidersHorizontalIcon style={{ width: '70%', height: '70%' }} />
     </ActionIcon>
   );
 }
@@ -19,7 +19,7 @@ function Demo() {
 function Wrapper(props: any) {
   return (
     <ActionIcon {...props} aria-label="Settings">
-      <IconAdjustments style={{ width: '70%', height: '70%' }} stroke={1.5} />
+      <SlidersHorizontalIcon style={{ width: '70%', height: '70%' }} />
     </ActionIcon>
   );
 }

@@ -1,4 +1,4 @@
-import { IconAdjustments } from '@tabler/icons-react';
+import { SlidersHorizontalIcon } from '@phosphor-icons/react';
 import {
   Anchor,
   Avatar,
@@ -57,7 +57,7 @@ export function HomePageOverlaysDemo() {
                   size="lg"
                   variant="default"
                   radius="md"
-                  rightSection={<IconAdjustments size={22} stroke={1.5} />}
+                  rightSection={<SlidersHorizontalIcon size={22} />}
                   justify="space-between"
                 >
                   Filters

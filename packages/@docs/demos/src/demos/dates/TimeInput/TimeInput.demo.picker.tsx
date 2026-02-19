@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { IconClock } from '@tabler/icons-react';
+import { ClockIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
@@ -8,14 +8,14 @@ const code = `
 import { useRef } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
-import { IconClock } from '@tabler/icons-react';
+import { ClockIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const ref = useRef<HTMLInputElement>(null);
 
   const pickerControl = (
     <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
-      <IconClock size={16} stroke={1.5} />
+      <ClockIcon size={16} />
     </ActionIcon>
   );
 
@@ -30,7 +30,7 @@ function Demo() {
 
   const pickerControl = (
     <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
-      <IconClock size={16} stroke={1.5} />
+      <ClockIcon size={16} />
     </ActionIcon>
   );
 

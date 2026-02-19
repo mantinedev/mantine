@@ -1,10 +1,10 @@
-import { IconSun, IconVideo } from '@tabler/icons-react';
+import { SunIcon, VideoCameraIcon } from '@phosphor-icons/react';
 import { Avatar, Text, ThemeIcon, Timeline } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';
-import { IconSun, IconVideo } from '@tabler/icons-react';
+import { SunIcon, VideoCameraIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -28,7 +28,7 @@ function Demo() {
           Timeline bullet as avatar image
         </Text>
       </Timeline.Item>
-      <Timeline.Item title="Icon" bullet={<IconSun size={13} />}>
+      <Timeline.Item title="Icon" bullet={<SunIcon size={13} />}>
         <Text c="dimmed" size="sm">
           Timeline bullet as icon
         </Text>
@@ -42,7 +42,7 @@ function Demo() {
             gradient={{ from: 'lime', to: 'cyan' }}
             radius="xl"
           >
-            <IconVideo size={13} />
+            <VideoCameraIcon size={13} />
           </ThemeIcon>
         }
       >
@@ -77,7 +77,7 @@ function Demo() {
           Timeline bullet as avatar image
         </Text>
       </Timeline.Item>
-      <Timeline.Item title="Icon" bullet={<IconSun size={13} />}>
+      <Timeline.Item title="Icon" bullet={<SunIcon size={13} />}>
         <Text c="dimmed" size="sm">
           Timeline bullet as icon
         </Text>
@@ -91,7 +91,7 @@ function Demo() {
             gradient={{ from: 'lime', to: 'cyan' }}
             radius="xl"
           >
-            <IconVideo size={13} />
+            <VideoCameraIcon size={13} />
           </ThemeIcon>
         }
       >

@@ -1,4 +1,4 @@
-import { IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { Anchor, Avatar, Group, SimpleGrid, Text } from '@mantine/core';
 import { meta } from '@mantinex/mantine-meta';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
@@ -29,7 +29,7 @@ function Review({ data }: ReviewProps) {
 
         <Anchor className={classes.reviewExternalLink} href={data.link} target="_blank">
           <span>Open on GitHub</span>
-          <IconExternalLink size={16} />
+          <ArrowSquareOutIcon size={16} />
         </Anchor>
       </div>
 

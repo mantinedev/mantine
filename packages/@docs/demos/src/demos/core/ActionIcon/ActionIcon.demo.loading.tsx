@@ -1,4 +1,4 @@
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { ActionIcon, Group, Switch } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
@@ -6,7 +6,7 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { ActionIcon, Group, Switch } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const [loading, { toggle }] = useDisclosure();
@@ -14,13 +14,13 @@ function Demo() {
     <>
       <Group>
         <ActionIcon loading={loading} aria-label="Like">
-          <IconHeart size={18} stroke={1.5} />
+          <HeartIcon size={18} />
         </ActionIcon>
         <ActionIcon variant="light" loading={loading} aria-label="Like">
-          <IconHeart size={18} stroke={1.5} />
+          <HeartIcon size={18} />
         </ActionIcon>
         <ActionIcon variant="outline" loading={loading} aria-label="Like">
-          <IconHeart size={18} stroke={1.5} />
+          <HeartIcon size={18} />
         </ActionIcon>
       </Group>
 
@@ -36,13 +36,13 @@ function Demo() {
     <>
       <Group>
         <ActionIcon loading={loading} aria-label="Like">
-          <IconHeart size={18} stroke={1.5} />
+          <HeartIcon size={18} />
         </ActionIcon>
         <ActionIcon variant="light" loading={loading} aria-label="Like">
-          <IconHeart size={18} stroke={1.5} />
+          <HeartIcon size={18} />
         </ActionIcon>
         <ActionIcon variant="outline" loading={loading} aria-label="Like">
-          <IconHeart size={18} stroke={1.5} />
+          <HeartIcon size={18} />
         </ActionIcon>
       </Group>
 

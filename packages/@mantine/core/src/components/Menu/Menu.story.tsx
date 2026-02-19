@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconSearch, IconTable } from '@tabler/icons-react';
+import { MagnifyingGlassIcon, TableIcon } from '@phosphor-icons/react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Input } from '../Input';
@@ -97,7 +97,7 @@ export function Usage() {
           <Menu.Item disabled>Disabled</Menu.Item>
 
           <Menu.Item
-            leftSection={<IconSearch size={14} />}
+            leftSection={<MagnifyingGlassIcon size={14} />}
             rightSection={
               <Text size="xs" c="dimmed">
                 ⌘K
@@ -110,10 +110,10 @@ export function Usage() {
           <Menu.Divider />
 
           <Menu.Label>Label 2</Menu.Label>
-          <Menu.Item color="red" leftSection={<IconTable size={14} />}>
+          <Menu.Item color="red" leftSection={<TableIcon size={14} />}>
             Red color
           </Menu.Item>
-          <Menu.Item leftSection={<IconTable size={14} />}>Button item 3</Menu.Item>
+          <Menu.Item leftSection={<TableIcon size={14} />}>Button item 3</Menu.Item>
         </Menu.Dropdown>
       </Menu>
     </div>

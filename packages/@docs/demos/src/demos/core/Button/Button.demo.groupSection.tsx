@@ -1,10 +1,10 @@
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 import { useCounter } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 import { useCounter } from '@mantine/hooks';
 
@@ -14,13 +14,13 @@ function Demo() {
   return (
     <Button.Group>
       <Button variant="default" radius="md" onClick={decrement}>
-        <IconChevronDown color="var(--mantine-color-red-text)" />
+        <CaretDownIcon color="var(--mantine-color-red-text)" />
       </Button>
       <Button.GroupSection variant="default" bg="var(--mantine-color-body)" miw={80}>
         {value}
       </Button.GroupSection>
       <Button variant="default" radius="md" onClick={increment}>
-        <IconChevronUp color="var(--mantine-color-teal-text)" />
+        <CaretUpIcon color="var(--mantine-color-teal-text)" />
       </Button>
     </Button.Group>
   );
@@ -33,13 +33,13 @@ function Demo() {
   return (
     <Button.Group>
       <Button variant="default" radius="md" onClick={decrement}>
-        <IconChevronDown color="var(--mantine-color-red-text)" />
+        <CaretDownIcon color="var(--mantine-color-red-text)" />
       </Button>
       <Button.GroupSection variant="default" bg="var(--mantine-color-body)" miw={80}>
         {value}
       </Button.GroupSection>
       <Button variant="default" radius="md" onClick={increment}>
-        <IconChevronUp color="var(--mantine-color-teal-text)" />
+        <CaretUpIcon color="var(--mantine-color-teal-text)" />
       </Button>
     </Button.Group>
   );

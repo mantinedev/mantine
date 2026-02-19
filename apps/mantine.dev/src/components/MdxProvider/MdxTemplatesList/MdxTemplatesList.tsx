@@ -1,4 +1,4 @@
-import { IconCircleDashed, IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon, CircleDashedIcon } from '@phosphor-icons/react';
 import { Button, Table, Text } from '@mantine/core';
 import { frameworkIcons } from '@/components/icons';
 import { COMMUNITY_TEMPLATES_DATA } from './community-data';
@@ -42,7 +42,7 @@ export function MdxTemplatesList({ type, name, community = false }: MdxTemplates
             target="_blank"
             size="xs"
             variant="default"
-            rightSection={<IconExternalLink stroke={1.5} className={classes.externalLinkIcon} />}
+            rightSection={<ArrowSquareOutIcon className={classes.externalLinkIcon} />}
           >
             Use template
           </Button>
@@ -58,7 +58,7 @@ export function MdxTemplatesList({ type, name, community = false }: MdxTemplates
           <Table.Tr>
             <Table.Td className={classes.iconCell} w={70}>
               <div className={classes.icon} data-type="empty">
-                <IconCircleDashed stroke={1.5} size={40} />
+                <CircleDashedIcon size={40} />
               </div>
             </Table.Td>
             <Table.Td>

@@ -1,4 +1,4 @@
-import { IconBrandCodesandbox, IconMessage2 } from '@tabler/icons-react';
+import { ChatCircleIcon, CodesandboxLogoIcon } from '@phosphor-icons/react';
 import { CodeHighlight, CodeHighlightControl } from '@mantine/code-highlight';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -9,7 +9,7 @@ function greet() {
 `;
 
 const code = `
-import { IconBrandCodesandbox, IconMessage2 } from '@tabler/icons-react';
+import { CodesandboxLogoIcon, ChatCircleIcon } from '@phosphor-icons/react';
 import { CodeHighlight, CodeHighlightControl } from '@mantine/code-highlight';
 
 const exampleCode = \`${exampleCode}\`;
@@ -28,10 +28,10 @@ function Demo() {
           tooltipLabel="Open on codesandbox"
           key="sandbox"
         >
-          <IconBrandCodesandbox />
+          <CodesandboxLogoIcon />
         </CodeHighlightControl>,
         <CodeHighlightControl tooltipLabel="Discuss with GPT" key="gpt">
-          <IconMessage2 />
+          <ChatCircleIcon />
         </CodeHighlightControl>,
       ]}
     />
@@ -53,10 +53,10 @@ function Demo() {
           tooltipLabel="Open on codesandbox"
           key="sandbox"
         >
-          <IconBrandCodesandbox />
+          <CodesandboxLogoIcon />
         </CodeHighlightControl>,
         <CodeHighlightControl tooltipLabel="Discuss with GPT" key="gpt">
-          <IconMessage2 />
+          <ChatCircleIcon />
         </CodeHighlightControl>,
       ]}
     />

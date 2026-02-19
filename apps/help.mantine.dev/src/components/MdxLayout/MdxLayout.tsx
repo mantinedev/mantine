@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { IconArrowLeft, IconBug, IconPencil } from '@tabler/icons-react';
+import { ArrowLeftIcon, BugIcon, PencilSimpleIcon } from '@phosphor-icons/react';
 import { Anchor, Center, Container, Text, Title } from '@mantine/core';
 import { Frontmatter } from '@/types';
 import classes from './MdxLayout.module.css';
@@ -28,7 +28,7 @@ export function MdxLayout({ meta, children }: MdxLayoutProps) {
           <Container size="md">
             <Anchor component={Link} href="/" underline="hover" fz="sm">
               <Center inline component="span" style={{ gap: 5 }}>
-                <IconArrowLeft size={18} stroke={1.5} />
+                <ArrowLeftIcon size={18} />
                 <span>Back to all questions</span>
               </Center>
             </Anchor>
@@ -37,13 +37,13 @@ export function MdxLayout({ meta, children }: MdxLayoutProps) {
 
             <nav className={classes.links}>
               <PageHeaderLink
-                icon={<IconPencil size={18} stroke={1.5} />}
+                icon={<PencilSimpleIcon size={18} />}
                 link={`https://github.com/mantinedev/mantine/blob/master/apps/help.mantine.dev/src/pages/q/${meta.slug}.mdx`}
               >
                 Edit this page on GitHub
               </PageHeaderLink>
               <PageHeaderLink
-                icon={<IconBug size={18} stroke={1.5} />}
+                icon={<BugIcon size={18} />}
                 link={`https://github.com/mantinedev/mantine/issues/new?template=docs_report.yml&title=${encodeURIComponent(
                   `Issue with Help Center article "${meta.title}"`
                 )}&link=${encodeURIComponent(`https://help.mantine.dev/q/${meta.slug}`)}`}

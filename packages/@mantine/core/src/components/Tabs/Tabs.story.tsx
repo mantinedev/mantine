@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconPackage } from '@tabler/icons-react';
+import { PackageIcon } from '@phosphor-icons/react';
 import { Tabs, TabsProps } from './Tabs';
 
 export default {
@@ -11,8 +11,8 @@ const base = (
     <Tabs.List grow>
       <Tabs.Tab
         value="react"
-        leftSection={<IconPackage size={16} />}
-        rightSection={<IconPackage size={16} />}
+        leftSection={<PackageIcon size={16} />}
+        rightSection={<PackageIcon size={16} />}
       >
         React
       </Tabs.Tab>
@@ -276,7 +276,7 @@ export const VerticalPlacement = () => (
 export const WithIcon = () => (
   <Wrapper defaultValue="react" variant="outline">
     <Tabs.List>
-      <Tabs.Tab value="react" leftSection={<IconPackage size={14} />} />
+      <Tabs.Tab value="react" leftSection={<PackageIcon size={14} />} />
       <Tabs.Tab value="sv" rightSection={<span>right</span>}>
         Svelte
       </Tabs.Tab>

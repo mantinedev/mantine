@@ -1,11 +1,11 @@
-import { IconFileInvoice } from '@tabler/icons-react';
+import { FileTextIcon } from '@phosphor-icons/react';
 import { ActionIcon, Code, Group, Text } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import { allVersions } from '@mantinex/mantine-meta';
 import classes from './VersionsList.module.css';
 
 function getMinorXVersion(version: string) {
-  return `${version.split('.').slice(0, 2).join('.')}.X`;
+  return `${version.split('.').slice(0, 2).join('.')}.XIcon`;
 }
 
 export function VersionsList() {
@@ -50,7 +50,7 @@ export function VersionsList() {
                 title="Changelog"
                 aria-label="Changelog"
               >
-                <IconFileInvoice size={14} />
+                <FileTextIcon size={14} />
               </ActionIcon>
             )}
             <ActionIcon

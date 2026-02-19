@@ -1,13 +1,13 @@
-import { IconComponents } from '@tabler/icons-react';
+import { SquaresFourIcon } from '@phosphor-icons/react';
 import { Select } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Select } from '@mantine/core';
-import { IconComponents } from '@tabler/icons-react';
+import { SquaresFourIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconComponents size={16} />;
+  const icon = <SquaresFourIcon size={16} />;
   return (
     <>
       <Select
@@ -31,7 +31,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconComponents size={16} />;
+  const icon = <SquaresFourIcon size={16} />;
   return (
     <>
       <Select

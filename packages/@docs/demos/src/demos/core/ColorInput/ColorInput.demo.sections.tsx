@@ -1,13 +1,13 @@
-import { IconColorPicker } from '@tabler/icons-react';
+import { EyedropperIcon } from '@phosphor-icons/react';
 import { ColorInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ColorInput } from '@mantine/core';
-import { IconColorPicker } from '@tabler/icons-react';
+import { EyedropperIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconColorPicker size={18} stroke={1.5} />;
+  const icon = <EyedropperIcon size={18} />;
 
   return (
     <>
@@ -31,7 +31,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconColorPicker size={18} stroke={1.5} />;
+  const icon = <EyedropperIcon size={18} />;
 
   return (
     <>

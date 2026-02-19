@@ -1,4 +1,4 @@
-import { IconCheck, IconCopy } from '@tabler/icons-react';
+import { CheckIcon, CopyIcon } from '@phosphor-icons/react';
 import { ActionIcon, Code, CopyButton, Group } from '@mantine/core';
 import CSS_FILES_LIST from '@/.docgen/css-exports.json';
 import { MdxDataTable } from '../MdxProvider';
@@ -22,7 +22,7 @@ function CssFilePath({ filePath }: CssFilePathProps) {
             onClick={copy}
             size="sm"
           >
-            {copied ? <IconCheck size={12} /> : <IconCopy size={12} />}
+            {copied ? <CheckIcon size={12} /> : <CopyIcon size={12} />}
           </ActionIcon>
         )}
       </CopyButton>

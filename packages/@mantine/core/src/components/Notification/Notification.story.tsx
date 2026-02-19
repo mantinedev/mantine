@@ -1,10 +1,10 @@
 import {
-  IconBookmark,
-  IconCheck,
-  IconExclamationMark,
-  IconMoodSmile,
-  IconX,
-} from '@tabler/icons-react';
+  BookmarkIcon,
+  CheckIcon,
+  ExclamationMarkIcon,
+  SmileyIcon,
+  XIcon,
+} from '@phosphor-icons/react';
 import { Notification } from './Notification';
 
 export default { title: 'Notification' };
@@ -54,7 +54,7 @@ export function Usage() {
           onClose={() => {}}
           mt="xl"
           title="Muted notification with icon"
-          icon={<IconMoodSmile size={18} />}
+          icon={<SmileyIcon size={18} />}
         >
           Something generic happened but with icon
         </Notification>
@@ -64,7 +64,7 @@ export function Usage() {
           onClose={() => {}}
           mt="xl"
           title="Success notification with icon"
-          icon={<IconCheck size={18} />}
+          icon={<CheckIcon size={18} />}
         >
           Your action was a complete success!
         </Notification>
@@ -74,7 +74,7 @@ export function Usage() {
           onClose={() => {}}
           mt="xl"
           title="Danger notification with icon"
-          icon={<IconX size={18} />}
+          icon={<XIcon size={18} />}
         >
           You have done something wrong, too bad
         </Notification>
@@ -84,7 +84,7 @@ export function Usage() {
           onClose={() => {}}
           mt="xl"
           title="Warning notification with icon"
-          icon={<IconExclamationMark size={18} />}
+          icon={<ExclamationMarkIcon size={18} />}
         >
           This action will not work very soon
         </Notification>
@@ -94,7 +94,7 @@ export function Usage() {
           onClose={() => {}}
           mt="xl"
           title="Primary notification with icon"
-          icon={<IconBookmark size={18} />}
+          icon={<BookmarkIcon size={18} />}
         >
           You have achieved something important
         </Notification>
@@ -155,7 +155,7 @@ export function Usage() {
           onClose={() => {}}
           mt="xl"
           title="Icon notification with a lot of content"
-          icon={<IconMoodSmile size={18} />}
+          icon={<SmileyIcon size={18} />}
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nam cumque natus ea aliquid
           quo illo enim totam sunt voluptatum, dolorum blanditiis sint, porro aut asperiores ut
@@ -166,7 +166,7 @@ export function Usage() {
           color="orange"
           onClose={() => {}}
           mt="xl"
-          icon={<IconMoodSmile size={18} />}
+          icon={<SmileyIcon size={18} />}
           title="NotificationWithIconAndTitleSoLargeThatItWillUseOverflowEllipsisOption"
         >
           NotificationWithIconAndDescriptionSoLargeThatItShouldUseOverflowEllipsis
@@ -177,7 +177,7 @@ export function Usage() {
           onClose={() => {}}
           withCloseButton={false}
           mt="xl"
-          icon={<IconMoodSmile size={18} />}
+          icon={<SmileyIcon size={18} />}
           title="NotificationWithIconDisallowCloseAndTitleSoLargeThatItWillUseOverflowEllipsisOption"
         >
           NotificationWithIconDisallowCloseAndDescriptionSoLargeThatItShouldUseOverflowEllipsis
@@ -191,7 +191,7 @@ export function Usage() {
           NotificationWithoutTitleAndTheDescriptionSoLargeThatItShouldUseOverflowEllipsis
         </Notification>
 
-        <Notification color="pink" onClose={() => {}} mt="xl" icon={<IconCheck size={18} />}>
+        <Notification color="pink" onClose={() => {}} mt="xl" icon={<CheckIcon size={18} />}>
           Notification without title but with icon
         </Notification>
 

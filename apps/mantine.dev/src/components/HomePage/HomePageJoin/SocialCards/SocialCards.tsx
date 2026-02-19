@@ -1,4 +1,4 @@
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import { Box, SimpleGrid, SimpleGridProps } from '@mantine/core';
 import { DiscordIcon, GithubIcon } from '@mantinex/dev-icons';
@@ -43,7 +43,7 @@ export function CardBase({ icon, title, description, className, ...others }: Car
   return (
     <a className={cx(classes.card, className)} target="_blank" rel="noreferrer" {...others}>
       {icons[icon]}
-      <IconArrowUpRight size={20} className={classes.arrow} />
+      <ArrowUpRightIcon size={20} className={classes.arrow} />
       <div className={classes.body}>
         <div className={classes.title}>{title}</div>
         <div className={classes.description}>{description}</div>
@@ -94,7 +94,7 @@ export function TwitterCard() {
       icon="twitter"
       className={classes.twitter}
       href={meta.twitterLink}
-      title="Follow on X"
+      title="Follow on XIcon"
       description="Get notified about new minor and major releases"
     />
   );

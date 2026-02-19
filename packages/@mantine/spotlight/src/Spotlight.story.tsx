@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 import { Spotlight, SpotlightActionData } from './Spotlight';
 import { createSpotlight } from './spotlight.store';
@@ -44,7 +44,7 @@ export function Compound() {
       >
         <Spotlight.Search
           placeholder="Search something..."
-          leftSection={<IconSearch stroke={1.5} size={20} />}
+          leftSection={<MagnifyingGlassIcon size={20} />}
         />
 
         <Spotlight.ActionsList>
@@ -82,7 +82,7 @@ export function Default() {
         limit={20}
         searchProps={{
           placeholder: 'Search actions',
-          leftSection: <IconSearch stroke={1.5} size={20} />,
+          leftSection: <MagnifyingGlassIcon size={20} />,
         }}
       />
       <Button onClick={actions.open}>Open spotlight</Button>
@@ -107,7 +107,7 @@ export function NotScrollable() {
         limit={20}
         searchProps={{
           placeholder: 'Search actions',
-          leftSection: <IconSearch stroke={1.5} size={20} />,
+          leftSection: <MagnifyingGlassIcon size={20} />,
         }}
       />
       <Button onClick={actions.open}>Open spotlight</Button>

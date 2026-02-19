@@ -148,19 +148,19 @@ To make `ActionIcon` accessible for screen readers, you need to either set `aria
 use the [VisuallyHidden](/core/visually-hidden) component:
 
 ```tsx
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { ActionIcon, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
   return (
     <>
       <ActionIcon aria-label="Like post">
-        <IconHeart />
+        <HeartIcon />
       </ActionIcon>
 
       <ActionIcon>
         <VisuallyHidden>Like post</VisuallyHidden>
-        <IconHeart />
+        <HeartIcon />
       </ActionIcon>
     </>
   );

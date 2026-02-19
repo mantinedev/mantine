@@ -1,4 +1,4 @@
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { rem } from '@mantine/core';
 import { HeaderControl } from './HeaderControl';
 
@@ -9,7 +9,7 @@ interface SearchMobileControlProps {
 export function SearchMobileControl({ onSearch }: SearchMobileControlProps) {
   return (
     <HeaderControl onClick={() => onSearch()} tooltip="Search">
-      <IconSearch style={{ width: rem(22), height: rem(22) }} stroke={1.5} />
+      <MagnifyingGlassIcon style={{ width: rem(22), height: rem(22) }} />
     </HeaderControl>
   );
 }

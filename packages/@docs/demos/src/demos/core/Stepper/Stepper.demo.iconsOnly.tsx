@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import { IconMailOpened, IconShieldCheck, IconUserCheck } from '@tabler/icons-react';
+import { EnvelopeOpenIcon, ShieldCheckIcon, UserCheckIcon } from '@phosphor-icons/react';
 import { Stepper } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
 import { Stepper } from '@mantine/core';
-import { IconUserCheck, IconMailOpened, IconShieldCheck } from '@tabler/icons-react';
+import { UserCheckIcon, EnvelopeOpenIcon, ShieldCheckIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const [active, setActive] = useState(0);
 
   return (
     <Stepper active={active} onStepClick={setActive}>
-      <Stepper.Step icon={<IconUserCheck size={18} />} />
-      <Stepper.Step icon={<IconMailOpened size={18} />} />
-      <Stepper.Step icon={<IconShieldCheck size={18} />} />
+      <Stepper.Step icon={<UserCheckIcon size={18} />} />
+      <Stepper.Step icon={<EnvelopeOpenIcon size={18} />} />
+      <Stepper.Step icon={<ShieldCheckIcon size={18} />} />
     </Stepper>
   );
 }
@@ -25,9 +25,9 @@ function Demo() {
   const [active, setActive] = useState(0);
   return (
     <Stepper active={active} onStepClick={setActive}>
-      <Stepper.Step icon={<IconUserCheck size={18} />} />
-      <Stepper.Step icon={<IconMailOpened size={18} />} />
-      <Stepper.Step icon={<IconShieldCheck size={18} />} />
+      <Stepper.Step icon={<UserCheckIcon size={18} />} />
+      <Stepper.Step icon={<EnvelopeOpenIcon size={18} />} />
+      <Stepper.Step icon={<ShieldCheckIcon size={18} />} />
     </Stepper>
   );
 }

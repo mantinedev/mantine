@@ -1,4 +1,4 @@
-import { IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 
 interface MdxExamplesButtonProps {
@@ -12,7 +12,7 @@ export function MdxExamplesButton({ label, link }: MdxExamplesButtonProps) {
       component="a"
       href={link}
       target="_blank"
-      rightSection={<IconExternalLink size={18} stroke={1.5} />}
+      rightSection={<ArrowSquareOutIcon size={18} />}
       fullWidth
       justify="space-between"
       h={50}

@@ -1,6 +1,6 @@
 import React from 'react';
+import { TextAlignLeftIcon, TextAlignRightIcon } from '@phosphor-icons/react';
 import type { Decorator, Preview } from '@storybook/nextjs';
-import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
 import { ActionIcon, MantineProvider, useDirection } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
@@ -64,7 +64,7 @@ function DirectionWrapper({ children }: { children: React.ReactNode }) {
         style={{ zIndex: 1000 }}
         aria-label="Toggle text direction"
       >
-        {dir === 'ltr' ? <IconTextDirectionLtr /> : <IconTextDirectionRtl />}
+        {dir === 'ltr' ? <TextAlignLeftIcon /> : <TextAlignRightIcon />}
       </ActionIcon>
       {children}
     </>

@@ -1,4 +1,4 @@
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { SpotlightActionData } from '@mantine/spotlight';
 import { MantineDemo } from '@mantinex/demo';
 import { SpotlightDemoBase } from './_demo-base';
@@ -6,7 +6,7 @@ import { SpotlightDemoBase } from './_demo-base';
 const code = `
 import { Button } from '@mantine/core';
 import { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 const actions: SpotlightActionData[] = Array(100)
   .fill(0)
@@ -27,7 +27,7 @@ function Demo() {
         scrollable
         maxHeight={350}
         searchProps={{
-          leftSection: <IconSearch size={20} stroke={1.5} />,
+          leftSection: <MagnifyingGlassIcon size={20} />,
           placeholder: 'Search...',
         }}
       />
@@ -54,7 +54,7 @@ function Demo() {
       maxHeight={350}
       shortcut={null}
       searchProps={{
-        leftSection: <IconSearch size={20} stroke={1.5} />,
+        leftSection: <MagnifyingGlassIcon size={20} />,
         placeholder: 'Search...',
       }}
     />

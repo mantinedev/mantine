@@ -1,13 +1,13 @@
-import { IconLock } from '@tabler/icons-react';
+import { LockIcon } from '@phosphor-icons/react';
 import { PasswordInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
-import { IconLock } from '@tabler/icons-react';
+import { LockIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconLock size={18} stroke={1.5} />;
+  const icon = <LockIcon size={18} />;
 
   return (
     <>
@@ -30,7 +30,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconLock size={18} stroke={1.5} />;
+  const icon = <LockIcon size={18} />;
 
   return (
     <>

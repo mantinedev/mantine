@@ -24,7 +24,7 @@ There are handlers available to add, remove, and reorder items in the list:
 Example of using form lists:
 
 ```tsx
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 import {
   ActionIcon,
   Box,
@@ -65,7 +65,7 @@ function Demo() {
         color="red"
         onClick={() => form.removeListItem('employees', index)}
       >
-        <IconTrash size="1rem" />
+        <TrashIcon size="1rem" />
       </ActionIcon>
     </Group>
   ));

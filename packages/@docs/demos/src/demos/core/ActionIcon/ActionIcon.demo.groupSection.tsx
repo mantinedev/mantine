@@ -1,10 +1,10 @@
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { useCounter } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { useCounter } from '@mantine/hooks';
 
@@ -20,7 +20,7 @@ function Demo() {
         onClick={decrement}
         aria-label="Decrement value"
       >
-        <IconChevronDown color="var(--mantine-color-red-text)" />
+        <CaretDownIcon color="var(--mantine-color-red-text)" />
       </ActionIcon>
       <ActionIcon.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)" miw={60}>
         {value}
@@ -32,7 +32,7 @@ function Demo() {
         onClick={increment}
         aria-label="Increment value"
       >
-        <IconChevronUp color="var(--mantine-color-teal-text)" />
+        <CaretUpIcon color="var(--mantine-color-teal-text)" />
       </ActionIcon>
     </ActionIcon.Group>
   );
@@ -51,7 +51,7 @@ function Demo() {
         onClick={decrement}
         aria-label="Decrement value"
       >
-        <IconChevronDown color="var(--mantine-color-red-text)" />
+        <CaretDownIcon color="var(--mantine-color-red-text)" />
       </ActionIcon>
       <ActionIcon.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)" miw={60}>
         {value}
@@ -63,7 +63,7 @@ function Demo() {
         onClick={increment}
         aria-label="Increment value"
       >
-        <IconChevronUp color="var(--mantine-color-teal-text)" />
+        <CaretUpIcon color="var(--mantine-color-teal-text)" />
       </ActionIcon>
     </ActionIcon.Group>
   );

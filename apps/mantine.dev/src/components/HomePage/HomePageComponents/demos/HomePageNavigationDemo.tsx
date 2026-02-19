@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import {
-  IconChevronRight,
-  IconDots,
-  IconHeartFilled,
-  IconLogout,
-  IconMessageCircle,
-  IconMessageFilled,
-  IconPhoto,
-  IconPlayerPause,
-  IconSettings,
-  IconStarFilled,
-  IconSwitchHorizontal,
-  IconTrash,
-} from '@tabler/icons-react';
+  ArrowsClockwiseIcon,
+  CaretRightIcon,
+  ChatCircleIcon,
+  DotsThreeIcon,
+  GearSixIcon,
+  HeartIcon,
+  ImageIcon,
+  PauseIcon,
+  SignOutIcon,
+  StarIcon,
+  TrashIcon,
+} from '@phosphor-icons/react';
 import {
   Avatar,
   Button,
@@ -40,7 +39,7 @@ function MenuDemo() {
       <Menu.Target>
         <Button
           variant="default"
-          rightSection={<IconDots size={24} stroke={1.5} />}
+          rightSection={<DotsThreeIcon size={24} />}
           miw={200}
           size="lg"
           radius="md"
@@ -50,7 +49,7 @@ function MenuDemo() {
         </Button>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item rightSection={<IconChevronRight size={18} stroke={1.5} />}>
+        <Menu.Item rightSection={<CaretRightIcon size={18} />}>
           <Group>
             <Avatar
               radius="xl"
@@ -68,38 +67,30 @@ function MenuDemo() {
 
         <Menu.Divider />
 
-        <Menu.Item
-          leftSection={<IconHeartFilled size={18} stroke={1.5} color={theme.colors.red[6]} />}
-        >
+        <Menu.Item leftSection={<HeartIcon weight="fill" size={18} color={theme.colors.red[6]} />}>
           Liked posts
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconStarFilled size={18} stroke={1.5} color={theme.colors.yellow[6]} />}
+          leftSection={<StarIcon weight="fill" size={18} color={theme.colors.yellow[6]} />}
         >
           Saved posts
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconMessageFilled size={18} stroke={1.5} color={theme.colors.blue[6]} />}
+          leftSection={<ChatCircleIcon weight="fill" size={18} color={theme.colors.blue[6]} />}
         >
           Your comments
         </Menu.Item>
 
         <Menu.Label>Settings</Menu.Label>
-        <Menu.Item leftSection={<IconSettings size={18} stroke={1.5} />}>
-          Account settings
-        </Menu.Item>
-        <Menu.Item leftSection={<IconSwitchHorizontal size={18} stroke={1.5} />}>
-          Change account
-        </Menu.Item>
-        <Menu.Item leftSection={<IconLogout size={18} stroke={1.5} />}>Logout</Menu.Item>
+        <Menu.Item leftSection={<GearSixIcon size={18} />}>Account settings</Menu.Item>
+        <Menu.Item leftSection={<ArrowsClockwiseIcon size={18} />}>Change account</Menu.Item>
+        <Menu.Item leftSection={<SignOutIcon size={18} />}>Logout</Menu.Item>
 
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item leftSection={<IconPlayerPause size={18} stroke={1.5} />}>
-          Pause subscription
-        </Menu.Item>
-        <Menu.Item color="red" leftSection={<IconTrash size={18} stroke={1.5} />}>
+        <Menu.Item leftSection={<PauseIcon size={18} />}>PauseIcon subscription</Menu.Item>
+        <Menu.Item color="red" leftSection={<TrashIcon size={18} />}>
           Delete account
         </Menu.Item>
       </Menu.Dropdown>
@@ -139,19 +130,19 @@ function TabsDemo() {
       <Tabs.List>
         <Tabs.Tab
           value="gallery"
-          leftSection={<IconPhoto size={18} color="var(--mantine-color-dimmed)" />}
+          leftSection={<ImageIcon size={18} color="var(--mantine-color-dimmed)" />}
         >
           Gallery
         </Tabs.Tab>
         <Tabs.Tab
           value="messages"
-          leftSection={<IconMessageCircle size={18} color="var(--mantine-color-dimmed)" />}
+          leftSection={<ChatCircleIcon size={18} color="var(--mantine-color-dimmed)" />}
         >
           Messages
         </Tabs.Tab>
         <Tabs.Tab
           value="settings"
-          leftSection={<IconSettings size={18} color="var(--mantine-color-dimmed)" />}
+          leftSection={<GearSixIcon size={18} color="var(--mantine-color-dimmed)" />}
         >
           Settings
         </Tabs.Tab>

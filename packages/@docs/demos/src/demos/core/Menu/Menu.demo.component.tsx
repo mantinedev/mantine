@@ -1,10 +1,10 @@
-import { IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { Button, Menu } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Menu, Button } from '@mantine/core';
-import { IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -18,7 +18,7 @@ function Demo() {
           Mantine website
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconExternalLink size={14} />}
+          leftSection={<ArrowSquareOutIcon size={14} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"
@@ -43,7 +43,7 @@ function Demo() {
           Mantine website
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconExternalLink size={14} />}
+          leftSection={<ArrowSquareOutIcon size={14} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"

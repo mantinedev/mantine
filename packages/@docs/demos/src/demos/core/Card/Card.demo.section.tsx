@@ -1,10 +1,10 @@
-import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
+import { DotsThreeIcon, EyeIcon, FileZipIcon, TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Card, Group, Image, Menu, SimpleGrid, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon, Card, Group, Image, Menu, SimpleGrid, Text } from '@mantine/core';
-import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
+import { DotsThreeIcon, EyeIcon, FileZipIcon, TrashIcon } from '@phosphor-icons/react';
 
 const images = [
   'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png',
@@ -21,19 +21,19 @@ function Demo() {
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon variant="subtle" color="gray">
-                <IconDots size={16} />
+                <DotsThreeIcon size={16} />
               </ActionIcon>
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item leftSection={<IconFileZip size={14} />}>
+              <Menu.Item leftSection={<FileZipIcon size={14} />}>
                 Download zip
               </Menu.Item>
-              <Menu.Item leftSection={<IconEye size={14} />}>
+              <Menu.Item leftSection={<EyeIcon size={14} />}>
                 Preview all
               </Menu.Item>
               <Menu.Item
-                leftSection={<IconTrash size={14} />}
+                leftSection={<TrashIcon size={14} />}
                 color="red"
               >
                 Delete all
@@ -81,14 +81,14 @@ function Demo() {
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon variant="subtle" color="gray">
-                <IconDots size={16} />
+                <DotsThreeIcon size={16} />
               </ActionIcon>
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item leftSection={<IconFileZip size={14} />}>Download zip</Menu.Item>
-              <Menu.Item leftSection={<IconEye size={14} />}>Preview all</Menu.Item>
-              <Menu.Item leftSection={<IconTrash size={14} />} color="red">
+              <Menu.Item leftSection={<FileZipIcon size={14} />}>Download zip</Menu.Item>
+              <Menu.Item leftSection={<EyeIcon size={14} />}>Preview all</Menu.Item>
+              <Menu.Item leftSection={<TrashIcon size={14} />} color="red">
                 Delete all
               </Menu.Item>
             </Menu.Dropdown>

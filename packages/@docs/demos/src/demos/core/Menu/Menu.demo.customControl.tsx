@@ -1,10 +1,10 @@
-import { IconChevronRight } from '@tabler/icons-react';
+import { CaretRightIcon } from '@phosphor-icons/react';
 import { Avatar, Group, Menu, Text, UnstyledButton } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
-import { IconChevronRight } from '@tabler/icons-react';
+import { CaretRightIcon } from '@phosphor-icons/react';
 import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
 
 interface UserButtonProps extends React.ComponentProps<'button'> {
@@ -37,7 +37,7 @@ function UserButton({ image, name, email, icon, ...others }: UserButtonProps) {
           </Text>
         </div>
 
-        {icon || <IconChevronRight size={16} />}
+        {icon || <CaretRightIcon size={16} />}
       </Group>
     </UnstyledButton>
   );
@@ -89,7 +89,7 @@ function UserButton({ image, name, email, icon, ...others }: UserButtonProps) {
           </Text>
         </div>
 
-        {icon || <IconChevronRight size={16} />}
+        {icon || <CaretRightIcon size={16} />}
       </Group>
     </UnstyledButton>
   );

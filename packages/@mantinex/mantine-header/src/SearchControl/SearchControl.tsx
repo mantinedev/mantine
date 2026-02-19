@@ -1,4 +1,4 @@
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import { BoxProps, ElementProps, Group, rem, Text, UnstyledButton } from '@mantine/core';
 import classes from './SearchControl.module.css';
@@ -9,7 +9,7 @@ export function SearchControl({ className, ...others }: SearchControlProps) {
   return (
     <UnstyledButton {...others} className={cx(classes.root, className)}>
       <Group gap="xs">
-        <IconSearch style={{ width: rem(15), height: rem(15) }} stroke={1.5} />
+        <MagnifyingGlassIcon style={{ width: rem(15), height: rem(15) }} />
         <Text fz="sm" c="dimmed" pr={80}>
           Search
         </Text>

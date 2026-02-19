@@ -1,4 +1,4 @@
-import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
+import { CheckCircleIcon, CircleDashedIcon } from '@phosphor-icons/react';
 import { ThemeIcon } from '@mantine/core';
 import { List } from './List';
 
@@ -40,7 +40,7 @@ export function WithIcons() {
       center
       icon={
         <ThemeIcon color="teal" size={24} radius="xl">
-          <IconCircleCheck size="1rem" />
+          <CheckCircleIcon size="1rem" />
         </ThemeIcon>
       }
     >
@@ -51,7 +51,7 @@ export function WithIcons() {
       <List.Item
         icon={
           <ThemeIcon color="blue" size={24} radius="xl">
-            <IconCircleDashed size="1rem" />
+            <CircleDashedIcon size="1rem" />
           </ThemeIcon>
         }
       >

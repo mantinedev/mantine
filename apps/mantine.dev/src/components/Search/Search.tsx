@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import Fuse from 'fuse.js';
 import { createSpotlight, Spotlight, SpotlightFilterFunction } from '@mantine/spotlight';
 import { MDX_NAV_SEARCH_PAGES } from '@/mdx';
@@ -72,7 +72,7 @@ export function Search() {
       limit={7}
       nothingFound="Nothing found..."
       searchProps={{
-        leftSection: <IconSearch size={20} />,
+        leftSection: <MagnifyingGlassIcon size={20} />,
         placeholder: 'Search documentation...',
       }}
     />

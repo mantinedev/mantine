@@ -54,7 +54,7 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
           </ActionIcon>
         </Tooltip>
         <Tooltip
-          label={copied ? 'Copied! Feed the robot!' : 'Copy LLM optimized docs'}
+          label={copied ? 'Copied! Feed the robot!' : 'CopyIcon LLM optimized docs'}
           position="left"
           transitionProps={{ duration: 0 }}
         >

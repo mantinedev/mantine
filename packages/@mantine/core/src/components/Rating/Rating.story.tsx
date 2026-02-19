@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconMoon } from '@tabler/icons-react';
+import { MoonIcon } from '@phosphor-icons/react';
 import { Stack } from '../Stack';
 import { Rating } from './Rating';
 
@@ -41,8 +41,8 @@ export function WithCustomSymbol() {
     <Stack p="md">
       <Rating
         defaultValue={3}
-        emptySymbol={<IconMoon size={20} />}
-        fullSymbol={<IconMoon size={20} fill="gray" />}
+        emptySymbol={<MoonIcon size={20} />}
+        fullSymbol={<MoonIcon size={20} fill="gray" />}
       />
 
       <Rating

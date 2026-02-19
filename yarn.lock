@@ -5231,7 +5231,7 @@ __metadata:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
     "@mantinex/dev-icons": ">=1.0.0"
-    "@tabler/icons-react": ">=2.0.0"
+    "@phosphor-icons/react": ">=2.0.0"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -6131,24 +6131,6 @@ __metadata:
   dependencies:
     tslib: "npm:^2.8.0"
   checksum: 10c0/33002f74f6f885f04c132960835fdfc474186983ea567606db62e86acd0680ca82f34647e8e610f4e1e422d1c16fce729dde22cd3b797ab1fd9061a825dabca4
-  languageName: node
-  linkType: hard
-
-"@tabler/icons-react@npm:^3.35.0":
-  version: 3.35.0
-  resolution: "@tabler/icons-react@npm:3.35.0"
-  dependencies:
-    "@tabler/icons": "npm:3.35.0"
-  peerDependencies:
-    react: ">= 16"
-  checksum: 10c0/8d280fcdae00916b001142ba0800ea05d8fa2acdcbd82f88a299b4141fb941237be2e826b86b1af710e038b4f8bb6f76f452c3309c29fd62398b4d5789c2b3e0
-  languageName: node
-  linkType: hard
-
-"@tabler/icons@npm:3.35.0":
-  version: 3.35.0
-  resolution: "@tabler/icons@npm:3.35.0"
-  checksum: 10c0/93098828128ffed2cf412b39bd78992f93f25b22349a4e04523d2a018b7fe376ddeff105babcc3efedd707aa00b705425c7d9f598d6987552a563c62125795a2
   languageName: node
   linkType: hard
 
@@ -10604,7 +10586,7 @@ __metadata:
     "@mdx-js/loader": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@next/mdx": "npm:^14.0.2"
-    "@tabler/icons-react": "npm:^3.35.0"
+    "@phosphor-icons/react": "npm:^2.1.10"
     "@tiptap/core": "npm:^3.13.0"
     "@tiptap/extension-code-block": "npm:^3.13.0"
     "@tiptap/extension-code-block-lowlight": "npm:^3.13.0"
@@ -13165,7 +13147,7 @@ __metadata:
     "@mdx-js/loader": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@next/mdx": "npm:^14.0.2"
-    "@tabler/icons-react": "npm:^3.35.0"
+    "@phosphor-icons/react": "npm:^2.1.10"
     "@types/mdx": "npm:2.0.10"
     "@types/node": "npm:^24.10.2"
     "@types/react": "npm:19.2.7"
@@ -15606,7 +15588,6 @@ __metadata:
     "@rollup/plugin-replace": "npm:^6.0.3"
     "@shikijs/transformers": "npm:^3.19.0"
     "@storybook/nextjs": "npm:^10.1.4"
-    "@tabler/icons-react": "npm:^3.35.0"
     "@testing-library/dom": "npm:10.4.1"
     "@testing-library/jest-dom": "npm:6.9.1"
     "@testing-library/react": "npm:16.3.0"

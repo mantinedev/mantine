@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
 import { Input } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const [value, setValue] = useState('Clear me');
   return (
     <>
-      <Input placeholder="Your email" leftSection={<IconAt size={16} />} />
+      <Input placeholder="Your email" leftSection={<AtIcon size={16} />} />
       <Input
         placeholder="Clearable input"
         value={value}
@@ -37,7 +37,7 @@ function Demo() {
   const [value, setValue] = useState('Clear me');
   return (
     <>
-      <Input placeholder="Your email" leftSection={<IconAt size={16} />} />
+      <Input placeholder="Your email" leftSection={<AtIcon size={16} />} />
       <Input
         placeholder="Clearable input"
         value={value}

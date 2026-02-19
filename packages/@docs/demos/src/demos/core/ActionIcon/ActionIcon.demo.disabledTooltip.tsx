@@ -1,10 +1,10 @@
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon, Tooltip } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
         data-disabled
         onClick={(event) => event.preventDefault()}
       >
-        <IconHeart />
+        <HeartIcon />
       </ActionIcon>
     </Tooltip>
   );
@@ -31,7 +31,7 @@ function Demo() {
         data-disabled
         onClick={(event) => event.preventDefault()}
       >
-        <IconHeart />
+        <HeartIcon />
       </ActionIcon>
     </Tooltip>
   );

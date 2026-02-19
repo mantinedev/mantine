@@ -1,4 +1,4 @@
-import { IconMoon, IconSun } from '@tabler/icons-react';
+import { MoonIcon, SunIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import { ActionIcon, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -6,7 +6,7 @@ import classes from './Theming.demo.colorSchemeControl.module.css';
 
 const code = `
 import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons-react';
+import { SunIcon, MoonIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import classes from './Demo.module.css';
 
@@ -21,8 +21,8 @@ function Demo() {
       size="xl"
       aria-label="Toggle color scheme"
     >
-      <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
-      <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+      <SunIcon className={cx(classes.icon, classes.light)} />
+      <MoonIcon className={cx(classes.icon, classes.dark)} />
     </ActionIcon>
   );
 }
@@ -66,8 +66,8 @@ function Demo() {
       size="xl"
       aria-label="Toggle color scheme"
     >
-      <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
-      <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+      <SunIcon className={cx(classes.icon, classes.light)} />
+      <MoonIcon className={cx(classes.icon, classes.dark)} />
     </ActionIcon>
   );
 }

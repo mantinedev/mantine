@@ -1,4 +1,4 @@
-import { IconFolder, IconFolderOpen } from '@tabler/icons-react';
+import { FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -27,7 +27,7 @@ const cssCode = `.root {
 }`;
 
 const code = `
-import { IconFolder, IconFolderOpen } from '@tabler/icons-react';
+import { FolderSimpleIcon, FolderOpenIcon } from '@phosphor-icons/react';
 import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { CssIcon, NpmIcon, TypeScriptCircleIcon } from '@mantinex/dev-icons';
 import { data, dataCode } from './data';
@@ -54,9 +54,9 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
   if (isFolder) {
     return expanded ? (
-      <IconFolderOpen color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={14} />
     ) : (
-      <IconFolder color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={14} />
     );
   }
 
@@ -106,9 +106,9 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
   if (isFolder) {
     return expanded ? (
-      <IconFolderOpen color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={14} />
     ) : (
-      <IconFolder color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={14} />
     );
   }
 

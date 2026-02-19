@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
-import { IconPlus } from '@tabler/icons-react';
+import { PlusIcon } from '@phosphor-icons/react';
 import { ActionIcon, Box, Group } from '@mantine/core';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
@@ -140,7 +140,7 @@ function Demo() {
                 onClick={handleCreateEvent}
                 aria-label="Create new event"
               >
-                <IconPlus size={18} stroke={3} />
+                <PlusIcon size={18} />
               </ActionIcon>
             </Group>
           ),
@@ -161,7 +161,7 @@ function Demo() {
 
 const code = `import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
-import { IconPlus } from '@tabler/icons-react';
+import { PlusIcon } from '@phosphor-icons/react';
 import { ActionIcon, Box, Group } from '@mantine/core';
 import { Schedule, ScheduleEventData } from '@mantine/schedule';
 import { EventData, EventForm } from './EventForm';
@@ -300,7 +300,7 @@ function Demo() {
                 onClick={handleCreateEvent}
                 aria-label="Create new event"
               >
-                <IconPlus size={18} stroke={3} />
+                <PlusIcon size={18} />
               </ActionIcon>
             </Group>
           ),

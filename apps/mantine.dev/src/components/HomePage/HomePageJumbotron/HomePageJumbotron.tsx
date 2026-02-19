@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { Box, Button } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import { meta } from '@mantinex/mantine-meta';
@@ -43,7 +43,7 @@ export function HomePageJumbotron() {
               className={classes.action}
               data-get-started
               justify="space-between"
-              rightSection={<IconArrowUpRight size={26} stroke={1.5} />}
+              rightSection={<ArrowUpRightIcon size={26} />}
             >
               Get Started
             </Button>

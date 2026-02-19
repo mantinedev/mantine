@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconChevronRight } from '@tabler/icons-react';
+import { CaretRightIcon } from '@phosphor-icons/react';
 import { ActionIcon, Checkbox, Combobox, Group, TextInput, useCombobox } from '@mantine/core';
 import classes from './TransferList.module.css';
 
@@ -69,7 +69,7 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
                 setValue([]);
               }}
             >
-              <IconChevronRight className={classes.icon} />
+              <CaretRightIcon className={classes.icon} />
             </ActionIcon>
           </Group>
         </Combobox.EventsTarget>

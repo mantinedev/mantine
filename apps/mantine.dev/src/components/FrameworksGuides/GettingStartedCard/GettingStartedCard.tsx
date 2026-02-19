@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { Badge, Card, Text } from '@mantine/core';
 import { frameworkIcons } from '@/components/icons';
 import classes from './GettingStartedCard.module.css';
@@ -32,7 +32,7 @@ export function GettingStartedCard({
     >
       {type === 'primary' && (
         <>
-          <IconArrowUpRight className={classes.arrow} />
+          <ArrowUpRightIcon className={classes.arrow} />
           <Badge color="red.8" size="md" className={classes.recommended}>
             Recommended
           </Badge>

@@ -157,14 +157,14 @@ To pass props down to the [TimePicker](/dates/time-picker) component, use the `t
 
 ```tsx
 import { DateTimePicker } from '@mantine/dates';
-import { IconClock } from '@tabler/icons-react';
+import { ClockIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <DateTimePicker
       // ❌ timeInputProps is no longer available
       timeInputProps={{
-        leftSection: <IconClock size={16} stroke={1.5} />,
+        leftSection: <ClockIcon size={16} />,
       }}
     />
   );
@@ -181,7 +181,7 @@ function Demo() {
     <DateTimePicker
       // ✅ Use timePickerProps instead of timeInputProps
       timePickerProps={{
-        leftSection: <IconClock size={16} stroke={1.5} />,
+        leftSection: <ClockIcon size={16} />,
         minutesStep: 5,
         withDropdown: true,
       }}

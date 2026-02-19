@@ -66,8 +66,8 @@
     "syncpack:format": "syncpack format",
     "prettier:test": "prettier --check \"**/*.{ts,tsx,css}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx,css}\"",
-    "ncu:docs": "npx npm-check-updates --packageFile './apps/*/package.json' -x @tabler/icons-react",
-    "ncu:root": "npx npm-check-updates --packageFile './package.json' -x @tabler/icons-react",
+    "ncu:docs": "npx npm-check-updates --packageFile './apps/*/package.json' -x @phosphor-icons/react",
+    "ncu:root": "npx npm-check-updates --packageFile './package.json' -x @phosphor-icons/react",
     "ncu": "npm run ncu:docs && npm run ncu:root",
     "backers": "tsx scripts/backers/generate-backers",
     "compile:llm": "tsx scripts/llm/compile-llm-doc.ts"
@@ -81,7 +81,6 @@
     "@floating-ui/react": "^0.27.16",
     "@phosphor-icons/react": "^2.1.10",
     "@shikijs/transformers": "^3.19.0",
-    "@tabler/icons-react": "^3.35.0",
     "@tiptap/core": "^3.13.0",
     "@tiptap/extension-code-block": "^3.13.0",
     "@tiptap/extension-code-block-lowlight": "^3.13.0",

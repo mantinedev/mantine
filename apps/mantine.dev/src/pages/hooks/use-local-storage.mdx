@@ -33,7 +33,7 @@ Example of a color scheme toggle button that uses `use-local-storage` hook
 to store current color scheme in the `localStorage`:
 
 ```tsx
-import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { MoonStarsIcon, SunIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
@@ -52,7 +52,7 @@ function ColorSchemeToggle() {
 
   return (
     <ActionIcon onClick={toggleColorScheme}>
-      {colorScheme === 'dark' ? <IconSun /> : <IconMoonStars />}
+      {colorScheme === 'dark' ? <SunIcon /> : <MoonStarsIcon />}
     </ActionIcon>
   );
 }

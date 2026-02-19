@@ -1,4 +1,4 @@
-import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
+import { TextAlignLeftIcon, TextAlignRightIcon } from '@phosphor-icons/react';
 import { rem, useDirection } from '@mantine/core';
 import { HeaderControl } from './HeaderControl';
 
@@ -10,15 +10,9 @@ export function DirectionControl() {
       tooltip={`${dir === 'ltr' ? 'RTL' : 'LTR'} direction`}
     >
       {dir === 'rtl' ? (
-        <IconTextDirectionLtr
-          style={{ width: rem(22), height: rem(22), pointerEvents: 'none' }}
-          stroke={1.5}
-        />
+        <TextAlignLeftIcon style={{ width: rem(22), height: rem(22), pointerEvents: 'none' }} />
       ) : (
-        <IconTextDirectionRtl
-          style={{ width: rem(22), height: rem(22), pointerEvents: 'none' }}
-          stroke={1.5}
-        />
+        <TextAlignRightIcon style={{ width: rem(22), height: rem(22), pointerEvents: 'none' }} />
       )}
     </HeaderControl>
   );

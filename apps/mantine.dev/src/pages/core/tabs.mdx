@@ -230,7 +230,7 @@ If you use `Tabs.Tab` without text content, for example, only with an icon, then
 or use the [VisuallyHidden](/core/visually-hidden) component:
 
 ```tsx
-import { IconCoin } from '@tabler/icons-react';
+import { CoinIcon } from '@phosphor-icons/react';
 import { Tabs, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
@@ -244,11 +244,11 @@ function Demo() {
         <Tabs.Tab
           value="money"
           aria-label="Get money"
-          leftSection={<IconCoin size={14} />}
+          leftSection={<CoinIcon size={14} />}
         />
 
         {/* You can use VisuallyHidden instead of aria-label */}
-        <Tabs.Tab value="money" leftSection={<IconCoin size={14} />}>
+        <Tabs.Tab value="money" leftSection={<CoinIcon size={14} />}>
           <VisuallyHidden>Get money</VisuallyHidden>
         </Tabs.Tab>
       </Tabs.List>
@@ -281,25 +281,25 @@ function Demo() {
 <KeyboardEventsTable
   data={[
     {
-      key: 'ArrowRight',
+      key: 'ArrowRightIcon',
       description:
         'Focuses and activates next tab that is not disabled',
       condition: 'orientation="horizontal"',
     },
     {
-      key: 'ArrowLeft',
+      key: 'ArrowLeftIcon',
       description:
         'Focuses and activates previous tab that is not disabled',
       condition: 'orientation="horizontal"',
     },
     {
-      key: 'ArrowDown',
+      key: 'ArrowDownIcon',
       description:
         'Focuses and activates next tab that is not disabled',
       condition: 'orientation="vertical"',
     },
     {
-      key: 'ArrowUp',
+      key: 'ArrowUpIcon',
       description:
         'Focuses and activates previous tab that is not disabled',
       condition: 'orientation="vertical"',

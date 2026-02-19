@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { IconRefresh } from '@tabler/icons-react';
+import { ArrowClockwiseIcon } from '@phosphor-icons/react';
 import { ActionIcon, ColorInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { IconRefresh } from '@tabler/icons-react';
+import { ArrowClockwiseIcon } from '@phosphor-icons/react';
 import { ActionIcon, ColorInput } from '@mantine/core';
 
 const randomColor = () => \`#\${Math.floor(Math.random() * 16777215).toString(16)}\`;
@@ -20,7 +20,7 @@ function Demo() {
       onChange={onChange}
       rightSection={
         <ActionIcon onClick={() => onChange(randomColor())}>
-          <IconRefresh size={16} />
+          <ArrowClockwiseIcon size={16} />
         </ActionIcon>
       }
     />
@@ -42,7 +42,7 @@ function Demo() {
       onChange={onChange}
       rightSection={
         <ActionIcon onClick={() => onChange(randomColor())}>
-          <IconRefresh size={16} />
+          <ArrowClockwiseIcon size={16} />
         </ActionIcon>
       }
     />

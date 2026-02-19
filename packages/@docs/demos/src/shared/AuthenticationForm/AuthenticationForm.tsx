@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconAt, IconLock } from '@tabler/icons-react';
+import { AtIcon, LockIcon } from '@phosphor-icons/react';
 import {
   Anchor,
   Button,
@@ -97,7 +97,7 @@ export function AuthenticationForm({
           required
           placeholder="Your email"
           label="Email"
-          leftSection={<IconAt size={16} stroke={1.5} />}
+          leftSection={<AtIcon size={16} />}
           radius="md"
           {...form.getInputProps('email')}
         />
@@ -107,7 +107,7 @@ export function AuthenticationForm({
           required
           placeholder="Password"
           label="Password"
-          leftSection={<IconLock size={16} stroke={1.5} />}
+          leftSection={<LockIcon size={16} />}
           radius="md"
           {...form.getInputProps('password')}
         />
@@ -118,7 +118,7 @@ export function AuthenticationForm({
             required
             label="Confirm Password"
             placeholder="Confirm password"
-            leftSection={<IconLock size={16} stroke={1.5} />}
+            leftSection={<LockIcon size={16} />}
             radius="md"
             {...form.getInputProps('confirmPassword')}
           />

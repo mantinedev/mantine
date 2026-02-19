@@ -1,17 +1,17 @@
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { MultiSelect } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { MultiSelectStylesApi } from '@docs/styles-api';
 
 const code = `
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   return (
     <MultiSelect
      {{props}}
-      leftSection={<IconAt size={18} stroke={1.5} />}
+      leftSection={<AtIcon size={18} />}
       label="MultiSelect"
       description="Description"
       error="Error"
@@ -31,7 +31,7 @@ function Demo(props: any) {
     <MultiSelect
       {...props}
       dropdownOpened
-      leftSection={<IconAt size={18} stroke={1.5} />}
+      leftSection={<AtIcon size={18} />}
       withAsterisk
       label="MultiSelect"
       description="Description"

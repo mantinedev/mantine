@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { IconClock, IconMapPin } from '@tabler/icons-react';
+import { ClockIcon, MapPinIcon } from '@phosphor-icons/react';
 import { Group, Text } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
@@ -35,7 +35,7 @@ const events: ScheduleEventData[] = [
 
 const code = `
 import dayjs from 'dayjs';
-import { IconClock, IconMapPin } from '@tabler/icons-react';
+import { ClockIcon, MapPinIcon } from '@phosphor-icons/react';
 import { Group, Text } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
 
@@ -64,7 +64,7 @@ function Demo() {
             {event.title}
           </Text>
           <Group gap={4}>
-            <IconClock size={12} />
+            <ClockIcon size={12} />
             <Text fz={10} lh={1}>
               {dayjs(event.start).format('h:mm A')}
             </Text>
@@ -72,7 +72,7 @@ function Demo() {
 
           {event.payload?.location && (
             <Group gap={4}>
-              <IconMapPin size={12} />
+              <MapPinIcon size={12} />
               <Text fz={10}>{event.payload.location}</Text>
             </Group>
           )}
@@ -96,7 +96,7 @@ function Demo() {
             {event.title}
           </Text>
           <Group gap={4}>
-            <IconClock size={12} />
+            <ClockIcon size={12} />
             <Text fz={10} lh={1}>
               {dayjs(event.start).format('h:mm A')}
             </Text>
@@ -104,7 +104,7 @@ function Demo() {
 
           {event.payload?.location && (
             <Group gap={4}>
-              <IconMapPin size={12} />
+              <MapPinIcon size={12} />
               <Text fz={10}>{event.payload.location}</Text>
             </Group>
           )}

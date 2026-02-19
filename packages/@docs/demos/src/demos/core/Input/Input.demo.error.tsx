@@ -1,10 +1,10 @@
-import { IconExclamationCircle } from '@tabler/icons-react';
+import { WarningCircleIcon } from '@phosphor-icons/react';
 import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { TextInput } from '@mantine/core';
-import { IconExclamationCircle } from '@tabler/icons-react';
+import { WarningCircleIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -25,7 +25,7 @@ function Demo() {
         withErrorStyles={false}
         rightSectionPointerEvents="none"
         rightSection={
-          <IconExclamationCircle
+          <WarningCircleIcon
             size={20}
             color="var(--mantine-color-error)"
           />
@@ -54,7 +54,7 @@ function Demo() {
         error="Something went wrong"
         withErrorStyles={false}
         rightSectionPointerEvents="none"
-        rightSection={<IconExclamationCircle size={20} color="var(--mantine-color-error)" />}
+        rightSection={<WarningCircleIcon size={20} color="var(--mantine-color-error)" />}
       />
     </>
   );

@@ -1,11 +1,11 @@
-import { IconPlus } from '@tabler/icons-react';
+import { PlusIcon } from '@phosphor-icons/react';
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './_base';
 import classes from './Accordion.demo.chevron.module.css';
 
 const code = `
-import { IconPlus } from '@tabler/icons-react';
+import { PlusIcon } from '@phosphor-icons/react';
 import { Accordion } from '@mantine/core';
 import { data } from './data';
 import classes from './Demo.module.css';
@@ -22,7 +22,7 @@ function Demo() {
     <Accordion
       defaultValue="Apples"
       classNames={{ chevron: classes.chevron }}
-      chevron={<IconPlus className={classes.icon} />}
+      chevron={<PlusIcon className={classes.icon} />}
       order={3}
     >
       {items}
@@ -56,7 +56,7 @@ function Demo() {
     <Accordion
       defaultValue="Apples"
       classNames={{ chevron: classes.chevron }}
-      chevron={<IconPlus className={classes.icon} />}
+      chevron={<PlusIcon className={classes.icon} />}
       order={3}
       mih={270}
     >

@@ -1,10 +1,10 @@
-import { IconCircleX } from '@tabler/icons-react';
+import { XCircleIcon } from '@phosphor-icons/react';
 import { Stepper } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Stepper } from '@mantine/core';
-import { IconCircleX } from '@tabler/icons-react';
+import { XCircleIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -14,7 +14,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<IconCircleX size={20} />}
+        completedIcon={<XCircleIcon size={20} />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>
@@ -30,7 +30,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<IconCircleX size={20} />}
+        completedIcon={<XCircleIcon size={20} />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>

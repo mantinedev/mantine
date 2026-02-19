@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconBrandCodesandbox } from '@tabler/icons-react';
+import { CodesandboxLogoIcon } from '@phosphor-icons/react';
 import hljs from 'highlight.js';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { createHighlightJsAdapter } from '../CodeHighlightProvider/adapters/highlight-js-adapter';
@@ -245,7 +245,7 @@ export function ExtraControls() {
             href="https://codesandbox.io"
             target="_blank"
           >
-            <IconBrandCodesandbox />
+            <CodesandboxLogoIcon />
           </CodeHighlight.Control>,
         ]}
       />

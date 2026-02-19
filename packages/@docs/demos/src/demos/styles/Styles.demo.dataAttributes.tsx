@@ -1,11 +1,11 @@
-import { IconArrowRight } from '@tabler/icons-react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import { Button, ButtonProps, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.dataAttributes.module.css';
 
 const code = `
 import { Button, ButtonProps, Group } from '@mantine/core';
-import { IconArrowRight } from '@tabler/icons-react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import classes from './Demo.module.css';
 
 function SendFilesButton(props: ButtonProps & React.ComponentProps<'button'>) {
@@ -17,13 +17,13 @@ function Demo() {
     <Group>
       <SendFilesButton
         leftSection="12"
-        rightSection={<IconArrowRight size={18} />}
+        rightSection={<ArrowRightIcon size={18} />}
       >
         Send files
       </SendFilesButton>
       <SendFilesButton
         leftSection="3"
-        rightSection={<IconArrowRight size={18} />}
+        rightSection={<ArrowRightIcon size={18} />}
         disabled
       >
         Send files
@@ -87,10 +87,10 @@ function SendFilesButton(props: ButtonProps & React.ComponentProps<'button'>) {
 function Demo() {
   return (
     <Group>
-      <SendFilesButton leftSection="12" rightSection={<IconArrowRight size={18} />}>
+      <SendFilesButton leftSection="12" rightSection={<ArrowRightIcon size={18} />}>
         Send files
       </SendFilesButton>
-      <SendFilesButton leftSection="3" rightSection={<IconArrowRight size={18} />} disabled>
+      <SendFilesButton leftSection="3" rightSection={<ArrowRightIcon size={18} />} disabled>
         Send files
       </SendFilesButton>
     </Group>

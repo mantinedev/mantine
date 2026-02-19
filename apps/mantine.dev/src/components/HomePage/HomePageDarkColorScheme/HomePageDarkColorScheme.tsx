@@ -1,4 +1,4 @@
-import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { MoonStarsIcon, SunIcon } from '@phosphor-icons/react';
 import { Button, Group, Image, SimpleGrid, useMantineColorScheme } from '@mantine/core';
 import { MdxCodeHighlight } from '@/components/MdxProvider';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
@@ -44,8 +44,8 @@ export function HomePageDarkColorScheme() {
                 onClick={() => toggleColorScheme()}
                 leftSection={
                   <>
-                    <IconSun className={classes.darkIcon} />
-                    <IconMoonStars className={classes.lightIcon} />
+                    <SunIcon className={classes.darkIcon} />
+                    <MoonStarsIcon className={classes.lightIcon} />
                   </>
                 }
               >

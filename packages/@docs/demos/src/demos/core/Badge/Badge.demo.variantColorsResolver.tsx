@@ -11,7 +11,7 @@ import {
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconPhoto, IconFingerprint, IconError404 } from '@tabler/icons-react';
+import { ImageIcon, FingerprintIcon, WarningIcon } from '@phosphor-icons/react';
 import {
   Badge,
   Group,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Tree, TreeNodeData } from './Tree';
@@ -92,7 +92,7 @@ export function RenderNode() {
           <Group gap="xs" {...elementProps}>
             <span>{node.label}</span>
             {hasChildren && (
-              <IconChevronDown
+              <CaretDownIcon
                 size={18}
                 style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
               />
@@ -118,7 +118,7 @@ export function ExpandOnDoubleClick() {
           <Group gap="xs" {...elementProps} onDoubleClick={() => tree.toggleExpanded(node.value)}>
             <span>{node.label}</span>
             {hasChildren && (
-              <IconChevronDown
+              <CaretDownIcon
                 size={18}
                 style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
               />
@@ -145,7 +145,7 @@ export function SelectOnClick() {
           <Group gap="xs" {...elementProps} onDoubleClick={() => tree.toggleExpanded(node.value)}>
             <span>{node.label}</span>
             {hasChildren && (
-              <IconChevronDown
+              <CaretDownIcon
                 size={18}
                 style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
               />
