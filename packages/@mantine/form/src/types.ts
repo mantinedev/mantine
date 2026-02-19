@@ -48,8 +48,10 @@ export type FormRulesRecord<Values, InitValues = Values> = Partial<{
 
 export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
 
-export type SetValues<Values> = React.Dispatch<React.SetStateAction<Partial<Values>>>;
-export type SetInitialValues<Values> = (values: Values) => void;
+export type SetValues<out Values> = <TValues extends Values>(
+  value: Partial<TValues> | ((prevState: Partial<TValues>) => Partial<TValues>)
+) => void;
+export type SetInitialValues<out Values> = <TValues extends Values>(values: TValues) => void;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
 export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 
@@ -65,8 +67,10 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
   ) => void
 ) => (event?: React.FormEvent<HTMLFormElement>) => void;
 
-export type GetTransformedValues<Values, TransformValues extends _TransformValues<Values>> = (
-  values?: Values
+export type GetTransformedValues<out Values, TransformValues extends _TransformValues<Values>> = <
+  TValues extends Values,
+>(
+  values?: TValues
 ) => ReturnType<TransformValues>;
 
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
@@ -95,11 +99,11 @@ export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   options?: GetInputPropsOptions
 ) => GetInputPropsReturnType;
 
-export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
+export type SetFieldValue<out Values> = <TValues extends Values, Field extends LooseKeys<TValues>>(
   path: Field,
   value:
-    | FormPathValue<Values, Field>
-    | ((prevValue: FormPathValue<Values, Field>) => FormPathValue<Values, Field>),
+    | FormPathValue<TValues, Field>
+    | ((prevValue: FormPathValue<TValues, Field>) => FormPathValue<TValues, Field>),
   options?: { forceUpdate: boolean }
 ) => void;
 
@@ -128,29 +132,38 @@ export type SetFieldDirty<Values> = <Field extends LooseKeys<Values>>(
   forceUpdate?: boolean
 ) => void;
 
-export type SetCalculatedFieldDirty<Values> = <Field extends LooseKeys<Values>>(
+export type SetCalculatedFieldDirty<out Values> = <
+  TValues extends Values,
+  Field extends LooseKeys<Values>,
+>(
   path: Field,
-  value: FormPathValue<Values, Field>
+  value: FormPathValue<TValues, Field>
 ) => void;
 
-export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
+export type ReorderListItem<out Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   payload: ReorderPayload
 ) => void;
 
-export type InsertListItem<Values> = <Field extends LooseKeys<Values>>(
+export type InsertListItem<out Values> = <
+  Field extends LooseKeys<Values>,
+  Element extends FormArrayElement<Values, Field>,
+>(
   path: Field,
-  item: FormArrayElement<Values, Field>,
+  item: Element,
   index?: number
 ) => void;
 
-export type ReplaceListItem<Values> = <Field extends LooseKeys<Values>>(
+export type ReplaceListItem<out Values> = <
+  Field extends LooseKeys<Values>,
+  Element extends FormArrayElement<Values, Field>,
+>(
   path: Field,
   index: number,
-  item: FormArrayElement<Values, Field>
+  item: Element
 ) => void;
 
-export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
+export type RemoveListItem<out Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   index: number
 ) => void;
@@ -159,22 +172,27 @@ export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Fi
 export type ResetStatus = () => void;
 export type GetStatus = () => FormStatus;
 
-export type ResetDirty<Values> = (values?: Values) => void;
+export type ResetDirty<out Values> = <TValues extends Values>(values?: TValues) => void;
 export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
-export type Initialize<Values> = (values: Values) => void;
+export type Initialize<out Values> = <TValues extends Values>(values: TValues) => void;
 
 export type _TransformValues<Values> = (values: Values) => unknown;
 
-export type FormFieldSubscriber<Values, Field extends LooseKeys<Values>> = (input: {
-  previousValue: FormPathValue<Values, Field>;
-  value: FormPathValue<Values, Field>;
+export type FormFieldSubscriber<out Values, out Field extends LooseKeys<Values>> = <
+  TValues extends Values,
+>(input: {
+  previousValue: FormPathValue<TValues, Field>;
+  value: FormPathValue<TValues, Field>;
   touched: boolean;
   dirty: boolean;
 }) => void;
 
-export type Watch<Values> = <Field extends LooseKeys<Values>>(
-  path: Field,
-  subscriber: FormFieldSubscriber<Values, Field>
+export type Watch<out Values, out Field extends LooseKeys<Values> = LooseKeys<Values>> = <
+  TValues extends Values,
+  TField extends Field,
+>(
+  path: TField,
+  subscriber: FormFieldSubscriber<TValues, TField>
 ) => void;
 
 export type Key<Values> = <Field extends LooseKeys<Values>>(path: Field) => string;
@@ -210,9 +228,15 @@ export interface UseFormInput<
   cascadeUpdates?: boolean;
 }
 
-export interface UseFormReturnType<
-  Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
+interface _UseFormReturnType<
+  out Values,
+  out TransformedValues = Values,
+  TransformValues extends _TransformValues<Values> = <
+    TValues extends Values,
+    TTransformedValues extends TransformedValues,
+  >(
+    values: TValues
+  ) => TTransformedValues,
 > {
   values: Values;
   submitting: boolean;
@@ -254,6 +278,14 @@ export interface UseFormReturnType<
   getInputNode: GetInputNode<Values>;
   resetField: (path: PropertyKey) => void;
 }
+
+export type UseFormReturnType<
+  Values,
+  TransformValues extends _TransformValues<Values> = <TValues extends Values, TTransformedValues>(
+    values: TValues
+  ) => TTransformedValues,
+  TransformedValues = Values,
+> = _UseFormReturnType<Values, TransformedValues, TransformValues>;
 
 export type UseForm<
   Values = Record<string, unknown>,
