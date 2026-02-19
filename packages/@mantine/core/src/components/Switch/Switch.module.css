@@ -98,6 +98,12 @@
     --switch-cursor: not-allowed;
   }
 
+  .input:checked:disabled + &,
+  .input:checked[data-disabled] + & {
+    --switch-bg: var(--switch-color);
+    opacity: 0.35;
+  }
+
   @mixin light {
     --switch-bg: var(--mantine-color-gray-3);
     --switch-text-color: var(--mantine-color-gray-6);
