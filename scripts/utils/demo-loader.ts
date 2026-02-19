@@ -2,6 +2,426 @@ import path from 'path';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
 
+type ControlPrimitive = string | number | boolean | null;
+
+const sharedControlExpressions = new Map<string, string>();
+let sharedControlsLoaded = false;
+
+function readBalancedExpression(source: string, startIndex: number): { expression: string; end: number } {
+  let i = startIndex;
+  let depthParen = 0;
+  let depthBracket = 0;
+  let depthBrace = 0;
+  let quote: '"' | "'" | '`' | null = null;
+
+  while (i < source.length) {
+    const ch = source[i];
+    const prev = i > 0 ? source[i - 1] : '';
+
+    if (quote) {
+      if (ch === quote && prev !== '\\') {
+        quote = null;
+      }
+      i += 1;
+      continue;
+    }
+
+    if (ch === '"' || ch === "'" || ch === '`') {
+      quote = ch as '"' | "'" | '`';
+      i += 1;
+      continue;
+    }
+
+    if (ch === '(') depthParen += 1;
+    else if (ch === ')') depthParen = Math.max(0, depthParen - 1);
+    else if (ch === '[') depthBracket += 1;
+    else if (ch === ']') depthBracket = Math.max(0, depthBracket - 1);
+    else if (ch === '{') depthBrace += 1;
+    else if (ch === '}') depthBrace = Math.max(0, depthBrace - 1);
+    else if (ch === ';' && depthParen === 0 && depthBracket === 0 && depthBrace === 0) {
+      return { expression: source.slice(startIndex, i).trim(), end: i };
+    }
+
+    i += 1;
+  }
+
+  return { expression: source.slice(startIndex).trim(), end: source.length };
+}
+
+function readBracketExpression(
+  source: string,
+  startIndex: number,
+  openBracket: '[' | '{',
+  closeBracket: ']' | '}'
+): { expression: string; end: number } {
+  let i = startIndex;
+  let depth = 0;
+  let quote: '"' | "'" | '`' | null = null;
+
+  while (i < source.length) {
+    const ch = source[i];
+    const prev = i > 0 ? source[i - 1] : '';
+
+    if (quote) {
+      if (ch === quote && prev !== '\\') {
+        quote = null;
+      }
+      i += 1;
+      continue;
+    }
+
+    if (ch === '"' || ch === "'" || ch === '`') {
+      quote = ch as '"' | "'" | '`';
+      i += 1;
+      continue;
+    }
+
+    if (ch === openBracket) {
+      depth += 1;
+    } else if (ch === closeBracket) {
+      depth -= 1;
+      if (depth === 0) {
+        return { expression: source.slice(startIndex, i + 1).trim(), end: i + 1 };
+      }
+    }
+
+    i += 1;
+  }
+
+  return { expression: source.slice(startIndex).trim(), end: source.length };
+}
+
+function splitTopLevelArrayItems(arrayBody: string): string[] {
+  const result: string[] = [];
+  let current = '';
+  let depthParen = 0;
+  let depthBracket = 0;
+  let depthBrace = 0;
+  let quote: '"' | "'" | '`' | null = null;
+
+  for (let i = 0; i < arrayBody.length; i += 1) {
+    const ch = arrayBody[i];
+    const prev = i > 0 ? arrayBody[i - 1] : '';
+
+    if (quote) {
+      current += ch;
+      if (ch === quote && prev !== '\\') {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (ch === '"' || ch === "'" || ch === '`') {
+      quote = ch as '"' | "'" | '`';
+      current += ch;
+      continue;
+    }
+
+    if (ch === '(') depthParen += 1;
+    else if (ch === ')') depthParen = Math.max(0, depthParen - 1);
+    else if (ch === '[') depthBracket += 1;
+    else if (ch === ']') depthBracket = Math.max(0, depthBracket - 1);
+    else if (ch === '{') depthBrace += 1;
+    else if (ch === '}') depthBrace = Math.max(0, depthBrace - 1);
+
+    if (ch === ',' && depthParen === 0 && depthBracket === 0 && depthBrace === 0) {
+      const trimmed = current.trim();
+      if (trimmed.length > 0) {
+        result.push(trimmed);
+      }
+      current = '';
+      continue;
+    }
+
+    current += ch;
+  }
+
+  const tail = current.trim();
+  if (tail.length > 0) {
+    result.push(tail);
+  }
+
+  return result;
+}
+
+function parsePrimitiveLiteral(raw: string): ControlPrimitive | undefined {
+  const value = raw.trim();
+  const quoted = value.match(/^(['"`])([\s\S]*?)\1$/);
+  if (quoted) {
+    return quoted[2];
+  }
+
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  if (value === 'null') return null;
+  if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
+  return undefined;
+}
+
+function parseControlObject(controlExpression: string): { prop: string; initialValue: ControlPrimitive } | null {
+  const propMatch = controlExpression.match(/prop:\s*(['"`])([\w$.-]+)\1/);
+  const quotedInitialValueMatch = controlExpression.match(/initialValue:\s*(['"`])([\s\S]*?)\1/);
+  const primitiveInitialValueMatch = controlExpression.match(
+    /initialValue:\s*(true|false|null|-?\d+(?:\.\d+)?)/
+  );
+
+  if (!propMatch || (!quotedInitialValueMatch && !primitiveInitialValueMatch)) {
+    return null;
+  }
+
+  const prop = propMatch[2];
+  const initialValue = quotedInitialValueMatch
+    ? quotedInitialValueMatch[2]
+    : parsePrimitiveLiteral(primitiveInitialValueMatch![1]);
+
+  if (initialValue === undefined) {
+    return null;
+  }
+
+  return { prop, initialValue };
+}
+
+function formatJsxProp(prop: string, value: ControlPrimitive): string {
+  if (typeof value === 'string') {
+    return ` ${prop}="${value}"`;
+  }
+
+  if (typeof value === 'number' || typeof value === 'boolean' || value === null) {
+    return ` ${prop}={${String(value)}}`;
+  }
+
+  return '';
+}
+
+async function loadSharedControlExpressions(demosPath: string) {
+  if (sharedControlsLoaded) {
+    return;
+  }
+
+  const sharedDir = path.resolve(demosPath, '..', 'shared');
+  const files = await glob('**/*.{ts,tsx}', {
+    cwd: sharedDir,
+    absolute: true,
+  });
+
+  for (const file of files) {
+    const content = await fs.readFile(file, 'utf-8');
+    const exportRegex = /export const (\w+)(?:\s*:[^=]+)?\s*=\s*/g;
+    let match: RegExpExecArray | null;
+
+    while ((match = exportRegex.exec(content)) !== null) {
+      const name = match[1];
+      const exprStart = match.index + match[0].length;
+      const { expression } = readBalancedExpression(content, exprStart);
+      if (expression) {
+        sharedControlExpressions.set(name, expression);
+      }
+    }
+  }
+
+  sharedControlsLoaded = true;
+}
+
+async function extractConfiguratorDefaults(
+  content: string,
+  demoDir: string,
+  demosPath: string
+): Promise<Map<string, ControlPrimitive>> {
+  const defaults = new Map<string, ControlPrimitive>();
+  await loadSharedControlExpressions(demosPath);
+
+  const localConstExpressions = new Map<string, string>();
+  const constRegex = /const (\w+)(?:\s*:[^=]+)?\s*=\s*/g;
+  let constMatch: RegExpExecArray | null;
+  while ((constMatch = constRegex.exec(content)) !== null) {
+    const exprStart = constMatch.index + constMatch[0].length;
+    const { expression } = readBalancedExpression(content, exprStart);
+    localConstExpressions.set(constMatch[1], expression);
+  }
+
+  const importMap = new Map<string, { importPath: string; importedName: string }>();
+  const importRegex = /import\s*{([^}]+)}\s*from\s*['"]([^'"]+)['"]/g;
+  let importMatch: RegExpExecArray | null;
+  while ((importMatch = importRegex.exec(content)) !== null) {
+    const names = importMatch[1]
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean);
+    for (const nameEntry of names) {
+      const aliasMatch = nameEntry.match(/^(\w+)\s+as\s+(\w+)$/);
+      if (aliasMatch) {
+        importMap.set(aliasMatch[2], { importPath: importMatch[2], importedName: aliasMatch[1] });
+      } else {
+        importMap.set(nameEntry, { importPath: importMatch[2], importedName: nameEntry });
+      }
+    }
+  }
+
+  const importedExpressionCache = new Map<string, string>();
+
+  async function resolveImportedExpression(importPath: string, importedName: string): Promise<string | null> {
+    const cacheKey = `${importPath}::${importedName}`;
+    if (importedExpressionCache.has(cacheKey)) {
+      return importedExpressionCache.get(cacheKey) || null;
+    }
+
+    // Shared controls are frequently re-exported via ../../../shared
+    if (sharedControlExpressions.has(importedName)) {
+      const expression = sharedControlExpressions.get(importedName) || null;
+      importedExpressionCache.set(cacheKey, expression || '');
+      return expression;
+    }
+
+    const candidates = [
+      path.resolve(demoDir, `${importPath}.ts`),
+      path.resolve(demoDir, `${importPath}.tsx`),
+      path.resolve(demoDir, importPath, 'index.ts'),
+      path.resolve(demoDir, importPath, 'index.tsx'),
+    ];
+
+    for (const filePath of candidates) {
+      if (!(await fs.pathExists(filePath))) {
+        continue;
+      }
+
+      const source = await fs.readFile(filePath, 'utf-8');
+
+      const directExport = new RegExp(`export const ${importedName}\\s*=\\s*`, 'm').exec(source);
+      if (directExport) {
+        const exprStart = directExport.index + directExport[0].length;
+        const { expression } = readBalancedExpression(source, exprStart);
+        importedExpressionCache.set(cacheKey, expression);
+        return expression;
+      }
+
+      const reExport = new RegExp(
+        `export\\s*\\{[^}]*\\b${importedName}\\b[^}]*\\}\\s*from\\s*['"]([^'"]+)['"]`,
+        'm'
+      ).exec(source);
+      if (reExport) {
+        const nested = await resolveImportedExpression(reExport[1], importedName);
+        importedExpressionCache.set(cacheKey, nested || '');
+        return nested;
+      }
+    }
+
+    importedExpressionCache.set(cacheKey, '');
+    return null;
+  }
+
+  async function resolveControlsExpression(name: string, visited = new Set<string>()): Promise<string | null> {
+    if (visited.has(name)) {
+      return null;
+    }
+    visited.add(name);
+
+    if (localConstExpressions.has(name)) {
+      return localConstExpressions.get(name) || null;
+    }
+
+    if (sharedControlExpressions.has(name)) {
+      return sharedControlExpressions.get(name) || null;
+    }
+
+    const importInfo = importMap.get(name);
+    if (importInfo) {
+      const importedExpr = await resolveImportedExpression(importInfo.importPath, importInfo.importedName);
+      if (importedExpr) {
+        return importedExpr;
+      }
+    }
+
+    return null;
+  }
+
+  async function collectDefaultsFromExpression(expression: string, depth = 0): Promise<void> {
+    if (!expression || depth > 8) {
+      return;
+    }
+
+    const trimmed = expression.trim();
+    if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+      const body = trimmed.slice(1, -1);
+      const items = splitTopLevelArrayItems(body);
+      for (const item of items) {
+        const normalized = item.trim().replace(/^\.{3}/, '');
+        if (normalized.startsWith('{') && normalized.endsWith('}')) {
+          const parsed = parseControlObject(normalized);
+          if (parsed) {
+            defaults.set(parsed.prop, parsed.initialValue);
+          }
+          continue;
+        }
+
+        if (/^\w+$/.test(normalized)) {
+          const resolved = await resolveControlsExpression(normalized);
+          if (resolved) {
+            await collectDefaultsFromExpression(resolved, depth + 1);
+          }
+        }
+      }
+      return;
+    }
+
+    if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+      const parsed = parseControlObject(trimmed);
+      if (parsed) {
+        defaults.set(parsed.prop, parsed.initialValue);
+      }
+      return;
+    }
+
+    if (/^\w+$/.test(trimmed)) {
+      const resolved = await resolveControlsExpression(trimmed);
+      if (resolved) {
+        await collectDefaultsFromExpression(resolved, depth + 1);
+      }
+    }
+  }
+
+  const exportMatch = content.match(/export const \w+:\s*MantineDemo\s*=\s*{([\s\S]*?)}\s*;/m);
+  if (!exportMatch) {
+    return defaults;
+  }
+
+  const exportBody = exportMatch[1];
+  const controlsArrayStart = exportBody.match(/controls:\s*\[/m);
+  if (controlsArrayStart) {
+    const startIndex = controlsArrayStart.index! + controlsArrayStart[0].length - 1;
+    const { expression } = readBracketExpression(exportBody, startIndex, '[', ']');
+    await collectDefaultsFromExpression(expression);
+    return defaults;
+  }
+
+  const controlsRefMatch = exportBody.match(/controls:\s*([A-Za-z_]\w*)/m);
+  if (controlsRefMatch) {
+    await collectDefaultsFromExpression(controlsRefMatch[1]);
+  }
+
+  return defaults;
+}
+
+function applyConfiguratorDefaultsToCode(code: string, defaults: Map<string, ControlPrimitive>): string {
+  if (defaults.size === 0) {
+    return code.replace(/\{\{props\}\}/g, '');
+  }
+
+  const propsString = [...defaults.entries()]
+    .map(([prop, value]) => formatJsxProp(prop, value))
+    .join('');
+
+  let resolved = code.replace(/\{\{props\}\}/g, propsString);
+  resolved = resolved.replace(/\$\{props\.(\w+)(?:[^}]*)\}/g, (_match, propName: string) => {
+    if (!defaults.has(propName)) {
+      return '';
+    }
+    const value = defaults.get(propName);
+    return value === null ? 'null' : String(value);
+  });
+
+  return resolved;
+}
+
 export async function extractCodeVariable(
   varName: string,
   content: string,
@@ -179,6 +599,7 @@ export async function loadDemoCode(demoName: string, demosPath: string): Promise
     if (demoFiles.length > 0) {
       const content = await fs.readFile(demoFiles[0], 'utf-8');
       const demoDir = path.dirname(demoFiles[0]);
+      const defaults = await extractConfiguratorDefaults(content, demoDir, demosPath);
 
       const exportMatch = content.match(
         /export const \w+:\s*MantineDemo\s*=\s*{[\s\S]*?code:\s*\[([\s\S]*?)\],?[\s\S]*?}/
@@ -220,7 +641,7 @@ export async function loadDemoCode(demoName: string, demosPath: string): Promise
           }
 
           if (fileCode) {
-            fileCode = fileCode.replace(/\{\{props\}\}/g, '');
+            fileCode = applyConfiguratorDefaultsToCode(fileCode, defaults);
 
             fileCode = fileCode.replace(/\$\{(\w+)\}/g, (match, varName) => {
               const varMatch = content.match(
@@ -246,7 +667,7 @@ export async function loadDemoCode(demoName: string, demosPath: string): Promise
         const extractedCode = await extractCodeVariable('code', content, demoDir);
         if (extractedCode) {
           let code = extractedCode;
-          code = code.replace(/\{\{props\}\}/g, '');
+          code = applyConfiguratorDefaultsToCode(code, defaults);
 
           code = code.replace(/\$\{(\w+)\}/g, (match, varName) => {
             const varMatch = content.match(
@@ -265,12 +686,7 @@ export async function loadDemoCode(demoName: string, demosPath: string): Promise
       const functionCodeMatch = content.match(/const code\s*=\s*\([^)]*\)\s*=>\s*`([\s\S]*?)`/);
       if (functionCodeMatch) {
         let code = functionCodeMatch[1];
-        code = code.replace(/\$\{props\.gradientFrom[^}]*\}/g, 'cyan');
-        code = code.replace(/\$\{props\.gradientTo[^}]*\}/g, 'blue');
-        code = code.replace(/\$\{props\.gradientDegree[^}]*\}/g, '90');
-        code = code.replace(/\$\{props\.size[^}]*\}/g, 'md');
-        code = code.replace(/\$\{props\.position[^}]*\}/g, 'bottom');
-        code = code.replace(/\$\{props\.[^}]+\}/g, '');
+        code = applyConfiguratorDefaultsToCode(code, defaults);
         return code.trim();
       }
 
@@ -284,7 +700,7 @@ export async function loadDemoCode(demoName: string, demosPath: string): Promise
           const match = codeValue.match(/`([\s\S]*?)`/);
           if (match) {
             let code = match[1];
-            code = code.replace(/\{\{props\}\}/g, '');
+            code = applyConfiguratorDefaultsToCode(code, defaults);
             return code.trim();
           }
         } else if (codeValue.match(/^['"][\s\S]*?['"]$/)) {
@@ -302,12 +718,7 @@ export async function loadDemoCode(demoName: string, demosPath: string): Promise
           );
           if (varFunctionMatch) {
             let code = varFunctionMatch[1];
-            code = code.replace(/\$\{props\.gradientFrom[^}]*\}/g, 'cyan');
-            code = code.replace(/\$\{props\.gradientTo[^}]*\}/g, 'blue');
-            code = code.replace(/\$\{props\.gradientDegree[^}]*\}/g, '90');
-            code = code.replace(/\$\{props\.size[^}]*\}/g, 'md');
-            code = code.replace(/\$\{props\.position[^}]*\}/g, 'bottom');
-            code = code.replace(/\$\{props\.[^}]+\}/g, '');
+            code = applyConfiguratorDefaultsToCode(code, defaults);
             return code.trim();
           }
         }
