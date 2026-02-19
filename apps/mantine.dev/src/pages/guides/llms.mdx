@@ -3,7 +3,7 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.LLMDocumentation);
 
-# LLMs.txt
+# Mantine with LLMs
 
 Mantine provides LLM-friendly documentation to help AI tools like **Cursor**, **Windsurf**, **GitHub Copilot**, **ChatGPT**, and **Claude** understand and work with the Mantine UI library.
 
@@ -54,6 +54,83 @@ While Copilot doesn't directly support external documentation, you can:
 
 1. Include relevant documentation snippets in your comments
 2. Reference component names and props accurately for better suggestions
+
+## MCP server (experimental)
+
+Mantine also provides an MCP server package:
+
+- `@mantine/mcp-server`
+
+The server reads Mantine static MCP data published on `mantine.dev` and exposes tools that AI agents can call directly:
+
+- `list_items`
+- `get_item_doc`
+- `get_item_props`
+- `search_docs`
+
+### MCP server configuration
+
+Most MCP-compatible tools support adding servers with a JSON configuration. Use this server definition:
+
+```json
+{
+  "mcpServers": {
+    "mantine": {
+      "command": "npx",
+      "args": ["-y", "@mantine/mcp-server"]
+    }
+  }
+}
+```
+
+To use a different data source (for example, alpha docs or local static files), add env variables:
+
+```json
+{
+  "mcpServers": {
+    "mantine": {
+      "command": "npx",
+      "args": ["-y", "@mantine/mcp-server"],
+      "env": {
+        "MANTINE_MCP_DATA_URL": "https://mantine.dev/mcp"
+      }
+    }
+  }
+}
+```
+
+### Using MCP server with different tools
+
+#### Claude Desktop
+
+1. Open MCP settings in Claude Desktop
+2. Add the `mantine` server configuration above
+3. Start a new chat and ask for Mantine guidance, for example: "Find Button props and give me a usage example"
+
+#### Cursor
+
+1. Open Cursor MCP/server settings
+2. Add the same `mantine` server config
+3. Use agent mode and ask Mantine-specific questions – Cursor will call MCP tools automatically
+
+#### Windsurf
+
+1. Open Windsurf MCP/server settings
+2. Register `@mantine/mcp-server` with the same config
+3. Ask for component docs, props, and examples directly in chat
+
+#### Other MCP clients (VS Code/Cline and others)
+
+If the client supports custom MCP servers, add the same command and args:
+
+- command: `npx`
+- args: `["-y", "@mantine/mcp-server"]`
+
+Then use prompts like:
+
+- "List Mantine items related to input fields"
+- "Get full docs for Button"
+- "Search Mantine docs for color scheme and dark mode"
 
 ## Example prompts
 

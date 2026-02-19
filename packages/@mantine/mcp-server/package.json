@@ -1,0 +1,43 @@
+{
+  "name": "@mantine/mcp-server",
+  "version": "9.0.0-alpha.1",
+  "description": "MCP server for Mantine documentation",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "ai",
+    "docs",
+    "mantine",
+    "mcp",
+    "model-context-protocol",
+    "react"
+  ],
+  "sideEffects": false,
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "bin": {
+    "mantine-mcp-server": "./bin/mantine-mcp-server.cjs"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine/mcp-server"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

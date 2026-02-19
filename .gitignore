@@ -61,6 +61,7 @@ apps/mantine.dev/public/llms.txt
 apps/help.mantine.dev/next-env.d.ts
 apps/mantine.dev/public/llms-full.txt
 apps/mantine.dev/public/llms
+apps/mantine.dev/public/mcp
 .samples
 .changelog
 
