@@ -1,4 +1,5 @@
-import { createContextContainer, render, tests } from '@mantine-tests/core';
+import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
+import { Select } from '../Select';
 import { Modal, ModalProps, ModalStylesNames } from './Modal';
 import { ModalBody, ModalBodyProps } from './ModalBody';
 import { ModalCloseButton, ModalCloseButtonProps } from './ModalCloseButton';
@@ -95,6 +96,20 @@ describe('@mantine/core/Modal', () => {
     expect(Modal.Header).toBe(ModalHeader);
     expect(Modal.Title).toBe(ModalTitle);
     expect(Modal.CloseButton).toBe(ModalCloseButton);
+  });
+
+  it('renders accessible Select dropdown inside Modal dialog', async () => {
+    render(
+      <Modal {...defaultProps}>
+        <Select label="test-label" data={['test-1', 'test-2']} />
+      </Modal>
+    );
+
+    await userEvent.click(screen.getByRole('textbox'));
+    const dialog = screen.getByRole('dialog');
+    const listbox = screen.getByRole('listbox');
+
+    expect(dialog.contains(listbox)).toBe(true);
   });
 });
 
