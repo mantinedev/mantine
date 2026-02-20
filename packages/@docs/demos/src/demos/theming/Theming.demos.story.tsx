@@ -98,6 +98,11 @@ export const Demo_colorSchemeControl = {
   render: renderDemo(demos.colorSchemeControl),
 };
 
+export const Demo_colorSchemeSegmentedControl = {
+  name: '⭐ Demo: colorSchemeSegmentedControl',
+  render: renderDemo(demos.colorSchemeSegmentedControl),
+};
+
 export const Demo_defaultGradient = {
   name: '⭐ Demo: defaultGradient',
   render: renderDemo(demos.defaultGradient),
