@@ -1,5 +1,6 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { render, renderHook, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MantineProvider } from '@mantine/core';
 import { ContextModalProps } from '../context';
 import { ModalsProvider } from '../ModalsProvider';
@@ -158,5 +159,386 @@ describe('@mantine/modals/use-modals', () => {
     render(<Component />, { wrapper });
     expect(screen.getByText('Test title')).toBeInTheDocument();
     expect(screen.getByText('Children')).toBeInTheDocument();
+  });
+
+  describe('multiple modals with modal manager', () => {
+    it('maintains backward compatibility - single modal by default', () => {
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openModal({
+            title: 'Modal 1',
+            children: <div>Content 1</div>,
+            transitionProps: { duration: 0 },
+          });
+          modals.openModal({
+            title: 'Modal 2',
+            children: <div>Content 2</div>,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Only Modal 2 should be visible (Modal 1 replaced)
+      expect(screen.queryByText('Modal 1')).not.toBeInTheDocument();
+      expect(screen.getByText('Modal 2')).toBeInTheDocument();
+      expect(screen.getByText('Content 2')).toBeInTheDocument();
+    });
+
+    it('multiple modals when shouldReplaceExistingModal is false', () => {
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openModal({
+            title: 'Modal 1',
+            children: <div>Content 1</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openModal({
+            title: 'Modal 2',
+            children: <div>Content 2</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Both modals should be visible
+      expect(screen.getByText('Modal 1')).toBeInTheDocument();
+      expect(screen.getByText('Content 1')).toBeInTheDocument();
+      expect(screen.getByText('Modal 2')).toBeInTheDocument();
+      expect(screen.getByText('Content 2')).toBeInTheDocument();
+    });
+
+    it('stacks confirm modals', () => {
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openConfirmModal({
+            title: 'Confirm 1',
+            children: <div>Confirm Content 1</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openConfirmModal({
+            title: 'Confirm 2',
+            children: <div>Confirm Content 2</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Both confirm modals should be visible
+      expect(screen.getByText('Confirm 1')).toBeInTheDocument();
+      expect(screen.getByText('Confirm Content 1')).toBeInTheDocument();
+      expect(screen.getByText('Confirm 2')).toBeInTheDocument();
+      expect(screen.getByText('Confirm Content 2')).toBeInTheDocument();
+    });
+
+    it('stacks context modals', () => {
+      const ContextModal1 = ({ innerProps }: ContextModalProps<{ text: string }>) => (
+        <div>{innerProps.text}</div>
+      );
+      const ContextModal2 = ({ innerProps }: ContextModalProps<{ text: string }>) => (
+        <div>{innerProps.text}</div>
+      );
+
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider modals={{ modal1: ContextModal1, modal2: ContextModal2 }}>
+            {children}
+          </ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openContextModal('modal1', {
+            innerProps: { text: 'Context 1' },
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openContextModal('modal2', {
+            innerProps: { text: 'Context 2' },
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Both context modals should be visible
+      expect(screen.getByText('Context 1')).toBeInTheDocument();
+      expect(screen.getByText('Context 2')).toBeInTheDocument();
+    });
+
+    it('can mix different modal types in stack', () => {
+      const ContextModal = ({ innerProps }: ContextModalProps<{ text: string }>) => (
+        <div>{innerProps.text}</div>
+      );
+
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider modals={{ contextTest: ContextModal }}>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openModal({
+            title: 'Regular Modal',
+            children: <div>Regular Content</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openConfirmModal({
+            title: 'Confirm Modal',
+            children: <div>Confirm Content</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openContextModal('contextTest', {
+            innerProps: { text: 'Context Content' },
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // All three different types should be visible
+      expect(screen.getByText('Regular Modal')).toBeInTheDocument();
+      expect(screen.getByText('Regular Content')).toBeInTheDocument();
+      expect(screen.getByText('Confirm Modal')).toBeInTheDocument();
+      expect(screen.getByText('Confirm Content')).toBeInTheDocument();
+      expect(screen.getByText('Context Content')).toBeInTheDocument();
+    });
+  });
+
+  describe('escape key and focus trap behavior with stacked modals', () => {
+    it('closes modals appropriately with escape key when stacked', async () => {
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openModal({
+            title: 'Bottom Modal',
+            children: <div>Bottom Content</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openModal({
+            title: 'Top Modal',
+            children: <div>Top Content</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Both modals should be visible initially
+      expect(screen.getByText('Bottom Modal')).toBeInTheDocument();
+      expect(screen.getByText('Top Modal')).toBeInTheDocument();
+
+      // Press Escape - should only close topmost modal
+      await userEvent.keyboard('{Escape}');
+
+      // Bottom modal should remain, top modal should be closed
+      expect(screen.getByText('Bottom Modal')).toBeInTheDocument();
+      expect(screen.queryByText('Top Modal')).not.toBeInTheDocument();
+
+      // Press Escape - should close the remaining modal
+      await userEvent.keyboard('{Escape}');
+
+      expect(screen.getByText('Bottom Modal')).not.toBeInTheDocument();
+    });
+
+    it('respects closeOnEscape=false on topmost modal', async () => {
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openModal({
+            title: 'Bottom Modal',
+            children: <div>Bottom Content</div>,
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openModal({
+            title: 'Top Modal',
+            children: <div>Top Content</div>,
+            shouldReplaceExistingModal: false,
+            closeOnEscape: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Press Escape
+      await userEvent.keyboard('{Escape}');
+
+      // Both modals should still be visible (topmost has closeOnEscape=false)
+      expect(screen.getByText('Bottom Modal')).toBeInTheDocument();
+      expect(screen.getByText('Top Modal')).toBeInTheDocument();
+    });
+
+    it('only traps focus in the topmost modal', async () => {
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openModal({
+            title: 'Bottom Modal',
+            children: (
+              <div>
+                <button type="button">Bottom Button 1</button>
+                <button type="button">Bottom Button 2</button>
+              </div>
+            ),
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openModal({
+            title: 'Top Modal',
+            children: (
+              <div>
+                <button type="button">Top Button 1</button>
+                <button type="button">Top Button 2</button>
+              </div>
+            ),
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Tab through elements - focus should stay in top modal
+      await userEvent.tab();
+      expect(document.activeElement?.textContent).not.toBe('Bottom Button 1');
+      expect(document.activeElement?.textContent).not.toBe('Bottom Button 2');
+    });
+
+    it('moves focus trap to remaining modal after closing topmost', async () => {
+      const wrapper = ({ children }: any) => (
+        <MantineProvider>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
+      );
+
+      const Component = () => {
+        const modals = useModals();
+
+        useEffect(() => {
+          modals.openModal({
+            title: 'Bottom Modal',
+            children: (
+              <div>
+                <button type="button">Bottom Button</button>
+              </div>
+            ),
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+          modals.openModal({
+            title: 'Top Modal',
+            children: (
+              <div>
+                <button type="button">Top Button</button>
+              </div>
+            ),
+            shouldReplaceExistingModal: false,
+            transitionProps: { duration: 0 },
+          });
+        }, []);
+
+        return <div>Empty</div>;
+      };
+
+      render(<Component />, { wrapper });
+
+      // Close topmost modal
+      await userEvent.keyboard('{Escape}');
+
+      // Tab - focus should now be able to reach bottom modal's button
+      await userEvent.tab();
+      // The bottom modal should now have focus trap active
+      expect(screen.getByText('Bottom Modal')).toBeInTheDocument();
+      expect(screen.queryByText('Top Modal')).not.toBeInTheDocument();
+    });
   });
 });

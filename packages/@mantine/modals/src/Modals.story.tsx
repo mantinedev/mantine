@@ -273,3 +273,110 @@ export function UpdateExample() {
     </ModalsProvider>
   );
 }
+
+function MultipleModalsDemo() {
+  const modals = useModals();
+
+  const openMultipleModals = () => {
+    // Open first modal without replacing
+    modals.openModal({
+      title: 'First Modal',
+      children: (
+        <div>
+          <Text mb="md">
+            This is the first modal. Notice it stays open when you click the button below.
+          </Text>
+          <Button
+            onClick={() => {
+              // Open second modal on top
+              modals.openModal({
+                title: 'Second Modal',
+                children: (
+                  <div>
+                    <Text size="sm" mb="md">
+                      This is the second modal, stacked on top of the first one!
+                    </Text>
+                    <Button
+                      onClick={() => {
+                        // Open third modal on top
+                        modals.openModal({
+                          title: 'Third Modal',
+                          children: (
+                            <Text size="sm">Three modals stacked! Each has its own overlay.</Text>
+                          ),
+                          shouldReplaceExistingModal: false,
+                        });
+                      }}
+                    >
+                      Open Third Modal
+                    </Button>
+                  </div>
+                ),
+                shouldReplaceExistingModal: false,
+              });
+            }}
+          >
+            Open Second Modal (Stacked)
+          </Button>
+        </div>
+      ),
+      shouldReplaceExistingModal: false,
+    });
+  };
+
+  const openMixedModals = () => {
+    // Open regular modal
+    modals.openModal({
+      title: 'Step 1: Information',
+      children: (
+        <div>
+          <Text size="sm" mb="md">
+            This is a regular content modal.
+          </Text>
+          <Button
+            onClick={() => {
+              // Stack a confirm modal on top
+              modals.openConfirmModal({
+                title: 'Step 2: Confirm Action',
+                children: <Text size="sm">Do you want to proceed with this action?</Text>,
+                labels: { confirm: 'Yes, Continue', cancel: 'No, Go Back' },
+                onConfirm: () => {
+                  modals.openModal({
+                    title: 'Step 3: Complete',
+                    children: <Text size="sm">Action completed successfully!</Text>,
+                    shouldReplaceExistingModal: false,
+                  });
+                },
+                shouldReplaceExistingModal: false,
+              });
+            }}
+          >
+            Next Step
+          </Button>
+        </div>
+      ),
+      shouldReplaceExistingModal: false,
+    });
+  };
+
+  return (
+    <Group p={40}>
+      <Button onClick={openMultipleModals} color="blue">
+        Multiple Content Modals
+      </Button>
+      <Button onClick={openMixedModals} color="violet">
+        Confirmation modal opened within another modal
+      </Button>
+    </Group>
+  );
+}
+
+export function MultipleModals() {
+  return (
+    <ModalsProvider>
+      <MultipleModalsDemo />
+    </ModalsProvider>
+  );
+}
+
+MultipleModals.storyName = 'Multiple Modals (New Feature)';
