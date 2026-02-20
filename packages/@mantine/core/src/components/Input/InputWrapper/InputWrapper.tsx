@@ -34,18 +34,21 @@ import {
   InputLabelProps,
   InputLabelStylesNames,
 } from '../InputLabel/InputLabel';
+import { InputFloatingLabelCssVariables } from '../FloatingLabel/FloatingLabel';
 import { InputWrapperProvider } from '../InputWrapper.context';
 import { getInputOffsets } from './get-input-offsets/get-input-offsets';
 
 export type InputWrapperCssVariables = InputLabelCssVariables &
   InputErrorCssVariables &
-  InputDescriptionCssVariables;
+  InputDescriptionCssVariables &
+  InputFloatingLabelCssVariables;
 
 export type InputWrapperStylesNames =
   | 'root'
   | InputLabelStylesNames
   | InputDescriptionStylesNames
-  | InputErrorStylesNames;
+  | InputErrorStylesNames
+  | 'floatingLabel';
 
 export interface __InputWrapperProps {
   /** Contents of `Input.Label` component. If not set, label is not displayed. */
@@ -125,6 +128,14 @@ const varsResolver = createVarsResolver<InputWrapperFactory>((_, { size }) => ({
   description: {
     '--input-description-size':
       size === undefined ? undefined : `calc(${getFontSize(size)} - ${rem(2)})`,
+  },
+  floatingLabel: {
+    '--floating-label-color': undefined,
+    '--floating-label-floating-color': undefined,
+    '--floating-label-top': undefined,
+    '--floating-label-left': undefined,
+    '--floating-label-size': undefined,
+    '--floating-label-floating-offset': undefined,
   },
 }));
 
