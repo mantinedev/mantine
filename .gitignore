@@ -70,3 +70,4 @@ apps/mantine.dev/public/mcp
 claude/
 .claude/skills
 .agents/
+codex
