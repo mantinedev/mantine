@@ -79,6 +79,39 @@ export function ModalsStack() {
   );
 }
 
+export function CompoundModalsStack() {
+  const stack = useModalsStack(['simple', 'compound']);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => stack.open('simple')}>Open simple modal</Button>
+      <Modal.Stack>
+        <Modal {...stack.register('simple')} title="First modal" overlayProps={{ blur: 3 }}>
+          First modal
+          {content}
+          <Button onClick={() => stack.open('compound')} fullWidth mt="md">
+            Open compound modal
+          </Button>
+        </Modal>
+
+        <Modal.Root {...stack.register('compound')}>
+          <Modal.Overlay blur={3} />
+          <Modal.Content>
+            <Modal.Header>
+              <Modal.Title>Compound modal</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Button onClick={() => stack.closeAll()} fullWidth mt="md">
+                Close all
+              </Button>
+            </Modal.Body>
+          </Modal.Content>
+        </Modal.Root>
+      </Modal.Stack>
+    </div>
+  );
+}
+
 export function WithSelect() {
   const [opened, { open, close }] = useDisclosure(true);
   return (
