@@ -13,6 +13,7 @@ import { HomePageGetStarted } from './HomePageGetStarted/HomePageGetStarted';
 import { HomePageHooks } from './HomePageHooks/HomePageHooks';
 import { HomePageJoin } from './HomePageJoin/HomePageJoin';
 import { HomePageJumbotron } from './HomePageJumbotron/HomePageJumbotron';
+import { HomePageLLM } from './HomePageLLM/HomePageLLM';
 import { HomePageSponsors } from './HomePageSponsors/HomePageSponsors';
 import { HomePageStyles } from './HomePageStyles/HomePageStyles';
 import { HomePageUI } from './HomePageUI/HomePageUI';
@@ -26,6 +27,7 @@ export function HomePage() {
       <div className={classes.root}>
         <HomePageJumbotron />
         <HomePageSponsors />
+        <HomePageLLM />
         <HomePageComponents />
         <HomePageHooks />
         <HomePageStyles />
