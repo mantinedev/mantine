@@ -83,6 +83,7 @@
 
 .reviewAuthor {
   font-weight: 600;
+  color: var(--mantine-color-bright);
 
   @mixin hover {
     text-decoration: underline;
