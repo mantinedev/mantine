@@ -55,6 +55,39 @@ While Copilot doesn't directly support external documentation, you can:
 1. Include relevant documentation snippets in your comments
 2. Reference component names and props accurately for better suggestions
 
+## Skills
+
+Mantine also provides skills for AI coding agents in the
+[`mantinedev/skills`](https://github.com/mantinedev/skills) repository.
+
+Currently available skills:
+
+- `mantine-combobox` – Build custom select/autocomplete/multiselect components with `Combobox`
+- `mantine-form` – Build forms with `@mantine/form`, validation, nested fields, and form context
+- `mantine-custom-components` – Create custom components with Mantine factory APIs and Styles API
+
+### Install skills
+
+Install each skill from the repository:
+
+```bash
+npx skills add https://github.com/mantinedev/skills --skill mantine-combobox
+npx skills add https://github.com/mantinedev/skills --skill mantine-form
+npx skills add https://github.com/mantinedev/skills --skill mantine-custom-components
+```
+
+### Use skills
+
+In your AI prompt, explicitly tell the agent to use one of the installed skills.
+
+Examples:
+
+- "Use `$mantine-form` and build a profile form with validation and nested fields"
+- "Use `$mantine-combobox` and create a searchable multi-select with custom option rendering"
+- "Use `$mantine-custom-components` and scaffold a polymorphic component with Styles API support"
+
+If your agent does not support `$skill-name` mentions, reference the skill name in plain text and ask the agent to follow it.
+
 ## MCP server (experimental)
 
 Mantine also provides an MCP server package:
