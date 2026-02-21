@@ -33,6 +33,8 @@ interface PageFileInfo {
   content: string;
 }
 
+const rootPackageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
+
 const config: CompilerConfig = {
   rootDir: process.cwd(),
   siteUrl: process.env.LLM_DOCS_SITE_URL || 'https://mantine.dev',
@@ -960,6 +962,7 @@ class MantineLLMCompiler {
 
     result = this.removeSectionsWithPlaceholder(result, 'REMOVESTYLESAPIDEMO::');
     result = this.removeSectionsByTitle(result, ['Migrate with LLM agents']);
+    result = this.replaceAllLiteral(result, '{packageJson.version}', rootPackageJson.version);
 
     // Replace InstallScript placeholders with installation instructions
     // Also remove any duplicate "After installation" text that follows
