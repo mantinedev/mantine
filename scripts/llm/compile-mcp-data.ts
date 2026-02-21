@@ -237,7 +237,9 @@ async function compile() {
       props,
     };
 
-    await fs.writeJSON(path.join(componentsDir, componentDataFileName), componentData, { spaces: 2 });
+    await fs.writeJSON(path.join(componentsDir, componentDataFileName), componentData, {
+      spaces: 2,
+    });
     index.push(item);
   }
 

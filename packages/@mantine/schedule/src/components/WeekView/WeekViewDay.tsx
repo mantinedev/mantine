@@ -185,9 +185,7 @@ export function WeekViewDay({
             ? (e) => onDaySlotsDragOver?.(e, String(day), dayIndex)
             : undefined
         }
-        onDragLeave={
-          withEventsDragAndDrop && mode !== 'static' ? onDaySlotsDragLeave : undefined
-        }
+        onDragLeave={withEventsDragAndDrop && mode !== 'static' ? onDaySlotsDragLeave : undefined}
         onDrop={
           withEventsDragAndDrop && mode !== 'static'
             ? (e) => onDaySlotsDrop?.(e, String(day), dayIndex)

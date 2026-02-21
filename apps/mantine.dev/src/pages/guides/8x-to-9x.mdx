@@ -1,10 +1,32 @@
 import { PopoverDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
+import packageJson from '../../../../../package.json';
 
 export default Layout(MDX_DATA.EightToNine);
 
 # 8.x → 9.x migration guide
+
+## Migrate with LLM agents
+
+You can use LLM agents to assist with the migration from 8.x to 9.x.
+The LLM documentation includes all breaking changes and migration steps
+in a format optimized for AI coding tools. Copy the link to the md documentation
+file and ask your AI agent to perform the migration for you.
+
+<LlmButton href="/llms/guides-8x-to-9x.md" />
+
+## Prerequisites
+
+Mantine 9.x requires React 19 or later. If your project uses an older React version,
+you need to update it before migrating to Mantine 9.x. If you cannot update React to 19+
+yet, you can continue using Mantine 8.x until you are ready to update React and migrate to Mantine 9.x.
+
+## Update dependencies
+
+- Update all `@mantine/*` packages to version {packageJson.version}
+- If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
+- If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
 ## use-form TransformValues type
 

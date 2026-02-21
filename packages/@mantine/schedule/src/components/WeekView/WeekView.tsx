@@ -484,44 +484,41 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const weekdaysRef = useRef<HTMLButtonElement[]>([]);
   const firstSlotIndex = { dayIndex: 0, slotIndex: 0 };
 
-  const getSlotIndexFromDragPoint = useCallback(
-    (event: React.DragEvent, dayIndex: number) => {
-      const daySlots = slotsRef.current[dayIndex] ?? [];
-      const slotIndex = daySlots.findIndex((slotNode) => {
-        if (!slotNode) {
-          return false;
-        }
-
-        const rect = slotNode.getBoundingClientRect();
-        return event.clientY >= rect.top && event.clientY <= rect.bottom;
-      });
-
-      if (slotIndex >= 0) {
-        return slotIndex;
+  const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, dayIndex: number) => {
+    const daySlots = slotsRef.current[dayIndex] ?? [];
+    const slotIndex = daySlots.findIndex((slotNode) => {
+      if (!slotNode) {
+        return false;
       }
 
-      const firstSlot = daySlots[0];
-      const lastSlot = daySlots[daySlots.length - 1];
+      const rect = slotNode.getBoundingClientRect();
+      return event.clientY >= rect.top && event.clientY <= rect.bottom;
+    });
 
-      if (!firstSlot || !lastSlot) {
-        return null;
-      }
+    if (slotIndex >= 0) {
+      return slotIndex;
+    }
 
-      const firstRect = firstSlot.getBoundingClientRect();
-      const lastRect = lastSlot.getBoundingClientRect();
+    const firstSlot = daySlots[0];
+    const lastSlot = daySlots[daySlots.length - 1];
 
-      if (event.clientY < firstRect.top) {
-        return 0;
-      }
-
-      if (event.clientY > lastRect.bottom) {
-        return daySlots.length - 1;
-      }
-
+    if (!firstSlot || !lastSlot) {
       return null;
-    },
-    []
-  );
+    }
+
+    const firstRect = firstSlot.getBoundingClientRect();
+    const lastRect = lastSlot.getBoundingClientRect();
+
+    if (event.clientY < firstRect.top) {
+      return 0;
+    }
+
+    if (event.clientY > lastRect.bottom) {
+      return daySlots.length - 1;
+    }
+
+    return null;
+  }, []);
 
   const handleSlotKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,

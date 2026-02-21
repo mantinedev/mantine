@@ -7,7 +7,10 @@ type ControlPrimitive = string | number | boolean | null;
 const sharedControlExpressions = new Map<string, string>();
 let sharedControlsLoaded = false;
 
-function readBalancedExpression(source: string, startIndex: number): { expression: string; end: number } {
+function readBalancedExpression(
+  source: string,
+  startIndex: number
+): { expression: string; end: number } {
   let i = startIndex;
   let depthParen = 0;
   let depthBracket = 0;
@@ -158,7 +161,9 @@ function parsePrimitiveLiteral(raw: string): ControlPrimitive | undefined {
   return undefined;
 }
 
-function parseControlObject(controlExpression: string): { prop: string; initialValue: ControlPrimitive } | null {
+function parseControlObject(
+  controlExpression: string
+): { prop: string; initialValue: ControlPrimitive } | null {
   const propMatch = controlExpression.match(/prop:\s*(['"`])([\w$.-]+)\1/);
   const quotedInitialValueMatch = controlExpression.match(/initialValue:\s*(['"`])([\s\S]*?)\1/);
   const primitiveInitialValueMatch = controlExpression.match(
@@ -259,7 +264,10 @@ async function extractConfiguratorDefaults(
 
   const importedExpressionCache = new Map<string, string>();
 
-  async function resolveImportedExpression(importPath: string, importedName: string): Promise<string | null> {
+  async function resolveImportedExpression(
+    importPath: string,
+    importedName: string
+  ): Promise<string | null> {
     const cacheKey = `${importPath}::${importedName}`;
     if (importedExpressionCache.has(cacheKey)) {
       return importedExpressionCache.get(cacheKey) || null;
@@ -309,7 +317,10 @@ async function extractConfiguratorDefaults(
     return null;
   }
 
-  async function resolveControlsExpression(name: string, visited = new Set<string>()): Promise<string | null> {
+  async function resolveControlsExpression(
+    name: string,
+    visited = new Set<string>()
+  ): Promise<string | null> {
     if (visited.has(name)) {
       return null;
     }
@@ -325,7 +336,10 @@ async function extractConfiguratorDefaults(
 
     const importInfo = importMap.get(name);
     if (importInfo) {
-      const importedExpr = await resolveImportedExpression(importInfo.importPath, importInfo.importedName);
+      const importedExpr = await resolveImportedExpression(
+        importInfo.importPath,
+        importInfo.importedName
+      );
       if (importedExpr) {
         return importedExpr;
       }
@@ -401,7 +415,10 @@ async function extractConfiguratorDefaults(
   return defaults;
 }
 
-function applyConfiguratorDefaultsToCode(code: string, defaults: Map<string, ControlPrimitive>): string {
+function applyConfiguratorDefaultsToCode(
+  code: string,
+  defaults: Map<string, ControlPrimitive>
+): string {
   if (defaults.size === 0) {
     return code.replace(/\{\{props\}\}/g, '');
   }

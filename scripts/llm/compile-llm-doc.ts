@@ -772,7 +772,9 @@ class MantineLLMCompiler {
                 'WrapperProps',
               ].includes(node.name)
             ) {
-              if (['AutoContrast', 'GetElementRef', 'Gradient', 'Polymorphic'].includes(node.name)) {
+              if (
+                ['AutoContrast', 'GetElementRef', 'Gradient', 'Polymorphic'].includes(node.name)
+              ) {
                 if (parent && parent.children && index !== undefined) {
                   parent.children.splice(index, 1);
                   return index;
@@ -825,8 +827,7 @@ class MantineLLMCompiler {
                   value: `STYLESAPIPLACEHOLDER::${stylesComponent}::END`,
                 },
               ];
-            }
-            else if (node.name === 'VersionsList') {
+            } else if (node.name === 'VersionsList') {
               node.type = 'paragraph';
               node.children = [
                 {
@@ -842,6 +843,7 @@ class MantineLLMCompiler {
                 'DataTable',
                 'PropsTable',
                 'SponsorButton',
+                'LlmButton',
                 'Video',
                 'ExamplesButton',
                 'ComboboxDisclaimer',
@@ -925,25 +927,12 @@ class MantineLLMCompiler {
           // For code highlighting demos, show the example output first
           const exampleCode = exampleCodeMatch[1].trim();
 
-          demoSection = [
-            '',
-            '```tsx',
-            exampleCode,
-            '```',
-            '',
-            '```tsx',
-            demoCode,
-            '```',
-            '',
-          ].join('\n');
+          demoSection = ['', '```tsx', exampleCode, '```', '', '```tsx', demoCode, '```', ''].join(
+            '\n'
+          );
         } else {
           // Regular demo
-          demoSection = [
-            '```tsx',
-            demoCode,
-            '```',
-            '',
-          ].join('\n');
+          demoSection = ['```tsx', demoCode, '```', ''].join('\n');
         }
 
         const placeholder = `DEMOPLACEHOLDER::${demo.name}::END`;
@@ -970,6 +959,7 @@ class MantineLLMCompiler {
     }
 
     result = this.removeSectionsWithPlaceholder(result, 'REMOVESTYLESAPIDEMO::');
+    result = this.removeSectionsByTitle(result, ['Migrate with LLM agents']);
 
     // Replace InstallScript placeholders with installation instructions
     // Also remove any duplicate "After installation" text that follows
@@ -1137,6 +1127,33 @@ import '${trimmedPkg}/styles.css';`;
     }
 
     return lines.filter((line) => !line.includes(placeholderPrefix)).join('\n');
+  }
+
+  private removeSectionsByTitle(content: string, titles: string[]): string {
+    const lines = content.split('\n');
+    const result: string[] = [];
+    let skipping = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const headingMatch = lines[i].match(/^(#{2,})\s+(.+)/);
+
+      if (headingMatch) {
+        if (titles.includes(headingMatch[2].trim())) {
+          skipping = true;
+          continue;
+        }
+
+        if (skipping) {
+          skipping = false;
+        }
+      }
+
+      if (!skipping) {
+        result.push(lines[i]);
+      }
+    }
+
+    return result.join('\n');
   }
 
   private async resolveDemoFilePath(demoName: string): Promise<string | null> {

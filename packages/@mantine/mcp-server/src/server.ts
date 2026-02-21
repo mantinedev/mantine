@@ -137,7 +137,9 @@ function writeError(id: string | number | null, code: number, message: string) {
 
 function readContentLength(rawHeaders: string) {
   const lines = rawHeaders.split('\r\n');
-  const contentLengthHeader = lines.find((line) => line.toLowerCase().startsWith('content-length:'));
+  const contentLengthHeader = lines.find((line) =>
+    line.toLowerCase().startsWith('content-length:')
+  );
 
   if (!contentLengthHeader) {
     return null;

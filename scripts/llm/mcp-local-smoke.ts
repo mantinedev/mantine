@@ -69,11 +69,15 @@ function parseFrames(buffer: Buffer<ArrayBufferLike>): {
 
 async function runSmokeTest() {
   if (!fs.existsSync(path.join(PUBLIC_DIR, 'mcp/index.json'))) {
-    throw new Error('Missing apps/mantine.dev/public/mcp/index.json. Run `npm run compile:mcp` first.');
+    throw new Error(
+      'Missing apps/mantine.dev/public/mcp/index.json. Run `npm run compile:mcp` first.'
+    );
   }
 
   if (!fs.existsSync(MCP_ENTRY)) {
-    throw new Error('Missing packages/@mantine/mcp-server/cjs/index.cjs. Run `yarn exec tsx scripts/build mcp-server` first.');
+    throw new Error(
+      'Missing packages/@mantine/mcp-server/cjs/index.cjs. Run `yarn exec tsx scripts/build mcp-server` first.'
+    );
   }
 
   const staticServer = http.createServer((req, res) => {

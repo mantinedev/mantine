@@ -330,43 +330,40 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
   const slotsRef = useRef<HTMLButtonElement[]>([]);
 
-  const getSlotIndexFromDragPoint = useCallback(
-    (event: React.DragEvent) => {
-      const slotIndex = slotsRef.current.findIndex((slotNode) => {
-        if (!slotNode) {
-          return false;
-        }
-
-        const rect = slotNode.getBoundingClientRect();
-        return event.clientY >= rect.top && event.clientY <= rect.bottom;
-      });
-
-      if (slotIndex >= 0) {
-        return slotIndex;
+  const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent) => {
+    const slotIndex = slotsRef.current.findIndex((slotNode) => {
+      if (!slotNode) {
+        return false;
       }
 
-      const firstSlot = slotsRef.current[0];
-      const lastSlot = slotsRef.current[slotsRef.current.length - 1];
+      const rect = slotNode.getBoundingClientRect();
+      return event.clientY >= rect.top && event.clientY <= rect.bottom;
+    });
 
-      if (!firstSlot || !lastSlot) {
-        return null;
-      }
+    if (slotIndex >= 0) {
+      return slotIndex;
+    }
 
-      const firstRect = firstSlot.getBoundingClientRect();
-      const lastRect = lastSlot.getBoundingClientRect();
+    const firstSlot = slotsRef.current[0];
+    const lastSlot = slotsRef.current[slotsRef.current.length - 1];
 
-      if (event.clientY < firstRect.top) {
-        return 0;
-      }
-
-      if (event.clientY > lastRect.bottom) {
-        return slotsRef.current.length - 1;
-      }
-
+    if (!firstSlot || !lastSlot) {
       return null;
-    },
-    []
-  );
+    }
+
+    const firstRect = firstSlot.getBoundingClientRect();
+    const lastRect = lastSlot.getBoundingClientRect();
+
+    if (event.clientY < firstRect.top) {
+      return 0;
+    }
+
+    if (event.clientY > lastRect.bottom) {
+      return slotsRef.current.length - 1;
+    }
+
+    return null;
+  }, []);
 
   const handleSlotKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, slotIndex: number) => {
     const direction = event.key;
