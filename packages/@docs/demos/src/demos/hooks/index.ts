@@ -58,6 +58,8 @@ export { useStateHistoryUsage } from './use-state-history.demo.usage';
 export { useFetchUsage } from './use-fetch.demo.usage';
 export { useMapUsage } from './use-map.demo.usage';
 export { useSetUsage } from './use-set.demo.usage';
+export { useDebouncedCallbackLeading } from './use-debounced-callback.demo.leading';
+export { useDebouncedCallbackTrailing } from './use-debounced-callback.demo.trailing';
 export { useDebouncedCallbackUsage } from './use-debounced-callback.demo.usage';
 export { useDebouncedCallbackUnmount } from './use-debounced-callback.demo.unmount';
 export { useThrottledStateUsage } from './use-throttled-state.demo.usage';

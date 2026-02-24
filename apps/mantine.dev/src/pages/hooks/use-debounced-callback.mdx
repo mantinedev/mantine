@@ -11,6 +11,19 @@ delaying its execution until a specified time has elapsed since the last invocat
 
 <Demo data={HooksDemos.useDebouncedCallbackUsage} />
 
+## leading option
+
+To execute the callback immediately on the first call and again after the specified delay set `leading:true`.
+
+<Demo data={HooksDemos.useDebouncedCallbackLeading} />
+
+## trailing option
+
+To execute callback once immediately on the first call, ignoring subsequent calls until the specified delay has passed, set `leading:true, trailing: false`.
+Best for preventing double-submissions on buttons.
+
+<Demo data={HooksDemos.useDebouncedCallbackTrailing} />
+
 ## flushOnUnmount option
 
 By default, the callback is not fired when the component unmounts.
@@ -44,6 +57,8 @@ callback.flush(); // immediately executes the pending callback
 interface UseDebouncedCallbackOptions {
   delay: number;
   flushOnUnmount?: boolean;
+  leading?: boolean;
+  trailing?: boolean;
 }
 
 type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> = ((

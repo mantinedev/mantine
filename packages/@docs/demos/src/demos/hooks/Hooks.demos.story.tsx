@@ -303,6 +303,16 @@ export const Demo_useSetUsage = {
   render: renderDemo(demos.useSetUsage),
 };
 
+export const Demo_useDebouncedCallbackLeading = {
+  name: '⭐ Demo: useDebouncedCallbackLeading',
+  render: renderDemo(demos.useDebouncedCallbackLeading),
+};
+
+export const Demo_useDebouncedCallbackTrailing = {
+  name: '⭐ Demo: useDebouncedCallbackTrailing',
+  render: renderDemo(demos.useDebouncedCallbackTrailing),
+};
+
 export const Demo_useDebouncedCallbackUsage = {
   name: '⭐ Demo: useDebouncedCallbackUsage',
   render: renderDemo(demos.useDebouncedCallbackUsage),
