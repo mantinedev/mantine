@@ -31,7 +31,7 @@ function Demo() {
     setLoading(true);
     setSearchResults(await getSearchResults(query));
     setLoading(false);
-  }, {delay: 500, leading: true});
+  }, { delay: 500, leading: true });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.currentTarget.value);
@@ -79,7 +79,7 @@ function Demo() {
     setLoading(true);
     setSearchResults(await getSearchResults(query));
     setLoading(false);
-  }, {delay: 500, leading: true});
+  }, { delay: 500, leading: true });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.currentTarget.value);

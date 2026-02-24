@@ -32,11 +32,11 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         const isFirstCall = currentCallback._isFirstCall;
         currentCallback._isFirstCall = false;
 
-        const clearTimeoutAndLeadingRef = ()=>{
+        const clearTimeoutAndLeadingRef = () => {
           window.clearTimeout(debounceTimerRef.current);
           debounceTimerRef.current = 0;
           currentCallback._isFirstCall = true;
-        }
+        };
 
         const flush = () => {
           if (debounceTimerRef.current !== 0) {
