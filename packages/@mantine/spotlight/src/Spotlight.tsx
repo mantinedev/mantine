@@ -137,7 +137,9 @@ export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
       {filteredActions.length > 0 && (
         <SpotlightActionsList {...(scrollAreaProps as any)}>{filteredActions}</SpotlightActionsList>
       )}
-      {filteredActions.length === 0 && nothingFound && <SpotlightEmpty>{nothingFound}</SpotlightEmpty>}
+      {filteredActions.length === 0 && nothingFound && (
+        <SpotlightEmpty>{nothingFound}</SpotlightEmpty>
+      )}
     </SpotlightRoot>
   );
 });
