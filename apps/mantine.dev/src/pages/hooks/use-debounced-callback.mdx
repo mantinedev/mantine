@@ -19,8 +19,8 @@ To execute the callback immediately on the first call and again after the specif
 
 ## trailing option
 
-To execute callback once immediately on the first call, ignoring subsequent calls until the specified delay has passed, set `leading:true, trailing: false`.
-Best for preventing double-submissions on buttons.
+By default, `trailing` is `true`, meaning the callback executes after the delay. When combined with `leading: true`, the callback executes both immediately and after the delay, unless `trailing: false` is specified.
+To execute callback once immediately on the first call, ignoring subsequent calls until the specified delay has passed, set `leading:true, trailing: false`. This disables the trailing execution and is best for preventing double-submissions on buttons.
 
 <Demo data={HooksDemos.useDebouncedCallbackTrailing} />
 
