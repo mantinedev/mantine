@@ -18,7 +18,7 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
 ) {
   const { delay, flushOnUnmount, leading, trailing } =
     typeof options === 'number'
-      ? { delay: options, flushOnUnmount: false, leading: false, trailing: true }
+      ? { delay: options, flushOnUnmount: false, leading: false, trailing: false }
       : options;
 
   const handleCallback = useCallbackRef(callback);
@@ -53,10 +53,13 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
             handleCallback(...args);
           }
 
-          if (!(trailing ?? true)) {
+          if (!(trailing ?? false)) {
             debounceTimerRef.current = window.setTimeout(clearTimeoutAndLeadingRef, delay);
             return;
           }
+        } else if (!(trailing ?? false)) {
+          // Neither leading nor trailing execution is desired (Dead Zone)
+          return;
         }
 
         debounceTimerRef.current = window.setTimeout(flush, delay);
