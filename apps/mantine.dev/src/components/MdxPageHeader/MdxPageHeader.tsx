@@ -59,7 +59,7 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
           <LinkItem
             label="LLM docs"
             icon={<RobotIcon size={14} />}
-            link={`https://mantine.dev/llms/${meta.slug.slice(1).replace(/\//g, '-')}.md`}
+            link={`/llms/${meta.slug.slice(1).replace(/\//g, '-')}.md`}
           >
             LLM documentation
           </LinkItem>
@@ -89,7 +89,7 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
 
         {meta.package && (
           <LinkItem
-            label="PackageIcon"
+            label="Package"
             icon={<NpmIcon size={14} />}
             link={`https://www.npmjs.com/package/${meta.package}`}
           >
