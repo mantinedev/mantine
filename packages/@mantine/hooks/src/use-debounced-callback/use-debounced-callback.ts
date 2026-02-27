@@ -5,6 +5,7 @@ export interface UseDebouncedCallbackOptions {
   delay: number;
   flushOnUnmount?: boolean;
   leading?: boolean;
+  trailing?: boolean;
 }
 
 export type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> = ((
@@ -15,9 +16,9 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
   options: number | UseDebouncedCallbackOptions
 ) {
-  const { delay, flushOnUnmount, leading } =
+  const { delay, flushOnUnmount, leading, trailing } =
     typeof options === 'number'
-      ? { delay: options, flushOnUnmount: false, leading: false }
+      ? { delay: options, flushOnUnmount: false, leading: false, trailing: true }
       : options;
 
   const handleCallback = useCallbackRef(callback);
@@ -31,57 +32,11 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         const isFirstCall = currentCallback._isFirstCall;
         currentCallback._isFirstCall = false;
 
-        function clearTimeoutAndLeadingRef() {
+        const clearTimeoutAndLeadingRef = () => {
           window.clearTimeout(debounceTimerRef.current);
           debounceTimerRef.current = 0;
           currentCallback._isFirstCall = true;
-        }
-
-        if (leading && isFirstCall) {
-          handleCallback(...args);
-
-          const resetLeadingState = () => {
-            clearTimeoutAndLeadingRef();
-          };
-
-          const flush = () => {
-            if (debounceTimerRef.current !== 0) {
-              clearTimeoutAndLeadingRef();
-              handleCallback(...args);
-            }
-          };
-
-          const cancel = () => {
-            clearTimeoutAndLeadingRef();
-          };
-
-          currentCallback.flush = flush;
-          currentCallback.cancel = cancel;
-          debounceTimerRef.current = window.setTimeout(resetLeadingState, delay);
-          return;
-        }
-
-        if (leading && !isFirstCall) {
-          const flush = () => {
-            if (debounceTimerRef.current !== 0) {
-              clearTimeoutAndLeadingRef();
-              handleCallback(...args);
-            }
-          };
-
-          const cancel = () => {
-            clearTimeoutAndLeadingRef();
-          };
-
-          currentCallback.flush = flush;
-          currentCallback.cancel = cancel;
-
-          const resetLeadingState = () => {
-            clearTimeoutAndLeadingRef();
-          };
-          debounceTimerRef.current = window.setTimeout(resetLeadingState, delay);
-          return;
-        }
+        };
 
         const flush = () => {
           if (debounceTimerRef.current !== 0) {
@@ -90,12 +45,23 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
           }
         };
 
-        const cancel = () => {
-          clearTimeoutAndLeadingRef();
-        };
-
         currentCallback.flush = flush;
-        currentCallback.cancel = cancel;
+        currentCallback.cancel = clearTimeoutAndLeadingRef;
+
+        if (leading) {
+          if (isFirstCall) {
+            handleCallback(...args);
+          }
+
+          if (!(trailing ?? true)) {
+            debounceTimerRef.current = window.setTimeout(clearTimeoutAndLeadingRef, delay);
+            return;
+          }
+        } else if (!(trailing ?? true)) {
+          // Neither leading nor trailing execution is desired (Dead Zone)
+          return;
+        }
+
         debounceTimerRef.current = window.setTimeout(flush, delay);
       },
       {
@@ -105,7 +71,7 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
       }
     );
     return currentCallback;
-  }, [handleCallback, delay, leading]);
+  }, [handleCallback, delay, leading, trailing]);
 
   useEffect(
     () => () => {
@@ -119,9 +85,4 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   );
 
   return lastCallback;
-}
-
-export namespace useDebouncedCallback {
-  export type Options = UseDebouncedCallbackOptions;
-  export type ReturnValue<T extends (...args: any[]) => any> = UseDebouncedCallbackReturnValue<T>;
 }

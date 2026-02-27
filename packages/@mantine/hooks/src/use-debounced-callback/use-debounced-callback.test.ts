@@ -174,7 +174,7 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).not.toHaveBeenCalled();
 
     jest.advanceTimersByTime(100);
-    expect(callback).not.toHaveBeenCalled(); // Fixed: no trailing call expected
+    expect(callback).toHaveBeenCalledTimes(1);
   });
 
   it('resets leading after delay with leading=true', () => {
@@ -190,16 +190,12 @@ describe('@mantine/hooks/use-debounced-callback', () => {
 
     // A second call during delay period should be ignored
     result.current('b');
-    expect(callback).toHaveBeenCalledTimes(1); // Still only 'a'
+    expect(callback).toHaveBeenCalledTimes(1);
 
-    // After delay, no trailing execution should happen
+    // After delay, trailing execution should happen
     jest.advanceTimersByTime(100);
-    expect(callback).toHaveBeenCalledTimes(1); // Still only 'a'
-
-    // After delay has passed, leading state should reset - next call fires immediately
-    result.current('c');
     expect(callback).toHaveBeenCalledTimes(2);
-    expect(callback).toHaveBeenNthCalledWith(2, 'c');
+    expect(callback).toHaveBeenNthCalledWith(2, 'b');
   });
 
   it('does not call on leading edge if leading changes from true to false', () => {
@@ -225,14 +221,12 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).toHaveBeenCalledTimes(1);
     rerender({ delay: 200 });
     result.current(2);
-    expect(callback).toHaveBeenCalledTimes(2); // Leading call
+    expect(callback).toHaveBeenCalledTimes(2);
 
     result.current(3);
     expect(callback).toHaveBeenCalledTimes(2);
-    jest.advanceTimersByTime(100);
-    expect(callback).toHaveBeenCalledTimes(2);
-    jest.advanceTimersByTime(100);
-    expect(callback).toHaveBeenCalledTimes(2);
+    jest.advanceTimersByTime(200);
+    expect(callback).toHaveBeenCalledTimes(3);
   });
 
   it('can cancel debounced callback', () => {
@@ -334,10 +328,10 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).toHaveBeenCalledWith(2);
   });
 
-  it('leading=true should suppress trailing execution', () => {
+  it('leading=true, trailing=false should suppress trailing execution', () => {
     const callback = jest.fn();
     const { result } = renderHook(() =>
-      useDebouncedCallback(callback, { delay: 100, leading: true })
+      useDebouncedCallback(callback, { delay: 100, leading: true, trailing: false })
     );
     result.current('first');
     expect(callback).toHaveBeenCalledTimes(1);
