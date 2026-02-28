@@ -1,5 +1,5 @@
-import TextareaAutosize from 'react-textarea-autosize';
 import { useEffect } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import {
   BoxProps,
   ElementProps,
