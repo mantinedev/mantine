@@ -15,14 +15,14 @@ export const NotificationContainer = forwardRef<HTMLDivElement, NotificationCont
     const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
     const autoCloseTimeout = useRef<number>(-1);
 
-    const cancelAutoClose = () => window.clearTimeout(autoCloseTimeout.current);
+    const cancelAutoCloseTimer = () => window.clearTimeout(autoCloseTimeout.current);
 
     const handleHide = () => {
       onHide(data.id!);
-      cancelAutoClose();
+      cancelAutoCloseTimer();
     };
 
-    const handleAutoClose = () => {
+    const setAutoCloseTimer = () => {
       if (typeof autoCloseDuration === 'number') {
         autoCloseTimeout.current = window.setTimeout(handleHide, autoCloseDuration);
       }
@@ -33,8 +33,8 @@ export const NotificationContainer = forwardRef<HTMLDivElement, NotificationCont
     }, []);
 
     useEffect(() => {
-      handleAutoClose();
-      return cancelAutoClose;
+      setAutoCloseTimer();
+      return cancelAutoCloseTimer;
     }, [autoCloseDuration]);
 
     return (
@@ -43,8 +43,8 @@ export const NotificationContainer = forwardRef<HTMLDivElement, NotificationCont
         {...notificationProps}
         onClose={handleHide}
         ref={ref}
-        onMouseEnter={cancelAutoClose}
-        onMouseLeave={handleAutoClose}
+        onMouseEnter={cancelAutoCloseTimer}
+        onMouseLeave={setAutoCloseTimer}
       >
         {message}
       </Notification>
