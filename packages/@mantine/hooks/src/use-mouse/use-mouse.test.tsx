@@ -35,8 +35,8 @@ describe('@mantine/hook/use-mouse', () => {
       bubbles: true,
     }) as MouseEvent & { pageX: number; pageY: number };
 
-    customEvent.pageX = 123;
-    customEvent.pageY = 456;
+    Object.defineProperty(customEvent, 'pageX', { value: 123 });
+    Object.defineProperty(customEvent, 'pageY', { value: 456 });
 
     fireEvent(target, customEvent);
 
