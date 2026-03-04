@@ -278,8 +278,9 @@ export function useForm<
 
   const getInputProps: GetInputProps<Values> = (
     path,
-    { type = 'input', withError = true, withFocus = true, ...otherOptions } = {}
+    { type = 'input', withError = true, withFocus, ...otherOptions } = {}
   ) => {
+    const _withFocus = withFocus ?? type !== 'radio';
     const onChange = getInputOnChange((value) =>
       setFieldValue(path, value as any, { forceUpdate: false })
     );
@@ -306,7 +307,7 @@ export function useForm<
       );
     }
 
-    if (withFocus) {
+    if (_withFocus) {
       payload.onFocus = () => $status.setFieldTouched(path, true);
       payload.onBlur = () => {
         if (shouldValidateOnChange(path, validateInputOnBlur)) {
@@ -320,7 +321,7 @@ export function useForm<
       enhanceGetInputProps?.({
         inputProps: payload,
         field: path,
-        options: { type, withError, withFocus, ...otherOptions },
+        options: { type, withError, withFocus: _withFocus, ...otherOptions },
         form: form as any,
       })
     );
