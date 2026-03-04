@@ -216,6 +216,16 @@ export function OnBottomReached() {
   );
 }
 
+export function StartScrollPosition() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <ScrollArea h={200} startScrollPosition={{ y: 200 }}>
+        <div style={{ width: 600 }}>{content}</div>
+      </ScrollArea>
+    </div>
+  );
+}
+
 export function PillGroupIssue() {
   const [pills, setPills] = useState<string[]>([]);
 

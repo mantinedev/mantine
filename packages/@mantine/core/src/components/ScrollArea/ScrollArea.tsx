@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
+import { useIsomorphicEffect } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -95,6 +96,9 @@ export interface ScrollAreaProps
 
   /** Defines `overscroll-behavior` of the viewport */
   overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
+
+  /** Initial scroll position set on mount */
+  startScrollPosition?: { x?: number; y?: number };
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
@@ -169,6 +173,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
     onLeftReached,
     onRightReached,
     overscrollBehavior,
+    startScrollPosition,
     attributes,
     ...others
   } = props;
@@ -199,6 +204,15 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
 
   const localViewportRef = useRef<HTMLDivElement>(null);
   const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef]);
+
+  useIsomorphicEffect(() => {
+    if (startScrollPosition && localViewportRef.current) {
+      localViewportRef.current.scrollTo({
+        left: startScrollPosition.x ?? 0,
+        top: startScrollPosition.y ?? 0,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const element = localViewportRef.current;
@@ -344,6 +358,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
     vars,
     onBottomReached,
     onTopReached,
+    startScrollPosition,
     onOverflowChange,
     ...others
   } = useProps('ScrollAreaAutosize', defaultProps, props as ScrollAreaAutosizeProps);
@@ -421,6 +436,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
           scrollbars={scrollbars}
           onBottomReached={onBottomReached}
           onTopReached={onTopReached}
+          startScrollPosition={startScrollPosition}
           data-autosize="true"
         >
           {children}

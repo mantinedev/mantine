@@ -24,6 +24,7 @@ import {
   MonthViewDemos,
   YearViewDemos,
   MobileMonthViewDemos,
+  ScrollAreaDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -501,6 +502,13 @@ const form = useForm({
   },
 });
 ```
+
+## ScrollArea startScrollPosition
+
+`ScrollArea` component now supports `startScrollPosition` prop to set the initial scroll
+position when the component mounts:
+
+<Demo data={ScrollAreaDemos.startScrollPosition} />
 
 ## Other changes
 

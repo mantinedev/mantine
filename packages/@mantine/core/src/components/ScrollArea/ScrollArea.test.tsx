@@ -124,6 +124,36 @@ describe('@mantine/core/ScrollArea', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
+  it('calls scrollTo with startScrollPosition on mount', () => {
+    const scrollToSpy = jest.fn();
+    const originalScrollTo = Element.prototype.scrollTo;
+    Element.prototype.scrollTo = scrollToSpy;
+
+    render(
+      <ScrollArea h={100} w={100} startScrollPosition={{ x: 50, y: 100 }}>
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    expect(scrollToSpy).toHaveBeenCalledWith({ left: 50, top: 100 });
+    Element.prototype.scrollTo = originalScrollTo;
+  });
+
+  it('does not call scrollTo when startScrollPosition is not provided', () => {
+    const scrollToSpy = jest.fn();
+    const originalScrollTo = Element.prototype.scrollTo;
+    Element.prototype.scrollTo = scrollToSpy;
+
+    render(
+      <ScrollArea h={100} w={100}>
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+    Element.prototype.scrollTo = originalScrollTo;
+  });
+
   it('does not call boundary callbacks multiple times when at boundary', () => {
     const topSpy = jest.fn();
     const bottomSpy = jest.fn();

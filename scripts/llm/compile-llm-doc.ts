@@ -1696,7 +1696,10 @@ Additional information about ${component} component.`;
       this.output.push('');
       this.output.push('-'.repeat(40));
       this.output.push('');
-      return { title: title || path.basename(filePath, '.mdx'), description: description || undefined };
+      return {
+        title: title || path.basename(filePath, '.mdx'),
+        description: description || undefined,
+      };
     } catch (error) {
       // Error processing FAQ
       return null;

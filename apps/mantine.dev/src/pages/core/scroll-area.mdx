@@ -55,6 +55,13 @@ get the viewport element ref with the `viewportRef` prop and call the `scrollTo`
 
 <Demo data={ScrollAreaDemos.scrollTo} />
 
+## Start scroll position
+
+Use the `startScrollPosition` prop to set the initial scroll position when the component mounts.
+Unlike using `viewportRef` with `useEffect`, this approach avoids the flash of content at position (0, 0):
+
+<Demo data={ScrollAreaDemos.startScrollPosition} />
+
 ## Styles API
 
 <Demo data={ScrollAreaDemos.stylesApi} />
