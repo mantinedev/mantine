@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -189,6 +189,9 @@ export interface MonthViewProps
 
   /** Props passed down to `ScrollArea` component */
   scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
+
+  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
+  onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
 }
 
 export type MonthViewFactory = Factory<{
@@ -265,6 +268,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     labels,
     mode,
     scrollAreaProps,
+    onExternalEventDrop,
     ...others
   } = props;
 
@@ -307,6 +311,16 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     consistentWeeks,
   });
 
+  const handleExternalDrop = useCallback(
+    (e: React.DragEvent, day: string) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      onExternalEventDrop(e.dataTransfer, `${dayjs(day).format('YYYY-MM-DD')} 00:00:00`);
+    },
+    [onExternalEventDrop]
+  );
+
   const dragDrop = useDragDropHandlers<string>({
     enabled: withEventsDragAndDrop,
     mode,
@@ -320,7 +334,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         targetDay,
       });
     },
+    onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
+
+  const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
 
   const flatDaysRef = useRef<string[]>([]);
 
@@ -462,19 +479,9 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           ]}
           data-outside={outside || undefined}
           tabIndex={mode === 'static' ? -1 : isFirstDay ? 0 : -1}
-          onDragOver={
-            withEventsDragAndDrop && mode !== 'static'
-              ? (e) => dragDrop.handleDragOver(e, day)
-              : undefined
-          }
-          onDragLeave={
-            withEventsDragAndDrop && mode !== 'static' ? dragDrop.handleDragLeave : undefined
-          }
-          onDrop={
-            withEventsDragAndDrop && mode !== 'static'
-              ? (e) => dragDrop.handleDrop(e, day)
-              : undefined
-          }
+          onDragOver={withDragHandlers ? (e) => dragDrop.handleDragOver(e, day) : undefined}
+          onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
+          onDrop={withDragHandlers ? (e) => dragDrop.handleDrop(e, day) : undefined}
         >
           <span data-today={today || undefined} {...getStyles('monthViewDayLabel')}>
             {dayjs(day).format('D')}

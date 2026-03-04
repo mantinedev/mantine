@@ -12,3 +12,5 @@ export { dragDrop } from './MonthView.demo.dragDrop';
 export { renderEvent } from './MonthView.demo.renderEvent';
 export { staticMode } from './MonthView.demo.staticMode';
 export { eventForm } from './MonthView.demo.eventForm';
+export { externalDragDrop } from './MonthView.demo.externalDragDrop';
+export { bidirectionalDragDrop } from './MonthView.demo.bidirectionalDragDrop';

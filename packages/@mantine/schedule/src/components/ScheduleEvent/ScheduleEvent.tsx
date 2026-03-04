@@ -1,4 +1,4 @@
-import { use } from 'react';
+import { use, useEffect, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -174,6 +174,18 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
 
   const isCurrentlyDragging = isDragging || ctx.draggedEventId === event.id;
   const isAnyEventDragging = ctx.isDragging || false;
+
+  const dragEndRef = useRef(ctx.onDragEnd);
+  dragEndRef.current = ctx.onDragEnd;
+
+  useEffect(() => {
+    if (isCurrentlyDragging) {
+      return () => {
+        dragEndRef.current?.();
+      };
+    }
+    return undefined;
+  }, [isCurrentlyDragging]);
 
   const eventChildren = (
     <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>

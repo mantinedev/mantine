@@ -107,3 +107,13 @@ export const Demo_startScrollTime = {
   name: '⭐ Demo: startScrollTime',
   render: renderDemo(demos.startScrollTime),
 };
+
+export const Demo_externalDragDrop = {
+  name: '⭐ Demo: externalDragDrop',
+  render: renderDemo(demos.externalDragDrop),
+};
+
+export const Demo_bidirectionalDragDrop = {
+  name: '⭐ Demo: bidirectionalDragDrop',
+  render: renderDemo(demos.bidirectionalDragDrop),
+};

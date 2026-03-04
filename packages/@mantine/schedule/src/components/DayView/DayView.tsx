@@ -213,6 +213,9 @@ export interface DayViewProps
 
   /** Time to scroll to on initial render, in `HH:mm:ss` format */
   startScrollTime?: string;
+
+  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
+  onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
 }
 
 export type DayViewFactory = Factory<{
@@ -300,6 +303,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     onSlotDragEnd,
     mode,
     startScrollTime,
+    onExternalEventDrop,
     ...others
   } = props;
 
@@ -340,7 +344,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   useAutoScrollOnDrag({
     viewportRef,
-    enabled: withEventsDragAndDrop! && mode !== 'static',
+    enabled: (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static',
   });
 
   useIsomorphicEffect(() => {
@@ -425,6 +429,17 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const eventsData = getDayViewEvents({ events, date, startTime, endTime });
 
+  const handleExternalDrop = useCallback(
+    (e: React.DragEvent, slotIndex: number) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      const slotDate = dayjs(date).format('YYYY-MM-DD');
+      onExternalEventDrop(e.dataTransfer, `${slotDate} ${slots[slotIndex].startTime}`);
+    },
+    [onExternalEventDrop, date, slots]
+  );
+
   const dragDrop = useDragDropHandlers({
     enabled: withEventsDragAndDrop,
     mode,
@@ -441,7 +456,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
         intervalMinutes,
       });
     },
+    onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
+
+  const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
 
   const eventsNodes = eventsData.regularEvents.map((event) => {
     const eventIsAllDay = isAllDayEvent({ event, date });
@@ -539,9 +557,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                 );
               }
         }
-        onDragOver={
-          withEventsDragAndDrop && mode !== 'static' ? (event) => event.preventDefault() : undefined
-        }
+        onDragOver={withDragHandlers ? (event) => event.preventDefault() : undefined}
       />
     );
   });
@@ -654,7 +670,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
             <div
               {...getStyles('dayViewTimeSlots')}
               onDragOver={
-                withEventsDragAndDrop && mode !== 'static'
+                withDragHandlers
                   ? (event) => {
                       const slotIndex = getSlotIndexFromDragPoint(event);
                       if (slotIndex !== null) {
@@ -663,11 +679,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
                     }
                   : undefined
               }
-              onDragLeave={
-                withEventsDragAndDrop && mode !== 'static' ? dragDrop.handleDragLeave : undefined
-              }
+              onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
               onDrop={
-                withEventsDragAndDrop && mode !== 'static'
+                withDragHandlers
                   ? (event) => {
                       const slotIndex = getSlotIndexFromDragPoint(event);
                       if (slotIndex !== null) {

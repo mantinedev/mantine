@@ -19,3 +19,5 @@ export { renderEvent } from './WeekView.demo.renderEvent';
 export { staticMode } from './WeekView.demo.staticMode';
 export { eventForm } from './WeekView.demo.eventForm';
 export { startScrollTime } from './WeekView.demo.startScrollTime';
+export { externalDragDrop } from './WeekView.demo.externalDragDrop';
+export { bidirectionalDragDrop } from './WeekView.demo.bidirectionalDragDrop';

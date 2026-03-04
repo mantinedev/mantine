@@ -64,7 +64,8 @@ type ScheduleCommonProps =
   | 'onSlotDragEnd'
   | 'view'
   | 'onViewChange'
-  | 'mode';
+  | 'mode'
+  | 'onExternalEventDrop';
 
 type ScheduleViewProps<T> = Partial<Omit<T, ScheduleCommonProps>>;
 
@@ -152,6 +153,9 @@ export interface ScheduleProps
    * @default 'default' */
   mode?: ScheduleMode;
 
+  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
+  onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
+
   /** Layout mode:
    * - `'default'` uses same views on all screen sizes
    * - `'responsive'` switches to YearView/MobileMonthView on small screens
@@ -217,6 +221,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     onEventClick,
     withDragSlotSelect,
     onSlotDragEnd,
+    onExternalEventDrop,
     mode,
     layout,
     dayViewProps,
@@ -288,6 +293,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     onEventClick,
     withDragSlotSelect,
     onSlotDragEnd,
+    onExternalEventDrop,
     mode,
   };
 

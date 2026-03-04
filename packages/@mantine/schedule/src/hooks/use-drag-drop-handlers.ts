@@ -32,6 +32,9 @@ export interface UseDragDropHandlersOptions<T = any> {
    * Receives the target location and the dragged event.
    */
   calculateDropTarget: (target: T, draggedEvent: ScheduleEventData) => { start: Date; end: Date };
+
+  /** Called when an external item is dropped onto the schedule */
+  onExternalDrop?: (e: React.DragEvent, target: T) => void;
 }
 
 export interface DragDropHandlers<T = any> {
@@ -80,10 +83,17 @@ export function useDragDropHandlers<T = any>(
     onEventDragStart,
     onEventDragEnd,
     calculateDropTarget,
+    onExternalDrop,
   } = options;
 
   const dragState = useDragState();
   const [dropTarget, setDropTarget] = useState<T | null>(null);
+
+  const handleDragEnd = useCallback(() => {
+    dragState.endDrag();
+    setDropTarget(null);
+    onEventDragEnd?.();
+  }, [dragState, onEventDragEnd]);
 
   const handleDragStart = useCallback(
     (event: ScheduleEventData) => {
@@ -96,22 +106,32 @@ export function useDragDropHandlers<T = any>(
     [enabled, mode, dragState, onEventDragStart]
   );
 
-  const handleDragEnd = useCallback(() => {
-    dragState.endDrag();
-    setDropTarget(null);
-    onEventDragEnd?.();
-  }, [dragState, onEventDragEnd]);
-
   const handleDragOver = useCallback(
     (event: React.DragEvent, target: T) => {
-      if (!enabled || !dragState.state.isDragging || mode === 'static') {
+      if (mode === 'static') {
         return;
       }
+
+      let isInternalDrag = dragState.state.isDragging;
+
+      if (isInternalDrag && !event.dataTransfer.types.includes('application/json')) {
+        handleDragEnd();
+        isInternalDrag = false;
+      }
+
+      if (isInternalDrag && !enabled) {
+        return;
+      }
+
+      if (!isInternalDrag && !onExternalDrop) {
+        return;
+      }
+
       event.preventDefault();
-      event.dataTransfer.dropEffect = 'move';
+      event.dataTransfer.dropEffect = isInternalDrag ? 'move' : 'copy';
       setDropTarget(target);
     },
-    [enabled, mode, dragState.state.isDragging]
+    [enabled, mode, dragState.state.isDragging, onExternalDrop, handleDragEnd]
   );
 
   const handleDragLeave = useCallback(() => {
@@ -122,19 +142,32 @@ export function useDragDropHandlers<T = any>(
     (event: React.DragEvent, target: T) => {
       event.preventDefault();
 
-      if (!enabled || !dragState.state.draggedEvent || !onEventDrop) {
+      const isInternalDrag =
+        dragState.state.isDragging && event.dataTransfer.types.includes('application/json');
+
+      if (isInternalDrag && enabled && dragState.state.draggedEvent && onEventDrop) {
+        const { start, end } = calculateDropTarget(target, dragState.state.draggedEvent);
+        onEventDrop(
+          dragState.state.draggedEventId!,
+          dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
+          dayjs(end).format('YYYY-MM-DD HH:mm:ss')
+        );
+        handleDragEnd();
         return;
       }
 
-      const { start, end } = calculateDropTarget(target, dragState.state.draggedEvent);
-      onEventDrop(
-        dragState.state.draggedEventId!,
-        dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
-        dayjs(end).format('YYYY-MM-DD HH:mm:ss')
-      );
-      handleDragEnd();
+      if (!isInternalDrag && onExternalDrop) {
+        if (dragState.state.isDragging) {
+          handleDragEnd();
+        }
+        onExternalDrop(event, target);
+        setDropTarget(null);
+        return;
+      }
+
+      setDropTarget(null);
     },
-    [enabled, dragState.state, onEventDrop, calculateDropTarget, handleDragEnd]
+    [enabled, dragState.state, onEventDrop, onExternalDrop, calculateDropTarget, handleDragEnd]
   );
 
   const isDraggableEvent = useCallback(

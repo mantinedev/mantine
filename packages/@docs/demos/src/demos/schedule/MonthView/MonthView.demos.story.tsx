@@ -57,3 +57,13 @@ export const Demo_eventForm = {
   name: '⭐ Demo: eventForm',
   render: renderDemo(demos.eventForm),
 };
+
+export const Demo_externalDragDrop = {
+  name: '⭐ Demo: externalDragDrop',
+  render: renderDemo(demos.externalDragDrop),
+};
+
+export const Demo_bidirectionalDragDrop = {
+  name: '⭐ Demo: bidirectionalDragDrop',
+  render: renderDemo(demos.bidirectionalDragDrop),
+};

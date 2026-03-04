@@ -242,6 +242,9 @@ export interface WeekViewProps
     weekStart: DateStringValue;
     weekEnd: DateStringValue;
   }) => React.ReactNode;
+
+  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
+  onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
 }
 
 export type WeekViewFactory = Factory<{
@@ -339,6 +342,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     mode,
     startScrollTime,
     renderWeekLabel,
+    onExternalEventDrop,
     ...others
   } = props;
 
@@ -378,10 +382,31 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   useAutoScrollOnDrag({
     viewportRef,
-    enabled: withEventsDragAndDrop! && mode !== 'static',
+    enabled: (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static',
   });
 
   type DropTargetSlot = { day: string; slotIndex: number };
+
+  const handleExternalDrop = useCallback(
+    (e: React.DragEvent, target: DropTargetSlot) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      const slotDate = dayjs(target.day).format('YYYY-MM-DD');
+      onExternalEventDrop(e.dataTransfer, `${slotDate} ${slots[target.slotIndex].startTime}`);
+    },
+    [onExternalEventDrop, slots]
+  );
+
+  const handleExternalAllDayDrop = useCallback(
+    (e: React.DragEvent, day: string) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      onExternalEventDrop(e.dataTransfer, `${dayjs(day).format('YYYY-MM-DD')} 00:00:00`);
+    },
+    [onExternalEventDrop]
+  );
 
   const dragDrop = useDragDropHandlers<DropTargetSlot>({
     enabled: withEventsDragAndDrop,
@@ -399,6 +424,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         intervalMinutes,
       });
     },
+    onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
 
   const allDayDragDrop = useDragDropHandlers<string>({
@@ -413,6 +439,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       const newStart = dayjs(targetDay).startOf('day');
       return { start: newStart.toDate(), end: newStart.add(eventDuration, 'millisecond').toDate() };
     },
+    onExternalDrop: onExternalEventDrop ? handleExternalAllDayDrop : undefined,
   });
 
   const slotDragSelect = useSlotDragSelect({
@@ -428,6 +455,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       );
     },
   });
+
+  const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
 
   const handleTimeSlotClick = (
     day: string,
@@ -679,7 +708,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         highlightBusinessHours={highlightBusinessHours}
         businessHours={businessHours}
         labels={labels}
-        withEventsDragAndDrop={withEventsDragAndDrop}
+        withEventsDragAndDrop={withDragHandlers}
         mode={mode}
         slotsRef={slotsRef}
         firstSlotIndex={firstSlotIndex}
@@ -731,19 +760,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           ? undefined
           : (e) => onAllDaySlotClick(dayjs(day).format('YYYY-MM-DD'), e)
       }
-      onDragOver={
-        withEventsDragAndDrop && mode !== 'static'
-          ? (e) => allDayDragDrop.handleDragOver(e, day)
-          : undefined
-      }
-      onDragLeave={
-        withEventsDragAndDrop && mode !== 'static' ? allDayDragDrop.handleDragLeave : undefined
-      }
-      onDrop={
-        withEventsDragAndDrop && mode !== 'static'
-          ? (e) => allDayDragDrop.handleDrop(e, day)
-          : undefined
-      }
+      onDragOver={withDragHandlers ? (e) => allDayDragDrop.handleDragOver(e, day) : undefined}
+      onDragLeave={withDragHandlers ? allDayDragDrop.handleDragLeave : undefined}
+      onDrop={withDragHandlers ? (e) => allDayDragDrop.handleDrop(e, day) : undefined}
       {...getStyles('weekViewDaySlot')}
       mod={{ 'drop-target': allDayDragDrop.isDropTarget(day) }}
     />

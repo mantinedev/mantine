@@ -104,6 +104,25 @@ event drops. All-day events cannot be dragged.
 
 <Demo data={DayViewDemos.dragDrop} />
 
+## External drag and drop
+
+Use `onExternalEventDrop` to allow dragging items from outside the component into
+the schedule. External items must set data in `dataTransfer` during their `onDragStart`.
+The callback receives the `DataTransfer` object and the drop target datetime.
+
+<Demo data={DayViewDemos.externalDragDrop} />
+
+## Bidirectional drag and drop
+
+Combine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional
+drag and drop. Items dragged from the sidebar are removed from the list and added
+to the schedule. Events dragged from the schedule back to the sidebar are removed
+from the schedule. The schedule sets `application/json` with `{ eventId }` in
+`dataTransfer` when an event is dragged, which the sidebar drop zone reads to
+identify the event.
+
+<Demo data={DayViewDemos.bidirectionalDragDrop} />
+
 ## Selective drag permissions
 
 Use `canDragEvent` callback to control which events can be dragged. This is useful for
