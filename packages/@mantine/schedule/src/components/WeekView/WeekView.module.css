@@ -43,7 +43,7 @@
   border-start-end-radius: var(--week-view-radius);
   position: sticky;
   top: 0;
-  z-index: 3;
+  z-index: 4;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid var(--week-view-border-color);
   margin-bottom: -1px;

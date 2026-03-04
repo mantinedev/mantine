@@ -21,6 +21,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useAutoScrollOnDrag } from '../../hooks/use-auto-scroll-on-drag';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
@@ -373,6 +374,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  useAutoScrollOnDrag({
+    viewportRef,
+    enabled: withEventsDragAndDrop! && mode !== 'static',
+  });
 
   type DropTargetSlot = { day: string; slotIndex: number };
 
@@ -487,8 +494,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
   const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
   const weekdaysRef = useRef<HTMLButtonElement[]>([]);
-  const viewportRef = useRef<HTMLDivElement>(null);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
+
   const firstSlotIndex = { dayIndex: 0, slotIndex: 0 };
 
   useIsomorphicEffect(() => {

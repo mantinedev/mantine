@@ -21,6 +21,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useAutoScrollOnDrag } from '../../hooks/use-auto-scroll-on-drag';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
@@ -336,6 +337,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const slotsRef = useRef<HTMLButtonElement[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
+
+  useAutoScrollOnDrag({
+    viewportRef,
+    enabled: withEventsDragAndDrop! && mode !== 'static',
+  });
 
   useIsomorphicEffect(() => {
     if (!startScrollTime || !viewportRef.current || slotsRef.current.length === 0) {
