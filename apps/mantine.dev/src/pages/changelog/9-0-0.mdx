@@ -503,6 +503,14 @@ const form = useForm({
 });
 ```
 
+## AppShell static mode
+
+[AppShell](/core/app-shell) component now supports `mode="static"` which renders
+all AppShell elements as part of the normal document flow using CSS Grid instead of
+fixed positioning. Static mode supports `layout="alt"` to place navbar and aside
+at full height with header and footer adjusted between them.
+See [AppShell examples](/app-shell/?e=BasicAppShell) for more details.
+
 ## ScrollArea startScrollPosition
 
 `ScrollArea` component now supports `startScrollPosition` prop to set the initial scroll
