@@ -23,9 +23,11 @@ const { ref, width, height } = useElementSize();
 ## Definition
 
 ```tsx
-type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
-
-function useResizeObserver<T extends HTMLElement = any>(
+function useElementSize<T extends HTMLElement = any>(
   options?: ResizeObserverOptions
-): readonly [React.RefObject<T>, ObserverRect];
+): {
+  ref: React.RefObject<T>;
+  width: number;
+  height: number;
+};
 ```
