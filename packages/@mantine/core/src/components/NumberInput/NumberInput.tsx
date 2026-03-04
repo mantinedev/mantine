@@ -390,6 +390,45 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     setTimeout(() => adjustCursor(inputRef.current?.value.length), 0);
   };
 
+  const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const pastedText = event.clipboardData.getData('text');
+    const _decimalSeparator = others.decimalSeparator || '.';
+    const separatorsToReplace = (allowedDecimalSeparators || ['.', ',']).filter(
+      (s) => s !== _decimalSeparator
+    );
+
+    if (separatorsToReplace.some((s) => pastedText.includes(s))) {
+      event.preventDefault();
+      let modifiedText = pastedText;
+      separatorsToReplace.forEach((s) => {
+        modifiedText = modifiedText.split(s).join(_decimalSeparator);
+      });
+
+      const input = inputRef.current;
+      if (input) {
+        const start = input.selectionStart ?? 0;
+        const end = input.selectionEnd ?? 0;
+        const currentValue = input.value;
+        const newValue =
+          currentValue.substring(0, start) + modifiedText + currentValue.substring(end);
+
+        // Use native setter to bypass React's controlled input tracking,
+        // then dispatch a native change event that React will process
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLInputElement.prototype,
+          'value'
+        )?.set;
+        nativeInputValueSetter?.call(input, newValue);
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+
+        const cursorPos = start + modifiedText.length;
+        setTimeout(() => adjustCursor(cursorPos), 0);
+      }
+    }
+
+    others.onPaste?.(event as any);
+  };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
@@ -540,6 +579,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       unstyled={unstyled}
       __staticSelector="NumberInput"
       decimalScale={allowDecimal ? decimalScale : 0}
+      onPaste={handlePaste}
       onKeyDown={handleKeyDown}
       onKeyDownCapture={handleKeyDownCapture}
       rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}
