@@ -29,11 +29,14 @@
   font-weight: var(--mantine-font-weight-medium);
 }
 
-.dayViewInner {
+.dayViewScrollArea {
   border: 1px solid var(--day-view-border-color);
-  display: flex;
   border-radius: var(--day-view-radius);
   overflow: hidden;
+}
+
+.dayViewInner {
+  display: flex;
 }
 
 .dayViewTimeSlots {

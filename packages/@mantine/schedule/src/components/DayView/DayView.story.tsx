@@ -493,6 +493,14 @@ export function StaticMode() {
   );
 }
 
+export function StartScrollTime() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView date={new Date()} events={regularEvents} startScrollTime="09:00:00" />
+    </div>
+  );
+}
+
 export function ScrollAreaProps() {
   return <DayView date={new Date()} scrollAreaProps={{ mah: 600 }} />;
 }

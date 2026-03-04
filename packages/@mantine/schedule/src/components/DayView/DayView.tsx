@@ -20,6 +20,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
@@ -208,6 +209,9 @@ export interface DayViewProps
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
+
+  /** Time to scroll to on initial render, in `HH:mm:ss` format */
+  startScrollTime?: string;
 }
 
 export type DayViewFactory = Factory<{
@@ -294,6 +298,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
+    startScrollTime,
     ...others
   } = props;
 
@@ -329,6 +334,28 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
   const slotsRef = useRef<HTMLButtonElement[]>([]);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
+
+  useIsomorphicEffect(() => {
+    if (!startScrollTime || !viewportRef.current || slotsRef.current.length === 0) {
+      return;
+    }
+
+    const targetIndex = slots.findIndex((s) => s.startTime >= startScrollTime);
+    if (targetIndex < 0) {
+      return;
+    }
+
+    const targetSlot = slotsRef.current[targetIndex];
+    if (!targetSlot) {
+      return;
+    }
+
+    const slotRect = targetSlot.getBoundingClientRect();
+    const viewportRect = viewportRef.current.getBoundingClientRect();
+    viewportRef.current.scrollTo({ left: 0, top: slotRect.top - viewportRect.top });
+  }, []);
 
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent) => {
     const slotIndex = slotsRef.current.findIndex((slotNode) => {
@@ -575,6 +602,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           className: scrollAreaProps?.className,
           style: scrollAreaProps?.style,
         })}
+        viewportRef={mergedViewportRef}
       >
         <Box {...getStyles('dayViewInner')}>
           <div {...getStyles('dayViewSlotLabels')}>

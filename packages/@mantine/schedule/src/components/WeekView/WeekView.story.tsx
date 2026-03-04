@@ -312,6 +312,10 @@ export function DragAndDrop() {
   );
 }
 
+export function StartScrollTime() {
+  return <WeekView date={new Date()} events={regularEvents} startScrollTime="09:00:00" />;
+}
+
 export function StaticMode() {
   return (
     <div style={{ padding: 40 }}>

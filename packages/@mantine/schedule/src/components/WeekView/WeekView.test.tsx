@@ -685,4 +685,28 @@ describe('@mantine/schedule/WeekView', () => {
       // handles that internally by setting onClick to undefined when mode is static
     });
   });
+
+  describe('startScrollTime', () => {
+    it('calls scrollTo on mount when startScrollTime is set', () => {
+      const scrollToSpy = jest.fn();
+      const originalScrollTo = Element.prototype.scrollTo;
+      Element.prototype.scrollTo = scrollToSpy;
+
+      render(<WeekView {...defaultProps} startScrollTime="09:00:00" />);
+
+      expect(scrollToSpy).toHaveBeenCalledWith({ left: 0, top: expect.any(Number) });
+      Element.prototype.scrollTo = originalScrollTo;
+    });
+
+    it('does not call scrollTo when startScrollTime is not provided', () => {
+      const scrollToSpy = jest.fn();
+      const originalScrollTo = Element.prototype.scrollTo;
+      Element.prototype.scrollTo = scrollToSpy;
+
+      render(<WeekView {...defaultProps} />);
+
+      expect(scrollToSpy).not.toHaveBeenCalled();
+      Element.prototype.scrollTo = originalScrollTo;
+    });
+  });
 });

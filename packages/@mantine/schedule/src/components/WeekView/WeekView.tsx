@@ -20,6 +20,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
@@ -232,6 +233,9 @@ export interface WeekViewProps
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 
+  /** Time to scroll to on initial render, in `HH:mm:ss` format */
+  startScrollTime?: string;
+
   /** Function to customize week label in the header */
   renderWeekLabel?: (params: {
     weekStart: DateStringValue;
@@ -332,6 +336,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
+    startScrollTime,
     renderWeekLabel,
     ...others
   } = props;
@@ -482,7 +487,34 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
   const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
   const weekdaysRef = useRef<HTMLButtonElement[]>([]);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
   const firstSlotIndex = { dayIndex: 0, slotIndex: 0 };
+
+  useIsomorphicEffect(() => {
+    if (!startScrollTime || !viewportRef.current) {
+      return;
+    }
+
+    const firstDaySlots = slotsRef.current[0];
+    if (!firstDaySlots || firstDaySlots.length === 0) {
+      return;
+    }
+
+    const targetIndex = slots.findIndex((s) => s.startTime >= startScrollTime);
+    if (targetIndex < 0) {
+      return;
+    }
+
+    const targetSlot = firstDaySlots[targetIndex];
+    if (!targetSlot) {
+      return;
+    }
+
+    const slotRect = targetSlot.getBoundingClientRect();
+    const viewportRect = viewportRef.current.getBoundingClientRect();
+    viewportRef.current.scrollTo({ left: 0, top: slotRect.top - viewportRect.top });
+  }, []);
 
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, dayIndex: number) => {
     const daySlots = slotsRef.current[dayIndex] ?? [];
@@ -797,6 +829,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             scrollAreaProps?.onScrollPositionChange?.(position);
             setScrolled(position.y !== 0);
           }}
+          viewportRef={mergedViewportRef}
         >
           <Box {...getStyles('weekViewHeader')} mod={{ scrolled }}>
             <div {...getStyles('weekViewCorner')} key="corner">

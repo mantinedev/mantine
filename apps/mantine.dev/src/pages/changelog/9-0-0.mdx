@@ -510,6 +510,13 @@ position when the component mounts:
 
 <Demo data={ScrollAreaDemos.startScrollPosition} />
 
+## DayView and WeekView startScrollTime
+
+`DayView` and `WeekView` components now support `startScrollTime` prop to set the initial
+scroll position to a specific time. The value should be in `HH:mm:ss` format:
+
+<Demo data={DayViewDemos.startScrollTime} />
+
 ## Other changes
 
 - `light` variant in all components now uses different colors values without transparency to improve contrast

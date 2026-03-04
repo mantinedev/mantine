@@ -17,6 +17,14 @@ Use `startTime` and `endTime` props to set the visible time range. Times should 
 
 <Demo data={WeekViewDemos.timeRange} />
 
+## Start scroll time
+
+Use `startScrollTime` prop to set the initial scroll position to a specific time.
+The value should be in `HH:mm:ss` format. This is useful when you want the view to
+open at a specific time (e.g., business hours start) instead of midnight.
+
+<Demo data={WeekViewDemos.startScrollTime} />
+
 ## Interval minutes
 
 `intervalMinutes` prop controls the granularity of time slots. Default is `60` minutes.

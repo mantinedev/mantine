@@ -19,3 +19,4 @@ export { labels } from './DayView.demo.labels';
 export { controlledDate } from './DayView.demo.controlledDate';
 export { viewChange } from './DayView.demo.viewChange';
 export { eventForm } from './DayView.demo.eventForm';
+export { startScrollTime } from './DayView.demo.startScrollTime';

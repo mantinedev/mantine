@@ -18,6 +18,14 @@ This is useful for focusing on specific hours like business hours.
 
 <Demo data={DayViewDemos.timeRange} />
 
+## Start scroll time
+
+Use `startScrollTime` prop to set the initial scroll position to a specific time.
+The value should be in `HH:mm:ss` format. This is useful when you want the view to
+open at a specific time (e.g., business hours start) instead of midnight.
+
+<Demo data={DayViewDemos.startScrollTime} />
+
 ## Interval minutes
 
 `intervalMinutes` prop controls the granularity of time slots. Default is `15` minutes.

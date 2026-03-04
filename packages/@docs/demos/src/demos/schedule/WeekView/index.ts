@@ -18,3 +18,4 @@ export { dragDrop } from './WeekView.demo.dragDrop';
 export { renderEvent } from './WeekView.demo.renderEvent';
 export { staticMode } from './WeekView.demo.staticMode';
 export { eventForm } from './WeekView.demo.eventForm';
+export { startScrollTime } from './WeekView.demo.startScrollTime';
