@@ -295,6 +295,10 @@ export function useForm<
         path,
         $values.refValues.current
       );
+    } else if (type === 'radio') {
+      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] =
+        getPath(path, $values.refValues.current) === otherOptions.value;
+      payload.value = otherOptions.value;
     } else {
       payload[mode === 'controlled' ? 'value' : 'defaultValue'] = getPath(
         path,

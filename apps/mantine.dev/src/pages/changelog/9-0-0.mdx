@@ -530,6 +530,7 @@ scroll position to a specific time. The value should be in `HH:mm:ss` format:
 - `light` variant in all components now uses different colors values without transparency to improve contrast
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead
+- `@mantine/form` `getInputProps` now supports `type: 'radio'` for individual radio inputs – returns `checked`/`defaultChecked` and passes through the radio option `value`
 - `@mantine/form` now supports async validation rules. `form.validate()`, `form.validateField()` and `form.isValid()` return results directly when all rules are synchronous and return promises only when async rules are present. New `form.validating`, `form.isValidating(path)`, `validateDebounce` and `resolveValidationError` options were added.
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
 - All Mantine components now use `font-weight: 600` instead of `font-weight: 500` for better readability

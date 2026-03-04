@@ -1,7 +1,7 @@
 import type { FormArrayElement, FormPathValue, LooseKeys } from './paths.types';
 import type { formRootRule } from './validate/validate-values';
 
-export type GetInputPropsType = 'input' | 'checkbox';
+export type GetInputPropsType = 'input' | 'checkbox' | 'radio';
 export type FormMode = 'controlled' | 'uncontrolled';
 
 export type FormStatus = Record<string, boolean>;

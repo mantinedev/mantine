@@ -192,3 +192,8 @@ export const Demo_asyncValidationDebounce = {
   name: '⭐ Demo: asyncValidationDebounce',
   render: renderDemo(demos.asyncValidationDebounce),
 };
+
+export const Demo_radioGetInputProps = {
+  name: '⭐ Demo: radioGetInputProps',
+  render: renderDemo(demos.radioGetInputProps),
+};

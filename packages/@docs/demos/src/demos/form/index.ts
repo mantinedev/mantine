@@ -34,6 +34,7 @@ export { submitting } from './Form.demo.submitting';
 export { rootRuleObject } from './Form.demo.rootRuleObject';
 export { rootRuleArray } from './Form.demo.rootRuleArray';
 export { cascadeUpdates } from './Form.demo.cascadeUpdates';
+export { radioGetInputProps } from './Form.demo.radioGetInputProps';
 export { asyncValidation } from './Form.demo.asyncValidation';
 export { asyncValidationDebounce } from './Form.demo.asyncValidationDebounce';
 export {
