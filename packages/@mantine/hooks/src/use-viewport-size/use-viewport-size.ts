@@ -1,54 +1,56 @@
 import { useSyncExternalStore } from 'react';
 
-const eventListerOptions: AddEventListenerOptions = {
-  passive: true,
-};
-
-const serverFallback = { width: 0, height: 0 };
-let cachedSize = serverFallback;
-let isInitialized = false;
-
-function getSnapshot() {
-  if (typeof window === 'undefined') {
-    return serverFallback;
-  }
-
-  if (!isInitialized) {
-    cachedSize = { width: window.innerWidth, height: window.innerHeight };
-    isInitialized = true;
-  }
-
-  return cachedSize;
+interface ViewportSize {
+  width: number;
+  height: number;
 }
 
-function getServerSnapshot() {
-  return serverFallback;
+const eventListenerOptions: AddEventListenerOptions = { passive: true };
+
+let cachedSize: ViewportSize = { width: 0, height: 0 };
+const subscribers = new Set<() => void>();
+
+function handleResize() {
+  const width = window.innerWidth || 0;
+  const height = window.innerHeight || 0;
+
+  if (cachedSize.width !== width || cachedSize.height !== height) {
+    cachedSize = { width, height };
+    subscribers.forEach((callback) => callback());
+  }
 }
 
-function subscribe(callback: () => void) {
+function subscribe(callback: () => void): () => void {
   if (typeof window === 'undefined') {
     return () => {};
   }
 
-  const handleResize = () => {
-    const newWidth = window.innerWidth;
-    const newHeight = window.innerHeight;
+  if (subscribers.size === 0) {
+    cachedSize = { width: window.innerWidth || 0, height: window.innerHeight || 0 };
+    window.addEventListener('resize', handleResize, eventListenerOptions);
+    window.addEventListener('orientationchange', handleResize, eventListenerOptions);
+  }
 
-    if (cachedSize.width !== newWidth || cachedSize.height !== newHeight) {
-      cachedSize = { width: newWidth, height: newHeight };
-      callback();
-    }
-  };
-
-  window.addEventListener('resize', handleResize, eventListerOptions);
-  window.addEventListener('orientationchange', handleResize, eventListerOptions);
+  subscribers.add(callback);
 
   return () => {
-    window.removeEventListener('resize', handleResize, eventListerOptions);
-    window.removeEventListener('orientationchange', handleResize, eventListerOptions);
+    subscribers.delete(callback);
+
+    if (subscribers.size === 0) {
+      window.removeEventListener('resize', handleResize, eventListenerOptions);
+      window.removeEventListener('orientationchange', handleResize, eventListenerOptions);
+    }
   };
 }
 
-export function useViewportSize() {
+function getSnapshot(): ViewportSize {
+  return cachedSize;
+}
+
+function getServerSnapshot(): ViewportSize {
+  return { width: 0, height: 0 };
+}
+
+export function useViewportSize(): ViewportSize {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
