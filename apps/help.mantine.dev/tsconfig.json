@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["./@types/mdx.d.ts"],
+    "types": ["./@types/mdx.d.ts", "./@types/css.d.ts"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
