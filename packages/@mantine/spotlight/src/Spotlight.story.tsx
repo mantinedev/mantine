@@ -126,7 +126,7 @@ export function EmptyStateWithoutActionsList() {
         shortcut={null}
         searchProps={{
           placeholder: 'Search actions',
-          leftSection: <IconSearch stroke={1.5} size={20} />,
+          leftSection: <MagnifyingGlassIcon size={20} />,
         }}
       />
     </div>

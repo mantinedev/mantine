@@ -85,12 +85,10 @@ export function RangeCancelled() {
 }
 
 export function ConditionalMinDate() {
-  const [value, setValue] = useState<DatesRangeValue>([null, null]);
+  const [value, setValue] = useState<[string | null, string | null]>([null, null]);
 
   const minDate =
-    value[0] && !value[1]
-      ? dayjs(value[0]).subtract(1, 'month').format('YYYY-MM-DD')
-      : undefined;
+    value[0] && !value[1] ? dayjs(value[0]).subtract(1, 'month').format('YYYY-MM-DD') : undefined;
 
   return (
     <div style={{ padding: 40 }}>

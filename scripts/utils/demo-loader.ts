@@ -35,13 +35,19 @@ function readBalancedExpression(
       continue;
     }
 
-    if (ch === '(') depthParen += 1;
-    else if (ch === ')') depthParen = Math.max(0, depthParen - 1);
-    else if (ch === '[') depthBracket += 1;
-    else if (ch === ']') depthBracket = Math.max(0, depthBracket - 1);
-    else if (ch === '{') depthBrace += 1;
-    else if (ch === '}') depthBrace = Math.max(0, depthBrace - 1);
-    else if (ch === ';' && depthParen === 0 && depthBracket === 0 && depthBrace === 0) {
+    if (ch === '(') {
+      depthParen += 1;
+    } else if (ch === ')') {
+      depthParen = Math.max(0, depthParen - 1);
+    } else if (ch === '[') {
+      depthBracket += 1;
+    } else if (ch === ']') {
+      depthBracket = Math.max(0, depthBracket - 1);
+    } else if (ch === '{') {
+      depthBrace += 1;
+    } else if (ch === '}') {
+      depthBrace = Math.max(0, depthBrace - 1);
+    } else if (ch === ';' && depthParen === 0 && depthBracket === 0 && depthBrace === 0) {
       return { expression: source.slice(startIndex, i).trim(), end: i };
     }
 
@@ -120,12 +126,19 @@ function splitTopLevelArrayItems(arrayBody: string): string[] {
       continue;
     }
 
-    if (ch === '(') depthParen += 1;
-    else if (ch === ')') depthParen = Math.max(0, depthParen - 1);
-    else if (ch === '[') depthBracket += 1;
-    else if (ch === ']') depthBracket = Math.max(0, depthBracket - 1);
-    else if (ch === '{') depthBrace += 1;
-    else if (ch === '}') depthBrace = Math.max(0, depthBrace - 1);
+    if (ch === '(') {
+      depthParen += 1;
+    } else if (ch === ')') {
+      depthParen = Math.max(0, depthParen - 1);
+    } else if (ch === '[') {
+      depthBracket += 1;
+    } else if (ch === ']') {
+      depthBracket = Math.max(0, depthBracket - 1);
+    } else if (ch === '{') {
+      depthBrace += 1;
+    } else if (ch === '}') {
+      depthBrace = Math.max(0, depthBrace - 1);
+    }
 
     if (ch === ',' && depthParen === 0 && depthBracket === 0 && depthBrace === 0) {
       const trimmed = current.trim();
@@ -154,10 +167,18 @@ function parsePrimitiveLiteral(raw: string): ControlPrimitive | undefined {
     return quoted[2];
   }
 
-  if (value === 'true') return true;
-  if (value === 'false') return false;
-  if (value === 'null') return null;
-  if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
+  if (value === 'true') {
+    return true;
+  }
+  if (value === 'false') {
+    return false;
+  }
+  if (value === 'null') {
+    return null;
+  }
+  if (/^-?\d+(\.\d+)?$/.test(value)) {
+    return Number(value);
+  }
   return undefined;
 }
 

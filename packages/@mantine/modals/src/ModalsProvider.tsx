@@ -12,7 +12,7 @@ import {
   OpenContextModal,
 } from './context';
 import { useModalsEvents } from './events';
-import { modalsReducer } from './reducer';
+import { handleCloseModal, modalsReducer } from './reducer';
 
 export interface ModalsProviderProps {
   /** Your app */
@@ -74,6 +74,12 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const closeAll = useCallback(
     (canceled?: boolean) => {
+      stateRef.current.modals
+        .concat()
+        .reverse()
+        .forEach((modal) => {
+          handleCloseModal(modal, canceled);
+        });
       dispatch({ type: 'CLOSE_ALL', canceled });
     },
     [stateRef, dispatch]
@@ -131,6 +137,10 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const closeModal = useCallback(
     (id: string, canceled?: boolean) => {
+      const modal = stateRef.current.modals.find((m) => m.id === id);
+      if (modal) {
+        handleCloseModal(modal, canceled);
+      }
       dispatch({ type: 'CLOSE', modalId: id, canceled });
     },
     [stateRef, dispatch]

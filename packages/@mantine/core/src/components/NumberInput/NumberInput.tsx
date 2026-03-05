@@ -641,6 +641,43 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       setTimeout(() => adjustCursor(inputRef.current?.value.length), 0);
     };
 
+    const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      const pastedText = event.clipboardData.getData('text');
+      const _decimalSeparator = others.decimalSeparator || '.';
+      const separatorsToReplace = (allowedDecimalSeparators || ['.', ',']).filter(
+        (s) => s !== _decimalSeparator
+      );
+
+      if (separatorsToReplace.some((s) => pastedText.includes(s))) {
+        event.preventDefault();
+        let modifiedText = pastedText;
+        separatorsToReplace.forEach((s) => {
+          modifiedText = modifiedText.split(s).join(_decimalSeparator);
+        });
+
+        const input = inputRef.current;
+        if (input) {
+          const start = input.selectionStart ?? 0;
+          const end = input.selectionEnd ?? 0;
+          const currentValue = input.value;
+          const newValue =
+            currentValue.substring(0, start) + modifiedText + currentValue.substring(end);
+
+          const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+            window.HTMLInputElement.prototype,
+            'value'
+          )?.set;
+          nativeInputValueSetter?.call(input, newValue);
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+
+          const cursorPos = start + modifiedText.length;
+          setTimeout(() => adjustCursor(cursorPos), 0);
+        }
+      }
+
+      others.onPaste?.(event as any);
+    };
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       onKeyDown?.(event);
 
@@ -826,6 +863,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
         unstyled={unstyled}
         __staticSelector="NumberInput"
         decimalScale={isBigIntMode ? 0 : allowDecimal ? decimalScale : 0}
+        onPaste={handlePaste}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         onKeyDownCapture={handleKeyDownCapture}
