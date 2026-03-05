@@ -11,7 +11,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
+import {
+  ModalBase,
+  ModalBaseProps,
+  ModalBaseStylesNames,
+  useModalBaseStackContext,
+  useModalStackProps,
+} from '../ModalBase';
 import { ScrollArea } from '../ScrollArea';
 import { MantineTransition } from '../Transition';
 import { DrawerProvider, ScrollAreaComponent } from './Drawer.context';
@@ -61,6 +67,9 @@ export interface DrawerRootProps extends StylesApiProps<DrawerRootFactory>, Moda
 
   /** Drawer container offset from the viewport end @default `0` */
   offset?: number | string;
+
+  /** Id of the drawer in the `Drawer.Stack` */
+  stackId?: string;
 }
 
 export type DrawerRootFactory = Factory<{
@@ -123,8 +132,14 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
     transitionProps,
     radius,
     attributes,
+    stackId,
+    opened,
+    zIndex,
     ...others
   } = props;
+
+  const ctx = useModalBaseStackContext();
+  const stackProps = useModalStackProps({ stackCtx: ctx, opened, stackId, zIndex });
 
   const { dir } = useDirection();
 
@@ -145,14 +160,17 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
   const drawerTransition = (dir === 'rtl' ? rtlTransitions : transitions)[position];
 
   return (
-    <DrawerProvider value={{ scrollAreaComponent, getStyles, radius }}>
+    <DrawerProvider value={{ scrollAreaComponent, getStyles, radius, opened, stackId }}>
       <ModalBase
         ref={ref}
+        opened={opened}
         {...getStyles('root')}
         transitionProps={{ transition: drawerTransition, ...transitionProps }}
         data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
         unstyled={unstyled}
+        zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
         {...others}
+        {...stackProps}
       />
     </DrawerProvider>
   );
