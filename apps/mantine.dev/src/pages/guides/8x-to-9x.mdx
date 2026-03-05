@@ -81,26 +81,22 @@ function Demo() {
 }
 ```
 
-## Light variant color resolver changes
+## Light variant color changes
 
-In Mantine 9, the `light` variant color resolution was changed. If you need to keep 8.x behavior
-for the `light` variant during migration, use `v8defaultVariantColorsResolver`:
+In Mantine 9, the `light` variant CSS variables were changed to use solid color values
+instead of transparency. If you need to keep 8.x behavior during migration,
+use `v8CssVariablesResolver`:
 
 ```tsx
 import {
   Button,
   MantineProvider,
-  createTheme,
-  v8defaultVariantColorsResolver,
+  v8CssVariablesResolver,
 } from '@mantine/core';
-
-const theme = createTheme({
-  variantColorResolver: v8defaultVariantColorsResolver,
-});
 
 function Demo() {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider cssVariablesResolver={v8CssVariablesResolver}>
       <Button variant="light" color="blue.6">
         Uses 8.x light variant colors
       </Button>

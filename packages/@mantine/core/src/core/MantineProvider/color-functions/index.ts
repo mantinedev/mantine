@@ -2,7 +2,6 @@ export { getPrimaryShade } from './get-primary-shade/get-primary-shade';
 export { parseThemeColor } from './parse-theme-color/parse-theme-color';
 export { getThemeColor } from './get-theme-color/get-theme-color';
 export { defaultVariantColorsResolver } from './default-variant-colors-resolver/default-variant-colors-resolver';
-export { v8defaultVariantColorsResolver } from './default-variant-colors-resolver/v8-default-variant-colors-resolver';
 export { getGradient } from './get-gradient/get-gradient';
 export { toRgba } from './to-rgba/to-rgba';
 export { rgba, alpha } from './rgba/rgba';
