@@ -16,6 +16,14 @@ Be sure to follow best practices to not [confuse or trap the end user](https://d
 
 
 
+## Mobile Safari limitations
+
+Mobile Safari (especially on iPhone) has limited Fullscreen API support. In many cases, fullscreen is only supported for `<video>` elements and may not work for arbitrary elements (including `document.documentElement`).
+
+`use-fullscreen` includes Safari-specific fallbacks where possible, but it cannot bypass browser/platform restrictions.
+
+Also note that entering fullscreen usually requires a direct user interaction (for example, a button click).
+
 ## Definition
 
 ```tsx

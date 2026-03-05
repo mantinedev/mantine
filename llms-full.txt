@@ -20615,8 +20615,8 @@ but still receives `opened` and `onClose` props. The element will not be affecte
 
 ## Reuse target node
 
-By default, Portal creates a new target node for each instance. To change this behavior and
-reuse the same target node for all instances, set `reuseTargetNode` prop. In the following
+By default, Portal reuses the same target node for all instances (`reuseTargetNode={true}`).
+To create a new target node for each instance, set `reuseTargetNode={false}`. In the following
 example, all three paragraphs will be rendered in the same target node:
 
 ```tsx
@@ -33244,6 +33244,14 @@ The hook returns an optional `ref` function that can be passed to an element to 
 Be sure to follow best practices to not [confuse or trap the end user](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide#things_your_users_want_to_know):
 
 
+
+## Mobile Safari limitations
+
+Mobile Safari (especially on iPhone) has limited Fullscreen API support. In many cases, fullscreen is only supported for `<video>` elements and may not work for arbitrary elements (including `document.documentElement`).
+
+`use-fullscreen` includes Safari-specific fallbacks where possible, but it cannot bypass browser/platform restrictions.
+
+Also note that entering fullscreen usually requires a direct user interaction (for example, a button click).
 
 ## Definition
 
@@ -66913,6 +66921,7 @@ Community extensions list:
 * [Window](https://gfazioli.github.io/mantine-window/) - window component with drag and resize functionalities
 * [Mantine Form Builder](https://pradip-v2.github.io/mantine-form-builder/) – form builder and viewer components
 * [Mantine Choropleth Map](https://maetes.github.io/mantine-choropleth/) - Choropleth Map component for GeoJson
+* [Lightbox](https://rilrom.github.io/mantine-bites/lightbox/) - Full-screen image lightbox built on top of @mantine/carousel
 
 ## Create your own extension
 
@@ -69350,6 +69359,9 @@ Individual packages do not have dedicated scripts.
 * `docs:docgen` – generates components types information with [docgen script](https://github.com/mantinedev/mantine/blob/master/scripts/docgen/index.ts)
 * `docs:build` – builds docs for production
 * `docs:deploy` – builds and deploys docs to the GitHub Pages
+* `docs:deploy:alpha` – builds and deploys docs to Cloudflare Pages `alpha-mantine-dev` project
+* `docs:deploy:v7` – builds and deploys docs to Cloudflare Pages `v7-mantine-docs` project
+* `docs:deploy:v8` – builds and deploys docs to Cloudflare Pages `v8-mantine-docs` project
 
 
 --------------------------------------------------------------------------------
@@ -76167,6 +76179,27 @@ function Demo() {
 }
 ```
 
+
+
+----------------------------------------
+
+# How to change background color for FiveM?
+Unset body background color and color-scheme styles for FiveM
+
+If you use Mantine in a FiveM UI (NUI), default `body` background and `color-scheme`
+styles can affect the background rendering.
+
+Add the following global CSS to override them:
+
+```css
+body {
+  background-color: unset !important;
+}
+
+:root {
+  color-scheme: unset !important;
+}
+```
 
 
 ----------------------------------------
