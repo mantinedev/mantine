@@ -68,6 +68,9 @@ export interface DateInputProps
   /** `dayjs` format to display input value, `"MMMM D, YYYY"` by default  */
   valueFormat?: string;
 
+  /** If set to `true`, the time part of the value is preserved. Set this to `true` when `valueFormat` includes time (e.g. `"YYYY-MM-DD HH:mm"`). @default false */
+  withTime?: boolean;
+
   /** If set to `false`, invalid user input is preserved and is not corrected on blur */
   fixOnBlur?: boolean;
 
@@ -115,6 +118,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     getDayProps,
     locale,
     valueFormat,
+    withTime,
     dateParser,
     minDate,
     maxDate,
@@ -149,7 +153,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
     return Number.isNaN(parsedDate.getTime())
       ? dateStringParser(val)
-      : dayjs(parsedDate).format('YYYY-MM-DD');
+      : dayjs(parsedDate).format(withTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD');
   };
 
   const _dateParser = dateParser || defaultDateParser;
@@ -163,6 +167,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     value,
     defaultValue,
     onChange,
+    withTime,
   });
 
   const [_date, setDate] = useUncontrolledDates({
@@ -325,7 +330,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
           </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
-      <HiddenDatesInput name={name} form={form} value={_value} type="default" />
+      <HiddenDatesInput name={name} form={form} value={_value} type="default" withTime={withTime} />
     </>
   );
 });
