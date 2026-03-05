@@ -176,6 +176,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-storybook": "^10.1.4",
     "fast-glob": "^3.3.3",
+    "fastest-levenshtein": "^1.0.16",
     "fs-extra": "^11.3.2",
     "gh-pages": "^6.3.0",
     "hash-css-selector": "^1.1.0",

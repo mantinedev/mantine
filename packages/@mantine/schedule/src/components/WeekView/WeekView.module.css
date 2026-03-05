@@ -33,7 +33,7 @@
 
 .weekViewScrollArea {
   :where(:global(.mantine-ScrollArea-scrollbar)) {
-    z-index: 2;
+    z-index: 4;
   }
 }
 

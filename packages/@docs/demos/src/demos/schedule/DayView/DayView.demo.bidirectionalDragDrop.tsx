@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
-import { Box, Text } from '@mantine/core';
+import { Box, Grid, Text } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -21,7 +21,7 @@ const initialSidebarItems: SidebarItem[] = [
 const code = `
 import { useRef, useState } from 'react';
 import dayjs from 'dayjs';
-import { Box, Text } from '@mantine/core';
+import { Box, Grid, Text } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
@@ -98,53 +98,53 @@ function Demo() {
   };
 
   return (
-    <Box style={{ display: 'flex', gap: 16 }}>
-      <Box
-        onDragOver={(e) => {
-          e.preventDefault();
-          e.dataTransfer.dropEffect = 'move';
-          setSidebarHighlight(true);
-        }}
-        onDragLeave={() => setSidebarHighlight(false)}
-        onDrop={handleSidebarDrop}
-        style={{
-          width: 160,
-          flexShrink: 0,
-          padding: 8,
-          borderRadius: 8,
-          border: sidebarHighlight
-            ? '2px dashed var(--mantine-color-blue-5)'
-            : '2px dashed transparent',
-          transition: 'border-color 150ms',
-        }}
-      >
-        <Text fw={500} mb="xs">Unscheduled</Text>
-        {sidebarItems.map((item) => (
-          <Box
-            key={item.title}
-            draggable
-            onDragStart={(e) => {
-              e.dataTransfer.setData('text/plain', JSON.stringify(item));
-              e.dataTransfer.effectAllowed = 'copy';
-            }}
-            style={{
-              padding: '8px 12px',
-              marginBottom: 8,
-              borderRadius: 4,
-              cursor: 'grab',
-              backgroundColor: \`var(--mantine-color-\${item.color}-light)\`,
-              color: \`var(--mantine-color-\${item.color}-light-color)\`,
-            }}
-          >
-            <Text size="sm" fw={500}>{item.title}</Text>
-            <Text size="xs">{item.duration} min</Text>
-          </Box>
-        ))}
-        {sidebarItems.length === 0 && (
-          <Text size="xs" c="dimmed">Drag events here to unschedule</Text>
-        )}
-      </Box>
-      <Box style={{ flex: 1 }}>
+    <Grid>
+      <Grid.Col span={{ base: 12, sm: 3 }}>
+        <Box
+          onDragOver={(e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            setSidebarHighlight(true);
+          }}
+          onDragLeave={() => setSidebarHighlight(false)}
+          onDrop={handleSidebarDrop}
+          style={{
+            padding: 8,
+            borderRadius: 8,
+            border: sidebarHighlight
+              ? '2px dashed var(--mantine-color-blue-5)'
+              : '2px dashed transparent',
+            transition: 'border-color 150ms',
+          }}
+        >
+          <Text fw={500} mb="xs">Unscheduled</Text>
+          {sidebarItems.map((item) => (
+            <Box
+              key={item.title}
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.setData('text/plain', JSON.stringify(item));
+                e.dataTransfer.effectAllowed = 'copy';
+              }}
+              style={{
+                padding: '8px 12px',
+                marginBottom: 8,
+                borderRadius: 4,
+                cursor: 'grab',
+                backgroundColor: \`var(--mantine-color-\${item.color}-light)\`,
+                color: \`var(--mantine-color-\${item.color}-light-color)\`,
+              }}
+            >
+              <Text size="sm" fw={500}>{item.title}</Text>
+              <Text size="xs">{item.duration} min</Text>
+            </Box>
+          ))}
+          {sidebarItems.length === 0 && (
+            <Text size="xs" c="dimmed">Drag events here to unschedule</Text>
+          )}
+        </Box>
+      </Grid.Col>
+      <Grid.Col span={{ base: 12, sm: 9 }}>
         <DayView
           date={new Date()}
           events={events}
@@ -154,8 +154,8 @@ function Demo() {
           onEventDrop={handleEventDrop}
           onExternalEventDrop={handleExternalDrop}
         />
-      </Box>
-    </Box>
+      </Grid.Col>
+    </Grid>
   );
 }
 `;
@@ -220,59 +220,59 @@ function Demo() {
   };
 
   return (
-    <Box style={{ display: 'flex', gap: 16 }}>
-      <Box
-        onDragOver={(e) => {
-          e.preventDefault();
-          e.dataTransfer.dropEffect = 'move';
-          setSidebarHighlight(true);
-        }}
-        onDragLeave={() => setSidebarHighlight(false)}
-        onDrop={handleSidebarDrop}
-        style={{
-          width: 160,
-          flexShrink: 0,
-          padding: 8,
-          borderRadius: 8,
-          border: sidebarHighlight
-            ? '2px dashed var(--mantine-color-blue-5)'
-            : '2px dashed transparent',
-          transition: 'border-color 150ms',
-        }}
-      >
-        <Text fw={500} mb="xs">
-          Unscheduled
-        </Text>
-        {sidebarItems.map((item) => (
-          <Box
-            key={item.title}
-            draggable
-            onDragStart={(e) => {
-              e.dataTransfer.setData('text/plain', JSON.stringify(item));
-              e.dataTransfer.effectAllowed = 'copy';
-            }}
-            style={{
-              padding: '8px 12px',
-              marginBottom: 8,
-              borderRadius: 4,
-              cursor: 'grab',
-              backgroundColor: `var(--mantine-color-${item.color}-light)`,
-              color: `var(--mantine-color-${item.color}-light-color)`,
-            }}
-          >
-            <Text size="sm" fw={500}>
-              {item.title}
-            </Text>
-            <Text size="xs">{item.duration} min</Text>
-          </Box>
-        ))}
-        {sidebarItems.length === 0 && (
-          <Text size="xs" c="dimmed">
-            Drag events here to unschedule
+    <Grid>
+      <Grid.Col span={{ base: 12, sm: 3 }}>
+        <Box
+          onDragOver={(e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            setSidebarHighlight(true);
+          }}
+          onDragLeave={() => setSidebarHighlight(false)}
+          onDrop={handleSidebarDrop}
+          style={{
+            padding: 8,
+            borderRadius: 8,
+            border: sidebarHighlight
+              ? '2px dashed var(--mantine-color-blue-5)'
+              : '2px dashed transparent',
+            transition: 'border-color 150ms',
+          }}
+        >
+          <Text fw={500} mb="xs">
+            Unscheduled
           </Text>
-        )}
-      </Box>
-      <Box style={{ flex: 1 }}>
+          {sidebarItems.map((item) => (
+            <Box
+              key={item.title}
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.setData('text/plain', JSON.stringify(item));
+                e.dataTransfer.effectAllowed = 'copy';
+              }}
+              style={{
+                padding: '8px 12px',
+                marginBottom: 8,
+                borderRadius: 4,
+                cursor: 'grab',
+                backgroundColor: `var(--mantine-color-${item.color}-light)`,
+                color: `var(--mantine-color-${item.color}-light-color)`,
+              }}
+            >
+              <Text size="sm" fw={500}>
+                {item.title}
+              </Text>
+              <Text size="xs">{item.duration} min</Text>
+            </Box>
+          ))}
+          {sidebarItems.length === 0 && (
+            <Text size="xs" c="dimmed">
+              Drag events here to unschedule
+            </Text>
+          )}
+        </Box>
+      </Grid.Col>
+      <Grid.Col span={{ base: 12, sm: 9 }}>
         <DayView
           date={today}
           events={events}
@@ -282,8 +282,8 @@ function Demo() {
           onEventDrop={handleEventDrop}
           onExternalEventDrop={handleExternalDrop}
         />
-      </Box>
-    </Box>
+      </Grid.Col>
+    </Grid>
   );
 }
 

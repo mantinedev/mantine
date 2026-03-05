@@ -33,6 +33,10 @@
   border: 1px solid var(--day-view-border-color);
   border-radius: var(--day-view-radius);
   overflow: hidden;
+
+  :where(:global(.mantine-ScrollArea-scrollbar)) {
+    z-index: 4;
+  }
 }
 
 .dayViewInner {

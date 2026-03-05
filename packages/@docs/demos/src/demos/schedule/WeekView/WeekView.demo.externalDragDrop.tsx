@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
-import { Box, Text } from '@mantine/core';
+import { Box, Grid, Text } from '@mantine/core';
 import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -13,7 +13,7 @@ const sidebarItems = [
 const code = `
 import { useRef, useState } from 'react';
 import dayjs from 'dayjs';
-import { Box, Text } from '@mantine/core';
+import { Box, Grid, Text } from '@mantine/core';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
 const sidebarItems = [
@@ -57,8 +57,8 @@ function Demo() {
   };
 
   return (
-    <Box style={{ display: 'flex', gap: 16 }}>
-      <Box style={{ width: 160, flexShrink: 0 }}>
+    <Grid>
+      <Grid.Col span={{ base: 12, sm: 3 }}>
         <Text fw={500} mb="xs">Drag to schedule</Text>
         {sidebarItems.map((item) => (
           <Box
@@ -81,8 +81,8 @@ function Demo() {
             <Text size="xs">{item.duration} min</Text>
           </Box>
         ))}
-      </Box>
-      <Box style={{ flex: 1 }}>
+      </Grid.Col>
+      <Grid.Col span={{ base: 12, sm: 9 }}>
         <WeekView
           date={new Date()}
           events={events}
@@ -92,8 +92,8 @@ function Demo() {
           onEventDrop={handleEventDrop}
           onExternalEventDrop={handleExternalDrop}
         />
-      </Box>
-    </Box>
+      </Grid.Col>
+    </Grid>
   );
 }
 `;
@@ -133,8 +133,8 @@ function Demo() {
   };
 
   return (
-    <Box style={{ display: 'flex', gap: 16 }}>
-      <Box style={{ width: 160, flexShrink: 0 }}>
+    <Grid>
+      <Grid.Col span={{ base: 12, sm: 3 }}>
         <Text fw={500} mb="xs">
           Drag to schedule
         </Text>
@@ -161,8 +161,8 @@ function Demo() {
             <Text size="xs">{item.duration} min</Text>
           </Box>
         ))}
-      </Box>
-      <Box style={{ flex: 1 }}>
+      </Grid.Col>
+      <Grid.Col span={{ base: 12, sm: 9 }}>
         <WeekView
           date={new Date()}
           events={events}
@@ -172,8 +172,8 @@ function Demo() {
           onEventDrop={handleEventDrop}
           onExternalEventDrop={handleExternalDrop}
         />
-      </Box>
-    </Box>
+      </Grid.Col>
+    </Grid>
   );
 }
 
