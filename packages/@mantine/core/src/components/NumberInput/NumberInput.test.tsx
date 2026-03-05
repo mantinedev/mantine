@@ -261,11 +261,7 @@ describe('@mantine/core/NumberInput', () => {
   it('converts multiple allowed decimal separators in pasted values', () => {
     const spy = jest.fn();
     render(
-      <NumberInput
-        onChange={spy}
-        decimalSeparator=","
-        allowedDecimalSeparators={['.', ',']}
-      />
+      <NumberInput onChange={spy} decimalSeparator="," allowedDecimalSeparators={['.', ',']} />
     );
 
     focusInput();
