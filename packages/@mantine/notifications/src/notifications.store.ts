@@ -30,6 +30,12 @@ export interface NotificationData
   /** Called when notification closes */
   onClose?: (props: NotificationData) => void;
 
+  /** Called when notification auto closes */
+  onAutoClose?: (props: NotificationData) => void;
+
+  /** Called when notification is closed manually */
+  onManualClose?: (props: NotificationData) => void;
+
   /** Called when notification opens */
   onOpen?: (props: NotificationData) => void;
 }
