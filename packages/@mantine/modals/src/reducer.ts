@@ -32,7 +32,7 @@ interface UpdateAction {
   newProps: Partial<ModalSettings>;
 }
 
-function handleCloseModal(modal: ModalState, canceled?: boolean) {
+export function handleCloseModal(modal: ModalState, canceled?: boolean) {
   if (canceled && modal.type === 'confirm') {
     modal.props.onCancel?.();
   }
@@ -57,8 +57,6 @@ export function modalsReducer(
         return state;
       }
 
-      handleCloseModal(modal, action.canceled);
-
       const remainingModals = state.modals.filter((m) => m.id !== action.modalId);
 
       return {
@@ -70,14 +68,6 @@ export function modalsReducer(
       if (!state.modals.length) {
         return state;
       }
-
-      // Resolve modal stack from top to bottom
-      state.modals
-        .concat()
-        .reverse()
-        .forEach((modal) => {
-          handleCloseModal(modal, action.canceled);
-        });
 
       return {
         current: state.current,
