@@ -35,7 +35,7 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
   };
 
   return (
-    <Affix position={{ bottom: 20, right: 20 }}>
+    <Affix position={{ bottom: 20, right: 20 }} visibleFrom="sm">
       <Card withBorder padding={6} radius="md" bg="body">
         <Text ff="monospace" fw="600" ta="center" fz={12} mb={4}>
           LLM
