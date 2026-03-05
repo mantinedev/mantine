@@ -297,10 +297,14 @@ export const Calendar = factory<CalendarFactory>((_props) => {
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
 
-  const now = new Date();
-  const fallbackDate =
-    minDate && dayjs(now).isAfter(minDate) ? minDate : dayjs(now).format('YYYY-MM-DD');
-  const currentDate = _date || fallbackDate;
+  const fallbackDateRef = useRef<DateStringValue | null>(null);
+  if (fallbackDateRef.current === null) {
+    const now = new Date();
+    fallbackDateRef.current = (
+      minDate && dayjs(now).isAfter(minDate) ? minDate : dayjs(now).format('YYYY-MM-DD')
+    ) as DateStringValue;
+  }
+  const currentDate = _date || fallbackDateRef.current;
 
   const handleNextMonth = () => {
     const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').format('YYYY-MM-DD');
