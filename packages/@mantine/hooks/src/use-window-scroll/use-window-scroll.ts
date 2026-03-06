@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export interface UseWindowScrollPosition {
@@ -32,11 +32,38 @@ function scrollTo({ x, y }: Partial<UseWindowScrollPosition>) {
 export function useWindowScroll(): UseWindowScrollReturnValue {
   const [position, setPosition] = useState<UseWindowScrollPosition>({ x: 0, y: 0 });
 
-  useWindowEvent('scroll', () => setPosition(getScrollPosition()));
-  useWindowEvent('resize', () => setPosition(getScrollPosition()));
+  const frameID = useRef<number | null>(null);
+
+  const handleScroll = useCallback(() => {
+    if (frameID.current !== null) {
+      return;
+    }
+
+    frameID.current = requestAnimationFrame(() => {
+      frameID.current = null;
+
+      setPosition((prev) => {
+        const next = getScrollPosition();
+        if (prev.x === next.x && prev.y === next.y) {
+          return prev;
+        }
+
+        return next;
+      });
+    });
+  }, []);
+
+  useWindowEvent('scroll', handleScroll, { passive: true });
+  useWindowEvent('resize', handleScroll, { passive: true });
 
   useEffect(() => {
     setPosition(getScrollPosition());
+
+    return () => {
+      if (frameID.current !== null) {
+        cancelAnimationFrame(frameID.current);
+      }
+    };
   }, []);
 
   return [position, scrollTo] as const;
