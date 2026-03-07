@@ -69,6 +69,9 @@ export interface UseHeadroomInput {
   /** Number in px at which element should be fixed */
   fixedAt?: number;
 
+  /** Number of px to scroll to fully reveal or hide the element, 100 by default */
+  scrollDistance?: number;
+
   /** Called when element is pinned */
   onPin?: () => void;
 
@@ -79,7 +82,21 @@ export interface UseHeadroomInput {
   onRelease?: () => void;
 }
 
-export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroomInput = {}) {
+export interface UseHeadroomReturnValue {
+  /** True when the element is at least partially visible */
+  pinned: boolean;
+
+  /** Reveal progress: 0 = fully hidden, 1 = fully visible */
+  scrollProgress: number;
+}
+
+export function useHeadroom({
+  fixedAt = 0,
+  scrollDistance = 100,
+  onPin,
+  onFix,
+  onRelease,
+}: UseHeadroomInput = {}): UseHeadroomReturnValue {
   const isCurrentlyPinnedRef = useRef(false);
   const isScrollingUp = useScrollDirection();
   const [{ y: scrollPosition }] = useWindowScroll();
@@ -105,13 +122,68 @@ export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroo
     }
   }, [scrollPosition, fixedAt]);
 
-  if (isFixed(scrollPosition, fixedAt) || isScrollingUp) {
-    return true;
+  // Refs for scroll-progress tracking. Mutated during render (safe for refs).
+  const currentlyFixed = isFixed(scrollPosition, fixedAt);
+  const prevIsFixedRef = useRef(currentlyFixed);
+  const directionChangeScrollYRef = useRef(scrollPosition);
+  const progressAtDirectionChangeRef = useRef(currentlyFixed ? 1 : 0);
+  const prevIsScrollingUpRef = useRef(isScrollingUp);
+
+  // Detect fixed-zone transitions first. When leaving the fixed zone the baseline
+  // is anchored at fixedAt (not the current scroll position) so the delta is measured
+  // from where the element was last fully visible, regardless of how scroll position
+  // was initialised on the first render.
+  if (prevIsFixedRef.current !== currentlyFixed) {
+    prevIsFixedRef.current = currentlyFixed;
+
+    if (!currentlyFixed) {
+      directionChangeScrollYRef.current = fixedAt;
+      progressAtDirectionChangeRef.current = 1;
+    } else {
+      directionChangeScrollYRef.current = scrollPosition;
+      progressAtDirectionChangeRef.current = 1;
+    }
+
+    prevIsScrollingUpRef.current = isScrollingUp;
   }
 
-  return false;
+  // When scroll direction changes outside the fixed zone, save the current progress
+  // so the next direction accumulates from that point (handles partial reveals).
+  if (!currentlyFixed && prevIsScrollingUpRef.current !== isScrollingUp) {
+    const transitionDelta = Math.abs(scrollPosition - directionChangeScrollYRef.current);
+    const transitionProgress = prevIsScrollingUpRef.current
+      ? Math.min(progressAtDirectionChangeRef.current + transitionDelta / scrollDistance, 1)
+      : Math.max(progressAtDirectionChangeRef.current - transitionDelta / scrollDistance, 0);
+
+    prevIsScrollingUpRef.current = isScrollingUp;
+    directionChangeScrollYRef.current = scrollPosition;
+    progressAtDirectionChangeRef.current = transitionProgress;
+  }
+
+  let scrollProgress: number;
+
+  if (currentlyFixed) {
+    scrollProgress = 1;
+  } else {
+    const scrollDelta = Math.abs(scrollPosition - directionChangeScrollYRef.current);
+
+    if (isScrollingUp) {
+      scrollProgress = Math.min(
+        progressAtDirectionChangeRef.current + scrollDelta / scrollDistance,
+        1
+      );
+    } else {
+      scrollProgress = Math.max(
+        progressAtDirectionChangeRef.current - scrollDelta / scrollDistance,
+        0
+      );
+    }
+  }
+
+  return { pinned: scrollProgress > 0, scrollProgress };
 }
 
 export namespace useHeadroom {
   export type Input = UseHeadroomInput;
+  export type ReturnValue = UseHeadroomReturnValue;
 }

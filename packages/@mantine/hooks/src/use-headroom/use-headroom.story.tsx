@@ -10,7 +10,7 @@ const content = Array.from({ length: 50 }, (_, i) => (
 ));
 
 export function Usage() {
-  const pinned = useHeadroom({ fixedAt: 120 });
+  const { pinned } = useHeadroom({ fixedAt: 120 });
 
   return (
     <div style={{ padding: '80px 20px 20px' }}>
@@ -44,7 +44,7 @@ export function WithCallbacks() {
   const addLog = (msg: string) =>
     setLog((prev) => [`${new Date().toLocaleTimeString()} — ${msg}`, ...prev].slice(0, 10));
 
-  const pinned = useHeadroom({
+  const { pinned } = useHeadroom({
     fixedAt: 80,
     onPin: () => addLog('onPin'),
     onRelease: () => addLog('onRelease'),
@@ -95,6 +95,34 @@ export function WithCallbacks() {
             {entry}
           </p>
         ))}
+      </div>
+      {content}
+    </div>
+  );
+}
+
+export function ScrollLinked() {
+  const { scrollProgress } = useHeadroom({ fixedAt: 120, scrollDistance: 60 });
+
+  return (
+    <div style={{ padding: '80px 20px 20px' }}>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 60,
+          background: '#7950f2',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 18,
+          transform: `translateY(${(scrollProgress - 1) * 100}%)`,
+        }}
+      >
+        Scroll-linked — {Math.round(scrollProgress * 100)}% visible
       </div>
       {content}
     </div>
