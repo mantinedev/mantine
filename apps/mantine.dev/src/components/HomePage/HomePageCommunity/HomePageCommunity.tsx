@@ -66,10 +66,10 @@ export function HomePageCommunity() {
         <SimpleGrid cols={{ md: 2 }} spacing={60}>
           <div>
             <div className={classes.primaryColumn}>
-              <HomePageTitle order={2}>Loved by the community</HomePageTitle>
+              <HomePageTitle order={2}>Trusted by thousands of developers</HomePageTitle>
               <HomePageDescription>
-                Mantine is used by thousands of developers from all over the world. It is a
-                community-driven project with more than 500 contributors.
+                30,000+ GitHub stars, 5M+ monthly downloads, 500+ contributors. Mantine is built in
+                the open and shaped by the developers who use it every day.
               </HomePageDescription>
 
               <HomePageLearnMore href="https://github.com/orgs/mantinedev/discussions/categories/kind-words">

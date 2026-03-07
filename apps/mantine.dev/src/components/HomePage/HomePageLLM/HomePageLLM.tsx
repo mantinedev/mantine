@@ -45,10 +45,11 @@ export function HomePageLLM() {
         <SimpleGrid cols={{ md: 2 }} spacing={50} verticalSpacing={30}>
           <div className={classes.column}>
             <div className={classes.main}>
-              <HomePageTitle order={2}>AI-ready documentation</HomePageTitle>
+              <HomePageTitle order={2}>Built for the AI-assisted workflow</HomePageTitle>
               <HomePageDescription className={classes.description}>
-                Mantine provides LLM-friendly documentation, skills for AI coding agents, and an MCP
-                server – everything AI tools need to work with Mantine effectively
+                LLM-optimized docs, agent skills for complex tasks, and an MCP server for direct API
+                access — Mantine is designed to work with Cursor, Claude Code, Windsurf, and every
+                AI coding tool you already use.
               </HomePageDescription>
               <HomePageLearnMore href="/guides/llms/">
                 Learn more about LLM integrations
