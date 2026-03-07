@@ -57,7 +57,7 @@ export { useTimeout } from './use-timeout/use-timeout.js';
 export { useTextSelection } from './use-text-selection/use-text-selection.js';
 export { usePrevious } from './use-previous/use-previous.js';
 export { useFavicon } from './use-favicon/use-favicon.js';
-export { useHeadroom } from './use-headroom/use-headroom.js';
+export { useHeadroom, useScrollDirection } from './use-headroom/use-headroom.js';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper.js';
 export { useInViewport } from './use-in-viewport/use-in-viewport.js';
 export {

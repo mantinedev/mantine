@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 import { useWindowScroll } from '../use-window-scroll/use-window-scroll';
 
@@ -22,48 +22,48 @@ export const isPinnedOrReleased = (
   } else if (!isInFixedPosition && isScrollingUp && !isCurrentlyPinnedRef.current) {
     isCurrentlyPinnedRef.current = true;
     onPin?.();
-  } else if (!isInFixedPosition && isCurrentlyPinnedRef.current) {
+  } else if (!isInFixedPosition && !isScrollingUp && isCurrentlyPinnedRef.current) {
     isCurrentlyPinnedRef.current = false;
     onRelease?.();
   }
 };
 
-export const useScrollDirection = () => {
+export function useScrollDirection() {
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isScrollingUp, setIsScrollingUp] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
+  const resizeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  const handleScroll = useEffectEvent(() => {
+    if (isResizing) {
+      return;
+    }
+    const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+    setIsScrollingUp(currentScrollTop < lastScrollTop);
+    setLastScrollTop(currentScrollTop);
+  });
 
   useEffect(() => {
-    let resizeTimer: NodeJS.Timeout | undefined;
-
-    const onResize = () => {
+    const handleResize = () => {
       setIsResizing(true);
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
+      clearTimeout(resizeTimerRef.current);
+      resizeTimerRef.current = setTimeout(() => {
         setIsResizing(false);
-      }, 300); // Reset the resizing flag after a timeout
+      }, 300);
     };
 
-    const onScroll = () => {
-      if (isResizing) {
-        return; // Skip scroll events if resizing is in progress
-      }
-      const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
-      setIsScrollingUp(currentScrollTop < lastScrollTop);
-      setLastScrollTop(currentScrollTop);
-    };
-
-    window.addEventListener('scroll', onScroll);
-    window.addEventListener('resize', onResize);
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimerRef.current);
     };
-  }, [lastScrollTop, isResizing]);
+  }, []);
 
   return isScrollingUp;
-};
+}
 
 export interface UseHeadroomInput {
   /** Number in px at which element should be fixed */
@@ -84,22 +84,26 @@ export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroo
   const isScrollingUp = useScrollDirection();
   const [{ y: scrollPosition }] = useWindowScroll();
 
+  const onPinEvent = useEffectEvent(() => onPin?.());
+  const onReleaseEvent = useEffectEvent(() => onRelease?.());
+  const onFixEvent = useEffectEvent(() => onFix?.());
+
   useIsomorphicEffect(() => {
     isPinnedOrReleased(
       scrollPosition,
       fixedAt,
       isCurrentlyPinnedRef,
       isScrollingUp,
-      onPin,
-      onRelease
+      onPinEvent,
+      onReleaseEvent
     );
-  }, [scrollPosition]);
+  }, [scrollPosition, fixedAt, isScrollingUp]);
 
   useIsomorphicEffect(() => {
     if (isFixed(scrollPosition, fixedAt)) {
-      onFix?.();
+      onFixEvent();
     }
-  }, [scrollPosition, fixedAt, onFix]);
+  }, [scrollPosition, fixedAt]);
 
   if (isFixed(scrollPosition, fixedAt) || isScrollingUp) {
     return true;
