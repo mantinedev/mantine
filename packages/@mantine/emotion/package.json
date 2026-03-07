@@ -37,8 +37,8 @@
     "@emotion/utils": "^1.2.1",
     "@mantine/core": "9.0.0-alpha.4",
     "@mantine/hooks": "9.0.0-alpha.4",
-    "react": "^18.x || ^19.x",
-    "react-dom": "^18.x || ^19.x"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "dependencies": {
     "csstype": "^3.2.3",

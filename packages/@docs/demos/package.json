@@ -36,8 +36,8 @@
     "directory": "packages/@docs/demos"
   },
   "peerDependencies": {
-    "react": "^18.x || ^19.x",
-    "react-dom": "^18.x || ^19.x"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@dnd-kit/core": "^6.3.1",
