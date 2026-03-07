@@ -34,6 +34,7 @@ lerna-debug.log*
 lib/
 cjs/
 esm/
+.buildinfo.json
 
 # typescript
 *.tsbuildinfo

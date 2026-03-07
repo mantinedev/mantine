@@ -9,9 +9,9 @@ const { argv } = yargs(hideBin(process.argv)) as any;
 (async () => {
   const correctedArgs = argv._.map((item: string) => correctPackageName(String(item)));
 
-  if (correctedArgs[0] === 'all') {
+  if (correctedArgs.length === 0 || correctedArgs[0] === 'all') {
     await buildAllPackages();
-  } else if (correctedArgs[0]) {
+  } else {
     for (const item of correctedArgs) {
       await buildPackage(item);
     }
