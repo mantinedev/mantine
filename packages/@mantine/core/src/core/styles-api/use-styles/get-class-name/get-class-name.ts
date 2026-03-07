@@ -91,7 +91,7 @@ export function getClassName({
   return cx(
     getGlobalClassNames({ theme, options, unstyled: unstyled || headless }),
     resolvedThemeClassNames.map((m) => m[selector]),
-    getVariantClassName({ options, classes, selector, unstyled }),
+    getVariantClassName({ options, classes, selector, unstyled: unstyled || headless }),
     resolvedClassNames[selector],
     getResolvedClassNames({ selector, stylesCtx, theme, classNames: transformedStyles, props }),
     getOptionsClassNames({ selector, stylesCtx, options, props, theme }),
