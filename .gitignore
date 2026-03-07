@@ -72,3 +72,4 @@ claude/
 .claude/skills
 .agents/
 codex
+/.claude/worktrees
