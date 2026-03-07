@@ -1,6 +1,12 @@
-import { forwardRef } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 import cx from 'clsx';
-import { BoxProps, ElementProps, MantineRadius, MantineShadow } from '../../core';
+import {
+  BoxProps,
+  ElementProps,
+  FloatingPortalProvider,
+  MantineRadius,
+  MantineShadow,
+} from '../../core';
 import { FocusTrap } from '../FocusTrap';
 import { Paper } from '../Paper';
 import { Transition, TransitionOverride } from '../Transition';
@@ -25,6 +31,11 @@ interface _ModalBaseContentProps extends ModalBaseContentProps {
 export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProps>(
   ({ transitionProps, className, innerProps, onKeyDown, style, ...others }, ref) => {
     const ctx = useModalBaseContext();
+    const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+
+    const portalTargetRef = useCallback((node: HTMLDivElement | null) => {
+      setPortalTarget(node);
+    }, []);
 
     return (
       <Transition
@@ -45,23 +56,29 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
           <div
             {...innerProps}
             className={cx({ [classes.inner]: !ctx.unstyled }, innerProps.className)}
+            role="dialog"
+            aria-modal
+            aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
+            aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
           >
             <FocusTrap active={ctx.opened && ctx.trapFocus} innerRef={ref}>
               <Paper
                 {...others}
-                component="section"
-                role="dialog"
                 tabIndex={-1}
-                aria-modal
-                aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
-                aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
                 style={[style, transitionStyles]}
                 className={cx({ [classes.content]: !ctx.unstyled }, className)}
                 unstyled={ctx.unstyled}
               >
-                {others.children}
+                <FloatingPortalProvider portalTarget={portalTarget}>
+                  {others.children}
+                </FloatingPortalProvider>
               </Paper>
             </FocusTrap>
+            <div
+              ref={portalTargetRef}
+              data-floating-portal
+              className={cx({ [classes.portal]: !ctx.unstyled })}
+            />
           </div>
         )}
       </Transition>
