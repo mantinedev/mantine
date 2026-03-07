@@ -67,10 +67,7 @@ apps/mantine.dev/public/mcp
 .changelog
 apps/help.mantine.dev/next-env.d.ts
 
-.claude/reviews
-.claude/plans
-claude/
-.claude/skills
+/claude/
 .agents/
-codex
+/codex
 /.claude/worktrees
