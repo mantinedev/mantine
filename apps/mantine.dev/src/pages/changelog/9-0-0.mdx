@@ -123,6 +123,15 @@ It allows animation of height from `0` to `auto` and vice versa.
 
 <Demo data={HooksDemos.useHorizontalCollapseDemo} />
 
+## useEffectEvent migration in hooks
+
+Five hooks — `usePageLeave`, `useWindowEvent`, `useHotkeys`, `useClickOutside`, and `useCollapse` —
+have been updated to use React 19's stable `useEffectEvent`. Previously these hooks captured stale
+closures or caused unnecessary event listener re-registrations when non-memoized callbacks were
+passed. With `useEffectEvent`, each hook registers a single stable listener that always calls the
+latest version of the provided callback, so wrapping callbacks in `useCallback` or `useMemo` is no
+longer required.
+
 ## React 19 Activity for keepMounted
 
 [Transition](/core/transition), [Collapse](/core/collapse), [Tabs.Panel](/core/tabs),

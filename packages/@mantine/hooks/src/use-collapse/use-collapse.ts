@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, useState } from 'react';
+import React, { CSSProperties, useEffectEvent, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 import { mergeRefs } from '../use-merged-ref/use-merged-ref';
@@ -72,6 +72,8 @@ export function useCollapse({
     ...(keepMounted ? {} : { display: 'none' }),
   };
 
+  const onTransitionStartEvent = useEffectEvent(() => onTransitionStart?.());
+
   const elementRef = useRef<HTMLElement>(null);
   const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);
   const [state, setState] = useState<UseCollapseState>(expanded ? 'entered' : 'exited');
@@ -94,7 +96,7 @@ export function useCollapse({
     const shouldTransition = transitionDuration !== 0;
 
     if (shouldTransition) {
-      onTransitionStart?.();
+      onTransitionStartEvent();
     }
 
     if (expanded) {
@@ -114,7 +116,7 @@ export function useCollapse({
         window.requestAnimationFrame(() => mergeStyles({ height: 0, overflow: 'hidden' }));
       });
     }
-  }, [expanded, onTransitionStart]);
+  }, [expanded]);
 
   const handleTransitionEnd = (event: React.TransitionEvent): void => {
     if (event.target !== elementRef.current || event.propertyName !== 'height') {
