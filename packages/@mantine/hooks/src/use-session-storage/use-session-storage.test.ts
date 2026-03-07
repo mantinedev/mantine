@@ -22,9 +22,7 @@ describe('@mantine/hooks/use-session-storage', () => {
   });
 
   it('writes value to sessionStorage on set', () => {
-    const { result } = renderHook(() =>
-      useSessionStorage({ key: 'test', defaultValue: '' })
-    );
+    const { result } = renderHook(() => useSessionStorage({ key: 'test', defaultValue: '' }));
     act(() => result.current[1]('hello'));
     expect(sessionStorage.getItem('test')).toBe(JSON.stringify('hello'));
     expect(result.current[0]).toBe('hello');

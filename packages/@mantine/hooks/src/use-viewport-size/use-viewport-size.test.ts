@@ -12,8 +12,16 @@ describe('@mantine/hooks/use-viewport-size', () => {
     const { result } = renderHook(() => useViewportSize());
 
     act(() => {
-      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1280 });
-      Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 800 });
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1280,
+      });
+      Object.defineProperty(window, 'innerHeight', {
+        writable: true,
+        configurable: true,
+        value: 800,
+      });
       window.dispatchEvent(new Event('resize'));
     });
 
@@ -25,8 +33,16 @@ describe('@mantine/hooks/use-viewport-size', () => {
     const { result } = renderHook(() => useViewportSize());
 
     act(() => {
-      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 390 });
-      Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 844 });
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 390,
+      });
+      Object.defineProperty(window, 'innerHeight', {
+        writable: true,
+        configurable: true,
+        value: 844,
+      });
       window.dispatchEvent(new Event('orientationchange'));
     });
 

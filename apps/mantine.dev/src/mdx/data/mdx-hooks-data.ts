@@ -84,7 +84,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Create headers that are hidden after user scrolls past given distance'
   ),
 
-  useScrollDirection: hDocs('useScrollDirection', 'Detects whether the user is scrolling up or down'),
+  useScrollDirection: hDocs(
+    'useScrollDirection',
+    'Detects whether the user is scrolling up or down'
+  ),
 
   useHotkeys: hDocs('useHotkeys', 'Listen for keys combinations on document element'),
   useHover: hDocs('useHover', 'Detects if given element is hovered'),

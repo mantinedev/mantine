@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useCallbackRef, useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
@@ -42,7 +42,7 @@ export function Scrollbar(props: ScrollbarProps) {
   const prevWebkitUserSelectRef = useRef<string>('');
   const { viewport } = context;
   const maxScrollPos = sizes.content - sizes.viewport;
-  const handleWheelScroll = useCallbackRef(onWheelScroll);
+  const handleWheelScroll = useEffectEvent(onWheelScroll);
   const handleThumbPositionChange = useCallbackRef(onThumbPositionChange);
   const handleResize = useDebouncedCallback(onResize, 10);
 
@@ -64,7 +64,7 @@ export function Scrollbar(props: ScrollbarProps) {
     };
     document.addEventListener('wheel', handleWheel, { passive: false });
     return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
-  }, [viewport, scrollbar, maxScrollPos, handleWheelScroll]);
+  }, [viewport, scrollbar, maxScrollPos]);
 
   useEffect(handleThumbPositionChange, [sizes, handleThumbPositionChange]);
 

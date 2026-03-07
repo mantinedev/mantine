@@ -17,14 +17,10 @@ describe('@mantine/hooks/use-validated-state', () => {
   });
 
   it('respects initialValidationState to override validator result on initial render', () => {
-    const hook = renderHook(() =>
-      useValidatedState('test', (val) => val === 'other', false)
-    );
+    const hook = renderHook(() => useValidatedState('test', (val) => val === 'other', false));
     expect(hook.result.current[0].valid).toBe(false);
 
-    const hookForced = renderHook(() =>
-      useValidatedState('test', (val) => val === 'other', true)
-    );
+    const hookForced = renderHook(() => useValidatedState('test', (val) => val === 'other', true));
     expect(hookForced.result.current[0].valid).toBe(true);
   });
 

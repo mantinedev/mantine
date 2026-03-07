@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffectEvent, useRef, useState } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import {
@@ -13,12 +13,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import classes from './ScrollArea.module.css';
 import { ScrollAreaCorner } from './ScrollAreaCorner/ScrollAreaCorner';
 import { ScrollAreaRoot } from './ScrollAreaRoot/ScrollAreaRoot';
 import { ScrollAreaScrollbar } from './ScrollAreaScrollbar/ScrollAreaScrollbar';
 import { ScrollAreaThumb } from './ScrollAreaThumb/ScrollAreaThumb';
 import { ScrollAreaViewport } from './ScrollAreaViewport/ScrollAreaViewport';
+import { useResizeObserver } from './use-resize-observer';
+import classes from './ScrollArea.module.css';
 
 export type ScrollAreaStylesNames =
   | 'root'
@@ -214,23 +215,13 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
     }
   }, []);
 
-  useEffect(() => {
+  useResizeObserver(offsetScrollbars === 'present' ? localViewportRef.current : null, () => {
     const element = localViewportRef.current;
-
-    if (!element || offsetScrollbars !== 'present') {
-      return;
+    if (element) {
+      setVerticalThumbVisible(element.scrollHeight > element.clientHeight);
+      setHorizontalThumbVisible(element.scrollWidth > element.clientWidth);
     }
-
-    const observer = new ResizeObserver(() => {
-      const { scrollHeight, clientHeight, scrollWidth, clientWidth } = element;
-      setVerticalThumbVisible(scrollHeight > clientHeight);
-      setHorizontalThumbVisible(scrollWidth > clientWidth);
-    });
-
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [offsetScrollbars]);
+  });
 
   return (
     <ScrollAreaRoot
@@ -367,42 +358,32 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
   const viewportObserverRef = useRef<HTMLDivElement>(null);
   const combinedViewportRef = useMergeRefs([viewportRef, viewportObserverRef]);
 
-  const [overflowing, setOverflowing] = useState(false);
-  const didMount = useRef(false);
+  const overflowingRef = useRef(false);
+  const didMountRef = useRef(false);
 
-  useEffect(() => {
-    if (!onOverflowChange) {
-      return;
-    }
-
+  const handleOverflowCheck = useEffectEvent(() => {
     const el = viewportObserverRef.current;
-
-    if (!el) {
+    if (!el || !onOverflowChange) {
       return;
     }
 
-    const update = () => {
-      const isOverflowing = el.scrollHeight > el.clientHeight;
+    const isOverflowing = el.scrollHeight > el.clientHeight;
 
-      if (isOverflowing !== overflowing) {
-        if (didMount.current) {
-          onOverflowChange?.(isOverflowing);
-        } else {
-          didMount.current = true;
-          if (isOverflowing) {
-            onOverflowChange?.(true);
-          }
+    if (isOverflowing !== overflowingRef.current) {
+      if (didMountRef.current) {
+        onOverflowChange(isOverflowing);
+      } else {
+        didMountRef.current = true;
+        if (isOverflowing) {
+          onOverflowChange(true);
         }
-
-        setOverflowing(isOverflowing);
       }
-    };
 
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [onOverflowChange, overflowing]);
+      overflowingRef.current = isOverflowing;
+    }
+  });
+
+  useResizeObserver(onOverflowChange ? viewportObserverRef.current : null, handleOverflowCheck);
 
   return (
     <Box {...others} variant={variant} style={[{ display: 'flex', overflow: 'hidden' }, style]}>

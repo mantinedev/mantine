@@ -7,9 +7,7 @@ beforeEach(() => {
 
 describe('@mantine/hooks/use-local-storage', () => {
   it('returns defaultValue when storage is empty', () => {
-    const { result } = renderHook(() =>
-      useLocalStorage({ key: 'test', defaultValue: 'default' })
-    );
+    const { result } = renderHook(() => useLocalStorage({ key: 'test', defaultValue: 'default' }));
     expect(result.current[0]).toBe('default');
   });
 
@@ -22,26 +20,20 @@ describe('@mantine/hooks/use-local-storage', () => {
   });
 
   it('writes value to localStorage on set', () => {
-    const { result } = renderHook(() =>
-      useLocalStorage({ key: 'test', defaultValue: '' })
-    );
+    const { result } = renderHook(() => useLocalStorage({ key: 'test', defaultValue: '' }));
     act(() => result.current[1]('hello'));
     expect(localStorage.getItem('test')).toBe(JSON.stringify('hello'));
     expect(result.current[0]).toBe('hello');
   });
 
   it('supports functional updater', async () => {
-    const { result } = renderHook(() =>
-      useLocalStorage<number>({ key: 'count', defaultValue: 1 })
-    );
+    const { result } = renderHook(() => useLocalStorage<number>({ key: 'count', defaultValue: 1 }));
     await act(async () => result.current[1]((prev) => prev + 1));
     expect(result.current[0]).toBe(2);
   });
 
   it('removes value from localStorage and resets to defaultValue', () => {
-    const { result } = renderHook(() =>
-      useLocalStorage({ key: 'test', defaultValue: 'default' })
-    );
+    const { result } = renderHook(() => useLocalStorage({ key: 'test', defaultValue: 'default' }));
     act(() => result.current[1]('set'));
     act(() => result.current[2]());
     expect(localStorage.getItem('test')).toBeNull();
@@ -58,9 +50,7 @@ describe('@mantine/hooks/use-local-storage', () => {
   });
 
   it('reacts to a storage event (cross-tab update)', () => {
-    const { result } = renderHook(() =>
-      useLocalStorage({ key: 'test', defaultValue: 'default' })
-    );
+    const { result } = renderHook(() => useLocalStorage({ key: 'test', defaultValue: 'default' }));
     act(() => {
       window.dispatchEvent(
         new StorageEvent('storage', {
@@ -74,9 +64,7 @@ describe('@mantine/hooks/use-local-storage', () => {
   });
 
   it('ignores storage events for different keys', () => {
-    const { result } = renderHook(() =>
-      useLocalStorage({ key: 'mine', defaultValue: 'original' })
-    );
+    const { result } = renderHook(() => useLocalStorage({ key: 'mine', defaultValue: 'original' }));
     act(() => {
       window.dispatchEvent(
         new StorageEvent('storage', {

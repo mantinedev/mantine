@@ -33,9 +33,22 @@ describe('@mantine/hooks/use-event-listener', () => {
 
     function Swappable({ useFirst }: { useFirst: boolean }) {
       const ref = useEventListener('click', spy);
-      const node1 = useFirst ? <button ref={ref} type="button" data-testid="btn1">one</button> : null;
-      const node2 = !useFirst ? <button ref={ref} type="button" data-testid="btn2">two</button> : null;
-      return <>{node1}{node2}</>;
+      const node1 = useFirst ? (
+        <button ref={ref} type="button" data-testid="btn1">
+          one
+        </button>
+      ) : null;
+      const node2 = !useFirst ? (
+        <button ref={ref} type="button" data-testid="btn2">
+          two
+        </button>
+      ) : null;
+      return (
+        <>
+          {node1}
+          {node2}
+        </>
+      );
     }
 
     const { rerender } = render(<Swappable useFirst />);
