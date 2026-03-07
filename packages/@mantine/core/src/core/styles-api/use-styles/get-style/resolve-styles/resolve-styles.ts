@@ -10,12 +10,15 @@ export interface ResolveStylesInput {
 
 export function resolveStyles({ theme, styles, props, stylesCtx }: ResolveStylesInput) {
   const arrayStyles = Array.isArray(styles) ? styles : [styles];
+  const result: Record<string, any> = {};
 
-  return arrayStyles.reduce<Record<string, any>>((acc, style) => {
+  for (const style of arrayStyles) {
     if (typeof style === 'function') {
-      return { ...acc, ...style(theme, props, stylesCtx) };
+      Object.assign(result, style(theme, props, stylesCtx));
+    } else if (style) {
+      Object.assign(result, style);
     }
+  }
 
-    return { ...acc, ...style };
-  }, {});
+  return result;
 }

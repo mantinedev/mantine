@@ -109,6 +109,8 @@ export function useStyles<Payload extends FactoryPayload>({
   const resolvedRootStyle = resolveStyle({ style, theme });
 
   return (selector, options) => ({
+    ...attributes?.[selector],
+
     className: getClassName({
       theme,
       options,
@@ -141,7 +143,5 @@ export function useStyles<Payload extends FactoryPayload>({
       resolvedVars,
       resolvedRootStyle,
     }),
-
-    ...attributes?.[selector],
   });
 }

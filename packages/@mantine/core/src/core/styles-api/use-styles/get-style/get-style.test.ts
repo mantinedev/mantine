@@ -134,4 +134,87 @@ describe('@mantine/core/get-style', () => {
       })
     ).toStrictEqual({ '--color': DEFAULT_THEME.colors.red[0] });
   });
+
+  it('resolvedStyles overrides resolvedThemeStyles for same property', () => {
+    expect(
+      getStyle({
+        ...defaultOptions,
+        resolvedThemeStyles: { root: { color: 'red' } },
+        resolvedStyles: { root: { color: 'blue' } },
+      })
+    ).toStrictEqual({ color: 'blue' });
+  });
+
+  it('resolvedVars overrides resolvedStyles for same property', () => {
+    expect(
+      getStyle({
+        ...defaultOptions,
+        resolvedStyles: { root: { color: 'red' } },
+        resolvedVars: { root: { color: 'blue' } },
+      })
+    ).toStrictEqual({ color: 'blue' });
+  });
+
+  it('resolvedRootStyle overrides resolvedVars for same property', () => {
+    expect(
+      getStyle({
+        ...defaultOptions,
+        resolvedVars: { root: { color: 'red' } },
+        resolvedRootStyle: { color: 'blue' },
+      })
+    ).toStrictEqual({ color: 'blue' });
+  });
+
+  it('options.style overrides all other sources for same property', () => {
+    expect(
+      getStyle({
+        ...defaultOptions,
+        resolvedThemeStyles: { root: { color: 'theme' } },
+        resolvedStyles: { root: { color: 'component' } },
+        resolvedVars: { root: { color: 'vars' } },
+        resolvedRootStyle: { color: 'root' },
+        options: { style: { color: 'options' } },
+      })
+    ).toStrictEqual({ color: 'options' });
+  });
+
+  it('options.styles overrides resolvedStyles but not resolvedVars', () => {
+    expect(
+      getStyle({
+        ...defaultOptions,
+        resolvedStyles: { root: { color: 'component', background: 'red' } },
+        options: { styles: { root: { color: 'options' } } },
+        resolvedVars: { root: { color: 'vars' } },
+      })
+    ).toStrictEqual({ color: 'vars', background: 'red' });
+  });
+
+  it('all sources compose non-overlapping properties', () => {
+    expect(
+      getStyle({
+        ...defaultOptions,
+        resolvedThemeStyles: { root: { color: 'red' } },
+        resolvedStyles: { root: { background: 'blue' } },
+        resolvedVars: { root: { '--size': '10px' } },
+        resolvedRootStyle: { fontSize: '14px' },
+        options: { style: { fontWeight: 'bold' } },
+      })
+    ).toStrictEqual({
+      color: 'red',
+      background: 'blue',
+      '--size': '10px',
+      fontSize: '14px',
+      fontWeight: 'bold',
+    });
+  });
+
+  it('returns empty for non-root selector when only resolvedRootStyle is set', () => {
+    expect(
+      getStyle({
+        ...defaultOptions,
+        selector: 'label',
+        resolvedRootStyle: { color: 'red' },
+      })
+    ).toStrictEqual({});
+  });
 });

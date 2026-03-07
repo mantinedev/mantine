@@ -293,4 +293,105 @@ describe('@mantine/core/get-class-name', () => {
     expect(output.includes('mantine-AnotherTest-root')).toBe(false);
     expect(output.includes('test-root')).toBe(true);
   });
+
+  it('headless mode strips CSS module classes', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      headless: true,
+    });
+
+    expect(output.includes('test-root')).toBe(false);
+  });
+
+  it('headless mode strips variant classes', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      headless: true,
+      classes: { root: 'test-root', 'root--filled': 'test-root-filled' },
+      options: { variant: 'filled' },
+    });
+
+    expect(output.includes('test-root')).toBe(false);
+    expect(output.includes('test-root-filled')).toBe(false);
+  });
+
+  it('headless mode strips static classes', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      headless: true,
+    });
+
+    expect(output.includes('mantine-Test-root')).toBe(false);
+  });
+
+  it('headless mode strips focus class names', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      headless: true,
+      options: { focusable: true },
+    });
+
+    expect(output.includes(FOCUS_CLASS_NAMES[DEFAULT_THEME.focusRing])).toBe(false);
+  });
+
+  it('headless mode preserves resolvedClassNames', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      headless: true,
+      resolvedClassNames: { root: '__custom' },
+    });
+
+    expect(output.includes('__custom')).toBe(true);
+  });
+
+  it('unstyled mode strips CSS module classes and variant classes', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      unstyled: true,
+      classes: { root: 'test-root', 'root--filled': 'test-root-filled' },
+      options: { variant: 'filled' },
+    });
+
+    expect(output.includes('test-root')).toBe(false);
+    expect(output.includes('test-root-filled')).toBe(false);
+  });
+
+  it('headless + unstyled combined strips all Mantine classes', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      headless: true,
+      unstyled: true,
+      classes: { root: 'test-root', 'root--filled': 'test-root-filled' },
+      options: { focusable: true, variant: 'filled' },
+    });
+
+    expect(output.includes('test-root')).toBe(false);
+    expect(output.includes('test-root-filled')).toBe(false);
+    expect(output.includes(FOCUS_CLASS_NAMES[DEFAULT_THEME.focusRing])).toBe(false);
+    expect(output.includes('mantine-Test-root')).toBe(false);
+  });
+
+  it('options.classNames overrides resolvedClassNames for same selector', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      resolvedClassNames: { root: '__component-class' },
+      options: { classNames: { root: '__options-class' } },
+    });
+
+    expect(output.includes('__component-class')).toBe(true);
+    expect(output.includes('__options-class')).toBe(true);
+  });
+
+  it('resolvedThemeClassNames, resolvedClassNames, and options.classNames all compose', () => {
+    const output = getClassName({
+      ...defaultOptions,
+      resolvedThemeClassNames: [{ root: '__theme-class' }],
+      resolvedClassNames: { root: '__component-class' },
+      options: { classNames: { root: '__options-class' } },
+    });
+
+    expect(output.includes('__theme-class')).toBe(true);
+    expect(output.includes('__component-class')).toBe(true);
+    expect(output.includes('__options-class')).toBe(true);
+  });
 });

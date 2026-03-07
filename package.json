@@ -66,6 +66,7 @@
     "syncpack:format": "syncpack format",
     "prettier:test": "prettier --check \"**/*.{ts,tsx,css}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx,css}\"",
+    "prettier:write:files": "prettier --write",
     "ncu:docs": "npx npm-check-updates --packageFile './apps/*/package.json' -x @phosphor-icons/react",
     "ncu:root": "npx npm-check-updates --packageFile './package.json' -x @phosphor-icons/react",
     "ncu": "npm run ncu:docs && npm run ncu:root",
