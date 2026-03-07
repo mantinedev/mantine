@@ -57,7 +57,8 @@ export { useTimeout } from './use-timeout/use-timeout.js';
 export { useTextSelection } from './use-text-selection/use-text-selection.js';
 export { usePrevious } from './use-previous/use-previous.js';
 export { useFavicon } from './use-favicon/use-favicon.js';
-export { useHeadroom, useScrollDirection } from './use-headroom/use-headroom.js';
+export { useHeadroom } from './use-headroom/use-headroom.js';
+export { useScrollDirection } from './use-scroll-direction/use-scroll-direction.js';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper.js';
 export { useInViewport } from './use-in-viewport/use-in-viewport.js';
 export {
@@ -133,6 +134,7 @@ export type {
 export type { UseFullscreenElementReturnValue } from './use-fullscreen/use-fullscreen';
 export type { UseHashInput as UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
 export type { UseHeadroomInput as UseHeadroomOptions } from './use-headroom/use-headroom';
+export type { ScrollDirection } from './use-scroll-direction/use-scroll-direction';
 export type { HotkeyItemOptions, HotkeyItem } from './use-hotkeys/use-hotkeys';
 export type { UseHoverReturnValue } from './use-hover/use-hover';
 export type { UseIdleOptions } from './use-idle/use-idle';

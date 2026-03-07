@@ -1,12 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import {
-  isFixed,
-  isPinned,
-  isPinnedOrReleased,
-  isReleased,
-  useHeadroom,
-  useScrollDirection,
-} from './use-headroom';
+import { isFixed, isPinned, isPinnedOrReleased, isReleased, useHeadroom } from './use-headroom';
 
 function simulateScroll(y: number) {
   Object.defineProperty(window, 'scrollY', { value: y, configurable: true, writable: true });
@@ -106,34 +99,6 @@ describe('@mantine/hooks/use-headroom', () => {
     });
   });
 
-  describe('useScrollDirection', () => {
-    it('returns false initially', () => {
-      const { result } = renderHook(() => useScrollDirection());
-      expect(result.current).toBe(false);
-    });
-
-    it('returns false after the first scroll down event', () => {
-      const { result } = renderHook(() => useScrollDirection());
-      simulateScroll(100);
-      expect(result.current).toBe(false);
-    });
-
-    it('returns true after scrolling up', () => {
-      const { result } = renderHook(() => useScrollDirection());
-      simulateScroll(100);
-      simulateScroll(50);
-      expect(result.current).toBe(true);
-    });
-
-    it('returns false again after reversing back down', () => {
-      const { result } = renderHook(() => useScrollDirection());
-      simulateScroll(100);
-      simulateScroll(50);
-      simulateScroll(150);
-      expect(result.current).toBe(false);
-    });
-  });
-
   describe('useHeadroom / scrollProgress', () => {
     it('starts fully visible at the top of the page', () => {
       const { result } = renderHook(() => useHeadroom());
@@ -163,28 +128,26 @@ describe('@mantine/hooks/use-headroom', () => {
 
     it('gradually reveals as the page scrolls back up', () => {
       const { result } = renderHook(() => useHeadroom({ fixedAt: 0, scrollDistance: 100 }));
-      simulateScroll(100); // fully hidden
-      simulateScroll(50); // direction change at 50 → progress = 0.5
+      simulateScroll(100);
+      simulateScroll(50);
       expect(result.current.scrollProgress).toBe(0.5);
     });
 
     it('returns to fully visible when scrolling back into the fixed zone', () => {
       const { result } = renderHook(() => useHeadroom({ fixedAt: 0, scrollDistance: 100 }));
-      simulateScroll(200); // fully hidden
-      simulateScroll(100); // direction change, still hidden
-      simulateScroll(0); // back in fixed zone
+      simulateScroll(200);
+      simulateScroll(100);
+      simulateScroll(0);
       expect(result.current.scrollProgress).toBe(1);
       expect(result.current.pinned).toBe(true);
     });
 
     it('continues from the saved progress when reversing direction mid-scroll', () => {
-      // Scroll down to 75% hidden, then reverse up, then reverse down again.
-      // Each reversal should continue from wherever progress was at that moment.
       const { result } = renderHook(() => useHeadroom({ fixedAt: 0, scrollDistance: 100 }));
 
-      simulateScroll(75); // progress = 1 - 75/100 = 0.25
-      simulateScroll(50); // direction change at 50 → transitionProgress = 0.5, scrollDelta = 0 → 0.5
-      simulateScroll(75); // direction change at 75 → transitionProgress = 0.5 + 25/100 = 0.75
+      simulateScroll(75);
+      simulateScroll(50);
+      simulateScroll(75);
 
       expect(result.current.scrollProgress).toBe(0.75);
     });
@@ -198,13 +161,12 @@ describe('@mantine/hooks/use-headroom', () => {
     it('clamps scrollProgress to 1 when scrolled far up', () => {
       const { result } = renderHook(() => useHeadroom({ fixedAt: 0, scrollDistance: 100 }));
       simulateScroll(200);
-      simulateScroll(100); // direction change, progress = 0
-      simulateScroll(0); // fixed zone → 1
+      simulateScroll(100);
+      simulateScroll(0);
       expect(result.current.scrollProgress).toBe(1);
     });
 
     it('starts hidden when the page loads already scrolled past fixedAt', () => {
-      // Mock scrollY before rendering so useWindowScroll reads the correct position on mount.
       Object.defineProperty(window, 'scrollY', { value: 500, configurable: true, writable: true });
       const { result } = renderHook(() => useHeadroom({ fixedAt: 0, scrollDistance: 100 }));
       expect(result.current.scrollProgress).toBe(0);
@@ -222,21 +184,19 @@ describe('@mantine/hooks/use-headroom', () => {
     it('calls onPin when scroll direction changes to up outside the fixed zone', () => {
       const onPin = jest.fn();
       renderHook(() => useHeadroom({ fixedAt: 0, onPin }));
-      // onPin fires on mount because isFixed(0, 0) = true. Clear that call first.
       jest.clearAllMocks();
-      simulateScroll(100); // scrolling down → onRelease (isCurrentlyPinned → false)
-      simulateScroll(50); // direction change to up → onPin fires
+      simulateScroll(100);
+      simulateScroll(50);
       expect(onPin).toHaveBeenCalledTimes(1);
     });
 
     it('calls onRelease when scroll direction changes to down after being pinned', () => {
       const onRelease = jest.fn();
       renderHook(() => useHeadroom({ fixedAt: 0, onRelease }));
-      // isCurrentlyPinned = true after mount (in fixed zone). Scrolling down releases.
-      simulateScroll(100); // onRelease fires (1)
-      simulateScroll(50); // direction change to up → onPin (no onRelease provided → noop)
+      simulateScroll(100);
+      simulateScroll(50);
       jest.clearAllMocks();
-      simulateScroll(100); // direction change to down → onRelease fires
+      simulateScroll(100);
       expect(onRelease).toHaveBeenCalledTimes(1);
     });
 
@@ -244,23 +204,22 @@ describe('@mantine/hooks/use-headroom', () => {
       const onPin = jest.fn();
       renderHook(() => useHeadroom({ fixedAt: 0, onPin }));
       jest.clearAllMocks();
-      simulateScroll(100); // scrolling down → onRelease (isCurrentlyPinned → false)
-      simulateScroll(75); // direction change to up → onPin fires once
-      simulateScroll(50); // still scrolling up → no extra onPin
-      simulateScroll(25); // still scrolling up → no extra onPin
+      simulateScroll(100);
+      simulateScroll(75);
+      simulateScroll(50);
+      simulateScroll(25);
       expect(onPin).toHaveBeenCalledTimes(1);
     });
 
     it('does not call onRelease more than once while continuously scrolling down', () => {
       const onRelease = jest.fn();
       renderHook(() => useHeadroom({ fixedAt: 0, onRelease }));
-      // Get into a pinned-then-cleared state, then re-pin to have a clean baseline.
-      simulateScroll(100); // onRelease fires (isCurrentlyPinned → false)
-      simulateScroll(50); // re-pins (isCurrentlyPinned → true)
+      simulateScroll(100);
+      simulateScroll(50);
       jest.clearAllMocks();
-      simulateScroll(100); // direction change to down → onRelease fires once
-      simulateScroll(150); // still scrolling down → no extra onRelease
-      simulateScroll(200); // still scrolling down → no extra onRelease
+      simulateScroll(100);
+      simulateScroll(150);
+      simulateScroll(200);
       expect(onRelease).toHaveBeenCalledTimes(1);
     });
 
@@ -276,9 +235,8 @@ describe('@mantine/hooks/use-headroom', () => {
           },
         }
       );
-      // Reset after mount so we test only the post-rerender call.
       callCount = 0;
-      simulateScroll(100); // scrolling down → onRelease (isCurrentlyPinned → false)
+      simulateScroll(100);
 
       rerender({
         onPin: () => {
@@ -286,7 +244,7 @@ describe('@mantine/hooks/use-headroom', () => {
         },
       });
 
-      simulateScroll(50); // direction change to up → should call the latest onPin (v2)
+      simulateScroll(50);
       expect(callCount).toBe(10);
     });
   });

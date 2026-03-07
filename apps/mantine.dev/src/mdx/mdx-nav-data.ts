@@ -216,6 +216,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useFavicon,
       MDX_DATA.useHash,
       MDX_DATA.useHeadroom,
+      MDX_DATA.useScrollDirection,
       MDX_DATA.useIdle,
       MDX_DATA.useInterval,
       MDX_DATA.useMergedRef,

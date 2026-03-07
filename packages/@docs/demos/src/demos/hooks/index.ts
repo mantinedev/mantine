@@ -18,6 +18,7 @@ export { useFullscreenDemo } from './use-fullscreen.demo.usage';
 export { useFullscreenRefDemo } from './use-fullscreen.demo.ref';
 export { useHashDemo } from './use-hash.demo.usage';
 export { useHeadroomDemo } from './use-headroom.demo.usage';
+export { useScrollDirectionDemo } from './use-scroll-direction.demo.usage';
 export { useHotkeysDemo } from './use-hotkeys.demo.usage';
 export { useHotkeysDemoIndex } from './use-hotkeys.demo.index';
 export { useHoverDemo } from './use-hover.demo.usage';

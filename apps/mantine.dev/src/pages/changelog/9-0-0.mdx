@@ -548,15 +548,10 @@ position when the component mounts:
 
 <Demo data={ScrollAreaDemos.startScrollPosition} />
 
-## DayView and WeekView startScrollTime
-
-`DayView` and `WeekView` components now support `startScrollTime` prop to set the initial
-scroll position to a specific time. The value should be in `HH:mm:ss` format:
-
-<Demo data={DayViewDemos.startScrollTime} />
-
 ## Other changes
 
+- [useHeadroom](/hooks/use-headroom) hook now returns `{ pinned: boolean; scrollProgress: number }` object instead of a plain `boolean`. `scrollProgress` is a value between `0` (fully hidden) and `1` (fully visible) that can be used for scroll-linked reveal animations. A new `scrollDistance` option controls how many pixels of scrolling are required to fully reveal or hide the element (default: `100`).
+- New [useScrollDirection](/hooks/use-scroll-direction) hook detects whether the user is currently scrolling up (`true`) or down (`false`). It handles resize events to avoid false direction changes and always uses the latest state without stale closure issues.
 - `light` variant in all components now uses different colors values without transparency to improve contrast
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead

@@ -1,6 +1,9 @@
-import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { useEffectEvent, useRef } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useScrollDirection } from '../use-scroll-direction/use-scroll-direction';
 import { useWindowScroll } from '../use-window-scroll/use-window-scroll';
+
+export { useScrollDirection } from '../use-scroll-direction/use-scroll-direction';
 
 export const isFixed = (current: number, fixedAt: number) => current <= fixedAt;
 export const isPinned = (current: number, previous: number) => current <= previous;
@@ -27,43 +30,6 @@ export const isPinnedOrReleased = (
     onRelease?.();
   }
 };
-
-export function useScrollDirection() {
-  const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [isScrollingUp, setIsScrollingUp] = useState(false);
-  const [isResizing, setIsResizing] = useState(false);
-  const resizeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  const handleScroll = useEffectEvent(() => {
-    if (isResizing) {
-      return;
-    }
-    const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
-    setIsScrollingUp(currentScrollTop < lastScrollTop);
-    setLastScrollTop(currentScrollTop);
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsResizing(true);
-      clearTimeout(resizeTimerRef.current);
-      resizeTimerRef.current = setTimeout(() => {
-        setIsResizing(false);
-      }, 300);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimerRef.current);
-    };
-  }, []);
-
-  return isScrollingUp;
-}
 
 export interface UseHeadroomInput {
   /** Number in px at which element should be fixed */
@@ -98,7 +64,8 @@ export function useHeadroom({
   onRelease,
 }: UseHeadroomInput = {}): UseHeadroomReturnValue {
   const isCurrentlyPinnedRef = useRef(false);
-  const isScrollingUp = useScrollDirection();
+  const scrollDirection = useScrollDirection();
+  const isScrollingUp = scrollDirection === 'up';
   const [{ y: scrollPosition }] = useWindowScroll();
 
   const onPinEvent = useEffectEvent(() => onPin?.());

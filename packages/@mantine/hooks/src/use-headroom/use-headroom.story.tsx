@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHeadroom, useScrollDirection } from './use-headroom';
+import { useHeadroom } from './use-headroom';
 
 export default { title: 'useHeadroom' };
 
@@ -123,34 +123,6 @@ export function ScrollLinked() {
         }}
       >
         Scroll-linked — {Math.round(scrollProgress * 100)}% visible
-      </div>
-      {content}
-    </div>
-  );
-}
-
-export function ScrollDirection() {
-  const isScrollingUp = useScrollDirection();
-
-  return (
-    <div style={{ padding: '80px 20px 20px' }}>
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 60,
-          background: isScrollingUp ? '#40c057' : '#fa5252',
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 18,
-          transition: 'background 150ms ease',
-        }}
-      >
-        Scrolling {isScrollingUp ? '↑ UP' : '↓ DOWN'}
       </div>
       {content}
     </div>
