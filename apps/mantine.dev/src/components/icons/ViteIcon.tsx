@@ -203,9 +203,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="19.2496"
           height="13.3537"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="2.45548" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -216,9 +216,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="28.9616"
           height="16.4901"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="2.45548" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -229,9 +229,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="25.44"
           height="9.42533"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -242,9 +242,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="25.5123"
           height="9.42534"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -255,9 +255,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="25.5123"
           height="9.42534"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -268,9 +268,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="23.9635"
           height="18.8673"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="2.45548" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -281,9 +281,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="19.6764"
           height="8.13085"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -294,9 +294,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="19.6764"
           height="8.13085"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -307,9 +307,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="17.9674"
           height="20.4053"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -320,9 +320,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="17.5728"
           height="20.7248"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -333,9 +333,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="10.7535"
           height="11.3209"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -346,9 +346,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="17.5728"
           height="20.7248"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -359,9 +359,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="17.5728"
           height="20.7248"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -372,9 +372,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="17.5728"
           height="20.7248"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
@@ -385,9 +385,9 @@ export function ViteIcon({ size = 40, ...others }: IconProps) {
           width="12.6344"
           height="13.985"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1.47329" result="effect1_foregroundBlur_242_20653" />
         </filter>
