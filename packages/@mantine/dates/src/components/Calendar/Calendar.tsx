@@ -108,6 +108,9 @@ export interface CalendarBaseProps {
   /** Number of columns displayed next to each other @default 1 */
   numberOfColumns?: number;
 
+  /** Number of rows displayed @default 1 */
+  numberOfRows?: number;
+
   /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
   columnsToScroll?: number;
 
@@ -190,6 +193,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     defaultDate,
     onDateChange,
     numberOfColumns,
+    numberOfRows,
     columnsToScroll,
     ariaLabels,
     nextLabel,
@@ -434,6 +438,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           hasNextLevel={maxLevel !== 'month'}
           onLevelClick={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
+          numberOfRows={numberOfRows}
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
           nextLabel={ariaLabels?.nextMonth ?? nextLabel}
@@ -459,6 +464,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
         <YearLevelGroup
           year={currentDate}
           numberOfColumns={numberOfColumns}
+          numberOfRows={numberOfRows}
           minDate={minDate}
           maxDate={maxDate}
           monthsListFormat={monthsListFormat}
@@ -500,6 +506,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           onNext={handleNextDecade}
           onPrevious={handlePreviousDecade}
           numberOfColumns={numberOfColumns}
+          numberOfRows={numberOfRows}
           nextLabel={ariaLabels?.nextDecade ?? nextLabel}
           nextIcon={nextIcon}
           previousLabel={ariaLabels?.previousDecade ?? previousLabel}
