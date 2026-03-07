@@ -1,10 +1,11 @@
+import { Activity } from 'react';
 import { useMantineEnv } from '../../core';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition } from './transitions';
 import { useTransition } from './use-transition';
 
 export interface TransitionProps {
-  /** If set, the element is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
+  /** If set, the element is kept in the DOM when hidden. React 19 `Activity` is used to preserve state while the element is not visible. */
   keepMounted?: boolean;
 
   /** Transition name or object */
@@ -75,15 +76,37 @@ export function Transition({
     exitDelay,
   });
 
-  if (transitionDuration === 0 || env === 'test') {
+  if (env === 'test') {
     return mounted ? <>{children({})}</> : keepMounted ? children({ display: 'none' }) : null;
   }
 
-  return transitionStatus === 'exited' ? (
-    keepMounted ? (
-      children({ display: 'none' })
-    ) : null
-  ) : (
+  if (transitionDuration === 0) {
+    if (keepMounted) {
+      return <Activity mode={mounted ? 'visible' : 'hidden'}>{children({})}</Activity>;
+    }
+    return mounted ? <>{children({})}</> : null;
+  }
+
+  const isExited = transitionStatus === 'exited';
+
+  if (keepMounted) {
+    return (
+      <Activity mode={isExited ? 'hidden' : 'visible'}>
+        {children(
+          isExited
+            ? {}
+            : getTransitionStyles({
+                transition,
+                duration: transitionDuration,
+                state: transitionStatus,
+                timingFunction: transitionTimingFunction,
+              })
+        )}
+      </Activity>
+    );
+  }
+
+  return isExited ? null : (
     <>
       {children(
         getTransitionStyles({

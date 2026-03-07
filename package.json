@@ -156,7 +156,7 @@
     "@types/jest-axe": "^3.5.9",
     "@types/lodash": "^4.17.21",
     "@types/node": "^24.10.2",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/react-transition-group": "^4.4.12",
     "@types/resize-observer-browser": "^0.1.11",
@@ -226,8 +226,8 @@
   "resolutions": {
     "prosemirror-model": "1.18.1",
     "@babel/core": "7.26.0",
-    "@types/react": "19.1.10",
-    "@types/react-dom": "19.1.7",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
     "react-is": "^19.0.0"
   }
 }

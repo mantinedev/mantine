@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '../Button';
+import { Button, NumberInput, Stack } from '../..';
 import { Text } from '../Text';
 import { Collapse } from './Collapse';
 
@@ -39,5 +39,36 @@ export function Usage() {
         <Component />
       </Collapse>
     </div>
+  );
+}
+
+export function WithActivityStatePreservation() {
+  const [opened, setOpened] = useState(true);
+  const [value, setValue] = useState(42);
+
+  return (
+    <Stack maw={400} p="md">
+      <Text size="sm" c="dimmed">
+        <strong>keepMounted + Activity</strong>: the NumberInput value is preserved when the panel
+        collapses and re-expands. Compare to the unmounted variant below where state resets.
+      </Text>
+
+      <Button onClick={() => setOpened((o) => !o)}>{opened ? 'Collapse' : 'Expand'}</Button>
+
+      <Collapse expanded={opened} keepMounted>
+        <Stack gap="xs" p="md" style={{ background: '#f0f4ff', borderRadius: 8 }}>
+          <Text fw={600}>keepMounted (Activity)</Text>
+          <NumberInput
+            label="Value survives collapse"
+            value={value}
+            onChange={(v) => setValue(typeof v === 'number' ? v : 0)}
+          />
+        </Stack>
+      </Collapse>
+
+      <Text size="xs" c="dimmed">
+        Value reported outside panel: <strong>{value}</strong>
+      </Text>
+    </Stack>
   );
 }

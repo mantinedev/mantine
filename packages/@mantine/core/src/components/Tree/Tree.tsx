@@ -90,6 +90,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** If set, tree nodes range can be selected with click when `Shift` key is pressed @default true */
   allowRangeSelection?: boolean;
+
+  /** If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. @default false */
+  keepMounted?: boolean;
 }
 
 function getFlatValues(data: TreeNodeData[]): string[] {
@@ -140,6 +143,7 @@ export const Tree = factory<TreeFactory>((_props) => {
     expandOnSpace,
     levelOffset,
     checkOnSpace,
+    keepMounted,
     attributes,
     ref,
     ...others
@@ -188,6 +192,7 @@ export const Tree = factory<TreeFactory>((_props) => {
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
       checkOnSpace={checkOnSpace}
+      keepMounted={keepMounted}
     />
   ));
 

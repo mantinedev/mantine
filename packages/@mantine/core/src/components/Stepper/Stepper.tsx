@@ -1,4 +1,4 @@
-import { Children, cloneElement } from 'react';
+import { Activity, Children, cloneElement } from 'react';
 import {
   Box,
   BoxProps,
@@ -104,6 +104,9 @@ export interface StepperProps
 
   /** When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color */
   autoContrast?: boolean;
+
+  /** If set, all step content is kept mounted. React 19 `Activity` is used to preserve state while content is hidden. @default false */
+  keepMounted?: boolean;
 }
 
 export type StepperFactory = Factory<{
@@ -166,6 +169,7 @@ export const Stepper = factory<StepperFactory>((_props) => {
     allowNextStepsSelect,
     wrap,
     autoContrast,
+    keepMounted,
     attributes,
     ...others
   } = props;
@@ -248,6 +252,23 @@ export const Stepper = factory<StepperFactory>((_props) => {
   const completedContent = completedStep?.props?.children;
   const content = active > _children.length - 1 ? completedContent : stepContent;
 
+  const contentSection = keepMounted ? (
+    <>
+      {_children.map((child, index) => (
+        <Activity key={index} mode={active === index ? 'visible' : 'hidden'}>
+          <div {...getStyles('content')}>{child.props.children}</div>
+        </Activity>
+      ))}
+      {completedStep && (
+        <Activity mode={active > _children.length - 1 ? 'visible' : 'hidden'}>
+          <div {...getStyles('content')}>{completedStep.props.children}</div>
+        </Activity>
+      )}
+    </>
+  ) : (
+    content && <div {...getStyles('content')}>{content}</div>
+  );
+
   return (
     <StepperProvider value={{ getStyles, orientation, iconPosition }}>
       <Box {...getStyles('root')} size={size} {...others}>
@@ -261,7 +282,7 @@ export const Stepper = factory<StepperFactory>((_props) => {
         >
           {items}
         </Box>
-        {content && <div {...getStyles('content')}>{content}</div>}
+        {contentSection}
       </Box>
     </StepperProvider>
   );

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CaretDownIcon } from '@phosphor-icons/react';
+import { Stack, Text } from '../..';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Tree, TreeNodeData } from './Tree';
@@ -127,6 +128,52 @@ export function ExpandOnDoubleClick() {
         )}
       />
     </div>
+  );
+}
+
+export function WithActivityStatePreservation() {
+  const tree = useTree({ initialExpandedState: { src: true, 'src/components': true } });
+  const [lastExpanded, setLastExpanded] = useState<string | null>(null);
+
+  return (
+    <Stack p={40} maw={500}>
+      <Text size="sm" c="dimmed">
+        <strong>keepMounted + Activity</strong>: subtree content is kept mounted when nodes are
+        collapsed. Collapse and re-expand nodes — child state (if any) is preserved.
+      </Text>
+
+      <Tree
+        data={data}
+        tree={tree}
+        keepMounted
+        renderNode={({ node, expanded, hasChildren, elementProps }) => (
+          <Group
+            gap="xs"
+            {...elementProps}
+            onClick={(e) => {
+              elementProps.onClick(e);
+              if (hasChildren) {
+                setLastExpanded(node.value);
+              }
+            }}
+          >
+            <span>{node.label}</span>
+            {hasChildren && (
+              <CaretDownIcon
+                size={18}
+                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
+            )}
+          </Group>
+        )}
+      />
+
+      {lastExpanded && (
+        <Text size="xs" c="dimmed">
+          Last toggled: <strong>{lastExpanded}</strong>
+        </Text>
+      )}
+    </Stack>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Activity } from 'react';
 import { useCollapse, useHorizontalCollapse, useReducedMotion } from '@mantine/hooks';
 import {
   Box,
@@ -5,6 +6,7 @@ import {
   Factory,
   factory,
   getStyleObject,
+  useMantineEnv,
   useMantineTheme,
   useProps,
 } from '../../core';
@@ -31,7 +33,7 @@ export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'
   /** Determines whether the opacity is animated @default true */
   animateOpacity?: boolean;
 
-  /** Determines whether the element is kept in the DOM when collapsed @default false */
+  /** If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. @default false */
   keepMounted?: boolean;
 }
 
@@ -63,6 +65,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
     ...others
   } = useProps('Collapse', defaultProps, props);
 
+  const env = useMantineEnv();
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
@@ -79,7 +82,25 @@ export const Collapse = factory<CollapseFactory>((props) => {
   });
 
   if (duration === 0) {
+    if (keepMounted === true && env !== 'test') {
+      return (
+        <Activity mode={expanded ? 'visible' : 'hidden'}>
+          <Box {...others}>{children}</Box>
+        </Activity>
+      );
+    }
     return expanded ? <Box {...others}>{children}</Box> : null;
+  }
+
+  const isExited = collapse.state === 'exited';
+
+  let content: React.ReactNode;
+  if (keepMounted === false) {
+    content = isExited ? null : children;
+  } else if (keepMounted === true) {
+    content = <Activity mode={isExited ? 'hidden' : 'visible'}>{children}</Activity>;
+  } else {
+    content = children;
   }
 
   return (
@@ -94,7 +115,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
         ref,
       })}
     >
-      {keepMounted === false ? collapse.state !== 'exited' && children : children}
+      {content}
     </Box>
   );
 });

@@ -123,6 +123,36 @@ It allows animation of height from `0` to `auto` and vice versa.
 
 <Demo data={HooksDemos.useHorizontalCollapseDemo} />
 
+## React 19 Activity for keepMounted
+
+[Transition](/core/transition), [Collapse](/core/collapse), [Tabs.Panel](/core/tabs),
+[Stepper](/core/stepper), and [Tree](/core/tree) now use React 19's
+[Activity](https://react.dev/reference/react/Activity) component when `keepMounted` is set.
+`Activity` preserves the state of hidden subtrees — form inputs, scroll positions, and any other
+component state survive while the content is not visible. `Stepper` and `Tree` gain a new
+`keepMounted` prop; all other components already had it.
+
+```tsx
+import { useState } from 'react';
+import { Stepper, TextInput } from '@mantine/core';
+
+function Demo() {
+  const [active, setActive] = useState(0);
+
+  // TextInput values are preserved when navigating between steps
+  return (
+    <Stepper active={active} onStepClick={setActive} keepMounted>
+      <Stepper.Step label="Step 1">
+        <TextInput label="Value survives navigation" />
+      </Stepper.Step>
+      <Stepper.Step label="Step 2">
+        <TextInput label="Value survives navigation" />
+      </Stepper.Step>
+    </Stepper>
+  );
+}
+```
+
 ## use-floating-window hook
 
 New [use-floating-window](/hooks/use-floating-window) hook allows creating floating draggable
