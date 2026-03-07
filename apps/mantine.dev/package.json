@@ -62,7 +62,7 @@
     "@tiptap/react": "^3.13.0",
     "@tiptap/starter-kit": "^3.13.0",
     "@types/node": "^24.10.2",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.14",
     "chroma-js": "^3.2.0",
     "dayjs": "^1.11.19",
     "embla-carousel": "^8.6.0",

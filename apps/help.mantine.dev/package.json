@@ -37,7 +37,7 @@
     "@mdx-js/loader": "^3.0.0",
     "@types/mdx": "2.0.10",
     "@types/node": "^24.10.2",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "typescript": "5.9.3"
   }
