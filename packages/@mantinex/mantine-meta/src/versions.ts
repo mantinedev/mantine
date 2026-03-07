@@ -24,7 +24,72 @@ export const allVersions = [
     date: 'September 8, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.3.0',
     link: 'https://mantine.dev/changelog/8-3-0',
-    patches: [],
+    patches: [
+      {
+        version: '8.3.16',
+        date: 'March 5, 2026',
+      },
+      {
+        version: '8.3.15',
+        date: 'February 16, 2026',
+      },
+      {
+        version: '8.3.14',
+        date: 'February 1, 2026',
+      },
+      {
+        version: '8.3.13',
+        date: 'January 20, 2026',
+      },
+      {
+        version: '8.3.12',
+        date: 'January 9, 2026',
+      },
+      {
+        version: '8.3.11',
+        date: 'January 5, 2026',
+      },
+      {
+        version: '8.3.10',
+        date: 'December 9, 2025',
+      },
+      {
+        version: '8.3.9',
+        date: 'November 22, 2025',
+      },
+      {
+        version: '8.3.8',
+        date: 'November 15, 2025',
+      },
+      {
+        version: '8.3.7',
+        date: 'November 9, 2025',
+      },
+      {
+        version: '8.3.6',
+        date: 'October 29, 2025',
+      },
+      {
+        version: '8.3.5',
+        date: 'October 14, 2025',
+      },
+      {
+        version: '8.3.4',
+        date: 'October 9, 2025',
+      },
+      {
+        version: '8.3.3',
+        date: 'October 2, 2025',
+      },
+      {
+        version: '8.3.2',
+        date: 'September 23, 2025',
+      },
+      {
+        version: '8.3.1',
+        date: 'September 10, 2025',
+      },
+    ],
   },
   {
     version: '8.2.0',
@@ -54,6 +119,10 @@ export const allVersions = [
       },
       {
         version: '8.2.7',
+        date: 'August 31, 2025',
+      },
+      {
+        version: '8.2.8',
         date: 'August 31, 2025',
       },
     ],
@@ -92,13 +161,17 @@ export const allVersions = [
         version: '8.0.1',
         date: 'May 27, 2025',
       },
+      {
+        version: '8.0.2',
+        date: 'May 27, 2025',
+      },
     ],
   },
   {
     version: '7.17.0',
     date: 'February 18, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.17.0',
-    link: 'https://mantine.dev/changelog/7-17-0',
+    link: 'https://v7.mantine.dev/changelog/7-17-0',
     patches: [
       {
         version: '7.17.1',
@@ -124,13 +197,21 @@ export const allVersions = [
         version: '7.17.8',
         date: 'June 2, 2025',
       },
+      {
+        version: '7.17.6',
+        date: 'May 2, 2025',
+      },
+      {
+        version: '7.17.3',
+        date: 'March 27, 2025',
+      },
     ],
   },
   {
     version: '7.16.0',
     date: 'January 14, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.16.0',
-    link: 'https://mantine.dev/changelog/7-16-0',
+    link: 'https://v7.mantine.dev/changelog/7-16-0',
     patches: [
       {
         version: '7.16.1',
@@ -150,7 +231,7 @@ export const allVersions = [
     version: '7.15.0',
     date: 'December 10, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.15.0',
-    link: 'https://mantine.dev/changelog/7-15-0',
+    link: 'https://v7.mantine.dev/changelog/7-15-0',
     patches: [
       {
         version: '7.15.1',
@@ -170,7 +251,7 @@ export const allVersions = [
     version: '7.14.0',
     date: 'November 12, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.14.0',
-    link: 'https://mantine.dev/changelog/7-14-0',
+    link: 'https://v7.mantine.dev/changelog/7-14-0',
     patches: [
       {
         version: '7.14.1',
@@ -190,7 +271,7 @@ export const allVersions = [
     version: '7.13.0',
     date: 'September 26, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.13.0',
-    link: 'https://mantine.dev/changelog/7-13-0',
+    link: 'https://v7.mantine.dev/changelog/7-13-0',
     patches: [
       {
         version: '7.13.1',
@@ -218,7 +299,7 @@ export const allVersions = [
     version: '7.12.0',
     date: 'August 6, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.12.0',
-    link: 'https://mantine.dev/changelog/7-12-0',
+    link: 'https://v7.mantine.dev/changelog/7-12-0',
     patches: [
       {
         version: '7.11.1',
@@ -228,13 +309,21 @@ export const allVersions = [
         version: '7.11.2',
         date: 'August 30, 2024',
       },
+      {
+        version: '7.12.2',
+        date: 'August 30, 2024',
+      },
+      {
+        version: '7.12.1',
+        date: 'August 12, 2024',
+      },
     ],
   },
   {
     version: '7.11.0',
     date: 'June 26, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.11.0',
-    link: 'https://mantine.dev/changelog/7-11-0',
+    link: 'https://v7.mantine.dev/changelog/7-11-0',
     patches: [
       {
         version: '7.11.1',
@@ -250,7 +339,7 @@ export const allVersions = [
     version: '7.10.0',
     date: 'May 23, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.10.0',
-    link: 'https://mantine.dev/changelog/7-10-0',
+    link: 'https://v7.mantine.dev/changelog/7-10-0',
     patches: [
       {
         version: '7.10.1',
@@ -266,7 +355,7 @@ export const allVersions = [
     version: '7.9.0',
     date: 'May 2, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.9.0',
-    link: 'https://mantine.dev/changelog/7-9-0',
+    link: 'https://v7.mantine.dev/changelog/7-9-0',
     patches: [
       {
         version: '7.9.1',
@@ -282,7 +371,7 @@ export const allVersions = [
     version: '7.8.0',
     date: 'April 12, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.8.0',
-    link: 'https://mantine.dev/changelog/7-8-0',
+    link: 'https://v7.mantine.dev/changelog/7-8-0',
     patches: [
       {
         version: '7.8.1',
@@ -294,7 +383,7 @@ export const allVersions = [
     version: '7.7.0',
     date: 'March 26, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.7.0',
-    link: 'https://mantine.dev/changelog/7-7-0',
+    link: 'https://v7.mantine.dev/changelog/7-7-0',
     patches: [
       {
         version: '7.7.2',
@@ -310,7 +399,7 @@ export const allVersions = [
     version: '7.6.0',
     date: 'February 27, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.6.0',
-    link: 'https://mantine.dev/changelog/7-6-0',
+    link: 'https://v7.mantine.dev/changelog/7-6-0',
     patches: [
       {
         version: '7.6.1',
@@ -326,7 +415,7 @@ export const allVersions = [
     version: '7.5.0',
     date: 'January 26, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.5.0',
-    link: 'https://mantine.dev/changelog/7-5-0',
+    link: 'https://v7.mantine.dev/changelog/7-5-0',
     patches: [
       {
         version: '7.5.1',
@@ -346,7 +435,7 @@ export const allVersions = [
     version: '7.4.0',
     date: 'January 3, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.4.0',
-    link: 'https://mantine.dev/changelog/7-4-0',
+    link: 'https://v7.mantine.dev/changelog/7-4-0',
     patches: [
       {
         version: '7.4.1',
@@ -362,7 +451,7 @@ export const allVersions = [
     version: '7.3.0',
     date: 'December 5, 2023',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.3.0',
-    link: 'https://mantine.dev/changelog/7-3-0',
+    link: 'https://v7.mantine.dev/changelog/7-3-0',
     patches: [
       {
         version: '7.3.1',
@@ -378,7 +467,7 @@ export const allVersions = [
     version: '7.2.0',
     date: 'November 6, 2023',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.2.0',
-    link: 'https://mantine.dev/changelog/7-2-0',
+    link: 'https://v7.mantine.dev/changelog/7-2-0',
     patches: [
       {
         version: '7.2.2',
@@ -398,7 +487,7 @@ export const allVersions = [
     version: '7.1.0',
     date: 'September 28, 2023',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.1.0',
-    link: 'https://mantine.dev/changelog/7-1-0',
+    link: 'https://v7.mantine.dev/changelog/7-1-0',
     patches: [
       {
         version: '7.1.6',
@@ -430,7 +519,7 @@ export const allVersions = [
     version: '7.0.0',
     date: 'September 18, 2023',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.0.0',
-    link: 'https://mantine.dev/changelog/7-0-0',
+    link: 'https://v7.mantine.dev/changelog/7-0-0',
     patches: [
       {
         version: '7.0.2',
