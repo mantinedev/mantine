@@ -71,6 +71,7 @@ export function useStyles<Payload extends FactoryPayload>({
     props,
     stylesCtx,
     themeName,
+    theme,
   });
 
   const resolvedClassNames = resolveClassNames({ theme, classNames, props, stylesCtx });
