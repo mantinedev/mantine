@@ -19,7 +19,6 @@ import {
 } from '../../core';
 import { Loader } from '../Loader/Loader';
 import { InputContext } from './Input.context';
-import classes from './Input.module.css';
 import { InputClearButton } from './InputClearButton/InputClearButton';
 import { ClearSectionMode, InputClearSection } from './InputClearSection/InputClearSection';
 import { InputDescription } from './InputDescription/InputDescription';
@@ -32,6 +31,7 @@ import {
   InputWrapper,
   InputWrapperStylesNames,
 } from './InputWrapper/InputWrapper';
+import classes from './Input.module.css';
 
 // Required to be a separate type for docgen script
 type WrapperProps = React.ComponentProps<'div'> & DataAttributes;

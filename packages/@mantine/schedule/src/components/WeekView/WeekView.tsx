@@ -58,8 +58,8 @@ import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getWeekLabel } from './get-week-label/get-week-label';
 import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
 import { handleWeekViewKeyDown, WeekViewControlsRef } from './handle-week-view-key-down';
-import classes from './WeekView.module.css';
 import { WeekViewDay } from './WeekViewDay';
+import classes from './WeekView.module.css';
 
 export type WeekViewStylesNames =
   | 'weekView'

@@ -11,8 +11,8 @@ import {
   useRandomClassName,
   useStyles,
 } from '../../core';
-import classes from './SimpleGrid.module.css';
 import { SimpleGridContainerVariables, SimpleGridMediaVariables } from './SimpleGridVariables';
+import classes from './SimpleGrid.module.css';
 
 export type SimpleGridStylesNames = 'root' | 'container';
 

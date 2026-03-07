@@ -28,7 +28,6 @@ import {
 } from './get-grouped-notifications/get-grouped-notifications';
 import { getNotificationStateStyles } from './get-notification-state-styles';
 import { NotificationContainer } from './NotificationContainer';
-import classes from './Notifications.module.css';
 import {
   hideNotification,
   NotificationPosition,
@@ -37,6 +36,7 @@ import {
   notificationsStore,
   useNotifications,
 } from './notifications.store';
+import classes from './Notifications.module.css';
 
 const Transition: any = _Transition;
 

@@ -3,8 +3,8 @@ import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, ScheduleViewLevel } from '../../types';
 import { MonthYearSelectProps } from './MonthYearSelect/MonthYearSelect';
 import { ScheduleHeader } from './ScheduleHeader';
-import classes from './ScheduleHeader.module.css';
 import { ViewSelectProps } from './ViewSelect/ViewSelect';
+import classes from './ScheduleHeader.module.css';
 
 interface NavigationHandlers {
   /** Handler for previous button click, returns new date */

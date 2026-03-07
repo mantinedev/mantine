@@ -21,7 +21,6 @@ import {
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
 import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
-import classes from '../Slider.module.css';
 import { SliderMark } from '../SliderMark';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
@@ -37,6 +36,7 @@ import {
   getNextMarkValue,
   getPreviousMarkValue,
 } from '../utils/get-step-mark-value/get-step-mark-value';
+import classes from '../Slider.module.css';
 
 export type RangeSliderValue = [number, number];
 

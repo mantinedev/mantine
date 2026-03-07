@@ -8,8 +8,8 @@ import {
 } from '../../../core';
 import { Collapse } from '../../Collapse';
 import { useAccordionContext } from '../Accordion.context';
-import classes from '../Accordion.module.css';
 import { useAccordionItemContext } from '../AccordionItem.context';
+import classes from '../Accordion.module.css';
 
 export type AccordionPanelStylesNames = 'panel' | 'content';
 

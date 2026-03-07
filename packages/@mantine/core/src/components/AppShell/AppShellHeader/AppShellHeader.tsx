@@ -10,8 +10,8 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
-import classes from '../AppShell.module.css';
 import type { AppShellCompoundProps } from '../AppShell.types';
+import classes from '../AppShell.module.css';
 
 export type AppShellHeaderStylesNames = 'header';
 

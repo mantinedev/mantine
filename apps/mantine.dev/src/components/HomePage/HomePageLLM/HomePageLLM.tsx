@@ -8,8 +8,8 @@ import {
 } from '../shared/HomePageFeatures/HomePageFeatures';
 import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import classes from './HomePageLLM.module.css';
 import { HomePageLLMDemo } from './HomePageLLMDemo';
+import classes from './HomePageLLM.module.css';
 
 const features: HomePageFeaturesData = [
   {

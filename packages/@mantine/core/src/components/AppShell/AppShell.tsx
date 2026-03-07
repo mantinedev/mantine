@@ -13,7 +13,6 @@ import {
   useStyles,
 } from '../../core';
 import { AppShellProvider } from './AppShell.context';
-import classes from './AppShell.module.css';
 import {
   AppShellAsideConfiguration,
   AppShellFooterConfiguration,
@@ -29,6 +28,7 @@ import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
 import { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
 import { AppShellSection } from './AppShellSection/AppShellSection';
 import { useResizing } from './use-resizing/use-resizing';
+import classes from './AppShell.module.css';
 
 export type AppShellStylesNames =
   | 'root'
