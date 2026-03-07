@@ -1,51 +1,33 @@
-import { DEFAULT_THEME, MantineTheme } from '../../../MantineProvider';
+import { DEFAULT_THEME } from '../../../MantineProvider';
 import { getStyle, GetStyleInput } from './get-style';
-
-const THEME_WITH_STYLES: MantineTheme = {
-  ...DEFAULT_THEME,
-  components: {
-    TestComponentObject: {
-      styles: {
-        root: { color: 'red' },
-      },
-    },
-
-    TestComponentFunction: {
-      styles: (theme: MantineTheme, props: Record<string, any>) => ({
-        root: { background: props['data-color'], outlineColor: theme.colors.red[0] },
-      }),
-    },
-  },
-};
 
 const defaultOptions: GetStyleInput = {
   theme: DEFAULT_THEME,
-  themeName: [],
   selector: 'root',
   rootSelector: 'root',
   options: undefined,
   props: {},
   stylesCtx: undefined,
-  styles: undefined,
-  style: undefined,
-  vars: undefined,
-  varsResolver: undefined,
+  resolvedStyles: {},
+  resolvedThemeStyles: {},
+  resolvedVars: {},
+  resolvedRootStyle: {},
 };
 
 describe('@mantine/core/get-style', () => {
   it('resolves style prop', () => {
-    expect(getStyle({ ...defaultOptions, style: { color: 'red' } })).toStrictEqual({
+    expect(getStyle({ ...defaultOptions, resolvedRootStyle: { color: 'red' } })).toStrictEqual({
       color: 'red',
     });
 
     expect(
-      getStyle({ ...defaultOptions, style: [{ color: 'red' }, { background: 'blue' }] })
+      getStyle({ ...defaultOptions, resolvedRootStyle: { color: 'red', background: 'blue' } })
     ).toStrictEqual({ color: 'red', background: 'blue' });
 
     expect(
       getStyle({
         ...defaultOptions,
-        style: [(theme) => ({ color: theme.colors.red[0] }), { background: 'blue' }],
+        resolvedRootStyle: { color: DEFAULT_THEME.colors.red[0], background: 'blue' },
       })
     ).toStrictEqual({ color: DEFAULT_THEME.colors.red[0], background: 'blue' });
   });
@@ -56,7 +38,7 @@ describe('@mantine/core/get-style', () => {
         ...defaultOptions,
         rootSelector: 'root',
         selector: 'child',
-        style: { color: 'red' },
+        resolvedRootStyle: { color: 'red' },
       })
     ).toStrictEqual({});
   });
@@ -85,14 +67,14 @@ describe('@mantine/core/get-style', () => {
     expect(
       getStyle({
         ...defaultOptions,
-        styles: { root: { color: 'red' } },
+        resolvedStyles: { root: { color: 'red' } },
       })
     ).toStrictEqual({ color: 'red' });
 
     expect(
       getStyle({
         ...defaultOptions,
-        styles: (theme) => ({ root: { color: theme.colors.red[0] } }),
+        resolvedStyles: { root: { color: DEFAULT_THEME.colors.red[0] } },
       })
     ).toStrictEqual({ color: DEFAULT_THEME.colors.red[0] });
   });
@@ -117,17 +99,16 @@ describe('@mantine/core/get-style', () => {
     expect(
       getStyle({
         ...defaultOptions,
-        theme: THEME_WITH_STYLES,
-        themeName: ['TestComponentObject'],
+        resolvedThemeStyles: { root: { color: 'red' } },
       })
     ).toStrictEqual({ color: 'red' });
 
     expect(
       getStyle({
         ...defaultOptions,
-        theme: THEME_WITH_STYLES,
-        props: { 'data-color': 'blue' },
-        themeName: ['TestComponentObject', 'TestComponentFunction'],
+        resolvedThemeStyles: {
+          root: { color: 'red', background: 'blue', outlineColor: DEFAULT_THEME.colors.red[0] },
+        },
       })
     ).toStrictEqual({
       color: 'red',
@@ -140,7 +121,7 @@ describe('@mantine/core/get-style', () => {
     expect(
       getStyle({
         ...defaultOptions,
-        vars: (theme) => ({ root: { '--color': theme.colors.red[0] } }),
+        resolvedVars: { root: { '--color': DEFAULT_THEME.colors.red[0] } },
       })
     ).toStrictEqual({ '--color': DEFAULT_THEME.colors.red[0] });
   });
@@ -149,7 +130,7 @@ describe('@mantine/core/get-style', () => {
     expect(
       getStyle({
         ...defaultOptions,
-        varsResolver: (theme) => ({ root: { '--color': theme.colors.red[0] } }),
+        resolvedVars: { root: { '--color': DEFAULT_THEME.colors.red[0] } },
       })
     ).toStrictEqual({ '--color': DEFAULT_THEME.colors.red[0] });
   });

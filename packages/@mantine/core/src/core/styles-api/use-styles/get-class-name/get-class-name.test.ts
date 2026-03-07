@@ -1,6 +1,7 @@
 import { DEFAULT_THEME, MantineTheme } from '../../../MantineProvider';
 import { getClassName, GetClassNameOptions } from './get-class-name';
 import { FOCUS_CLASS_NAMES } from './get-global-class-names/get-global-class-names';
+import { resolveClassNames } from './resolve-class-names/resolve-class-names';
 
 const THEME_WITH_CLASSNAMES: MantineTheme = {
   ...DEFAULT_THEME,
@@ -27,7 +28,8 @@ const defaultOptions: GetClassNameOptions = {
   themeName: ['Test'],
   selector: 'root',
   classNamesPrefix: 'mantine',
-  classNames: undefined,
+  resolvedClassNames: {},
+  resolvedThemeClassNames: [],
   classes: { root: 'test-root', child: 'test-child' },
   unstyled: false,
   className: undefined,
@@ -83,51 +85,72 @@ describe('@mantine/core/get-class-name', () => {
 
   it('resolves classNames correctly (object)', () => {
     expect(
-      getClassName({ ...defaultOptions, classNames: { root: '__test-root' } }).includes(
-        '__test-root'
+      getClassName({
+        ...defaultOptions,
+        resolvedClassNames: { root: '__test-root' },
+      }).includes('__test-root')
+    ).toBe(true);
+  });
+
+  it('resolves classNames correctly (function — pre-resolved with theme)', () => {
+    const resolved = resolveClassNames({
+      theme: DEFAULT_THEME,
+      classNames: (theme) => ({ root: theme.activeClassName }),
+      props: {},
+      stylesCtx: undefined,
+    });
+    expect(
+      getClassName({ ...defaultOptions, resolvedClassNames: resolved }).includes(
+        DEFAULT_THEME.activeClassName
       )
     ).toBe(true);
   });
 
-  it('resolves classNames correctly (function theme)', () => {
+  it('resolves classNames correctly (function — pre-resolved with props)', () => {
+    const props = { 'data-test': '__test-props' };
+    const resolved = resolveClassNames({
+      theme: DEFAULT_THEME,
+      classNames: (_, p) => ({ root: p['data-test'] }),
+      props,
+      stylesCtx: undefined,
+    });
     expect(
-      getClassName({
-        ...defaultOptions,
-        classNames: (theme) => ({ root: theme.activeClassName }),
-      }).includes(DEFAULT_THEME.activeClassName)
+      getClassName({ ...defaultOptions, props, resolvedClassNames: resolved }).includes(
+        '__test-props'
+      )
     ).toBe(true);
   });
 
-  it('resolves classNames correctly (function props)', () => {
+  it('resolves classNames correctly (function — pre-resolved with stylesCtx)', () => {
+    const stylesCtx = { 'data-test': '__test-stylesCtx' };
+    const resolved = resolveClassNames({
+      theme: DEFAULT_THEME,
+      classNames: (_, __, ctx) => ({ root: ctx!['data-test'] }),
+      props: {},
+      stylesCtx,
+    });
     expect(
-      getClassName({
-        ...defaultOptions,
-        props: { 'data-test': '__test-props' },
-        classNames: (_, props) => ({ root: props['data-test'] }),
-      }).includes('__test-props')
+      getClassName({ ...defaultOptions, stylesCtx, resolvedClassNames: resolved }).includes(
+        '__test-stylesCtx'
+      )
     ).toBe(true);
   });
 
-  it('resolves classNames correctly (function stylesCtx)', () => {
+  it('resolves classNames correctly (function — pre-resolved with theme, props, stylesCtx)', () => {
+    const props = { 'data-test': '__test-props' };
+    const stylesCtx = { 'data-test': '__test-stylesCtx' };
+    const resolved = resolveClassNames({
+      theme: DEFAULT_THEME,
+      classNames: (theme, p, ctx) => ({
+        root: `${theme.activeClassName} ${p['data-test']} ${ctx!['data-test']}`,
+      }),
+      props,
+      stylesCtx,
+    });
     expect(
-      getClassName({
-        ...defaultOptions,
-        stylesCtx: { 'data-test': '__test-stylesCtx' },
-        classNames: (_, __, stylesCtx) => ({ root: stylesCtx!['data-test'] }),
-      }).includes('__test-stylesCtx')
-    ).toBe(true);
-  });
-
-  it('resolves classNames correctly (function theme, props, stylesCtx)', () => {
-    expect(
-      getClassName({
-        ...defaultOptions,
-        props: { 'data-test': '__test-props' },
-        stylesCtx: { 'data-test': '__test-stylesCtx' },
-        classNames: (theme, props, stylesCtx) => ({
-          root: `${theme.activeClassName} ${props['data-test']} ${stylesCtx!['data-test']}`,
-        }),
-      }).includes(`${DEFAULT_THEME.activeClassName} __test-props __test-stylesCtx`)
+      getClassName({ ...defaultOptions, props, stylesCtx, resolvedClassNames: resolved }).includes(
+        `${DEFAULT_THEME.activeClassName} __test-props __test-stylesCtx`
+      )
     ).toBe(true);
   });
 
@@ -201,22 +224,41 @@ describe('@mantine/core/get-class-name', () => {
   });
 
   it('resolves theme.components classNames correctly (object)', () => {
+    const resolvedThemeClassNames = [
+      resolveClassNames({
+        theme: THEME_WITH_CLASSNAMES,
+        classNames: THEME_WITH_CLASSNAMES.components.TestComponentObject?.classNames,
+        props: {},
+        stylesCtx: undefined,
+      }),
+    ];
     expect(
       getClassName({
         ...defaultOptions,
         themeName: ['TestComponentObject'],
         theme: THEME_WITH_CLASSNAMES,
+        resolvedThemeClassNames,
       }).includes('__test-object')
     ).toBe(true);
   });
 
   it('resolves theme.components classNames correctly (function)', () => {
+    const props = { test: 'test' };
+    const resolvedThemeClassNames = [
+      resolveClassNames({
+        theme: THEME_WITH_CLASSNAMES,
+        classNames: THEME_WITH_CLASSNAMES.components.TestComponentFunction?.classNames,
+        props,
+        stylesCtx: undefined,
+      }),
+    ];
     expect(
       getClassName({
         ...defaultOptions,
-        props: { test: 'test' },
+        props,
         themeName: ['TestComponentFunction'],
         theme: THEME_WITH_CLASSNAMES,
+        resolvedThemeClassNames,
       }).includes('__test-function-test')
     ).toBe(true);
   });

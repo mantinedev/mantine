@@ -7,7 +7,6 @@ import { getResolvedClassNames } from './get-resolved-class-names/get-resolved-c
 import { getRootClassName } from './get-root-class-name/get-root-class-name';
 import { getSelectorClassName } from './get-selector-class-name/get-selector-class-name';
 import { getStaticClassNames } from './get-static-class-names/get-static-class-names';
-import { getThemeClassNames } from './get-theme-class-names/get-theme-class-names';
 import { getVariantClassName } from './get-variant-class-name/get-variant-class-name';
 
 type __ClassNames =
@@ -37,8 +36,11 @@ export interface GetClassNameOptions {
   /** Prefix for all class names, resolved by hook, `mantine` by default */
   classNamesPrefix: string;
 
-  /** `classNames` specified in the hook, only resolved `classNames[selector]` is added to the list */
-  classNames: _ClassNames;
+  /** Precomputed resolved `classNames` map (from the component `classNames` prop) */
+  resolvedClassNames: Partial<Record<string, string>>;
+
+  /** Precomputed resolved theme `classNames` maps (from `theme.components[name].classNames`) */
+  resolvedThemeClassNames: Partial<Record<string, string>>[];
 
   /** Classes object, usually imported from `*.module.css` */
   classes: Record<string, string>;
@@ -52,10 +54,10 @@ export interface GetClassNameOptions {
   /** `rootSelector` specified in the hook, determines whether `className` should be added to the list */
   rootSelector: string;
 
-  /** Component props, used as context for `classNames` and `options.classNames` */
+  /** Component props, used as context for `options.classNames` */
   props: Record<string, any>;
 
-  /** Component styles context, used as context for `classNames` and `options.classNames` */
+  /** Component styles context, used as context for `options.classNames` */
   stylesCtx?: Record<string, any> | undefined;
 
   /** Determines whether static classes should be added */
@@ -74,7 +76,8 @@ export function getClassName({
   themeName,
   selector,
   classNamesPrefix,
-  classNames,
+  resolvedClassNames,
+  resolvedThemeClassNames,
   classes,
   unstyled,
   className,
@@ -87,9 +90,9 @@ export function getClassName({
 }: GetClassNameOptions) {
   return cx(
     getGlobalClassNames({ theme, options, unstyled: unstyled || headless }),
-    getThemeClassNames({ theme, themeName, selector, props, stylesCtx }),
+    resolvedThemeClassNames.map((m) => m[selector]),
     getVariantClassName({ options, classes, selector, unstyled }),
-    getResolvedClassNames({ selector, stylesCtx, theme, classNames, props }),
+    resolvedClassNames[selector],
     getResolvedClassNames({ selector, stylesCtx, theme, classNames: transformedStyles, props }),
     getOptionsClassNames({ selector, stylesCtx, options, props, theme }),
     getRootClassName({ rootSelector, selector, className }),

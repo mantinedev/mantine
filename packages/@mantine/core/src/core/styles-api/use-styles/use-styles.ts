@@ -16,7 +16,11 @@ import {
   Styles,
 } from '../styles-api.types';
 import { getClassName } from './get-class-name/get-class-name';
+import { resolveClassNames } from './get-class-name/resolve-class-names/resolve-class-names';
 import { getStyle } from './get-style/get-style';
+import { resolveStyle } from './get-style/resolve-style/resolve-style';
+import { resolveStyles } from './get-style/resolve-styles/resolve-styles';
+import { mergeVars } from './get-style/resolve-vars/merge-vars';
 import { useStylesTransform } from './use-transformed-styles';
 
 export interface UseStylesInput<Payload extends FactoryPayload> {
@@ -69,6 +73,40 @@ export function useStyles<Payload extends FactoryPayload>({
     themeName,
   });
 
+  const resolvedClassNames = resolveClassNames({ theme, classNames, props, stylesCtx });
+  const resolvedThemeClassNames = themeName.map((n) =>
+    resolveClassNames({ theme, classNames: theme.components[n]?.classNames, props, stylesCtx })
+  );
+
+  const resolvedComponentStyles = withStylesTransform
+    ? {}
+    : resolveStyles({ theme, styles, props, stylesCtx });
+
+  const resolvedThemeStyles: Record<string, any> = {};
+
+  if (!withStylesTransform) {
+    for (const n of themeName) {
+      const resolved = resolveStyles({
+        theme,
+        styles: theme.components[n]?.styles,
+        props,
+        stylesCtx,
+      });
+
+      for (const key of Object.keys(resolved)) {
+        resolvedThemeStyles[key] = { ...resolvedThemeStyles[key], ...resolved[key] };
+      }
+    }
+  }
+
+  const resolvedVars = mergeVars([
+    headless ? {} : varsResolver?.(theme, props, stylesCtx),
+    ...themeName.map((n) => theme.components?.[n]?.vars?.(theme, props, stylesCtx)),
+    vars?.(theme, props, stylesCtx),
+  ]);
+
+  const resolvedRootStyle = resolveStyle({ style, theme });
+
   return (selector, options) => ({
     className: getClassName({
       theme,
@@ -76,7 +114,8 @@ export function useStyles<Payload extends FactoryPayload>({
       themeName,
       selector,
       classNamesPrefix,
-      classNames,
+      resolvedClassNames,
+      resolvedThemeClassNames,
       classes,
       unstyled,
       className,
@@ -90,18 +129,16 @@ export function useStyles<Payload extends FactoryPayload>({
 
     style: getStyle({
       theme,
-      themeName,
       selector,
       options,
       props,
       stylesCtx,
       rootSelector,
-      styles,
-      style,
-      vars,
-      varsResolver,
-      headless,
       withStylesTransform,
+      resolvedStyles: resolvedComponentStyles,
+      resolvedThemeStyles,
+      resolvedVars,
+      resolvedRootStyle,
     }),
 
     ...attributes?.[selector],
