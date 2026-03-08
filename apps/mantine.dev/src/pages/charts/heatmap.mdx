@@ -153,6 +153,13 @@ The default first day of the week is Monday; you can change it with the `firstDa
 
 <Demo data={HeatmapDemos.firstDayOfWeek} />
 
+## Legend
+
+Set `withLegend` to display a color legend below the heatmap. Use `legendLabels`
+prop to customize the labels (default: `['Less', 'More']`):
+
+<Demo data={HeatmapDemos.legend} />
+
 ## Split months
 
 Use `splitMonths` to separate months visually with a spacer column and show only days that belong to the current month in each column. Month labels will be shifted by one column when `splitMonths` is enabled and months with fewer than 2 weeks are not labeled.

@@ -1,4 +1,4 @@
-import { HooksDemos, MaskInputDemos, TimePickerDemos, TreemapDemos } from '@docs/demos';
+import { HeatmapDemos, HooksDemos, MaskInputDemos, TimePickerDemos, TreemapDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -41,6 +41,14 @@ entering durations that exceed 24 hours. In this mode, the hours field has no up
 and the input width adjusts dynamically based on the entered value:
 
 <Demo data={TimePickerDemos.duration} />
+
+## Heatmap legend
+
+[Heatmap](/charts/heatmap) component now supports `withLegend` prop that displays
+a color legend below the chart. Use `legendLabels` prop to customize labels
+(default: `['Less', 'More']`):
+
+<Demo data={HeatmapDemos.legend} />
 
 ## use-roving-index hook
 
