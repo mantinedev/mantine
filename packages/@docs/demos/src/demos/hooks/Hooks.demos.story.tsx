@@ -418,6 +418,31 @@ export const Demo_useScrollerScrollAmountDemo = {
   render: renderDemo(demos.useScrollerScrollAmountDemo),
 };
 
+export const Demo_useRovingIndexUsage = {
+  name: '⭐ Demo: useRovingIndexUsage',
+  render: renderDemo(demos.useRovingIndexUsage),
+};
+
+export const Demo_useRovingIndexVertical = {
+  name: '⭐ Demo: useRovingIndexVertical',
+  render: renderDemo(demos.useRovingIndexVertical),
+};
+
+export const Demo_useRovingIndexGrid = {
+  name: '⭐ Demo: useRovingIndexGrid',
+  render: renderDemo(demos.useRovingIndexGrid),
+};
+
+export const Demo_useRovingIndexDisabled = {
+  name: '⭐ Demo: useRovingIndexDisabled',
+  render: renderDemo(demos.useRovingIndexDisabled),
+};
+
+export const Demo_useRovingIndexLoop = {
+  name: '⭐ Demo: useRovingIndexLoop',
+  render: renderDemo(demos.useRovingIndexLoop),
+};
+
 export const Demo_useScrollerDraggableDemo = {
   name: '⭐ Demo: useScrollerDraggableDemo',
   render: renderDemo(demos.useScrollerDraggableDemo),

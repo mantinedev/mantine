@@ -92,3 +92,8 @@ export { useMaskCustomTokens } from './use-mask.demo.custom-tokens';
 export { useMaskEscape } from './use-mask.demo.escape';
 export { useMaskRegex } from './use-mask.demo.regex';
 export { useMaskReset } from './use-mask.demo.reset';
+export { useRovingIndexUsage } from './use-roving-index.demo.usage';
+export { useRovingIndexVertical } from './use-roving-index.demo.vertical';
+export { useRovingIndexGrid } from './use-roving-index.demo.grid';
+export { useRovingIndexDisabled } from './use-roving-index.demo.disabled';
+export { useRovingIndexLoop } from './use-roving-index.demo.loop';

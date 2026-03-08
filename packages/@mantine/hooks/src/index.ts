@@ -91,6 +91,7 @@ export {
   isMaskComplete,
   generatePattern,
 } from './use-mask/use-mask.js';
+export { useRovingIndex } from './use-roving-index/use-roving-index.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type {
@@ -233,3 +234,8 @@ export type {
   UseHorizontalCollapseState,
 } from './use-collapse/use-horizontal-collapse';
 export type { UseMaskOptions, UseMaskReturnValue, MaskState } from './use-mask/use-mask';
+export type {
+  UseRovingIndexInput,
+  UseRovingIndexGetItemPropsInput,
+  UseRovingIndexReturnValue,
+} from './use-roving-index/use-roving-index';

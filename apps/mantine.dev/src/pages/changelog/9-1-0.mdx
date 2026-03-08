@@ -26,3 +26,12 @@ New [MaskInput](/core/mask-input) component is a wrapper around [use-mask](/hook
 that provides all standard input props (label, description, error, etc.) and supports all mask options:
 
 <Demo data={MaskInputDemos.usage} />
+
+## use-roving-index hook
+
+New [use-roving-index](/hooks/use-roving-index) hook implements the
+[roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
+keyboard navigation pattern. It manages `tabIndex` state for a group of focusable elements,
+handles arrow key navigation with disabled item skipping, and supports both 1D lists and 2D grids:
+
+<Demo data={HooksDemos.useRovingIndexUsage} />
