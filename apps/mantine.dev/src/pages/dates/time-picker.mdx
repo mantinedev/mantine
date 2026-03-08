@@ -39,6 +39,22 @@ to enter only hours and minutes.
 
 <Demo data={TimePickerDemos.withSeconds} />
 
+## Duration type
+
+Set `type="duration"` to allow entering durations that exceed 24 hours.
+In this mode, the hours field has no upper limit and the input width adjusts
+dynamically based on the entered value. The `format` prop is ignored (always 24h)
+and the dropdown is disabled.
+
+<Demo data={TimePickerDemos.duration} />
+
+## Min hours digits
+
+Use the `minHoursDigits` prop to set the minimum number of digits displayed in the hours input.
+This prop is only applicable when `type="duration"` is set. By default, the minimum is `2`.
+
+<Demo data={TimePickerDemos.minHoursDigits} />
+
 ## 12-hour format
 
 Set `format="12h"` to use 12-hour format. Note that `onChange` is called only when all inputs are filled,

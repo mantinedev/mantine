@@ -1,4 +1,4 @@
-import { HooksDemos, MaskInputDemos, TreemapDemos } from '@docs/demos';
+import { HooksDemos, MaskInputDemos, TimePickerDemos, TreemapDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -33,6 +33,14 @@ New [Treemap](/charts/treemap) component displays hierarchical data as a set of 
 rectangles. It is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap):
 
 <Demo data={TreemapDemos.usage} />
+
+## TimePicker duration type
+
+[TimePicker](/dates/time-picker) component now supports `type="duration"` prop that allows
+entering durations that exceed 24 hours. In this mode, the hours field has no upper limit
+and the input width adjusts dynamically based on the entered value:
+
+<Demo data={TimePickerDemos.duration} />
 
 ## use-roving-index hook
 

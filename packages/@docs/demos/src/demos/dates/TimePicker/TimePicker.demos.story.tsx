@@ -102,3 +102,13 @@ export const Demo_withPlaceholders = {
   name: '⭐ Demo: withPlaceholders',
   render: renderDemo(demos.withPlaceholders),
 };
+
+export const Demo_duration = {
+  name: '⭐ Demo: duration',
+  render: renderDemo(demos.duration),
+};
+
+export const Demo_minHoursDigits = {
+  name: '⭐ Demo: minHoursDigits',
+  render: renderDemo(demos.minHoursDigits),
+};

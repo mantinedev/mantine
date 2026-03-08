@@ -9,6 +9,7 @@ import type {
   TimePickerFormat,
   TimePickerPasteSplit,
   TimePickerPresets,
+  TimePickerType,
 } from './TimePicker.types';
 
 export { TimePicker } from './TimePicker';
@@ -23,6 +24,7 @@ export type {
   TimePickerAmPmLabels,
   TimePickerPasteSplit,
   TimePickerPresets,
+  TimePickerType,
 };
 
 export namespace TimePicker {
@@ -34,4 +36,5 @@ export namespace TimePicker {
   export type AmPmLabels = TimePickerAmPmLabels;
   export type PasteSplit = TimePickerPasteSplit;
   export type Presets = TimePickerPresets;
+  export type Type = TimePickerType;
 }
