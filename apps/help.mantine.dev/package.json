@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 4817 --webpack",
-    "build": "next build --webpack && touch out/.nojekyll && echo 'help.mantine.dev' > out/CNAME",
+    "dev": "next dev --port 4817",
+    "build": "next build && touch out/.nojekyll && echo 'help.mantine.dev' > out/CNAME",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
@@ -22,7 +22,7 @@
     "@mantinex/mantine-logo": "workspace:*",
     "@mantinex/mantine-meta": "workspace:*",
     "@mdx-js/react": "^3.0.0",
-    "@next/mdx": "^14.0.2",
+    "@next/mdx": "16.0.8",
     "@phosphor-icons/react": "^2.1.10",
     "dayjs": "^1.11.19",
     "fuse.js": "^7.1.0",
