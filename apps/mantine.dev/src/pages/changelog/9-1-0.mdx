@@ -1,4 +1,4 @@
-import { HeatmapDemos, HooksDemos, MaskInputDemos, TimePickerDemos, TreemapDemos } from '@docs/demos';
+import { HeatmapDemos, HooksDemos, MaskInputDemos, MonthPickerDemos, TimePickerDemos, TreemapDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -32,7 +32,7 @@ that provides all standard input props (label, description, error, etc.) and sup
 New [Treemap](/charts/treemap) component displays hierarchical data as a set of nested
 rectangles. It is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap):
 
-<Demo data={TreemapDemos.usage} />
+<Demo data={TreemapDemos.nestedDataDemo} />
 
 ## TimePicker duration type
 
@@ -49,6 +49,15 @@ a color legend below the chart. Use `legendLabels` prop to customize labels
 (default: `['Less', 'More']`):
 
 <Demo data={HeatmapDemos.legend} />
+
+## MonthPicker and YearPicker presets
+
+[MonthPicker](/dates/month-picker) and [YearPicker](/dates/year-picker) components now support
+`presets` prop that allows adding predefined values to pick from. Presets are also available
+in [MonthPickerInput](/dates/month-picker-input) and [YearPickerInput](/dates/year-picker-input)
+components:
+
+<Demo data={MonthPickerDemos.presets} />
 
 ## use-roving-index hook
 

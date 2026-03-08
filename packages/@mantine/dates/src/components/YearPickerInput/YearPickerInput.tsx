@@ -72,6 +72,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       maxDate,
       vars,
       valueFormatter,
+      presets,
       attributes,
       ...rest
     } = props;
@@ -145,6 +146,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          presets={presets}
           attributes={attributes}
         />
       </PickerInputBase>

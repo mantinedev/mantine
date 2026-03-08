@@ -13,3 +13,5 @@ export { listFormat } from './MonthPicker.demo.listFormat';
 export { maxLevel } from './MonthPicker.demo.maxLevel';
 export { locale } from './MonthPicker.demo.locale';
 export { fullWidth } from './MonthPicker.demo.fullWidth';
+export { presets } from './MonthPicker.demo.presets';
+export { presetsRange } from './MonthPicker.demo.presetsRange';

@@ -155,9 +155,16 @@ export const YearPickerStylesApi: StylesApiData<YearPickerFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
     ...DecadeLevelGroupStylesApi.selectors,
+    yearPickerRoot: 'Year picker root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
   },
 
-  vars: {},
+  vars: {
+    yearPickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
 
   modifiers: CalendarHeaderStylesApi.modifiers,
 };
@@ -167,9 +174,16 @@ export const MonthPickerStylesApi: StylesApiData<MonthPickerFactory> = {
     ...CalendarHeaderStylesApi.selectors,
     ...DecadeLevelGroupStylesApi.selectors,
     ...YearLevelGroupStylesApi.selectors,
+    monthPickerRoot: 'Month picker root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
   },
 
-  vars: {},
+  vars: {
+    monthPickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
 
   modifiers: CalendarHeaderStylesApi.modifiers,
 };
