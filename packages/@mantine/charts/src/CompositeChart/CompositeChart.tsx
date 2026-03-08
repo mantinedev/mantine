@@ -108,8 +108,8 @@ export interface CompositeChartProps
 
   /** Props passed down to recharts `Area` component */
   areaProps?:
-    | ((series: CompositeChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
-    | Partial<Omit<AreaProps, 'ref'>>;
+    | ((series: CompositeChartSeries) => Partial<Omit<AreaProps<any, any>, 'ref'>>)
+    | Partial<Omit<AreaProps<any, any>, 'ref'>>;
 
   /** Props passed down to recharts `Bar` component */
   barProps?:
@@ -492,7 +492,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
           </YAxis>
 
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}

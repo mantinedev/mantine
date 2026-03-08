@@ -54,7 +54,7 @@ export interface SparklineProps
   connectNulls?: boolean;
 
   /** Props passed down to the underlying recharts `Area` component */
-  areaProps?: Omit<AreaProps, 'data' | 'dataKey' | 'ref'>;
+  areaProps?: Omit<AreaProps<any, any>, 'data' | 'dataKey' | 'ref'>;
 }
 
 export type SparklineFactory = Factory<{

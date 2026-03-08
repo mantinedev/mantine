@@ -291,7 +291,9 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
-                  segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
+                  segmentId={
+                    tooltipDataSource === 'segment' ? (payload?.[0]?.name as string) : undefined
+                  }
                   valueFormatter={valueFormatter}
                   attributes={attributes}
                 />

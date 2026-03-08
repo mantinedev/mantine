@@ -1,6 +1,6 @@
 ---
 name: new-mantine-release
-description: Initialize a new Mantine minor or major release: creates a git branch, sets up the changelog MDX page, updates mdx-meta-data.ts and versions.ts, and commits. Use when the user wants to start a new release (e.g., "new release 9.1.0", "/new-mantine-release 9.1.0", "initialize 9.2.0 release").
+description: Initialize a new Mantine minor or major release: creates a git branch, sets up the changelog MDX page, updates mdx-meta-data.ts, mdx-nav-data.ts, and versions.ts, and commits. Use when the user wants to start a new release (e.g., "new release 9.1.0", "/new-mantine-release 9.1.0", "initialize 9.2.0 release").
 ---
 
 # New Mantine Release
@@ -69,7 +69,11 @@ Format (note ordinal suffix on date day: "1st", "2nd", "3rd", "4th"…"26th"):
 
 Use the previous release date (with ordinal suffix on the day number) as the placeholder.
 
-### 5. Add entry to versions.ts
+### 5. Add entry to mdx-nav-data.ts
+
+Edit `apps/mantine.dev/src/mdx/mdx-nav-data.ts`. In the `GETTING_STARTED_PAGES_GROUP`, find the `Changelog` category and insert `MDX_DATA.ChangelogKEYDIGITS` as the **first page** in the `pages` array (before the existing first changelog entry, e.g., `MDX_DATA.Changelog900`).
+
+### 6. Add entry to versions.ts
 
 Edit `packages/@mantinex/mantine-meta/src/versions.ts`. Insert a new entry **at the top** of the `allVersions` array.
 
@@ -83,7 +87,7 @@ Edit `packages/@mantinex/mantine-meta/src/versions.ts`. Insert a new entry **at 
   },
 ```
 
-### 6. Commit
+### 7. Commit
 
 ```
 [mantine.dev] Initialize X.Y.0 release changelog

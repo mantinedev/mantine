@@ -436,7 +436,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
           </YAxis>
 
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}

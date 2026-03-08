@@ -17,9 +17,6 @@
   "main": "./cjs/index.cjs",
   "module": "./esm/index.mjs",
   "types": "./lib/index.d.ts",
-  "bin": {
-    "mantine-mcp-server": "./bin/mantine-mcp-server.cjs"
-  },
   "exports": {
     ".": {
       "import": {
@@ -39,5 +36,8 @@
   },
   "engines": {
     "node": ">=20.9.0"
+  },
+  "bin": {
+    "mantine-mcp-server": "./bin/mantine-mcp-server.cjs"
   }
 }
