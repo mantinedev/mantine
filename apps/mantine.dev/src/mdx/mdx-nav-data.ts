@@ -455,6 +455,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Sparkline,
       MDX_DATA.Heatmap,
       MDX_DATA.BarsList,
+      MDX_DATA.Treemap,
     ],
   },
 

@@ -1,0 +1,47 @@
+import { TreemapDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Treemap);
+
+## Usage
+
+`Treemap` is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap).
+It displays hierarchical data as a set of nested rectangles:
+
+<Demo data={TreemapDemos.usage} />
+
+## Nested data
+
+`Treemap` supports nested data – each data item can have a `children` array.
+The `color` property on a parent node is used for all its children:
+
+<Demo data={TreemapDemos.nestedDataDemo} />
+
+## Node color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={TreemapDemos.color} />
+
+## autoContrast
+
+`Treemap` supports `autoContrast` prop that automatically adjusts text color
+based on the background color of each node to ensure readable labels:
+
+<Demo data={TreemapDemos.autoContrast} />
+
+## Node stroke
+
+Use the `strokeWidth` prop to control the width of the stroke around each node.
+To change the color of the stroke, use the `strokeColor` prop:
+
+<Demo data={TreemapDemos.strokeColor} />
+
+## Disable tooltip
+
+To disable the tooltip, set `withTooltip={false}`:
+
+<Demo data={TreemapDemos.noTooltip} />
