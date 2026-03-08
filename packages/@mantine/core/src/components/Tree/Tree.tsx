@@ -23,6 +23,7 @@ export interface TreeNodeData {
   value: string;
   nodeProps?: Record<string, any>;
   children?: TreeNodeData[];
+  hasChildren?: boolean;
 }
 
 export interface RenderTreeNodePayload {
@@ -32,11 +33,17 @@ export interface RenderTreeNodePayload {
   /** `true` if the node is expanded, applicable only for nodes with `children` */
   expanded: boolean;
 
-  /** `true` if the node has non-empty `children` array */
+  /** `true` if the node has non-empty `children` array or `hasChildren` is set to `true` in the data */
   hasChildren: boolean;
 
   /** `true` if the node is selected */
   selected: boolean;
+
+  /** `true` if the node's children are currently being loaded */
+  isLoading: boolean;
+
+  /** Error from the last failed load attempt, or `null` */
+  loadError: Error | null;
 
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;

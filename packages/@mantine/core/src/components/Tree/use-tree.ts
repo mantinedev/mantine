@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   CheckedNodeStatus,
   getAllCheckedNodes,
 } from './get-all-checked-nodes/get-all-checked-nodes';
 import {
+  findTreeNode,
   getAllChildrenNodes,
   getChildrenNodesValues,
 } from './get-children-nodes-values/get-children-nodes-values';
@@ -92,6 +93,11 @@ export interface UseTreeInput {
 
   /** Called with the node value when it is collapsed */
   onNodeCollapse?: (value: string) => void;
+
+  /** Called when a node with `hasChildren: true` is expanded for the first time.
+   * The callback should update the tree data with loaded children.
+   */
+  onLoadChildren?: (nodeValue: string) => Promise<void>;
 }
 
 export interface UseTreeReturnType {
@@ -171,6 +177,18 @@ export interface UseTreeReturnType {
 
   /** Returns `true` if node with provided value is indeterminate */
   isNodeIndeterminate: (value: string) => boolean;
+
+  /** Returns `true` if the node's children are currently being loaded */
+  isNodeLoading: (value: string) => boolean;
+
+  /** Returns the error from the last failed load attempt for the given node, or `null` */
+  getNodeLoadError: (value: string) => Error | null;
+
+  /** Programmatically triggers loading of a node's children */
+  loadNode: (value: string) => Promise<void>;
+
+  /** Clears the loaded cache for a node, causing it to re-fetch on next expand */
+  invalidateNode: (value: string) => void;
 }
 
 export function useTree({
@@ -186,6 +204,7 @@ export function useTree({
   onCheckedStateChange,
   onSelectedStateChange,
   onExpandedStateChange,
+  onLoadChildren,
 }: UseTreeInput = {}): UseTreeReturnType {
   const [data, setData] = useState<TreeNodeData[]>([]);
   const [_expandedState, setExpandedState] = useUncontrolled({
@@ -211,6 +230,11 @@ export function useTree({
 
   const [anchorNode, setAnchorNode] = useState<string | null>(null);
 
+  const loadingNodesRef = useRef(new Set<string>());
+  const loadedNodesRef = useRef(new Set<string>());
+  const [loadingNodes, setLoadingNodes] = useState<string[]>([]);
+  const [loadErrors, setLoadErrors] = useState<Record<string, Error>>({});
+
   const initialize = useCallback(
     (_data: TreeNodeData[]) => {
       setExpandedState(getInitialTreeExpandedState(_expandedState, _data, _selectedState));
@@ -220,13 +244,66 @@ export function useTree({
     [_selectedState, _checkedState, _expandedState]
   );
 
+  const loadNodeImpl = useCallback(
+    async (value: string) => {
+      if (!onLoadChildren) {
+        return;
+      }
+
+      if (loadingNodesRef.current.has(value) || loadedNodesRef.current.has(value)) {
+        return;
+      }
+
+      loadingNodesRef.current.add(value);
+      setLoadingNodes(Array.from(loadingNodesRef.current));
+      setLoadErrors((prev) => {
+        if (!(value in prev)) {
+          return prev;
+        }
+
+        const next = { ...prev };
+        delete next[value];
+        return next;
+      });
+
+      try {
+        await onLoadChildren(value);
+        loadedNodesRef.current.add(value);
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error(String(error));
+        setLoadErrors((prev) => ({ ...prev, [value]: err }));
+      } finally {
+        loadingNodesRef.current.delete(value);
+        setLoadingNodes(Array.from(loadingNodesRef.current));
+      }
+    },
+    [onLoadChildren]
+  );
+
+  const tryLoadAsync = useCallback(
+    (value: string) => {
+      if (!onLoadChildren) {
+        return;
+      }
+
+      const node = findTreeNode(value, data);
+      if (node && node.hasChildren && !Array.isArray(node.children)) {
+        loadNodeImpl(value);
+      }
+    },
+    [onLoadChildren, data, loadNodeImpl]
+  );
+
   const toggleExpanded = useCallback(
     (value: string) => {
       const nextState = { ..._expandedState, [value]: !_expandedState[value] };
       nextState[value] ? onNodeExpand?.(value) : onNodeCollapse?.(value);
+      if (nextState[value]) {
+        tryLoadAsync(value);
+      }
       setExpandedState(nextState);
     },
-    [onNodeCollapse, onNodeExpand, _expandedState]
+    [onNodeCollapse, onNodeExpand, _expandedState, tryLoadAsync]
   );
 
   const collapse = useCallback(
@@ -246,19 +323,21 @@ export function useTree({
         onNodeExpand?.(value);
       }
 
+      tryLoadAsync(value);
       setExpandedState({ ..._expandedState, [value]: true });
     },
-    [onNodeExpand, _expandedState]
+    [onNodeExpand, _expandedState, tryLoadAsync]
   );
 
   const expandAllNodes = useCallback(() => {
     const nextState = { ..._expandedState };
     Object.keys(nextState).forEach((key) => {
       nextState[key] = true;
+      tryLoadAsync(key);
     });
 
     setExpandedState(nextState);
-  }, [_expandedState]);
+  }, [_expandedState, tryLoadAsync]);
 
   const collapseAllNodes = useCallback(() => {
     const nextState = { ..._expandedState };
@@ -348,6 +427,22 @@ export function useTree({
   const isNodeIndeterminate = (value: string) =>
     memoizedIsNodeIndeterminate(value, data, _checkedState);
 
+  const isNodeLoading = (value: string) => loadingNodes.includes(value);
+  const getNodeLoadError = (value: string) => loadErrors[value] || null;
+
+  const invalidateNode = useCallback((value: string) => {
+    loadedNodesRef.current.delete(value);
+    setLoadErrors((prev) => {
+      if (!(value in prev)) {
+        return prev;
+      }
+
+      const next = { ...prev };
+      delete next[value];
+      return next;
+    });
+  }, []);
+
   return {
     multiple,
     expandedState: _expandedState,
@@ -378,6 +473,11 @@ export function useTree({
     getCheckedNodes,
     isNodeChecked,
     isNodeIndeterminate,
+
+    isNodeLoading,
+    getNodeLoadError,
+    loadNode: loadNodeImpl,
+    invalidateNode,
   };
 }
 

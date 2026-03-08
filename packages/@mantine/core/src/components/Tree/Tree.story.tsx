@@ -3,6 +3,7 @@ import { CaretDownIcon } from '@phosphor-icons/react';
 import { Stack, Text } from '../..';
 import { Button } from '../Button';
 import { Group } from '../Group';
+import { mergeAsyncChildren } from './merge-async-children/merge-async-children';
 import { moveTreeNode, TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { Tree, TreeNodeData } from './Tree';
 import { getTreeExpandedState, useTree } from './use-tree';
@@ -292,6 +293,203 @@ export function LargeTreeNoDragDrop() {
         1000 nodes, all expanded, no drag-and-drop
       </Text>
       <Tree data={largeData} tree={tree} />
+    </div>
+  );
+}
+
+export function AsyncLoading() {
+  const [treeData, setTreeData] = useState<TreeNodeData[]>([
+    {
+      label: 'Documents',
+      value: 'documents',
+      hasChildren: true,
+    },
+    {
+      label: 'Images',
+      value: 'images',
+      hasChildren: true,
+    },
+    { label: 'readme.md', value: 'readme.md' },
+  ]);
+
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1500);
+      });
+      const children: TreeNodeData[] = [
+        { label: `${value}/file1.txt`, value: `${value}/file1.txt` },
+        { label: `${value}/file2.txt`, value: `${value}/file2.txt` },
+        {
+          label: `${value}/subfolder`,
+          value: `${value}/subfolder`,
+          hasChildren: true,
+        },
+      ];
+      setTreeData((prev) => mergeAsyncChildren(prev, value, children));
+    },
+  });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Tree
+        data={treeData}
+        tree={tree}
+        renderNode={({ node, expanded, hasChildren: hc, elementProps, isLoading }) => (
+          <Group gap="xs" {...elementProps}>
+            {isLoading ? (
+              <Text size="sm" c="dimmed">
+                Loading...
+              </Text>
+            ) : (
+              <>
+                <span>{node.label}</span>
+                {hc && (
+                  <CaretDownIcon
+                    size={18}
+                    style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  />
+                )}
+              </>
+            )}
+          </Group>
+        )}
+      />
+    </div>
+  );
+}
+
+export function AsyncLoadingDefault() {
+  const [treeData, setTreeData] = useState<TreeNodeData[]>([
+    { label: 'Documents', value: 'documents', hasChildren: true },
+    { label: 'Images', value: 'images', hasChildren: true },
+    { label: 'readme.md', value: 'readme.md' },
+  ]);
+
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      });
+      setTreeData((prev) =>
+        mergeAsyncChildren(prev, value, [
+          { label: `${value}/file1.txt`, value: `${value}/file1.txt` },
+          { label: `${value}/file2.txt`, value: `${value}/file2.txt` },
+          { label: `${value}/nested`, value: `${value}/nested`, hasChildren: true },
+        ])
+      );
+    },
+  });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Text size="sm" c="dimmed" mb="md">
+        Default rendering (no renderNode) with async loading
+      </Text>
+      <Tree data={treeData} tree={tree} />
+    </div>
+  );
+}
+
+export function AsyncLoadingWithError() {
+  const [treeData, setTreeData] = useState<TreeNodeData[]>([
+    { label: 'Will succeed', value: 'success', hasChildren: true },
+    { label: 'Will fail', value: 'fail', hasChildren: true },
+    { label: 'readme.md', value: 'readme.md' },
+  ]);
+
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      });
+
+      if (value === 'fail') {
+        throw new Error('Network error');
+      }
+
+      setTreeData((prev) =>
+        mergeAsyncChildren(prev, value, [
+          { label: `${value}/file1.txt`, value: `${value}/file1.txt` },
+        ])
+      );
+    },
+  });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Tree
+        data={treeData}
+        tree={tree}
+        renderNode={({ node, expanded, hasChildren: hc, elementProps, isLoading, loadError }) => (
+          <Group gap="xs" {...elementProps}>
+            <span>{node.label}</span>
+            {hc && !isLoading && !loadError && (
+              <CaretDownIcon
+                size={18}
+                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
+            )}
+            {isLoading && (
+              <Text size="xs" c="dimmed">
+                Loading...
+              </Text>
+            )}
+            {loadError && (
+              <Text
+                size="xs"
+                c="red"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  tree.invalidateNode(node.value);
+                  tree.loadNode(node.value);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                Error! Click to retry
+              </Text>
+            )}
+          </Group>
+        )}
+      />
+    </div>
+  );
+}
+
+export function AsyncLoadingWithInvalidation() {
+  let counter = 0;
+  const [treeData, setTreeData] = useState<TreeNodeData[]>([
+    { label: 'Dynamic folder', value: 'dynamic', hasChildren: true },
+  ]);
+
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 800);
+      });
+      counter++;
+      setTreeData((prev) =>
+        mergeAsyncChildren(prev, value, [
+          { label: `item-${counter}-a`, value: `${value}/item-${counter}-a` },
+          { label: `item-${counter}-b`, value: `${value}/item-${counter}-b` },
+        ])
+      );
+    },
+  });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Button
+        onClick={() => {
+          tree.invalidateNode('dynamic');
+          setTreeData([{ label: 'Dynamic folder', value: 'dynamic', hasChildren: true }]);
+          tree.collapse('dynamic');
+        }}
+        mb="md"
+      >
+        Invalidate & reload
+      </Button>
+      <Tree data={treeData} tree={tree} />
     </div>
   );
 }

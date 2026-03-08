@@ -6,3 +6,4 @@ export { checked } from './Tree.demo.checked';
 export { expandedState } from './Tree.demo.expandedState';
 export { checkAllNodes } from './Tree.demo.checkAllNodes';
 export { dragDrop } from './Tree.demo.dragDrop';
+export { asyncLoading } from './Tree.demo.asyncLoading';

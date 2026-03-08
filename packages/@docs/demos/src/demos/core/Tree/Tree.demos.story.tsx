@@ -42,3 +42,8 @@ export const Demo_dragDrop = {
   name: '⭐ Demo: dragDrop',
   render: renderDemo(demos.dragDrop),
 };
+
+export const Demo_asyncLoading = {
+  name: '⭐ Demo: asyncLoading',
+  render: renderDemo(demos.asyncLoading),
+};

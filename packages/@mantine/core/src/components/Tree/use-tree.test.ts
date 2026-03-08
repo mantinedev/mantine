@@ -497,4 +497,215 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(onCheckedStateChange).toHaveBeenCalledWith(expect.arrayContaining(['package.json']));
     });
   });
+
+  describe('async loading', () => {
+    const asyncData: TreeNodeData[] = [
+      { label: 'Documents', value: 'documents', hasChildren: true },
+      { label: 'Photos', value: 'photos', hasChildren: true },
+      { label: 'readme.md', value: 'readme' },
+    ];
+
+    it('loadNode calls onLoadChildren and sets loading state', async () => {
+      let resolveLoad: () => void;
+      const onLoadChildren = jest.fn(
+        () =>
+          new Promise<void>((resolve) => {
+            resolveLoad = resolve;
+          })
+      );
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      let loadPromise: Promise<void>;
+      act(() => {
+        loadPromise = result.current.loadNode('documents');
+      });
+
+      expect(result.current.isNodeLoading('documents')).toBe(true);
+      expect(onLoadChildren).toHaveBeenCalledWith('documents');
+
+      await act(async () => {
+        resolveLoad!();
+        await loadPromise!;
+      });
+
+      expect(result.current.isNodeLoading('documents')).toBe(false);
+    });
+
+    it('loadNode does not call onLoadChildren twice for same node', async () => {
+      const onLoadChildren = jest.fn(
+        () =>
+          new Promise<void>((resolve) => {
+            setTimeout(resolve, 10);
+          })
+      );
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      let p1: Promise<void>;
+      let p2: Promise<void>;
+      act(() => {
+        p1 = result.current.loadNode('documents');
+        p2 = result.current.loadNode('documents');
+      });
+
+      await act(async () => {
+        await p1!;
+        await p2!;
+      });
+
+      expect(onLoadChildren).toHaveBeenCalledTimes(1);
+    });
+
+    it('loadNode does not re-fetch after successful load', async () => {
+      const onLoadChildren = jest.fn(() => Promise.resolve());
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      await act(async () => {
+        await result.current.loadNode('documents');
+      });
+      await act(async () => {
+        await result.current.loadNode('documents');
+      });
+
+      expect(onLoadChildren).toHaveBeenCalledTimes(1);
+    });
+
+    it('loadNode sets error state on failure', async () => {
+      const testError = new Error('Network error');
+      const onLoadChildren = jest.fn(() => Promise.reject(testError));
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      await act(async () => {
+        await result.current.loadNode('documents');
+      });
+
+      expect(result.current.isNodeLoading('documents')).toBe(false);
+      expect(result.current.getNodeLoadError('documents')).toBe(testError);
+    });
+
+    it('invalidateNode clears loaded cache and error, allowing re-fetch', async () => {
+      let callCount = 0;
+      const onLoadChildren = jest.fn(() => {
+        callCount += 1;
+        if (callCount === 1) {
+          return Promise.reject(new Error('fail'));
+        }
+        return Promise.resolve();
+      });
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      await act(async () => {
+        await result.current.loadNode('documents');
+      });
+      expect(result.current.getNodeLoadError('documents')).toBeTruthy();
+
+      act(() => result.current.invalidateNode('documents'));
+      expect(result.current.getNodeLoadError('documents')).toBe(null);
+
+      await act(async () => {
+        await result.current.loadNode('documents');
+      });
+      expect(onLoadChildren).toHaveBeenCalledTimes(2);
+      expect(result.current.getNodeLoadError('documents')).toBe(null);
+    });
+
+    it('loadNode does nothing when onLoadChildren is not provided', async () => {
+      const { result } = renderHook(() => useTree());
+      act(() => result.current.initialize(asyncData));
+
+      await act(async () => {
+        await result.current.loadNode('documents');
+      });
+
+      expect(result.current.isNodeLoading('documents')).toBe(false);
+    });
+
+    it('expand triggers async load for nodes with hasChildren', async () => {
+      const onLoadChildren = jest.fn(() => Promise.resolve());
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      await act(async () => {
+        result.current.expand('documents');
+        await Promise.resolve();
+      });
+
+      expect(onLoadChildren).toHaveBeenCalledWith('documents');
+    });
+
+    it('toggleExpanded triggers async load when expanding', async () => {
+      const onLoadChildren = jest.fn(() => Promise.resolve());
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      await act(async () => {
+        result.current.toggleExpanded('documents');
+        await Promise.resolve();
+      });
+
+      expect(onLoadChildren).toHaveBeenCalledWith('documents');
+    });
+
+    it('toggleExpanded does not trigger async load when collapsing', async () => {
+      const onLoadChildren = jest.fn(() => Promise.resolve());
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      await act(async () => {
+        result.current.expand('documents');
+        await Promise.resolve();
+      });
+      onLoadChildren.mockClear();
+
+      act(() => result.current.toggleExpanded('documents'));
+
+      expect(onLoadChildren).not.toHaveBeenCalled();
+    });
+
+    it('expand does not trigger async load for nodes with children already loaded', async () => {
+      const dataWithChildren: TreeNodeData[] = [
+        {
+          label: 'Documents',
+          value: 'documents',
+          children: [{ label: 'file.txt', value: 'documents/file.txt' }],
+        },
+      ];
+      const onLoadChildren = jest.fn(() => Promise.resolve());
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(dataWithChildren));
+
+      act(() => result.current.expand('documents'));
+
+      expect(onLoadChildren).not.toHaveBeenCalled();
+    });
+
+    it('getNodeLoadError returns null for nodes without errors', () => {
+      const { result } = renderHook(() => useTree());
+      act(() => result.current.initialize(asyncData));
+
+      expect(result.current.getNodeLoadError('documents')).toBe(null);
+      expect(result.current.getNodeLoadError('nonexistent')).toBe(null);
+    });
+
+    it('isNodeLoading returns false for nodes not being loaded', () => {
+      const { result } = renderHook(() => useTree());
+      act(() => result.current.initialize(asyncData));
+
+      expect(result.current.isNodeLoading('documents')).toBe(false);
+      expect(result.current.isNodeLoading('nonexistent')).toBe(false);
+    });
+  });
 });

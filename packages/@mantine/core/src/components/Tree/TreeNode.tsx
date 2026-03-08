@@ -1,5 +1,6 @@
 import { Activity, useRef } from 'react';
 import { Box, findElementAncestor, GetStylesApi } from '../../core';
+import { Loader } from '../Loader';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import type { RenderNode, TreeDragState, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
@@ -58,7 +59,13 @@ export function TreeNode({
   data,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
-  const hasChildren = Array.isArray(node.children) && node.children.length > 0;
+  const hasLoadedChildren = Array.isArray(node.children);
+  const hasAsyncChildren = !!node.hasChildren && !hasLoadedChildren;
+  const hasChildren = hasLoadedChildren || hasAsyncChildren;
+  const isLoading = controller.isNodeLoading(node.value);
+  const loadError = controller.getNodeLoadError(node.value);
+  const isExpanded = controller.expandedState[node.value] || false;
+
   const nested = (node.children || []).map((child) => (
     <TreeNode
       key={child.value}
@@ -95,7 +102,7 @@ export function TreeNode({
       event.stopPropagation();
       event.preventDefault();
 
-      if (controller.expandedState[node.value]) {
+      if (isExpanded) {
         event.currentTarget.querySelector<HTMLLIElement>('[role=treeitem]')?.focus();
       } else {
         controller.expand(node.value);
@@ -105,7 +112,7 @@ export function TreeNode({
     if (event.nativeEvent.code === 'ArrowLeft') {
       event.stopPropagation();
       event.preventDefault();
-      if (controller.expandedState[node.value] && (node.children || []).length > 0) {
+      if (isExpanded && hasChildren) {
         controller.collapse(node.value);
       } else if (isSubtree) {
         findElementAncestor(event.currentTarget as HTMLElement, '[role=treeitem]')?.focus();
@@ -168,7 +175,10 @@ export function TreeNode({
       controller.setSelectedState(getValuesRange(controller.anchorNode, node.value, flatValues));
       ref.current?.focus();
     } else {
-      expandOnClick && controller.toggleExpanded(node.value);
+      if (expandOnClick) {
+        controller.toggleExpanded(node.value);
+      }
+
       selectOnClick && controller.select(node.value);
       ref.current?.focus();
     }
@@ -182,6 +192,8 @@ export function TreeNode({
     'data-value': node.value,
     ...dragProps,
   };
+
+  const withLoadingIndicator = isExpanded && isLoading && nested.length === 0;
 
   return (
     <li
@@ -203,22 +215,38 @@ export function TreeNode({
           level,
           selected,
           tree: controller,
-          expanded: controller.expandedState[node.value] || false,
+          expanded: isExpanded,
           hasChildren,
+          isLoading,
+          loadError,
           elementProps,
         })
       ) : (
         <div {...elementProps}>{node.label}</div>
       )}
 
+      {withLoadingIndicator && (
+        <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
+          <li
+            {...getStyles('node', {
+              style: { '--label-offset': `calc(var(--level-offset) * ${level})` },
+            })}
+          >
+            <div {...getStyles('label')}>
+              <Loader size={16} />
+            </div>
+          </li>
+        </Box>
+      )}
+
       {keepMounted && nested.length > 0 ? (
-        <Activity mode={controller.expandedState[node.value] ? 'visible' : 'hidden'}>
+        <Activity mode={isExpanded ? 'visible' : 'hidden'}>
           <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
             {nested}
           </Box>
         </Activity>
       ) : (
-        controller.expandedState[node.value] &&
+        isExpanded &&
         nested.length > 0 && (
           <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
             {nested}

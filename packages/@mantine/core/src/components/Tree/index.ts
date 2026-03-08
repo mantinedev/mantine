@@ -13,6 +13,7 @@ import type { UseTreeInput, UseTreeReturnType } from './use-tree';
 export { Tree } from './Tree';
 export { useTree, getTreeExpandedState } from './use-tree';
 export { moveTreeNode } from './move-tree-node/move-tree-node';
+export { mergeAsyncChildren } from './merge-async-children/merge-async-children';
 
 export type {
   TreeProps,

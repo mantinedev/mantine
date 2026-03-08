@@ -86,11 +86,17 @@ export interface RenderTreeNodePayload {
   /** `true` if the node is expanded, applicable only for nodes with `children` */
   expanded: boolean;
 
-  /** `true` if the node has non-empty `children` array */
+  /** `true` if the node has non-empty `children` array or `hasChildren` is set to `true` */
   hasChildren: boolean;
 
   /** `true` if the node is selected */
   selected: boolean;
+
+  /** `true` if the node's children are currently being loaded */
+  isLoading: boolean;
+
+  /** Error from the last failed load attempt, or `null` */
+  loadError: Error | null;
 
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
@@ -154,6 +160,9 @@ export interface UseTreeInput {
 
   /** Called with the node value when it is collapsed */
   onNodeCollapse?: (value: string) => void;
+
+  /** Called when a node with `hasChildren: true` is expanded for the first time */
+  onLoadChildren?: (nodeValue: string) => Promise<void>;
 }
 ```
 
@@ -239,6 +248,18 @@ export interface UseTreeReturnType {
 
   /** Returns `true` if node with provided value is indeterminate */
   isNodeIndeterminate: (value: string) => boolean;
+
+  /** Returns `true` if the node's children are currently being loaded */
+  isNodeLoading: (value: string) => boolean;
+
+  /** Returns the error from the last failed load attempt, or `null` */
+  getNodeLoadError: (value: string) => Error | null;
+
+  /** Programmatically triggers loading of a node's children */
+  loadNode: (value: string) => Promise<void>;
+
+  /** Clears the loaded cache for a node, causing it to re-fetch on next expand */
+  invalidateNode: (value: string) => void;
 }
 ```
 
@@ -278,6 +299,37 @@ getTreeExpandedState(data, '*');
 ```
 
 <Demo data={TreeDemos.expandedState} />
+
+## Async loading
+
+`Tree` supports lazy loading of children. Set `hasChildren: true` on a node without providing `children` –
+when the node is expanded for the first time, `onLoadChildren` callback passed to `useTree` is called.
+Use the `mergeAsyncChildren` utility to splice loaded children into your data:
+
+```tsx
+import { mergeAsyncChildren, Tree, TreeNodeData, useTree } from '@mantine/core';
+
+function Demo() {
+  const [data, setData] = useState<TreeNodeData[]>([
+    { label: 'Documents', value: 'documents', hasChildren: true },
+  ]);
+
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      const children = await fetchChildren(value);
+      setData((prev) => mergeAsyncChildren(prev, value, children));
+    },
+  });
+
+  return <Tree data={data} tree={tree} />;
+}
+```
+
+The `renderNode` payload includes `isLoading` and `loadError` fields that you can use
+to display a loading indicator or an error message. Use `tree.invalidateNode(value)` to clear
+the cache for a node and allow re-fetching on next expand.
+
+<Demo data={TreeDemos.asyncLoading} />
 
 ## Drag and drop
 
