@@ -47,3 +47,18 @@ export const Demo_asyncLoading = {
   name: '⭐ Demo: asyncLoading',
   render: renderDemo(demos.asyncLoading),
 };
+
+export const Demo_searchHighlight = {
+  name: '⭐ Demo: searchHighlight',
+  render: renderDemo(demos.searchHighlight),
+};
+
+export const Demo_searchFilter = {
+  name: '⭐ Demo: searchFilter',
+  render: renderDemo(demos.searchFilter),
+};
+
+export const Demo_searchFuzzy = {
+  name: '⭐ Demo: searchFuzzy',
+  render: renderDemo(demos.searchFuzzy),
+};

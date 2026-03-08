@@ -331,6 +331,49 @@ the cache for a node and allow re-fetching on next expand.
 
 <Demo data={TreeDemos.asyncLoading} />
 
+## Search and filter
+
+`Tree` does not include built-in search controls – search input and filtering logic are always external.
+Use the `filterTreeData` utility to filter tree data based on a search query. The function
+accepts tree data, a query string, and an optional custom filter function:
+
+```tsx
+import { filterTreeData } from '@mantine/core';
+
+// Filter with default case-insensitive label matching
+const filtered = filterTreeData(data, 'button');
+
+// Filter with a custom function
+const filtered = filterTreeData(data, 'btn', (query, node) =>
+  node.value.includes(query)
+);
+```
+
+The default filter compares the query against `node.label` (when it is a string) or `node.value` as a fallback.
+Matching nodes and their ancestors are preserved in the result. You can provide a custom `TreeNodeFilter`
+function for more advanced matching (for example, fuzzy search with fuse.js).
+
+### Highlight matching nodes
+
+In this example, all nodes remain visible and matching text is highlighted using the `Highlight` component
+inside `renderNode`. Ancestor nodes of matching nodes are auto-expanded.
+
+<Demo data={TreeDemos.searchHighlight} />
+
+### Filter non-matching nodes
+
+In this example, non-matching branches are removed from the tree using `filterTreeData`.
+The filtered tree is auto-expanded with `getTreeExpandedState(filteredData, '*')`.
+
+<Demo data={TreeDemos.searchFilter} />
+
+### Fuzzy search with fuse.js
+
+You can pass a custom filter function to `filterTreeData` for fuzzy matching. This example
+uses [fuse.js](https://www.fusejs.io/):
+
+<Demo data={TreeDemos.searchFuzzy} />
+
 ## Drag and drop
 
 `Tree` component supports drag-and-drop reordering of nodes. To enable it, provide `onDragDrop` callback.

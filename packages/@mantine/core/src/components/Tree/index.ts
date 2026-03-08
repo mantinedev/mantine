@@ -1,3 +1,4 @@
+import type { TreeNodeFilter } from './filter-tree-data/filter-tree-data';
 import type { CheckedNodeStatus } from './get-all-checked-nodes/get-all-checked-nodes';
 import type { TreeDragDropPayload, TreeDragDropPosition } from './move-tree-node/move-tree-node';
 import type {
@@ -14,6 +15,7 @@ export { Tree } from './Tree';
 export { useTree, getTreeExpandedState } from './use-tree';
 export { moveTreeNode } from './move-tree-node/move-tree-node';
 export { mergeAsyncChildren } from './merge-async-children/merge-async-children';
+export { filterTreeData, defaultTreeNodeFilter } from './filter-tree-data/filter-tree-data';
 
 export type {
   TreeProps,
@@ -27,6 +29,7 @@ export type {
   CheckedNodeStatus,
   TreeDragDropPayload,
   TreeDragDropPosition,
+  TreeNodeFilter,
 };
 
 export namespace Tree {
@@ -37,4 +40,5 @@ export namespace Tree {
   export type RenderNodePayload = RenderTreeNodePayload;
   export type DragDropPayload = TreeDragDropPayload;
   export type DragDropPosition = TreeDragDropPosition;
+  export type NodeFilter = TreeNodeFilter;
 }

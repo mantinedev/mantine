@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { CaretDownIcon } from '@phosphor-icons/react';
-import { Stack, Text } from '../..';
+import { Highlight, Stack, Text, TextInput } from '../..';
 import { Button } from '../Button';
 import { Group } from '../Group';
+import { defaultTreeNodeFilter, filterTreeData } from './filter-tree-data/filter-tree-data';
 import { mergeAsyncChildren } from './merge-async-children/merge-async-children';
 import { moveTreeNode, TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { Tree, TreeNodeData } from './Tree';
@@ -508,6 +509,85 @@ export function LargeTreeWithDragDrop() {
         tree={tree}
         onDragDrop={(payload) => setTreeData((current) => moveTreeNode(current, payload))}
       />
+    </div>
+  );
+}
+
+function getMatchingAncestors(nodes: TreeNodeData[], query: string): string[] {
+  const result: string[] = [];
+  for (const node of nodes) {
+    const childMatches = node.children ? getMatchingAncestors(node.children, query) : [];
+    if (defaultTreeNodeFilter(query, node) || childMatches.length > 0) {
+      result.push(node.value, ...childMatches);
+    }
+  }
+  return result;
+}
+
+export function SearchHighlight() {
+  const [search, setSearch] = useState('');
+  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, []) });
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    if (value.trim()) {
+      tree.setExpandedState(getTreeExpandedState(data, getMatchingAncestors(data, value)));
+    } else {
+      tree.collapseAllNodes();
+    }
+  };
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TextInput
+        placeholder="Search (highlight)..."
+        mb="sm"
+        value={search}
+        onChange={(event) => handleSearchChange(event.currentTarget.value)}
+      />
+      <Tree
+        data={data}
+        tree={tree}
+        renderNode={({ node, elementProps }) => {
+          const label = typeof node.label === 'string' ? node.label : node.value;
+          return (
+            <div {...elementProps}>
+              <Highlight highlight={search} component="span">
+                {label}
+              </Highlight>
+            </div>
+          );
+        }}
+      />
+    </div>
+  );
+}
+
+export function SearchFilter() {
+  const [search, setSearch] = useState('');
+  const tree = useTree();
+
+  const filteredData = useMemo(() => filterTreeData(data, search), [search]);
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    if (value.trim()) {
+      const next = filterTreeData(data, value);
+      tree.setExpandedState(getTreeExpandedState(next, '*'));
+    } else {
+      tree.collapseAllNodes();
+    }
+  };
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TextInput
+        placeholder="Search (filter)..."
+        mb="sm"
+        value={search}
+        onChange={(event) => handleSearchChange(event.currentTarget.value)}
+      />
+      <Tree data={filteredData} tree={tree} />
     </div>
   );
 }
