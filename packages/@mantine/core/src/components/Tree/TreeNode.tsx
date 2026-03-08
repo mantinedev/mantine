@@ -1,7 +1,9 @@
 import { Activity, useRef } from 'react';
 import { Box, findElementAncestor, GetStylesApi } from '../../core';
-import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
+import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
+import type { RenderNode, TreeDragState, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
+import { useTreeNodeDragDrop } from './use-tree-node-drag-drop';
 
 function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
   if (!anchor || !value) {
@@ -31,6 +33,9 @@ interface TreeNodeProps {
   expandOnSpace: boolean | undefined;
   checkOnSpace: boolean | undefined;
   keepMounted: boolean | undefined;
+  onDragDrop: ((payload: TreeDragDropPayload) => void) | undefined;
+  dragStateRef: React.RefObject<TreeDragState>;
+  data: TreeNodeData[];
 }
 
 export function TreeNode({
@@ -48,8 +53,12 @@ export function TreeNode({
   expandOnSpace,
   checkOnSpace,
   keepMounted,
+  onDragDrop,
+  dragStateRef,
+  data,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
+  const hasChildren = Array.isArray(node.children) && node.children.length > 0;
   const nested = (node.children || []).map((child) => (
     <TreeNode
       key={child.value}
@@ -67,8 +76,19 @@ export function TreeNode({
       expandOnSpace={expandOnSpace}
       checkOnSpace={checkOnSpace}
       keepMounted={keepMounted}
+      onDragDrop={onDragDrop}
+      dragStateRef={dragStateRef}
+      data={data}
     />
   ));
+
+  const dragProps = useTreeNodeDragDrop({
+    nodeValue: node.value,
+    hasChildren,
+    data,
+    onDragDrop,
+    dragStateRef,
+  });
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.nativeEvent.code === 'ArrowRight') {
@@ -160,6 +180,7 @@ export function TreeNode({
     onClick: handleNodeClick,
     'data-selected': selected || undefined,
     'data-value': node.value,
+    ...dragProps,
   };
 
   return (
@@ -183,7 +204,7 @@ export function TreeNode({
           selected,
           tree: controller,
           expanded: controller.expandedState[node.value] || false,
-          hasChildren: Array.isArray(node.children) && node.children.length > 0,
+          hasChildren,
           elementProps,
         })
       ) : (

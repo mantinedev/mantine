@@ -26,6 +26,7 @@
 }
 
 .label {
+  position: relative;
   padding-inline-start: var(--label-offset);
 
   &:where([data-selected]) {
@@ -36,5 +37,37 @@
     @mixin where-dark {
       background-color: var(--mantine-color-dark-5);
     }
+  }
+
+  &:where([data-dragging]) {
+    opacity: 0.4;
+  }
+
+  &:where([data-drag-over='before'])::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    inset-inline-start: var(--label-offset, 0);
+    inset-inline-end: 0;
+    height: 2px;
+    background-color: var(--mantine-primary-color-filled);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &:where([data-drag-over='after'])::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    inset-inline-start: var(--label-offset, 0);
+    inset-inline-end: 0;
+    height: 2px;
+    background-color: var(--mantine-primary-color-filled);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &:where([data-drag-over='inside']) {
+    background-color: var(--mantine-primary-color-light);
   }
 }

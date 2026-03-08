@@ -279,6 +279,40 @@ getTreeExpandedState(data, '*');
 
 <Demo data={TreeDemos.expandedState} />
 
+## Drag and drop
+
+`Tree` component supports drag-and-drop reordering of nodes. To enable it, provide `onDragDrop` callback.
+The callback receives an object with `draggedNode` (value of the dragged node), `targetNode` (value of the node it was dropped on),
+and `position` (`'before'`, `'after'`, or `'inside'`).
+
+Use `moveTreeNode` utility function to update the data based on the drag-and-drop result:
+
+```tsx
+import { moveTreeNode, Tree, TreeNodeData } from '@mantine/core';
+
+function Demo() {
+  const [data, setData] = useState<TreeNodeData[]>(initialData);
+
+  return (
+    <Tree
+      data={data}
+      onDragDrop={(payload) =>
+        setData((current) => moveTreeNode(current, payload))
+      }
+    />
+  );
+}
+```
+
+When dragging over a node, the drop position is determined by cursor position:
+- **Top zone** – drop before the target node (shown as a line above)
+- **Middle zone** – drop inside the target node as a child (shown as a background highlight, only for nodes with children)
+- **Bottom zone** – drop after the target node (shown as a line below)
+
+Nodes cannot be dropped onto their own descendants.
+
+<Demo data={TreeDemos.dragDrop} />
+
 ## Example: files tree
 
 <Demo data={TreeDemos.files} />

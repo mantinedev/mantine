@@ -37,3 +37,8 @@ export const Demo_checkAllNodes = {
   name: '⭐ Demo: checkAllNodes',
   render: renderDemo(demos.checkAllNodes),
 };
+
+export const Demo_dragDrop = {
+  name: '⭐ Demo: dragDrop',
+  render: renderDemo(demos.dragDrop),
+};
