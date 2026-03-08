@@ -7,10 +7,6 @@ description: Update all dependencies to latest minor versions across the Mantine
 
 Update all dependencies to their latest minor versions, validate everything works, and produce a report.
 
-## Excluded packages
-
-Do not update `@phosphor-icons/react` — it is pinned intentionally.
-
 ## Steps
 
 ### 1. Update minor versions
@@ -18,7 +14,7 @@ Do not update `@phosphor-icons/react` — it is pinned intentionally.
 Run `npx npm-check-updates` to update all package.json files to latest minor versions:
 
 ```bash
-npx npm-check-updates --target minor -u --packageFile 'package.json' --deep -x @phosphor-icons/react
+npx npm-check-updates --target minor -u --deep
 ```
 
 ### 2. Sync and install
@@ -37,14 +33,17 @@ If `npm run syncpack` (list-mismatches) still reports errors after fix, resolve 
 npm run test:all
 ```
 
-This runs prettier, syncpack, typecheck, lint, and jest. If there are minor errors (e.g., lint/format issues), fix them:
+This runs prettier, syncpack, typecheck, lint, and jest.
 
+If there are formatting/lint errors, fix them:
 ```bash
 npm run prettier:write
 npx eslint --fix packages apps/mantine.dev/src apps/help.mantine.dev/src scripts --cache
 ```
 
-Re-run `npm run test:all` to confirm fixes. If there are major errors (type errors, test failures that require code changes), document them in the report but do not attempt large refactors.
+If there are type errors caused by updated packages (e.g., recharts changing generic type parameters), fix them with minimal changes — use type assertions or add missing type arguments. These are minor fixable errors.
+
+Re-run `npm run test:all` to confirm fixes. If there are major errors that require significant refactoring, document them in the report but do not attempt large refactors.
 
 ### 4. Build packages
 
@@ -75,7 +74,7 @@ Verify it completes without errors. Document any errors in the report.
 Run ncu without `-u` to list available major updates (for the report only, do not install):
 
 ```bash
-npx npm-check-updates --deep -x @phosphor-icons/react
+npx npm-check-updates --deep
 ```
 
 Filter the output to show only major version bumps (where the major version number changed).

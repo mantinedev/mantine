@@ -118,8 +118,8 @@ export interface AreaChartProps
 
   /** Props passed down to recharts `Area` component */
   areaProps?:
-    | ((series: AreaChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
-    | Partial<Omit<AreaProps, 'ref'>>;
+    | ((series: AreaChartSeries) => Partial<Omit<AreaProps<any, any>, 'ref'>>)
+    | Partial<Omit<AreaProps<any, any>, 'ref'>>;
 
   /** If set, each point has an associated label @default false */
   withPointLabels?: boolean;
@@ -380,7 +380,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
           )}
 
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}

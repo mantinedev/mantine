@@ -68,15 +68,15 @@ describe('@mantine/hooks/use-hotkey', () => {
     const removeSpy = jest.spyOn(document.documentElement, 'removeEventListener');
     const handler = jest.fn();
 
-    const { rerender } = renderHook(({ value }) => useHotkeys([['ctrl+S', handler]]), {
-      initialProps: { value: 1 },
+    const { rerender } = renderHook(({ _value }) => useHotkeys([['ctrl+S', handler]]), {
+      initialProps: { _value: 1 },
     });
 
     const initialAdds = addSpy.mock.calls.filter(([t]) => t === 'keydown').length;
     const initialRemoves = removeSpy.mock.calls.filter(([t]) => t === 'keydown').length;
 
-    rerender({ value: 2 });
-    rerender({ value: 3 });
+    rerender({ _value: 2 });
+    rerender({ _value: 3 });
 
     expect(addSpy.mock.calls.filter(([t]) => t === 'keydown').length).toBe(initialAdds);
     expect(removeSpy.mock.calls.filter(([t]) => t === 'keydown').length).toBe(initialRemoves);

@@ -242,7 +242,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
           {...scatterChartProps}
         >
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}
@@ -315,14 +315,18 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
                     labels
                       ? payload?.map((item) => ({
                           ...item,
-                          name: labels[getAxis(item.name, dataKey)] || item.name,
+                          name: labels[getAxis(item.name as string, dataKey)] || item.name,
                           value:
-                            getFormatter(getAxis(item.name, dataKey))?.(item.value) ?? item.value,
+                            getFormatter(getAxis(item.name as string, dataKey))?.(
+                              item.value as number
+                            ) ?? item.value,
                         }))
                       : payload?.map((item) => ({
                           ...item,
                           value:
-                            getFormatter(getAxis(item.name, dataKey))?.(item.value) ?? item.value,
+                            getFormatter(getAxis(item.name as string, dataKey))?.(
+                              item.value as number
+                            ) ?? item.value,
                         }))
                   }
                   classNames={resolvedClassNames}

@@ -48,7 +48,7 @@
     "react-dom": "^19.2.0"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.27.16",
+    "@floating-ui/react": "^0.27.19",
     "clsx": "^2.1.1",
     "react-number-format": "^5.4.4",
     "react-remove-scroll": "^2.7.2",
@@ -58,7 +58,7 @@
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   }
 }
