@@ -1,11 +1,10 @@
 import createMdx from '@next/mdx';
-import rehypeSlug from 'rehype-slug';
 
 const withMDX = createMdx({
   extension: /\.mdx?$/,
   options: {
     providerImportSource: '@mdx-js/react',
-    rehypePlugins: [rehypeSlug],
+    rehypePlugins: ['rehype-slug'],
   },
 });
 
@@ -18,6 +17,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  turbopack: {},
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve = {
