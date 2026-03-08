@@ -1,0 +1,77 @@
+import { MaskInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MaskInput);
+
+## Usage
+
+`MaskInput` is a wrapper around [useMask](/hooks/use-mask) hook that provides all standard input
+props (label, description, error, etc.) and supports all mask options. The mask string defines
+the expected format using token characters (`9` for digits, `a` for letters, etc.).
+
+<Demo data={MaskInputDemos.usage} />
+
+## Dynamic mask
+
+Use the `modify` option to change the mask based on the current input value.
+This example switches between standard and American Express credit card formats:
+
+<Demo data={MaskInputDemos.dynamic} />
+
+## Custom tokens
+
+Override or extend the built-in token map with the `tokens` option:
+
+<Demo data={MaskInputDemos.customTokens} />
+
+## Regex array format
+
+For complex masks where built-in tokens are not enough, pass an array of
+string literals and `RegExp` objects:
+
+<Demo data={MaskInputDemos.regex} />
+
+## Transform
+
+Use the `transform` option to convert each character before validation.
+This example auto-uppercases input so the `A` token accepts lowercase letters:
+
+<Demo data={MaskInputDemos.transform} />
+
+## Disabled state
+
+<Demo data={MaskInputDemos.disabled} />
+
+## Error state
+
+<Demo data={MaskInputDemos.error} />
+
+## Mask pattern syntax
+
+The mask string defines the expected format. Each character is either a **token** (editable slot)
+or a **literal** (fixed character inserted automatically).
+
+### Built-in tokens
+
+- `9` – any single digit (`[0-9]`)
+- `a` – any single letter (`[A-Za-z]`)
+- `A` – any uppercase letter (`[A-Z]`)
+- `*` – any alphanumeric character (`[A-Za-z0-9]`)
+- `#` – digit or sign (`[-+0-9]`)
+
+### Optional segments
+
+Append `?` after the last required character to mark remaining slots as optional:
+
+```tsx
+<MaskInput mask="(999) 999-9999? x9999" /> // Extension is optional
+```
+
+### Escaping
+
+Prefix a token character with `\` to treat it as a literal:
+
+```tsx
+<MaskInput mask="\A999" /> // "A" is literal, not a token
+```

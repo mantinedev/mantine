@@ -422,3 +422,38 @@ export const Demo_useScrollerDraggableDemo = {
   name: '⭐ Demo: useScrollerDraggableDemo',
   render: renderDemo(demos.useScrollerDraggableDemo),
 };
+
+export const Demo_useMaskUsage = {
+  name: '⭐ Demo: useMaskUsage',
+  render: renderDemo(demos.useMaskUsage),
+};
+
+export const Demo_useMaskComplete = {
+  name: '⭐ Demo: useMaskComplete',
+  render: renderDemo(demos.useMaskComplete),
+};
+
+export const Demo_useMaskDynamic = {
+  name: '⭐ Demo: useMaskDynamic',
+  render: renderDemo(demos.useMaskDynamic),
+};
+
+export const Demo_useMaskCustomTokens = {
+  name: '⭐ Demo: useMaskCustomTokens',
+  render: renderDemo(demos.useMaskCustomTokens),
+};
+
+export const Demo_useMaskEscape = {
+  name: '⭐ Demo: useMaskEscape',
+  render: renderDemo(demos.useMaskEscape),
+};
+
+export const Demo_useMaskRegex = {
+  name: '⭐ Demo: useMaskRegex',
+  render: renderDemo(demos.useMaskRegex),
+};
+
+export const Demo_useMaskReset = {
+  name: '⭐ Demo: useMaskReset',
+  render: renderDemo(demos.useMaskReset),
+};

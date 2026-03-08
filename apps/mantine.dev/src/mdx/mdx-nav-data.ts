@@ -174,6 +174,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useOrientation,
       MDX_DATA.useFileDialog,
       MDX_DATA.useLongPress,
+      MDX_DATA.useMask,
     ],
   },
 
@@ -276,6 +277,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.RangeSlider,
       MDX_DATA.Switch,
       MDX_DATA.TextInput,
+      MDX_DATA.MaskInput,
       MDX_DATA.Checkbox,
       MDX_DATA.Radio,
       MDX_DATA.Fieldset,

@@ -1,3 +1,4 @@
+import { HooksDemos, MaskInputDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,19 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## use-mask hook
+
+New [use-mask](/hooks/use-mask) hook attaches real-time input masking to any `<input>` element via
+a ref callback. It formats user input against a defined pattern and exposes both the masked display
+value and the raw unmasked value. The hook supports built-in and custom tokens, dynamic masks,
+character transforms, optional segments, and regex array format:
+
+<Demo data={HooksDemos.useMaskUsage} />
+
+## MaskInput component
+
+New [MaskInput](/core/mask-input) component is a wrapper around [use-mask](/hooks/use-mask) hook
+that provides all standard input props (label, description, error, etc.) and supports all mask options:
+
+<Demo data={MaskInputDemos.usage} />
