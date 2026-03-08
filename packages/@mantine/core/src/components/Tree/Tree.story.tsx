@@ -513,6 +513,32 @@ export function LargeTreeWithDragDrop() {
   );
 }
 
+export function WithLines() {
+  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Tree data={data} tree={tree} withLines />
+    </div>
+  );
+}
+
+export function WithLinesCustom() {
+  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Tree
+        data={data}
+        tree={tree}
+        withLines
+        style={{
+          '--tree-line-width': '2px',
+          '--tree-line-color': 'var(--mantine-color-blue-5)',
+        }}
+      />
+    </div>
+  );
+}
+
 function getMatchingAncestors(nodes: TreeNodeData[], query: string): string[] {
   const result: string[] = [];
   for (const node of nodes) {

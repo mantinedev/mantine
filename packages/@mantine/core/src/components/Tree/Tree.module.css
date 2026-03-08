@@ -1,5 +1,7 @@
 .root {
   --level-offset: var(--mantine-spacing-lg);
+  --tree-line-width: rem(1px);
+  --tree-line-color: var(--mantine-color-default-border);
   margin: 0;
   padding: 0;
   user-select: none;
@@ -69,5 +71,40 @@
 
   &:where([data-drag-over='inside']) {
     background-color: var(--mantine-primary-color-light);
+  }
+}
+
+:where([data-with-lines]) {
+  .node {
+    position: relative;
+  }
+
+  .subtree > .node {
+    &::before {
+      content: '';
+      position: absolute;
+      top: rem(12px);
+      inset-inline-start: calc(var(--label-offset) - var(--level-offset) / 2);
+      width: calc(var(--level-offset) / 2);
+      height: 0;
+      border-top: var(--tree-line-width) solid var(--tree-line-color);
+      pointer-events: none;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      inset-inline-start: calc(var(--label-offset) - var(--level-offset) / 2);
+      width: 0;
+      border-inline-start: var(--tree-line-width) solid var(--tree-line-color);
+      pointer-events: none;
+    }
+
+    &:last-child::after {
+      bottom: auto;
+      height: rem(12px);
+    }
   }
 }

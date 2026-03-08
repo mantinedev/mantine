@@ -115,6 +115,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** Called when a node is dropped on another node, enables drag-and-drop when provided */
   onDragDrop?: (payload: TreeDragDropPayload) => void;
+
+  /** If set, connecting lines are rendered showing parent-child relationships @default false */
+  withLines?: boolean;
 }
 
 function getFlatValues(data: TreeNodeData[]): string[] {
@@ -167,6 +170,7 @@ export const Tree = factory<TreeFactory>((_props) => {
     checkOnSpace,
     keepMounted,
     onDragDrop,
+    withLines,
     attributes,
     ref,
     ...others
@@ -233,6 +237,7 @@ export const Tree = factory<TreeFactory>((_props) => {
       role="tree"
       aria-multiselectable={controller.multiple}
       data-tree-root
+      data-with-lines={withLines || undefined}
     >
       {nodes}
     </Box>

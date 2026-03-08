@@ -10,3 +10,4 @@ export { asyncLoading } from './Tree.demo.asyncLoading';
 export { searchHighlight } from './Tree.demo.searchHighlight';
 export { searchFilter } from './Tree.demo.searchFilter';
 export { searchFuzzy } from './Tree.demo.searchFuzzy';
+export { lines } from './Tree.demo.lines';

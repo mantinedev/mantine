@@ -62,3 +62,8 @@ export const Demo_searchFuzzy = {
   name: '⭐ Demo: searchFuzzy',
   render: renderDemo(demos.searchFuzzy),
 };
+
+export const Demo_lines = {
+  name: '⭐ Demo: lines',
+  render: renderDemo(demos.lines),
+};
