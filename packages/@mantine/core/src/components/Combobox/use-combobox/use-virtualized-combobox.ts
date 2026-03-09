@@ -14,10 +14,10 @@ export interface UseVirtualizedComboboxOptions {
   onOpenedChange?: (opened: boolean) => void;
 
   /** Called when dropdown closes */
-  onDropdownClose?: (eventSource?: ComboboxDropdownEventSource) => void;
+  onDropdownClose?: (eventSource: ComboboxDropdownEventSource) => void;
 
   /** Called when dropdown opens */
-  onDropdownOpen?: (eventSource?: ComboboxDropdownEventSource) => void;
+  onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
 
   /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
   loop?: boolean;
@@ -62,7 +62,7 @@ export function useVirtualizedCombobox(
   }: UseVirtualizedComboboxOptions = {
     totalOptionsCount: 0,
     getOptionId: () => null,
-    selectedOptionIndex: 1,
+    selectedOptionIndex: -1,
     setSelectedOptionIndex: () => {},
     onSelectedOptionSubmit: () => {},
   }
@@ -80,73 +80,117 @@ export function useVirtualizedCombobox(
   const focusSearchTimeout = useRef<number>(-1);
   const focusTargetTimeout = useRef<number>(-1);
 
-  const openDropdown = (eventSource?: ComboboxDropdownEventSource) => {
-    if (!dropdownOpened) {
-      setDropdownOpened(true);
-      onDropdownOpen?.(eventSource);
-    }
-  };
+  const openDropdown: ComboboxStore['openDropdown'] = useCallback(
+    (eventSource = 'unknown') => {
+      if (!dropdownOpened) {
+        setDropdownOpened(true);
+        onDropdownOpen?.(eventSource);
+      }
+    },
+    [setDropdownOpened, onDropdownOpen, dropdownOpened]
+  );
 
-  const closeDropdown = (eventSource?: ComboboxDropdownEventSource) => {
-    if (dropdownOpened) {
-      setDropdownOpened(false);
-      onDropdownClose?.(eventSource);
-    }
-  };
+  const closeDropdown: ComboboxStore['closeDropdown'] = useCallback(
+    (eventSource = 'unknown') => {
+      if (dropdownOpened) {
+        setDropdownOpened(false);
+        onDropdownClose?.(eventSource);
+      }
+    },
+    [setDropdownOpened, onDropdownClose, dropdownOpened]
+  );
 
-  const toggleDropdown = (eventSource?: ComboboxDropdownEventSource) => {
-    if (dropdownOpened) {
-      closeDropdown(eventSource);
-    } else {
-      openDropdown(eventSource);
-    }
-  };
+  const toggleDropdown: ComboboxStore['toggleDropdown'] = useCallback(
+    (eventSource = 'unknown') => {
+      if (dropdownOpened) {
+        closeDropdown(eventSource);
+      } else {
+        openDropdown(eventSource);
+      }
+    },
+    [closeDropdown, openDropdown, dropdownOpened]
+  );
 
-  const selectOption = (index: number) => {
-    const nextIndex = index >= totalOptionsCount ? 0 : index < 0 ? totalOptionsCount - 1 : index;
-    setSelectedOptionIndex(nextIndex);
-    return getOptionId(nextIndex);
-  };
+  const selectOption = useCallback(
+    (index: number) => {
+      if (totalOptionsCount === 0) {
+        setSelectedOptionIndex(-1);
+        return null;
+      }
 
-  const selectActiveOption = () => selectOption(activeOptionIndex ?? 0);
+      const nextIndex = index >= totalOptionsCount ? 0 : index < 0 ? totalOptionsCount - 1 : index;
 
-  const selectNextOption = () =>
-    selectOption(
-      getNextIndex({ currentIndex: selectedOptionIndex, isOptionDisabled, totalOptionsCount, loop })
-    );
+      if (isOptionDisabled(nextIndex)) {
+        return null;
+      }
 
-  const selectPreviousOption = () =>
-    selectOption(
-      getPreviousIndex({
-        currentIndex: selectedOptionIndex,
-        isOptionDisabled,
-        totalOptionsCount,
-        loop,
-      })
-    );
+      setSelectedOptionIndex(nextIndex);
+      return getOptionId(nextIndex);
+    },
+    [totalOptionsCount, isOptionDisabled, setSelectedOptionIndex, getOptionId]
+  );
 
-  const selectFirstOption = () =>
-    selectOption(getFirstIndex({ isOptionDisabled, totalOptionsCount }));
+  const selectActiveOption = useCallback(
+    () => selectOption(activeOptionIndex ?? 0),
+    [selectOption, activeOptionIndex]
+  );
 
-  const resetSelectedOption = () => {
+  const selectNextOption = useCallback(
+    () =>
+      selectOption(
+        getNextIndex({
+          currentIndex: selectedOptionIndex,
+          isOptionDisabled,
+          totalOptionsCount,
+          loop,
+        })
+      ),
+    [selectOption, selectedOptionIndex, isOptionDisabled, totalOptionsCount, loop]
+  );
+
+  const selectPreviousOption = useCallback(
+    () =>
+      selectOption(
+        getPreviousIndex({
+          currentIndex: selectedOptionIndex,
+          isOptionDisabled,
+          totalOptionsCount,
+          loop,
+        })
+      ),
+    [selectOption, selectedOptionIndex, isOptionDisabled, totalOptionsCount, loop]
+  );
+
+  const selectFirstOption = useCallback(
+    () => selectOption(getFirstIndex({ isOptionDisabled, totalOptionsCount })),
+    [selectOption, isOptionDisabled, totalOptionsCount]
+  );
+
+  const resetSelectedOption = useCallback(() => {
     setSelectedOptionIndex(-1);
-  };
+  }, [setSelectedOptionIndex]);
 
-  const clickSelectedOption = () => {
-    onSelectedOptionSubmit?.(selectedOptionIndex);
-  };
+  const clickSelectedOption = useCallback(() => {
+    if (
+      selectedOptionIndex >= 0 &&
+      selectedOptionIndex < totalOptionsCount &&
+      !isOptionDisabled(selectedOptionIndex)
+    ) {
+      onSelectedOptionSubmit?.(selectedOptionIndex);
+    }
+  }, [selectedOptionIndex, totalOptionsCount, isOptionDisabled, onSelectedOptionSubmit]);
 
-  const setListId = (id: string) => {
+  const setListId = useCallback((id: string) => {
     listId.current = id;
-  };
+  }, []);
 
-  const focusSearchInput = () => {
-    focusSearchTimeout.current = window.setTimeout(() => searchRef.current!.focus(), 0);
-  };
+  const focusSearchInput = useCallback(() => {
+    focusSearchTimeout.current = window.setTimeout(() => searchRef.current?.focus(), 0);
+  }, []);
 
-  const focusTarget = () => {
-    focusTargetTimeout.current = window.setTimeout(() => targetRef.current!.focus(), 0);
-  };
+  const focusTarget = useCallback(() => {
+    focusTargetTimeout.current = window.setTimeout(() => targetRef.current?.focus(), 0);
+  }, []);
 
   useEffect(
     () => () => {
@@ -156,9 +200,9 @@ export function useVirtualizedCombobox(
     []
   );
 
-  const getSelectedOptionIndex = useCallback(() => selectedOptionIndex, []);
+  const getSelectedOptionIndex = useCallback(() => selectedOptionIndex, [selectedOptionIndex]);
 
-  const updateSelectedOptionIndex = useCallback(
+  const updateSelectedOptionIndex: ComboboxStore['updateSelectedOptionIndex'] = useCallback(
     (index?: 'active' | 'selected' | number) => {
       if (typeof index === 'number') {
         setSelectedOptionIndex(index);
@@ -167,9 +211,6 @@ export function useVirtualizedCombobox(
       if (index === 'active' && typeof activeOptionIndex === 'number') {
         setSelectedOptionIndex(activeOptionIndex);
       }
-
-      // 'selected' not applicable for virtualized combobox
-      // only kept for API consistency
     },
     [setSelectedOptionIndex, activeOptionIndex]
   );

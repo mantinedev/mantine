@@ -326,15 +326,17 @@ function Demo() {
 }
 ```
 
-## Combobox virtualization (alpha)
+## Combobox virtualization
 
-[Combobox](/core/combobox) component now supports [virtualization](/core/combobox/#virtualization).
-Virtualization support is currently in alpha stage and the API may change in future releases. You
-are welcome to try it out and provide feedback.
+[Combobox](/core/combobox) component now supports [virtualization](/core/combobox/#virtualization)
+with the `useVirtualizedCombobox` hook. The hook does not depend on any specific virtualization library.
+The recommended option is [@tanstack/react-virtual](https://tanstack.com/virtual/latest).
 
-Example of implementation with `useVirtualizedCombobox` and [react-virtuoso](https://virtuoso.dev/):
+Example of implementation with `useVirtualizedCombobox` and [@tanstack/react-virtual](https://tanstack.com/virtual/latest):
 
-<Demo data={ComboboxDemos.virtualized} />
+<Demo data={ComboboxDemos.virtualizedTanstack} />
+
+You can find more virtualization examples on the [Combobox examples page](/combobox?e=VirtualizedTanstack).
 
 ## Highlight per-term colors
 

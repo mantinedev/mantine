@@ -16,3 +16,4 @@ export { groups } from './Combobox.demo.groups';
 export { stylesApi } from './Combobox.demo.stylesApi';
 export { dropdownPosition } from './Combobox.demo.dropdownPosition';
 export { virtualized } from './Combobox.demo.virtualized';
+export { virtualizedTanstack } from './Combobox.demo.virtualizedTanstack';

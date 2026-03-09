@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
+import { useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { ScrollArea } from '../ScrollArea';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
@@ -16,14 +16,22 @@ const largeData = Array(10000)
     disabled: false,
   }));
 
-export function Virtualized() {
+const ITEM_HEIGHT = 36;
+
+export function VirtualizedTanstack() {
   const [opened, setOpened] = useState(false);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [value, setValue] = useState('');
-  const virtuoso = useRef<VirtuosoHandle>(null);
   const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
 
   const activeIndex = largeData.findIndex((item) => item.value === value);
+
+  const virtualizer = useVirtualizer({
+    count: largeData.length,
+    getScrollElement: () => scrollParent,
+    estimateSize: () => ITEM_HEIGHT,
+    overscan: 5,
+  });
 
   const store = useVirtualizedCombobox({
     opened,
@@ -36,14 +44,14 @@ export function Virtualized() {
     setSelectedOptionIndex: (index) => {
       setSelectedOptionIndex(index);
       if (index !== -1) {
-        virtuoso.current?.scrollIntoView({ index });
+        virtualizer.scrollToIndex(index, { align: 'auto' });
       }
     },
     onDropdownOpen: () => {
       if (activeIndex !== -1) {
         setSelectedOptionIndex(activeIndex);
         requestAnimationFrame(() => {
-          virtuoso.current?.scrollToIndex({ index: activeIndex });
+          virtualizer.scrollToIndex(activeIndex, { align: 'auto' });
         });
       }
     },
@@ -82,23 +90,30 @@ export function Virtualized() {
               viewportRef={setScrollParent}
               onMouseDown={(event) => event.preventDefault()}
             >
-              <Virtuoso
-                data={largeData}
-                ref={virtuoso}
-                style={{ height: 400 }}
-                customScrollParent={scrollParent ?? undefined}
-                itemContent={(index, item) => (
-                  <Combobox.Option
-                    value={item.value}
-                    key={item.value}
-                    active={index === activeIndex}
-                    selected={index === selectedOptionIndex}
-                    onClick={() => onOptionSubmit(index)}
-                  >
-                    {item.label}
-                  </Combobox.Option>
-                )}
-              />
+              <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
+                {virtualizer.getVirtualItems().map((virtualItem) => {
+                  const item = largeData[virtualItem.index];
+                  return (
+                    <Combobox.Option
+                      value={item.value}
+                      key={item.value}
+                      active={virtualItem.index === activeIndex}
+                      selected={virtualItem.index === selectedOptionIndex}
+                      onClick={() => onOptionSubmit(virtualItem.index)}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: virtualItem.size,
+                        transform: `translateY(${virtualItem.start}px)`,
+                      }}
+                    >
+                      {item.label}
+                    </Combobox.Option>
+                  );
+                })}
+              </div>
             </ScrollArea.Autosize>
           </Combobox.Options>
         </Combobox.Dropdown>

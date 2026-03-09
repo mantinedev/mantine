@@ -329,16 +329,24 @@ of `Combobox.Target`:
 
 <Demo data={ComboboxDemos.stylesApi} />
 
-## Virtualization (alpha)
-
-Note that virtualization support is currently in alpha stage and the API may change in future releases.
-You are welcome to try it out and provide feedback.
+## Virtualization
 
 `useVirtualizedCombobox` hook can be used to create comboboxes with virtualized options list.
 Note that due to the nature of virtualization, the hook requires some additional configuration
 compared to the `useCombobox` hook. In `useVirtualizedCombobox` hook all operations related to
 option indexing do not rely on the actual DOM structure, instead, you need to preserve values in
 React state and pass them to the hook.
+
+`useVirtualizedCombobox` does not depend on any specific virtualization library.
+The recommended option is [@tanstack/react-virtual](https://tanstack.com/virtual/latest):
+
+<Demo data={ComboboxDemos.virtualizedTanstack} />
+
+Example of implementation with [react-virtuoso](https://virtuoso.dev/):
+
+<Demo data={ComboboxDemos.virtualized} />
+
+You can find more virtualization examples on the [Combobox examples page](/combobox?e=VirtualizedTanstack).
 
 Hook options:
 
@@ -354,10 +362,10 @@ export interface UseVirtualizedComboboxOptions {
   onOpenedChange?: (opened: boolean) => void;
 
   /** Called when dropdown closes */
-  onDropdownClose?: (eventSource?: ComboboxDropdownEventSource) => void;
+  onDropdownClose?: (eventSource: ComboboxDropdownEventSource) => void;
 
   /** Called when dropdown opens */
-  onDropdownOpen?: (eventSource?: ComboboxDropdownEventSource) => void;
+  onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
 
   /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
   loop?: boolean;
@@ -384,9 +392,3 @@ export interface UseVirtualizedComboboxOptions {
   onSelectedOptionSubmit: (index: number) => void;
 }
 ```
-
-`useVirtualizedCombobox` does not depend on any specific virtualization library. During the
-development, it was tested with [react-virtuoso](https://virtuoso.dev/).
-Example of implementation with `useVirtualizedCombobox` and [react-virtuoso](https://virtuoso.dev/):
-
-<Demo data={ComboboxDemos.virtualized} />
