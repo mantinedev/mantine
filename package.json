@@ -123,7 +123,6 @@
     "lowlight": "^3.3.0",
     "react": "19.2.4",
     "react-dropzone": "15.0.0",
-    "react-imask": "^7.6.1",
     "react-number-format": "^5.4.4",
     "react-remove-scroll": "^2.7.2",
     "react-textarea-autosize": "8.5.9",

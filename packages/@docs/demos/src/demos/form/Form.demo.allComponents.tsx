@@ -605,7 +605,6 @@ export const fileInput: MantineDemo = {
 const codeInput = `
 import { Input, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IMaskInput } from 'react-imask';
 
 function Demo() {
   const form = useForm({
@@ -619,8 +618,7 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Input.Wrapper label="Phone" withAsterisk>
         <Input
-          component={IMaskInput}
-          mask="+7 (000) 000-00-00"
+          component="input"
           placeholder="Your phone"
           key={form.key('phone')}
           {...form.getInputProps('phone')}
