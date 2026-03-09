@@ -5237,6 +5237,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-virtual@npm:^3.13.21":
+  version: 3.13.21
+  resolution: "@tanstack/react-virtual@npm:3.13.21"
+  dependencies:
+    "@tanstack/virtual-core": "npm:3.13.21"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/4af1da35de730cba482c94529e51b52f7a33aa1855270c572d67c80965931090301299b55ca2803a2c58d5082ba36be4ae252d972ce4cb225088ef391da405f3
+  languageName: node
+  linkType: hard
+
+"@tanstack/virtual-core@npm:3.13.21":
+  version: 3.13.21
+  resolution: "@tanstack/virtual-core@npm:3.13.21"
+  checksum: 10c0/e420e3d3d7d494deab873fd1d4114a5a5aa65ca475f0a8149c84bdd52572c695a142449c6de033fbb369eac68e2d4b0c25c090c97f9cceaad3b51a7f22f3e2a7
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:10.4.1":
   version: 10.4.1
   resolution: "@testing-library/dom@npm:10.4.1"
@@ -14601,6 +14620,7 @@ __metadata:
     "@rollup/plugin-replace": "npm:^6.0.3"
     "@shikijs/transformers": "npm:^3.23.0"
     "@storybook/nextjs": "npm:^10.2.16"
+    "@tanstack/react-virtual": "npm:^3.13.21"
     "@testing-library/dom": "npm:10.4.1"
     "@testing-library/jest-dom": "npm:6.9.1"
     "@testing-library/react": "npm:16.3.2"

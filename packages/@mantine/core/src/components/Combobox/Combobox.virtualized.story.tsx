@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { ListRange, Virtuoso } from 'react-virtuoso';
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { ScrollArea } from '../ScrollArea';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
@@ -18,14 +18,10 @@ const largeData = Array(10000)
 
 export function Virtualized() {
   const [opened, setOpened] = useState(false);
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [value, setValue] = useState('');
-  const virtuoso = useRef<any>(null);
+  const virtuoso = useRef<VirtuosoHandle>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const visibleRangeRef = useRef<ListRange>({
-    startIndex: 0,
-    endIndex: 0,
-  });
 
   const store = useVirtualizedCombobox({
     opened,
@@ -36,10 +32,8 @@ export function Virtualized() {
     selectedOptionIndex,
     setSelectedOptionIndex: (index) => {
       setSelectedOptionIndex(index);
-      const isVisible =
-        index >= visibleRangeRef.current.startIndex && index <= visibleRangeRef.current.endIndex;
-      if (index !== -1 && !isVisible) {
-        virtuoso.current.scrollToIndex({ index, align: 'end' });
+      if (index !== -1) {
+        virtuoso.current?.scrollIntoView({ index });
       }
     },
     onSelectedOptionSubmit: onOptionSubmit,
@@ -81,10 +75,7 @@ export function Virtualized() {
                 data={largeData}
                 ref={virtuoso}
                 style={{ height: 400 }}
-                customScrollParent={viewportRef.current!}
-                rangeChanged={(range) => {
-                  visibleRangeRef.current = range;
-                }}
+                customScrollParent={viewportRef.current ?? undefined}
                 itemContent={(index, item) => (
                   <Combobox.Option
                     value={item.value}
