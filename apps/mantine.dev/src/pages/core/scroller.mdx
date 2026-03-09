@@ -1,4 +1,4 @@
-import { ScrollerDemos } from '@docs/demos';
+import { ScrollerDemos, TabsDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -38,3 +38,9 @@ Use `startControlIcon` and `endControlIcon` props to replace default chevron ico
 with custom icons:
 
 <Demo data={ScrollerDemos.customIcons} />
+
+## Usage with Tabs
+
+Use `Scroller` inside [Tabs.List](/core/tabs) to make the tabs list scrollable when there are too many tabs to fit in the available space:
+
+<Demo data={TabsDemos.scroller} />
