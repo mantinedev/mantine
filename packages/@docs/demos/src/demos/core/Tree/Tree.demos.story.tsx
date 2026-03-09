@@ -67,3 +67,8 @@ export const Demo_lines = {
   name: '⭐ Demo: lines',
   render: renderDemo(demos.lines),
 };
+
+export const Demo_virtualized = {
+  name: '⭐ Demo: virtualized',
+  render: renderDemo(demos.virtualized),
+};

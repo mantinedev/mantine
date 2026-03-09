@@ -1,4 +1,6 @@
 import type { TreeNodeFilter } from './filter-tree-data/filter-tree-data';
+import type { FlattenedTreeNodeData } from './flatten-tree-data/flatten-tree-data';
+import type { FlatTreeNodeProps } from './FlatTreeNode';
 import type { CheckedNodeStatus } from './get-all-checked-nodes/get-all-checked-nodes';
 import type { TreeDragDropPayload, TreeDragDropPosition } from './move-tree-node/move-tree-node';
 import type {
@@ -12,10 +14,12 @@ import type {
 import type { UseTreeInput, UseTreeReturnType } from './use-tree';
 
 export { Tree } from './Tree';
+export { FlatTreeNode } from './FlatTreeNode';
 export { useTree, getTreeExpandedState } from './use-tree';
 export { moveTreeNode } from './move-tree-node/move-tree-node';
 export { mergeAsyncChildren } from './merge-async-children/merge-async-children';
 export { filterTreeData, defaultTreeNodeFilter } from './filter-tree-data/filter-tree-data';
+export { flattenTreeData } from './flatten-tree-data/flatten-tree-data';
 
 export type {
   TreeProps,
@@ -30,6 +34,8 @@ export type {
   TreeDragDropPayload,
   TreeDragDropPosition,
   TreeNodeFilter,
+  FlattenedTreeNodeData,
+  FlatTreeNodeProps,
 };
 
 export namespace Tree {
@@ -41,4 +47,5 @@ export namespace Tree {
   export type DragDropPayload = TreeDragDropPayload;
   export type DragDropPosition = TreeDragDropPosition;
   export type NodeFilter = TreeNodeFilter;
+  export type FlattenedNodeData = FlattenedTreeNodeData;
 }

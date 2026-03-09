@@ -415,6 +415,29 @@ Lines adapt to `levelOffset` spacing automatically.
 
 <Demo data={TreeDemos.lines} />
 
+## Virtualization
+
+`Tree` does not depend on any virtualization library – you supply one yourself.
+Use the `flattenTreeData` utility to convert hierarchical data into a flat list of
+visible nodes based on the current expanded state, then render each node with
+`FlatTreeNode` which provides Tree's styles, aria attributes, click/keyboard
+handlers, and `renderNode` support.
+
+```tsx
+import { FlatTreeNode, flattenTreeData, useTree } from '@mantine/core';
+
+const tree = useTree();
+const flatList = flattenTreeData(data, tree.expandedState);
+// flatList is FlattenedTreeNodeData[] – spread each entry into FlatTreeNode
+```
+
+`FlatTreeNode` accepts the same behavioral props as `Tree` (`expandOnClick`,
+`selectOnClick`, `expandOnSpace`, `checkOnSpace`, `renderNode`) and a `style` prop
+for virtualizer positioning. The container element must have `data-tree-root`
+and `role="tree"` attributes for keyboard navigation to work.
+
+<Demo data={TreeDemos.virtualized} />
+
 ## Example: files tree
 
 <Demo data={TreeDemos.files} />

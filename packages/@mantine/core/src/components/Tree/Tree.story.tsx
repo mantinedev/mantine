@@ -1,9 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { CaretDownIcon } from '@phosphor-icons/react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { Highlight, Stack, Text, TextInput } from '../..';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { defaultTreeNodeFilter, filterTreeData } from './filter-tree-data/filter-tree-data';
+import { flattenTreeData } from './flatten-tree-data/flatten-tree-data';
+import { FlatTreeNode } from './FlatTreeNode';
 import { mergeAsyncChildren } from './merge-async-children/merge-async-children';
 import { moveTreeNode, TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { Tree, TreeNodeData } from './Tree';
@@ -614,6 +617,98 @@ export function SearchFilter() {
         onChange={(event) => handleSearchChange(event.currentTarget.value)}
       />
       <Tree data={filteredData} tree={tree} />
+    </div>
+  );
+}
+
+const ITEM_HEIGHT = 30;
+
+function generateVirtualizedTreeData(count: number): TreeNodeData[] {
+  const result: TreeNodeData[] = [];
+  let id = 0;
+
+  function addChildren(parent: TreeNodeData[], depth: number, remaining: { count: number }) {
+    const childCount = depth === 0 ? 20 : Math.floor(Math.random() * 8) + 2;
+
+    for (let i = 0; i < childCount && remaining.count > 0; i++) {
+      id++;
+      remaining.count--;
+      const hasChildren = depth < 3 && remaining.count > 0 && Math.random() > 0.3;
+      const node: TreeNodeData = {
+        label: `${hasChildren ? 'Folder' : 'File'} ${id}`,
+        value: `node-${id}`,
+        children: hasChildren ? [] : undefined,
+      };
+
+      if (hasChildren) {
+        addChildren(node.children!, depth + 1, remaining);
+      }
+
+      parent.push(node);
+    }
+  }
+
+  addChildren(result, 0, { count });
+  return result;
+}
+
+const virtualizedData = generateVirtualizedTreeData(10000);
+
+export function Virtualized() {
+  const tree = useTree({ initialExpandedState: getTreeExpandedState(virtualizedData, '*') });
+  const flatList = useMemo(
+    () => flattenTreeData(virtualizedData, tree.expandedState),
+    [tree.expandedState]
+  );
+
+  const scrollParentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: flatList.length,
+    getScrollElement: () => scrollParentRef.current,
+    estimateSize: () => ITEM_HEIGHT,
+    overscan: 20,
+  });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Text size="sm" c="dimmed" mb="md">
+        10,000 nodes, virtualized with @tanstack/react-virtual ({flatList.length} visible)
+      </Text>
+      <Group mb="md">
+        <Button size="xs" onClick={() => tree.expandAllNodes()}>
+          Expand all
+        </Button>
+        <Button size="xs" onClick={() => tree.collapseAllNodes()}>
+          Collapse all
+        </Button>
+      </Group>
+      <div ref={scrollParentRef} style={{ height: 500, overflow: 'auto' }}>
+        <div
+          data-tree-root
+          role="tree"
+          style={{ height: virtualizer.getTotalSize(), position: 'relative' }}
+        >
+          {virtualizer.getVirtualItems().map((virtualItem) => (
+            <FlatTreeNode
+              key={flatList[virtualItem.index].node.value}
+              {...flatList[virtualItem.index]}
+              tree={tree}
+              expandOnClick
+              selectOnClick
+              tabIndex={virtualItem.index === 0 ? 0 : -1}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: virtualItem.size,
+                transform: `translateY(${virtualItem.start}px)`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
