@@ -683,6 +683,8 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
     if (opts.invalid) {
       input.setAttribute('aria-invalid', 'true');
+    } else {
+      input.removeAttribute('aria-invalid');
     }
   }, []);
 

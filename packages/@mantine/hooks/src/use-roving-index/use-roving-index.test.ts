@@ -96,7 +96,7 @@ describe('@mantine/hooks/use-roving-index', () => {
     expect(result.current.focusedIndex).toBe(0);
 
     rerender({ isItemDisabled: (i: number) => i === 0 });
-    expect(result.current.focusedIndex).toBe(0);
+    expect(result.current.focusedIndex).toBe(1);
   });
 
   describe('horizontal list navigation', () => {

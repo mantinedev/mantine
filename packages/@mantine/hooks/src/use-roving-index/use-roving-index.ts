@@ -165,7 +165,7 @@ export function useRovingIndex(input: UseRovingIndexInput): UseRovingIndexReturn
     } else if (isItemDisabled(activeIndex)) {
       setActiveIndex(findFirstEnabled(total, isItemDisabled));
     }
-  }, [total]);
+  }, [total, activeIndex, isItemDisabled]);
 
   const focusItem = useCallback(
     (index: number) => {
