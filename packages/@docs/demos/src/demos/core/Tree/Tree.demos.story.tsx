@@ -72,3 +72,8 @@ export const Demo_virtualized = {
   name: '⭐ Demo: virtualized',
   render: renderDemo(demos.virtualized),
 };
+
+export const Demo_checkStrictly = {
+  name: '⭐ Demo: checkStrictly',
+  render: renderDemo(demos.checkStrictly),
+};

@@ -12,3 +12,4 @@ export { searchFilter } from './Tree.demo.searchFilter';
 export { searchFuzzy } from './Tree.demo.searchFuzzy';
 export { lines } from './Tree.demo.lines';
 export { virtualized } from './Tree.demo.virtualized';
+export { checkStrictly } from './Tree.demo.checkStrictly';

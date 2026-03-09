@@ -163,6 +163,11 @@ export interface UseTreeInput {
 
   /** Called when a node with `hasChildren: true` is expanded for the first time */
   onLoadChildren?: (nodeValue: string) => Promise<void>;
+
+  /** When `true`, checking a parent does not affect children and vice versa.
+   * Each node's checked state is fully independent. @default false
+   */
+  checkStrictly?: boolean;
 }
 ```
 
@@ -170,6 +175,9 @@ And returns an object with the following properties:
 
 ```tsx
 export interface UseTreeReturnType {
+  /** When `true`, each node's checked state is independent (no parent-child cascading) */
+  checkStrictly: boolean;
+
   /** Determines whether multiple node can be selected at a time */
   multiple: boolean;
 
@@ -278,6 +286,15 @@ To implement checked state, you need to render `Checkbox.Indicator` in the `rend
 To check/uncheck nodes, use `checkAllNodes` and `uncheckAllNodes` functions:
 
 <Demo data={TreeDemos.checkAllNodes} />
+
+## Check strictly
+
+By default, checking a parent node also checks all of its children (and unchecking works
+the same way). Set `checkStrictly: true` on `useTree` to make each node's checked state
+fully independent – checking a parent does not affect children and vice versa.
+In this mode, `isNodeIndeterminate` always returns `false`.
+
+<Demo data={TreeDemos.checkStrictly} />
 
 ## Initial expanded state
 

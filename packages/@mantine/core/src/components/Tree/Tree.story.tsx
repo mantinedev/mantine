@@ -3,6 +3,7 @@ import { CaretDownIcon } from '@phosphor-icons/react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Highlight, Stack, Text, TextInput } from '../..';
 import { Button } from '../Button';
+import { Checkbox } from '../Checkbox';
 import { Group } from '../Group';
 import { defaultTreeNodeFilter, filterTreeData } from './filter-tree-data/filter-tree-data';
 import { flattenTreeData } from './flatten-tree-data/flatten-tree-data';
@@ -538,6 +539,63 @@ export function WithLinesCustom() {
           '--tree-line-color': 'var(--mantine-color-blue-5)',
         }}
       />
+    </div>
+  );
+}
+
+export function CheckStrictly() {
+  const tree = useTree({
+    checkStrictly: true,
+    initialExpandedState: getTreeExpandedState(data, '*'),
+  });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Text size="sm" c="dimmed" mb="md">
+        checkStrictly: checking a parent does not affect children
+      </Text>
+      <Tree
+        data={data}
+        tree={tree}
+        expandOnClick={false}
+        levelOffset={23}
+        renderNode={({ node, expanded, hasChildren, elementProps }) => {
+          const checked = tree.isNodeChecked(node.value);
+          const indeterminate = tree.isNodeIndeterminate(node.value);
+
+          return (
+            <Group gap="xs" {...elementProps}>
+              <Checkbox.Indicator
+                checked={checked}
+                indeterminate={indeterminate}
+                onClick={() =>
+                  checked ? tree.uncheckNode(node.value) : tree.checkNode(node.value)
+                }
+              />
+              <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>
+                <span>{node.label}</span>
+                {hasChildren && (
+                  <CaretDownIcon
+                    size={14}
+                    style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  />
+                )}
+              </Group>
+            </Group>
+          );
+        }}
+      />
+      <Group mt="md">
+        <Button size="xs" onClick={() => tree.checkAllNodes()}>
+          Check all
+        </Button>
+        <Button size="xs" onClick={() => tree.uncheckAllNodes()}>
+          Uncheck all
+        </Button>
+      </Group>
+      <Text size="xs" c="dimmed" mt="sm">
+        Checked: {tree.checkedState.join(', ') || 'none'}
+      </Text>
     </div>
   );
 }
