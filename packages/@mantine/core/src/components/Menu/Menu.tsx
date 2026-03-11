@@ -91,6 +91,9 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
 
   /** If set, focus placeholder element is added before items @default `true` */
   withInitialFocusPlaceholder?: boolean;
+
+  /** Determines whether focus should be automatically returned to control when dropdown closes @default `true` */
+  returnFocus?: boolean;
 }
 
 const defaultProps = {
