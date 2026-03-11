@@ -98,6 +98,9 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
 
   /** Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. @default true */
   withInitialFocusPlaceholder?: boolean;
+
+  /** Determines whether focus should be automatically returned to control when dropdown closes @default `true` */
+  returnFocus?: boolean;
 }
 
 const defaultProps = {
