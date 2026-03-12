@@ -18,6 +18,7 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
     viewSelect: 'View select element, part of ScheduleHeader',
     event: 'Event element, part of ScheduleEvent',
     eventInner: 'Event inner element, part of ScheduleEvent',
+    eventResizeHandle: 'Event resize handle element, part of ScheduleEvent',
     moreEventsButton: 'More events button, part of MoreEvents',
     moreEventsList: 'More events list, part of MoreEvents',
     moreEventsDropdown: 'More events dropdown, part of MoreEvents',

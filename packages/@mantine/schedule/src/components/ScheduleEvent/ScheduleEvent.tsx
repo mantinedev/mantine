@@ -17,7 +17,7 @@ import { ScheduleEventData, ScheduleMode } from '../../types';
 import { DragContext } from '../DragContext/DragContext';
 import classes from './ScheduleEvent.module.css';
 
-export type ScheduleEventStylesNames = 'event' | 'eventInner';
+export type ScheduleEventStylesNames = 'event' | 'eventInner' | 'eventResizeHandle';
 
 export type ScheduleEventVariant = 'filled' | 'light';
 export type ScheduleEventCssVariables = {
@@ -73,6 +73,15 @@ export interface ScheduleEventProps
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
+
+  /** If true, event can be resized by dragging its edges @default false */
+  withResize?: boolean;
+
+  /** Called when resize starts on an edge */
+  onResizeStart?: (edge: 'top' | 'bottom', e: React.PointerEvent) => void;
+
+  /** If true, event is currently being resized @default false */
+  isResizing?: boolean;
 }
 
 export type ScheduleEventFactory = Factory<{
@@ -135,6 +144,9 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     onEventDragEnd,
     isDragging = false,
     mode,
+    withResize = false,
+    onResizeStart,
+    isResizing = false,
     ...others
   } = props;
 
@@ -187,10 +199,28 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     return undefined;
   }, [isCurrentlyDragging]);
 
+  const showResizeHandles = withResize && mode !== 'static';
+
   const eventChildren = (
-    <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>
-      {typeof renderEventBody === 'function' ? renderEventBody(event) : event.title}
-    </Box>
+    <>
+      {showResizeHandles && (
+        <Box
+          {...getStyles('eventResizeHandle')}
+          mod={{ edge: 'top' }}
+          onPointerDown={(e: React.PointerEvent) => onResizeStart?.('top', e)}
+        />
+      )}
+      <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>
+        {typeof renderEventBody === 'function' ? renderEventBody(event) : event.title}
+      </Box>
+      {showResizeHandles && (
+        <Box
+          {...getStyles('eventResizeHandle')}
+          mod={{ edge: 'bottom' }}
+          onPointerDown={(e: React.PointerEvent) => onResizeStart?.('bottom', e)}
+        />
+      )}
+    </>
   );
 
   const rootProps = {
@@ -205,6 +235,8 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
         dragging: isCurrentlyDragging,
         'any-dragging': isAnyEventDragging,
         static: mode === 'static',
+        resizing: isResizing,
+        resizable: showResizeHandles,
       },
       mod,
     ],

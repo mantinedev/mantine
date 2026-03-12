@@ -117,3 +117,8 @@ export const Demo_bidirectionalDragDrop = {
   name: '⭐ Demo: bidirectionalDragDrop',
   render: renderDemo(demos.bidirectionalDragDrop),
 };
+
+export const Demo_eventResize = {
+  name: '⭐ Demo: eventResize',
+  render: renderDemo(demos.eventResize),
+};

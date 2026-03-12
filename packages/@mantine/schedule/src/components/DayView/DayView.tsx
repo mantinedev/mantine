@@ -23,6 +23,7 @@ import { useDatesContext } from '@mantine/dates';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useAutoScrollOnDrag } from '../../hooks/use-auto-scroll-on-drag';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useEventResize } from '../../hooks/use-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
@@ -216,6 +217,19 @@ export interface DayViewProps
 
   /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
   onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
+
+  /** If true, events can be resized by dragging their edges @default false */
+  withEventResize?: boolean;
+
+  /** Called when event is resized */
+  onEventResize?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue
+  ) => void;
+
+  /** Function to determine if event can be resized */
+  canResizeEvent?: (event: ScheduleEventData) => boolean;
 }
 
 export type DayViewFactory = Factory<{
@@ -239,6 +253,7 @@ const defaultProps = {
   businessHours: ['09:00:00', '17:00:00'],
   withEventsDragAndDrop: false,
   withDragSlotSelect: false,
+  withEventResize: false,
   mode: 'default',
 } satisfies Partial<DayViewProps>;
 
@@ -304,6 +319,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
     mode,
     startScrollTime,
     onExternalEventDrop,
+    withEventResize,
+    onEventResize,
+    canResizeEvent,
     ...others
   } = props;
 
@@ -340,6 +358,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
   const slotsRef = useRef<HTMLButtonElement[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const timeSlotsContainerRef = useRef<HTMLDivElement>(null);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
 
   useAutoScrollOnDrag({
@@ -459,11 +478,25 @@ export const DayView = factory<DayViewFactory>((_props) => {
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
 
+  const eventResize = useEventResize({
+    enabled: withEventResize,
+    mode,
+    startTime,
+    endTime,
+    intervalMinutes,
+    onEventResize,
+    canResizeEvent,
+  });
+
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
 
   const eventsNodes = eventsData.regularEvents.map((event) => {
     const eventIsAllDay = isAllDayEvent({ event, date });
     const isDraggable = !eventIsAllDay && dragDrop.isDraggableEvent(event);
+    const isResizable = !eventIsAllDay && eventResize.isResizableEvent(event);
+    const resizePosition = eventResize.getResizePosition(event.id);
+    const eventTop = resizePosition ? resizePosition.top : event.position.top;
+    const eventHeight = resizePosition ? resizePosition.height : event.position.height;
 
     return (
       <ScheduleEvent
@@ -473,13 +506,32 @@ export const DayView = factory<DayViewFactory>((_props) => {
         renderEvent={renderEvent}
         autoSize
         draggable={isDraggable}
+        withResize={isResizable}
+        isResizing={resizePosition !== null}
+        onResizeStart={
+          isResizable
+            ? (edge, e) => {
+                if (timeSlotsContainerRef.current) {
+                  eventResize.handleResizeStart(
+                    event,
+                    edge,
+                    timeSlotsContainerRef.current,
+                    event.position.top,
+                    event.position.height,
+                    dayjs(date).format('YYYY-MM-DD'),
+                    e
+                  );
+                }
+              }
+            : undefined
+        }
         mode={mode}
         onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
         {...stylesApiProps}
         style={{
           ...stylesApiProps.styles?.event,
-          top: `${event.position.top}%`,
-          height: `${event.position.height}%`,
+          top: `${eventTop}%`,
+          height: `${eventHeight}%`,
           insetInlineStart: `${event.position.offset}%`,
           width: `${event.position.width}%`,
           position: 'absolute',
@@ -668,6 +720,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
             )}
 
             <div
+              ref={timeSlotsContainerRef}
               {...getStyles('dayViewTimeSlots')}
               onDragOver={
                 withDragHandlers

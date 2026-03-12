@@ -84,6 +84,9 @@ export interface WeekViewDayProps {
 
   /** Function to check if a slot is drag-selected */
   isSlotDragSelected?: (index: number, group: string) => boolean;
+
+  /** Ref callback for the day slots container */
+  daySlotsContainerRef?: (node: HTMLDivElement | null) => void;
 }
 
 export function WeekViewDay({
@@ -110,6 +113,7 @@ export function WeekViewDay({
   withDragSlotSelect,
   onSlotPointerDown,
   isSlotDragSelected,
+  daySlotsContainerRef,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
@@ -178,6 +182,7 @@ export function WeekViewDay({
   return (
     <Box {...getStyles('weekViewDay')} mod={{ today, weekend }}>
       <Box
+        ref={daySlotsContainerRef}
         mod={{ today }}
         {...getStyles('weekViewDaySlots')}
         onDragOver={

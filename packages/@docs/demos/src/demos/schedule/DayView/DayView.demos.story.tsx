@@ -122,3 +122,13 @@ export const Demo_bidirectionalDragDrop = {
   name: '⭐ Demo: bidirectionalDragDrop',
   render: renderDemo(demos.bidirectionalDragDrop),
 };
+
+export const Demo_eventResize = {
+  name: '⭐ Demo: eventResize',
+  render: renderDemo(demos.eventResize),
+};
+
+export const Demo_canResizeEvent = {
+  name: '⭐ Demo: canResizeEvent',
+  render: renderDemo(demos.canResizeEvent),
+};

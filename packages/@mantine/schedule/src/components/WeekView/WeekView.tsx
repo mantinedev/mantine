@@ -23,6 +23,7 @@ import { useDatesContext } from '@mantine/dates';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useAutoScrollOnDrag } from '../../hooks/use-auto-scroll-on-drag';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useEventResize } from '../../hooks/use-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
@@ -245,6 +246,19 @@ export interface WeekViewProps
 
   /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
   onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
+
+  /** If true, events can be resized by dragging their edges @default false */
+  withEventResize?: boolean;
+
+  /** Called when event is resized */
+  onEventResize?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue
+  ) => void;
+
+  /** Function to determine if event can be resized */
+  canResizeEvent?: (event: ScheduleEventData) => boolean;
 }
 
 export type WeekViewFactory = Factory<{
@@ -272,6 +286,7 @@ const defaultProps = {
   businessHours: ['09:00:00', '17:00:00'],
   withEventsDragAndDrop: false,
   withDragSlotSelect: false,
+  withEventResize: false,
   mode: 'default',
 } satisfies Partial<WeekViewProps>;
 
@@ -343,6 +358,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     startScrollTime,
     renderWeekLabel,
     onExternalEventDrop,
+    withEventResize,
+    onEventResize,
+    canResizeEvent,
     ...others
   } = props;
 
@@ -456,6 +474,16 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     },
   });
 
+  const eventResize = useEventResize({
+    enabled: withEventResize,
+    mode,
+    startTime,
+    endTime,
+    intervalMinutes,
+    onEventResize,
+    canResizeEvent,
+  });
+
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
 
   const handleTimeSlotClick = (
@@ -523,6 +551,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
   const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
   const weekdaysRef = useRef<HTMLButtonElement[]>([]);
+  const daySlotsContainersRef = useRef<(HTMLDivElement | null)[]>([]);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
 
   const firstSlotIndex = { dayIndex: 0, slotIndex: 0 };
@@ -673,6 +702,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });
       const isDraggable = !eventIsAllDay && dragDrop.isDraggableEvent(event);
+      const isResizable = !eventIsAllDay && eventResize.isResizableEvent(event);
+      const resizePosition = eventResize.getResizePosition(event.id);
+      const eventTop = resizePosition ? resizePosition.top : event.position.top;
+      const eventHeight = resizePosition ? resizePosition.height : event.position.height;
 
       return (
         <ScheduleEvent
@@ -681,6 +714,26 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           autoSize
           hanging={event.position.hanging}
           draggable={isDraggable}
+          withResize={isResizable}
+          isResizing={resizePosition !== null}
+          onResizeStart={
+            isResizable
+              ? (edge, e) => {
+                  const container = daySlotsContainersRef.current[dayIndex];
+                  if (container) {
+                    eventResize.handleResizeStart(
+                      event,
+                      edge,
+                      container,
+                      event.position.top,
+                      event.position.height,
+                      dayjs(day).format('YYYY-MM-DD'),
+                      e
+                    );
+                  }
+                }
+              : undefined
+          }
           renderEventBody={renderEventBody}
           renderEvent={renderEvent}
           radius={radius}
@@ -688,10 +741,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
           style={{
             position: 'absolute',
-            top: `calc(${event.position.top}% + 1px)`,
+            top: `calc(${eventTop}% + 1px)`,
             left: `${event.position.offset}%`,
             width: `${event.position.width}%`,
-            height: `calc(${event.position.height}% - 1px)`,
+            height: `calc(${eventHeight}% - 1px)`,
           }}
         />
       );
@@ -740,6 +793,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         withDragSlotSelect={withDragSlotSelect}
         onSlotPointerDown={slotDragSelect.handleSlotPointerDown}
         isSlotDragSelected={slotDragSelect.isSlotSelected}
+        daySlotsContainerRef={(node) => {
+          daySlotsContainersRef.current[dayIndex] = node;
+        }}
       >
         {dayEvents}
       </WeekViewDay>

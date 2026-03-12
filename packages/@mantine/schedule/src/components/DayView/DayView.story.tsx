@@ -501,6 +501,193 @@ export function StartScrollTime() {
   );
 }
 
+export function EventResize() {
+  const [events, setEvents] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Morning Standup',
+      start: `${today} 09:00:00`,
+      end: `${today} 09:30:00`,
+      color: 'blue',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Team Meeting',
+      start: `${today} 11:00:00`,
+      end: `${today} 12:00:00`,
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Lunch Break',
+      start: `${today} 12:30:00`,
+      end: `${today} 13:30:00`,
+      color: 'orange',
+      payload: {},
+    },
+    {
+      id: 4,
+      title: 'Code Review',
+      start: `${today} 14:00:00`,
+      end: `${today} 15:00:00`,
+      color: 'violet',
+      payload: {},
+    },
+    {
+      id: 5,
+      title: 'Locked Event (Cannot Resize)',
+      start: `${today} 16:00:00`,
+      end: `${today} 17:00:00`,
+      color: 'gray',
+      payload: { locked: true },
+    },
+  ]);
+
+  const [lastAction, setLastAction] = useState<string>('');
+
+  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+    const resizedEvent = events.find((e) => e.id === eventId);
+    setEvents((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return { ...event, start: newStart, end: newEnd };
+        }
+        return event;
+      })
+    );
+    setLastAction(
+      `Resized "${resizedEvent?.title}" to ${dayjs(newStart).format('HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
+    );
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Event Resize Demo
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Drag the top or bottom edge of an event to resize it. The locked event cannot be
+            resized.
+          </Text>
+        </div>
+
+        {lastAction && (
+          <Text size="sm" c="blue">
+            Last action: {lastAction}
+          </Text>
+        )}
+
+        <DayView
+          date={new Date()}
+          events={events}
+          withEventResize
+          onEventResize={handleEventResize}
+          canResizeEvent={(event) => !event.payload?.locked}
+          startTime="08:00:00"
+          endTime="18:00:00"
+        />
+      </Stack>
+    </div>
+  );
+}
+
+export function EventResizeWithDragAndDrop() {
+  const [events, setEvents] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Morning Standup',
+      start: `${today} 09:00:00`,
+      end: `${today} 09:30:00`,
+      color: 'blue',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Team Meeting',
+      start: `${today} 11:00:00`,
+      end: `${today} 12:00:00`,
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Code Review',
+      start: `${today} 14:00:00`,
+      end: `${today} 15:30:00`,
+      color: 'violet',
+      payload: {},
+    },
+  ]);
+
+  const [lastAction, setLastAction] = useState<string>('');
+
+  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+    const movedEvent = events.find((e) => e.id === eventId);
+    setEvents((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return { ...event, start: newStart, end: newEnd };
+        }
+        return event;
+      })
+    );
+    setLastAction(
+      `Moved "${movedEvent?.title}" to ${dayjs(newStart).format('HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
+    );
+  };
+
+  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+    const resizedEvent = events.find((e) => e.id === eventId);
+    setEvents((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return { ...event, start: newStart, end: newEnd };
+        }
+        return event;
+      })
+    );
+    setLastAction(
+      `Resized "${resizedEvent?.title}" to ${dayjs(newStart).format('HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
+    );
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Event Resize + Drag and Drop
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Events can be both moved (drag center) and resized (drag top/bottom edge).
+          </Text>
+        </div>
+
+        {lastAction && (
+          <Text size="sm" c="blue">
+            Last action: {lastAction}
+          </Text>
+        )}
+
+        <DayView
+          date={new Date()}
+          events={events}
+          withEventsDragAndDrop
+          onEventDrop={handleEventDrop}
+          withEventResize
+          onEventResize={handleEventResize}
+          startTime="08:00:00"
+          endTime="18:00:00"
+        />
+      </Stack>
+    </div>
+  );
+}
+
 export function ScrollAreaProps() {
   return <DayView date={new Date()} scrollAreaProps={{ mah: 600 }} />;
 }

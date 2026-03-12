@@ -130,6 +130,21 @@ implementing locked or read-only events.
 
 <Demo data={DayViewDemos.canDragEvent} />
 
+## Event resize
+
+Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
+edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
+the resize.
+
+<Demo data={DayViewDemos.eventResize} />
+
+## Selective resize permissions
+
+Use `canResizeEvent` callback to control which events can be resized. This is useful for
+implementing locked or read-only events that should not be resizable.
+
+<Demo data={DayViewDemos.canResizeEvent} />
+
 ## Custom event rendering
 
 Use `renderEventBody` prop to customize how events are displayed. This allows you to

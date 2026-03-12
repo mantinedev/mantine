@@ -15,6 +15,7 @@ export { slotHeight } from './WeekView.demo.slotHeight';
 export { businessHours } from './WeekView.demo.businessHours';
 export { overlappingEvents } from './WeekView.demo.overlappingEvents';
 export { dragDrop } from './WeekView.demo.dragDrop';
+export { eventResize } from './WeekView.demo.eventResize';
 export { renderEvent } from './WeekView.demo.renderEvent';
 export { staticMode } from './WeekView.demo.staticMode';
 export { eventForm } from './WeekView.demo.eventForm';

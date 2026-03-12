@@ -92,6 +92,7 @@ export const ScheduleStylesApi: StylesApiData<ScheduleFactory> = {
     monthYearSelectLabel: 'MonthYearSelect label',
     event: 'ScheduleEvent element',
     eventInner: 'ScheduleEvent inner element',
+    eventResizeHandle: 'ScheduleEvent resize handle element',
     moreEventsButton: 'MoreEvents button',
     moreEventsList: 'MoreEvents list',
     moreEventsDropdown: 'MoreEvents dropdown',

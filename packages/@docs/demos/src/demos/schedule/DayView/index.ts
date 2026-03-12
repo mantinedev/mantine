@@ -12,6 +12,8 @@ export { slotLabelFormat } from './DayView.demo.slotLabelFormat';
 export { radius } from './DayView.demo.radius';
 export { dragDrop } from './DayView.demo.dragDrop';
 export { canDragEvent } from './DayView.demo.canDragEvent';
+export { eventResize } from './DayView.demo.eventResize';
+export { canResizeEvent } from './DayView.demo.canResizeEvent';
 export { renderEventBody } from './DayView.demo.renderEventBody';
 export { renderEvent } from './DayView.demo.renderEvent';
 export { staticMode } from './DayView.demo.staticMode';

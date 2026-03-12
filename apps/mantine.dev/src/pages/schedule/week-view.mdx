@@ -135,6 +135,14 @@ identify the event.
 
 <Demo data={WeekViewDemos.bidirectionalDragDrop} />
 
+## Event resize
+
+Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
+edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
+the resize. Use `canResizeEvent` to control which events can be resized.
+
+<Demo data={WeekViewDemos.eventResize} />
+
 ## Full event customization
 
 Use `renderEvent` prop to fully customize event rendering. This function receives the event
