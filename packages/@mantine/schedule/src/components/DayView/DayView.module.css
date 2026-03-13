@@ -188,7 +188,7 @@
 .dayViewBackgroundEvent {
   position: absolute;
   border-radius: 0;
-  /* pointer-events: none; */
+  pointer-events: none;
   z-index: 2;
   background-color: var(--bg-event-bg);
   overflow: hidden;

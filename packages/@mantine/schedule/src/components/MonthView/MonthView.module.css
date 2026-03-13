@@ -3,7 +3,7 @@
   --month-view-border: 1px solid var(--month-view-border-color);
   --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --day-base-color: var(--mantine-color-text);
-  --min-day-width: 54px;
+  --min-day-width: 84px;
 
   &:where([data-with-week-numbers]) {
     --week-numbers-offset: 42px;

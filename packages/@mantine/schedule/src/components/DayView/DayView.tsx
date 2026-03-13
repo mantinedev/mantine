@@ -702,8 +702,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
       key: event.id,
       ...getStyles('dayViewBackgroundEvent', {
         style: {
-          top: `${event.position.top}%`,
-          height: `${event.position.height}%`,
+          top: `calc(${event.position.top}% + 1px)`,
+          height: `calc(${event.position.height}% - 2px)`,
           width: '100%',
         },
       }),

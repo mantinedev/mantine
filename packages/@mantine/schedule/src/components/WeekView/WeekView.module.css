@@ -23,6 +23,7 @@
 .weekViewRoot {
   border: 1px solid var(--week-view-border-color);
   border-radius: var(--week-view-radius);
+  overflow: hidden;
 }
 
 .weekViewInner {
@@ -39,8 +40,6 @@
 
 .weekViewHeader {
   display: flex;
-  border-start-start-radius: var(--week-view-radius);
-  border-start-end-radius: var(--week-view-radius);
   position: sticky;
   top: 0;
   z-index: 4;
@@ -69,7 +68,6 @@
   flex: 0 0 var(--week-view-slots-label-width);
   min-width: var(--week-view-slots-label-width);
   background-color: var(--mantine-color-body);
-  border-end-start-radius: var(--week-view-radius);
 }
 
 .weekViewSlotLabel {
