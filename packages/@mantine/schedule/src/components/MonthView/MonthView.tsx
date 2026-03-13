@@ -14,6 +14,7 @@ import {
   ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
+  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -64,6 +65,7 @@ export type MonthViewStylesNames =
   | 'monthViewWeekdays'
   | 'monthViewWeekdaysCorner'
   | 'monthViewEvents'
+  | 'monthViewBackgroundEvent'
   | CombinedScheduleHeaderStylesNames;
 
 export type MonthViewCssVariables = {
@@ -308,6 +310,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     radius,
   };
 
+  const theme = useMantineTheme();
   const ctx = useDatesContext();
 
   const range = getMonthRange({
@@ -514,6 +517,39 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
 
+    const backgroundEventNodes = (monthEvents.backgroundByWeek[weekIndex] || []).map((event) => {
+      const colors = theme.variantColorResolver({
+        color: event.color || theme.primaryColor,
+        theme,
+        variant: 'light',
+        autoContrast: true,
+      });
+
+      const bgEventBody =
+        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+      const bgEventProps = {
+        key: `bg-${event.id}-${weekIndex}`,
+        ...getStyles('monthViewBackgroundEvent', {
+          style: {
+            left: `calc(${event.position.startOffset}% + 2px)`,
+            width: `calc(${event.position.width}% - 3px)`,
+          },
+        }),
+        __vars: {
+          '--bg-event-bg': colors.background,
+          '--bg-event-color': colors.color,
+        },
+        children: bgEventBody,
+      };
+
+      if (typeof renderEvent === 'function') {
+        return renderEvent(event, bgEventProps as any);
+      }
+
+      return <Box {...bgEventProps} />;
+    });
+
     const events = (monthEvents.groupedByWeek[weekIndex] || [])
       .filter((event) => event.position.row < 2)
       .map((event) => {
@@ -603,6 +639,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         )}
 
         <div {...getStyles('monthViewEvents')} key="week-events">
+          {backgroundEventNodes}
           {events}
           {moreEventsNodes}
         </div>

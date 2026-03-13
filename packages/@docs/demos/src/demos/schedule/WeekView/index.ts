@@ -23,3 +23,5 @@ export { startScrollTime } from './WeekView.demo.startScrollTime';
 export { externalDragDrop } from './WeekView.demo.externalDragDrop';
 export { bidirectionalDragDrop } from './WeekView.demo.bidirectionalDragDrop';
 export { recurringEvents } from './WeekView.demo.recurringEvents';
+export { backgroundEvents } from './WeekView.demo.backgroundEvents';
+export { backgroundEventsCustomStyle } from './WeekView.demo.backgroundEventsCustomStyle';

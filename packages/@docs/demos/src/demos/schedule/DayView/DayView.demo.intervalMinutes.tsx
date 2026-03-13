@@ -32,6 +32,7 @@ function Demo() {
 }
 
 export const intervalMinutes: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

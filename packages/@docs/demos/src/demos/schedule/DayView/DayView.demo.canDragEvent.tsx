@@ -112,6 +112,7 @@ function Demo() {
 }
 
 export const canDragEvent: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

@@ -56,6 +56,7 @@ function Demo() {
 }
 
 export const startScrollTime: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

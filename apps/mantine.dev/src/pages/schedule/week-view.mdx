@@ -159,6 +159,23 @@ See [Recurring events guide](/schedule/recurring-events) for full documentation.
 
 <Demo data={WeekViewDemos.recurringEvents} />
 
+## Background events
+
+Set `display="background"` on an event to render it as a full-width, semi-transparent,
+non-interactive block behind regular events. Background events are useful for marking
+unavailability, lunch breaks, focus time, or other blocked periods.
+
+<Demo data={WeekViewDemos.backgroundEvents} />
+
+## Custom background event styles with drag and drop blocking
+
+Use Styles API to customize background event appearance and prevent dropping
+regular events into blocked time ranges. This example uses diagonal red lines
+to indicate lunch breaks across the entire week and rejects drops that overlap
+with background events.
+
+<Demo data={WeekViewDemos.backgroundEventsCustomStyle} />
+
 ## Static mode
 
 Set `mode="static"` to disable all interactions.

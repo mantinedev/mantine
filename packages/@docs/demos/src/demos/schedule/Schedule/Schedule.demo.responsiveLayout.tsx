@@ -26,6 +26,7 @@ function Demo() {
 }
 
 export const responsiveLayout: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

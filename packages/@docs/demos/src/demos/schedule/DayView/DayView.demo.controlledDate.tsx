@@ -68,6 +68,7 @@ function Demo() {
 }
 
 export const controlledDate: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

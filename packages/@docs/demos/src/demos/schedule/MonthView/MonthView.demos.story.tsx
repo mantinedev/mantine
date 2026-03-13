@@ -72,3 +72,8 @@ export const Demo_recurringEvents = {
   name: '⭐ Demo: recurringEvents',
   render: renderDemo(demos.recurringEvents),
 };
+
+export const Demo_backgroundEvents = {
+  name: '⭐ Demo: backgroundEvents',
+  render: renderDemo(demos.backgroundEvents),
+};

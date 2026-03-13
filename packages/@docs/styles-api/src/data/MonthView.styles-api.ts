@@ -14,6 +14,7 @@ export const MonthViewStylesApi: StylesApiData<MonthViewFactory> = {
     monthViewWeekdays: 'Weekdays row',
     monthViewWeekdaysCorner: 'Top-left corner in weekdays row',
     monthViewEvents: 'Events container in day cell',
+    monthViewBackgroundEvent: 'Background event element',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
     viewSelect: 'View select element, part of ScheduleHeader',

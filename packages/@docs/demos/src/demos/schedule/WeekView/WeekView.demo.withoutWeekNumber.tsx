@@ -32,6 +32,7 @@ function Demo() {
 }
 
 export const withoutWeekNumber: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

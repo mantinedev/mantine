@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import alias, { Alias } from '@rollup/plugin-alias';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -13,6 +14,11 @@ import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
 
 export function createPackageConfig(packagePath: string): RollupOptions {
+  const pkgJson = JSON.parse(fs.readFileSync(path.resolve(packagePath, 'package.json'), 'utf-8'));
+  const pkgDeps = [
+    ...Object.keys(pkgJson.dependencies || {}),
+    ...Object.keys(pkgJson.peerDependencies || {}),
+  ];
   const packagesList = getPackagesList();
 
   const aliasEntries: Alias[] = packagesList.map((pkg) => ({
@@ -41,6 +47,12 @@ export function createPackageConfig(packagePath: string): RollupOptions {
   ];
 
   return {
+    onwarn(warning, warn) {
+      if (warning.code === 'CIRCULAR_DEPENDENCY') {
+        return;
+      }
+      warn(warning);
+    },
     input: path.resolve(packagePath, 'src/index.ts'),
     output: [
       {
@@ -59,7 +71,7 @@ export function createPackageConfig(packagePath: string): RollupOptions {
         interop: 'auto',
       },
     ],
-    external: ROLLUP_EXTERNALS,
+    external: [...ROLLUP_EXTERNALS, ...pkgDeps],
     plugins,
   };
 }

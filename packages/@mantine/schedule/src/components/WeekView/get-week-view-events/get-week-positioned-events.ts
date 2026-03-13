@@ -43,6 +43,7 @@ export interface GetWeekPositionedEventsInput {
 export interface GroupedWeekEvents {
   allDayEvents: WeekPositionedEventData[];
   regularEvents: Record<DateStringValue, WeekPositionedEventData[]>;
+  backgroundEvents: Record<DateStringValue, WeekPositionedEventData[]>;
 }
 
 export function getWeekPositionedEvents({
@@ -62,6 +63,7 @@ export function getWeekPositionedEvents({
   const grouped: GroupedWeekEvents = {
     allDayEvents: [],
     regularEvents: Object.fromEntries(weekDays.map((day) => [day, []])),
+    backgroundEvents: Object.fromEntries(weekDays.map((day) => [day, []])),
   };
 
   const columns = new Map<string, ScheduleEventData[]>();
@@ -69,6 +71,61 @@ export function getWeekPositionedEvents({
   const sorted = sortEvents(events);
 
   for (const event of sorted) {
+    if (event.display === 'background') {
+      const eventStartDate = dayjs(event.start).startOf('day');
+      const actualEndDate = getEventEndDate(event);
+      const eventWeekDays = calculateEventDays({ event, weekDays, actualEndDate });
+      const hanging = getHangingStatus({ eventStartDate, actualEndDate, weekDays });
+
+      for (const day of eventWeekDays) {
+        const visibleDayIndex = weekDays.indexOf(day);
+        if (visibleDayIndex === -1) {
+          continue;
+        }
+
+        const dayStart = dayjs(day);
+        const dayEnd = dayStart.endOf('day');
+        const eventStart = dayjs(event.start);
+        const eventEnd = dayjs(event.end);
+
+        const clippedStart = eventStart.isBefore(dayStart) ? dayStart : eventStart;
+        const clippedEnd = eventEnd.isAfter(dayEnd) ? dayEnd : eventEnd;
+
+        const clippedEvent = {
+          ...event,
+          start: clippedStart.format('YYYY-MM-DD HH:mm:ss'),
+          end: clippedEnd.format('YYYY-MM-DD HH:mm:ss'),
+        };
+
+        const isAllDay = isAllDayEvent({ event: clippedEvent, date: day });
+        const verticalPosition = isAllDay
+          ? { top: 0, height: 100 }
+          : getDayPosition({ event: clippedEvent, startTime, endTime });
+
+        if (!isAllDay && verticalPosition.height <= 0) {
+          continue;
+        }
+
+        const dayWeekOffset = (visibleDayIndex / visibleDaysCount) * 100;
+
+        grouped.backgroundEvents[day].push({
+          ...event,
+          position: {
+            ...verticalPosition,
+            allDay: isAllDay,
+            column: 0,
+            width: 100,
+            offset: 0,
+            overlaps: 1,
+            weekOffset: dayWeekOffset,
+            row: 0,
+            hanging,
+          },
+        });
+      }
+
+      continue;
+    }
     const eventStartDate = dayjs(event.start).startOf('day');
     const actualEndDate = getEventEndDate(event);
     const eventWeekDays = calculateEventDays({ event, weekDays, actualEndDate });

@@ -54,6 +54,7 @@ function Demo() {
 }
 
 export const controlled: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

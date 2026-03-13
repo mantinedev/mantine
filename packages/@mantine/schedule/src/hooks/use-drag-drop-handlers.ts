@@ -174,7 +174,12 @@ export function useDragDropHandlers<T = any>(
 
   const isDraggableEvent = useCallback(
     (event: ScheduleEventData) => {
-      return enabled && mode !== 'static' && (canDragEvent ? canDragEvent(event) : true);
+      return (
+        enabled &&
+        mode !== 'static' &&
+        event.display !== 'background' &&
+        (canDragEvent ? canDragEvent(event) : true)
+      );
     },
     [enabled, mode, canDragEvent]
   );

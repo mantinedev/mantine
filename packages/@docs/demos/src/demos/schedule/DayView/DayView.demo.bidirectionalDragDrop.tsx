@@ -288,6 +288,7 @@ function Demo() {
 }
 
 export const bidirectionalDragDrop: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

@@ -25,6 +25,7 @@ function Demo() {
 }
 
 export const allDayEvents: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

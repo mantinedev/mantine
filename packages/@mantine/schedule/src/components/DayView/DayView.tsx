@@ -15,6 +15,7 @@ import {
   ScrollAreaAutosizeProps,
   StylesApiProps,
   UnstyledButton,
+  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -75,6 +76,7 @@ export type DayViewStylesNames =
   | 'dayViewTimeSlots'
   | 'dayViewSlotLabel'
   | 'dayViewSlotLabels'
+  | 'dayViewBackgroundEvent'
   | MoreEventsStylesNames
   | ScheduleEventStylesNames
   | Exclude<CombinedScheduleHeaderStylesNames, MonthYearSelectStylesNames>
@@ -361,6 +363,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     radius,
   };
 
+  const theme = useMantineTheme();
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
   const slotsRef = useRef<HTMLButtonElement[]>([]);
@@ -654,6 +657,70 @@ export const DayView = factory<DayViewFactory>((_props) => {
     return acc;
   }, []);
 
+  const backgroundAllDayEventNodes = eventsData.backgroundAllDayEvents.map((event) => {
+    const colors = theme.variantColorResolver({
+      color: event.color || theme.primaryColor,
+      theme,
+      variant: 'light',
+      autoContrast: true,
+    });
+
+    const bgEventBody =
+      typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+    const bgEventProps = {
+      key: `bg-allday-${event.id}`,
+      ...getStyles('dayViewBackgroundEvent', {
+        style: { top: 0, height: '100%', width: '100%' },
+      }),
+      __vars: {
+        '--bg-event-bg': colors.background,
+        '--bg-event-color': colors.color,
+      },
+      children: bgEventBody,
+    };
+
+    if (typeof renderEvent === 'function') {
+      return renderEvent(event, bgEventProps as any);
+    }
+
+    return <Box {...bgEventProps} />;
+  });
+
+  const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => {
+    const colors = theme.variantColorResolver({
+      color: event.color || theme.primaryColor,
+      theme,
+      variant: 'light',
+      autoContrast: true,
+    });
+
+    const bgEventBody =
+      typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+    const bgEventProps = {
+      key: event.id,
+      ...getStyles('dayViewBackgroundEvent', {
+        style: {
+          top: `${event.position.top}%`,
+          height: `${event.position.height}%`,
+          width: '100%',
+        },
+      }),
+      __vars: {
+        '--bg-event-bg': colors.background,
+        '--bg-event-color': colors.color,
+      },
+      children: bgEventBody,
+    };
+
+    if (typeof renderEvent === 'function') {
+      return renderEvent(event, bgEventProps as any);
+    }
+
+    return <Box {...bgEventProps} />;
+  });
+
   const content = (
     <Box
       {...getStyles('dayView')}
@@ -705,6 +772,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           <div {...getStyles('dayViewSlots')}>
             {withAllDaySlot && (
               <div {...getStyles('dayViewAllDay')}>
+                {backgroundAllDayEventNodes}
                 <div {...getStyles('dayViewAllDayEvents')}>
                   {allDayEventsNodes}
                   {allDayEventsCount.hiddenEventsCount > 0 && (
@@ -758,6 +826,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
                   : undefined
               }
             >
+              {backgroundTimedEventNodes}
+
               {eventsNodes}
 
               {withCurrentTimeIndicator && (

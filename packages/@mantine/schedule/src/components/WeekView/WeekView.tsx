@@ -15,6 +15,7 @@ import {
   ScrollAreaAutosizeProps,
   StylesApiProps,
   UnstyledButton,
+  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -85,6 +86,7 @@ export type WeekViewStylesNames =
   | 'weekViewDaySlots'
   | 'weekViewWeekLabel'
   | 'weekViewWeekNumber'
+  | 'weekViewBackgroundEvent'
   | CurrentTimeIndicatorStylesNames
   | CombinedScheduleHeaderStylesNames;
 
@@ -400,6 +402,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     radius,
   };
 
+  const theme = useMantineTheme();
   const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
@@ -715,6 +718,44 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   ));
 
   const days = weekdays.map((day, dayIndex) => {
+    const allBgEvents = weekEvents.backgroundEvents[day] || [];
+
+    const backgroundEventNodes = allBgEvents
+      .filter((event) => !event.position.allDay)
+      .map((event) => {
+        const colors = theme.variantColorResolver({
+          color: event.color || theme.primaryColor,
+          theme,
+          variant: 'light',
+          autoContrast: true,
+        });
+
+        const bgEventBody =
+          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+        const bgEventProps = {
+          key: `bg-${event.id}`,
+          ...getStyles('weekViewBackgroundEvent', {
+            style: {
+              top: `${event.position.top}%`,
+              height: `${event.position.height}%`,
+              width: '100%',
+            },
+          }),
+          __vars: {
+            '--bg-event-bg': colors.background,
+            '--bg-event-color': colors.color,
+          },
+          children: bgEventBody,
+        };
+
+        if (typeof renderEvent === 'function') {
+          return renderEvent(event, bgEventProps as any);
+        }
+
+        return <Box {...bgEventProps} />;
+      });
+
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });
       const isDraggable = !eventIsAllDay && dragDrop.isDraggableEvent(event);
@@ -813,6 +854,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           daySlotsContainersRef.current[dayIndex] = node;
         }}
       >
+        {backgroundEventNodes}
         {dayEvents}
       </WeekViewDay>
     );
@@ -867,6 +909,49 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       }}
     />
   ));
+
+  const allDayBackgroundEventNodes = weekdays.flatMap((day, dayIndex) => {
+    const allDayBgEvents = (weekEvents.backgroundEvents[day] || []).filter(
+      (event) => event.position.allDay
+    );
+    const dayWidth = 100 / weekdays.length;
+    const dayOffset = dayIndex * dayWidth;
+
+    return allDayBgEvents.map((event) => {
+      const colors = theme.variantColorResolver({
+        color: event.color || theme.primaryColor,
+        theme,
+        variant: 'light',
+        autoContrast: true,
+      });
+
+      const bgEventBody =
+        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+      const bgEventProps = {
+        key: `bg-allday-${event.id}-${day}`,
+        ...getStyles('weekViewBackgroundEvent', {
+          style: {
+            top: 0,
+            height: '100%',
+            left: `${dayOffset}%`,
+            width: `${dayWidth}%`,
+          },
+        }),
+        __vars: {
+          '--bg-event-bg': colors.background,
+          '--bg-event-color': colors.color,
+        },
+        children: bgEventBody,
+      };
+
+      if (typeof renderEvent === 'function') {
+        return renderEvent(event, bgEventProps as any);
+      }
+
+      return <Box {...bgEventProps} />;
+    });
+  });
 
   // Extra rows show on hover = total rows - 2 visible rows (starts from 0, so -1)
   const extraRows = Math.max(...weekEvents.allDayEvents.map((event) => event.position.row), 1) - 1;
@@ -946,6 +1031,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             <div {...getStyles('weekViewAllDaySlots')}>
               <div {...getStyles('weekViewAllDaySlotsLabel')}>{getLabel('allDay', labels)}</div>
               <div {...getStyles('weekViewAllDaySlotsList')}>
+                {allDayBackgroundEventNodes}
                 <Box
                   {...getStyles('weekViewAllDaySlotsEvents')}
                   __vars={{ '--extra-rows': `${extraRows}` }}

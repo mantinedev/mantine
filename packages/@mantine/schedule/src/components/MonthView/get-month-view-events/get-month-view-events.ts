@@ -28,7 +28,7 @@ export function getMonthViewEvents({
   consistentWeeks,
 }: UseMonthViewEventsInput): GroupedMonthEvents {
   if (events === undefined) {
-    return { groupedByDay: {}, groupedByWeek: {} };
+    return { groupedByDay: {}, groupedByWeek: {}, backgroundByWeek: {} };
   }
 
   const ids = new Set<string | number>();

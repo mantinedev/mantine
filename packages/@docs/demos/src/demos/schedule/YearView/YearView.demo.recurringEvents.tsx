@@ -79,6 +79,7 @@ function Demo() {
 }
 
 export const recurringEvents: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

@@ -39,6 +39,11 @@ export interface GroupedMonthEvents {
   groupedByDay: {
     [date: string]: MonthPositionedEventData[];
   };
+
+  /** Background events grouped by week index */
+  backgroundByWeek: {
+    [weekIndex: string]: MonthPositionedEventData[];
+  };
 }
 
 export function getMonthPositionedEvents({
@@ -48,6 +53,7 @@ export function getMonthPositionedEvents({
   range,
 }: GetMonthPositionedEventsInput): GroupedMonthEvents {
   const groupedByWeek: GroupedMonthEvents['groupedByWeek'] = {};
+  const backgroundByWeek: GroupedMonthEvents['backgroundByWeek'] = {};
   const eventsAddedToDay = new Set<string>();
 
   const rangeStart = range ? dayjs(range.start) : dayjs(date).startOf('month');
@@ -61,6 +67,7 @@ export function getMonthPositionedEvents({
 
   for (let i = 0; i < weeks.length; i++) {
     groupedByWeek[i.toString()] = [];
+    backgroundByWeek[i.toString()] = [];
   }
 
   for (const event of events) {
@@ -85,6 +92,20 @@ export function getMonthPositionedEvents({
             weekEnd,
             isMultiday,
           });
+
+        if (event.display === 'background') {
+          backgroundByWeek[weekIdx.toString()].push({
+            ...event,
+            position: {
+              startOffset,
+              width,
+              weekIndex: weekIdx,
+              row: 0,
+              hanging,
+            },
+          });
+          continue;
+        }
 
         const row = findAvailableRow({
           existingEvents: groupedByWeek[weekIdx.toString()],
@@ -121,5 +142,6 @@ export function getMonthPositionedEvents({
   return {
     groupedByWeek,
     groupedByDay,
+    backgroundByWeek,
   };
 }

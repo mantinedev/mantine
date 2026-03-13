@@ -46,6 +46,10 @@ export function getMobileMonthViewEvents({ date, events }: GetMobileMonthViewEve
   const ids = new Set<string | number>();
 
   for (const event of events) {
+    if (event.display === 'background') {
+      continue;
+    }
+
     if (dayjs(event.start).isSame(dayjs(date), 'month')) {
       groupEventByDate(validateEvent(event), groupedEvents);
 

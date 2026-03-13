@@ -268,6 +268,21 @@
   }
 }
 
+.monthViewBackgroundEvent {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: var(--month-view-radius);
+  background-color: var(--bg-event-bg);
+  top: 0;
+  bottom: -21px;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: 3px 4px;
+  color: var(--bg-event-color);
+}
+
 .monthViewEvents {
   position: absolute;
   inset-inline: 0;

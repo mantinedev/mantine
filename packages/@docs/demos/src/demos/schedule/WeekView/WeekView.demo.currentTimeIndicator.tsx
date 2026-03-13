@@ -30,6 +30,7 @@ function Demo() {
 }
 
 export const currentTimeIndicator: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

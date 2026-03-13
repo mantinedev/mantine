@@ -178,6 +178,7 @@ function Demo() {
 }
 
 export const externalDragDrop: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

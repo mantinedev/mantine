@@ -204,7 +204,7 @@ export function useEventResize({
 
   const isResizableEvent = useCallback(
     (event: ScheduleEventData) => {
-      if (!enabled || mode === 'static') {
+      if (!enabled || mode === 'static' || event.display === 'background') {
         return false;
       }
       return canResizeEvent ? canResizeEvent(event) : true;

@@ -32,6 +32,7 @@ function Demo() {
 }
 
 export const headerFormat: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

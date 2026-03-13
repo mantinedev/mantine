@@ -13,6 +13,7 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
     dayViewTimeSlots: 'Container for time slots (excludes all-day)',
     dayViewSlotLabel: 'Time slot label element',
     dayViewSlotLabels: 'Container for all slot labels',
+    dayViewBackgroundEvent: 'Background event element',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
     viewSelect: 'View select element, part of ScheduleHeader',

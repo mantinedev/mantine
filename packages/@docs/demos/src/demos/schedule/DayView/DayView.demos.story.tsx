@@ -137,3 +137,13 @@ export const Demo_recurringEvents = {
   name: '⭐ Demo: recurringEvents',
   render: renderDemo(demos.recurringEvents),
 };
+
+export const Demo_backgroundEvents = {
+  name: '⭐ Demo: backgroundEvents',
+  render: renderDemo(demos.backgroundEvents),
+};
+
+export const Demo_backgroundEventsCustomStyle = {
+  name: '⭐ Demo: backgroundEventsCustomStyle',
+  render: renderDemo(demos.backgroundEventsCustomStyle),
+};

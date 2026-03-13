@@ -108,6 +108,7 @@ function Demo() {
 }
 
 export const eventResize: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

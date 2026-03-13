@@ -58,6 +58,7 @@ function Demo() {
 }
 
 export const viewProps: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,
