@@ -77,6 +77,13 @@ build a custom header or embed the view in a larger component.
 
 <Demo data={DayViewDemos.withoutHeader} />
 
+## Custom header
+
+You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
+Set `withHeader={false}` on the view and compose the header externally.
+
+<Demo data={DayViewDemos.customHeader} />
+
 ## Header format
 
 Use `headerFormat` prop to customize the date format in the header. The format uses

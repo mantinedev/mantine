@@ -147,3 +147,8 @@ export const Demo_backgroundEventsCustomStyle = {
   name: '⭐ Demo: backgroundEventsCustomStyle',
   render: renderDemo(demos.backgroundEventsCustomStyle),
 };
+
+export const Demo_customHeader = {
+  name: '⭐ Demo: customHeader',
+  render: renderDemo(demos.customHeader),
+};

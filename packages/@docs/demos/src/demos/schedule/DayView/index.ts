@@ -27,3 +27,4 @@ export { bidirectionalDragDrop } from './DayView.demo.bidirectionalDragDrop';
 export { recurringEvents } from './DayView.demo.recurringEvents';
 export { backgroundEvents } from './DayView.demo.backgroundEvents';
 export { backgroundEventsCustomStyle } from './DayView.demo.backgroundEventsCustomStyle';
+export { customHeader } from './DayView.demo.customHeader';
