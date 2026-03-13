@@ -41,6 +41,9 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
+  "dependencies": {
+    "rrule": "^2.8.1"
+  },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",

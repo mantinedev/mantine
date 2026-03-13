@@ -7,6 +7,7 @@ type ResizeEdge = 'top' | 'bottom';
 
 interface ResizeState {
   eventId: string | number;
+  event: ScheduleEventData;
   edge: ResizeEdge;
   container: HTMLElement;
   originalTop: number;
@@ -27,7 +28,8 @@ export interface UseEventResizeInput {
   onEventResize?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 }
@@ -101,6 +103,7 @@ export function useEventResize({
 
       const state: ResizeState = {
         eventId: event.id,
+        event,
         edge,
         container,
         originalTop,
@@ -172,7 +175,7 @@ export function useEventResize({
             newEnd = percentToDateTime(state.currentTop + state.currentHeight, state.eventDate);
           }
 
-          onEventResizeRef.current(state.eventId, newStart, newEnd);
+          onEventResizeRef.current(state.eventId, newStart, newEnd, state.event);
         }
       }
       resizeRef.current = null;

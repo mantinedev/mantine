@@ -132,3 +132,8 @@ export const Demo_canResizeEvent = {
   name: '⭐ Demo: canResizeEvent',
   render: renderDemo(demos.canResizeEvent),
 };
+
+export const Demo_recurringEvents = {
+  name: '⭐ Demo: recurringEvents',
+  render: renderDemo(demos.recurringEvents),
+};

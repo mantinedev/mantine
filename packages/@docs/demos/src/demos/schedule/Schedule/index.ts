@@ -8,3 +8,4 @@ export { eventForm } from './Schedule.demo.eventForm';
 export { externalDragDrop } from './Schedule.demo.externalDragDrop';
 export { bidirectionalDragDrop } from './Schedule.demo.bidirectionalDragDrop';
 export { eventResize } from './Schedule.demo.eventResize';
+export { recurringEvents } from './Schedule.demo.recurringEvents';

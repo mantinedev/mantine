@@ -37,6 +37,7 @@ import {
 import {
   calculateDropTime,
   clampIntervalMinutes,
+  expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
   getDayTimeIntervals,
@@ -178,7 +179,8 @@ export interface DayViewProps
   onEventDrop?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be dragged */
@@ -225,11 +227,15 @@ export interface DayViewProps
   onEventResize?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
 }
 
 export type DayViewFactory = Factory<{
@@ -322,6 +328,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    recurrenceExpansionLimit,
     ...others
   } = props;
 
@@ -446,7 +453,14 @@ export const DayView = factory<DayViewFactory>((_props) => {
     },
   });
 
-  const eventsData = getDayViewEvents({ events, date, startTime, endTime });
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(date).startOf('day').toDate(),
+    rangeEnd: dayjs(date).endOf('day').toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
+  const eventsData = getDayViewEvents({ events: expandedEvents, date, startTime, endTime });
 
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, slotIndex: number) => {

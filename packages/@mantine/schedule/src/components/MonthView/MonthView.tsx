@@ -33,7 +33,9 @@ import {
 } from '../../types';
 import {
   calculateMonthDropDate,
+  expandRecurringEvents,
   getMonthDays,
+  getMonthRange,
   getWeekdaysNames,
   getWeekNumber,
   isSameMonth,
@@ -160,7 +162,8 @@ export interface MonthViewProps
   onEventDrop?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be dragged */
@@ -192,6 +195,9 @@ export interface MonthViewProps
 
   /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
   onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
 }
 
 export type MonthViewFactory = Factory<{
@@ -269,6 +275,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     mode,
     scrollAreaProps,
     onExternalEventDrop,
+    recurrenceExpansionLimit,
     ...others
   } = props;
 
@@ -303,9 +310,23 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
   const ctx = useDatesContext();
 
+  const range = getMonthRange({
+    month: date,
+    withOutsideDays,
+    consistentWeeks,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  });
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(range.start).startOf('day').toDate(),
+    rangeEnd: dayjs(range.end).endOf('day').toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
   const monthEvents = getMonthViewEvents({
     date,
-    events,
+    events: expandedEvents,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     withOutsideDays,
     consistentWeeks,

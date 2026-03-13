@@ -122,3 +122,8 @@ export const Demo_eventResize = {
   name: '⭐ Demo: eventResize',
   render: renderDemo(demos.eventResize),
 };
+
+export const Demo_recurringEvents = {
+  name: '⭐ Demo: recurringEvents',
+  render: renderDemo(demos.recurringEvents),
+};

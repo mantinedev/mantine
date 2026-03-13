@@ -17,7 +17,13 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
-import { getMonthDays, getMonthsByQuarter, isSameMonth, toDateString } from '../../utils';
+import {
+  expandRecurringEvents,
+  getMonthDays,
+  getMonthsByQuarter,
+  isSameMonth,
+  toDateString,
+} from '../../utils';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -89,6 +95,9 @@ export interface YearViewProps
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
 }
 
 export type YearViewFactory = Factory<{
@@ -157,6 +166,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     attributes,
     radius,
     mode,
+    recurrenceExpansionLimit,
     ...others
   } = props;
 
@@ -191,7 +201,14 @@ export const YearView = factory<YearViewFactory>((_props) => {
     radius,
   };
 
-  const groupedEvents = getYearViewEvents({ date, events });
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(date).startOf('year').toDate(),
+    rangeEnd: dayjs(date).endOf('year').toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
+  const groupedEvents = getYearViewEvents({ date, events: expandedEvents });
 
   // [monthIndex][weekIndex][dayIndex]
   const daysRef = useRef<HTMLButtonElement[][][]>([]) as YearViewControlsRef;

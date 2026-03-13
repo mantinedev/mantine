@@ -24,3 +24,4 @@ export { eventForm } from './DayView.demo.eventForm';
 export { startScrollTime } from './DayView.demo.startScrollTime';
 export { externalDragDrop } from './DayView.demo.externalDragDrop';
 export { bidirectionalDragDrop } from './DayView.demo.bidirectionalDragDrop';
+export { recurringEvents } from './DayView.demo.recurringEvents';

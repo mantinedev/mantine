@@ -1,7 +1,7 @@
 import { ScheduleEventData } from './types';
 
-function createEvent(input: Partial<ScheduleEventData>): ScheduleEventData {
-  return {
+function createEvent(input: Partial<ScheduleEventData> = {}): ScheduleEventData {
+  const base = {
     id: 1,
     title: 'Test Event 2hr',
     start: `${testUtils.testDate} 10:00:00`,
@@ -10,6 +10,8 @@ function createEvent(input: Partial<ScheduleEventData>): ScheduleEventData {
     payload: {},
     ...input,
   };
+
+  return base as ScheduleEventData;
 }
 
 export const testUtils = {

@@ -36,3 +36,8 @@ export const Demo_staticMode = {
   name: '⭐ Demo: staticMode',
   render: renderDemo(demos.staticMode),
 };
+
+export const Demo_recurringEvents = {
+  name: '⭐ Demo: recurringEvents',
+  render: renderDemo(demos.recurringEvents),
+};

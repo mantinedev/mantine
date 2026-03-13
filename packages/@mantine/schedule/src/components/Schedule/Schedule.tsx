@@ -68,7 +68,8 @@ type ScheduleCommonProps =
   | 'onExternalEventDrop'
   | 'withEventResize'
   | 'onEventResize'
-  | 'canResizeEvent';
+  | 'canResizeEvent'
+  | 'recurrenceExpansionLimit';
 
 type ScheduleViewProps<T> = Partial<Omit<T, ScheduleCommonProps>>;
 
@@ -116,7 +117,8 @@ export interface ScheduleProps
   onEventDrop?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be dragged */
@@ -166,11 +168,15 @@ export interface ScheduleProps
   onEventResize?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
 
   /** Layout mode:
    * - `'default'` uses same views on all screen sizes
@@ -241,6 +247,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    recurrenceExpansionLimit,
     mode,
     layout,
     dayViewProps,
@@ -316,6 +323,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     withEventResize: mode === 'static' ? false : withEventResize,
     onEventResize,
     canResizeEvent,
+    recurrenceExpansionLimit,
     mode,
   };
 
@@ -348,6 +356,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             radius={radius}
             labels={labels}
             mode={mode}
+            recurrenceExpansionLimit={recurrenceExpansionLimit}
             onYearClick={() => handleViewChange('year')}
             onEventClick={onEventClick}
             {...mobileMonthViewProps}

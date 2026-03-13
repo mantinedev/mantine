@@ -14,7 +14,15 @@ export interface ComboboxExample {
   fullDescription?: string;
 
   /** Type based on which components are ordered in the navbar, also used for filtering */
-  type: 'select' | 'autocomplete' | 'multiselect' | 'dropdown' | 'button' | 'animations' | 'virtualization' | 'other';
+  type:
+    | 'select'
+    | 'autocomplete'
+    | 'multiselect'
+    | 'dropdown'
+    | 'button'
+    | 'animations'
+    | 'virtualization'
+    | 'other';
 }
 
 export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [

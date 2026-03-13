@@ -67,3 +67,8 @@ export const Demo_bidirectionalDragDrop = {
   name: '⭐ Demo: bidirectionalDragDrop',
   render: renderDemo(demos.bidirectionalDragDrop),
 };
+
+export const Demo_recurringEvents = {
+  name: '⭐ Demo: recurringEvents',
+  render: renderDemo(demos.recurringEvents),
+};

@@ -37,6 +37,7 @@ import {
 } from '../../types';
 import {
   calculateDropTime,
+  expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
   getDayTimeIntervals,
@@ -201,7 +202,8 @@ export interface WeekViewProps
   onEventDrop?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be dragged */
@@ -254,11 +256,15 @@ export interface WeekViewProps
   onEventResize?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
 }
 
 export type WeekViewFactory = Factory<{
@@ -361,6 +367,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    recurrenceExpansionLimit,
     ...others
   } = props;
 
@@ -505,9 +512,25 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     onTimeSlotClick(`${slotDate} ${slot.startTime}`, `${slotDate} ${slot.endTime}`, e);
   };
 
+  const weekdays = getWeekDays({
+    week: date,
+    withWeekendDays,
+    weekendDays: ctx.getWeekendDays(weekendDays),
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  });
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(weekdays[0]).startOf('day').toDate(),
+    rangeEnd: dayjs(weekdays[weekdays.length - 1])
+      .endOf('day')
+      .toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
   const weekEvents = getWeekViewEvents({
     date,
-    events,
+    events: expandedEvents,
     startTime,
     endTime,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
@@ -539,13 +562,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         {label}
       </Box>
     );
-  });
-
-  const weekdays = getWeekDays({
-    week: date,
-    withWeekendDays,
-    weekendDays: ctx.getWeekendDays(weekendDays),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   });
 
   const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
