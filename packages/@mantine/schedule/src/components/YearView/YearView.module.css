@@ -247,7 +247,7 @@
 
 .yearViewDayIndicators {
   position: absolute;
-  bottom: 4px;
+  bottom: 1px;
   inset-inline: 0;
   display: flex;
   justify-content: center;
