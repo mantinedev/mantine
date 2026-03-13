@@ -26,7 +26,6 @@ describe('@mantine/schedule/YearView', () => {
       'yearViewDay',
       'yearViewMonth',
       'yearViewMonthCaption',
-      'yearViewQuarter',
       'yearViewWeek',
       'yearViewWeekNumber',
       'yearViewWeekday',

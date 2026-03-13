@@ -13,7 +13,6 @@ export const YearViewStylesApi: StylesApiData<YearViewFactory> = {
     yearViewWeekdays: 'Weekdays row',
     yearViewWeekdaysCorner: 'Top-left corner in weekdays row',
     yearViewMonthCaption: 'Month name label',
-    yearViewQuarter: 'Quarter container (groups 3 months)',
     yearViewDayIndicators: 'Container for day event indicators',
     yearViewDayIndicator: 'Individual day event indicator',
     header: 'Header container, part of ScheduleHeader',

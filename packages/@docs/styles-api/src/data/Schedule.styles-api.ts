@@ -61,7 +61,6 @@ export const ScheduleStylesApi: StylesApiData<ScheduleFactory> = {
     yearViewWeekdays: 'YearView weekdays row',
     yearViewWeekdaysCorner: 'YearView top-left corner',
     yearViewMonthCaption: 'YearView month caption',
-    yearViewQuarter: 'YearView quarter container',
     yearViewDayIndicators: 'YearView day indicators container',
     yearViewDayIndicator: 'YearView individual day indicator',
     mobileMonthView: 'MobileMonthView root element',
