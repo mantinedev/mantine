@@ -69,7 +69,7 @@ export type MonthViewStylesNames =
   | CombinedScheduleHeaderStylesNames;
 
 export type MonthViewCssVariables = {
-  monthView: '--month-view-radius';
+  monthView: '--month-view-radius' | '--month-view-max-events';
 };
 
 export interface MonthViewProps
@@ -200,6 +200,9 @@ export interface MonthViewProps
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
+
+  /** Maximum number of events visible per day before "+more" indicator shows, value is clamped between 1 and 10 @default 2 */
+  maxEventsPerDay?: number;
 }
 
 export type MonthViewFactory = Factory<{
@@ -209,9 +212,15 @@ export type MonthViewFactory = Factory<{
   vars: MonthViewCssVariables;
 }>;
 
-const varsResolver = createVarsResolver<MonthViewFactory>((_theme, { radius }) => ({
-  monthView: { '--month-view-radius': radius ? getRadius(radius) : undefined },
-}));
+const varsResolver = createVarsResolver<MonthViewFactory>(
+  (_theme, { radius, maxEventsPerDay }) => ({
+    monthView: {
+      '--month-view-radius': radius ? getRadius(radius) : undefined,
+      '--month-view-max-events':
+        maxEventsPerDay !== undefined ? `${Math.min(10, Math.max(1, maxEventsPerDay))}` : undefined,
+    },
+  })
+);
 
 const defaultProps = {
   __staticSelector: 'MonthView',
@@ -278,8 +287,11 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     scrollAreaProps,
     onExternalEventDrop,
     recurrenceExpansionLimit,
+    maxEventsPerDay: _maxEventsPerDay,
     ...others
   } = props;
+
+  const maxEventsPerDay = Math.min(10, Math.max(1, _maxEventsPerDay ?? 2));
 
   const getStyles = useStyles<MonthViewFactory>({
     name: __staticSelector,
@@ -550,8 +562,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       return <Box {...bgEventProps} />;
     });
 
+    const rowHeightPercent = 100 / maxEventsPerDay;
+
     const events = (monthEvents.groupedByWeek[weekIndex] || [])
-      .filter((event) => event.position.row < 2)
+      .filter((event) => event.position.row < maxEventsPerDay)
       .map((event) => {
         const isDraggable = dragDrop.isDraggableEvent(event);
 
@@ -570,10 +584,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
             style={{
               position: 'absolute',
-              top: `calc(${event.position.row * 50}% + 1px)`,
+              top: `calc(${event.position.row * rowHeightPercent}% + 1px)`,
               left: `calc(${event.position.startOffset}% + 1px)`,
               width: `calc(${event.position.width}% - 2px)`,
-              height: `calc(50% - 2px)`,
+              height: `calc(${rowHeightPercent}% - 2px)`,
             }}
           />
         );
@@ -581,7 +595,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
     const moreEventsNodes = week.map((day, dayIndex) => {
       const dayEvents = monthEvents.groupedByDay[day] || [];
-      const hiddenEventsCount = Math.max(0, dayEvents.length - 2);
+      const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerDay);
 
       if (hiddenEventsCount <= 0) {
         return null;

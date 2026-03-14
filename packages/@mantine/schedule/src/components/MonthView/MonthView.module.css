@@ -114,7 +114,7 @@
 .monthViewDay {
   min-width: var(--min-day-width);
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
-  height: 100px;
+  height: calc(52px + var(--month-view-max-events, 2) * 24px);
   padding: 4px;
   font-weight: var(--mantine-font-weight-medium);
   border-block-start: var(--month-view-border);

@@ -82,3 +82,8 @@ export const Demo_customHeader = {
   name: '⭐ Demo: customHeader',
   render: renderDemo(demos.customHeader),
 };
+
+export const Demo_maxEventsPerDay = {
+  name: '⭐ Demo: maxEventsPerDay',
+  render: renderDemo(demos.maxEventsPerDay),
+};

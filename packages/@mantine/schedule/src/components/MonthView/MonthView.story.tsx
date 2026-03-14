@@ -299,6 +299,33 @@ export function DragAndDrop() {
   );
 }
 
+export function MaxEventsPerDay() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xl">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            maxEventsPerDay=1
+          </Text>
+          <MonthView date={month} events={events} maxEventsPerDay={1} />
+        </div>
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            maxEventsPerDay=3
+          </Text>
+          <MonthView date={month} events={events} maxEventsPerDay={3} />
+        </div>
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            maxEventsPerDay=5
+          </Text>
+          <MonthView date={month} events={events} maxEventsPerDay={5} />
+        </div>
+      </Stack>
+    </div>
+  );
+}
+
 export function StaticMode() {
   return (
     <div style={{ padding: 40 }}>

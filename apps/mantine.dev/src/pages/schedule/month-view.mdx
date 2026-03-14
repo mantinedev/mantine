@@ -65,6 +65,13 @@ Set `withHeader={false}` on the view and compose the header externally.
 
 <Demo data={MonthViewDemos.customHeader} />
 
+## Max events per day
+
+Use `maxEventsPerDay` prop to control how many events are visible per day before the "+more"
+indicator appears. The value is clamped between 1 and 10. Day cell height adjusts automatically.
+
+<Demo data={MonthViewDemos.maxEventsPerDay} />
+
 ## Many events
 
 When a day has many events, the component shows a "More events" indicator.

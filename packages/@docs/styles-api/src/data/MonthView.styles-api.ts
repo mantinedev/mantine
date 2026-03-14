@@ -28,6 +28,8 @@ export const MonthViewStylesApi: StylesApiData<MonthViewFactory> = {
   vars: {
     monthView: {
       '--month-view-radius': 'Controls `border-radius` of the month view',
+      '--month-view-max-events':
+        'Maximum number of visible events per day before "+more" indicator',
     },
   },
 
