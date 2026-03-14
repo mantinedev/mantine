@@ -254,6 +254,37 @@ useMutationObserverTarget(
 );
 ```
 
+## use-debounced-callback hook changes
+
+The [use-debounced-callback](/hooks/use-debounced-callback/) hook will now always fire the callback on the trailing edge by default.
+This change was made to align with common expectations of debounced functions.
+If you do not want this behavior, you can set the `trailing` option to `false`.
+
+Previous usage (8.x):
+
+```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
+
+const handleSearch = useDebouncedCallback(async (query: string) => {
+  setLoading(true);
+  setSearchResults(await getSearchResults(query));
+  setLoading(false);
+}, { delay: 500, leading: true });
+```
+
+New usage (9.x):
+
+```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
+
+const handleSearch = useDebouncedCallback(async (query: string) => {
+  setLoading(true);
+  setSearchResults(await getSearchResults(query));
+  setLoading(false);
+  // ✅ If you do not want the callback to fire on the trailing edge, set trailing to false
+}, { delay: 500, leading: true, trailing: false });
+```
+
 ## Rename hooks types
 
 `@mantine/hooks` types were renamed for consistency; rename them in your codebase:
