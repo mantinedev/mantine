@@ -159,7 +159,6 @@ export interface MobileMonthViewProps
   /** Format for the events list header date @default 'dddd, MMMM D' */
   eventsHeaderFormat?: DateLabelFormat;
 
-
   /** Called when the year back button in the header is clicked */
   onYearClick?: () => void;
 
