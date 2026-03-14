@@ -9,3 +9,4 @@ export { withoutHeader } from './YearView.demo.withoutHeader';
 export { staticMode } from './YearView.demo.staticMode';
 export { recurringEvents } from './YearView.demo.recurringEvents';
 export { customHeader } from './YearView.demo.customHeader';
+export { localization } from './YearView.demo.localization';
