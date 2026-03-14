@@ -544,6 +544,33 @@ const form = useForm({
 });
 ```
 
+## Standard Schema support in use-form
+
+`@mantine/form` now has built-in support for [Standard Schema](https://standardschema.dev/),
+a community specification implemented by Zod v4, Valibot, ArkType, and other schema libraries.
+Use `schemaResolver` to validate forms with any compliant library without installing
+a separate resolver package:
+
+```tsx
+import { z } from 'zod/v4';
+import { useForm, schemaResolver } from '@mantine/form';
+
+const schema = z.object({
+  name: z.string().min(2, { error: 'Name should have at least 2 letters' }),
+  email: z.email({ error: 'Invalid email' }),
+  age: z.number().min(18, { error: 'You must be at least 18 to create an account' }),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: '', email: '', age: 16 },
+  validate: schemaResolver(schema, { sync: true }),
+});
+```
+
+Pass `{ sync: true }` when your schema is synchronous to get synchronous return types
+for `form.validate()`, `form.validateField()`, and `form.isValid()`.
+
 ## AppShell static mode
 
 [AppShell](/core/app-shell) component now supports `mode="static"` which renders
@@ -565,7 +592,7 @@ position when the component mounts:
 - New [useScrollDirection](/hooks/use-scroll-direction) hook detects whether the user is currently scrolling up (`true`) or down (`false`). It handles resize events to avoid false direction changes and always uses the latest state without stale closure issues.
 - `light` variant in all components now uses different colors values without transparency to improve contrast
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
-- `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead
+- `@mantine/form` package now includes built-in [Standard Schema](/form/schema-validation/) support via `schemaResolver`
 - `@mantine/form` `getInputProps` now supports `type: 'radio'` for individual radio inputs – returns `checked`/`defaultChecked` and passes through the radio option `value`
 - `@mantine/form` now supports async validation rules. `form.validate()`, `form.validateField()` and `form.isValid()` return results directly when all rules are synchronous and return promises only when async rules are present. New `form.validating`, `form.isValidating(path)`, `validateDebounce` and `resolveValidationError` options were added.
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
