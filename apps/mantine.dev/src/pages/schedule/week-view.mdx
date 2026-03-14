@@ -11,6 +11,12 @@ drag and drop, custom time ranges, and more.
 
 <Demo data={WeekViewDemos.usage} />
 
+## Controlled date
+
+Control the date displayed by WeekView externally using `date` and `onDateChange` props.
+
+<Demo data={WeekViewDemos.controlledDate} />
+
 ## Time range
 
 Use `startTime` and `endTime` props to set the visible time range. Times should be in `HH:mm:ss` format.
@@ -73,11 +79,24 @@ Set `withAllDaySlots={false}` to hide the all-day events section at the top.
 
 <Demo data={WeekViewDemos.withoutAllDaySlots} />
 
+## All-day events
+
+All-day events are displayed in a separate section at the top of the week view.
+Events that span midnight or cover a full day are automatically placed in this section.
+
+<Demo data={WeekViewDemos.allDayEvents} />
+
 ## Without header
 
 Set `withHeader={false}` to hide the header controls.
 
 <Demo data={WeekViewDemos.withoutHeader} />
+
+## View change callback
+
+Use `onViewChange` callback to be notified when the user selects a different view from the header dropdown.
+
+<Demo data={WeekViewDemos.viewChange} />
 
 ## Custom header
 
@@ -105,6 +124,12 @@ Customize the height of time slots and the all-day section using `slotHeight` an
 
 <Demo data={WeekViewDemos.slotHeight} />
 
+## Radius
+
+Use `radius` prop to customize the border radius of events.
+
+<Demo data={WeekViewDemos.radius} />
+
 ## Business hours
 
 Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours.
@@ -122,6 +147,13 @@ When multiple events overlap in time, they are automatically positioned side by 
 Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to different days and times.
 
 <Demo data={WeekViewDemos.dragDrop} />
+
+## Restrict draggable events
+
+Use `canDragEvent` callback to control which events can be dragged.
+Events that return `false` will not be draggable.
+
+<Demo data={WeekViewDemos.canDragEvent} />
 
 ## External drag and drop
 
@@ -150,6 +182,13 @@ the resize. Use `canResizeEvent` to control which events can be resized.
 
 <Demo data={WeekViewDemos.eventResize} />
 
+## Restrict resizable events
+
+Use `canResizeEvent` callback to control which events can be resized.
+Events that return `false` will not show resize handles.
+
+<Demo data={WeekViewDemos.canResizeEvent} />
+
 ## Full event customization
 
 Use `renderEvent` prop to fully customize event rendering. This function receives the event
@@ -158,6 +197,13 @@ data as the first argument and all props that would be passed to the event root 
 like HoverCard, Tooltip, or custom wrappers.
 
 <Demo data={WeekViewDemos.renderEvent} />
+
+## Custom event body
+
+Use `renderEventBody` prop to customize the content inside events without replacing
+the event wrapper. This is useful for adding icons, additional text, or custom layouts.
+
+<Demo data={WeekViewDemos.renderEventBody} />
 
 ## Recurring events
 

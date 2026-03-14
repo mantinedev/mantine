@@ -92,3 +92,8 @@ export const Demo_localization = {
   name: '⭐ Demo: localization',
   render: renderDemo(demos.localization),
 };
+
+export const Demo_radius = {
+  name: '⭐ Demo: radius',
+  render: renderDemo(demos.radius),
+};

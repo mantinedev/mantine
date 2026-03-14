@@ -60,6 +60,13 @@ The following props are shared across all views:
 These props are automatically passed to all views. For view-specific customization, use the
 `dayViewProps`, `weekViewProps`, `monthViewProps`, and `yearViewProps` props.
 
+## Drag and drop
+
+Enable event drag and drop by setting `withEventsDragAndDrop` prop. Events can be dragged
+to different time slots and days across all views.
+
+<Demo data={ScheduleDemos.dragDrop} />
+
 ## Create and update events
 
 Set `withDragSlotSelect` prop to allow users to drag across time slots or day cells to select a range.
@@ -110,11 +117,12 @@ block behind regular events. Background events work in Day, Week, and Month view
 
 <Demo data={ScheduleDemos.backgroundEvents} />
 
-## Responsive styles
+## Responsive layout
 
-Schedule and all its view components use [@container queries](https://caniuse.com/css-container-queries) for responsive styles.
-The components automatically adjust their layout based on the container width, hiding labels
-and reducing padding on smaller screens. Container queries are supported in all modern browsers.
+Schedule supports `layout="responsive"` prop that automatically switches between views
+based on the container width. Resize the container below to see the view change.
+
+<Demo data={ScheduleDemos.responsiveLayout} />
 
 ## View components
 
