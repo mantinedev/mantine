@@ -138,4 +138,32 @@ describe('@mantine/hooks/use-interval', () => {
     advanceTimerToNextTick();
     expect(callback).toHaveBeenCalledTimes(3);
   });
+
+  it('should change interval timing when interval parameter changes', () => {
+    const initialTimeout = defaultTimeout;
+    const newTimeout = 500;
+
+    const { result, rerender } = renderHook(({ timeout }) => useInterval(callback, timeout), {
+      initialProps: { timeout: initialTimeout },
+    });
+
+    act(() => {
+      result.current.start();
+    });
+
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), initialTimeout);
+
+    jest.advanceTimersByTime(initialTimeout);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    rerender({ timeout: newTimeout });
+
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), newTimeout);
+
+    jest.advanceTimersByTime(newTimeout);
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    jest.advanceTimersByTime(newTimeout);
+    expect(callback).toHaveBeenCalledTimes(3);
+  });
 });
