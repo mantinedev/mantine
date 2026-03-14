@@ -315,12 +315,12 @@ describe('@mantine/schedule/MobileMonthView', () => {
     expect(screen.getByText('No events')).toBeInTheDocument();
   });
 
-  it('supports custom noEventsText', async () => {
+  it('supports custom noEvents label', async () => {
     render(
       <MobileMonthView
         {...defaultProps}
         selectedDate="2025-11-01"
-        noEventsText="Nothing scheduled"
+        labels={{ noEvents: 'Nothing scheduled' }}
       />
     );
 

@@ -5,7 +5,6 @@
   --week-view-slots-label-width: 80px;
   --week-view-min-slot-width: 80px;
   --week-view-slot-height: 64px;
-  --indicator-labels-offset: calc(var(--week-view-slots-label-width) / var(--number-of-days));
 
   @mixin where-light {
     --week-view-border-color: var(--mantine-color-gray-3);
@@ -21,6 +20,8 @@
 }
 
 .weekViewRoot {
+  --indicator-labels-offset: calc(var(--week-view-slots-label-width) / var(--number-of-days));
+
   border: 1px solid var(--week-view-border-color);
   border-radius: var(--week-view-radius);
   overflow: hidden;

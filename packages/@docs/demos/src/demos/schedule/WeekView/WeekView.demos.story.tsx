@@ -142,3 +142,43 @@ export const Demo_customHeader = {
   name: '⭐ Demo: customHeader',
   render: renderDemo(demos.customHeader),
 };
+
+export const Demo_localization = {
+  name: '⭐ Demo: localization',
+  render: renderDemo(demos.localization),
+};
+
+export const Demo_radius = {
+  name: '⭐ Demo: radius',
+  render: renderDemo(demos.radius),
+};
+
+export const Demo_renderEventBody = {
+  name: '⭐ Demo: renderEventBody',
+  render: renderDemo(demos.renderEventBody),
+};
+
+export const Demo_allDayEvents = {
+  name: '⭐ Demo: allDayEvents',
+  render: renderDemo(demos.allDayEvents),
+};
+
+export const Demo_canDragEvent = {
+  name: '⭐ Demo: canDragEvent',
+  render: renderDemo(demos.canDragEvent),
+};
+
+export const Demo_canResizeEvent = {
+  name: '⭐ Demo: canResizeEvent',
+  render: renderDemo(demos.canResizeEvent),
+};
+
+export const Demo_controlledDate = {
+  name: '⭐ Demo: controlledDate',
+  render: renderDemo(demos.controlledDate),
+};
+
+export const Demo_viewChange = {
+  name: '⭐ Demo: viewChange',
+  render: renderDemo(demos.viewChange),
+};

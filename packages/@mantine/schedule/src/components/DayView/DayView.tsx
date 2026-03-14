@@ -788,7 +788,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                 </div>
                 <UnstyledButton
                   {...getStyles('dayViewSlot')}
-                  mod={{ 'all-day': true }}
+                  mod={{ 'all-day': true, static: mode === 'static' }}
                   aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
                   onClick={
                     mode === 'static' || !onAllDaySlotClick

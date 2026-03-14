@@ -24,17 +24,55 @@ By default, days from the previous and next months are hidden. Set `withOutsideD
 
 <Demo data={MobileMonthViewDemos.withOutsideDays} />
 
+## Highlight today
+
+Set `highlightToday={false}` to disable highlighting the current day.
+
+<Demo data={MobileMonthViewDemos.highlightToday} />
+
+## First day of week
+
+Set `firstDayOfWeek` to control which day starts the week. 0 is Sunday, 1 is Monday (default), etc.
+
+<Demo data={MobileMonthViewDemos.firstDayOfWeek} />
+
+## Custom header
+
+Use `renderHeader` to customize the header. The callback receives the default header element,
+the current mode, and the current date, allowing you to wrap or replace the default header.
+
+<Demo data={MobileMonthViewDemos.renderHeader} />
+
+## Consistent weeks
+
+Set `consistentWeeks={false}` to only show weeks that have days in the current month.
+
+<Demo data={MobileMonthViewDemos.consistentWeeks} />
+
+## Weekday format
+
+Use `weekdayFormat` prop to customize the weekday names display. It accepts dayjs format strings.
+
+<Demo data={MobileMonthViewDemos.weekdayFormat} />
+
+## Without week days
+
+Set `withWeekDays={false}` to hide the weekday names row.
+
+<Demo data={MobileMonthViewDemos.withoutWeekDays} />
+
 ## Static mode
 
 Set `mode="static"` to disable all interactions. In this mode, days are not clickable and no selection changes occur.
 
 <Demo data={MobileMonthViewDemos.staticMode} />
 
-## Responsive styles
+## Localization
 
-MobileMonthView uses [@container queries](https://caniuse.com/css-container-queries) for responsive styles.
-The component automatically adjusts its layout based on the container width, hiding labels
-and reducing padding on smaller screens. Container queries are supported in all modern browsers.
+Use `locale` prop to set the dayjs locale for date formatting.
+Combine it with `labels` prop to translate all UI text.
+
+<Demo data={MobileMonthViewDemos.localization} />
 
 ## Accessibility
 

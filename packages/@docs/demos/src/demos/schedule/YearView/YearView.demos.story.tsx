@@ -46,3 +46,8 @@ export const Demo_customHeader = {
   name: '⭐ Demo: customHeader',
   render: renderDemo(demos.customHeader),
 };
+
+export const Demo_localization = {
+  name: '⭐ Demo: localization',
+  render: renderDemo(demos.localization),
+};

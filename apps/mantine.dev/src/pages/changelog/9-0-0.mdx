@@ -304,7 +304,7 @@ firing an API call on every keystroke:
 
 [SegmentedControl](/core/segmented-control), [Select](/core/select), [MultiSelect](/core/multi-select),
 [Chip.Group](/core/chip), [Switch.Group](/core/switch), [Checkbox.Group](/core/checkbox) and [Radio.Group](/core/radio)
-now support generic value type. You can pass primitive values (numbers, strings, boolean, null)
+now support generic value type. You can pass primitive values (numbers, strings, booleans, bigint)
 as the type argument. The generic type is used for `value`, `defaultValue`, `onChange` and other props.
 
 For example, generic type can now be used with [SegmentedControl](/core/segmented-control)
@@ -403,7 +403,7 @@ components now support `fullWidth` prop to make the calendar stretch to fill 100
 
 ## Namespace types exports
 
-All Mantine components and hooks now provide namespace exports for related types.
+Many Mantine components and hooks now provide namespace exports for related types.
 For example, [use-disclosure](/hooks/use-disclosure) hook types can now be accessed like this:
 
 ```tsx
@@ -589,14 +589,14 @@ position when the component mounts:
 ## Other changes
 
 - [useHeadroom](/hooks/use-headroom) hook now returns `{ pinned: boolean; scrollProgress: number }` object instead of a plain `boolean`. `scrollProgress` is a value between `0` (fully hidden) and `1` (fully visible) that can be used for scroll-linked reveal animations. A new `scrollDistance` option controls how many pixels of scrolling are required to fully reveal or hide the element (default: `100`).
-- New [useScrollDirection](/hooks/use-scroll-direction) hook detects whether the user is currently scrolling up (`true`) or down (`false`). It handles resize events to avoid false direction changes and always uses the latest state without stale closure issues.
+- New [useScrollDirection](/hooks/use-scroll-direction) hook detects whether the user is currently scrolling up or down. It returns `'up'`, `'down'`, or `'unknown'`, handles resize events to avoid false direction changes, and always uses the latest state without stale closure issues.
 - `light` variant in all components now uses different colors values without transparency to improve contrast
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
 - `@mantine/form` package now includes built-in [Standard Schema](/form/schema-validation/) support via `schemaResolver`
 - `@mantine/form` `getInputProps` now supports `type: 'radio'` for individual radio inputs – returns `checked`/`defaultChecked` and passes through the radio option `value`
 - `@mantine/form` now supports async validation rules. `form.validate()`, `form.validateField()` and `form.isValid()` return results directly when all rules are synchronous and return promises only when async rules are present. New `form.validating`, `form.isValidating(path)`, `validateDebounce` and `resolveValidationError` options were added.
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
-- All Mantine components now use `font-weight: 600` instead of `font-weight: 500` for better readability
+- Mantine components now use theme-controlled `fontWeights` values. The default `medium` font weight was changed from `500` to `600` for better readability.
 - All Mantine components now support logical margin and padding style props:
   - `mis` - margin-inline-start
   - `mie` - margin-inline-end
@@ -645,7 +645,7 @@ position when the component mounts:
 - [use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`
 - [use-media-query](/hooks/use-media-query) hook no longer includes fallback for old Safari versions (iOS 13 and earlier, released before 2019)
 - [use-resize-observer](/hooks/use-resize-observer) now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. This change might be breaking, validate hook usage in your application.
-- [use-mouse](/hooks/use-mouse) hook now uses the new callback ref approach to resolve the issue with stale refs. The previous hook functionality was split into two hooks: `use-mouse` (for ref) and `use-mouse-position` (for document).
+- [use-mouse](/hooks/use-mouse) hook now uses the new callback ref approach to resolve the issue with stale refs. The previous hook functionality was split into two hooks: `useMouse` (for ref) and `useMousePosition` (for document).
 - [use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. Additionally, a new `useMutationObserverTarget` hook was added for observing external target elements.
 - [use-disclosure](/hooks/use-disclosure) hook now supports new `set` handler
 - [use-floating-indicator](/hooks/use-floating-indicator) hook now supports `onTransitionStart` and `onTransitionEnd` callbacks

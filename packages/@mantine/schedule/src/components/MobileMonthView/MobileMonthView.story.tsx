@@ -174,7 +174,7 @@ export function CustomNoEventsText() {
         date="2025-11-01"
         events={[]}
         selectedDate="2025-11-10"
-        noEventsText="Нет событий"
+        labels={{ noEvents: 'Нет событий' }}
       />
     </Box>
   );
