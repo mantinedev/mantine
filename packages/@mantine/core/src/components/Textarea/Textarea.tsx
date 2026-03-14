@@ -1,4 +1,3 @@
-import TextareaAutosize from 'react-textarea-autosize';
 import {
   BoxProps,
   ElementProps,
@@ -10,6 +9,7 @@ import {
 } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
+import { TextareaAutosize } from './Autosize';
 
 export interface TextareaProps
   extends
