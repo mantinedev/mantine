@@ -173,15 +173,17 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
             </Transition>
 
             {state !== 'stepCompleted' ? (
-              loading ? (
-                <Loader
-                  {...ctx.getStyles('stepLoader', stylesApi)}
-                  size="calc(var(--stepper-icon-size) / 2)"
-                  color={color}
-                />
-              ) : (
-                getStepFragment(_icon || icon, step)
-              )
+              <span>
+                {loading ? (
+                  <Loader
+                    {...ctx.getStyles('stepLoader', stylesApi)}
+                    size="calc(var(--stepper-icon-size) / 2)"
+                    color={color}
+                  />
+                ) : (
+                  getStepFragment(_icon || icon, step)
+                )}
+              </span>
             ) : null}
           </span>
           {orientation === 'vertical' && (

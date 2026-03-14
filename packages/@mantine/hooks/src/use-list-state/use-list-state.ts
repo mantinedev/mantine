@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export interface UseListStateHandlers<T> {
   setState: React.Dispatch<React.SetStateAction<T[]>>;
@@ -25,84 +25,111 @@ export type UseListStateReturnValue<T> = [T[], UseListStateHandlers<T>];
 export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListStateReturnValue<T> {
   const [state, setState] = useState(initialValue);
 
-  const append = (...items: T[]) => setState((current) => [...current, ...items]);
-  const prepend = (...items: T[]) => setState((current) => [...items, ...current]);
+  const append = useCallback((...items: T[]) => setState((current) => [...current, ...items]), []);
 
-  const insert = (index: number, ...items: T[]) =>
-    setState((current) => [...current.slice(0, index), ...items, ...current.slice(index)]);
+  const prepend = useCallback((...items: T[]) => setState((current) => [...items, ...current]), []);
 
-  const apply = (fn: (item: T, index?: number) => T) =>
-    setState((current) => current.map((item, index) => fn(item, index)));
+  const insert = useCallback(
+    (index: number, ...items: T[]) =>
+      setState((current) => [...current.slice(0, index), ...items, ...current.slice(index)]),
+    []
+  );
 
-  const remove = (...indices: number[]) =>
-    setState((current) => current.filter((_, index) => !indices.includes(index)));
+  const apply = useCallback(
+    (fn: (item: T, index?: number) => T) =>
+      setState((current) => current.map((item, index) => fn(item, index))),
+    []
+  );
 
-  const pop = () =>
-    setState((current) => {
-      const cloned = [...current];
-      cloned.pop();
-      return cloned;
-    });
+  const remove = useCallback(
+    (...indices: number[]) =>
+      setState((current) => current.filter((_, index) => !indices.includes(index))),
+    []
+  );
 
-  const shift = () =>
-    setState((current) => {
-      const cloned = [...current];
-      cloned.shift();
-      return cloned;
-    });
+  const pop = useCallback(
+    () =>
+      setState((current) => {
+        const cloned = [...current];
+        cloned.pop();
+        return cloned;
+      }),
+    []
+  );
 
-  const reorder = ({ from, to }: { from: number; to: number }) =>
-    setState((current) => {
-      const cloned = [...current];
-      const item = current[from];
+  const shift = useCallback(
+    () =>
+      setState((current) => {
+        const cloned = [...current];
+        cloned.shift();
+        return cloned;
+      }),
+    []
+  );
 
-      cloned.splice(from, 1);
-      cloned.splice(to, 0, item);
+  const reorder = useCallback(
+    ({ from, to }: { from: number; to: number }) =>
+      setState((current) => {
+        const cloned = [...current];
+        const item = current[from];
 
-      return cloned;
-    });
+        cloned.splice(from, 1);
+        cloned.splice(to, 0, item);
 
-  const swap = ({ from, to }: { from: number; to: number }) =>
-    setState((current) => {
-      const cloned = [...current];
-      const fromItem = cloned[from];
-      const toItem = cloned[to];
+        return cloned;
+      }),
+    []
+  );
 
-      cloned.splice(to, 1, fromItem);
-      cloned.splice(from, 1, toItem);
+  const swap = useCallback(
+    ({ from, to }: { from: number; to: number }) =>
+      setState((current) => {
+        const cloned = [...current];
+        const fromItem = cloned[from];
+        const toItem = cloned[to];
 
-      return cloned;
-    });
+        cloned.splice(to, 1, fromItem);
+        cloned.splice(from, 1, toItem);
 
-  const setItem = (index: number, item: T) =>
-    setState((current) => {
-      const cloned = [...current];
-      cloned[index] = item;
-      return cloned;
-    });
+        return cloned;
+      }),
+    []
+  );
 
-  const setItemProp = <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) =>
-    setState((current) => {
-      const cloned = [...current];
-      cloned[index] = { ...cloned[index], [prop]: value };
-      return cloned;
-    });
+  const setItem = useCallback(
+    (index: number, item: T) =>
+      setState((current) => {
+        const cloned = [...current];
+        cloned[index] = item;
+        return cloned;
+      }),
+    []
+  );
 
-  const applyWhere = (
-    condition: (item: T, index: number) => boolean,
-    fn: (item: T, index?: number) => T
-  ) =>
-    setState((current) =>
-      current.map((item, index) => (condition(item, index) ? fn(item, index) : item))
-    );
+  const setItemProp = useCallback(
+    <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) =>
+      setState((current) => {
+        const cloned = [...current];
+        cloned[index] = { ...cloned[index], [prop]: value };
+        return cloned;
+      }),
+    []
+  );
 
-  const filter = (fn: (item: T, i: number) => boolean) => {
+  const applyWhere = useCallback(
+    (condition: (item: T, index: number) => boolean, fn: (item: T, index?: number) => T) =>
+      setState((current) =>
+        current.map((item, index) => (condition(item, index) ? fn(item, index) : item))
+      ),
+    []
+  );
+
+  const filter = useCallback((fn: (item: T, i: number) => boolean) => {
     setState((current) => current.filter(fn));
-  };
+  }, []);
 
-  return [
-    state,
-    {
+  const handlers = useMemo(
+    () => ({
       setState,
       append,
       prepend,
@@ -117,8 +144,11 @@ export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListSt
       setItem,
       setItemProp,
       filter,
-    },
-  ];
+    }),
+    []
+  );
+
+  return [state, handlers];
 }
 
 export namespace useListState {
