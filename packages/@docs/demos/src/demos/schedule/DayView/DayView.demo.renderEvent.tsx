@@ -142,6 +142,7 @@ function Demo() {
 }
 
 export const renderEvent: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

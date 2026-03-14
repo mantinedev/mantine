@@ -16,6 +16,7 @@ function Demo() {
 }
 
 export const withoutHeader: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

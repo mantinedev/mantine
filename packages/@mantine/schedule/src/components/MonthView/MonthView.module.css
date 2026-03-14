@@ -3,7 +3,7 @@
   --month-view-border: 1px solid var(--month-view-border-color);
   --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --day-base-color: var(--mantine-color-text);
-  --min-day-width: 54px;
+  --min-day-width: 84px;
 
   &:where([data-with-week-numbers]) {
     --week-numbers-offset: 42px;
@@ -114,7 +114,7 @@
 .monthViewDay {
   min-width: var(--min-day-width);
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
-  height: 100px;
+  height: calc(52px + var(--month-view-max-events, 2) * 24px);
   padding: 4px;
   font-weight: var(--mantine-font-weight-medium);
   border-block-start: var(--month-view-border);
@@ -266,6 +266,21 @@
     background-color: var(--mantine-primary-color-filled);
     color: var(--mantine-primary-color-contrast);
   }
+}
+
+.monthViewBackgroundEvent {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: var(--month-view-radius);
+  background-color: var(--bg-event-bg);
+  top: 0;
+  bottom: -21px;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: 3px 4px;
+  color: var(--bg-event-color);
 }
 
 .monthViewEvents {

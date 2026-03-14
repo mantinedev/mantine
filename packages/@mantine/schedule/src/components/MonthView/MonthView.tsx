@@ -14,6 +14,7 @@ import {
   ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
+  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -33,7 +34,9 @@ import {
 } from '../../types';
 import {
   calculateMonthDropDate,
+  expandRecurringEvents,
   getMonthDays,
+  getMonthRange,
   getWeekdaysNames,
   getWeekNumber,
   isSameMonth,
@@ -62,10 +65,11 @@ export type MonthViewStylesNames =
   | 'monthViewWeekdays'
   | 'monthViewWeekdaysCorner'
   | 'monthViewEvents'
+  | 'monthViewBackgroundEvent'
   | CombinedScheduleHeaderStylesNames;
 
 export type MonthViewCssVariables = {
-  monthView: '--month-view-radius';
+  monthView: '--month-view-radius' | '--month-view-max-events';
 };
 
 export interface MonthViewProps
@@ -160,7 +164,8 @@ export interface MonthViewProps
   onEventDrop?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be dragged */
@@ -192,6 +197,12 @@ export interface MonthViewProps
 
   /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
   onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
+
+  /** Maximum number of events visible per day before "+more" indicator shows, value is clamped between 1 and 10 @default 2 */
+  maxEventsPerDay?: number;
 }
 
 export type MonthViewFactory = Factory<{
@@ -201,9 +212,15 @@ export type MonthViewFactory = Factory<{
   vars: MonthViewCssVariables;
 }>;
 
-const varsResolver = createVarsResolver<MonthViewFactory>((_theme, { radius }) => ({
-  monthView: { '--month-view-radius': radius ? getRadius(radius) : undefined },
-}));
+const varsResolver = createVarsResolver<MonthViewFactory>(
+  (_theme, { radius, maxEventsPerDay }) => ({
+    monthView: {
+      '--month-view-radius': radius ? getRadius(radius) : undefined,
+      '--month-view-max-events':
+        maxEventsPerDay !== undefined ? `${Math.min(10, Math.max(1, maxEventsPerDay))}` : undefined,
+    },
+  })
+);
 
 const defaultProps = {
   __staticSelector: 'MonthView',
@@ -269,8 +286,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     mode,
     scrollAreaProps,
     onExternalEventDrop,
+    recurrenceExpansionLimit,
+    maxEventsPerDay: _maxEventsPerDay,
     ...others
   } = props;
+
+  const maxEventsPerDay = Math.min(10, Math.max(1, _maxEventsPerDay ?? 2));
 
   const getStyles = useStyles<MonthViewFactory>({
     name: __staticSelector,
@@ -301,11 +322,26 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     radius,
   };
 
+  const theme = useMantineTheme();
   const ctx = useDatesContext();
+
+  const range = getMonthRange({
+    month: date,
+    withOutsideDays,
+    consistentWeeks,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  });
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(range.start).startOf('day').toDate(),
+    rangeEnd: dayjs(range.end).endOf('day').toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
 
   const monthEvents = getMonthViewEvents({
     date,
-    events,
+    events: expandedEvents,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     withOutsideDays,
     consistentWeeks,
@@ -493,8 +529,43 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
 
+    const backgroundEventNodes = (monthEvents.backgroundByWeek[weekIndex] || []).map((event) => {
+      const colors = theme.variantColorResolver({
+        color: event.color || theme.primaryColor,
+        theme,
+        variant: 'light',
+        autoContrast: true,
+      });
+
+      const bgEventBody =
+        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+      const bgEventProps = {
+        key: `bg-${event.id}-${weekIndex}`,
+        ...getStyles('monthViewBackgroundEvent', {
+          style: {
+            left: `calc(${event.position.startOffset}% + 2px)`,
+            width: `calc(${event.position.width}% - 3px)`,
+          },
+        }),
+        __vars: {
+          '--bg-event-bg': colors.background,
+          '--bg-event-color': colors.color,
+        },
+        children: bgEventBody,
+      };
+
+      if (typeof renderEvent === 'function') {
+        return renderEvent(event, bgEventProps as any);
+      }
+
+      return <Box {...bgEventProps} />;
+    });
+
+    const rowHeightPercent = 100 / maxEventsPerDay;
+
     const events = (monthEvents.groupedByWeek[weekIndex] || [])
-      .filter((event) => event.position.row < 2)
+      .filter((event) => event.position.row < maxEventsPerDay)
       .map((event) => {
         const isDraggable = dragDrop.isDraggableEvent(event);
 
@@ -513,10 +584,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
             style={{
               position: 'absolute',
-              top: `calc(${event.position.row * 50}% + 1px)`,
+              top: `calc(${event.position.row * rowHeightPercent}% + 1px)`,
               left: `calc(${event.position.startOffset}% + 1px)`,
               width: `calc(${event.position.width}% - 2px)`,
-              height: `calc(50% - 2px)`,
+              height: `calc(${rowHeightPercent}% - 2px)`,
             }}
           />
         );
@@ -524,7 +595,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
     const moreEventsNodes = week.map((day, dayIndex) => {
       const dayEvents = monthEvents.groupedByDay[day] || [];
-      const hiddenEventsCount = Math.max(0, dayEvents.length - 2);
+      const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerDay);
 
       if (hiddenEventsCount <= 0) {
         return null;
@@ -582,6 +653,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         )}
 
         <div {...getStyles('monthViewEvents')} key="week-events">
+          {backgroundEventNodes}
           {events}
           {moreEventsNodes}
         </div>

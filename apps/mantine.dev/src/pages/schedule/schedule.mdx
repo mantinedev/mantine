@@ -34,6 +34,13 @@ Set `defaultView` to control which view is shown initially when using uncontroll
 
 <Demo data={ScheduleDemos.defaultView} />
 
+## Custom header
+
+You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
+Disable the default header on all views by passing `withHeader={false}` through view-specific props.
+
+<Demo data={ScheduleDemos.customHeader} />
+
 ## Common props
 
 The following props are shared across all views:
@@ -45,6 +52,9 @@ The following props are shared across all views:
 - `withDragDrop` - Enable drag and drop
 - `onEventDrop` - Drag and drop handler
 - `canDragEvent` - Drag permission callback
+- `withEventResize` - Enable event resizing
+- `onEventResize` - Resize handler
+- `canResizeEvent` - Resize permission callback
 - `mode` - Interaction mode (`default` or `static`)
 
 These props are automatically passed to all views. For view-specific customization, use the
@@ -77,6 +87,28 @@ from the schedule. The schedule sets `application/json` with `{ eventId }` in
 identify the event.
 
 <Demo data={ScheduleDemos.bidirectionalDragDrop} />
+
+## Event resize
+
+Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
+edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
+the resize. Event resize works in both Day and Week views and can be combined with drag and drop.
+
+<Demo data={ScheduleDemos.eventResize} />
+
+## Recurring events
+
+Schedule automatically expands recurring events for the visible date range in each view.
+See [Recurring events guide](/schedule/recurring-events) for full documentation.
+
+<Demo data={ScheduleDemos.recurringEvents} />
+
+## Background events
+
+Set `display="background"` on an event to render it as a full-width, non-interactive
+block behind regular events. Background events work in Day, Week, and Month views.
+
+<Demo data={ScheduleDemos.backgroundEvents} />
 
 ## Responsive styles
 

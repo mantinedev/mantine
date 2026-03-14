@@ -52,6 +52,20 @@ Set `withHeader={false}` to hide the header controls.
 
 <Demo data={YearViewDemos.withoutHeader} />
 
+## Custom header
+
+You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
+Set `withHeader={false}` on the view and compose the header externally.
+
+<Demo data={YearViewDemos.customHeader} />
+
+## Recurring events
+
+YearView automatically expands recurring events for the visible year.
+See [Recurring events guide](/schedule/recurring-events) for full documentation.
+
+<Demo data={YearViewDemos.recurringEvents} />
+
 ## Static mode
 
 Set `mode="static"` to disable all interactions.

@@ -107,7 +107,9 @@ function Demo() {
 
 ## Form resolvers
 
-The `@mantine/form` package no longer exports schema resolvers; use [dedicated packages](/form/schema-validation/) instead:
+In 9.x, `@mantine/form` has built-in support for [Standard Schema](https://standardschema.dev/).
+If your schema library supports Standard Schema (Zod v4, Valibot, ArkType), use the built-in
+`schemaResolver` instead of a dedicated resolver package:
 
 Example with 8.x:
 
@@ -121,26 +123,24 @@ const schema = z.object({
 });
 
 const form = useForm({
-  initialValues: {  email: '' },
+  initialValues: { email: '' },
   validate: zodResolver(schema),
 });
 ```
 
-Example with 9.x:
+Example with 9.x using Standard Schema (recommended):
 
 ```tsx
-import { z } from 'zod';
-import { useForm } from '@mantine/form';
-// ✅ Use a dedicated package for the zod resolver
-import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod/v4';
+import { useForm, schemaResolver } from '@mantine/form';
 
 const schema = z.object({
-  email: z.string().email({ message: 'Invalid email' }),
+  email: z.email({ error: 'Invalid email' }),
 });
 
 const form = useForm({
-  initialValues: {  email: '' },
-  validate: zodResolver(schema),
+  initialValues: { email: '' },
+  validate: schemaResolver(schema, { sync: true }),
 });
 ```
 

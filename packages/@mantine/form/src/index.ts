@@ -4,6 +4,7 @@ export { createFormActions } from './actions/index.js';
 export { FORM_INDEX } from './form-index.js';
 export * from './validators/index.js';
 export { useField } from './use-field.js';
+export { schemaResolver } from './schema-resolver.js';
 export { formRootRule } from './validate/validate-values.js';
 
 export type * from './types';

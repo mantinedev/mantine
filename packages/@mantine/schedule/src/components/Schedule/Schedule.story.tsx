@@ -433,6 +433,121 @@ export function DragAndDrop() {
   );
 }
 
+export function EventResize() {
+  const [eventsData, setEventsData] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Team Meeting',
+      start: new Date(2024, 0, 15, 10, 0),
+      end: new Date(2024, 0, 15, 11, 0),
+      color: 'blue',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Project Review',
+      start: new Date(2024, 0, 16, 14, 0),
+      end: new Date(2024, 0, 16, 16, 0),
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Client Call',
+      start: new Date(2024, 0, 17, 9, 0),
+      end: new Date(2024, 0, 17, 10, 30),
+      color: 'red',
+      payload: {},
+    },
+    {
+      id: 4,
+      title: 'Lunch Break',
+      start: new Date(2024, 0, 18, 12, 0),
+      end: new Date(2024, 0, 18, 13, 0),
+      color: 'orange',
+      payload: {},
+    },
+    {
+      id: 5,
+      title: 'Design Workshop',
+      start: new Date(2024, 0, 18, 14, 30),
+      end: new Date(2024, 0, 18, 16, 0),
+      color: 'violet',
+      payload: {},
+    },
+    {
+      id: 6,
+      title: 'Code Review',
+      start: new Date(2024, 0, 19, 11, 0),
+      end: new Date(2024, 0, 19, 12, 0),
+      color: 'cyan',
+      payload: {},
+    },
+    {
+      id: 7,
+      title: 'Locked Event (Cannot Resize)',
+      start: new Date(2024, 0, 19, 15, 0),
+      end: new Date(2024, 0, 19, 16, 0),
+      color: 'gray',
+      payload: { locked: true },
+    },
+  ]);
+  const [lastAction, setLastAction] = useState<string>('');
+
+  const handleEventUpdate = (eventId: string | number, newStart: string, newEnd: string) => {
+    const updatedEvent = eventsData.find((e) => e.id === eventId);
+    setEventsData((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return { ...event, start: newStart, end: newEnd };
+        }
+        return event;
+      })
+    );
+    return updatedEvent;
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Schedule
+        events={eventsData}
+        withEventsDragAndDrop
+        withEventResize
+        defaultDate={new Date(2024, 0, 19)}
+        onEventDrop={(eventId, newStart, newEnd) => {
+          const event = handleEventUpdate(eventId, newStart, newEnd);
+          setLastAction(
+            `Moved "${event?.title}" to ${dayjs(newStart).format('MMMM D, YYYY [at] HH:mm')}`
+          );
+        }}
+        onEventResize={(eventId, newStart, newEnd) => {
+          const event = handleEventUpdate(eventId, newStart, newEnd);
+          setLastAction(
+            `Resized "${event?.title}" to ${dayjs(newStart).format('HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
+          );
+        }}
+        canDragEvent={(event) => !event.payload?.locked}
+        canResizeEvent={(event) => !event.payload?.locked}
+        dayViewProps={{
+          startTime: '08:00:00',
+          endTime: '20:00:00',
+          intervalMinutes: 60,
+        }}
+        weekViewProps={{
+          startTime: '08:00:00',
+          endTime: '20:00:00',
+          intervalMinutes: 60,
+        }}
+      />
+      {lastAction && (
+        <div style={{ marginTop: 20, padding: 12, backgroundColor: '#f0f0f0', borderRadius: 4 }}>
+          Last action: {lastAction}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Styling() {
   return (
     <div style={{ padding: 40 }}>

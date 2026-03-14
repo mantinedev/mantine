@@ -34,6 +34,7 @@ function Demo() {
 }
 
 export const slotHeight: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

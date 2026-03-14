@@ -16,6 +16,7 @@ function Demo() {
 }
 
 export const withoutOutsideDays: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

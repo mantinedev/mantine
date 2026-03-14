@@ -44,6 +44,7 @@ function Demo() {
 }
 
 export const labels: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

@@ -30,6 +30,7 @@ import {
   ScheduleMode,
 } from '../../types';
 import {
+  expandRecurringEvents,
   formatDate,
   getMonthDays,
   getWeekdaysNames,
@@ -169,6 +170,9 @@ export interface MobileMonthViewProps
 
   /** Custom header renderer, receives object with mode, date, and default header element */
   renderHeader?: (input: MobileMonthViewRenderHeaderInput) => React.ReactNode;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
 }
 
 export type MobileMonthViewFactory = Factory<{
@@ -233,6 +237,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     onYearClick,
     onEventClick,
     renderHeader,
+    recurrenceExpansionLimit,
     ...others
   } = props;
 
@@ -264,7 +269,14 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   const daysRef: MonthViewControlsRef = useRef<HTMLButtonElement[][]>([]);
   const firstDayPosition = useRef<{ weekIndex: number; dayIndex: number } | null>(null);
 
-  const groupedEvents = getMobileMonthViewEvents({ date, events });
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(date).startOf('month').toDate(),
+    rangeEnd: dayjs(date).endOf('month').toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
+  const groupedEvents = getMobileMonthViewEvents({ date, events: expandedEvents });
 
   const weekdays = withWeekDays
     ? getWeekdaysNames({

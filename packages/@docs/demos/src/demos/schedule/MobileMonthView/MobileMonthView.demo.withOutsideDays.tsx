@@ -44,6 +44,7 @@ function Demo() {
 }
 
 export const withOutsideDays: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

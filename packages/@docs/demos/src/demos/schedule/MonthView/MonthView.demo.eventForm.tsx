@@ -200,6 +200,7 @@ function Demo() {
 }`;
 
 export const eventForm: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code: [

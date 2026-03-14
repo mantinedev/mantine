@@ -79,6 +79,13 @@ Set `withHeader={false}` to hide the header controls.
 
 <Demo data={WeekViewDemos.withoutHeader} />
 
+## Custom header
+
+You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
+Set `withHeader={false}` on the view and compose the header externally.
+
+<Demo data={WeekViewDemos.customHeader} />
+
 ## Week label format
 
 Use `weekLabelFormat` prop to customize the week range display in the header.
@@ -135,6 +142,14 @@ identify the event.
 
 <Demo data={WeekViewDemos.bidirectionalDragDrop} />
 
+## Event resize
+
+Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
+edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
+the resize. Use `canResizeEvent` to control which events can be resized.
+
+<Demo data={WeekViewDemos.eventResize} />
+
 ## Full event customization
 
 Use `renderEvent` prop to fully customize event rendering. This function receives the event
@@ -143,6 +158,30 @@ data as the first argument and all props that would be passed to the event root 
 like HoverCard, Tooltip, or custom wrappers.
 
 <Demo data={WeekViewDemos.renderEvent} />
+
+## Recurring events
+
+WeekView automatically expands recurring events for the visible week.
+See [Recurring events guide](/schedule/recurring-events) for full documentation.
+
+<Demo data={WeekViewDemos.recurringEvents} />
+
+## Background events
+
+Set `display="background"` on an event to render it as a full-width, semi-transparent,
+non-interactive block behind regular events. Background events are useful for marking
+unavailability, lunch breaks, focus time, or other blocked periods.
+
+<Demo data={WeekViewDemos.backgroundEvents} />
+
+## Custom background event styles with drag and drop blocking
+
+Use Styles API to customize background event appearance and prevent dropping
+regular events into blocked time ranges. This example uses diagonal red lines
+to indicate lunch breaks across the entire week and rejects drops that overlap
+with background events.
+
+<Demo data={WeekViewDemos.backgroundEventsCustomStyle} />
 
 ## Static mode
 

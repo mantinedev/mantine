@@ -40,6 +40,16 @@
     cursor: default;
   }
 
+  &:where([data-resizing]) {
+    z-index: 10;
+
+    .eventInner {
+      @mixin hover {
+        background-color: var(--event-bg);
+      }
+    }
+  }
+
   &:where([data-hanging='start'], [data-hanging='both']) {
     &::before {
       content: '';
@@ -130,5 +140,44 @@
 
   :where([data-slot-dragging]) & {
     pointer-events: none;
+  }
+}
+
+.eventResizeHandle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  max-width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  cursor: ns-resize;
+  pointer-events: all;
+  z-index: 4;
+  touch-action: none;
+  background-color: var(--event-color);
+  opacity: 0;
+  transition: opacity 100ms ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px -6px;
+  }
+
+  &:where([data-edge='top']) {
+    top: -2px;
+  }
+
+  &:where([data-edge='bottom']) {
+    bottom: -2px;
+  }
+
+  .event:where(:hover, [data-resizing]) & {
+    opacity: 0.5;
+  }
+
+  @mixin hover {
+    opacity: 0.8;
   }
 }

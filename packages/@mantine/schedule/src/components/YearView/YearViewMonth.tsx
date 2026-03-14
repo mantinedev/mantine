@@ -211,6 +211,7 @@ export function YearViewMonth({
           <UnstyledButton
             key={weekNumber}
             aria-label={`Week ${weekNumber}`}
+            title={`Week ${weekNumber}`}
             {...weekNumberProps}
             onClick={
               mode === 'static'

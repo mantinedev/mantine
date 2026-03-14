@@ -20,6 +20,7 @@ function Demo() {
 }
 
 export const consistentWeeks: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

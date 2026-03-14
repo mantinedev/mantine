@@ -65,7 +65,11 @@ type ScheduleCommonProps =
   | 'view'
   | 'onViewChange'
   | 'mode'
-  | 'onExternalEventDrop';
+  | 'onExternalEventDrop'
+  | 'withEventResize'
+  | 'onEventResize'
+  | 'canResizeEvent'
+  | 'recurrenceExpansionLimit';
 
 type ScheduleViewProps<T> = Partial<Omit<T, ScheduleCommonProps>>;
 
@@ -113,7 +117,8 @@ export interface ScheduleProps
   onEventDrop?: (
     eventId: string | number,
     newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
   ) => void;
 
   /** Function to determine if event can be dragged */
@@ -155,6 +160,23 @@ export interface ScheduleProps
 
   /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
   onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
+
+  /** If true, events can be resized by dragging their edges @default false */
+  withEventResize?: boolean;
+
+  /** Called when event is resized */
+  onEventResize?: (
+    eventId: string | number,
+    newStart: DateTimeStringValue,
+    newEnd: DateTimeStringValue,
+    event: ScheduleEventData
+  ) => void;
+
+  /** Function to determine if event can be resized */
+  canResizeEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
 
   /** Layout mode:
    * - `'default'` uses same views on all screen sizes
@@ -222,6 +244,10 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     withDragSlotSelect,
     onSlotDragEnd,
     onExternalEventDrop,
+    withEventResize,
+    onEventResize,
+    canResizeEvent,
+    recurrenceExpansionLimit,
     mode,
     layout,
     dayViewProps,
@@ -294,6 +320,10 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     withDragSlotSelect,
     onSlotDragEnd,
     onExternalEventDrop,
+    withEventResize: mode === 'static' ? false : withEventResize,
+    onEventResize,
+    canResizeEvent,
+    recurrenceExpansionLimit,
     mode,
   };
 
@@ -326,6 +356,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             radius={radius}
             labels={labels}
             mode={mode}
+            recurrenceExpansionLimit={recurrenceExpansionLimit}
             onYearClick={() => handleViewChange('year')}
             onEventClick={onEventClick}
             {...mobileMonthViewProps}

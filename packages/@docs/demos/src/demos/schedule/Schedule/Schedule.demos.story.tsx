@@ -33,3 +33,23 @@ export const Demo_bidirectionalDragDrop = {
   name: '⭐ Demo: bidirectionalDragDrop',
   render: renderDemo(demos.bidirectionalDragDrop),
 };
+
+export const Demo_eventResize = {
+  name: '⭐ Demo: eventResize',
+  render: renderDemo(demos.eventResize),
+};
+
+export const Demo_recurringEvents = {
+  name: '⭐ Demo: recurringEvents',
+  render: renderDemo(demos.recurringEvents),
+};
+
+export const Demo_backgroundEvents = {
+  name: '⭐ Demo: backgroundEvents',
+  render: renderDemo(demos.backgroundEvents),
+};
+
+export const Demo_customHeader = {
+  name: '⭐ Demo: customHeader',
+  render: renderDemo(demos.customHeader),
+};

@@ -24,6 +24,7 @@ export const WeekViewStylesApi: StylesApiData<WeekViewFactory> = {
     weekViewDaySlots: 'Container for day slots',
     weekViewWeekLabel: 'Week label',
     weekViewWeekNumber: 'Week number indicator',
+    weekViewBackgroundEvent: 'Background event element',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
     viewSelect: 'View select element, part of ScheduleHeader',

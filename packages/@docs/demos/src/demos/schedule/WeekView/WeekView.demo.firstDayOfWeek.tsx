@@ -32,6 +32,7 @@ function Demo() {
 }
 
 export const firstDayOfWeek: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

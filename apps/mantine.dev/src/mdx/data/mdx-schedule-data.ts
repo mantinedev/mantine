@@ -76,4 +76,11 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/schedule/src/components/Schedule/Schedule.tsx',
     docs: 'schedule/schedule.mdx',
   },
+  RecurringEventsSchedule: {
+    title: 'Recurring events',
+    package: '@mantine/schedule',
+    slug: '/schedule/recurring-events',
+    description: 'Recurring events guide for @mantine/schedule',
+    docs: 'schedule/recurring-events.mdx',
+  },
 };

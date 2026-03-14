@@ -32,6 +32,7 @@ function Demo() {
 }
 
 export const withoutWeekendDays: MantineDemo = {
+  defaultExpanded: false,
   type: 'code',
   component: Demo,
   code,

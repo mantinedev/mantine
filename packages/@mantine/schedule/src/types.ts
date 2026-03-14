@@ -25,8 +25,35 @@ export type ScheduleMode = 'static' | 'default';
 /** Payload type for ScheduleEventData, defined in user application */
 export type EventPayload = Record<PropertyKey, any>;
 
-/** Event data object passed to all `@mantine/schedule` components */
-export interface ScheduleEventData<Payload extends EventPayload = EventPayload> {
+/** RFC 5545 recurrence data */
+export interface ScheduleRecurrenceData {
+  /** Recurrence rule string, for example: `FREQ=WEEKLY;BYDAY=MO,WE` */
+  rrule: string;
+
+  /** Exception datetimes in `YYYY-MM-DD HH:mm:ss` or valid date string format */
+  exdate?: DateTimeStringValue[];
+
+  /** Optional explicit series start datetime */
+  dtstart?: DateTimeStringValue;
+}
+
+/** Metadata attached to generated recurring instances */
+export interface RecurringInstanceMeta {
+  /** If true, event is generated from recurrence rule */
+  isRecurringInstance: boolean;
+
+  /** Parent series event id */
+  recurringEventId: string | number;
+
+  /** Original occurrence datetime key */
+  recurrenceId: DateTimeStringValue;
+
+  /** Original occurrence dates before any drag/drop updates */
+  originalStart: DateTimeStringValue;
+  originalEnd: DateTimeStringValue;
+}
+
+interface ScheduleEventBase<Payload extends EventPayload = EventPayload> {
   /** Unique event id, used for key and identification */
   id: string | number;
 
@@ -45,9 +72,53 @@ export interface ScheduleEventData<Payload extends EventPayload = EventPayload> 
   /** Event variant, default is `'light'` */
   variant?: 'filled' | 'light';
 
+  /** Event display mode. Background events render as full-width, non-interactive blocks behind regular events. @default 'default' */
+  display?: 'default' | 'background';
+
   /** Additional event data, defined by the user, not used internally by the library */
   payload?: Payload;
 }
+
+/** One-off event without recurrence */
+export interface ScheduleSingleEventData<
+  Payload extends EventPayload = EventPayload,
+> extends ScheduleEventBase<Payload> {
+  recurrence?: never;
+  recurringEventId?: never;
+  recurrenceId?: never;
+}
+
+/** Recurring series source event */
+export interface ScheduleRecurringSeriesEventData<
+  Payload extends EventPayload = EventPayload,
+> extends ScheduleEventBase<Payload> {
+  /** Recurrence definition for the event series */
+  recurrence: ScheduleRecurrenceData;
+  recurringEventId?: never;
+  recurrenceId?: never;
+}
+
+/** Override for one specific recurring occurrence */
+export interface ScheduleRecurringOverrideEventData<
+  Payload extends EventPayload = EventPayload,
+> extends ScheduleEventBase<Payload> {
+  recurrence?: never;
+  /** Parent recurring series id */
+  recurringEventId: string | number;
+  /** Occurrence id (`YYYY-MM-DD HH:mm:ss`) */
+  recurrenceId: DateTimeStringValue;
+}
+
+interface ScheduleEventRuntimeMeta {
+  /** Metadata for generated recurring instances */
+  recurringInstance?: RecurringInstanceMeta;
+}
+
+/** Event data object passed to all `@mantine/schedule` components */
+export type ScheduleEventData<Payload extends EventPayload = EventPayload> =
+  | (ScheduleSingleEventData<Payload> & ScheduleEventRuntimeMeta)
+  | (ScheduleRecurringSeriesEventData<Payload> & ScheduleEventRuntimeMeta)
+  | (ScheduleRecurringOverrideEventData<Payload> & ScheduleEventRuntimeMeta);
 
 export interface DayEventPositionData {
   /** All day events */
@@ -73,11 +144,10 @@ export interface DayEventPositionData {
 }
 
 /** Event data with calculated position for day view */
-export interface DayPositionedEventData<
-  Payload extends EventPayload = EventPayload,
-> extends ScheduleEventData<Payload> {
-  position: DayEventPositionData;
-}
+export type DayPositionedEventData<Payload extends EventPayload = EventPayload> =
+  ScheduleEventData<Payload> & {
+    position: DayEventPositionData;
+  };
 
 export interface WeekEventPositionData extends DayEventPositionData {
   /** Week offset in %, represents event start position from the first day of the week (for regular events only) */
@@ -91,11 +161,10 @@ export interface WeekEventPositionData extends DayEventPositionData {
 }
 
 /** Event data with calculated position for week view */
-export interface WeekPositionedEventData<
-  Payload extends EventPayload = EventPayload,
-> extends ScheduleEventData<Payload> {
-  position: WeekEventPositionData;
-}
+export type WeekPositionedEventData<Payload extends EventPayload = EventPayload> =
+  ScheduleEventData<Payload> & {
+    position: WeekEventPositionData;
+  };
 
 export interface MonthEventPositionData {
   /** Start offset % from the start of the week (inset-inline-start) */
@@ -115,11 +184,10 @@ export interface MonthEventPositionData {
 }
 
 /** Event data with calculated position for month view */
-export interface MonthPositionedEventData<
-  Payload extends EventPayload = EventPayload,
-> extends ScheduleEventData<Payload> {
-  position: MonthEventPositionData;
-}
+export type MonthPositionedEventData<Payload extends EventPayload = EventPayload> =
+  ScheduleEventData<Payload> & {
+    position: MonthEventPositionData;
+  };
 
 export interface DropTarget {
   /** Target date in YYYY-MM-DD format */

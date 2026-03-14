@@ -9,6 +9,8 @@ describe('@mantine/schedule/get-day-view-events', () => {
     expect(getDayViewEvents({ events: undefined, date: testDate })).toStrictEqual({
       allDayEvents: [],
       regularEvents: [],
+      backgroundTimedEvents: [],
+      backgroundAllDayEvents: [],
     });
   });
 
@@ -21,6 +23,8 @@ describe('@mantine/schedule/get-day-view-events', () => {
     expect(getDayViewEvents({ events, date: testDate })).toStrictEqual({
       regularEvents: [{ ...events[0], position: expect.any(Object) }],
       allDayEvents: [],
+      backgroundTimedEvents: [],
+      backgroundAllDayEvents: [],
     });
   });
 
@@ -37,6 +41,8 @@ describe('@mantine/schedule/get-day-view-events', () => {
     expect(getDayViewEvents({ events, date: testDate })).toStrictEqual({
       allDayEvents: [{ ...events[1], position: expect.any(Object) }],
       regularEvents: [{ ...events[0], position: expect.any(Object) }],
+      backgroundTimedEvents: [],
+      backgroundAllDayEvents: [],
     });
   });
 
@@ -66,6 +72,8 @@ describe('@mantine/schedule/get-day-view-events', () => {
     expect(result).toStrictEqual({
       regularEvents: [{ ...events[0], position: expect.any(Object) }],
       allDayEvents: [],
+      backgroundTimedEvents: [],
+      backgroundAllDayEvents: [],
     });
   });
 
@@ -87,6 +95,8 @@ describe('@mantine/schedule/get-day-view-events', () => {
         { ...events[1], position: expect.any(Object) },
       ],
       allDayEvents: [],
+      backgroundTimedEvents: [],
+      backgroundAllDayEvents: [],
     });
   });
 
@@ -110,6 +120,8 @@ describe('@mantine/schedule/get-day-view-events', () => {
     expect(result).toStrictEqual({
       allDayEvents: [{ ...events[0], position: expect.any(Object) }],
       regularEvents: [],
+      backgroundTimedEvents: [],
+      backgroundAllDayEvents: [],
     });
   });
 });

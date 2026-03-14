@@ -185,6 +185,19 @@
   }
 }
 
+.dayViewBackgroundEvent {
+  position: absolute;
+  border-radius: 0;
+  pointer-events: none;
+  z-index: 2;
+  background-color: var(--bg-event-bg);
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: 3px 4px;
+  color: var(--bg-event-color);
+}
+
 .dayViewAllDay {
   position: relative;
   height: var(--all-day-slot-height);
