@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconViewfinder } from '@tabler/icons-react';
+import { CrosshairIcon } from '@phosphor-icons/react';
 import { ActionIcon, ColorSwatch, Group, Text } from '@mantine/core';
 import { useEyeDropper } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
@@ -7,7 +7,7 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { useState } from 'react';
 import { ActionIcon, Group, ColorSwatch, Text } from '@mantine/core';
-import { IconColorPicker } from '@tabler/icons-react';
+import { EyedropperIcon } from '@phosphor-icons/react';
 import { useEyeDropper } from '@mantine/hooks';
 
 function Demo() {
@@ -31,7 +31,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
-        <IconViewfinder size={28} stroke={1.5} />
+        <CrosshairIcon size={28} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">
@@ -68,7 +68,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
-        <IconViewfinder size={28} stroke={1.5} />
+        <CrosshairIcon size={28} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">

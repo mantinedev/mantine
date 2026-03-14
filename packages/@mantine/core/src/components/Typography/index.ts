@@ -1,20 +1,11 @@
-import {
-  Typography,
-  TypographyFactory,
-  TypographyProps,
-  TypographyStylesNames,
-} from './Typography';
+import type { TypographyFactory, TypographyProps, TypographyStylesNames } from './Typography';
 
-/** @deprecated use `Typography` instead */
-const TypographyStylesProvider = Typography;
+export { Typography } from './Typography';
 
-export { Typography, TypographyStylesProvider };
+export type { TypographyProps, TypographyStylesNames, TypographyFactory };
 
-export type {
-  TypographyFactory,
-  TypographyProps,
-  TypographyStylesNames,
-  TypographyFactory as TypographyStylesProviderFactory,
-  TypographyProps as TypographyStylesProviderProps,
-  TypographyStylesNames as TypographyStylesProviderStylesNames,
-};
+export namespace Typography {
+  export type Props = TypographyProps;
+  export type StylesNames = TypographyStylesNames;
+  export type Factory = TypographyFactory;
+}

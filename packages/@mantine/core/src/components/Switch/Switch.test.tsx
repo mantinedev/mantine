@@ -17,15 +17,7 @@ describe('@mantine/core/Switch', () => {
   tests.itSupportsSystemProps<SwitchProps, SwitchStylesNames>({
     component: Switch,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
+    varsResolver: true,
     displayName: '@mantine/core/Switch',
     stylesApiSelectors: [
       'root',
@@ -71,6 +63,17 @@ describe('@mantine/core/Switch', () => {
     const ref = createRef<HTMLDivElement>();
     render(<Switch {...defaultProps} rootRef={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+
+  it('renders thumb indicator based on withThumbIndicator prop', () => {
+    const { container: withIndicator } = render(<Switch withThumbIndicator />);
+    const { container: withoutIndicator } = render(<Switch withThumbIndicator={false} />);
+
+    const thumbWithIndicator = withIndicator.querySelector('[data-with-thumb-indicator]');
+    const thumbWithoutIndicator = withoutIndicator.querySelector('[data-with-thumb-indicator]');
+
+    expect(thumbWithIndicator).toBeInTheDocument();
+    expect(thumbWithoutIndicator).not.toBeInTheDocument();
   });
 
   it('ensures input is visible in DOM and accessibility tree with switch/checkbox semantics', () => {

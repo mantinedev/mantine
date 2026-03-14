@@ -45,89 +45,106 @@ function enterFullScreen(element: HTMLElement) {
 
 const prefixes = ['', 'webkit', 'moz', 'ms'];
 
-function addEvents(
-  element: HTMLElement,
-  {
-    onFullScreen,
-    onError,
-  }: { onFullScreen: (event: Event) => void; onError: (event: Event) => void }
-) {
+interface FullscreenEvents {
+  onFullScreen: (event: Event) => void;
+  onError: (event: Event) => void;
+}
+
+function addEvents(element: HTMLElement, { onFullScreen, onError }: FullscreenEvents) {
   prefixes.forEach((prefix) => {
     element.addEventListener(`${prefix}fullscreenchange`, onFullScreen);
     element.addEventListener(`${prefix}fullscreenerror`, onError);
   });
-
-  return () => {
-    prefixes.forEach((prefix) => {
-      element.removeEventListener(`${prefix}fullscreenchange`, onFullScreen);
-      element.removeEventListener(`${prefix}fullscreenerror`, onError);
-    });
-  };
 }
 
-export interface UseFullscreenReturnValue<T extends HTMLElement = any> {
+function removeEvents(element: HTMLElement, { onFullScreen, onError }: FullscreenEvents) {
+  prefixes.forEach((prefix) => {
+    element.removeEventListener(`${prefix}fullscreenchange`, onFullScreen);
+    element.removeEventListener(`${prefix}fullscreenerror`, onError);
+  });
+}
+
+export interface UseFullscreenElementReturnValue<T extends HTMLElement = any> {
   ref: React.RefCallback<T | null>;
   toggle: () => Promise<void>;
   fullscreen: boolean;
 }
 
-export function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<T> {
+export function useFullscreenElement<
+  T extends HTMLElement = any,
+>(): UseFullscreenElementReturnValue<T> {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
+  const refElement = useRef<T | null>(null);
+  const prevNodeRef = useRef<T | null>(null);
 
-  const _ref = useRef<T>(null);
+  const handleFullscreenChange = useCallback(() => {
+    setFullscreen(refElement.current === getFullscreenElement());
+  }, []);
 
-  const handleFullscreenChange = useCallback(
-    (event: Event) => {
-      setFullscreen(event.target === getFullscreenElement());
-    },
-    [setFullscreen]
-  );
-
-  const handleFullscreenError = useCallback(
-    (event: Event) => {
-      setFullscreen(false);
-      // eslint-disable-next-line no-console
-      console.error(
-        `[@mantine/hooks] use-fullscreen: Error attempting full-screen mode method: ${event} (${event.target})`
-      );
-    },
-    [setFullscreen]
-  );
+  const handleFullscreenError = useCallback(() => {
+    setFullscreen(false);
+  }, []);
 
   const toggle = useCallback(async () => {
-    if (!getFullscreenElement()) {
-      await enterFullScreen(_ref.current!);
+    if (!getFullscreenElement() && refElement.current) {
+      await enterFullScreen(refElement.current);
     } else {
       await exitFullscreen();
     }
   }, []);
 
-  const ref = useCallback((element: T | null) => {
-    if (element === null) {
-      _ref.current = window.document.documentElement as T;
+  const refCallback: React.RefCallback<T | null> = useCallback((node) => {
+    if (prevNodeRef.current && prevNodeRef.current !== node) {
+      removeEvents(prevNodeRef.current, {
+        onFullScreen: handleFullscreenChange,
+        onError: handleFullscreenError,
+      });
+    }
+
+    if (node) {
+      addEvents(node, {
+        onFullScreen: handleFullscreenChange,
+        onError: handleFullscreenError,
+      });
+    }
+
+    refElement.current = node;
+    prevNodeRef.current = node;
+  }, []);
+
+  return { ref: refCallback, toggle, fullscreen };
+}
+
+export interface UseFullscreenDocumentReturnValue {
+  toggle: () => Promise<void>;
+  fullscreen: boolean;
+}
+
+export function useFullscreenDocument(): UseFullscreenDocumentReturnValue {
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
+
+  const handleFullscreenChange = useCallback(() => {
+    setFullscreen(getFullscreenElement() === window.document.documentElement);
+  }, []);
+
+  const handleFullscreenError = useCallback(() => {
+    setFullscreen(false);
+  }, []);
+
+  const toggle = useCallback(async () => {
+    if (!getFullscreenElement()) {
+      await enterFullScreen(window.document.documentElement);
     } else {
-      _ref.current = element;
+      await exitFullscreen();
     }
   }, []);
 
   useEffect(() => {
-    if (!_ref.current && window.document) {
-      _ref.current = window.document.documentElement as T;
-      return addEvents(_ref.current, {
-        onFullScreen: handleFullscreenChange,
-        onError: handleFullscreenError,
-      });
-    }
+    return addEvents(window.document.documentElement, {
+      onFullScreen: handleFullscreenChange,
+      onError: handleFullscreenError,
+    });
+  }, []);
 
-    if (_ref.current) {
-      return addEvents(_ref.current, {
-        onFullScreen: handleFullscreenChange,
-        onError: handleFullscreenError,
-      });
-    }
-
-    return undefined;
-  }, [_ref.current]);
-
-  return { ref, toggle, fullscreen } as const;
+  return { toggle, fullscreen };
 }

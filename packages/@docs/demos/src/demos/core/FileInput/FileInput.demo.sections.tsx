@@ -1,13 +1,13 @@
-import { IconFileCv } from '@tabler/icons-react';
+import { FileTextIcon } from '@phosphor-icons/react';
 import { FileInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { FileInput } from '@mantine/core';
-import { IconFileCv } from '@tabler/icons-react';
+import { FileTextIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconFileCv size={18} stroke={1.5} />;
+  const icon = <FileTextIcon size={18} />;
 
   return (
     <>
@@ -30,7 +30,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconFileCv size={18} stroke={1.5} />;
+  const icon = <FileTextIcon size={18} />;
 
   return (
     <>

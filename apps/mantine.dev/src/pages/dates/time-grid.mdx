@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.TimeGrid);
 
 ## Usage
 
-Use `TimeGrid` component to capture time value from the user with a
+Use the `TimeGrid` component to capture a time value from the user with a
 predefined set of time slots:
 
 <Demo data={TimeGridDemos.usage} />
@@ -25,9 +25,9 @@ function Demo() {
 
 ## data prop
 
-`data` prop accepts an array of time values in 24-hour format. Values
-must be unique. To generate time range use `getTimeRange` function
-exported from `@mantine/dates` package:
+The `data` prop accepts an array of time values in 24-hour format. Values
+must be unique. To generate a time range, use the `getTimeRange` function
+exported from the `@mantine/dates` package:
 
 ```tsx
 import { TimeGrid, getTimeRange } from '@mantine/dates';
@@ -45,7 +45,7 @@ function WithRange() {
 
 ## Min and max time
 
-Set `minTime` and `maxTime` props to limit available time range.
+Set the `minTime` and `maxTime` props to limit the available time range.
 Both props accept time values in 24-hour format:
 
 <Demo data={TimeGridDemos.minMax} />
@@ -59,8 +59,8 @@ values to the `disableTime` prop:
 
 ## Allow deselect
 
-Set `allowDeselect` prop to allow deselecting time value by clicking on
-the control with selected value:
+Set the `allowDeselect` prop to allow deselecting the time value by clicking on
+the control with the selected value:
 
 <Demo data={TimeGridDemos.allowDeselect} />
 
@@ -70,6 +70,6 @@ the control with selected value:
 
 ## Disabled
 
-Set `disabled` prop to disable all controls:
+Set the `disabled` prop to disable all controls:
 
 <Demo data={TimeGridDemos.disabled} />

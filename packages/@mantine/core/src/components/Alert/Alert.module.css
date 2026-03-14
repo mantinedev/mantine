@@ -29,7 +29,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: var(--mantine-font-size-sm);
-  font-weight: 700;
+  font-weight: var(--mantine-font-weight-bold);
 
   &:where([data-with-close-button]) {
     padding-inline-end: var(--mantine-spacing-md);

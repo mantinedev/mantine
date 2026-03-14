@@ -9,13 +9,14 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
-import classes from '../AppShell.module.css';
 import type { AppShellCompoundProps } from '../AppShell.types';
+import classes from '../AppShell.module.css';
 
 export type AppShellNavbarStylesNames = 'navbar';
 
 export interface AppShellNavbarProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AppShellCompoundProps,
     StylesApiProps<AppShellNavbarFactory>,
     ElementProps<'div'> {}
@@ -26,7 +27,7 @@ export type AppShellNavbarFactory = Factory<{
   stylesNames: AppShellNavbarStylesNames;
 }>;
 
-export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
+export const AppShellNavbar = factory<AppShellNavbarFactory>((_props) => {
   const {
     classNames,
     className,
@@ -49,7 +50,6 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
   return (
     <Box
       component="nav"
-      ref={ref}
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('navbar', { className, classNames, styles, style })}
       {...others}

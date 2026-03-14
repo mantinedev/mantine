@@ -9,7 +9,7 @@ import { Paper, Text } from '@mantine/core';
 import { data } from './data';
 
 interface ChartTooltipProps {
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ payload }: ChartTooltipProps) {
@@ -43,7 +43,7 @@ function Demo() {
 `;
 
 interface ChartTooltipProps {
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ payload }: ChartTooltipProps) {

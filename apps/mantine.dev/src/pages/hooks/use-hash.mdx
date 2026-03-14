@@ -6,16 +6,16 @@ export default Layout(MDX_DATA.useHash);
 
 ## Usage
 
-`use-hash` returns hash from URL, subscribes to its changes with [hashchange event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event)
-and allows changing it with `setHash` function:
+The `use-hash` hook returns the hash from the URL, subscribes to its changes with the [hashchange event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event),
+and allows you to change it with the `setHash` function:
 
 <Demo data={HooksDemos.useHashDemo} />
 
 ## Initial state value
 
-By default, `use-hash` will retrieve value in `useEffect`. If you want to get initial value
-as soon as hook is called, set `getInitialValueInEffect` to `false`. Note that this option is
-not compatible with server side rendering – you can only use it if your app is client-side only.
+By default, `use-hash` will retrieve the value in `useEffect`. If you want to get the initial value
+as soon as the hook is called, set `getInitialValueInEffect` to `false`. Note that this option is
+not compatible with server-side rendering – you can only use it if your app is client-side only.
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -42,7 +42,8 @@ function useHash(options?: UseHashOptions): UseHashReturnValue
 ```
 
 ## Exported types
-`UseHashOptions` and `UseHashReturnValue` types are exported from `@mantine/hooks` package,
+
+The `UseHashOptions` and `UseHashReturnValue` types are exported from `@mantine/hooks`;
 you can import them in your application:
 
 ```tsx

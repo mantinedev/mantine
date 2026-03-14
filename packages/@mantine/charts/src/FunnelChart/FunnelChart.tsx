@@ -40,16 +40,14 @@ export type FunnelChartCssVariables = {
 };
 
 export interface FunnelChartProps
-  extends BoxProps,
-    StylesApiProps<FunnelChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<FunnelChartFactory>, ElementProps<'div'> {
   /** Data used to render chart */
   data: FunnelChartCell[];
 
-  /** Determines whether the tooltip should be displayed when a section is hovered @default `true` */
+  /** Determines whether the tooltip should be displayed when a section is hovered @default true */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms @default `0` */
+  /** Tooltip animation duration in ms @default 0 */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -61,32 +59,32 @@ export interface FunnelChartProps
   /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;
 
-  /** Controls text color of all labels @default `'white'` */
+  /** Controls text color of all labels @default 'white' */
   labelColor?: MantineColor;
 
-  /** Controls chart width and height @default `300` */
+  /** Controls chart width and height @default 300 */
   size?: number;
 
-  /** Controls width of segments stroke @default `1` */
+  /** Controls width of segments stroke @default 1 */
   strokeWidth?: number;
 
-  /** Determines whether each segment should have associated label @default `false` */
+  /** Determines whether each segment should have associated label @default false */
   withLabels?: boolean;
 
-  /** Controls labels position relative to the segment @default `'right'` */
+  /** Controls labels position relative to the segment @default 'right' */
   labelsPosition?: 'right' | 'left' | 'inside';
 
   /** A function to format values inside the tooltip and labels */
   valueFormatter?: (value: number) => string;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default 'all' */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Additional elements rendered inside `FunnelChart` component */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `FunnelChart` component */
-  funnelChartProps?: React.ComponentPropsWithoutRef<typeof RechartsFunnelChart>;
+  funnelChartProps?: React.ComponentProps<typeof RechartsFunnelChart>;
 }
 
 export type FunnelChartFactory = Factory<{
@@ -115,7 +113,7 @@ const varsResolver = createVarsResolver<FunnelChartFactory>(
   })
 );
 
-export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
+export const FunnelChart = factory<FunnelChartFactory>((_props) => {
   const props = useProps('FunnelChart', defaultProps, _props);
   const {
     classNames,
@@ -164,7 +162,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <RechartsFunnelChart {...funnelChartProps}>
           <Funnel
@@ -185,7 +183,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
                 }
                 stroke="none"
                 fontFamily="var(--mantine-font-family)"
-                fontSize={14}
+                fontSize={12}
                 dataKey={(entry) => {
                   return typeof valueFormatter === 'function'
                     ? valueFormatter(entry.value as number)
@@ -213,7 +211,9 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
-                  segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
+                  segmentId={
+                    tooltipDataSource === 'segment' ? (payload?.[0]?.name as string) : undefined
+                  }
                   valueFormatter={valueFormatter}
                   attributes={attributes}
                 />
@@ -231,3 +231,4 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
 
 FunnelChart.displayName = '@mantine/charts/FunnelChart';
 FunnelChart.classes = classes;
+FunnelChart.varsResolver = varsResolver;

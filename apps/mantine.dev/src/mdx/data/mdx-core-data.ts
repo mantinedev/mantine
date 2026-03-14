@@ -23,8 +23,8 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     slug: '/core/button',
     description: 'Button component to render button or link',
     componentPrefix: 'Button',
-    props: ['Button', 'ButtonGroup'],
-    styles: ['Button', 'ButtonGroup'],
+    props: ['Button', 'ButtonGroup', 'ButtonGroupSection'],
+    styles: ['Button', 'ButtonGroup', 'ButtonGroupSection'],
     source: '@mantine/core/src/components/Button/Button.tsx',
     docs: 'core/button.mdx',
   },
@@ -272,6 +272,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Mark/Mark.tsx',
     docs: 'core/mark.mdx',
   },
+  Marquee: {
+    title: 'Marquee',
+    package: '@mantine/core',
+    slug: '/core/marquee',
+    props: ['Marquee'],
+    styles: ['Marquee'],
+    description: 'Create continuous scrolling animation for content',
+    source: '@mantine/core/src/components/Marquee/Marquee.tsx',
+    docs: 'core/marquee.mdx',
+  },
   NativeSelect: {
     title: 'NativeSelect',
     package: '@mantine/core',
@@ -332,6 +342,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Area with custom scrollbars',
     source: '@mantine/core/src/components/ScrollArea/ScrollArea.tsx',
     docs: 'core/scroll-area.mdx',
+  },
+  Scroller: {
+    title: 'Scroller',
+    package: '@mantine/core',
+    slug: '/core/scroller',
+    props: ['Scroller'],
+    styles: ['Scroller'],
+    description: 'Horizontal scroll container with navigation controls',
+    source: '@mantine/core/src/components/Scroller/Scroller.tsx',
+    docs: 'core/scroller.mdx',
   },
   SegmentedControl: {
     title: 'SegmentedControl',
@@ -1106,6 +1126,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/angle-slider.mdx',
   },
 
+  FloatingWindow: {
+    title: 'FloatingWindow',
+    package: '@mantine/core',
+    slug: '/core/floating-window',
+    props: ['FloatingWindow'],
+    styles: ['FloatingWindow'],
+    description: 'Draggable floating area',
+    source: '@mantine/core/src/components/FloatingWindow/FloatingWindow.tsx',
+    docs: 'core/floating-window.mdx',
+  },
+
   TableOfContents: {
     title: 'TableOfContents',
     package: '@mantine/core',
@@ -1116,5 +1147,39 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
       'Renders a list of headings on the page and tracks current heading visible in the viewport',
     source: '@mantine/core/src/components/TableOfContents/TableOfContents.tsx',
     docs: 'core/table-of-contents.mdx',
+  },
+
+  OverflowList: {
+    title: 'OverflowList',
+    package: '@mantine/core',
+    slug: '/core/overflow-list',
+    props: ['OverflowList'],
+    styles: ['OverflowList'],
+    description:
+      'Hide items that do not fit in a container and display them as a single collapsed item',
+    source: '@mantine/core/src/components/OverflowList/OverflowList.tsx',
+    docs: 'core/overflow-list.mdx',
+  },
+
+  HueSlider: {
+    title: 'HueSlider',
+    package: '@mantine/core',
+    slug: '/core/hue-slider',
+    props: ['HueSlider'],
+    styles: ['HueSlider'],
+    description: 'Slider component for selecting hue channel in color pickers (0 – 360 degrees)',
+    source: '@mantine/core/src/components/ColorPicker/HueSlider/HueSlider.tsx',
+    docs: 'core/hue-slider.mdx',
+  },
+
+  AlphaSlider: {
+    title: 'AlphaSlider',
+    package: '@mantine/core',
+    slug: '/core/alpha-slider',
+    props: ['AlphaSlider'],
+    styles: ['AlphaSlider'],
+    description: 'Slider component for selecting alpha channel in color pickers (0 – 1)',
+    source: '@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx',
+    docs: 'core/alpha-slider.mdx',
   },
 };

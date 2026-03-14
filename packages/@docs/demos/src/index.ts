@@ -60,12 +60,14 @@ export * as ListDemos from './demos/core/List';
 export * as LoaderDemos from './demos/core/Loader';
 export * as LoadingOverlayDemos from './demos/core/LoadingOverlay';
 export * as MarkDemos from './demos/core/Mark';
+export * as MarqueeDemos from './demos/core/Marquee';
 export * as MenuDemos from './demos/core/Menu';
 export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
 export * as NativeSelectDemos from './demos/core/NativeSelect';
 export * as NavLinkDemos from './demos/core/NavLink';
 export * as OverlayDemos from './demos/core/Overlay';
+export * as OverflowListDemos from './demos/core/OverflowList';
 export * as PaginationDemos from './demos/core/Pagination';
 export * as PaperDemos from './demos/core/Paper';
 export * as PasswordInputDemos from './demos/core/PasswordInput';
@@ -78,6 +80,7 @@ export * as RadioDemos from './demos/core/Radio';
 export * as RatingDemos from './demos/core/Rating';
 export * as RingProgressDemos from './demos/core/RingProgress';
 export * as ScrollAreaDemos from './demos/core/ScrollArea';
+export * as ScrollerDemos from './demos/core/Scroller';
 export * as SegmentedControlDemos from './demos/core/SegmentedControl';
 export * as SelectDemos from './demos/core/Select';
 export * as SemiCircleProgressDemos from './demos/core/SemiCircleProgress';
@@ -109,6 +112,7 @@ export * as NumberFormatterDemos from './demos/core/NumberFormatter';
 export * as FloatingIndicatorDemos from './demos/core/FloatingIndicator';
 export * as TreeDemos from './demos/core/Tree';
 export * as AngleSliderDemos from './demos/core/AngleSlider';
+export * as FloatingWindowDemos from './demos/core/FloatingWindow';
 export * as RangeSliderDemos from './demos/core/RangeSlider';
 
 // @mantine/dates
@@ -142,6 +146,15 @@ export * as CompositeChartDemos from './demos/charts/CompositeChart';
 export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
+export * as BarsListDemos from './demos/charts/BarsList';
+
+// @mantine/schedule
+export * as ScheduleDemos from './demos/schedule/Schedule';
+export * as MonthViewDemos from './demos/schedule/MonthView';
+export * as WeekViewDemos from './demos/schedule/WeekView';
+export * as DayViewDemos from './demos/schedule/DayView';
+export * as YearViewDemos from './demos/schedule/YearView';
+export * as MobileMonthViewDemos from './demos/schedule/MobileMonthView';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

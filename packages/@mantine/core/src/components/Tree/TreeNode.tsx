@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { Activity, useRef } from 'react';
 import { Box, findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
@@ -30,6 +30,7 @@ interface TreeNodeProps {
   allowRangeSelection: boolean | undefined;
   expandOnSpace: boolean | undefined;
   checkOnSpace: boolean | undefined;
+  keepMounted: boolean | undefined;
 }
 
 export function TreeNode({
@@ -46,6 +47,7 @@ export function TreeNode({
   allowRangeSelection,
   expandOnSpace,
   checkOnSpace,
+  keepMounted,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
   const nested = (node.children || []).map((child) => (
@@ -64,6 +66,7 @@ export function TreeNode({
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
       checkOnSpace={checkOnSpace}
+      keepMounted={keepMounted}
     />
   ));
 
@@ -98,7 +101,9 @@ export function TreeNode({
 
       event.stopPropagation();
       event.preventDefault();
-      const nodes = Array.from(root.querySelectorAll<HTMLLIElement>('[role=treeitem]'));
+      const nodes = Array.from(root.querySelectorAll<HTMLLIElement>('[role=treeitem]')).filter(
+        (treeNode) => treeNode.style.display !== 'none'
+      );
       const index = nodes.indexOf(event.currentTarget as HTMLLIElement);
 
       if (index === -1) {
@@ -155,7 +160,6 @@ export function TreeNode({
     onClick: handleNodeClick,
     'data-selected': selected || undefined,
     'data-value': node.value,
-    'data-hovered': controller.hoveredNode === node.value || undefined,
   };
 
   return (
@@ -167,19 +171,10 @@ export function TreeNode({
       aria-selected={selected}
       data-value={node.value}
       data-selected={selected || undefined}
-      data-hovered={controller.hoveredNode === node.value || undefined}
       data-level={level}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       ref={ref}
-      onMouseOver={(event) => {
-        event.stopPropagation();
-        controller.setHoveredNode(node.value);
-      }}
-      onMouseLeave={(event) => {
-        event.stopPropagation();
-        controller.setHoveredNode(null);
-      }}
     >
       {typeof renderNode === 'function' ? (
         renderNode({
@@ -195,10 +190,19 @@ export function TreeNode({
         <div {...elementProps}>{node.label}</div>
       )}
 
-      {controller.expandedState[node.value] && nested.length > 0 && (
-        <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
-          {nested}
-        </Box>
+      {keepMounted && nested.length > 0 ? (
+        <Activity mode={controller.expandedState[node.value] ? 'visible' : 'hidden'}>
+          <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
+            {nested}
+          </Box>
+        </Activity>
+      ) : (
+        controller.expandedState[node.value] &&
+        nested.length > 0 && (
+          <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
+            {nested}
+          </Box>
+        )
       )}
     </li>
   );

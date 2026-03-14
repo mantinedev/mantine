@@ -33,7 +33,6 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import classes from '../grid-chart.module.css';
 import { PointLabel } from '../PointLabel/PointLabel';
 import type {
   BaseChartStylesNames,
@@ -41,6 +40,7 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import classes from '../grid-chart.module.css';
 
 export type CompositeChartCurveType =
   | 'bump'
@@ -69,7 +69,8 @@ export type CompositeChartCssVariables = {
 };
 
 export interface CompositeChartProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<GridChartBaseProps, 'orientation'>,
     StylesApiProps<CompositeChartFactory>,
     ElementProps<'div'> {
@@ -79,10 +80,10 @@ export interface CompositeChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: CompositeChartSeries[];
 
-  /** Type of the curve @default `'monotone'` */
+  /** Type of the curve @default 'monotone' */
   curveType?: CompositeChartCurveType;
 
-  /** Determines whether dots should be displayed @default `true` */
+  /** Determines whether dots should be displayed @default true */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -91,10 +92,10 @@ export interface CompositeChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart lines @default `2` */
+  /** Stroke width for the chart lines @default 2 */
   strokeWidth?: number;
 
-  /** Determines whether points with `null` values should be connected @default `true` */
+  /** Determines whether points with `null` values should be connected @default true */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `AreaChart` component */
@@ -107,28 +108,28 @@ export interface CompositeChartProps
 
   /** Props passed down to recharts `Area` component */
   areaProps?:
-    | ((series: CompositeChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
-    | Partial<Omit<AreaProps, 'ref'>>;
+    | ((series: CompositeChartSeries) => Partial<Omit<AreaProps<any, any>, 'ref'>>)
+    | Partial<Omit<AreaProps<any, any>, 'ref'>>;
 
   /** Props passed down to recharts `Bar` component */
   barProps?:
     | ((series: CompositeChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default `false` */
+  /** Determines whether each point should have associated label @default false */
   withPointLabels?: boolean;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar @default `false` */
+  /** Determines whether a label with bar value should be displayed on top of each bar @default false */
   withBarValueLabel?: boolean;
 
-  /** Sets minimum height of the bar in px @default `0` */
+  /** Sets minimum height of the bar in px @default 0 */
   minBarSize?: number;
 
   /** Maximum bar width in px */
   maxBarWidth?: number;
 
   /** Props passed down to recharts `AreaChart` component */
-  composedChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsCompositeChart>;
+  composedChartProps?: React.ComponentProps<typeof ReChartsCompositeChart>;
 }
 
 export type CompositeChartFactory = Factory<{
@@ -161,7 +162,7 @@ const varsResolver = createVarsResolver<CompositeChartFactory>(
   })
 );
 
-export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
+export const CompositeChart = factory<CompositeChartFactory>((_props) => {
   const props = useProps('CompositeChart', defaultProps, _props);
   const {
     classNames,
@@ -281,7 +282,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           connectNulls={connectNulls}
           type={curveType}
           strokeDasharray={item.strokeDasharray}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
           {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
         />
@@ -327,7 +328,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           fillOpacity={dimmed ? 0 : 0.2}
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
           {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
@@ -346,7 +347,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           isAnimationActive={false}
           fillOpacity={dimmed ? 0.1 : 1}
           strokeOpacity={dimmed ? 0.2 : 0}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           minPointSize={minBarSize}
           {...(typeof barProps === 'function' ? barProps(item) : barProps)}
         >
@@ -372,7 +373,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
           value: line.label,
@@ -396,13 +397,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
   };
 
   return (
-    <Box
-      ref={ref}
-      {...getStyles('root')}
-      onMouseLeave={handleMouseLeave}
-      dir={dir || 'ltr'}
-      {...others}
-    >
+    <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsCompositeChart
           data={data}
@@ -452,7 +447,6 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
             orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}
@@ -498,7 +492,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           </YAxis>
 
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}
@@ -542,3 +536,4 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
 
 CompositeChart.displayName = '@mantine/charts/CompositeChart';
 CompositeChart.classes = classes;
+CompositeChart.varsResolver = varsResolver;

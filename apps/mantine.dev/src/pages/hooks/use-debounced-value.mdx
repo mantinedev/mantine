@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.useDebouncedValue);
 
 ## Usage
 
-`use-debounced-value` hook debounces value changes.
-This can be useful in case you want to perform a heavy operation based on react state,
-for example, send search request. Unlike [use-debounced-state](/hooks/use-debounced-state/) it
+The `use-debounced-value` hook debounces value changes.
+This can be useful when you want to perform a heavy operation based on React state,
+for example, sending a search request. Unlike [use-debounced-state](/hooks/use-debounced-state/), it
 is designed to work with controlled components.
 
 <Demo data={HooksDemos.useDebouncedValueUsage} />
@@ -16,18 +16,18 @@ is designed to work with controlled components.
 ## Differences from use-debounced-state
 
 - You have direct access to the non-debounced value.
-- It is used for controlled inputs (`value` prop instead of `defaultValue`), for example renders on every state change like a character typed in an input.
+- It is used for controlled inputs (`value` prop instead of `defaultValue`), for example, it renders on every state change like a character typed in an input.
 - It works with props or other state providers, and it does not force use of `useState`.
 
 ## Leading update
 
-You can immediately update value with first call with `{ leading: true }` options:
+You can immediately update the value with the first call using `{ leading: true }` options:
 
 <Demo data={HooksDemos.useDebouncedValueLeading} />
 
 ## Cancel update
 
-Hook provides `cancel` callback, you can use it to cancel update.
+The hook provides a `cancel` callback; you can use it to cancel the update.
 Update cancels automatically on component unmount.
 
 In this example, type in some text and click the cancel button
@@ -53,7 +53,7 @@ function useDebouncedValue<T = any>(
 
 ## Exported types
 
-`UseDebouncedValueOptions` and `UseDebouncedValueReturnValue` types are exported from `@mantine/hooks` package,
+The `UseDebouncedValueOptions` and `UseDebouncedValueReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

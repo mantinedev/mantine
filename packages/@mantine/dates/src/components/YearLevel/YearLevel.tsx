@@ -20,14 +20,15 @@ import { MonthsList, MonthsListSettings, MonthsListStylesNames } from '../Months
 export type YearLevelStylesNames = MonthsListStylesNames | CalendarHeaderStylesNames;
 
 export interface YearLevelBaseSettings extends MonthsListSettings {
-  /** dayjs label format to display year label or a function that returns year label based on year value @default `"YYYY"` */
+  /** dayjs label format to display year label or a function that returns year label based on year value @default "YYYY" */
   yearLabelFormat?: DateLabelFormat;
 }
 
 export interface YearLevelSettings extends YearLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface YearLevelProps
-  extends BoxProps,
+  extends
+    BoxProps,
     YearLevelSettings,
     Omit<StylesApiProps<YearLevelFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {
@@ -40,6 +41,9 @@ export interface YearLevelProps
 
   /** `aria-label` for change level control */
   levelControlAriaLabel?: string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type YearLevelFactory = Factory<{
@@ -52,7 +56,7 @@ const defaultProps = {
   yearLabelFormat: 'YYYY',
 } satisfies Partial<YearLevelProps>;
 
-export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
+export const YearLevel = factory<YearLevelFactory>((_props) => {
   const props = useProps('YearLevel', defaultProps, _props);
   const {
     // MonthsList settings
@@ -93,6 +97,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -123,7 +128,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
         : false;
 
   return (
-    <Box data-year-level size={size} ref={ref} {...others}>
+    <Box data-year-level size={size} {...others}>
       <CalendarHeader
         label={
           typeof yearLabelFormat === 'function'
@@ -148,6 +153,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
 
@@ -165,6 +171,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         withCellSpacing={withCellSpacing}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
     </Box>

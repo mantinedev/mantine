@@ -1,13 +1,13 @@
-import { IconInfoCircle } from '@tabler/icons-react';
+import { InfoIcon } from '@phosphor-icons/react';
 import { Blockquote } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Blockquote } from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { InfoIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconInfoCircle />;
+  const icon = <InfoIcon />;
   return (
     <Blockquote{{props}} cite="– Forrest Gump" icon={icon} mt="xl">
       Life is like an npm install – you never know what you are going to get.
@@ -17,7 +17,7 @@ function Demo() {
 `;
 
 function Wrapper(props: any) {
-  const icon = <IconInfoCircle />;
+  const icon = <InfoIcon />;
   return (
     <Blockquote cite="– Forrest Gump" icon={icon} mt="xl" {...props}>
       Life is like an npm install – you never know what you are going to get.
@@ -37,11 +37,11 @@ export const usage: MantineDemo = {
     {
       type: 'number',
       prop: 'iconSize',
-      initialValue: 48,
+      initialValue: 38,
       min: 30,
       max: 60,
       step: 1,
-      libraryValue: 48,
+      libraryValue: '__',
     },
   ],
 };

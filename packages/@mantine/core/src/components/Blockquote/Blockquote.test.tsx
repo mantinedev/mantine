@@ -9,16 +9,8 @@ describe('@mantine/core/Blockquote', () => {
   tests.itSupportsSystemProps<BlockquoteProps, BlockquoteStylesNames>({
     component: Blockquote,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLQuoteElement,
     displayName: '@mantine/core/Blockquote',
     stylesApiSelectors: ['root', 'icon'],
   });

@@ -1,17 +1,17 @@
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './ActionIcon.demo.disabledStyles.module.css';
 
 const code = `
 import { ActionIcon } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import classes from './Demo.module.css';
 
 function Demo() {
   return (
     <ActionIcon size="xl" className={classes.button} disabled aria-label="Disabled with styles">
-      <IconHeart />
+      <HeartIcon />
     </ActionIcon>
   );
 }
@@ -30,7 +30,7 @@ const cssCode = `
 function Demo() {
   return (
     <ActionIcon size="xl" className={classes.button} disabled aria-label="Disabled with styles">
-      <IconHeart />
+      <HeartIcon />
     </ActionIcon>
   );
 }

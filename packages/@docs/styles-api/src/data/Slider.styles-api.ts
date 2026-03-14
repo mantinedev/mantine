@@ -25,6 +25,11 @@ export const SliderStylesApi: StylesApiData<SliderFactory> = {
 
   modifiers: [
     {
+      modifier: 'data-orientation',
+      selector: 'root',
+      condition: 'Determines slider orientation, `horizontal` by default',
+    },
+    {
       modifier: 'data-disabled',
       selector: ['trackContainer', 'track', 'bar', 'thumb', 'mark'],
       condition: '`disabled` prop is set',

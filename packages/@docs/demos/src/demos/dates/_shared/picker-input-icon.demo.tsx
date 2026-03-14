@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import { IconCalendar } from '@tabler/icons-react';
+import { CalendarBlankIcon } from '@phosphor-icons/react';
 import { MantineDemo } from '@mantinex/demo';
 
 const getCode = (name: string) => `
 import { useState } from 'react';
-import { IconCalendar } from '@tabler/icons-react';
+import { CalendarBlankIcon } from '@phosphor-icons/react';
 import { ${name} } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<string | null>(null);
-  const icon = <IconCalendar size={18} stroke={1.5} />;
+  const icon = <CalendarBlankIcon size={18} />;
   return (
     <${name}
-      leftSection={<IconCalendar size={18} stroke={1.5} />}
+      leftSection={<CalendarBlankIcon size={18} />}
       leftSectionPointerEvents="none"
       label="Pick date"
       placeholder="Pick date"
@@ -28,7 +28,7 @@ function getDemo(Component: React.FC<any>) {
     const [value, setValue] = useState<string | null>(null);
     return (
       <Component
-        leftSection={<IconCalendar size={18} stroke={1.5} />}
+        leftSection={<CalendarBlankIcon size={18} />}
         leftSectionPointerEvents="none"
         label="Pick date"
         placeholder="Pick date"

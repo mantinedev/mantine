@@ -26,13 +26,7 @@ describe('@mantine/core/RadioGroup', () => {
   tests.itSupportsSystemProps<RadioGroupProps, RadioGroupStylesNames>({
     component: RadioGroup,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/RadioGroup',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });
@@ -66,5 +60,28 @@ describe('@mantine/core/RadioGroup', () => {
     expect(screen.getAllByRole('radio')?.[1]?.getAttribute('name')?.includes('mantine-')).toBe(
       true
     );
+  });
+
+  it('prevents value changes when readOnly is true', async () => {
+    const spy = jest.fn();
+    render(<RadioGroup {...defaultProps} value="test-value-1" onChange={spy} readOnly />);
+
+    expect(screen.getAllByRole('radio')[0]).toBeChecked();
+    await userEvent.click(screen.getAllByRole('radio')[1]);
+
+    // Value should not change when readOnly
+    expect(screen.getAllByRole('radio')[0]).toBeChecked();
+    expect(screen.getAllByRole('radio')[1]).not.toBeChecked();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('allows value changes when readOnly is false', async () => {
+    const spy = jest.fn();
+    render(<RadioGroup {...defaultProps} value="test-value-1" onChange={spy} readOnly={false} />);
+
+    expect(screen.getAllByRole('radio')[0]).toBeChecked();
+    await userEvent.click(screen.getAllByRole('radio')[1]);
+
+    expect(spy).toHaveBeenCalledWith('test-value-2');
   });
 });

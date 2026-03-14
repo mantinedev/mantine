@@ -21,18 +21,18 @@ import { getDecadeRange } from './get-decade-range/get-decade-range';
 export type DecadeLevelStylesNames = YearsListStylesNames | CalendarHeaderStylesNames;
 
 export interface DecadeLevelBaseSettings extends YearsListSettings {
-  /** `dayjs` format for decade label or a function that returns decade label based on the date value @default `"YYYY"` */
+  /** `dayjs` format for decade label or a function that returns decade label based on the date value @default "YYYY" */
   decadeLabelFormat?:
     | string
     | ((startOfDecade: DateStringValue, endOfDecade: DateStringValue) => React.ReactNode);
 }
 
 export interface DecadeLevelSettings
-  extends DecadeLevelBaseSettings,
-    Omit<CalendarHeaderSettings, 'onLevelClick' | 'hasNextLevel'> {}
+  extends DecadeLevelBaseSettings, Omit<CalendarHeaderSettings, 'onLevelClick' | 'hasNextLevel'> {}
 
 export interface DecadeLevelProps
-  extends BoxProps,
+  extends
+    BoxProps,
     DecadeLevelSettings,
     Omit<StylesApiProps<DecadeLevelFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {
@@ -45,6 +45,9 @@ export interface DecadeLevelProps
 
   /** Level control `aria-label` */
   levelControlAriaLabel?: string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type DecadeLevelFactory = Factory<{
@@ -57,7 +60,7 @@ const defaultProps = {
   decadeLabelFormat: 'YYYY',
 } satisfies Partial<DecadeLevelProps>;
 
-export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
+export const DecadeLevel = factory<DecadeLevelFactory>((_props) => {
   const props = useProps('DecadeLevel', defaultProps, _props);
   const {
     // YearsList settings
@@ -96,6 +99,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
     __staticSelector,
     __stopPropagation,
     size,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -132,7 +136,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
       .format(format);
 
   return (
-    <Box data-decade-level size={size} ref={ref} {...others}>
+    <Box data-decade-level size={size} {...others}>
       <CalendarHeader
         label={
           typeof decadeLabelFormat === 'function'
@@ -157,6 +161,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
 
@@ -174,6 +179,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         withCellSpacing={withCellSpacing}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
     </Box>

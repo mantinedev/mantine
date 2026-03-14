@@ -1,10 +1,10 @@
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { Anchor, Box, Divider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Divider, Box, Anchor } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -18,7 +18,7 @@ function Demo() {
         labelPosition="center"
         label={
           <>
-            <IconSearch size={12} />
+            <MagnifyingGlassIcon size={12} />
             <Box ml={5}>Search results</Box>
           </>
         }
@@ -48,7 +48,7 @@ function Demo() {
         labelPosition="center"
         label={
           <>
-            <IconSearch size={12} />
+            <MagnifyingGlassIcon size={12} />
             <Box ml={5}>Search results</Box>
           </>
         }

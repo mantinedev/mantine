@@ -45,13 +45,13 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Section displayed on the right side of the label */
   rightSection?: React.ReactNode;
 
-  /** Determines whether the link should have active styles @default `false` */
+  /** Determines whether the link should have active styles @default false */
   active?: boolean;
 
-  /** Key of `theme.colors` of any valid CSS color to control active styles @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to control active styles @default theme.primaryColor */
   color?: MantineColor;
 
-  /** If set, label and description do not wrap to the next line @default `false` */
+  /** If set, label and description are truncated with ellipsis instead of wrapping @default false */
   noWrap?: boolean;
 
   /** Child `NavLink` components */
@@ -66,13 +66,13 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Called when open state changes */
   onChange?: (opened: boolean) => void;
 
-  /** If set, right section will not be rotated when collapse is opened @default `false` */
+  /** If set, right section will not be rotated when collapse is opened @default false */
   disableRightSectionRotation?: boolean;
 
-  /** Key of `theme.spacing` or any valid CSS value to set collapsed links `padding-left` @default `'lg'` */
+  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value @default 'lg' */
   childrenOffset?: MantineSpacing;
 
-  /** If set, disabled styles will be added to the root element @default `false` */
+  /** If set, disabled styles will be added to the root element @default false */
   disabled?: boolean;
 
   /** If set, adjusts text color based on background color for `filled` variant */
@@ -83,6 +83,9 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
 
   /** Called on keydown of the root element */
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+
+  /** If set to `false`, child `NavLinks` are unmounted when collapsed */
+  keepMounted?: boolean;
 }
 
 export type NavLinkFactory = PolymorphicFactory<{
@@ -117,7 +120,7 @@ const varsResolver = createVarsResolver<NavLinkFactory>(
   }
 );
 
-export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
+export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
   const props = useProps('NavLink', null, _props);
   const {
     classNames,
@@ -144,6 +147,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     attributes,
     onClick,
     onKeyDown,
+    keepMounted,
     ...others
   } = props;
 
@@ -184,7 +188,6 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
       <UnstyledButton
         {...getStyles('root')}
         component="a"
-        ref={ref}
         onClick={handleClick}
         onKeyDown={(event) => {
           onKeyDown?.(event);
@@ -230,7 +233,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
         )}
       </UnstyledButton>
       {withChildren && (
-        <Collapse in={_opened} {...getStyles('collapse')}>
+        <Collapse expanded={_opened} keepMounted={keepMounted} {...getStyles('collapse')}>
           <div {...getStyles('children')}>{children}</div>
         </Collapse>
       )}
@@ -239,4 +242,5 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
 });
 
 NavLink.classes = classes;
+NavLink.varsResolver = varsResolver;
 NavLink.displayName = '@mantine/core/NavLink';

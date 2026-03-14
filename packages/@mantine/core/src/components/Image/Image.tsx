@@ -19,10 +19,10 @@ export type ImageCssVariables = {
 };
 
 export interface ImageProps extends BoxProps, StylesApiProps<ImageFactory> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `0` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 0 */
   radius?: MantineRadius;
 
-  /** Controls `object-fit` style @default `'cover'` */
+  /** Controls `object-fit` style @default 'cover' */
   fit?: React.CSSProperties['objectFit'];
 
   /** Image url used as a fallback if the image cannot be loaded */
@@ -50,7 +50,7 @@ const varsResolver = createVarsResolver<ImageFactory>((_, { radius, fit }) => ({
   },
 }));
 
-export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
+export const Image = polymorphicFactory<ImageFactory>((_props) => {
   const props = useProps('Image', null, _props);
   const {
     classNames,
@@ -91,7 +91,6 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     return (
       <Box
         component="img"
-        ref={ref}
         src={fallbackSrc}
         {...getStyles('root')}
         onError={onError}
@@ -104,7 +103,6 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
   return (
     <Box
       component="img"
-      ref={ref}
       {...getStyles('root')}
       src={src}
       onError={(event) => {
@@ -118,4 +116,5 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
 });
 
 Image.classes = classes;
+Image.varsResolver = varsResolver;
 Image.displayName = '@mantine/core/Image';

@@ -93,6 +93,11 @@ export const Demo_clearable = {
   render: renderDemo(demos.clearable),
 };
 
+export const Demo_clearSectionMode = {
+  name: '⭐ Demo: clearSectionMode',
+  render: renderDemo(demos.clearSectionMode),
+};
+
 export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
@@ -146,4 +151,14 @@ export const Demo_acceptValueOnBlur = {
 export const Demo_isDuplicate = {
   name: '⭐ Demo: isDuplicate',
   render: renderDemo(demos.isDuplicate),
+};
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};
+
+export const Demo_renderPill = {
+  name: '⭐ Demo: renderPill',
+  render: renderDemo(demos.renderPill),
 };

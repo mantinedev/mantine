@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.useDebouncedState);
 
 ## Usage
 
-`use-debounced-state` hook debounces value changes.
-This can be useful in case you want to perform a heavy operation based on react state,
-for example, send search request. Unlike [use-debounced-value](/hooks/use-debounced-value/) it
+The `use-debounced-state` hook debounces value changes.
+This can be useful when you want to perform a heavy operation based on React state,
+for example, sending a search request. Unlike [use-debounced-value](/hooks/use-debounced-value/), it
 is designed to work with uncontrolled components.
 
 <Demo data={HooksDemos.useDebouncedStateUsage} />
@@ -16,12 +16,12 @@ is designed to work with uncontrolled components.
 ## Differences from use-debounce-value
 
 - You do not have direct access to the non-debounced value.
-- It is used for uncontrolled inputs (`defaultValue` prop instead of `value`), for example does not render with every state change like a character typed in an input.
+- It is used for uncontrolled inputs (`defaultValue` prop instead of `value`), for example, it does not render with every state change like a character typed in an input.
 - It does not work with custom state providers or props, and it uses `useState` internally.
 
 ## Leading update
 
-You can immediately update value with first call with `{ leading: true }` options:
+You can immediately update the value with the first call using `{ leading: true }` options:
 
 <Demo data={HooksDemos.useDebouncedStateLeading} />
 
@@ -43,7 +43,7 @@ function useDebouncedState<T = any>(
 
 ## Exported types
 
-`UseDebouncedStateOptions` and `UseDebouncedStateReturnValue` types are exported from `@mantine/hooks` package,
+The `UseDebouncedStateOptions` and `UseDebouncedStateReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

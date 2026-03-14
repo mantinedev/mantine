@@ -4,6 +4,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -16,13 +17,13 @@ import {
 } from '../../core';
 import { ColorSwatch } from '../ColorSwatch';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
-import { ColorPickerProvider } from './ColorPicker.context';
-import classes from './ColorPicker.module.css';
+import { ColorPickerContext } from './ColorPicker.context';
 import { ColorFormat, HsvaColor } from './ColorPicker.types';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { HueSlider } from './HueSlider/HueSlider';
 import { Saturation } from './Saturation/Saturation';
 import { Swatches } from './Swatches/Swatches';
+import classes from './ColorPicker.module.css';
 
 export type ColorPickerStylesNames =
   | 'wrapper'
@@ -62,33 +63,34 @@ export interface __ColorPickerProps {
   /** Called when the user stops dragging one of the sliders or changes the value with keyboard */
   onChangeEnd?: (value: string) => void;
 
-  /** Color format @default `'hex'` */
+  /** Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider @default 'hex' */
   format?: ColorFormat;
 
-  /** Determines whether the color picker should be displayed @default `true` */
+  /** If `false`, the component displays only swatches @default true */
   withPicker?: boolean;
 
   /** A list of colors used to display swatches list below the color picker */
   swatches?: string[];
 
-  /** Number of swatches per row @default `7` */
+  /** Number of swatches per row @default 7 */
   swatchesPerRow?: number;
 
-  /** Controls size of hue, alpha and saturation sliders @default `'md'` */
+  /** Component size @default 'md' */
   size?: MantineSize | (string & {});
 }
 
 export interface ColorPickerProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __ColorPickerProps,
     StylesApiProps<ColorPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   __staticSelector?: string;
 
-  /** If set, the component takes 100% width of its container @default `false` */
+  /** If set, the component takes 100% width of its container @default false */
   fullWidth?: boolean;
 
-  /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default `true` */
+  /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default true */
   focusable?: boolean;
 
   /** Saturation slider `aria-label` */
@@ -102,6 +104,12 @@ export interface ColorPickerProps
 
   /** Called when one of the color swatches is clicked */
   onColorSwatchClick?: (color: string) => void;
+
+  /** Hidden input `name` attribute, if not set, the input will not be rendered */
+  name?: string;
+
+  /** Props spread to the hidden input */
+  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 }
 
 export type ColorPickerFactory = Factory<{
@@ -130,7 +138,7 @@ const varsResolver = createVarsResolver<ColorPickerFactory>((_, { size, swatches
   },
 }));
 
-export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
+export const ColorPicker = factory<ColorPickerFactory>((_props) => {
   const props = useProps('ColorPicker', defaultProps, _props);
   const {
     classNames,
@@ -157,6 +165,8 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
     __staticSelector,
     mod,
     attributes,
+    name,
+    hiddenInputProps,
     ...others
   } = props;
 
@@ -224,14 +234,15 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
   }, [format]);
 
   return (
-    <ColorPickerProvider value={{ getStyles, unstyled }}>
+    <ColorPickerContext value={{ getStyles, unstyled }}>
       <Box
-        ref={ref}
         {...getStyles('wrapper')}
         size={size}
         mod={[{ 'full-width': fullWidth }, mod]}
         {...others}
       >
+        {name && <input type="hidden" name={name} value={_value} {...hiddenInputProps} />}
+
         {withPicker && (
           <>
             <Saturation
@@ -310,9 +321,10 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
           />
         )}
       </Box>
-    </ColorPickerProvider>
+    </ColorPickerContext>
   );
 });
 
 ColorPicker.classes = classes;
+ColorPicker.varsResolver = varsResolver;
 ColorPicker.displayName = '@mantine/core/ColorPicker';

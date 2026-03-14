@@ -1,10 +1,10 @@
-import { IconCode, IconExternalLink, IconEye } from '@tabler/icons-react';
+import { ArrowSquareOutIcon, CodeIcon, EyeIcon } from '@phosphor-icons/react';
 import { Center, SegmentedControl } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Center, SegmentedControl } from '@mantine/core';
-import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
+import { EyeIcon, CodeIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -14,7 +14,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconEye size={16} />
+              <EyeIcon size={16} />
               <span>Preview</span>
             </Center>
           ),
@@ -23,8 +23,8 @@ function Demo() {
           value: 'code',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconCode size={16} />
-              <span>Code</span>
+              <CodeIcon size={16} />
+              <span>CodeIcon</span>
             </Center>
           ),
         },
@@ -32,7 +32,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconExternalLink size={16} />
+              <ArrowSquareOutIcon size={16} />
               <span>Export</span>
             </Center>
           ),
@@ -51,7 +51,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconEye size={16} />
+              <EyeIcon size={16} />
               <span>Preview</span>
             </Center>
           ),
@@ -60,8 +60,8 @@ function Demo() {
           value: 'code',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconCode size={16} />
-              <span>Code</span>
+              <CodeIcon size={16} />
+              <span>CodeIcon</span>
             </Center>
           ),
         },
@@ -69,7 +69,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconExternalLink size={16} />
+              <ArrowSquareOutIcon size={16} />
               <span>Export</span>
             </Center>
           ),

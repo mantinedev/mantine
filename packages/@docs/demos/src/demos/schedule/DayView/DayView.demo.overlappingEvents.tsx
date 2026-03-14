@@ -1,0 +1,40 @@
+import { DayView } from '@mantine/schedule';
+import { MantineDemo } from '@mantinex/demo';
+import { overlappingEventsCode, overlappingEvents as overlappingEventsData } from './_data';
+
+const code = `
+import { DayView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return (
+    <DayView
+      date={new Date()}
+      events={events}
+      startTime="08:00:00"
+      endTime="18:00:00"
+    />
+  );
+}
+`;
+
+function Demo() {
+  return (
+    <DayView
+      date={new Date()}
+      events={overlappingEventsData}
+      startTime="08:00:00"
+      endTime="18:00:00"
+    />
+  );
+}
+
+export const overlappingEvents: MantineDemo = {
+  defaultExpanded: false,
+  type: 'code',
+  component: Demo,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: overlappingEventsCode, language: 'tsx', fileName: 'data.ts' },
+  ],
+};

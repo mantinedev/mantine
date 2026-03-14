@@ -16,13 +16,7 @@ describe('@mantine/code-highlight/CodeHighlightTabs', () => {
     component: CodeHighlightTabs,
     props: defaultProps,
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     providerStylesApi: false,
-    refType: HTMLDivElement,
     displayName: '@mantine/code-highlight/CodeHighlightTabs',
     stylesApiSelectors: [
       'root',

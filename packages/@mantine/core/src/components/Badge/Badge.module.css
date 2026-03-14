@@ -39,7 +39,7 @@
   justify-content: center;
   width: fit-content;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: var(--mantine-font-weight-bold);
   letter-spacing: 0.25px;
   cursor: default;
   text-overflow: ellipsis;

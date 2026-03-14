@@ -14,12 +14,21 @@ interface GridVariablesProps extends GridProps {
   selector: string;
 }
 
-export function GridVariables({ gutter, selector, breakpoints, type }: GridVariablesProps) {
+export function GridVariables({
+  gap,
+  rowGap,
+  columnGap,
+  selector,
+  breakpoints,
+  type,
+}: GridVariablesProps) {
   const theme = useMantineTheme();
   const _breakpoints = breakpoints || theme.breakpoints;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
-    '--grid-gutter': getSpacing(getBaseValue(gutter)),
+    '--grid-gap': getSpacing(getBaseValue(gap)),
+    '--grid-row-gap': getSpacing(getBaseValue(rowGap)),
+    '--grid-column-gap': getSpacing(getBaseValue(columnGap)),
   });
 
   const queries = keys(_breakpoints).reduce<Record<string, Record<string, any>>>(
@@ -28,8 +37,16 @@ export function GridVariables({ gutter, selector, breakpoints, type }: GridVaria
         acc[breakpoint] = {};
       }
 
-      if (typeof gutter === 'object' && gutter[breakpoint] !== undefined) {
-        acc[breakpoint]['--grid-gutter'] = getSpacing(gutter[breakpoint]);
+      if (typeof gap === 'object' && gap[breakpoint] !== undefined) {
+        acc[breakpoint]['--grid-gap'] = getSpacing(gap[breakpoint]);
+      }
+
+      if (typeof rowGap === 'object' && rowGap[breakpoint] !== undefined) {
+        acc[breakpoint]['--grid-row-gap'] = getSpacing(rowGap[breakpoint]);
+      }
+
+      if (typeof columnGap === 'object' && columnGap[breakpoint] !== undefined) {
+        acc[breakpoint]['--grid-column-gap'] = getSpacing(columnGap[breakpoint]);
       }
 
       return acc;

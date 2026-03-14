@@ -17,8 +17,8 @@ import {
   useStyles,
 } from '../../core';
 import { getPositionVariables } from './get-position-variables/get-position-variables';
-import classes from './Indicator.module.css';
 import { IndicatorPosition } from './Indicator.types';
+import classes from './Indicator.module.css';
 
 export type IndicatorPositionVariables =
   | '--indicator-top'
@@ -40,44 +40,48 @@ export type IndicatorCssVariables = {
 };
 
 export interface IndicatorProps
-  extends BoxProps,
-    StylesApiProps<IndicatorFactory>,
-    ElementProps<'div'> {
-  /** Indicator position relative to the target element @default `'top-end'` */
+  extends BoxProps, StylesApiProps<IndicatorFactory>, ElementProps<'div'> {
+  /** Indicator position relative to the target element @default 'top-end' */
   position?: IndicatorPosition;
 
-  /** Indicator offset relative to the target element, usually used for elements with border-radius */
-  offset?: number;
+  /** Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with `x` and `y` properties for separate horizontal and vertical offsets @default 0 */
+  offset?: number | { x: number; y: number };
 
-  /** Determines whether the indicator container should be an inline element @default `false` */
+  /** Changes container display from block to inline-block, use when wrapping elements with fixed width @default false */
   inline?: boolean;
 
-  /** Indicator width and height @default `10` */
+  /** Indicator width and height @default 10 */
   size?: number | string;
 
   /** Label displayed inside the indicator, for example, notification count */
   label?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `100` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 100 */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
   color?: MantineColor;
 
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** If set, the indicator is hidden */
+  /** Hides the indicator when set */
   disabled?: boolean;
 
-  /** If set, the indicator has processing animation @default `false` */
+  /** If set, the indicator has processing animation @default false */
   processing?: boolean;
 
-  /** Indicator z-index @default `200` */
+  /** Indicator z-index @default 200 */
   zIndex?: string | number;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color */
   autoContrast?: boolean;
+
+  /** Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` */
+  maxValue?: number;
+
+  /** Determines whether indicator with label `0` should be displayed @default true */
+  showZero?: boolean;
 }
 
 export type IndicatorFactory = Factory<{
@@ -90,6 +94,7 @@ export type IndicatorFactory = Factory<{
 const defaultProps = {
   position: 'top-end',
   offset: 0,
+  showZero: true,
 } satisfies Partial<IndicatorProps>;
 
 const varsResolver = createVarsResolver<IndicatorFactory>(
@@ -107,7 +112,7 @@ const varsResolver = createVarsResolver<IndicatorFactory>(
   })
 );
 
-export const Indicator = factory<IndicatorFactory>((_props, ref) => {
+export const Indicator = factory<IndicatorFactory>((_props) => {
   const props = useProps('Indicator', defaultProps, _props);
   const {
     classNames,
@@ -128,6 +133,8 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     processing,
     zIndex,
     autoContrast,
+    maxValue,
+    showZero,
     mod,
     attributes,
     ...others
@@ -147,14 +154,20 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const shouldHideZero = !showZero && (label === 0 || label === '0');
+  const formattedLabel =
+    maxValue !== undefined && typeof label === 'number' && label > maxValue
+      ? `${maxValue}+`
+      : label;
+
   return (
-    <Box ref={ref} {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
-      {!disabled && (
+    <Box {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
+      {!disabled && !shouldHideZero && (
         <Box
           mod={{ 'with-label': !!label, 'with-border': withBorder, processing }}
           {...getStyles('indicator')}
         >
-          {label}
+          {formattedLabel}
         </Box>
       )}
       {children}
@@ -163,4 +176,5 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
 });
 
 Indicator.classes = classes;
+Indicator.varsResolver = varsResolver;
 Indicator.displayName = '@mantine/core/Indicator';

@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
-import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
+import { TextAlignLeftIcon, TextAlignRightIcon } from '@phosphor-icons/react';
 import { ActionIcon, useDirection } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon, useDirection } from '@mantine/core';
-import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
+import { TextAlignLeftIcon, TextAlignRightIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const { toggleDirection, dir } = useDirection();
   return (
     <ActionIcon onClick={() => toggleDirection()} variant="default" radius="md" size="lg">
       {dir === 'rtl' ? (
-        <IconTextDirectionLtr stroke={1.5} />
+        <TextAlignLeftIcon />
       ) : (
-        <IconTextDirectionRtl stroke={1.5} />
+        <TextAlignRightIcon />
       )}
     </ActionIcon>
   );
@@ -27,11 +27,7 @@ function Demo() {
 
   return (
     <ActionIcon onClick={() => toggleDirection()} variant="default" radius="md" size="lg">
-      {dir === 'rtl' ? (
-        <IconTextDirectionLtr stroke={1.5} />
-      ) : (
-        <IconTextDirectionRtl stroke={1.5} />
-      )}
+      {dir === 'rtl' ? <TextAlignLeftIcon /> : <TextAlignRightIcon />}
     </ActionIcon>
   );
 }

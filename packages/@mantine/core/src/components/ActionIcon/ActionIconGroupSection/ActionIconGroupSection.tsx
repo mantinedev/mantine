@@ -31,19 +31,17 @@ export type ActionIconGroupSectionCssVariables = {
 };
 
 export interface ActionIconGroupSectionProps
-  extends BoxProps,
-    StylesApiProps<ActionIconGroupSectionFactory>,
-    ElementProps<'div'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  extends BoxProps, StylesApiProps<ActionIconGroupSectionFactory>, ElementProps<'div'> {
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient values used with `variant="gradient"`. @default `theme.defaultGradient` */
+  /** Gradient values used with `variant="gradient"`. @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Controls section `height`, `font-size` and horizontal `padding` @default `'sm'` */
+  /** Controls section `height`, `font-size` and horizontal `padding` @default 'sm' */
   size?: MantineSize | (string & {}) | number;
 }
 
@@ -79,7 +77,7 @@ const varsResolver = createVarsResolver<ActionIconGroupSectionFactory>(
   }
 );
 
-export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_props, ref) => {
+export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_props) => {
   const props = useProps('ActionIconGroupSection', null, _props);
   const {
     className,
@@ -111,8 +109,9 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     rootSelector: 'groupSection',
   });
 
-  return <Box {...getStyles('groupSection')} ref={ref} variant={variant} {...others} />;
+  return <Box {...getStyles('groupSection')} variant={variant} {...others} />;
 });
 
 ActionIconGroupSection.classes = classes;
+ActionIconGroupSection.varsResolver = varsResolver;
 ActionIconGroupSection.displayName = '@mantine/core/ActionIconGroupSection';

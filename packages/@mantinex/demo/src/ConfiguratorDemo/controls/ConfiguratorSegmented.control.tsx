@@ -9,8 +9,7 @@ export type ConfiguratorSegmentedControlOptions = ConfiguratorControl<
 >;
 
 export interface ConfiguratorSegmentedControlProps
-  extends BoxProps,
-    ElementProps<'div', 'onChange'> {
+  extends BoxProps, ElementProps<'div', 'onChange'> {
   data: SelectData;
   value: string;
   onChange: (value: string) => void;

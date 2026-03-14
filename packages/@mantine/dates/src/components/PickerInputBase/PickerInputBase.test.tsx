@@ -6,7 +6,7 @@ const noop = () => {};
 
 const defaultProps: PickerInputBaseProps = {
   dropdownOpened: false,
-  dropdownHandlers: { open: noop, close: noop, toggle: noop },
+  dropdownHandlers: { open: noop, close: noop, toggle: noop, set: noop },
   formattedValue: 'test-value',
   __staticSelector: 'PickerInputBase',
   children: 'test-children',

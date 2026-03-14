@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.useOs);
 
 ## Usage
 
-`use-os` returns user's os. Possible values are: `undetermined`, `macos`, `ios`, `windows`, `android`, `linux`, `chromeos`.
-If the OS cannot be identified, for example, during server side rendering `undetermined` will be returned.
+The `use-os` hook returns the user's operating system. Possible values are: `undetermined`, `macos`, `ios`, `windows`, `android`, `linux`, `chromeos`.
+If the OS cannot be identified, for example, during server-side rendering, `undetermined` will be returned.
 
 <Demo data={HooksDemos.useOsDemo} />
 
@@ -32,7 +32,7 @@ function getOS(options?: UseOsOptions): UseOSReturnValue;
 
 ## Exported types
 
-`UseOsOptions` and `UseOSReturnValue` types are exported from `@mantine/hooks` package,
+`UseOsOptions` and `UseOSReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

@@ -2,16 +2,16 @@ import { useMergedRef } from '@mantine/hooks';
 import { ElementProps, factory, Factory, useProps } from '../../../core';
 import { Input, InputProps, InputStylesNames } from '../../Input/Input';
 import { useComboboxContext } from '../Combobox.context';
-import classes from '../Combobox.module.css';
 import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
+import classes from '../Combobox.module.css';
 
 export type ComboboxSearchStylesNames = InputStylesNames;
 
 export interface ComboboxSearchProps extends InputProps, ElementProps<'input', 'size'> {
-  /** if set, the search input has `aria-` attribute @default `true` */
+  /** if set, the search input has `aria-` attribute @default true */
   withAriaAttributes?: boolean;
 
-  /** if set, the search input handles keyboard navigation @default `true` */
+  /** if set, the search input handles keyboard navigation @default true */
   withKeyboardNavigation?: boolean;
 }
 
@@ -26,7 +26,7 @@ const defaultProps = {
   withKeyboardNavigation: true,
 } satisfies Partial<ComboboxSearchProps>;
 
-export const ComboboxSearch = factory<ComboboxSearchFactory>((_props, ref) => {
+export const ComboboxSearch = factory<ComboboxSearchFactory>((_props) => {
   const props = useProps('ComboboxSearch', defaultProps, _props);
   const {
     classNames,
@@ -37,6 +37,7 @@ export const ComboboxSearch = factory<ComboboxSearchFactory>((_props, ref) => {
     onKeyDown,
     withKeyboardNavigation,
     size,
+    ref,
     ...others
   } = props;
 

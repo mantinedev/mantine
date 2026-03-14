@@ -53,9 +53,7 @@ export type RadarChartCssVariables = {
 };
 
 export interface RadarChartProps
-  extends BoxProps,
-    StylesApiProps<RadarChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RadarChartFactory>, ElementProps<'div'> {
   /** Data used in the chart */
   data: Record<string, any>[];
 
@@ -71,16 +69,16 @@ export interface RadarChartProps
   /** Controls color of all text elements. By default, color depends on the color scheme. */
   textColor?: MantineColor;
 
-  /** Determines whether PolarGrid component should be displayed @default `true`. */
+  /** Determines whether PolarGrid component should be displayed @default true. */
   withPolarGrid?: boolean;
 
-  /** Determines whether PolarAngleAxis component should be displayed @default `true` */
+  /** Determines whether PolarAngleAxis component should be displayed @default true */
   withPolarAngleAxis?: boolean;
 
-  /** Determines whether PolarRadiusAxisProps component should be displayed @default `false` */
+  /** Determines whether PolarRadiusAxisProps component should be displayed @default false */
   withPolarRadiusAxis?: boolean;
 
-  /** Determines whether Tooltip component should be displayed @default `false` */
+  /** Determines whether Tooltip component should be displayed @default false */
   withTooltip?: boolean;
 
   /** Props passed down to recharts Radar component */
@@ -89,7 +87,7 @@ export interface RadarChartProps
     | Partial<Omit<RadarProps, 'ref'>>;
 
   /** Props passed down to recharts RadarChart component */
-  radarChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsRadarChart>;
+  radarChartProps?: React.ComponentProps<typeof ReChartsRadarChart>;
 
   /** Props passed down to recharts PolarGrid component */
   polarGridProps?: Omit<PolarGridProps, 'ref'>;
@@ -106,13 +104,13 @@ export interface RadarChartProps
   /** Props passed down to recharts Tooltip component */
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
-  /** Tooltip position animation duration in ms @default `0` */
+  /** Tooltip position animation duration in ms @default 0 */
   tooltipAnimationDuration?: number;
 
-  /** Determines whether the legend should be displayed @default `false` */
+  /** Determines whether the legend should be displayed @default false */
   withLegend?: boolean;
 
-  /** Determines whether dots should be displayed @default `false` */
+  /** Determines whether dots should be displayed @default false */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -148,7 +146,7 @@ const varsResolver = createVarsResolver<RadarChartFactory>((theme, { gridColor, 
   },
 }));
 
-export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
+export const RadarChart = factory<RadarChartFactory>((_props) => {
   const props = useProps('RadarChart', defaultProps, _props);
   const {
     classNames,
@@ -249,7 +247,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsRadarChart data={data} {...radarChartProps}>
           {withPolarGrid && <PolarGrid stroke="var(--chart-grid-color)" {...polarGridProps} />}
@@ -307,3 +305,4 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
 
 RadarChart.displayName = '@mantine/charts/RadarChart';
 RadarChart.classes = classes;
+RadarChart.varsResolver = varsResolver;

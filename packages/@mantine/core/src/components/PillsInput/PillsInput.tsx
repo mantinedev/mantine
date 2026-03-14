@@ -2,11 +2,12 @@ import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { PillsInputProvider } from './PillsInput.context';
+import { PillsInputContext } from './PillsInput.context';
 import { PillsInputField } from './PillsInputField/PillsInputField';
 
 export interface PillsInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<PillsInputFactory>,
     ElementProps<'div', 'size'> {
@@ -16,7 +17,7 @@ export interface PillsInputProps
 
 export type PillsInputFactory = Factory<{
   props: PillsInputProps;
-  ref: HTMLInputElement;
+  ref: HTMLDivElement;
   stylesNames: __InputStylesNames;
   staticComponents: {
     Field: typeof PillsInputField;
@@ -27,7 +28,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<PillsInputProps>;
 
-export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
+export const PillsInput = factory<PillsInputFactory>((_props) => {
   const props = useProps('PillsInput', defaultProps, _props);
   const {
     children,
@@ -44,13 +45,12 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
   const fieldRef = useRef<HTMLInputElement>(null);
 
   return (
-    <PillsInputProvider value={{ fieldRef, size, disabled, hasError: !!error, variant }}>
+    <PillsInputContext value={{ fieldRef, size, disabled, hasError: !!error, variant }}>
       <InputBase
         size={size}
         error={error}
         variant={variant}
         component="div"
-        ref={ref}
         data-no-overflow
         onMouseDown={(event) => {
           event.preventDefault();
@@ -73,9 +73,10 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
       >
         {children}
       </InputBase>
-    </PillsInputProvider>
+    </PillsInputContext>
   );
 });
 
 PillsInput.displayName = '@mantine/core/PillsInput';
+PillsInput.classes = InputBase.classes;
 PillsInput.Field = PillsInputField;

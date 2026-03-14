@@ -14,9 +14,7 @@ import classes from '../Pagination.module.css';
 export type PaginationDotsStylesNames = 'dots';
 
 export interface PaginationDotsProps
-  extends BoxProps,
-    CompoundStylesApiProps<PaginationDotsFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<PaginationDotsFactory>, ElementProps<'div'> {
   /** Custom dots icon component, must accept svg element props and size prop */
   icon?: React.FC<PaginationIconProps>;
 }
@@ -32,13 +30,13 @@ const defaultProps = {
   icon: PaginationDotsIcon,
 } satisfies Partial<PaginationDotsProps>;
 
-export const PaginationDots = factory<PaginationDotsFactory>((_props, ref) => {
+export const PaginationDots = factory<PaginationDotsFactory>((_props) => {
   const props = useProps('PaginationDots', defaultProps, _props);
   const { classNames, className, style, styles, vars, icon: Icon, ...others } = props;
   const ctx = usePaginationContext();
 
   return (
-    <Box ref={ref} {...ctx.getStyles('dots', { className, style, styles, classNames })} {...others}>
+    <Box {...ctx.getStyles('dots', { className, style, styles, classNames })} {...others}>
       <Icon
         style={{
           width: 'calc(var(--pagination-control-size) / 1.8)',

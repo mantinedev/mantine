@@ -1,13 +1,13 @@
 import { Code, Text } from '@mantine/core';
-import { useMouse } from '@mantine/hooks';
+import { useMousePosition } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Text, Code } from '@mantine/core';
-import { useMouse } from '@mantine/hooks';
+import { useMousePosition } from '@mantine/hooks';
 
 function Demo() {
-  const { x, y } = useMouse();
+  const { x, y } = useMousePosition();
 
   return (
     <Text ta="center">
@@ -17,7 +17,7 @@ function Demo() {
 }`;
 
 function Demo() {
-  const { x, y } = useMouse();
+  const { x, y } = useMousePosition();
 
   return (
     <Text ta="center">

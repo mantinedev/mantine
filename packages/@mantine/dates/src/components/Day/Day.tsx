@@ -31,35 +31,38 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   /** Date that is displayed in `YYYY-MM-DD` format */
   date: DateStringValue;
 
-  /** Control width and height of the day @default `'sm'` */
+  /** Control width and height of the day @default 'sm' */
   size?: MantineSize;
 
-  /** Determines whether the day is considered to be a weekend @default `false` */
+  /** Determines whether the day is considered to be a weekend @default false */
   weekend?: boolean;
 
-  /** Determines whether the day is outside of the current month @default `false` */
+  /** Determines whether the day is outside of the current month @default false */
   outside?: boolean;
 
-  /** Determines whether the day is selected @default `false` */
+  /** Determines whether the day is selected @default false */
   selected?: boolean;
 
-  /** Determines whether the day should not be displayed @default `false` */
+  /** Determines whether the day should not be displayed @default false */
   hidden?: boolean;
 
-  /** Determines whether the day is selected in range @default `false` */
+  /** Determines whether the day is selected in range @default false */
   inRange?: boolean;
 
-  /** Determines whether the day is first in range selection @default `false` */
+  /** Determines whether the day is first in range selection @default false */
   firstInRange?: boolean;
 
-  /** Determines whether the day is last in range selection @default `false` */
+  /** Determines whether the day is last in range selection @default false */
   lastInRange?: boolean;
 
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether today should be highlighted with a border @default `false` */
+  /** Determines whether today should be highlighted with a border @default false */
   highlightToday?: boolean;
+
+  /** Determines whether the day should take the full width of its cell @default false */
+  fullWidth?: boolean;
 }
 
 export type DayFactory = Factory<{
@@ -75,7 +78,7 @@ const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
   },
 }));
 
-export const Day = factory<DayFactory>((_props, ref) => {
+export const Day = factory<DayFactory>((_props) => {
   const props = useProps('Day', null, _props);
   const {
     classNames,
@@ -97,6 +100,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
     hidden,
     static: isStatic,
     highlightToday,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -120,7 +124,6 @@ export const Day = factory<DayFactory>((_props, ref) => {
     <UnstyledButton<any>
       {...getStyles('day', { style: hidden ? { display: 'none' } : undefined })}
       component={isStatic ? 'div' : 'button'}
-      ref={ref}
       disabled={disabled}
       data-today={dayjs(date).isSame(new Date(), 'day') || undefined}
       data-hidden={hidden || undefined}
@@ -133,6 +136,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
       data-first-in-range={(firstInRange && !disabled) || undefined}
       data-last-in-range={(lastInRange && !disabled) || undefined}
       data-static={isStatic || undefined}
+      data-full-width={fullWidth || undefined}
       unstyled={unstyled}
       {...others}
     >
@@ -142,4 +146,5 @@ export const Day = factory<DayFactory>((_props, ref) => {
 });
 
 Day.classes = classes;
+Day.varsResolver = varsResolver;
 Day.displayName = '@mantine/dates/Day';

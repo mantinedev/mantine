@@ -1,7 +1,7 @@
 import type { FormArrayElement, FormPathValue, LooseKeys } from './paths.types';
 import type { formRootRule } from './validate/validate-values';
 
-export type GetInputPropsType = 'input' | 'checkbox';
+export type GetInputPropsType = 'input' | 'checkbox' | 'radio';
 export type FormMode = 'controlled' | 'uncontrolled';
 
 export type FormStatus = Record<string, boolean>;
@@ -23,7 +23,12 @@ export interface ReorderPayload {
   to: number;
 }
 
-type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
+type Rule<Value, Values> = (
+  value: Value,
+  values: Values,
+  path: string,
+  signal?: AbortSignal
+) => React.ReactNode | Promise<React.ReactNode>;
 
 type SetSubmitting = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -46,16 +51,18 @@ export type FormRulesRecord<Values, InitValues = Values> = Partial<{
   [Key in keyof Values]: FormRule<Values[Key], InitValues>;
 }> & { [formRootRule]?: Rule<Values, InitValues> };
 
-export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
+export type FormValidateInput<Values> =
+  | FormRulesRecord<Values>
+  | ((values: Values) => FormErrors | Promise<FormErrors>);
 
 export type SetValues<Values> = React.Dispatch<React.SetStateAction<Partial<Values>>>;
 export type SetInitialValues<Values> = (values: Values) => void;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
 export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 
-export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> = (
+export type OnSubmit<Values, TransformedValues = Values> = (
   handleSubmit: (
-    values: ReturnType<TransformValues>,
+    values: TransformedValues,
     event: React.FormEvent<HTMLFormElement> | undefined
   ) => void | Promise<any>,
   handleValidationFailure?: (
@@ -65,9 +72,9 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
   ) => void
 ) => (event?: React.FormEvent<HTMLFormElement>) => void;
 
-export type GetTransformedValues<Values, TransformValues extends _TransformValues<Values>> = (
+export type GetTransformedValues<Values, TransformedValues = Values> = (
   values?: Values
-) => ReturnType<TransformValues>;
+) => TransformedValues;
 
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
@@ -107,10 +114,50 @@ export type ClearFieldError = (path: unknown) => void;
 export type ClearFieldDirty = (path: unknown) => void;
 export type ClearErrors = () => void;
 export type Reset = () => void;
-export type Validate = () => FormValidationResult;
-export type ValidateField<Values> = <Field extends LooseKeys<Values>>(
+
+type IsAsyncFn<R> = R extends (...args: any[]) => infer Ret
+  ? [Extract<Ret, Promise<any>>] extends [never]
+    ? false
+    : true
+  : false;
+
+type HasAsyncInRecord<V> = V extends object
+  ? true extends {
+      [K in keyof V]: V[K] extends (...args: any[]) => any
+        ? IsAsyncFn<V[K]>
+        : V[K] extends object
+          ? true extends { [J in keyof V[K]]: IsAsyncFn<V[K][J]> }[keyof V[K]]
+            ? true
+            : false
+          : false;
+    }[keyof V]
+    ? true
+    : false
+  : false;
+
+export type HasAsyncRules<V> = V extends undefined
+  ? false
+  : V extends (...args: any[]) => infer R
+    ? [Extract<R, Promise<any>>] extends [never]
+      ? false
+      : true
+    : V extends object
+      ? HasAsyncInRecord<V>
+      : false;
+
+export type Validate<Rules = any> = () => [HasAsyncRules<Rules>] extends [true]
+  ? Promise<FormValidationResult>
+  : [HasAsyncRules<Rules>] extends [false]
+    ? FormValidationResult
+    : FormValidationResult | Promise<FormValidationResult>;
+
+export type ValidateField<Values, Rules = any> = <Field extends LooseKeys<Values>>(
   path: Field
-) => FormFieldValidationResult;
+) => [HasAsyncRules<Rules>] extends [true]
+  ? Promise<FormFieldValidationResult>
+  : [HasAsyncRules<Rules>] extends [false]
+    ? FormFieldValidationResult
+    : FormFieldValidationResult | Promise<FormFieldValidationResult>;
 
 export type SetFieldError<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -160,10 +207,15 @@ export type ResetStatus = () => void;
 export type GetStatus = () => FormStatus;
 
 export type ResetDirty<Values> = (values?: Values) => void;
-export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
+export type IsValid<Values, Rules = any> = <Field extends LooseKeys<Values>>(
+  path?: Field
+) => [HasAsyncRules<Rules>] extends [true]
+  ? Promise<boolean>
+  : [HasAsyncRules<Rules>] extends [false]
+    ? boolean
+    : boolean | Promise<boolean>;
+export type IsValidating<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 export type Initialize<Values> = (values: Values) => void;
-
-export type _TransformValues<Values> = (values: Values) => unknown;
 
 export type FormFieldSubscriber<Values, Field extends LooseKeys<Values>> = (input: {
   previousValue: FormPathValue<Values, Field>;
@@ -183,17 +235,14 @@ export type GetInputNode<Values> = <NodeType extends HTMLElement, Field extends 
   path: Field
 ) => NodeType | null;
 
-export interface UseFormInput<
-  Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
-> {
+export interface UseFormInput<Values, TransformedValues = Values> {
   name?: string;
   mode?: FormMode;
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;
   initialDirty?: FormStatus;
-  transformValues?: TransformValues;
+  transformValues?: (values: Values) => TransformedValues;
   validate?: FormValidateInput<Values>;
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
@@ -203,17 +252,16 @@ export interface UseFormInput<
     inputProps: GetInputPropsReturnType;
     field: LooseKeys<Values>;
     options: GetInputPropsOptions;
-    form: UseFormReturnType<Values, TransformValues>;
+    form: UseFormReturnType<Values, TransformedValues>;
   }) => Record<string, any> | undefined | void;
   onSubmitPreventDefault?: 'always' | 'never' | 'validation-failed';
   touchTrigger?: 'focus' | 'change';
   cascadeUpdates?: boolean;
+  validateDebounce?: number;
+  resolveValidationError?: (error: unknown) => React.ReactNode;
 }
 
-export interface UseFormReturnType<
-  Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
-> {
+export interface UseFormReturnType<Values, TransformedValues = Values, Rules = any> {
   values: Values;
   submitting: boolean;
   initialized: boolean;
@@ -228,14 +276,14 @@ export interface UseFormReturnType<
   clearFieldError: ClearFieldError;
   clearErrors: ClearErrors;
   reset: Reset;
-  validate: Validate;
-  validateField: ValidateField<Values>;
+  validate: Validate<Rules>;
+  validateField: ValidateField<Values, Rules>;
   reorderListItem: ReorderListItem<Values>;
   removeListItem: RemoveListItem<Values>;
   replaceListItem: ReplaceListItem<Values>;
   insertListItem: InsertListItem<Values>;
   getInputProps: GetInputProps<Values>;
-  onSubmit: OnSubmit<Values, TransformValues>;
+  onSubmit: OnSubmit<Values, TransformedValues>;
   onReset: OnReset;
   isDirty: GetFieldStatus<Values>;
   isTouched: GetFieldStatus<Values>;
@@ -243,8 +291,10 @@ export interface UseFormReturnType<
   setDirty: SetFormStatus;
   resetTouched: ResetStatus;
   resetDirty: ResetDirty<Values>;
-  isValid: IsValid<Values>;
-  getTransformedValues: GetTransformedValues<Values, TransformValues>;
+  isValid: IsValid<Values, Rules>;
+  validating: boolean;
+  isValidating: IsValidating<Values>;
+  getTransformedValues: GetTransformedValues<Values, TransformedValues>;
   getValues: () => Values;
   getInitialValues: () => Values;
   getTouched: GetStatus;
@@ -255,11 +305,10 @@ export interface UseFormReturnType<
   resetField: (path: PropertyKey) => void;
 }
 
-export type UseForm<
-  Values = Record<string, unknown>,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
-> = (input?: UseFormInput<Values, TransformValues>) => UseFormReturnType<Values, TransformValues>;
+export type UseForm<Values = Record<string, unknown>, TransformedValues = Values, Rules = any> = (
+  input?: UseFormInput<Values, TransformedValues>
+) => UseFormReturnType<Values, TransformedValues, Rules>;
 
-export type TransformedValues<Form extends UseFormReturnType<any>> = Parameters<
+export type TransformedValues<Form extends UseFormReturnType<any, any, any>> = Parameters<
   Parameters<Form['onSubmit']>[0]
 >[0];

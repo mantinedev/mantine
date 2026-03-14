@@ -8,8 +8,8 @@ function Demo() {
   return (
     <>
       <NumberInput
-        label="Thousands are separated with a coma"
-        placeholder="Thousands are separated with a coma"
+        label="Thousands are separated with a comma"
+        placeholder="Thousands are separated with a comma"
         thousandSeparator=","
         defaultValue={1_000_000}
       />
@@ -30,8 +30,8 @@ function Demo() {
   return (
     <>
       <NumberInput
-        label="Thousands are separated with a coma"
-        placeholder="Thousands are separated with a coma"
+        label="Thousands are separated with a comma"
+        placeholder="Thousands are separated with a comma"
         thousandSeparator=","
         defaultValue={1_000_000}
       />

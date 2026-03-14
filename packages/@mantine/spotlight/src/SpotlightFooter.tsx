@@ -13,9 +13,7 @@ import classes from './Spotlight.module.css';
 export type SpotlightFooterStylesNames = 'footer';
 
 export interface SpotlightFooterProps
-  extends BoxProps,
-    CompoundStylesApiProps<SpotlightFooterFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<SpotlightFooterFactory>, ElementProps<'div'> {}
 
 export type SpotlightFooterFactory = Factory<{
   props: SpotlightFooterProps;
@@ -24,20 +22,14 @@ export type SpotlightFooterFactory = Factory<{
   compound: true;
 }>;
 
-export const SpotlightFooter = factory<SpotlightFooterFactory>((props, ref) => {
+export const SpotlightFooter = factory<SpotlightFooterFactory>((props) => {
   const { className, style, classNames, styles, ...others } = useProps(
     'SpotlightFooter',
     null,
     props
   );
   const ctx = useSpotlightContext();
-  return (
-    <Box
-      ref={ref}
-      {...ctx.getStyles('footer', { className, classNames, style, styles })}
-      {...others}
-    />
-  );
+  return <Box {...ctx.getStyles('footer', { className, classNames, style, styles })} {...others} />;
 });
 
 SpotlightFooter.classes = classes;

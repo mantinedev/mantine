@@ -1,5 +1,5 @@
 export { getParsedComboboxData } from './get-parsed-combobox-data/get-parsed-combobox-data';
-export { getOptionsLockup, getLabelsLockup } from './get-options-lockup/get-options-lockup';
+export { getOptionsLockup } from './get-options-lockup/get-options-lockup';
 export { ComboboxChevron } from './ComboboxChevron/ComboboxChevron';
 export { Combobox } from './Combobox';
 export { ComboboxDropdown } from './ComboboxDropdown/ComboboxDropdown';
@@ -21,41 +21,45 @@ export { useVirtualizedCombobox } from './use-combobox/use-virtualized-combobox'
 export { useComboboxTargetProps } from './use-combobox-target-props/use-combobox-target-props';
 export { isOptionsGroup } from './OptionsDropdown/is-options-group';
 export { defaultOptionsFilter } from './OptionsDropdown/default-options-filter';
+export { useComboboxContext } from './Combobox.context';
 
-export type {
-  ComboboxStore,
-  ComboboxDropdownEventSource,
-  UseComboboxOptions,
-} from './use-combobox/use-combobox';
-export type {
-  ComboboxItem,
-  ComboboxData,
-  ComboboxParsedItem,
-  ComboboxItemGroup,
-  ComboboxParsedItemGroup,
-  ComboboxLikeProps,
-  ComboboxLikeStylesNames,
-  ComboboxStringData,
-  ComboboxLikeRenderOptionInput,
-  ComboboxStringItem,
-} from './Combobox.types';
 export type { ComboboxFactory, ComboboxProps, ComboboxStylesNames } from './Combobox';
-export type { ComboboxDropdownProps } from './ComboboxDropdown/ComboboxDropdown';
-export type { ComboboxOptionsProps } from './ComboboxOptions/ComboboxOptions';
-export type { ComboboxOptionProps } from './ComboboxOption/ComboboxOption';
-export type { ComboboxTargetProps } from './ComboboxTarget/ComboboxTarget';
-export type { ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
-export type { ComboboxEmptyProps } from './ComboboxEmpty/ComboboxEmpty';
-export type { ComboboxSearchProps } from './ComboboxSearch/ComboboxSearch';
-export type { ComboboxFooterProps } from './ComboboxFooter/ComboboxFooter';
-export type { ComboboxHeaderProps } from './ComboboxHeader/ComboboxHeader';
-export type { ComboboxDropdownTargetProps } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
-export type { ComboboxEventsTargetProps } from './ComboboxEventsTarget/ComboboxEventsTarget';
-export type { ComboboxGroupProps } from './ComboboxGroup/ComboboxGroup';
-export type { ComboboxClearButtonProps } from './ComboboxClearButton/ComboboxClearButton';
-export type { ComboboxHiddenInputProps } from './ComboboxHiddenInput/ComboboxHiddenInput';
+export type { ComboboxContextValue } from './Combobox.context';
 export type {
-  OptionsDropdownProps,
+  ComboboxData,
+  ComboboxGenericData,
+  ComboboxGenericItem,
+  ComboboxItem,
+  ComboboxItemGroup,
+  ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
+  ComboboxLikeStylesNames,
+  ComboboxParsedItem,
+  ComboboxParsedItemGroup,
+  ComboboxRenderPillInput,
+} from './Combobox.types';
+export type { ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
+export type { ComboboxClearButtonProps } from './ComboboxClearButton/ComboboxClearButton';
+export type { ComboboxDropdownProps } from './ComboboxDropdown/ComboboxDropdown';
+export type { ComboboxDropdownTargetProps } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
+export type { ComboboxEmptyProps } from './ComboboxEmpty/ComboboxEmpty';
+export type { ComboboxEventsTargetProps } from './ComboboxEventsTarget/ComboboxEventsTarget';
+export type { ComboboxFooterProps } from './ComboboxFooter/ComboboxFooter';
+export type { ComboboxGroupProps } from './ComboboxGroup/ComboboxGroup';
+export type { ComboboxHeaderProps } from './ComboboxHeader/ComboboxHeader';
+export type { ComboboxHiddenInputProps } from './ComboboxHiddenInput/ComboboxHiddenInput';
+export type { ComboboxOptionProps } from './ComboboxOption/ComboboxOption';
+export type { ComboboxOptionsProps } from './ComboboxOptions/ComboboxOptions';
+export type { ComboboxSearchProps } from './ComboboxSearch/ComboboxSearch';
+export type { ComboboxTargetProps } from './ComboboxTarget/ComboboxTarget';
+export type {
   OptionsData,
+  OptionsDropdownProps,
   OptionsFilter,
 } from './OptionsDropdown/OptionsDropdown';
+export type {
+  ComboboxDropdownEventSource,
+  ComboboxStore,
+  UseComboboxOptions,
+} from './use-combobox/use-combobox';
+export type { UseVirtualizedComboboxOptions } from './use-combobox/use-virtualized-combobox';

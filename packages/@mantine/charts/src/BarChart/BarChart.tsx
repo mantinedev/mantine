@@ -32,8 +32,8 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import classes from '../grid-chart.module.css';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
@@ -60,27 +60,24 @@ export type BarChartCssVariables = {
 };
 
 export interface BarChartProps
-  extends BoxProps,
-    GridChartBaseProps,
-    StylesApiProps<BarChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, GridChartBaseProps, StylesApiProps<BarChartFactory>, ElementProps<'div'> {
   /** Data used to display chart. */
   data: Record<string, any>[];
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: BarChartSeries[];
 
-  /** Controls how bars are positioned relative to each other @default `'default'` */
+  /** Controls how bars are positioned relative to each other @default 'default' */
   type?: BarChartType;
 
-  /** Controls fill opacity of all bars @default `1` */
+  /** Controls fill opacity of all bars @default 1 */
   fillOpacity?: number;
 
   /** Fill of hovered bar section, by default value is based on color scheme */
   cursorFill?: MantineColor;
 
   /** Props passed down to recharts `BarChart` component */
-  barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
+  barChartProps?: React.ComponentProps<typeof ReChartsBarChart>;
 
   /** Additional components that are rendered inside recharts `BarChart` component */
   children?: React.ReactNode;
@@ -90,15 +87,15 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default `false` */
+  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default false */
   withBarValueLabel?: boolean;
 
   /** Props passed down to recharts `LabelList` component */
   valueLabelProps?:
-    | ((series: BarChartSeries) => Partial<Omit<LabelListProps<Record<string, any>>, 'ref'>>)
-    | Partial<LabelListProps<Record<string, any>>>;
+    | ((series: BarChartSeries) => Partial<Omit<LabelListProps, 'ref'>>)
+    | Partial<LabelListProps>;
 
-  /** Sets minimum height of the bar in px @default `0` */
+  /** Sets minimum height of the bar in px @default 0 */
   minBarSize?: number;
 
   /** Maximum bar width in px */
@@ -172,7 +169,7 @@ function getBarFill(barProps: BarChartProps['barProps'], series: BarChartSeries)
   return barProps?.fill;
 }
 
-export const BarChart = factory<BarChartFactory>((_props, ref) => {
+export const BarChart = factory<BarChartFactory>((_props) => {
   const props = useProps('BarChart', defaultProps, _props);
   const {
     classNames,
@@ -275,7 +272,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : item.stackId || undefined}
-        yAxisId={item.yAxisId || 'left'}
+        yAxisId={item.yAxisId || undefined}
         minPointSize={minBarSize}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       >
@@ -308,7 +305,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
           value: line.label,
@@ -335,7 +332,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
 
   return (
     <Box
-      ref={ref}
       {...getStyles('root')}
       onMouseLeave={handleMouseLeave}
       dir={dir || 'ltr'}
@@ -395,7 +391,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
             orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}
@@ -441,7 +436,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           </YAxis>
 
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}
@@ -487,3 +482,4 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
 
 BarChart.displayName = '@mantine/charts/BarChart';
 BarChart.classes = classes;
+BarChart.varsResolver = varsResolver;

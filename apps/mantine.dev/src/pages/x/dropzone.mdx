@@ -26,48 +26,48 @@ import '@mantine/dropzone/styles.css';
 
 ## Usage
 
-`Dropzone` lets you capture one or more files from user.
-Component is based on [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
+`Dropzone` lets you capture one or more files from the user.
+The component is based on [react-dropzone](https://react-dropzone.js.org/) and supports all of its core features:
 
 - Accepts/rejects files based on provided mime types
 - Limits individual file size
-- Renders given children and provides context based component to display elements based on current status
+- Renders given children and provides context-based components to display elements based on current status
 
 <Demo data={DropzoneDemos.usage} />
 
 ## Dropzone.Accept, Dropzone.Reject and Dropzone.Idle
 
-`Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components are visible only when the user performs certain action:
+`Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components are visible only when the user performs a certain action:
 
-- `Dropzone.Accept` is visible only when the user drags file that can be accepted over the dropzone
-- `Dropzone.Reject` is visible only when the user drags file that cannot be accepted over the dropzone
-- `Dropzone.Idle` is visible when the user does not drag anything over dropzone
+- `Dropzone.Accept` is visible only when the user drags a file that can be accepted over the dropzone
+- `Dropzone.Reject` is visible only when the user drags a file that cannot be accepted over the dropzone
+- `Dropzone.Idle` is visible when the user does not drag anything over the dropzone
 
 ## Loading state
 
-Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.
-When `loading` props is true user cannot drop or select new files (`Dropzone` becomes disabled):
+Set the `loading` prop to indicate a loading state with the [LoadingOverlay](/core/loading-overlay/) component.
+When the `loading` prop is true, users cannot drop or select new files (`Dropzone` becomes disabled):
 
 <Demo data={DropzoneDemos.loading} />
 
 ## Disabled state
 
-If you want to implement your own loading state you can disable `Dropzone` without `LoadingOverlay`.
-Same as with `loading`, when `Dropzone` is disabled user cannot drop or select new files:
+If you want to implement your own loading state, you can disable `Dropzone` without `LoadingOverlay`.
+Same as with `loading`, when `Dropzone` is disabled, users cannot drop or select new files:
 
 <Demo data={DropzoneDemos.disabled} />
 
 ## Open file browser manually
 
-To open files browser from outside of component use `openRef` prop to get function that will trigger file browser:
+To open the file browser from outside of the component, use the `openRef` prop to get a function that will trigger the file browser:
 
 <Demo data={DropzoneDemos.manual} />
 
-## Enable child pointer event
+## Enable child pointer events
 
 By default, Dropzone disables pointer events on its children for dragging events to work. When `activateOnClick={false}`,
 clicking on any children inside Dropzone will not do anything.
-However, you can set style `pointerEvents: 'all'` to make children clickable.
+However, you can set the style `pointerEvents: 'all'` to make children clickable.
 Note that you need to set these styles only on interactive elements, such as buttons or links.
 
 <Demo data={DropzoneDemos.enableChildPointerEvent} />
@@ -96,7 +96,7 @@ function Demo() {
 }
 ```
 
-You can also specify file types by providing an array of mime types to `accept` prop:
+You can also specify file types by providing an array of mime types to the `accept` prop:
 
 ```tsx
 import { Dropzone } from '@mantine/dropzone';
@@ -118,7 +118,7 @@ function Demo() {
 }
 ```
 
-To save some research time you can use `MIME_TYPES` variable exported from `@mantine/dropzone`:
+To save some research time, you can use the `MIME_TYPES` variable exported from `@mantine/dropzone`:
 
 ```tsx
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
@@ -140,14 +140,14 @@ function Demo() {
 }
 ```
 
-`MIME_TYPES` includes following data:
+`MIME_TYPES` includes the following data:
 
 <DataTable
   head={['Key', 'Mime type']}
   data={Object.keys(MIME_TYPES).map((key) => [key, MIME_TYPES[key]])}
 />
 
-Additionally you can use grouped mime types:
+Additionally, you can use grouped mime types:
 
 <DataTable
   head={['Variable', 'Mime types']}
@@ -179,7 +179,7 @@ function Demo() {
 - `data-loading` – when `loading` prop is `true`
 - `data-accept` – when user drags files that can be accepted over the dropzone
 - `data-reject` – when user drags files that cannot be accepted over the dropzone
-- `data-idle` – default state – user does not drag any files over dropzone
+- `data-idle` – default state – the user does not drag any files over the dropzone
 
 <Demo data={DropzoneDemos.stylesApi} />
 
@@ -210,9 +210,9 @@ function Demo() {
 
 ## Dropzone.FullScreen component
 
-`Dropzone.FullScreen` lets you capture files dropped to browser window instead of specific area.
-It supports the same props as `Dropzone` component.
+`Dropzone.FullScreen` lets you capture files dropped to the browser window instead of a specific area.
+It supports the same props as the `Dropzone` component.
 
-To preview component click button and drop images to browser window:
+To preview the component, click the button and drop images to the browser window:
 
 <Demo data={DropzoneDemos.fullScreen} />

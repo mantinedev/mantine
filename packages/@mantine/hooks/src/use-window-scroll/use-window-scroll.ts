@@ -41,3 +41,9 @@ export function useWindowScroll(): UseWindowScrollReturnValue {
 
   return [position, scrollTo] as const;
 }
+
+export namespace useWindowScroll {
+  export type Position = UseWindowScrollPosition;
+  export type ScrollTo = UseWindowScrollTo;
+  export type ReturnValue = UseWindowScrollReturnValue;
+}

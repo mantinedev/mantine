@@ -17,7 +17,8 @@ import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 export type YearPickerStylesNames = DecadeLevelGroupStylesNames;
 
 export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type>,
+  extends
+    PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
     Omit<
       CalendarBaseProps,
@@ -25,7 +26,8 @@ export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
     > {}
 
 export interface YearPickerProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
@@ -44,12 +46,12 @@ const defaultProps = {
 } satisfies Partial<YearPickerProps>;
 
 type YearPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: YearPickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }
+  props: YearPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<YearPickerFactory>;
 
-export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_props, ref) => {
+export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_props) => {
   const props = useProps('YearPicker', defaultProps, _props);
   const {
     classNames,
@@ -88,7 +90,6 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
 
   return (
     <Calendar
-      ref={ref}
       minLevel="decade"
       __updateDateOnYearSelect={__updateDateOnYearSelect ?? false}
       __staticSelector={__staticSelector || 'YearPicker'}

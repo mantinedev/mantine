@@ -87,3 +87,8 @@ export const Demo_clearButton = {
   name: '⭐ Demo: clearButton',
   render: renderDemo(demos.clearButton),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

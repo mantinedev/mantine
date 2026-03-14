@@ -22,3 +22,13 @@ export const Demo_props = {
   name: '⭐ Demo: props',
   render: renderDemo(demos.props),
 };
+
+export const Demo_colors = {
+  name: '⭐ Demo: colors',
+  render: renderDemo(demos.colors),
+};
+
+export const Demo_wholeword = {
+  name: '⭐ Demo: wholeword',
+  render: renderDemo(demos.wholeword),
+};

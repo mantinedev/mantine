@@ -21,7 +21,7 @@ options filtering with `filter` prop. You can use it to integrate
 third-party fuzzy search libraries like [fuse.js](https://fusejs.io/)
 or customize filtering logic to better suit your needs.
 
-Example of a custom filter function that matches options by words instead of letters sequence:
+## Example with a custom filter function that matches options by words instead of a letter sequence:
 
 ```tsx
 import { Select, ComboboxItem, OptionsFilter } from '@mantine/core';
@@ -49,6 +49,6 @@ function Demo() {
 
 ## Example with fuse.js
 
-Example of adding fuzzy search with [fuse.js](https://fusejs.io/) to Select component:
+An example of adding fuzzy search with [fuse.js](https://fusejs.io/) to the Select component:
 
 <Demo data={SelectFuzzy} />

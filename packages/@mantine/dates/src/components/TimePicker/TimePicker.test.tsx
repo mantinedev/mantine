@@ -16,12 +16,7 @@ describe('@mantine/dates/TimePicker', () => {
   tests.itSupportsSystemProps<TimePickerProps, TimePickerStylesNames>({
     component: TimePicker,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/dates/TimePicker',
     stylesApiSelectors: ['root'],
   });

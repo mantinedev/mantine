@@ -6,13 +6,13 @@ export default Layout(MDX_DATA.useMove);
 
 ## Usage
 
-`use-move` handles move behavior over any element:
+The `use-move` hook handles move behavior over any element:
 
 <Demo data={HooksDemos.useMoveUsage} />
 
 ## API
 
-The hook accepts a callback that is called when user moves pressed mouse over the given element
+The hook accepts a callback that is called when the user moves the pressed mouse over the given element
 and returns an object with `ref` and active state:
 
 ```tsx
@@ -20,11 +20,11 @@ import { useMove } from '@mantine/hooks';
 
 const {
   ref, // -> pass ref to target element
-  active, // -> is user changing something right now?
+  active, // -> is the user changing something right now?
 } = useMove(({ x, y }) => console.log({ x, y }));
 ```
 
-`x` and `y` values are always between `0` and `1`, you can use them to calculate value in your boundaries.
+The `x` and `y` values are always between `0` and `1`; you can use them to calculate the value in your boundaries.
 
 ## Horizontal slider
 
@@ -106,7 +106,7 @@ function useMove<T extends HTMLElement = any>(
 
 ## Exported types
 
-`UseMovePosition`, `UseMoveReturnValue` and `UseMoveHandlers` types are exported from `@mantine/hooks` package,
+`UseMovePosition`, `UseMoveReturnValue` and `UseMoveHandlers` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

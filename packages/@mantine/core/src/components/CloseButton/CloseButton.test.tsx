@@ -15,17 +15,9 @@ describe('@mantine/core/CloseButton', () => {
   tests.itSupportsSystemProps<CloseButtonProps, CloseButtonStylesNames>({
     component: CloseButton,
     props: defaultProps,
-    mod: true,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/CloseButton',
     stylesApiSelectors: ['root'],
   });

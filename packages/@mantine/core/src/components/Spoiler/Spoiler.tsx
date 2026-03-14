@@ -20,23 +20,21 @@ export type SpoilerCssVariables = {
 };
 
 export interface SpoilerProps
-  extends BoxProps,
-    StylesApiProps<SpoilerFactory>,
-    ElementProps<'div'> {
-  /** Maximum height of the visible content, when this point is reached spoiler appears @default `100` */
+  extends BoxProps, StylesApiProps<SpoilerFactory>, ElementProps<'div'> {
+  /** Maximum height of visible content in px. When content exceeds this height, the toggle control appears @default 100 */
   maxHeight?: number;
 
-  /** Label for close spoiler action */
-  hideLabel: React.ReactNode;
-
-  /** Label for open spoiler action */
+  /** Content displayed in the toggle button when content is collapsed (to expand) */
   showLabel: React.ReactNode;
 
-  /** Get ref of spoiler toggle button */
-  controlRef?: React.ForwardedRef<HTMLButtonElement>;
+  /** Content displayed in the toggle button when content is expanded (to collapse) */
+  hideLabel: React.ReactNode;
 
-  /** Initial spoiler state, `true` to wrap content in spoiler, `false` to show content without spoiler, opened state is updated on mount */
-  initialState?: boolean;
+  /** Ref of the toggle button element */
+  controlRef?: React.Ref<HTMLButtonElement>;
+
+  /** Initial expanded state in uncontrolled mode. If `true`, content starts expanded. If `false`, content starts collapsed @default false */
+  defaultExpanded?: boolean;
 
   /** Controlled expanded state value */
   expanded?: boolean;
@@ -44,8 +42,14 @@ export interface SpoilerProps
   /** Called when expanded state changes (when spoiler visibility is toggled by the user) */
   onExpandedChange?: (expanded: boolean) => void;
 
-  /** Spoiler reveal transition duration in ms, set 0 or null to turn off animation @default `200` */
+  /** Spoiler reveal transition duration in ms. Set to 0 to disable animation @default 200 */
   transitionDuration?: number;
+
+  /** Accessible label for the toggle button when collapsed. If not set, `showLabel` is used */
+  showAriaLabel?: string;
+
+  /** Accessible label for the toggle button when expanded. If not set, `hideLabel` is used */
+  hideAriaLabel?: string;
 }
 
 export type SpoilerFactory = Factory<{
@@ -57,7 +61,7 @@ export type SpoilerFactory = Factory<{
 
 const defaultProps = {
   maxHeight: 100,
-  initialState: false,
+  defaultExpanded: false,
 } satisfies Partial<SpoilerProps>;
 
 const varsResolver = createVarsResolver<SpoilerFactory>((_, { transitionDuration }) => ({
@@ -67,7 +71,7 @@ const varsResolver = createVarsResolver<SpoilerFactory>((_, { transitionDuration
   },
 }));
 
-export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
+export const Spoiler = factory<SpoilerFactory>((_props) => {
   const props = useProps('Spoiler', defaultProps, _props);
   const {
     classNames,
@@ -76,7 +80,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
-    initialState,
+    defaultExpanded,
     maxHeight,
     hideLabel,
     showLabel,
@@ -86,6 +90,8 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     id,
     expanded,
     onExpandedChange,
+    showAriaLabel,
+    hideAriaLabel,
     attributes,
     ...others
   } = props;
@@ -108,22 +114,17 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
   const regionId = `${_id}-region`;
   const [show, setShowState] = useUncontrolled({
     value: expanded,
-    defaultValue: initialState,
+    defaultValue: defaultExpanded,
     finalValue: false,
     onChange: onExpandedChange,
   });
   const { ref: contentRef, height } = useElementSize();
   const spoilerMoreContent = show ? hideLabel : showLabel;
   const spoiler = spoilerMoreContent !== null && maxHeight! < height;
+  const ariaLabel = show ? hideAriaLabel : showAriaLabel;
 
   return (
-    <Box
-      {...getStyles('root')}
-      id={_id}
-      ref={ref}
-      data-has-spoiler={spoiler || undefined}
-      {...others}
-    >
+    <Box {...getStyles('root')} id={_id} data-has-spoiler={spoiler || undefined} {...others}>
       {spoiler && (
         <Anchor
           component="button"
@@ -132,6 +133,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
           onClick={() => setShowState(!show)}
           aria-expanded={show}
           aria-controls={regionId}
+          aria-label={ariaLabel}
           {...getStyles('control')}
         >
           {spoilerMoreContent}
@@ -152,4 +154,5 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
 });
 
 Spoiler.classes = classes;
+Spoiler.varsResolver = varsResolver;
 Spoiler.displayName = '@mantine/core/Spoiler';

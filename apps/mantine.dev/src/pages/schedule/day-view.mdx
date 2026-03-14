@@ -1,0 +1,270 @@
+import { DayViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DayView);
+
+## Usage
+
+DayView displays events for a single day with time slots. It supports all-day events, overlapping events,
+drag and drop, custom time ranges, and more.
+
+<Demo data={DayViewDemos.usage} />
+
+## Time range
+
+Use `startTime` and `endTime` props to set the visible time range. Times should be in `HH:mm:ss` format.
+This is useful for focusing on specific hours like business hours.
+
+<Demo data={DayViewDemos.timeRange} />
+
+## Start scroll time
+
+Use `startScrollTime` prop to set the initial scroll position to a specific time.
+The value should be in `HH:mm:ss` format. This is useful when you want the view to
+open at a specific time (e.g., business hours start) instead of midnight.
+
+<Demo data={DayViewDemos.startScrollTime} />
+
+## Interval minutes
+
+`intervalMinutes` prop controls the granularity of time slots. Default is `15` minutes.
+Common values are 15, 30, or 60 minutes.
+
+<Demo data={DayViewDemos.intervalMinutes} />
+
+## All-day events
+
+Events that span the entire day are displayed in a dedicated all-day section at the top.
+When there are more than 2 all-day events, the component shows a "More events" indicator.
+
+<Demo data={DayViewDemos.allDayEvents} />
+
+## Overlapping events
+
+When multiple events overlap in time, they are automatically positioned side by side
+with appropriate widths and offsets.
+
+<Demo data={DayViewDemos.overlappingEvents} />
+
+## Current time indicator
+
+Set `withCurrentTimeIndicator` to display a line showing the current time.
+By default, it's only shown for the current day. Set `withCurrentTimeBubble={false}`
+to hide the time bubble.
+
+<Demo data={DayViewDemos.currentTimeIndicator} />
+
+## Business hours
+
+Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours
+from non-business hours. The `businessHours` prop accepts a tuple with start and end times
+in `HH:mm:ss` format.
+
+<Demo data={DayViewDemos.businessHours} />
+
+## Slot height
+
+Customize the height of time slots and the all-day section using `slotHeight` and
+`allDaySlotHeight` props. The `slotHeight` represents the height of a 1-hour slot.
+
+<Demo data={DayViewDemos.slotHeight} />
+
+## Without header
+
+Set `withHeader={false}` to hide the header controls. This is useful when you want to
+build a custom header or embed the view in a larger component.
+
+<Demo data={DayViewDemos.withoutHeader} />
+
+## Custom header
+
+You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
+Set `withHeader={false}` on the view and compose the header externally.
+
+<Demo data={DayViewDemos.customHeader} />
+
+## Header format
+
+Use `headerFormat` prop to customize the date format in the header. The format uses
+dayjs format syntax or can be a function that returns a formatted string.
+
+<Demo data={DayViewDemos.headerFormat} />
+
+## Slot label format
+
+`slotLabelFormat` prop controls the format of time labels. It accepts a dayjs format string
+or a function that returns a formatted string.
+
+<Demo data={DayViewDemos.slotLabelFormat} />
+
+## Radius
+
+Use `radius` prop to control the border radius of the day view container.
+
+<Demo data={DayViewDemos.radius} />
+
+## Drag and drop
+
+Enable drag and drop by setting `withDragDrop` prop. Use `onEventDrop` callback to handle
+event drops. All-day events cannot be dragged.
+
+<Demo data={DayViewDemos.dragDrop} />
+
+## External drag and drop
+
+Use `onExternalEventDrop` to allow dragging items from outside the component into
+the schedule. External items must set data in `dataTransfer` during their `onDragStart`.
+The callback receives the `DataTransfer` object and the drop target datetime.
+
+<Demo data={DayViewDemos.externalDragDrop} />
+
+## Bidirectional drag and drop
+
+Combine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional
+drag and drop. Items dragged from the sidebar are removed from the list and added
+to the schedule. Events dragged from the schedule back to the sidebar are removed
+from the schedule. The schedule sets `application/json` with `{ eventId }` in
+`dataTransfer` when an event is dragged, which the sidebar drop zone reads to
+identify the event.
+
+<Demo data={DayViewDemos.bidirectionalDragDrop} />
+
+## Selective drag permissions
+
+Use `canDragEvent` callback to control which events can be dragged. This is useful for
+implementing locked or read-only events.
+
+<Demo data={DayViewDemos.canDragEvent} />
+
+## Event resize
+
+Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
+edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
+the resize.
+
+<Demo data={DayViewDemos.eventResize} />
+
+## Selective resize permissions
+
+Use `canResizeEvent` callback to control which events can be resized. This is useful for
+implementing locked or read-only events that should not be resizable.
+
+<Demo data={DayViewDemos.canResizeEvent} />
+
+## Custom event rendering
+
+Use `renderEventBody` prop to customize how events are displayed. This allows you to
+add custom icons, badges, or any other content to events.
+
+<Demo data={DayViewDemos.renderEventBody} />
+
+## Full event customization
+
+Use `renderEvent` prop to fully customize event rendering. This function receives the event
+data as the first argument and all props that would be passed to the event root element
+(including children) as the second argument, allowing you to wrap events in custom components
+like HoverCard, Tooltip, or custom wrappers.
+
+<Demo data={DayViewDemos.renderEvent} />
+
+## Recurring events
+
+DayView automatically expands recurring events for the visible day.
+See [Recurring events guide](/schedule/recurring-events) for full documentation.
+
+<Demo data={DayViewDemos.recurringEvents} />
+
+## Background events
+
+Set `display="background"` on an event to render it as a full-width, semi-transparent,
+non-interactive block behind regular events. Background events are useful for marking
+unavailability, lunch breaks, focus time, or other blocked periods. They cannot be
+clicked, dragged, or resized.
+
+<Demo data={DayViewDemos.backgroundEvents} />
+
+## Custom background event styles with drag and drop blocking
+
+Use Styles API to customize background event appearance and prevent dropping
+regular events into blocked time ranges. This example uses diagonal red lines
+to indicate blocked time and rejects drops that overlap with background events.
+
+<Demo data={DayViewDemos.backgroundEventsCustomStyle} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions. In static mode, events and time slots
+are not clickable, draggable, or hoverable. This is useful for read-only displays or reports.
+
+<Demo data={DayViewDemos.staticMode} />
+
+## Custom labels
+
+Use `labels` prop to override default labels for internationalization or custom text.
+
+<Demo data={DayViewDemos.labels} />
+
+## Localization
+
+Use `locale` prop to set the dayjs locale for date formatting.
+Combine it with `labels` prop to translate all UI text.
+
+<Demo data={DayViewDemos.localization} />
+
+## Controlled date
+
+Control the date externally using the `date` prop and `onDateChange` callback.
+This allows you to build custom navigation or integrate with other components.
+
+<Demo data={DayViewDemos.controlledDate} />
+
+## View change
+
+Use `onViewChange` prop to handle view level changes when the user clicks on view selector buttons.
+
+<Demo data={DayViewDemos.viewChange} />
+
+## Create and update events
+
+Set `withDragSlotSelect` prop to allow users to drag across time slots to select a time range.
+When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
+Combined with `onTimeSlotClick`, `onAllDaySlotClick`, and `onEventClick` callbacks, this enables
+a complete event creation and editing experience.
+
+<Demo data={DayViewDemos.eventForm} />
+
+## Responsive styles
+
+DayView uses [@container queries](https://caniuse.com/css-container-queries) for responsive styles.
+The component automatically adjusts its layout based on the container width, hiding labels
+and reducing padding on smaller screens. Container queries are supported in all modern browsers.
+
+## Accessibility
+
+### Focus management
+
+In the DayView component, focus is managed to provide an efficient keyboard navigation experience:
+
+- Only the first time slot is included in the tab order (`tabIndex={0}`)
+- All other time slots have `tabIndex={-1}` and can only be reached via arrow key navigation
+- This approach reduces the number of tab stops when navigating through the schedule
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowDown',
+      description: 'Focuses next time slot',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses previous time slot',
+    },
+  ]}
+/>
+
+### Slot labels
+
+Each time slot button has an `aria-label` attribute with the complete slot information including the time range (e.g., "Time slot 08:00:00 - 09:00:00"). This provides screen reader users with complete context about each slot.

@@ -58,24 +58,28 @@ export interface CalendarHeaderSettings {
   /** Disables previous control */
   previousDisabled?: boolean;
 
-  /** Determines whether next level button should be enabled @default `true` */
+  /** Determines whether next level button should be enabled @default true */
   hasNextLevel?: boolean;
 
-  /** Determines whether next control should be rendered @default `true` */
+  /** Determines whether next control should be rendered @default true */
   withNext?: boolean;
 
-  /** Determines whether previous control should be rendered @default `true` */
+  /** Determines whether previous control should be rendered @default true */
   withPrevious?: boolean;
 
   /** Component size */
   size?: MantineSize;
 
-  /** Controls order @default `['previous', 'level', 'next']` */
+  /** Controls order @default ['previous', 'level', 'next'] */
   headerControlsOrder?: ('previous' | 'next' | 'level')[];
+
+  /** Determines whether the header should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface CalendarHeaderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     CalendarHeaderSettings,
     StylesApiProps<CalendarHeaderFactory>,
     ElementProps<'div'> {
@@ -109,7 +113,7 @@ const varsResolver = createVarsResolver<CalendarHeaderFactory>((_, { size }) => 
   },
 }));
 
-export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
+export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
   const props = useProps('CalendarHeader', defaultProps, _props);
   const {
     classNames,
@@ -133,6 +137,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     withNext,
     withPrevious,
     headerControlsOrder,
+    fullWidth,
     __staticSelector,
     __preventFocus,
     __stopPropagation,
@@ -239,11 +244,12 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
   });
 
   return (
-    <Box {...getStyles('calendarHeader')} ref={ref} {...others}>
+    <Box {...getStyles('calendarHeader')} data-full-width={fullWidth || undefined} {...others}>
       {controls}
     </Box>
   );
 });
 
 CalendarHeader.classes = classes;
+CalendarHeader.varsResolver = varsResolver;
 CalendarHeader.displayName = '@mantine/dates/CalendarHeader';

@@ -58,5 +58,7 @@ export interface StylesApiProps<Payload extends FactoryPayload> {
   attributes?: Attributes<Payload>;
 }
 
-export interface CompoundStylesApiProps<Payload extends FactoryPayload>
-  extends Omit<StylesApiProps<Payload>, 'unstyled' | 'attributes'> {}
+export interface CompoundStylesApiProps<Payload extends FactoryPayload> extends Omit<
+  StylesApiProps<Payload>,
+  'unstyled' | 'attributes'
+> {}

@@ -7,16 +7,8 @@ describe('@mantine/core/AppShell', () => {
   tests.itSupportsSystemProps<AppShellProps, AppShellStylesNames>({
     component: AppShell,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/AppShell',
     stylesApiSelectors: ['root'],
   });

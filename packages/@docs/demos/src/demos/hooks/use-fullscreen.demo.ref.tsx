@@ -1,13 +1,13 @@
 import { Button, Stack } from '@mantine/core';
-import { useFullscreen } from '@mantine/hooks';
+import { useFullscreenElement } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const refCode = `
-import { useFullscreen } from '@mantine/hooks';
+import { useFullscreenElement } from '@mantine/hooks';
 import { Button, Stack } from '@mantine/core';
 
 function RefDemo() {
-  const { ref, toggle, fullscreen } = useFullscreen();
+  const { ref, toggle, fullscreen } = useFullscreenElement();
 
   return (
     <Stack align="center">
@@ -26,7 +26,7 @@ function RefDemo() {
 `;
 
 function RefDemo() {
-  const { ref, toggle, fullscreen } = useFullscreen();
+  const { ref, toggle, fullscreen } = useFullscreenElement();
 
   return (
     <Stack align="center">

@@ -32,17 +32,13 @@ describe('@mantine/core/Table', () => {
     tests.itSupportsSystemProps<TableThProps, 'th'>({
       component: TestContainer,
       props: {},
-      styleProps: true,
       children: true,
-      extend: true,
-      withProps: true,
-      id: true,
-      refType: HTMLTableCellElement,
       displayName: '@mantine/core/TableTh',
       selector: 'th',
       stylesApiName: 'Table',
       stylesApiSelectors: ['th'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-with-column-border attribute when withColumnBorders prop is set on Table component', () => {
@@ -63,17 +59,13 @@ describe('@mantine/core/Table', () => {
     tests.itSupportsSystemProps<TableTdProps, 'td'>({
       component: TestContainer,
       props: {},
-      styleProps: true,
       children: true,
-      extend: true,
-      withProps: true,
-      id: true,
-      refType: HTMLTableCellElement,
       displayName: '@mantine/core/TableTd',
       selector: 'td',
       stylesApiName: 'Table',
       stylesApiSelectors: ['td'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-with-column-border attribute when withColumnBorders prop is set on Table component', () => {
@@ -94,17 +86,13 @@ describe('@mantine/core/Table', () => {
     tests.itSupportsSystemProps<TableTrProps, 'tr'>({
       component: TestContainer,
       props: {},
-      styleProps: true,
       children: true,
-      extend: true,
-      withProps: true,
-      id: true,
-      refType: HTMLTableRowElement,
       displayName: '@mantine/core/TableTr',
       selector: 'tr',
       stylesApiName: 'Table',
       stylesApiSelectors: ['tr'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-with-row-border attribute when withRowBorders prop is set on Table component', () => {
@@ -143,17 +131,13 @@ describe('@mantine/core/Table', () => {
     tests.itSupportsSystemProps<TableTheadProps, 'thead'>({
       component: TestContainer,
       props: {},
-      styleProps: true,
       children: true,
-      extend: true,
-      withProps: true,
-      id: true,
-      refType: HTMLTableSectionElement,
       displayName: '@mantine/core/TableThead',
       selector: 'thead',
       stylesApiName: 'Table',
       stylesApiSelectors: ['thead'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-sticky attribute when stickyHeader prop is set on Table component', () => {
@@ -172,17 +156,13 @@ describe('@mantine/core/Table', () => {
     tests.itSupportsSystemProps<TableTbodyProps, 'tbody'>({
       component: TestContainer,
       props: {},
-      styleProps: true,
       children: true,
-      extend: true,
-      withProps: true,
-      id: true,
-      refType: HTMLTableSectionElement,
       displayName: '@mantine/core/TableTbody',
       selector: 'tbody',
       stylesApiName: 'Table',
       stylesApiSelectors: ['tbody'],
       providerStylesApi: false,
+      compound: true,
     });
   });
 
@@ -191,17 +171,13 @@ describe('@mantine/core/Table', () => {
     tests.itSupportsSystemProps<TableTfootProps, 'tfoot'>({
       component: TestContainer,
       props: {},
-      styleProps: true,
       children: true,
-      extend: true,
-      withProps: true,
-      id: true,
-      refType: HTMLTableSectionElement,
       displayName: '@mantine/core/TableTfoot',
       selector: 'tfoot',
       stylesApiName: 'Table',
       stylesApiSelectors: ['tfoot'],
       providerStylesApi: false,
+      compound: true,
     });
   });
 
@@ -210,17 +186,13 @@ describe('@mantine/core/Table', () => {
     tests.itSupportsSystemProps<TableCaptionProps, 'caption'>({
       component: TestContainer,
       props: {},
-      styleProps: true,
       children: true,
-      extend: true,
-      withProps: true,
-      id: true,
-      refType: HTMLTableCaptionElement,
       displayName: '@mantine/core/TableCaption',
       selector: 'caption',
       stylesApiName: 'Table',
       stylesApiSelectors: ['caption'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-side attribute based on value set on Table component', () => {

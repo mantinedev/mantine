@@ -5,7 +5,7 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { Button, Text, Stack, Center, Loader } from '@mantine/core';
 import { modals, ContextModalProps, ModalsProvider } from '@mantine/modals';
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon } from '@phosphor-icons/react';
 
 const TestModal = ({
   context,
@@ -19,7 +19,7 @@ const TestModal = ({
         {innerProps.loading ? (
           <Loader size={32}/>
         ): (
-          <IconCheck size={23} color="var(--mantine-color-teal-6)" />
+          <CheckIcon size={23} color="var(--mantine-color-teal-6)" />
         )}
       </Center>
     </Stack>

@@ -21,11 +21,12 @@ export type MonthPickerStylesNames = DecadeLevelGroupStylesNames | YearLevelGrou
 type MonthPickerLevel = Exclude<CalendarLevel, 'month'>;
 
 export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type>,
+  extends
+    PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     Omit<CalendarBaseProps, 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'> {
-  /** Max level that user can go up to @default `'decade'` */
+  /** Max level that user can go up to @default 'decade' */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */
@@ -39,7 +40,8 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
 }
 
 export interface MonthPickerProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
@@ -58,12 +60,12 @@ const defaultProps = {
 } satisfies Partial<MonthPickerProps>;
 
 type MonthPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: MonthPickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }
+  props: MonthPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<MonthPickerFactory>;
 
-export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props, ref) => {
+export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props) => {
   const props = useProps('MonthPicker', defaultProps, _props);
   const {
     classNames,
@@ -103,7 +105,6 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
 
   return (
     <Calendar
-      ref={ref}
       minLevel="year"
       __updateDateOnMonthSelect={__updateDateOnMonthSelect ?? false}
       __staticSelector={__staticSelector || 'MonthPicker'}

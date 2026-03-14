@@ -4,6 +4,7 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
+  ClearSectionMode,
   ElementProps,
   factory,
   Factory,
@@ -31,7 +32,8 @@ import { isDateValid } from './is-date-valid/is-date-valid';
 export type DateInputStylesNames = __InputStylesNames | CalendarStylesNames;
 
 export interface DateInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'size'>,
     CalendarBaseProps,
     DecadeLevelSettings,
@@ -54,14 +56,20 @@ export interface DateInputProps
   /** Props passed down to the `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default `false` */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false */
   clearable?: boolean;
 
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
+
   /** Props passed down to the clear button */
-  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+  clearButtonProps?: React.ComponentProps<'button'>;
 
   /** `dayjs` format to display input value, `"MMMM D, YYYY"` by default  */
   valueFormat?: string;
+
+  /** If set to `true`, the time part of the value is preserved. Set this to `true` when `valueFormat` includes time (e.g. `"YYYY-MM-DD HH:mm"`). @default false */
+  withTime?: boolean;
 
   /** If set to `false`, invalid user input is preserved and is not corrected on blur */
   fixOnBlur?: boolean;
@@ -69,7 +77,7 @@ export interface DateInputProps
   /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. */
   allowDeselect?: boolean;
 
-  /** Max level that user can go up to @default `'decade'` */
+  /** Max level that user can go up to @default 'decade' */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */
@@ -95,7 +103,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<DateInputProps>;
 
-export const DateInput = factory<DateInputFactory>((_props, ref) => {
+export const DateInput = factory<DateInputFactory>((_props) => {
   const props = useInputProps('DateInput', defaultProps, _props);
   const {
     inputProps,
@@ -104,11 +112,13 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     defaultValue,
     onChange,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     popoverProps,
     getDayProps,
     locale,
     valueFormat,
+    withTime,
     dateParser,
     minDate,
     maxDate,
@@ -143,7 +153,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
     return Number.isNaN(parsedDate.getTime())
       ? dateStringParser(val)
-      : dayjs(parsedDate).format('YYYY-MM-DD');
+      : dayjs(parsedDate).format(withTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD');
   };
 
   const _dateParser = dateParser || defaultDateParser;
@@ -157,6 +167,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     value,
     defaultValue,
     onChange,
+    withTime,
   });
 
   const [_date, setDate] = useUncontrolledDates({
@@ -270,7 +281,6 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               data-dates-input
               data-read-only={readOnly || undefined}
               autoComplete="off"
-              ref={ref}
               value={inputValue}
               onChange={handleInputChange}
               onBlur={handleInputBlur}
@@ -281,6 +291,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               rightSection={rightSection}
               __clearSection={clearButton}
               __clearable={_clearable}
+              __clearSectionMode={clearSectionMode}
               {...inputProps}
               {...others}
               disabled={disabled}
@@ -319,7 +330,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
           </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
-      <HiddenDatesInput name={name} form={form} value={_value} type="default" />
+      <HiddenDatesInput name={name} form={form} value={_value} type="default" withTime={withTime} />
     </>
   );
 });

@@ -15,10 +15,10 @@ import { getBoundaries } from './get-boundaries/get-boundaries';
 import { getColumns, getFirstMonthColumnIndex, HeatmapColumn } from './get-columns/get-columns';
 import { getDatesRange } from './get-dates-range/get-dates-range';
 import { getMonthsRange } from './get-months-range/get-months-range';
-import classes from './Heatmap.module.css';
 import { HeatmapSplitWeeks } from './HeatmapSplitWeeks';
 import { HeatmapWeeks } from './HeatmapWeeks';
 import { rotateWeekdaysNames } from './rotate-weekdays-names/rotate-weekdays-names';
+import classes from './Heatmap.module.css';
 
 export type HeatmapStylesNames = 'root' | 'rect' | 'weekdayLabel' | 'monthLabel';
 
@@ -28,7 +28,8 @@ interface HeatmapRectData {
 }
 
 export interface HeatmapProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<HeatmapFactory>,
     ElementProps<'svg', 'display' | 'opacity' | 'viewBox' | 'width' | 'height'> {
   /** Heatmap data, key is date in `YYYY-MM-DD` format (interpreted as a UTC calendar day) */
@@ -43,19 +44,19 @@ export interface HeatmapProps
   /** Heatmap end date. Current date by default. Date is normalized to UTC midnight of the intended calendar day. */
   endDate?: Date | string;
 
-  /** If set, month labels are displayed @default `false` */
+  /** If set, month labels are displayed @default false */
   withMonthLabels?: boolean;
 
   /** Month labels, array of 12 elements, can be used for localization */
   monthLabels?: string[];
 
-  /** If set, weekday labels are displayed @default `false` */
+  /** If set, weekday labels are displayed @default false */
   withWeekdayLabels?: boolean;
 
   /** Weekday labels, array of 7 elements, can be used for localization */
   weekdayLabels?: string[];
 
-  /** If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. @default `true` */
+  /** If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. @default true */
   withOutsideDates?: boolean;
 
   /** First day of week, 0 – Sunday, 1 – Monday. @default 1 – Monday */
@@ -85,16 +86,16 @@ export interface HeatmapProps
   /** A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible */
   getTooltipLabel?: (input: HeatmapRectData) => React.ReactNode;
 
-  /** If set, tooltip is displayed on rect hover @default `false` */
+  /** If set, tooltip is displayed on rect hover @default false */
   withTooltip?: boolean;
 
   /** Props passed down to the `Tooltip.Floating` component */
   tooltipProps?: Partial<TooltipFloatingProps>;
 
   /** Props passed down to each rect depending on its date and associated value */
-  getRectProps?: (input: HeatmapRectData) => React.ComponentPropsWithoutRef<'rect'>;
+  getRectProps?: (input: HeatmapRectData) => React.ComponentProps<'rect'>;
 
-  /** If set, inserts a spacer column between months @default `false` */
+  /** If set, inserts a spacer column between months @default false */
   splitMonths?: boolean;
 }
 
@@ -123,7 +124,7 @@ const defaultProps = {
   ],
 } satisfies Partial<HeatmapProps>;
 
-export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
+export const Heatmap = factory<HeatmapFactory>((_props) => {
   const props = useProps('Heatmap', defaultProps, _props);
   const {
     classNames,
@@ -279,7 +280,6 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   return (
     <Box
       component="svg"
-      ref={ref}
       width={rectSizeWithGap * totalColumns + gap + weekdaysOffset}
       height={rectSizeWithGap * 7 + gap + monthsOffset}
       {...getStyles('root')}

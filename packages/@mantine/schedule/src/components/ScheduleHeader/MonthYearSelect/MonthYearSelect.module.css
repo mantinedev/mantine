@@ -1,0 +1,57 @@
+.monthYearSelectTarget {
+  text-transform: capitalize;
+  min-width: 80px;
+
+  &:where([data-with-months]) {
+    min-width: 140px;
+  }
+}
+
+.monthYearSelectList {
+  flex: 1;
+}
+
+.monthYearSelectDropdown {
+  display: flex;
+  gap: var(--mantine-spacing-sm);
+  padding: 8px 4px;
+
+  &:where([data-with-months]) {
+    padding: var(--mantine-spacing-sm);
+  }
+}
+
+.monthYearSelectLabel {
+  font-weight: var(--mantine-font-weight-medium);
+  font-size: var(--mantine-font-size-sm);
+  padding-inline: 8px;
+  margin-bottom: 6px;
+}
+
+.monthYearSelectControl {
+  display: block;
+  width: 100%;
+  padding: 6px 8px;
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1;
+  border-radius: var(--schedule-radius, var(--control-radius, var(--mantine-radius-default)));
+  font-variant-numeric: tabular-nums;
+  text-transform: capitalize;
+
+  &:where([data-type='year']) {
+    text-align: center;
+  }
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+
+  &:where([data-active]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+
+    @mixin hover {
+      background-color: var(--mantine-primary-color-filled-hover);
+    }
+  }
+}

@@ -21,8 +21,8 @@ import type { TimePickerAmPmLabels, TimePickerFormat } from '../TimePicker';
 import { isSameTime } from '../TimePicker/utils/is-same-time/is-same-time';
 import { isTimeAfter, isTimeBefore } from './compare-time';
 import { TimeGridProvider } from './TimeGrid.context';
-import classes from './TimeGrid.module.css';
 import { TimeGridControl } from './TimeGridControl';
+import classes from './TimeGrid.module.css';
 
 export type TimeGridStylesNames = 'root' | 'control' | 'simpleGrid';
 export type TimeGridCssVariables = {
@@ -30,7 +30,8 @@ export type TimeGridCssVariables = {
 };
 
 export interface TimeGridProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<TimeGridFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Time data in 24h format to be displayed in the grid, for example `['10:00', '18:30', '22:00']`. Time values must be unique. */
@@ -45,28 +46,28 @@ export interface TimeGridProps
   /** Called when value changes */
   onChange?: (value: string | null) => void;
 
-  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default `false` */
+  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default false */
   allowDeselect?: boolean;
 
-  /** Time format displayed in the grid @default `'24h'` */
+  /** Time format displayed in the grid @default '24h' */
   format?: TimePickerFormat;
 
-  /** Determines whether the seconds part should be displayed @default `false` */
+  /** Determines whether the seconds part should be displayed @default false */
   withSeconds?: boolean;
 
-  /** Labels used for am/pm values @default `{ am: 'AM', pm: 'PM' }` */
+  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Props passed down to the underlying `SimpleGrid` component @default `{ cols: 3, spacing: 'xs' }` */
+  /** Props passed down to the underlying `SimpleGrid` component @default { cols: 3, spacing: 'xs' } */
   simpleGridProps?: SimpleGridProps;
 
   /** A function to pass props down to control based on the time value */
-  getControlProps?: (time: string) => React.ComponentPropsWithoutRef<'button'> & DataAttributes;
+  getControlProps?: (time: string) => React.ComponentProps<'button'> & DataAttributes;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value @default `'sm'` */
+  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value @default 'sm' */
   size?: MantineSize;
 
   /** All controls before this time are disabled */
@@ -102,7 +103,7 @@ const varsResolver = createVarsResolver<TimeGridFactory>((_theme, { size, radius
   },
 }));
 
-export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
+export const TimeGrid = factory<TimeGridFactory>((_props) => {
   const props = useProps('TimeGrid', defaultProps, _props);
   const {
     classNames,
@@ -184,7 +185,7 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
 
   return (
     <TimeGridProvider value={{ getStyles }}>
-      <Box ref={ref} {...getStyles('root')} {...others}>
+      <Box {...getStyles('root')} {...others}>
         <SimpleGrid
           {...simpleGridProps}
           {...getStyles('simpleGrid', {
@@ -201,3 +202,4 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
 
 TimeGrid.displayName = '@mantine/dates/TimeGrid';
 TimeGrid.classes = classes;
+TimeGrid.varsResolver = varsResolver;

@@ -34,6 +34,7 @@ lerna-debug.log*
 lib/
 cjs/
 esm/
+.buildinfo.json
 
 # typescript
 *.tsbuildinfo
@@ -56,7 +57,17 @@ apps/mantine.dev/out
 apps/mantine.dev/.next
 apps/mantine.dev/src/.docgen/
 apps/mantine.dev/public/llms.txt
+.samples
+*storybook.log
+apps/help.mantine.dev/next-env.d.ts
 apps/mantine.dev/public/llms-full.txt
 apps/mantine.dev/public/llms
+apps/mantine.dev/public/mcp
 .samples
+.changelog
 apps/help.mantine.dev/next-env.d.ts
+
+/claude/
+.agents/
+/codex
+/.claude/worktrees

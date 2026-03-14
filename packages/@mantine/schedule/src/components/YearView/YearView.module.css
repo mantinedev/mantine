@@ -1,0 +1,258 @@
+.yearView {
+  --year-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --year-view-font-size: var(--mantine-font-size-sm);
+  container-type: inline-size;
+
+  @mixin where-light {
+    --year-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --year-view-border-color: var(--mantine-color-dark-4);
+  }
+}
+
+.yearViewMonths {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  @container (width <= 850px) {
+    --year-view-font-size: calc(var(--mantine-font-size-sm) - 2px);
+  }
+
+  @container (width <= 750px) {
+    grid-template-columns: repeat(2, 1fr);
+    --year-view-font-size: var(--mantine-font-size-xs);
+  }
+
+  @container (width <= 520px) {
+    --year-view-font-size: calc(var(--mantine-font-size-xs) - 2px);
+  }
+
+  @container (width <= 420px) {
+    grid-template-columns: 1fr;
+    --year-view-font-size: var(--mantine-font-size-xs);
+  }
+}
+
+.yearViewMonth {
+  --week-numbers-offset: 0rem;
+  --day-base-color: var(--mantine-color-text);
+  --day-dimmed-color: alpha(var(--day-base-color), 0.35);
+
+  &:where([data-with-week-numbers]) {
+    --week-numbers-offset: 28px;
+  }
+
+  min-width: 0;
+  border: 1px solid var(--year-view-border-color);
+  padding: var(--mantine-spacing-md);
+  margin-top: -1px;
+  margin-inline-start: -1px;
+
+  &:where(:nth-child(3n + 1)) {
+    margin-inline-start: 0;
+  }
+
+  &:where(:nth-child(-n + 3)) {
+    margin-top: 0;
+  }
+
+  &:where(:nth-child(1)) {
+    border-start-start-radius: var(--year-view-radius);
+  }
+
+  &:where(:nth-child(3)) {
+    border-start-end-radius: var(--year-view-radius);
+  }
+
+  &:where(:nth-last-child(3)) {
+    border-end-start-radius: var(--year-view-radius);
+  }
+
+  &:where(:nth-last-child(1)) {
+    border-end-end-radius: var(--year-view-radius);
+  }
+
+  @container (width <= 750px) {
+    border: 0;
+    padding: 8px;
+    margin: 0;
+
+    &:where([data-with-week-numbers]) {
+      --week-numbers-offset: 14px;
+    }
+  }
+
+  @container (width <= 420px) {
+    padding: 6px;
+  }
+}
+
+.yearViewWeekdays {
+  display: flex;
+}
+
+.yearViewWeek {
+  display: flex;
+}
+
+.yearViewWeekNumber {
+  flex: 0 0 calc(var(--week-numbers-offset) - rem(4px));
+  margin-inline-end: rem(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--year-view-font-size);
+  border-radius: var(--year-view-radius);
+  padding: 4px;
+  font-weight: var(--mantine-font-weight-medium);
+  cursor: pointer;
+  user-select: none;
+  color: var(--day-dimmed-color);
+
+  @container (width <= 750px) {
+    padding: 0;
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.yearViewWeekday {
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  height: 36px;
+  font-size: var(--year-view-font-size);
+  font-weight: var(--mantine-font-weight-medium);
+  text-align: center;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  user-select: none;
+  color: var(--day-dimmed-color);
+
+  @container (width <= 750px) {
+    height: auto;
+    padding-block: 2px;
+  }
+}
+
+.yearViewWeekdaysCorner {
+  flex: 0 0 var(--week-numbers-offset);
+}
+
+.yearViewDay {
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  padding: 4px;
+  font-size: var(--year-view-font-size);
+  color: var(--day-base-color);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  aspect-ratio: 1;
+  position: relative;
+
+  @container (width <= 750px) {
+    padding: 0;
+  }
+
+  &:where([data-day-placeholder]) {
+    background-color: transparent;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &:where([data-weekend]) {
+    color: var(--mantine-color-red-6);
+  }
+
+  &:where([data-outside]) {
+    color: var(--day-dimmed-color);
+  }
+
+  @mixin hover {
+    &:where(:not([data-today], [data-day-placeholder])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-6);
+      }
+    }
+  }
+
+  &:where([data-today]:not([data-outside])) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+
+    @mixin hover {
+      background-color: var(--mantine-primary-color-filled-hover);
+    }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.yearViewMonthCaption {
+  padding-inline: var(--mantine-spacing-sm);
+  width: 100%;
+  padding-block: 4px;
+  margin-bottom: 4px;
+  font-size: var(--year-view-font-size);
+  font-weight: var(--mantine-font-weight-medium);
+  text-transform: capitalize;
+  border-radius: var(--year-view-radius);
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.yearViewDayIndicators {
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  display: flex;
+  justify-content: center;
+  padding-inline-start: 2px;
+}
+
+.yearViewDayIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  margin-inline-start: -2px;
+  border: 1px solid var(--mantine-color-body);
+}

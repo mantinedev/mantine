@@ -18,14 +18,14 @@ export const meta = {
 
 export default Layout(meta);
 
-If you try to align one of Mantine inputs in a flex container with a button,
-you will notice that input is not aligned with the button. This happens because
-Mantine inputs have associated elements: label, description and error message.
+If you try to align a Mantine input with a button in a flex container,
+you will notice that the input is not aligned with the button. This happens because
+Mantine inputs have associated elements: label, description, and error message.
 
 <Demo data={AlignInputButton} />
 
-To align input with a button, you can either use `inputContainer` prop to wrap the button
-next to the in a flex container:
+To align the input with a button, you can either use the `inputContainer` prop to wrap the button
+next to it in a flex container:
 
 <Demo data={AlignInputButtonCorrect} />
 

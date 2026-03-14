@@ -280,7 +280,7 @@ export const Demo_useMutationObserverUsage = {
 
 export const Demo_useMutationObserverTarget = {
   name: '⭐ Demo: useMutationObserverTarget',
-  render: renderDemo(demos.useMutationObserverTarget),
+  render: renderDemo(demos.useMutationObserverTargetDemo),
 };
 
 export const Demo_useStateHistoryUsage = {
@@ -348,6 +348,41 @@ export const Demo_useFileDialogUsage = {
   render: renderDemo(demos.useFileDialogUsage),
 };
 
+export const Demo_useFloatingWindowUsageDemo = {
+  name: '⭐ Demo: useFloatingWindowUsageDemo',
+  render: renderDemo(demos.useFloatingWindowUsageDemo),
+};
+
+export const Demo_useFloatingWindowSetPositionDemo = {
+  name: '⭐ Demo: useFloatingWindowSetPositionDemo',
+  render: renderDemo(demos.useFloatingWindowSetPositionDemo),
+};
+
+export const Demo_useFloatingWindowEnabledDemo = {
+  name: '⭐ Demo: useFloatingWindowEnabledDemo',
+  render: renderDemo(demos.useFloatingWindowEnabledDemo),
+};
+
+export const Demo_useFloatingWindowDragHandleSelectorDemo = {
+  name: '⭐ Demo: useFloatingWindowDragHandleSelectorDemo',
+  render: renderDemo(demos.useFloatingWindowDragHandleSelectorDemo),
+};
+
+export const Demo_useFloatingWindowConstrainToViewportDemo = {
+  name: '⭐ Demo: useFloatingWindowConstrainToViewportDemo',
+  render: renderDemo(demos.useFloatingWindowConstrainToViewportDemo),
+};
+
+export const Demo_useFloatingWindowConstrainOffsetDemo = {
+  name: '⭐ Demo: useFloatingWindowConstrainOffsetDemo',
+  render: renderDemo(demos.useFloatingWindowConstrainOffsetDemo),
+};
+
+export const Demo_useFloatingWindowAxisDemo = {
+  name: '⭐ Demo: useFloatingWindowAxisDemo',
+  render: renderDemo(demos.useFloatingWindowAxisDemo),
+};
+
 export const Demo_useLongPressDemo = {
   name: '⭐ Demo: useLongPressDemo',
   render: renderDemo(demos.useLongPressDemo),
@@ -356,4 +391,34 @@ export const Demo_useLongPressDemo = {
 export const Demo_useSelectionDemo = {
   name: '⭐ Demo: useSelectionDemo',
   render: renderDemo(demos.useSelectionDemo),
+};
+
+export const Demo_useCollapseDemo = {
+  name: '⭐ Demo: useCollapseDemo',
+  render: renderDemo(demos.useCollapseDemo),
+};
+
+export const Demo_useHorizontalCollapseDemo = {
+  name: '⭐ Demo: useHorizontalCollapseDemo',
+  render: renderDemo(demos.useHorizontalCollapseDemo),
+};
+
+export const Demo_usePaginationStartValueDemo = {
+  name: '⭐ Demo: usePaginationStartValueDemo',
+  render: renderDemo(demos.usePaginationStartValueDemo),
+};
+
+export const Demo_useScrollerUsageDemo = {
+  name: '⭐ Demo: useScrollerUsageDemo',
+  render: renderDemo(demos.useScrollerUsageDemo),
+};
+
+export const Demo_useScrollerScrollAmountDemo = {
+  name: '⭐ Demo: useScrollerScrollAmountDemo',
+  render: renderDemo(demos.useScrollerScrollAmountDemo),
+};
+
+export const Demo_useScrollerDraggableDemo = {
+  name: '⭐ Demo: useScrollerDraggableDemo',
+  render: renderDemo(demos.useScrollerDraggableDemo),
 };

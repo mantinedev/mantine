@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { use, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
@@ -11,15 +11,13 @@ import {
 } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
+import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
-import { useSubMenuContext } from '../MenuSub/MenuSub.context';
 
 export type MenuSubDropdownStylesNames = 'dropdown';
 
 export interface MenuSubDropdownProps
-  extends BoxProps,
-    CompoundStylesApiProps<MenuSubDropdownFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<MenuSubDropdownFactory>, ElementProps<'div'> {}
 
 export type MenuSubDropdownFactory = Factory<{
   props: MenuSubDropdownProps;
@@ -28,7 +26,7 @@ export type MenuSubDropdownFactory = Factory<{
   compound: true;
 }>;
 
-export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props, ref) => {
+export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
   const {
     classNames,
     className,
@@ -39,12 +37,13 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props, ref) => {
     onMouseLeave,
     onKeyDown,
     children,
+    ref,
     ...others
   } = useProps('MenuSubDropdown', null, props);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ctx = useMenuContext();
-  const subCtx = useSubMenuContext();
+  const subCtx = use(SubMenuContext);
 
   const handleMouseEnter = createEventHandler<any>(onMouseEnter, subCtx?.open);
 

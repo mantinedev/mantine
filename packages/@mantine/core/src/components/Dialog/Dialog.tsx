@@ -22,18 +22,19 @@ export type DialogCssVariables = {
 };
 
 export interface DialogProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AffixBaseProps,
     PaperBaseProps,
     StylesApiProps<DialogFactory>,
     ElementProps<'div'> {
-  /** If set, dialog is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
+  /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default false */
   keepMounted?: boolean;
 
-  /** If set, the close button is displayed @default `true` */
+  /** If set, displays the close button @default true */
   withCloseButton?: boolean;
 
-  /** Called when the close button is clicked */
+  /** Called on close button click */
   onClose?: () => void;
 
   /** Dialog content */
@@ -42,10 +43,10 @@ export interface DialogProps
   /** Opened state */
   opened: boolean;
 
-  /** Props passed down to the underlying `Transition` component @default `{ transition: 'pop-top-right', duration: 200 }` */
+  /** Props passed down to the underlying `Transition` component @default { transition: 'pop-top-right', duration: 200 } */
   transitionProps?: TransitionOverride;
 
-  /** Controls `width` of the dialog @default `'md'` */
+  /** Controls `width` of the dialog @default 'md' */
   size?: MantineSize | (string & {}) | number;
 }
 
@@ -59,7 +60,7 @@ export type DialogFactory = Factory<{
 const defaultProps = {
   shadow: 'md',
   p: 'md',
-  withBorder: false,
+  withBorder: true,
   transitionProps: { transition: 'pop-top-right', duration: 200 },
   position: {
     bottom: 30,
@@ -73,7 +74,7 @@ const varsResolver = createVarsResolver<DialogFactory>((_, { size }) => ({
   },
 }));
 
-export const Dialog = factory<DialogFactory>((_props, ref) => {
+export const Dialog = factory<DialogFactory>((_props) => {
   const props = useProps('Dialog', defaultProps, _props);
   const {
     classNames,
@@ -114,7 +115,6 @@ export const Dialog = factory<DialogFactory>((_props, ref) => {
     <Affix
       zIndex={zIndex}
       position={position}
-      ref={ref}
       withinPortal={withinPortal}
       portalProps={portalProps}
       unstyled={unstyled}
@@ -138,4 +138,5 @@ export const Dialog = factory<DialogFactory>((_props, ref) => {
 });
 
 Dialog.classes = classes;
+Dialog.varsResolver = varsResolver;
 Dialog.displayName = '@mantine/core/Dialog';

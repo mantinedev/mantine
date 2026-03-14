@@ -24,11 +24,11 @@ import {
 } from '../../utils/Floating';
 import { OptionalPortal } from '../Portal';
 import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
-import classes from './Tooltip.module.css';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
+import classes from './Tooltip.module.css';
 
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
@@ -37,7 +37,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Open delay in ms */
   openDelay?: number;
 
-  /** Close delay in ms @default `0` */
+  /** Close delay in ms @default 0 */
   closeDelay?: number;
 
   /** Controlled opened state */
@@ -46,32 +46,29 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Uncontrolled tooltip initial opened state */
   defaultOpened?: boolean;
 
-  /** Space between target element and tooltip in px @default `5` */
+  /** Space between target element and tooltip in px @default 5 */
   offset?: number | FloatingAxesOffsets;
 
-  /** If set, the tooltip has an arrow @default `false` */
+  /** If set, the tooltip has an arrow @default false */
   withArrow?: boolean;
 
-  /** Arrow size in px @default `4` */
+  /** Arrow size in px @default 4 */
   arrowSize?: number;
 
-  /** Arrow offset in px @default `5` */
+  /** Arrow offset in px @default 5 */
   arrowOffset?: number;
 
-  /** Arrow `border-radius` in px @default `0` */
+  /** Arrow `border-radius` in px @default 0 */
   arrowRadius?: number;
 
-  /** Arrow position relative to the tooltip @default `side` */
+  /** Arrow position relative to the tooltip @default side */
   arrowPosition?: ArrowPosition;
 
-  /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default `{ duration: 100, transition: 'fade' }` */
+  /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default { duration: 100, transition: 'fade' } */
   transitionProps?: TransitionOverride;
 
-  /** Determines which events will be used to show tooltip @default `{ hover: true, focus: false, touch: false }` */
+  /** Determines which events will be used to show tooltip @default { hover: true, focus: false, touch: false } */
   events?: { hover: boolean; focus: boolean; touch: boolean };
-
-  /** @deprecated: Do not use, will be removed in 9.0 */
-  positionDependencies?: any[];
 
   /** Must be set if the tooltip target is an inline element */
   inline?: boolean;
@@ -79,7 +76,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** If set, the tooltip is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
   keepMounted?: boolean;
 
-  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default `'absolute'` */
+  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default 'absolute' */
   floatingStrategy?: FloatingStrategy;
 
   /** If set, adjusts text color based on background color for `filled` variant */
@@ -112,7 +109,6 @@ const defaultProps = {
   transitionProps: { duration: 100, transition: 'fade' },
   events: { hover: true, focus: false, touch: false },
   zIndex: getDefaultZIndex('popover'),
-  positionDependencies: [],
   middlewares: { flip: true, shift: true, inline: false },
 } satisfies Partial<TooltipProps>;
 
@@ -135,7 +131,7 @@ const varsResolver = createVarsResolver<TooltipFactory>(
   }
 );
 
-export const Tooltip = factory<TooltipFactory>((_props, ref) => {
+export const Tooltip = factory<TooltipFactory>((_props) => {
   const props = useProps('Tooltip', defaultProps, _props);
   const {
     children,
@@ -166,9 +162,6 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     events,
     zIndex,
     disabled,
-    // Scheduled for removal in 9.0
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    positionDependencies,
     onClick,
     onMouseEnter,
     onMouseLeave,
@@ -183,8 +176,9 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     autoContrast,
     attributes,
     target,
+    ref,
     ...others
-  } = useProps('Tooltip', defaultProps, props);
+  } = props;
 
   const { dir } = useDirection();
   const arrowRef = useRef<HTMLDivElement>(null);
@@ -200,7 +194,6 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     arrowRef,
     arrowOffset,
     offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
-    positionDependencies: [...positionDependencies, target ?? children],
     inline,
     strategy: floatingStrategy,
     middlewares,
@@ -241,6 +234,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     );
   }
 
+  const tooltipStyles = getStyles('tooltip');
+
   if (target) {
     const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
     return (
@@ -258,11 +253,12 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
                 data-fixed={floatingStrategy === 'fixed' || undefined}
                 variant={variant}
                 mod={[{ multiline }, mod]}
+                {...tooltipStyles}
                 {...tooltip.getFloatingProps({
                   ref: tooltip.floating,
-                  className: getStyles('tooltip').className,
+                  className: tooltipStyles.className,
                   style: {
-                    ...getStyles('tooltip').style,
+                    ...tooltipStyles.style,
                     ...transitionStyles,
                     zIndex: zIndex as React.CSSProperties['zIndex'],
                     top: tooltip.y ?? 0,
@@ -360,6 +356,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
 });
 
 Tooltip.classes = classes;
+Tooltip.varsResolver = varsResolver;
 Tooltip.displayName = '@mantine/core/Tooltip';
 Tooltip.Floating = TooltipFloating;
 Tooltip.Group = TooltipGroup;

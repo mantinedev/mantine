@@ -1,9 +1,12 @@
-import path from 'path';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import type { StorybookConfig } from '@storybook/nextjs';
 import fg from 'fast-glob';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const { argv } = yargs(hideBin(process.argv));
 
 if (argv instanceof Promise) {
@@ -13,10 +16,6 @@ if (argv instanceof Promise) {
 const getPath = (storyPath: string) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
 const getGlobPaths = (paths: string[]) =>
   paths.reduce<string[]>((acc, path) => [...acc, ...fg.sync(path)], []);
-
-function getAbsolutePath(value: string) {
-  return path.dirname(require.resolve(path.join(value, 'package.json')));
-}
 
 function getStoryPaths(fileName: string | number = '*') {
   return getGlobPaths([
@@ -30,57 +29,24 @@ const storiesPath = !argv._[1]
   ? [...getStoryPaths()]
   : [...getStoryPaths(argv._[1]), ...getStoryPaths(`${argv._[1]}.demos`)];
 
-export default {
-  stories: storiesPath,
+const config: StorybookConfig = {
   core: {
     disableWhatsNewNotifications: true,
     disableTelemetry: true,
     enableCrashReports: false,
   },
-
-  addons: [
-    getAbsolutePath('storybook-dark-mode'),
-    {
-      name: '@storybook/addon-styling-webpack',
-      options: {
-        rules: [
-          {
-            test: /\.css$/,
-            sideEffects: true,
-            use: ['style-loader', 'css-loader', 'postcss-loader'],
-          },
-        ],
-      },
-    },
-  ],
-
-  module: {
-    rules: [
-      {
-        test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-react', '@babel/preset-env', '@babel/preset-typescript'],
-            plugins: ['@babel/plugin-transform-runtime', 'react-refresh/babel'],
-          },
-        },
-      },
-    ],
-  },
-
+  stories: storiesPath,
+  addons: [],
   framework: {
-    name: getAbsolutePath('@storybook/nextjs'),
+    name: '@storybook/nextjs',
     options: {},
   },
-
-  webpackFinal: async (config: any) => {
+  webpackFinal: async (config) => {
     config.resolve = {
       ...config.resolve,
       extensionAlias: { '.js': ['.ts', '.tsx', '.js'] },
       plugins: [
-        ...(config.resolve.plugins || []),
+        ...(config.resolve?.plugins || []),
         new TsconfigPathsPlugin({
           extensions: ['.ts', '.tsx', '.js'],
           configFile: path.join(__dirname, '../tsconfig.json'),
@@ -90,12 +56,6 @@ export default {
 
     return config;
   },
-
-  docs: {
-    autodocs: false,
-  },
-
-  typescript: {
-    reactDocgen: false,
-  },
 };
+
+export default config;

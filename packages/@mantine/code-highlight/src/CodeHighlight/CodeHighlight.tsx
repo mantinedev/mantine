@@ -19,12 +19,12 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import classes from '../CodeHighlight.module.css';
 import { useHighlight } from '../CodeHighlightProvider/CodeHighlightProvider';
 import { CodeHighlightContextProvider } from './CodeHighlight.context';
 import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
+import classes from '../CodeHighlight.module.css';
 
 export type CodeHighlightStylesNames =
   | 'codeHighlight'
@@ -41,10 +41,10 @@ export type CodeHighlightCssVariables = {
 };
 
 export interface CodeHighlightSettings {
-  /** Label for copy button in default state @default `'Copy'` */
+  /** Label for copy button in default state @default 'Copy' */
   copyLabel?: string;
 
-  /** Label for copy button in copied state @default `'Copied'` */
+  /** Label for copy button in copied state @default 'Copied' */
   copiedLabel?: string;
 
   /** Uncontrolled expanded default state */
@@ -56,28 +56,28 @@ export interface CodeHighlightSettings {
   /** Called when expanded state changes */
   onExpandedChange?: (expanded: boolean) => void;
 
-  /** Max height of collapsed state @default `180px` */
+  /** Max height of collapsed state @default 180px */
   maxCollapsedHeight?: number | string;
 
-  /** Determines whether the copy button should be displayed @default `true`  */
+  /** Determines whether the copy button should be displayed @default true  */
   withCopyButton?: boolean;
 
-  /** Determines whether the expand/collapse button should be displayed @default `false` */
+  /** Determines whether the expand/collapse button should be displayed @default false */
   withExpandButton?: boolean;
 
-  /** Label for expand button @default `'Expand code'` */
+  /** Label for expand button @default 'Expand code' */
   expandCodeLabel?: string;
 
-  /** Label for collapse button @default `'Collapse code'` */
+  /** Label for collapse button @default 'Collapse code' */
   collapseCodeLabel?: string;
 
   /** Controls background color of the code. By default, the value depends on color scheme. */
   background?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `0` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 0 */
   radius?: MantineRadius;
 
-  /** Adds border to the root element @default `false` */
+  /** Adds border to the root element @default false */
   withBorder?: boolean;
 
   /** Extra controls to display in the controls list */
@@ -88,14 +88,15 @@ export interface CodeHighlightSettings {
 }
 
 export interface CodeHighlightProps
-  extends CodeHighlightSettings,
+  extends
+    CodeHighlightSettings,
     BoxProps,
     StylesApiProps<CodeHighlightFactory>,
     ElementProps<'div'> {
   __withOffset?: boolean;
   __staticSelector?: string;
 
-  /** If set, the code will be rendered as inline element without `<pre>` @default `false` */
+  /** If set, the code will be rendered as inline element without `<pre>` @default false */
   __inline?: boolean;
 
   /** Code to highlight */
@@ -118,6 +119,7 @@ export type CodeHighlightFactory = Factory<{
 const defaultProps = {
   withCopyButton: true,
   expandCodeLabel: 'Expand code',
+  collapseCodeLabel: 'Collapse code',
 } satisfies Partial<CodeHighlightProps>;
 
 const varsResolver = createVarsResolver<CodeHighlightFactory>(
@@ -130,7 +132,7 @@ const varsResolver = createVarsResolver<CodeHighlightFactory>(
   })
 );
 
-export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
+export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
   const props = useProps('CodeHighlight', defaultProps, _props);
   const {
     classNames,
@@ -204,7 +206,6 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     return (
       <Box
         component="code"
-        ref={ref}
         {...others}
         {...highlightedCode.codeElementProps}
         {...getStyles('codeHighlight', {
@@ -220,7 +221,6 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
   return (
     <CodeHighlightContextProvider value={{ getStyles, codeColorScheme }}>
       <Box
-        ref={ref}
         {...getStyles('codeHighlight')}
         {...others}
         dir="ltr"
@@ -281,4 +281,5 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
 
 CodeHighlight.displayName = '@mantine/code-highlight/CodeHighlight';
 CodeHighlight.classes = classes;
+CodeHighlight.varsResolver = varsResolver;
 CodeHighlight.Control = CodeHighlightControl;

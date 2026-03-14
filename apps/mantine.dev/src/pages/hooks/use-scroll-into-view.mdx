@@ -6,31 +6,31 @@ export default Layout(MDX_DATA.useScrollIntoView);
 
 ## Usage
 
-`use-scroll-into-view` handles scroll behavior for any scrollable element. Basic usage works the same way as `element.scrollIntoView()`.
-Hook adjusts scrolling animation with respect to the `reduced-motion` user preference.
+The `use-scroll-into-view` hook handles scroll behavior for any scrollable element. Basic usage works the same way as `element.scrollIntoView()`.
+The hook adjusts the scrolling animation with respect to the `reduced-motion` user preference.
 
 <Demo data={HooksDemos.useScrollIntoViewUsage} />
 
 ## API
 
-The hook is configured with settings object:
+The hook is configured with a settings object:
 
-- `onScrollFinish` – function that will be called after scroll animation
+- `onScrollFinish` – function that will be called after the scroll animation
 - `easing` – custom math easing function
-- `duration` - duration of scroll animation in milliseconds
-- `axis` - axis of scroll
-- `cancelable` - indicator if animation may be interrupted by user scrolling
-- `offset` - additional distance between the nearest edge and element
+- `duration` - duration of the scroll animation in milliseconds
+- `axis` - axis of the scroll
+- `cancelable` - indicator if the animation may be interrupted by user scrolling
+- `offset` - additional distance between the nearest edge and the element
 - `isList` - indicator that prevents content jumping in scrolling lists with multiple targets, for example Select, Carousel
 
-Hook returns an object with:
+The hook returns an object with:
 
-- `scrollIntoView` – function that starts scroll animation
-- `cancel` – function that stops scroll animation
-- `targetRef` - ref of target HTML node
-- `scrollableRef` - ref of scrollable parent HTML element, if not used document element will be used
+- `scrollIntoView` – function that starts the scroll animation
+- `cancel` – function that stops the scroll animation
+- `targetRef` - ref of the target HTML node
+- `scrollableRef` - ref of the scrollable parent HTML element; if not used, the document element will be used
 
-Returned `scrollIntoView` function accepts single optional argument `alignment` - optional target element alignment relatively to parent based on current axis.
+The returned `scrollIntoView` function accepts a single optional argument `alignment` - optional target element alignment relative to the parent based on the current axis.
 
 ```tsx
 import { useScrollIntoView } from '@mantine/hooks';
@@ -115,7 +115,7 @@ function useScrollIntoView<
 
 ## Exported types
 
-`UseScrollIntoViewOptions` and `UseScrollIntoViewReturnValue` types are exported from `@mantine/hooks` package,
+`UseScrollIntoViewOptions` and `UseScrollIntoViewReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

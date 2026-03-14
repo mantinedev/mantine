@@ -9,7 +9,8 @@ import { MonthLevel, MonthLevelSettings, MonthLevelStylesNames } from '../MonthL
 export type MonthLevelGroupStylesNames = MonthLevelStylesNames | LevelsGroupStylesNames;
 
 export interface MonthLevelGroupProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
     Omit<StylesApiProps<MonthLevelGroupFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {
@@ -28,6 +29,9 @@ export interface MonthLevelGroupProps
 
   /** Passed as `isStatic` prop to `Month` component */
   static?: boolean;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type MonthLevelGroupFactory = Factory<{
@@ -40,7 +44,7 @@ const defaultProps = {
   numberOfColumns: 1,
 } satisfies Partial<MonthLevelGroupProps>;
 
-export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => {
+export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
   const props = useProps('MonthLevelGroup', defaultProps, _props);
   const {
     // Month settings
@@ -88,6 +92,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
     __stopPropagation,
     size,
     static: isStatic,
+    fullWidth,
     vars,
     attributes,
     ...others
@@ -168,6 +173,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           attributes={attributes}
         />
       );
@@ -178,8 +184,8 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'MonthLevelGroup'}
-      ref={ref}
       size={size}
+      fullWidth={fullWidth}
       attributes={attributes}
       {...others}
     >

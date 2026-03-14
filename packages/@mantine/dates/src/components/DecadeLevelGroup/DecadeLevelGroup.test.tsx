@@ -17,14 +17,6 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
   tests.itSupportsSystemProps<DecadeLevelGroupProps, DecadeLevelGroupStylesNames>({
     component: DecadeLevelGroup,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/DecadeLevelGroup',
     stylesApiSelectors: [
       'levelsGroup',

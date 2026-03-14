@@ -1,0 +1,102 @@
+import { HooksDemos, ScrollerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useScroller);
+
+## Usage
+
+The `use-scroller` hook manages horizontal scroll behavior for a container element.
+It provides scroll state (whether content can be scrolled in either direction),
+scroll functions, and drag-to-scroll functionality.
+
+<Demo data={HooksDemos.useScrollerUsageDemo} />
+
+## Scroll amount
+
+Use `scrollAmount` option to control how many pixels the content scrolls
+when `scrollStart` or `scrollEnd` functions are called. Default value is `200`:
+
+<Demo data={HooksDemos.useScrollerScrollAmountDemo} />
+
+## Draggable
+
+Use `draggable` option to enable or disable drag-to-scroll functionality.
+When `draggable` is `true` (default), users can click and drag to scroll the content:
+
+<Demo data={HooksDemos.useScrollerDraggableDemo} />
+
+## Scroller component
+
+If you prefer component API, you can use [Scroller](/core/scroller) component.
+It provides the same functionality with additional styling and control button features.
+
+<Demo data={ScrollerDemos.usage} />
+
+## Definition
+
+```tsx
+function useScroller<T extends HTMLElement = HTMLDivElement>(
+  options?: UseScrollerOptions
+): UseScrollerReturnValue<T>;
+
+interface UseScrollerOptions {
+  /** Amount of pixels to scroll when calling scroll functions, `200` by default */
+  scrollAmount?: number;
+
+  /** Determines whether content can be scrolled by dragging with mouse, `true` by default */
+  draggable?: boolean;
+
+  /** Called when scroll state changes (canScrollStart or canScrollEnd) */
+  onScrollStateChange?: (state: UseScrollerScrollState) => void;
+}
+
+interface UseScrollerScrollState {
+  /** Whether content can be scrolled towards the start (left in LTR, right in RTL) */
+  canScrollStart: boolean;
+
+  /** Whether content can be scrolled towards the end (right in LTR, left in RTL) */
+  canScrollEnd: boolean;
+}
+
+interface UseScrollerReturnValue<T extends HTMLElement = HTMLDivElement> {
+  /** Ref callback to attach to the scrollable container element */
+  ref: RefCallback<T | null>;
+
+  /** Whether content can be scrolled towards the start */
+  canScrollStart: boolean;
+
+  /** Whether content can be scrolled towards the end */
+  canScrollEnd: boolean;
+
+  /** Scrolls towards the start direction */
+  scrollStart: () => void;
+
+  /** Scrolls towards the end direction */
+  scrollEnd: () => void;
+
+  /** `true` if the user is currently dragging the content */
+  isDragging: boolean;
+
+  /** Props to spread on the scrollable container for drag functionality */
+  dragHandlers: {
+    onMouseDown: (e: React.MouseEvent) => void;
+    onMouseMove: (e: React.MouseEvent) => void;
+    onMouseUp: () => void;
+    onMouseLeave: () => void;
+  };
+}
+```
+
+## Exported types
+
+`UseScrollerOptions`, `UseScrollerReturnValue` and `UseScrollerScrollState` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
+
+```tsx
+import type {
+  UseScrollerOptions,
+  UseScrollerReturnValue,
+  UseScrollerScrollState,
+} from '@mantine/hooks';
+```

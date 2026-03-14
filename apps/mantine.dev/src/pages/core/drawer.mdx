@@ -10,27 +10,27 @@ export default Layout(MDX_DATA.Drawer);
 
 ## Position
 
-Drawer can be placed on `left` (default), `top`, `right` and `bottom`. Control drawer position with `position` prop,
+Drawer can be placed on `left` (default), `top`, `right` and `bottom`. Control the drawer position with the `position` prop,
 for example `<Drawer position="top" />`.
 
 <Demo data={DrawerDemos.positions} />
 
 ## Offset
 
-Set `offset` prop to change drawer offset from the edge of the viewport:
+Set the `offset` prop to change the drawer offset from the edge of the viewport:
 
 <Demo data={DrawerDemos.offset} />
 
 ## Customize overlay
 
-`Drawer` uses [Overlay](/core/overlay/) component, you can set any props that [Overlay](/core/overlay/)
+`Drawer` uses the [Overlay](/core/overlay/) component. You can set any props that [Overlay](/core/overlay/)
 supports with `overlayProps`:
 
 <Demo data={DrawerDemos.overlay} />
 
 ## Sizes
 
-You can change drawer width/height (depends on `position`) by setting `size` prop to predefined size or any valid width,
+You can change the drawer width/height (depends on `position`) by setting the `size` prop to a predefined size or any valid width,
 for example, `size="55%"` or `size={200}`:
 
 ```tsx
@@ -49,7 +49,7 @@ function Demo() {
 
 ## Remove header
 
-To remove header set `withCloseButton={false}`
+To remove the header, set `withCloseButton={false}`
 
 <Demo data={DrawerDemos.header} />
 
@@ -63,33 +63,33 @@ To remove header set `withCloseButton={false}`
 
 ## Change transition
 
-`Drawer` is built with [Transition](/core/transition/) component. Use `transitionProps`
+`Drawer` is built with the [Transition](/core/transition/) component. Use the `transitionProps`
 prop to customize any [Transition](/core/transition/) properties:
 
 <Demo data={DrawerDemos.transitions} />
 
 ## onExitTransitionEnd and onEnterTransitionEnd
 
-`onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
-exit/enter transition is finished. For example, this is useful when you want to clear
-data after drawer is closed:
+The `onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
+the exit/enter transition is finished. For example, this is useful when you want to clear
+data after the drawer is closed:
 
 <Demo data={DrawerDemos.transitionEnd} />
 
 ## Initial focus
 
-`Drawer` uses [FocusTrap](/core/focus-trap/) to trap focus. Add `data-autofocus`
+`Drawer` uses [FocusTrap](/core/focus-trap/) to trap focus. Add the `data-autofocus`
 attribute to the element that should receive initial focus.
 
 <Demo data={DrawerDemos.initialFocus} />
 
-If you do not want to focus any elements when the drawer is opened, use `FocusTrap.InitialFocus`
+If you do not want to focus any elements when the drawer is opened, use the `FocusTrap.InitialFocus`
 component to create a visually hidden element that will receive initial focus:
 
 <Demo data={DrawerDemos.initialFocusTrap} />
 
-If you do not add `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
-drawer will focus the first focusable element inside it which is usually the close button.
+If you do not add the `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
+the drawer will focus the first focusable element inside it which is usually the close button.
 
 ## Control behavior
 

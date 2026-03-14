@@ -41,16 +41,14 @@ export type PieChartCssVariables = {
 };
 
 export interface PieChartProps
-  extends BoxProps,
-    StylesApiProps<PieChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<PieChartFactory>, ElementProps<'div'> {
   /** Data used to render chart */
   data: PieChartCell[];
 
-  /** Determines whether the tooltip should be displayed when one of the section is hovered @default `true` */
+  /** Determines whether the tooltip should be displayed when one of the section is hovered @default true */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms @default `0` */
+  /** Tooltip animation duration in ms @default 0 */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -65,40 +63,40 @@ export interface PieChartProps
   /** Controls text color of all labels, white by default */
   labelColor?: MantineColor;
 
-  /** Controls padding between segments @default `0` */
+  /** Controls padding between segments @default 0 */
   paddingAngle?: number;
 
-  /** Determines whether each segment should have associated label @default `false` */
+  /** Determines whether each segment should have associated label @default false */
   withLabels?: boolean;
 
-  /** Determines whether segments labels should have lines that connect the segment with the label @default `true` */
+  /** Determines whether segments labels should have lines that connect the segment with the label @default true */
   withLabelsLine?: boolean;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default `80` */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 80 */
   size?: number;
 
-  /** Controls width of segments stroke @default `1` */
+  /** Controls width of segments stroke @default 1 */
   strokeWidth?: number;
 
-  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default `0` */
+  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default 0 */
   startAngle?: number;
 
-  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default `360` */
+  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default 360 */
   endAngle?: number;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default 'all' */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Additional elements rendered inside `PieChart` component */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `PieChart` component */
-  pieChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsPieChart>;
+  pieChartProps?: React.ComponentProps<typeof ReChartsPieChart>;
 
-  /** Controls labels position relative to the segment @default `'outside'` */
+  /** Controls labels position relative to the segment @default 'outside' */
   labelsPosition?: 'inside' | 'outside';
 
-  /** Type of labels to display @default `'value'` */
+  /** Type of labels to display @default 'value' */
   labelsType?: 'value' | 'percent';
 
   /** A function to format values inside the tooltip */
@@ -161,19 +159,19 @@ const getInsideLabel =
   (labelsType: 'value' | 'percent', valueFormatter?: PieChartProps['valueFormatter']): PieLabel =>
   ({ cx, cy, midAngle, innerRadius, outerRadius, value, percent }) => {
     const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-(midAngle || 0) * RADIAN);
-    const y = cy + radius * Math.sin(-(midAngle || 0) * RADIAN);
+    const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.5;
+    const x = Number(cx) + radius * Math.cos(-(midAngle || 0) * RADIAN);
+    const y = Number(cy) + radius * Math.sin(-(midAngle || 0) * RADIAN);
 
     return (
       <text
         x={x}
         y={y}
-        textAnchor={x > cx ? 'start' : 'end'}
+        textAnchor={x > Number(cx) ? 'start' : 'end'}
         dominantBaseline="central"
         className={classes.label}
       >
-        {getLabelValue(labelsType, value, percent, valueFormatter)}
+        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
       </text>
     );
   };
@@ -186,16 +184,18 @@ const getOutsideLabel =
       y={y}
       cx={cx}
       cy={cy}
-      textAnchor={x > cx ? 'start' : 'end'}
+      textAnchor={x > Number(cx) ? 'start' : 'end'}
       fill="var(--chart-labels-color, var(--mantine-color-dimmed))"
       fontFamily="var(--mantine-font-family)"
       fontSize={12}
     >
-      <tspan x={x}>{getLabelValue(labelsType, value, percent, valueFormatter)}</tspan>
+      <tspan x={x}>
+        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
+      </tspan>
     </text>
   );
 
-export const PieChart = factory<PieChartFactory>((_props, ref) => {
+export const PieChart = factory<PieChartFactory>((_props) => {
   const props = useProps('PieChart', defaultProps, _props);
   const {
     classNames,
@@ -261,11 +261,11 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsPieChart {...pieChartProps}>
           <Pie
-            data={data}
+            data={data as any}
             innerRadius={0}
             outerRadius={size / 2}
             dataKey="value"
@@ -303,7 +303,9 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
-                  segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
+                  segmentId={
+                    tooltipDataSource === 'segment' ? (payload?.[0]?.name as string) : undefined
+                  }
                   valueFormatter={valueFormatter}
                   attributes={attributes}
                 />
@@ -321,3 +323,4 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
 
 PieChart.displayName = '@mantine/charts/PieChart';
 PieChart.classes = classes;
+PieChart.varsResolver = varsResolver;

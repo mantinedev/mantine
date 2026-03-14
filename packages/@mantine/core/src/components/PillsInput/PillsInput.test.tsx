@@ -4,6 +4,7 @@ import { PillsInput, PillsInputProps } from './PillsInput';
 
 const defaultProps: PillsInputProps = {
   ...inputDefaultProps,
+  children: <PillsInput.Field />,
 };
 
 describe('@mantine/core/PillsInput', () => {
@@ -28,14 +29,7 @@ describe('@mantine/core/PillsInput', () => {
   tests.itSupportsSystemProps<PillsInputProps, __InputStylesNames>({
     component: PillsInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/PillsInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

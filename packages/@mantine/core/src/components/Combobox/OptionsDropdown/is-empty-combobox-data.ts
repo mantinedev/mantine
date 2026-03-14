@@ -1,6 +1,7 @@
+import { Primitive } from '../../..';
 import { ComboboxParsedItem, ComboboxParsedItemGroup } from '../Combobox.types';
 
-export function isEmptyComboboxData(data: ComboboxParsedItem[]) {
+export function isEmptyComboboxData(data: ComboboxParsedItem<Primitive>[]) {
   if (data.length === 0) {
     return true;
   }

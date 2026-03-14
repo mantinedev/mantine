@@ -7,7 +7,7 @@ import { Button, Group, Text, Collapse, Box } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [expanded, { toggle }] = useDisclosure(false);
 
   return (
     <Box maw={400} mx="auto">
@@ -15,7 +15,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle content</Button>
       </Group>
 
-      <Collapse in={opened}>
+      <Collapse expanded={expanded}>
         <Text>{/* ... content */}</Text>
       </Collapse>
     </Box>
@@ -24,7 +24,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [expanded, { toggle }] = useDisclosure(false);
 
   return (
     <Box maw={400} mx="auto">
@@ -32,7 +32,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle content</Button>
       </Group>
 
-      <Collapse in={opened}>
+      <Collapse expanded={expanded}>
         <Text>
           From Bulbapedia: Bulbasaur is a small, quadrupedal Pokémon that has blue-green skin with
           darker patches. It has red eyes with white pupils, pointed, ear-like structures on top of

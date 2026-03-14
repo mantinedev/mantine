@@ -1,0 +1,45 @@
+.header {
+  --schedule-header-gap: 8px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--schedule-header-gap);
+  margin-bottom: var(--schedule-header-gap);
+  container-type: inline-size;
+}
+
+.navigationGroup {
+  display: flex;
+  gap: var(--schedule-header-gap);
+  align-items: center;
+
+  @container (width <= 600px) {
+    flex: 1;
+
+    & > :not([data-square]) {
+      flex: 1;
+    }
+  }
+}
+
+.todayControl {
+  @container (width <= 600px) {
+    display: none;
+  }
+}
+
+.viewSelect {
+  @container (width <= 600px) {
+    display: none;
+  }
+}
+
+.compactViewSelect {
+  display: none;
+  font-weight: var(--mantine-font-weight-medium);
+
+  @container (width <= 600px) {
+    display: block;
+    flex: 1 1 100%;
+  }
+}

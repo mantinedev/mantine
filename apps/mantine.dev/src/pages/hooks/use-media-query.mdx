@@ -6,25 +6,25 @@ export default Layout(MDX_DATA.useMediaQuery);
 
 ## Usage
 
-`use-media-query` subscribes to media queries.
+The `use-media-query` hook subscribes to media queries.
 It receives a media query as an argument and returns `true` if the given media query matches the current state.
-The hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+The hook relies on the `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
 and will return `false` if the API is not available, unless an initial value is provided in the second argument.
 
-Resize browser window to trigger `window.matchMedia` event:
+Resize the browser window to trigger the `window.matchMedia` event:
 
 <Demo data={HooksDemos.useMediaQueryDemo} />
 
-## Server Side Rendering
+## Server-Side Rendering
 
-During server side rendering the hook will always return `false` as `window.matchMedia` api is not available,
-if that is not a desired behavior, you can override the initial value:
+During server-side rendering, the hook will always return `false` as the `window.matchMedia` API is not available.
+If that is not the desired behavior, you can override the initial value:
 
 ```tsx
 import { useMediaQuery } from '@mantine/hooks';
 
 function Demo() {
-  // Set initial value in second argument and getInitialValueInEffect option to false
+  // Set the initial value in the second argument and getInitialValueInEffect option to false
   const matches = useMediaQuery('(max-width: 40em)', true, {
     getInitialValueInEffect: false,
   });

@@ -1,4 +1,4 @@
-import { IconAt, IconChevronDown } from '@tabler/icons-react';
+import { AtIcon, CaretDownIcon } from '@phosphor-icons/react';
 import { Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { InputStylesApi } from '@docs/styles-api';
@@ -7,15 +7,15 @@ const code = `
 import { Input } from '@mantine/core';
 
 function Demo() {
-  const at = <IconAt size={16} stroke={1.5} />;
-  const chevron = <IconChevronDown size={16} stroke={1.5} />;
+  const at = <AtIcon size={16} />;
+  const chevron = <CaretDownIcon size={16} />;
   return <Input{{props}} placeholder="Input component" leftSection={at} rightSection={chevron} />;
 }
 `;
 
 function Demo(props: any) {
-  const at = <IconAt size={16} stroke={1.5} />;
-  const chevron = <IconChevronDown size={16} stroke={1.5} />;
+  const at = <AtIcon size={16} />;
+  const chevron = <CaretDownIcon size={16} />;
   return <Input placeholder="Input component" leftSection={at} rightSection={chevron} {...props} />;
 }
 

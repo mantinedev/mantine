@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.useMergedRef);
 
 ## Usage
 
-`use-merged-ref` accepts any number of refs and returns a function that should be passed to the `ref` prop.
-Use this hook when you need to use more than one ref on a single dom node, for example,
+The `use-merged-ref` hook accepts any number of refs and returns a function that should be passed to the `ref` prop.
+Use this hook when you need to use more than one ref on a single DOM node, for example,
 when you want to use [use-click-outside](/hooks/use-click-outside/) and [use-focus-trap](/hooks/use-focus-trap/) hooks and also get a ref for yourself:
 
 ```tsx
@@ -34,10 +34,10 @@ function Demo() {
 
 ## mergeRefs function
 
-`use-merged-ref` hooks memoizes refs with `useCallback` hook, but in some cases
+The `use-merged-ref` hook memoizes refs with the `useCallback` hook, but in some cases
 memoizing is not a valid strategy, for example, when you are working with a list
-of dynamic components React will complain that different number of hooks was called
-across two renders. To fix that issue, use `mergeRefs` function instead:
+of dynamic components React will complain that a different number of hooks was called
+across two renders. To fix that issue, use the `mergeRefs` function instead:
 
 ```tsx
 import { useRef } from 'react';

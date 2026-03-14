@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.useQueue);
 
 ## Usage
 
-`use-queue` limits the number of data in current state and places the rest of it in a queue.
-For example, in [@mantine/notifications](/x/notifications/) package number of
-notifications that is currently displayed is limited and other new notifications are added to the queue and displayed once
+The `use-queue` hook limits the number of data items in the current state and places the rest of them in a queue.
+For example, in the [@mantine/notifications](/x/notifications/) package, the number of
+notifications that is currently displayed is limited, and other new notifications are added to the queue and displayed once
 available space appears.
 
 ```tsx
@@ -21,20 +21,20 @@ const { state, queue, add, update, cleanQueue } = useQueue({
 
 // state -> [1], queue -> []
 
-// When state.length is less that limit, new items are added to state
+// When state.length is less than limit, new items are added to state
 add(2);
 // state -> [1,2], queue -> []
 
-// When state.length is equal to limit, new items are added to queue
+// When state.length is equal to the limit, new items are added to the queue
 add(3, 4, 5, 6);
 // state -> [1,2], queue -> [3,4,5,6]
 
-// Use update function to modify items
+// Use the update function to modify items
 update((values) => values.map((item) => item * 3));
 // state -> [3,6], queue -> [9,12,15,18]
 
-// If you add or remove items in update function,
-// they will be divided between queue and state according to limit
+// If you add or remove items in the update function,
+// they will be divided between queue and state according to the limit;
 // order is always preserved
 update((values) => values.filter((item) => item % 2));
 // state -> [3,9], queue -> [15]
@@ -127,7 +127,7 @@ function useQueue<T>(options: UseQueueOptions<T>): UseQueueReturnValue<T>
 
 ## Exported types
 
-`UseQueueOptions` and `UseQueueReturnValue` types are exported from `@mantine/hooks` package,
+`UseQueueOptions` and `UseQueueReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

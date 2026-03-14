@@ -1,14 +1,14 @@
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { CheckIcon, XIcon } from '@phosphor-icons/react';
 import { Notification } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconX, IconCheck } from '@tabler/icons-react';
+import { XIcon, CheckIcon } from '@phosphor-icons/react';
 import { Notification } from '@mantine/core';
 
 function Demo() {
-  const xIcon = <IconX size={20} />;
-  const checkIcon = <IconCheck size={20} />;
+  const xIcon = <XIcon size={20} />;
+  const checkIcon = <CheckIcon size={20} />;
 
   return (
     <>
@@ -24,8 +24,8 @@ function Demo() {
 `;
 
 function Demo() {
-  const xIcon = <IconX size={20} />;
-  const checkIcon = <IconCheck size={20} />;
+  const xIcon = <XIcon size={20} />;
+  const checkIcon = <CheckIcon size={20} />;
 
   return (
     <>

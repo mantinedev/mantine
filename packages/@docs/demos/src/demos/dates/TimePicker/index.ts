@@ -1,5 +1,6 @@
 export { usage } from './TimePicker.demo.usage';
 export { clearable } from './TimePicker.demo.clearable';
+export { clearSectionMode } from './TimePicker.demo.clearSectionMode';
 export { disabled } from './TimePicker.demo.disabled';
 export { readOnly } from './TimePicker.demo.readOnly';
 export { withSeconds } from './TimePicker.demo.withSeconds';
