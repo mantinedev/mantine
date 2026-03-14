@@ -164,6 +164,22 @@ describe('@mantine/dates/DateTimePicker', () => {
     expectNoPopover(container);
   });
 
+  it('supports placeholder styles selector in classNames', () => {
+    const classNames: DateTimePickerProps['classNames'] = {
+      placeholder: 'test-placeholder-class',
+    };
+
+    render(
+      <DateTimePicker
+        {...defaultProps}
+        classNames={classNames}
+        placeholder="test-placeholder"
+      />
+    );
+
+    expect(screen.getByText('test-placeholder')).toHaveClass('test-placeholder-class');
+  });
+
   it('supports uncontrolled state', async () => {
     const { container } = render(<DateTimePicker {...defaultProps} defaultValue="2022-04-11" />);
 
