@@ -1,3 +1,4 @@
+import { PaginationDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,10 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Pagination responsive layout
+
+[Pagination](/core/pagination/) component now supports `layout="responsive"` prop that uses CSS container
+queries to switch between page number buttons and a compact "Page X of Y" label based on the available width.
+
+<Demo data={PaginationDemos.responsive} />

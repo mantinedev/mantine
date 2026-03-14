@@ -14,6 +14,10 @@
   --pagination-control-size: var(--pagination-control-size-md);
   --pagination-control-fz: var(--mantine-font-size-md);
   --pagination-active-bg: var(--mantine-primary-color-filled);
+
+  &:where([data-layout='responsive']) {
+    container-type: inline-size;
+  }
 }
 
 .control {
@@ -78,4 +82,27 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
+}
+
+.items {
+  display: flex;
+  gap: inherit;
+  align-items: center;
+
+  @container (width <= 400px) {
+    display: none;
+  }
+}
+
+.label {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: var(--pagination-control-size);
+  font-size: var(--pagination-control-fz);
+  white-space: nowrap;
+
+  @container (width <= 400px) {
+    display: flex;
+  }
 }

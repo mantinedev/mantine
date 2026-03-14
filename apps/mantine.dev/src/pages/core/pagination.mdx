@@ -40,6 +40,13 @@ Control the number of items displayed after previous and before next buttons wit
 
 <Demo data={PaginationDemos.boundaries} />
 
+## Responsive layout
+
+Set `layout="responsive"` to use CSS container queries to show a compact "Page X of Y" label
+when the container is narrow. Use `formatLabel` prop to customize the label text.
+
+<Demo data={PaginationDemos.responsive} />
+
 ## Hide pages controls
 
 Set `withPages={false}` to hide the pages controls:
@@ -60,6 +67,7 @@ You can use the following compound components to have full control over the `Pag
 - `Pagination.Previous` – previous control
 - `Pagination.First` – first control
 - `Pagination.Last` – last control
+- `Pagination.Label` – compact label for responsive layout
 
 <Demo data={PaginationDemos.composition} />
 
