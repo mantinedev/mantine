@@ -258,7 +258,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'Version v9.1.0',
     slug: '/changelog/9-1-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/9.1.0',
-    date: 'May 26th, 2026',
+    date: 'April 21st, 2026',
     searchTags: '9-1-0, 910',
   },
 };
