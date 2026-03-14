@@ -687,6 +687,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           }}
           control={{
             monthYearSelect: {
+              locale,
               yearValue: dayjs(date).get('year'),
               monthValue: dayjs(date).get('month'),
               onYearChange: (year) =>

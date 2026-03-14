@@ -18,3 +18,4 @@ export { recurringEvents } from './MonthView.demo.recurringEvents';
 export { backgroundEvents } from './MonthView.demo.backgroundEvents';
 export { customHeader } from './MonthView.demo.customHeader';
 export { maxEventsPerDay } from './MonthView.demo.maxEventsPerDay';
+export { localization } from './MonthView.demo.localization';

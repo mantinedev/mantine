@@ -21,7 +21,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useUncontrolled } from '@mantine/hooks';
-import { ScheduleLabelsOverride } from '../../labels';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -159,8 +159,6 @@ export interface MobileMonthViewProps
   /** Format for the events list header date @default 'dddd, MMMM D' */
   eventsHeaderFormat?: DateLabelFormat;
 
-  /** Placeholder text when no events for selected date @default 'No events' */
-  noEventsText?: string;
 
   /** Called when the year back button in the header is clicked */
   onYearClick?: () => void;
@@ -189,7 +187,6 @@ const defaultProps = {
   highlightToday: true,
   mode: 'default',
   eventsHeaderFormat: 'dddd, MMMM D',
-  noEventsText: 'No events',
 } satisfies Partial<MobileMonthViewProps>;
 
 const varsResolver = createVarsResolver<MobileMonthViewFactory>((_theme, { radius }) => ({
@@ -233,7 +230,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     mode,
     renderEvent,
     eventsHeaderFormat,
-    noEventsText,
     onYearClick,
     onEventClick,
     renderHeader,
@@ -518,7 +514,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
           eventsList
         ) : (
           <Text {...getStyles('mobileMonthViewNoEvents')} c="dimmed" ta="center" py="xl">
-            {noEventsText}
+            {getLabel('noEvents', labels)}
           </Text>
         )}
       </Box>

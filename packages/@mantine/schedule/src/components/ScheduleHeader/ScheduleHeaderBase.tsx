@@ -83,7 +83,7 @@ export function ScheduleHeaderBase({
   stylesApiProps,
 }: ScheduleHeaderBaseProps) {
   const centralControl = control.monthYearSelect ? (
-    <ScheduleHeader.MonthYearSelect {...stylesApiProps} {...control.monthYearSelect} />
+    <ScheduleHeader.MonthYearSelect {...stylesApiProps} labels={labels} {...control.monthYearSelect} />
   ) : (
     <ScheduleHeader.Control {...stylesApiProps} interactive={false} miw={control.miw}>
       {control.title}

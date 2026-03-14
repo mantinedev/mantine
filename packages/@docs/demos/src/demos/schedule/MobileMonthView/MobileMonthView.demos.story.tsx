@@ -22,3 +22,8 @@ export const Demo_staticMode = {
   name: '⭐ Demo: staticMode',
   render: renderDemo(demos.staticMode),
 };
+
+export const Demo_localization = {
+  name: '⭐ Demo: localization',
+  render: renderDemo(demos.localization),
+};

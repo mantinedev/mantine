@@ -26,3 +26,4 @@ export { recurringEvents } from './WeekView.demo.recurringEvents';
 export { backgroundEvents } from './WeekView.demo.backgroundEvents';
 export { backgroundEventsCustomStyle } from './WeekView.demo.backgroundEventsCustomStyle';
 export { customHeader } from './WeekView.demo.customHeader';
+export { localization } from './WeekView.demo.localization';
