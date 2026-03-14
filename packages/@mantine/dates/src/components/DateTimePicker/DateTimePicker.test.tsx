@@ -170,11 +170,7 @@ describe('@mantine/dates/DateTimePicker', () => {
     };
 
     render(
-      <DateTimePicker
-        {...defaultProps}
-        classNames={classNames}
-        placeholder="test-placeholder"
-      />
+      <DateTimePicker {...defaultProps} classNames={classNames} placeholder="test-placeholder" />
     );
 
     expect(screen.getByText('test-placeholder')).toHaveClass('test-placeholder-class');

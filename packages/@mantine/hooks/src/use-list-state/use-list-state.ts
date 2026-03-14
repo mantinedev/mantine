@@ -25,15 +25,9 @@ export type UseListStateReturnValue<T> = [T[], UseListStateHandlers<T>];
 export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListStateReturnValue<T> {
   const [state, setState] = useState(initialValue);
 
-  const append = useCallback(
-    (...items: T[]) => setState((current) => [...current, ...items]),
-    []
-  );
+  const append = useCallback((...items: T[]) => setState((current) => [...current, ...items]), []);
 
-  const prepend = useCallback(
-    (...items: T[]) => setState((current) => [...items, ...current]),
-    []
-  );
+  const prepend = useCallback((...items: T[]) => setState((current) => [...items, ...current]), []);
 
   const insert = useCallback(
     (index: number, ...items: T[]) =>
@@ -123,22 +117,16 @@ export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListSt
   );
 
   const applyWhere = useCallback(
-    (
-      condition: (item: T, index: number) => boolean,
-      fn: (item: T, index?: number) => T
-    ) =>
+    (condition: (item: T, index: number) => boolean, fn: (item: T, index?: number) => T) =>
       setState((current) =>
         current.map((item, index) => (condition(item, index) ? fn(item, index) : item))
       ),
     []
   );
 
-  const filter = useCallback(
-    (fn: (item: T, i: number) => boolean) => {
-      setState((current) => current.filter(fn));
-    },
-    []
-  );
+  const filter = useCallback((fn: (item: T, i: number) => boolean) => {
+    setState((current) => current.filter(fn));
+  }, []);
 
   const handlers = useMemo(
     () => ({
