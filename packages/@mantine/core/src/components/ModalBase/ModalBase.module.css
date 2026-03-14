@@ -54,3 +54,14 @@
     padding-top: 0;
   }
 }
+
+.portal {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+
+  & > * {
+    pointer-events: auto;
+  }
+}

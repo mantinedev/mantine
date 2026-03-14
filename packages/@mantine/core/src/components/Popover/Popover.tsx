@@ -12,6 +12,7 @@ import {
   MantineShadow,
   StylesApiProps,
   useDirection,
+  useFloatingPortalTarget,
   useMantineEnv,
   useProps,
   useResolvedStylesApi,
@@ -279,6 +280,14 @@ export function Popover(_props: PopoverProps) {
   const [dropdownNode, setDropdownNode] = useState<HTMLElement | null>(null);
   const { dir } = useDirection();
   const env = useMantineEnv();
+  const floatingPortalTarget = useFloatingPortalTarget();
+
+  const useFloatingPortal = floatingPortalTarget && !portalProps?.target;
+  const resolvedPortalProps = useFloatingPortal
+    ? { ...portalProps, target: floatingPortalTarget }
+    : portalProps;
+
+  const resolvedFloatingStrategy = useFloatingPortal ? 'fixed' : floatingStrategy;
 
   const uid = useId(id);
   const popover = usePopover({
@@ -296,7 +305,7 @@ export function Popover(_props: PopoverProps) {
     onOpen,
     onClose,
     onDismiss,
-    strategy: floatingStrategy,
+    strategy: resolvedFloatingStrategy,
     dropdownVisible,
     setDropdownVisible,
     positionRef,
@@ -372,7 +381,7 @@ export function Popover(_props: PopoverProps) {
         placement: popover.floating.placement,
         trapFocus,
         withinPortal,
-        portalProps,
+        portalProps: resolvedPortalProps,
         zIndex,
         radius,
         shadow,
@@ -392,7 +401,7 @@ export function Popover(_props: PopoverProps) {
         keepMounted,
         getStyles,
         resolvedStyles,
-        floatingStrategy,
+        floatingStrategy: resolvedFloatingStrategy,
         referenceHidden:
           hideDetached && env !== 'test'
             ? popover.floating.middlewareData.hide?.referenceHidden
