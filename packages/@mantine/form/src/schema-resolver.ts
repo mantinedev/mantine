@@ -18,9 +18,7 @@ function issuesToFormErrors(issues: ReadonlyArray<StandardSchemaV1.Issue>): Form
 export function schemaResolver<Sync extends boolean = false>(
   schema: StandardSchemaV1,
   _options?: { sync?: Sync }
-): Sync extends true
-  ? (values: any) => FormErrors
-  : (values: any) => Promise<FormErrors> {
+): Sync extends true ? (values: any) => FormErrors : (values: any) => Promise<FormErrors> {
   const sync = _options?.sync ?? false;
   return ((values: any) => {
     const result = schema['~standard'].validate(values);
