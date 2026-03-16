@@ -60,12 +60,12 @@
 
   .root:where([data-align='left']) & {
     padding-inline-start: var(--offset);
-    text-align: left;
+    text-align: start;
   }
 
   .root:where([data-align='right']) & {
     padding-inline-end: var(--offset);
-    text-align: right;
+    text-align: end;
   }
 
   @mixin where-light {
@@ -159,19 +159,11 @@
 .itemBody {
   .root:where([data-align='left']) & {
     padding-inline-start: var(--offset);
-    text-align: left;
-
-    @mixin where-rtl {
-      text-align: right;
-    }
+    text-align: start;
   }
 
   .root:where([data-align='right']) & {
     padding-inline-end: var(--offset);
-    text-align: right;
-
-    @mixin where-rtl {
-      text-align: left;
-    }
+    text-align: end;
   }
 }

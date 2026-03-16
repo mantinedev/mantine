@@ -15,11 +15,11 @@
 
   &:where([data-truncate='start']) {
     direction: rtl;
-    text-align: right;
+    text-align: end;
 
     @mixin where-rtl {
       direction: ltr;
-      text-align: left;
+      text-align: start;
     }
   }
 

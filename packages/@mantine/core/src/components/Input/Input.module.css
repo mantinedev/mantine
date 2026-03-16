@@ -19,7 +19,6 @@
   --input-radius: var(--mantine-radius-default);
 
   --input-cursor: text;
-  --input-text-align: left;
   --input-line-height: calc(var(--input-height) - rem(2px));
   --input-padding: calc(var(--input-height) / 3);
   --input-padding-inline-start: var(--input-padding);
@@ -148,7 +147,6 @@
   }
 
   @mixin where-rtl {
-    --input-text-align: right;
     --left-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
     --right-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
   }
@@ -162,7 +160,7 @@
   width: 100%;
   transition: border-color 100ms ease;
 
-  text-align: var(--input-text-align);
+  text-align: start;
   color: var(--input-color);
   border: rem(1px) solid var(--input-bd);
   background-color: var(--input-bg);
