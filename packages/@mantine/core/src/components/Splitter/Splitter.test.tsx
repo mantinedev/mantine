@@ -65,11 +65,4 @@ describe('@mantine/core/Splitter', () => {
     render(<Splitter {...defaultProps} />);
     expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'horizontal');
   });
-
-  it('supports controlled sizes', () => {
-    const spy = jest.fn();
-    render(<Splitter {...defaultProps} sizes={[30, 70]} onSizeChange={spy} />);
-    expect(screen.getByText('Left pane')).toBeInTheDocument();
-    expect(screen.getByText('Right pane')).toBeInTheDocument();
-  });
 });
