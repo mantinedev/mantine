@@ -246,4 +246,6 @@ export type {
   UseSplitterPanel,
   UseSplitterOptions,
   UseSplitterReturnValue,
+  UseSplitterRedistributeInput,
+  UseSplitterRedistributeFn,
 } from './use-splitter/use-splitter';

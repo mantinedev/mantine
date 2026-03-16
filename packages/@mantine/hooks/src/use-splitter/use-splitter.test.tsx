@@ -318,6 +318,20 @@ describe('useSplitter', () => {
     expect(handle.getAttribute('aria-valuenow')).toBe('70');
   });
 
+  it('sizes always sum to 100 when constrained by min', () => {
+    render(<TestComponent panels={[{ defaultSize: 50 }, { defaultSize: 50, min: 20 }]} />);
+
+    const handle = screen.getByTestId('handle-0');
+
+    for (let i = 0; i < 50; i++) {
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+    }
+
+    const valuenow = Number(handle.getAttribute('aria-valuenow'));
+    expect(valuenow).toBeLessThanOrEqual(80);
+    expect(valuenow + 20).toBeLessThanOrEqual(100);
+  });
+
   it('keyboard collapse fires onCollapseChange', () => {
     const onCollapseChange = jest.fn();
     render(
@@ -333,5 +347,264 @@ describe('useSplitter', () => {
 
     expect(handle.getAttribute('aria-valuenow')).toBe('0');
     expect(onCollapseChange).toHaveBeenCalledWith(0, true);
+  });
+
+  describe('redistribute: nearest', () => {
+    it('borrows from further panels when neighbor is at min', () => {
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 26, min: 0 },
+            { defaultSize: 20, min: 20 },
+            { defaultSize: 54, min: 0 },
+          ]}
+          redistribute="nearest"
+          step={10}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      expect(handle.getAttribute('aria-valuenow')).toBe('36');
+    });
+
+    it('borrows from nearest panel first (positive delta)', () => {
+      const onSizeChange = jest.fn();
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 20, min: 0 },
+            { defaultSize: 30, min: 10 },
+            { defaultSize: 50, min: 10 },
+          ]}
+          redistribute="nearest"
+          step={25}
+          onSizeChange={onSizeChange}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      const newSizes = onSizeChange.mock.calls[0][0];
+      expect(newSizes[0]).toBe(45);
+      expect(newSizes[1]).toBe(10);
+      expect(newSizes[2]).toBe(45);
+      expect(newSizes[0] + newSizes[1] + newSizes[2]).toBe(100);
+    });
+
+    it('borrows from panels to the left on negative delta', () => {
+      const onSizeChange = jest.fn();
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 50, min: 10 },
+            { defaultSize: 20, min: 20 },
+            { defaultSize: 30, min: 0 },
+          ]}
+          redistribute="nearest"
+          step={15}
+          onSizeChange={onSizeChange}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-1');
+      fireEvent.keyDown(handle, { key: 'ArrowLeft' });
+
+      const newSizes = onSizeChange.mock.calls[0][0];
+      expect(newSizes[0]).toBe(35);
+      expect(newSizes[1]).toBe(20);
+      expect(newSizes[2]).toBe(45);
+      expect(newSizes[0] + newSizes[1] + newSizes[2]).toBe(100);
+    });
+
+    it('respects growing panel max constraint', () => {
+      const onSizeChange = jest.fn();
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 30, min: 0, max: 40 },
+            { defaultSize: 20, min: 0 },
+            { defaultSize: 50, min: 0 },
+          ]}
+          redistribute="nearest"
+          step={30}
+          onSizeChange={onSizeChange}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      const newSizes = onSizeChange.mock.calls[0][0];
+      expect(newSizes[0]).toBe(40);
+      expect(newSizes[0] + newSizes[1] + newSizes[2]).toBe(100);
+    });
+  });
+
+  describe('redistribute: equal', () => {
+    it('distributes shrinkage equally among donor panels', () => {
+      const onSizeChange = jest.fn();
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 20, min: 0 },
+            { defaultSize: 40, min: 0 },
+            { defaultSize: 40, min: 0 },
+          ]}
+          redistribute="equal"
+          step={20}
+          onSizeChange={onSizeChange}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      const newSizes = onSizeChange.mock.calls[0][0];
+      expect(newSizes[0]).toBe(40);
+      expect(newSizes[1]).toBe(30);
+      expect(newSizes[2]).toBe(30);
+      expect(newSizes[0] + newSizes[1] + newSizes[2]).toBe(100);
+    });
+
+    it('skips donors at min and redistributes to remaining', () => {
+      const onSizeChange = jest.fn();
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 20, min: 0 },
+            { defaultSize: 20, min: 20 },
+            { defaultSize: 60, min: 0 },
+          ]}
+          redistribute="equal"
+          step={10}
+          onSizeChange={onSizeChange}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      const newSizes = onSizeChange.mock.calls[0][0];
+      expect(newSizes[0]).toBe(30);
+      expect(newSizes[1]).toBe(20);
+      expect(newSizes[2]).toBe(50);
+      expect(newSizes[0] + newSizes[1] + newSizes[2]).toBe(100);
+    });
+  });
+
+  describe('redistribute: custom function', () => {
+    it('calls custom function with correct input', () => {
+      const customFn = jest.fn((input: { sizes: number[]; delta: number }) => {
+        const result = [...input.sizes];
+        result[0] += input.delta;
+        result[2] -= input.delta;
+        return result;
+      });
+
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 30, min: 0 },
+            { defaultSize: 40, min: 40 },
+            { defaultSize: 30, min: 0 },
+          ]}
+          redistribute={customFn}
+          step={5}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      expect(customFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          sizes: [30, 40, 30],
+          handleIndex: 0,
+          delta: 5,
+        })
+      );
+    });
+
+    it('uses sizes returned by custom function', () => {
+      const onSizeChange = jest.fn();
+      const customFn = jest.fn(() => [50, 10, 40]);
+
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 30, min: 0 },
+            { defaultSize: 40, min: 0 },
+            { defaultSize: 30, min: 0 },
+          ]}
+          redistribute={customFn}
+          step={5}
+          onSizeChange={onSizeChange}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      expect(onSizeChange).toHaveBeenCalledWith([50, 10, 40]);
+    });
+  });
+
+  describe('redistribute preserves sum', () => {
+    it('nearest: sizes sum to 100 after multiple operations', () => {
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 25, min: 5 },
+            { defaultSize: 25, min: 5 },
+            { defaultSize: 50, min: 5 },
+          ]}
+          redistribute="nearest"
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      for (let i = 0; i < 30; i++) {
+        fireEvent.keyDown(handle, { key: 'ArrowRight' });
+      }
+
+      const panel0 = screen.getByTestId('panel-0');
+      const panel1 = screen.getByTestId('panel-1');
+      const panel2 = screen.getByTestId('panel-2');
+      const sum =
+        parseFloat(panel0.style.width) +
+        parseFloat(panel1.style.width) +
+        parseFloat(panel2.style.width);
+      expect(sum).toBe(100);
+    });
+
+    it('equal: sizes sum to 100 after multiple operations', () => {
+      render(
+        <TestComponent
+          panels={[
+            { defaultSize: 25, min: 5 },
+            { defaultSize: 25, min: 5 },
+            { defaultSize: 50, min: 5 },
+          ]}
+          redistribute="equal"
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      for (let i = 0; i < 30; i++) {
+        fireEvent.keyDown(handle, { key: 'ArrowRight' });
+      }
+
+      const panel0 = screen.getByTestId('panel-0');
+      const panel1 = screen.getByTestId('panel-1');
+      const panel2 = screen.getByTestId('panel-2');
+      const sum =
+        parseFloat(panel0.style.width) +
+        parseFloat(panel1.style.width) +
+        parseFloat(panel2.style.width);
+      expect(sum).toBe(100);
+    });
   });
 });

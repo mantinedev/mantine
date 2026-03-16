@@ -532,3 +532,33 @@ export const Demo_useSplitterControlled = {
   name: '⭐ Demo: useSplitterControlled',
   render: renderDemo(demos.useSplitterControlled),
 };
+
+export const Demo_useSplitterRedistributeNearest = {
+  name: '⭐ Demo: useSplitterRedistributeNearest',
+  render: renderDemo(demos.useSplitterRedistributeNearest),
+};
+
+export const Demo_useSplitterRedistributeEqual = {
+  name: '⭐ Demo: useSplitterRedistributeEqual',
+  render: renderDemo(demos.useSplitterRedistributeEqual),
+};
+
+export const Demo_useSplitterRedistributeCustom = {
+  name: '⭐ Demo: useSplitterRedistributeCustom',
+  render: renderDemo(demos.useSplitterRedistributeCustom),
+};
+
+export const Demo_useSplitterGripOnly = {
+  name: '⭐ Demo: useSplitterGripOnly',
+  render: renderDemo(demos.useSplitterGripOnly),
+};
+
+export const Demo_useSplitterNested = {
+  name: '⭐ Demo: useSplitterNested',
+  render: renderDemo(demos.useSplitterNested),
+};
+
+export const Demo_useSplitterCodeEditor = {
+  name: '⭐ Demo: useSplitterCodeEditor',
+  render: renderDemo(demos.useSplitterCodeEditor),
+};

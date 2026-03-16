@@ -15,6 +15,19 @@ export interface UseSplitterPanel {
   collapseThreshold?: number;
 }
 
+export interface UseSplitterRedistributeInput {
+  /** Current sizes before applying delta */
+  sizes: number[];
+  /** Panel configurations */
+  panels: UseSplitterPanel[];
+  /** Index of the handle being dragged */
+  handleIndex: number;
+  /** Requested size change in percentage (positive = grow before-panel) */
+  delta: number;
+}
+
+export type UseSplitterRedistributeFn = (input: UseSplitterRedistributeInput) => number[];
+
 export interface UseSplitterOptions {
   /** Panel configuration array (minimum 2 panels) */
   panels: UseSplitterPanel[];
@@ -30,6 +43,12 @@ export interface UseSplitterOptions {
   onResizeEnd?: (handleIndex: number, sizes: number[]) => void;
   /** Called when a panel collapses or expands */
   onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
+  /** How to borrow space from non-adjacent panels when the immediate neighbor is at its min/max.
+   * `'nearest'` takes from the nearest panel in the drag direction first.
+   * `'equal'` distributes equally among all panels in the drag direction.
+   * A function receives sizes, panels, handleIndex and delta, and returns new sizes.
+   * When not set, only the two adjacent panels are affected. */
+  redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
   /** Keyboard step size in percentage, `1` by default */
   step?: number;
   /** Shift+arrow step size in percentage, `10` by default */
@@ -108,7 +127,46 @@ function createInitialInternalState(): SplitterInternalState {
   };
 }
 
-function applyConstraints(
+function checkCollapse(
+  sizes: number[],
+  panels: UseSplitterPanel[],
+  handleIndex: number,
+  delta: number
+): number[] | null {
+  const beforeIdx = handleIndex;
+  const afterIdx = handleIndex + 1;
+  const beforePanel = panels[beforeIdx];
+  const afterPanel = panels[afterIdx];
+
+  const rawBefore = sizes[beforeIdx] + delta;
+  const rawAfter = sizes[afterIdx] - delta;
+
+  if (
+    beforePanel.collapsible &&
+    rawBefore < getCollapseThreshold(beforePanel) &&
+    rawBefore < sizes[beforeIdx]
+  ) {
+    const result = [...sizes];
+    result[afterIdx] += result[beforeIdx];
+    result[beforeIdx] = 0;
+    return result;
+  }
+
+  if (
+    afterPanel.collapsible &&
+    rawAfter < getCollapseThreshold(afterPanel) &&
+    rawAfter < sizes[afterIdx]
+  ) {
+    const result = [...sizes];
+    result[beforeIdx] += result[afterIdx];
+    result[afterIdx] = 0;
+    return result;
+  }
+
+  return null;
+}
+
+function applyAdjacentOnly(
   sizes: number[],
   panels: UseSplitterPanel[],
   handleIndex: number,
@@ -117,50 +175,193 @@ function applyConstraints(
   const result = [...sizes];
   const beforeIdx = handleIndex;
   const afterIdx = handleIndex + 1;
-  const beforePanel = panels[beforeIdx];
-  const afterPanel = panels[afterIdx];
 
-  const beforeMin = getMin(beforePanel);
-  const beforeMax = getMax(beforePanel);
-  const afterMin = getMin(afterPanel);
-  const afterMax = getMax(afterPanel);
+  const total = result[beforeIdx] + result[afterIdx];
+  const effectiveBeforeMax = Math.min(getMax(panels[beforeIdx]), total - getMin(panels[afterIdx]));
+  const effectiveBeforeMin = Math.max(getMin(panels[beforeIdx]), total - getMax(panels[afterIdx]));
+  const newBefore = clamp(result[beforeIdx] + delta, effectiveBeforeMin, effectiveBeforeMax);
+  result[beforeIdx] = newBefore;
+  result[afterIdx] = total - newBefore;
+  return result;
+}
 
-  let newBefore = result[beforeIdx] + delta;
-  let newAfter = result[afterIdx] - delta;
+function redistributeNearest(
+  sizes: number[],
+  panels: UseSplitterPanel[],
+  handleIndex: number,
+  delta: number
+): number[] {
+  const result = [...sizes];
 
-  if (
-    beforePanel.collapsible &&
-    newBefore < getCollapseThreshold(beforePanel) &&
-    newBefore < result[beforeIdx]
-  ) {
-    newBefore = 0;
-    newAfter = result[beforeIdx] + result[afterIdx];
-  } else if (
-    afterPanel.collapsible &&
-    newAfter < getCollapseThreshold(afterPanel) &&
-    newAfter < result[afterIdx]
-  ) {
-    newAfter = 0;
-    newBefore = result[beforeIdx] + result[afterIdx];
-  } else {
-    newBefore = clamp(newBefore, beforeMin, beforeMax);
-    newAfter = clamp(newAfter, afterMin, afterMax);
+  if (delta > 0) {
+    const growIdx = handleIndex;
+    const maxGrow = getMax(panels[growIdx]) - result[growIdx];
+    const wantedGrow = Math.min(delta, maxGrow);
 
-    const total = result[beforeIdx] + result[afterIdx];
-    if (newBefore + newAfter > total) {
-      newAfter = total - newBefore;
-    }
-    if (newBefore + newAfter < total) {
-      newBefore = total - newAfter;
+    let taken = 0;
+    for (let i = handleIndex + 1; i < result.length && taken < wantedGrow; i += 1) {
+      const canGive = result[i] - getMin(panels[i]);
+      const take = Math.min(canGive, wantedGrow - taken);
+      result[i] -= take;
+      taken += take;
     }
 
-    newBefore = clamp(newBefore, beforeMin, beforeMax);
-    newAfter = clamp(newAfter, afterMin, afterMax);
+    result[growIdx] += taken;
+  } else if (delta < 0) {
+    const growIdx = handleIndex + 1;
+    const maxGrow = getMax(panels[growIdx]) - result[growIdx];
+    const wantedGrow = Math.min(Math.abs(delta), maxGrow);
+
+    let taken = 0;
+    for (let i = handleIndex; i >= 0 && taken < wantedGrow; i -= 1) {
+      const canGive = result[i] - getMin(panels[i]);
+      const take = Math.min(canGive, wantedGrow - taken);
+      result[i] -= take;
+      taken += take;
+    }
+
+    result[growIdx] += taken;
   }
 
-  result[beforeIdx] = newBefore;
-  result[afterIdx] = newAfter;
   return result;
+}
+
+function redistributeEqual(
+  sizes: number[],
+  panels: UseSplitterPanel[],
+  handleIndex: number,
+  delta: number
+): number[] {
+  const result = [...sizes];
+
+  if (delta > 0) {
+    const growIdx = handleIndex;
+    const maxGrow = getMax(panels[growIdx]) - result[growIdx];
+    const wantedGrow = Math.min(delta, maxGrow);
+
+    const donors: number[] = [];
+    for (let i = handleIndex + 1; i < result.length; i += 1) {
+      if (result[i] > getMin(panels[i])) {
+        donors.push(i);
+      }
+    }
+
+    let remaining = wantedGrow;
+    while (remaining > 0.001 && donors.length > 0) {
+      const perDonor = remaining / donors.length;
+      const exhausted: number[] = [];
+
+      for (let d = 0; d < donors.length; d += 1) {
+        const idx = donors[d];
+        const canGive = result[idx] - getMin(panels[idx]);
+        const take = Math.min(canGive, perDonor);
+        result[idx] -= take;
+        remaining -= take;
+        if (canGive <= perDonor + 0.001) {
+          exhausted.push(d);
+        }
+      }
+
+      for (let i = exhausted.length - 1; i >= 0; i -= 1) {
+        donors.splice(exhausted[i], 1);
+      }
+
+      if (exhausted.length === 0) {
+        break;
+      }
+    }
+
+    result[growIdx] += wantedGrow - remaining;
+  } else if (delta < 0) {
+    const growIdx = handleIndex + 1;
+    const maxGrow = getMax(panels[growIdx]) - result[growIdx];
+    const wantedGrow = Math.min(Math.abs(delta), maxGrow);
+
+    const donors: number[] = [];
+    for (let i = handleIndex; i >= 0; i -= 1) {
+      if (result[i] > getMin(panels[i])) {
+        donors.push(i);
+      }
+    }
+
+    let remaining = wantedGrow;
+    while (remaining > 0.001 && donors.length > 0) {
+      const perDonor = remaining / donors.length;
+      const exhausted: number[] = [];
+
+      for (let d = 0; d < donors.length; d += 1) {
+        const idx = donors[d];
+        const canGive = result[idx] - getMin(panels[idx]);
+        const take = Math.min(canGive, perDonor);
+        result[idx] -= take;
+        remaining -= take;
+        if (canGive <= perDonor + 0.001) {
+          exhausted.push(d);
+        }
+      }
+
+      for (let i = exhausted.length - 1; i >= 0; i -= 1) {
+        donors.splice(exhausted[i], 1);
+      }
+
+      if (exhausted.length === 0) {
+        break;
+      }
+    }
+
+    result[growIdx] += wantedGrow - remaining;
+  }
+
+  return result;
+}
+
+function applyConstraints(
+  sizes: number[],
+  panels: UseSplitterPanel[],
+  handleIndex: number,
+  delta: number,
+  redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn
+): number[] {
+  if (typeof redistribute === 'function') {
+    return redistribute({ sizes: [...sizes], panels, handleIndex, delta });
+  }
+
+  if (redistribute === 'nearest' || redistribute === 'equal') {
+    const strategy = redistribute === 'nearest' ? redistributeNearest : redistributeEqual;
+    const result = strategy(sizes, panels, handleIndex, delta);
+
+    const beforeIdx = handleIndex;
+    const afterIdx = handleIndex + 1;
+    const beforePanel = panels[beforeIdx];
+    const afterPanel = panels[afterIdx];
+
+    if (
+      beforePanel.collapsible &&
+      result[beforeIdx] < getCollapseThreshold(beforePanel) &&
+      result[beforeIdx] < sizes[beforeIdx]
+    ) {
+      const freed = result[beforeIdx];
+      result[afterIdx] += freed;
+      result[beforeIdx] = 0;
+    } else if (
+      afterPanel.collapsible &&
+      result[afterIdx] < getCollapseThreshold(afterPanel) &&
+      result[afterIdx] < sizes[afterIdx]
+    ) {
+      const freed = result[afterIdx];
+      result[beforeIdx] += freed;
+      result[afterIdx] = 0;
+    }
+
+    return result;
+  }
+
+  const collapsed = checkCollapse(sizes, panels, handleIndex, delta);
+  if (collapsed) {
+    return collapsed;
+  }
+
+  return applyAdjacentOnly(sizes, panels, handleIndex, delta);
 }
 
 export function useSplitter<T extends HTMLElement = any>(
@@ -172,6 +373,7 @@ export function useSplitter<T extends HTMLElement = any>(
     sizes: controlledSizes,
     onSizeChange,
     onCollapseChange,
+    redistribute,
     step = 1,
     shiftStep = 10,
     dir = 'ltr',
@@ -342,6 +544,46 @@ export function useSplitter<T extends HTMLElement = any>(
           document.addEventListener('pointercancel', onPointerUp, { signal: sig });
         };
 
+        const flushResize = (pointerEvent: PointerEvent) => {
+          const s = internalStateRef.current;
+          const isHorizontal = (optionsRef.current.orientation ?? 'horizontal') === 'horizontal';
+          const pointerPos = isHorizontal ? pointerEvent.clientX : pointerEvent.clientY;
+          const pixelDelta = pointerPos - s.startPointer;
+          const percentDelta = (pixelDelta / s.containerSize) * 100;
+
+          const opts = optionsRef.current;
+          const newSizes = applyConstraints(
+            s.startSizes,
+            opts.panels,
+            s.handleIndex,
+            percentDelta,
+            opts.redistribute
+          );
+
+          const prevSizes = currentSizesRef.current;
+          const beforeWasCollapsed = prevSizes[s.handleIndex] === 0;
+          const afterWasCollapsed = prevSizes[s.handleIndex + 1] === 0;
+          const beforeNowCollapsed = newSizes[s.handleIndex] === 0;
+          const afterNowCollapsed = newSizes[s.handleIndex + 1] === 0;
+
+          if (!beforeWasCollapsed && beforeNowCollapsed) {
+            preCollapseSizesRef.current = [...s.startSizes];
+            opts.onCollapseChange?.(s.handleIndex, true);
+          } else if (beforeWasCollapsed && !beforeNowCollapsed) {
+            opts.onCollapseChange?.(s.handleIndex, false);
+          }
+
+          if (!afterWasCollapsed && afterNowCollapsed) {
+            preCollapseSizesRef.current = [...s.startSizes];
+            opts.onCollapseChange?.(s.handleIndex + 1, true);
+          } else if (afterWasCollapsed && !afterNowCollapsed) {
+            opts.onCollapseChange?.(s.handleIndex + 1, false);
+          }
+
+          currentSizesRef.current = newSizes;
+          setCurrentSizes(newSizes);
+        };
+
         const onPointerMove = (event: PointerEvent) => {
           const s = internalStateRef.current;
           if (!s.isDragging) {
@@ -350,46 +592,19 @@ export function useSplitter<T extends HTMLElement = any>(
 
           cancelAnimationFrame(frameRef.current);
           frameRef.current = requestAnimationFrame(() => {
-            const isHorizontal = (optionsRef.current.orientation ?? 'horizontal') === 'horizontal';
-            const pointerPos = isHorizontal ? event.clientX : event.clientY;
-            const pixelDelta = pointerPos - s.startPointer;
-            const percentDelta = (pixelDelta / s.containerSize) * 100;
-
-            const pnls = optionsRef.current.panels;
-            const newSizes = applyConstraints(s.startSizes, pnls, s.handleIndex, percentDelta);
-
-            const prevSizes = currentSizesRef.current;
-            const beforeWasCollapsed = prevSizes[s.handleIndex] === 0;
-            const afterWasCollapsed = prevSizes[s.handleIndex + 1] === 0;
-            const beforeNowCollapsed = newSizes[s.handleIndex] === 0;
-            const afterNowCollapsed = newSizes[s.handleIndex + 1] === 0;
-
-            if (!beforeWasCollapsed && beforeNowCollapsed) {
-              preCollapseSizesRef.current = [...s.startSizes];
-              optionsRef.current.onCollapseChange?.(s.handleIndex, true);
-            } else if (beforeWasCollapsed && !beforeNowCollapsed) {
-              optionsRef.current.onCollapseChange?.(s.handleIndex, false);
-            }
-
-            if (!afterWasCollapsed && afterNowCollapsed) {
-              preCollapseSizesRef.current = [...s.startSizes];
-              optionsRef.current.onCollapseChange?.(s.handleIndex + 1, true);
-            } else if (afterWasCollapsed && !afterNowCollapsed) {
-              optionsRef.current.onCollapseChange?.(s.handleIndex + 1, false);
-            }
-
-            currentSizesRef.current = newSizes;
-            setCurrentSizes(newSizes);
+            flushResize(event);
           });
         };
 
-        const onPointerUp = () => {
+        const onPointerUp = (event: PointerEvent) => {
           const s = internalStateRef.current;
           if (!s.isDragging) {
             return;
           }
 
           cancelAnimationFrame(frameRef.current);
+          flushResize(event);
+
           s.isDragging = false;
           const finishedHandle = s.handleIndex;
           s.handleIndex = -1;
@@ -504,7 +719,7 @@ export function useSplitter<T extends HTMLElement = any>(
           event.preventDefault();
 
           if (delta !== 0) {
-            const newSizes = applyConstraints(currentSizes, panels, index, delta);
+            const newSizes = applyConstraints(currentSizes, panels, index, delta, redistribute);
             const beforeWas = currentSizes[index] === 0;
             const afterWas = currentSizes[index + 1] === 0;
             const beforeNow = newSizes[index] === 0;
@@ -540,9 +755,11 @@ export function useSplitter<T extends HTMLElement = any>(
       step,
       shiftStep,
       activeHandle,
+      redistribute,
       getHandleRefCallback,
       toggleCollapsePanel,
       updateSizes,
+      onCollapseChange,
     ]
   );
 
@@ -562,5 +779,7 @@ export function useSplitter<T extends HTMLElement = any>(
 export namespace useSplitter {
   export type Panel = UseSplitterPanel;
   export type Options = UseSplitterOptions;
+  export type RedistributeInput = UseSplitterRedistributeInput;
+  export type RedistributeFn = UseSplitterRedistributeFn;
   export type ReturnValue<T extends HTMLElement = any> = UseSplitterReturnValue<T>;
 }

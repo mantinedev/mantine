@@ -1,8 +1,15 @@
+import React from 'react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { useSplitter } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
+import React from 'react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { useSplitter } from '@mantine/hooks';
+
+const colors = ['var(--mantine-color-blue-filled)', 'var(--mantine-color-teal-filled)'];
+const labels = ['Panel A', 'Panel B'];
 
 function Demo() {
   const splitter = useSplitter({
@@ -18,48 +25,71 @@ function Demo() {
       style={{
         display: 'flex',
         height: 200,
-        border: '1px solid var(--mantine-color-default-border)',
         borderRadius: 'var(--mantine-radius-md)',
         overflow: 'hidden',
       }}
     >
-      <div
-        style={{
-          width: \`\${splitter.sizes[0]}%\`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'var(--mantine-color-blue-light)',
-        }}
-      >
-        Panel 1 ({Math.round(splitter.sizes[0])}%)
-      </div>
-      <div
-        {...splitter.getHandleProps({ index: 0 })}
-        style={{
-          width: 4,
-          flexShrink: 0,
-          backgroundColor: 'var(--mantine-color-default-border)',
-          cursor: 'col-resize',
-          touchAction: 'none',
-        }}
-      />
-      <div
-        style={{
-          width: \`\${splitter.sizes[1]}%\`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'var(--mantine-color-teal-light)',
-        }}
-      >
-        Panel 2 ({Math.round(splitter.sizes[1])}%)
-      </div>
+      {splitter.sizes.map((size, i) => (
+        <React.Fragment key={i}>
+          {i > 0 && (
+            <div
+              {...splitter.getHandleProps({ index: i - 1 })}
+              style={{
+                width: 4,
+                flexShrink: 0,
+                cursor: 'col-resize',
+                touchAction: 'none',
+                backgroundColor: 'var(--mantine-color-default-border)',
+                position: 'relative',
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 8,
+                  height: 40,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 'var(--mantine-radius-xs)',
+                  backgroundColor: 'var(--mantine-color-default)',
+                  border: '1px solid var(--mantine-color-default-border)',
+                  color: 'var(--mantine-color-dimmed)',
+                }}
+              >
+                <DotsSixVerticalIcon />
+              </div>
+            </div>
+          )}
+          <div
+            style={{
+              width: \`\${size}%\`,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: colors[i],
+              color: 'var(--mantine-color-white)',
+              fontWeight: 500,
+              whiteSpace: 'nowrap',
+              gap: 2,
+            }}
+          >
+            {labels[i]} ({Math.round(size)}%)
+          </div>
+        </React.Fragment>
+      ))}
     </div>
   );
 }
 `;
 
+const colors = ['var(--mantine-color-blue-filled)', 'var(--mantine-color-teal-filled)'];
+const labels = ['Panel A', 'Panel B'];
+
 function Demo() {
   const splitter = useSplitter({
     panels: [
@@ -74,43 +104,63 @@ function Demo() {
       style={{
         display: 'flex',
         height: 200,
-        border: '1px solid var(--mantine-color-default-border)',
         borderRadius: 'var(--mantine-radius-md)',
         overflow: 'hidden',
       }}
     >
-      <div
-        style={{
-          width: `${splitter.sizes[0]}%`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'var(--mantine-color-blue-light)',
-        }}
-      >
-        Panel 1 ({Math.round(splitter.sizes[0])}%)
-      </div>
-      <div
-        {...splitter.getHandleProps({ index: 0 })}
-        style={{
-          width: 4,
-          flexShrink: 0,
-          backgroundColor: 'var(--mantine-color-default-border)',
-          cursor: 'col-resize',
-          touchAction: 'none',
-        }}
-      />
-      <div
-        style={{
-          width: `${splitter.sizes[1]}%`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'var(--mantine-color-teal-light)',
-        }}
-      >
-        Panel 2 ({Math.round(splitter.sizes[1])}%)
-      </div>
+      {splitter.sizes.map((size, i) => (
+        <React.Fragment key={i}>
+          {i > 0 && (
+            <div
+              {...splitter.getHandleProps({ index: i - 1 })}
+              style={{
+                width: 4,
+                flexShrink: 0,
+                cursor: 'col-resize',
+                touchAction: 'none',
+                backgroundColor: 'var(--mantine-color-default-border)',
+                position: 'relative',
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 8,
+                  height: 40,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 'var(--mantine-radius-xs)',
+                  backgroundColor: 'var(--mantine-color-default)',
+                  border: '1px solid var(--mantine-color-default-border)',
+                  color: 'var(--mantine-color-dimmed)',
+                }}
+              >
+                <DotsSixVerticalIcon />
+              </div>
+            </div>
+          )}
+          <div
+            style={{
+              width: `${size}%`,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: colors[i],
+              color: 'var(--mantine-color-white)',
+              fontWeight: 500,
+              whiteSpace: 'nowrap',
+              gap: 2,
+            }}
+          >
+            {labels[i]} ({Math.round(size)}%)
+          </div>
+        </React.Fragment>
+      ))}
     </div>
   );
 }

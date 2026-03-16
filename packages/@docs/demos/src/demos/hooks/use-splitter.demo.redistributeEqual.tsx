@@ -12,16 +12,19 @@ const colors = [
   'var(--mantine-color-blue-filled)',
   'var(--mantine-color-teal-filled)',
   'var(--mantine-color-grape-filled)',
+  'var(--mantine-color-orange-filled)',
 ];
-const labels = ['Panel A', 'Panel B', 'Panel C'];
+const labels = ['Panel A', 'Panel B', 'Panel C', 'Panel D'];
 
 function Demo() {
   const splitter = useSplitter({
     panels: [
       { defaultSize: 25, min: 10 },
-      { defaultSize: 50, min: 20 },
+      { defaultSize: 25, min: 20 },
+      { defaultSize: 25, min: 10 },
       { defaultSize: 25, min: 10 },
     ],
+    redistribute: 'equal',
   });
 
   return (
@@ -96,16 +99,19 @@ const colors = [
   'var(--mantine-color-blue-filled)',
   'var(--mantine-color-teal-filled)',
   'var(--mantine-color-grape-filled)',
+  'var(--mantine-color-orange-filled)',
 ];
-const labels = ['Panel A', 'Panel B', 'Panel C'];
+const labels = ['Panel A', 'Panel B', 'Panel C', 'Panel D'];
 
 function Demo() {
   const splitter = useSplitter({
     panels: [
       { defaultSize: 25, min: 10 },
-      { defaultSize: 50, min: 20 },
+      { defaultSize: 25, min: 20 },
+      { defaultSize: 25, min: 10 },
       { defaultSize: 25, min: 10 },
     ],
+    redistribute: 'equal',
   });
 
   return (
@@ -175,7 +181,7 @@ function Demo() {
   );
 }
 
-export const useSplitterMultiple: MantineDemo = {
+export const useSplitterRedistributeEqual: MantineDemo = {
   type: 'code',
   code,
   component: Demo,
