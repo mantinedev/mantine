@@ -507,3 +507,28 @@ export const Demo_useDragFilterTaps = {
   name: '⭐ Demo: useDragFilterTaps',
   render: renderDemo(demos.useDragFilterTaps),
 };
+
+export const Demo_useSplitterUsage = {
+  name: '⭐ Demo: useSplitterUsage',
+  render: renderDemo(demos.useSplitterUsage),
+};
+
+export const Demo_useSplitterVertical = {
+  name: '⭐ Demo: useSplitterVertical',
+  render: renderDemo(demos.useSplitterVertical),
+};
+
+export const Demo_useSplitterCollapsible = {
+  name: '⭐ Demo: useSplitterCollapsible',
+  render: renderDemo(demos.useSplitterCollapsible),
+};
+
+export const Demo_useSplitterMultiple = {
+  name: '⭐ Demo: useSplitterMultiple',
+  render: renderDemo(demos.useSplitterMultiple),
+};
+
+export const Demo_useSplitterControlled = {
+  name: '⭐ Demo: useSplitterControlled',
+  render: renderDemo(demos.useSplitterControlled),
+};

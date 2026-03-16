@@ -1,4 +1,4 @@
-import { PaginationDemos, TextDemos, TooltipDemos } from '@docs/demos';
+import { HooksDemos, PaginationDemos, TextDemos, TooltipDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -25,6 +25,14 @@ queries to switch between page number buttons and a compact "Page X of Y" label 
 or prevent orphaned words in paragraphs.
 
 <Demo data={TextDemos.textWrap} />
+
+## use-splitter hook
+
+New [use-splitter](/hooks/use-splitter/) hook provides resizable split-pane functionality
+with pointer drag, keyboard navigation (WAI-ARIA Window Splitter pattern), collapsible panels
+and min/max constraints:
+
+<Demo data={HooksDemos.useSplitterUsage} />
 
 ## Tooltip merge arrow position
 

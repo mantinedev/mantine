@@ -1,0 +1,146 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useSplitter);
+
+## Usage
+
+`use-splitter` hook provides resizable split-pane functionality. It handles pointer drag
+on resize handles, keyboard navigation following the WAI-ARIA Window Splitter pattern,
+collapsible panels and min/max constraints. All sizes are percentages to avoid
+SSR/hydration issues.
+
+<Demo data={HooksDemos.useSplitterUsage} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to create a vertical split layout.
+Keyboard navigation uses ArrowUp/ArrowDown instead of ArrowLeft/ArrowRight:
+
+<Demo data={HooksDemos.useSplitterVertical} />
+
+## Collapsible panels
+
+Set `collapsible: true` on a panel to allow it to collapse to zero size.
+When dragged below the `collapseThreshold` (defaults to `min`), the panel
+snaps to 0%. Use `collapse()`, `expand()` and `toggleCollapse()` for
+programmatic control. Press Enter on a handle to toggle the smaller adjacent
+collapsible panel:
+
+<Demo data={HooksDemos.useSplitterCollapsible} />
+
+## Multiple panels
+
+The hook supports any number of panels. Each handle only affects its two
+adjacent panels:
+
+<Demo data={HooksDemos.useSplitterMultiple} />
+
+## Controlled mode
+
+Pass `sizes` and `onSizeChange` to control the sizes externally.
+Use `setSizes()` for programmatic updates:
+
+<Demo data={HooksDemos.useSplitterControlled} />
+
+## Keyboard support
+
+Handles follow the WAI-ARIA Window Splitter pattern:
+
+| Key | Action |
+|-----|--------|
+| ArrowLeft/ArrowRight | Resize by `step` (horizontal) |
+| ArrowUp/ArrowDown | Resize by `step` (vertical) |
+| Shift + Arrow | Resize by `shiftStep` |
+| Home | Shrink panel before handle to its min |
+| End | Grow panel before handle to its max |
+| Enter | Toggle collapse of the smaller adjacent collapsible panel |
+
+## Touch support
+
+The hook uses the Pointer Events API which handles both mouse and touch automatically.
+Set `touch-action: none` on the handle element to prevent the browser from
+interpreting touch drag as scroll:
+
+```css
+.handle {
+  touch-action: none;
+}
+```
+
+## Definition
+
+```tsx
+interface UseSplitterPanel {
+  /** Initial size as percentage (0-100). All panels must sum to 100. */
+  defaultSize: number;
+  /** Minimum size percentage, `0` by default */
+  min?: number;
+  /** Maximum size percentage, `100` by default */
+  max?: number;
+  /** Whether this panel can be collapsed, `false` by default */
+  collapsible?: boolean;
+  /** Size below which the panel snaps to collapsed (percentage), defaults to `min` */
+  collapseThreshold?: number;
+}
+
+interface UseSplitterOptions {
+  /** Panel configuration array (minimum 2 panels) */
+  panels: UseSplitterPanel[];
+  /** Layout direction, `'horizontal'` by default */
+  orientation?: 'horizontal' | 'vertical';
+  /** Controlled sizes (percentages summing to 100) */
+  sizes?: number[];
+  /** Called during resize with updated sizes */
+  onSizeChange?: (sizes: number[]) => void;
+  /** Called when drag starts */
+  onResizeStart?: (handleIndex: number) => void;
+  /** Called when drag ends */
+  onResizeEnd?: (handleIndex: number, sizes: number[]) => void;
+  /** Called when a panel collapses or expands */
+  onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
+  /** Keyboard step size in percentage, `1` by default */
+  step?: number;
+  /** Shift+arrow step size in percentage, `10` by default */
+  shiftStep?: number;
+  /** Text direction for keyboard nav, `'ltr'` by default */
+  dir?: 'ltr' | 'rtl';
+  /** Enable/disable the hook, `true` by default */
+  enabled?: boolean;
+}
+
+interface UseSplitterReturnValue<T extends HTMLElement = any> {
+  /** Ref callback for the container element */
+  ref: React.RefCallback<T | null>;
+  /** Current panel sizes as percentages */
+  sizes: number[];
+  /** Which panels are currently collapsed */
+  collapsed: boolean[];
+  /** Index of handle being dragged, or -1 */
+  activeHandle: number;
+  /** Get props to spread on each resize handle */
+  getHandleProps: (input: { index: number }) => HandleProps;
+  /** Programmatically set sizes */
+  setSizes: (sizes: number[]) => void;
+  /** Collapse a panel */
+  collapse: (panelIndex: number) => void;
+  /** Expand a collapsed panel */
+  expand: (panelIndex: number) => void;
+  /** Toggle collapse of a panel */
+  toggleCollapse: (panelIndex: number) => void;
+}
+
+function useSplitter<T extends HTMLElement = any>(
+  options: UseSplitterOptions
+): UseSplitterReturnValue<T>
+```
+
+## Exported types
+
+`UseSplitterPanel`, `UseSplitterOptions` and `UseSplitterReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
+
+```tsx
+import type { UseSplitterPanel, UseSplitterOptions, UseSplitterReturnValue } from '@mantine/hooks';
+```

@@ -210,4 +210,8 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'useDrag',
     'Handle pointer drag gestures with movement, velocity, direction and axis constraints'
   ),
+  useSplitter: hDocs(
+    'useSplitter',
+    'Create resizable split pane layouts with keyboard support, collapsible panels and constraints'
+  ),
 };

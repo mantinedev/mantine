@@ -102,3 +102,8 @@ export { useDragAxis } from './use-drag.demo.axis';
 export { useDragSwipe } from './use-drag.demo.swipe';
 export { useDragScroll } from './use-drag.demo.scroll';
 export { useDragFilterTaps } from './use-drag.demo.filterTaps';
+export { useSplitterUsage } from './use-splitter.demo.usage';
+export { useSplitterVertical } from './use-splitter.demo.vertical';
+export { useSplitterCollapsible } from './use-splitter.demo.collapsible';
+export { useSplitterMultiple } from './use-splitter.demo.multiple';
+export { useSplitterControlled } from './use-splitter.demo.controlled';
