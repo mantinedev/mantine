@@ -1,4 +1,4 @@
-import { PaginationDemos, SplitterDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, PaginationDemos, SplitterDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -40,6 +40,13 @@ New [Splitter](/core/splitter/) component provides declarative resizable split p
 built on top of the [use-splitter](/hooks/use-splitter/) hook:
 
 <Demo data={SplitterDemos.usage} />
+
+## CodeHighlight line numbers
+
+[CodeHighlight](/x/code-highlight/) component now supports `withLineNumbers` prop
+to display line numbers alongside the code:
+
+<Demo data={CodeHighlightDemos.lineNumbers} />
 
 ## Tooltip merge arrow position
 

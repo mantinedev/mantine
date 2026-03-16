@@ -48,3 +48,8 @@ export const Demo_customControl = {
   name: '⭐ Demo: customControl',
   render: renderDemo(demos.customControl),
 };
+
+export const Demo_lineNumbers = {
+  name: '⭐ Demo: lineNumbers',
+  render: renderDemo(demos.lineNumbers),
+};

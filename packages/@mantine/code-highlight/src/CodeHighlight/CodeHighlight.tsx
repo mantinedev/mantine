@@ -34,7 +34,9 @@ export type CodeHighlightStylesNames =
   | 'controlTooltip'
   | 'controls'
   | 'scrollarea'
-  | 'showCodeButton';
+  | 'showCodeButton'
+  | 'lineNumbers'
+  | 'codeWrapper';
 
 export type CodeHighlightCssVariables = {
   codeHighlight: '--ch-max-height' | '--ch-background' | '--ch-radius';
@@ -79,6 +81,9 @@ export interface CodeHighlightSettings {
 
   /** Adds border to the root element @default false */
   withBorder?: boolean;
+
+  /** Determines whether line numbers should be displayed @default false */
+  withLineNumbers?: boolean;
 
   /** Extra controls to display in the controls list */
   controls?: React.ReactNode[];
@@ -155,6 +160,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
     radius,
     background,
     withBorder,
+    withLineNumbers,
     controls,
     language,
     codeColorScheme,
@@ -254,16 +260,28 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
           styles={{ viewport: { overscrollBehaviorInline: 'none' } }}
           {...getStyles('scrollarea')}
         >
-          <pre {...getStyles('pre')} data-with-offset={__withOffset || undefined}>
-            <code
-              {...highlightedCode.codeElementProps}
-              {...getStyles('code', {
-                className: highlightedCode.codeElementProps?.className,
-                style: highlightedCode.codeElementProps?.style,
-              })}
-              {...codeContent}
-            />
-          </pre>
+          <div {...getStyles('codeWrapper')}>
+            {withLineNumbers && (
+              <div {...getStyles('lineNumbers')} data-with-offset={__withOffset || undefined}>
+                {code
+                  .trim()
+                  .split('\n')
+                  .map((_, i) => (
+                    <div key={i}>{i + 1}</div>
+                  ))}
+              </div>
+            )}
+            <pre {...getStyles('pre')} data-with-offset={__withOffset || undefined}>
+              <code
+                {...highlightedCode.codeElementProps}
+                {...getStyles('code', {
+                  className: highlightedCode.codeElementProps?.className,
+                  style: highlightedCode.codeElementProps?.style,
+                })}
+                {...codeContent}
+              />
+            </pre>
+          </div>
         </ScrollArea>
 
         <UnstyledButton
