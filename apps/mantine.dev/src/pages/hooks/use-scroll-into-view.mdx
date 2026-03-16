@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseScrollIntoViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,7 +9,7 @@ export default Layout(MDX_DATA.useScrollIntoView);
 The `use-scroll-into-view` hook handles scroll behavior for any scrollable element. Basic usage works the same way as `element.scrollIntoView()`.
 The hook adjusts the scrolling animation with respect to the `reduced-motion` user preference.
 
-<Demo data={HooksDemos.useScrollIntoViewUsage} />
+<Demo data={UseScrollIntoViewDemos.usage} />
 
 ## API
 
@@ -58,11 +58,11 @@ useScrollIntoView({
 
 ## Parent node
 
-<Demo data={HooksDemos.useScrollIntoViewParent} />
+<Demo data={UseScrollIntoViewDemos.parent} />
 
 ## Scroll X axis
 
-<Demo data={HooksDemos.useScrollIntoViewAxis} />
+<Demo data={UseScrollIntoViewDemos.axis} />
 
 ## Definition
 

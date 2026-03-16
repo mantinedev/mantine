@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseIdleDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -8,21 +8,21 @@ export default Layout(MDX_DATA.useIdle);
 
 The `use-idle` hook detects if the user does nothing for a given time in milliseconds:
 
-<Demo data={HooksDemos.useIdleDemo} />
+<Demo data={UseIdleDemos.usage} />
 
 ## Custom events
 
 By default, the hook will listen to `keypress`, `mousemove`, `touchmove`, `wheel`, `click`, and `scroll` events to set the idle status.
 To change that, provide a list of events in the `options` argument:
 
-<Demo data={HooksDemos.useIdleEvents} />
+<Demo data={UseIdleDemos.events} />
 
 ## Initial state
 
 By default, the hook will return an idle state.
 To change this, provide an initial state value in the `options` argument:
 
-<Demo data={HooksDemos.useIdleInitialState} />
+<Demo data={UseIdleDemos.state} />
 
 ## Definition
 

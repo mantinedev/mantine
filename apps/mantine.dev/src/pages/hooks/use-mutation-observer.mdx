@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseMutationObserverDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,14 +9,14 @@ export default Layout(MDX_DATA.useMutationObserver);
 The `use-mutation-observer` hook is a wrapper for the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
 It allows you to subscribe to changes being made to the DOM tree.
 
-<Demo data={HooksDemos.useMutationObserverUsage} />
+<Demo data={UseMutationObserverDemos.usage} />
 
 ## Target element
 
 If you cannot pass a `ref` to the target element, you can pass a function to resolve
 the target element as the third argument.
 
-<Demo data={HooksDemos.useMutationObserverTargetDemo} />
+<Demo data={UseMutationObserverDemos.target} />
 
 ## Definition
 

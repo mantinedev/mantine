@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseOsDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,7 +9,7 @@ export default Layout(MDX_DATA.useOs);
 The `use-os` hook returns the user's operating system. Possible values are: `undetermined`, `macos`, `ios`, `windows`, `android`, `linux`, `chromeos`.
 If the OS cannot be identified, for example, during server-side rendering, `undetermined` will be returned.
 
-<Demo data={HooksDemos.useOsDemo} />
+<Demo data={UseOsDemos.usage} />
 
 ## Definition
 
