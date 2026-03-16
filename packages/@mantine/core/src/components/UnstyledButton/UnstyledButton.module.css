@@ -10,8 +10,4 @@
   color: inherit;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-
-  @mixin where-rtl {
-    text-align: right;
-  }
 }
