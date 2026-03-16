@@ -1,4 +1,4 @@
-import { PaginationDemos, TextDemos } from '@docs/demos';
+import { PaginationDemos, TextDemos, TooltipDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -25,3 +25,11 @@ queries to switch between page number buttons and a compact "Page X of Y" label 
 or prevent orphaned words in paragraphs.
 
 <Demo data={TextDemos.textWrap} />
+
+## Tooltip merge arrow position
+
+[Tooltip](/core/tooltip/), [Popover](/core/popover/) and other components based on [Popover](/core/popover/)
+now support `arrowPosition="merge"`. When set, the arrow forms a right triangle merged
+with the corresponding corner of the dropdown, and the border radius of that corner is removed.
+
+<Demo data={TooltipDemos.arrow} />

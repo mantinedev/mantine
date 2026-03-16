@@ -32,7 +32,7 @@ export const arrow: MantineDemo = {
       prop: 'arrowPosition',
       initialValue: 'center',
       libraryValue: 'center',
-      data: ['center', 'side'],
+      data: ['center', 'side', 'merge'],
     },
     {
       type: 'number',

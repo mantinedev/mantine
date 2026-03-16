@@ -20,6 +20,7 @@ import {
   FloatingAxesOffsets,
   FloatingPosition,
   FloatingStrategy,
+  getArrowMergeDropdownStyles,
   getFloatingPosition,
 } from '../../utils/Floating';
 import { OptionalPortal } from '../Portal';
@@ -235,6 +236,10 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
   }
 
   const tooltipStyles = getStyles('tooltip');
+  const mergeStyles =
+    arrowPosition === 'merge' && withArrow
+      ? getArrowMergeDropdownStyles({ position: tooltip.placement, dir })
+      : undefined;
 
   if (target) {
     const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
@@ -260,6 +265,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
                   style: {
                     ...tooltipStyles.style,
                     ...transitionStyles,
+                    ...mergeStyles,
                     zIndex: zIndex as React.CSSProperties['zIndex'],
                     top: tooltip.y ?? 0,
                     left: tooltip.x ?? 0,
@@ -273,10 +279,10 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
                   arrowY={tooltip.arrowY}
                   visible={withArrow}
                   position={tooltip.placement}
-                  arrowSize={arrowSize}
-                  arrowOffset={arrowOffset}
-                  arrowRadius={arrowRadius}
-                  arrowPosition={arrowPosition}
+                  arrowSize={arrowSize!}
+                  arrowOffset={arrowOffset!}
+                  arrowRadius={arrowRadius!}
+                  arrowPosition={arrowPosition!}
                   {...getStyles('arrow')}
                 />
               </Box>
@@ -313,6 +319,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
                 style: {
                   ...getStyles('tooltip').style,
                   ...transitionStyles,
+                  ...mergeStyles,
                   zIndex: zIndex as React.CSSProperties['zIndex'],
                   top: tooltip.y ?? 0,
                   left: tooltip.x ?? 0,
