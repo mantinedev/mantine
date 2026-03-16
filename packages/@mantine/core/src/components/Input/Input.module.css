@@ -55,6 +55,10 @@
     --input-cursor: pointer;
   }
 
+  &[data-with-bottom-section] {
+    --input-bottom-section-height: 28px;
+  }
+
   &[data-multiline] {
     --input-padding-y-xs: 4.5px;
     --input-padding-y-sm: 5.5px;
@@ -235,6 +239,26 @@
   &[readonly] {
     caret-color: transparent;
   }
+
+  [data-with-bottom-section] & {
+    padding-bottom: calc(var(--input-padding-y, 0rem) + var(--input-bottom-section-height));
+  }
+}
+
+.bottomSection {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  height: var(--input-bottom-section-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-inline: var(--input-padding);
+  border-radius: 0 0 var(--input-radius) var(--input-radius);
+  pointer-events: all;
+  color: var(--mantine-color-dimmed);
+  font-size: var(--input-fz, var(--mantine-font-size-sm));
 }
 
 .section {

@@ -1,4 +1,4 @@
-import { CodeHighlightDemos, OverflowListDemos, PaginationDemos, SplitterDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, OverflowListDemos, PaginationDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -56,6 +56,14 @@ collapse items from the beginning – this is useful for breadcrumb-like pattern
 the last items should remain visible.
 
 <Demo data={OverflowListDemos.collapseFrom} />
+
+## Textarea bottomSection
+
+[Textarea](/core/textarea/) component now supports `bottomSection` prop that renders content
+inside the input border at the bottom. This is useful for displaying character counters
+or other supplementary information:
+
+<Demo data={TextareaDemos.bottomSection} />
 
 ## Tooltip merge arrow position
 
