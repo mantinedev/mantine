@@ -112,45 +112,6 @@ It allows animation of height from `0` to `auto` and vice versa.
 
 <Demo data={HooksDemos.useHorizontalCollapseDemo} />
 
-## useEffectEvent migration in hooks
-
-Five hooks — `usePageLeave`, `useWindowEvent`, `useHotkeys`, `useClickOutside`, and `useCollapse` —
-have been updated to use React 19's stable `useEffectEvent`. Previously these hooks captured stale
-closures or caused unnecessary event listener re-registrations when non-memoized callbacks were
-passed. With `useEffectEvent`, each hook registers a single stable listener that always calls the
-latest version of the provided callback, so wrapping callbacks in `useCallback` or `useMemo` is no
-longer required.
-
-## React 19 Activity for keepMounted
-
-[Transition](/core/transition), [Collapse](/core/collapse), [Tabs.Panel](/core/tabs),
-[Stepper](/core/stepper), and [Tree](/core/tree) now use React 19's
-[Activity](https://react.dev/reference/react/Activity) component when `keepMounted` is set.
-`Activity` preserves the state of hidden subtrees — form inputs, scroll positions, and any other
-component state survive while the content is not visible. `Stepper` and `Tree` gain a new
-`keepMounted` prop; all other components already had it.
-
-```tsx
-import { useState } from 'react';
-import { Stepper, TextInput } from '@mantine/core';
-
-function Demo() {
-  const [active, setActive] = useState(0);
-
-  // TextInput values are preserved when navigating between steps
-  return (
-    <Stepper active={active} onStepClick={setActive} keepMounted>
-      <Stepper.Step label="Step 1">
-        <TextInput label="Value survives navigation" />
-      </Stepper.Step>
-      <Stepper.Step label="Step 2">
-        <TextInput label="Value survives navigation" />
-      </Stepper.Step>
-    </Stepper>
-  );
-}
-```
-
 ## use-floating-window hook
 
 New [use-floating-window](/hooks/use-floating-window) hook allows creating floating draggable
@@ -169,6 +130,32 @@ elements:
 New [OverflowList](/core/overflow-list) component displays list of items and collapses the overflowing items into a single element:
 
 <Demo data={OverflowListDemos.usage} />
+
+## Marquee component
+
+New [Marquee](/core/marquee) component creates continuous scrolling animation for content:
+
+<Demo data={MarqueeDemos.usage} />
+
+## Scroller component
+
+New [Scroller](/core/scroller) component displays horizontally scrollable content with navigation controls.
+It supports native scrolling via trackpad, shift + mouse wheel, touch gestures, and mouse drag:
+
+<Demo data={ScrollerDemos.usage} />
+
+## use-scroller hook
+
+New [use-scroller](/hooks/use-scroller) hook provides logic for creating custom scrollable containers with navigation controls:
+
+<Demo data={HooksDemos.useScrollerUsageDemo} demoProps={{ defaultExpanded: false }} />
+
+## BarsList component
+
+New [BarsList](/charts/bars-list) component displays a list of horizontal bars with names and values.
+It supports custom colors, auto contrast, value formatting, and custom bar rendering:
+
+<Demo data={BarsListDemos.usage} />
 
 ## Card horizontal orientation
 
@@ -214,24 +201,27 @@ This prop is supported by [Select](/core/select), [Autocomplete](/core/autocompl
 
 <Demo data={DatePickerInputDemos.clearSectionMode} />
 
-## Marquee component
+## use-form async validation
 
-New [Marquee](/core/marquee) component creates continuous scrolling animation for content:
+[use-form](/form/use-form) validation rules can now be async – return a `Promise` that resolves to an
+error message or `null`. When all rules are synchronous, `form.validate()`, `form.validateField()` and
+`form.isValid()` return their results directly (not wrapped in a `Promise`). When any rule is async,
+these methods return promises instead. TypeScript infers the correct return type based on your
+validation rules, so you get precise types without manual annotations.
 
-<Demo data={MarqueeDemos.usage} />
+The `form.validating` property is `true` while any async validation is in progress, and
+`form.isValidating(path)` checks individual fields. The `validating` state is never set for
+forms with only synchronous rules.
 
-## Scroller component
+Each rule receives an `AbortSignal` as the fourth argument. The signal is aborted when a newer
+validation supersedes the current one, which you can use to cancel in-flight HTTP requests.
 
-New [Scroller](/core/scroller) component displays horizontally scrollable content with navigation controls.
-It supports native scrolling via trackpad, shift + mouse wheel, touch gestures, and mouse drag:
+<Demo data={FormDemos.asyncValidation} />
 
-<Demo data={ScrollerDemos.usage} />
+When using async validation with `validateInputOnChange`, set `validateDebounce` to avoid
+firing an API call on every keystroke:
 
-## use-scroller hook
-
-New [use-scroller](/hooks/use-scroller) hook provides logic for creating custom scrollable containers with navigation controls:
-
-<Demo data={HooksDemos.useScrollerUsageDemo} demoProps={{ defaultExpanded: false }} />
+<Demo data={FormDemos.asyncValidationDebounce} />
 
 ## use-form TransformedValues type argument
 
@@ -266,28 +256,6 @@ function Demo() {
   });
 }
 ```
-
-## use-form async validation
-
-[use-form](/form/use-form) validation rules can now be async – return a `Promise` that resolves to an
-error message or `null`. When all rules are synchronous, `form.validate()`, `form.validateField()` and
-`form.isValid()` return their results directly (not wrapped in a `Promise`). When any rule is async,
-these methods return promises instead. TypeScript infers the correct return type based on your
-validation rules, so you get precise types without manual annotations.
-
-The `form.validating` property is `true` while any async validation is in progress, and
-`form.isValidating(path)` checks individual fields. The `validating` state is never set for
-forms with only synchronous rules.
-
-Each rule receives an `AbortSignal` as the fourth argument. The signal is aborted when a newer
-validation supersedes the current one, which you can use to cancel in-flight HTTP requests.
-
-<Demo data={FormDemos.asyncValidation} />
-
-When using async validation with `validateInputOnChange`, set `validateDebounce` to avoid
-firing an API call on every keystroke:
-
-<Demo data={FormDemos.asyncValidationDebounce} />
 
 ## Generic components
 
@@ -376,13 +344,6 @@ implicitly created grid rows:
 
 <Demo data={SimpleGridDemos.autoRows} />
 
-## BarsList component
-
-New [BarsList](/charts/bars-list) component displays a list of horizontal bars with names and values.
-It supports custom colors, auto contrast, value formatting, and custom bar rendering:
-
-<Demo data={BarsListDemos.usage} />
-
 ## Calendar fullWidth prop
 
 [Calendar](/dates/calendar), [DatePicker](/dates/date-picker), [MonthPicker](/dates/month-picker) and [YearPicker](/dates/year-picker)
@@ -457,19 +418,9 @@ function Demo() {
 }
 ```
 
-## Documentation updates
+## @mantine/mcp-server package
 
-- New [Custom components](/guides/custom-components) guide explaining how to create custom components with Mantine's styling system
-- New [Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled) guide explaining differences between controlled and uncontrolled components
-- [HueSlider](/core/hue-slider) and [AlphaSlider](/core/alpha-slider) components now have their own documentation pages
-- Uncontrolled documentation and usage with `FormData` section was added to all inputs components
-- [JsonInput](/core/json-input) documentation now includes custom serialization example with `superjson` library
-- [Pagination](/core/pagination) documentation now includes URL synchronization examples for Next.js, react-router-dom and nuqs
-- [use-form](/form/use-form) documentation now includes separate examples with [all Mantine inputs](/form/all-inputs)
-
-## Experimental `@mantine/mcp-server` package
-
-Mantine now includes experimental `@mantine/mcp-server` package that exposes Mantine
+Mantine now includes `@mantine/mcp-server` package that exposes Mantine
 documentation over [Model Context Protocol](https://modelcontextprotocol.io/).
 It allows AI tools to query Mantine docs and props data through MCP tools instead of raw web scraping.
 
@@ -574,6 +525,55 @@ See [AppShell examples](/app-shell/?e=BasicAppShell) for more details.
 position when the component mounts:
 
 <Demo data={ScrollAreaDemos.startScrollPosition} />
+
+## useEffectEvent migration in hooks
+
+Five hooks — `usePageLeave`, `useWindowEvent`, `useHotkeys`, `useClickOutside`, and `useCollapse` —
+have been updated to use React 19's stable `useEffectEvent`. Previously these hooks captured stale
+closures or caused unnecessary event listener re-registrations when non-memoized callbacks were
+passed. With `useEffectEvent`, each hook registers a single stable listener that always calls the
+latest version of the provided callback, so wrapping callbacks in `useCallback` or `useMemo` is no
+longer required.
+
+## React 19 Activity for keepMounted
+
+[Transition](/core/transition), [Collapse](/core/collapse), [Tabs.Panel](/core/tabs),
+[Stepper](/core/stepper), and [Tree](/core/tree) now use React 19's
+[Activity](https://react.dev/reference/react/Activity) component when `keepMounted` is set.
+`Activity` preserves the state of hidden subtrees — form inputs, scroll positions, and any other
+component state survive while the content is not visible. `Stepper` and `Tree` gain a new
+`keepMounted` prop; all other components already had it.
+
+```tsx
+import { useState } from 'react';
+import { Stepper, TextInput } from '@mantine/core';
+
+function Demo() {
+  const [active, setActive] = useState(0);
+
+  // TextInput values are preserved when navigating between steps
+  return (
+    <Stepper active={active} onStepClick={setActive} keepMounted>
+      <Stepper.Step label="Step 1">
+        <TextInput label="Value survives navigation" />
+      </Stepper.Step>
+      <Stepper.Step label="Step 2">
+        <TextInput label="Value survives navigation" />
+      </Stepper.Step>
+    </Stepper>
+  );
+}
+```
+
+## Documentation updates
+
+- New [Custom components](/guides/custom-components) guide explaining how to create custom components with Mantine's styling system
+- New [Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled) guide explaining differences between controlled and uncontrolled components
+- [HueSlider](/core/hue-slider) and [AlphaSlider](/core/alpha-slider) components now have their own documentation pages
+- Uncontrolled documentation and usage with `FormData` section was added to all inputs components
+- [JsonInput](/core/json-input) documentation now includes custom serialization example with `superjson` library
+- [Pagination](/core/pagination) documentation now includes URL synchronization examples for Next.js, react-router-dom and nuqs
+- [use-form](/form/use-form) documentation now includes separate examples with [all Mantine inputs](/form/all-inputs)
 
 ## Other changes
 
