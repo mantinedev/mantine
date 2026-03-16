@@ -1,4 +1,4 @@
-import { HooksDemos, SliderDemos } from '@docs/demos';
+import { SliderDemos, UseMoveDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -8,7 +8,7 @@ export default Layout(MDX_DATA.useMove);
 
 The `use-move` hook handles move behavior over any element:
 
-<Demo data={HooksDemos.useMoveUsage} />
+<Demo data={UseMoveDemos.usage} />
 
 ## API
 
@@ -31,7 +31,7 @@ The `x` and `y` values are always between `0` and `1`; you can use them to calcu
 You can ignore changes for one of the axis:
 
 <Demo
-  data={HooksDemos.useMoveHorizontal}
+  data={UseMoveDemos.horizontal}
   demoProps={{ toggle: true }}
 />
 
@@ -44,13 +44,13 @@ You can ignore changes for one of the axis:
 Moving the slider down increases the value, to reverse that set value to `1 - y` in your `setValue` function:
 
 <Demo
-  data={HooksDemos.useMoveVertical}
+  data={UseMoveDemos.vertical}
   demoProps={{ toggle: true }}
 />
 
 ## Color picker
 
-<Demo data={HooksDemos.useMoveColor} demoProps={{ toggle: true }} />
+<Demo data={UseMoveDemos.color} demoProps={{ toggle: true }} />
 
 ## clampUseMovePosition
 

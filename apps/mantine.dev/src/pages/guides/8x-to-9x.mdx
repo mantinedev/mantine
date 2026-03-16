@@ -1,4 +1,4 @@
-import { PopoverDemos, HooksDemos } from '@docs/demos';
+import { PopoverDemos, UseFullscreenDemos, UseMouseDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 import packageJson from '../../../../../package.json';
@@ -190,11 +190,11 @@ This change was required to fix a stale ref issue in the previous implementation
 
 New usage with the `document` element:
 
-<Demo data={HooksDemos.useFullscreenDemo} />
+<Demo data={UseFullscreenDemos.usage} />
 
 New usage with a custom target element:
 
-<Demo data={HooksDemos.useFullscreenRefDemo} />
+<Demo data={UseFullscreenDemos.ref} />
 
 ## use-mouse hook changes
 
@@ -220,7 +220,7 @@ function Demo() {
 
 New usage with `document`:
 
-<Demo data={HooksDemos.useMouseUsage} />
+<Demo data={UseMouseDemos.usage} />
 
 ## use-mutation-observer hook changes
 

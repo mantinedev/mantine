@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useDrag, UseDragState } from './use-drag';
 
-export default { title: 'use-drag' };
+export default { title: 'useDrag' };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);

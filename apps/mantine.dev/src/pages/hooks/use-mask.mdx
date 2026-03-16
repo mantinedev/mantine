@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseMaskDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -11,7 +11,7 @@ It formats user input against a defined pattern and exposes both the masked disp
 and the raw unmasked value. If you need a ready-made input component, use [MaskInput](/core/mask-input)
 which wraps this hook with all standard input props.
 
-<Demo data={HooksDemos.useMaskUsage} />
+<Demo data={UseMaskDemos.usage} />
 
 ## isComplete, slotChar, and transform
 
@@ -20,20 +20,20 @@ a submit button. The `slotChar` option accepts a multi-character string to show 
 hints for each slot. The `transform` option converts each character before validation —
 this example uses it to auto-uppercase input so the `A` token (`[A-Z]`) accepts lowercase letters:
 
-<Demo data={HooksDemos.useMaskComplete} />
+<Demo data={UseMaskDemos.complete} />
 
 ## Dynamic mask
 
 Use the `modify` option to change the mask based on the current input value.
 This example switches between standard and American Express credit card formats:
 
-<Demo data={HooksDemos.useMaskDynamic} />
+<Demo data={UseMaskDemos.dynamic} />
 
 ## Custom tokens
 
 Override or extend the built-in token map with the `tokens` option:
 
-<Demo data={HooksDemos.useMaskCustomTokens} />
+<Demo data={UseMaskDemos.customTokens} />
 
 ## Escaping
 
@@ -41,7 +41,7 @@ Prefix a token character with `\` to treat it as a literal.
 In this example, `A` would normally be an uppercase letter token,
 but `\A` makes it a literal character:
 
-<Demo data={HooksDemos.useMaskEscape} />
+<Demo data={UseMaskDemos.escape} />
 
 ## Regex array format
 
@@ -49,14 +49,14 @@ For complex masks where built-in tokens are not enough, pass an array of
 string literals and `RegExp` objects. This example creates a time input where
 the first digit is restricted to `0-2` and the minute tens digit to `0-5`:
 
-<Demo data={HooksDemos.useMaskRegex} />
+<Demo data={UseMaskDemos.regex} />
 
 ## Reset
 
 Use the `reset` function returned by the hook to programmatically clear
 the input value:
 
-<Demo data={HooksDemos.useMaskReset} />
+<Demo data={UseMaskDemos.reset} />
 
 ## Mask pattern syntax
 

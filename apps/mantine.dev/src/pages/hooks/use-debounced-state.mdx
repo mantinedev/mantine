@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseDebouncedStateDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -11,7 +11,7 @@ This can be useful when you want to perform a heavy operation based on React sta
 for example, sending a search request. Unlike [use-debounced-value](/hooks/use-debounced-value/), it
 is designed to work with uncontrolled components.
 
-<Demo data={HooksDemos.useDebouncedStateUsage} />
+<Demo data={UseDebouncedStateDemos.usage} />
 
 ## Differences from use-debounce-value
 
@@ -23,7 +23,7 @@ is designed to work with uncontrolled components.
 
 You can immediately update the value with the first call using `{ leading: true }` options:
 
-<Demo data={HooksDemos.useDebouncedStateLeading} />
+<Demo data={UseDebouncedStateDemos.leading} />
 
 ## Definition
 

@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -11,14 +11,14 @@ on resize handles, keyboard navigation following the WAI-ARIA Window Splitter pa
 collapsible panels and min/max constraints. All sizes are percentages to avoid
 SSR/hydration issues.
 
-<Demo data={HooksDemos.useSplitterUsage} />
+<Demo data={UseSplitterDemos.usage} />
 
 ## Vertical orientation
 
 Set `orientation="vertical"` to create a vertical split layout.
 Keyboard navigation uses ArrowUp/ArrowDown instead of ArrowLeft/ArrowRight:
 
-<Demo data={HooksDemos.useSplitterVertical} />
+<Demo data={UseSplitterDemos.vertical} />
 
 ## Collapsible panels
 
@@ -28,14 +28,14 @@ snaps to 0%. Use `collapse()`, `expand()` and `toggleCollapse()` for
 programmatic control. Press Enter on a handle to toggle the smaller adjacent
 collapsible panel:
 
-<Demo data={HooksDemos.useSplitterCollapsible} />
+<Demo data={UseSplitterDemos.collapsible} />
 
 ## Multiple panels
 
 The hook supports any number of panels. Each handle controls the boundary
 between its two adjacent panels:
 
-<Demo data={HooksDemos.useSplitterMultiple} />
+<Demo data={UseSplitterDemos.multiple} />
 
 ## Redistribute
 
@@ -50,7 +50,7 @@ then moves to the next one if more space is needed. Try dragging the first handl
 the right — when the second panel hits its minimum (20%), space is taken from the third
 and fourth panels:
 
-<Demo data={HooksDemos.useSplitterRedistributeNearest} />
+<Demo data={UseSplitterDemos.redistributeNearest} />
 
 ### Equal
 
@@ -58,7 +58,7 @@ and fourth panels:
 drag direction, respecting each panel's minimum. Panels that hit their minimum are
 excluded and the remaining deficit is re-distributed among the rest:
 
-<Demo data={HooksDemos.useSplitterRedistributeEqual} />
+<Demo data={UseSplitterDemos.redistributeEqual} />
 
 ### Custom function
 
@@ -67,7 +67,7 @@ The function receives `{ sizes, panels, handleIndex, delta }` and must return
 a new sizes array. This example always borrows from the last panel when growing
 and from the first panel when shrinking:
 
-<Demo data={HooksDemos.useSplitterRedistributeCustom} />
+<Demo data={UseSplitterDemos.redistributeCustom} />
 
 ## Grip only handle
 
@@ -75,7 +75,7 @@ You can make the drag handle a small floating grip button instead of a full-heig
 In this example, only the grip icon is draggable — the thin line between panels is not
 interactive:
 
-<Demo data={HooksDemos.useSplitterGripOnly} />
+<Demo data={UseSplitterDemos.gripOnly} />
 
 ## Nested layout
 
@@ -83,21 +83,21 @@ Compose multiple `useSplitter` instances to create complex layouts with both
 horizontal and vertical splits. Here the right side of a horizontal split contains
 a vertical split:
 
-<Demo data={HooksDemos.useSplitterNested} />
+<Demo data={UseSplitterDemos.nested} />
 
 ## Code editor layout
 
 A real-world example combining a collapsible file explorer sidebar, a code editor
 panel and a terminal — similar to VS Code:
 
-<Demo data={HooksDemos.useSplitterCodeEditor} />
+<Demo data={UseSplitterDemos.codeEditor} />
 
 ## Controlled mode
 
 Pass `sizes` and `onSizeChange` to control the sizes externally.
 Use `setSizes()` for programmatic updates:
 
-<Demo data={HooksDemos.useSplitterControlled} />
+<Demo data={UseSplitterDemos.controlled} />
 
 ## Keyboard support
 

@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseCollapseDemos, UseHorizontalCollapseDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,13 +9,13 @@ export default Layout(MDX_DATA.useCollapse);
 `use-collapse` is the hook version of [Collapse](/core/collapse) component.
 It allows animation of height from `0` to `auto` and vice versa.
 
-<Demo data={HooksDemos.useCollapseDemo} />
+<Demo data={UseCollapseDemos.usage} />
 
 ## Horizontal collapse
 
 `use-horizontal-collapse` works the same way as `use-collapse` but animates width instead of height:
 
-<Demo data={HooksDemos.useHorizontalCollapseDemo} />
+<Demo data={UseHorizontalCollapseDemos.usage} />
 
 ## ref prop
 

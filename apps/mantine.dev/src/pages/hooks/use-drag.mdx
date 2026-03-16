@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseDragDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,7 +10,7 @@ export default Layout(MDX_DATA.useDrag);
 velocity, direction and supports axis constraints, threshold activation and tap detection.
 The hook uses the Pointer Events API and works with both mouse and touch input.
 
-<Demo data={HooksDemos.useDragUsage} />
+<Demo data={UseDragDemos.usage} />
 
 ## Axis constraint
 
@@ -18,7 +18,7 @@ Use the `axis` option to constrain movement to a single axis.
 Set `axis` to `'x'` or `'y'` for a fixed constraint, or `'lock'` to
 lock to whichever axis has more movement after `axisThreshold` is exceeded:
 
-<Demo data={HooksDemos.useDragAxis} />
+<Demo data={UseDragDemos.axis} />
 
 ## Distinguishing taps from drags
 
@@ -26,20 +26,20 @@ When `filterTaps` is enabled, the last state includes a `tap` property that is `
 when the total distance is below `tapThreshold` (default `3px`). Combined with `threshold`,
 this lets you distinguish clicks from drags on the same element:
 
-<Demo data={HooksDemos.useDragFilterTaps} />
+<Demo data={UseDragDemos.filterTaps} />
 
 ## Swipe to dismiss
 
 Use `movement` and `velocity` on the last event to decide whether to dismiss an item.
 This pattern works well for notifications:
 
-<Demo data={HooksDemos.useDragSwipe} />
+<Demo data={UseDragDemos.swipe} />
 
 ## Drag to scroll
 
 Apply `delta` to a container's `scrollLeft` to create a drag-to-scroll interaction:
 
-<Demo data={HooksDemos.useDragScroll} />
+<Demo data={UseDragDemos.scroll} />
 
 ## Touch support
 

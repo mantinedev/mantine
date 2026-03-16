@@ -1,4 +1,4 @@
-import { HooksDemos, ScrollerDemos } from '@docs/demos';
+import { ScrollerDemos, UseScrollerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,21 +10,21 @@ The `use-scroller` hook manages horizontal scroll behavior for a container eleme
 It provides scroll state (whether content can be scrolled in either direction),
 scroll functions, and drag-to-scroll functionality.
 
-<Demo data={HooksDemos.useScrollerUsageDemo} />
+<Demo data={UseScrollerDemos.usage} />
 
 ## Scroll amount
 
 Use `scrollAmount` option to control how many pixels the content scrolls
 when `scrollStart` or `scrollEnd` functions are called. Default value is `200`:
 
-<Demo data={HooksDemos.useScrollerScrollAmountDemo} />
+<Demo data={UseScrollerDemos.scrollAmount} />
 
 ## Draggable
 
 Use `draggable` option to enable or disable drag-to-scroll functionality.
 When `draggable` is `true` (default), users can click and drag to scroll the content:
 
-<Demo data={HooksDemos.useScrollerDraggableDemo} />
+<Demo data={UseScrollerDemos.draggable} />
 
 ## Scroller component
 
