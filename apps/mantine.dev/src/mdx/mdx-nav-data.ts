@@ -48,6 +48,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog940,
       MDX_DATA.Changelog930,
       MDX_DATA.Changelog920,
       MDX_DATA.Changelog910,
