@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseRovingIndexDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,7 +10,7 @@ export default Layout(MDX_DATA.useRovingIndex);
 In a group of focusable elements, only one element has `tabIndex={0}` (can be reached with Tab key),
 while all others have `tabIndex={-1}`. Arrow keys move focus between items in the group.
 
-<Demo data={HooksDemos.useRovingIndexUsage} />
+<Demo data={UseRovingIndexDemos.usage} />
 
 ## Orientation
 
@@ -19,7 +19,7 @@ Set `orientation` to control which arrow keys are used for navigation:
 - `'vertical'` – ArrowUp/ArrowDown
 - `'both'` – all four arrow keys
 
-<Demo data={HooksDemos.useRovingIndexVertical} />
+<Demo data={UseRovingIndexDemos.vertical} />
 
 ## Grid navigation
 
@@ -28,7 +28,7 @@ ArrowUp/ArrowDown navigate across rows preserving the column position.
 Navigation stops at grid boundaries. Use Ctrl+Home/Ctrl+End to jump to the first/last item in the grid,
 and Home/End to jump to the first/last item in the current row.
 
-<Demo data={HooksDemos.useRovingIndexGrid} />
+<Demo data={UseRovingIndexDemos.grid} />
 
 ## Disabled items
 
@@ -36,14 +36,14 @@ Use `isItemDisabled` callback to mark items as disabled. Disabled items are skip
 keyboard navigation. If the initially focused item is disabled, the first non-disabled item
 receives focus instead.
 
-<Demo data={HooksDemos.useRovingIndexDisabled} />
+<Demo data={UseRovingIndexDemos.disabled} />
 
 ## Loop
 
 By default, navigation wraps around at boundaries (`loop` is `true`).
 Set `loop={false}` to stop at the first and last items.
 
-<Demo data={HooksDemos.useRovingIndexLoop} />
+<Demo data={UseRovingIndexDemos.loop} />
 
 ## Controlled mode
 

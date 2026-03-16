@@ -1,4 +1,4 @@
-import { HeatmapDemos, HooksDemos, MaskInputDemos, MonthPickerDemos, TimePickerDemos, TreeDemos, TreemapDemos } from '@docs/demos';
+import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -18,7 +18,7 @@ a ref callback. It formats user input against a defined pattern and exposes both
 value and the raw unmasked value. The hook supports built-in and custom tokens, dynamic masks,
 character transforms, optional segments, and regex array format:
 
-<Demo data={HooksDemos.useMaskUsage} />
+<Demo data={UseMaskDemos.usage} />
 
 ## MaskInput component
 
@@ -66,7 +66,7 @@ New [use-roving-index](/hooks/use-roving-index) hook implements the
 keyboard navigation pattern. It manages `tabIndex` state for a group of focusable elements,
 handles arrow key navigation with disabled item skipping, and supports both 1D lists and 2D grids:
 
-<Demo data={HooksDemos.useRovingIndexUsage} />
+<Demo data={UseRovingIndexDemos.usage} />
 
 ## Tree drag and drop
 

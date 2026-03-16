@@ -1,31 +1,4 @@
-import {
-  HooksDemos,
-  FormDemos,
-  FloatingWindowDemos,
-  OverflowListDemos,
-  CardDemos,
-  ComboboxDemos,
-  CheckboxDemos,
-  CollapseDemos,
-  HighlightDemos,
-  TextInputDemos,
-  MultiSelectDemos,
-  PaginationDemos,
-  MarqueeDemos,
-  ScrollerDemos,
-  DatePickerInputDemos,
-  SimpleGridDemos,
-  SliderDemos,
-  BarsListDemos,
-  CalendarDemos,
-  ScheduleDemos,
-  DayViewDemos,
-  WeekViewDemos,
-  MonthViewDemos,
-  YearViewDemos,
-  MobileMonthViewDemos,
-  ScrollAreaDemos,
-} from '@docs/demos';
+import { BarsListDemos, CalendarDemos, CardDemos, CheckboxDemos, CollapseDemos, ComboboxDemos, DatePickerInputDemos, DayViewDemos, FloatingWindowDemos, FormDemos, HighlightDemos, MarqueeDemos, MobileMonthViewDemos, MonthViewDemos, MultiSelectDemos, OverflowListDemos, PaginationDemos, ScheduleDemos, ScrollAreaDemos, ScrollerDemos, SimpleGridDemos, SliderDemos, TextInputDemos, UseCollapseDemos, UseFloatingWindowDemos, UseHorizontalCollapseDemos, UseScrollerDemos, WeekViewDemos, YearViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -106,18 +79,18 @@ To get started, follow the [getting started guide](/schedule/getting-started).
 New `use-collapse` hook is the hook version of [Collapse](/core/collapse) component.
 It allows animation of height from `0` to `auto` and vice versa.
 
-<Demo data={HooksDemos.useCollapseDemo} />
+<Demo data={UseCollapseDemos.usage} />
 
 `use-horizontal-collapse` works the same way as `use-collapse` but animates width instead of height:
 
-<Demo data={HooksDemos.useHorizontalCollapseDemo} />
+<Demo data={UseHorizontalCollapseDemos.usage} />
 
 ## use-floating-window hook
 
 New [use-floating-window](/hooks/use-floating-window) hook allows creating floating draggable
 elements:
 
-<Demo data={HooksDemos.useFloatingWindowUsageDemo} />
+<Demo data={UseFloatingWindowDemos.usage} />
 
 ## FloatingWindow component
 
@@ -148,7 +121,7 @@ It supports native scrolling via trackpad, shift + mouse wheel, touch gestures, 
 
 New [use-scroller](/hooks/use-scroller) hook provides logic for creating custom scrollable containers with navigation controls:
 
-<Demo data={HooksDemos.useScrollerUsageDemo} demoProps={{ defaultExpanded: false }} />
+<Demo data={UseScrollerDemos.usage} demoProps={{ defaultExpanded: false }} />
 
 ## BarsList component
 

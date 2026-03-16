@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseHotkeysDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -12,7 +12,7 @@ The `use-hotkeys` hook accepts an array of hotkeys and handler tuples as its fir
 - `handler` - event handler called when the given combination is pressed
 - `options` - object with extra options for the hotkey handler
 
-<Demo data={HooksDemos.useHotkeysDemoIndex} />
+<Demo data={UseHotkeysDemos.index} />
 
 The second argument is a list of HTML tags on which hotkeys should be ignored.
 By default, hotkey events are ignored if the focus is in `input`, `textarea`, and `select` elements.
@@ -38,7 +38,7 @@ The `use-hotkeys` hook can only work with the document element; you will need to
 if you need to support other elements. For this purpose, the `@mantine/hooks` package exports a `getHotkeyHandler` function
 that should be used with `onKeyDown`:
 
-<Demo data={HooksDemos.useHotkeysDemo} />
+<Demo data={UseHotkeysDemos.usage} />
 
 With `getHotkeyHandler` you can also add events to any DOM node using `.addEventListener`:
 

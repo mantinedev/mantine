@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseClickOutsideDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.useClickOutside);
 
 ## Usage
 
-<Demo data={HooksDemos.useClickOutsideUsage} />
+<Demo data={UseClickOutsideDemos.usage} />
 
 ## API
 
@@ -35,7 +35,7 @@ function Example() {
 By default, `use-click-outside` listens to `mousedown` and `touchstart` events,
 you can change these events by passing an array of events as second argument:
 
-<Demo data={HooksDemos.useClickOutsideEvents} />
+<Demo data={UseClickOutsideDemos.events} />
 
 ## Multiple nodes
 
