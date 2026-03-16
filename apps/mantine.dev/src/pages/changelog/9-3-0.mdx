@@ -1,4 +1,4 @@
-import { PaginationDemos } from '@docs/demos';
+import { PaginationDemos, TextDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -17,3 +17,11 @@ All funds are used to improve Mantine and create new features and components.
 queries to switch between page number buttons and a compact "Page X of Y" label based on the available width.
 
 <Demo data={PaginationDemos.responsive} />
+
+## Text textWrap prop
+
+[Text](/core/text/) and [Blockquote](/core/blockquote/) components now support
+`textWrap` prop that controls the `text-wrap` CSS property. You can use it to balance line lengths
+or prevent orphaned words in paragraphs.
+
+<Demo data={TextDemos.textWrap} />

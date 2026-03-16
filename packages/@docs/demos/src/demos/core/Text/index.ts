@@ -4,3 +4,4 @@ export { lineClamp } from './Text.demo.lineClamp';
 export { gradient } from './Text.demo.gradient';
 export { inherit } from './Text.demo.inherit';
 export { truncate } from './Text.demo.truncate';
+export { textWrap } from './Text.demo.textWrap';

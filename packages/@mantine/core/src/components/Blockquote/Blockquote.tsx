@@ -20,7 +20,13 @@ import classes from './Blockquote.module.css';
 
 export type BlockquoteStylesNames = 'root' | 'icon' | 'cite';
 export type BlockquoteCssVariables = {
-  root: '--bq-bg-light' | '--bq-bg-dark' | '--bq-bd' | '--bq-icon-size' | '--bq-radius';
+  root:
+    | '--bq-bg-light'
+    | '--bq-bg-dark'
+    | '--bq-bd'
+    | '--bq-icon-size'
+    | '--bq-radius'
+    | '--bq-text-wrap';
 };
 
 export interface BlockquoteProps
@@ -39,6 +45,9 @@ export interface BlockquoteProps
 
   /** Reference to a cited quote */
   cite?: React.ReactNode;
+
+  /** Controls `text-wrap` CSS property */
+  textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
 }
 
 export type BlockquoteFactory = Factory<{
@@ -52,29 +61,32 @@ const defaultProps = {
   iconSize: 48,
 } satisfies Partial<BlockquoteProps>;
 
-const varsResolver = createVarsResolver<BlockquoteFactory>((theme, { color, iconSize, radius }) => {
-  const darkParsed = parseThemeColor({
-    color: color || theme.primaryColor,
-    theme,
-    colorScheme: 'dark',
-  });
+const varsResolver = createVarsResolver<BlockquoteFactory>(
+  (theme, { color, iconSize, radius, textWrap }) => {
+    const darkParsed = parseThemeColor({
+      color: color || theme.primaryColor,
+      theme,
+      colorScheme: 'dark',
+    });
 
-  const lightParsed = parseThemeColor({
-    color: color || theme.primaryColor,
-    theme,
-    colorScheme: 'light',
-  });
+    const lightParsed = parseThemeColor({
+      color: color || theme.primaryColor,
+      theme,
+      colorScheme: 'light',
+    });
 
-  return {
-    root: {
-      '--bq-bg-light': rgba(lightParsed.value, 0.07),
-      '--bq-bg-dark': rgba(darkParsed.value, 0.06),
-      '--bq-bd': getThemeColor(color, theme),
-      '--bq-icon-size': rem(iconSize),
-      '--bq-radius': getRadius(radius),
-    },
-  };
-});
+    return {
+      root: {
+        '--bq-bg-light': rgba(lightParsed.value, 0.07),
+        '--bq-bg-dark': rgba(darkParsed.value, 0.06),
+        '--bq-bd': getThemeColor(color, theme),
+        '--bq-icon-size': rem(iconSize),
+        '--bq-radius': getRadius(radius),
+        '--bq-text-wrap': textWrap,
+      },
+    };
+  }
+);
 
 export const Blockquote = factory<BlockquoteFactory>((_props) => {
   const props = useProps('Blockquote', defaultProps, _props);
@@ -89,6 +101,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props) => {
     icon,
     iconSize,
     cite,
+    textWrap,
     attributes,
     ...others
   } = props;

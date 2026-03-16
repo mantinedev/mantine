@@ -32,3 +32,8 @@ export const Demo_truncate = {
   name: '⭐ Demo: truncate',
   render: renderDemo(demos.truncate),
 };
+
+export const Demo_textWrap = {
+  name: '⭐ Demo: textWrap',
+  render: renderDemo(demos.textWrap),
+};

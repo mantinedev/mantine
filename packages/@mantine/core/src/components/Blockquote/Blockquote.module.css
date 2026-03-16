@@ -3,6 +3,7 @@
 
   position: relative;
   margin: 0;
+  text-wrap: var(--bq-text-wrap, wrap);
   border-inline-start: var(--blockquote-border);
   border-start-end-radius: var(--bq-radius);
   border-end-end-radius: var(--bq-radius);
