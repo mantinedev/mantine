@@ -92,6 +92,7 @@ export * from './SimpleGrid';
 export * from './Skeleton';
 export * from './Slider';
 export * from './Space';
+export * from './Splitter';
 export * from './Spoiler';
 export * from './Stack';
 export * from './Stepper';

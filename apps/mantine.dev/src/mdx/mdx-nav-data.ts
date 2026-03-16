@@ -268,6 +268,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Grid,
       MDX_DATA.Space,
       MDX_DATA.Flex,
+      MDX_DATA.Splitter,
     ],
   },
   {

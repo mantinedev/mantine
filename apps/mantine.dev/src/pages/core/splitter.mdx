@@ -1,0 +1,138 @@
+import { SplitterDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Splitter);
+
+## Usage
+
+`Splitter` component provides resizable split pane layout. It is built on top of the
+[use-splitter](/hooks/use-splitter/) hook and provides a declarative API with
+Styles API integration.
+
+<Demo data={SplitterDemos.usage} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to split panes vertically:
+
+<Demo data={SplitterDemos.vertical} />
+
+## Collapsible panes
+
+Set `collapsible` prop on `Splitter.Pane` to allow the pane to be collapsed
+by dragging past its minimum size. Use `splitterRef` to access imperative API
+for programmatic collapse/expand:
+
+<Demo data={SplitterDemos.collapsible} />
+
+## Controlled
+
+To control panel sizes, use `sizes` and `onSizeChange` props:
+
+<Demo data={SplitterDemos.controlled} />
+
+## Multiple panes
+
+`Splitter` supports any number of panes. Handles are automatically rendered between panes:
+
+<Demo data={SplitterDemos.multiple} />
+
+## Nested splitters
+
+You can nest `Splitter` components to create complex layouts:
+
+<Demo data={SplitterDemos.nested} />
+
+## Redistribute
+
+When using multiple panes, set `redistribute` prop to control how space is borrowed from
+non-adjacent panels when the immediate neighbor is at its min/max:
+
+<Demo data={SplitterDemos.redistribute} />
+
+## Line size
+
+Use `lineSize` prop to control the thickness of the separator line between panes:
+
+<Demo data={SplitterDemos.lineSize} />
+
+## Without handle
+
+Set `withHandle={false}` to hide the thumb with grip icon. The separator line
+between panes is still visible and draggable:
+
+<Demo data={SplitterDemos.withHandle} />
+
+## Imperative API
+
+Use `splitterRef` prop to access imperative splitter API:
+
+```tsx
+import { useRef } from 'react';
+import { Splitter } from '@mantine/core';
+import { UseSplitterReturnValue } from '@mantine/hooks';
+
+function Demo() {
+  const splitterRef = useRef<UseSplitterReturnValue>(null);
+
+  return (
+    <>
+      <button onClick={() => splitterRef.current?.collapse(0)}>
+        Collapse first pane
+      </button>
+      <Splitter splitterRef={splitterRef}>
+        <Splitter.Pane defaultSize={50} min={20} collapsible>
+          First pane
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={50} min={20}>
+          Second pane
+        </Splitter.Pane>
+      </Splitter>
+    </>
+  );
+}
+```
+
+## Wrap Splitter.Pane
+
+`Splitter` component relies on `Splitter.Pane` order. Wrapping `Splitter.Pane` is not supported,
+`Splitter.Pane` must be a direct child of `Splitter`.
+
+```tsx
+import { Splitter } from '@mantine/core';
+
+// This will not work – wrapped pane will not be recognized
+function WillNotWork() {
+  return (
+    <Splitter.Pane defaultSize={50} min={20}>
+      This part will not render correctly
+    </Splitter.Pane>
+  );
+}
+
+// Create a separate component for pane content instead
+function PaneContent() {
+  return <div>This will work as expected!</div>;
+}
+
+function Demo() {
+  return (
+    <Splitter h={200}>
+      <Splitter.Pane defaultSize={50} min={20}>
+        First pane
+      </Splitter.Pane>
+      {/* Do not wrap Splitter.Pane in another component */}
+      {/* <WillNotWork /> */}
+      <Splitter.Pane defaultSize={50} min={20}>
+        <PaneContent />
+      </Splitter.Pane>
+    </Splitter>
+  );
+}
+```
+
+## use-splitter hook
+
+`Splitter` component is built on top of the [use-splitter](/hooks/use-splitter/) hook.
+If you need more control over the layout and styling, you can use the hook directly.

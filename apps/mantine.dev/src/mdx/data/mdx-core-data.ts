@@ -945,6 +945,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/file-input.mdx',
   },
 
+  Splitter: {
+    title: 'Splitter',
+    package: '@mantine/core',
+    slug: '/core/splitter',
+    props: ['Splitter', 'SplitterPane'],
+    styles: ['Splitter'],
+    componentPrefix: 'Splitter',
+    description: 'Resizable split pane layout',
+    source: '@mantine/core/src/components/Splitter/Splitter.tsx',
+    docs: 'core/splitter.mdx',
+  },
+
   Stepper: {
     title: 'Stepper',
     package: '@mantine/core',

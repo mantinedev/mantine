@@ -1,0 +1,76 @@
+.root {
+  display: flex;
+
+  &:where([data-orientation='horizontal']) {
+    flex-direction: row;
+  }
+
+  &:where([data-orientation='vertical']) {
+    flex-direction: column;
+  }
+}
+
+.pane {
+  flex-grow: 0;
+  flex-shrink: 1;
+  overflow: auto;
+}
+
+.handle {
+  flex: 0 0 var(--splitter-line-size, rem(2px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  touch-action: none;
+  outline: none;
+  background-color: var(--splitter-handle-color, var(--mantine-color-body));
+
+  &:where([data-orientation='horizontal']) {
+    cursor: col-resize;
+  }
+
+  &:where([data-orientation='vertical']) {
+    cursor: row-resize;
+  }
+}
+
+.thumb {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+  color: var(--mantine-color-dimmed);
+  transition: color 100ms ease;
+
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+    border: rem(1px) solid var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    border: rem(1px) solid var(--mantine-color-dark-4);
+  }
+
+  &:where([data-orientation='horizontal']) {
+    width: rem(12px);
+    height: rem(60px);
+  }
+
+  &:where([data-orientation='vertical']) {
+    width: rem(60px);
+    height: rem(12px);
+  }
+
+  & > svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .handle:focus-visible & {
+    box-shadow: 0 0 0 rem(2px) var(--mantine-primary-color-filled);
+  }
+}

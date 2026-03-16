@@ -547,9 +547,10 @@ export function useSplitter<T extends HTMLElement = any>(
         const flushResize = (pointerEvent: PointerEvent) => {
           const s = internalStateRef.current;
           const isHorizontal = (optionsRef.current.orientation ?? 'horizontal') === 'horizontal';
+          const isRtl = isHorizontal && optionsRef.current.dir === 'rtl';
           const pointerPos = isHorizontal ? pointerEvent.clientX : pointerEvent.clientY;
           const pixelDelta = pointerPos - s.startPointer;
-          const percentDelta = (pixelDelta / s.containerSize) * 100;
+          const percentDelta = ((isRtl ? -pixelDelta : pixelDelta) / s.containerSize) * 100;
 
           const opts = optionsRef.current;
           const newSizes = applyConstraints(

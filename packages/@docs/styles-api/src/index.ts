@@ -103,6 +103,7 @@ export * from './data/SimpleGrid.styles-api';
 export * from './data/Skeleton.styles-api';
 export * from './data/Slider.styles-api';
 export * from './data/Sparkline.styles-api';
+export * from './data/Splitter.styles-api';
 export * from './data/Spoiler.styles-api';
 export * from './data/Spotlight.styles-api';
 export * from './data/Stack.styles-api';

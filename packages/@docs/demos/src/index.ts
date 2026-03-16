@@ -90,6 +90,7 @@ export * as SimpleGridDemos from './demos/core/SimpleGrid';
 export * as SkeletonDemos from './demos/core/Skeleton';
 export * as SliderDemos from './demos/core/Slider';
 export * as SpaceDemos from './demos/core/Space';
+export * as SplitterDemos from './demos/core/Splitter';
 export * as SpoilerDemos from './demos/core/Spoiler';
 export * as StackDemos from './demos/core/Stack';
 export * as StepperDemos from './demos/core/Stepper';
