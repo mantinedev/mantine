@@ -178,7 +178,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
 
   const withContextProps = {
     checked: contextChecked ?? checked,
-    name: ctx?.name ?? rest.name,
+    name: rest.name ?? ctx?.name,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
       ctx?.onChange(event);
       onChange?.(event);
