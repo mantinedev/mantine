@@ -7,13 +7,13 @@ import {
   OptionalPortal,
   Progress,
 } from '@mantine/core';
+import classes from './NavigationProgress.module.css';
 import {
   NprogressStore,
   nprogressStore,
   resetNavigationProgressAction,
   useNprogress,
 } from './nprogress.store';
-import classes from './NavigationProgress.module.css';
 
 export interface NavigationProgressProps extends ElementProps<'div'> {
   /** Component store, controls state */

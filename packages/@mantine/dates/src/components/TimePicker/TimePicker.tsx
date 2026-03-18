@@ -27,6 +27,7 @@ import { AmPmInput } from './AmPmInput/AmPmInput';
 import { AmPmControlsList } from './TimeControlsList/AmPmControlsList';
 import { TimeControlsList } from './TimeControlsList/TimeControlsList';
 import { TimePickerProvider } from './TimePicker.context';
+import classes from './TimePicker.module.css';
 import {
   TimePickerAmPmLabels,
   TimePickerFormat,
@@ -38,7 +39,6 @@ import { useTimePicker } from './use-time-picker';
 import { clampTime } from './utils/clamp-time/clamp-time';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
 import { getTimeString } from './utils/get-time-string/get-time-string';
-import classes from './TimePicker.module.css';
 
 export type TimePickerStylesNames =
   | 'fieldsRoot'

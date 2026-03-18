@@ -1,9 +1,7 @@
-// prettier-ignore
 import chalk from 'chalk';
-
-import { generateCSS } from './generate-css';
 import { createLogger } from '../utils/signale';
 import { buildPackage } from './build-package';
+import { generateCSS } from './generate-css';
 import { getBuildTime } from './get-build-time';
 import { getPackagesBuildOrder } from './get-packages-build-order';
 

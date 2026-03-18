@@ -114,3 +114,21 @@ export function NotScrollable() {
     </div>
   );
 }
+
+export function EmptyStateWithoutActionsList() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Spotlight
+        store={store}
+        actions={[]}
+        forceOpened
+        withinPortal={false}
+        shortcut={null}
+        searchProps={{
+          placeholder: 'Search actions',
+          leftSection: <IconSearch stroke={1.5} size={20} />,
+        }}
+      />
+    </div>
+  );
+}

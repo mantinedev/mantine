@@ -239,6 +239,7 @@ export const DateTimePickerStylesApi: StylesApiData<DateTimePickerFactory> = {
   selectors: {
     ...InputBaseStylesApi.selectors,
     ...DatePickerStylesApi.selectors,
+    placeholder: 'Placeholder element',
     timeWrapper: 'Wrapper around time input and submit button',
     timeInput: 'TimeInput',
     submitButton: 'Submit button',

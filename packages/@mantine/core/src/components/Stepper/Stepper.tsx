@@ -23,9 +23,9 @@ import {
   useStyles,
 } from '../../core';
 import { StepperProvider } from './Stepper.context';
+import classes from './Stepper.module.css';
 import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
 import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
-import classes from './Stepper.module.css';
 
 export type StepFragmentComponent = React.FC<{ step: number }>;
 

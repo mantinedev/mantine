@@ -222,4 +222,54 @@ describe('@mantine/core/NumberInput', () => {
     blurInput();
     expectValue(String(MAX));
   });
+
+  it('treats values with trailing decimal separator as strings', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+
+    focusInput();
+    await enterText('10.');
+
+    expect(spy).toHaveBeenLastCalledWith('10.');
+    expectValue('10.');
+  });
+
+  it('treats values with digits after decimal separator as numbers', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+
+    focusInput();
+    await enterText('10.1');
+
+    expect(spy).toHaveBeenLastCalledWith(10.1);
+    expectValue('10.1');
+  });
+
+  it('converts decimal separators in pasted values when decimalSeparator is set', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} decimalSeparator="," />);
+
+    focusInput();
+    fireEvent.paste(getInput(), {
+      clipboardData: { getData: () => '10.02' },
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(10.02);
+    expectValue('10,02');
+  });
+
+  it('converts multiple allowed decimal separators in pasted values', () => {
+    const spy = jest.fn();
+    render(
+      <NumberInput onChange={spy} decimalSeparator="," allowedDecimalSeparators={['.', ',']} />
+    );
+
+    focusInput();
+    fireEvent.paste(getInput(), {
+      clipboardData: { getData: () => '25.5' },
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(25.5);
+    expectValue('25,5');
+  });
 });

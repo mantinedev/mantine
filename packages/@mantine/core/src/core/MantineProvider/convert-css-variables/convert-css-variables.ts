@@ -1,5 +1,4 @@
 import { CSSVariables, cssVariablesObjectToString } from './css-variables-object-to-string';
-import { wrapWithSelector } from './wrap-with-selector';
 
 export interface ConvertCSSVariablesInput {
   /** Shared CSS variables that should be accessible independent from color scheme */
@@ -12,23 +11,24 @@ export interface ConvertCSSVariablesInput {
   light: CSSVariables;
 }
 
-export function convertCssVariables(input: ConvertCSSVariablesInput, selector: string) {
+export function convertCssVariables(input: ConvertCSSVariablesInput, selectorOverride?: string) {
+  const selectors = selectorOverride ? [selectorOverride] : [':root', ':host'];
   const sharedVariables = cssVariablesObjectToString(input.variables);
-  const shared = sharedVariables ? wrapWithSelector(selector, sharedVariables) : '';
+  const shared = sharedVariables ? `${selectors.join(', ')}{${sharedVariables}}` : '';
   const dark = cssVariablesObjectToString(input.dark);
   const light = cssVariablesObjectToString(input.light);
 
-  const darkForced = dark
-    ? selector === ':host'
-      ? wrapWithSelector(`${selector}([data-mantine-color-scheme="dark"])`, dark)
-      : wrapWithSelector(`${selector}[data-mantine-color-scheme="dark"]`, dark)
-    : '';
+  const selectorsWithScheme = (scheme: 'light' | 'dark') =>
+    selectors
+      .map((selector) =>
+        selector === ':host'
+          ? `${selector}([data-mantine-color-scheme="${scheme}"])`
+          : `${selector}[data-mantine-color-scheme="${scheme}"]`
+      )
+      .join(', ');
 
-  const lightForced = light
-    ? selector === ':host'
-      ? wrapWithSelector(`${selector}([data-mantine-color-scheme="light"])`, light)
-      : wrapWithSelector(`${selector}[data-mantine-color-scheme="light"]`, light)
-    : '';
+  const darkForced = dark ? `${selectorsWithScheme('dark')}{${dark}}` : '';
+  const lightForced = light ? `${selectorsWithScheme('light')}{${light}}` : '';
 
   return `${shared}\n\n${darkForced}\n\n${lightForced}`;
 }

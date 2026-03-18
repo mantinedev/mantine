@@ -5,8 +5,8 @@ import { useWindowEvent } from '@mantine/hooks';
 import { Logo } from '../Logo/Logo';
 import { DiscordButton, TwitterButton } from '../SocialButton';
 import { FOOTER_LINKS_DATA } from './data';
-import { LinksGroup } from './LinksGroup/LinksGroup';
 import classes from './DocsFooter.module.css';
+import { LinksGroup } from './LinksGroup/LinksGroup';
 
 interface FooterProps {
   withNavbar?: boolean;

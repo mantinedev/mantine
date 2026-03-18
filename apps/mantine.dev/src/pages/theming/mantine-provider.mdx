@@ -46,7 +46,7 @@ interface MantineProviderProps {
   /** Forces color scheme value, if set, MantineProvider ignores `colorSchemeManager` and `defaultColorScheme` */
   forceColorScheme?: 'light' | 'dark';
 
-  /** CSS selector to which CSS variables should be added, `:root` by default */
+  /** CSS selector to which CSS variables should be added, by default variables are applied to `:root` and `:host` */
   cssVariablesSelector?: string;
 
   /** Determines whether theme CSS variables should be added to given `cssVariablesSelector`, `true` by default */
@@ -151,8 +151,9 @@ function Demo() {
 ### cssVariablesSelector
 
 `cssVariablesSelector` is a CSS selector to which [CSS variables](/styles/css-variables/) should be added.
-By default, it is `:root`. `MantineProvider` generates CSS variables based on given [theme override](/theming/theme-object/)
-and `cssVariablesResolver`, then these variables are rendered into `<style />` tag next to your application.
+By default, variables are applied to `:root` and `:host`. `MantineProvider` generates CSS variables based
+on given [theme override](/theming/theme-object/) and `cssVariablesResolver`, then these variables are
+rendered into `<style />` tag next to your application.
 You can learn more about Mantine CSS variables in the [CSS variables guide](/styles/css-variables/).
 
 ```tsx

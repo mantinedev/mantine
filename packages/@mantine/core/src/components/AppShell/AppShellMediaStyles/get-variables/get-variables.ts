@@ -16,12 +16,27 @@ interface GetVariablesInput {
   aside: AppShellProps['aside'] | undefined;
   padding: AppShellProps['padding'] | undefined;
   theme: MantineTheme;
+  mode: 'fixed' | 'static';
 }
 
-export function getVariables({ navbar, header, footer, aside, padding, theme }: GetVariablesInput) {
+export function getVariables({
+  navbar,
+  header,
+  footer,
+  aside,
+  padding,
+  theme,
+  mode,
+}: GetVariablesInput) {
   const minMediaStyles: MediaQueryVariables = {};
   const maxMediaStyles: MediaQueryVariables = {};
   const baseStyles: CSSVariables = {};
+
+  // Set default main grid position in static mode
+  if (mode === 'static') {
+    baseStyles['--app-shell-main-grid-column'] = '1 / -1';
+    baseStyles['--app-shell-main-grid-row'] = '2';
+  }
 
   assignNavbarVariables({
     baseStyles,
@@ -29,6 +44,7 @@ export function getVariables({ navbar, header, footer, aside, padding, theme }: 
     maxMediaStyles,
     navbar,
     theme,
+    mode,
   });
 
   assignAsideVariables({
@@ -37,10 +53,11 @@ export function getVariables({ navbar, header, footer, aside, padding, theme }: 
     maxMediaStyles,
     aside,
     theme,
+    mode,
   });
 
-  assignHeaderVariables({ baseStyles, minMediaStyles, header });
-  assignFooterVariables({ baseStyles, minMediaStyles, footer });
+  assignHeaderVariables({ baseStyles, minMediaStyles, header, mode });
+  assignFooterVariables({ baseStyles, minMediaStyles, footer, mode });
   assignPaddingVariables({ baseStyles, minMediaStyles, padding });
 
   const minMedia = getSortedBreakpoints(keys(minMediaStyles), theme.breakpoints).map(

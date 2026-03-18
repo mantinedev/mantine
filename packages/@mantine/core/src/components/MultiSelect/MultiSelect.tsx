@@ -30,6 +30,14 @@ import { PillsInput } from '../PillsInput';
 import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedValues } from './filter-picked-values';
 
+const clearSectionOffset: Record<string, number> = {
+  xs: 41,
+  sm: 50,
+  md: 60,
+  lg: 72,
+  xl: 89,
+};
+
 export type MultiSelectStylesNames =
   | __InputStylesNames
   | ComboboxLikeStylesNames
@@ -111,6 +119,9 @@ export interface MultiSelectProps
 
   /** Clear search value when item is selected */
   clearSearchOnChange?: boolean;
+
+  /** If set, the dropdown opens when the input receives focus @default `true` */
+  openOnFocus?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -125,6 +136,7 @@ const defaultProps = {
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
   clearSearchOnChange: true,
+  openOnFocus: true,
   size: 'sm',
 } satisfies Partial<MultiSelectProps>;
 
@@ -149,6 +161,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     onDropdownOpen,
     onDropdownClose,
     selectFirstOptionOnChange,
+    selectFirstOptionOnDropdownOpen,
     onOptionSubmit,
     comboboxProps,
     filter,
@@ -206,6 +219,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     chevronColor,
     attributes,
     clearSearchOnChange,
+    openOnFocus,
     ...others
   } = props;
 
@@ -217,7 +231,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      if (selectFirstOptionOnDropdownOpen) {
+        combobox.selectFirstOption();
+      }
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
@@ -324,6 +343,9 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
 
   const filteredData = filterPickedValues({ data: parsedData, value: _value });
   const _clearable = clearable && _value.length > 0 && !disabled && !readOnly;
+  const pillsListStyle = _clearable
+    ? { paddingInlineEnd: clearSectionOffset[size] ?? clearSectionOffset.sm }
+    : undefined;
 
   return (
     <>
@@ -396,7 +418,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             withErrorStyles={withErrorStyles}
             __stylesApiProps={{
               ...props,
-              rightSectionPointerEvents: rightSectionPointerEvents || (_clearable ? 'all' : 'none'),
+              rightSectionPointerEvents: rightSectionPointerEvents || 'none',
               multiline: true,
             }}
             pointer={!searchable}
@@ -411,7 +433,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
               attributes={attributes}
               disabled={disabled}
               unstyled={unstyled}
-              {...getStyles('pillsList')}
+              {...getStyles('pillsList', { style: pillsListStyle })}
             >
               {values}
               <Combobox.EventsTarget autoComplete={autoComplete}>
@@ -425,7 +447,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   unstyled={unstyled}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    searchable && combobox.openDropdown();
+                    openOnFocus && searchable && combobox.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);

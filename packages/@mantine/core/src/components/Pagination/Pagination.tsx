@@ -1,6 +1,7 @@
 import { factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { PaginationIcon } from './Pagination.icons';
+import classes from './Pagination.module.css';
 import { PaginationControl } from './PaginationControl/PaginationControl';
 import { PaginationDots } from './PaginationDots/PaginationDots';
 import {
@@ -16,7 +17,6 @@ import {
   PaginationRootProps,
   PaginationRootStylesNames,
 } from './PaginationRoot/PaginationRoot';
-import classes from './Pagination.module.css';
 
 export type PaginationStylesNames = PaginationRootStylesNames;
 export type PaginationCssVariables = PaginationRootCssVariables;

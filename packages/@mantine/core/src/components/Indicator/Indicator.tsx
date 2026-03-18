@@ -17,8 +17,8 @@ import {
   useStyles,
 } from '../../core';
 import { getPositionVariables } from './get-position-variables/get-position-variables';
-import { IndicatorPosition } from './Indicator.types';
 import classes from './Indicator.module.css';
+import { IndicatorPosition } from './Indicator.types';
 
 export type IndicatorPositionVariables =
   | '--indicator-top'

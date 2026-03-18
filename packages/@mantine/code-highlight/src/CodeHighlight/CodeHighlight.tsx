@@ -19,12 +19,12 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import classes from '../CodeHighlight.module.css';
 import { useHighlight } from '../CodeHighlightProvider/CodeHighlightProvider';
 import { CodeHighlightContextProvider } from './CodeHighlight.context';
 import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
-import classes from '../CodeHighlight.module.css';
 
 export type CodeHighlightStylesNames =
   | 'codeHighlight'

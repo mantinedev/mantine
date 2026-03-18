@@ -11,8 +11,8 @@ import {
   useRandomClassName,
 } from '../../../core';
 import { useGridContext } from '../Grid.context';
-import { GridColVariables } from './GridColVariables';
 import classes from '../Grid.module.css';
+import { GridColVariables } from './GridColVariables';
 
 export type GridColStylesNames = 'col';
 export type ColSpan = number | 'auto' | 'content';

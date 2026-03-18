@@ -1,27 +1,12 @@
 <div align="center">
-	<a href="https://go.warp.dev/mantine" target="_blank">
+	<a href="https://formengine.io/documentation/components-library/mantine/?utm_source=github&utm_medium=hero-banner&utm_campaign=mantine-readme-core#getting-started-with-mantine-components" target="_blank">
 		<sup>Special thanks to:</sup>
 		<br>
-		<img alt="Warp sponsorship" width="400" src="https://github.com/warpdotdev/brand-assets/blob/main/Github/Sponsor/Warp-Github-LG-02.png">
+		<img alt="Formengine sponsorship" width="400" src="https://formengine.io/ads-images/mantine3.png?version=1">
 		<br>
-		<h>Warp, built for coding with multiple AI agents</b>
+		<h>FormEngine Core – Lightweight React JSON Schema form builder library for Mantine</b>
 		<br>
-		<sup>Available for macOS, Linux and Windows</sup>
-	</a>
-</div>
-
-<br>
-
-<br>
-<div align="center">
-	<a href="https://formengine.io/?utm_source=github&utm_medium=hero-banner&utm_campaign=mantine-readme" target="_blank">
-		<sup>Special thanks to:</sup>
-		<br>
-		<img alt="Warp sponsorship" width="400" src="https://formengine.io/ads-images/banner2.png?v=1">
-		<br>
-		<h>Drag and Drop React Complex Form Builder Library</b>
-		<br>
-		<sup>Build and customize complex React forms in minutes.<td> Seamlessly integrate a no-code form designer for your end-users or your internal tools</sup>
+		<sup>No deep React knowledge required.</sup>
 	</a>
 </div>
 

@@ -5,8 +5,8 @@ import { getComponentName } from '@/components/PropsTable';
 import { TableError } from '@/components/TableError';
 import { ModifiersTable } from './ModifiersTable';
 import { SelectorsTable } from './SelectorsTable';
-import { VariablesTable } from './VariablesTable';
 import classes from './StylesApiTable.module.css';
+import { VariablesTable } from './VariablesTable';
 
 export interface StylesApiData {
   selectors: Record<string, string>;

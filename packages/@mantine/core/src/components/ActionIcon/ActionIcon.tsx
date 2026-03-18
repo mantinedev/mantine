@@ -17,9 +17,9 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
+import classes from './ActionIcon.module.css';
 import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';
 import { ActionIconGroupSection } from './ActionIconGroupSection/ActionIconGroupSection';
-import classes from './ActionIcon.module.css';
 
 export type ActionIconVariant =
   | 'filled'

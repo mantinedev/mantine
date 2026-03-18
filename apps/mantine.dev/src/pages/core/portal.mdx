@@ -41,8 +41,8 @@ but still receives `opened` and `onClose` props. The element will not be affecte
 
 ## Reuse target node
 
-By default, Portal creates a new target node for each instance. To change this behavior and
-reuse the same target node for all instances, set `reuseTargetNode` prop. In the following
+By default, Portal reuses the same target node for all instances (`reuseTargetNode={true}`).
+To create a new target node for each instance, set `reuseTargetNode={false}`. In the following
 example, all three paragraphs will be rendered in the same target node:
 
 ```tsx

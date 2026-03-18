@@ -19,9 +19,9 @@ import {
   useStyles,
 } from '../../core';
 import { CheckIcon } from '../Checkbox';
+import classes from './Chip.module.css';
 import { useChipGroupContext } from './ChipGroup.context';
 import { ChipGroup } from './ChipGroup/ChipGroup';
-import classes from './Chip.module.css';
 
 export type ChipStylesNames = 'root' | 'input' | 'iconWrapper' | 'checkIcon' | 'label';
 export type ChipVariant = 'outline' | 'filled' | 'light';

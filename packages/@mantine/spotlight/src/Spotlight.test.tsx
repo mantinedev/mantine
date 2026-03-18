@@ -1,4 +1,4 @@
-import { tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Spotlight, SpotlightProps, SpotlightStylesNames } from './Spotlight';
 import { spotlight } from './spotlight.store';
 import { SpotlightAction } from './SpotlightAction';
@@ -63,5 +63,14 @@ describe('@mantine/core/Spotlight', () => {
     expect(Spotlight.open).toBe(spotlight.open);
     expect(Spotlight.close).toBe(spotlight.close);
     expect(Spotlight.toggle).toBe(spotlight.toggle);
+  });
+
+  it('does not render actions list container when there are no actions', () => {
+    const { container } = render(
+      <Spotlight {...defaultProps} actions={[]} nothingFound="Nothing found" />
+    );
+
+    expect(screen.getByText('Nothing found')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-Spotlight-actionsList')).toBe(null);
   });
 });

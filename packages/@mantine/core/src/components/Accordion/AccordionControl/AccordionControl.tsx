@@ -10,8 +10,8 @@ import {
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useAccordionContext } from '../Accordion.context';
-import { useAccordionItemContext } from '../AccordionItem.context';
 import classes from '../Accordion.module.css';
+import { useAccordionItemContext } from '../AccordionItem.context';
 
 export type AccordionControlStylesNames = 'control' | 'chevron' | 'label' | 'itemTitle' | 'icon';
 

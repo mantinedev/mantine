@@ -180,3 +180,26 @@ export function Sizes() {
 export function Unstyled() {
   return <Checkbox label="Unstyled checkbox" unstyled />;
 }
+
+export function Inert() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack>
+        <Checkbox
+          label="Inert checkbox (cannot be changed by clicking label or input)"
+          checked={checked}
+          onChange={(event) => setChecked(event.currentTarget.checked)}
+          inert
+        />
+        <Checkbox
+          label="Normal checkbox for comparison"
+          checked={checked}
+          onChange={(event) => setChecked(event.currentTarget.checked)}
+        />
+        <p>Checked state: {checked ? 'true' : 'false'}</p>
+      </Stack>
+    </div>
+  );
+}

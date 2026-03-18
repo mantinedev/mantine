@@ -1,6 +1,5 @@
 import { MantineStylesTransform, useMantineTheme } from '@mantine/core';
 import { getHelpers } from './create-styles';
-// prettier-ignore
 import { useCss } from './use-css';
 
 function sxTransform() {

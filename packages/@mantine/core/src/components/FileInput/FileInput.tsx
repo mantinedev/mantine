@@ -82,6 +82,7 @@ const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
 
 const defaultProps = {
   valueComponent: DefaultValue,
+  size: 'sm',
 } satisfies Partial<FileInputProps>;
 
 const _FileInput = factory<FileInputFactory>((_props, ref) => {

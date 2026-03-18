@@ -9,16 +9,24 @@ interface AssignFooterVariablesInput {
   baseStyles: CSSVariables;
   minMediaStyles: MediaQueryVariables;
   footer: AppShellProps['footer'] | undefined;
+  mode: 'fixed' | 'static';
 }
 
 export function assignFooterVariables({
   baseStyles,
   minMediaStyles,
   footer,
+  mode,
 }: AssignFooterVariablesInput) {
   const footerHeight = footer?.height;
   const collapsedFooterTransform = 'translateY(var(--app-shell-footer-height))';
-  const shouldOffset = footer?.offset ?? true;
+  const shouldOffset = mode === 'static' ? true : (footer?.offset ?? true);
+
+  if (mode === 'static' && footer) {
+    baseStyles['--app-shell-footer-position'] = 'sticky';
+    baseStyles['--app-shell-footer-grid-column'] = '1 / -1';
+    baseStyles['--app-shell-footer-grid-row'] = '3';
+  }
 
   if (isPrimitiveSize(footerHeight)) {
     const baseSize = rem(getBaseSize(footerHeight));
@@ -51,6 +59,8 @@ export function assignFooterVariables({
 
   if (footer?.collapsed) {
     baseStyles['--app-shell-footer-transform'] = collapsedFooterTransform;
-    baseStyles['--app-shell-footer-offset'] = '0px !important';
+    if (mode === 'fixed') {
+      baseStyles['--app-shell-footer-offset'] = '0px !important';
+    }
   }
 }

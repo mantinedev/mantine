@@ -46,6 +46,7 @@ storybook-static
 packages/*/*/styles.css
 packages/*/*/styles.layer.css
 packages/@mantine/core/styles
+packages/*/*/LICENSE
 .stylelintcache
 ____test.*
 apps/help.mantine.dev/out
@@ -55,4 +56,7 @@ apps/mantine.dev/out
 apps/mantine.dev/.next
 apps/mantine.dev/src/.docgen/
 apps/mantine.dev/public/llms.txt
+apps/mantine.dev/public/llms-full.txt
+apps/mantine.dev/public/llms
 .samples
+apps/help.mantine.dev/next-env.d.ts

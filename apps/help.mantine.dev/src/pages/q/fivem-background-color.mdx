@@ -1,0 +1,29 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How to change background color for FiveM?',
+  description: 'Unset body background color and color-scheme styles for FiveM',
+  slug: 'fivem-background-color',
+  category: 'styles',
+  tags: ['fivem', 'background', 'body', 'color-scheme', 'css'],
+  created_at: 'February 23, 2026',
+  last_updated_at: 'February 23, 2026',
+};
+
+export default Layout(meta);
+
+If you use Mantine in a FiveM UI (NUI), default `body` background and `color-scheme`
+styles can affect the background rendering.
+
+Add the following global CSS to override them:
+
+```css
+body {
+  background-color: unset !important;
+}
+
+:root {
+  color-scheme: unset !important;
+}
+```
+

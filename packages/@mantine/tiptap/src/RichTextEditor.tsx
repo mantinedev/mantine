@@ -12,13 +12,13 @@ import {
 } from '@mantine/core';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './labels';
 import { RichTextEditorProvider } from './RichTextEditor.context';
+import classes from './RichTextEditor.module.css';
 import { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent';
 import * as controls from './RichTextEditorControl';
 import { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
 import { RichTextEditorSourceCodeControl } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
 import { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 import { RichTextEditorToolbar } from './RichTextEditorToolbar/RichTextEditorToolbar';
-import classes from './RichTextEditor.module.css';
 
 export type RichTextEditorVariant = 'default' | 'subtle';
 

@@ -46,7 +46,7 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).toHaveBeenCalledWith(1);
   });
 
-  it('doesnt flush twice', () => {
+  it('does not flush twice', () => {
     const callback = jest.fn();
     const { result, rerender } = renderHook(() => useDebouncedCallback(callback, 100));
     result.current(1);
@@ -58,7 +58,7 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
-  it('doesnt flush after being called if not called since', () => {
+  it('does not flush after being called if not called since', () => {
     const callback = jest.fn();
     const { result } = renderHook(() => useDebouncedCallback(callback, 100));
     result.current(1);
@@ -69,7 +69,7 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
-  it('doesnt still call after flush if not called since', () => {
+  it('does not still call after flush if not called since', () => {
     const callback = jest.fn();
     const { result } = renderHook(() => useDebouncedCallback(callback, 100));
     result.current(1);
@@ -202,7 +202,7 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).toHaveBeenNthCalledWith(2, 'c');
   });
 
-  it('doesnt call on leading edge if leading changes from true to false', () => {
+  it('does not call on leading edge if leading changes from true to false', () => {
     const callback = jest.fn();
     const { result, rerender } = renderHook(
       ({ leading }: { leading?: boolean } = { leading: true }) =>

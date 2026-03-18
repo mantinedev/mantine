@@ -12,8 +12,8 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { CodeHighlight } from './CodeHighlight';
 import classes from '../CodeHighlight.module.css';
+import { CodeHighlight } from './CodeHighlight';
 
 export type InlineCodeHighlightStylesNames = 'inlineCodeHighlight';
 export type InlineCodeHighlightCssVariables = {

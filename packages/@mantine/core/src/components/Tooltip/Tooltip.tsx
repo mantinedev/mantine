@@ -9,7 +9,7 @@ import {
   getDefaultZIndex,
   getRadius,
   getRefProp,
-  isElement,
+  getSingleElementChild,
   useDirection,
   useProps,
   useStyles,
@@ -24,11 +24,11 @@ import {
 } from '../../utils/Floating';
 import { OptionalPortal } from '../Portal';
 import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
+import classes from './Tooltip.module.css';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
-import classes from './Tooltip.module.css';
 
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
@@ -234,8 +234,11 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     varsResolver,
   });
 
-  if (!target && !isElement(children)) {
-    return null;
+  const child = getSingleElementChild(children);
+  if (!target && !child) {
+    throw new Error(
+      '[@mantine/core] Tooltip component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
+    );
   }
 
   if (target) {
@@ -289,9 +292,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
   }
 
   // fallback to children-based approach
-  const _children = children as React.ReactElement;
-  const _childrenProps = _children.props as any;
-  const targetRef = useMergedRef(tooltip.reference, getRefProp(_children), ref);
+  const childProps = child!.props as any;
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(child), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
 
   return (
@@ -340,7 +342,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
       </OptionalPortal>
 
       {cloneElement(
-        _children,
+        child!,
         tooltip.getReferenceProps({
           onClick,
           onMouseEnter,
@@ -348,8 +350,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           onMouseMove: props.onMouseMove,
           onPointerDown: props.onPointerDown,
           onPointerEnter: props.onPointerEnter,
-          className: cx(className, _childrenProps.className),
-          ..._childrenProps,
+          ...childProps,
+          className: cx(className, childProps.className),
           [refProp]: targetRef,
         })
       )}

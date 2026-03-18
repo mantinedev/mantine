@@ -15,8 +15,8 @@ import {
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';
-import { useSubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
+import { useSubMenuContext } from '../MenuSub/MenuSub.context';
 
 export type MenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
 

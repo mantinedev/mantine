@@ -1,7 +1,9 @@
 import { useDisclosure } from '@mantine/hooks';
+import { Box } from '../../core';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Modal } from '../Modal';
+import { ScrollArea } from '../ScrollArea';
 import { AppShell } from './AppShell';
 
 export default { title: 'AppShell' };
@@ -231,6 +233,149 @@ export function Unstyled() {
       <AppShell.Aside>Aside</AppShell.Aside>
 
       <AppShell.Footer>Footer</AppShell.Footer>
+    </AppShell>
+  );
+}
+
+export function StaticMode() {
+  const [navbarOpened, { toggle }] = useDisclosure(true);
+  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure(false);
+  const [asideOpened, { toggle: toggleAside }] = useDisclosure(true);
+  const [asideMobileOpened, { toggle: toggleAsideMobile }] = useDisclosure(false);
+
+  return (
+    <AppShell
+      mode="static"
+      padding="md"
+      navbar={{
+        width: { base: 200, md: 300 },
+        breakpoint: 'sm',
+        collapsed: { desktop: !navbarOpened, mobile: !mobileOpened },
+      }}
+      aside={{
+        width: { base: 200, md: 300 },
+        breakpoint: 'sm',
+        collapsed: { desktop: !asideOpened, mobile: !asideMobileOpened },
+      }}
+      header={{
+        height: 60,
+      }}
+      footer={{
+        height: 50,
+      }}
+    >
+      <AppShell.Header>
+        <Group h="100%" px="md">
+          Header (static)
+        </Group>
+      </AppShell.Header>
+      <AppShell.Navbar p="md">
+        <p>Navbar (static)</p>
+        <p>
+          Scroll the main content to see the static behavior. Unlike fixed mode, these sections are
+          part of the document flow.
+        </p>
+
+        <Group mb="md">
+          <Button onClick={toggle}>Toggle navbar</Button>
+          <Button onClick={toggleMobile}>Toggle navbar mobile</Button>
+          <Button onClick={toggleAside}>Toggle aside</Button>
+          <Button onClick={toggleAsideMobile}>Toggle aside mobile</Button>
+        </Group>
+      </AppShell.Navbar>
+      <AppShell.Main>
+        <Group mb="md">
+          <Button onClick={toggle}>Toggle navbar</Button>
+          <Button onClick={toggleMobile}>Toggle navbar mobile</Button>
+          <Button onClick={toggleAside}>Toggle aside</Button>
+          <Button onClick={toggleAsideMobile}>Toggle aside mobile</Button>
+        </Group>
+        <p>{longContent}</p>
+      </AppShell.Main>
+      <AppShell.Aside>
+        <p>Aside (static)</p>
+      </AppShell.Aside>
+      <AppShell.Footer>
+        <Group h="100%" px="md">
+          Footer (static)
+        </Group>
+      </AppShell.Footer>
+    </AppShell>
+  );
+}
+
+export function StaticInsideFixed() {
+  return (
+    <AppShell
+      mode="fixed"
+      padding="0px"
+      zIndex={10}
+      navbar={{
+        width: { base: 200, md: 260 },
+        breakpoint: 'sm',
+      }}
+      aside={{
+        width: { base: 200, md: 260 },
+        breakpoint: 'sm',
+      }}
+      header={{
+        height: 60,
+      }}
+      footer={{
+        height: 50,
+      }}
+    >
+      <AppShell.Navbar p="md">Outer navbar (fixed)</AppShell.Navbar>
+      <AppShell.Aside p="md">Outer aside (fixed)</AppShell.Aside>
+      <AppShell.Header>
+        <Group h="100%" px="md">
+          Outer header (fixed)
+        </Group>
+      </AppShell.Header>
+      <AppShell.Main>
+        <AppShell
+          mode="static"
+          zIndex={1}
+          padding={0}
+          navbar={{
+            width: { base: 180, md: 220 },
+            breakpoint: 'sm',
+          }}
+          aside={{
+            width: { base: 180, md: 220 },
+            breakpoint: 'sm',
+          }}
+          header={{ height: 50 }}
+          footer={{ height: 50 }}
+        >
+          <AppShell.Navbar p="md">Inner navbar (static)</AppShell.Navbar>
+          <AppShell.Aside p="md">Inner aside (static)</AppShell.Aside>
+          <AppShell.Header>
+            <Group h="100%" px="md">
+              Inner header (static)
+            </Group>
+          </AppShell.Header>
+          <AppShell.Main h="calc(100dvh - 220px)">
+            <ScrollArea h="calc(100dvh - 220px - var(--app-shell-padding, 0px))">
+              <Box p="md">
+                <p>Inner AppShell with static mode inside outer AppShell with fixed mode.</p>
+                <p>{longContent}</p>
+              </Box>
+            </ScrollArea>
+          </AppShell.Main>
+
+          <AppShell.Footer>
+            <Group h="100%" px="md">
+              Inner footer (static)
+            </Group>
+          </AppShell.Footer>
+        </AppShell>
+      </AppShell.Main>
+      <AppShell.Footer>
+        <Group h="100%" px="md">
+          Outer footer (fixed)
+        </Group>
+      </AppShell.Footer>
     </AppShell>
   );
 }

@@ -22,12 +22,12 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputStylesNames } from '../../utils/InlineInput';
+import classes from './Radio.module.css';
 import { RadioCard } from './RadioCard/RadioCard';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
 import { RadioIcon, RadioIconProps } from './RadioIcon';
 import { RadioIndicator } from './RadioIndicator/RadioIndicator';
-import classes from './Radio.module.css';
 
 export type RadioVariant = 'filled' | 'outline';
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';

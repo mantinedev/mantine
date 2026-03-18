@@ -12,7 +12,7 @@ interface PublishPackage {
 
 export async function publishPackage({ packagePath, name, tag }: PublishPackage) {
   try {
-    $`cd ${packagePath} && npm publish --access public --tag ${tag}`;
+    await $`cd ${packagePath} && npm publish --access public --tag ${tag}`;
     logger.success(`Package ${chalk.cyan(name)} has been published`);
   } catch (error: any) {
     logger.error(`Failed to publish package ${chalk.red(name)}`);

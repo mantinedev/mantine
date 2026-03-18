@@ -65,4 +65,14 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
     name: 'Navbar with sections',
     description: 'AppShell.Section component usage',
   },
+  {
+    id: 'StaticMode',
+    name: 'Static mode',
+    description: 'AppShell with position: sticky sections',
+  },
+  {
+    id: 'NestedAppShell',
+    name: 'Nested AppShell',
+    description: 'Static AppShell nested inside fixed AppShell',
+  },
 ];

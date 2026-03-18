@@ -11,6 +11,7 @@ function getTestObject(footer: AppShellProps['footer']) {
     baseStyles,
     minMediaStyles,
     footer,
+    mode: 'fixed',
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };

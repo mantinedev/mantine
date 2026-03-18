@@ -17,8 +17,8 @@ import {
 import { useDisclosure, useInputState, useWindowEvent } from '@mantine/hooks';
 import { IconExternalLink, IconLink } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
-import { RichTextEditorControlBase, RichTextEditorControlBaseProps } from './RichTextEditorControl';
 import classes from '../RichTextEditor.module.css';
+import { RichTextEditorControlBase, RichTextEditorControlBaseProps } from './RichTextEditorControl';
 
 export type RichTextEditorLinkControlStylesNames =
   | 'control'

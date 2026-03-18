@@ -15,6 +15,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
+import classes from '../Input.module.css';
 import {
   InputDescription,
   InputDescriptionCssVariables,
@@ -35,7 +36,6 @@ import {
 } from '../InputLabel/InputLabel';
 import { InputWrapperProvider } from '../InputWrapper.context';
 import { getInputOffsets } from './get-input-offsets/get-input-offsets';
-import classes from '../Input.module.css';
 
 export type InputWrapperCssVariables = InputLabelCssVariables &
   InputErrorCssVariables &

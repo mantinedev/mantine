@@ -22,13 +22,13 @@ import {
 } from '@mantine/core';
 import { clamp } from '@mantine/hooks';
 import { CarouselProvider } from './Carousel.context';
+import classes from './Carousel.module.css';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
 import {
   CarouselContainerVariables,
   CarouselVariables,
 } from './CarouselVariables/CarouselVariables';
 import { getChevronRotation } from './get-chevron-rotation';
-import classes from './Carousel.module.css';
 
 export type CarouselStylesNames =
   | 'slide'
@@ -327,21 +327,6 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
         mod={[{ orientation, 'include-gap-in-size': includeGapInSize }, mod]}
         onKeyDownCapture={handleKeydown}
       >
-        <div {...getStyles('viewport')} ref={emblaRefElement} data-type={type}>
-          <div
-            {...getStyles('container', { className: responsiveClassName })}
-            data-orientation={orientation}
-          >
-            {children}
-          </div>
-        </div>
-
-        {withIndicators && (
-          <div {...getStyles('indicators')} data-orientation={orientation}>
-            {indicators}
-          </div>
-        )}
-
         {withControls && (
           <div {...getStyles('controls')} data-orientation={orientation}>
             <UnstyledButton
@@ -401,6 +386,21 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
                 />
               )}
             </UnstyledButton>
+          </div>
+        )}
+
+        <div {...getStyles('viewport')} ref={emblaRefElement} data-type={type}>
+          <div
+            {...getStyles('container', { className: responsiveClassName })}
+            data-orientation={orientation}
+          >
+            {children}
+          </div>
+        </div>
+
+        {withIndicators && (
+          <div {...getStyles('indicators')} data-orientation={orientation}>
+            {indicators}
           </div>
         )}
       </Box>

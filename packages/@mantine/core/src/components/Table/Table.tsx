@@ -24,9 +24,9 @@ import {
   TableTr,
 } from './Table.components';
 import { TableProvider } from './Table.context';
+import classes from './Table.module.css';
 import { TableDataRenderer } from './TableDataRenderer';
 import { TableScrollContainer } from './TableScrollContainer';
-import classes from './Table.module.css';
 
 export type TableVariant = 'default' | 'vertical';
 

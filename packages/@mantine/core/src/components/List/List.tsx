@@ -15,8 +15,8 @@ import {
   useStyles,
 } from '../../core';
 import { ListProvider } from './List.context';
-import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import classes from './List.module.css';
+import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 
 export type ListStylesNames = 'root' | ListItemStylesNames;
 export type ListCssVariables = {
@@ -114,7 +114,7 @@ export const List = factory<ListFactory>((_props, ref) => {
       <Box<any>
         {...getStyles('root', { style: { listStyleType } })}
         component={type === 'unordered' ? 'ul' : 'ol'}
-        mod={[{ 'with-padding': withPadding, type: listStyleType }, mod]}
+        mod={[{ 'with-padding': withPadding, type: icon ? 'none' : listStyleType }, mod]}
         ref={ref}
         {...others}
       >

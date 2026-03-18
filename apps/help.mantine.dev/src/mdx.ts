@@ -19,6 +19,7 @@ import { meta as disabledJs } from './pages/q/disabled-js.mdx';
 import { meta as dropzoneUpload } from './pages/q/dropzone-upload.mdx';
 import { meta as dynamicCssStyles } from './pages/q/dynamic-css-styles.mdx';
 import { meta as fileButtonInMenu } from './pages/q/file-button-in-menu.mdx';
+import { meta as fivemBackgroundColor } from './pages/q/fivem-background-color.mdx';
 import { meta as floatingActionButton } from './pages/q/floating-action-button.mdx';
 import { meta as focusFirstInputWithError } from './pages/q/focus-first-input-with-error.mdx';
 import { meta as howCanIContribute } from './pages/q/how-can-i-contribute.mdx';
@@ -93,6 +94,7 @@ export const MDX_DATA = [
   dropzoneUpload,
   dynamicCssStyles,
   fileButtonInMenu,
+  fivemBackgroundColor,
   floatingActionButton,
   focusFirstInputWithError,
   howCanIContribute,

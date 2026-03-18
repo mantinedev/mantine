@@ -1,3 +1,4 @@
+import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -12,6 +13,7 @@ import {
   useStyles,
 } from '../../core';
 import { AppShellProvider } from './AppShell.context';
+import classes from './AppShell.module.css';
 import {
   AppShellAsideConfiguration,
   AppShellFooterConfiguration,
@@ -27,7 +29,6 @@ import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
 import { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
 import { AppShellSection } from './AppShellSection/AppShellSection';
 import { useResizing } from './use-resizing/use-resizing';
-import classes from './AppShell.module.css';
 
 export type AppShellStylesNames =
   | 'root'
@@ -81,6 +82,9 @@ export interface AppShellProps
 
   /** If set, `Header` and `Footer` components include styles to offset scrollbars. Based on `react-remove-scroll`. @default `true` */
   offsetScrollbars?: boolean;
+
+  /** Determines positioning mode of all sections @default 'fixed' */
+  mode?: 'fixed' | 'static';
 }
 
 export type AppShellFactory = Factory<{
@@ -104,6 +108,7 @@ const defaultProps = {
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
   zIndex: getDefaultZIndex('app'),
+  mode: 'fixed',
 } satisfies Partial<AppShellProps>;
 
 const varsResolver = createVarsResolver<AppShellFactory>(
@@ -136,8 +141,10 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
     aside,
     footer,
     offsetScrollbars = true,
+    mode,
     mod,
     attributes,
+    id,
     ...others
   } = props;
 
@@ -156,20 +163,24 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
   });
 
   const resizing = useResizing({ disabled, transitionDuration });
+  const _id = useId(id);
 
   return (
-    <AppShellProvider value={{ getStyles, withBorder, zIndex, disabled, offsetScrollbars }}>
+    <AppShellProvider value={{ getStyles, withBorder, zIndex, disabled, offsetScrollbars, mode }}>
       <AppShellMediaStyles
         navbar={navbar}
         header={header}
         aside={aside}
         footer={footer}
         padding={padding}
+        mode={mode}
+        selector={mode === 'static' ? `#${_id}` : undefined}
       />
       <Box
         ref={ref}
         {...getStyles('root')}
-        mod={[{ resizing, layout, disabled }, mod]}
+        mod={[{ resizing, layout, disabled, mode }, mod]}
+        id={_id}
         {...others}
       />
     </AppShellProvider>

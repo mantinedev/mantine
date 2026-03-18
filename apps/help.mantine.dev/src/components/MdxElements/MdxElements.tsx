@@ -3,10 +3,10 @@ import type { MDXComponents } from 'mdx/types';
 import { CodeHighlight } from '@mantine/code-highlight';
 import { Anchor, Code, Image, Title } from '@mantine/core';
 import { Demo } from '@mantinex/demo';
+import classes from './MdxElements.module.css';
 import { MdxErrorMessage } from './MdxErrorMessage/MdxErrorMessage';
 import { MdxInfo } from './MdxInfo/MdxInfo';
 import { MdxInstallScript } from './MdxInstallScript/MdxInstallScript';
-import classes from './MdxElements.module.css';
 
 export function MdxTitle({
   id,

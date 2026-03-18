@@ -44,7 +44,18 @@ export function useTimePicker({
     format,
   });
 
+  const initialTimeString = getTimeString({
+    hours: parsedTime.hours,
+    minutes: parsedTime.minutes,
+    seconds: parsedTime.seconds,
+    format,
+    withSeconds,
+    amPm: parsedTime.amPm,
+    amPmLabels,
+  });
+
   const acceptChange = useRef(true);
+  const wasInvalidBefore = useRef(!initialTimeString.valid);
 
   const [hours, setHours] = useState<number | null>(parsedTime.hours);
   const [minutes, setMinutes] = useState<number | null>(parsedTime.minutes);
@@ -87,6 +98,7 @@ export function useTimePicker({
 
     if (timeString.valid) {
       acceptChange.current = false;
+      wasInvalidBefore.current = false;
       if (field === 'hours') {
         setHours(val);
       }
@@ -103,8 +115,9 @@ export function useTimePicker({
       onChange?.(timeString.value);
     } else {
       acceptChange.current = false;
-      if (typeof value === 'string' && value !== '') {
+      if (!wasInvalidBefore.current) {
         onChange?.('');
+        wasInvalidBefore.current = true;
       }
     }
   };
@@ -118,6 +131,8 @@ export function useTimePicker({
     setSeconds(parsedTime.seconds);
     setAmPm(parsedTime.amPm);
 
+    const next = getTimeString({ ...parsedTime, format, withSeconds, amPmLabels });
+    wasInvalidBefore.current = !next.valid;
     onChange?.(timeString);
   };
 
@@ -157,6 +172,7 @@ export function useTimePicker({
     setSeconds(null);
     setAmPm(null);
     onChange?.('');
+    wasInvalidBefore.current = true;
     focus('hours');
   };
 

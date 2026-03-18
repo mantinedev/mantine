@@ -8,8 +8,8 @@ import {
   useProps,
 } from '../../../core';
 import { useAccordionContext } from '../Accordion.context';
-import { AccordionItemProvider } from '../AccordionItem.context';
 import classes from '../Accordion.module.css';
+import { AccordionItemProvider } from '../AccordionItem.context';
 
 export type AccordionItemStylesNames = 'item';
 

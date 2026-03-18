@@ -71,6 +71,9 @@ export interface AutocompleteProps
 
   /** If set, the highlighted option is selected when the input loses focus @default `false` */
   autoSelectOnBlur?: boolean;
+
+  /** If set, the dropdown opens when the input receives focus @default `true` */
+  openOnFocus?: boolean;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -99,6 +102,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     value,
     defaultValue,
     selectFirstOptionOnChange,
+    selectFirstOptionOnDropdownOpen,
     onOptionSubmit,
     comboboxProps,
     readOnly,
@@ -118,6 +122,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     clearable,
     rightSection,
     autoSelectOnBlur,
+    openOnFocus = true,
     attributes,
     ...others
   } = props;
@@ -136,7 +141,12 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      if (selectFirstOptionOnDropdownOpen) {
+        combobox.selectFirstOption();
+      }
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       // Required for autoSelectOnBlur to work correctly
@@ -208,7 +218,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
             selectFirstOptionOnChange && combobox.selectFirstOption();
           }}
           onFocus={(event) => {
-            combobox.openDropdown();
+            openOnFocus && combobox.openDropdown();
             onFocus?.(event);
           }}
           onBlur={(event) => {

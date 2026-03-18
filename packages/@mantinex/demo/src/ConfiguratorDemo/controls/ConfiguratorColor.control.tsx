@@ -13,9 +13,9 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { ColorWheelIcon } from './ColorWheelIcon';
+import classes from './ConfiguratorColor.control.module.css';
 import { getControlLabel } from './get-control-label';
 import { ConfiguratorControl } from './types';
-import classes from './ConfiguratorColor.control.module.css';
 
 export type ConfiguratorColorControlOptions = ConfiguratorControl<
   'color',

@@ -30,6 +30,7 @@ import {
 import { useId } from '@mantine/hooks';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import classes from '../grid-chart.module.css';
 import { PointLabel } from '../PointLabel/PointLabel';
 import type {
   BaseChartStylesNames,
@@ -37,7 +38,6 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
-import classes from '../grid-chart.module.css';
 
 export type LineChartType = 'default' | 'gradient';
 

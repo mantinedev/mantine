@@ -18,8 +18,8 @@ import {
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 import { UnstyledButton } from '../UnstyledButton';
-import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
+import { NumberInputChevron } from './NumberInputChevron';
 
 // Re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
 // And for positive 0., 0.0, 0.00, 0.000 ... strings
@@ -30,6 +30,9 @@ const leadingZerosPattern = /^-?0\d+(\.\d+)?\.?$/;
 
 // Re for decimal numbers with trailing zeros like 13.0, 13.00, 5.10 ... strings
 const trailingZerosPattern = /\.\d*0$/;
+
+// Re for numbers with trailing decimal separator like 10. or -3.
+const trailingDecimalSeparatorPattern = /^-?\d+\.$/;
 
 export interface NumberInputHandlers {
   increment: () => void;
@@ -83,7 +86,7 @@ export type NumberInputCssVariables = {
 
 export interface NumberInputProps
   extends BoxProps,
-    __BaseInputProps,
+    Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<NumberInputFactory>,
     ElementProps<'input', 'size' | 'type' | 'onChange'> {
   /** Controlled component value */
@@ -201,14 +204,28 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
 }));
 
 function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, min?: number) {
-  const replaced = sanitizedValue.toString().replace(/^0+(?=\d)/, '');
+  const stringValue = sanitizedValue.toString();
+  const hasTrailingDecimalSeparator = trailingDecimalSeparatorPattern.test(stringValue);
+
+  const replaced = stringValue.replace(/^0+(?=\d)/, '');
   const parsedValue = parseFloat(replaced);
+
   if (Number.isNaN(parsedValue)) {
     return replaced;
-  } else if (parsedValue > Number.MAX_SAFE_INTEGER) {
+  }
+
+  if (parsedValue > Number.MAX_SAFE_INTEGER) {
     return max !== undefined ? max : replaced;
   }
-  return clamp(parsedValue, min, max);
+
+  const clamped = clamp(parsedValue, min, max);
+
+  if (hasTrailingDecimalSeparator) {
+    const clampedString = clamped.toString().replace(/^0+(?=\d)/, '');
+    return `${clampedString}.`;
+  }
+
+  return clamped;
 }
 
 export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
@@ -289,7 +306,8 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         isValidNumber(payload.floatValue, payload.value) &&
           !leadingDecimalZeroPattern.test(payload.value) &&
           !(allowLeadingZeros ? leadingZerosPattern.test(payload.value) : false) &&
-          !trailingZerosPattern.test(payload.value)
+          !trailingZerosPattern.test(payload.value) &&
+          !trailingDecimalSeparatorPattern.test(payload.value)
           ? payload.floatValue
           : payload.value
       );
@@ -370,6 +388,45 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       { source: 'decrement' as any }
     );
     setTimeout(() => adjustCursor(inputRef.current?.value.length), 0);
+  };
+
+  const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const pastedText = event.clipboardData.getData('text');
+    const _decimalSeparator = others.decimalSeparator || '.';
+    const separatorsToReplace = (allowedDecimalSeparators || ['.', ',']).filter(
+      (s) => s !== _decimalSeparator
+    );
+
+    if (separatorsToReplace.some((s) => pastedText.includes(s))) {
+      event.preventDefault();
+      let modifiedText = pastedText;
+      separatorsToReplace.forEach((s) => {
+        modifiedText = modifiedText.split(s).join(_decimalSeparator);
+      });
+
+      const input = inputRef.current;
+      if (input) {
+        const start = input.selectionStart ?? 0;
+        const end = input.selectionEnd ?? 0;
+        const currentValue = input.value;
+        const newValue =
+          currentValue.substring(0, start) + modifiedText + currentValue.substring(end);
+
+        // Use native setter to bypass React's controlled input tracking,
+        // then dispatch a native change event that React will process
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLInputElement.prototype,
+          'value'
+        )?.set;
+        nativeInputValueSetter?.call(input, newValue);
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+
+        const cursorPos = start + modifiedText.length;
+        setTimeout(() => adjustCursor(cursorPos), 0);
+      }
+    }
+
+    others.onPaste?.(event as any);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -522,6 +579,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       unstyled={unstyled}
       __staticSelector="NumberInput"
       decimalScale={allowDecimal ? decimalScale : 0}
+      onPaste={handlePaste}
       onKeyDown={handleKeyDown}
       onKeyDownCapture={handleKeyDownCapture}
       rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}

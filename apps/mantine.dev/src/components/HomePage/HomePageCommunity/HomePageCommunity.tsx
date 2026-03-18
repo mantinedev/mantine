@@ -5,8 +5,8 @@ import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import { ReviewData, reviews } from './reviews-data';
 import classes from './HomePageCommunity.module.css';
+import { ReviewData, reviews } from './reviews-data';
 
 interface ReviewProps {
   data: ReviewData;

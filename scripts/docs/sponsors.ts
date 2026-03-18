@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import path from 'path';
 import fs from 'fs-extra';
 import { getPath } from '../utils/get-path';
@@ -20,8 +21,15 @@ async function fetchSponsors() {
 
   const data = await response.json();
 
+  const thirtyOneDaysAgo = dayjs().subtract(31, 'day');
+
   const sponsors = data
-    .filter((item: any) => item.role === 'BACKER' && item.tier === 'sponsor')
+    .filter((item: any) => {
+      const isActiveSponsor = item.role === 'BACKER' && item.tier === 'sponsor';
+      const hasRecentTransaction =
+        item.lastTransactionAt && dayjs(item.lastTransactionAt).isAfter(thirtyOneDaysAgo);
+      return isActiveSponsor && hasRecentTransaction;
+    })
     .reduce((unique: Sponsor[], item: any) => {
       const sponsor: Sponsor = {
         name: item.name,

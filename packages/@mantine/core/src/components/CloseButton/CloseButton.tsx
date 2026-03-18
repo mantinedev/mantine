@@ -13,8 +13,8 @@ import {
   useStyles,
 } from '../../core';
 import { UnstyledButton } from '../UnstyledButton';
-import { CloseIcon } from './CloseIcon';
 import classes from './CloseButton.module.css';
+import { CloseIcon } from './CloseIcon';
 
 export type CloseButtonVariant = 'subtle' | 'transparent';
 export type CloseButtonStylesNames = 'root';
@@ -34,7 +34,7 @@ export interface __CloseButtonProps {
   /** Sets `disabled` attribute, assigns disabled styles */
   disabled?: boolean;
 
-  /** `X` icon `width` and `height` @default `80%` */
+  /** `X` icon `width` and `height` @default `70%` */
   iconSize?: number | string;
 
   /** Content rendered inside the button. For example `VisuallyHidden` with label for screen readers. */

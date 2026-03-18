@@ -106,6 +106,9 @@ export interface TagsInputProps
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
+
+  /** If set, the dropdown opens when the input receives focus @default `true` */
+  openOnFocus?: boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -119,6 +122,7 @@ const defaultProps = {
   acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
+  openOnFocus: true,
   size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
@@ -146,6 +150,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onDropdownOpen,
     onDropdownClose,
     selectFirstOptionOnChange,
+    selectFirstOptionOnDropdownOpen,
     onOptionSubmit,
     comboboxProps,
     filter,
@@ -196,6 +201,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     scrollAreaProps,
     acceptValueOnBlur,
     isDuplicate,
+    openOnFocus,
     attributes,
     ...others
   } = props;
@@ -209,7 +215,12 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      if (selectFirstOptionOnDropdownOpen) {
+        combobox.selectFirstOption();
+      }
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
@@ -262,9 +273,13 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
 
     if (isDuplicated) {
       onDuplicate?.(val);
+      if (!allowDuplicates) {
+        handleSearchChange('');
+        return;
+      }
     }
 
-    if ((!isDuplicated || (isDuplicated && allowDuplicates)) && _value.length < maxTags) {
+    if (_value.length < maxTags) {
       onOptionSubmit?.(val);
       handleSearchChange('');
       if (val.length > 0) {
@@ -291,6 +306,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           maxTags,
           value: _searchValue,
           currentTags: _value,
+          isDuplicate,
+          onDuplicate,
         })
       );
       handleSearchChange('');
@@ -336,6 +353,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           maxTags,
           value: `${_searchValue}${pastedText}`,
           currentTags: _value,
+          isDuplicate,
+          onDuplicate,
         })
       );
       handleSearchChange('');
@@ -451,7 +470,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   onKeyDown={handleInputKeydown}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    combobox.openDropdown();
+                    openOnFocus && combobox.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);

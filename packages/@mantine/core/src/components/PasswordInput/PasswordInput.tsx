@@ -16,8 +16,8 @@ import {
 import { ActionIcon } from '../ActionIcon';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
-import { PasswordToggleIcon } from './PasswordToggleIcon';
 import classes from './PasswordInput.module.css';
+import { PasswordToggleIcon } from './PasswordToggleIcon';
 
 export type PasswordInputStylesNames =
   | 'root'
@@ -30,7 +30,7 @@ export type PasswordInputCssVariables = {
 
 export interface PasswordInputProps
   extends BoxProps,
-    __BaseInputProps,
+    Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {
   /** A component to replace the visibility toggle icon */
@@ -196,6 +196,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector="PasswordInput"
+      __stylesApiProps={props}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
       inputWrapperOrder={inputWrapperOrder}
@@ -220,6 +221,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
         radius={radius}
         disabled={disabled}
         __staticSelector="PasswordInput"
+        __stylesApiProps={props}
         rightSectionWidth={rightSectionWidth}
         rightSection={rightSection ?? visibilityToggleButton}
         variant={variant}

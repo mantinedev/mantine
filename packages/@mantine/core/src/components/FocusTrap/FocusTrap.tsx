@@ -1,6 +1,6 @@
 import { cloneElement } from 'react';
 import { useFocusTrap, useMergedRef } from '@mantine/hooks';
-import { isElement } from '../../core';
+import { getSingleElementChild } from '../../core';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 export interface FocusTrapProps {
@@ -26,11 +26,12 @@ export function FocusTrap({
   const focusTrapRef = useFocusTrap(active);
   const ref = useMergedRef(focusTrapRef, innerRef);
 
-  if (!isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     return children;
   }
 
-  return cloneElement(children, { [refProp]: ref });
+  return cloneElement(child, { [refProp]: ref });
 }
 
 export function FocusTrapInitialFocus(props: React.ComponentPropsWithoutRef<'span'>) {

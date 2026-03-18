@@ -9,6 +9,7 @@ import { useUncontrolled } from '@mantine/hooks';
 import { defaultSpotlightFilter } from './default-spotlight-filter';
 import { isActionsGroup } from './is-actions-group';
 import { limitActions } from './limit-actions';
+import classes from './Spotlight.module.css';
 import { spotlight, spotlightStore } from './spotlight.store';
 import { SpotlightAction, SpotlightActionProps } from './SpotlightAction';
 import { SpotlightActionsGroup } from './SpotlightActionsGroup';
@@ -17,7 +18,6 @@ import { SpotlightEmpty } from './SpotlightEmpty';
 import { SpotlightFooter } from './SpotlightFooter';
 import { SpotlightRoot, SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
 import { SpotlightSearch, SpotlightSearchProps } from './SpotlightSearch';
-import classes from './Spotlight.module.css';
 
 export type SpotlightFilterFunction = (
   query: string,
@@ -134,12 +134,12 @@ export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
   return (
     <SpotlightRoot {...others} query={_query} onQueryChange={setQuery} ref={ref}>
       <SpotlightSearch {...searchProps} />
-      <SpotlightActionsList {...(scrollAreaProps as any)}>
-        {filteredActions}
-        {filteredActions.length === 0 && nothingFound && (
-          <SpotlightEmpty>{nothingFound}</SpotlightEmpty>
-        )}
-      </SpotlightActionsList>
+      {filteredActions.length > 0 && (
+        <SpotlightActionsList {...(scrollAreaProps as any)}>{filteredActions}</SpotlightActionsList>
+      )}
+      {filteredActions.length === 0 && nothingFound && (
+        <SpotlightEmpty>{nothingFound}</SpotlightEmpty>
+      )}
     </SpotlightRoot>
   );
 });

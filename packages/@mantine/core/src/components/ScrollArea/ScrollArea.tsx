@@ -12,12 +12,12 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import classes from './ScrollArea.module.css';
 import { ScrollAreaCorner } from './ScrollAreaCorner/ScrollAreaCorner';
 import { ScrollAreaRoot } from './ScrollAreaRoot/ScrollAreaRoot';
 import { ScrollAreaScrollbar } from './ScrollAreaScrollbar/ScrollAreaScrollbar';
 import { ScrollAreaThumb } from './ScrollAreaThumb/ScrollAreaThumb';
 import { ScrollAreaViewport } from './ScrollAreaViewport/ScrollAreaViewport';
-import classes from './ScrollArea.module.css';
 
 export type ScrollAreaStylesNames =
   | 'root'
@@ -105,12 +105,24 @@ const defaultProps = {
 } satisfies Partial<ScrollAreaProps>;
 
 const varsResolver = createVarsResolver<ScrollAreaFactory>(
-  (_, { scrollbarSize, overscrollBehavior }) => ({
-    root: {
-      '--scrollarea-scrollbar-size': rem(scrollbarSize),
-      '--scrollarea-over-scroll-behavior': overscrollBehavior,
-    },
-  })
+  (_, { scrollbarSize, overscrollBehavior, scrollbars }) => {
+    let overrideOverscrollBehavior = overscrollBehavior;
+
+    if (overscrollBehavior && scrollbars) {
+      if (scrollbars === 'x') {
+        overrideOverscrollBehavior = `${overscrollBehavior} auto`;
+      } else if (scrollbars === 'y') {
+        overrideOverscrollBehavior = `auto ${overscrollBehavior}`;
+      }
+    }
+
+    return {
+      root: {
+        '--scrollarea-scrollbar-size': rem(scrollbarSize),
+        '--scrollarea-over-scroll-behavior': overrideOverscrollBehavior,
+      },
+    };
+  }
 );
 
 export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
@@ -207,8 +219,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
           const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-          // threshold of -0.6 is required for some browsers that use sub-pixel rendering
-          if (scrollTop - (scrollHeight - clientHeight) >= -0.6) {
+          // threshold of -0.8 is required for some browsers that use sub-pixel rendering, specifically when zoomed out.
+          if (scrollTop - (scrollHeight - clientHeight) >= -0.8) {
             onBottomReached?.();
           }
           if (scrollTop === 0) {
@@ -274,6 +286,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
     type,
     dir,
     offsetScrollbars,
+    overscrollBehavior,
     viewportRef,
     onScrollPositionChange,
     unstyled,
@@ -351,6 +364,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
           type={type}
           dir={dir}
           offsetScrollbars={offsetScrollbars}
+          overscrollBehavior={overscrollBehavior}
           viewportRef={combinedViewportRef}
           onScrollPositionChange={onScrollPositionChange}
           unstyled={unstyled}

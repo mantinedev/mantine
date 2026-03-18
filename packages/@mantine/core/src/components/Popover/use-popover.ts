@@ -13,7 +13,7 @@ import {
   useFloating,
   UseFloatingReturn,
 } from '@floating-ui/react';
-import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
+import { useDidUpdate, useIsomorphicEffect, useUncontrolled } from '@mantine/hooks';
 import { useMantineEnv } from '../../core';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
@@ -71,6 +71,12 @@ function getPopoverMiddlewares(
     middlewaresOptions.flip = false;
   }
 
+  if (middlewaresOptions.flip) {
+    middlewares.push(
+      typeof middlewaresOptions.flip === 'boolean' ? flip() : flip(middlewaresOptions.flip)
+    );
+  }
+
   if (middlewaresOptions.shift) {
     middlewares.push(
       shift(
@@ -78,12 +84,6 @@ function getPopoverMiddlewares(
           ? { limiter: limitShift(), padding: 5 }
           : { limiter: limitShift(), padding: 5, ...middlewaresOptions.shift }
       )
-    );
-  }
-
-  if (middlewaresOptions.flip) {
-    middlewares.push(
-      typeof middlewaresOptions.flip === 'boolean' ? flip() : flip(middlewaresOptions.flip)
     );
   }
 
@@ -104,7 +104,7 @@ function getPopoverMiddlewares(
           const styles = floating.refs.floating.current?.style ?? {};
 
           if (middlewaresOptions.size) {
-            //If custom apply function is given use that else set defaults
+            // If custom apply function is given use that else set defaults
             if (typeof middlewaresOptions.size === 'object' && !!middlewaresOptions.size.apply) {
               middlewaresOptions.size.apply({ rects, availableWidth, availableHeight, ...rest });
             } else {
@@ -191,7 +191,7 @@ export function usePopover(options: UsePopoverOptions) {
     previouslyOpened.current = _opened;
   }, [_opened, options.onClose, options.onOpen]);
 
-  useDidUpdate(() => {
+  useIsomorphicEffect(() => {
     let timeout: number = -1;
 
     if (_opened) {

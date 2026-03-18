@@ -18,8 +18,8 @@ import {
   useStyles,
 } from '../../core';
 import { TimelineProvider } from './Timeline.context';
-import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 import classes from './Timeline.module.css';
+import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
 export type TimelineStylesNames = 'root' | TimelineItemStylesNames;
 export type TimelineCssVariables = {

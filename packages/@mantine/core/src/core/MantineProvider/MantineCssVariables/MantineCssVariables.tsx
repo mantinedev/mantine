@@ -5,15 +5,19 @@ import { getMergedVariables } from './get-merged-variables';
 import { removeDefaultVariables } from './remove-default-variables';
 
 interface MantineCssVariablesProps {
-  cssVariablesSelector: string;
+  cssVariablesSelector?: string;
   deduplicateCssVariables: boolean;
 }
 
-function getColorSchemeCssVariables(selector: string) {
-  return `
-  ${selector}[data-mantine-color-scheme="dark"] { --mantine-color-scheme: dark; }
-  ${selector}[data-mantine-color-scheme="light"] { --mantine-color-scheme: light; }
-`;
+function getColorSchemeCssVariables(selectorOverride?: string) {
+  return convertCssVariables(
+    {
+      variables: {},
+      dark: { '--mantine-color-scheme': 'dark' },
+      light: { '--mantine-color-scheme': 'light' },
+    },
+    selectorOverride
+  );
 }
 
 export function MantineCssVariables({
@@ -24,7 +28,11 @@ export function MantineCssVariables({
   const nonce = useMantineStyleNonce();
   const generator = useMantineCssVariablesResolver();
   const mergedVariables = getMergedVariables({ theme, generator });
-  const shouldCleanVariables = cssVariablesSelector === ':root' && deduplicateCssVariables;
+  const shouldCleanVariables =
+    (cssVariablesSelector === undefined ||
+      cssVariablesSelector === ':root' ||
+      cssVariablesSelector === ':host') &&
+    deduplicateCssVariables;
   const cleanedVariables = shouldCleanVariables
     ? removeDefaultVariables(mergedVariables)
     : mergedVariables;

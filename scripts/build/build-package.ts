@@ -44,6 +44,15 @@ export async function buildPackage(_packageName: string) {
       await fs.remove(path.join(packagePath, 'cjs/index.css'));
     }
 
+    const repoRoot = path.resolve(__dirname, '../../');
+    const licenseSource = path.join(repoRoot, 'LICENSE');
+    const licenseDestination = path.join(packagePath, 'LICENSE');
+
+    if (await fs.pathExists(licenseSource)) {
+      await fs.copyFile(licenseSource, licenseDestination);
+      logger.log(`Copied LICENSE file to ${formattedPackageName}`);
+    }
+
     logger.success(
       `Package ${formattedPackageName} has been built in ${chalk.green(getBuildTime(startTime))}`
     );

@@ -1,6 +1,5 @@
-import { CSSObject } from '@emotion/serialize';
 import { em, MantineBreakpoint, MantineTheme, px, useMantineTheme } from '@mantine/core';
-// prettier-ignore
+import { CSSObject } from './types';
 import { useCss } from './use-css';
 
 export function getStylesRef(refName: string) {
