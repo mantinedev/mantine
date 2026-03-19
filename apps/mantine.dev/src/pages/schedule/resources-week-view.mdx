@@ -1,0 +1,88 @@
+import { ResourcesWeekViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ResourcesWeekView);
+
+## Usage
+
+ResourcesWeekView displays resources as rows and a full week of time slots as columns
+with a two-level header showing day names and time labels. Each row represents a resource
+(e.g., conference room, person, equipment) and shows events assigned to that resource
+via the `resourceId` property on event data.
+
+<Demo data={ResourcesWeekViewDemos.usage} />
+
+## Drag and drop
+
+Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback
+receives the target `resourceId` as the fifth argument, allowing you to update the event's resource
+assignment. Events can be dragged across both resources and days.
+
+<Demo data={ResourcesWeekViewDemos.dragDrop} />
+
+## Event form
+
+Use `onTimeSlotClick`, `onSlotDragEnd`, and `onEventClick` callbacks to open a form
+for creating or editing events. Combine with `withDragSlotSelect` to allow selecting
+a time range by dragging across slots.
+
+<Demo data={ResourcesWeekViewDemos.eventForm} />
+
+## Business hours
+
+Use `highlightBusinessHours` prop to visually distinguish business hours from non-business hours
+across all time slot columns.
+
+<Demo data={ResourcesWeekViewDemos.businessHours} />
+
+## Without weekend days
+
+Set `withWeekendDays={false}` to hide weekend days from the view.
+
+<Demo data={ResourcesWeekViewDemos.withoutWeekendDays} />
+
+## Custom resource label
+
+Use `renderResourceLabel` prop to customize how resource labels are rendered.
+
+<Demo data={ResourcesWeekViewDemos.renderResourceLabel} />
+
+## Custom event rendering
+
+Use `renderEvent` prop to customize how events are rendered. The example below
+shows event details in a hover card.
+
+<Demo data={ResourcesWeekViewDemos.renderEvent} />
+
+## Localization
+
+Use `locale` prop to set the locale for date formatting and `labels` prop to override
+default labels.
+
+<Demo data={ResourcesWeekViewDemos.localization} />
+
+## Radius
+
+Use `radius` prop to change the border radius of events.
+
+<Demo data={ResourcesWeekViewDemos.radius} />
+
+## Start scroll time
+
+Use `startScrollTime` prop to scroll to a specific time on mount.
+
+<Demo data={ResourcesWeekViewDemos.startScrollTime} />
+
+## Scroll area props
+
+Use `scrollAreaProps` to pass props to the underlying ScrollArea component.
+
+<Demo data={ResourcesWeekViewDemos.scrollAreaProps} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions. Events and time slots become non-interactive,
+useful for display-only views.
+
+<Demo data={ResourcesWeekViewDemos.staticMode} />

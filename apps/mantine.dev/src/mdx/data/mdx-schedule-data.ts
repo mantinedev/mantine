@@ -87,6 +87,17 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     docs: 'schedule/resources-day-view.mdx',
   },
 
+  ResourcesWeekView: {
+    title: 'ResourcesWeekView',
+    package: '@mantine/schedule',
+    slug: '/schedule/resources-week-view',
+    description: 'Week view with resource rows for scheduling across resources',
+    props: ['ResourcesWeekView'],
+    styles: ['ResourcesWeekView'],
+    source: '@mantine/schedule/src/components/ResourcesWeekView/ResourcesWeekView.tsx',
+    docs: 'schedule/resources-week-view.mdx',
+  },
+
   ResourcesMonthView: {
     title: 'ResourcesMonthView',
     package: '@mantine/schedule',

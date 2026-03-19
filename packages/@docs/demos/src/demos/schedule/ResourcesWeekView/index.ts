@@ -1,0 +1,12 @@
+export { usage } from './ResourcesWeekView.demo.usage';
+export { dragDrop } from './ResourcesWeekView.demo.dragDrop';
+export { eventForm } from './ResourcesWeekView.demo.eventForm';
+export { staticMode } from './ResourcesWeekView.demo.staticMode';
+export { businessHours } from './ResourcesWeekView.demo.businessHours';
+export { withoutWeekendDays } from './ResourcesWeekView.demo.withoutWeekendDays';
+export { renderResourceLabel } from './ResourcesWeekView.demo.renderResourceLabel';
+export { renderEvent } from './ResourcesWeekView.demo.renderEvent';
+export { localization } from './ResourcesWeekView.demo.localization';
+export { radius } from './ResourcesWeekView.demo.radius';
+export { startScrollTime } from './ResourcesWeekView.demo.startScrollTime';
+export { scrollAreaProps } from './ResourcesWeekView.demo.scrollAreaProps';

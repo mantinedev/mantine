@@ -17,6 +17,7 @@ export * from './components/YearView';
 
 // Resource views
 export * from './components/ResourcesDayView';
+export * from './components/ResourcesWeekView';
 export * from './components/ResourcesMonthView';
 export * from './components/ResourcesSchedule';
 

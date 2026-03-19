@@ -29,15 +29,21 @@ import {
   ResourcesMonthViewProps,
   ResourcesMonthViewStylesNames,
 } from '../ResourcesMonthView/ResourcesMonthView';
+import {
+  ResourcesWeekView,
+  ResourcesWeekViewProps,
+  ResourcesWeekViewStylesNames,
+} from '../ResourcesWeekView/ResourcesWeekView';
 import { RenderEventBody } from '../ScheduleEvent/ScheduleEvent';
 import classes from './ResourcesSchedule.module.css';
 
 export type ResourcesScheduleStylesNames =
   | 'root'
   | ResourcesDayViewStylesNames
+  | ResourcesWeekViewStylesNames
   | ResourcesMonthViewStylesNames;
 
-export type ResourcesScheduleViewLevel = 'day' | 'month';
+export type ResourcesScheduleViewLevel = 'day' | 'week' | 'month';
 
 type ResourcesScheduleCommonProps =
   | 'date'
@@ -192,6 +198,9 @@ export interface ResourcesScheduleProps
   /** Props specific to ResourcesDayView */
   dayViewProps?: ResourcesScheduleViewProps<ResourcesDayViewProps>;
 
+  /** Props specific to ResourcesWeekView */
+  weekViewProps?: ResourcesScheduleViewProps<ResourcesWeekViewProps>;
+
   /** Props specific to ResourcesMonthView */
   monthViewProps?: ResourcesScheduleViewProps<ResourcesMonthViewProps>;
 }
@@ -246,6 +255,7 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     recurrenceExpansionLimit,
     mode,
     dayViewProps,
+    weekViewProps,
     monthViewProps,
     __staticSelector,
     mod,
@@ -281,7 +291,7 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
   };
 
   const handleViewChange = (newView: ScheduleViewLevel) => {
-    if (newView === 'day' || newView === 'month') {
+    if (newView === 'day' || newView === 'week' || newView === 'month') {
       _setView(newView);
     }
     onViewChange?.(newView);
@@ -322,6 +332,14 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
             onEventResize={onEventResize}
             canResizeEvent={canResizeEvent}
             {...dayViewProps}
+          />
+        );
+      case 'week':
+        return (
+          <ResourcesWeekView
+            {...commonProps}
+            onTimeSlotClick={onTimeSlotClick}
+            {...weekViewProps}
           />
         );
       case 'month':

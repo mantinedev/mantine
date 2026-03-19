@@ -1,4 +1,4 @@
-import { ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos } from '@docs/demos';
+import { ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -19,6 +19,14 @@ shows events assigned to that resource. Supports drag and drop across resources,
 highlighting, and slot drag select.
 
 <Demo data={ResourcesDayViewDemos.usage} />
+
+## ResourcesWeekView component
+
+New [ResourcesWeekView](/schedule/resources-week-view) component displays resources as rows
+and a full week of time slots as columns with a two-level header showing day names and time
+labels. Supports drag and drop, slot selection, business hours, and current time indicator.
+
+<Demo data={ResourcesWeekViewDemos.usage} />
 
 ## ResourcesMonthView component
 

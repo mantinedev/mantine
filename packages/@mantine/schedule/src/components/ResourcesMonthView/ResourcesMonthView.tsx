@@ -696,7 +696,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
           previousControlProps={previousControlProps}
           nextControlProps={nextControlProps}
           todayControlProps={todayControlProps}
-          viewSelectProps={{ views: ['day', 'month'] as const, ...viewSelectProps }}
+          viewSelectProps={{ views: ['day', 'week', 'month'] as const, ...viewSelectProps }}
           stylesApiProps={stylesApiProps}
         />
       )}
