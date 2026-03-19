@@ -2,21 +2,21 @@ import { useCallback, useRef, useState } from 'react';
 import { getPath, setPath } from '../../paths';
 import { FormMode } from '../../types';
 
-export interface $FormValues<Values extends Record<PropertyKey, any>> {
+export interface $FormValues<out Values extends Record<PropertyKey, any>> {
   initialized: React.RefObject<boolean>;
   stateValues: Values;
   refValues: React.RefObject<Values>;
   valuesSnapshot: React.RefObject<Values>;
-  setValues: (payload: SetValuesInput<Values>) => void;
-  setFieldValue: (payload: SetFieldValueInput<Values>) => void;
+  setValues: <TValues extends Values>(payload: SetValuesInput<TValues>) => void;
+  setFieldValue: <TValues extends Values>(payload: SetFieldValueInput<TValues>) => void;
   resetValues: () => void;
-  setValuesSnapshot: (payload: Values) => void;
-  initialize: (values: Values, onInitialize: () => void) => void;
+  setValuesSnapshot: <TValues extends Values>(payload: TValues) => void;
+  initialize: <TValues extends Values>(values: TValues, onInitialize: () => void) => void;
   getValues: () => Values;
   getValuesSnapshot: () => Values;
-  resetField: (
+  resetField: <TValues extends Values>(
     path: PropertyKey,
-    subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]
+    subscribers?: (SetFieldValueSubscriber<TValues> | null | undefined)[]
   ) => void;
 }
 
@@ -26,14 +26,16 @@ export interface SetValuesSubscriberPayload<Values> {
   previousValues: Values;
 }
 
-export interface SetValuesInput<Values> {
-  values: Partial<Values> | ((values: Values) => Partial<Values>);
+export interface SetValuesInput<out Values = Record<string, any>> {
+  values: Partial<Values> | (<TValues extends Values>(values: TValues) => Partial<TValues>);
   mergeWithPreviousValues?: boolean;
   updateState?: boolean;
   subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[];
 }
 
-export type SetFieldValueSubscriber<Values> = (payload: SetValuesSubscriberPayload<Values>) => void;
+export type SetFieldValueSubscriber<out Values> = <TValues extends Values>(
+  payload: SetValuesSubscriberPayload<TValues>
+) => void;
 
 export interface SetFieldValueInput<Values> {
   path: PropertyKey;
