@@ -197,6 +197,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector="PasswordInput"
+      __stylesApiProps={props}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
       inputWrapperOrder={inputWrapperOrder}
@@ -221,6 +222,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         radius={radius}
         disabled={disabled}
         __staticSelector="PasswordInput"
+        __stylesApiProps={props}
         rightSectionWidth={rightSectionWidth}
         rightSection={rightSection ?? visibilityToggleButton}
         variant={variant}
