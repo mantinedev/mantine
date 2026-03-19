@@ -874,7 +874,9 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
                     {formattedCurrentTime}
                   </div>
                 )}
-                <div {...getStyles('resourceDayViewCurrentTimeIndicatorThumb')} />
+                {!withCurrentTimeBubble && (
+                  <div {...getStyles('resourceDayViewCurrentTimeIndicatorThumb')} />
+                )}
                 <div {...getStyles('resourceDayViewCurrentTimeIndicatorLine')} />
               </Box>
             )}

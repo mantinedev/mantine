@@ -58,7 +58,7 @@
   border-inline-end: 1px solid var(--resource-day-view-border-color);
   position: sticky;
   left: 0;
-  z-index: 6;
+  z-index: 11;
   background-color: var(--mantine-color-body);
   display: flex;
   align-items: center;
@@ -115,7 +115,7 @@
   min-height: var(--resource-day-view-row-height);
   position: sticky;
   left: 0;
-  z-index: 4;
+  z-index: 11;
   background-color: var(--mantine-color-body);
   transition: box-shadow 100ms ease;
 
@@ -284,7 +284,7 @@
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
-  top: calc(-1 * var(--_time-bubble-height) / 2);
+  top: 0;
   left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
   z-index: 10;
 }
