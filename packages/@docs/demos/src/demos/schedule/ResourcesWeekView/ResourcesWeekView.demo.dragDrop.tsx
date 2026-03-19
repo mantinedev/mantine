@@ -11,7 +11,8 @@ import { ResourcesWeekView, ScheduleEventData } from '@mantine/schedule';
 import { events as initialEvents, resources } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);
 
   return (
@@ -22,7 +23,7 @@ function Demo() {
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
-      startScrollTime="08:00:00"
+      startScrollDateTime={\`\${today} 08:00:00\`}
       withEventsDragAndDrop
       onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
         setEvents((current) =>
@@ -50,7 +51,7 @@ function Demo() {
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
-      startScrollTime="08:00:00"
+      startScrollDateTime={`${dayjs().format('YYYY-MM-DD')} 08:00:00`}
       withEventsDragAndDrop
       onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
         setEvents((current) =>

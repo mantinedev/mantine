@@ -104,7 +104,7 @@ function Demo() {
         events={events}
         startTime="08:00:00"
         endTime="18:00:00"
-        startScrollTime="08:00:00"
+        startScrollDateTime={`${dayjs().format('YYYY-MM-DD')} 08:00:00`}
         withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onSlotDragEnd={handleSlotDragEnd}
@@ -140,7 +140,8 @@ import { EventData, EventForm } from './EventForm';
 import { events as initialEvents, resources } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
@@ -237,7 +238,7 @@ function Demo() {
         events={events}
         startTime="08:00:00"
         endTime="18:00:00"
-        startScrollTime="08:00:00"
+        startScrollDateTime={\`\${today} 08:00:00\`}
         withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onSlotDragEnd={handleSlotDragEnd}

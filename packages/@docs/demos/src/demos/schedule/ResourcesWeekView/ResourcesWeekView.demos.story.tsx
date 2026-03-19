@@ -53,9 +53,9 @@ export const Demo_radius = {
   render: renderDemo(demos.radius),
 };
 
-export const Demo_startScrollTime = {
-  name: '⭐ Demo: startScrollTime',
-  render: renderDemo(demos.startScrollTime),
+export const Demo_startScrollDateTime = {
+  name: '⭐ Demo: startScrollDateTime',
+  render: renderDemo(demos.startScrollDateTime),
 };
 
 export const Demo_scrollAreaProps = {

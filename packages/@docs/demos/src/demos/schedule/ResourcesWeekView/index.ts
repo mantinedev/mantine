@@ -8,5 +8,5 @@ export { renderResourceLabel } from './ResourcesWeekView.demo.renderResourceLabe
 export { renderEvent } from './ResourcesWeekView.demo.renderEvent';
 export { localization } from './ResourcesWeekView.demo.localization';
 export { radius } from './ResourcesWeekView.demo.radius';
-export { startScrollTime } from './ResourcesWeekView.demo.startScrollTime';
+export { startScrollDateTime } from './ResourcesWeekView.demo.startScrollDateTime';
 export { scrollAreaProps } from './ResourcesWeekView.demo.scrollAreaProps';

@@ -297,3 +297,28 @@ export function SlotWidth() {
     />
   );
 }
+
+export function ManyOverlappingEvents() {
+  const [date, setDate] = useState(toDateString(new Date()));
+
+  const manyEvents: ScheduleEventData[] = Array.from({ length: 10 }, (_, i) => ({
+    id: `overlap-${i + 1}`,
+    title: `Event ${i + 1}`,
+    start: `${today} 10:00:00`,
+    end: `${today} 11:00:00`,
+    color: ['blue', 'green', 'violet', 'orange', 'cyan', 'pink', 'red', 'grape', 'teal', 'indigo'][i],
+    resourceId: 'tokyo',
+    payload: {},
+  }));
+
+  return (
+    <ResourcesWeekView
+      date={date}
+      onDateChange={setDate}
+      resources={resources}
+      events={manyEvents}
+      startTime="08:00:00"
+      endTime="18:00:00"
+    />
+  );
+}

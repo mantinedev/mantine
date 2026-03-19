@@ -65,8 +65,9 @@ export type ResourcesWeekViewStylesNames =
   | 'resourcesWeekView'
   | 'resourcesWeekViewRoot'
   | 'resourcesWeekViewInner'
+  | 'resourcesWeekViewHeaderRows'
+  | 'resourcesWeekViewHeaderContent'
   | 'resourcesWeekViewDayLabelsRow'
-  | 'resourcesWeekViewDayLabelsCorner'
   | 'resourcesWeekViewDayLabel'
   | 'resourcesWeekViewTimeLabelsRow'
   | 'resourcesWeekViewScrollArea'
@@ -103,7 +104,8 @@ export interface ResourcesWeekViewProps
   intervalMinutes?: number;
   slotLabelFormat?: DateLabelFormat;
   radius?: MantineRadius;
-  startScrollTime?: string;
+  /** Date and time to scroll to on initial render, in `YYYY-MM-DD HH:mm:ss` format */
+  startScrollDateTime?: string;
   scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
   locale?: string;
   withCurrentTimeIndicator?: boolean;
@@ -220,7 +222,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     intervalMinutes,
     slotLabelFormat,
     radius,
-    startScrollTime,
+    startScrollDateTime,
     scrollAreaProps,
     locale,
     withCurrentTimeIndicator: _withCurrentTimeIndicator,
@@ -337,11 +339,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       }
       const dayIndex = Math.floor(target.slotIndex / totalSlotsPerDay);
       const slotInDay = target.slotIndex % totalSlotsPerDay;
-      const slotDate = weekdays[dayIndex];
-      if (slotDate) {
+      const slotDay = weekdays[dayIndex];
+      if (slotDay) {
         onExternalEventDrop(
           e.dataTransfer,
-          `${slotDate} ${slots[slotInDay].startTime}`,
+          `${dayjs(slotDay).format('YYYY-MM-DD')} ${slots[slotInDay].startTime}`,
           target.resourceId
         );
       }
@@ -408,8 +410,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       const endDay = weekdays[endDayIndex];
       if (startDay && endDay) {
         onSlotDragEnd(
-          `${startDay} ${slots[startSlotInDay].startTime}`,
-          `${endDay} ${slots[endSlotInDay].endTime}`,
+          `${dayjs(startDay).format('YYYY-MM-DD')} ${slots[startSlotInDay].startTime}`,
+          `${dayjs(endDay).format('YYYY-MM-DD')} ${slots[endSlotInDay].endTime}`,
           groupToResourceId.get(group) ?? group
         );
       }
@@ -432,7 +434,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       return;
     }
     const slot = slots[slotIndex];
-    onTimeSlotClick(`${day} ${slot.startTime}`, `${day} ${slot.endTime}`, e, resourceId);
+    const dayStr = dayjs(day).format('YYYY-MM-DD');
+    onTimeSlotClick(`${dayStr} ${slot.startTime}`, `${dayStr} ${slot.endTime}`, e, resourceId);
   };
 
   const weekViewEvents = getResourcesWeekViewEvents({
@@ -498,18 +501,26 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const firstSlotIndex = { resourceIndex: 0, slotIndex: 0 };
 
   useIsomorphicEffect(() => {
-    if (!startScrollTime || !viewportRef.current) {
+    if (!startScrollDateTime || !viewportRef.current) {
       return;
     }
+    const parsed = dayjs(startScrollDateTime);
+    const targetDayStr = parsed.format('YYYY-MM-DD 00:00:00');
+    const targetTime = parsed.format('HH:mm:ss');
+    const dayIndex = weekdays.indexOf(targetDayStr);
+    if (dayIndex < 0) {
+      return;
+    }
+    const slotInDay = slots.findIndex((s) => s.startTime >= targetTime);
+    if (slotInDay < 0) {
+      return;
+    }
+    const flatIndex = dayIndex * totalSlotsPerDay + slotInDay;
     const firstResourceSlots = slotsRef.current[0];
     if (!firstResourceSlots || firstResourceSlots.length === 0) {
       return;
     }
-    const targetIndex = slots.findIndex((s) => s.startTime >= startScrollTime);
-    if (targetIndex < 0) {
-      return;
-    }
-    const targetSlot = firstResourceSlots[targetIndex];
+    const targetSlot = firstResourceSlots[flatIndex];
     if (!targetSlot) {
       return;
     }
@@ -770,17 +781,19 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           viewportRef={mergedViewportRef}
         >
           <div {...getStyles('resourcesWeekViewInner')}>
-            <div {...getStyles('resourcesWeekViewDayLabelsRow')}>
-              <div {...getStyles('resourcesWeekViewDayLabelsCorner')} />
-              {dayLabels}
-            </div>
-
-            <Box {...getStyles('resourcesWeekViewTimeLabelsRow')} mod={{ scrolled }}>
-              <div {...getStyles('resourcesWeekViewCorner')} key="corner">
+            <div {...getStyles('resourcesWeekViewHeaderRows')}>
+              <div {...getStyles('resourcesWeekViewCorner')}>
                 {getLabel('resources', labels)}
               </div>
-              {timeLabels}
-            </Box>
+              <div {...getStyles('resourcesWeekViewHeaderContent')}>
+                <div {...getStyles('resourcesWeekViewDayLabelsRow')}>
+                  {dayLabels}
+                </div>
+                <Box {...getStyles('resourcesWeekViewTimeLabelsRow')} mod={{ scrolled }}>
+                  {timeLabels}
+                </Box>
+              </div>
+            </div>
 
             {rows}
 

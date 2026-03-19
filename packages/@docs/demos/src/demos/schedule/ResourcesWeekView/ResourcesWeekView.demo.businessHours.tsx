@@ -11,7 +11,8 @@ import { ResourcesWeekView } from '@mantine/schedule';
 import { events, resources } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
 
   return (
     <ResourcesWeekView
@@ -21,7 +22,7 @@ function Demo() {
       events={events}
       startTime="07:00:00"
       endTime="20:00:00"
-      startScrollTime="08:00:00"
+      startScrollDateTime={\`\${today} 08:00:00\`}
       highlightBusinessHours
       businessHours={['09:00:00', '17:00:00']}
     />
@@ -40,7 +41,7 @@ function Demo() {
       events={resourceEvents}
       startTime="07:00:00"
       endTime="20:00:00"
-      startScrollTime="08:00:00"
+      startScrollDateTime={`${dayjs().format('YYYY-MM-DD')} 08:00:00`}
       highlightBusinessHours
       businessHours={['09:00:00', '17:00:00']}
     />

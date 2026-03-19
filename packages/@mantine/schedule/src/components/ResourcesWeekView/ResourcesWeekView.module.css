@@ -37,16 +37,17 @@
   position: relative;
 }
 
-.resourcesWeekViewDayLabelsRow {
+.resourcesWeekViewHeaderRows {
   display: flex;
   position: sticky;
   top: 0;
   z-index: 5;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid var(--resources-week-view-border-color);
+  margin-bottom: -1px;
 }
 
-.resourcesWeekViewDayLabelsCorner {
+.resourcesWeekViewCorner {
   flex: 0 0 var(--resources-week-view-resource-label-width);
   min-width: var(--resources-week-view-resource-label-width);
   border-inline-end: 1px solid var(--resources-week-view-border-color);
@@ -54,6 +55,22 @@
   left: 0;
   z-index: 6;
   background-color: var(--mantine-color-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+}
+
+.resourcesWeekViewHeaderContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.resourcesWeekViewDayLabelsRow {
+  display: flex;
+  border-bottom: 1px solid var(--resources-week-view-border-color);
 }
 
 .resourcesWeekViewDayLabel {
@@ -83,33 +100,6 @@
 
 .resourcesWeekViewTimeLabelsRow {
   display: flex;
-  position: sticky;
-  top: 33px;
-  z-index: 5;
-  background-color: var(--mantine-color-body);
-  border-bottom: 1px solid var(--resources-week-view-border-color);
-  margin-bottom: -1px;
-  transition: box-shadow 100ms ease;
-
-  &:where([data-scrolled]) {
-    box-shadow: var(--mantine-shadow-sm);
-  }
-}
-
-.resourcesWeekViewCorner {
-  flex: 0 0 var(--resources-week-view-resource-label-width);
-  min-width: var(--resources-week-view-resource-label-width);
-  border-inline-end: 1px solid var(--resources-week-view-border-color);
-  position: sticky;
-  left: 0;
-  z-index: 6;
-  background-color: var(--mantine-color-body);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--mantine-font-size-sm);
-  font-weight: var(--mantine-font-weight-medium);
-  user-select: none;
 }
 
 .resourcesWeekViewTimeLabel {
