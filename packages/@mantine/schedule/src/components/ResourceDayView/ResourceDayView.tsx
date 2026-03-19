@@ -20,7 +20,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useInterval, useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
@@ -39,8 +39,10 @@ import {
   expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
+  getCurrentTimePosition,
   getDayTimeIntervals,
   isAllDayEvent,
+  isInTimeRange,
   toDateString,
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
@@ -69,6 +71,10 @@ export type ResourceDayViewStylesNames =
   | 'resourceDayViewRowSlot'
   | 'resourceDayViewRowSlots'
   | 'resourceDayViewBackgroundEvent'
+  | 'resourceDayViewCurrentTimeIndicator'
+  | 'resourceDayViewCurrentTimeIndicatorLine'
+  | 'resourceDayViewCurrentTimeIndicatorThumb'
+  | 'resourceDayViewCurrentTimeIndicatorTimeBubble'
   | 'resourceDayViewEventWrapper'
   | 'resourceDayViewResizeHandle'
   | CombinedScheduleHeaderStylesNames;
@@ -116,6 +122,12 @@ export interface ResourceDayViewProps
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
+
+  /** If set, displays a vertical line indicating the current time. By default, displayed only for the current day. */
+  withCurrentTimeIndicator?: boolean;
+
+  /** If set, the time indicator displays the current time in the bubble @default true */
+  withCurrentTimeBubble?: boolean;
 
   /** If set, the header is displayed @default true */
   withHeader?: boolean;
@@ -289,6 +301,8 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
     startScrollTime,
     scrollAreaProps,
     locale,
+    withCurrentTimeIndicator: _withCurrentTimeIndicator,
+    withCurrentTimeBubble = true,
     __staticSelector,
     withHeader,
     onViewChange,
@@ -465,6 +479,20 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
   };
 
   const dateStr = dayjs(date).format('YYYY-MM-DD');
+  const isToday = dayjs(date).isSame(dayjs(), 'day');
+  const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
+
+  const [timeIndicatorOffset, setTimeIndicatorOffset] = useState(
+    getCurrentTimePosition({ startTime, endTime })
+  );
+  useInterval(() => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime })), 60000, {
+    autoInvoke: true,
+  });
+  const showTimeIndicator =
+    withCurrentTimeIndicator && isInTimeRange({ date: dayjs().toDate(), startTime, endTime });
+  const formattedCurrentTime = withCurrentTimeBubble
+    ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: slotLabelFormat })
+    : '';
 
   const expandedEvents = expandRecurringEvents({
     events,
@@ -830,6 +858,26 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
             </Box>
 
             {rows}
+
+            {showTimeIndicator && (
+              <Box
+                {...getStyles('resourceDayViewCurrentTimeIndicator')}
+                __vars={{
+                  '--indicator-left-offset': `calc(var(--resource-day-view-resource-label-width) + (100% - var(--resource-day-view-resource-label-width)) * ${timeIndicatorOffset} / 100)`,
+                  '--_time-bubble-width': formattedCurrentTime?.toString().toLowerCase().includes('m')
+                    ? '64px'
+                    : '46px',
+                }}
+              >
+                {withCurrentTimeBubble && (
+                  <div {...getStyles('resourceDayViewCurrentTimeIndicatorTimeBubble')}>
+                    {formattedCurrentTime}
+                  </div>
+                )}
+                <div {...getStyles('resourceDayViewCurrentTimeIndicatorThumb')} />
+                <div {...getStyles('resourceDayViewCurrentTimeIndicatorLine')} />
+              </Box>
+            )}
           </div>
         </ScrollArea>
       </Box>

@@ -22,6 +22,7 @@
   border-radius: var(--resource-day-view-radius);
   overflow: hidden;
   max-width: fit-content;
+  position: relative;
 }
 
 .resourceDayViewScrollArea {
@@ -33,6 +34,7 @@
 .resourceDayViewInner {
   display: inline-flex;
   flex-direction: column;
+  position: relative;
 }
 
 .resourceDayViewTimeLabelsRow {
@@ -223,6 +225,68 @@
     cursor: default;
     pointer-events: none;
   }
+}
+
+.resourceDayViewCurrentTimeIndicator {
+  --_indicator-color: var(--resource-day-view-indicator-color, var(--mantine-color-red-7));
+  --_time-bubble-height: 18px;
+  --_thumb-size: 12px;
+
+  position: absolute;
+  pointer-events: none;
+  top: 37px;
+  bottom: 0;
+  left: var(--indicator-left-offset);
+  width: 2px;
+  z-index: 10;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--_indicator-color);
+    opacity: 0.2;
+  }
+}
+
+.resourceDayViewCurrentTimeIndicatorLine {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: var(--_indicator-color);
+}
+
+.resourceDayViewCurrentTimeIndicatorThumb {
+  position: absolute;
+  top: calc(-1 * (var(--_thumb-size) / 2 - 1px));
+  width: var(--_thumb-size);
+  height: var(--_thumb-size);
+  border-radius: 50%;
+  border: 1px solid var(--mantine-color-body);
+  background-color: var(--_indicator-color);
+  left: calc(-1 * (var(--_thumb-size) / 2 - 1px));
+}
+
+.resourceDayViewCurrentTimeIndicatorTimeBubble {
+  position: absolute;
+  height: var(--_time-bubble-height);
+  width: var(--_time-bubble-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+  background-color: var(--_indicator-color);
+  color: var(--mantine-color-white);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  box-shadow: var(--mantine-shadow-sm);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  top: calc(-1 * var(--_time-bubble-height) / 2);
+  left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
+  z-index: 10;
 }
 
 .resourceDayViewBackgroundEvent {
