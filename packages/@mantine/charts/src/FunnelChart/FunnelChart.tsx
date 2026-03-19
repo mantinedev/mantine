@@ -1,5 +1,4 @@
 import {
-  Cell,
   Funnel,
   FunnelProps,
   LabelList,
@@ -166,7 +165,10 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
       <ResponsiveContainer>
         <RechartsFunnelChart {...funnelChartProps}>
           <Funnel
-            data={data}
+            data={data.map((entry) => ({
+              ...entry,
+              fill: getThemeColor(entry.color, theme),
+            }))}
             dataKey="value"
             isAnimationActive={false}
             stroke="var(--chart-stroke-color, var(--mantine-color-body))"
@@ -191,14 +193,6 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
                 }}
               />
             )}
-            {data.map((entry, index) => (
-              <Cell
-                key={index}
-                fill={getThemeColor(entry.color, theme)}
-                stroke="var(--chart-stroke-color, var(--mantine-color-body))"
-                strokeWidth={strokeWidth}
-              />
-            ))}
           </Funnel>
 
           {withTooltip && (

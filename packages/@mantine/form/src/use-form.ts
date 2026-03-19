@@ -51,7 +51,7 @@ export function useForm<
 ): UseFormReturnType<Values, TransformedValues, undefined>;
 
 export function useForm<
-  Values extends Record<string, any> = Record<string, any>,
+  Values extends Record<PropertyKey, any> = Record<string, any>,
   TransformedValues = Values,
 >({
   name,

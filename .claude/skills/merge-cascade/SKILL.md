@@ -37,26 +37,39 @@ Merge chain: master (origin) → 9.0 (origin) → 9.1 (gitlab) → 9.2 (gitlab)
 
 ### 3. Fetch latest from all involved remotes
 
-For each unique remote in the chain, run:
+**Important:** Some remotes (e.g., `gitlab`) may have a fetch refspec that maps to `refs/remotes/origin/*`, which means fetching from them will overwrite `origin`'s tracking refs. To avoid this, always fetch `origin` **last** so its refs are authoritative.
+
+Collect all unique remotes in the chain, then fetch them in order with `origin` last:
 ```bash
-git fetch <remote>
+# Fetch non-origin remotes first
+git fetch <other-remote>
+# Fetch origin last to ensure its refs are not overwritten
+git fetch origin
 ```
 
-### 4. Execute merges sequentially
+### 4. Update master from origin
+
+After fetching, ensure `master` is up to date with `origin/master`:
+```bash
+git checkout master
+git merge origin/master --ff-only
+```
+
+### 5. Execute merges sequentially
 
 For each consecutive pair `(source, target)` in the chain:
 
-#### 4a. Checkout target branch
+#### 5a. Checkout target branch
 ```bash
 git checkout <target>
 ```
 
-#### 4b. Merge source into target
+#### 5b. Merge source into target
 ```bash
 git merge <source> --no-edit
 ```
 
-#### 4c. Handle merge conflicts
+#### 5c. Handle merge conflicts
 
 If there are conflicts, analyze them:
 
@@ -73,21 +86,21 @@ If there are conflicts, analyze them:
 
 If auto-resolution is not possible for any file, **stop the cascade**, show the user the conflicted files and diff, and ask how to proceed.
 
-#### 4d. Push target branch
+#### 5d. Push target branch
 ```bash
 git push <target-remote> <target>
 ```
 
 If push fails (e.g., rejected), **stop** and ask the user how to proceed.
 
-### 5. Return to original branch
+### 6. Return to original branch
 
 After all merges complete (or on failure), checkout the branch the user was on before the cascade started:
 ```bash
 git checkout <original-branch>
 ```
 
-### 6. Report
+### 7. Report
 
 Print a summary:
 ```
