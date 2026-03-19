@@ -15,6 +15,11 @@ export * from './components/WeekView';
 export * from './components/MonthView';
 export * from './components/YearView';
 
+// Resource views
+export * from './components/ResourceDayView';
+export * from './components/ResourceMonthView';
+export * from './components/ResourcesSchedule';
+
 // Supporting components
 export * from './components/ScheduleEvent';
 export * from './components/ScheduleHeader';

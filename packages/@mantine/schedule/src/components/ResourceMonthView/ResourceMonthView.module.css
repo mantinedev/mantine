@@ -1,0 +1,224 @@
+.resourceMonthView {
+  --resource-month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --resource-month-view-resource-label-width: 120px;
+  --resource-month-view-day-width: 80px;
+  --resource-month-view-row-height: 64px;
+
+  @mixin where-light {
+    --resource-month-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --resource-month-view-border-color: var(--mantine-color-dark-4);
+  }
+}
+
+.resourceMonthViewRoot {
+  border: 1px solid var(--resource-month-view-border-color);
+  border-radius: var(--resource-month-view-radius);
+  overflow: hidden;
+  max-width: fit-content;
+}
+
+.resourceMonthViewScrollArea {
+  :where([data-mantine-scrollbar]) {
+    z-index: 6;
+  }
+}
+
+.resourceMonthViewInner {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.resourceMonthViewDayLabelsRow {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid var(--resource-month-view-border-color);
+  margin-bottom: -1px;
+}
+
+.resourceMonthViewCorner {
+  flex: 0 0 var(--resource-month-view-resource-label-width);
+  min-width: var(--resource-month-view-resource-label-width);
+  border-inline-end: 1px solid var(--resource-month-view-border-color);
+  position: sticky;
+  left: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  background-color: var(--mantine-color-body);
+}
+
+.resourceMonthViewDayLabel {
+  flex: 0 0 var(--resource-month-view-day-width);
+  min-width: var(--resource-month-view-day-width);
+  max-width: var(--resource-month-view-day-width);
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-xs);
+  user-select: none;
+  cursor: default;
+  border-inline-end: 1px solid var(--resource-month-view-border-color);
+
+  &:where(:last-of-type) {
+    border-inline-end: none;
+  }
+
+  &:where([data-weekend]) {
+    color: var(--mantine-color-red-6);
+  }
+
+  &:where([data-today]) {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-primary-color-filled);
+  }
+}
+
+.resourceMonthViewDayLabelWeekday {
+  font-size: 10px;
+  text-transform: capitalize;
+}
+
+.resourceMonthViewDayLabelNumber {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.resourceMonthViewRow {
+  display: flex;
+  border-top: 1px solid var(--resource-month-view-border-color);
+}
+
+.resourceMonthViewResourceLabel {
+  flex: 0 0 var(--resource-month-view-resource-label-width);
+  min-width: var(--resource-month-view-resource-label-width);
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  border-inline-end: 1px solid var(--resource-month-view-border-color);
+  min-height: var(--resource-month-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background-color: var(--mantine-color-body);
+}
+
+.resourceMonthViewRowSlots {
+  display: flex;
+  position: relative;
+  min-height: var(--resource-month-view-row-height);
+}
+
+.resourceMonthViewCell {
+  flex: 0 0 var(--resource-month-view-day-width);
+  min-width: var(--resource-month-view-day-width);
+  max-width: var(--resource-month-view-day-width);
+  min-height: var(--resource-month-view-row-height);
+  border-inline-end: 1px solid var(--resource-month-view-border-color);
+  cursor: pointer;
+  position: relative;
+
+  &:where(:last-of-type) {
+    border-inline-end: none;
+  }
+
+  &:where(:focus) {
+    z-index: 1;
+  }
+
+  @mixin hover {
+    &:where(:not([data-static])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-6);
+      }
+    }
+  }
+
+  &:where([data-weekend]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-8);
+    }
+  }
+
+  &:where([data-drop-target]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-blue-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
+    }
+  }
+
+  &:where([data-drag-selected]) {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-light);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+
+      @mixin where-light {
+        border-color: var(--mantine-primary-color-2);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-primary-color-9);
+      }
+    }
+  }
+
+  &:where([data-drag-slot-index]) {
+    touch-action: none;
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}

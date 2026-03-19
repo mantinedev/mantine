@@ -1,0 +1,45 @@
+import { ResourcesScheduleDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ResourcesSchedule);
+
+## Usage
+
+`ResourcesSchedule` is a wrapper component that combines `ResourceDayView` and `ResourceMonthView`
+into a single component with view switching. It manages the current view and date state, passing
+common props to both views automatically.
+
+<Demo data={ResourcesScheduleDemos.usage} />
+
+## Controlled state
+
+You can control the current date and view level with `date`/`onDateChange` and `view`/`onViewChange` props.
+
+<Demo data={ResourcesScheduleDemos.controlled} />
+
+## Drag and drop
+
+Enable drag and drop across all views with `withEventsDragAndDrop` prop.
+
+<Demo data={ResourcesScheduleDemos.dragDrop} />
+
+## View-specific props
+
+Use `dayViewProps` and `monthViewProps` to pass props specific to each view:
+
+```tsx
+<ResourcesSchedule
+  resources={resources}
+  events={events}
+  dayViewProps={{
+    startTime: '08:00:00',
+    endTime: '18:00:00',
+    intervalMinutes: 30,
+    highlightBusinessHours: true,
+  }}
+  monthViewProps={{
+    maxEventsPerCell: 3,
+  }}
+/>
+```

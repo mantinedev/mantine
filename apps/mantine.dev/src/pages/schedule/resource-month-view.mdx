@@ -1,0 +1,19 @@
+import { ResourceMonthViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ResourceMonthView);
+
+## Usage
+
+ResourceMonthView displays a month grid where each day cell contains resource lanes.
+Events are shown within their resource's lane, making it easy to see resource utilization
+across the month.
+
+<Demo data={ResourceMonthViewDemos.usage} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions.
+
+<Demo data={ResourceMonthViewDemos.staticMode} />

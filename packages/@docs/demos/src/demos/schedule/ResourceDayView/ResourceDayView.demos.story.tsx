@@ -1,0 +1,84 @@
+import { renderDemo } from '../../../render-demo';
+import * as demos from './index';
+
+export default { title: 'schedule/ResourceDayView' };
+
+export const Demo_usage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const Demo_dragDrop = {
+  name: '⭐ Demo: dragDrop',
+  render: renderDemo(demos.dragDrop),
+};
+
+export const Demo_eventResize = {
+  name: '⭐ Demo: eventResize',
+  render: renderDemo(demos.eventResize),
+};
+
+export const Demo_eventForm = {
+  name: '⭐ Demo: eventForm',
+  render: renderDemo(demos.eventForm),
+};
+
+export const Demo_staticMode = {
+  name: '⭐ Demo: staticMode',
+  render: renderDemo(demos.staticMode),
+};
+
+export const Demo_businessHours = {
+  name: '⭐ Demo: businessHours',
+  render: renderDemo(demos.businessHours),
+};
+
+export const Demo_renderResourceLabel = {
+  name: '⭐ Demo: renderResourceLabel',
+  render: renderDemo(demos.renderResourceLabel),
+};
+
+export const Demo_renderEvent = {
+  name: '⭐ Demo: renderEvent',
+  render: renderDemo(demos.renderEvent),
+};
+
+export const Demo_externalDragDrop = {
+  name: '⭐ Demo: externalDragDrop',
+  render: renderDemo(demos.externalDragDrop),
+};
+
+export const Demo_bidirectionalDragDrop = {
+  name: '⭐ Demo: bidirectionalDragDrop',
+  render: renderDemo(demos.bidirectionalDragDrop),
+};
+
+export const Demo_localization = {
+  name: '⭐ Demo: localization',
+  render: renderDemo(demos.localization),
+};
+
+export const Demo_timeRange = {
+  name: '⭐ Demo: timeRange',
+  render: renderDemo(demos.timeRange),
+};
+
+export const Demo_slotWidth = {
+  name: '⭐ Demo: slotWidth',
+  render: renderDemo(demos.slotWidth),
+};
+
+export const Demo_radius = {
+  name: '⭐ Demo: radius',
+  render: renderDemo(demos.radius),
+};
+
+export const Demo_startScrollTime = {
+  name: '⭐ Demo: startScrollTime',
+  render: renderDemo(demos.startScrollTime),
+};
+
+export const Demo_scrollAreaProps = {
+  name: '⭐ Demo: scrollAreaProps',
+  render: renderDemo(demos.scrollAreaProps),
+};

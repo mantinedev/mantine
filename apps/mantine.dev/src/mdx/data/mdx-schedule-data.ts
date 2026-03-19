@@ -76,6 +76,39 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/schedule/src/components/Schedule/Schedule.tsx',
     docs: 'schedule/schedule.mdx',
   },
+  ResourceDayView: {
+    title: 'ResourceDayView',
+    package: '@mantine/schedule',
+    slug: '/schedule/resource-day-view',
+    description: 'Day view with resource columns for scheduling across resources',
+    props: ['ResourceDayView'],
+    styles: ['ResourceDayView'],
+    source: '@mantine/schedule/src/components/ResourceDayView/ResourceDayView.tsx',
+    docs: 'schedule/resource-day-view.mdx',
+  },
+
+  ResourceMonthView: {
+    title: 'ResourceMonthView',
+    package: '@mantine/schedule',
+    slug: '/schedule/resource-month-view',
+    description: 'Month view with resource lanes for scheduling across resources',
+    props: ['ResourceMonthView'],
+    styles: ['ResourceMonthView'],
+    source: '@mantine/schedule/src/components/ResourceMonthView/ResourceMonthView.tsx',
+    docs: 'schedule/resource-month-view.mdx',
+  },
+
+  ResourcesSchedule: {
+    title: 'ResourcesSchedule',
+    package: '@mantine/schedule',
+    slug: '/schedule/resources-schedule',
+    description: 'Schedule wrapper component that combines resource day and month views',
+    props: ['ResourcesSchedule'],
+    styles: ['ResourcesSchedule'],
+    source: '@mantine/schedule/src/components/ResourcesSchedule/ResourcesSchedule.tsx',
+    docs: 'schedule/resources-schedule.mdx',
+  },
+
   RecurringEventsSchedule: {
     title: 'Recurring events',
     package: '@mantine/schedule',

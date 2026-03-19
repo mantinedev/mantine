@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Button, Group, Modal, ModalProps, Stack, TextInput } from '@mantine/core';
 import { DateTimePicker, DateValue } from '@mantine/dates';
 import { isNotEmpty, useForm } from '@mantine/form';
@@ -16,6 +16,7 @@ interface EventFormProps extends Omit<ModalProps, 'onSubmit'> {
   values: EventData | null;
   onSubmit: (values: EventData) => void;
   onDelete?: () => void;
+  children?: ReactNode;
 }
 
 export function EventForm({
@@ -24,6 +25,7 @@ export function EventForm({
   values,
   onSubmit,
   onDelete,
+  children,
   ...others
 }: EventFormProps) {
   const form = useForm({
@@ -102,6 +104,8 @@ export function EventForm({
             {...form.getInputProps('start')}
           />
           <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable radius="md" />
+
+          {children}
 
           <Group justify="flex-end" gap="sm">
             {form.values.id && onDelete && (

@@ -1,3 +1,4 @@
+import { ResourceDayViewDemos, ResourceMonthViewDemos, ResourcesScheduleDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,28 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## ResourceDayView component
+
+New [ResourceDayView](/schedule/resource-day-view) component displays resources as rows and
+time slots as columns. Each row represents a resource (conference room, person, equipment) and
+shows events assigned to that resource. Supports drag and drop across resources, business hours
+highlighting, and slot drag select.
+
+<Demo data={ResourceDayViewDemos.usage} />
+
+## ResourceMonthView component
+
+New [ResourceMonthView](/schedule/resource-month-view) component displays resources as rows
+and days of the month as columns. Events are shown as colored indicators within each
+resource-day cell for easy visualization of resource utilization across the month.
+
+<Demo data={ResourceMonthViewDemos.usage} />
+
+## ResourcesSchedule component
+
+New [ResourcesSchedule](/schedule/resources-schedule) wrapper component combines `ResourceDayView`
+and `ResourceMonthView` into a single component with view switching, similar to how `Schedule`
+combines day, week, month and year views.
+
+<Demo data={ResourcesScheduleDemos.usage} />
