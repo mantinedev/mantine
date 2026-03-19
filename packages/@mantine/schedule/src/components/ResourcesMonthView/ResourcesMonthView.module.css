@@ -24,6 +24,10 @@
   :where([data-mantine-scrollbar]) {
     z-index: 6;
   }
+
+  :where(:global(.mantine-ScrollArea-viewport)) {
+    overscroll-behavior-x: none;
+  }
 }
 
 .resourcesMonthViewInner {

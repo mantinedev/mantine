@@ -704,7 +704,6 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       <Box {...getStyles('resourcesMonthViewRoot')}>
         <ScrollArea
           scrollbarSize={4}
-          overscrollBehavior="none"
           {...scrollAreaProps}
           {...getStyles('resourcesMonthViewScrollArea', {
             className: scrollAreaProps?.className,

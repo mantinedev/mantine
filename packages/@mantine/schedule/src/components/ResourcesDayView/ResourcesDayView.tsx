@@ -835,7 +835,6 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
 
       <Box {...getStyles('resourcesDayViewRoot')}>
         <ScrollArea
-          overscrollBehavior="none"
           scrollbarSize={4}
           {...scrollAreaProps}
           {...getStyles('resourcesDayViewScrollArea', {

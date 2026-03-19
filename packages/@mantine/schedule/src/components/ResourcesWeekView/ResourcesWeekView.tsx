@@ -767,7 +767,6 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       <Box {...getStyles('resourcesWeekViewRoot')}>
         <ScrollArea
           scrollbarSize={4}
-          overscrollBehavior="none"
           {...scrollAreaProps}
           {...getStyles('resourcesWeekViewScrollArea', {
             className: scrollAreaProps?.className,
