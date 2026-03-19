@@ -13,7 +13,7 @@ function Demo() {
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
   const mobileSelectedDate = useRef<string>(dayjs().format('YYYY-MM-DD'));
 
-  const handleTimeSlotClick = (slotStart: string, slotEnd: string) => {
+  const handleTimeSlotClick = ({ slotStart, slotEnd }: { slotStart: string; slotEnd: string }) => {
     setSelectedEventData({
       title: '',
       start: new Date(slotStart),
@@ -173,7 +173,7 @@ function Demo() {
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
   const mobileSelectedDate = useRef<string>(dayjs().format('YYYY-MM-DD'));
 
-  const handleTimeSlotClick = (slotStart: string, slotEnd: string) => {
+  const handleTimeSlotClick = ({ slotStart, slotEnd }: { slotStart: string; slotEnd: string }) => {
     setSelectedEventData({
       title: '',
       start: new Date(slotStart),

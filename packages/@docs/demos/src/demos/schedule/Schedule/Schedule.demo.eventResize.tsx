@@ -93,7 +93,7 @@ const initialEvents: ScheduleEventData[] = [
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventUpdate = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventUpdate = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -116,7 +116,15 @@ function Demo() {
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventUpdate = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventUpdate = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
