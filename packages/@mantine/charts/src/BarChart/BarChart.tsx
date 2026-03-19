@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Bar,
   BarProps,
+  BarShapeProps,
   CartesianGrid,
-  Cell,
   Label,
   LabelList,
   LabelListProps,
   Legend,
   BarChart as ReChartsBarChart,
+  Rectangle,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -259,6 +260,8 @@ export const BarChart = factory<BarChartFactory>((_props) => {
   const bars = series.map((item) => {
     const color = getThemeColor(item.color, theme);
     const dimmed = shouldHighlight && highlightedArea !== item.name;
+    const resolvedBarProps = typeof barProps === 'function' ? barProps(item) : barProps;
+    const userShape = resolvedBarProps?.shape;
 
     return (
       <Bar
@@ -274,17 +277,27 @@ export const BarChart = factory<BarChartFactory>((_props) => {
         stackId={stacked ? 'stack' : item.stackId || undefined}
         yAxisId={item.yAxisId || undefined}
         minPointSize={minBarSize}
-        {...(typeof barProps === 'function' ? barProps(item) : barProps)}
-      >
-        {inputData.map((entry, index) => {
-          const cellColor = entry.color
+        {...resolvedBarProps}
+        shape={(shapeProps: BarShapeProps) => {
+          const entry = shapeProps.payload;
+          const cellColor = entry?.color
             ? getThemeColor(entry.color, theme)
             : typeof getBarColor === 'function'
-              ? getThemeColor(getBarColor(entry[item.name], item), theme)
+              ? getThemeColor(getBarColor(entry?.[item.name], item), theme)
               : getBarFill(barProps, item) || color;
-
-          return <Cell key={`cell-${index}`} fill={cellColor} />;
-        })}
+          const coloredProps = { ...shapeProps, fill: cellColor };
+          if (typeof userShape === 'function') {
+            return (userShape as (props: BarShapeProps) => React.ReactElement)(coloredProps);
+          }
+          if (React.isValidElement(userShape)) {
+            return React.cloneElement(userShape, coloredProps as any);
+          }
+          if (typeof userShape === 'object' && userShape) {
+            return <Rectangle {...coloredProps} {...(userShape as any)} />;
+          }
+          return <Rectangle {...coloredProps} />;
+        }}
+      >
         {withBarValueLabel && (
           <LabelList
             position={orientation === 'vertical' ? 'right' : 'top'}
