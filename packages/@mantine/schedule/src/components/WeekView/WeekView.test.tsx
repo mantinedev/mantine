@@ -615,12 +615,18 @@ describe('@mantine/schedule/WeekView', () => {
       await userEvent.click(slot);
 
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(expect.any(String), expect.any(String), expect.any(Object));
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          slotStart: expect.any(String),
+          slotEnd: expect.any(String),
+          nativeEvent: expect.any(Object),
+        })
+      );
 
-      const [start, end] = spy.mock.calls[0];
-      expect(start).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
-      expect(end).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
-      expect(end > start).toBe(true);
+      const { slotStart, slotEnd } = spy.mock.calls[0][0];
+      expect(slotStart).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+      expect(slotEnd).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+      expect(slotEnd > slotStart).toBe(true);
     });
 
     it('calls onAllDaySlotClick when all-day slot is clicked', async () => {

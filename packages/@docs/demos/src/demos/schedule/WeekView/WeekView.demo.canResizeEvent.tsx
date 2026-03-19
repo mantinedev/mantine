@@ -68,7 +68,7 @@ function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventResize = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -95,7 +95,15 @@ function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventResize = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event

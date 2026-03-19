@@ -25,12 +25,12 @@ export interface UseEventResizeInput {
   startTime: string;
   endTime: string;
   intervalMinutes: number;
-  onEventResize?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 }
 
@@ -175,7 +175,12 @@ export function useEventResize({
             newEnd = percentToDateTime(state.currentTop + state.currentHeight, state.eventDate);
           }
 
-          onEventResizeRef.current(state.eventId, newStart, newEnd, state.event);
+          onEventResizeRef.current({
+            eventId: state.eventId,
+            newStart,
+            newEnd,
+            event: state.event,
+          });
         }
       }
       resizeRef.current = null;

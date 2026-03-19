@@ -274,7 +274,15 @@ export function DragAndDrop() {
   ]);
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     setEventsData((prev) =>
       prev.map((event) => {
         if (event.id === eventId) {
@@ -354,7 +362,15 @@ export function EventResize() {
   ]);
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventResize = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     const resizedEvent = eventsData.find((e) => e.id === eventId);
     setEventsData((prev) =>
       prev.map((event) => {
@@ -471,14 +487,14 @@ export function EventResizeWithDragAndDrop() {
         onDateChange={setDate}
         events={eventsData}
         withEventsDragAndDrop
-        onEventDrop={(eventId, newStart, newEnd) => {
+        onEventDrop={({ eventId, newStart, newEnd }) => {
           const event = handleEventUpdate(eventId, newStart, newEnd);
           setLastAction(
             `Moved "${event?.title}" to ${dayjs(newStart).format('dddd HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
           );
         }}
         withEventResize
-        onEventResize={(eventId, newStart, newEnd) => {
+        onEventResize={({ eventId, newStart, newEnd }) => {
           const event = handleEventUpdate(eventId, newStart, newEnd);
           setLastAction(
             `Resized "${event?.title}" to ${dayjs(newStart).format('dddd HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`

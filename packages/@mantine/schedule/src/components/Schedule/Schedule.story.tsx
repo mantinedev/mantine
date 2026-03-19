@@ -389,7 +389,15 @@ export function DragAndDrop() {
   ]);
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     setEventsData((prev) =>
       prev.map((event) => {
         if (event.id === eventId) {
@@ -514,13 +522,13 @@ export function EventResize() {
         withEventsDragAndDrop
         withEventResize
         defaultDate={new Date(2024, 0, 19)}
-        onEventDrop={(eventId, newStart, newEnd) => {
+        onEventDrop={({ eventId, newStart, newEnd }) => {
           const event = handleEventUpdate(eventId, newStart, newEnd);
           setLastAction(
             `Moved "${event?.title}" to ${dayjs(newStart).format('MMMM D, YYYY [at] HH:mm')}`
           );
         }}
-        onEventResize={(eventId, newStart, newEnd) => {
+        onEventResize={({ eventId, newStart, newEnd }) => {
           const event = handleEventUpdate(eventId, newStart, newEnd);
           setLastAction(
             `Resized "${event?.title}" to ${dayjs(newStart).format('HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
