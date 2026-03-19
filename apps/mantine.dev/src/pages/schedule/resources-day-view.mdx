@@ -1,0 +1,112 @@
+import { ResourcesDayViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ResourcesDayView);
+
+## Usage
+
+ResourcesDayView displays resources as rows and time slots as columns. Each row represents
+a resource (e.g., conference room, person, equipment) and shows events assigned to that
+resource via the `resourceId` property on event data.
+
+<Demo data={ResourcesDayViewDemos.usage} />
+
+## Time range and intervals
+
+Use `startTime`, `endTime` and `intervalMinutes` props to control the visible time range
+and slot granularity.
+
+<Demo data={ResourcesDayViewDemos.timeRange} />
+
+## Start scroll time
+
+Use `startScrollTime` prop to set the initial horizontal scroll position to a specific time.
+The value should be in `HH:mm:ss` format.
+
+<Demo data={ResourcesDayViewDemos.startScrollTime} />
+
+## Slot width and row height
+
+Use `slotWidth` to control the width of each time slot column and `rowHeight` to control
+the height of each resource row.
+
+<Demo data={ResourcesDayViewDemos.slotWidth} />
+
+## Custom resource label
+
+Use `renderResourceLabel` prop to customize the resource label rendering in the left column.
+
+<Demo data={ResourcesDayViewDemos.renderResourceLabel} />
+
+## Custom event rendering
+
+Use `renderEvent` prop to fully customize event rendering.
+
+<Demo data={ResourcesDayViewDemos.renderEvent} />
+
+## Drag and drop
+
+Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback
+receives the target `resourceId` as the fifth argument, allowing you to update the event's resource
+assignment.
+
+<Demo data={ResourcesDayViewDemos.dragDrop} />
+
+## External drag and drop
+
+You can drag external items onto the schedule using `onExternalEventDrop` prop.
+
+<Demo data={ResourcesDayViewDemos.externalDragDrop} />
+
+## Bidirectional drag and drop
+
+Events can be dragged both within the schedule and to an external area.
+
+<Demo data={ResourcesDayViewDemos.bidirectionalDragDrop} />
+
+## Event resize
+
+Enable event resizing with `withEventResize` prop. Events can be resized by dragging
+their left or right edges.
+
+<Demo data={ResourcesDayViewDemos.eventResize} />
+
+## Event form
+
+Click on a time slot or drag to select a range to create a new event. Click on an
+existing event to edit it.
+
+<Demo data={ResourcesDayViewDemos.eventForm} />
+
+## Business hours
+
+Use `highlightBusinessHours` prop to visually distinguish business hours from non-business hours
+across all time slot columns.
+
+<Demo data={ResourcesDayViewDemos.businessHours} />
+
+## Radius
+
+<Demo data={ResourcesDayViewDemos.radius} />
+
+## Scroll area props
+
+Use `scrollAreaProps` to customize the scroll area, for example to increase the scrollbar size
+and offset scrollbars.
+
+<Demo data={ResourcesDayViewDemos.scrollAreaProps} />
+
+## Localization
+
+Use `locale` prop to change the date formatting locale, `slotLabelFormat` for time format,
+and `labels` to override UI labels.
+
+<Demo data={ResourcesDayViewDemos.localization} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions. Events and time slots become non-interactive,
+useful for display-only views.
+
+<Demo data={ResourcesDayViewDemos.staticMode} />

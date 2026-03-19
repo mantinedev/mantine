@@ -76,26 +76,26 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/schedule/src/components/Schedule/Schedule.tsx',
     docs: 'schedule/schedule.mdx',
   },
-  ResourceDayView: {
-    title: 'ResourceDayView',
+  ResourcesDayView: {
+    title: 'ResourcesDayView',
     package: '@mantine/schedule',
-    slug: '/schedule/resource-day-view',
+    slug: '/schedule/resources-day-view',
     description: 'Day view with resource columns for scheduling across resources',
-    props: ['ResourceDayView'],
-    styles: ['ResourceDayView'],
-    source: '@mantine/schedule/src/components/ResourceDayView/ResourceDayView.tsx',
-    docs: 'schedule/resource-day-view.mdx',
+    props: ['ResourcesDayView'],
+    styles: ['ResourcesDayView'],
+    source: '@mantine/schedule/src/components/ResourcesDayView/ResourcesDayView.tsx',
+    docs: 'schedule/resources-day-view.mdx',
   },
 
-  ResourceMonthView: {
-    title: 'ResourceMonthView',
+  ResourcesMonthView: {
+    title: 'ResourcesMonthView',
     package: '@mantine/schedule',
-    slug: '/schedule/resource-month-view',
+    slug: '/schedule/resources-month-view',
     description: 'Month view with resource lanes for scheduling across resources',
-    props: ['ResourceMonthView'],
-    styles: ['ResourceMonthView'],
-    source: '@mantine/schedule/src/components/ResourceMonthView/ResourceMonthView.tsx',
-    docs: 'schedule/resource-month-view.mdx',
+    props: ['ResourcesMonthView'],
+    styles: ['ResourcesMonthView'],
+    source: '@mantine/schedule/src/components/ResourcesMonthView/ResourcesMonthView.tsx',
+    docs: 'schedule/resources-month-view.mdx',
   },
 
   ResourcesSchedule: {

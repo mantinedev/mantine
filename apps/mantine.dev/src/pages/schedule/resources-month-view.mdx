@@ -1,0 +1,92 @@
+import { ResourcesMonthViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ResourcesMonthView);
+
+## Usage
+
+ResourcesMonthView displays a month grid where each day cell contains resource lanes.
+Events are shown within their resource's lane, making it easy to see resource utilization
+across the month.
+
+<Demo data={ResourcesMonthViewDemos.usage} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions.
+
+<Demo data={ResourcesMonthViewDemos.staticMode} />
+
+## Drag and drop
+
+Enable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives
+the `resourceId` of the target resource, allowing you to update the event's resource assignment.
+
+<Demo data={ResourcesMonthViewDemos.dragDrop} />
+
+## Event form
+
+Click a day cell to create a new event, or click an existing event to edit it. Use `withDragSlotSelect`
+and `onSlotDragEnd` to allow drag-to-create across day cells. The `onSlotDragEnd` callback includes
+the `resourceId` of the resource where the drag started.
+
+<Demo data={ResourcesMonthViewDemos.eventForm} />
+
+## Custom event rendering
+
+Use `renderEvent` prop to customize how events are rendered. The example below uses `HoverCard`
+to display event details on hover.
+
+<Demo data={ResourcesMonthViewDemos.renderEvent} />
+
+## Custom resource label
+
+Use `renderResourceLabel` prop to customize how resource labels are rendered in the row headers.
+
+<Demo data={ResourcesMonthViewDemos.renderResourceLabel} />
+
+## Localization
+
+Set `locale` prop to change the language. Use `labels` prop to override built-in labels.
+
+<Demo data={ResourcesMonthViewDemos.localization} />
+
+## Max events per cell
+
+Use `maxEventsPerCell` prop to limit the number of events visible in each cell.
+When there are more events than the limit, a "+more" indicator is shown.
+
+<Demo data={ResourcesMonthViewDemos.maxEventsPerCell} />
+
+## Day width and row height
+
+Use `dayWidth` and `rowHeight` props to customize the dimensions of day columns and resource rows.
+
+<Demo data={ResourcesMonthViewDemos.dayWidth} />
+
+## Start scroll date
+
+Use `startScrollDate` prop to scroll to a specific date on initial render. This is useful
+when the month has many days and you want the view to start at a specific date, for example today.
+
+<Demo data={ResourcesMonthViewDemos.startScrollDate} />
+
+## Without weekend days
+
+Set `withWeekendDays={false}` to hide weekend day columns from the month grid.
+
+<Demo data={ResourcesMonthViewDemos.withoutWeekendDays} />
+
+## More events indicator
+
+When a day cell has more events than `maxEventsPerCell`, a "+X more" indicator is shown.
+Click the indicator to see all events for that day.
+
+<Demo data={ResourcesMonthViewDemos.moreEvents} />
+
+## Scroll area props
+
+Use `scrollAreaProps` to customize the scroll area behavior.
+
+<Demo data={ResourcesMonthViewDemos.scrollAreaProps} />

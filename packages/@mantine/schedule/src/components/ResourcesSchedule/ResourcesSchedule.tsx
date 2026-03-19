@@ -20,22 +20,22 @@ import {
   ScheduleViewLevel,
 } from '../../types';
 import {
-  ResourceDayView,
-  ResourceDayViewProps,
-  ResourceDayViewStylesNames,
-} from '../ResourceDayView/ResourceDayView';
+  ResourcesDayView,
+  ResourcesDayViewProps,
+  ResourcesDayViewStylesNames,
+} from '../ResourcesDayView/ResourcesDayView';
 import {
-  ResourceMonthView,
-  ResourceMonthViewProps,
-  ResourceMonthViewStylesNames,
-} from '../ResourceMonthView/ResourceMonthView';
+  ResourcesMonthView,
+  ResourcesMonthViewProps,
+  ResourcesMonthViewStylesNames,
+} from '../ResourcesMonthView/ResourcesMonthView';
 import { RenderEventBody } from '../ScheduleEvent/ScheduleEvent';
 import classes from './ResourcesSchedule.module.css';
 
 export type ResourcesScheduleStylesNames =
   | 'root'
-  | ResourceDayViewStylesNames
-  | ResourceMonthViewStylesNames;
+  | ResourcesDayViewStylesNames
+  | ResourcesMonthViewStylesNames;
 
 export type ResourcesScheduleViewLevel = 'day' | 'month';
 
@@ -189,11 +189,11 @@ export interface ResourcesScheduleProps
   /** Max number of generated recurring instances @default 2000 */
   recurrenceExpansionLimit?: number;
 
-  /** Props specific to ResourceDayView */
-  dayViewProps?: ResourcesScheduleViewProps<ResourceDayViewProps>;
+  /** Props specific to ResourcesDayView */
+  dayViewProps?: ResourcesScheduleViewProps<ResourcesDayViewProps>;
 
-  /** Props specific to ResourceMonthView */
-  monthViewProps?: ResourcesScheduleViewProps<ResourceMonthViewProps>;
+  /** Props specific to ResourcesMonthView */
+  monthViewProps?: ResourcesScheduleViewProps<ResourcesMonthViewProps>;
 }
 
 export type ResourcesScheduleFactory = Factory<{
@@ -315,7 +315,7 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     switch (_view) {
       case 'day':
         return (
-          <ResourceDayView
+          <ResourcesDayView
             {...commonProps}
             onTimeSlotClick={onTimeSlotClick}
             withEventResize={mode === 'static' ? false : withEventResize}
@@ -325,7 +325,7 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
           />
         );
       case 'month':
-        return <ResourceMonthView {...commonProps} onDayClick={onDayClick} {...monthViewProps} />;
+        return <ResourcesMonthView {...commonProps} onDayClick={onDayClick} {...monthViewProps} />;
       default:
         return null;
     }

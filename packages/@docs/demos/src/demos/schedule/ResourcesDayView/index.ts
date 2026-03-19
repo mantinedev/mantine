@@ -1,0 +1,16 @@
+export { usage } from './ResourcesDayView.demo.usage';
+export { dragDrop } from './ResourcesDayView.demo.dragDrop';
+export { eventResize } from './ResourcesDayView.demo.eventResize';
+export { eventForm } from './ResourcesDayView.demo.eventForm';
+export { staticMode } from './ResourcesDayView.demo.staticMode';
+export { businessHours } from './ResourcesDayView.demo.businessHours';
+export { renderResourceLabel } from './ResourcesDayView.demo.renderResourceLabel';
+export { renderEvent } from './ResourcesDayView.demo.renderEvent';
+export { externalDragDrop } from './ResourcesDayView.demo.externalDragDrop';
+export { bidirectionalDragDrop } from './ResourcesDayView.demo.bidirectionalDragDrop';
+export { localization } from './ResourcesDayView.demo.localization';
+export { timeRange } from './ResourcesDayView.demo.timeRange';
+export { slotWidth } from './ResourcesDayView.demo.slotWidth';
+export { radius } from './ResourcesDayView.demo.radius';
+export { startScrollTime } from './ResourcesDayView.demo.startScrollTime';
+export { scrollAreaProps } from './ResourcesDayView.demo.scrollAreaProps';

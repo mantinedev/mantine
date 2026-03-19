@@ -162,8 +162,8 @@ export * as WeekViewDemos from './demos/schedule/WeekView';
 export * as DayViewDemos from './demos/schedule/DayView';
 export * as YearViewDemos from './demos/schedule/YearView';
 export * as MobileMonthViewDemos from './demos/schedule/MobileMonthView';
-export * as ResourceDayViewDemos from './demos/schedule/ResourceDayView';
-export * as ResourceMonthViewDemos from './demos/schedule/ResourceMonthView';
+export * as ResourcesDayViewDemos from './demos/schedule/ResourcesDayView';
+export * as ResourcesMonthViewDemos from './demos/schedule/ResourcesMonthView';
 export * as ResourcesScheduleDemos from './demos/schedule/ResourcesSchedule';
 
 // Extensions demos
