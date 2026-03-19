@@ -65,20 +65,20 @@ export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 export type OnSubmit<Values, TransformedValues = Values> = (
   handleSubmit: (
     values: TransformedValues,
-    event: React.FormEvent<HTMLFormElement> | undefined
+    event: React.SyntheticEvent<HTMLFormElement> | undefined
   ) => void | Promise<any>,
   handleValidationFailure?: (
     errors: FormErrors,
     values: Values,
-    event: React.FormEvent<HTMLFormElement> | undefined
+    event: React.SyntheticEvent<HTMLFormElement> | undefined
   ) => void
-) => (event?: React.FormEvent<HTMLFormElement>) => void;
+) => (event?: React.SyntheticEvent<HTMLFormElement>) => void;
 
 export type GetTransformedValues<out Values, TransformedValues = Values> = <TValues extends Values>(
   values?: TValues
 ) => TransformedValues;
 
-export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
+export type OnReset = (event: React.SyntheticEvent<HTMLFormElement>) => void;
 
 export interface GetInputPropsOptions {
   type?: GetInputPropsType;
