@@ -226,7 +226,7 @@ const defaultProps = {
   __staticSelector: 'ResourceMonthView',
   highlightToday: true,
   withHeader: true,
-  weekdayFormat: 'dd',
+  weekdayFormat: 'ddd',
   withEventsDragAndDrop: false,
   withDragSlotSelect: false,
   mode: 'default',
@@ -641,6 +641,7 @@ export const ResourceMonthView = factory<ResourceMonthViewFactory>((_props) => {
       <Box {...getStyles('resourceMonthViewRoot')}>
         <ScrollArea
           scrollbarSize={4}
+          overscrollBehavior="none"
           {...scrollAreaProps}
           {...getStyles('resourceMonthViewScrollArea', {
             className: scrollAreaProps?.className,

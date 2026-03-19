@@ -19,7 +19,12 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={events}
-      scrollAreaProps={{ scrollbarSize: 10, offsetScrollbars: true }}
+      scrollAreaProps={{
+        scrollbarSize: 10,
+        offsetScrollbars: true,
+        type: 'always',
+        scrollbars: 'x',
+      }}
     />
   );
 }
@@ -34,7 +39,12 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={resourceEvents}
-      scrollAreaProps={{ scrollbarSize: 10, offsetScrollbars: true }}
+      scrollAreaProps={{
+        scrollbarSize: 10,
+        offsetScrollbars: true,
+        type: 'always',
+        scrollbars: 'x',
+      }}
     />
   );
 }

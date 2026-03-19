@@ -61,7 +61,7 @@
   flex: 0 0 var(--resource-month-view-day-width);
   min-width: var(--resource-month-view-day-width);
   max-width: var(--resource-month-view-day-width);
-  height: 36px;
+  height: 42px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,18 +80,23 @@
   }
 
   &:where([data-today]) {
-    font-weight: var(--mantine-font-weight-bold);
-    color: var(--mantine-primary-color-filled);
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
   }
 }
 
 .resourceMonthViewDayLabelWeekday {
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
   text-transform: capitalize;
+  line-height: 1;
+  margin-bottom: 3px;
 }
 
 .resourceMonthViewDayLabelNumber {
   font-weight: var(--mantine-font-weight-medium);
+  font-size: 12px;
+  line-height: 1;
 }
 
 .resourceMonthViewRow {

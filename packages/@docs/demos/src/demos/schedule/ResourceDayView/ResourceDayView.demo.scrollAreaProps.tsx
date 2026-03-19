@@ -21,7 +21,12 @@ function Demo() {
       events={events}
       startTime="00:00:00"
       endTime="23:59:00"
-      scrollAreaProps={{ scrollbarSize: 10, offsetScrollbars: true, type: 'always' }}
+      scrollAreaProps={{
+        scrollbarSize: 10,
+        offsetScrollbars: true,
+        type: 'always',
+        scrollbars: 'x',
+      }}
     />
   );
 }
@@ -38,7 +43,12 @@ function Demo() {
       events={resourceEvents}
       startTime="00:00:00"
       endTime="23:59:00"
-      scrollAreaProps={{ scrollbarSize: 10, offsetScrollbars: true, type: 'always' }}
+      scrollAreaProps={{
+        scrollbarSize: 10,
+        offsetScrollbars: true,
+        type: 'always',
+        scrollbars: 'x',
+      }}
     />
   );
 }
