@@ -161,12 +161,12 @@ export interface MonthViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped on new date */
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;

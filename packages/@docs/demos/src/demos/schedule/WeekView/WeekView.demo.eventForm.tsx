@@ -11,7 +11,7 @@ function Demo() {
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
 
-  const handleTimeSlotClick = (slotStart: string, slotEnd: string) => {
+  const handleTimeSlotClick = ({ slotStart, slotEnd }: { slotStart: string; slotEnd: string }) => {
     setSelectedEventData({
       title: '',
       start: new Date(slotStart),
@@ -126,7 +126,7 @@ function Demo() {
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
 
-  const handleTimeSlotClick = (slotStart: string, slotEnd: string) => {
+  const handleTimeSlotClick = ({ slotStart, slotEnd }: { slotStart: string; slotEnd: string }) => {
     setSelectedEventData({
       title: '',
       start: new Date(slotStart),

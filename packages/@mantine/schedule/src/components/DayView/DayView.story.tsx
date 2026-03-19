@@ -280,7 +280,15 @@ export function DragAndDrop() {
 
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     setEvents((prev) =>
       prev.map((event) => {
         if (event.id === eventId) {
@@ -427,7 +435,15 @@ export function DragAndDropWithOverlappingEvents() {
     },
   ]);
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     setEvents((prev) =>
       prev.map((event) => {
         if (event.id === eventId) {
@@ -547,7 +563,15 @@ export function EventResize() {
 
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventResize = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     const resizedEvent = events.find((e) => e.id === eventId);
     setEvents((prev) =>
       prev.map((event) => {
@@ -625,7 +649,15 @@ export function EventResizeWithDragAndDrop() {
 
   const [lastAction, setLastAction] = useState<string>('');
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     const movedEvent = events.find((e) => e.id === eventId);
     setEvents((prev) =>
       prev.map((event) => {
@@ -640,7 +672,15 @@ export function EventResizeWithDragAndDrop() {
     );
   };
 
-  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventResize = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     const resizedEvent = events.find((e) => e.id === eventId);
     setEvents((prev) =>
       prev.map((event) => {

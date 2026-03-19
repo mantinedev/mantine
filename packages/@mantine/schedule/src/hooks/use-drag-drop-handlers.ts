@@ -12,12 +12,12 @@ export interface UseDragDropHandlersOptions<T = any> {
   mode: ScheduleMode;
 
   /** Called when event is dropped at new location */
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -148,12 +148,12 @@ export function useDragDropHandlers<T = any>(
 
       if (isInternalDrag && enabled && dragState.state.draggedEvent && onEventDrop) {
         const { start, end } = calculateDropTarget(target, dragState.state.draggedEvent);
-        onEventDrop(
-          dragState.state.draggedEventId!,
-          dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
-          dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
-          dragState.state.draggedEvent
-        );
+        onEventDrop({
+          eventId: dragState.state.draggedEventId!,
+          newStart: dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
+          newEnd: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
+          event: dragState.state.draggedEvent,
+        });
         handleDragEnd();
         return;
       }

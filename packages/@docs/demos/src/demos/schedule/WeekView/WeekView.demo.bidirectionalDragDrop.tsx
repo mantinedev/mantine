@@ -63,7 +63,7 @@ function Demo() {
     setSidebarItems((prev) => prev.filter((item) => item.title !== data.title));
   };
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -185,7 +185,15 @@ function Demo() {
     setSidebarItems((prev) => prev.filter((item) => item.title !== data.title));
   };
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event

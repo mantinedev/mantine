@@ -178,12 +178,12 @@ export interface DayViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped at new time */
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -195,11 +195,11 @@ export interface DayViewProps
   onEventDragEnd?: () => void;
 
   /** Called when time slot is clicked */
-  onTimeSlotClick?: (
-    slotStart: DateTimeStringValue,
-    slotEnd: DateTimeStringValue,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => void;
+  onTimeSlotClick?: (data: {
+    slotStart: DateTimeStringValue;
+    slotEnd: DateTimeStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+  }) => void;
 
   /** Called when all-day slot is clicked */
   onAllDaySlotClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -226,12 +226,12 @@ export interface DayViewProps
   withEventResize?: boolean;
 
   /** Called when event is resized */
-  onEventResize?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
@@ -619,11 +619,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
             ? undefined
             : (event) => {
                 const slotDate = dayjs(date).format('YYYY-MM-DD');
-                onTimeSlotClick(
-                  `${slotDate} ${slot.startTime}`,
-                  `${slotDate} ${slot.endTime}`,
-                  event
-                );
+                onTimeSlotClick({
+                  slotStart: `${slotDate} ${slot.startTime}`,
+                  slotEnd: `${slotDate} ${slot.endTime}`,
+                  nativeEvent: event,
+                });
               }
         }
         onDragOver={withDragHandlers ? (event) => event.preventDefault() : undefined}
