@@ -129,7 +129,9 @@ export function useHorizontalEventResize({
     }
 
     const savedUserSelect = document.body.style.userSelect;
+    const savedCursor = document.body.style.cursor;
     document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'ew-resize';
 
     const handlePointerMove = (e: PointerEvent) => {
       const state = resizeRef.current;
@@ -187,6 +189,7 @@ export function useHorizontalEventResize({
 
     return () => {
       document.body.style.userSelect = savedUserSelect;
+      document.body.style.cursor = savedCursor;
       document.removeEventListener('pointermove', handlePointerMove);
       document.removeEventListener('pointerup', handlePointerUp);
     };
@@ -216,6 +219,7 @@ export function useHorizontalEventResize({
     handleResizeStart,
     isResizing,
     resizingEventId: resizeState?.eventId ?? null,
+    resizingEdge: resizeState?.edge ?? null,
     getResizePosition,
     isResizableEvent,
   };

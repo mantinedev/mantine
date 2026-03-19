@@ -277,4 +277,27 @@
   & .resourceDayViewResizeHandle:hover {
     opacity: 0.8;
   }
+
+  &:where([data-resizing]) .resourceDayViewResizeHandle:where([data-active]) {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourceDayViewResizeHandle:not([data-active]) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.resourceDayView:where([data-resizing]) {
+  & * {
+    cursor: ew-resize !important;
+  }
+
+  & .resourceDayViewEventWrapper:not([data-resizing]) {
+    pointer-events: none;
+
+    & .resourceDayViewResizeHandle {
+      opacity: 0;
+    }
+  }
 }

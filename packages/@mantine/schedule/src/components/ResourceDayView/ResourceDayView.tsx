@@ -635,14 +635,29 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
         const eventLeft = resizePosition ? resizePosition.left : event.position.top;
         const eventWidth = resizePosition ? resizePosition.width : event.position.height;
 
+        const eventColors = isResizable
+          ? theme.variantColorResolver({
+              color: event.color || theme.primaryColor,
+              theme,
+              variant: event.variant || 'light',
+              autoContrast: true,
+            })
+          : null;
+
+        const isThisEventResizing = resizePosition !== null;
+        const activeEdge =
+          isThisEventResizing && eventResize.resizingEdge ? eventResize.resizingEdge : null;
+
         return (
-          <div
+          <Box
             key={event.id}
             {...getStyles('resourceDayViewEventWrapper')}
+            __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
+            data-resizing={isThisEventResizing || undefined}
             style={{
               left: `calc(${eventLeft}% + 1px)`,
               top: `${event.position.offset}%`,
-              width: `calc(${eventWidth}% - 1px)`,
+              width: `calc(${eventWidth}% - 2px)`,
               height: `${event.position.width}%`,
             }}
           >
@@ -651,22 +666,20 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
               autoSize
               nowrap
               draggable={isDraggable}
-              isResizing={resizePosition !== null}
+              isResizing={isThisEventResizing}
               renderEventBody={renderEventBody}
               renderEvent={renderEvent}
               radius={radius}
               mode={mode}
               onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
+              style={{ width: '100%', height: '100%' }}
             />
             {isResizable && mode !== 'static' && (
               <>
                 <div
                   {...getStyles('resourceDayViewResizeHandle')}
                   data-edge="start"
+                  data-active={activeEdge === 'start' || undefined}
                   onPointerDown={(e) => {
                     const container = rowSlotsContainersRef.current[resourceIndex];
                     if (container) {
@@ -685,6 +698,7 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
                 <div
                   {...getStyles('resourceDayViewResizeHandle')}
                   data-edge="end"
+                  data-active={activeEdge === 'end' || undefined}
                   onPointerDown={(e) => {
                     const container = rowSlotsContainersRef.current[resourceIndex];
                     if (container) {
@@ -702,7 +716,7 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
                 />
               </>
             )}
-          </div>
+          </Box>
         );
       });
 
@@ -765,7 +779,7 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
   const content = (
     <Box
       {...getStyles('resourceDayView')}
-      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging }}
+      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging, resizing: eventResize.isResizing }}
       {...others}
     >
       {withHeader && (
@@ -793,6 +807,7 @@ export const ResourceDayView = factory<ResourceDayViewFactory>((_props) => {
 
       <Box {...getStyles('resourceDayViewRoot')}>
         <ScrollArea
+          overscrollBehavior="none"
           scrollbarSize={4}
           {...scrollAreaProps}
           {...getStyles('resourceDayViewScrollArea', {
