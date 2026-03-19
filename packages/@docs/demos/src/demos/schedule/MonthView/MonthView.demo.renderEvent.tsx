@@ -99,7 +99,7 @@ function Demo() {
       date={new Date()}
       events={selectedEvents}
       withEventsDragAndDrop
-      onEventDrop={(eventId, newStart, newEnd) => {
+      onEventDrop={({ eventId, newStart, newEnd }) => {
         setEvents((current) =>
           current.map((event) =>
             event.id === eventId
@@ -135,7 +135,7 @@ function Demo() {
       date={new Date()}
       events={events}
       withEventsDragAndDrop
-      onEventDrop={(eventId, newStart, newEnd) => {
+      onEventDrop={({ eventId, newStart, newEnd }) => {
         setEvents((current) =>
           current.map((event) =>
             event.id === eventId

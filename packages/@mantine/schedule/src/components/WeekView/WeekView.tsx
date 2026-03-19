@@ -201,12 +201,12 @@ export interface WeekViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped at new time */
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -218,11 +218,11 @@ export interface WeekViewProps
   onEventDragEnd?: () => void;
 
   /** Called when time slot is clicked */
-  onTimeSlotClick?: (
-    slotStart: DateTimeStringValue,
-    slotEnd: DateTimeStringValue,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => void;
+  onTimeSlotClick?: (data: {
+    slotStart: DateTimeStringValue;
+    slotEnd: DateTimeStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+  }) => void;
 
   /** Called when all-day slot is clicked */
   onAllDaySlotClick?: (day: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -255,12 +255,12 @@ export interface WeekViewProps
   withEventResize?: boolean;
 
   /** Called when event is resized */
-  onEventResize?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
@@ -512,7 +512,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     }
 
     const slot = slots[slotIndex];
-    onTimeSlotClick(`${slotDate} ${slot.startTime}`, `${slotDate} ${slot.endTime}`, e);
+    onTimeSlotClick({
+      slotStart: `${slotDate} ${slot.startTime}`,
+      slotEnd: `${slotDate} ${slot.endTime}`,
+      nativeEvent: e,
+    });
   };
 
   const weekdays = getWeekDays({

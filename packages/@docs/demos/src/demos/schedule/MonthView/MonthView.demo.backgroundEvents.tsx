@@ -76,11 +76,15 @@ function overlapsBackground(
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (
-    eventId: string | number,
-    newStart: string,
-    newEnd: string
-  ) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     if (overlapsBackground(newStart, newEnd, events)) {
       return;
     }
@@ -112,7 +116,15 @@ function overlapsBackground(newStart: string, newEnd: string, events: ScheduleEv
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+  }) => {
     if (overlapsBackground(newStart, newEnd, events)) {
       return;
     }
