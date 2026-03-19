@@ -30,6 +30,7 @@ function Demo() {
           )
         );
       }}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -53,6 +54,7 @@ function Demo() {
           )
         );
       }}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

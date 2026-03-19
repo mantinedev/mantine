@@ -24,6 +24,7 @@ function Demo() {
           </Text>
         </Stack>
       )}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -54,6 +55,7 @@ function Demo() {
           </Text>
         </Stack>
       )}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

@@ -30,10 +30,11 @@ function Demo() {
             <UnstyledButton {...props} />
           </HoverCard.Target>
           <HoverCard.Dropdown>
-            <EventDetails event={event} />
+            <EventDetails event={event} resources={resources} />
           </HoverCard.Dropdown>
         </HoverCard>
       )}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -72,10 +73,11 @@ function Demo() {
             <UnstyledButton {...props} />
           </HoverCard.Target>
           <HoverCard.Dropdown>
-            <EventDetails event={event} />
+            <EventDetails event={event} resources={resources} />
           </HoverCard.Dropdown>
         </HoverCard>
       )}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

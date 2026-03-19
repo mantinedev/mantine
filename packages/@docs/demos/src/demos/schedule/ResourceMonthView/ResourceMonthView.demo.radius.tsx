@@ -20,6 +20,7 @@ function Demo() {
       resources={resources}
       events={events}
       radius="md"
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -35,6 +36,7 @@ function Demo() {
       resources={resources}
       events={resourceEvents}
       radius="md"
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

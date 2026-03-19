@@ -10,9 +10,9 @@ export default { title: 'schedule/ResourceDayView' };
 const today = dayjs().format('YYYY-MM-DD');
 
 const resources: ScheduleResourceData[] = [
-  { id: 'tokyo', label: 'Tokyo' },
-  { id: 'paris', label: 'Paris' },
-  { id: 'new-york', label: 'New York' },
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
 ];
 
 const regularEvents: ScheduleEventData[] = [

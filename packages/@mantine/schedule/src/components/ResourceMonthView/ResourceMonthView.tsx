@@ -20,6 +20,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
@@ -92,6 +93,12 @@ export interface ResourceMonthViewProps
 
   /** Indices of weekend days */
   weekendDays?: DayOfWeek[];
+
+  /** If set to false, weekend days are hidden @default true */
+  withWeekendDays?: boolean;
+
+  /** Date to scroll to on initial render, in `YYYY-MM-DD` format */
+  startScrollDate?: string;
 
   /** Called when a cell is clicked, includes resourceId */
   onDayClick?: (
@@ -227,6 +234,7 @@ const defaultProps = {
   highlightToday: true,
   withHeader: true,
   weekdayFormat: 'ddd',
+  withWeekendDays: true,
   withEventsDragAndDrop: false,
   withDragSlotSelect: false,
   mode: 'default',
@@ -249,6 +257,8 @@ export const ResourceMonthView = factory<ResourceMonthViewFactory>((_props) => {
     locale,
     weekdayFormat,
     weekendDays,
+    withWeekendDays,
+    startScrollDate,
     __staticSelector,
     onDayClick,
     highlightToday,
@@ -316,6 +326,7 @@ export const ResourceMonthView = factory<ResourceMonthViewFactory>((_props) => {
   };
 
   const ctx = useDatesContext();
+  const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
 
   const monthStart = dayjs(date).startOf('month');
   const monthEnd = dayjs(date).endOf('month');
@@ -323,8 +334,48 @@ export const ResourceMonthView = factory<ResourceMonthViewFactory>((_props) => {
 
   const monthDays: string[] = [];
   for (let d = 1; d <= daysInMonth; d++) {
-    monthDays.push(monthStart.date(d).format('YYYY-MM-DD'));
+    const day = monthStart.date(d);
+    if (!withWeekendDays && resolvedWeekendDays.includes(day.day() as DayOfWeek)) {
+      continue;
+    }
+    monthDays.push(day.format('YYYY-MM-DD'));
   }
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
+  const dayLabelRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const resourceLabelRef = useRef<HTMLDivElement>(null);
+
+  const scrollToDay = useCallback(
+    (targetDate: string) => {
+      if (!viewportRef.current) {
+        return;
+      }
+      const targetIndex = monthDays.indexOf(targetDate);
+      if (targetIndex < 0) {
+        return;
+      }
+      const targetLabel = dayLabelRefs.current[targetIndex];
+      if (!targetLabel) {
+        return;
+      }
+      const labelRect = targetLabel.getBoundingClientRect();
+      const viewportRect = viewportRef.current.getBoundingClientRect();
+      const labelWidth = resourceLabelRef.current?.getBoundingClientRect().width ?? 0;
+      viewportRef.current.scrollTo({
+        left: labelRect.left - viewportRect.left - labelWidth,
+        top: 0,
+      });
+    },
+    [monthDays]
+  );
+
+  useIsomorphicEffect(() => {
+    if (startScrollDate) {
+      scrollToDay(startScrollDate);
+    }
+  }, []);
 
   const expandedEvents = expandRecurringEvents({
     events,
@@ -423,13 +474,20 @@ export const ResourceMonthView = factory<ResourceMonthViewFactory>((_props) => {
     },
   });
 
-  const dayLabels = monthDays.map((day) => {
+  const dayLabels = monthDays.map((day, dayIndex) => {
     const d = dayjs(day);
-    const weekend = ctx.getWeekendDays(weekendDays).includes(d.day() as DayOfWeek);
+    const weekend = resolvedWeekendDays.includes(d.day() as DayOfWeek);
     const today = d.isSame(dayjs(), 'day') && highlightToday;
 
     return (
-      <Box {...getStyles('resourceMonthViewDayLabel')} key={day} mod={{ weekend, today }}>
+      <Box
+        {...getStyles('resourceMonthViewDayLabel')}
+        key={day}
+        mod={{ weekend, today }}
+        ref={(node) => {
+          dayLabelRefs.current[dayIndex] = node;
+        }}
+      >
         <span {...getStyles('resourceMonthViewDayLabelWeekday')}>
           {formatDate({ date: d, locale: ctx.getLocale(locale), format: weekdayFormat })}
         </span>
@@ -613,7 +671,12 @@ export const ResourceMonthView = factory<ResourceMonthViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => toDateString(dayjs(date).subtract(1, 'month').startOf('month')),
             next: () => toDateString(dayjs(date).add(1, 'month').startOf('month')),
-            today: () => toDateString(dayjs()),
+            today: () => {
+              requestAnimationFrame(() => {
+                scrollToDay(dayjs().format('YYYY-MM-DD'));
+              });
+              return toDateString(dayjs());
+            },
           }}
           control={{
             monthYearSelect: {
@@ -647,10 +710,11 @@ export const ResourceMonthView = factory<ResourceMonthViewFactory>((_props) => {
             className: scrollAreaProps?.className,
             style: scrollAreaProps?.style,
           })}
+          viewportRef={mergedViewportRef}
         >
           <div {...getStyles('resourceMonthViewInner')}>
             <div {...getStyles('resourceMonthViewDayLabelsRow')}>
-              <div {...getStyles('resourceMonthViewCorner')} key="corner">
+              <div {...getStyles('resourceMonthViewCorner')} key="corner" ref={resourceLabelRef}>
                 {getLabel('resources', labels)}
               </div>
               {dayLabels}

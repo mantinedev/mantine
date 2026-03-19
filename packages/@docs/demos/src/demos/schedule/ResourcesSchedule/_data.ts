@@ -6,10 +6,10 @@ const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
 const nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');
 
 export const resources: ScheduleResourceData[] = [
-  { id: 'tokyo', label: 'Tokyo' },
-  { id: 'paris', label: 'Paris' },
-  { id: 'new-york', label: 'New York' },
-  { id: 'london', label: 'London' },
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+  { id: 'london', label: 'Meeting room: London' },
 ];
 
 export const resourceEvents: ScheduleEventData[] = [
@@ -88,10 +88,10 @@ const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
 const nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');
 
 const resources: ScheduleResourceData[] = [
-  { id: 'tokyo', label: 'Tokyo' },
-  { id: 'paris', label: 'Paris' },
-  { id: 'new-york', label: 'New York' },
-  { id: 'london', label: 'London' },
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+  { id: 'london', label: 'Meeting room: London' },
 ];
 
 const events = [

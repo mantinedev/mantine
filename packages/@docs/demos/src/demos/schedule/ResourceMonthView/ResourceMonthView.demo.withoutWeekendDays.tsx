@@ -19,8 +19,7 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={events}
-      dayWidth={60}
-      rowHeight={64}
+      withWeekendDays={false}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
@@ -36,14 +35,13 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={resourceEvents}
-      dayWidth={60}
-      rowHeight={64}
+      withWeekendDays={false}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
 
-export const dayWidth: MantineDemo = {
+export const withoutWeekendDays: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,

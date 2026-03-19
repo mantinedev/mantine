@@ -25,6 +25,7 @@ function Demo() {
         type: 'always',
         scrollbars: 'x',
       }}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -45,6 +46,7 @@ function Demo() {
         type: 'always',
         scrollbars: 'x',
       }}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

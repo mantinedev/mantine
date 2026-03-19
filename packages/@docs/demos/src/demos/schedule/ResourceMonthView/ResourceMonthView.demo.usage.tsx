@@ -19,6 +19,7 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={events}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -33,6 +34,7 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={resourceEvents}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

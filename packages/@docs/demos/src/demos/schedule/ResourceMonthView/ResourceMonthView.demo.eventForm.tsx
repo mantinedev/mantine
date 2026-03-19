@@ -103,6 +103,7 @@ function Demo() {
         onDayClick={handleDayClick}
         onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
+        startScrollDate={dayjs().format('YYYY-MM-DD')}
       />
 
       <EventForm
@@ -230,6 +231,7 @@ function Demo() {
         onDayClick={handleDayClick}
         onSlotDragEnd={handleSlotDragEnd}
         onEventClick={handleEventClick}
+        startScrollDate={dayjs().format('YYYY-MM-DD')}
       />
 
       <EventForm

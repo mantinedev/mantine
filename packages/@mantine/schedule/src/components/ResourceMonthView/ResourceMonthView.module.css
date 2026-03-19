@@ -135,6 +135,7 @@
   border-inline-end: 1px solid var(--resource-month-view-border-color);
   cursor: pointer;
   position: relative;
+  overflow: hidden;
 
   &:where(:last-of-type) {
     border-inline-end: none;

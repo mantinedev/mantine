@@ -65,6 +65,26 @@ Use `dayWidth` and `rowHeight` props to customize the dimensions of day columns 
 
 <Demo data={ResourceMonthViewDemos.dayWidth} />
 
+## Start scroll date
+
+Use `startScrollDate` prop to scroll to a specific date on initial render. This is useful
+when the month has many days and you want the view to start at a specific date, for example today.
+
+<Demo data={ResourceMonthViewDemos.startScrollDate} />
+
+## Without weekend days
+
+Set `withWeekendDays={false}` to hide weekend day columns from the month grid.
+
+<Demo data={ResourceMonthViewDemos.withoutWeekendDays} />
+
+## More events indicator
+
+When a day cell has more events than `maxEventsPerCell`, a "+X more" indicator is shown.
+Click the indicator to see all events for that day.
+
+<Demo data={ResourceMonthViewDemos.moreEvents} />
+
 ## Scroll area props
 
 Use `scrollAreaProps` to customize the scroll area behavior.

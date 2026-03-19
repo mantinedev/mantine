@@ -57,3 +57,18 @@ export const Demo_scrollAreaProps = {
   name: '⭐ Demo: scrollAreaProps',
   render: renderDemo(demos.scrollAreaProps),
 };
+
+export const Demo_startScrollDate = {
+  name: '⭐ Demo: startScrollDate',
+  render: renderDemo(demos.startScrollDate),
+};
+
+export const Demo_withoutWeekendDays = {
+  name: '⭐ Demo: withoutWeekendDays',
+  render: renderDemo(demos.withoutWeekendDays),
+};
+
+export const Demo_moreEvents = {
+  name: '⭐ Demo: moreEvents',
+  render: renderDemo(demos.moreEvents),
+};

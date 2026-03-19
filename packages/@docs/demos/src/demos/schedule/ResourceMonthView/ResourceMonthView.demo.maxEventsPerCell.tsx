@@ -6,8 +6,8 @@ import { MantineDemo } from '@mantinex/demo';
 const today = dayjs().format('YYYY-MM-DD');
 
 const resources: ScheduleResourceData[] = [
-  { id: 'tokyo', label: 'Tokyo' },
-  { id: 'paris', label: 'Paris' },
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
 ];
 
 const manyEvents: ScheduleEventData[] = [
@@ -93,8 +93,8 @@ import { ResourceMonthView, ScheduleEventData, ScheduleResourceData } from '@man
 const today = dayjs().format('YYYY-MM-DD');
 
 const resources: ScheduleResourceData[] = [
-  { id: 'tokyo', label: 'Tokyo' },
-  { id: 'paris', label: 'Paris' },
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
 ];
 
 const events: ScheduleEventData[] = [
@@ -119,6 +119,7 @@ function Demo() {
       resources={resources}
       events={events}
       maxEventsPerCell={3}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -134,6 +135,7 @@ function Demo() {
       resources={resources}
       events={manyEvents}
       maxEventsPerCell={3}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

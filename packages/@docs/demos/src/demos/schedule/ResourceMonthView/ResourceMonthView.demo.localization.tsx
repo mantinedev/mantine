@@ -33,8 +33,10 @@ function Demo() {
         previous: 'Anterior',
         next: 'Siguiente',
         more: 'Más',
+        resources: 'Recursos',
         moreLabel: (hiddenEventsCount) => \`+\${hiddenEventsCount} más\`,
       }}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
@@ -59,8 +61,10 @@ function Demo() {
         previous: 'Anterior',
         next: 'Siguiente',
         more: 'Más',
+        resources: 'Recursos',
         moreLabel: (hiddenEventsCount) => `+${hiddenEventsCount} más`,
       }}
+      startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }

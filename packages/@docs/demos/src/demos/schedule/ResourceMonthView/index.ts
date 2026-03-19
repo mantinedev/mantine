@@ -9,3 +9,6 @@ export { localization } from './ResourceMonthView.demo.localization';
 export { maxEventsPerCell } from './ResourceMonthView.demo.maxEventsPerCell';
 export { dayWidth } from './ResourceMonthView.demo.dayWidth';
 export { scrollAreaProps } from './ResourceMonthView.demo.scrollAreaProps';
+export { startScrollDate } from './ResourceMonthView.demo.startScrollDate';
+export { withoutWeekendDays } from './ResourceMonthView.demo.withoutWeekendDays';
+export { moreEvents } from './ResourceMonthView.demo.moreEvents';

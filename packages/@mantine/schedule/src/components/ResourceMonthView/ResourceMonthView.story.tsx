@@ -12,9 +12,9 @@ const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
 const nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');
 
 const resources: ScheduleResourceData[] = [
-  { id: 'tokyo', label: 'Tokyo' },
-  { id: 'paris', label: 'Paris' },
-  { id: 'new-york', label: 'New York' },
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
 ];
 
 const events: ScheduleEventData[] = [

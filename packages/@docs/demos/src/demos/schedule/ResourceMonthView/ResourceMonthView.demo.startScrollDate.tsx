@@ -19,8 +19,6 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={events}
-      dayWidth={60}
-      rowHeight={64}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
@@ -36,14 +34,12 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={resourceEvents}
-      dayWidth={60}
-      rowHeight={64}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
 
-export const dayWidth: MantineDemo = {
+export const startScrollDate: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
