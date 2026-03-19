@@ -19,19 +19,8 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={events}
-      dayViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-        intervalMinutes: 30,
-      }}
-      weekViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-      }}
-      monthViewProps={{
-        maxEventsPerCell: 3,
-        startScrollDate: dayjs().format('YYYY-MM-DD'),
-      }}
+      defaultView="week"
+      weekViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
     />
   );
 }
@@ -46,24 +35,13 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={resourceEvents}
-      dayViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-        intervalMinutes: 30,
-      }}
-      weekViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-      }}
-      monthViewProps={{
-        maxEventsPerCell: 3,
-        startScrollDate: dayjs().format('YYYY-MM-DD'),
-      }}
+      defaultView="week"
+      weekViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
     />
   );
 }
 
-export const viewProps: MantineDemo = {
+export const weekView: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,

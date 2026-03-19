@@ -82,3 +82,13 @@ export const Demo_scrollAreaProps = {
   name: '⭐ Demo: scrollAreaProps',
   render: renderDemo(demos.scrollAreaProps),
 };
+
+export const Demo_currentTimeIndicator = {
+  name: '⭐ Demo: currentTimeIndicator',
+  render: renderDemo(demos.currentTimeIndicator),
+};
+
+export const Demo_permissions = {
+  name: '⭐ Demo: permissions',
+  render: renderDemo(demos.permissions),
+};

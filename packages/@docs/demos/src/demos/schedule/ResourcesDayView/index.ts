@@ -14,3 +14,5 @@ export { slotWidth } from './ResourcesDayView.demo.slotWidth';
 export { radius } from './ResourcesDayView.demo.radius';
 export { startScrollTime } from './ResourcesDayView.demo.startScrollTime';
 export { scrollAreaProps } from './ResourcesDayView.demo.scrollAreaProps';
+export { currentTimeIndicator } from './ResourcesDayView.demo.currentTimeIndicator';
+export { permissions } from './ResourcesDayView.demo.permissions';

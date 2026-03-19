@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.ResourcesSchedule);
 
 ## Usage
 
-`ResourcesSchedule` is a wrapper component that combines `ResourcesDayView` and `ResourcesMonthView`
+`ResourcesSchedule` is a wrapper component that combines `ResourcesDayView`, `ResourcesWeekView`, and `ResourcesMonthView`
 into a single component with view switching. It manages the current view and date state, passing
-common props to both views automatically.
+common props to all three views automatically.
 
 <Demo data={ResourcesScheduleDemos.usage} />
 
@@ -24,18 +24,31 @@ Enable drag and drop across all views with `withEventsDragAndDrop` prop.
 
 <Demo data={ResourcesScheduleDemos.dragDrop} />
 
+## Week view
+
+Set `defaultView="week"` to open the schedule in week view by default.
+
+<Demo data={ResourcesScheduleDemos.weekView} />
+
 ## View-specific props
 
-Use `dayViewProps` and `monthViewProps` to pass props specific to each view.
+Use `dayViewProps`, `weekViewProps`, and `monthViewProps` to pass props specific to each view.
 
 <Demo data={ResourcesScheduleDemos.viewProps} />
 
 ## Event form
 
 Click time slots, day cells, or existing events to open an event form. The form works across
-both day and month views with automatic view switching.
+day, week, and month views with automatic view switching.
 
 <Demo data={ResourcesScheduleDemos.eventForm} />
+
+## External drag and drop
+
+You can drag external items onto the schedule using `onExternalEventDrop` prop. The callback
+receives the `resourceId` of the target resource.
+
+<Demo data={ResourcesScheduleDemos.externalDragDrop} />
 
 ## Event resize
 
@@ -46,6 +59,6 @@ where events can be resized by dragging their left or right edges.
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions across both views.
+Set `mode="static"` to disable all interactions across all three views.
 
 <Demo data={ResourcesScheduleDemos.staticMode} />

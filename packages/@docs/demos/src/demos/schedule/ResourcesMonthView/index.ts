@@ -12,3 +12,5 @@ export { scrollAreaProps } from './ResourcesMonthView.demo.scrollAreaProps';
 export { startScrollDate } from './ResourcesMonthView.demo.startScrollDate';
 export { withoutWeekendDays } from './ResourcesMonthView.demo.withoutWeekendDays';
 export { moreEvents } from './ResourcesMonthView.demo.moreEvents';
+export { moreEventsProps } from './ResourcesMonthView.demo.moreEventsProps';
+export { customHeader } from './ResourcesMonthView.demo.customHeader';

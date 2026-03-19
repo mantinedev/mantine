@@ -37,3 +37,13 @@ export const Demo_staticMode = {
   name: '⭐ Demo: staticMode',
   render: renderDemo(demos.staticMode),
 };
+
+export const Demo_weekView = {
+  name: '⭐ Demo: weekView',
+  render: renderDemo(demos.weekView),
+};
+
+export const Demo_externalDragDrop = {
+  name: '⭐ Demo: externalDragDrop',
+  render: renderDemo(demos.externalDragDrop),
+};

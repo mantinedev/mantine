@@ -1,37 +1,28 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { ResourcesSchedule } from '@mantine/schedule';
+import { ResourcesWeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, resourceEvents, resources } from './_data';
 
 const code = `
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { ResourcesSchedule } from '@mantine/schedule';
+import { ResourcesWeekView } from '@mantine/schedule';
 import { events, resources } from './data';
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
 
   return (
-    <ResourcesSchedule
+    <ResourcesWeekView
       date={date}
       onDateChange={setDate}
       resources={resources}
       events={events}
-      dayViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-        intervalMinutes: 30,
-      }}
-      weekViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-      }}
-      monthViewProps={{
-        maxEventsPerCell: 3,
-        startScrollDate: dayjs().format('YYYY-MM-DD'),
-      }}
+      startTime="00:00:00"
+      endTime="23:59:59"
+      withCurrentTimeIndicator
+      withCurrentTimeBubble={false}
     />
   );
 }
@@ -41,29 +32,20 @@ function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
 
   return (
-    <ResourcesSchedule
+    <ResourcesWeekView
       date={date}
       onDateChange={setDate}
       resources={resources}
       events={resourceEvents}
-      dayViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-        intervalMinutes: 30,
-      }}
-      weekViewProps={{
-        startTime: '08:00:00',
-        endTime: '18:00:00',
-      }}
-      monthViewProps={{
-        maxEventsPerCell: 3,
-        startScrollDate: dayjs().format('YYYY-MM-DD'),
-      }}
+      startTime="00:00:00"
+      endTime="23:59:59"
+      withCurrentTimeIndicator
+      withCurrentTimeBubble={false}
     />
   );
 }
 
-export const viewProps: MantineDemo = {
+export const currentTimeIndicator: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,

@@ -29,6 +29,34 @@ a time range by dragging across slots.
 
 <Demo data={ResourcesWeekViewDemos.eventForm} />
 
+## Time range and intervals
+
+Use `startTime`, `endTime` and `intervalMinutes` props to control the visible time range
+and slot granularity.
+
+<Demo data={ResourcesWeekViewDemos.timeRange} />
+
+## Current time indicator
+
+Use `withCurrentTimeIndicator` to display a line at the current time. Set `withCurrentTimeBubble={false}`
+to hide the time bubble label.
+
+<Demo data={ResourcesWeekViewDemos.currentTimeIndicator} />
+
+## First day of week
+
+Use `firstDayOfWeek` to set the first day of the week. Set `weekdayFormat` to customize
+the day label format.
+
+<Demo data={ResourcesWeekViewDemos.firstDayOfWeek} />
+
+## Custom week label
+
+Use `renderWeekLabel` to fully customize the week label in the header. When provided,
+it takes full control of the label. Use `weekLabelFormat` instead if you only need to change the date format.
+
+<Demo data={ResourcesWeekViewDemos.renderWeekLabel} />
+
 ## Business hours
 
 Use `highlightBusinessHours` prop to visually distinguish business hours from non-business hours
@@ -79,6 +107,10 @@ Use `startScrollDateTime` prop to scroll to a specific time on mount.
 Use `scrollAreaProps` to pass props to the underlying ScrollArea component.
 
 <Demo data={ResourcesWeekViewDemos.scrollAreaProps} />
+
+## Event resize
+
+Note that event resize is not supported in the week view.
 
 ## Static mode
 

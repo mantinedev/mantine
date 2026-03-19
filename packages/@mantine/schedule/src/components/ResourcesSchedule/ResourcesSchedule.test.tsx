@@ -62,11 +62,11 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
     expect(screen.getByText('Test Event')).toBeInTheDocument();
   });
 
-  it('shows only Day and Month in view selector', () => {
+  it('shows only Day, Week, and Month in view selector', () => {
     render(<ResourcesSchedule {...defaultProps} />);
     expect(screen.getByRole('tab', { name: 'Switch to day view' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Switch to week view' })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'Switch to month view' })).toBeInTheDocument();
-    expect(screen.queryByRole('tab', { name: 'Switch to week view' })).not.toBeInTheDocument();
     expect(screen.queryByRole('tab', { name: 'Switch to year view' })).not.toBeInTheDocument();
   });
 });

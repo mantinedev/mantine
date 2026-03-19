@@ -72,3 +72,13 @@ export const Demo_moreEvents = {
   name: '⭐ Demo: moreEvents',
   render: renderDemo(demos.moreEvents),
 };
+
+export const Demo_moreEventsProps = {
+  name: '⭐ Demo: moreEventsProps',
+  render: renderDemo(demos.moreEventsProps),
+};
+
+export const Demo_customHeader = {
+  name: '⭐ Demo: customHeader',
+  render: renderDemo(demos.customHeader),
+};

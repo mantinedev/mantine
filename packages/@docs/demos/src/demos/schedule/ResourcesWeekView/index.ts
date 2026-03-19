@@ -10,3 +10,7 @@ export { localization } from './ResourcesWeekView.demo.localization';
 export { radius } from './ResourcesWeekView.demo.radius';
 export { startScrollDateTime } from './ResourcesWeekView.demo.startScrollDateTime';
 export { scrollAreaProps } from './ResourcesWeekView.demo.scrollAreaProps';
+export { timeRange } from './ResourcesWeekView.demo.timeRange';
+export { currentTimeIndicator } from './ResourcesWeekView.demo.currentTimeIndicator';
+export { firstDayOfWeek } from './ResourcesWeekView.demo.firstDayOfWeek';
+export { renderWeekLabel } from './ResourcesWeekView.demo.renderWeekLabel';

@@ -86,6 +86,20 @@ across all time slot columns.
 
 <Demo data={ResourcesDayViewDemos.businessHours} />
 
+## Current time indicator
+
+Use `withCurrentTimeIndicator` to display a line at the current time. Set `withCurrentTimeBubble={false}`
+to hide the time bubble label.
+
+<Demo data={ResourcesDayViewDemos.currentTimeIndicator} />
+
+## Event permissions
+
+Use `canDragEvent` and `canResizeEvent` to control which events can be dragged or resized.
+Events with `payload.locked` set to `true` cannot be moved or resized.
+
+<Demo data={ResourcesDayViewDemos.permissions} />
+
 ## Radius
 
 <Demo data={ResourcesDayViewDemos.radius} />

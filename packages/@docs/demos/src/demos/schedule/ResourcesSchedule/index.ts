@@ -5,3 +5,5 @@ export { viewProps } from './ResourcesSchedule.demo.viewProps';
 export { eventForm } from './ResourcesSchedule.demo.eventForm';
 export { eventResize } from './ResourcesSchedule.demo.eventResize';
 export { staticMode } from './ResourcesSchedule.demo.staticMode';
+export { weekView } from './ResourcesSchedule.demo.weekView';
+export { externalDragDrop } from './ResourcesSchedule.demo.externalDragDrop';

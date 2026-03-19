@@ -62,3 +62,23 @@ export const Demo_scrollAreaProps = {
   name: '⭐ Demo: scrollAreaProps',
   render: renderDemo(demos.scrollAreaProps),
 };
+
+export const Demo_timeRange = {
+  name: '⭐ Demo: timeRange',
+  render: renderDemo(demos.timeRange),
+};
+
+export const Demo_currentTimeIndicator = {
+  name: '⭐ Demo: currentTimeIndicator',
+  render: renderDemo(demos.currentTimeIndicator),
+};
+
+export const Demo_firstDayOfWeek = {
+  name: '⭐ Demo: firstDayOfWeek',
+  render: renderDemo(demos.firstDayOfWeek),
+};
+
+export const Demo_renderWeekLabel = {
+  name: '⭐ Demo: renderWeekLabel',
+  render: renderDemo(demos.renderWeekLabel),
+};
