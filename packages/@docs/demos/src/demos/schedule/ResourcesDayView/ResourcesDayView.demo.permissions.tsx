@@ -83,13 +83,18 @@ const initialEvents: ScheduleEventData[] = [
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (
-    eventId: string | number,
-    newStart: string,
-    newEnd: string,
-    _event: ScheduleEventData,
-    resourceId?: string | number
-  ) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+    resourceId,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+    event: ScheduleEventData;
+    resourceId?: string | number;
+  }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd, resourceId } : event
@@ -97,7 +102,7 @@ function Demo() {
     );
   };
 
-  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventResize = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string; event: ScheduleEventData }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -126,13 +131,18 @@ function Demo() {
 function Demo() {
   const [events, setEvents] = useState(initialEvents);
 
-  const handleEventDrop = (
-    eventId: string | number,
-    newStart: string,
-    newEnd: string,
-    _event: ScheduleEventData,
-    resourceId?: string | number
-  ) => {
+  const handleEventDrop = ({
+    eventId,
+    newStart,
+    newEnd,
+    resourceId,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+    event: ScheduleEventData;
+    resourceId?: string | number;
+  }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd, resourceId } : event
@@ -140,7 +150,16 @@ function Demo() {
     );
   };
 
-  const handleEventResize = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventResize = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+    event: ScheduleEventData;
+  }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event

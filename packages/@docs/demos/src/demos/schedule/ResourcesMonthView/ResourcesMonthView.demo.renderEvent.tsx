@@ -17,7 +17,7 @@ function Demo() {
       resources={resources}
       events={events}
       withEventsDragAndDrop
-      onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
+      onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {
         setEvents((current) =>
           current.map((event) =>
             event.id === eventId ? { ...event, start: newStart, end: newEnd, resourceId } : event
@@ -58,7 +58,7 @@ function Demo() {
       resources={resources}
       events={events}
       withEventsDragAndDrop
-      onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
+      onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {
         setEvents((current) =>
           current.map((event) =>
             event.id === eventId

@@ -23,7 +23,7 @@ function Demo() {
       startTime="08:00:00"
       endTime="18:00:00"
       withEventResize
-      onEventResize={(eventId, newStart, newEnd) => {
+      onEventResize={({ eventId, newStart, newEnd }) => {
         setEvents((current) =>
           current.map((event) =>
             event.id === eventId
@@ -50,7 +50,7 @@ function Demo() {
       startTime="08:00:00"
       endTime="18:00:00"
       withEventResize
-      onEventResize={(eventId, newStart, newEnd) => {
+      onEventResize={({ eventId, newStart, newEnd }) => {
         setEvents((current) =>
           current.map((event) =>
             event.id === eventId ? { ...event, start: newStart, end: newEnd } : event

@@ -131,35 +131,35 @@ export interface ResourcesWeekViewProps
   renderEvent?: RenderEvent;
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
   withEventsDragAndDrop?: boolean;
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData,
-    resourceId?: string | number
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+    resourceId?: string | number;
+  }) => void;
   canDragEvent?: (event: ScheduleEventData) => boolean;
   onEventDragStart?: (event: ScheduleEventData) => void;
   onEventDragEnd?: () => void;
-  onTimeSlotClick?: (
-    slotStart: DateTimeStringValue,
-    slotEnd: DateTimeStringValue,
-    event: React.MouseEvent<HTMLButtonElement>,
-    resourceId?: string | number
-  ) => void;
+  onTimeSlotClick?: (data: {
+    slotStart: DateTimeStringValue;
+    slotEnd: DateTimeStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+    resourceId?: string | number;
+  }) => void;
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
   withDragSlotSelect?: boolean;
-  onSlotDragEnd?: (
-    rangeStart: DateTimeStringValue,
-    rangeEnd: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onSlotDragEnd?: (data: {
+    rangeStart: DateTimeStringValue;
+    rangeEnd: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
   mode?: ScheduleMode;
-  onExternalEventDrop?: (
-    dataTransfer: DataTransfer,
-    dropDateTime: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onExternalEventDrop?: (data: {
+    dataTransfer: DataTransfer;
+    dropDateTime: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
   recurrenceExpansionLimit?: number;
   firstDayOfWeek?: DayOfWeek;
   weekendDays?: DayOfWeek[];
@@ -315,11 +315,9 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const [timeIndicatorOffset, setTimeIndicatorOffset] = useState(
     getCurrentTimePosition({ startTime, endTime })
   );
-  useInterval(
-    () => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime })),
-    60000,
-    { autoInvoke: true }
-  );
+  useInterval(() => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime })), 60000, {
+    autoInvoke: true,
+  });
 
   const todayDayIndex = weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'day'));
   const showTimeIndicator =
@@ -341,11 +339,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       const slotInDay = target.slotIndex % totalSlotsPerDay;
       const slotDay = weekdays[dayIndex];
       if (slotDay) {
-        onExternalEventDrop(
-          e.dataTransfer,
-          `${dayjs(slotDay).format('YYYY-MM-DD')} ${slots[slotInDay].startTime}`,
-          target.resourceId
-        );
+        onExternalEventDrop({
+          dataTransfer: e.dataTransfer,
+          dropDateTime: `${dayjs(slotDay).format('YYYY-MM-DD')} ${slots[slotInDay].startTime}`,
+          resourceId: target.resourceId,
+        });
       }
     },
     [onExternalEventDrop, slots, weekdays, totalSlotsPerDay]
@@ -354,13 +352,13 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const lastDropResourceId = useRef<string | number | undefined>(undefined);
 
   const handleInternalEventDrop = useCallback(
-    (
-      eventId: string | number,
-      newStart: DateTimeStringValue,
-      newEnd: DateTimeStringValue,
-      event: ScheduleEventData
-    ) => {
-      onEventDrop?.(eventId, newStart, newEnd, event, lastDropResourceId.current);
+    (data: {
+      eventId: string | number;
+      newStart: DateTimeStringValue;
+      newEnd: DateTimeStringValue;
+      event: ScheduleEventData;
+    }) => {
+      onEventDrop?.({ ...data, resourceId: lastDropResourceId.current });
     },
     [onEventDrop]
   );
@@ -409,11 +407,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       const startDay = weekdays[startDayIndex];
       const endDay = weekdays[endDayIndex];
       if (startDay && endDay) {
-        onSlotDragEnd(
-          `${dayjs(startDay).format('YYYY-MM-DD')} ${slots[startSlotInDay].startTime}`,
-          `${dayjs(endDay).format('YYYY-MM-DD')} ${slots[endSlotInDay].endTime}`,
-          groupToResourceId.get(group) ?? group
-        );
+        onSlotDragEnd({
+          rangeStart: `${dayjs(startDay).format('YYYY-MM-DD')} ${slots[startSlotInDay].startTime}`,
+          rangeEnd: `${dayjs(endDay).format('YYYY-MM-DD')} ${slots[endSlotInDay].endTime}`,
+          resourceId: groupToResourceId.get(group) ?? group,
+        });
       }
     },
   });
@@ -435,7 +433,12 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     }
     const slot = slots[slotIndex];
     const dayStr = dayjs(day).format('YYYY-MM-DD');
-    onTimeSlotClick(`${dayStr} ${slot.startTime}`, `${dayStr} ${slot.endTime}`, e, resourceId);
+    onTimeSlotClick({
+      slotStart: `${dayStr} ${slot.startTime}`,
+      slotEnd: `${dayStr} ${slot.endTime}`,
+      nativeEvent: e,
+      resourceId,
+    });
   };
 
   const weekViewEvents = getResourcesWeekViewEvents({
@@ -529,43 +532,40 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     viewportRef.current.scrollTo({ left: slotRect.left - viewportRect.left, top: 0 });
   }, []);
 
-  const getSlotIndexFromDragPoint = useCallback(
-    (event: React.DragEvent, resourceIndex: number) => {
-      const resourceSlots = slotsRef.current[resourceIndex] ?? [];
-      const slotIndex = resourceSlots.findIndex((slotNode) => {
-        if (!slotNode) {
-          return false;
-        }
-        const rect = slotNode.getBoundingClientRect();
-        return event.clientX >= rect.left && event.clientX <= rect.right;
-      });
-
-      if (slotIndex >= 0) {
-        return slotIndex;
+  const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
+    const resourceSlots = slotsRef.current[resourceIndex] ?? [];
+    const slotIndex = resourceSlots.findIndex((slotNode) => {
+      if (!slotNode) {
+        return false;
       }
+      const rect = slotNode.getBoundingClientRect();
+      return event.clientX >= rect.left && event.clientX <= rect.right;
+    });
 
-      const firstSlot = resourceSlots[0];
-      const lastSlot = resourceSlots[resourceSlots.length - 1];
+    if (slotIndex >= 0) {
+      return slotIndex;
+    }
 
-      if (!firstSlot || !lastSlot) {
-        return null;
-      }
+    const firstSlot = resourceSlots[0];
+    const lastSlot = resourceSlots[resourceSlots.length - 1];
 
-      const firstRect = firstSlot.getBoundingClientRect();
-      const lastRect = lastSlot.getBoundingClientRect();
-
-      if (event.clientX < firstRect.left) {
-        return 0;
-      }
-
-      if (event.clientX > lastRect.right) {
-        return resourceSlots.length - 1;
-      }
-
+    if (!firstSlot || !lastSlot) {
       return null;
-    },
-    []
-  );
+    }
+
+    const firstRect = firstSlot.getBoundingClientRect();
+    const lastRect = lastSlot.getBoundingClientRect();
+
+    if (event.clientX < firstRect.left) {
+      return 0;
+    }
+
+    if (event.clientX > lastRect.right) {
+      return resourceSlots.length - 1;
+    }
+
+    return null;
+  }, []);
 
   const handleSlotKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -641,7 +641,6 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
         const eventLeft = dayOffsetPercent + (event.position.top / 100) * dayWidthPercent;
         const eventWidth = (event.position.height / 100) * dayWidthPercent;
-
 
         eventNodes.push(
           <div
@@ -727,9 +726,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     renderWeekLabel,
   });
 
-  const indicatorLeftPercent = todayDayIndex >= 0
-    ? ((todayDayIndex + timeIndicatorOffset / 100) / weekdays.length) * 100
-    : 0;
+  const indicatorLeftPercent =
+    todayDayIndex >= 0 ? ((todayDayIndex + timeIndicatorOffset / 100) / weekdays.length) * 100 : 0;
 
   const content = (
     <Box
@@ -744,8 +742,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         <ScheduleHeaderBase
           view="week"
           navigationHandlers={{
-            previous: () =>
-              previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
+            previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
             next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
             today: () => toDateString(dayjs()),
           }}
@@ -781,13 +778,9 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         >
           <div {...getStyles('resourcesWeekViewInner')}>
             <div {...getStyles('resourcesWeekViewHeaderRows')}>
-              <div {...getStyles('resourcesWeekViewCorner')}>
-                {getLabel('resources', labels)}
-              </div>
+              <div {...getStyles('resourcesWeekViewCorner')}>{getLabel('resources', labels)}</div>
               <div {...getStyles('resourcesWeekViewHeaderContent')}>
-                <div {...getStyles('resourcesWeekViewDayLabelsRow')}>
-                  {dayLabels}
-                </div>
+                <div {...getStyles('resourcesWeekViewDayLabelsRow')}>{dayLabels}</div>
                 <Box {...getStyles('resourcesWeekViewTimeLabelsRow')} mod={{ scrolled }}>
                   {timeLabels}
                 </Box>
@@ -801,7 +794,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                 {...getStyles('resourcesWeekViewCurrentTimeIndicator')}
                 __vars={{
                   '--indicator-left-offset': `calc(var(--resources-week-view-resource-label-width) + (100% - var(--resources-week-view-resource-label-width)) * ${indicatorLeftPercent} / 100)`,
-                  '--_time-bubble-width': formattedCurrentTime?.toString().toLowerCase().includes('m')
+                  '--_time-bubble-width': formattedCurrentTime
+                    ?.toString()
+                    .toLowerCase()
+                    .includes('m')
                     ? '64px'
                     : '46px',
                 }}

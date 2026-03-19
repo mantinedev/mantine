@@ -181,13 +181,13 @@ export interface ResourcesDayViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped at new time, includes target resourceId */
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData,
-    resourceId?: string | number
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+    resourceId?: string | number;
+  }) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -199,12 +199,12 @@ export interface ResourcesDayViewProps
   onEventDragEnd?: () => void;
 
   /** Called when time slot is clicked, includes resourceId */
-  onTimeSlotClick?: (
-    slotStart: DateTimeStringValue,
-    slotEnd: DateTimeStringValue,
-    event: React.MouseEvent<HTMLButtonElement>,
-    resourceId?: string | number
-  ) => void;
+  onTimeSlotClick?: (data: {
+    slotStart: DateTimeStringValue;
+    slotEnd: DateTimeStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+    resourceId?: string | number;
+  }) => void;
 
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -213,32 +213,32 @@ export interface ResourcesDayViewProps
   withDragSlotSelect?: boolean;
 
   /** Called when a time slot range is selected by dragging, includes resourceId */
-  onSlotDragEnd?: (
-    rangeStart: DateTimeStringValue,
-    rangeEnd: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onSlotDragEnd?: (data: {
+    rangeStart: DateTimeStringValue;
+    rangeEnd: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
 
   /** Interaction mode @default default */
   mode?: ScheduleMode;
 
   /** Called when an external item is dropped onto the schedule */
-  onExternalEventDrop?: (
-    dataTransfer: DataTransfer,
-    dropDateTime: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onExternalEventDrop?: (data: {
+    dataTransfer: DataTransfer;
+    dropDateTime: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
 
   /** If true, events can be resized by dragging their left/right edges @default false */
   withEventResize?: boolean;
 
   /** Called when event is resized */
-  onEventResize?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
@@ -381,11 +381,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         return;
       }
       const slotDate = dayjs(date).format('YYYY-MM-DD');
-      onExternalEventDrop(
-        e.dataTransfer,
-        `${slotDate} ${slots[target.slotIndex].startTime}`,
-        target.resourceId
-      );
+      onExternalEventDrop({
+        dataTransfer: e.dataTransfer,
+        dropDateTime: `${slotDate} ${slots[target.slotIndex].startTime}`,
+        resourceId: target.resourceId,
+      });
     },
     [onExternalEventDrop, slots, date]
   );
@@ -393,13 +393,13 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const lastDropResourceId = useRef<string | number | undefined>(undefined);
 
   const handleInternalEventDrop = useCallback(
-    (
-      eventId: string | number,
-      newStart: DateTimeStringValue,
-      newEnd: DateTimeStringValue,
-      event: ScheduleEventData
-    ) => {
-      onEventDrop?.(eventId, newStart, newEnd, event, lastDropResourceId.current);
+    (data: {
+      eventId: string | number;
+      newStart: DateTimeStringValue;
+      newEnd: DateTimeStringValue;
+      event: ScheduleEventData;
+    }) => {
+      onEventDrop?.({ ...data, resourceId: lastDropResourceId.current });
     },
     [onEventDrop]
   );
@@ -439,11 +439,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         return;
       }
       const slotDate = dayjs(date).format('YYYY-MM-DD');
-      onSlotDragEnd(
-        `${slotDate} ${slots[startIndex].startTime}`,
-        `${slotDate} ${slots[endIndex].endTime}`,
-        groupToResourceId.get(group) ?? group
-      );
+      onSlotDragEnd({
+        rangeStart: `${slotDate} ${slots[startIndex].startTime}`,
+        rangeEnd: `${slotDate} ${slots[endIndex].endTime}`,
+        resourceId: groupToResourceId.get(group) ?? group,
+      });
     },
   });
 
@@ -475,7 +475,12 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     }
 
     const slot = slots[slotIndex];
-    onTimeSlotClick(`${slotDate} ${slot.startTime}`, `${slotDate} ${slot.endTime}`, e, resourceId);
+    onTimeSlotClick({
+      slotStart: `${slotDate} ${slot.startTime}`,
+      slotEnd: `${slotDate} ${slot.endTime}`,
+      nativeEvent: e,
+      resourceId,
+    });
   };
 
   const dateStr = dayjs(date).format('YYYY-MM-DD');
@@ -807,7 +812,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const content = (
     <Box
       {...getStyles('resourcesDayView')}
-      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging, resizing: eventResize.isResizing }}
+      mod={{
+        static: mode === 'static',
+        'slot-dragging': slotDragSelect.isDragging,
+        resizing: eventResize.isResizing,
+      }}
       {...others}
     >
       {withHeader && (
@@ -863,7 +872,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                 {...getStyles('resourcesDayViewCurrentTimeIndicator')}
                 __vars={{
                   '--indicator-left-offset': `calc(var(--resources-day-view-resource-label-width) + (100% - var(--resources-day-view-resource-label-width)) * ${timeIndicatorOffset} / 100)`,
-                  '--_time-bubble-width': formattedCurrentTime?.toString().toLowerCase().includes('m')
+                  '--_time-bubble-width': formattedCurrentTime
+                    ?.toString()
+                    .toLowerCase()
+                    .includes('m')
                     ? '64px'
                     : '46px',
                 }}

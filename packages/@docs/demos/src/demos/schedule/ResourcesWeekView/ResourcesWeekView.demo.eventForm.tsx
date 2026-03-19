@@ -15,12 +15,16 @@ function Demo() {
     String(resources[0].id)
   );
 
-  const handleTimeSlotClick = (
-    slotStart: string,
-    slotEnd: string,
-    _e: React.MouseEvent,
-    _resourceId?: string | number
-  ) => {
+  const handleTimeSlotClick = ({
+    slotStart,
+    slotEnd,
+    resourceId: _resourceId,
+  }: {
+    slotStart: string;
+    slotEnd: string;
+    nativeEvent: React.MouseEvent;
+    resourceId?: string | number;
+  }) => {
     setSelectedResourceId(_resourceId ? String(_resourceId) : String(resources[0].id));
     setSelectedEventData({
       title: '',
@@ -80,11 +84,15 @@ function Demo() {
     }
   };
 
-  const handleSlotDragEnd = (
-    rangeStart: string,
-    rangeEnd: string,
-    _resourceId?: string | number
-  ) => {
+  const handleSlotDragEnd = ({
+    rangeStart,
+    rangeEnd,
+    resourceId: _resourceId,
+  }: {
+    rangeStart: string;
+    rangeEnd: string;
+    resourceId?: string | number;
+  }) => {
     setSelectedResourceId(_resourceId ? String(_resourceId) : String(resources[0].id));
     setSelectedEventData({
       title: '',

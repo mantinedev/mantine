@@ -13,11 +13,14 @@ function Demo() {
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
   const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null);
 
-  const handleDayClick = (
-    clickedDate: string,
-    _event: React.MouseEvent<HTMLButtonElement>,
-    resourceId?: string | number
-  ) => {
+  const handleDayClick = ({
+    date: clickedDate,
+    resourceId,
+  }: {
+    date: string;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+    resourceId?: string | number;
+  }) => {
     setSelectedResourceId(resourceId ? String(resourceId) : null);
     setSelectedEventData({
       title: '',
@@ -40,11 +43,15 @@ function Demo() {
     setFormOpened(true);
   };
 
-  const handleSlotDragEnd = (
-    rangeStart: string,
-    rangeEnd: string,
-    resourceId?: string | number
-  ) => {
+  const handleSlotDragEnd = ({
+    rangeStart,
+    rangeEnd,
+    resourceId,
+  }: {
+    rangeStart: string;
+    rangeEnd: string;
+    resourceId?: string | number;
+  }) => {
     setSelectedResourceId(resourceId ? String(resourceId) : null);
     setSelectedEventData({
       title: '',
@@ -141,11 +148,14 @@ function Demo() {
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
   const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null);
 
-  const handleDayClick = (
-    clickedDate: string,
-    _event: React.MouseEvent<HTMLButtonElement>,
-    resourceId?: string | number
-  ) => {
+  const handleDayClick = ({
+    date: clickedDate,
+    resourceId,
+  }: {
+    date: string;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+    resourceId?: string | number;
+  }) => {
     setSelectedResourceId(resourceId ? String(resourceId) : null);
     setSelectedEventData({
       title: '',
@@ -168,11 +178,15 @@ function Demo() {
     setFormOpened(true);
   };
 
-  const handleSlotDragEnd = (
-    rangeStart: string,
-    rangeEnd: string,
-    resourceId?: string | number
-  ) => {
+  const handleSlotDragEnd = ({
+    rangeStart,
+    rangeEnd,
+    resourceId,
+  }: {
+    rangeStart: string;
+    rangeEnd: string;
+    resourceId?: string | number;
+  }) => {
     setSelectedResourceId(resourceId ? String(resourceId) : null);
     setSelectedEventData({
       title: '',

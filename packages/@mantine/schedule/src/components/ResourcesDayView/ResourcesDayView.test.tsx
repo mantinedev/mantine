@@ -93,10 +93,12 @@ describe('@mantine/schedule/ResourcesDayView', () => {
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(
-      expect.any(String),
-      expect.any(String),
-      expect.any(Object),
-      'room-a'
+      expect.objectContaining({
+        slotStart: expect.any(String),
+        slotEnd: expect.any(String),
+        nativeEvent: expect.any(Object),
+        resourceId: 'room-a',
+      })
     );
   });
 

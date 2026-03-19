@@ -25,12 +25,12 @@ export interface UseHorizontalEventResizeInput {
   startTime: string;
   endTime: string;
   intervalMinutes: number;
-  onEventResize?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 }
 
@@ -177,7 +177,12 @@ export function useHorizontalEventResize({
             newEnd = percentToDateTime(state.currentLeft + state.currentWidth, state.eventDate);
           }
 
-          onEventResizeRef.current(state.eventId, newStart, newEnd, state.event);
+          onEventResizeRef.current({
+            eventId: state.eventId,
+            newStart,
+            newEnd,
+            event: state.event,
+          });
         }
       }
       resizeRef.current = null;

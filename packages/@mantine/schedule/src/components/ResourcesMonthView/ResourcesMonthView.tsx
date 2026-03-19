@@ -101,11 +101,11 @@ export interface ResourcesMonthViewProps
   startScrollDate?: string;
 
   /** Called when a cell is clicked, includes resourceId */
-  onDayClick?: (
-    date: DateStringValue,
-    event: React.MouseEvent<HTMLButtonElement>,
-    resourceId?: string | number
-  ) => void;
+  onDayClick?: (data: {
+    date: DateStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+    resourceId?: string | number;
+  }) => void;
 
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
@@ -156,13 +156,13 @@ export interface ResourcesMonthViewProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped, includes target resourceId */
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData,
-    resourceId?: string | number
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+    resourceId?: string | number;
+  }) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -180,11 +180,11 @@ export interface ResourcesMonthViewProps
   withDragSlotSelect?: boolean;
 
   /** Called when a day range is selected by dragging, includes resourceId */
-  onSlotDragEnd?: (
-    rangeStart: DateTimeStringValue,
-    rangeEnd: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onSlotDragEnd?: (data: {
+    rangeStart: DateTimeStringValue;
+    rangeEnd: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
 
   /** Labels override for i18n */
   labels?: ScheduleLabelsOverride;
@@ -196,11 +196,11 @@ export interface ResourcesMonthViewProps
   scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
 
   /** Called when an external item is dropped */
-  onExternalEventDrop?: (
-    dataTransfer: DataTransfer,
-    dropDateTime: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onExternalEventDrop?: (data: {
+    dataTransfer: DataTransfer;
+    dropDateTime: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
 
   /** Maximum number of events visible per cell before "+more" indicator @default 2 */
   maxEventsPerCell?: number;
@@ -419,11 +419,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       if (!onExternalEventDrop) {
         return;
       }
-      onExternalEventDrop(
-        e.dataTransfer,
-        `${dayjs(target.day).format('YYYY-MM-DD')} 00:00:00`,
-        target.resourceId
-      );
+      onExternalEventDrop({
+        dataTransfer: e.dataTransfer,
+        dropDateTime: `${dayjs(target.day).format('YYYY-MM-DD')} 00:00:00`,
+        resourceId: target.resourceId,
+      });
     },
     [onExternalEventDrop]
   );
@@ -431,8 +431,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
   const dragDrop = useDragDropHandlers<DropTargetCell>({
     enabled: withEventsDragAndDrop,
     mode,
-    onEventDrop: (eventId, newStart, newEnd, event) => {
-      onEventDrop?.(eventId, newStart, newEnd, event, lastDropResourceId.current);
+    onEventDrop: (data) => {
+      onEventDrop?.({ ...data, resourceId: lastDropResourceId.current });
     },
     canDragEvent,
     onEventDragStart,
@@ -465,11 +465,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       const startDay = monthDays[startIndex];
       const endDay = monthDays[endIndex];
       if (startDay && endDay) {
-        onSlotDragEnd(
-          dayjs(startDay).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-          dayjs(endDay).endOf('day').format('YYYY-MM-DD HH:mm:ss'),
-          groupToResourceId.get(group) ?? group
-        );
+        onSlotDragEnd({
+          rangeStart: dayjs(startDay).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          rangeEnd: dayjs(endDay).endOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          resourceId: groupToResourceId.get(group) ?? group,
+        });
       }
     },
   });
@@ -597,7 +597,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             static: mode === 'static',
           }}
           tabIndex={mode === 'static' ? -1 : isFirstCell ? 0 : -1}
-          onClick={mode === 'static' ? undefined : (e) => onDayClick?.(day, e, resource.id)}
+          onClick={
+            mode === 'static'
+              ? undefined
+              : (e) => onDayClick?.({ date: day, nativeEvent: e, resourceId: resource.id })
+          }
           onKeyDown={
             mode === 'static' ? undefined : (e) => handleCellKeyDown(e, resourceIndex, dayIndex)
           }

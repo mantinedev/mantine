@@ -123,13 +123,13 @@ export interface ResourcesScheduleProps
   withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped */
-  onEventDrop?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData,
-    resourceId?: string | number
-  ) => void;
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+    resourceId?: string | number;
+  }) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -141,19 +141,19 @@ export interface ResourcesScheduleProps
   onEventDragEnd?: () => void;
 
   /** Called when time slot is clicked */
-  onTimeSlotClick?: (
-    slotStart: DateTimeStringValue,
-    slotEnd: DateTimeStringValue,
-    event: React.MouseEvent<HTMLButtonElement>,
-    resourceId?: string | number
-  ) => void;
+  onTimeSlotClick?: (data: {
+    slotStart: DateTimeStringValue;
+    slotEnd: DateTimeStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+    resourceId?: string | number;
+  }) => void;
 
   /** Called when day is clicked in month view */
-  onDayClick?: (
-    date: DateStringValue,
-    event: React.MouseEvent<HTMLButtonElement>,
-    resourceId?: string | number
-  ) => void;
+  onDayClick?: (data: {
+    date: DateStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+    resourceId?: string | number;
+  }) => void;
 
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -162,32 +162,32 @@ export interface ResourcesScheduleProps
   withDragSlotSelect?: boolean;
 
   /** Called when a slot range is selected by dragging */
-  onSlotDragEnd?: (
-    rangeStart: DateTimeStringValue,
-    rangeEnd: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onSlotDragEnd?: (data: {
+    rangeStart: DateTimeStringValue;
+    rangeEnd: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
 
   /** Interaction mode @default default */
   mode?: ScheduleMode;
 
   /** Called when an external item is dropped onto the schedule */
-  onExternalEventDrop?: (
-    dataTransfer: DataTransfer,
-    dropDateTime: DateTimeStringValue,
-    resourceId?: string | number
-  ) => void;
+  onExternalEventDrop?: (data: {
+    dataTransfer: DataTransfer;
+    dropDateTime: DateTimeStringValue;
+    resourceId?: string | number;
+  }) => void;
 
   /** If true, events can be resized @default false */
   withEventResize?: boolean;
 
   /** Called when event is resized */
-  onEventResize?: (
-    eventId: string | number,
-    newStart: DateTimeStringValue,
-    newEnd: DateTimeStringValue,
-    event: ScheduleEventData
-  ) => void;
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;

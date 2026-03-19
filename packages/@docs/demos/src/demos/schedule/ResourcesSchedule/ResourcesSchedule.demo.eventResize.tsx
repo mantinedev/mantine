@@ -14,7 +14,7 @@ function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);
 
-  const handleEventUpdate = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventUpdate = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string; event: ScheduleEventData }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -29,7 +29,7 @@ function Demo() {
       resources={resources}
       events={events}
       withEventsDragAndDrop
-      onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
+      onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {
         setEvents((prev) =>
           prev.map((event) =>
             event.id === eventId
@@ -50,7 +50,16 @@ function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>(resourceEvents);
 
-  const handleEventUpdate = (eventId: string | number, newStart: string, newEnd: string) => {
+  const handleEventUpdate = ({
+    eventId,
+    newStart,
+    newEnd,
+  }: {
+    eventId: string | number;
+    newStart: string;
+    newEnd: string;
+    event: ScheduleEventData;
+  }) => {
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -65,7 +74,7 @@ function Demo() {
       resources={resources}
       events={events}
       withEventsDragAndDrop
-      onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
+      onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {
         setEvents((prev) =>
           prev.map((event) =>
             event.id === eventId ? { ...event, start: newStart, end: newEnd, resourceId } : event

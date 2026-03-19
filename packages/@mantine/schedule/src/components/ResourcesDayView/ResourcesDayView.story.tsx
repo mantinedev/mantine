@@ -197,7 +197,7 @@ export function DragAndDrop() {
         startTime="08:00:00"
         endTime="18:00:00"
         withEventsDragAndDrop
-        onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
+        onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {
           setEvents((prev) =>
             prev.map((event) =>
               event.id === eventId ? { ...event, start: newStart, end: newEnd, resourceId } : event
@@ -232,7 +232,7 @@ export function SlotDragSelect() {
         startTime="08:00:00"
         endTime="18:00:00"
         withDragSlotSelect
-        onSlotDragEnd={(rangeStart, rangeEnd, resourceId) => {
+        onSlotDragEnd={({ rangeStart, rangeEnd, resourceId }) => {
           setLastAction(
             `Selected ${dayjs(rangeStart).format('HH:mm')} - ${dayjs(rangeEnd).format('HH:mm')} on ${resourceId}`
           );

@@ -148,7 +148,7 @@ export function DragAndDrop() {
         resources={resources}
         events={eventsData}
         withEventsDragAndDrop
-        onEventDrop={(eventId, newStart, newEnd, _event, resourceId) => {
+        onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {
           setEventsData((prev) =>
             prev.map((event) =>
               event.id === eventId ? { ...event, start: newStart, end: newEnd, resourceId } : event
