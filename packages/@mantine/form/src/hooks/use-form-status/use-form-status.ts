@@ -16,7 +16,7 @@ import {
 } from '../../types';
 import type { $FormValues } from '../use-form-values/use-form-values';
 
-export interface $FormStatus<Values extends Record<string, any>> {
+export interface $FormStatus<out Values extends Record<string, any>> {
   touchedState: FormStatus;
   dirtyState: FormStatus;
   touchedRef: React.RefObject<FormStatus>;
@@ -37,7 +37,7 @@ export interface $FormStatus<Values extends Record<string, any>> {
   setCalculatedFieldDirty: SetCalculatedFieldDirty<Values>;
 }
 
-interface UseFormStatusInput<Values extends Record<string, any>> {
+interface UseFormStatusInput<out Values extends Record<string, any>> {
   initialDirty: FormStatus;
   initialTouched: FormStatus;
   mode: FormMode;

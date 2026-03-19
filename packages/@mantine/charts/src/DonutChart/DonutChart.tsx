@@ -1,6 +1,4 @@
 import {
-  Cell,
-  CellProps,
   Pie,
   PieLabel,
   PieProps,
@@ -104,10 +102,10 @@ export interface DonutChartProps
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
 
-  /** Props passed down to recharts `Cell` component */
+  /** Props passed down to each segment of the chart */
   cellProps?:
-    | ((series: DonutChartCell) => Partial<Omit<CellProps, 'ref'>>)
-    | Partial<Omit<CellProps, 'ref'>>;
+    | ((series: DonutChartCell) => Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>)
+    | Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>;
 }
 
 export type DonutChartFactory = Factory<{
@@ -232,22 +230,20 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
     props,
   });
 
-  const cells = data.map((item, index) => (
-    <Cell
-      key={index}
-      fill={getThemeColor(item.color, theme)}
-      stroke="var(--chart-stroke-color, var(--mantine-color-body))"
-      strokeWidth={strokeWidth}
-      {...(typeof cellProps === 'function' ? cellProps(item) : cellProps)}
-    />
-  ));
+  const pieData = data.map((item) => ({
+    ...item,
+    fill: getThemeColor(item.color, theme),
+    stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
+    strokeWidth,
+    ...(typeof cellProps === 'function' ? cellProps(item) : cellProps),
+  }));
 
   return (
     <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsPieChart {...pieChartProps}>
           <Pie
-            data={data as any}
+            data={pieData as any}
             innerRadius={size / 2 - thickness}
             outerRadius={size / 2}
             dataKey="value"
@@ -265,9 +261,7 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
                 : false
             }
             {...pieProps}
-          >
-            {cells}
-          </Pie>
+          />
 
           {chartLabel && (
             <text
