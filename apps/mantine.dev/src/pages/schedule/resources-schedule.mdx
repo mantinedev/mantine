@@ -26,20 +26,26 @@ Enable drag and drop across all views with `withEventsDragAndDrop` prop.
 
 ## View-specific props
 
-Use `dayViewProps` and `monthViewProps` to pass props specific to each view:
+Use `dayViewProps` and `monthViewProps` to pass props specific to each view.
 
-```tsx
-<ResourcesSchedule
-  resources={resources}
-  events={events}
-  dayViewProps={{
-    startTime: '08:00:00',
-    endTime: '18:00:00',
-    intervalMinutes: 30,
-    highlightBusinessHours: true,
-  }}
-  monthViewProps={{
-    maxEventsPerCell: 3,
-  }}
-/>
-```
+<Demo data={ResourcesScheduleDemos.viewProps} />
+
+## Event form
+
+Click time slots, day cells, or existing events to open an event form. The form works across
+both day and month views with automatic view switching.
+
+<Demo data={ResourcesScheduleDemos.eventForm} />
+
+## Event resize
+
+Enable event resizing with `withEventResize` prop. Event resize is only available in day view
+where events can be resized by dragging their left or right edges.
+
+<Demo data={ResourcesScheduleDemos.eventResize} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions across both views.
+
+<Demo data={ResourcesScheduleDemos.staticMode} />

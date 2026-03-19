@@ -17,3 +17,56 @@ across the month.
 Set `mode="static"` to disable all interactions.
 
 <Demo data={ResourceMonthViewDemos.staticMode} />
+
+## Drag and drop
+
+Enable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives
+the `resourceId` of the target resource, allowing you to update the event's resource assignment.
+
+<Demo data={ResourceMonthViewDemos.dragDrop} />
+
+## Event form
+
+Click a day cell to create a new event, or click an existing event to edit it. Use `withDragSlotSelect`
+and `onSlotDragEnd` to allow drag-to-create across day cells. The `onSlotDragEnd` callback includes
+the `resourceId` of the resource where the drag started.
+
+<Demo data={ResourceMonthViewDemos.eventForm} />
+
+## Custom event rendering
+
+Use `renderEvent` prop to customize how events are rendered. The example below uses `HoverCard`
+to display event details on hover.
+
+<Demo data={ResourceMonthViewDemos.renderEvent} />
+
+## Custom resource label
+
+Use `renderResourceLabel` prop to customize how resource labels are rendered in the row headers.
+
+<Demo data={ResourceMonthViewDemos.renderResourceLabel} />
+
+## Localization
+
+Set `locale` prop to change the language. Use `labels` prop to override built-in labels.
+
+<Demo data={ResourceMonthViewDemos.localization} />
+
+## Max events per cell
+
+Use `maxEventsPerCell` prop to limit the number of events visible in each cell.
+When there are more events than the limit, a "+more" indicator is shown.
+
+<Demo data={ResourceMonthViewDemos.maxEventsPerCell} />
+
+## Day width and row height
+
+Use `dayWidth` and `rowHeight` props to customize the dimensions of day columns and resource rows.
+
+<Demo data={ResourceMonthViewDemos.dayWidth} />
+
+## Scroll area props
+
+Use `scrollAreaProps` to customize the scroll area behavior.
+
+<Demo data={ResourceMonthViewDemos.scrollAreaProps} />

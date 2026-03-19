@@ -1,3 +1,11 @@
 export { usage } from './ResourceMonthView.demo.usage';
 export { staticMode } from './ResourceMonthView.demo.staticMode';
 export { radius } from './ResourceMonthView.demo.radius';
+export { dragDrop } from './ResourceMonthView.demo.dragDrop';
+export { eventForm } from './ResourceMonthView.demo.eventForm';
+export { renderEvent } from './ResourceMonthView.demo.renderEvent';
+export { renderResourceLabel } from './ResourceMonthView.demo.renderResourceLabel';
+export { localization } from './ResourceMonthView.demo.localization';
+export { maxEventsPerCell } from './ResourceMonthView.demo.maxEventsPerCell';
+export { dayWidth } from './ResourceMonthView.demo.dayWidth';
+export { scrollAreaProps } from './ResourceMonthView.demo.scrollAreaProps';

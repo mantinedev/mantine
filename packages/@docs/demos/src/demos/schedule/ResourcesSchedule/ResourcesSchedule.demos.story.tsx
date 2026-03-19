@@ -17,3 +17,23 @@ export const Demo_controlled = {
   name: '⭐ Demo: controlled',
   render: renderDemo(demos.controlled),
 };
+
+export const Demo_viewProps = {
+  name: '⭐ Demo: viewProps',
+  render: renderDemo(demos.viewProps),
+};
+
+export const Demo_eventForm = {
+  name: '⭐ Demo: eventForm',
+  render: renderDemo(demos.eventForm),
+};
+
+export const Demo_eventResize = {
+  name: '⭐ Demo: eventResize',
+  render: renderDemo(demos.eventResize),
+};
+
+export const Demo_staticMode = {
+  name: '⭐ Demo: staticMode',
+  render: renderDemo(demos.staticMode),
+};

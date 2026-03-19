@@ -307,9 +307,6 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     withDragSlotSelect,
     onSlotDragEnd,
     onExternalEventDrop,
-    withEventResize: mode === 'static' ? false : withEventResize,
-    onEventResize,
-    canResizeEvent,
     recurrenceExpansionLimit,
     mode,
   };
@@ -318,7 +315,14 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     switch (_view) {
       case 'day':
         return (
-          <ResourceDayView {...commonProps} onTimeSlotClick={onTimeSlotClick} {...dayViewProps} />
+          <ResourceDayView
+            {...commonProps}
+            onTimeSlotClick={onTimeSlotClick}
+            withEventResize={mode === 'static' ? false : withEventResize}
+            onEventResize={onEventResize}
+            canResizeEvent={canResizeEvent}
+            {...dayViewProps}
+          />
         );
       case 'month':
         return <ResourceMonthView {...commonProps} onDayClick={onDayClick} {...monthViewProps} />;
