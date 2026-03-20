@@ -15,3 +15,4 @@ export { currentTimeIndicator } from './ResourcesWeekView.demo.currentTimeIndica
 export { firstDayOfWeek } from './ResourcesWeekView.demo.firstDayOfWeek';
 export { renderWeekLabel } from './ResourcesWeekView.demo.renderWeekLabel';
 export { maxEventsPerTimeSlot } from './ResourcesWeekView.demo.maxEventsPerTimeSlot';
+export { recurringEvents } from './ResourcesWeekView.demo.recurringEvents';

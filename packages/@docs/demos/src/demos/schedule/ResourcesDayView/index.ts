@@ -17,3 +17,4 @@ export { scrollAreaProps } from './ResourcesDayView.demo.scrollAreaProps';
 export { currentTimeIndicator } from './ResourcesDayView.demo.currentTimeIndicator';
 export { permissions } from './ResourcesDayView.demo.permissions';
 export { maxEventsPerTimeSlot } from './ResourcesDayView.demo.maxEventsPerTimeSlot';
+export { recurringEvents } from './ResourcesDayView.demo.recurringEvents';

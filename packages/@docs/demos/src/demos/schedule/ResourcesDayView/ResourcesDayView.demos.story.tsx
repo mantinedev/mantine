@@ -97,3 +97,8 @@ export const Demo_maxEventsPerTimeSlot = {
   name: '⭐ Demo: maxEventsPerTimeSlot',
   render: renderDemo(demos.maxEventsPerTimeSlot),
 };
+
+export const Demo_recurringEvents = {
+  name: '⭐ Demo: recurringEvents',
+  render: renderDemo(demos.recurringEvents),
+};
