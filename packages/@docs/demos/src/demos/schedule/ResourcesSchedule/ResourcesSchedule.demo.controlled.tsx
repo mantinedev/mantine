@@ -11,7 +11,8 @@ import { ResourcesSchedule, ResourcesScheduleViewLevel } from '@mantine/schedule
 import { events, resources } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [view, setView] = useState<ResourcesScheduleViewLevel>('day');
 
   return (
@@ -22,14 +23,17 @@ function Demo() {
       onViewChange={(v) => setView(v as ResourcesScheduleViewLevel)}
       resources={resources}
       events={events}
-      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
+      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}
+      weekViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollDateTime: \`\${today} 08:00:00\` }}
+      monthViewProps={{ startScrollDate: today }}
     />
   );
 }
 `;
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [view, setView] = useState<ResourcesScheduleViewLevel>('day');
 
   return (
@@ -40,7 +44,13 @@ function Demo() {
       onViewChange={(v) => setView(v as ResourcesScheduleViewLevel)}
       resources={resources}
       events={resourceEvents}
-      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
+      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}
+      weekViewProps={{
+        startTime: '08:00:00',
+        endTime: '18:00:00',
+        startScrollDateTime: `${today} 08:00:00`,
+      }}
+      monthViewProps={{ startScrollDate: today }}
     />
   );
 }

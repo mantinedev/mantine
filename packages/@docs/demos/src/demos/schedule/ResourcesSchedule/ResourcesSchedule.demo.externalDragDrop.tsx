@@ -31,7 +31,8 @@ const sidebarItems = [
 ];
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const nextId = useRef(1);
 
@@ -117,7 +118,9 @@ function Demo() {
           onDateChange={setDate}
           resources={resources}
           events={events}
-          dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
+          dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}
+          weekViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollDateTime: \`\${today} 08:00:00\` }}
+          monthViewProps={{ startScrollDate: today }}
           withEventsDragAndDrop
           onEventDrop={handleEventDrop}
           onExternalEventDrop={handleExternalDrop}
@@ -129,7 +132,8 @@ function Demo() {
 `;
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const nextId = useRef(1);
 
@@ -219,7 +223,13 @@ function Demo() {
           onDateChange={setDate}
           resources={resources}
           events={events}
-          dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
+          dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}
+          weekViewProps={{
+            startTime: '08:00:00',
+            endTime: '18:00:00',
+            startScrollDateTime: `${today} 08:00:00`,
+          }}
+          monthViewProps={{ startScrollDate: today }}
           withEventsDragAndDrop
           onEventDrop={handleEventDrop}
           onExternalEventDrop={handleExternalDrop}

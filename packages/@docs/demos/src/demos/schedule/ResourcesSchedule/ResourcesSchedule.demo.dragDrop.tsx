@@ -11,7 +11,8 @@ import { ResourcesSchedule, ScheduleEventData } from '@mantine/schedule';
 import { events as initialEvents, resources } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);
 
   return (
@@ -30,14 +31,17 @@ function Demo() {
           )
         );
       }}
-      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
+      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}
+      weekViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollDateTime: \`\${today} 08:00:00\` }}
+      monthViewProps={{ startScrollDate: today }}
     />
   );
 }
 `;
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>(resourceEvents);
 
   return (
@@ -54,7 +58,13 @@ function Demo() {
           )
         );
       }}
-      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00' }}
+      dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}
+      weekViewProps={{
+        startTime: '08:00:00',
+        endTime: '18:00:00',
+        startScrollDateTime: `${today} 08:00:00`,
+      }}
+      monthViewProps={{ startScrollDate: today }}
     />
   );
 }
