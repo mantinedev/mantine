@@ -498,6 +498,41 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const cellsRef = useRef<HTMLButtonElement[][]>([]);
 
+  const getDayIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
+    const resourceCells = cellsRef.current[resourceIndex] ?? [];
+    const dayIndex = resourceCells.findIndex((cellNode) => {
+      if (!cellNode) {
+        return false;
+      }
+      const rect = cellNode.getBoundingClientRect();
+      return event.clientX >= rect.left && event.clientX <= rect.right;
+    });
+
+    if (dayIndex >= 0) {
+      return dayIndex;
+    }
+
+    const firstCell = resourceCells[0];
+    const lastCell = resourceCells[resourceCells.length - 1];
+
+    if (!firstCell || !lastCell) {
+      return null;
+    }
+
+    const firstRect = firstCell.getBoundingClientRect();
+    const lastRect = lastCell.getBoundingClientRect();
+
+    if (event.clientX < firstRect.left) {
+      return 0;
+    }
+
+    if (event.clientX > lastRect.right) {
+      return resourceCells.length - 1;
+    }
+
+    return null;
+  }, []);
+
   const handleCellKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
     resourceIndex: number,
@@ -554,43 +589,49 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       const dayLeftPercent = (dayIndex / totalDays) * 100;
       const dayWidthPercent = 100 / totalDays;
 
+      const hasHiddenEvents = hiddenEventsCount > 0 && mode !== 'static';
+
       visibleEvents.forEach((event, eventIndex) => {
         const isDraggable = dragDrop.isDraggableEvent(event);
+        const topValue = hasHiddenEvents
+          ? `calc((100% - 18px) * ${eventIndex} / ${maxEventsPerCell} + 1px)`
+          : `calc(${eventIndex * rowHeightPercent}% + 1px)`;
+        const heightValue = hasHiddenEvents
+          ? `calc((100% - 18px) / ${maxEventsPerCell} - 2px)`
+          : `calc(${rowHeightPercent}% - 2px)`;
 
         eventNodes.push(
-          <div
+          <ScheduleEvent
             key={`${event.id}-${day}`}
+            event={event}
+            nowrap
+            autoSize
+            size="sm"
+            draggable={isDraggable}
+            renderEventBody={renderEventBody}
+            renderEvent={renderEvent}
+            radius={radius}
+            mode={mode}
+            onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
             style={{
               position: 'absolute',
-              top: `calc(${eventIndex * rowHeightPercent}% + 1px)`,
+              top: topValue,
               left: `calc(${dayLeftPercent}% + 1px)`,
               width: `calc(${dayWidthPercent}% - 2px)`,
-              height: `calc(${rowHeightPercent}% - 2px)`,
+              height: heightValue,
               zIndex: 3,
-              pointerEvents: 'none',
             }}
-          >
-            <ScheduleEvent
-              event={event}
-              nowrap
-              autoSize
-              size="sm"
-              draggable={isDraggable}
-              renderEventBody={renderEventBody}
-              renderEvent={renderEvent}
-              radius={radius}
-              mode={mode}
-              onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
-              style={{ width: '100%', height: '100%', pointerEvents: 'auto' }}
-            />
-          </div>
+          />
         );
       });
 
       if (hiddenEventsCount > 0 && mode !== 'static') {
         moreNodes.push(
-          <div
+          <MoreEvents
             key={`more-${resource.id}-${day}`}
+            events={dayEvents}
+            moreEventsCount={hiddenEventsCount}
+            mode={mode}
             style={{
               position: 'absolute',
               bottom: 1,
@@ -598,17 +639,9 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               width: `calc(${dayWidthPercent}% - 2px)`,
               height: 18,
               zIndex: 4,
-              pointerEvents: 'none',
             }}
-          >
-            <MoreEvents
-              events={dayEvents}
-              moreEventsCount={hiddenEventsCount}
-              mode={mode}
-              style={{ width: '100%', height: '100%', pointerEvents: 'auto' }}
-              {...moreEventsProps}
-            />
-          </div>
+            {...moreEventsProps}
+          />
         );
       }
 
@@ -652,17 +685,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
                   )
               : undefined
           }
-          onDragOver={
-            withDragHandlers
-              ? (e) => dragDrop.handleDragOver(e, { day, resourceId: resource.id })
-              : undefined
-          }
-          onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
-          onDrop={
-            withDragHandlers
-              ? (e) => dragDrop.handleDrop(e, { day, resourceId: resource.id })
-              : undefined
-          }
+          onDragOver={withDragHandlers ? (e) => e.preventDefault() : undefined}
         />
       );
     });
@@ -672,7 +695,36 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         <div {...getStyles('resourcesMonthViewResourceLabel')}>
           {renderResourceLabel ? renderResourceLabel(resource) : resource.label}
         </div>
-        <div {...getStyles('resourcesMonthViewRowSlots')}>
+        <div
+          {...getStyles('resourcesMonthViewRowSlots')}
+          onDragOver={
+            withDragHandlers
+              ? (e) => {
+                  const dayIndex = getDayIndexFromDragPoint(e, resourceIndex);
+                  if (dayIndex !== null && monthDays[dayIndex]) {
+                    dragDrop.handleDragOver(e, {
+                      day: monthDays[dayIndex],
+                      resourceId: resource.id,
+                    });
+                  }
+                }
+              : undefined
+          }
+          onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
+          onDrop={
+            withDragHandlers
+              ? (e) => {
+                  const dayIndex = getDayIndexFromDragPoint(e, resourceIndex);
+                  if (dayIndex !== null && monthDays[dayIndex]) {
+                    dragDrop.handleDrop(e, {
+                      day: monthDays[dayIndex],
+                      resourceId: resource.id,
+                    });
+                  }
+                }
+              : undefined
+          }
+        >
           {eventNodes}
           {moreNodes}
           {cells}
