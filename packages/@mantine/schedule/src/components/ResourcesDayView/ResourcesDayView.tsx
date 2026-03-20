@@ -46,10 +46,12 @@ import {
   toDateString,
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
+import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { getOverlapClusters } from './get-overlap-clusters/get-overlap-clusters';
 import { getResourcesDayViewEvents } from './get-resources-day-view-events/get-resources-day-view-events';
 import {
   handleResourcesDayViewKeyDown,
@@ -245,6 +247,12 @@ export interface ResourcesDayViewProps
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
+
+  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 */
+  maxEventsPerTimeSlot?: number;
+
+  /** Props passed down to `MoreEvents` component */
+  moreEventsProps?: Partial<MoreEventsProps>;
 }
 
 export type ResourcesDayViewFactory = Factory<{
@@ -335,8 +343,13 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     onEventResize,
     canResizeEvent,
     recurrenceExpansionLimit,
+    maxEventsPerTimeSlot: _maxEventsPerTimeSlot,
+    moreEventsProps,
     ...others
   } = props;
+
+  const maxEventsPerTimeSlot =
+    _maxEventsPerTimeSlot !== undefined ? Math.max(1, _maxEventsPerTimeSlot) : undefined;
 
   const getStyles = useStyles<ResourcesDayViewFactory>({
     name: __staticSelector,
@@ -659,99 +672,145 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
       return <Box {...bgEventProps} />;
     });
 
-    const regularEvents = (resourceEvents.regularEvents[resource.id] || [])
-      .filter((event) => !isAllDayEvent({ event, date }))
-      .map((event) => {
-        const isDraggable = dragDrop.isDraggableEvent(event);
-        const isResizable = eventResize.isResizableEvent(event);
-        const resizePosition = eventResize.getResizePosition(event.id);
-        const eventLeft = resizePosition ? resizePosition.left : event.position.top;
-        const eventWidth = resizePosition ? resizePosition.width : event.position.height;
+    const allRegularEvents = (resourceEvents.regularEvents[resource.id] || []).filter(
+      (event) => !isAllDayEvent({ event, date })
+    );
 
-        const eventColors = isResizable
-          ? theme.variantColorResolver({
-              color: event.color || theme.primaryColor,
-              theme,
-              variant: event.variant || 'light',
-              autoContrast: true,
+    const visibleRegularEvents =
+      maxEventsPerTimeSlot !== undefined
+        ? allRegularEvents.filter((event) => event.position.column < maxEventsPerTimeSlot)
+        : allRegularEvents;
+
+    const regularEvents = visibleRegularEvents.map((event) => {
+      const isDraggable = dragDrop.isDraggableEvent(event);
+      const isResizable = eventResize.isResizableEvent(event);
+      const resizePosition = eventResize.getResizePosition(event.id);
+      const eventLeft = resizePosition ? resizePosition.left : event.position.top;
+      const eventWidth = resizePosition ? resizePosition.width : event.position.height;
+
+      const adjustPosition =
+        maxEventsPerTimeSlot !== undefined && event.position.overlaps > maxEventsPerTimeSlot;
+
+      const eventColors = isResizable
+        ? theme.variantColorResolver({
+            color: event.color || theme.primaryColor,
+            theme,
+            variant: event.variant || 'light',
+            autoContrast: true,
+          })
+        : null;
+
+      const isThisEventResizing = resizePosition !== null;
+      const activeEdge =
+        isThisEventResizing && eventResize.resizingEdge ? eventResize.resizingEdge : null;
+
+      return (
+        <Box
+          key={event.id}
+          {...getStyles('resourcesDayViewEventWrapper')}
+          __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
+          data-resizing={isThisEventResizing || undefined}
+          style={{
+            left: `calc(${eventLeft}% + 1px)`,
+            top: adjustPosition
+              ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
+              : `${event.position.offset}%`,
+            width: `calc(${eventWidth}% - 2px)`,
+            height: adjustPosition
+              ? `calc((100% - 22px) / ${maxEventsPerTimeSlot})`
+              : `${event.position.width}%`,
+          }}
+        >
+          <ScheduleEvent
+            event={event}
+            autoSize
+            nowrap
+            draggable={isDraggable}
+            isResizing={isThisEventResizing}
+            renderEventBody={renderEventBody}
+            renderEvent={renderEvent}
+            radius={radius}
+            mode={mode}
+            onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+            style={{ width: '100%', height: '100%' }}
+          />
+          {isResizable && mode !== 'static' && (
+            <>
+              <div
+                {...getStyles('resourcesDayViewResizeHandle')}
+                data-edge="start"
+                data-active={activeEdge === 'start' || undefined}
+                onPointerDown={(e) => {
+                  const container = rowSlotsContainersRef.current[resourceIndex];
+                  if (container) {
+                    eventResize.handleResizeStart(
+                      event,
+                      'start',
+                      container,
+                      event.position.top,
+                      event.position.height,
+                      dateStr,
+                      e
+                    );
+                  }
+                }}
+              />
+              <div
+                {...getStyles('resourcesDayViewResizeHandle')}
+                data-edge="end"
+                data-active={activeEdge === 'end' || undefined}
+                onPointerDown={(e) => {
+                  const container = rowSlotsContainersRef.current[resourceIndex];
+                  if (container) {
+                    eventResize.handleResizeStart(
+                      event,
+                      'end',
+                      container,
+                      event.position.top,
+                      event.position.height,
+                      dateStr,
+                      e
+                    );
+                  }
+                }}
+              />
+            </>
+          )}
+        </Box>
+      );
+    });
+
+    const moreEventsForResource =
+      maxEventsPerTimeSlot !== undefined
+        ? getOverlapClusters(allRegularEvents)
+            .filter((cluster) => cluster.length > maxEventsPerTimeSlot)
+            .map((cluster) => {
+              const hiddenCount = cluster.length - maxEventsPerTimeSlot;
+              const leftPercent = Math.min(...cluster.map((e) => e.position.top));
+              const rightPercent = Math.max(
+                ...cluster.map((e) => e.position.top + e.position.height)
+              );
+
+              return (
+                <MoreEvents
+                  key={`more-${cluster[0].id}`}
+                  events={cluster}
+                  moreEventsCount={hiddenCount}
+                  mode={mode}
+                  style={{
+                    position: 'absolute',
+                    left: `calc(${leftPercent}% + 1px)`,
+                    width: `calc(${rightPercent - leftPercent}% - 2px)`,
+                    bottom: 0,
+                    height: '22px',
+                    paddingInline: 4,
+                    zIndex: 4,
+                  }}
+                  {...moreEventsProps}
+                />
+              );
             })
-          : null;
-
-        const isThisEventResizing = resizePosition !== null;
-        const activeEdge =
-          isThisEventResizing && eventResize.resizingEdge ? eventResize.resizingEdge : null;
-
-        return (
-          <Box
-            key={event.id}
-            {...getStyles('resourcesDayViewEventWrapper')}
-            __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
-            data-resizing={isThisEventResizing || undefined}
-            style={{
-              left: `calc(${eventLeft}% + 1px)`,
-              top: `${event.position.offset}%`,
-              width: `calc(${eventWidth}% - 2px)`,
-              height: `${event.position.width}%`,
-            }}
-          >
-            <ScheduleEvent
-              event={event}
-              autoSize
-              nowrap
-              draggable={isDraggable}
-              isResizing={isThisEventResizing}
-              renderEventBody={renderEventBody}
-              renderEvent={renderEvent}
-              radius={radius}
-              mode={mode}
-              onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
-              style={{ width: '100%', height: '100%' }}
-            />
-            {isResizable && mode !== 'static' && (
-              <>
-                <div
-                  {...getStyles('resourcesDayViewResizeHandle')}
-                  data-edge="start"
-                  data-active={activeEdge === 'start' || undefined}
-                  onPointerDown={(e) => {
-                    const container = rowSlotsContainersRef.current[resourceIndex];
-                    if (container) {
-                      eventResize.handleResizeStart(
-                        event,
-                        'start',
-                        container,
-                        event.position.top,
-                        event.position.height,
-                        dateStr,
-                        e
-                      );
-                    }
-                  }}
-                />
-                <div
-                  {...getStyles('resourcesDayViewResizeHandle')}
-                  data-edge="end"
-                  data-active={activeEdge === 'end' || undefined}
-                  onPointerDown={(e) => {
-                    const container = rowSlotsContainersRef.current[resourceIndex];
-                    if (container) {
-                      eventResize.handleResizeStart(
-                        event,
-                        'end',
-                        container,
-                        event.position.top,
-                        event.position.height,
-                        dateStr,
-                        e
-                      );
-                    }
-                  }}
-                />
-              </>
-            )}
-          </Box>
-        );
-      });
+        : [];
 
     return (
       <ResourcesDayViewRow
@@ -799,6 +858,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
       >
         {backgroundEventNodes}
         {regularEvents}
+        {moreEventsForResource}
       </ResourcesDayViewRow>
     );
   });
