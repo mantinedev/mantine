@@ -100,6 +100,14 @@ Events with `payload.locked` set to `true` cannot be moved or resized.
 
 <Demo data={ResourcesDayViewDemos.permissions} />
 
+## Max events per time slot
+
+Use `maxEventsPerTimeSlot` prop to limit the number of visible overlapping events per time slot.
+When events exceed the limit, a "+N more" indicator is displayed. Clicking the indicator opens
+a popover with all events in the group. Use `moreEventsProps` to customize the popover behavior.
+
+<Demo data={ResourcesDayViewDemos.maxEventsPerTimeSlot} />
+
 ## Radius
 
 <Demo data={ResourcesDayViewDemos.radius} />

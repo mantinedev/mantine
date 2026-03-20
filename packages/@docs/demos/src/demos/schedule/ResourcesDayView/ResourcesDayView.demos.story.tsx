@@ -92,3 +92,8 @@ export const Demo_permissions = {
   name: '⭐ Demo: permissions',
   render: renderDemo(demos.permissions),
 };
+
+export const Demo_maxEventsPerTimeSlot = {
+  name: '⭐ Demo: maxEventsPerTimeSlot',
+  render: renderDemo(demos.maxEventsPerTimeSlot),
+};
