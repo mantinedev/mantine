@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -151,6 +152,7 @@ export const Tabs = factory<TabsFactory>((_props) => {
   } = props;
 
   const uid = useId(id);
+  const mountedPanels = useRef(new Set<string>());
 
   const [currentTab, setCurrentTab] = useUncontrolled({
     value,
@@ -193,6 +195,7 @@ export const Tabs = factory<TabsFactory>((_props) => {
         keepMounted,
         unstyled,
         getStyles,
+        mountedPanels,
       }}
     >
       <Box

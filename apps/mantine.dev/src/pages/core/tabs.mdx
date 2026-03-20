@@ -156,6 +156,140 @@ function Demo() {
 }
 ```
 
+## Tab as a link
+
+You can render `Tabs.Tab` as an `a` element by using the `renderRoot` prop. This gives you
+native link behavior: right-click to open in a new tab, middle-click, and `href` for
+crawlers and accessibility.
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="home">
+      <Tabs.List>
+        <Tabs.Tab
+          value="home"
+          renderRoot={(props) => <a href="/home" {...props} />}
+        >
+          Home
+        </Tabs.Tab>
+        <Tabs.Tab
+          value="about"
+          renderRoot={(props) => <a href="/about" {...props} />}
+        >
+          About
+        </Tabs.Tab>
+        <Tabs.Tab
+          value="contacts"
+          renderRoot={(props) => <a href="/contacts" {...props} />}
+        >
+          Contacts
+        </Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+You can also use the `component` prop to render tabs as links:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="home">
+      <Tabs.List>
+        <Tabs.Tab value="home" component="a" href="/home">
+          Home
+        </Tabs.Tab>
+        <Tabs.Tab value="about" component="a" href="/about">
+          About
+        </Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Tab as a link with Next.js
+
+Use the `renderRoot` prop to render `Tabs.Tab` as a Next.js `Link` component. The `renderRoot` prop
+is required instead of `component` because Next.js `Link` is a generic component:
+
+```tsx
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const pathname = usePathname();
+
+  return (
+    <Tabs value={pathname}>
+      <Tabs.List>
+        <Tabs.Tab
+          value="/home"
+          renderRoot={(props) => <Link href="/home" {...props} />}
+        >
+          Home
+        </Tabs.Tab>
+        <Tabs.Tab
+          value="/about"
+          renderRoot={(props) => <Link href="/about" {...props} />}
+        >
+          About
+        </Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Tab as a link with React Router
+
+Use the `renderRoot` prop to render `Tabs.Tab` as a React Router `NavLink` or `Link` component:
+
+```tsx
+import {
+  Link,
+  Route,
+  useLocation,
+} from 'react-router-dom';
+import { Tabs } from '@mantine/core';
+
+// Route: <Route path="/tabs/:tabValue" element={<Demo />} />
+
+function Demo() {
+  const location = useLocation();
+
+  return (
+    <Tabs value={location.pathname}>
+      <Tabs.List>
+        <Tabs.Tab
+          value="/tabs/first"
+          renderRoot={(props) => (
+            <Link to="/tabs/first" {...props} />
+          )}
+        >
+          First tab
+        </Tabs.Tab>
+        <Tabs.Tab
+          value="/tabs/second"
+          renderRoot={(props) => (
+            <Link to="/tabs/second" {...props} />
+          )}
+        >
+          Second tab
+        </Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
 ## Usage with react-router
 
 ```tsx
@@ -225,6 +359,16 @@ Use [Scroller](/core/scroller) component to make the tabs list scrollable when t
 ## Accessibility
 
 The Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
+
+### Tabs as links
+
+When `Tabs.Tab` is rendered as a link (`<a>` tag), the `role="tab"` attribute overrides
+the implicit link role. Screen readers will announce the element as a "tab", not a "link".
+This is the expected behavior per the WAI-ARIA specification.
+
+When using tabs as navigation links without `Tabs.Panel` components, the `aria-controls` attribute
+on each tab references a panel element that does not exist in the DOM. This is a minor
+accessibility consideration – most screen readers handle this gracefully.
 
 If you use `Tabs.Tab` without text content, for example, only with an icon, then set `aria-label`
 or use the [VisuallyHidden](/core/visually-hidden) component:
