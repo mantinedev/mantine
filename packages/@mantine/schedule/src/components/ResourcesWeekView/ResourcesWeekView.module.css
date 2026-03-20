@@ -27,10 +27,10 @@
 
 .resourcesWeekViewScrollArea {
   :where([data-mantine-scrollbar]) {
-    z-index: 6;
+    z-index: 20;
   }
 
-  :where(:global(.mantine-ScrollArea-viewport)) {
+  :where([data-scrollarea-viewport]) {
     overscroll-behavior-x: none;
   }
 }
