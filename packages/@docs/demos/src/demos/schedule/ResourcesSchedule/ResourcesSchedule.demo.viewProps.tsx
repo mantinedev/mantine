@@ -29,7 +29,7 @@ function Demo() {
         endTime: '18:00:00',
       }}
       monthViewProps={{
-        maxEventsPerCell: 3,
+        maxEventsPerTimeSlot: 3,
         startScrollDate: dayjs().format('YYYY-MM-DD'),
       }}
     />
@@ -56,7 +56,7 @@ function Demo() {
         endTime: '18:00:00',
       }}
       monthViewProps={{
-        maxEventsPerCell: 3,
+        maxEventsPerTimeSlot: 3,
         startScrollDate: dayjs().format('YYYY-MM-DD'),
       }}
     />

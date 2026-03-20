@@ -6,7 +6,7 @@ export { eventForm } from './ResourcesMonthView.demo.eventForm';
 export { renderEvent } from './ResourcesMonthView.demo.renderEvent';
 export { renderResourceLabel } from './ResourcesMonthView.demo.renderResourceLabel';
 export { localization } from './ResourcesMonthView.demo.localization';
-export { maxEventsPerCell } from './ResourcesMonthView.demo.maxEventsPerCell';
+export { maxEventsPerTimeSlot } from './ResourcesMonthView.demo.maxEventsPerTimeSlot';
 export { dayWidth } from './ResourcesMonthView.demo.dayWidth';
 export { scrollAreaProps } from './ResourcesMonthView.demo.scrollAreaProps';
 export { startScrollDate } from './ResourcesMonthView.demo.startScrollDate';

@@ -203,7 +203,7 @@ export interface ResourcesMonthViewProps
   }) => void;
 
   /** Maximum number of events visible per cell before "+more" indicator @default 2 */
-  maxEventsPerCell?: number;
+  maxEventsPerTimeSlot?: number;
 
   /** Props passed down to `MoreEvents` component */
   moreEventsProps?: Partial<MoreEventsProps>;
@@ -288,13 +288,13 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     mode,
     scrollAreaProps,
     onExternalEventDrop,
-    maxEventsPerCell: _maxEventsPerCell,
+    maxEventsPerTimeSlot: _maxEventsPerTimeSlot,
     moreEventsProps,
     recurrenceExpansionLimit,
     ...others
   } = props;
 
-  const maxEventsPerCell = Math.min(10, Math.max(1, _maxEventsPerCell ?? 2));
+  const maxEventsPerTimeSlot = Math.min(10, Math.max(1, _maxEventsPerTimeSlot ?? 2));
 
   const getStyles = useStyles<ResourcesMonthViewFactory>({
     name: __staticSelector,
@@ -558,7 +558,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     cellsRef.current[nextResourceIndex]?.[nextDayIndex]?.focus();
   };
 
-  const rowHeightPercent = 100 / maxEventsPerCell;
+  const rowHeightPercent = 100 / maxEventsPerTimeSlot;
 
   const rows = resources.map((resource, resourceIndex) => {
     if (!cellsRef.current[resourceIndex]) {
@@ -583,8 +583,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         (dropTarget as DropTargetCell).resourceId === resource.id;
       const isDragSelected = slotDragSelect.isSlotSelected(dayIndex, slotGroup);
       const dayEvents = eventsByResourceAndDay[resource.id]?.[day] || [];
-      const visibleEvents = dayEvents.slice(0, maxEventsPerCell);
-      const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerCell);
+      const visibleEvents = dayEvents.slice(0, maxEventsPerTimeSlot);
+      const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerTimeSlot);
       const isFirstCell = resourceIndex === 0 && dayIndex === 0;
       const dayLeftPercent = (dayIndex / totalDays) * 100;
       const dayWidthPercent = 100 / totalDays;
@@ -594,10 +594,10 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       visibleEvents.forEach((event, eventIndex) => {
         const isDraggable = dragDrop.isDraggableEvent(event);
         const topValue = hasHiddenEvents
-          ? `calc((100% - 18px) * ${eventIndex} / ${maxEventsPerCell} + 1px)`
+          ? `calc((100% - 18px) * ${eventIndex} / ${maxEventsPerTimeSlot} + 1px)`
           : `calc(${eventIndex * rowHeightPercent}% + 1px)`;
         const heightValue = hasHiddenEvents
-          ? `calc((100% - 18px) / ${maxEventsPerCell} - 2px)`
+          ? `calc((100% - 18px) / ${maxEventsPerTimeSlot} - 2px)`
           : `calc(${rowHeightPercent}% - 2px)`;
 
         eventNodes.push(

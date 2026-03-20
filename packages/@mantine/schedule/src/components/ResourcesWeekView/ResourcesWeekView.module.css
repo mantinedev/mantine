@@ -92,13 +92,14 @@
     border-inline-end: none;
   }
 
-  &:where([data-today]) {
-    color: var(--mantine-primary-color-filled);
-    font-weight: var(--mantine-font-weight-bold);
-  }
-
   &:where([data-weekend]) {
     color: var(--mantine-color-red-6);
+  }
+
+  &:where([data-today]) {
+    color: var(--mantine-primary-color-contrast);
+    background-color: var(--mantine-primary-color-filled);
+    font-weight: var(--mantine-font-weight-bold);
   }
 }
 

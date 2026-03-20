@@ -100,7 +100,7 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={events}
-      maxEventsPerCell={2}
+      maxEventsPerTimeSlot={2}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
       moreEventsProps={{ dropdownType: 'modal', modalTitle: 'All Events' }}
     />
@@ -117,7 +117,7 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={manyEvents}
-      maxEventsPerCell={2}
+      maxEventsPerTimeSlot={2}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
       moreEventsProps={{ dropdownType: 'modal', modalTitle: 'All Events' }}
     />

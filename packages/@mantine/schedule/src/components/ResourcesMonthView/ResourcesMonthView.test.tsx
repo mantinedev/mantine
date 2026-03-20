@@ -474,7 +474,7 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     expect(instances.length).toBe(4);
   });
 
-  it('maxEventsPerCell default shows only 2 visible events and +more trigger', () => {
+  it('maxEventsPerTimeSlot default shows only 2 visible events and +more trigger', () => {
     const events = [
       {
         id: 'e1',
@@ -512,7 +512,7 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     expect(screen.getByText('+1 more')).toBeInTheDocument();
   });
 
-  it('maxEventsPerCell clamps low values to 1', () => {
+  it('maxEventsPerTimeSlot clamps low values to 1', () => {
     const events = [
       {
         id: 'e1',
@@ -534,13 +534,13 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
       },
     ];
 
-    render(<ResourcesMonthView {...defaultProps} events={events} maxEventsPerCell={-5} />);
+    render(<ResourcesMonthView {...defaultProps} events={events} maxEventsPerTimeSlot={-5} />);
     expect(screen.getByText('Event 1')).toBeInTheDocument();
     expect(screen.queryByText('Event 2')).not.toBeInTheDocument();
     expect(screen.getByText('+1 more')).toBeInTheDocument();
   });
 
-  it('maxEventsPerCell clamps high values to 10', () => {
+  it('maxEventsPerTimeSlot clamps high values to 10', () => {
     const events = Array.from({ length: 12 }, (_, i) => ({
       id: `e${i}`,
       title: `Event ${i}`,
@@ -551,7 +551,7 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
       resourceId: 'room-a',
     }));
 
-    render(<ResourcesMonthView {...defaultProps} events={events} maxEventsPerCell={99} />);
+    render(<ResourcesMonthView {...defaultProps} events={events} maxEventsPerTimeSlot={99} />);
     for (let i = 0; i < 10; i++) {
       expect(screen.getByText(`Event ${i}`)).toBeInTheDocument();
     }

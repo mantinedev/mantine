@@ -54,10 +54,10 @@ Set `locale` prop to change the language. Use `labels` prop to override built-in
 
 ## Max events per cell
 
-Use `maxEventsPerCell` prop to limit the number of events visible in each cell.
+Use `maxEventsPerTimeSlot` prop to limit the number of events visible in each cell.
 When there are more events than the limit, a "+more" indicator is shown.
 
-<Demo data={ResourcesMonthViewDemos.maxEventsPerCell} />
+<Demo data={ResourcesMonthViewDemos.maxEventsPerTimeSlot} />
 
 ## Day width and row height
 
@@ -80,7 +80,7 @@ Set `withWeekendDays={false}` to hide weekend day columns from the month grid.
 
 ## More events indicator
 
-When a day cell has more events than `maxEventsPerCell`, a "+X more" indicator is shown.
+When a day cell has more events than `maxEventsPerTimeSlot`, a "+X more" indicator is shown.
 Click the indicator to see all events for that day.
 
 <Demo data={ResourcesMonthViewDemos.moreEvents} />

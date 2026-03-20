@@ -14,3 +14,4 @@ export { timeRange } from './ResourcesWeekView.demo.timeRange';
 export { currentTimeIndicator } from './ResourcesWeekView.demo.currentTimeIndicator';
 export { firstDayOfWeek } from './ResourcesWeekView.demo.firstDayOfWeek';
 export { renderWeekLabel } from './ResourcesWeekView.demo.renderWeekLabel';
+export { maxEventsPerTimeSlot } from './ResourcesWeekView.demo.maxEventsPerTimeSlot';

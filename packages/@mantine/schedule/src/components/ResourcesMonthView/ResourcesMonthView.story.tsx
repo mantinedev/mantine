@@ -263,7 +263,7 @@ export function ManyEventsPerDay() {
       onDateChange={setDate}
       resources={resources}
       events={manyEvents}
-      maxEventsPerCell={3}
+      maxEventsPerTimeSlot={3}
     />
   );
 }

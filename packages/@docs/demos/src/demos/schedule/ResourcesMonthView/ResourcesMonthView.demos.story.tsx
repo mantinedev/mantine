@@ -43,9 +43,9 @@ export const Demo_localization = {
   render: renderDemo(demos.localization),
 };
 
-export const Demo_maxEventsPerCell = {
-  name: '⭐ Demo: maxEventsPerCell',
-  render: renderDemo(demos.maxEventsPerCell),
+export const Demo_maxEventsPerTimeSlot = {
+  name: '⭐ Demo: maxEventsPerTimeSlot',
+  render: renderDemo(demos.maxEventsPerTimeSlot),
 };
 
 export const Demo_dayWidth = {

@@ -48,6 +48,8 @@ import {
   toDateString,
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
+import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
+import { getOverlapClusters } from '../ResourcesDayView/get-overlap-clusters/get-overlap-clusters';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -161,6 +163,13 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
   recurrenceExpansionLimit?: number;
+
+  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 */
+  maxEventsPerTimeSlot?: number;
+
+  /** Props passed down to `MoreEvents` component */
+  moreEventsProps?: Partial<MoreEventsProps>;
+
   firstDayOfWeek?: DayOfWeek;
   weekendDays?: DayOfWeek[];
   withWeekendDays?: boolean;
@@ -192,6 +201,7 @@ const defaultProps = {
   withCurrentTimeBubble: true,
   highlightToday: true,
   mode: 'default',
+  maxEventsPerTimeSlot: 2,
 } satisfies Partial<ResourcesWeekViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesWeekViewFactory>(
@@ -257,6 +267,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     mode,
     onExternalEventDrop,
     recurrenceExpansionLimit,
+    maxEventsPerTimeSlot: _maxEventsPerTimeSlot,
+    moreEventsProps,
     firstDayOfWeek,
     weekendDays,
     withWeekendDays,
@@ -264,6 +276,9 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     highlightToday,
     ...others
   } = props;
+
+  const maxEventsPerTimeSlot =
+    _maxEventsPerTimeSlot !== undefined ? Math.max(1, _maxEventsPerTimeSlot) : undefined;
 
   const getStyles = useStyles<ResourcesWeekViewFactory>({
     name: __staticSelector,
@@ -628,12 +643,16 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         }
       }
 
-      const regularEvents = dayEvents.regularEvents[resource.id] || [];
-      for (const event of regularEvents) {
-        if (isAllDayEvent({ event, date: day })) {
-          continue;
-        }
+      const allRegularEvents = (dayEvents.regularEvents[resource.id] || []).filter(
+        (event) => !isAllDayEvent({ event, date: day })
+      );
 
+      const visibleEvents =
+        maxEventsPerTimeSlot !== undefined
+          ? allRegularEvents.filter((event) => event.position.column < maxEventsPerTimeSlot)
+          : allRegularEvents;
+
+      for (const event of visibleEvents) {
         const isDraggable = dragDrop.isDraggableEvent(event);
 
         const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
@@ -642,15 +661,22 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         const eventLeft = dayOffsetPercent + (event.position.top / 100) * dayWidthPercent;
         const eventWidth = (event.position.height / 100) * dayWidthPercent;
 
+        const adjustPosition =
+          maxEventsPerTimeSlot !== undefined && event.position.overlaps > maxEventsPerTimeSlot;
+
         eventNodes.push(
           <div
             key={`${event.id}-${day}`}
             {...getStyles('resourcesWeekViewEventWrapper')}
             style={{
               left: `calc(${eventLeft}% + 1px)`,
-              top: `${event.position.offset}%`,
+              top: adjustPosition
+                ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
+                : `${event.position.offset}%`,
               width: `calc(${eventWidth}% - 2px)`,
-              height: `${event.position.width}%`,
+              height: adjustPosition
+                ? `calc((100% - 22px) / ${maxEventsPerTimeSlot})`
+                : `${event.position.width}%`,
             }}
           >
             <ScheduleEvent
@@ -667,6 +693,46 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
             />
           </div>
         );
+      }
+
+      if (maxEventsPerTimeSlot !== undefined) {
+        const clusters = getOverlapClusters(allRegularEvents);
+        for (const cluster of clusters) {
+          const hiddenCount = cluster.filter(
+            (e) => e.position.column >= maxEventsPerTimeSlot
+          ).length;
+
+          if (hiddenCount > 0 && mode !== 'static') {
+            const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
+            const dayWidthPercent = 100 / weekdays.length;
+            const leftPercent =
+              dayOffsetPercent +
+              (Math.min(...cluster.map((e) => e.position.top)) / 100) * dayWidthPercent;
+            const rightPercent =
+              dayOffsetPercent +
+              (Math.max(...cluster.map((e) => e.position.top + e.position.height)) / 100) *
+                dayWidthPercent;
+
+            eventNodes.push(
+              <MoreEvents
+                key={`more-${resource.id}-${day}-${cluster[0].id}`}
+                events={cluster}
+                moreEventsCount={hiddenCount}
+                mode={mode}
+                style={{
+                  position: 'absolute',
+                  left: `calc(${leftPercent}% + 1px)`,
+                  width: `calc(${rightPercent - leftPercent}% - 2px)`,
+                  bottom: 0,
+                  height: '22px',
+                  paddingInline: 4,
+                  zIndex: 4,
+                }}
+                {...moreEventsProps}
+              />
+            );
+          }
+        }
       }
     });
 

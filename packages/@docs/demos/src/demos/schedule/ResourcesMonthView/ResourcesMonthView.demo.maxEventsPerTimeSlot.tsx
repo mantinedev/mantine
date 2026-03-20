@@ -118,7 +118,7 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={events}
-      maxEventsPerCell={3}
+      maxEventsPerTimeSlot={3}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
@@ -134,13 +134,13 @@ function Demo() {
       onDateChange={setDate}
       resources={resources}
       events={manyEvents}
-      maxEventsPerCell={3}
+      maxEventsPerTimeSlot={3}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
   );
 }
 
-export const maxEventsPerCell: MantineDemo = {
+export const maxEventsPerTimeSlot: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,

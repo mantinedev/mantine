@@ -83,6 +83,14 @@ shows event details in a hover card.
 
 <Demo data={ResourcesWeekViewDemos.renderEvent} />
 
+## Max events per time slot
+
+Use `maxEventsPerTimeSlot` prop to limit the number of visible overlapping events per time slot.
+When events exceed the limit, a "+N more" indicator is displayed. Clicking the indicator opens
+a popover with all events in the group. Use `moreEventsProps` to customize the popover behavior.
+
+<Demo data={ResourcesWeekViewDemos.maxEventsPerTimeSlot} />
+
 ## Localization
 
 Use `locale` prop to set the locale for date formatting and `labels` prop to override

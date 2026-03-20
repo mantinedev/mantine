@@ -82,3 +82,8 @@ export const Demo_renderWeekLabel = {
   name: '⭐ Demo: renderWeekLabel',
   render: renderDemo(demos.renderWeekLabel),
 };
+
+export const Demo_maxEventsPerTimeSlot = {
+  name: '⭐ Demo: maxEventsPerTimeSlot',
+  render: renderDemo(demos.maxEventsPerTimeSlot),
+};
