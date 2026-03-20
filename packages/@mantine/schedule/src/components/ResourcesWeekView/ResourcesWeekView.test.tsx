@@ -1,4 +1,9 @@
-import { render, screen } from '@mantine-tests/core';
+import 'dayjs/locale/ru';
+
+import dayjs from 'dayjs';
+import { DatesProvider } from '@mantine/dates';
+import { render, screen, userEvent } from '@mantine-tests/core';
+import { toDateString } from '../../utils';
 import { ResourcesWeekView, ResourcesWeekViewProps } from './ResourcesWeekView';
 
 const resources = [
@@ -48,5 +53,563 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     expect(screen.getByRole('button', { name: 'Previous' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Today' })).toBeInTheDocument();
+  });
+
+  it('renders events in correct resource row and day column', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Event in Room A Wed',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 2,
+        title: 'Event in Room B Thu',
+        start: '2025-01-16 10:00:00',
+        end: '2025-01-16 11:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-b',
+      },
+    ];
+
+    render(<ResourcesWeekView {...defaultProps} events={events} />);
+    expect(screen.getByText('Event in Room A Wed')).toBeInTheDocument();
+    expect(screen.getByText('Event in Room B Thu')).toBeInTheDocument();
+  });
+
+  it('calls onTimeSlotClick with slotStart, slotEnd, and resourceId', async () => {
+    const spy = jest.fn();
+    render(<ResourcesWeekView {...defaultProps} onTimeSlotClick={spy} />);
+
+    const slot = screen.getAllByRole('button', {
+      name: /Resource time slot Room A/,
+    })[0];
+    await userEvent.click(slot);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        slotStart: expect.any(String),
+        slotEnd: expect.any(String),
+        nativeEvent: expect.any(Object),
+        resourceId: 'room-a',
+      })
+    );
+  });
+
+  it('calls onEventClick with correct event', async () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Clickable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const spy = jest.fn();
+    render(<ResourcesWeekView {...defaultProps} events={events} onEventClick={spy} />);
+
+    await userEvent.click(screen.getByText('Clickable Event'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: 1,
+        title: 'Clickable Event',
+      }),
+      expect.any(Object)
+    );
+  });
+
+  it('calls onDateChange with previous week, next week, and today', async () => {
+    const spy = jest.fn();
+    render(<ResourcesWeekView {...defaultProps} onDateChange={spy} />);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-01-06 00:00:00')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-01-20 00:00:00')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('calls onViewChange when view tab is clicked', async () => {
+    const spy = jest.fn();
+    render(<ResourcesWeekView {...defaultProps} onViewChange={spy} />);
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
+    expect(spy).toHaveBeenCalledWith('day');
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
+    expect(spy).toHaveBeenCalledWith('month');
+  });
+
+  it('does not render header when withHeader={false}', () => {
+    const { container } = render(<ResourcesWeekView {...defaultProps} withHeader={false} />);
+    expect(container.querySelector('.mantine-ResourcesWeekView-header')).not.toBeInTheDocument();
+  });
+
+  it('changes slot count based on startTime, endTime, and intervalMinutes', () => {
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        startTime="09:00:00"
+        endTime="11:00:00"
+        intervalMinutes={30}
+      />
+    );
+
+    const slots = container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewRowSlot');
+    expect(slots).toHaveLength(2 * 4 * 7);
+  });
+
+  it('supports locale prop for day labels', () => {
+    const { container } = render(<ResourcesWeekView {...defaultProps} locale="ru" />);
+    const dayLabels = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel'
+    );
+    const texts = Array.from(dayLabels).map((el) => el.textContent);
+    expect(texts.some((t) => /пн/i.test(t!))).toBe(true);
+  });
+
+  it('supports locale from DatesProvider', () => {
+    const { container } = render(
+      <DatesProvider settings={{ locale: 'ru' }}>
+        <ResourcesWeekView {...defaultProps} />
+      </DatesProvider>
+    );
+    const dayLabels = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel'
+    );
+    const texts = Array.from(dayLabels).map((el) => el.textContent);
+    expect(texts.some((t) => /пн/i.test(t!))).toBe(true);
+  });
+
+  it('supports firstDayOfWeek to change visible week start', () => {
+    const { container } = render(
+      <ResourcesWeekView {...defaultProps} firstDayOfWeek={0} weekdayFormat="ddd D" />
+    );
+    const dayLabels = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel'
+    );
+    expect(dayLabels[0]).toHaveTextContent('Sun 12');
+  });
+
+  it('marks weekend days with data-weekend attribute', () => {
+    const { container } = render(<ResourcesWeekView {...defaultProps} />);
+    const weekendDays = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel[data-weekend]'
+    );
+    expect(weekendDays).toHaveLength(2);
+  });
+
+  it('hides weekend columns when withWeekendDays={false}', () => {
+    const { container, rerender } = render(<ResourcesWeekView {...defaultProps} />);
+    const allDays = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel'
+    );
+    expect(allDays).toHaveLength(7);
+
+    rerender(<ResourcesWeekView {...defaultProps} withWeekendDays={false} />);
+    const weekdaysOnly = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel'
+    );
+    expect(weekdaysOnly).toHaveLength(5);
+  });
+
+  it('supports weekdayFormat with callback', () => {
+    const { container } = render(
+      <ResourcesWeekView {...defaultProps} weekdayFormat={(date) => dayjs(date).format('dd')} />
+    );
+    const dayLabels = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel'
+    );
+    expect(dayLabels[0]).toHaveTextContent('Mo');
+  });
+
+  it('supports weekLabelFormat for header week label', () => {
+    render(<ResourcesWeekView {...defaultProps} weekLabelFormat="DD MMM" />);
+    expect(screen.getByText(/13 Jan.*19 Jan/)).toBeInTheDocument();
+  });
+
+  it('supports renderWeekLabel to replace default week label', () => {
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        renderWeekLabel={({ weekStart, weekEnd }) => (
+          <span data-week-label>
+            {dayjs(weekStart).format('DD')} - {dayjs(weekEnd).format('DD')}
+          </span>
+        )}
+      />
+    );
+
+    const label = container.querySelector('[data-week-label]');
+    expect(label).toBeInTheDocument();
+    expect(label).toHaveTextContent('13 - 19');
+  });
+
+  it('marks today with data-today attribute when highlightToday is true', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15 12:00:00'));
+    const { container, rerender } = render(
+      <ResourcesWeekView {...defaultProps} highlightToday />
+    );
+    const todayLabels = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel[data-today]'
+    );
+    expect(todayLabels).toHaveLength(1);
+
+    rerender(<ResourcesWeekView {...defaultProps} highlightToday={false} />);
+    const noTodayLabels = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel[data-today]'
+    );
+    expect(noTodayLabels).toHaveLength(0);
+    jest.useRealTimers();
+  });
+
+  it('shows current time indicator when current time is within range', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15 10:30:00'));
+    const { container, rerender } = render(
+      <ResourcesWeekView {...defaultProps} withCurrentTimeIndicator />
+    );
+
+    expect(
+      container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicator')
+    ).toBeInTheDocument();
+
+    rerender(<ResourcesWeekView {...defaultProps} withCurrentTimeIndicator={false} />);
+    expect(
+      container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('hides time bubble when withCurrentTimeBubble={false}', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15 10:30:00'));
+    const { container, rerender } = render(
+      <ResourcesWeekView {...defaultProps} withCurrentTimeIndicator withCurrentTimeBubble={false} />
+    );
+
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorThumb'
+      )
+    ).toBeInTheDocument();
+
+    rerender(
+      <ResourcesWeekView {...defaultProps} withCurrentTimeIndicator withCurrentTimeBubble />
+    );
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('marks slots with business hours attributes when highlightBusinessHours is true', () => {
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        highlightBusinessHours
+        businessHours={['09:00:00', '11:00:00']}
+      />
+    );
+
+    const businessSlots = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewRowSlot[data-business-hours]'
+    );
+    const nonBusinessSlots = container.querySelectorAll(
+      '.mantine-ResourcesWeekView-resourcesWeekViewRowSlot[data-non-business-hours]'
+    );
+    expect(businessSlots.length).toBeGreaterThan(0);
+    expect(nonBusinessSlots.length).toBeGreaterThan(0);
+  });
+
+  it('supports renderResourceLabel to replace resource labels', () => {
+    render(
+      <ResourcesWeekView
+        {...defaultProps}
+        renderResourceLabel={(resource) => <span>Custom: {resource.label}</span>}
+      />
+    );
+    expect(screen.getByText('Custom: Room A')).toBeInTheDocument();
+    expect(screen.getByText('Custom: Room B')).toBeInTheDocument();
+  });
+
+  it('supports renderEventBody to replace event body', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Original Title',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: { extra: 'info' },
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(
+      <ResourcesWeekView
+        {...defaultProps}
+        events={events}
+        renderEventBody={(event) => <span>Custom: {event.title}</span>}
+      />
+    );
+    expect(screen.getByText('Custom: Original Title')).toBeInTheDocument();
+  });
+
+  it('supports renderEvent for full custom event rendering', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Custom Rendered',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(
+      <ResourcesWeekView
+        {...defaultProps}
+        events={events}
+        renderEvent={(event, props) => (
+          <button type="button" {...props} data-custom-event>
+            {event.title}
+          </button>
+        )}
+      />
+    );
+    expect(screen.getByText('Custom Rendered').closest('[data-custom-event]')).toBeInTheDocument();
+  });
+
+  it('supports labels override for corner label and slot aria-labels', () => {
+    render(
+      <ResourcesWeekView
+        {...defaultProps}
+        labels={{
+          resources: 'Recursos',
+          resourceSlot: 'Slot de recurso',
+        }}
+      />
+    );
+
+    expect(screen.getByText('Recursos')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Slot de recurso/ }).length).toBeGreaterThan(0);
+  });
+
+  describe('keyboard navigation', () => {
+    it('moves focus right with ArrowRight', async () => {
+      render(<ResourcesWeekView {...defaultProps} />);
+
+      const firstSlot = screen.getAllByRole('button', {
+        name: /Resource time slot Room A 2025-01-13/,
+      })[0];
+      firstSlot.focus();
+      await userEvent.keyboard('{ArrowRight}');
+
+      const nextSlot = screen.getAllByRole('button', {
+        name: /Resource time slot Room A 2025-01-13/,
+      })[1];
+      expect(nextSlot).toHaveFocus();
+    });
+
+    it('moves focus down with ArrowDown to next resource', async () => {
+      render(<ResourcesWeekView {...defaultProps} />);
+
+      const roomASlot = screen.getAllByRole('button', {
+        name: /Resource time slot Room A 2025-01-13/,
+      })[0];
+      roomASlot.focus();
+      await userEvent.keyboard('{ArrowDown}');
+
+      const roomBSlot = screen.getAllByRole('button', {
+        name: /Resource time slot Room B 2025-01-13/,
+      })[0];
+      expect(roomBSlot).toHaveFocus();
+    });
+  });
+
+  it('forwards scrollAreaProps to ScrollArea', () => {
+    const { container } = render(
+      <ResourcesWeekView {...defaultProps} scrollAreaProps={{ 'data-test': 'scroll-area' }} />
+    );
+    expect(container.querySelector('[data-test="scroll-area"]')).toBeInTheDocument();
+  });
+
+  it('forwards previousControlProps, nextControlProps, and todayControlProps', () => {
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        previousControlProps={{ 'data-previous-prop': 'test' }}
+        nextControlProps={{ 'data-next-prop': 'test' }}
+        todayControlProps={{ 'data-today-prop': 'test' }}
+      />
+    );
+
+    expect(
+      container.querySelector('button.mantine-ResourcesWeekView-headerControl[data-previous-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-ResourcesWeekView-headerControl[data-next-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-ResourcesWeekView-headerControl[data-today-prop]')
+    ).toBeInTheDocument();
+  });
+
+  it('forwards viewSelectProps', () => {
+    const { container } = render(
+      <ResourcesWeekView {...defaultProps} viewSelectProps={{ 'data-view-select': 'test' }} />
+    );
+    expect(
+      container.querySelector('.mantine-ResourcesWeekView-viewSelect[data-view-select]')
+    ).toBeInTheDocument();
+  });
+
+  it('makes events draggable when withEventsDragAndDrop is true', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Draggable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(<ResourcesWeekView {...defaultProps} events={events} withEventsDragAndDrop />);
+
+    const event = screen.getByText('Draggable Event').closest('button');
+    expect(event).toHaveAttribute('draggable', 'true');
+  });
+
+  it('prevents specific events from dragging with canDragEvent', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Non-Draggable',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 2,
+        title: 'Draggable',
+        start: '2025-01-15 10:00:00',
+        end: '2025-01-15 11:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(
+      <ResourcesWeekView
+        {...defaultProps}
+        events={events}
+        withEventsDragAndDrop
+        canDragEvent={(event) => event.id !== 1}
+      />
+    );
+
+    const nonDraggable = screen.getByText('Non-Draggable').closest('button');
+    const draggable = screen.getByText('Draggable').closest('button');
+    expect(nonDraggable).not.toHaveAttribute('draggable', 'true');
+    expect(draggable).toHaveAttribute('draggable', 'true');
+  });
+
+  describe('mode="static"', () => {
+    it('suppresses slot clicks', async () => {
+      const spy = jest.fn();
+      render(<ResourcesWeekView {...defaultProps} mode="static" onTimeSlotClick={spy} />);
+
+      const slot = screen
+        .getAllByRole('button')
+        .find((btn) =>
+          btn.classList.contains('mantine-ResourcesWeekView-resourcesWeekViewRowSlot')
+        )!;
+      await userEvent.click(slot);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('suppresses event clicks', async () => {
+      const events = [
+        {
+          id: 1,
+          title: 'Static Event',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 10:00:00',
+          color: 'blue',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      const spy = jest.fn();
+      render(
+        <ResourcesWeekView {...defaultProps} mode="static" events={events} onEventClick={spy} />
+      );
+
+      const event = screen.getByText('Static Event').closest('button')!;
+      expect(event).toHaveAttribute('tabIndex', '-1');
+      await userEvent.click(event);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('sets all slots to tabIndex=-1 for keyboard nav suppression', () => {
+      const { container } = render(<ResourcesWeekView {...defaultProps} mode="static" />);
+      const slots = container.querySelectorAll(
+        '.mantine-ResourcesWeekView-resourcesWeekViewRowSlot'
+      );
+      slots.forEach((slot) => {
+        expect(slot).toHaveAttribute('tabIndex', '-1');
+      });
+    });
+
+    it('does not make events draggable', () => {
+      const events = [
+        {
+          id: 1,
+          title: 'Static Drag Event',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 10:00:00',
+          color: 'blue',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      render(
+        <ResourcesWeekView {...defaultProps} mode="static" events={events} withEventsDragAndDrop />
+      );
+
+      const event = screen.getByText('Static Drag Event').closest('button');
+      expect(event).not.toHaveAttribute('draggable', 'true');
+    });
   });
 });

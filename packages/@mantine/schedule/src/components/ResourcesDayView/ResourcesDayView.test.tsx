@@ -1,4 +1,9 @@
+import 'dayjs/locale/ru';
+
+import dayjs from 'dayjs';
+import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
+import { toDateString } from '../../utils';
 import { ResourcesDayView, ResourcesDayViewProps } from './ResourcesDayView';
 
 const resources = [
@@ -111,6 +116,478 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     );
     expect(screen.getByText('Custom: Room A')).toBeInTheDocument();
     expect(screen.getByText('Custom: Room B')).toBeInTheDocument();
+  });
+
+  it('header navigation calls onDateChange with previous day, next day, and today', async () => {
+    const spy = jest.fn();
+    render(<ResourcesDayView {...defaultProps} onDateChange={spy} />);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-01-14')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-01-16')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('view tabs call onViewChange with day, week, month', async () => {
+    const spy = jest.fn();
+    render(<ResourcesDayView {...defaultProps} onViewChange={spy} />);
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
+    expect(spy).toHaveBeenCalledWith('day');
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to week view' }));
+    expect(spy).toHaveBeenCalledWith('week');
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
+    expect(spy).toHaveBeenCalledWith('month');
+  });
+
+  it('startTime/endTime/intervalMinutes changes rendered slot count', () => {
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        startTime="09:00:00"
+        endTime="11:00:00"
+        intervalMinutes={30}
+      />
+    );
+
+    const slots = screen.getAllByRole('button', {
+      name: /Resource time slot Room A/,
+    });
+    expect(slots).toHaveLength(4);
+  });
+
+  it('slotLabelFormat with a callback function', () => {
+    render(
+      <ResourcesDayView {...defaultProps} slotLabelFormat={(date) => dayjs(date).format('h A')} />
+    );
+
+    expect(screen.getByText('8 AM')).toBeInTheDocument();
+    expect(screen.getByText('9 AM')).toBeInTheDocument();
+    expect(screen.getByText('10 AM')).toBeInTheDocument();
+    expect(screen.getByText('11 AM')).toBeInTheDocument();
+  });
+
+  it('headerFormat with format string', () => {
+    render(<ResourcesDayView {...defaultProps} headerFormat="DD/MM/YYYY" />);
+    expect(screen.getByText('15/01/2025')).toBeInTheDocument();
+  });
+
+  it('headerFormat with callback', () => {
+    render(<ResourcesDayView {...defaultProps} headerFormat={(date) => `Date: ${date}`} />);
+    expect(screen.getByText('Date: 2025-01-15 00:00:00')).toBeInTheDocument();
+  });
+
+  it('locale prop affects header and slot labels', () => {
+    render(<ResourcesDayView {...defaultProps} locale="ru" />);
+    expect(screen.getByText('январь 15, 2025')).toBeInTheDocument();
+  });
+
+  it('locale from DatesProvider affects labels', () => {
+    render(
+      <DatesProvider settings={{ locale: 'ru' }}>
+        <ResourcesDayView {...defaultProps} />
+      </DatesProvider>
+    );
+
+    expect(screen.getByText('январь 15, 2025')).toBeInTheDocument();
+  });
+
+  it('withCurrentTimeIndicator=true on a non-today date shows indicator', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15T10:30:00'));
+
+    const { container } = render(<ResourcesDayView {...defaultProps} withCurrentTimeIndicator />);
+
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator')
+    ).toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('withCurrentTimeIndicator=false on today hides indicator', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15T10:30:00'));
+
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} withCurrentTimeIndicator={false} />
+    );
+
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator')
+    ).not.toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('withCurrentTimeBubble=false hides bubble but keeps indicator', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15T10:30:00'));
+
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} withCurrentTimeIndicator withCurrentTimeBubble={false} />
+    );
+
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorThumb')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).not.toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('highlightBusinessHours marks business and non-business slots', () => {
+    const { container } = render(<ResourcesDayView {...defaultProps} highlightBusinessHours />);
+
+    const slots = container.querySelectorAll('.mantine-ResourcesDayView-resourcesDayViewRowSlot');
+
+    const businessSlots = container.querySelectorAll(
+      '.mantine-ResourcesDayView-resourcesDayViewRowSlot[data-business-hours]'
+    );
+    const nonBusinessSlots = container.querySelectorAll(
+      '.mantine-ResourcesDayView-resourcesDayViewRowSlot[data-non-business-hours]'
+    );
+
+    expect(businessSlots.length).toBeGreaterThan(0);
+    expect(nonBusinessSlots.length).toBeGreaterThan(0);
+    expect(businessSlots.length + nonBusinessSlots.length).toBe(slots.length);
+  });
+
+  it('renderEventBody replaces default body', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Test Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        events={events}
+        renderEventBody={(event) => (
+          <div>
+            <strong>{event.title}</strong>
+            <div>Custom body</div>
+          </div>
+        )}
+      />
+    );
+
+    expect(screen.getByText('Test Event')).toBeInTheDocument();
+    expect(screen.queryAllByText('Custom body').length).toBeGreaterThan(0);
+  });
+
+  it('renderEvent allows full custom rendering', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Custom Rendered',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        events={events}
+        renderEvent={(event, props) => (
+          <div data-testid="custom-event" key={props.key}>
+            {event.title} - custom
+          </div>
+        )}
+      />
+    );
+
+    expect(screen.getByTestId('custom-event')).toBeInTheDocument();
+    expect(screen.getByText('Custom Rendered - custom')).toBeInTheDocument();
+  });
+
+  it('clicking event calls onEventClick', async () => {
+    const spy = jest.fn();
+    const events = [
+      {
+        id: 1,
+        title: 'Clickable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(<ResourcesDayView {...defaultProps} events={events} onEventClick={spy} />);
+
+    await userEvent.click(screen.getByText('Clickable Event'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: 1,
+        title: 'Clickable Event',
+      }),
+      expect.any(Object)
+    );
+  });
+
+  it('labels overrides change corner label and slot aria-labels', () => {
+    render(
+      <ResourcesDayView {...defaultProps} labels={{ resources: 'Rooms', resourceSlot: 'Slot' }} />
+    );
+
+    expect(screen.getByText('Rooms')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /^Slot Room A/ }).length).toBeGreaterThan(0);
+  });
+
+  it('arrow key navigation moves focus across slots and between resources', async () => {
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        startTime="08:00:00"
+        endTime="10:00:00"
+        intervalMinutes={60}
+      />
+    );
+
+    const firstSlot = screen.getByRole('button', {
+      name: 'Resource time slot Room A 2025-01-15 08:00:00 - 09:00:00',
+    });
+    const secondSlot = screen.getByRole('button', {
+      name: 'Resource time slot Room A 2025-01-15 09:00:00 - 10:00:00',
+    });
+    const roomBFirstSlot = screen.getByRole('button', {
+      name: 'Resource time slot Room B 2025-01-15 08:00:00 - 09:00:00',
+    });
+
+    firstSlot.focus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(secondSlot).toHaveFocus();
+
+    firstSlot.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    expect(roomBFirstSlot).toHaveFocus();
+  });
+
+  it('scrollAreaProps forwarded', () => {
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} scrollAreaProps={{ className: 'custom-scroll' }} />
+    );
+
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewScrollArea.custom-scroll')
+    ).toBeInTheDocument();
+  });
+
+  it('previousControlProps, nextControlProps, todayControlProps forwarded', () => {
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        previousControlProps={{ className: 'custom-prev' }}
+        nextControlProps={{ className: 'custom-next' }}
+        todayControlProps={{ className: 'custom-today' }}
+      />
+    );
+
+    expect(container.querySelector('button.custom-prev')).toBeInTheDocument();
+    expect(container.querySelector('button.custom-next')).toBeInTheDocument();
+    expect(container.querySelector('button.custom-today')).toBeInTheDocument();
+  });
+
+  it('viewSelectProps forwarded', () => {
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} viewSelectProps={{ className: 'custom-view-select' }} />
+    );
+
+    expect(container.querySelector('.custom-view-select')).toBeInTheDocument();
+  });
+
+  it('withEventsDragAndDrop makes events draggable', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Draggable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(<ResourcesDayView {...defaultProps} events={events} withEventsDragAndDrop />);
+
+    const event = screen.getByTitle('Draggable Event');
+    expect(event.closest('[draggable="true"]') || event).toHaveAttribute('draggable', 'true');
+  });
+
+  it('canDragEvent prevents specific events from being draggable', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Locked Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 2,
+        title: 'Free Event',
+        start: '2025-01-15 10:00:00',
+        end: '2025-01-15 11:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        events={events}
+        withEventsDragAndDrop
+        canDragEvent={(event) => event.id !== 1}
+      />
+    );
+
+    const lockedEvent = screen.getByTitle('Locked Event');
+    expect(lockedEvent.closest('[draggable="true"]')).not.toBeInTheDocument();
+
+    const freeEvent = screen.getByTitle('Free Event');
+    expect(freeEvent.closest('[draggable="true"]') || freeEvent).toHaveAttribute(
+      'draggable',
+      'true'
+    );
+  });
+
+  it('withEventResize renders resize handles', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'Resizable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} events={events} withEventResize />
+    );
+
+    expect(
+      container.querySelectorAll('.mantine-ResourcesDayView-resourcesDayViewResizeHandle').length
+    ).toBeGreaterThan(0);
+  });
+
+  it('canResizeEvent suppresses resize handles for blocked events', () => {
+    const events = [
+      {
+        id: 1,
+        title: 'No Resize',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 2,
+        title: 'Can Resize',
+        start: '2025-01-15 10:00:00',
+        end: '2025-01-15 11:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        events={events}
+        withEventResize
+        canResizeEvent={(event) => event.id !== 1}
+      />
+    );
+
+    const resizeHandles = container.querySelectorAll(
+      '.mantine-ResourcesDayView-resourcesDayViewResizeHandle'
+    );
+    expect(resizeHandles).toHaveLength(2);
+  });
+
+  it('mode="static" suppresses slot clicks, event clicks, keyboard nav, draggable, resize handles', async () => {
+    const slotClickSpy = jest.fn();
+    const eventClickSpy = jest.fn();
+    const events = [
+      {
+        id: 1,
+        title: 'Static Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        mode="static"
+        events={events}
+        onTimeSlotClick={slotClickSpy}
+        onEventClick={eventClickSpy}
+        withEventsDragAndDrop
+        withEventResize
+      />
+    );
+
+    const slot = screen.getAllByRole('button', {
+      name: /Resource time slot Room A/,
+    })[0];
+    await userEvent.click(slot);
+    expect(slotClickSpy).not.toHaveBeenCalled();
+
+    expect(slot).toHaveAttribute('tabIndex', '-1');
+
+    const allSlots = container.querySelectorAll(
+      '.mantine-ResourcesDayView-resourcesDayViewRowSlot'
+    );
+    allSlots.forEach((s) => {
+      expect(s).toHaveAttribute('tabIndex', '-1');
+    });
+
+    const eventButton = screen.getByTitle('Static Event');
+    await userEvent.click(eventButton);
+    expect(eventClickSpy).not.toHaveBeenCalled();
+    expect(eventButton.closest('[draggable="true"]')).not.toBeInTheDocument();
+
+    const resizeHandles = container.querySelectorAll(
+      '.mantine-ResourcesDayView-resourcesDayViewResizeHandle'
+    );
+    expect(resizeHandles).toHaveLength(0);
   });
 
   describe('maxEventsPerTimeSlot', () => {
