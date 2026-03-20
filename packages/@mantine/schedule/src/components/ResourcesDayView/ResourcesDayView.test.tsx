@@ -705,6 +705,47 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       expect(screen.getAllByRole('button', { name: /more/ })).toHaveLength(1);
     });
 
+    it('does not show "+more" for transitively overlapping events within the limit', () => {
+      const chainEvents = [
+        {
+          id: 1,
+          title: 'Workshop',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 11:00:00',
+          color: 'pink',
+          payload: {},
+          resourceId: 'room-a',
+        },
+        {
+          id: 2,
+          title: 'Design Review',
+          start: '2025-01-15 09:30:00',
+          end: '2025-01-15 10:30:00',
+          color: 'orange',
+          payload: {},
+          resourceId: 'room-a',
+        },
+        {
+          id: 3,
+          title: 'Retrospective',
+          start: '2025-01-15 10:30:00',
+          end: '2025-01-15 11:30:00',
+          color: 'violet',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      render(
+        <ResourcesDayView {...defaultProps} events={chainEvents} maxEventsPerTimeSlot={2} />
+      );
+
+      expect(screen.getByText('Workshop')).toBeInTheDocument();
+      expect(screen.getByText('Design Review')).toBeInTheDocument();
+      expect(screen.getByText('Retrospective')).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /more/ })).not.toBeInTheDocument();
+    });
+
     it('passes moreEventsProps to MoreEvents component', async () => {
       render(
         <ResourcesDayView

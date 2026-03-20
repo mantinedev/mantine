@@ -784,9 +784,13 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     const moreEventsForResource =
       maxEventsPerTimeSlot !== undefined
         ? getOverlapClusters(allRegularEvents)
-            .filter((cluster) => cluster.length > maxEventsPerTimeSlot)
+            .filter((cluster) =>
+              cluster.some((e) => e.position.column >= maxEventsPerTimeSlot)
+            )
             .map((cluster) => {
-              const hiddenCount = cluster.length - maxEventsPerTimeSlot;
+              const hiddenCount = cluster.filter(
+                (e) => e.position.column >= maxEventsPerTimeSlot
+              ).length;
               const leftPercent = Math.min(...cluster.map((e) => e.position.top));
               const rightPercent = Math.max(
                 ...cluster.map((e) => e.position.top + e.position.height)
