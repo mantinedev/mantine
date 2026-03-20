@@ -276,7 +276,6 @@ const defaultProps = {
   withDragSlotSelect: false,
   withEventResize: false,
   mode: 'default',
-  maxEventsPerTimeSlot: 2,
 } satisfies Partial<ResourcesDayViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesDayViewFactory>(
@@ -784,9 +783,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     const moreEventsForResource =
       maxEventsPerTimeSlot !== undefined
         ? getOverlapClusters(allRegularEvents)
-            .filter((cluster) =>
-              cluster.some((e) => e.position.column >= maxEventsPerTimeSlot)
-            )
+            .filter((cluster) => cluster.some((e) => e.position.column >= maxEventsPerTimeSlot))
             .map((cluster) => {
               const hiddenCount = cluster.filter(
                 (e) => e.position.column >= maxEventsPerTimeSlot

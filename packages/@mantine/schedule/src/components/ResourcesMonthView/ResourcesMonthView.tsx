@@ -558,18 +558,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         const isDraggable = dragDrop.isDraggableEvent(event);
 
         eventNodes.push(
-          <ScheduleEvent
+          <div
             key={`${event.id}-${day}`}
-            event={event}
-            nowrap
-            autoSize
-            size="sm"
-            draggable={isDraggable}
-            renderEventBody={renderEventBody}
-            renderEvent={renderEvent}
-            radius={radius}
-            mode={mode}
-            onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
             style={{
               position: 'absolute',
               top: `calc(${eventIndex * rowHeightPercent}% + 1px)`,
@@ -577,18 +567,30 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               width: `calc(${dayWidthPercent}% - 2px)`,
               height: `calc(${rowHeightPercent}% - 2px)`,
               zIndex: 3,
+              pointerEvents: 'none',
             }}
-          />
+          >
+            <ScheduleEvent
+              event={event}
+              nowrap
+              autoSize
+              size="sm"
+              draggable={isDraggable}
+              renderEventBody={renderEventBody}
+              renderEvent={renderEvent}
+              radius={radius}
+              mode={mode}
+              onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+              style={{ width: '100%', height: '100%', pointerEvents: 'auto' }}
+            />
+          </div>
         );
       });
 
-      if (hiddenEventsCount > 0) {
+      if (hiddenEventsCount > 0 && mode !== 'static') {
         moreNodes.push(
-          <MoreEvents
+          <div
             key={`more-${resource.id}-${day}`}
-            events={dayEvents}
-            moreEventsCount={hiddenEventsCount}
-            mode={mode}
             style={{
               position: 'absolute',
               bottom: 1,
@@ -596,9 +598,17 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               width: `calc(${dayWidthPercent}% - 2px)`,
               height: 18,
               zIndex: 4,
+              pointerEvents: 'none',
             }}
-            {...moreEventsProps}
-          />
+          >
+            <MoreEvents
+              events={dayEvents}
+              moreEventsCount={hiddenEventsCount}
+              mode={mode}
+              style={{ width: '100%', height: '100%', pointerEvents: 'auto' }}
+              {...moreEventsProps}
+            />
+          </div>
         );
       }
 

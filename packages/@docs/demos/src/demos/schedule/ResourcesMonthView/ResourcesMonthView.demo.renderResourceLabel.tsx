@@ -15,7 +15,7 @@ function Demo() {
       resources={resources}
       events={resourceEvents}
       renderResourceLabel={(resource: ScheduleResourceData) => (
-        <Stack gap={0} align="center">
+        <Stack gap={0} align="flex-start">
           <Text fw={600} size="sm">
             {resource.label}
           </Text>
@@ -46,7 +46,7 @@ function Demo() {
       resources={resources}
       events={events}
       renderResourceLabel={(resource: ScheduleResourceData) => (
-        <Stack gap={0} align="center">
+        <Stack gap={0} align="flex-start">
           <Text fw={600} size="sm">
             {resource.label}
           </Text>

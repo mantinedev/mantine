@@ -26,7 +26,7 @@ function Demo() {
       endTime="18:00:00"
       startScrollDateTime={\`\${today} 08:00:00\`}
       renderResourceLabel={(resource) => (
-        <Stack gap={2} align="center">
+        <Stack gap={2} align="flex-start">
           <Text size="sm" fw={600}>{resource.label}</Text>
           <Text size="xs" c="dimmed">Floor 2</Text>
         </Stack>
@@ -49,7 +49,7 @@ function Demo() {
       endTime="18:00:00"
       startScrollDateTime={`${dayjs().format('YYYY-MM-DD')} 08:00:00`}
       renderResourceLabel={(resource) => (
-        <Stack gap={2} align="center">
+        <Stack gap={2} align="flex-start">
           <Text size="sm" fw={600}>
             {resource.label}
           </Text>
