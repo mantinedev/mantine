@@ -276,6 +276,7 @@ const defaultProps = {
   withDragSlotSelect: false,
   withEventResize: false,
   mode: 'default',
+  maxEventsPerTimeSlot: 2,
 } satisfies Partial<ResourcesDayViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesDayViewFactory>(

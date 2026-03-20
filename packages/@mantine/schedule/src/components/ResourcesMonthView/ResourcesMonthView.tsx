@@ -533,6 +533,10 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     const slotGroup = String(resource.id);
     const dropTarget = dragDrop.dropTarget;
 
+    const totalDays = monthDays.length;
+    const eventNodes: React.ReactNode[] = [];
+    const moreNodes: React.ReactNode[] = [];
+
     const cells = monthDays.map((day, dayIndex) => {
       const d = dayjs(day);
       const weekend = ctx.getWeekendDays(weekendDays).includes(d.day() as DayOfWeek);
@@ -547,13 +551,15 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       const visibleEvents = dayEvents.slice(0, maxEventsPerCell);
       const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerCell);
       const isFirstCell = resourceIndex === 0 && dayIndex === 0;
+      const dayLeftPercent = (dayIndex / totalDays) * 100;
+      const dayWidthPercent = 100 / totalDays;
 
-      const eventNodes = visibleEvents.map((event, eventIndex) => {
+      visibleEvents.forEach((event, eventIndex) => {
         const isDraggable = dragDrop.isDraggableEvent(event);
 
-        return (
+        eventNodes.push(
           <ScheduleEvent
-            key={event.id}
+            key={`${event.id}-${day}`}
             event={event}
             nowrap
             autoSize
@@ -567,13 +573,34 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             style={{
               position: 'absolute',
               top: `calc(${eventIndex * rowHeightPercent}% + 1px)`,
-              left: 1,
-              right: 1,
+              left: `calc(${dayLeftPercent}% + 1px)`,
+              width: `calc(${dayWidthPercent}% - 2px)`,
               height: `calc(${rowHeightPercent}% - 2px)`,
+              zIndex: 3,
             }}
           />
         );
       });
+
+      if (hiddenEventsCount > 0) {
+        moreNodes.push(
+          <MoreEvents
+            key={`more-${resource.id}-${day}`}
+            events={dayEvents}
+            moreEventsCount={hiddenEventsCount}
+            mode={mode}
+            style={{
+              position: 'absolute',
+              bottom: 1,
+              left: `calc(${dayLeftPercent}% + 1px)`,
+              width: `calc(${dayWidthPercent}% - 2px)`,
+              height: 18,
+              zIndex: 4,
+            }}
+            {...moreEventsProps}
+          />
+        );
+      }
 
       return (
         <UnstyledButton
@@ -626,24 +653,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               ? (e) => dragDrop.handleDrop(e, { day, resourceId: resource.id })
               : undefined
           }
-        >
-          {eventNodes}
-          {hiddenEventsCount > 0 && (
-            <MoreEvents
-              events={dayEvents}
-              moreEventsCount={hiddenEventsCount}
-              mode={mode}
-              style={{
-                position: 'absolute',
-                bottom: 1,
-                left: 1,
-                right: 1,
-                height: 18,
-              }}
-              {...moreEventsProps}
-            />
-          )}
-        </UnstyledButton>
+        />
       );
     });
 
@@ -652,7 +662,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         <div {...getStyles('resourcesMonthViewResourceLabel')}>
           {renderResourceLabel ? renderResourceLabel(resource) : resource.label}
         </div>
-        <div {...getStyles('resourcesMonthViewRowSlots')}>{cells}</div>
+        <div {...getStyles('resourcesMonthViewRowSlots')}>
+          {eventNodes}
+          {moreNodes}
+          {cells}
+        </div>
       </div>
     );
   });
