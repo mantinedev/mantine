@@ -20,7 +20,7 @@ function Demo() {
       date={date}
       onDateChange={setDate}
       view={view}
-      onViewChange={(v) => setView(v as ResourcesScheduleViewLevel)}
+      onViewChange={setView}
       resources={resources}
       events={events}
       dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}
@@ -41,7 +41,7 @@ function Demo() {
       date={date}
       onDateChange={setDate}
       view={view}
-      onViewChange={(v) => setView(v as ResourcesScheduleViewLevel)}
+      onViewChange={setView}
       resources={resources}
       events={resourceEvents}
       dayViewProps={{ startTime: '08:00:00', endTime: '18:00:00', startScrollTime: '08:00:00' }}

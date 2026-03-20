@@ -113,7 +113,7 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     title: 'ResourcesSchedule',
     package: '@mantine/schedule',
     slug: '/schedule/resources-schedule',
-    description: 'Schedule wrapper component that combines resource day and month views',
+    description: 'Schedule wrapper component that combines resource day, week and month views',
     props: ['ResourcesSchedule'],
     styles: ['ResourcesSchedule'],
     source: '@mantine/schedule/src/components/ResourcesSchedule/ResourcesSchedule.tsx',

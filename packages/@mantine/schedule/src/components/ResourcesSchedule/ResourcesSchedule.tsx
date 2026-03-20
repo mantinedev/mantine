@@ -99,7 +99,7 @@ export interface ResourcesScheduleProps
   defaultView?: ResourcesScheduleViewLevel;
 
   /** Called when view level changes */
-  onViewChange?: (view: ScheduleViewLevel) => void;
+  onViewChange?: (view: ResourcesScheduleViewLevel) => void;
 
   /** Events to display across all views */
   events?: ScheduleEventData[];
@@ -277,7 +277,7 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
   const [_view, _setView] = useUncontrolled<ResourcesScheduleViewLevel>({
     value: view,
     defaultValue: defaultView,
-    onChange: onViewChange as (view: ResourcesScheduleViewLevel) => void,
+    onChange: onViewChange,
   });
 
   const [_date, _setDate] = useUncontrolled<Date | DateStringValue>({
@@ -294,7 +294,6 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     if (newView === 'day' || newView === 'week' || newView === 'month') {
       _setView(newView);
     }
-    onViewChange?.(newView);
   };
 
   const commonProps = {

@@ -119,17 +119,20 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
     ).toBeInTheDocument();
   });
 
-  it('calls onViewChange when switching views', async () => {
+  it('calls onViewChange exactly once per tab click', async () => {
     const spy = jest.fn();
     render(<ResourcesSchedule {...defaultProps} defaultView="day" onViewChange={spy} />);
 
     await userEvent.click(screen.getByRole('tab', { name: 'Switch to week view' }));
+    expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('week');
 
     await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
+    expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenCalledWith('month');
 
     await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
+    expect(spy).toHaveBeenCalledTimes(3);
     expect(spy).toHaveBeenCalledWith('day');
   });
 

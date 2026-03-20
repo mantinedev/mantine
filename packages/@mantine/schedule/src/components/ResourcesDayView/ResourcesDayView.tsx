@@ -248,7 +248,7 @@ export interface ResourcesDayViewProps
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
 
-  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 */
+  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 */
   maxEventsPerTimeSlot?: number;
 
   /** Props passed down to `MoreEvents` component */
@@ -276,6 +276,7 @@ const defaultProps = {
   withDragSlotSelect: false,
   withEventResize: false,
   mode: 'default',
+  maxEventsPerTimeSlot: 2,
 } satisfies Partial<ResourcesDayViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesDayViewFactory>(

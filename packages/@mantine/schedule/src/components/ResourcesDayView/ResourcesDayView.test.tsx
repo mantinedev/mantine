@@ -621,13 +621,13 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       },
     ];
 
-    it('renders all events when maxEventsPerTimeSlot is not set', () => {
+    it('uses default maxEventsPerTimeSlot of 2', () => {
       render(<ResourcesDayView {...defaultProps} events={overlappingEvents} />);
 
       expect(screen.getByText('Event 1')).toBeInTheDocument();
       expect(screen.getByText('Event 2')).toBeInTheDocument();
-      expect(screen.getByText('Event 3')).toBeInTheDocument();
-      expect(screen.queryByRole('button', { name: /more/ })).not.toBeInTheDocument();
+      expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /\+1 more/ })).toBeInTheDocument();
     });
 
     it('limits visible events and shows "+more" button', () => {

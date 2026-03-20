@@ -164,7 +164,7 @@ export interface ResourcesWeekViewProps
   }) => void;
   recurrenceExpansionLimit?: number;
 
-  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 */
+  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 */
   maxEventsPerTimeSlot?: number;
 
   /** Props passed down to `MoreEvents` component */

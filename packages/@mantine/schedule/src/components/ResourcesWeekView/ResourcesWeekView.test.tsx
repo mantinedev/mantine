@@ -262,9 +262,7 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
 
   it('marks today with data-today attribute when highlightToday is true', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-01-15 12:00:00'));
-    const { container, rerender } = render(
-      <ResourcesWeekView {...defaultProps} highlightToday />
-    );
+    const { container, rerender } = render(<ResourcesWeekView {...defaultProps} highlightToday />);
     const todayLabels = container.querySelectorAll(
       '.mantine-ResourcesWeekView-resourcesWeekViewDayLabel[data-today]'
     );
@@ -610,6 +608,135 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
 
       const event = screen.getByText('Static Drag Event').closest('button');
       expect(event).not.toHaveAttribute('draggable', 'true');
+    });
+  });
+
+  describe('maxEventsPerTimeSlot', () => {
+    const overlappingEvents = [
+      {
+        id: 1,
+        title: 'Event 1',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 11:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 2,
+        title: 'Event 2',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 11:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 3,
+        title: 'Event 3',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 11:00:00',
+        color: 'green',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    it('uses default maxEventsPerTimeSlot of 2', () => {
+      render(<ResourcesWeekView {...defaultProps} events={overlappingEvents} />);
+
+      expect(screen.getByText('Event 1')).toBeInTheDocument();
+      expect(screen.getByText('Event 2')).toBeInTheDocument();
+      expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /\+1 more/ })).toBeInTheDocument();
+    });
+
+    it('limits visible events and shows "+more" button', () => {
+      render(
+        <ResourcesWeekView {...defaultProps} events={overlappingEvents} maxEventsPerTimeSlot={2} />
+      );
+
+      expect(screen.getByText('Event 1')).toBeInTheDocument();
+      expect(screen.getByText('Event 2')).toBeInTheDocument();
+      expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /more/ })).toBeInTheDocument();
+    });
+
+    it('shows correct hidden events count', () => {
+      render(
+        <ResourcesWeekView {...defaultProps} events={overlappingEvents} maxEventsPerTimeSlot={1} />
+      );
+
+      expect(screen.getByText('Event 1')).toBeInTheDocument();
+      expect(screen.queryByText('Event 2')).not.toBeInTheDocument();
+      expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /\+2 more/ })).toBeInTheDocument();
+    });
+
+    it('does not show "+more" for transitively overlapping events within the limit', () => {
+      const chainEvents = [
+        {
+          id: 1,
+          title: 'Workshop',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 11:00:00',
+          color: 'pink',
+          payload: {},
+          resourceId: 'room-a',
+        },
+        {
+          id: 2,
+          title: 'Design Review',
+          start: '2025-01-15 09:30:00',
+          end: '2025-01-15 10:30:00',
+          color: 'orange',
+          payload: {},
+          resourceId: 'room-a',
+        },
+        {
+          id: 3,
+          title: 'Retrospective',
+          start: '2025-01-15 10:30:00',
+          end: '2025-01-15 11:30:00',
+          color: 'violet',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      render(<ResourcesWeekView {...defaultProps} events={chainEvents} maxEventsPerTimeSlot={2} />);
+
+      expect(screen.getByText('Workshop')).toBeInTheDocument();
+      expect(screen.getByText('Design Review')).toBeInTheDocument();
+      expect(screen.getByText('Retrospective')).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /more/ })).not.toBeInTheDocument();
+    });
+
+    it('shows all events in MoreEvents dropdown when clicked', async () => {
+      render(
+        <ResourcesWeekView {...defaultProps} events={overlappingEvents} maxEventsPerTimeSlot={1} />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+
+      expect(screen.getAllByText('Event 1')).toHaveLength(2);
+      expect(screen.getByText('Event 2')).toBeInTheDocument();
+      expect(screen.getByText('Event 3')).toBeInTheDocument();
+    });
+
+    it('passes moreEventsProps to MoreEvents component', async () => {
+      render(
+        <ResourcesWeekView
+          {...defaultProps}
+          events={overlappingEvents}
+          maxEventsPerTimeSlot={1}
+          moreEventsProps={{ dropdownType: 'modal', modalTitle: 'Hidden events' }}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+
+      expect(screen.getByRole('heading', { name: 'Hidden events' })).toBeInTheDocument();
     });
   });
 });
