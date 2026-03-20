@@ -86,6 +86,7 @@
   user-select: none;
   cursor: default;
   height: 32px;
+  text-transform: capitalize;
   border-inline-end: 1px solid var(--resources-week-view-border-color);
 
   &:where(:last-of-type) {

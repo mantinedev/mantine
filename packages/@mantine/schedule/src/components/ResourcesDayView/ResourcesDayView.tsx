@@ -582,7 +582,12 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
 
     const slotRect = targetSlot.getBoundingClientRect();
     const viewportRect = viewportRef.current.getBoundingClientRect();
-    viewportRef.current.scrollTo({ left: slotRect.left - viewportRect.left, top: 0 });
+    const cornerEl = viewportRef.current.querySelector(`.${classes.resourcesDayViewCorner}`);
+    const labelWidth = cornerEl ? cornerEl.getBoundingClientRect().width : 0;
+    viewportRef.current.scrollTo({
+      left: slotRect.left - viewportRect.left - labelWidth,
+      top: 0,
+    });
   }, []);
 
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
