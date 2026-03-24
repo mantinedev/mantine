@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {
   BoxProps,
@@ -50,6 +51,33 @@ export const Textarea = factory<TextareaFactory>((props, ref) => {
 
   const shouldAutosize = autosize && getEnv() !== 'test';
   const autosizeProps = shouldAutosize ? { maxRows, minRows } : {};
+
+  useEffect(() => {
+    if (!shouldAutosize || typeof document === 'undefined') {
+      return undefined;
+    }
+
+    const setMirrorAttributes = () => {
+      document
+        .querySelectorAll<HTMLTextAreaElement>('textarea[aria-hidden="true"][tabindex="-1"]')
+        .forEach((element) => {
+          if (
+            element.style.position === 'absolute' &&
+            element.style.visibility === 'hidden' &&
+            element.style.zIndex === '-1000'
+          ) {
+            element.setAttribute('role', 'presentation');
+            element.setAttribute('aria-label', 'autosize measurement mirror textarea');
+          }
+        });
+    };
+
+    // Workaround for react-textarea-autosize hidden mirror textarea.
+    // Remove when upstream sets required accessibility attributes on mirror textarea.
+    requestAnimationFrame(setMirrorAttributes);
+
+    return undefined;
+  }, [shouldAutosize]);
 
   return (
     <InputBase<any>
