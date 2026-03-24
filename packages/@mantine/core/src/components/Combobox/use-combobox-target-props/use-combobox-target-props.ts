@@ -91,21 +91,26 @@ export function useComboboxTargetProps({
   };
 
   const ariaAttributes = withAriaAttributes
-    ? {
-        'aria-haspopup': 'listbox' as const,
-        'aria-expanded': withExpandedAttribute
-          ? !!(ctx.store.listId && ctx.store.dropdownOpened)
-          : undefined,
-        'aria-controls':
-          ctx.store.dropdownOpened && ctx.store.listId ? ctx.store.listId : undefined,
-        'aria-activedescendant': ctx.store.dropdownOpened
-          ? selectedOptionId || undefined
-          : undefined,
-        autoComplete,
-        'data-expanded': ctx.store.dropdownOpened || undefined,
-        'data-mantine-stop-propagation': ctx.store.dropdownOpened || undefined,
-      }
-    : {};
+  ? {
+      role: 'combobox',
+
+      'aria-haspopup': 'listbox' as const,
+
+      'aria-expanded': ctx.store.dropdownOpened,
+
+      'aria-controls':
+        ctx.store.dropdownOpened && ctx.store.listId ? ctx.store.listId : undefined,
+
+      'aria-activedescendant': ctx.store.dropdownOpened
+        ? selectedOptionId || undefined
+        : undefined,
+
+      autoComplete,
+
+      'data-expanded': ctx.store.dropdownOpened || undefined,
+      'data-mantine-stop-propagation': ctx.store.dropdownOpened || undefined,
+    }
+  : {};
 
   return {
     ...ariaAttributes,
