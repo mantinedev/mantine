@@ -316,7 +316,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         }}
         {...comboboxProps}
       >
-        <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
+        <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete} withExpandedAttribute>
           <InputBase
             id={_id}
             ref={ref}

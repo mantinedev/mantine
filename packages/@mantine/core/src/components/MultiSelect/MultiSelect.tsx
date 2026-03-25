@@ -436,7 +436,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
               {...getStyles('pillsList', { style: pillsListStyle })}
             >
               {values}
-              <Combobox.EventsTarget autoComplete={autoComplete}>
+              <Combobox.EventsTarget autoComplete={autoComplete} withExpandedAttribute>
                 <PillsInput.Field
                   {...rest}
                   ref={ref}
