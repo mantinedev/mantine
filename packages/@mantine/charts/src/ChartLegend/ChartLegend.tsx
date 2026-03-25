@@ -107,7 +107,6 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
       key={index}
       {...getStyles('legendItem')}
       onMouseEnter={() => onHighlight(item.dataKey)}
-      onMouseLeave={() => onHighlight(null)}
       data-without-color={showColor === false || undefined}
     >
       <ColorSwatch
@@ -125,6 +124,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
       ref={ref}
       mod={[{ position: legendPosition, centered }, mod]}
       {...getStyles('legend')}
+      onMouseLeave={() => onHighlight(null)}
       {...others}
     >
       {items}
