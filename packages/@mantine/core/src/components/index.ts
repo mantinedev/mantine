@@ -90,6 +90,7 @@ export * from './Spoiler';
 export * from './Stack';
 export * from './Stepper';
 export * from './Switch';
+export * from './DataTable';
 export * from './Table';
 export * from './TableOfContents';
 export * from './Tabs';

@@ -1,0 +1,98 @@
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.virtualScrollContainer {
+  overflow: auto;
+  position: relative;
+}
+
+.root:where([data-virtualized]) .virtualScrollContainer {
+  height: var(--datatable-height);
+}
+
+.table {
+  width: 100%;
+}
+
+.th:where([data-sortable]) {
+  cursor: pointer;
+  user-select: none;
+}
+
+.th:where([data-sortable]):hover {
+  background-color: var(--table-hover-color);
+}
+
+.sortIcon {
+  margin-left: var(--mantine-spacing-xs);
+  transition: transform 150ms ease;
+  color: var(--mantine-color-dimmed);
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.sortIcon[data-sorted] {
+  color: var(--mantine-color-blue-filled);
+}
+
+.sortIcon[data-direction='desc'] {
+  transform: rotate(180deg);
+}
+
+.tr:where([data-clickable]) {
+  cursor: pointer;
+}
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--mantine-color-body);
+  opacity: 0.6;
+  z-index: 2;
+  pointer-events: all;
+}
+
+.emptyState {
+  padding: var(--mantine-spacing-xl);
+  text-align: center;
+  color: var(--mantine-color-dimmed);
+  width: 100%;
+}
+
+.footer {
+  margin-top: var(--mantine-spacing-md);
+  padding: 0 var(--mantine-spacing-xs);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+}
+
+.recordsInfo {
+  white-space: nowrap;
+}
+
+.pageSizeSelect {
+  white-space: nowrap;
+}
+
+.pageSizeSelectInput {
+  width: 70px;
+}
+
+.selectionCheckbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
