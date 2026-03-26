@@ -62,7 +62,7 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
     [refProp]: targetRef,
     ...(!ctx.controlled
       ? {
-          onClick: (event) => {
+          onClick: (event: React.MouseEvent<HTMLElement>) => {
             ctx.onToggle();
             childProps.onClick?.(event);
           },
