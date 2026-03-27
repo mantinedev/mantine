@@ -108,6 +108,21 @@
       position: sticky;
       top: var(--table-sticky-header-offset, 0);
       background-color: var(--mantine-color-body);
+      /* border-collapse conflicts with position:sticky — vertical borders and
+         rowSpan > 1 borders vanish. Use box-shadow to draw borders instead. */
+      --_th-shadow-start: ;
+      --_th-shadow-end: ;
+      box-shadow: var(--_th-shadow-start) var(--_th-shadow-end) inset 0 -1px 0 var(--table-border-color);
+    }
+
+    & :where(.th[data-with-column-border]:not(:first-child)) {
+      border-inline-start: none;
+      --_th-shadow-start: inset 1px 0 0 var(--table-border-color),;
+    }
+
+    & :where(.th[data-with-column-border]:not(:last-child)) {
+      border-inline-end: none;
+      --_th-shadow-end: inset -1px 0 0 var(--table-border-color),;
     }
   }
 }
