@@ -9,4 +9,5 @@ describe('@mantine/charts/get-heat-color', () => {
     expect(getHeatColor({ value: 3, min: 1, max: 4, colors })).toBe('3');
     expect(getHeatColor({ value: 4, min: 1, max: 4, colors })).toBe('4');
   });
+
 });
