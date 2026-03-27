@@ -125,6 +125,12 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const handleCloseButtonEvent = (e: React.MouseEvent) => {
+    // A click on the close button shouldn't be mistaken for a click on the notification container
+    e.stopPropagation();
+    onClose?.();
+  };
+
   return (
     <Box
       {...getStyles('root')}
@@ -150,7 +156,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
           color="gray"
           {...closeButtonProps}
           unstyled={unstyled}
-          onClick={onClose}
+          onClick={handleCloseButtonEvent}
           {...getStyles('closeButton')}
         />
       )}
