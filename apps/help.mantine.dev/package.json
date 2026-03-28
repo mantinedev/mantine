@@ -31,12 +31,12 @@
     "react-dom": "19.2.4",
     "react-imask": "^7.6.1",
     "rehype-slug": "^6.0.0",
-    "shiki": "^3.23.0"
+    "shiki": "^4.0.2"
   },
   "devDependencies": {
     "@mdx-js/loader": "^3.1.1",
     "@types/mdx": "2.0.13",
-    "@types/node": "^24.12.0",
+    "@types/node": "^25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "typescript": "5.9.3"

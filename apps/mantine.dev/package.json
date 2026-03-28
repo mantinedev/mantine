@@ -61,7 +61,7 @@
     "@tiptap/pm": "^3.21.0",
     "@tiptap/react": "^3.21.0",
     "@tiptap/starter-kit": "^3.21.0",
-    "@types/node": "^24.12.0",
+    "@types/node": "^25.5.0",
     "@types/react": "19.2.14",
     "chroma-js": "^3.2.0",
     "dayjs": "^1.11.20",
@@ -80,7 +80,7 @@
     "react-number-format": "^5.4.5",
     "recharts": "^3.8.1",
     "rehype-slug": "^6.0.0",
-    "shiki": "^3.23.0",
+    "shiki": "^4.0.2",
     "typescript": "5.9.3"
   },
   "devDependencies": {
