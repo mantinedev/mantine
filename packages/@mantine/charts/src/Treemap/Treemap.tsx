@@ -103,14 +103,12 @@ const defaultProps = {
   aspectRatio: 0.5 * (1 + Math.sqrt(5)),
 } satisfies Partial<TreemapProps>;
 
-const varsResolver = createVarsResolver<TreemapFactory>(
-  (theme, { strokeColor, height }) => ({
-    root: {
-      '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
-      '--chart-height': rem(height),
-    },
-  })
-);
+const varsResolver = createVarsResolver<TreemapFactory>((theme, { strokeColor, height }) => ({
+  root: {
+    '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
+    '--chart-height': rem(height),
+  },
+}));
 
 interface TreemapContentProps {
   x: number;
@@ -292,8 +290,7 @@ export const Treemap = factory<TreemapFactory>((_props) => {
                     payload?.map((item) => ({
                       name: item.name as string,
                       value: item.value as number,
-                      color:
-                        resolvedColors[item.name as string] || 'var(--mantine-color-blue-6)',
+                      color: resolvedColors[item.name as string] || 'var(--mantine-color-blue-6)',
                     })) || []
                   }
                   classNames={resolvedClassNames}

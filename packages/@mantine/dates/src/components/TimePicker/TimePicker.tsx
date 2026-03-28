@@ -301,9 +301,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
   const isDuration = type === 'duration';
   const format = isDuration ? '24h' : _format!;
   const resolvedHoursPlaceholder =
-    isDuration && hoursPlaceholder === '--'
-      ? '-'.repeat(minHoursDigits!)
-      : hoursPlaceholder;
+    isDuration && hoursPlaceholder === '--' ? '-'.repeat(minHoursDigits!) : hoursPlaceholder;
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<TimePickerFactory>({
     classNames,
