@@ -20,7 +20,6 @@ import { DirectionProvider, MantineProvider } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
-import { Banner } from '@/components/Banner';
 import { GaScript } from '@/components/GaScript';
 import { HotKeysHandler } from '@/components/HotKeysHandler';
 import { MdxProvider } from '@/components/MdxProvider';
@@ -81,17 +80,6 @@ export default function App({ Component, pageProps, router }: AppProps) {
             <CodeHighlightAdapterProvider adapter={shikiAdapter}>
               <Search />
               <Notifications />
-              <Banner id="9-0-0-alpha-release">
-                🎉 Mantine 9.0 alpha is now available!{' '}
-                <a
-                  href="https://alpha.mantine.dev/changelog/9-0-0/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'white', textDecoration: 'underline' }}
-                >
-                  Check out what&apos;s new →
-                </a>
-              </Banner>
               <ModalsProviderDemo>
                 <MdxProvider>
                   <HotKeysHandler />
