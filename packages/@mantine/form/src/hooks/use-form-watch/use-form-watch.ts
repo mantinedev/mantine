@@ -39,21 +39,22 @@ export function useFormWatch<
           })
       ) ?? [];
 
-    if (cascadeUpdates) {
-      for (const subscriptionKey in subscribers.current) {
-        if (subscriptionKey.startsWith(`${path}.`) || path.startsWith(`${subscriptionKey}.`)) {
-          result.push(
-            ...subscribers.current[subscriptionKey].map(
-              (cb) => (input: SetValuesSubscriberPayload<Values>) =>
-                cb({
-                  previousValue: getPath(subscriptionKey, input.previousValues) as any,
-                  value: getPath(subscriptionKey, input.updatedValues) as any,
-                  touched: $status.isTouched(subscriptionKey),
-                  dirty: $status.isDirty(subscriptionKey),
-                })
-            )
-          );
-        }
+    for (const subscriptionKey in subscribers.current) {
+      const isParent = String(path).startsWith(`${subscriptionKey}.`);
+      const isChild = String(subscriptionKey).startsWith(`${path}.`);
+
+      if (isParent || (cascadeUpdates && isChild)) {
+        result.push(
+          ...subscribers.current[subscriptionKey].map(
+            (cb) => (input: SetValuesSubscriberPayload<Values>) =>
+              cb({
+                previousValue: getPath(subscriptionKey, input.previousValues) as any,
+                value: getPath(subscriptionKey, input.updatedValues) as any,
+                touched: $status.isTouched(subscriptionKey),
+                dirty: $status.isDirty(subscriptionKey),
+              })
+          )
+        );
       }
     }
 

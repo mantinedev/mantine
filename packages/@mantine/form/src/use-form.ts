@@ -93,23 +93,31 @@ export function useForm<
     mode === 'uncontrolled' && setFormKey((key) => key + 1);
   }, []);
 
+  const notifyWatchSubscribers = useCallback((previousValues: Values) => {
+    Object.keys($watch.subscribers.current).forEach((path) => {
+      const value = getPath(path, $values.refValues.current);
+      const previousValue = getPath(path, previousValues);
+
+      if (value !== previousValue) {
+        $watch.subscribers.current[path]?.forEach((cb) =>
+          cb({
+            previousValue: getPath(path, previousValues),
+            value: getPath(path, $values.refValues.current),
+            touched: $status.isTouched(path),
+            dirty: $status.isDirty(path),
+          })
+        );
+      }
+    });
+  }, []);
+
   const handleValuesChanges = useCallback(
     (previousValues: Values) => {
       clearInputErrorOnChange && $errors.clearErrors();
       mode === 'uncontrolled' && setFormKey((key) => key + 1);
-
-      Object.keys($watch.subscribers.current).forEach((path) => {
-        const value = getPath(path, $values.refValues.current);
-        const previousValue = getPath(path, previousValues);
-
-        if (value !== previousValue) {
-          $watch
-            .getFieldSubscribers(path)
-            .forEach((cb) => cb({ previousValues, updatedValues: $values.refValues.current }));
-        }
-      });
+      notifyWatchSubscribers(previousValues);
     },
-    [clearInputErrorOnChange]
+    [clearInputErrorOnChange, notifyWatchSubscribers]
   );
 
   const initialize: Initialize<Values> = useCallback(
@@ -461,10 +469,26 @@ export function useForm<
     getTouched: $status.getTouched,
     getDirty: $status.getDirty,
 
-    reorderListItem: $list.reorderListItem,
-    insertListItem: $list.insertListItem,
-    removeListItem: $list.removeListItem,
-    replaceListItem: $list.replaceListItem,
+    reorderListItem: ((path, payload) => {
+      const previousValues = $values.refValues.current;
+      $list.reorderListItem(path, payload);
+      notifyWatchSubscribers(previousValues);
+    }) as typeof $list.reorderListItem,
+    insertListItem: ((path, item, index) => {
+      const previousValues = $values.refValues.current;
+      $list.insertListItem(path, item, index);
+      notifyWatchSubscribers(previousValues);
+    }) as typeof $list.insertListItem,
+    removeListItem: ((path, index) => {
+      const previousValues = $values.refValues.current;
+      $list.removeListItem(path, index);
+      notifyWatchSubscribers(previousValues);
+    }) as typeof $list.removeListItem,
+    replaceListItem: ((path, index, item) => {
+      const previousValues = $values.refValues.current;
+      $list.replaceListItem(path, index, item);
+      notifyWatchSubscribers(previousValues);
+    }) as typeof $list.replaceListItem,
 
     reset,
     validate,
