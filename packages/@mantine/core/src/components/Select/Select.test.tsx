@@ -177,20 +177,20 @@ describe('@mantine/core/Select', () => {
   it('opens dropdown on focus when openOnFocus is true and searchable', async () => {
     render(<Select {...defaultProps} searchable openOnFocus />);
     expect(screen.queryByRole('listbox')).toBe(null);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('listbox')).toBeVisible();
   });
 
   it('does not open dropdown on focus when openOnFocus is false', async () => {
     render(<Select {...defaultProps} searchable openOnFocus={false} />);
     await userEvent.tab();
-    expect(screen.getByRole('textbox')).toHaveFocus();
+    expect(screen.getByRole('combobox')).toHaveFocus();
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
   it('does not open dropdown on focus when openOnFocus is true but not searchable', async () => {
     render(<Select {...defaultProps} openOnFocus />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     await userEvent.tab();
     expect(input).toHaveFocus();
     expect(screen.queryByRole('listbox')).toBe(null);
@@ -198,7 +198,7 @@ describe('@mantine/core/Select', () => {
 
   it('selects highlighted option on blur when autoSelectOnBlur is true', async () => {
     render(<Select {...defaultProps} searchable autoSelectOnBlur />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     await userEvent.click(input);
     await userEvent.keyboard('{ArrowDown}');
     await userEvent.tab();
