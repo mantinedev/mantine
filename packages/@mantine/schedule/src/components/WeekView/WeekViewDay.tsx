@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
-import { DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
+import { DateStringValue, DateTimeStringValue, DayOfWeek, ScheduleMode } from '../../types';
 import { DayTimeInterval, getBusinessHoursMod } from '../../utils';
 import type { WeekViewControlsRef } from './handle-week-view-key-down';
 import type { WeekViewFactory } from './WeekView';
@@ -87,6 +87,12 @@ export interface WeekViewDayProps {
 
   /** Ref callback for the day slots container */
   daySlotsContainerRef?: (node: HTMLDivElement | null) => void;
+
+  /** Function to get additional props for each time slot */
+  getTimeSlotProps?: (data: {
+    start: DateTimeStringValue;
+    end: DateTimeStringValue;
+  }) => Record<string, any> | undefined;
 }
 
 export function WeekViewDay({
@@ -114,6 +120,7 @@ export function WeekViewDay({
   onSlotPointerDown,
   isSlotDragSelected,
   daySlotsContainerRef,
+  getTimeSlotProps,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
@@ -126,6 +133,18 @@ export function WeekViewDay({
     const isFirstSlot =
       firstSlotIndex?.dayIndex === dayIndex && firstSlotIndex?.slotIndex === slotIndex;
     const isDragSelected = isSlotDragSelected?.(slotIndex, dayGroup) || false;
+    const slotStart = `${dayGroup} ${slot.startTime}` as DateTimeStringValue;
+    const slotEnd = `${dayGroup} ${slot.endTime}` as DateTimeStringValue;
+    const { onClick: externalOnClick, ...externalSlotProps } =
+      getTimeSlotProps?.({ start: slotStart, end: slotEnd }) || {};
+
+    const handleClick =
+      mode === 'static'
+        ? undefined
+        : (e: React.MouseEvent<HTMLButtonElement>) => {
+            onSlotClick?.(String(day), slot.startTime, e);
+            externalOnClick?.(e);
+          };
 
     return (
       <UnstyledButton
@@ -167,14 +186,11 @@ export function WeekViewDay({
             ? (e) => onSlotPointerDown?.(e, slotIndex, dayGroup)
             : undefined
         }
-        onClick={
-          mode === 'static' || !onSlotClick
-            ? undefined
-            : (e) => onSlotClick(String(day), slot.startTime, e)
-        }
+        onClick={handleClick}
         onDragOver={
           withEventsDragAndDrop && mode !== 'static' ? (e) => e.preventDefault() : undefined
         }
+        {...externalSlotProps}
       />
     );
   });
