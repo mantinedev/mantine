@@ -325,7 +325,11 @@ export const Select = genericFactory<SelectFactory>((_props) => {
         }}
         {...comboboxProps}
       >
-        <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
+        <Combobox.Target
+          targetType={searchable ? 'input' : 'button'}
+          autoComplete={autoComplete}
+          withExpandedAttribute
+        >
           <InputBase
             id={_id}
             __defaultRightSection={

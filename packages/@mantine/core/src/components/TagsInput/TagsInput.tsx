@@ -509,7 +509,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}
-              <Combobox.EventsTarget autoComplete={autoComplete}>
+              <Combobox.EventsTarget autoComplete={autoComplete} withExpandedAttribute>
                 <PillsInput.Field
                   {...rest}
                   ref={_ref}
