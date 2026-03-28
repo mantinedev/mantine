@@ -749,15 +749,15 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                 onPointerDown={(e) => {
                   const container = rowSlotsContainersRef.current[resourceIndex];
                   if (container) {
-                    eventResize.handleResizeStart(
+                    eventResize.handleResizeStart({
                       event,
-                      'start',
+                      edge: 'start',
                       container,
-                      event.position.top,
-                      event.position.height,
-                      dateStr,
-                      e
-                    );
+                      originalLeft: event.position.top,
+                      originalWidth: event.position.height,
+                      eventDate: dateStr,
+                      pointerEvent: e,
+                    });
                   }
                 }}
               />
@@ -768,15 +768,15 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                 onPointerDown={(e) => {
                   const container = rowSlotsContainersRef.current[resourceIndex];
                   if (container) {
-                    eventResize.handleResizeStart(
+                    eventResize.handleResizeStart({
                       event,
-                      'end',
+                      edge: 'end',
                       container,
-                      event.position.top,
-                      event.position.height,
-                      dateStr,
-                      e
-                    );
+                      originalLeft: event.position.top,
+                      originalWidth: event.position.height,
+                      eventDate: dateStr,
+                      pointerEvent: e,
+                    });
                   }
                 }}
               />
