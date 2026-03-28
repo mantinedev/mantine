@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { Anchor, Box, SimpleGrid, Title } from '@mantine/core';
 import { AutocompleteHighlight } from '../../../combobox-examples/examples/AutocompleteHighlight/AutocompleteHighlight';
 import { MaxSelectedItems } from '../../../combobox-examples/examples/MaxSelectedItems/MaxSelectedItems';
@@ -60,7 +60,7 @@ function ComboboxDemo({ title, name, hiddenOnMobile, component: Component }: Com
 
         <Anchor component={Link} href={`/combobox/?e=${name}`} className={classes.demoLink}>
           <span>View example code</span>
-          <IconArrowUpRight size={16} stroke={1.5} />
+          <ArrowUpRightIcon size={16} />
         </Anchor>
       </header>
 

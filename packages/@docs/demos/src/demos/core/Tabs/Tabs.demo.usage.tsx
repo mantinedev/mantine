@@ -1,4 +1,4 @@
-import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
+import { ChatCircleIcon, GearSixIcon, ImageIcon } from '@phosphor-icons/react';
 import { Tabs, TabsProps, useDirection } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -10,13 +10,13 @@ function Wrapper(props: TabsProps) {
   return (
     <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
-        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={12} />}>
+        <Tabs.Tab value="gallery" leftSection={<ImageIcon size={12} />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={12} />}>
+        <Tabs.Tab value="messages" leftSection={<ChatCircleIcon size={12} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" leftSection={<IconSettings size={12} />}>
+        <Tabs.Tab value="settings" leftSection={<GearSixIcon size={12} />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>
@@ -38,19 +38,19 @@ function Wrapper(props: TabsProps) {
 
 const code = `
 import { Tabs } from '@mantine/core';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
+import { ImageIcon, ChatCircleIcon, GearSixIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Tabs{{props}} defaultValue="gallery">
       <Tabs.List>
-        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={12} />}>
+        <Tabs.Tab value="gallery" leftSection={<ImageIcon size={12} />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={12} />}>
+        <Tabs.Tab value="messages" leftSection={<ChatCircleIcon size={12} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" leftSection={<IconSettings size={12} />}>
+        <Tabs.Tab value="settings" leftSection={<GearSixIcon size={12} />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>

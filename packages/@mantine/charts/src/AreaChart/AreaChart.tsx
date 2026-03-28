@@ -29,7 +29,6 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import classes from '../grid-chart.module.css';
 import { PointLabel } from '../PointLabel/PointLabel';
 import type {
   BaseChartStylesNames,
@@ -40,6 +39,7 @@ import type {
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
+import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
@@ -73,23 +73,20 @@ export type AreaChartCSSVariables = {
 };
 
 export interface AreaChartProps
-  extends BoxProps,
-    GridChartBaseProps,
-    StylesApiProps<AreaChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, GridChartBaseProps, StylesApiProps<AreaChartFactory>, ElementProps<'div'> {
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
 
-  /** Controls how chart areas are positioned relative to each other @default `'default'` */
+  /** Controls how chart areas are positioned relative to each other @default 'default' */
   type?: AreaChartType;
 
-  /** Determines whether the chart area should be represented with a gradient instead of the solid color @default `false` */
+  /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false */
   withGradient?: boolean;
 
-  /** Type of the curve @default `'monotone'` */
+  /** Type of the curve @default 'monotone' */
   curveType?: AreaChartCurveType;
 
-  /** Determines whether dots should be displayed @default `true` */
+  /** Determines whether dots should be displayed @default true */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -98,22 +95,22 @@ export interface AreaChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart areas @default `2` */
+  /** Stroke width for the chart areas @default 2 */
   strokeWidth?: number;
 
   /** Props passed down to recharts `AreaChart` component */
-  areaChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsAreaChart>;
+  areaChartProps?: React.ComponentProps<typeof ReChartsAreaChart>;
 
-  /** Controls fill opacity of all areas @default `0.2` */
+  /** Controls fill opacity of all areas @default 0.2 */
   fillOpacity?: number;
 
-  /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors @default `['green.7', 'red.7']` */
+  /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors @default ['green.7', 'red.7'] */
   splitColors?: [MantineColor, MantineColor];
 
   /** Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. */
   splitOffset?: number;
 
-  /** If set, points with `null` values are connected @default `true` */
+  /** If set, points with `null` values are connected @default true */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `AreaChart` component */
@@ -121,10 +118,10 @@ export interface AreaChartProps
 
   /** Props passed down to recharts `Area` component */
   areaProps?:
-    | ((series: AreaChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
-    | Partial<Omit<AreaProps, 'ref'>>;
+    | ((series: AreaChartSeries) => Partial<Omit<AreaProps<any, any>, 'ref'>>)
+    | Partial<Omit<AreaProps<any, any>, 'ref'>>;
 
-  /** If set, each point has an associated label @default `false` */
+  /** If set, each point has an associated label @default false */
   withPointLabels?: boolean;
 }
 
@@ -160,7 +157,7 @@ const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor, g
   },
 }));
 
-export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
+export const AreaChart = factory<AreaChartFactory>((_props) => {
   const props = useProps('AreaChart', defaultProps, _props);
   const {
     classNames,
@@ -270,7 +267,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         isAnimationActive={false}
         connectNulls={connectNulls}
         stackId={stacked ? 'stack-dots' : undefined}
-        yAxisId={item.yAxisId || 'left'}
+        yAxisId={item.yAxisId || undefined}
         {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
       />
     );
@@ -307,7 +304,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           fillOpacity={dimmed ? 0 : 1}
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
           {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
@@ -322,7 +319,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
           value: line.label,
@@ -350,13 +347,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
   };
 
   return (
-    <Box
-      ref={ref}
-      {...getStyles('root')}
-      onMouseLeave={handleMouseLeave}
-      dir={dir || 'ltr'}
-      {...others}
-    >
+    <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart
           data={data}
@@ -389,7 +380,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           )}
 
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}
@@ -417,7 +408,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
             orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}
@@ -509,4 +499,5 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
 });
 
 AreaChart.classes = classes;
+AreaChart.varsResolver = varsResolver;
 AreaChart.displayName = '@mantine/charts/AreaChart';

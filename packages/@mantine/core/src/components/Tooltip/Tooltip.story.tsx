@@ -14,6 +14,9 @@ export function Usage() {
         color="cyan"
         radius="md"
         target={ref}
+        opened
+        withinPortal={false}
+        attributes={{ tooltip: { 'data-test-id': 'tooltip' } }}
       />
       <button type="button" ref={setRef} style={{ position: 'fixed', bottom: 100, left: 100 }}>
         target

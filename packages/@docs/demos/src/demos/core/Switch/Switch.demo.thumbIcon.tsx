@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { CheckIcon, XIcon } from '@phosphor-icons/react';
 import { Switch } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
 import { Switch } from '@mantine/core';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { CheckIcon, XIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const [checked, setChecked] = useState(false);
@@ -20,9 +20,9 @@ function Demo() {
       label="Switch with thumb icon"
       thumbIcon={
         checked ? (
-          <IconCheck size={12} color="var(--mantine-color-teal-6)" stroke={3} />
+          <CheckIcon size={12} color="var(--mantine-color-teal-6)" />
         ) : (
-          <IconX size={12} color="var(--mantine-color-red-6)" stroke={3} />
+          <XIcon size={12} color="var(--mantine-color-red-6)" />
         )
       }
     />
@@ -42,9 +42,9 @@ function Demo() {
       label="Switch with thumb icon"
       thumbIcon={
         checked ? (
-          <IconCheck size={12} color="var(--mantine-color-teal-6)" stroke={3} />
+          <CheckIcon size={12} color="var(--mantine-color-teal-6)" />
         ) : (
-          <IconX size={12} color="var(--mantine-color-red-6)" stroke={3} />
+          <XIcon size={12} color="var(--mantine-color-red-6)" />
         )
       }
     />

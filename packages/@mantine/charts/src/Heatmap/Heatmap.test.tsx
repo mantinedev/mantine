@@ -11,11 +11,6 @@ describe('@mantine/core/Heatmap', () => {
   tests.itSupportsSystemProps<HeatmapProps, HeatmapStylesNames>({
     component: Heatmap,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     refType: SVGSVGElement,
     displayName: '@mantine/charts/Heatmap',
     stylesApiSelectors: ['root', 'monthLabel', 'weekdayLabel', 'rect'],
@@ -56,7 +51,6 @@ describe('@mantine/core/Heatmap', () => {
     const width1 = Number(svg1.getAttribute('width'));
     const width2 = Number(svg2.getAttribute('width'));
 
-    // With splitMonths enabled, width must increase due to separators/extra split columns
     expect(width2).toBeGreaterThan(width1);
   });
 });

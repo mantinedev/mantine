@@ -45,13 +45,12 @@ function Demo() {
     },
   });
 
-  const nextStep = () =>
-    setActive((current) => {
-      if (form.validate().hasErrors) {
-        return current;
-      }
-      return current < 3 ? current + 1 : current;
-    });
+  const nextStep = async () => {
+    const result = await form.validate();
+    if (!result.hasErrors) {
+      setActive((current) => (current < 3 ? current + 1 : current));
+    }
+  };
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
@@ -163,13 +162,12 @@ function Demo() {
     },
   });
 
-  const nextStep = () =>
-    setActive((current) => {
-      if (form.validate().hasErrors) {
-        return current;
-      }
-      return current < 3 ? current + 1 : current;
-    });
+  const nextStep = async () => {
+    const result = await form.validate();
+    if (!result.hasErrors) {
+      setActive((current) => (current < 3 ? current + 1 : current));
+    }
+  };
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 

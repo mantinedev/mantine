@@ -40,3 +40,8 @@ export function useDebouncedValue<T = any>(
 
   return [_value, cancel];
 }
+
+export namespace useDebouncedValue {
+  export type Options = UseDebouncedValueOptions;
+  export type ReturnValue<T> = UseDebouncedValueReturnValue<T>;
+}

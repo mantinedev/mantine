@@ -41,7 +41,10 @@ function updateChartTooltipPayload(payload: Record<string, any>[]): Record<strin
   });
 }
 
-export function getFilteredChartTooltipPayload(payload: Record<string, any>[], segmentId?: string) {
+export function getFilteredChartTooltipPayload(
+  payload: readonly Record<string, any>[] | Record<string, any>[],
+  segmentId?: string
+) {
   const duplicatesFilter = updateChartTooltipPayload(
     payload.filter((item) => item.fill !== 'none' || !item.color)
   );
@@ -78,19 +81,17 @@ export type ChartTooltipStylesNames =
   | 'tooltipBody';
 
 export interface ChartTooltipProps
-  extends BoxProps,
-    StylesApiProps<ChartTooltipFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ChartTooltipFactory>, ElementProps<'div'> {
   /** Main tooltip label */
   label?: React.ReactNode;
 
   /** Chart data provided by recharts */
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | Record<string, any>[] | undefined;
 
   /** Data units, provided by parent component */
   unit?: string;
 
-  /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart @default `'area'` */
+  /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart @default 'area' */
   type?: 'area' | 'radial' | 'scatter';
 
   /** Id of the segment to display data for. Only applicable when `type="radial"`. If not set, all data is rendered. */
@@ -102,7 +103,7 @@ export interface ChartTooltipProps
   /** A function to format values */
   valueFormatter?: (value: number) => React.ReactNode;
 
-  /** Determines whether the color swatch should be visible @default `true` */
+  /** Determines whether the color swatch should be visible @default true */
   showColor?: boolean;
 }
 
@@ -117,7 +118,7 @@ const defaultProps = {
   showColor: true,
 } satisfies Partial<ChartTooltipProps>;
 
-export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
+export const ChartTooltip = factory<ChartTooltipFactory>((_props) => {
   const props = useProps('ChartTooltip', defaultProps, _props);
   const {
     classNames,
@@ -189,7 +190,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   ));
 
   return (
-    <Box {...getStyles('tooltip')} mod={[{ type }, mod]} ref={ref} {...others}>
+    <Box {...getStyles('tooltip')} mod={[{ type }, mod]} {...others}>
       {_label && <div {...getStyles('tooltipLabel')}>{_label}</div>}
       <div {...getStyles('tooltipBody')}>{items}</div>
     </Box>

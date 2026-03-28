@@ -24,19 +24,17 @@ export type BlockquoteCssVariables = {
 };
 
 export interface BlockquoteProps
-  extends BoxProps,
-    StylesApiProps<BlockquoteFactory>,
-    ElementProps<'blockquote', 'cite'> {
+  extends BoxProps, StylesApiProps<BlockquoteFactory>, ElementProps<'blockquote', 'cite'> {
   /** Blockquote icon, displayed at the top left side */
   icon?: React.ReactNode;
 
-  /** Controls icon `width` and `height`, numbers are converted to rem @default `40` */
+  /** Controls icon `width` and `height`, numbers are converted to rem @default 40 */
   iconSize?: number | string;
 
-  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Reference to a cited quote */
@@ -78,7 +76,7 @@ const varsResolver = createVarsResolver<BlockquoteFactory>((theme, { color, icon
   };
 });
 
-export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
+export const Blockquote = factory<BlockquoteFactory>((_props) => {
   const props = useProps('Blockquote', defaultProps, _props);
   const {
     classNames,
@@ -110,7 +108,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="blockquote" ref={ref} {...getStyles('root')} {...others}>
+    <Box component="blockquote" {...getStyles('root')} {...others}>
       {icon && <span {...getStyles('icon')}>{icon}</span>}
       {children}
       {cite && <cite {...getStyles('cite')}>{cite}</cite>}
@@ -119,4 +117,5 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
 });
 
 Blockquote.classes = classes;
+Blockquote.varsResolver = varsResolver;
 Blockquote.displayName = '@mantine/core/Blockquote';

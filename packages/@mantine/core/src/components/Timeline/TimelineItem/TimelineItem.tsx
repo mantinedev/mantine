@@ -23,9 +23,7 @@ export type TimelineItemStylesNames =
   | 'itemTitle';
 
 export interface TimelineItemProps
-  extends BoxProps,
-    CompoundStylesApiProps<TimelineItemFactory>,
-    ElementProps<'div', 'title'> {
+  extends BoxProps, CompoundStylesApiProps<TimelineItemFactory>, ElementProps<'div', 'title'> {
   __active?: boolean;
   __lineActive?: boolean;
   __align?: 'right' | 'left';
@@ -39,13 +37,13 @@ export interface TimelineItemProps
   /** React node that should be rendered inside the bullet – icon, image, avatar, etc. By default, large white dot is displayed. */
   bullet?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color to control active item colors @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to control active item colors @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls line border style @default `'solid'` */
+  /** Controls line border style @default 'solid' */
   lineVariant?: 'solid' | 'dashed' | 'dotted';
 }
 
@@ -56,7 +54,7 @@ export type TimelineItemFactory = Factory<{
   compound: true;
 }>;
 
-export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
+export const TimelineItem = factory<TimelineItemFactory>((_props) => {
   const props = useProps('TimelineItem', null, _props);
   const {
     classNames,
@@ -87,7 +85,6 @@ export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
     <Box
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
       mod={[{ 'line-active': __lineActive, active: __active }, mod]}
-      ref={ref}
       __vars={{
         '--tli-radius': radius ? getRadius(radius) : undefined,
         '--tli-color': color ? getThemeColor(color, theme) : undefined,

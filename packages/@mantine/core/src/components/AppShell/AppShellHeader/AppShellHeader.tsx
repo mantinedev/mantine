@@ -10,13 +10,14 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
-import classes from '../AppShell.module.css';
 import type { AppShellCompoundProps } from '../AppShell.types';
+import classes from '../AppShell.module.css';
 
 export type AppShellHeaderStylesNames = 'header';
 
 export interface AppShellHeaderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AppShellCompoundProps,
     StylesApiProps<AppShellHeaderFactory>,
     ElementProps<'header'> {}
@@ -27,7 +28,7 @@ export type AppShellHeaderFactory = Factory<{
   stylesNames: AppShellHeaderStylesNames;
 }>;
 
-export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
+export const AppShellHeader = factory<AppShellHeaderFactory>((_props) => {
   const {
     classNames,
     className,
@@ -50,7 +51,6 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
   return (
     <Box
       component="header"
-      ref={ref}
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('header', {
         className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),

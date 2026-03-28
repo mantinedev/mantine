@@ -25,7 +25,7 @@ export {
 } from './use-session-storage/use-session-storage.js';
 export { useMediaQuery } from './use-media-query/use-media-query.js';
 export { useMergedRef, mergeRefs, assignRef } from './use-merged-ref/use-merged-ref.js';
-export { useMouse } from './use-mouse/use-mouse.js';
+export { useMouse, useMousePosition } from './use-mouse/use-mouse.js';
 export { useMove, clampUseMovePosition } from './use-move/use-move.js';
 export { usePagination } from './use-pagination/use-pagination.js';
 export { useQueue } from './use-queue/use-queue.js';
@@ -42,7 +42,7 @@ export { useWindowScroll } from './use-window-scroll/use-window-scroll.js';
 export { useIntersection } from './use-intersection/use-intersection.js';
 export { useHash } from './use-hash/use-hash.js';
 export { useHotkeys, getHotkeyHandler } from './use-hotkeys/use-hotkeys.js';
-export { useFullscreen } from './use-fullscreen/use-fullscreen.js';
+export { useFullscreenDocument, useFullscreenElement } from './use-fullscreen/use-fullscreen.js';
 export { useLogger } from './use-logger/use-logger.js';
 export { useHover } from './use-hover/use-hover.js';
 export { useValidatedState } from './use-validated-state/use-validated-state.js';
@@ -58,9 +58,13 @@ export { useTextSelection } from './use-text-selection/use-text-selection.js';
 export { usePrevious } from './use-previous/use-previous.js';
 export { useFavicon } from './use-favicon/use-favicon.js';
 export { useHeadroom } from './use-headroom/use-headroom.js';
+export { useScrollDirection } from './use-scroll-direction/use-scroll-direction.js';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper.js';
 export { useInViewport } from './use-in-viewport/use-in-viewport.js';
-export { useMutationObserver } from './use-mutation-observer/use-mutation-observer.js';
+export {
+  useMutationObserver,
+  useMutationObserverTarget,
+} from './use-mutation-observer/use-mutation-observer.js';
 export { useMounted } from './use-mounted/use-mounted.js';
 export { useStateHistory } from './use-state-history/use-state-history.js';
 export { useMap } from './use-map/use-map.js';
@@ -73,24 +77,31 @@ export { useOrientation } from './use-orientation/use-orientation.js';
 export { useFetch } from './use-fetch/use-fetch.js';
 export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move.js';
 export { useScrollSpy } from './use-scroll-spy/use-scroll-spy.js';
+export { useScroller } from './use-scroller/use-scroller.js';
 export { useFileDialog } from './use-file-dialog/use-file-dialog.js';
 export { useLongPress } from './use-long-press/use-long-press.js';
 export { useSelection } from './use-selection/use-selection.js';
+export { useFloatingWindow } from './use-floating-window/use-floating-window.js';
+export { useCollapse } from './use-collapse/use-collapse.js';
+export { useHorizontalCollapse } from './use-collapse/use-horizontal-collapse.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
-export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
+export type {
+  UseClipboardInput as UseClipboardOptions,
+  UseClipboardReturnValue,
+} from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
 export type {
-  UseCounterOptions,
+  UseCounterOptions as UseCounterOptions,
   UseCounterHandlers,
   UseCounterReturnValue,
 } from './use-counter/use-counter';
 export type {
-  UseDebouncedCallbackOptions,
+  UseDebouncedCallbackOptions as UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
 } from './use-debounced-callback/use-debounced-callback';
 export type {
-  UseDebouncedStateOptions,
+  UseDebouncedStateOptions as UseDebouncedStateOptions,
   UseDebouncedStateReturnValue,
 } from './use-debounced-state/use-debounced-state';
 export type {
@@ -113,16 +124,17 @@ export type {
   UseFileDialogReturnValue,
 } from './use-file-dialog/use-file-dialog';
 export type {
-  UseFocusReturnOptions,
+  UseFocusReturnInput as UseFocusReturnOptions,
   UseFocusReturnReturnValue,
 } from './use-focus-return/use-focus-return';
 export type {
   UseFocusWithinOptions,
   UseFocusWithinReturnValue,
 } from './use-focus-within/use-focus-within';
-export type { UseFullscreenReturnValue } from './use-fullscreen/use-fullscreen';
-export type { UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
-export type { UseHeadroomOptions } from './use-headroom/use-headroom';
+export type { UseFullscreenElementReturnValue } from './use-fullscreen/use-fullscreen';
+export type { UseHashInput as UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
+export type { UseHeadroomInput as UseHeadroomOptions } from './use-headroom/use-headroom';
+export type { ScrollDirection } from './use-scroll-direction/use-scroll-direction';
 export type { HotkeyItemOptions, HotkeyItem } from './use-hotkeys/use-hotkeys';
 export type { UseHoverReturnValue } from './use-hover/use-hover';
 export type { UseIdleOptions } from './use-idle/use-idle';
@@ -141,7 +153,7 @@ export type {
   UseOrientationOptions,
   UseOrientationReturnType,
 } from './use-orientation/use-orientation';
-export type { UseOSReturnValue as OS, UseOSReturnValue, UseOsOptions } from './use-os/use-os';
+export type { UseOSReturnValue, UseOsOptions } from './use-os/use-os';
 export type {
   UsePaginationOptions,
   UsePaginationReturnValue,
@@ -158,8 +170,13 @@ export type {
 export type {
   UseScrollSpyOptions,
   UseScrollSpyHeadingData,
-  UseScrollSpyReturnType,
+  UseScrollSpyReturnValue,
 } from './use-scroll-spy/use-scroll-spy';
+export type {
+  UseScrollerOptions,
+  UseScrollerReturnValue,
+  UseScrollerScrollState,
+} from './use-scroller/use-scroller';
 export type { UseSetStateCallback, UseSetStateReturnValue } from './use-set-state/use-set-state';
 export type {
   UseStateHistoryHandlers,
@@ -184,7 +201,27 @@ export type {
 } from './use-window-scroll/use-window-scroll';
 export type { UseLongPressOptions, UseLongPressReturnValue } from './use-long-press/use-long-press';
 export type {
+  SetFloatingWindowPosition,
+  UseFloatingWindowOptions,
+  UseFloatingWindowReturnValue,
+} from './use-floating-window/use-floating-window';
+export type {
   UseSelectionHandlers,
   UseSelectionInput,
   UseSelectionReturnValue,
 } from './use-selection/use-selection';
+export type {
+  UseElementSizeReturnValue,
+  UseResizeObserverReturnValue,
+  ObserverRect,
+} from './use-resize-observer/use-resize-observer';
+export type {
+  UseCollapseInput,
+  UseCollapseReturnValue,
+  UseCollapseState,
+} from './use-collapse/use-collapse';
+export type {
+  UseHorizontalCollapseInput,
+  UseHorizontalCollapseReturnValue,
+  UseHorizontalCollapseState,
+} from './use-collapse/use-horizontal-collapse';

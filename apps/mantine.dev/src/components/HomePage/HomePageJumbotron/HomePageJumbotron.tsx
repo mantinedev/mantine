@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { Box, Button } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import { meta } from '@mantinex/mantine-meta';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import classes from './HomePageJumbotron.module.css';
 import darkImg from './images/dark-collage.webp';
 import lightImg from './images/light-collage.webp';
+import classes from './HomePageJumbotron.module.css';
 
 export function HomePageJumbotron() {
   return (
@@ -43,7 +43,7 @@ export function HomePageJumbotron() {
               className={classes.action}
               data-get-started
               justify="space-between"
-              rightSection={<IconArrowUpRight size={26} stroke={1.5} />}
+              rightSection={<ArrowUpRightIcon size={26} />}
             >
               Get Started
             </Button>

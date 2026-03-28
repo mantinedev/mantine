@@ -18,4 +18,10 @@
       text-decoration: underline;
     }
   }
+
+  & ul {
+    margin: var(--mantine-spacing-sm) 0;
+    padding-left: var(--mantine-spacing-lg);
+    margin-top: 3px;
+  }
 }

@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps, MantineRadius, MantineShadow } from '../../core';
 import { FocusTrap } from '../FocusTrap';
@@ -14,59 +13,65 @@ export interface ModalBaseContentProps extends BoxProps, ElementProps<'div'> {
   /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 }
 
 interface _ModalBaseContentProps extends ModalBaseContentProps {
-  innerProps: React.ComponentPropsWithoutRef<'div'>;
+  innerProps: React.ComponentProps<'div'>;
 }
 
-export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProps>(
-  ({ transitionProps, className, innerProps, onKeyDown, style, ...others }, ref) => {
-    const ctx = useModalBaseContext();
+export function ModalBaseContent({
+  transitionProps,
+  className,
+  innerProps,
+  onKeyDown,
+  style,
+  ref,
+  ...others
+}: _ModalBaseContentProps) {
+  const ctx = useModalBaseContext();
 
-    return (
-      <Transition
-        mounted={ctx.opened}
-        transition="pop"
-        {...ctx.transitionProps}
-        onExited={() => {
-          ctx.onExitTransitionEnd?.();
-          ctx.transitionProps?.onExited?.();
-        }}
-        onEntered={() => {
-          ctx.onEnterTransitionEnd?.();
-          ctx.transitionProps?.onEntered?.();
-        }}
-        {...transitionProps}
-      >
-        {(transitionStyles) => (
-          <div
-            {...innerProps}
-            className={cx({ [classes.inner]: !ctx.unstyled }, innerProps.className)}
-          >
-            <FocusTrap active={ctx.opened && ctx.trapFocus} innerRef={ref}>
-              <Paper
-                {...others}
-                component="section"
-                role="dialog"
-                tabIndex={-1}
-                aria-modal
-                aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
-                aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
-                style={[style, transitionStyles]}
-                className={cx({ [classes.content]: !ctx.unstyled }, className)}
-                unstyled={ctx.unstyled}
-              >
-                {others.children}
-              </Paper>
-            </FocusTrap>
-          </div>
-        )}
-      </Transition>
-    );
-  }
-);
+  return (
+    <Transition
+      mounted={ctx.opened}
+      transition="pop"
+      {...ctx.transitionProps}
+      onExited={() => {
+        ctx.onExitTransitionEnd?.();
+        ctx.transitionProps?.onExited?.();
+      }}
+      onEntered={() => {
+        ctx.onEnterTransitionEnd?.();
+        ctx.transitionProps?.onEntered?.();
+      }}
+      {...transitionProps}
+    >
+      {(transitionStyles) => (
+        <div
+          {...innerProps}
+          className={cx({ [classes.inner]: !ctx.unstyled }, innerProps.className)}
+        >
+          <FocusTrap active={ctx.opened && ctx.trapFocus} innerRef={ref}>
+            <Paper
+              {...others}
+              component="section"
+              role="dialog"
+              tabIndex={-1}
+              aria-modal
+              aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
+              aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
+              style={[style, transitionStyles]}
+              className={cx({ [classes.content]: !ctx.unstyled }, className)}
+              unstyled={ctx.unstyled}
+            >
+              {others.children}
+            </Paper>
+          </FocusTrap>
+        </div>
+      )}
+    </Transition>
+  );
+}
 
 ModalBaseContent.displayName = '@mantine/core/ModalBaseContent';

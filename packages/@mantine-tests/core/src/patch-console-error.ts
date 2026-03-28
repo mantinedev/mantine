@@ -19,3 +19,13 @@ export function patchConsoleWarn() {
 patchConsoleWarn.release = () => {
   console.warn = initialWarn;
 };
+
+export function autoPatchWarn() {
+  beforeAll(() => {
+    patchConsoleWarn();
+  });
+
+  afterAll(() => {
+    patchConsoleWarn.release();
+  });
+}

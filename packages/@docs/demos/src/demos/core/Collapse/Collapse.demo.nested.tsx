@@ -12,7 +12,7 @@ export function CollapsedDemo({
   return (
     <Box maw={400} mx="auto" mt="md">
       <Button onClick={() => setOpened((o) => !o)} mb={5} {...buttonProps} />
-      <Collapse in={opened} {...others}>
+      <Collapse expanded={opened} {...others}>
         {children}
       </Collapse>
     </Box>

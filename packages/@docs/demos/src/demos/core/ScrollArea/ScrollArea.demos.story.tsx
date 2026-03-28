@@ -42,7 +42,18 @@ export const Demo_autosizePopover = {
   name: '⭐ Demo: autosizePopover',
   render: renderDemo(demos.autosizePopover),
 };
+
 export const Demo_scrollbars = {
   name: '⭐ Demo: scrollbars',
   render: renderDemo(demos.scrollbars),
+};
+
+export const Demo_boundaries = {
+  name: '⭐ Demo: boundaries',
+  render: renderDemo(demos.boundaries),
+};
+
+export const Demo_startScrollPosition = {
+  name: '⭐ Demo: startScrollPosition',
+  render: renderDemo(demos.startScrollPosition),
 };

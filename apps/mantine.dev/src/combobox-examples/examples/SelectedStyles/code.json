@@ -7,6 +7,6 @@
   {
     "fileName": "SelectedStyles.module.css",
     "language": "css",
-    "code": "  &[data-combobox-selected] {\n    background-color: var(--mantine-color-red-9);\n    color: var(--mantine-color-red-0);\n    font-weight: 500;\n  }\n}\n"
+    "code": "  &[data-combobox-selected] {\n    background-color: var(--mantine-color-red-9);\n    color: var(--mantine-color-red-0);\n    font-weight: 600;\n  }\n}\n"
   }
 ]

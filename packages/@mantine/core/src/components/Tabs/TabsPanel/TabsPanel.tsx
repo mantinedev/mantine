@@ -1,3 +1,4 @@
+import { Activity } from 'react';
 import {
   Box,
   BoxProps,
@@ -5,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  useMantineEnv,
   useProps,
 } from '../../../core';
 import { useTabsContext } from '../Tabs.context';
@@ -13,9 +15,7 @@ import classes from '../Tabs.module.css';
 export type TabsPanelStylesNames = 'panel';
 
 export interface TabsPanelProps
-  extends BoxProps,
-    CompoundStylesApiProps<TabsPanelFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<TabsPanelFactory>, ElementProps<'div'> {
   /** Panel content */
   children: React.ReactNode;
 
@@ -33,15 +33,24 @@ export type TabsPanelFactory = Factory<{
   compound: true;
 }>;
 
-export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
+export const TabsPanel = factory<TabsPanelFactory>((_props) => {
   const props = useProps('TabsPanel', null, _props);
   const { children, className, value, classNames, styles, style, mod, keepMounted, ...others } =
     props;
 
+  const env = useMantineEnv();
   const ctx = useTabsContext();
 
   const active = ctx.value === value;
-  const content = ctx.keepMounted || keepMounted ? children : active ? children : null;
+  const shouldKeepMounted = ctx.keepMounted || keepMounted;
+  const content =
+    shouldKeepMounted && env !== 'test' ? (
+      <Activity mode={active ? 'visible' : 'hidden'}>{children}</Activity>
+    ) : shouldKeepMounted ? (
+      children
+    ) : active ? (
+      children
+    ) : null;
 
   return (
     <Box
@@ -52,7 +61,6 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
         style: [style, !active ? { display: 'none' } : undefined],
         props,
       })}
-      ref={ref}
       mod={[{ orientation: ctx.orientation }, mod]}
       role="tabpanel"
       id={ctx.getPanelId(value)}

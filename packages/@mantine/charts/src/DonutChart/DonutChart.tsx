@@ -1,6 +1,4 @@
 import {
-  Cell,
-  CellProps,
   Pie,
   PieLabel,
   PieProps,
@@ -40,16 +38,14 @@ export type DonutChartCssVariables = {
 };
 
 export interface DonutChartProps
-  extends BoxProps,
-    StylesApiProps<DonutChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<DonutChartFactory>, ElementProps<'div'> {
   /** Data used to render chart */
   data: DonutChartCell[];
 
-  /** Determines whether the tooltip should be displayed when one of the section is hovered @default `true` */
+  /** Determines whether the tooltip should be displayed when one of the section is hovered @default true */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms @default `0` */
+  /** Tooltip animation duration in ms @default 0 */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -64,31 +60,31 @@ export interface DonutChartProps
   /** Controls text color of all labels, by default depends on color scheme */
   labelColor?: MantineColor;
 
-  /** Controls padding between segments @default `0` */
+  /** Controls padding between segments @default 0 */
   paddingAngle?: number;
 
-  /** Determines whether each segment should have associated label @default `false` */
+  /** Determines whether each segment should have associated label @default false */
   withLabels?: boolean;
 
-  /** Determines whether segments labels should have lines that connect the segment with the label @default `true` */
+  /** Determines whether segments labels should have lines that connect the segment with the label @default true */
   withLabelsLine?: boolean;
 
-  /** Controls thickness of the chart segments @default `20` */
+  /** Controls thickness of the chart segments @default 20 */
   thickness?: number;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default `80` */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 80 */
   size?: number;
 
-  /** Controls width of segments stroke @default `1` */
+  /** Controls width of segments stroke @default 1 */
   strokeWidth?: number;
 
-  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default `0` */
+  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default 0 */
   startAngle?: number;
 
-  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default `360` */
+  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default 360 */
   endAngle?: number;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default 'all' */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Chart label, displayed in the center of the chart */
@@ -98,7 +94,7 @@ export interface DonutChartProps
   children?: React.ReactNode;
 
   /** Props passed down to recharts `PieChart` component */
-  pieChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsPieChart>;
+  pieChartProps?: React.ComponentProps<typeof ReChartsPieChart>;
 
   /** Type of labels to display, `'value'` by default */
   labelsType?: 'value' | 'percent';
@@ -106,10 +102,10 @@ export interface DonutChartProps
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
 
-  /** Props passed down to recharts `Cell` component */
+  /** Props passed down to each segment of the chart */
   cellProps?:
-    | ((series: DonutChartCell) => Partial<Omit<CellProps, 'ref'>>)
-    | Partial<Omit<CellProps, 'ref'>>;
+    | ((series: DonutChartCell) => Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>)
+    | Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>;
 }
 
 export type DonutChartFactory = Factory<{
@@ -167,16 +163,18 @@ const getLabel =
       y={y}
       cx={cx}
       cy={cy}
-      textAnchor={x > cx ? 'start' : 'end'}
+      textAnchor={x > Number(cx) ? 'start' : 'end'}
       fill="var(--chart-labels-color, var(--mantine-color-dimmed))"
       fontFamily="var(--mantine-font-family)"
       fontSize={12}
     >
-      <tspan x={x}>{getLabelValue(labelsType, value, percent, valueFormatter)}</tspan>
+      <tspan x={x}>
+        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
+      </tspan>
     </text>
   );
 
-export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
+export const DonutChart = factory<DonutChartFactory>((_props) => {
   const props = useProps('DonutChart', defaultProps, _props);
   const {
     classNames,
@@ -232,22 +230,20 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     props,
   });
 
-  const cells = data.map((item, index) => (
-    <Cell
-      key={index}
-      fill={getThemeColor(item.color, theme)}
-      stroke="var(--chart-stroke-color, var(--mantine-color-body))"
-      strokeWidth={strokeWidth}
-      {...(typeof cellProps === 'function' ? cellProps(item) : cellProps)}
-    />
-  ));
+  const pieData = data.map((item) => ({
+    ...item,
+    fill: getThemeColor(item.color, theme),
+    stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
+    strokeWidth,
+    ...(typeof cellProps === 'function' ? cellProps(item) : cellProps),
+  }));
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsPieChart {...pieChartProps}>
           <Pie
-            data={data}
+            data={pieData as any}
             innerRadius={size / 2 - thickness}
             outerRadius={size / 2}
             dataKey="value"
@@ -265,9 +261,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                 : false
             }
             {...pieProps}
-          >
-            {cells}
-          </Pie>
+          />
 
           {chartLabel && (
             <text
@@ -291,7 +285,9 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
-                  segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
+                  segmentId={
+                    tooltipDataSource === 'segment' ? (payload?.[0]?.name as string) : undefined
+                  }
                   valueFormatter={valueFormatter}
                   attributes={attributes}
                 />
@@ -309,3 +305,4 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
 
 DonutChart.displayName = '@mantine/charts/DonutChart';
 DonutChart.classes = classes;
+DonutChart.varsResolver = varsResolver;

@@ -1,6 +1,6 @@
 import type { MantineColorScheme } from '../theme.types';
 
-export interface ColorSchemeScriptProps extends React.ComponentPropsWithoutRef<'script'> {
+export interface ColorSchemeScriptProps extends React.ComponentProps<'script'> {
   forceColorScheme?: 'light' | 'dark';
   defaultColorScheme?: MantineColorScheme;
   localStorageKey?: string;

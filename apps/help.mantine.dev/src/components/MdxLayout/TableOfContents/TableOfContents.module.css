@@ -24,7 +24,7 @@
   margin-left: -1px;
   padding-left: calc(var(--toc-link-offset) * var(--mantine-spacing-lg));
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
   border-top-right-radius: var(--mantine-radius-sm);
   border-bottom-right-radius: var(--mantine-radius-sm);
@@ -41,7 +41,7 @@
 
 .title {
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: var(--mantine-spacing-md);
   color: var(--mantine-color-bright);
 }

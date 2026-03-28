@@ -28,15 +28,7 @@ describe('@mantine/core/Stepper', () => {
   tests.itSupportsSystemProps<StepperProps, StepperStylesNames>({
     component: Stepper,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/core/Stepper',
     stylesApiSelectors: [
       'root',

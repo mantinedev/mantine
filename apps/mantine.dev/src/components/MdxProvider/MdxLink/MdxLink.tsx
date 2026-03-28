@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Anchor } from '@mantine/core';
 import classes from './MdxLink.module.css';
 
-export function MdxLink({ href, ...others }: React.ComponentPropsWithoutRef<'a'>) {
+export function MdxLink({ href, ...others }: React.ComponentProps<'a'>) {
   const replaced = href?.replace('https://mantine.dev', '');
 
   if (replaced && !replaced?.startsWith('http') && replaced.trim().length > 0) {

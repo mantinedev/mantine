@@ -1,4 +1,4 @@
-import { IconStarFilled } from '@tabler/icons-react';
+import { StarIcon } from '@phosphor-icons/react';
 import { Group } from '../Group';
 import { Badge } from './Badge';
 
@@ -54,7 +54,7 @@ export function WithFixedWidth() {
 export function WithIconInSection() {
   return (
     <Badge
-      leftSection={<IconStarFilled size={12} color="var(--mantine-color-yellow-5)" />}
+      leftSection={<StarIcon weight="fill" size={12} color="var(--mantine-color-yellow-5)" />}
       color="dark"
       variant="filled"
     >

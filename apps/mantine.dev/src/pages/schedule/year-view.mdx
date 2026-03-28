@@ -1,0 +1,128 @@
+import { YearViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.YearView);
+
+## Usage
+
+YearView displays all 12 months of a year in a grid layout. Event indicators are shown as colored dots in day cells.
+
+<Demo data={YearViewDemos.usage} />
+
+## With week numbers
+
+Set `withWeekNumbers` to display week numbers in the first column of each month.
+
+<Demo data={YearViewDemos.withWeekNumbers} />
+
+## Without week days
+
+Set `withWeekDays={false}` to hide the weekday names row in each month.
+
+<Demo data={YearViewDemos.withoutWeekDays} />
+
+## Hide outside days
+
+Set `withOutsideDays={false}` to hide days from adjacent months.
+
+<Demo data={YearViewDemos.withOutsideDays} />
+
+## First day of week
+
+Set `firstDayOfWeek` to control which day starts the week.
+
+<Demo data={YearViewDemos.firstDayOfWeek} />
+
+## Weekday format
+
+Use `weekdayFormat` prop to customize weekday names.
+
+<Demo data={YearViewDemos.weekdayFormat} />
+
+## Highlight today
+
+Set `highlightToday={false}` to disable highlighting the current day.
+
+<Demo data={YearViewDemos.highlightToday} />
+
+## Without header
+
+Set `withHeader={false}` to hide the header controls.
+
+<Demo data={YearViewDemos.withoutHeader} />
+
+## Custom header
+
+You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
+Set `withHeader={false}` on the view and compose the header externally.
+
+<Demo data={YearViewDemos.customHeader} />
+
+## Recurring events
+
+YearView automatically expands recurring events for the visible year.
+See [Recurring events guide](/schedule/recurring-events) for full documentation.
+
+<Demo data={YearViewDemos.recurringEvents} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions.
+
+<Demo data={YearViewDemos.staticMode} />
+
+## Localization
+
+Use `locale` prop to set the dayjs locale for date formatting.
+Combine it with `labels` prop to translate all UI text.
+
+<Demo data={YearViewDemos.localization} />
+
+## Responsive styles
+
+YearView uses [@container queries](https://caniuse.com/css-container-queries) for responsive styles.
+The component automatically adjusts its layout based on the container width, hiding labels
+and reducing padding on smaller screens. Container queries are supported in all modern browsers.
+
+## Accessibility
+
+### Focus management
+
+In the YearView component, focus is managed to provide an efficient keyboard navigation experience:
+
+- Only the first day of each month is included in the tab order (has `tabIndex={0}`)
+- All other days within a month have `tabIndex={-1}` and can only be reached via arrow key navigation
+- Outside days (days from adjacent months displayed in the current month view) are not focusable
+- Disabled days are skipped during keyboard navigation
+
+This approach reduces the number of tab stops when navigating through the calendar, making it faster for keyboard users to move between months while still allowing full access to all days via arrow keys.
+
+### Keyboard interactions
+
+Note that the following events will only trigger if focus is on a day control.
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next non-disabled day',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous non-disabled day',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses same day in the next week (moves to next month if at end of month)',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses same day in the previous week (moves to previous month if at start)',
+    },
+  ]}
+/>
+
+### Day labels
+
+Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025"). This provides screen reader users with complete date information.

@@ -14,16 +14,7 @@ describe('@mantine/core/StepperStep', () => {
   tests.itSupportsSystemProps<StepperStepProps, StepperStepStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/StepperStep',
     stylesApiSelectors: [
       'step',

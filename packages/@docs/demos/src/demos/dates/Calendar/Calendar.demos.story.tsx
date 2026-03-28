@@ -22,3 +22,8 @@ export const Demo_weekPicker = {
   name: '⭐ Demo: weekPicker',
   render: renderDemo(demos.weekPicker),
 };
+
+export const Demo_fullWidth = {
+  name: '⭐ Demo: fullWidth',
+  render: renderDemo(demos.fullWidth),
+};

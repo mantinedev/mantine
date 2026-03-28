@@ -2,9 +2,7 @@ import { BoxProps, extractStyleProps, StylesApiProps, useProps } from '../../cor
 import { __BaseInputProps } from './Input';
 
 interface BaseProps
-  extends __BaseInputProps,
-    BoxProps,
-    StylesApiProps<{ props: any; stylesNames: string }> {
+  extends __BaseInputProps, BoxProps, StylesApiProps<{ props: any; stylesNames: string }> {
   __staticSelector?: string;
   __stylesApiProps?: Record<string, any>;
   id?: string;

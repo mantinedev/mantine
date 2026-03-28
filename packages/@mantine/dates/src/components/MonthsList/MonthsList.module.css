@@ -2,6 +2,10 @@
   border-collapse: collapse;
   border-width: 0;
   cursor: pointer;
+
+  &[data-full-width] {
+    width: 100%;
+  }
 }
 
 .monthsListCell {

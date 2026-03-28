@@ -50,16 +50,16 @@ export type DrawerRootCssVariables = {
 };
 
 export interface DrawerRootProps extends StylesApiProps<DrawerRootFactory>, ModalBaseProps {
-  /** Scroll area component @default `'div'` */
+  /** Scroll area component @default 'div' */
   scrollAreaComponent?: ScrollAreaComponent;
 
-  /** Side of the screen on which drawer will be opened @default `'left'` */
+  /** Side of the screen on which drawer will be opened @default 'left' */
   position?: DrawerPosition;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `0` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 0 */
   radius?: MantineRadius;
 
-  /** Drawer container offset from the viewport end @default `0` */
+  /** Drawer container offset from the viewport end @default 0 */
   offset?: number | string;
 }
 
@@ -109,7 +109,7 @@ const varsResolver = createVarsResolver<DrawerRootFactory>((_, { position, size,
   },
 }));
 
-export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
+export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
   const props = useProps('DrawerRoot', defaultProps, _props);
   const {
     classNames,
@@ -147,7 +147,6 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
   return (
     <DrawerProvider value={{ scrollAreaComponent, getStyles, radius }}>
       <ModalBase
-        ref={ref}
         {...getStyles('root')}
         transitionProps={{ transition: drawerTransition, ...transitionProps }}
         data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
@@ -159,4 +158,5 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
 });
 
 DrawerRoot.classes = classes;
+DrawerRoot.varsResolver = varsResolver;
 DrawerRoot.displayName = '@mantine/core/DrawerRoot';

@@ -19,11 +19,12 @@ import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearP
 export type YearPickerInputStylesNames = __InputStylesNames | 'placeholder' | YearPickerStylesNames;
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerInputFactory> {
-  /** `dayjs` format to display input value @default `"YYYY"` */
+  /** `dayjs` format to display input value @default "YYYY" */
   valueFormat?: string;
 }
 
@@ -43,13 +44,13 @@ const defaultProps = {
 } satisfies Partial<YearPickerInputProps>;
 
 type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
-  props: YearPickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  props: YearPickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<YearPickerInputFactory>;
 
 export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('YearPickerInput', defaultProps, _props);
     const {
       type,
@@ -112,7 +113,6 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}

@@ -1,3 +1,22 @@
+import type {
+  TableCssVariables,
+  TableData,
+  TableFactory,
+  TableProps,
+  TableStylesNames,
+} from './Table';
+import type {
+  TableCaptionProps,
+  TableTbodyProps,
+  TableTdProps,
+  TableTfootProps,
+  TableTheadProps,
+  TableThProps,
+  TableTrProps,
+} from './Table.components';
+import type { TableContextValue } from './Table.context';
+import type { TableScrollContainerProps } from './TableScrollContainer';
+
 export { Table } from './Table';
 export {
   TableCaption,
@@ -9,6 +28,7 @@ export {
   TableThead,
 } from './Table.components';
 export { TableScrollContainer } from './TableScrollContainer';
+export { useTableContext } from './Table.context';
 
 export type {
   TableProps,
@@ -16,9 +36,6 @@ export type {
   TableCssVariables,
   TableFactory,
   TableData,
-} from './Table';
-
-export type {
   TableTbodyProps,
   TableTdProps,
   TableThProps,
@@ -26,6 +43,47 @@ export type {
   TableCaptionProps,
   TableTfootProps,
   TableTheadProps,
-} from './Table.components';
+  TableScrollContainerProps,
+  TableContextValue,
+};
 
-export type { TableScrollContainerProps } from './TableScrollContainer';
+export namespace Table {
+  export type Props = TableProps;
+  export type StylesNames = TableStylesNames;
+  export type CssVariables = TableCssVariables;
+  export type Factory = TableFactory;
+  export type Data = TableData;
+  export type ContextValue = TableContextValue;
+
+  export namespace Caption {
+    export type Props = TableCaptionProps;
+  }
+
+  export namespace Tbody {
+    export type Props = TableTbodyProps;
+  }
+
+  export namespace Td {
+    export type Props = TableTdProps;
+  }
+
+  export namespace Th {
+    export type Props = TableThProps;
+  }
+
+  export namespace Tr {
+    export type Props = TableTrProps;
+  }
+
+  export namespace Thead {
+    export type Props = TableTheadProps;
+  }
+
+  export namespace Tfoot {
+    export type Props = TableTfootProps;
+  }
+
+  export namespace ScrollContainer {
+    export type Props = TableScrollContainerProps;
+  }
+}

@@ -14,20 +14,12 @@ describe('@mantine/core/PopoverDropdown', () => {
   tests.itSupportsSystemProps<PopoverDropdownProps>({
     component: TestContainer,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/PopoverDropdown',
     stylesApiName: 'Popover',
     stylesApiSelectors: ['dropdown', 'arrow'],
     providerStylesApi: false,
+    compound: true,
   });
 
   tests.itThrowsContextError({

@@ -3,6 +3,7 @@ export { withSeconds } from './DateTimePicker.demo.withSeconds';
 export { modal } from './DateTimePicker.demo.modal';
 export { configurator } from './DateTimePicker.demo.configurator';
 export { clearable } from './DateTimePicker.demo.clearable';
+export { clearSectionMode } from './DateTimePicker.demo.clearSectionMode';
 export { format } from './DateTimePicker.demo.format';
 export { disabled } from './DateTimePicker.demo.disabled';
 export { timePickerProps } from './DateTimePicker.demo.timePickerProps';

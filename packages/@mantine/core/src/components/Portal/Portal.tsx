@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { assignRef, useIsomorphicEffect } from '@mantine/hooks';
 import { Factory, factory, useProps } from '../../core';
 
-function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
+function createPortalNode(props: React.ComponentProps<'div'>) {
   const node = document.createElement('div');
   node.setAttribute('data-portal', 'true');
   typeof props.className === 'string' &&
@@ -13,16 +13,31 @@ function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
   return node;
 }
 
-export interface BasePortalProps extends React.ComponentPropsWithoutRef<'div'> {
-  /** Element inside which portal should be created, by default a new div element is created and appended to the `document.body` */
+export interface BasePortalProps extends React.ComponentProps<'div'> {
+  /**
+   * Target element where portal should be rendered. Accepts:
+   * - HTMLElement: Renders portal inside this element
+   * - string: CSS selector - renders inside first matching element
+   * - undefined: Uses shared portal node or creates new one based on `reuseTargetNode`
+   *
+   * Note: If selector doesn't match any element, portal will not render
+   */
   target?: HTMLElement | string;
 
-  /** If set, all portals are rendered in the same DOM node @default `true` */
+  /**
+   * When true and target is not specified, all Portal instances share a single
+   * container node appended to document.body. When false, each Portal creates
+   * its own container node.
+   *
+   * Has no effect when target is specified.
+   *
+   * @default true
+   */
   reuseTargetNode?: boolean;
 }
 
 export interface PortalProps extends BasePortalProps {
-  /** Portal children, for example, custom modal or popover */
+  /** Content to render inside the portal */
   children: React.ReactNode;
 }
 
@@ -60,8 +75,12 @@ const defaultProps = {
   reuseTargetNode: true,
 } satisfies Partial<PortalProps>;
 
-export const Portal = factory<PortalFactory>((props, ref) => {
-  const { children, target, reuseTargetNode, ...others } = useProps('Portal', defaultProps, props);
+export const Portal = factory<PortalFactory>((props) => {
+  const { children, target, reuseTargetNode, ref, ...others } = useProps(
+    'Portal',
+    defaultProps,
+    props
+  );
 
   const [mounted, setMounted] = useState(false);
   const nodeRef = useRef<HTMLElement | null>(null);

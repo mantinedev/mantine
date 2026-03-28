@@ -3,6 +3,7 @@ import { getPackagesList } from '../../packages/get-packages-list';
 
 export const ROLLUP_EXTERNALS = [
   'dayjs/locale/ru',
+  'dayjs/locale/es',
   'dayjs/plugin/customParseFormat.js',
   'dayjs/plugin/customParseFormat',
   'dayjs/plugin/utc.js',

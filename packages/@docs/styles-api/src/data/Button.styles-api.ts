@@ -1,4 +1,4 @@
-import type { ButtonFactory, ButtonGroupFactory } from '@mantine/core';
+import type { ButtonFactory, ButtonGroupFactory, ButtonGroupSectionFactory } from '@mantine/core';
 import type { StylesApiData } from '../types';
 
 export const ButtonStylesApi: StylesApiData<ButtonFactory> = {
@@ -49,4 +49,24 @@ export const ButtonGroupStylesApi: StylesApiData<ButtonGroupFactory> = {
   modifiers: [
     { modifier: 'data-orientation', selector: 'group', value: 'Value of `orientation` prop' },
   ],
+};
+
+export const ButtonGroupSectionStylesApi: StylesApiData<ButtonGroupSectionFactory> = {
+  selectors: {
+    groupSection: 'Root element',
+  },
+
+  vars: {
+    groupSection: {
+      '--section-bg': 'Controls `background`',
+      '--section-bd': 'Control `border`',
+      '--section-color': 'Control text `color`',
+      '--section-radius': 'Controls `border-radius`',
+      '--section-height': 'Controls `height` of the section',
+      '--section-padding-x': 'Controls horizontal `padding` of the section',
+      '--section-fz': 'Controls `font-size` of the section',
+    },
+  },
+
+  modifiers: [],
 };

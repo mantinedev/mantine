@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
-import classes from './Modal.module.css';
 import { ModalBody } from './ModalBody';
 import { ModalCloseButton } from './ModalCloseButton';
 import { ModalContent } from './ModalContent';
@@ -13,8 +12,9 @@ import {
   ModalRootProps,
   ModalRootStylesNames,
 } from './ModalRoot';
-import { ModalStack, useModalStackContext } from './ModalStack';
+import { ModalStack, ModalStackContext } from './ModalStack';
 import { ModalTitle } from './ModalTitle';
+import classes from './Modal.module.css';
 
 export type ModalStylesNames = ModalRootStylesNames;
 export type ModalCssVariables = ModalRootCssVariables;
@@ -25,7 +25,7 @@ export interface ModalProps extends ModalRootProps {
   /** Modal title */
   title?: React.ReactNode;
 
-  /** If set, the overlay is rendered @default `true` */
+  /** If set, the overlay is rendered @default true */
   withOverlay?: boolean;
 
   /** Props passed down to the `Overlay` component, use to configure opacity, `background-color`, styles and other properties */
@@ -34,7 +34,7 @@ export interface ModalProps extends ModalRootProps {
   /** Modal content */
   children?: React.ReactNode;
 
-  /** If set, the close button is rendered @default `true` */
+  /** If set, the close button is rendered @default true */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
@@ -75,7 +75,7 @@ const defaultProps = {
   withCloseButton: true,
 } satisfies Partial<ModalProps>;
 
-export const Modal = factory<ModalFactory>((_props, ref) => {
+export const Modal = factory<ModalFactory>((_props) => {
   const {
     title,
     withOverlay,
@@ -89,7 +89,7 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
     zIndex,
     ...others
   } = useProps('Modal', defaultProps, _props);
-  const ctx = useModalStackContext();
+  const ctx = use(ModalStackContext);
   const hasHeader = !!title || withCloseButton;
   const stackProps =
     ctx && stackId
@@ -113,7 +113,6 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
 
   return (
     <ModalRoot
-      ref={ref}
       radius={radius}
       opened={opened}
       zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}

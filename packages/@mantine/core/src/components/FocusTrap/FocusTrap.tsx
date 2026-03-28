@@ -10,11 +10,11 @@ export interface FocusTrapProps {
   /** If set to `false`, disables focus trap */
   active?: boolean;
 
-  /** Prop that is used to access element ref @default `'ref'` */
+  /** Prop that is used to access element ref @default 'ref' */
   refProp?: string;
 
   /** Ref to combine with the focus trap ref */
-  innerRef?: React.ForwardedRef<any>;
+  innerRef?: React.Ref<any>;
 }
 
 export function FocusTrap({
@@ -34,10 +34,14 @@ export function FocusTrap({
   return cloneElement(child, { [refProp]: ref });
 }
 
-export function FocusTrapInitialFocus(props: React.ComponentPropsWithoutRef<'span'>) {
+export function FocusTrapInitialFocus(props: React.ComponentProps<'span'>) {
   return <VisuallyHidden tabIndex={-1} data-autofocus {...props} />;
 }
 
 FocusTrap.displayName = '@mantine/core/FocusTrap';
 FocusTrapInitialFocus.displayName = '@mantine/core/FocusTrapInitialFocus';
 FocusTrap.InitialFocus = FocusTrapInitialFocus;
+
+export namespace FocusTrap {
+  export type Props = FocusTrapProps;
+}

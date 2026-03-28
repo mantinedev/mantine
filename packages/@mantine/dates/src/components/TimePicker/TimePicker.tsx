@@ -3,6 +3,7 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
+  ClearSectionMode,
   CloseButton,
   CloseButtonProps,
   createVarsResolver,
@@ -27,7 +28,6 @@ import { AmPmInput } from './AmPmInput/AmPmInput';
 import { AmPmControlsList } from './TimeControlsList/AmPmControlsList';
 import { TimeControlsList } from './TimeControlsList/TimeControlsList';
 import { TimePickerProvider } from './TimePicker.context';
-import classes from './TimePicker.module.css';
 import {
   TimePickerAmPmLabels,
   TimePickerFormat,
@@ -39,6 +39,7 @@ import { useTimePicker } from './use-time-picker';
 import { clampTime } from './utils/clamp-time/clamp-time';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
 import { getTimeString } from './utils/get-time-string/get-time-string';
+import classes from './TimePicker.module.css';
 
 export type TimePickerStylesNames =
   | 'fieldsRoot'
@@ -60,7 +61,8 @@ export type TimePickerCssVariables = {
 };
 
 export interface TimePickerProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TimePickerFactory>,
     ElementProps<'div', 'onChange' | 'defaultValue'> {
@@ -73,8 +75,11 @@ export interface TimePickerProps
   /** Called when the value changes */
   onChange?: (value: string) => void;
 
-  /** Determines whether the clear button should be displayed @default `false` */
+  /** Determines whether the clear button should be displayed @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** `name` prop passed down to the hidden input */
   name?: string;
@@ -91,16 +96,16 @@ export interface TimePickerProps
   /** Time format, `'24h'` by default */
   format?: TimePickerFormat;
 
-  /** Number by which hours are incremented/decremented @default `1` */
+  /** Number by which hours are incremented/decremented @default 1 */
   hoursStep?: number;
 
-  /** Number by which minutes are incremented/decremented @default `1` */
+  /** Number by which minutes are incremented/decremented @default 1 */
   minutesStep?: number;
 
-  /** Number by which seconds are incremented/decremented @default `1` */
+  /** Number by which seconds are incremented/decremented @default 1 */
   secondsStep?: number;
 
-  /** Determines whether the seconds input should be displayed @default `false` */
+  /** Determines whether the seconds input should be displayed @default false */
   withSeconds?: boolean;
 
   /** `aria-label` of hours input */
@@ -115,10 +120,10 @@ export interface TimePickerProps
   /** `aria-label` of am/pm input */
   amPmInputLabel?: string;
 
-  /** Labels used for am/pm values @default `{ am: 'AM', pm: 'PM' }` */
+  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Determines whether the dropdown with time controls list should be visible when the input has focus @default `false` */
+  /** Determines whether the dropdown with time controls list should be visible when the input has focus @default false */
   withDropdown?: boolean;
 
   /** Props passed down to `Popover` component */
@@ -134,16 +139,16 @@ export interface TimePickerProps
   clearButtonProps?: CloseButtonProps & ElementProps<'button'> & DataAttributes;
 
   /** Props passed down to hours input */
-  hoursInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  hoursInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** Props passed down to minutes input */
-  minutesInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  minutesInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** Props passed down to seconds input */
-  secondsInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  secondsInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** Props passed down to am/pm select */
-  amPmSelectProps?: React.ComponentPropsWithoutRef<'select'> & DataAttributes;
+  amPmSelectProps?: React.ComponentProps<'select'> & DataAttributes;
 
   /** If set, the value cannot be updated */
   readOnly?: boolean;
@@ -152,7 +157,7 @@ export interface TimePickerProps
   disabled?: boolean;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** A function to transform paste values, by default time in 24h format can be parsed on paste for example `23:34:22` */
   pasteSplit?: TimePickerPasteSplit;
@@ -172,22 +177,22 @@ export interface TimePickerProps
   /** Time presets to display in the dropdown */
   presets?: TimePickerPresets;
 
-  /** Maximum height of the content displayed in the dropdown in px @default `200` */
+  /** Maximum height of the content displayed in the dropdown in px @default 200 */
   maxDropdownContentHeight?: number;
 
   /** Props passed down to all underlying `ScrollArea` components */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** If set, the time controls list are reversed, @default `false` */
+  /** If set, the time controls list are reversed, @default false */
   reverseTimeControlsList?: boolean;
 
-  /** Hours input placeholder, @default `--` */
+  /** Hours input placeholder, @default -- */
   hoursPlaceholder?: string;
 
-  /** Minutes input placeholder, @default `--` */
+  /** Minutes input placeholder, @default -- */
   minutesPlaceholder?: string;
 
-  /** Seconds input placeholder, @default `--` */
+  /** Seconds input placeholder, @default -- */
   secondsPlaceholder?: string;
 }
 
@@ -218,7 +223,7 @@ const varsResolver = createVarsResolver<TimePickerFactory>((_theme, { size }) =>
   },
 }));
 
-export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
+export const TimePicker = factory<TimePickerFactory>((_props) => {
   const props = useProps('TimePicker', defaultProps, _props);
   const {
     classNames,
@@ -242,6 +247,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     amPmInputLabel,
     amPmLabels,
     clearable,
+    clearSectionMode,
     onMouseDown,
     onFocusCapture,
     onBlurCapture,
@@ -368,7 +374,6 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
             component="div"
             size={size}
             disabled={disabled}
-            ref={ref}
             onClick={(event) => {
               onClick?.(event);
               controller.focus('hours');
@@ -385,28 +390,29 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
               setDropdownOpened(false);
               onBlurCapture?.(event);
             }}
-            rightSection={
-              rightSection ||
-              (controller.isClearable && (
-                <CloseButton
-                  {...clearButtonProps}
-                  size={size}
-                  onClick={(event) => {
-                    controller.clear();
-                    clearButtonProps?.onClick?.(event);
-                  }}
-                  onMouseDown={(event) => {
-                    event.preventDefault();
-                    clearButtonProps?.onMouseDown?.(event);
-                  }}
-                />
-              ))
+            rightSection={rightSection}
+            __clearSection={
+              <CloseButton
+                {...clearButtonProps}
+                size={size}
+                onClick={(event) => {
+                  controller.clear();
+                  clearButtonProps?.onClick?.(event);
+                }}
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  clearButtonProps?.onMouseDown?.(event);
+                }}
+              />
             }
+            __clearable={controller.isClearable}
+            __clearSectionMode={clearSectionMode}
             labelProps={{ htmlFor: hoursInputId, ...labelProps }}
             style={style}
             className={className}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
+            attributes={attributes}
             __staticSelector="TimePicker"
             {...others}
           >
@@ -601,3 +607,4 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
 
 TimePicker.displayName = '@mantine/dates/TimePicker';
 TimePicker.classes = classes;
+TimePicker.varsResolver = varsResolver;

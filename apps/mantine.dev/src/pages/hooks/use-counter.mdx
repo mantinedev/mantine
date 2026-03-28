@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseCounterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -6,16 +6,11 @@ export default Layout(MDX_DATA.useCounter);
 
 ## Usage
 
-<Demo data={HooksDemos.useCounterDemo} />
+<Demo data={UseCounterDemos.usage} />
 
 ## Definition
 
 ```tsx
-interface UseCounterOptions {
-  min?: number;
-  max?: number;
-}
-
 interface UseCounterOptions {
   min?: number;
   max?: number;
@@ -38,7 +33,7 @@ function useCounter(
 
 ## Exported types
 
-`UseCounterOptions`, `UseCounterHandlers` and `UseCounterReturnValue` types are exported from `@mantine/hooks` package,
+The `UseCounterOptions`, `UseCounterHandlers`, and `UseCounterReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

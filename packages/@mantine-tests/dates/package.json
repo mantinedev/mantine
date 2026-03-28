@@ -33,16 +33,16 @@
   },
   "peerDependencies": {
     "dayjs": "*",
-    "react": "^18.x || ^19.x",
-    "react-dom": "^18.x || ^19.x"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "dayjs": "^1.11.18",
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "dayjs": "^1.11.20",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   }
 }

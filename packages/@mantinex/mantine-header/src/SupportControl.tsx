@@ -1,4 +1,4 @@
-import { IconHeartFilled } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { rem } from '@mantine/core';
 import { HeaderControl } from './HeaderControl';
 import classes from './SupportControl.module.css';
@@ -12,7 +12,7 @@ export function SupportControl() {
       aria-label="Sponsor"
       className={classes.support}
     >
-      <IconHeartFilled style={{ width: rem(22), height: rem(22) }} />
+      <HeartIcon weight="fill" style={{ width: rem(22), height: rem(22) }} />
     </HeaderControl>
   );
 }

@@ -23,6 +23,10 @@ export interface MantineStyleProps {
   ms?: StyleProp<MantineSpacing>;
   /** MarginInlineEnd, theme key: theme.spacing */
   me?: StyleProp<MantineSpacing>;
+  /** MarginInlineStart, theme key: theme.spacing */
+  mis?: StyleProp<MantineSpacing>;
+  /** MarginInlineEnd, theme key: theme.spacing */
+  mie?: StyleProp<MantineSpacing>;
   /** MarginLeft, theme key: theme.spacing */
   ml?: StyleProp<MantineSpacing>;
   /** MarginRight, theme key: theme.spacing */
@@ -42,6 +46,10 @@ export interface MantineStyleProps {
   ps?: StyleProp<MantineSpacing>;
   /** PaddingInlineEnd, theme key: theme.spacing */
   pe?: StyleProp<MantineSpacing>;
+  /** PaddingInlineStart, theme key: theme.spacing */
+  pis?: StyleProp<MantineSpacing>;
+  /** PaddingInlineEnd, theme key: theme.spacing */
+  pie?: StyleProp<MantineSpacing>;
   /** PaddingLeft, theme key: theme.spacing */
   pl?: StyleProp<MantineSpacing>;
   /** PaddingRight, theme key: theme.spacing */

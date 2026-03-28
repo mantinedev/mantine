@@ -4,8 +4,9 @@ import { DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
 import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
 import { isInRange } from './is-in-range/is-in-range';
 
-interface UseDatesRangeInput<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type> {
+interface UseDatesRangeInput<
+  Type extends DatePickerType = 'default',
+> extends PickerBaseProps<Type> {
   level: 'year' | 'month' | 'day';
   type: Type;
   onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void;

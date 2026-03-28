@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { BoxProps, ElementProps, rem, useProps } from '@mantine/core';
 import { IconBraces } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
@@ -8,10 +8,7 @@ export interface RichTextEditorSourceCodeControlProps extends BoxProps, ElementP
 
 const defaultProps: Partial<RichTextEditorSourceCodeControlProps> = {};
 
-export const RichTextEditorSourceCodeControl = forwardRef<
-  HTMLButtonElement,
-  RichTextEditorSourceCodeControlProps
->((props, ref) => {
+export function RichTextEditorSourceCodeControl(props: RichTextEditorSourceCodeControlProps) {
   const { ...others } = useProps('RichTextEditorSourceCodeControl', defaultProps, props);
   const { editor, labels, variant, onSourceCodeTextSwitch } = useRichTextEditorContext();
   const [isSourceCodeModeActive, setIsSourceCodeModeActive] = useState(false);
@@ -37,11 +34,10 @@ export const RichTextEditorSourceCodeControl = forwardRef<
       aria-label={labels.sourceCodeControlLabel}
       title={labels.sourceCodeControlLabel}
       onClick={() => handleStateChange()}
-      ref={ref}
     >
       <IconBraces style={{ width: rem(16), height: rem(16) }} />
     </RichTextEditorControl>
   );
-});
+}
 
 RichTextEditorSourceCodeControl.displayName = '@mantine/tiptap/RichTextEditorSourceCodeControl';

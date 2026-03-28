@@ -5,14 +5,14 @@ export default Layout(MDX_DATA.Storybook);
 
 # Setup Mantine in Storybook
 
-Note that this guide covers only Storybook 10.0+ integration. If you are using older version of Storybook,
-it will not work for you.
+Note that this guide covers only Storybook 10+ integration. If you're using an older version of Storybook,
+it won't work for you.
 
 ## Add Storybook to your application
 
 If you already have Storybook in your application, you can skip this step.
 
-Follow [Storybook getting started](https://storybook.js.org/docs/react/get-started/install/) guide
+Follow the [Storybook getting started](https://storybook.js.org/docs/react/get-started/install/) guide
 to add Storybook to your application:
 
 ```bash
@@ -40,7 +40,7 @@ export default config;
 
 ## Theme object
 
-To shared [theme object](/theming/theme-object) between your application and Storybook, create
+To share the [theme object](/theming/theme-object) between your application and Storybook, create a
 `src/theme.ts` (or any other path in your application) file with your theme override:
 
 ```tsx
@@ -53,7 +53,7 @@ export const theme = createTheme({
 });
 ```
 
-Then you will be able to use the same theme both in your application and Storybook:
+Then you'll be able to use the same theme both in your application and Storybook:
 
 ```tsx
 // In your application
@@ -68,7 +68,7 @@ function App() {
 
 ## Storybook preview
 
-If `.storybook/preview.tsx` file does not exist, create it and add
+If the `.storybook/preview.tsx` file doesn't exist, create it and add
 the following content:
 
 ```tsx

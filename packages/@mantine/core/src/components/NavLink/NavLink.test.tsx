@@ -12,17 +12,9 @@ describe('@mantine/core/NavLink', () => {
   tests.itSupportsSystemProps<NavLinkProps, NavLinkStylesNames>({
     component: NavLink,
     props: defaultProps,
-    mod: true,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLAnchorElement,
     displayName: '@mantine/core/NavLink',
     stylesApiSelectors: ['root', 'body', 'chevron', 'children', 'description', 'label', 'section'],
   });

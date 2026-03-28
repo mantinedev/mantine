@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -11,8 +12,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
+import { InputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';
-import { useInputWrapperContext } from '../InputWrapper.context';
 
 export type InputLabelStylesNames = 'label' | 'required';
 export type InputLabelCssVariables = {
@@ -20,18 +21,16 @@ export type InputLabelCssVariables = {
 };
 
 export interface InputLabelProps
-  extends BoxProps,
-    StylesApiProps<InputLabelFactory>,
-    ElementProps<'label'> {
+  extends BoxProps, StylesApiProps<InputLabelFactory>, ElementProps<'label'> {
   __staticSelector?: string;
 
   /** If set, the required asterisk is displayed next to the label */
   required?: boolean;
 
-  /** Controls label `font-size` @default `'sm'` */
+  /** Controls label `font-size` @default 'sm' */
   size?: MantineFontSize;
 
-  /** Root element of the label @default `'label'` */
+  /** Root element of the label @default 'label' */
   labelElement?: 'label' | 'div';
 }
 
@@ -53,7 +52,7 @@ const varsResolver = createVarsResolver<InputLabelFactory>((_, { size }) => ({
   },
 }));
 
-export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
+export const InputLabel = factory<InputLabelFactory>((_props) => {
   const props = useProps('InputLabel', defaultProps, _props);
   const {
     classNames,
@@ -63,17 +62,15 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     unstyled,
     vars,
     labelElement,
-    size,
     required,
     htmlFor,
     onMouseDown,
     children,
     __staticSelector,
-    variant,
     mod,
     attributes,
     ...others
-  } = useProps('InputLabel', defaultProps, props);
+  } = props;
 
   const _getStyles = useStyles<InputLabelFactory>({
     name: ['InputWrapper', __staticSelector],
@@ -90,16 +87,13 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
   const getStyles = ctx?.getStyles || _getStyles;
 
   return (
     <Box
       {...getStyles('label', ctx?.getStyles ? { className, style } : undefined)}
       component={labelElement as 'label'}
-      variant={variant}
-      size={size}
-      ref={ref}
       htmlFor={labelElement === 'label' ? htmlFor : undefined}
       mod={[{ required }, mod]}
       onMouseDown={(event) => {
@@ -121,4 +115,5 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
 });
 
 InputLabel.classes = classes;
+InputLabel.varsResolver = varsResolver;
 InputLabel.displayName = '@mantine/core/InputLabel';

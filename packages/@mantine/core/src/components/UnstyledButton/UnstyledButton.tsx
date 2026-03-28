@@ -12,8 +12,7 @@ import classes from './UnstyledButton.module.css';
 export type UnstyledButtonStylesNames = 'root';
 
 export interface UnstyledButtonProps
-  extends Omit<BoxComponentProps, 'vars' | 'variant'>,
-    StylesApiProps<UnstyledButtonFactory> {
+  extends Omit<BoxComponentProps, 'vars' | 'variant'>, StylesApiProps<UnstyledButtonFactory> {
   __staticSelector?: string;
 }
 
@@ -29,7 +28,7 @@ export type UnstyledButtonFactory = PolymorphicFactory<{
 }>;
 
 export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
-  (_props: UnstyledButtonProps & { component?: any }, ref) => {
+  (_props: UnstyledButtonProps & { component?: any }) => {
     const props = useProps('UnstyledButton', defaultProps, _props);
     const {
       className,
@@ -59,7 +58,6 @@ export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
       <Box
         {...getStyles('root', { focusable: true })}
         component={component}
-        ref={ref}
         type={component === 'button' ? 'button' : undefined}
         {...others}
       />

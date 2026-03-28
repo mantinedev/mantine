@@ -85,6 +85,12 @@ import SelectOptionOnHoverCode from './SelectOptionOnHover/code.json';
 import { SelectOptionOnHover } from './SelectOptionOnHover/SelectOptionOnHover';
 import TransferListCode from './TransferList/code.json';
 import { TransferList } from './TransferList/TransferList';
+import VirtualizedOptionsCode from './VirtualizedOptions/code.json';
+import { VirtualizedOptions } from './VirtualizedOptions/VirtualizedOptions';
+import VirtualizedSearchableTanstackCode from './VirtualizedSearchableTanstack/code.json';
+import { VirtualizedSearchableTanstack } from './VirtualizedSearchableTanstack/VirtualizedSearchableTanstack';
+import VirtualizedTanstackCode from './VirtualizedTanstack/code.json';
+import { VirtualizedTanstack } from './VirtualizedTanstack/VirtualizedTanstack';
 
 interface ComboboxExampleComponent {
   component: () => React.JSX.Element;
@@ -309,6 +315,21 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   TransferList: {
     component: TransferList,
     code: TransferListCode as ComboboxExampleComponent['code'],
+  },
+
+  VirtualizedOptions: {
+    component: VirtualizedOptions,
+    code: VirtualizedOptionsCode as ComboboxExampleComponent['code'],
+  },
+
+  VirtualizedTanstack: {
+    component: VirtualizedTanstack,
+    code: VirtualizedTanstackCode as ComboboxExampleComponent['code'],
+  },
+
+  VirtualizedSearchableTanstack: {
+    component: VirtualizedSearchableTanstack,
+    code: VirtualizedSearchableTanstackCode as ComboboxExampleComponent['code'],
   },
 };
 

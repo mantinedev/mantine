@@ -12,7 +12,7 @@ export function Usage() {
     key,
   });
 
-  const [storedValue, setStoredValue] = useState(null);
+  const [storedValue, setStoredValue] = useState<string | null | undefined>(null);
 
   useEffect(() => {
     setTimeout(() => {

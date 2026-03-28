@@ -1,42 +1,36 @@
 import {
-  IconAlignCenter,
-  IconAlignJustified,
-  IconAlignLeft,
-  IconAlignRight,
-  IconCheck,
-} from '@tabler/icons-react';
+  CheckIcon,
+  TextAlignCenterIcon,
+  TextAlignJustifyIcon,
+  TextAlignLeftIcon,
+  TextAlignRightIcon,
+} from '@phosphor-icons/react';
 import { Group, Select, SelectProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import {
-  IconAlignCenter,
-  IconAlignJustified,
-  IconAlignLeft,
-  IconAlignRight,
-  IconCheck,
-} from '@tabler/icons-react';
+import { TextAlignCenterIcon, TextAlignJustifyIcon, TextAlignLeftIcon, TextAlignRightIcon, CheckIcon } from '@phosphor-icons/react';
 import { Group, Select, SelectProps } from '@mantine/core';
 
 const iconProps = {
-  stroke: 1.5,
+
   color: 'currentColor',
   opacity: 0.6,
   size: 18,
 };
 
 const icons: Record<string, React.ReactNode> = {
-  left: <IconAlignLeft {...iconProps} />,
-  center: <IconAlignCenter {...iconProps} />,
-  right: <IconAlignRight {...iconProps} />,
-  justify: <IconAlignJustified {...iconProps} />,
+  left: <TextAlignLeftIcon {...iconProps} />,
+  center: <TextAlignCenterIcon {...iconProps} />,
+  right: <TextAlignRightIcon {...iconProps} />,
+  justify: <TextAlignJustifyIcon {...iconProps} />,
 };
 
 const renderSelectOption: SelectProps['renderOption'] = ({ option, checked }) => (
   <Group flex="1" gap="xs">
     {icons[option.value]}
     {option.label}
-    {checked && <IconCheck style={{ marginInlineStart: 'auto' }} {...iconProps} />}
+    {checked && <CheckIcon style={{ marginInlineStart: 'auto' }} {...iconProps} />}
   </Group>
 );
 
@@ -58,24 +52,23 @@ function Demo() {
 `;
 
 const iconProps = {
-  stroke: 1.5,
   color: 'currentColor',
   opacity: 0.6,
   size: 18,
 };
 
 const icons: Record<string, React.ReactNode> = {
-  left: <IconAlignLeft {...iconProps} />,
-  center: <IconAlignCenter {...iconProps} />,
-  right: <IconAlignRight {...iconProps} />,
-  justify: <IconAlignJustified {...iconProps} />,
+  left: <TextAlignLeftIcon {...iconProps} />,
+  center: <TextAlignCenterIcon {...iconProps} />,
+  right: <TextAlignRightIcon {...iconProps} />,
+  justify: <TextAlignJustifyIcon {...iconProps} />,
 };
 
 const renderSelectOption: SelectProps['renderOption'] = ({ option, checked }) => (
   <Group flex="1" gap="xs">
     {icons[option.value]}
     {option.label}
-    {checked && <IconCheck style={{ marginInlineStart: 'auto' }} {...iconProps} />}
+    {checked && <CheckIcon style={{ marginInlineStart: 'auto' }} {...iconProps} />}
   </Group>
 );
 

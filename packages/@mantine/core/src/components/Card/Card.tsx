@@ -14,8 +14,8 @@ import {
 } from '../../core';
 import { Paper } from '../Paper';
 import { CardProvider } from './Card.context';
-import classes from './Card.module.css';
 import { CardSection } from './CardSection/CardSection';
+import classes from './Card.module.css';
 
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {
@@ -26,17 +26,20 @@ export interface CardProps extends BoxProps, StylesApiProps<CardFactory> {
   /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Adds border to the card */
   withBorder?: boolean;
 
-  /** Key of `theme.spacing` or any valid CSS value to set padding @default `'md'` */
+  /** Key of `theme.spacing` or any valid CSS value to set padding @default 'md' */
   padding?: MantineSpacing;
 
   /** Card content */
   children?: React.ReactNode;
+
+  /** Card orientation @default 'vertical' */
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export type CardFactory = PolymorphicFactory<{
@@ -56,8 +59,12 @@ const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
   },
 }));
 
-export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
-  const props = useProps('Card', null, _props);
+const defaultProps = {
+  orientation: 'vertical',
+} satisfies Partial<CardProps>;
+
+export const Card = polymorphicFactory<CardFactory>((_props) => {
+  const props = useProps('Card', defaultProps, _props);
   const {
     classNames,
     className,
@@ -68,6 +75,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     children,
     padding,
     attributes,
+    orientation,
     ...others
   } = props;
 
@@ -89,6 +97,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
   const content = _children.map((child, index) => {
     if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
       return cloneElement(child, {
+        'data-orientation': orientation,
         'data-first-section': index === 0 || undefined,
         'data-last-section': index === _children.length - 1 || undefined,
       } as any);
@@ -99,7 +108,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
 
   return (
     <CardProvider value={{ getStyles }}>
-      <Paper ref={ref} unstyled={unstyled} {...getStyles('root')} {...others}>
+      <Paper unstyled={unstyled} data-orientation={orientation} {...getStyles('root')} {...others}>
         {content}
       </Paper>
     </CardProvider>
@@ -107,5 +116,6 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
 });
 
 Card.classes = classes;
+Card.varsResolver = varsResolver;
 Card.displayName = '@mantine/core/Card';
 Card.Section = CardSection;

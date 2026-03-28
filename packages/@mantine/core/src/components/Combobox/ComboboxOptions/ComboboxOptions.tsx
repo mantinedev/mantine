@@ -15,9 +15,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxOptionsStylesNames = 'options';
 
 export interface ComboboxOptionsProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxOptionsFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<ComboboxOptionsFactory>, ElementProps<'div'> {
   /** Id of the element that labels the options list */
   labelledBy?: string;
 }
@@ -29,7 +27,7 @@ export type ComboboxOptionsFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxOptions = factory<ComboboxOptionsFactory>((_props, ref) => {
+export const ComboboxOptions = factory<ComboboxOptionsFactory>((_props) => {
   const props = useProps('ComboboxOptions', null, _props);
   const { classNames, className, style, styles, id, onMouseDown, labelledBy, ...others } = props;
   const ctx = useComboboxContext();
@@ -41,7 +39,6 @@ export const ComboboxOptions = factory<ComboboxOptionsFactory>((_props, ref) => 
 
   return (
     <Box
-      ref={ref}
       {...ctx.getStyles('options', { className, style, classNames, styles })}
       {...others}
       id={_id}

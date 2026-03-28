@@ -153,4 +153,15 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/Heatmap/Heatmap.tsx',
     docs: 'charts/heatmap.mdx',
   },
+
+  BarsList: {
+    title: 'BarsList',
+    props: ['BarsList'],
+    styles: ['BarsList'],
+    package: '@mantine/charts',
+    slug: '/charts/bars-list',
+    description: 'Display a list of bars with names and values',
+    source: '@mantine/charts/src/BarsList/BarsList.tsx',
+    docs: 'charts/bars-list.mdx',
+  },
 };

@@ -12,8 +12,8 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import classes from '../CodeHighlight.module.css';
 import { CodeHighlight } from './CodeHighlight';
+import classes from '../CodeHighlight.module.css';
 
 export type InlineCodeHighlightStylesNames = 'inlineCodeHighlight';
 export type InlineCodeHighlightCssVariables = {
@@ -21,9 +21,7 @@ export type InlineCodeHighlightCssVariables = {
 };
 
 export interface InlineCodeHighlightProps
-  extends BoxProps,
-    StylesApiProps<InlineCodeHighlightFactory>,
-    ElementProps<'code'> {
+  extends BoxProps, StylesApiProps<InlineCodeHighlightFactory>, ElementProps<'code'> {
   /** Code to highlight */
   code: string;
 
@@ -33,10 +31,10 @@ export interface InlineCodeHighlightProps
   /** Controls background color of the code. By default, the value depends on color scheme. */
   background?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'sm'` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 'sm' */
   radius?: MantineRadius;
 
-  /** Adds border to the root element @default `false` */
+  /** Adds border to the root element @default false */
   withBorder?: boolean;
 }
 
@@ -56,9 +54,10 @@ const varsResolver = createVarsResolver<InlineCodeHighlightFactory>(
   })
 );
 
-export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props, ref) => {
+export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props) => {
   const props = useProps('InlineCodeHighlight', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, attributes, ref, ...others } =
+    props;
 
   const getStyles = useStyles<InlineCodeHighlightFactory>({
     name: 'InlineCodeHighlight',
@@ -82,3 +81,4 @@ export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props, 
 
 InlineCodeHighlight.displayName = '@mantine/code-highlight/InlineCodeHighlight';
 InlineCodeHighlight.classes = classes;
+InlineCodeHighlight.varsResolver = varsResolver;

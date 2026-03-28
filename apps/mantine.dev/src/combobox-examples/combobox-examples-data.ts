@@ -14,7 +14,15 @@ export interface ComboboxExample {
   fullDescription?: string;
 
   /** Type based on which components are ordered in the navbar, also used for filtering */
-  type: 'select' | 'autocomplete' | 'multiselect' | 'dropdown' | 'button' | 'animations' | 'other';
+  type:
+    | 'select'
+    | 'autocomplete'
+    | 'multiselect'
+    | 'dropdown'
+    | 'button'
+    | 'animations'
+    | 'virtualization'
+    | 'other';
 }
 
 export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
@@ -281,5 +289,23 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     name: 'Transfer list',
     description: 'Transfer list with search',
     type: 'other',
+  },
+  {
+    id: 'VirtualizedTanstack',
+    name: 'Virtualized select (TanStack)',
+    description: 'Virtualized options list with @tanstack/react-virtual',
+    type: 'virtualization',
+  },
+  {
+    id: 'VirtualizedSearchableTanstack',
+    name: 'Searchable virtualized select (TanStack)',
+    description: 'Searchable virtualized options list with @tanstack/react-virtual',
+    type: 'virtualization',
+  },
+  {
+    id: 'VirtualizedOptions',
+    name: 'Virtualized select (react-virtuoso)',
+    description: 'Virtualized options list with react-virtuoso',
+    type: 'virtualization',
   },
 ];

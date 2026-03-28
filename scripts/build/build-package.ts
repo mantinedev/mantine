@@ -30,7 +30,7 @@ export async function buildPackage(_packageName: string) {
     await generateDts(packagePath);
 
     const config = createPackageConfig(packagePath);
-    logger.log(`Compiling ${formattedPackageName} package with rollup...`);
+    logger.log(`Compiling ${formattedPackageName} package with rolldown...`);
 
     await compile(config);
 

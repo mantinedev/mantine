@@ -20,10 +20,7 @@ export interface UseCounterHandlers {
 
 export type UseCounterReturnValue = [number, UseCounterHandlers];
 
-export function useCounter(
-  initialValue = 0,
-  options?: UseCounterOptions
-): [number, UseCounterHandlers] {
+export function useCounter(initialValue = 0, options?: UseCounterOptions): UseCounterReturnValue {
   const { min, max } = { ...DEFAULT_OPTIONS, ...options };
   const [count, setCount] = useState<number>(clamp(initialValue, min, max));
 
@@ -45,4 +42,10 @@ export function useCounter(
   );
 
   return [count, { increment, decrement, set, reset }];
+}
+
+export namespace useCounter {
+  export type Options = UseCounterOptions;
+  export type Handlers = UseCounterHandlers;
+  export type ReturnValue = UseCounterReturnValue;
 }

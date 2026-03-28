@@ -1,3 +1,4 @@
+import { createContext, use } from 'react';
 import {
   Box,
   BoxProps,
@@ -11,9 +12,15 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { usePillsInputContext } from '../../PillsInput/PillsInput.context';
+import { PillsInputContext } from '../../PillsInput/PillsInput.context';
 import classes from '../Pill.module.css';
-import { PillGroupProvider } from '../PillGroup.context';
+
+export interface PillGroupContextValue {
+  size: MantineSize | (string & {}) | undefined;
+  disabled: boolean | undefined;
+}
+
+export const PillGroupContext = createContext<PillGroupContextValue | null>(null);
 
 export type PillGroupStylesNames = 'group';
 export type PillGroupCssVariables = {
@@ -21,13 +28,11 @@ export type PillGroupCssVariables = {
 };
 
 export interface PillGroupProps
-  extends BoxProps,
-    StylesApiProps<PillGroupFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<PillGroupFactory>, ElementProps<'div'> {
   /** Controls spacing between pills, by default controlled by `size` */
   gap?: MantineSize | (string & {}) | number;
 
-  /** Controls size of the child `Pill` components and gap between them @default `'sm'` */
+  /** Controls size of the child `Pill` components and gap between them @default 'sm' */
   size?: MantineSize | (string & {});
 
   /** If set, adds disabled to all child `Pill` components */
@@ -48,7 +53,7 @@ const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size })
   },
 }));
 
-export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
+export const PillGroup = factory<PillGroupFactory>((_props) => {
   const props = useProps('PillGroup', null, _props);
   const {
     classNames,
@@ -62,7 +67,7 @@ export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
     attributes,
     ...others
   } = props;
-  const pillsInputCtx = usePillsInputContext();
+  const pillsInputCtx = use(PillsInputContext);
   const _size = pillsInputCtx?.size || size || undefined;
 
   const getStyles = useStyles<PillGroupFactory>({
@@ -82,11 +87,12 @@ export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
   });
 
   return (
-    <PillGroupProvider value={{ size: _size, disabled }}>
-      <Box ref={ref} size={_size} {...getStyles('group')} {...others} />
-    </PillGroupProvider>
+    <PillGroupContext value={{ size: _size, disabled }}>
+      <Box size={_size} {...getStyles('group')} {...others} />
+    </PillGroupContext>
   );
 });
 
 PillGroup.classes = classes;
+PillGroup.varsResolver = varsResolver;
 PillGroup.displayName = '@mantine/core/PillGroup';

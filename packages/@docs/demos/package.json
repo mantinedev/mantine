@@ -36,8 +36,8 @@
     "directory": "packages/@docs/demos"
   },
   "peerDependencies": {
-    "react": "^18.x || ^19.x",
-    "react-dom": "^18.x || ^19.x"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -54,19 +54,21 @@
     "@mantine/hooks": "workspace:*",
     "@mantine/notifications": "workspace:*",
     "@mantine/nprogress": "workspace:*",
+    "@mantine/schedule": "workspace:*",
     "@mantine/spotlight": "workspace:*",
     "@mantine/tiptap": "workspace:*",
     "@mantinex/demo": "workspace:*",
     "@mantinex/dev-icons": "workspace:*",
-    "@tiptap/core": "^3.3.1",
-    "@tiptap/extension-floating-menu": "^3.2.0",
-    "@tiptap/extension-link": "^3.3.1",
-    "@tiptap/pm": "^3.3.1",
-    "@tiptap/react": "^3.3.1",
-    "dayjs": "^1.11.18",
+    "@mantinex/mantine-logo": "workspace:*",
+    "@tiptap/core": "^3.21.0",
+    "@tiptap/extension-floating-menu": "^3.21.0",
+    "@tiptap/extension-link": "^3.21.0",
+    "@tiptap/pm": "^3.21.0",
+    "@tiptap/react": "^3.21.0",
+    "dayjs": "^1.11.20",
     "embla-carousel-react": "^8.6.0",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
-    "recharts": "^2.13.3"
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "recharts": "^3.8.1"
   }
 }

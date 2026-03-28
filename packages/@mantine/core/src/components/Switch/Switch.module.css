@@ -71,7 +71,7 @@
   display: flex;
   align-items: center;
   font-size: var(--switch-label-font-size);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   order: var(--switch-order, 1);
   user-select: none;
   z-index: 0;

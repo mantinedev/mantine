@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Transition as _Transition,
   TransitionGroup,
@@ -28,7 +28,6 @@ import {
 } from './get-grouped-notifications/get-grouped-notifications';
 import { getNotificationStateStyles } from './get-notification-state-styles';
 import { NotificationContainer } from './NotificationContainer';
-import classes from './Notifications.module.css';
 import {
   hideNotification,
   NotificationPosition,
@@ -37,6 +36,7 @@ import {
   notificationsStore,
   useNotifications,
 } from './notifications.store';
+import classes from './Notifications.module.css';
 
 const Transition: any = _Transition;
 
@@ -46,28 +46,26 @@ export type NotificationsCssVariables = {
 };
 
 export interface NotificationsProps
-  extends BoxProps,
-    StylesApiProps<NotificationsFactory>,
-    ElementProps<'div'> {
-  /** Notifications default position @default `'bottom-right'` */
+  extends BoxProps, StylesApiProps<NotificationsFactory>, ElementProps<'div'> {
+  /** Notifications default position @default 'bottom-right' */
   position?: NotificationPosition;
 
-  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function @default `4000` */
+  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function @default 4000 */
   autoClose?: number | false;
 
-  /** Notification transition duration in ms @default `250` */
+  /** Notification transition duration in ms @default 250 */
   transitionDuration?: number;
 
-  /** Notification width, cannot exceed 100% @default `440` */
+  /** Notification width, cannot exceed 100% @default 440 */
   containerWidth?: number | string;
 
-  /** Notification `max-height`, used for transitions @default `200` */
+  /** Notification `max-height`, used for transitions @default 200 */
   notificationMaxHeight?: number | string;
 
-  /** Maximum number of notifications displayed at a time, other new notifications will be added to queue @default `5` */
+  /** Maximum number of notifications displayed at a time, other new notifications will be added to queue @default 5 */
   limit?: number;
 
-  /** Notifications container z-index @default `400` */
+  /** Notifications container z-index @default 400 */
   zIndex?: string | number;
 
   /** Props passed down to the `Portal` component */
@@ -76,8 +74,11 @@ export interface NotificationsProps
   /** Store for notifications state, can be used to create multiple instances of notifications system in your application */
   store?: NotificationsStore;
 
-  /** Determines whether notifications container should be rendered inside `Portal` @default `true` */
+  /** Determines whether notifications container should be rendered inside `Portal` @default true */
   withinPortal?: boolean;
+
+  /** Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification @default 'all' */
+  pauseResetOnHover?: 'all' | 'notification';
 }
 
 export type NotificationsFactory = Factory<{
@@ -105,6 +106,7 @@ const defaultProps = {
   zIndex: getDefaultZIndex('overlay'),
   store: notificationsStore,
   withinPortal: true,
+  pauseResetOnHover: 'all',
 } satisfies Partial<NotificationsProps>;
 
 const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
@@ -114,7 +116,7 @@ const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, cont
   },
 }));
 
-export const Notifications = factory<NotificationsFactory>((_props, ref) => {
+export const Notifications = factory<NotificationsFactory>((_props) => {
   const props = useProps('Notifications', defaultProps, _props);
   const {
     classNames,
@@ -123,6 +125,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
+    attributes,
     position,
     autoClose,
     transitionDuration,
@@ -133,6 +136,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
     store,
     portalProps,
     withinPortal,
+    pauseResetOnHover,
     ...others
   } = props;
 
@@ -142,6 +146,10 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
   const shouldReduceMotion = useReducedMotion();
   const refs = useRef<Record<string, HTMLDivElement>>({});
   const previousLength = useRef<number>(0);
+  const [hoveredCount, setHoveredCount] = useState(0);
+
+  const handleHoverStart = useCallback(() => setHoveredCount((c) => c + 1), []);
+  const handleHoverEnd = useCallback(() => setHoveredCount((c) => Math.max(0, c - 1)), []);
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -155,6 +163,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -194,6 +203,9 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
               data={notification}
               onHide={(id) => hideNotification(id, store)}
               autoClose={autoClose}
+              paused={pauseResetOnHover === 'all' ? hoveredCount > 0 : false}
+              onHoverStart={handleHoverStart}
+              onHoverEnd={handleHoverEnd}
               {...getStyles('notification', {
                 style: {
                   ...getNotificationStateStyles({
@@ -217,7 +229,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
 
   return (
     <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Box {...getStyles('root')} data-position="top-center" ref={ref} {...others}>
+      <Box {...getStyles('root')} data-position="top-center" {...others}>
         <TransitionGroup>{groupedComponents['top-center']}</TransitionGroup>
       </Box>
 
@@ -253,6 +265,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
 });
 
 Notifications.classes = classes;
+Notifications.varsResolver = varsResolver;
 Notifications.displayName = '@mantine/notifications/Notifications';
 Notifications.show = notifications.show;
 Notifications.hide = notifications.hide;

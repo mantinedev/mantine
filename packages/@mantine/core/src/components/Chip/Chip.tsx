@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -19,9 +20,8 @@ import {
   useStyles,
 } from '../../core';
 import { CheckIcon } from '../Checkbox';
+import { ChipGroup, ChipGroupContext } from './ChipGroup/ChipGroup';
 import classes from './Chip.module.css';
-import { useChipGroupContext } from './ChipGroup.context';
-import { ChipGroup } from './ChipGroup/ChipGroup';
 
 export type ChipStylesNames = 'root' | 'input' | 'iconWrapper' | 'checkIcon' | 'label';
 export type ChipVariant = 'outline' | 'filled' | 'light';
@@ -41,46 +41,44 @@ export type ChipCssVariables = {
 };
 
 export interface ChipProps
-  extends BoxProps,
-    StylesApiProps<ChipFactory>,
-    ElementProps<'input', 'size' | 'onChange'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `'xl'` */
+  extends BoxProps, StylesApiProps<ChipFactory>, ElementProps<'input', 'size' | 'onChange'> {
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
   radius?: MantineRadius;
 
-  /** Controls various properties related to component size @default `'sm'` */
+  /** Controls various properties related to the component size @default 'sm' */
   size?: MantineSize;
 
-  /** Chip input type @default `'checkbox'` */
+  /** Chip input type @default 'checkbox' */
   type?: 'radio' | 'checkbox';
 
   /** `label` element associated with the input */
   children: React.ReactNode;
 
-  /** Checked state for controlled component */
+  /** Controlled checked state */
   checked?: boolean;
 
-  /** Default checked state for uncontrolled component */
+  /** Uncontrolled checked state initial value */
   defaultChecked?: boolean;
 
   /** Calls when checked state changes */
   onChange?: (checked: boolean) => void;
 
-  /** Controls components colors based on `variant` prop. Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Unique input id */
+  /** Unique input id, generated randomly if not provided */
   id?: string;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Any element or component to replace default icon */
+  /** Any element or component to replace the default icon */
   icon?: React.ReactNode;
 
   /** Assigns ref of the root element */
-  rootRef?: React.ForwardedRef<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement>;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on the chip background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -126,7 +124,7 @@ const varsResolver = createVarsResolver<ChipFactory>(
   }
 );
 
-export const Chip = factory<ChipFactory>((_props, ref) => {
+export const Chip = factory<ChipFactory>((_props) => {
   const props = useProps('Chip', defaultProps, _props);
   const {
     classNames,
@@ -168,7 +166,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const ctx = useChipGroupContext();
+  const ctx = use(ChipGroupContext);
   const uuid = useId(id);
   const { styleProps, rest } = extractStyleProps(others);
 
@@ -209,16 +207,15 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
         onChange={(event) => setValue(event.currentTarget.checked)}
         id={uuid}
         disabled={disabled}
-        ref={ref}
         value={value}
         {...contextProps}
         {...rest}
       />
 
-      <label
+      <Box
+        component="label"
         htmlFor={uuid}
-        data-checked={_checked || undefined}
-        data-disabled={disabled || undefined}
+        mod={{ checked: _checked, disabled }}
         {...getStyles('label', { variant: variant || 'filled' })}
       >
         {_checked && icon !== null && icon !== false && (
@@ -227,11 +224,12 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
           </span>
         )}
         <span>{children}</span>
-      </label>
+      </Box>
     </Box>
   );
 });
 
 Chip.classes = classes;
+Chip.varsResolver = varsResolver;
 Chip.displayName = '@mantine/core/Chip';
 Chip.Group = ChipGroup;

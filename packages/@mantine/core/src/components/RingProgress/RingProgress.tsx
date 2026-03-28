@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -19,7 +20,7 @@ function getClampedThickness(thickness: number, size: number) {
   return Math.min(thickness || 12, (size || 120) / 4);
 }
 
-interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
+export interface RingProgressSection extends React.ComponentProps<'circle'>, DataAttributes {
   value: number;
   color: MantineColor;
   tooltip?: React.ReactNode;
@@ -28,32 +29,40 @@ interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
 export type RingProgressStylesNames = 'root' | 'svg' | 'label' | 'curve';
 export type RingProgressCssVariables = {
   root: '--rp-size' | '--rp-label-offset' | '--rp-transition-duration';
+  svg: '--rp-start-angle';
 };
 
 export interface RingProgressProps
-  extends BoxProps,
-    StylesApiProps<RingProgressFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RingProgressFactory>, ElementProps<'div'> {
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 
-  /** Ring thickness @default 12 */
+  /** Ring thickness in pixels. Cannot exceed size / 4 and will be automatically clamped if necessary @default 12 */
   thickness?: number;
 
   /** Width and height of the progress ring @default 120 */
   size?: number;
 
-  /** Sets whether the edges of the progress circle are rounded */
+  /** Applies rounded line caps to the start and end of visible sections @default false */
   roundCaps?: boolean;
 
-  /** Ring sections */
+  /**
+   * Array of sections to display in the ring. Each section should have a `value` (0-100),
+   * `color`, and optional `tooltip`. Sections can also receive any valid SVG circle element props.
+   */
   sections: RingProgressSection[];
 
-  /** Color of the root section, key of theme.colors or CSS color value */
+  /** Color of the unfilled portion of the ring (background). Defaults to gray-2 in light mode, dark-4 in dark mode */
   rootColor?: MantineColor;
 
-  /** Transition duration of filled section styles changes in ms @default `0` */
+  /** Transition duration in milliseconds for section value and color changes @default 0 */
   transitionDuration?: number;
+
+  /** Gap between sections in degrees. Reduces the visual size of each section @default 0 */
+  sectionGap?: number;
+
+  /** Starting angle in degrees. 0 = right, 90 = bottom, 180 = left, 270 = top @default 270 */
+  startAngle?: number;
 }
 
 export type RingProgressFactory = Factory<{
@@ -66,19 +75,23 @@ export type RingProgressFactory = Factory<{
 const defaultProps = {
   size: 120,
   thickness: 12,
+  startAngle: 270,
 } satisfies Partial<RingProgressProps>;
 
 const varsResolver = createVarsResolver<RingProgressFactory>(
-  (_, { size, thickness, transitionDuration }) => ({
+  (_, { size, thickness, transitionDuration, startAngle }) => ({
     root: {
       '--rp-size': rem(size),
       '--rp-label-offset': rem(thickness! * 2),
       '--rp-transition-duration': transitionDuration ? `${transitionDuration}ms` : undefined,
     },
+    svg: {
+      '--rp-start-angle': `${startAngle}deg`,
+    },
   })
 );
 
-export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
+export const RingProgress = factory<RingProgressFactory>((_props) => {
   const props = useProps('RingProgress', defaultProps, _props);
   const {
     classNames,
@@ -94,6 +107,8 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     roundCaps,
     rootColor,
     transitionDuration,
+    sectionGap,
+    startAngle,
     attributes,
     ...others
   } = props;
@@ -120,6 +135,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     sections,
     renderRoundedLineCaps: roundCaps,
     rootColor,
+    sectionGap,
   }).map(({ data, sum, root, lineRoundCaps, offset }, index) => (
     <Curve
       {...data}
@@ -136,7 +152,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
   ));
 
   return (
-    <Box {...getStyles('root')} size={size} ref={ref} {...others}>
+    <Box {...getStyles('root')} size={size} {...others}>
       <svg {...getStyles('svg')}>{curves}</svg>
       {label && <div {...getStyles('label')}>{label}</div>}
     </Box>
@@ -144,4 +160,5 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
 });
 
 RingProgress.classes = classes;
+RingProgress.varsResolver = varsResolver;
 RingProgress.displayName = '@mantine/core/RingProgress';

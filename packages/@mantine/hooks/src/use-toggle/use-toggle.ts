@@ -15,3 +15,7 @@ export function useToggle<T = boolean>(
 
   return [option, toggle as UseToggleAction<T>];
 }
+
+export namespace useToggle {
+  export type ReturnValue<T> = UseToggleReturnValue<T>;
+}

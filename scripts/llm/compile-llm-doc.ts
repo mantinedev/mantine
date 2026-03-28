@@ -7,9 +7,12 @@ import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
 import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
+import { allVersions } from '@mantinex/mantine-meta';
+import { extractCodeVariable, loadDemoCode } from '../utils/demo-loader';
 
 interface CompilerConfig {
   rootDir: string;
+  siteUrl: string;
   mdxPaths: {
     docs: string;
     help: string;
@@ -30,8 +33,11 @@ interface PageFileInfo {
   content: string;
 }
 
+const rootPackageJson = fs.readJsonSync(path.join(process.cwd(), 'package.json'));
+
 const config: CompilerConfig = {
   rootDir: process.cwd(),
+  siteUrl: process.env.LLM_DOCS_SITE_URL || 'https://mantine.dev',
   mdxPaths: {
     docs: './apps/mantine.dev/src/pages',
     help: './apps/help.mantine.dev/src/pages/q',
@@ -63,6 +69,18 @@ class MantineLLMCompiler {
     }
   >();
   private propsData = new Map<string, any>();
+  private propsComponentNames = new Set<string>();
+  private stylesApiDemoCache = new Map<string, boolean>();
+  private knownLlmFiles = new Set<string>();
+
+  private escapeTableCell(value: unknown): string {
+    const str = String(value ?? '-')
+      .replace(/<code>([\s\S]*?)<\/code>/g, '`$1`')
+      .replace(/\|/g, '\\|')
+      .replace(/\n/g, ' ')
+      .trim();
+    return str.length > 0 ? str : '-';
+  }
 
   constructor(config: CompilerConfig) {
     this.config = config;
@@ -267,16 +285,16 @@ class MantineLLMCompiler {
               const modifier: any = {};
 
               // Extract modifier properties
-              const propRegex = /(\w+):\s*['"`]([^'"`]+)['"`]/g;
+              const propRegex = /(\w+):\s*(['"`])([\s\S]*?)\2/g;
               let propMatch;
               while ((propMatch = propRegex.exec(modifierContent)) !== null) {
-                modifier[propMatch[1]] = propMatch[2];
+                modifier[propMatch[1]] = propMatch[3];
               }
 
               // Also handle 'value' property
-              const valueMatch = modifierContent.match(/value:\s*['"`]([^'"`]+)['"`]/);
+              const valueMatch = modifierContent.match(/value:\s*(['"`])([\s\S]*?)\1/);
               if (valueMatch) {
-                modifier.value = valueMatch[1];
+                modifier.value = valueMatch[2];
               }
 
               if (Object.keys(modifier).length > 0) {
@@ -370,6 +388,7 @@ class MantineLLMCompiler {
         // Store props data for each component
         for (const [componentName, componentData] of Object.entries(docgenData)) {
           if (componentData && typeof componentData === 'object') {
+            this.propsComponentNames.add(componentName);
             this.propsData.set(componentName.toLowerCase(), componentData);
             // Also store with original case for flexibility
             this.propsData.set(componentName, componentData);
@@ -391,6 +410,7 @@ class MantineLLMCompiler {
       charts: '@mantine/charts',
       x: '@mantine/x',
       form: '@mantine/form',
+      schedule: '@mantine/schedule',
       guides: null,
       theming: null,
       styles: null,
@@ -406,8 +426,16 @@ class MantineLLMCompiler {
     const mdxFiles = await glob('**/*.mdx', {
       cwd: this.config.mdxPaths.docs,
       absolute: true,
-      ignore: ['**/changelog/**/*.mdx'],
+      ignore: ['**/.changelog/**/*.mdx'],
     });
+
+    // Build known llms file names list for safe link rewriting
+    this.knownLlmFiles.clear();
+    for (const file of mdxFiles) {
+      const relativePath = path.relative(this.config.mdxPaths.docs, file);
+      const route = this.getRouteFromRelative(relativePath);
+      this.knownLlmFiles.add(this.getPageFileName(route));
+    }
 
     const categories = {
       core: [] as string[],
@@ -418,6 +446,8 @@ class MantineLLMCompiler {
       theming: [] as string[],
       styles: [] as string[],
       x: [] as string[],
+      form: [] as string[],
+      schedule: [] as string[],
       other: [] as string[],
     };
 
@@ -505,6 +535,54 @@ class MantineLLMCompiler {
     return `${base}.md`;
   }
 
+  private mapMantineDocsUrlToLlm(url: string): string {
+    const siteUrl = this.config.siteUrl.replace(/\/+$/, '');
+    let pathName = '';
+    let hash = '';
+
+    if (url.startsWith('/')) {
+      const [pathPart, hashPart] = url.split('#');
+      pathName = pathPart;
+      hash = hashPart ? `#${hashPart}` : '';
+    } else if (
+      url.startsWith('https://mantine.dev/') ||
+      url.startsWith('http://mantine.dev/') ||
+      url.startsWith(`${siteUrl}/`)
+    ) {
+      try {
+        const parsed = new URL(url);
+        pathName = parsed.pathname;
+        hash = parsed.hash || '';
+      } catch {
+        return url;
+      }
+    } else {
+      return url;
+    }
+
+    if (!pathName || pathName.startsWith('/llms')) {
+      return url;
+    }
+
+    let route = pathName.replace(/\/+$/, '');
+    if (route === '') {
+      return `${siteUrl}/llms.txt${hash}`;
+    }
+
+    if (route.endsWith('/index')) {
+      route = route.slice(0, -'/index'.length) || '/';
+    }
+
+    const fileName = this.getPageFileName(route);
+    if (!this.knownLlmFiles.has(fileName)) {
+      if (url.startsWith('/')) {
+        return `https://mantine.dev${url}`;
+      }
+      return url;
+    }
+    return `${siteUrl}/llms/${fileName}${hash}`;
+  }
+
   private async processSingleMdx(
     filePath: string
   ): Promise<{ title: string; description?: string } | null> {
@@ -545,7 +623,9 @@ class MantineLLMCompiler {
       await this.addComponentProps(componentName);
 
       // Add Styles API documentation
-      await this.addComponentStylesApi(componentName);
+      if (!processedContent.includes('#### Styles API')) {
+        await this.addComponentStylesApi(componentName);
+      }
 
       this.output.push('');
       this.output.push('-'.repeat(80));
@@ -566,7 +646,7 @@ class MantineLLMCompiler {
   private async extractMdxContent(
     content: string,
     packageName?: string,
-    _componentName?: string
+    componentName?: string
   ): Promise<string> {
     // Remove only the top-level imports and export default Layout
     // Split content into lines to handle imports more carefully
@@ -628,8 +708,7 @@ class MantineLLMCompiler {
       .use(remarkMdx as any)
       .use(() => {
         return (tree: any) => {
-          // Remove component references and convert demos
-          visit(tree, 'mdxJsxFlowElement', (node: any, index: number | undefined, parent: any) => {
+          const processMdxJsxElement = (node: any, index: number | undefined, parent: any) => {
             // Handle InstallScript components
             if (node.name === 'InstallScript' && node.attributes) {
               const packagesAttr = node.attributes.find((attr: any) => attr.name === 'packages');
@@ -698,6 +777,16 @@ class MantineLLMCompiler {
                 'WrapperProps',
               ].includes(node.name)
             ) {
+              if (
+                ['AutoContrast', 'GetElementRef', 'Gradient', 'Polymorphic'].includes(node.name)
+              ) {
+                if (parent && parent.children && index !== undefined) {
+                  parent.children.splice(index, 1);
+                  return index;
+                }
+                return;
+              }
+
               // Create placeholder for shared component content
               const attributesStr =
                 node.attributes?.map((attr: any) => `${attr.name}="${attr.value}"`).join('|') || '';
@@ -722,13 +811,59 @@ class MantineLLMCompiler {
                 },
               ];
             }
+            // Render StylesApiSelectors components as placeholders
+            else if (node.name === 'StylesApiSelectors') {
+              const componentAttr = node.attributes?.find((attr: any) => attr.name === 'component');
+              let stylesComponent = componentName || '';
+
+              if (typeof componentAttr?.value === 'string') {
+                stylesComponent = componentAttr.value;
+              } else if (
+                componentAttr?.value &&
+                componentAttr.value.type === 'mdxJsxAttributeValueExpression'
+              ) {
+                stylesComponent = String(componentAttr.value.value || componentName || '');
+              }
+
+              node.type = 'paragraph';
+              node.children = [
+                {
+                  type: 'text',
+                  value: `STYLESAPIPLACEHOLDER::${stylesComponent}::END`,
+                },
+              ];
+            } else if (node.name === 'VersionsList') {
+              node.type = 'paragraph';
+              node.children = [
+                {
+                  type: 'text',
+                  value: 'VERSIONSLISTPLACEHOLDER::END',
+                },
+              ];
+            }
             // Remove other unwanted components
             else if (
               [
-                'StylesApiSelectors',
                 'KeyboardEventsTable',
                 'DataTable',
                 'PropsTable',
+                'SponsorButton',
+                'LlmButton',
+                'Video',
+                'ExamplesButton',
+                'ComboboxDisclaimer',
+                'ComboboxProps',
+                'ClearSectionMode',
+                'StylePropsTable',
+                'ThemeColors',
+                'CssFilesList',
+                'CssVariablesList',
+                'LogoAssets',
+                'TemplatesList',
+                'FrameworksGuides',
+                'PackagesInstallation',
+                'GetTemplates',
+                'NpmScript',
                 'MantineProvider',
                 'DemoContainer',
                 'StorybookGallery',
@@ -748,12 +883,21 @@ class MantineLLMCompiler {
                 return index; // Return index to continue from same position
               }
             }
-          });
+            // Remove any unresolved MDX components that are not explicitly handled
+            else if (parent && parent.children && index !== undefined) {
+              parent.children.splice(index, 1);
+              return index;
+            }
+          };
+
+          // Remove component references and convert demos (flow + inline jsx elements)
+          visit(tree, 'mdxJsxFlowElement', processMdxJsxElement as any);
+          visit(tree, 'mdxJsxTextElement', processMdxJsxElement as any);
 
           // Convert internal links to full URLs
           visit(tree, 'link', (node: any) => {
-            if (node.url && node.url.startsWith('/')) {
-              node.url = `https://mantine.dev${node.url}`;
+            if (node.url) {
+              node.url = this.mapMantineDocsUrlToLlm(node.url);
             }
           });
 
@@ -772,6 +916,12 @@ class MantineLLMCompiler {
 
     // Now replace each demo placeholder with the actual demo code
     for (const demo of demosToInclude) {
+      if (await this.isStylesApiDemo(demo.name)) {
+        const placeholder = `DEMOPLACEHOLDER::${demo.name}::END`;
+        result = result.replace(placeholder, `REMOVESTYLESAPIDEMO::${demo.name}::END`);
+        continue;
+      }
+
       const demoCode = await this.loadDemoCode(demo.name);
       if (demoCode) {
         // Check if this is a code highlighting demo that shows example output
@@ -782,38 +932,40 @@ class MantineLLMCompiler {
           // For code highlighting demos, show the example output first
           const exampleCode = exampleCodeMatch[1].trim();
 
-          demoSection = [
-            '',
-            '```tsx',
-            exampleCode,
-            '```',
-            '',
-            `#### Example: ${demo.name.split('.').pop()}`,
-            '',
-            '```tsx',
-            demoCode,
-            '```',
-            '',
-          ].join('\n');
+          demoSection = ['', '```tsx', exampleCode, '```', '', '```tsx', demoCode, '```', ''].join(
+            '\n'
+          );
         } else {
           // Regular demo
-          demoSection = [
-            `#### Example: ${demo.name.split('.').pop()}`,
-            '',
-            '```tsx',
-            demoCode,
-            '```',
-            '',
-          ].join('\n');
+          demoSection = ['```tsx', demoCode, '```', ''].join('\n');
         }
 
         const placeholder = `DEMOPLACEHOLDER::${demo.name}::END`;
-        result = result.replace(placeholder, demoSection);
+        result = this.replaceAllLiteral(result, placeholder, demoSection);
       } else {
         // If we can't find the demo, remove the placeholder
-        result = result.replace(`DEMOPLACEHOLDER::${demo.name}::END`, '');
+        result = this.replaceAllLiteral(result, `DEMOPLACEHOLDER::${demo.name}::END`, '');
       }
     }
+
+    // Fallback pass: resolve any unreplaced demo placeholders
+    const unresolvedPlaceholders = Array.from(
+      new Set(result.match(/DEMOPLACEHOLDER::[^:]+::END/g) || [])
+    );
+    for (const unresolved of unresolvedPlaceholders) {
+      const demoName = unresolved.replace('DEMOPLACEHOLDER::', '').replace('::END', '');
+      const demoCode = await this.loadDemoCode(demoName);
+      if (demoCode) {
+        const demoSection = ['```tsx', demoCode, '```', ''].join('\n');
+        result = this.replaceAllLiteral(result, unresolved, demoSection);
+      } else {
+        result = this.replaceAllLiteral(result, unresolved, '');
+      }
+    }
+
+    result = this.removeSectionsWithPlaceholder(result, 'REMOVESTYLESAPIDEMO::');
+    result = this.removeSectionsByTitle(result, ['Migrate with LLM agents']);
+    result = this.replaceAllLiteral(result, '{packageJson.version}', rootPackageJson.version);
 
     // Replace InstallScript placeholders with installation instructions
     // Also remove any duplicate "After installation" text that follows
@@ -878,7 +1030,7 @@ import '${trimmedPkg}/styles.css';`;
     const sharedContentRegex = /SHAREDCONTENT::([^:]+)::([^:]*?)::JSX::(.+?)::END/g;
     result = result.replace(
       sharedContentRegex,
-      (_match, componentName, attributesStr, originalJsx) => {
+      (_match, componentName, attributesStr, _originalJsx) => {
         // Parse attributes from string
         const attributes: any[] = [];
         if (attributesStr) {
@@ -891,233 +1043,216 @@ import '${trimmedPkg}/styles.css';`;
           }
         }
 
-        // Include the original JSX example along with the rendered content
         const content = this.getSharedComponentContent(componentName, attributes);
-        // Remove any escape characters that might have been added
-        const cleanJsx = originalJsx.replace(/\\/g, '');
-        return `${cleanJsx}\n\n${content}`;
+        return content;
       }
     );
+
+    // Replace StylesApiSelectors placeholders with actual generated styles API docs
+    const stylesApiRegex = /STYLESAPIPLACEHOLDER::([^:]*?)::END/g;
+    result = result.replace(stylesApiRegex, (_match, stylesComponentName) => {
+      const targetComponent = (stylesComponentName || componentName || '').trim();
+      if (!targetComponent) {
+        return '';
+      }
+
+      return this.getComponentStylesApiMarkdown(targetComponent);
+    });
+
+    result = result.replace('VERSIONSLISTPLACEHOLDER::END', this.getVersionsListContent());
 
     return result;
   }
 
-  private async loadDemoCode(demoName: string): Promise<string | null> {
-    try {
-      // Demo name format: ComponentDemos.demoname (e.g., AccordionDemos.configurator)
-      const [componentWithDemos, demoId] = demoName.split('.');
+  private replaceAllLiteral(input: string, search: string, replacement: string): string {
+    return input.split(search).join(replacement);
+  }
 
-      // Remove "Demos" suffix to get component name
-      const component = componentWithDemos.replace(/Demos$/, '');
+  private getVersionsListContent(): string {
+    const lines: string[] = [];
+    const siteUrl = this.config.siteUrl.replace(/\/+$/, '');
 
-      // Find the demo file with pattern: Component.demo.demoId.tsx
-      // Also check for kebab-case folder names
-      const demoPattern = `**/${component}/${component}.demo.${demoId}.tsx`;
-      const kebabCasePattern = `**/${component
-        .replace(/([A-Z])/g, '-$1')
-        .toLowerCase()
-        .slice(1)}/${component}.demo.${demoId}.tsx`;
+    lines.push('## Releases');
+    lines.push('');
 
-      let demoFiles = await glob(demoPattern, {
+    for (const version of allVersions as any[]) {
+      const changelogUrl = version.link ? this.mapMantineDocsUrlToLlm(version.link) : null;
+      const githubUrl = version.github || '';
+
+      if (changelogUrl) {
+        lines.push(`### [${version.version}](${changelogUrl}) (${version.date})`);
+      } else {
+        lines.push(`### ${version.version} (${version.date})`);
+      }
+
+      if (githubUrl) {
+        lines.push(`- GitHub release: ${githubUrl}`);
+      }
+
+      const patches = Array.isArray(version.patches) ? version.patches : [];
+      const validPatches = patches.filter((patch: any) => patch?.version && patch?.date);
+
+      if (validPatches.length > 0) {
+        lines.push('- Patches:');
+        for (const patch of validPatches) {
+          lines.push(
+            `  - [${patch.version}](https://github.com/mantinedev/mantine/releases/tag/${patch.version}) (${patch.date})`
+          );
+        }
+      }
+
+      lines.push('');
+    }
+
+    lines.push(`See all releases: ${siteUrl}/changelog/all-releases`);
+    lines.push('');
+
+    return lines.join('\n');
+  }
+
+  private removeSectionsWithPlaceholder(content: string, placeholderPrefix: string): string {
+    const lines = content.split('\n');
+    let idx = lines.findIndex((line) => line.includes(placeholderPrefix));
+
+    while (idx !== -1) {
+      let start = idx;
+      while (start > 0 && !lines[start].match(/^##\s+/)) {
+        start -= 1;
+      }
+      if (!lines[start].match(/^##\s+/)) {
+        start = idx;
+      }
+
+      let end = idx + 1;
+      while (end < lines.length && !lines[end].match(/^##\s+/)) {
+        end += 1;
+      }
+
+      lines.splice(start, end - start);
+      idx = lines.findIndex((line) => line.includes(placeholderPrefix));
+    }
+
+    return lines.filter((line) => !line.includes(placeholderPrefix)).join('\n');
+  }
+
+  private removeSectionsByTitle(content: string, titles: string[]): string {
+    const lines = content.split('\n');
+    const result: string[] = [];
+    let skipping = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const headingMatch = lines[i].match(/^(#{2,})\s+(.+)/);
+
+      if (headingMatch) {
+        if (titles.includes(headingMatch[2].trim())) {
+          skipping = true;
+          continue;
+        }
+
+        if (skipping) {
+          skipping = false;
+        }
+      }
+
+      if (!skipping) {
+        result.push(lines[i]);
+      }
+    }
+
+    return result.join('\n');
+  }
+
+  private async resolveDemoFilePath(demoName: string): Promise<string | null> {
+    const [componentWithDemos, demoId] = demoName.split('.');
+    const component = componentWithDemos.replace(/Demos$/, '');
+
+    const demoPattern = `**/${component}/${component}.demo.${demoId}.tsx`;
+    const kebabCasePattern = `**/${component
+      .replace(/([A-Z])/g, '-$1')
+      .toLowerCase()
+      .slice(1)}/${component}.demo.${demoId}.tsx`;
+
+    let demoFiles = await glob(demoPattern, {
+      cwd: this.config.demosPath,
+      absolute: true,
+    });
+
+    if (demoFiles.length === 0) {
+      demoFiles = await glob(kebabCasePattern, {
         cwd: this.config.demosPath,
         absolute: true,
       });
+    }
 
-      // If not found, try kebab-case folder name
-      if (demoFiles.length === 0) {
-        demoFiles = await glob(kebabCasePattern, {
-          cwd: this.config.demosPath,
-          absolute: true,
-        });
-      }
+    if (demoFiles.length > 0) {
+      return demoFiles[0];
+    }
 
-      if (demoFiles.length > 0) {
-        const content = await fs.readFile(demoFiles[0], 'utf-8');
-        const demoDir = path.dirname(demoFiles[0]);
+    const [namespaceName, exportName] = demoName.split('.');
+    const mainIndexPath = path.resolve(this.config.demosPath, '..', 'index.ts');
 
-        // First check if this is a multi-file demo
-        const exportMatch = content.match(
-          /export const \w+:\s*MantineDemo\s*=\s*{[\s\S]*?code:\s*\[([\s\S]*?)\],?[\s\S]*?}/
-        );
+    try {
+      const mainIndex = await fs.readFile(mainIndexPath, 'utf-8');
+      const namespaceMatch = mainIndex.match(
+        new RegExp(`export \\* as ${namespaceName} from ['"]([^'"]+)['"]`)
+      );
 
-        if (exportMatch) {
-          // Multi-file demo - extract all files
-          const codeArrayContent = exportMatch[1];
-          // Parse each file object manually
-          const files: string[] = [];
-
-          // Split by commas at the top level (between objects)
-          const objectStrings = codeArrayContent.split(/},\s*{/);
-
-          for (let objStr of objectStrings) {
-            // Clean up the object string
-            objStr = objStr.replace(/^\s*\{?\s*/, '').replace(/\s*\}?\s*$/, '');
-
-            // Extract fileName
-            const fileNameMatch = objStr.match(/fileName:\s*['"]([^'"]+)['"]/);
-            const fileName = fileNameMatch ? fileNameMatch[1] : '';
-
-            // Extract code reference - handle both 'code' and 'code: varName'
-            // Match: "code," or "code: varName,"
-            const codeMatch = objStr.match(/code(?::\s*(\w+))?\s*,/);
-            const codeRef = codeMatch ? codeMatch[1] || 'code' : '';
-
-            if (!fileName || !codeRef) {
-              continue;
-            }
-
-            // Try to resolve the code reference
-            let fileCode = '';
-
-            if (codeRef.startsWith('`')) {
-              // Inline code
-              const inlineMatch = codeRef.match(/`([\s\S]*?)`/);
-              if (inlineMatch) {
-                fileCode = inlineMatch[1];
-              }
-            } else if (codeRef.match(/^['"][\s\S]*?['"]$/)) {
-              // Direct string
-              const stringMatch = codeRef.match(/^['"]([^'"]*?)['"]$/);
-              if (stringMatch) {
-                fileCode = stringMatch[1];
-              }
-            } else {
-              // Variable reference - try to find it
-              const varName = codeRef;
-              fileCode = await this.extractCodeVariable(varName, content, demoDir);
-            }
-
-            if (fileCode) {
-              // Clean up the code
-              fileCode = fileCode.replace(/\{\{props\}\}/g, '');
-
-              // Handle ${varName} interpolations in the extracted code
-              fileCode = fileCode.replace(/\$\{(\w+)\}/g, (match, varName) => {
-                // Try to find the variable definition in the file content
-                const varMatch = content.match(
-                  new RegExp(`const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`;`, 'm')
-                );
-                if (varMatch) {
-                  return varMatch[1];
-                }
-                return match;
-              });
-
-              files.push(`// ${fileName}\n${fileCode.trim()}`);
-            }
-          }
-
-          if (files.length > 0) {
-            return files.join('\n\n');
-          }
-        }
-
-        // Single file demo - try existing patterns
-        // Use the more robust extraction method for template literals
-        const codeVarMatch = content.match(/const code\s*=/);
-        if (codeVarMatch) {
-          const extractedCode = await this.extractCodeVariable('code', content, demoDir);
-          if (extractedCode) {
-            // Clean up the code and handle interpolations
-            let code = extractedCode;
-            code = code.replace(/\{\{props\}\}/g, '');
-
-            // Handle ${varName} interpolations
-            code = code.replace(/\$\{(\w+)\}/g, (match, varName) => {
-              // Try to find the variable definition
-              const varMatch = content.match(
-                new RegExp(`const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`;`, 'm')
-              );
-              if (varMatch) {
-                return varMatch[1];
-              }
-              return match;
-            });
-
-            return code.trim();
-          }
-        }
-
-        // Try to find code as a function that returns a template literal
-        const functionCodeMatch = content.match(/const code\s*=\s*\([^)]*\)\s*=>\s*`([\s\S]*?)`/);
-        if (functionCodeMatch) {
-          // Clean up the code: remove ${props.*} interpolations with reasonable defaults
-          let code = functionCodeMatch[1];
-          // Replace gradient props with example values
-          code = code.replace(/\$\{props\.gradientFrom[^}]*\}/g, 'cyan');
-          code = code.replace(/\$\{props\.gradientTo[^}]*\}/g, 'blue');
-          code = code.replace(/\$\{props\.gradientDegree[^}]*\}/g, '90');
-          // Replace size props
-          code = code.replace(/\$\{props\.size[^}]*\}/g, 'md');
-          // Replace position props
-          code = code.replace(/\$\{props\.position[^}]*\}/g, 'bottom');
-          // Replace generic props
-          code = code.replace(/\$\{props\.[^}]+\}/g, '');
-          return code.trim();
-        }
-
-        // Look for code in export object (single file)
-        const singleFileExportMatch = content.match(
-          /export const \w+:\s*MantineDemo\s*=\s*{[\s\S]*?code:\s*([^,}]+)(?:,|\s*})/
-        );
-        if (singleFileExportMatch) {
-          const codeValue = singleFileExportMatch[1].trim();
-
-          // Handle different code formats
-          if (codeValue.startsWith('`')) {
-            // Inline template literal
-            const match = codeValue.match(/`([\s\S]*?)`/);
-            if (match) {
-              let code = match[1];
-              code = code.replace(/\{\{props\}\}/g, '');
-              return code.trim();
-            }
-          } else if (codeValue.match(/^['"][\s\S]*?['"]$/)) {
-            // Direct string
-            const match = codeValue.match(/^['"]([^'"]*?)['"]$/);
-            return match ? match[1].trim() : null;
-          } else {
-            // Variable reference
-            const varName = codeValue;
-            // Extract the code variable using dedicated function
-            const extractedCode = await this.extractCodeVariable(varName, content, demoDir);
-            if (extractedCode) {
-              return extractedCode;
-            }
-
-            // Check if it's a function that returns a template literal
-            const varFunctionMatch = content.match(
-              new RegExp(`const ${varName}\\s*=\\s*\\([^)]*\\)\\s*=>\\s*\`([\\s\\S]*?)\``)
-            );
-            if (varFunctionMatch) {
-              let code = varFunctionMatch[1];
-              // Replace prop interpolations with defaults
-              code = code.replace(/\$\{props\.gradientFrom[^}]*\}/g, 'cyan');
-              code = code.replace(/\$\{props\.gradientTo[^}]*\}/g, 'blue');
-              code = code.replace(/\$\{props\.gradientDegree[^}]*\}/g, '90');
-              code = code.replace(/\$\{props\.size[^}]*\}/g, 'md');
-              code = code.replace(/\$\{props\.position[^}]*\}/g, 'bottom');
-              code = code.replace(/\$\{props\.[^}]+\}/g, '');
-              return code.trim();
-            }
-          }
-        }
-
-        // If we still can't extract, check if it's a demo with no code property
-        // In this case, return the entire component function as the demo code
-        const componentFunctionMatch = content.match(/function Demo\(\)\s*{([\s\S]*?)^}/m);
-        if (componentFunctionMatch) {
-          // Return the entire Demo component as the code
-          return `function Demo() {${componentFunctionMatch[1]}}`;
-        }
-
-        // If we still can't extract, return null silently
+      if (!namespaceMatch) {
         return null;
       }
-    } catch (error) {
-      // Could not load demo
+
+      const namespaceDirRel = namespaceMatch[1];
+      const namespaceDir = path.resolve(path.dirname(mainIndexPath), namespaceDirRel);
+      const namespaceIndexPath = path.join(namespaceDir, 'index.ts');
+      const namespaceIndex = await fs.readFile(namespaceIndexPath, 'utf-8');
+
+      const exportMatch = namespaceIndex.match(
+        new RegExp(`export\\s*\\{\\s*${exportName}\\s*\\}\\s*from\\s*['"]([^'"]+)['"]`)
+      );
+
+      if (!exportMatch) {
+        return null;
+      }
+
+      const demoFileRel = exportMatch[1];
+      const extensions = ['.tsx', '.ts'];
+      for (const ext of extensions) {
+        const demoFilePath = path.resolve(namespaceDir, demoFileRel + ext);
+        if (await fs.pathExists(demoFilePath)) {
+          return demoFilePath;
+        }
+      }
+    } catch (e) {
+      return null;
     }
+
     return null;
+  }
+
+  private async isStylesApiDemo(demoName: string): Promise<boolean> {
+    if (this.stylesApiDemoCache.has(demoName)) {
+      return this.stylesApiDemoCache.get(demoName)!;
+    }
+
+    const demoPath = await this.resolveDemoFilePath(demoName);
+    if (!demoPath) {
+      this.stylesApiDemoCache.set(demoName, false);
+      return false;
+    }
+
+    try {
+      const content = await fs.readFile(demoPath, 'utf-8');
+      const isStylesApi = /type:\s*['"]styles-api['"]/.test(content);
+      this.stylesApiDemoCache.set(demoName, isStylesApi);
+      return isStylesApi;
+    } catch (e) {
+      this.stylesApiDemoCache.set(demoName, false);
+      return false;
+    }
+  }
+
+  private async loadDemoCode(demoName: string): Promise<string | null> {
+    return loadDemoCode(demoName, this.config.demosPath);
   }
 
   private async extractCodeVariable(
@@ -1125,113 +1260,7 @@ import '${trimmedPkg}/styles.css';`;
     content: string,
     demoDir: string
   ): Promise<string> {
-    // Try to find the variable declaration
-    const varDeclPattern = new RegExp(`const ${varName}\\s*=\\s*\``, 'm');
-    const varDeclMatch = content.match(varDeclPattern);
-
-    if (varDeclMatch && varDeclMatch.index !== undefined) {
-      // Find the matching closing backtick by tracking nested backticks and braces
-      const startIdx = varDeclMatch.index + varDeclMatch[0].length;
-      let endIdx = startIdx;
-      let templateDepth = 1;
-      let braceDepth = 0;
-      let inExpression = false;
-
-      while (endIdx < content.length && templateDepth > 0) {
-        const char = content[endIdx];
-        const prevChar = endIdx > 0 ? content[endIdx - 1] : '';
-
-        // Handle escaped characters
-        if (prevChar === '\\') {
-          endIdx++;
-          continue;
-        }
-
-        // Track template literal boundaries
-        if (char === '`') {
-          if (!inExpression) {
-            templateDepth--;
-          }
-        }
-        // Track expression boundaries
-        else if (char === '$' && content[endIdx + 1] === '{') {
-          inExpression = true;
-          braceDepth++;
-          endIdx++; // Skip the {
-        } else if (char === '{' && inExpression) {
-          braceDepth++;
-        } else if (char === '}' && inExpression) {
-          braceDepth--;
-          if (braceDepth === 0) {
-            inExpression = false;
-          }
-        }
-
-        endIdx++;
-      }
-
-      if (templateDepth === 0) {
-        // Get the extracted content and handle escaped characters
-        let extracted = content.substring(startIdx, endIdx - 1);
-        // Replace escaped backticks with regular backticks
-        extracted = extracted.replace(/\\`/g, '`');
-        // Replace escaped dollar signs with regular dollar signs
-        extracted = extracted.replace(/\\\$/g, '$');
-        return extracted;
-      }
-    }
-
-    // Fallback to simpler patterns
-    const patterns = [
-      // Single quotes: const code = '...';
-      new RegExp(`const ${varName}\\s*=\\s*'([\\s\\S]*?)';`, 'm'),
-      // Double quotes: const code = "...";
-      new RegExp(`const ${varName}\\s*=\\s*"([\\s\\S]*?)";`, 'm'),
-    ];
-
-    // Try each pattern in the current file
-    for (const pattern of patterns) {
-      const match = content.match(pattern);
-      if (match) {
-        return match[1];
-      }
-    }
-
-    // If not found in current file, check imports
-    const importMatch = content.match(
-      new RegExp(`import\\s*{[^}]*\\b${varName}\\b[^}]*}\\s*from\\s*['"]([^'"]+)['"]`)
-    );
-
-    if (importMatch) {
-      const importPath = importMatch[1];
-      const extensions = ['.tsx', '.ts', '.js', '.jsx'];
-
-      for (const ext of extensions) {
-        try {
-          const resolvedPath = path.resolve(demoDir, importPath + ext);
-          const importedContent = await fs.readFile(resolvedPath, 'utf-8');
-
-          // Try patterns with export prefix
-          const exportPatterns = [
-            new RegExp(`export const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`;`, 'm'),
-            new RegExp(`export const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`(?:\\s|$)`, 'm'),
-            new RegExp(`export const ${varName}\\s*=\\s*'([\\s\\S]*?)';`, 'm'),
-            new RegExp(`export const ${varName}\\s*=\\s*"([\\s\\S]*?)";`, 'm'),
-          ];
-
-          for (const pattern of exportPatterns) {
-            const match = importedContent.match(pattern);
-            if (match) {
-              return match[1];
-            }
-          }
-        } catch (e) {
-          // Try next extension
-        }
-      }
-    }
-
-    return '';
+    return extractCodeVariable(varName, content, demoDir);
   }
 
   private getSharedComponentContent(componentName: string, attributes: any[]): string {
@@ -1324,7 +1353,7 @@ function Demo() {
 
 **Polymorphic components with TypeScript**
 
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ${component}Props does not extend React.ComponentPropsWithoutRef<'${defaultElement}'> although ${defaultElement} is the default element.
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ${component}Props does not extend React.ComponentProps<'${defaultElement}'> although ${defaultElement} is the default element.
 
 If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.`;
 
@@ -1409,31 +1438,50 @@ Additional information about ${component} component.`;
   }
 
   private async addComponentProps(componentName: string) {
-    const propsData = this.propsData.get(componentName.toLowerCase());
+    const mainPropsData = this.propsData.get(componentName.toLowerCase());
+    const subcomponentNames = [...this.propsComponentNames].filter(
+      (name) => name.startsWith(componentName) && name !== componentName
+    );
+    const allComponents = [
+      { displayName: componentName, data: mainPropsData },
+      ...subcomponentNames.map((name) => ({
+        displayName: `${componentName}.${name.slice(componentName.length)}`,
+        data: this.propsData.get(name) || this.propsData.get(name.toLowerCase()),
+      })),
+    ].filter((entry) => entry.data && entry.data.props);
 
-    if (!propsData || !propsData.props) {
+    if (allComponents.length === 0) {
       return;
     }
 
     this.output.push('');
     this.output.push('#### Props');
     this.output.push('');
-    this.output.push('| Prop | Type | Default | Description |');
-    this.output.push('|------|------|---------|-------------|');
 
-    for (const [propName, propData] of Object.entries(propsData.props as any)) {
-      const { type, defaultValue, description, required } = propData as any;
-      const typeStr = type?.name || 'unknown';
-      const defaultStr = defaultValue?.value || (required ? 'required' : '-');
-      const descStr = description || '-';
+    for (const entry of allComponents) {
+      this.output.push(`**${entry.displayName} props**`);
+      this.output.push('');
+      this.output.push('| Prop | Type | Default | Description |');
+      this.output.push('|------|------|---------|-------------|');
 
-      this.output.push(`| ${propName} | ${typeStr} | ${defaultStr} | ${descStr} |`);
+      for (const [propName, propData] of Object.entries(entry.data.props as any)) {
+        const { type, defaultValue, description, required } = propData as any;
+        const typeStr = type?.name || 'unknown';
+        const defaultStr = defaultValue?.value || (required ? 'required' : '-');
+        const descStr = description || '-';
+
+        this.output.push(
+          `| ${this.escapeTableCell(propName)} | ${this.escapeTableCell(typeStr)} | ${this.escapeTableCell(defaultStr)} | ${this.escapeTableCell(descStr)} |`
+        );
+      }
+
+      this.output.push('');
     }
-
-    this.output.push('');
   }
 
-  private async addComponentStylesApi(componentName: string) {
+  private getComponentStylesApiMarkdown(componentName: string): string {
+    const lines: string[] = [];
+
     // Get all styles data for this component (including sub-components like Radio.Group)
     const allStylesData: Array<{ name: string; data: any }> = [];
 
@@ -1449,6 +1497,7 @@ Additional information about ${component} component.`;
         const subName = key.replace(componentName.toLowerCase(), '');
         // Convert radioindicator -> Radio.Indicator, radiogroup -> Radio.Group
         const formattedSubName = subName
+          .replace(/^groupsection$/, '.GroupSection')
           .replace(/^group$/, '.Group')
           .replace(/^indicator$/, '.Indicator')
           .replace(/^card$/, '.Card')
@@ -1461,16 +1510,16 @@ Additional information about ${component} component.`;
     }
 
     if (allStylesData.length === 0) {
-      return;
+      return '';
     }
 
-    this.output.push('');
-    this.output.push('#### Styles API');
-    this.output.push('');
-    this.output.push(
+    lines.push('');
+    lines.push('#### Styles API');
+    lines.push('');
+    lines.push(
       `${componentName} component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.`
     );
-    this.output.push('');
+    lines.push('');
 
     // Process each component's styles
     for (const { name, data } of allStylesData) {
@@ -1478,10 +1527,10 @@ Additional information about ${component} component.`;
 
       // Add selectors table
       if (data.selectors && Object.keys(data.selectors).length > 0) {
-        this.output.push(`**${name} selectors**`);
-        this.output.push('');
-        this.output.push('| Selector | Static selector | Description |');
-        this.output.push('|----------|----------------|-------------|');
+        lines.push(`**${name} selectors**`);
+        lines.push('');
+        lines.push('| Selector | Static selector | Description |');
+        lines.push('|----------|----------------|-------------|');
 
         for (const [selector, description] of Object.entries(data.selectors)) {
           // Skip spread placeholders
@@ -1491,9 +1540,11 @@ Additional information about ${component} component.`;
 
           // Generate the CSS class name from the selector
           const className = `.mantine-${componentPrefix}-${selector}`;
-          this.output.push(`| ${selector} | ${className} | ${description} |`);
+          lines.push(
+            `| ${this.escapeTableCell(selector)} | ${this.escapeTableCell(className)} | ${this.escapeTableCell(description)} |`
+          );
         }
-        this.output.push('');
+        lines.push('');
       }
 
       // Add CSS variables table
@@ -1501,10 +1552,10 @@ Additional information about ${component} component.`;
         const hasActualVars = Object.keys(data.vars).some((k) => !k.startsWith('_ref_'));
 
         if (hasActualVars) {
-          this.output.push(`**${name} CSS variables**`);
-          this.output.push('');
-          this.output.push('| Selector | Variable | Description |');
-          this.output.push('|----------|----------|-------------|');
+          lines.push(`**${name} CSS variables**`);
+          lines.push('');
+          lines.push('| Selector | Variable | Description |');
+          lines.push('|----------|----------|-------------|');
 
           for (const [component, variables] of Object.entries(data.vars)) {
             // Skip reference entries
@@ -1514,31 +1565,46 @@ Additional information about ${component} component.`;
 
             if (typeof variables === 'object' && variables && !(variables as any).from) {
               for (const [varName, description] of Object.entries(variables)) {
-                this.output.push(`| ${component} | ${varName} | ${description} |`);
+                lines.push(
+                  `| ${this.escapeTableCell(component)} | ${this.escapeTableCell(varName)} | ${this.escapeTableCell(description)} |`
+                );
               }
             }
           }
-          this.output.push('');
+          lines.push('');
         }
       }
 
       // Add data attributes table
       if (data.modifiers && data.modifiers.length > 0) {
-        this.output.push(`**${name} data attributes**`);
-        this.output.push('');
-        this.output.push('| Selector | Attribute | Condition | Value |');
-        this.output.push('|----------|-----------|-----------|-------|');
+        lines.push(`**${name} data attributes**`);
+        lines.push('');
+        lines.push('| Selector | Attribute | Condition | Value |');
+        lines.push('|----------|-----------|-----------|-------|');
 
         for (const modifier of data.modifiers) {
           const selector = modifier.selector || '-';
           const attribute = modifier.modifier || '-';
           const condition = modifier.condition || '-';
           const value = modifier.value || '-';
-          this.output.push(`| ${selector} | ${attribute} | ${condition} | ${value} |`);
+          lines.push(
+            `| ${this.escapeTableCell(selector)} | ${this.escapeTableCell(attribute)} | ${this.escapeTableCell(condition)} | ${this.escapeTableCell(value)} |`
+          );
         }
-        this.output.push('');
+        lines.push('');
       }
     }
+
+    return lines.join('\n');
+  }
+
+  private async addComponentStylesApi(componentName: string) {
+    const stylesApi = this.getComponentStylesApiMarkdown(componentName);
+    if (!stylesApi) {
+      return;
+    }
+
+    this.output.push(stylesApi);
   }
 
   private async processFaqContent() {
@@ -1553,11 +1619,44 @@ Additional information about ${component} component.`;
     });
 
     for (const file of faqFiles) {
-      await this.processSingleFaq(file);
+      const sectionStart = this.output.length;
+      const pageInfo = await this.processSingleFaq(file);
+      const sectionEnd = this.output.length;
+
+      if (pageInfo) {
+        const sectionLines = this.output.slice(sectionStart, sectionEnd);
+
+        while (sectionLines.length > 0 && sectionLines[sectionLines.length - 1].trim() === '') {
+          sectionLines.pop();
+        }
+
+        if (sectionLines.length > 0 && sectionLines[sectionLines.length - 1] === '-'.repeat(40)) {
+          sectionLines.pop();
+        }
+
+        while (sectionLines.length > 0 && sectionLines[sectionLines.length - 1].trim() === '') {
+          sectionLines.pop();
+        }
+
+        const relativePath = path.relative(this.config.mdxPaths.help, file);
+        const faqRoute = `/q${this.getRouteFromRelative(relativePath)}`;
+        const fileName = this.getPageFileName(faqRoute);
+
+        this.pageFiles.push({
+          category: 'faq',
+          title: pageInfo.title,
+          description: pageInfo.description,
+          route: faqRoute,
+          fileName,
+          content: sectionLines.join('\n'),
+        });
+      }
     }
   }
 
-  private async processSingleFaq(filePath: string) {
+  private async processSingleFaq(
+    filePath: string
+  ): Promise<{ title: string; description?: string } | null> {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
 
@@ -1597,8 +1696,13 @@ Additional information about ${component} component.`;
       this.output.push('');
       this.output.push('-'.repeat(40));
       this.output.push('');
+      return {
+        title: title || path.basename(filePath, '.mdx'),
+        description: description || undefined,
+      };
     } catch (error) {
       // Error processing FAQ
+      return null;
     }
   }
 
@@ -1936,14 +2040,16 @@ Additional information about ${component} component.`;
     lines.push('Each link points to a standalone Markdown file under the /llms path.');
     lines.push('');
     lines.push('For a single consolidated file with all content, use:');
-    lines.push('- https://mantine.dev/llms-full.txt');
+    lines.push(`- ${this.config.siteUrl.replace(/\/+$/, '')}/llms-full.txt`);
     lines.push('');
 
     const categoryOrder = [
       'core',
       'hooks',
+      'form',
       'dates',
       'charts',
+      'schedule',
       'guides',
       'theming',
       'styles',
@@ -1959,6 +2065,27 @@ Additional information about ${component} component.`;
       pagesByCategory.set(page.category, list);
     }
 
+    const faqPages = pagesByCategory.get('faq');
+    if (faqPages && faqPages.length > 0) {
+      lines.push('## FAQ');
+      lines.push('');
+
+      const sortedFaqPages = [...faqPages].sort((a, b) => a.title.localeCompare(b.title));
+
+      for (const page of sortedFaqPages) {
+        const url = `${this.config.siteUrl.replace(/\/+$/, '')}/llms/${page.fileName}`;
+        const description = page.description?.trim();
+
+        if (description) {
+          lines.push(`- [${page.title}](${url}): ${description}`);
+        } else {
+          lines.push(`- [${page.title}](${url})`);
+        }
+      }
+
+      lines.push('');
+    }
+
     for (const category of categoryOrder) {
       const pages = pagesByCategory.get(category);
       if (!pages || pages.length === 0) {
@@ -1971,7 +2098,7 @@ Additional information about ${component} component.`;
       const sortedPages = [...pages].sort((a, b) => a.title.localeCompare(b.title));
 
       for (const page of sortedPages) {
-        const url = `https://mantine.dev/llms/${page.fileName}`;
+        const url = `${this.config.siteUrl.replace(/\/+$/, '')}/llms/${page.fileName}`;
         const description = page.description?.trim();
 
         if (description) {

@@ -32,19 +32,17 @@ export type ThemeIconCssVariables = {
 };
 
 export interface ThemeIconProps
-  extends BoxProps,
-    StylesApiProps<ThemeIconFactory>,
-    ElementProps<'div'> {
-  /** Controls width and height of the button. Numbers are converted to rem. @default `'md'` */
+  extends BoxProps, StylesApiProps<ThemeIconFactory>, ElementProps<'div'> {
+  /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient data used when `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient data used when `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** Icon displayed inside the component */
@@ -84,7 +82,7 @@ const varsResolver = createVarsResolver<ThemeIconFactory>(
   }
 );
 
-export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
+export const ThemeIcon = factory<ThemeIconFactory>((_props) => {
   const props = useProps('ThemeIcon', null, _props);
   const {
     classNames,
@@ -112,8 +110,9 @@ export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return <Box {...getStyles('root')} {...others} />;
 });
 
 ThemeIcon.classes = classes;
+ThemeIcon.varsResolver = varsResolver;
 ThemeIcon.displayName = '@mantine/core/ThemeIcon';

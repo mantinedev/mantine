@@ -1,10 +1,10 @@
-import { IconStar } from '@tabler/icons-react';
+import { StarIcon } from '@phosphor-icons/react';
 import { Avatar, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Avatar } from '@mantine/core';
-import { IconStar } from '@tabler/icons-react';
+import { StarIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -20,7 +20,7 @@ function Demo() {
 
       {/* Placeholder with custom icon */}
       <Avatar color="blue" radius="xl">
-        <IconStar size={20} />
+        <StarIcon size={20} />
       </Avatar>
     </>
   );
@@ -37,7 +37,7 @@ function Demo() {
         VR
       </Avatar>
       <Avatar color="blue" radius="xl">
-        <IconStar size={20} />
+        <StarIcon size={20} />
       </Avatar>
     </Group>
   );

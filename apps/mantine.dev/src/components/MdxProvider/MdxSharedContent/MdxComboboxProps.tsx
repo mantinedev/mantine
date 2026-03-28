@@ -29,7 +29,7 @@ export function MdxComboboxProps({ component }: MdxComboboxPropsProps) {
       <MdxTitle id="combobox-props">Combobox props</MdxTitle>
       <MdxParagraph>
         You can override <MdxLink href="/core/combobox">Combobox</MdxLink> props with{' '}
-        <MdxCode>comboboxProps</MdxCode>. It is useful when you need to change some of the props
+        <MdxCode>comboboxProps</MdxCode>. This is useful when you need to change some of the props
         that are not exposed by <MdxCode>{component}</MdxCode>, for example{' '}
         <MdxCode>withinPortal</MdxCode>:
       </MdxParagraph>

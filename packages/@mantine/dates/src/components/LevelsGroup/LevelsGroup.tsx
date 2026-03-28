@@ -14,11 +14,12 @@ import classes from './LevelsGroup.module.css';
 export type LevelsGroupStylesNames = 'levelsGroup';
 
 export interface LevelsGroupProps
-  extends BoxProps,
-    StylesApiProps<LevelsGroupFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<LevelsGroupFactory>, ElementProps<'div'> {
   __staticSelector?: string;
   size?: MantineSize;
+
+  /** Determines whether the group should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type LevelsGroupFactory = Factory<{
@@ -27,7 +28,7 @@ export type LevelsGroupFactory = Factory<{
   stylesNames: LevelsGroupStylesNames;
 }>;
 
-export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
+export const LevelsGroup = factory<LevelsGroupFactory>((_props) => {
   const props = useProps('LevelsGroup', null, _props);
   const {
     classNames,
@@ -37,6 +38,7 @@ export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
     unstyled,
     vars,
     __staticSelector,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -55,7 +57,7 @@ export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
     rootSelector: 'levelsGroup',
   });
 
-  return <Box ref={ref} {...getStyles('levelsGroup')} {...others} />;
+  return <Box {...getStyles('levelsGroup')} data-full-width={fullWidth || undefined} {...others} />;
 });
 
 LevelsGroup.classes = classes;

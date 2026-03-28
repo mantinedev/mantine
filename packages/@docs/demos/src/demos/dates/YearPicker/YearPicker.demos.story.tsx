@@ -67,3 +67,8 @@ export const Demo_controlledDate = {
   name: '⭐ Demo: controlledDate',
   render: renderDemo(demos.controlledDate),
 };
+
+export const Demo_fullWidth = {
+  name: '⭐ Demo: fullWidth',
+  render: renderDemo(demos.fullWidth),
+};

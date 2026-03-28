@@ -32,37 +32,35 @@ export type SemiCircleProgressCssVariables = {
 };
 
 export interface SemiCircleProgressProps
-  extends BoxProps,
-    StylesApiProps<SemiCircleProgressFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<SemiCircleProgressFactory>, ElementProps<'div'> {
   /** Progress value from `0` to `100` */
   value: number;
 
-  /** Diameter of the svg in px @default `200` */
+  /** Width of the component and diameter of the full circle in px. The visible SVG height will be size/2 @default 200 */
   size?: number;
 
-  /** Circle thickness in px @default `12` */
+  /** Stroke width of the circle segments in px @default 12 */
   thickness?: number;
 
-  /** Orientation of the circle @default `'up'` */
+  /** Orientation of the circle @default 'up' */
   orientation?: 'up' | 'down';
 
-  /** Direction from which the circle is filled @default `'left-to-right'` */
+  /** Direction from which the circle is filled @default 'left-to-right' */
   fillDirection?: 'right-to-left' | 'left-to-right';
 
-  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
   filledSegmentColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color value, by default the value is determined based on the color scheme value */
+  /** Key of `theme.colors` or any valid CSS color value @default 'gray.2' in light mode, 'dark.4' in dark mode */
   emptySegmentColor?: MantineColor;
 
-  /** Transition duration of filled section styles changes in ms @default `0` */
+  /** Transition duration for the filled segment progress changes in ms. Does not affect color transitions @default 0 */
   transitionDuration?: number;
 
   /** Label rendered inside the circle */
   label?: React.ReactNode;
 
-  /** Label position relative to the circle center @default `'bottom'` */
+  /** Label position relative to the circle center @default 'bottom' */
   labelPosition?: 'center' | 'bottom';
 }
 
@@ -124,7 +122,7 @@ const varsResolver = createVarsResolver<SemiCircleProgressFactory>(
   })
 );
 
-export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, ref) => {
+export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) => {
   const props = useProps('SemiCircleProgress', defaultProps, _props);
   const {
     classNames,
@@ -167,11 +165,11 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
   const semiCirclePercentage = clamp(value, 0, 100) * (circumference / 100);
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       {label && (
-        <p {...getStyles('label')} data-position={labelPosition} data-orientation={orientation}>
+        <div {...getStyles('label')} data-position={labelPosition} data-orientation={orientation}>
           {label}
-        </p>
+        </div>
       )}
 
       <svg width={size} height={size / 2} {...getStyles('svg')}>
@@ -203,3 +201,4 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
 
 SemiCircleProgress.displayName = '@mantine/core/SemiCircleProgress';
 SemiCircleProgress.classes = classes;
+SemiCircleProgress.varsResolver = varsResolver;

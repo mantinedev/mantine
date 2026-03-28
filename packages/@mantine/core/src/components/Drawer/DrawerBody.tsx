@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerBodyStylesNames = 'body';
 
 export interface DrawerBodyProps
-  extends ModalBaseBodyProps,
-    CompoundStylesApiProps<DrawerBodyFactory> {}
+  extends ModalBaseBodyProps, CompoundStylesApiProps<DrawerBodyFactory> {}
 
 export type DrawerBodyFactory = Factory<{
   props: DrawerBodyProps;
@@ -16,7 +15,7 @@ export type DrawerBodyFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerBody = factory<DrawerBodyFactory>((_props, ref) => {
+export const DrawerBody = factory<DrawerBodyFactory>((_props) => {
   const props = useProps('DrawerBody', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +23,6 @@ export const DrawerBody = factory<DrawerBodyFactory>((_props, ref) => {
 
   return (
     <ModalBaseBody
-      ref={ref}
       {...ctx.getStyles('body', { classNames, style, styles, className })}
       {...others}
     />

@@ -33,9 +33,7 @@ export type MiniCalendarCssVariables = {
 };
 
 export interface MiniCalendarProps
-  extends BoxProps,
-    StylesApiProps<MiniCalendarFactory>,
-    ElementProps<'div', 'onChange'> {
+  extends BoxProps, StylesApiProps<MiniCalendarFactory>, ElementProps<'div', 'onChange'> {
   /** Controlled component date value, start date of the interval */
   date?: Date | string;
 
@@ -60,7 +58,7 @@ export interface MiniCalendarProps
   /** Number of days to display in the calendar @default 7 */
   numberOfDays?: number;
 
-  /** Dayjs format string for month label @default `MMM` */
+  /** Dayjs format string for month label @default MMM */
   monthLabelFormat?: string;
 
   /** Called when the next button is clicked */
@@ -76,10 +74,10 @@ export interface MiniCalendarProps
   size?: MantineSize;
 
   /** Props passed to previous control button */
-  previousControlProps?: React.ComponentPropsWithoutRef<'button'> & DataAttributes;
+  previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
   /** Props passed to next control button */
-  nextControlProps?: React.ComponentPropsWithoutRef<'button'> & DataAttributes;
+  nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
   /** dayjs locale used for formatting */
   locale?: string;
@@ -104,7 +102,7 @@ const varsResolver = createVarsResolver<MiniCalendarFactory>((_theme, { size }) 
   },
 }));
 
-export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
+export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
   const props = useProps('MiniCalendar', defaultProps, _props);
   const {
     classNames,
@@ -113,6 +111,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
+    attributes,
     date,
     defaultDate,
     onDateChange,
@@ -143,6 +142,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     unstyled,
     vars,
     varsResolver,
+    attributes,
   });
 
   const ctx = useDatesContext();
@@ -211,7 +211,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     });
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <UnstyledButton
         size={size}
         onClick={handlePrevious}
@@ -251,3 +251,4 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
 
 MiniCalendar.displayName = '@mantine/dates/MiniCalendar';
 MiniCalendar.classes = classes;
+MiniCalendar.varsResolver = varsResolver;

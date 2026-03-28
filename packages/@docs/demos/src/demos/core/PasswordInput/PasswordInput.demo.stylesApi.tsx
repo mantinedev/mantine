@@ -1,10 +1,10 @@
-import { IconLock } from '@tabler/icons-react';
+import { LockIcon } from '@phosphor-icons/react';
 import { PasswordInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { PasswordInputStylesApi } from '@docs/styles-api';
 
 const code = `
-import { IconLock } from '@tabler/icons-react';
+import { LockIcon } from '@phosphor-icons/react';
 import { PasswordInput } from '@mantine/core';
 
 function Demo() {
@@ -15,7 +15,7 @@ function Demo() {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconLock size={18} />}
+      leftSection={<LockIcon size={18} />}
       {{props}}
     />
   );
@@ -30,7 +30,7 @@ function Demo(props: any) {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconLock size={18} />}
+      leftSection={<LockIcon size={18} />}
       {...props}
     />
   );

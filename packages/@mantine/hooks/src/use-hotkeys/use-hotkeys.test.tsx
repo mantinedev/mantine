@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useHotkeys } from './use-hotkeys';
 
 const dispatchEvent = (data: any) => {
@@ -61,5 +61,58 @@ describe('@mantine/hooks/use-hotkey', () => {
     renderHook(() => useHotkeys([['A', handler, { usePhysicalKeys: true }]], [], true));
     dispatchEvent({ code: 'KeyA' });
     expect(handler).toHaveBeenCalled();
+  });
+
+  it('does not re-register the listener when an inline array changes identity on rerender', () => {
+    const addSpy = jest.spyOn(document.documentElement, 'addEventListener');
+    const removeSpy = jest.spyOn(document.documentElement, 'removeEventListener');
+    const handler = jest.fn();
+
+    const { rerender } = renderHook(({ _value }) => useHotkeys([['ctrl+S', handler]]), {
+      initialProps: { _value: 1 },
+    });
+
+    const initialAdds = addSpy.mock.calls.filter(([t]) => t === 'keydown').length;
+    const initialRemoves = removeSpy.mock.calls.filter(([t]) => t === 'keydown').length;
+
+    rerender({ _value: 2 });
+    rerender({ _value: 3 });
+
+    expect(addSpy.mock.calls.filter(([t]) => t === 'keydown').length).toBe(initialAdds);
+    expect(removeSpy.mock.calls.filter(([t]) => t === 'keydown').length).toBe(initialRemoves);
+
+    addSpy.mockRestore();
+    removeSpy.mockRestore();
+  });
+
+  it('calls the latest handler after rerender (no stale closure)', () => {
+    const first = jest.fn();
+    const second = jest.fn();
+
+    const { rerender } = renderHook(({ handler }) => useHotkeys([['ctrl+S', handler]]), {
+      initialProps: { handler: first },
+    });
+
+    rerender({ handler: second });
+
+    act(() => {
+      dispatchEvent({ ctrlKey: true, key: 'S' });
+    });
+
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes the listener on unmount', () => {
+    const handler = jest.fn();
+    const { unmount } = renderHook(() => useHotkeys([['ctrl+S', handler]]));
+
+    unmount();
+
+    act(() => {
+      dispatchEvent({ ctrlKey: true, key: 'S' });
+    });
+
+    expect(handler).not.toHaveBeenCalled();
   });
 });

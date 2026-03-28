@@ -4,8 +4,9 @@ import {
   BoxProps,
   ElementProps,
   Factory,
-  factory,
+  genericFactory,
   MantineColor,
+  Primitive,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -19,11 +20,13 @@ import {
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
+  OptionsFilter,
   useCombobox,
 } from '../Combobox';
 import {
   __BaseInputProps,
   __InputStylesNames,
+  ClearSectionMode,
   InputClearButtonProps,
   InputVariant,
 } from '../Input';
@@ -32,37 +35,38 @@ import { ScrollAreaProps } from '../ScrollArea';
 
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
-export interface SelectProps
-  extends BoxProps,
+export interface SelectProps<Value extends Primitive = string>
+  extends
+    BoxProps,
     __BaseInputProps,
-    ComboboxLikeProps,
+    ComboboxLikeProps<Value>,
     StylesApiProps<SelectFactory>,
     ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
   /** Controlled component value */
-  value?: string | null;
+  value?: Value | null;
 
   /** Uncontrolled component default value */
-  defaultValue?: string | null;
+  defaultValue?: Value | null;
 
   /** Called when value changes */
-  onChange?: (value: string | null, option: ComboboxItem) => void;
+  onChange?: (value: Value | null, option: ComboboxItem<Value>) => void;
 
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Determines whether the select should be searchable @default `false` */
+  /** Determines whether the select should be searchable @default false */
   searchable?: boolean;
 
-  /** If set, the check icon is displayed near the selected option label @default `true` */
+  /** Displays check icon near the selected option label @default true */
   withCheckIcon?: boolean;
 
-  /** If set, unchecked labels are aligned with the checked one @default `false` */
+  /** Aligns unchecked labels with the checked one @default false */
   withAlignedLabels?: boolean;
 
-  /** Position of the check icon relative to the option label @default `'left'` */
+  /** Position of the check icon relative to the option label @default 'left' */
   checkIconPosition?: 'left' | 'right';
 
-  /** Message displayed when no option matches the current search query when the `searchable` prop is set or there is no data */
+  /** Message displayed when no options match the search query or when there is no data */
   nothingFoundMessage?: React.ReactNode;
 
   /** Controlled search value */
@@ -74,17 +78,20 @@ export interface SelectProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** If set, it becomes possible to deselect value by clicking on the selected option @default `true` */
+  /** Allows deselecting the selected option by clicking it @default true */
   allowDeselect?: boolean;
 
-  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
+  /** Displays clear button in the right section when component has value @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
   /** A function to render content of the option, replaces the default content of the option */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
@@ -95,10 +102,10 @@ export interface SelectProps
   /** Controls color of the default chevron, by default depends on the color scheme */
   chevronColor?: MantineColor;
 
-  /** If set, the highlighted option is selected when the input loses focus @default `false` */
+  /** Automatically selects the highlighted option when input loses focus @default false */
   autoSelectOnBlur?: boolean;
 
-  /** If set, the dropdown opens when the input receives focus @default `true` */
+  /** Opens dropdown when input receives focus (requires searchable={true}) @default true */
   openOnFocus?: boolean;
 }
 
@@ -107,6 +114,7 @@ export type SelectFactory = Factory<{
   ref: HTMLInputElement;
   stylesNames: SelectStylesNames;
   variant: InputVariant;
+  signature: <Value extends Primitive = string>(props: SelectProps<Value>) => React.JSX.Element;
 }>;
 
 const defaultProps = {
@@ -116,7 +124,7 @@ const defaultProps = {
   openOnFocus: true,
 } satisfies Partial<SelectProps>;
 
-export const Select = factory<SelectFactory>((_props, ref) => {
+export const Select = genericFactory<SelectFactory>((_props) => {
   const props = useProps('Select', defaultProps, _props);
   const {
     classNames,
@@ -161,6 +169,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     rightSectionPointerEvents,
     id,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     hiddenInputProps,
     renderOption,
@@ -178,7 +187,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   } = props;
 
   const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
-  const retainedSelectedOptions = useRef<Record<string, ComboboxItem>>({});
+  const retainedSelectedOptions = useRef<Record<string, ComboboxItem<Primitive>>>({});
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
 
@@ -268,8 +277,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
   useEffect(() => {
     if (_value) {
-      if (_value in optionsLockup) {
-        retainedSelectedOptions.current[_value] = optionsLockup[_value];
+      if (`${_value}` in optionsLockup) {
+        retainedSelectedOptions.current[`${_value}`] = optionsLockup[`${_value}`];
       }
     }
   }, [optionsLockup, _value]);
@@ -300,7 +309,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         attributes={attributes}
         keepMounted={autoSelectOnBlur}
         onOptionSubmit={(val) => {
-          onOptionSubmit?.(val);
+          onOptionSubmit?.(val as any);
           const optionLockup = allowDeselect
             ? optionsLockup[val].value === _value
               ? null
@@ -309,7 +318,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
           const nextValue = optionLockup ? optionLockup.value : null;
 
-          nextValue !== _value && setValue(nextValue, optionLockup);
+          nextValue !== _value && setValue(nextValue as any, optionLockup);
           !controlled &&
             handleSearchChange(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
@@ -323,7 +332,6 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         >
           <InputBase
             id={_id}
-            ref={ref}
             __defaultRightSection={
               <Combobox.Chevron
                 size={size}
@@ -334,6 +342,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             }
             __clearSection={clearButton}
             __clearable={_clearable}
+            __clearSectionMode={clearSectionMode}
             rightSection={rightSection}
             rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
             {...others}
@@ -378,9 +387,9 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           />
         </Combobox.Target>
         <OptionsDropdown
-          data={parsedData}
+          data={parsedData as any}
           hidden={readOnly || disabled}
-          filter={filter}
+          filter={filter as OptionsFilter<Primitive> | undefined}
           search={search}
           limit={limit}
           hiddenWhenEmpty={!nothingFoundMessage}

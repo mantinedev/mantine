@@ -3,7 +3,7 @@ import { Tooltip } from '../../Tooltip';
 import type { RingProgressFactory } from '../RingProgress';
 import { getCurveProps } from './get-curve-props';
 
-interface CurveProps extends React.ComponentPropsWithRef<'circle'> {
+interface CurveProps extends React.ComponentProps<'circle'> {
   value?: number;
   size: number;
   offset: number;

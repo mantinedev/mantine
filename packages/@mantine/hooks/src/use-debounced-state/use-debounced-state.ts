@@ -36,3 +36,8 @@ export function useDebouncedState<T = any>(
 
   return [value, debouncedSetValue] as const;
 }
+
+export namespace useDebouncedState {
+  export type Options = UseDebouncedStateOptions;
+  export type ReturnValue<T> = UseDebouncedStateReturnValue<T>;
+}

@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { IconPackage } from '@tabler/icons-react';
+import { useRef, useState } from 'react';
+import { PackageIcon } from '@phosphor-icons/react';
+import { NumberInput, Stack, Text } from '../..';
 import { Tabs, TabsProps } from './Tabs';
 
 export default {
@@ -11,8 +12,8 @@ const base = (
     <Tabs.List grow>
       <Tabs.Tab
         value="react"
-        leftSection={<IconPackage size={16} />}
-        rightSection={<IconPackage size={16} />}
+        leftSection={<PackageIcon size={16} />}
+        rightSection={<PackageIcon size={16} />}
       >
         React
       </Tabs.Tab>
@@ -276,7 +277,7 @@ export const VerticalPlacement = () => (
 export const WithIcon = () => (
   <Wrapper defaultValue="react" variant="outline">
     <Tabs.List>
-      <Tabs.Tab value="react" leftSection={<IconPackage size={14} />} />
+      <Tabs.Tab value="react" leftSection={<PackageIcon size={14} />} />
       <Tabs.Tab value="sv" rightSection={<span>right</span>}>
         Svelte
       </Tabs.Tab>
@@ -333,6 +334,55 @@ export const DynamicTabs = () => {
     </Tabs>
   );
 };
+
+export function WithActivityStatePreservation() {
+  const [value1, setValue1] = useState(10);
+  const [value2, setValue2] = useState(20);
+  const renderCount = useRef(0);
+  renderCount.current += 1;
+
+  return (
+    <Stack maw={500} p="md">
+      <Text size="sm" c="dimmed">
+        <strong>keepMounted + Activity</strong>: values in each tab panel are preserved when
+        switching tabs. Compare to the default behavior where state resets on tab switch.
+      </Text>
+
+      <Tabs defaultValue="tab1" keepMounted>
+        <Tabs.List>
+          <Tabs.Tab value="tab1">Tab 1</Tabs.Tab>
+          <Tabs.Tab value="tab2">Tab 2</Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="tab1" pt="md">
+          <Stack gap="xs" p="md" style={{ background: '#f0f4ff', borderRadius: 8 }}>
+            <Text fw={600}>Tab 1 (keepMounted)</Text>
+            <NumberInput
+              label="Value survives tab switch"
+              value={value1}
+              onChange={(v) => setValue1(typeof v === 'number' ? v : 0)}
+            />
+          </Stack>
+        </Tabs.Panel>
+
+        <Tabs.Panel value="tab2" pt="md">
+          <Stack gap="xs" p="md" style={{ background: '#fff0f0', borderRadius: 8 }}>
+            <Text fw={600}>Tab 2 (keepMounted)</Text>
+            <NumberInput
+              label="Value survives tab switch"
+              value={value2}
+              onChange={(v) => setValue2(typeof v === 'number' ? v : 0)}
+            />
+          </Stack>
+        </Tabs.Panel>
+      </Tabs>
+
+      <Text size="xs" c="dimmed">
+        Tab 1 value: <strong>{value1}</strong> | Tab 2 value: <strong>{value2}</strong>
+      </Text>
+    </Stack>
+  );
+}
 
 export const Inverted = () => (
   <Wrapper defaultValue="react" variant="outline" inverted>

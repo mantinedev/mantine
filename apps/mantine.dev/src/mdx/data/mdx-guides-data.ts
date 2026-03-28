@@ -4,7 +4,14 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
   Polymorphic: {
     title: 'Polymorphic components',
     slug: '/guides/polymorphic',
-    search: 'createPolymorphicComponent, change root element, component prop',
+    search: 'polymorphic, change root element, component prop',
+    hideHeader: true,
+  },
+
+  CustomComponents: {
+    title: 'Custom components',
+    slug: '/guides/custom-components',
+    search: 'factory, genericFactory, useStyles, varsResolver',
     hideHeader: true,
   },
 
@@ -100,6 +107,14 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     searchTags: '7x, 8x, 7to8, 78',
   },
 
+  EightToNine: {
+    title: '8.x to 9.x migration',
+    slug: '/guides/8x-to-9x',
+    search: 'Migration guide from 8.x to 9.x',
+    hideHeader: true,
+    searchTags: '8x, 9x, 8to9, 89',
+  },
+
   Tiptap3Migration: {
     title: 'Migration guide Tiptap 2 → Tiptap 3',
     slug: '/guides/tiptap-3-migration',
@@ -117,9 +132,16 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
   },
 
   LLMDocumentation: {
-    title: 'LLMs.txt',
+    title: 'Mantine with LLMs',
     slug: '/guides/llms',
     search: 'LLM, AI, ChatGPT, Claude, Copilot, Cursor, Windsurf, documentation',
+    hideHeader: true,
+  },
+
+  ControlledVsUncontrolled: {
+    title: 'Controlled vs Uncontrolled',
+    slug: '/guides/controlled-vs-uncontrolled',
+    search: 'Controlled vs Uncontrolled components in React',
     hideHeader: true,
   },
 };

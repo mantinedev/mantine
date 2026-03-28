@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 import { getHotkeyHandler, getHotkeyMatcher, HotkeyItemOptions } from './parse-hotkey';
 
 export type { HotkeyItemOptions };
@@ -27,25 +27,29 @@ export function useHotkeys(
   tagsToIgnore: string[] = ['INPUT', 'TEXTAREA', 'SELECT'],
   triggerOnContentEditable = false
 ) {
-  useEffect(() => {
-    const keydownListener = (event: KeyboardEvent) => {
-      hotkeys.forEach(
-        ([hotkey, handler, options = { preventDefault: true, usePhysicalKeys: false }]) => {
-          if (
-            getHotkeyMatcher(hotkey, options.usePhysicalKeys)(event) &&
-            shouldFireEvent(event, tagsToIgnore, triggerOnContentEditable)
-          ) {
-            if (options.preventDefault) {
-              event.preventDefault();
-            }
-
-            handler(event);
+  const handleKeydown = useEffectEvent((event: KeyboardEvent) => {
+    hotkeys.forEach(
+      ([hotkey, handler, options = { preventDefault: true, usePhysicalKeys: false }]) => {
+        if (
+          getHotkeyMatcher(hotkey, options.usePhysicalKeys)(event) &&
+          shouldFireEvent(event, tagsToIgnore, triggerOnContentEditable)
+        ) {
+          if (options.preventDefault) {
+            event.preventDefault();
           }
-        }
-      );
-    };
 
-    document.documentElement.addEventListener('keydown', keydownListener);
-    return () => document.documentElement.removeEventListener('keydown', keydownListener);
-  }, [hotkeys]);
+          handler(event);
+        }
+      }
+    );
+  });
+
+  useEffect(() => {
+    document.documentElement.addEventListener('keydown', handleKeydown);
+    return () => document.documentElement.removeEventListener('keydown', handleKeydown);
+  }, []);
+}
+
+export namespace useHotkeys {
+  export type Hotkey = HotkeyItem;
 }

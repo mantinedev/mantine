@@ -35,9 +35,7 @@ export type RadialBarChartCssVariables = {
 };
 
 export interface RadialBarChartProps
-  extends BoxProps,
-    StylesApiProps<RadialBarChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RadialBarChartFactory>, ElementProps<'div'> {
   /** Chart data */
   data: Record<string, any>[];
 
@@ -47,32 +45,32 @@ export interface RadialBarChartProps
   /** Size of bars in px, `20` by default */
   barSize?: number;
 
-  /** Determines whether empty bars area should be visible @default `true` */
+  /** Determines whether empty bars area should be visible @default true */
   withBackground?: boolean;
 
-  /** Determines whether labels should be displayed @default `false` */
+  /** Determines whether labels should be displayed @default false */
   withLabels?: boolean;
 
-  /** Determines whether the legend should be displayed @default `false` */
+  /** Determines whether the legend should be displayed @default false */
   withLegend?: boolean;
 
-  /** Determines whether the tooltip should be displayed when one of the bars is hovered @default `true` */
+  /** Determines whether the tooltip should be displayed when one of the bars is hovered @default true */
   withTooltip?: boolean;
 
   /** Color of the empty background, by default depends on the color scheme */
   emptyBackgroundColor?: string;
 
-  /** Angle at which chart starts @default `90` */
+  /** Angle at which chart starts @default 90 */
   startAngle?: number;
 
-  /** Angle at which chart ends @default `-270` */
+  /** Angle at which chart ends @default -270 */
   endAngle?: number;
 
   /** Props passed down to recharts RadialBar component */
   radialBarProps?: Omit<RadialBarProps, 'ref'>;
 
   /** Props passed down to recharts RadarChartChart component */
-  radialBarChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsRadialBarChart>;
+  radialBarChartProps?: React.ComponentProps<typeof ReChartsRadialBarChart>;
 
   /** Props passed down to recharts Legend component */
   legendProps?: Omit<LegendProps, 'ref'>;
@@ -106,7 +104,7 @@ const varsResolver = createVarsResolver<RadialBarChartFactory>(
   })
 );
 
-export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
+export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
   const props = useProps('RadialBarChart', defaultProps, _props);
   const {
     classNames,
@@ -169,7 +167,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsRadialBarChart
           margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
@@ -246,3 +244,4 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
 
 RadialBarChart.displayName = '@mantine/core/RadialBarChart';
 RadialBarChart.classes = classes;
+RadialBarChart.varsResolver = varsResolver;

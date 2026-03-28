@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useCallbackRef, useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
@@ -19,10 +19,9 @@ export interface ScrollbarPrivateProps {
 }
 
 interface ScrollbarProps
-  extends ScrollbarPrivateProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onResize'> {}
+  extends ScrollbarPrivateProps, Omit<React.ComponentProps<'div'>, 'onResize'> {}
 
-export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forwardedRef) => {
+export function Scrollbar(props: ScrollbarProps) {
   const {
     sizes,
     hasThumb,
@@ -33,16 +32,17 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
     onDragScroll,
     onWheelScroll,
     onResize,
+    ref,
     ...scrollbarProps
   } = props;
   const context = useScrollAreaContext();
   const [scrollbar, setScrollbar] = useState<HTMLDivElement | null>(null);
-  const composeRefs = useMergedRef(forwardedRef, (node) => setScrollbar(node));
+  const composeRefs = useMergedRef(ref, (node) => setScrollbar(node));
   const rectRef = useRef<DOMRect | null>(null);
   const prevWebkitUserSelectRef = useRef<string>('');
   const { viewport } = context;
   const maxScrollPos = sizes.content - sizes.viewport;
-  const handleWheelScroll = useCallbackRef(onWheelScroll);
+  const handleWheelScroll = useEffectEvent(onWheelScroll);
   const handleThumbPositionChange = useCallbackRef(onThumbPositionChange);
   const handleResize = useDebouncedCallback(onResize, 10);
 
@@ -64,7 +64,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
     };
     document.addEventListener('wheel', handleWheel, { passive: false });
     return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
-  }, [viewport, scrollbar, maxScrollPos, handleWheelScroll]);
+  }, [viewport, scrollbar, maxScrollPos]);
 
   useEffect(handleThumbPositionChange, [sizes, handleThumbPositionChange]);
 
@@ -117,4 +117,4 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
       />
     </ScrollbarProvider>
   );
-});
+}

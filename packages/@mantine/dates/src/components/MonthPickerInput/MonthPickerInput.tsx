@@ -22,11 +22,12 @@ export type MonthPickerInputStylesNames =
   | MonthPickerStylesNames;
 
 export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerInputFactory> {
-  /** `dayjs` format for input value @default `"MMMM YYYY"` */
+  /** `dayjs` format for input value @default "MMMM YYYY" */
   valueFormat?: string;
 }
 
@@ -46,13 +47,13 @@ const defaultProps = {
 } satisfies Partial<MonthPickerInputProps>;
 
 type MonthPickerInputComponent = (<Type extends DatePickerType = 'default'>(
-  props: MonthPickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  props: MonthPickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<MonthPickerInputFactory>;
 
 export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('MonthPickerInput', defaultProps, _props);
     const {
       type,
@@ -115,7 +116,6 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}

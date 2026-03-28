@@ -1,4 +1,5 @@
-import { useInputWrapperContext } from '../../components/Input';
+import { use } from 'react';
+import { InputWrapperContext } from '../../components/Input';
 
 interface InputsGroupFieldsetProps {
   children: React.ReactNode;
@@ -6,7 +7,7 @@ interface InputsGroupFieldsetProps {
 }
 
 export function InputsGroupFieldset({ children, role }: InputsGroupFieldsetProps) {
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
 
   if (!ctx) {
     return <>{children}</>;

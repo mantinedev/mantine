@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalOverlayStylesNames = 'overlay';
 
 export interface ModalOverlayProps
-  extends ModalBaseOverlayProps,
-    CompoundStylesApiProps<ModalOverlayFactory> {}
+  extends ModalBaseOverlayProps, CompoundStylesApiProps<ModalOverlayFactory> {}
 
 export type ModalOverlayFactory = Factory<{
   props: ModalOverlayProps;
@@ -16,7 +15,7 @@ export type ModalOverlayFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalOverlay = factory<ModalOverlayFactory>((_props, ref) => {
+export const ModalOverlay = factory<ModalOverlayFactory>((_props) => {
   const props = useProps('ModalOverlay', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +23,6 @@ export const ModalOverlay = factory<ModalOverlayFactory>((_props, ref) => {
 
   return (
     <ModalBaseOverlay
-      ref={ref}
       {...ctx.getStyles('overlay', { classNames, style, styles, className })}
       {...others}
     />

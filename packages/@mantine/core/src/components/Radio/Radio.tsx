@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -22,12 +23,11 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputStylesNames } from '../../utils/InlineInput';
-import classes from './Radio.module.css';
 import { RadioCard } from './RadioCard/RadioCard';
-import { useRadioGroupContext } from './RadioGroup.context';
-import { RadioGroup } from './RadioGroup/RadioGroup';
+import { RadioGroup, RadioGroupContext } from './RadioGroup/RadioGroup';
 import { RadioIcon, RadioIconProps } from './RadioIcon';
 import { RadioIndicator } from './RadioIndicator/RadioIndicator';
+import classes from './Radio.module.css';
 
 export type RadioVariant = 'filled' | 'outline';
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';
@@ -41,25 +41,23 @@ export type RadioCssVariables = {
 };
 
 export interface RadioProps
-  extends BoxProps,
-    StylesApiProps<RadioFactory>,
-    ElementProps<'input', 'size' | 'children'> {
+  extends BoxProps, StylesApiProps<RadioFactory>, ElementProps<'input', 'size' | 'children'> {
   /** Content of the `label` associated with the radio */
   label?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default `theme.primaryColor` */
+  /** Key of theme.colors or any valid CSS color to set radio background color in checked state @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls size of the component @default `'sm'` */
+  /** Controls size of the component @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** A component that replaces default check icon */
+  /** A component that replaces the default radio icon (centered dot) */
   icon?: React.FC<RadioIconProps>;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input @default `'right'` */
+  /** Position of the label relative to the input @default 'right' */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */
@@ -68,17 +66,20 @@ export interface RadioProps
   /** Error displayed below the label */
   error?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
   radius?: MantineRadius;
 
   /** Assigns ref of the root element */
-  rootRef?: React.ForwardedRef<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement>;
 
-  /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
+  /** Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting */
   iconColor?: MantineColor;
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
+
+  /** If set, applies error styles to the radio when `error` prop is set @default true */
+  withErrorStyles?: boolean;
 }
 
 export type RadioFactory = Factory<{
@@ -96,6 +97,7 @@ export type RadioFactory = Factory<{
 
 const defaultProps = {
   labelPosition: 'right',
+  withErrorStyles: true,
 } satisfies Partial<RadioProps>;
 
 const varsResolver = createVarsResolver<RadioFactory>(
@@ -122,7 +124,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
   }
 );
 
-export const Radio = factory<RadioFactory>((_props, ref) => {
+export const Radio = factory<RadioFactory>((_props) => {
   const props = useProps('Radio', defaultProps, _props);
   const {
     classNames,
@@ -148,6 +150,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     onChange,
     mod,
     attributes,
+    withErrorStyles,
     checked,
     ...others
   } = props;
@@ -166,7 +169,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const ctx = useRadioGroupContext();
+  const ctx = use(RadioGroupContext);
 
   const contextSize = ctx?.size ?? size;
   const componentSize = props.size ? size : contextSize;
@@ -205,6 +208,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
       variant={variant}
       ref={rootRef}
       mod={mod}
+      attributes={attributes}
       {...styleProps}
       {...wrapperProps}
     >
@@ -214,8 +218,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
           {...rest}
           {...withContextProps}
           component="input"
-          mod={{ error: !!error }}
-          ref={ref}
+          mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           id={uuid}
           type="radio"
         />
@@ -226,6 +229,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
 });
 
 Radio.classes = classes;
+Radio.varsResolver = varsResolver;
 Radio.displayName = '@mantine/core/Radio';
 Radio.Group = RadioGroup;
 Radio.Card = RadioCard;

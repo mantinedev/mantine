@@ -39,15 +39,7 @@ describe('@mantine/core/NumberInput', () => {
   tests.itSupportsSystemProps<NumberInputProps, __InputStylesNames>({
     component: NumberInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
+    varsResolver: true,
     displayName: '@mantine/core/NumberInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -243,6 +235,387 @@ describe('@mantine/core/NumberInput', () => {
 
     expect(spy).toHaveBeenLastCalledWith(10.1);
     expectValue('10.1');
+  });
+
+  it('calls onMaxReached when increment would exceed max', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput min={0} max={10} defaultValue={8} step={5} onMaxReached={spy} />
+    );
+
+    await clickIncrement(container);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('10');
+  });
+
+  it('calls onMaxReached when arrow up would exceed max', async () => {
+    const spy = jest.fn();
+    render(<NumberInput min={0} max={10} defaultValue={9} step={2} onMaxReached={spy} />);
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('10');
+  });
+
+  it('does not call onMaxReached when max is not defined', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={10} onMaxReached={spy} />);
+
+    await clickIncrement(container);
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  it('calls onMinReached when decrement would go below min', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput min={0} max={10} defaultValue={3} step={5} onMinReached={spy} />
+    );
+
+    await clickDecrement(container);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('0');
+  });
+
+  it('calls onMinReached when arrow down would go below min', async () => {
+    const spy = jest.fn();
+    render(<NumberInput min={0} max={10} defaultValue={0} onMinReached={spy} />);
+
+    focusInput();
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('0');
+  });
+
+  it('calls onMinReached when decrement would go below 0 with allowNegative=false', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput allowNegative={false} defaultValue={0} onMinReached={spy} />
+    );
+
+    await clickDecrement(container);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('0');
+  });
+
+  it('does not call onMinReached when min is not defined and allowNegative is true', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={-5} onMinReached={spy} />);
+
+    await clickDecrement(container);
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  it('selects all text on focus when selectAllOnFocus is true', async () => {
+    render(<NumberInput defaultValue={123} selectAllOnFocus />);
+    const input = getInput() as HTMLInputElement;
+
+    focusInput();
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(3);
+  });
+
+  it('does not select text on focus when selectAllOnFocus is false', async () => {
+    render(<NumberInput defaultValue={123} selectAllOnFocus={false} />);
+    const input = getInput() as HTMLInputElement;
+
+    focusInput();
+    expect(input.selectionStart).toBe(3);
+    expect(input.selectionEnd).toBe(3);
+  });
+
+  it('supports custom decimal separator', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} decimalSeparator="," />);
+
+    focusInput();
+    await enterText('10,5');
+    expect(spy).toHaveBeenLastCalledWith(10.5);
+    expectValue('10,5');
+  });
+
+  it('pads decimal places when fixedDecimalScale is set', async () => {
+    render(<NumberInput defaultValue={5.1} decimalScale={2} fixedDecimalScale />);
+    expectValue('5.10');
+  });
+
+  it('formats value with thousand separator', async () => {
+    render(<NumberInput defaultValue={1000000} thousandSeparator="," />);
+    expectValue('1,000,000');
+  });
+
+  it('formats value with custom thousandsGroupStyle', async () => {
+    render(<NumberInput defaultValue={100000} thousandSeparator="," thousandsGroupStyle="lakh" />);
+    expectValue('1,00,000');
+  });
+
+  it('displays prefix and suffix', async () => {
+    render(<NumberInput defaultValue={100} prefix="$" suffix=" USD" />);
+    expectValue('$100 USD');
+  });
+
+  it('validates input with isAllowed callback', async () => {
+    const spy = jest.fn();
+    const isAllowed = (values: any) => values.floatValue === undefined || values.floatValue <= 100;
+    render(<NumberInput onChange={spy} isAllowed={isAllowed} />);
+
+    focusInput();
+    await enterText('50');
+    expect(spy).toHaveBeenLastCalledWith(50);
+
+    await enterText('0');
+    expect(spy).toHaveBeenLastCalledWith(50);
+    expectValue('50');
+  });
+
+  it('disables keyboard arrow events when withKeyboardEvents is false', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={5} onChange={spy} withKeyboardEvents={false} />);
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('5');
+
+    await enterText('{arrowdown}');
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('5');
+  });
+
+  it('respects max when using arrow up key', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={9} max={10} onChange={spy} />);
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).toHaveBeenLastCalledWith(10);
+
+    await enterText('{arrowup}');
+    expect(spy).toHaveBeenLastCalledWith(10);
+    expectValue('10');
+  });
+
+  it('respects min when using arrow down key', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={1} min={0} onChange={spy} />);
+
+    focusInput();
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenLastCalledWith(0);
+
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenLastCalledWith(0);
+    expectValue('0');
+  });
+
+  it('disables increment button when value is at max', () => {
+    const { container } = render(<NumberInput defaultValue={10} max={10} />);
+    const incrementButton = container.querySelector(
+      '.mantine-NumberInput-control[data-direction="up"]'
+    );
+    expect(incrementButton).toBeDisabled();
+  });
+
+  it('disables decrement button when value is at min', () => {
+    const { container } = render(<NumberInput defaultValue={0} min={0} />);
+    const decrementButton = container.querySelector(
+      '.mantine-NumberInput-control[data-direction="down"]'
+    );
+    expect(decrementButton).toBeDisabled();
+  });
+
+  it('hides controls when readOnly is set', () => {
+    const { container } = render(<NumberInput readOnly />);
+    const controls = container.querySelector('.mantine-NumberInput-controls');
+    expect(controls).not.toBeInTheDocument();
+  });
+
+  it('calls onValueChange with correct payload structure', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onValueChange={spy} />);
+
+    focusInput();
+    await enterText('123');
+
+    expect(spy).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        floatValue: 123,
+        formattedValue: '123',
+        value: '123',
+      }),
+      expect.objectContaining({
+        source: 'event',
+      })
+    );
+  });
+
+  it('calls onValueChange with source="increment" when increment button is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={5} onValueChange={spy} />);
+
+    await clickIncrement(container);
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        floatValue: 6,
+      }),
+      expect.objectContaining({
+        source: 'increment',
+      })
+    );
+  });
+
+  it('calls onValueChange with source="decrement" when decrement button is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={5} onValueChange={spy} />);
+
+    await clickDecrement(container);
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        floatValue: 4,
+      }),
+      expect.objectContaining({
+        source: 'decrement',
+      })
+    );
+  });
+
+  it('onValueChange receives formatted value with prefix and suffix', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput defaultValue={100} prefix="$" suffix=" USD" onValueChange={spy} />
+    );
+
+    await clickIncrement(container);
+
+    expect(spy).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        floatValue: 101,
+        formattedValue: '$101 USD',
+      }),
+      expect.anything()
+    );
+  });
+
+  it('renders bigint values and preserves formatting options', () => {
+    render(
+      <NumberInput defaultValue={BigInt('12345678901234567890')} thousandSeparator="," prefix="$" />
+    );
+
+    expectValue('$12,345,678,901,234,567,890');
+  });
+
+  it('returns bigint in bigint mode for valid integer input', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={BigInt(0)} onChange={spy} />);
+
+    focusInput();
+    await enterText('{backspace}');
+    await enterText('123');
+
+    expect(spy).toHaveBeenLastCalledWith(BigInt(123));
+  });
+
+  it('returns string fallback in bigint mode for intermediate input', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={BigInt(0)} onChange={spy} />);
+
+    focusInput();
+    await enterText('{backspace}');
+    expect(spy).toHaveBeenLastCalledWith('');
+
+    await enterText('-');
+    expect(spy).toHaveBeenLastCalledWith('-');
+  });
+
+  it('supports bigint increment/decrement with handlersRef', () => {
+    const ref = createRef<NumberInputHandlers>();
+    const spy = jest.fn();
+    render(
+      <NumberInput
+        step={BigInt(2)}
+        startValue={BigInt(4)}
+        defaultValue={BigInt(0)}
+        onChange={spy}
+        handlersRef={ref}
+      />
+    );
+
+    act(() => ref.current?.increment());
+    expect(spy).toHaveBeenLastCalledWith(BigInt(2));
+
+    act(() => ref.current?.increment());
+    expect(spy).toHaveBeenLastCalledWith(BigInt(4));
+
+    act(() => ref.current?.decrement());
+    expect(spy).toHaveBeenLastCalledWith(BigInt(2));
+  });
+
+  it('supports bigint keyboard stepping and min/max callbacks', async () => {
+    const minSpy = jest.fn();
+    const maxSpy = jest.fn();
+    render(
+      <NumberInput
+        defaultValue={BigInt(9)}
+        min={BigInt(0)}
+        max={BigInt(10)}
+        step={BigInt(2)}
+        onMinReached={minSpy}
+        onMaxReached={maxSpy}
+      />
+    );
+
+    focusInput();
+    await enterText('{arrowup}');
+    expectValue('10');
+    expect(maxSpy).toHaveBeenCalledTimes(1);
+
+    await enterText('{arrowdown}');
+    await enterText('{arrowdown}');
+    await enterText('{arrowdown}');
+    await enterText('{arrowdown}');
+    await enterText('{arrowdown}');
+    await enterText('{arrowdown}');
+    expectValue('0');
+    expect(minSpy).toHaveBeenCalled();
+  });
+
+  it('supports bigint strict and blur clamping', async () => {
+    const strictSpy = jest.fn();
+    render(
+      <NumberInput
+        defaultValue={BigInt(5)}
+        min={BigInt(0)}
+        max={BigInt(10)}
+        clampBehavior="strict"
+        onChange={strictSpy}
+      />
+    );
+
+    focusInput();
+    await enterText('{backspace}{backspace}11');
+    expect(strictSpy).toHaveBeenLastCalledWith(BigInt(1));
+    expectValue('1');
+
+    const blurSpy = jest.fn();
+    render(
+      <NumberInput
+        defaultValue={BigInt(0)}
+        min={BigInt(0)}
+        max={BigInt(10)}
+        clampBehavior="blur"
+        onChange={blurSpy}
+      />
+    );
+    const inputs = screen.getAllByRole('textbox');
+    fireEvent.focus(inputs[1]);
+    await userEvent.type(inputs[1], '{backspace}999');
+    fireEvent.blur(inputs[1]);
+    expect(inputs[1]).toHaveValue('10');
   });
 
   it('converts decimal separators in pasted values when decimalSeparator is set', () => {

@@ -67,4 +67,43 @@ describe('@mantine/core/Box/get-box-mod', () => {
       'data-variant': 'test',
     });
   });
+
+  it('converts camelCase to kebab-case', () => {
+    expect(getBoxMod({ someValue: true })).toStrictEqual({
+      'data-some-value': true,
+    });
+    expect(getBoxMod('someValue')).toStrictEqual({
+      'data-some-value': true,
+    });
+    expect(getBoxMod({ myCustomProp: 'test' })).toStrictEqual({
+      'data-my-custom-prop': 'test',
+    });
+  });
+
+  it('converts data- prefixed camelCase to kebab-case', () => {
+    expect(getBoxMod({ 'data-SomeValue': true })).toStrictEqual({
+      'data-some-value': true,
+    });
+    expect(getBoxMod('data-someValue')).toStrictEqual({
+      'data-some-value': true,
+    });
+    expect(getBoxMod({ 'data-MyCustomProp': 'test' })).toStrictEqual({
+      'data-my-custom-prop': 'test',
+    });
+  });
+
+  it('handles mixed kebab-case and camelCase', () => {
+    expect(
+      getBoxMod({
+        'data-test': true,
+        someValue: 'value',
+        'data-anotherValue': true,
+        regularKey: false,
+      })
+    ).toStrictEqual({
+      'data-test': true,
+      'data-some-value': 'value',
+      'data-another-value': true,
+    });
+  });
 });

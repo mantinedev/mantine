@@ -1,20 +1,20 @@
 import { NumericFormat } from 'react-number-format';
 import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../core';
 
-export interface NumberFormatterProps extends React.ComponentPropsWithoutRef<'span'> {
+export interface NumberFormatterProps extends React.ComponentProps<'span'> {
   /** Value to format */
   value?: number | string;
 
-  /** If set, negative values are allowed @default `true` */
+  /** If set, negative values are allowed @default true */
   allowNegative?: boolean;
 
-  /** Limits the number of digits that are displayed after the decimal point @default `Infinity` */
+  /** Limits the number of digits that are displayed after the decimal point @default Infinity */
   decimalScale?: number;
 
   /** Character used as a decimal separator, `'.'` by default */
   decimalSeparator?: string;
 
-  /** If set, zeros are added after `decimalSeparator` to match given `decimalScale`. @default `false` */
+  /** If set, zeros are added after `decimalSeparator` to match given `decimalScale`. @default false */
   fixedDecimalScale?: boolean;
 
   /** Prefix added before the value */
@@ -26,7 +26,7 @@ export interface NumberFormatterProps extends React.ComponentPropsWithoutRef<'sp
   /** Defines the thousand grouping style */
   thousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none';
 
-  /** A character used to separate thousands @default  `','` */
+  /** A character used to separate thousands @default  ',' */
   thousandSeparator?: string | boolean;
 }
 
@@ -50,3 +50,8 @@ const extendNumberFormatter = (c: ExtendComponent<NumberFormatterFactory>): Mant
 
 NumberFormatter.extend = extendNumberFormatter;
 NumberFormatter.displayName = '@mantine/core/NumberFormatter';
+
+export namespace NumberFormatter {
+  export type Props = NumberFormatterProps;
+  export type Factory = NumberFormatterFactory;
+}

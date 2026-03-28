@@ -68,3 +68,8 @@ export function useFetch<T>(
 
   return { data, loading, error, refetch, abort };
 }
+
+export namespace useFetch {
+  export type Options = UseFetchOptions;
+  export type ReturnValue<T> = UseFetchReturnValue<T>;
+}

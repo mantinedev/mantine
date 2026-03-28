@@ -99,6 +99,58 @@ describe('@mantine/hooks/use-click-outside', () => {
     expect(handler).toHaveBeenCalledTimes(1);
   });
 
+  it('calls the latest handler after rerender (no stale closure)', async () => {
+    const first = jest.fn();
+    const second = jest.fn();
+
+    const { rerender } = render(
+      <>
+        <Target handler={first} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    rerender(
+      <>
+        <Target handler={second} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not re-register listeners when handler identity changes', async () => {
+    const addSpy = jest.spyOn(document, 'addEventListener');
+    const removeSpy = jest.spyOn(document, 'removeEventListener');
+
+    const { rerender } = render(
+      <>
+        <Target handler={jest.fn()} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    const initialAdds = addSpy.mock.calls.filter(([t]) => t === 'mousedown').length;
+    const initialRemoves = removeSpy.mock.calls.filter(([t]) => t === 'mousedown').length;
+
+    rerender(
+      <>
+        <Target handler={jest.fn()} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    expect(addSpy.mock.calls.filter(([t]) => t === 'mousedown').length).toBe(initialAdds);
+    expect(removeSpy.mock.calls.filter(([t]) => t === 'mousedown').length).toBe(initialRemoves);
+
+    addSpy.mockRestore();
+    removeSpy.mockRestore();
+  });
+
   it('propagates event to handler', async () => {
     const handler = jest.fn();
 

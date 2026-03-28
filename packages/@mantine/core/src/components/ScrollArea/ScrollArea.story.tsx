@@ -30,6 +30,7 @@ export function Usage() {
         scrollbars="y"
         onBottomReached={() => console.log('bottom')}
         onTopReached={() => console.log('top')}
+        variant="test-variant"
       >
         <div style={{ width: 600 }}>{content}</div>
       </ScrollArea>
@@ -212,6 +213,16 @@ export function OnBottomReached() {
         Custom Has Reached Bottom: <Code>{`{ ${customReachedBottom} }`}</Code>
       </div>
     </Stack>
+  );
+}
+
+export function StartScrollPosition() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <ScrollArea h={200} startScrollPosition={{ y: 200 }}>
+        <div style={{ width: 600 }}>{content}</div>
+      </ScrollArea>
+    </div>
   );
 }
 

@@ -3,7 +3,7 @@ import image from '@/images/dates-broken-styles.png';
 import { Layout } from '@/layout';
 
 export const meta = {
-  title: 'Why my dates components look broken?',
+  title: 'Why do my dates components look broken?',
   description: 'Because you did not import styles',
   slug: 'dates-missing-styles',
   category: 'styles',
@@ -18,11 +18,11 @@ If your dates components look like this:
 
 <Image src={image.src} maw={400} />
 
-It means that you did not import styles for `@mantine/dates` package like
-it is described in [installation](https://mantine.dev/dates/getting-started/#installation)
+It means that you did not import styles for the `@mantine/dates` package as
+described in the [installation](https://mantine.dev/dates/getting-started/#installation)
 instructions.
 
-Add styles import to your application:
+Add the styles import to your application:
 
 ```bash
 import '@mantine/dates/styles.css';

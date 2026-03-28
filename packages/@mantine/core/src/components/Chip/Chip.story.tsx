@@ -1,4 +1,4 @@
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon } from '@phosphor-icons/react';
 import { Tooltip } from '../Tooltip';
 import { Chip } from './Chip';
 
@@ -79,19 +79,19 @@ export function Sizes() {
 export function CustomIcon() {
   return (
     <div style={{ padding: 40 }}>
-      <Chip type="checkbox" size="xs" icon={<IconCheck size={14} />}>
+      <Chip type="checkbox" size="xs" icon={<CheckIcon size={14} />}>
         XS chip
       </Chip>
-      <Chip type="checkbox" size="sm" icon={<IconCheck size={20} />}>
+      <Chip type="checkbox" size="sm" icon={<CheckIcon size={20} />}>
         SM chip
       </Chip>
-      <Chip type="checkbox" size="md" icon={<IconCheck size={12} />}>
+      <Chip type="checkbox" size="md" icon={<CheckIcon size={12} />}>
         MD chip
       </Chip>
-      <Chip type="checkbox" size="lg" icon={<IconCheck size={12} />}>
+      <Chip type="checkbox" size="lg" icon={<CheckIcon size={12} />}>
         LG chip
       </Chip>
-      <Chip type="checkbox" size="xl" icon={<IconCheck size={14} />}>
+      <Chip type="checkbox" size="xl" icon={<CheckIcon size={14} />}>
         XL chip
       </Chip>
     </div>

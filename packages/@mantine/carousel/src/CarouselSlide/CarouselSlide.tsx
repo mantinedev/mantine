@@ -13,9 +13,7 @@ import classes from '../Carousel.module.css';
 export type CarouselSlideStylesNames = 'slide';
 
 export interface CarouselSlideProps
-  extends BoxProps,
-    CompoundStylesApiProps<CarouselSlideFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<CarouselSlideFactory>, ElementProps<'div'> {}
 
 export type CarouselSlideFactory = Factory<{
   props: CarouselSlideProps;
@@ -24,7 +22,7 @@ export type CarouselSlideFactory = Factory<{
   compound: true;
 }>;
 
-export const CarouselSlide = factory<CarouselSlideFactory>((props, ref) => {
+export const CarouselSlide = factory<CarouselSlideFactory>((props) => {
   const { classNames, className, style, styles, vars, mod, ...others } = useProps(
     'CarouselSlide',
     null,
@@ -35,8 +33,10 @@ export const CarouselSlide = factory<CarouselSlideFactory>((props, ref) => {
 
   return (
     <Box
-      ref={ref}
       mod={[{ orientation: ctx.orientation }, mod]}
+      role="group"
+      aria-roledescription="slide"
+      aria-label="Carousel slide"
       {...ctx.getStyles('slide', { className, style, classNames, styles })}
       {...others}
     />

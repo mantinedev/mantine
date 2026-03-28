@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { IconClock } from '@tabler/icons-react';
+import { ClockIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { TimePicker } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { IconClock } from '@tabler/icons-react';
+import { ClockIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { TimePicker } from '@mantine/dates';
 
@@ -19,7 +19,7 @@ function Demo() {
       withDropdown
       rightSection={
         <ActionIcon onClick={() => setDropdownOpened(true)} variant="default">
-          <IconClock size={18} stroke={1.5} />
+          <ClockIcon size={18} />
         </ActionIcon>
       }
       value={value}
@@ -47,7 +47,7 @@ function Demo() {
       withDropdown
       rightSection={
         <ActionIcon onClick={() => setDropdownOpened(true)} variant="default">
-          <IconClock size={18} stroke={1.5} />
+          <ClockIcon size={18} />
         </ActionIcon>
       }
       value={value}
