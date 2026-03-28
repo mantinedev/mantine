@@ -210,6 +210,54 @@ describe('@mantine/core/Select', () => {
     expect(container.querySelector('.mantine-Loader-root')).toBeInTheDocument();
   });
 
+  it('supports uncontrolled state with numeric values', async () => {
+    render(
+      <Select
+        data={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+        ]}
+      />
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'One' }));
+    expect(screen.getByRole('combobox')).toHaveValue('One');
+  });
+
+  it('supports controlled state with numeric values', async () => {
+    const spy = jest.fn();
+    render(
+      <Select
+        value={1}
+        onChange={spy}
+        data={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+        ]}
+      />
+    );
+    expect(screen.getByRole('combobox')).toHaveValue('One');
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'Two' }));
+    expect(spy).toHaveBeenCalledWith(2, { label: 'Two', value: 2 });
+  });
+
+  it('allows deselecting option with numeric values', async () => {
+    render(
+      <Select
+        defaultValue={1}
+        data={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+        ]}
+      />
+    );
+    expect(screen.getByRole('combobox')).toHaveValue('One');
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'One' }));
+    expect(screen.getByRole('combobox')).toHaveValue('');
+  });
+
   it('allows to change controlled search value when value is controlled and selected', async () => {
     const Wrapper: React.FunctionComponent = () => {
       const [value, setValue] = useState<string | null>('Angular');
