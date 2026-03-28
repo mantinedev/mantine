@@ -92,6 +92,7 @@ export function useComboboxTargetProps({
 
   const ariaAttributes = withAriaAttributes
     ? {
+        ...(withExpandedAttribute ? { role: 'combobox' as const } : {}),
         'aria-haspopup': 'listbox' as const,
         'aria-expanded': withExpandedAttribute
           ? !!(ctx.store.listId && ctx.store.dropdownOpened)
