@@ -13,6 +13,9 @@ interface NotificationContainerProps extends NotificationProps {
   transitionDuration: number;
   allowDragDismiss: boolean;
   allowScrollDismiss: boolean;
+  paused: boolean;
+  onHoverStart?: () => void;
+  onHoverEnd?: () => void;
   ref?: React.Ref<HTMLDivElement>;
 }
 
@@ -23,6 +26,9 @@ export function NotificationContainer({
   transitionDuration,
   allowDragDismiss,
   allowScrollDismiss,
+  paused,
+  onHoverStart,
+  onHoverEnd,
   ref,
   style,
   ...others
@@ -176,12 +182,14 @@ export function NotificationContainer({
   const handleMouseEnter = () => {
     hoveredRef.current = true;
     cancelAutoClose();
+    onHoverStart?.();
   };
 
   const handleMouseLeave = () => {
     hoveredRef.current = false;
     resetSwipe();
     handleAutoClose();
+    onHoverEnd?.();
   };
 
   const handleWheel = useEffectEvent((event: WheelEvent) => {
@@ -252,6 +260,16 @@ export function NotificationContainer({
     handleAutoClose();
     return cancelAutoClose;
   }, [autoCloseDuration, active, dismissed]);
+
+  useEffect(() => {
+    if (paused) {
+      cancelAutoClose();
+    } else {
+      handleAutoClose();
+    }
+
+    return cancelAutoClose;
+  }, [paused]);
 
   return (
     <Notification

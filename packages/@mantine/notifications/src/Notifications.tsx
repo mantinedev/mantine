@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Transition as _Transition,
   TransitionGroup,
@@ -82,6 +82,9 @@ export interface NotificationsProps
 
   /** Determines whether notifications container should be rendered inside `Portal` @default true */
   withinPortal?: boolean;
+
+  /** Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification @default 'all' */
+  pauseResetOnHover?: 'all' | 'notification';
 }
 
 export type NotificationsFactory = Factory<{
@@ -111,6 +114,7 @@ const defaultProps = {
   zIndex: getDefaultZIndex('overlay'),
   store: notificationsStore,
   withinPortal: true,
+  pauseResetOnHover: 'all',
 } satisfies Partial<NotificationsProps>;
 
 const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
@@ -142,6 +146,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     store,
     portalProps,
     withinPortal,
+    pauseResetOnHover,
     ...others
   } = props;
 
@@ -151,6 +156,10 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const shouldReduceMotion = useReducedMotion();
   const refs = useRef<Record<string, HTMLDivElement>>({});
   const previousLength = useRef<number>(0);
+  const [hoveredCount, setHoveredCount] = useState(0);
+
+  const handleHoverStart = useCallback(() => setHoveredCount((c) => c + 1), []);
+  const handleHoverEnd = useCallback(() => setHoveredCount((c) => Math.max(0, c - 1)), []);
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -207,6 +216,9 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
               transitionDuration={duration}
               allowDragDismiss={allowDragDismiss}
               allowScrollDismiss={allowScrollDismiss}
+              paused={pauseResetOnHover === 'all' ? hoveredCount > 0 : false}
+              onHoverStart={handleHoverStart}
+              onHoverEnd={handleHoverEnd}
               {...getStyles('notification', {
                 style: {
                   ...getNotificationStateStyles({

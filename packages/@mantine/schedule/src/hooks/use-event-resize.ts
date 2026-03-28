@@ -85,15 +85,23 @@ export function useEventResize({
   );
 
   const handleResizeStart = useCallback(
-    (
-      event: ScheduleEventData,
-      edge: ResizeEdge,
-      container: HTMLElement,
-      originalTop: number,
-      originalHeight: number,
-      eventDate: string,
-      pointerEvent: React.PointerEvent
-    ) => {
+    ({
+      event,
+      edge,
+      container,
+      originalTop,
+      originalHeight,
+      eventDate,
+      pointerEvent,
+    }: {
+      event: ScheduleEventData;
+      edge: ResizeEdge;
+      container: HTMLElement;
+      originalTop: number;
+      originalHeight: number;
+      eventDate: string;
+      pointerEvent: React.PointerEvent;
+    }) => {
       if (!enabled || mode === 'static') {
         return;
       }
