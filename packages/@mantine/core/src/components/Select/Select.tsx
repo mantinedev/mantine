@@ -199,10 +199,10 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   });
 
   const selectedOption =
-    typeof _value === 'string'
-      ? _value in optionsLockup
-        ? optionsLockup[_value]
-        : retainedSelectedOptions.current[_value]
+    _value != null
+      ? `${_value}` in optionsLockup
+        ? optionsLockup[`${_value}`]
+        : retainedSelectedOptions.current[`${_value}`]
       : undefined;
   const previousSelectedOption = usePrevious(selectedOption);
 
@@ -254,7 +254,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     }
 
     if (
-      typeof value === 'string' &&
+      value != null &&
       selectedOption &&
       (previousSelectedOption?.value !== selectedOption.value ||
         previousSelectedOption?.label !== selectedOption.label)
@@ -266,10 +266,10 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   useEffect(() => {
     if (!controlled && !searchControlled) {
       handleSearchChange(
-        typeof _value === 'string'
-          ? _value in optionsLockup
-            ? optionsLockup[_value]?.label
-            : retainedSelectedOptions.current[_value]?.label || ''
+        _value != null
+          ? `${_value}` in optionsLockup
+            ? optionsLockup[`${_value}`]?.label
+            : retainedSelectedOptions.current[`${_value}`]?.label || ''
           : ''
       );
     }
@@ -311,7 +311,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val as any);
           const optionLockup = allowDeselect
-            ? optionsLockup[val].value === _value
+            ? `${optionsLockup[val].value}` === `${_value}`
               ? null
               : optionsLockup[val]
             : optionsLockup[val];
@@ -320,7 +320,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
 
           nextValue !== _value && setValue(nextValue as any, optionLockup);
           !controlled &&
-            handleSearchChange(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
+            handleSearchChange(nextValue != null ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
         {...comboboxProps}
@@ -367,10 +367,10 @@ export const Select = genericFactory<SelectFactory>((_props) => {
 
               !!searchable && combobox.closeDropdown();
               const optionLockup =
-                typeof _value === 'string' &&
-                (_value in optionsLockup
-                  ? optionsLockup[_value]
-                  : retainedSelectedOptions.current[_value]);
+                _value != null &&
+                (`${_value}` in optionsLockup
+                  ? optionsLockup[`${_value}`]
+                  : retainedSelectedOptions.current[`${_value}`]);
               handleSearchChange(optionLockup ? optionLockup.label || '' : '');
               onBlur?.(event);
             }}
