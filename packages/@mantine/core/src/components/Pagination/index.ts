@@ -9,7 +9,10 @@ import type { PaginationControlProps } from './PaginationControl/PaginationContr
 import type { PaginationDotsProps } from './PaginationDots/PaginationDots';
 import type { PaginationEdgeProps } from './PaginationEdges/PaginationEdges';
 import type { PaginationItemsProps } from './PaginationItems/PaginationItems';
-import type { PaginationFormatLabel, PaginationLabelProps } from './PaginationLabel/PaginationLabel';
+import type {
+  PaginationFormatLabel,
+  PaginationLabelProps,
+} from './PaginationLabel/PaginationLabel';
 import type { PaginationRootProps } from './PaginationRoot/PaginationRoot';
 
 export { Pagination } from './Pagination';

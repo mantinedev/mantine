@@ -490,14 +490,12 @@ describe('@mantine/hooks/use-roving-index', () => {
       );
 
       act(() => {
-        result.current
-          .getItemProps({ index: 8 })
-          .onKeyDown(
-            new KeyboardEvent('keydown', {
-              key: 'Home',
-              ctrlKey: true,
-            }) as unknown as React.KeyboardEvent
-          );
+        result.current.getItemProps({ index: 8 }).onKeyDown(
+          new KeyboardEvent('keydown', {
+            key: 'Home',
+            ctrlKey: true,
+          }) as unknown as React.KeyboardEvent
+        );
       });
       expect(result.current.focusedIndex).toBe(0);
     });
@@ -508,14 +506,12 @@ describe('@mantine/hooks/use-roving-index', () => {
       );
 
       act(() => {
-        result.current
-          .getItemProps({ index: 0 })
-          .onKeyDown(
-            new KeyboardEvent('keydown', {
-              key: 'End',
-              ctrlKey: true,
-            }) as unknown as React.KeyboardEvent
-          );
+        result.current.getItemProps({ index: 0 }).onKeyDown(
+          new KeyboardEvent('keydown', {
+            key: 'End',
+            ctrlKey: true,
+          }) as unknown as React.KeyboardEvent
+        );
       });
       expect(result.current.focusedIndex).toBe(8);
     });

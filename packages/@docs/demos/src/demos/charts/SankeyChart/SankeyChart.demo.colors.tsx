@@ -17,12 +17,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return (
-    <SankeyChart
-      data={data}
-      colors={['indigo.6', 'cyan.6', 'teal.6', 'orange.6', 'red.6']}
-    />
-  );
+  return <SankeyChart data={data} colors={['indigo.6', 'cyan.6', 'teal.6', 'orange.6', 'red.6']} />;
 }
 
 export const colors: MantineDemo = {
