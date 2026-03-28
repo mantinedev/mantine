@@ -238,6 +238,12 @@ export interface DayViewProps
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
+
+  /** Function to get additional props for each time slot. Receives slot start and end datetime strings. Returned props are spread onto the slot element. Event handlers returned by this function are composed with internal handlers (e.g. onClick) rather than overriding them. */
+  getTimeSlotProps?: (data: {
+    start: DateTimeStringValue;
+    end: DateTimeStringValue;
+  }) => Record<string, any> | undefined;
 }
 
 export type DayViewFactory = Factory<{
@@ -331,6 +337,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     onEventResize,
     canResizeEvent,
     recurrenceExpansionLimit,
+    getTimeSlotProps,
     ...others
   } = props;
 
@@ -529,15 +536,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
           isResizable
             ? (edge, e) => {
                 if (timeSlotsContainerRef.current) {
-                  eventResize.handleResizeStart(
+                  eventResize.handleResizeStart({
                     event,
                     edge,
-                    timeSlotsContainerRef.current,
-                    event.position.top,
-                    event.position.height,
-                    dayjs(date).format('YYYY-MM-DD'),
-                    e
-                  );
+                    container: timeSlotsContainerRef.current,
+                    originalTop: event.position.top,
+                    originalHeight: event.position.height,
+                    eventDate: dayjs(date).format('YYYY-MM-DD'),
+                    pointerEvent: e,
+                  });
                 }
               }
             : undefined
@@ -584,6 +591,22 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const items = slots.map((slot, index) => {
     const isDropTarget = dragDrop.isDropTarget(index);
     const isDragSelected = slotDragSelect.isSlotSelected(index, dayGroup);
+    const slotStart = `${dayGroup} ${slot.startTime}` as DateTimeStringValue;
+    const slotEnd = `${dayGroup} ${slot.endTime}` as DateTimeStringValue;
+    const { onClick: externalOnClick, ...externalSlotProps } =
+      getTimeSlotProps?.({ start: slotStart, end: slotEnd }) || {};
+
+    const handleClick =
+      mode === 'static'
+        ? undefined
+        : (event: React.MouseEvent<HTMLButtonElement>) => {
+            onTimeSlotClick?.({
+              slotStart,
+              slotEnd,
+              nativeEvent: event,
+            });
+            externalOnClick?.(event);
+          };
 
     return (
       <UnstyledButton
@@ -614,19 +637,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
             ? (e) => slotDragSelect.handleSlotPointerDown(e, index, dayGroup)
             : undefined
         }
-        onClick={
-          mode === 'static' || !onTimeSlotClick
-            ? undefined
-            : (event) => {
-                const slotDate = dayjs(date).format('YYYY-MM-DD');
-                onTimeSlotClick({
-                  slotStart: `${slotDate} ${slot.startTime}`,
-                  slotEnd: `${slotDate} ${slot.endTime}`,
-                  nativeEvent: event,
-                });
-              }
-        }
+        onClick={handleClick}
         onDragOver={withDragHandlers ? (event) => event.preventDefault() : undefined}
+        {...externalSlotProps}
       />
     );
   });

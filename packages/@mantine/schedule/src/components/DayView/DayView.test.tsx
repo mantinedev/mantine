@@ -578,6 +578,75 @@ describe('@mantine/schedule/DayView', () => {
     });
   });
 
+  describe('getTimeSlotProps', () => {
+    it('spreads props returned by getTimeSlotProps onto time slots', () => {
+      const { container } = render(
+        <DayView
+          {...defaultProps}
+          startTime="09:00:00"
+          endTime="10:59:59"
+          intervalMinutes={60}
+          getTimeSlotProps={({ start }) => {
+            if (start === '2025-11-03 09:00:00') {
+              return { 'data-business': true };
+            }
+            return undefined;
+          }}
+        />
+      );
+
+      const slots = container.querySelectorAll('.mantine-DayView-dayViewSlot:not([data-all-day])');
+      expect(slots[0]).toHaveAttribute('data-business', 'true');
+      expect(slots[1]).not.toHaveAttribute('data-business');
+    });
+
+    it('composes onClick from getTimeSlotProps with onTimeSlotClick', async () => {
+      const externalClickSpy = jest.fn();
+      const timeSlotClickSpy = jest.fn();
+
+      const { container } = render(
+        <DayView
+          {...defaultProps}
+          startTime="09:00:00"
+          endTime="09:59:59"
+          intervalMinutes={60}
+          onTimeSlotClick={timeSlotClickSpy}
+          getTimeSlotProps={() => ({ onClick: externalClickSpy })}
+        />
+      );
+
+      const slot = container.querySelector(
+        '.mantine-DayView-dayViewSlot:not([data-all-day])'
+      ) as HTMLButtonElement;
+      await userEvent.click(slot);
+
+      expect(timeSlotClickSpy).toHaveBeenCalledTimes(1);
+      expect(externalClickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not call getTimeSlotProps onClick in static mode', async () => {
+      const externalClickSpy = jest.fn();
+
+      const { container } = render(
+        <DayView
+          {...defaultProps}
+          mode="static"
+          startTime="09:00:00"
+          endTime="09:59:59"
+          intervalMinutes={60}
+          getTimeSlotProps={() => ({ onClick: externalClickSpy })}
+        />
+      );
+
+      const slot = container.querySelector(
+        '.mantine-DayView-dayViewSlot:not([data-all-day])'
+      ) as HTMLButtonElement;
+      await userEvent.click(slot);
+
+      expect(externalClickSpy).not.toHaveBeenCalled();
+    });
+  });
+
   describe('startScrollTime', () => {
     it('calls scrollTo on mount when startScrollTime is set', () => {
       const scrollToSpy = jest.fn();

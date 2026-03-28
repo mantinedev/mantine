@@ -42,15 +42,15 @@
     "@mantine/nprogress": "workspace:*",
     "@mantine/spotlight": "workspace:*",
     "@mantine/tiptap": "workspace:*",
-    "@tiptap/core": "^3.20.1",
-    "@tiptap/extension-link": "^3.20.1",
-    "@tiptap/pm": "^3.20.1",
-    "@tiptap/react": "^3.20.1",
-    "dayjs": "^1.11.19",
+    "@tiptap/core": "^3.21.0",
+    "@tiptap/extension-link": "^3.21.0",
+    "@tiptap/pm": "^3.21.0",
+    "@tiptap/react": "^3.21.0",
+    "dayjs": "^1.11.20",
     "embla-carousel-react": "^8.6.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "recharts": "^3.8.0",
-    "shiki": "^3.23.0"
+    "recharts": "^3.8.1",
+    "shiki": "^4.0.2"
   }
 }

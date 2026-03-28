@@ -29,3 +29,4 @@ export { backgroundEvents } from './DayView.demo.backgroundEvents';
 export { backgroundEventsCustomStyle } from './DayView.demo.backgroundEventsCustomStyle';
 export { customHeader } from './DayView.demo.customHeader';
 export { localization } from './DayView.demo.localization';
+export { getTimeSlotProps } from './DayView.demo.getTimeSlotProps';
