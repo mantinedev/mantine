@@ -203,12 +203,20 @@ function Demo() {
 }
 ```
 
+## form.watch with arrays
+
+`form.watch` works with array fields – the callback is triggered when any
+nested field within the array changes or when list operations
+(`insertListItem`, `removeListItem`, `reorderListItem`, `replaceListItem`)
+are performed:
+
+<Demo data={FormDemos.watchList} />
+
 ## form.watch cascade
 
-To loosely subscribe to changes, you can set `cascadeUpdates: true`.
-This allows parent objects to be written to directly, while still having
-subscribers to nested keys updated. Additionally, writes to nested keys
-will bubble up, triggering parent key subscriptions as well.
+By default, `form.watch` notifies parent watchers when nested fields change
+(upward cascade). To also enable downward cascade (notifying nested field
+watchers when a parent is set directly), set `cascadeUpdates: true`:
 
 <Demo data={FormDemos.cascadeUpdates} />
 
