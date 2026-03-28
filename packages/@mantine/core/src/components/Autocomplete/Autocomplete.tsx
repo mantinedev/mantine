@@ -199,7 +199,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       }}
       {...comboboxProps}
     >
-      <Combobox.Target autoComplete={autoComplete}>
+      <Combobox.Target autoComplete={autoComplete} withExpandedAttribute>
         <InputBase
           ref={ref}
           {...others}

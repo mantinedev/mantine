@@ -59,7 +59,7 @@ describe('@mantine/core/MultiSelect', () => {
 
   it('supports uncontrolled state', async () => {
     render(<MultiSelect {...defaultProps} name="test-multi-select" />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: 'test-1' }));
     expect(document.querySelector('input[name="test-multi-select"]')).toHaveValue('test-1');
 
@@ -72,7 +72,7 @@ describe('@mantine/core/MultiSelect', () => {
     render(
       <MultiSelect {...defaultProps} value={['test-1']} onChange={spy} name="test-multi-select" />
     );
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: 'test-2' }));
     expect(document.querySelector('input[name="test-multi-select"]')).toHaveValue('test-1');
     expect(spy).toHaveBeenLastCalledWith(['test-1', 'test-2']);
@@ -86,25 +86,25 @@ describe('@mantine/core/MultiSelect', () => {
   it('allows controlling dropdown state with dropdownOpened prop', async () => {
     const { rerender } = render(<MultiSelect {...defaultProps} dropdownOpened />);
     expect(screen.getByRole('listbox')).toBeVisible();
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('listbox')).toBeVisible();
 
     rerender(<MultiSelect {...defaultProps} dropdownOpened={false} />);
     expect(screen.queryByRole('listbox')).toBe(null);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
   it('displays the nothing found message if no options matched the search query', async () => {
     render(<MultiSelect {...defaultProps} searchable nothingFoundMessage="Nothing found" />);
-    await userEvent.click(screen.getByRole('textbox'));
-    await userEvent.type(screen.getByRole('textbox'), 'test-3');
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.type(screen.getByRole('combobox'), 'test-3');
     expect(screen.getByText('Nothing found')).toBeVisible();
   });
 
   it('displays the nothing found message if there is no data', async () => {
     render(<MultiSelect {...defaultProps} data={[]} nothingFoundMessage="No data" />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByText('No data')).toBeVisible();
   });
 
