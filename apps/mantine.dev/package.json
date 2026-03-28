@@ -81,7 +81,7 @@
     "recharts": "^3.8.1",
     "rehype-slug": "^6.0.0",
     "shiki": "^4.0.2",
-    "typescript": "5.9.3"
+    "typescript": "6.0.2"
   },
   "devDependencies": {
     "@types/chroma-js": "^3.1.2",

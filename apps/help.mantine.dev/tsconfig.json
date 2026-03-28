@@ -4,7 +4,7 @@
       "./@types/mdx.d.ts",
       "./@types/css.d.ts"
     ],
-    "target": "es5",
+    "target": "ES2015",
     "lib": [
       "dom",
       "dom.iterable",
