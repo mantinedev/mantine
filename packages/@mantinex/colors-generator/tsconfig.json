@@ -9,7 +9,7 @@
     "target": "ES2015",
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "emitDeclarationOnly": true,
     "resolveJsonModule": true,
