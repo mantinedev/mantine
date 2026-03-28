@@ -382,3 +382,17 @@ function Demo() {
   );
 }
 ```
+
+## Notifications pauseResetOnHover default change
+
+In 8.x, hovering over a notification paused the auto close timer only for that notification.
+In 9.x, the default behavior changed – hovering over any notification now pauses the auto close timer of all
+visible notifications. To keep the previous behavior, set `pauseResetOnHover="notification"`:
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications pauseResetOnHover="notification" />;
+}
+```

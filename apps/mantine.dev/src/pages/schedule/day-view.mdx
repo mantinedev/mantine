@@ -63,6 +63,19 @@ in `HH:mm:ss` format.
 
 <Demo data={DayViewDemos.businessHours} />
 
+## Custom time slot props
+
+Use `getTimeSlotProps` to add custom props to individual time slots based on their time range.
+The function receives `{ start, end }` datetime strings in `YYYY-MM-DD HH:mm:ss` format
+and should return an object of props to spread onto the slot element, or `undefined`.
+
+This is useful for setting `data-business-hours` on a custom range that differs from the
+default 9:00–17:00, or for attaching custom event handlers to specific slots.
+Event handlers like `onClick` returned by `getTimeSlotProps` are composed with internal handlers
+(`onTimeSlotClick`) – both will fire without overriding each other.
+
+<Demo data={DayViewDemos.getTimeSlotProps} />
+
 ## Slot height
 
 Customize the height of time slots and the all-day section using `slotHeight` and

@@ -134,6 +134,8 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
     funnelProps,
     labelsPosition,
     tooltipDataSource,
+    strokeColor,
+    labelColor,
     attributes,
     ...others
   } = props;

@@ -267,6 +267,12 @@ export interface WeekViewProps
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
+
+  /** Function to get additional props for each time slot. Receives slot start and end datetime strings. Returned props are spread onto the slot element. Event handlers returned by this function are composed with internal handlers (e.g. onClick) rather than overriding them. */
+  getTimeSlotProps?: (data: {
+    start: DateTimeStringValue;
+    end: DateTimeStringValue;
+  }) => Record<string, any> | undefined;
 }
 
 export type WeekViewFactory = Factory<{
@@ -370,6 +376,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     onEventResize,
     canResizeEvent,
     recurrenceExpansionLimit,
+    getTimeSlotProps,
     ...others
   } = props;
 
@@ -782,15 +789,15 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               ? (edge, e) => {
                   const container = daySlotsContainersRef.current[dayIndex];
                   if (container) {
-                    eventResize.handleResizeStart(
+                    eventResize.handleResizeStart({
                       event,
                       edge,
                       container,
-                      event.position.top,
-                      event.position.height,
-                      dayjs(day).format('YYYY-MM-DD'),
-                      e
-                    );
+                      originalTop: event.position.top,
+                      originalHeight: event.position.height,
+                      eventDate: dayjs(day).format('YYYY-MM-DD'),
+                      pointerEvent: e,
+                    });
                   }
                 }
               : undefined
@@ -857,6 +864,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         daySlotsContainerRef={(node) => {
           daySlotsContainersRef.current[dayIndex] = node;
         }}
+        getTimeSlotProps={getTimeSlotProps}
       >
         {backgroundEventNodes}
         {dayEvents}

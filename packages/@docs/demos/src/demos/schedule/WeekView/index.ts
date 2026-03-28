@@ -34,3 +34,4 @@ export { canDragEvent } from './WeekView.demo.canDragEvent';
 export { canResizeEvent } from './WeekView.demo.canResizeEvent';
 export { controlledDate } from './WeekView.demo.controlledDate';
 export { viewChange } from './WeekView.demo.viewChange';
+export { getTimeSlotProps } from './WeekView.demo.getTimeSlotProps';
