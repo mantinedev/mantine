@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import {
-  ScheduleEventData,
-  ScheduleResourceData,
-} from '../../../types';
+import { ScheduleEventData, ScheduleResourceData } from '../../../types';
 import { expandRecurringEvents } from '../../../utils';
-import { getResourcesDayViewEvents, ResourcesDayViewEventsResult } from '../../ResourcesDayView/get-resources-day-view-events/get-resources-day-view-events';
+import {
+  getResourcesDayViewEvents,
+  ResourcesDayViewEventsResult,
+} from '../../ResourcesDayView/get-resources-day-view-events/get-resources-day-view-events';
 
 export interface ResourcesWeekViewEventsResult {
   byDay: Record<string, ResourcesDayViewEventsResult>;
@@ -28,7 +28,9 @@ export function getResourcesWeekViewEvents({
   expansionLimit,
 }: GetResourcesWeekViewEventsInput): ResourcesWeekViewEventsResult {
   const rangeStart = dayjs(weekdays[0]).startOf('day').toDate();
-  const rangeEnd = dayjs(weekdays[weekdays.length - 1]).endOf('day').toDate();
+  const rangeEnd = dayjs(weekdays[weekdays.length - 1])
+    .endOf('day')
+    .toDate();
 
   const expandedEvents = expandRecurringEvents({
     events,
