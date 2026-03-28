@@ -319,8 +319,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
           const nextValue = optionLockup ? optionLockup.value : null;
 
           nextValue !== _value && setValue(nextValue as any, optionLockup);
-          !controlled &&
-            handleSearchChange(nextValue != null ? optionLockup?.label || '' : '');
+          !controlled && handleSearchChange(nextValue != null ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
         {...comboboxProps}

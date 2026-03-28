@@ -8,6 +8,7 @@ import { useFormValidating } from './hooks/use-form-validating/use-form-validati
 import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getDataPath, getPath } from './paths';
+import type { FormPathValue, LooseKeys } from './paths.types';
 import {
   FormErrors,
   FormRulesRecord,
@@ -101,8 +102,14 @@ export function useForm<
       if (value !== previousValue) {
         $watch.subscribers.current[path]?.forEach((cb) =>
           cb({
-            previousValue: getPath(path, previousValues),
-            value: getPath(path, $values.refValues.current),
+            previousValue: getPath(path, previousValues) as FormPathValue<
+              Values,
+              LooseKeys<Values>
+            >,
+            value: getPath(path, $values.refValues.current) as FormPathValue<
+              Values,
+              LooseKeys<Values>
+            >,
             touched: $status.isTouched(path),
             dirty: $status.isDirty(path),
           })
