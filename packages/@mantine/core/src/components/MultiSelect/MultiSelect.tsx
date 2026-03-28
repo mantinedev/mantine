@@ -480,7 +480,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
               {...getStyles('pillsList', { style: pillsListStyle })}
             >
               {values}
-              <Combobox.EventsTarget autoComplete={autoComplete}>
+              <Combobox.EventsTarget autoComplete={autoComplete} withExpandedAttribute>
                 <PillsInput.Field
                   {...rest}
                   id={_id}

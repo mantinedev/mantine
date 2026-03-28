@@ -383,6 +383,33 @@ function Demo() {
 }
 ```
 
+## useLocalStorage and useSessionStorage return type
+
+The `useLocalStorage` and `useSessionStorage` hooks now correctly include `undefined` in the
+return type when no `defaultValue` is provided. Previously, calling these hooks without
+`defaultValue` would type the value as `T` (e.g., `string`), even though at runtime
+the value could be `undefined`.
+
+If you relied on the incorrect type, update your code to handle `undefined`:
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+// ❌ In 8.x, `value` was typed as `string` (incorrect)
+const [value, setValue] = useLocalStorage({ key: 'my-key' });
+
+// ✅ In 9.x, `value` is typed as `string | undefined`
+const [value, setValue] = useLocalStorage({ key: 'my-key' });
+
+// ✅ Provide defaultValue to keep the previous non-undefined type
+const [value, setValue] = useLocalStorage({
+  key: 'my-key',
+  defaultValue: '',
+});
+```
+
+The same change applies to `readLocalStorageValue`, `useSessionStorage`, and `readSessionStorageValue`.
+
 ## Notifications pauseResetOnHover default change
 
 In 8.x, hovering over a notification paused the auto close timer only for that notification.
