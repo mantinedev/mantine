@@ -63,7 +63,7 @@ describe('@mantine/core/TagsInput', () => {
     const onMaxTags = jest.fn();
     render(<TagsInput maxTags={2} onMaxTags={onMaxTags} />);
     const user = userEvent.setup();
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await user.type(input, 'test-1{Enter}');
     await user.type(input, 'test-2{Enter}');
@@ -88,7 +88,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('handles default split chars (comma)', async () => {
     render(<TagsInput />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'React,');
     expect(screen.getByText('React')).toBeInTheDocument();
@@ -102,7 +102,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('handles custom split chars', async () => {
     render(<TagsInput splitChars={[';', '|']} />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'React;');
     expect(screen.getByText('React')).toBeInTheDocument();
@@ -116,7 +116,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('handles paste with split chars', async () => {
     render(<TagsInput />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.click(input);
     await userEvent.paste('React,Angular,Vue');
@@ -128,7 +128,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('removes last tag with Backspace', async () => {
     render(<TagsInput defaultValue={['React', 'Angular', 'Vue']} />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.click(input);
     await userEvent.keyboard('{Backspace}');
@@ -140,7 +140,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('accepts value on blur when acceptValueOnBlur is true', async () => {
     render(<TagsInput acceptValueOnBlur />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'React');
     await userEvent.tab();
@@ -150,7 +150,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('does not accept value on blur when acceptValueOnBlur is false', async () => {
     render(<TagsInput acceptValueOnBlur={false} />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'React');
     await userEvent.tab();
@@ -160,7 +160,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('allows duplicate tags when allowDuplicates is true', async () => {
     render(<TagsInput allowDuplicates />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'React{Enter}');
     await userEvent.type(input, 'React{Enter}');
@@ -170,7 +170,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('prevents duplicate tags by default', async () => {
     render(<TagsInput />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'React{Enter}');
     await userEvent.type(input, 'React{Enter}');
@@ -204,7 +204,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('adds tag on Enter key', async () => {
     render(<TagsInput />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'React{Enter}');
 
@@ -213,7 +213,7 @@ describe('@mantine/core/TagsInput', () => {
 
   it('prevents changes when readOnly is true', async () => {
     render(<TagsInput defaultValue={['React']} readOnly />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
 
     await userEvent.type(input, 'Angular{Enter}');
 

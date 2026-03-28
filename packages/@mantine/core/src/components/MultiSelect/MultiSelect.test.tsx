@@ -160,7 +160,7 @@ describe('@mantine/core/MultiSelect', () => {
 
   it('removes last value when backspace is pressed with empty search', async () => {
     render(<MultiSelect {...defaultProps} defaultValue={['test-1', 'test-2']} searchable />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('{Backspace}');
     expect(
       screen.queryByText('test-2', { selector: '.mantine-Pill-label' })
@@ -171,7 +171,7 @@ describe('@mantine/core/MultiSelect', () => {
   it('toggles dropdown when space is pressed and searchable is false', async () => {
     render(<MultiSelect {...defaultProps} searchable={false} />);
     // Use focus instead of click to avoid triggering onClick handler
-    screen.getByRole('textbox').focus();
+    screen.getByRole('combobox').focus();
     await userEvent.keyboard(' ');
     expect(screen.getByRole('listbox')).toBeVisible();
     await userEvent.keyboard(' ');
@@ -189,7 +189,7 @@ describe('@mantine/core/MultiSelect', () => {
         defaultValue={['test-1']}
       />
     );
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
 
     await userEvent.click(screen.getByRole('option', { name: 'test-2' }));
     expect(
@@ -200,32 +200,32 @@ describe('@mantine/core/MultiSelect', () => {
 
   it('clears search on change when clearSearchOnChange is true', async () => {
     render(<MultiSelect {...defaultProps} searchable clearSearchOnChange data={['test-1']} />);
-    await userEvent.type(screen.getByRole('textbox'), 'test');
-    expect(screen.getByRole('textbox')).toHaveValue('test');
+    await userEvent.type(screen.getByRole('combobox'), 'test');
+    expect(screen.getByRole('combobox')).toHaveValue('test');
     await userEvent.click(screen.getByRole('option', { name: 'test-1' }));
-    expect(screen.getByRole('textbox')).toHaveValue('');
+    expect(screen.getByRole('combobox')).toHaveValue('');
   });
 
   it('does not clear search on change when clearSearchOnChange is false', async () => {
     render(
       <MultiSelect {...defaultProps} searchable clearSearchOnChange={false} data={['test-1']} />
     );
-    await userEvent.type(screen.getByRole('textbox'), 'test');
-    expect(screen.getByRole('textbox')).toHaveValue('test');
+    await userEvent.type(screen.getByRole('combobox'), 'test');
+    expect(screen.getByRole('combobox')).toHaveValue('test');
     await userEvent.click(screen.getByRole('option', { name: 'test-1' }));
-    expect(screen.getByRole('textbox')).toHaveValue('test');
+    expect(screen.getByRole('combobox')).toHaveValue('test');
   });
 
   it('opens dropdown on focus when openOnFocus is true', async () => {
     render(<MultiSelect {...defaultProps} openOnFocus />);
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('listbox')).toBeVisible();
   });
 
   it('does not open dropdown on focus when openOnFocus is false', async () => {
     render(<MultiSelect {...defaultProps} openOnFocus={false} />);
-    screen.getByRole('textbox').focus();
+    screen.getByRole('combobox').focus();
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 
@@ -238,7 +238,7 @@ describe('@mantine/core/MultiSelect', () => {
         defaultValue={['test-1']}
       />
     );
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('option', { name: 'test-1' })).not.toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'test-2' })).toBeVisible();
   });
