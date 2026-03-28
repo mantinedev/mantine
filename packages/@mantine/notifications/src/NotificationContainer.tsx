@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Notification, NotificationProps } from '@mantine/core';
 import { getAutoClose } from './get-auto-close/get-auto-close';
 import { NotificationData } from './notifications.store';
@@ -7,17 +7,24 @@ interface NotificationContainerProps extends NotificationProps {
   data: NotificationData;
   onHide: (id: string) => void;
   autoClose: number | false;
+  paused: boolean;
+  onHoverStart?: () => void;
+  onHoverEnd?: () => void;
 }
 
 export function NotificationContainer({
   data,
   onHide,
   autoClose,
+  paused,
+  onHoverStart,
+  onHoverEnd,
   ...others
 }: NotificationContainerProps) {
   const { autoClose: _autoClose, message, ...notificationProps } = data;
   const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
   const autoCloseTimeout = useRef<number>(-1);
+  const [hovered, setHovered] = useState(false);
 
   const cancelAutoClose = () => window.clearTimeout(autoCloseTimeout.current);
 
@@ -27,9 +34,20 @@ export function NotificationContainer({
   };
 
   const handleAutoClose = () => {
+    cancelAutoClose();
     if (typeof autoCloseDuration === 'number') {
       autoCloseTimeout.current = window.setTimeout(handleHide, autoCloseDuration);
     }
+  };
+
+  const handleMouseEnter = () => {
+    setHovered(true);
+    onHoverStart?.();
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    onHoverEnd?.();
   };
 
   useEffect(() => {
@@ -41,13 +59,23 @@ export function NotificationContainer({
     return cancelAutoClose;
   }, [autoCloseDuration]);
 
+  useEffect(() => {
+    if (paused || hovered) {
+      cancelAutoClose();
+    } else {
+      handleAutoClose();
+    }
+
+    return cancelAutoClose;
+  }, [paused, hovered]);
+
   return (
     <Notification
       {...others}
       {...notificationProps}
       onClose={handleHide}
-      onMouseEnter={cancelAutoClose}
-      onMouseLeave={handleAutoClose}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {message}
     </Notification>

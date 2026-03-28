@@ -234,6 +234,22 @@ notifications.update({
 
 <Demo data={NotificationsDemos.autoclose} />
 
+## Pause auto close on hover
+
+By default, hovering over any notification pauses the auto close timer of all
+visible notifications. You can change this behavior with the `pauseResetOnHover` prop:
+
+- `pauseResetOnHover="all"` (default) – pauses auto close for all notifications when any notification is hovered
+- `pauseResetOnHover="notification"` – pauses auto close only for the hovered notification
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications pauseResetOnHover="notification" />;
+}
+```
+
 ## Subscribe to notifications state
 
 You can subscribe to notification state changes with the `useNotifications` hook.
