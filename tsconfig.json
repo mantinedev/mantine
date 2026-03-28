@@ -36,7 +36,6 @@
     "noEmitOnError": true,
     "allowJs": true,
     "strict": true,
-    "baseUrl": ".",
     "paths": {
       "@mantine/*": ["./packages/@mantine/*/src"],
       "@mantinex/*": ["./packages/@mantinex/*/src"],
