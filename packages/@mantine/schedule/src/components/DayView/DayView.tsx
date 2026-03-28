@@ -536,15 +536,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
           isResizable
             ? (edge, e) => {
                 if (timeSlotsContainerRef.current) {
-                  eventResize.handleResizeStart(
+                  eventResize.handleResizeStart({
                     event,
                     edge,
-                    timeSlotsContainerRef.current,
-                    event.position.top,
-                    event.position.height,
-                    dayjs(date).format('YYYY-MM-DD'),
-                    e
-                  );
+                    container: timeSlotsContainerRef.current,
+                    originalTop: event.position.top,
+                    originalHeight: event.position.height,
+                    eventDate: dayjs(date).format('YYYY-MM-DD'),
+                    pointerEvent: e,
+                  });
                 }
               }
             : undefined

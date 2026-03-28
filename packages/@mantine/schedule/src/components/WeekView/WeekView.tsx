@@ -789,15 +789,15 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               ? (edge, e) => {
                   const container = daySlotsContainersRef.current[dayIndex];
                   if (container) {
-                    eventResize.handleResizeStart(
+                    eventResize.handleResizeStart({
                       event,
                       edge,
                       container,
-                      event.position.top,
-                      event.position.height,
-                      dayjs(day).format('YYYY-MM-DD'),
-                      e
-                    );
+                      originalTop: event.position.top,
+                      originalHeight: event.position.height,
+                      eventDate: dayjs(day).format('YYYY-MM-DD'),
+                      pointerEvent: e,
+                    });
                   }
                 }
               : undefined
