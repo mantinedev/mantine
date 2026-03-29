@@ -207,12 +207,7 @@ export function StaticMode() {
 export function CustomRadius() {
   return (
     <Box style={{ width: 375, height: 600, border: '1px solid #ccc' }}>
-      <MobileMonthView
-        date="2025-11-01"
-        events={november2025Events}
-        selectedDate="2025-11-10"
-        radius="md"
-      />
+      <MobileMonthView date="2025-11-01" events={november2025Events} selectedDate="2025-11-10" />
     </Box>
   );
 }

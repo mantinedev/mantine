@@ -14,7 +14,6 @@ export function Usage() {
         onChange={setValue}
         data={getTimeRange({ startTime: '10:00', endTime: '21:00', interval: '01:00' })}
         size="md"
-        radius="md"
         allowDeselect
       />
     </div>
@@ -31,7 +30,6 @@ export function MinMax() {
         onChange={setValue}
         data={getTimeRange({ startTime: '10:00', endTime: '21:00', interval: '00:30' })}
         size="md"
-        radius="md"
         minTime="12:00"
         maxTime="18:00"
         disableTime={['15:00', '15:30']}

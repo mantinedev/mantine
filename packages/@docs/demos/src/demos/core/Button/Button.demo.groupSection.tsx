@@ -13,13 +13,13 @@ function Demo() {
 
   return (
     <Button.Group>
-      <Button variant="default" radius="md" onClick={decrement}>
+      <Button variant="default" onClick={decrement}>
         <CaretDownIcon color="var(--mantine-color-red-text)" />
       </Button>
       <Button.GroupSection variant="default" bg="var(--mantine-color-body)" miw={80}>
         {value}
       </Button.GroupSection>
-      <Button variant="default" radius="md" onClick={increment}>
+      <Button variant="default" onClick={increment}>
         <CaretUpIcon color="var(--mantine-color-teal-text)" />
       </Button>
     </Button.Group>
@@ -32,13 +32,13 @@ function Demo() {
 
   return (
     <Button.Group>
-      <Button variant="default" radius="md" onClick={decrement}>
+      <Button variant="default" onClick={decrement}>
         <CaretDownIcon color="var(--mantine-color-red-text)" />
       </Button>
       <Button.GroupSection variant="default" bg="var(--mantine-color-body)" miw={80}>
         {value}
       </Button.GroupSection>
-      <Button variant="default" radius="md" onClick={increment}>
+      <Button variant="default" onClick={increment}>
         <CaretUpIcon color="var(--mantine-color-teal-text)" />
       </Button>
     </Button.Group>

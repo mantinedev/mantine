@@ -20,7 +20,7 @@ function Demo() {
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
-      radius="md"
+      radius={0}
     />
   );
 }
@@ -36,7 +36,7 @@ function Demo() {
       events={regularEvents}
       startTime="08:00:00"
       endTime="18:00:00"
-      radius="md"
+      radius={0}
     />
   );
 }

@@ -553,6 +553,7 @@ function Demo() {
 - [Notifications](/x/notifications) component now pauses auto close timer of all visible notifications when any notification is hovered (new default). Use `pauseResetOnHover="notification"` to keep the previous behavior of pausing only the hovered notification.
 - [useHeadroom](/hooks/use-headroom) hook now returns `{ pinned: boolean; scrollProgress: number }` object instead of a plain `boolean`. `scrollProgress` is a value between `0` (fully hidden) and `1` (fully visible) that can be used for scroll-linked reveal animations. A new `scrollDistance` option controls how many pixels of scrolling are required to fully reveal or hide the element (default: `100`).
 - New [useScrollDirection](/hooks/use-scroll-direction) hook detects whether the user is currently scrolling up or down. It returns `'up'`, `'down'`, or `'unknown'`, handles resize events to avoid false direction changes, and always uses the latest state without stale closure issues.
+- Default `theme.defaultRadius` was changed from `sm` (`4px`) to `md` (`8px`)
 - `light` variant in all components now uses different colors values without transparency to improve contrast
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
 - `@mantine/form` package now includes built-in [Standard Schema](/form/schema-validation/) support via `schemaResolver`

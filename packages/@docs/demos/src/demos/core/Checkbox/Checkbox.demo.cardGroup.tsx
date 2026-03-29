@@ -55,7 +55,7 @@ function Demo() {
   const [value, setValue] = useState<string[]>([]);
 
   const cards = data.map((item) => (
-    <Checkbox.Card className={classes.root} radius="md" value={item.name} key={item.name}>
+    <Checkbox.Card className={classes.root} value={item.name} key={item.name}>
       <Group wrap="nowrap" align="flex-start">
         <Checkbox.Indicator />
         <div>
@@ -100,7 +100,7 @@ function Demo() {
   const [value, setValue] = useState<string[]>([]);
 
   const cards = data.map((item) => (
-    <Checkbox.Card className={classes.root} radius="md" value={item.name} key={item.name}>
+    <Checkbox.Card className={classes.root} value={item.name} key={item.name}>
       <Group wrap="nowrap" align="flex-start">
         <Checkbox.Indicator />
         <div>

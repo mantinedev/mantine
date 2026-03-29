@@ -215,7 +215,7 @@ export type MonthViewFactory = Factory<{
 const varsResolver = createVarsResolver<MonthViewFactory>(
   (_theme, { radius, maxEventsPerDay }) => ({
     monthView: {
-      '--month-view-radius': radius ? getRadius(radius) : undefined,
+      '--month-view-radius': radius !== undefined ? getRadius(radius) : undefined,
       '--month-view-max-events':
         maxEventsPerDay !== undefined ? `${Math.min(10, Math.max(1, maxEventsPerDay))}` : undefined,
     },

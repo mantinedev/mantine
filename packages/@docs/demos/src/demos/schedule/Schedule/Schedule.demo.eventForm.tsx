@@ -136,7 +136,6 @@ function Demo() {
                 variant="default"
                 mx="sm"
                 size="lg"
-                radius="md"
                 onClick={handleCreateEvent}
                 aria-label="Create new event"
               >
@@ -296,7 +295,6 @@ function Demo() {
                 variant="default"
                 mx="sm"
                 size="lg"
-                radius="md"
                 onClick={handleCreateEvent}
                 aria-label="Create new event"
               >

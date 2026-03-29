@@ -48,7 +48,6 @@ function Demo() {
   return (
     <Checkbox.Card
       className={classes.root}
-      radius="md"
       checked={checked}
       onClick={() => setChecked((c) => !c)}
     >
@@ -71,12 +70,7 @@ function Demo() {
   const [checked, setChecked] = useState(false);
 
   return (
-    <Checkbox.Card
-      className={classes.root}
-      radius="md"
-      checked={checked}
-      onClick={() => setChecked((c) => !c)}
-    >
+    <Checkbox.Card className={classes.root} checked={checked} onClick={() => setChecked((c) => !c)}>
       <Group wrap="nowrap" align="flex-start">
         <Checkbox.Indicator />
 

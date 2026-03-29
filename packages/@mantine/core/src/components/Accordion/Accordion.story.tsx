@@ -39,7 +39,6 @@ export function Variants() {
         mx="auto"
         mt="xl"
         variant="default"
-        radius="md"
         keepMounted={false}
       >
         {_items}
@@ -51,19 +50,11 @@ export function Variants() {
         mx="auto"
         mt={50}
         variant="contained"
-        radius="md"
       >
         {_items}
       </Accordion>
 
-      <Accordion
-        defaultValue="flex"
-        style={{ maxWidth: 400 }}
-        mx="auto"
-        mt={50}
-        variant="filled"
-        radius="md"
-      >
+      <Accordion defaultValue="flex" style={{ maxWidth: 400 }} mx="auto" mt={50} variant="filled">
         {_items}
       </Accordion>
 
@@ -73,7 +64,6 @@ export function Variants() {
         mx="auto"
         mt={50}
         variant="separated"
-        radius="md"
       >
         {_items}
       </Accordion>

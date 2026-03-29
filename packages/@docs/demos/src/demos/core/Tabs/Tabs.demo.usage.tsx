@@ -89,7 +89,7 @@ export const usage: MantineDemo = {
         { value: 'pills', label: 'Pills' },
       ],
     },
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
     {
       prop: 'orientation',
       type: 'segmented',

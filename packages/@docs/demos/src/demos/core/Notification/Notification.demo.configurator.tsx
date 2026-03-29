@@ -32,7 +32,7 @@ export const configurator: MantineDemo = {
     { prop: 'withCloseButton', type: 'boolean', initialValue: true, libraryValue: true },
     { prop: 'withBorder', type: 'boolean', initialValue: false, libraryValue: false },
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
     {
       prop: 'title',
       type: 'string',

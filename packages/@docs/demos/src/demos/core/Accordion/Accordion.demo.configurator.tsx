@@ -58,7 +58,7 @@ export const configurator: MantineDemo = {
         { label: 'Unstyled', value: 'unstyled' },
       ],
     },
-    { prop: 'radius', type: 'size', libraryValue: 'sm', initialValue: 'sm' },
+    { prop: 'radius', type: 'size', libraryValue: 'md', initialValue: 'md' },
     {
       prop: 'chevronPosition',
       type: 'segmented',

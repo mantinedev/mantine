@@ -22,7 +22,7 @@ function Demo() {
   ));
 
   return (
-    <Card padding="sm" radius="md" withBorder orientation="horizontal">
+    <Card padding="sm" withBorder orientation="horizontal">
       <Card.Section inheritPadding px="xs" withBorder>
         <RingProgress
           roundCaps
@@ -76,7 +76,7 @@ function Demo() {
   ));
 
   return (
-    <Card padding="sm" radius="md" withBorder orientation="horizontal">
+    <Card padding="sm" withBorder orientation="horizontal">
       <Card.Section inheritPadding px="xs" withBorder>
         <RingProgress
           roundCaps

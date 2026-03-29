@@ -23,6 +23,6 @@ export const configurator: MantineDemo = {
     interactiveVariantsControl,
     { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: 'blue' },
     { type: 'size', prop: 'size', initialValue: 'sm', libraryValue: 'sm' },
-    { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+    { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: 'md' },
   ],
 };

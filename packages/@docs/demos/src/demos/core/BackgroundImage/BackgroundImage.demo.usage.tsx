@@ -46,5 +46,5 @@ export const usage: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   code,
-  controls: [{ prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: null }],
+  controls: [{ prop: 'radius', type: 'size', initialValue: 'md', libraryValue: null }],
 };

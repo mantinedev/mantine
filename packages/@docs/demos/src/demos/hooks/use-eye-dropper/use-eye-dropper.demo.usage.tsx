@@ -30,7 +30,7 @@ function Demo() {
 
   return (
     <Group>
-      <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
+      <ActionIcon variant="default" onClick={pickColor} size="xl">
         <CrosshairIcon size={28} />
       </ActionIcon>
       {color ? (
@@ -67,7 +67,7 @@ function Demo() {
 
   return (
     <Group>
-      <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
+      <ActionIcon variant="default" onClick={pickColor} size="xl">
         <CrosshairIcon size={28} />
       </ActionIcon>
       {color ? (
