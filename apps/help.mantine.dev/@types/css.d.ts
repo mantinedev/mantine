@@ -1,4 +1,4 @@
-declare module '*.module.css' {
+declare module '*.css' {
   const classes: Record<string, string>;
   export default classes;
 }
