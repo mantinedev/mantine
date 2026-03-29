@@ -86,7 +86,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
       mod={[{ 'line-active': __lineActive, active: __active }, mod]}
       __vars={{
-        '--tli-radius': radius ? getRadius(radius) : undefined,
+        '--tli-radius': radius !== undefined ? getRadius(radius) : undefined,
         '--tli-color': color ? getThemeColor(color, theme) : undefined,
         '--tli-border-style': lineVariant || undefined,
       }}

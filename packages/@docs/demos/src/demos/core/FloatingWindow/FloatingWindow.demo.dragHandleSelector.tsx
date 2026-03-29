@@ -19,7 +19,6 @@ function Demo() {
         <FloatingWindow
           w={280}
           withBorder
-          radius="md"
           dragHandleSelector=".drag-handle"
           excludeDragHandleSelector="button"
           initialPosition={{ top: 300, left: 20 }}
@@ -57,7 +56,6 @@ function Demo() {
         <FloatingWindow
           w={280}
           withBorder
-          radius="md"
           dragHandleSelector=".drag-handle"
           excludeDragHandleSelector="button"
           initialPosition={{ top: 300, left: 20 }}

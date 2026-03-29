@@ -106,6 +106,7 @@ const defaultProps = {
   icon: CheckboxIcon,
   withErrorStyles: true,
   variant: 'filled',
+  radius: 'sm',
 } satisfies Partial<CheckboxProps>;
 
 const varsResolver = createVarsResolver<CheckboxFactory>(

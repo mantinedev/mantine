@@ -148,7 +148,7 @@ export function HighlightToday() {
 }
 
 export function Radius() {
-  return <WeekView date={new Date()} radius="md" />;
+  return <WeekView date={new Date()} />;
 }
 
 export function NoWeekends() {

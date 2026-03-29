@@ -117,7 +117,7 @@ const defaultProps = {
 } satisfies Partial<YearViewProps>;
 
 const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) => ({
-  yearView: { '--year-view-radius': radius ? getRadius(radius) : undefined },
+  yearView: { '--year-view-radius': radius !== undefined ? getRadius(radius) : undefined },
 }));
 
 export const YearView = factory<YearViewFactory>((_props) => {

@@ -206,7 +206,7 @@ export function CustomInterval() {
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView date={new Date()} radius="md" events={regularEvents} withAllDaySlot />
+      <DayView date={new Date()} events={regularEvents} withAllDaySlot />
     </div>
   );
 }

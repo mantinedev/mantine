@@ -10,7 +10,7 @@ import { TextAlignLeftIcon, TextAlignRightIcon } from '@phosphor-icons/react';
 function Demo() {
   const { toggleDirection, dir } = useDirection();
   return (
-    <ActionIcon onClick={() => toggleDirection()} variant="default" radius="md" size="lg">
+    <ActionIcon onClick={() => toggleDirection()} variant="default" size="lg">
       {dir === 'rtl' ? (
         <TextAlignLeftIcon />
       ) : (
@@ -26,7 +26,7 @@ function Demo() {
   useEffect(() => () => setDirection('ltr'), []);
 
   return (
-    <ActionIcon onClick={() => toggleDirection()} variant="default" radius="md" size="lg">
+    <ActionIcon onClick={() => toggleDirection()} variant="default" size="lg">
       {dir === 'rtl' ? <TextAlignLeftIcon /> : <TextAlignRightIcon />}
     </ActionIcon>
   );

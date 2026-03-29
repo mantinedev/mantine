@@ -14,7 +14,7 @@ const images = [
 
 function Demo() {
   return (
-    <Card withBorder shadow="sm" radius="md">
+    <Card withBorder shadow="sm">
       <Card.Section withBorder inheritPadding py="xs">
         <Group justify="space-between">
           <Text fw={500}>Review pictures</Text>
@@ -74,7 +74,7 @@ const images = [
 
 function Demo() {
   return (
-    <Card withBorder shadow="sm" radius="md">
+    <Card withBorder shadow="sm">
       <Card.Section withBorder inheritPadding py="xs">
         <Group justify="space-between">
           <Text fw={500}>Review pictures</Text>

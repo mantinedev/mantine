@@ -16,7 +16,7 @@ function ChartTooltip({ payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       {payload.map((item: any) => (
         <Text key={item.name} fz="sm">
           {item.name}: {item.value}
@@ -52,7 +52,7 @@ function ChartTooltip({ payload }: ChartTooltipProps) {
   }
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       {payload.map((item: any) => (
         <Text key={item.name} fz="sm">
           {item.name}: {item.value}

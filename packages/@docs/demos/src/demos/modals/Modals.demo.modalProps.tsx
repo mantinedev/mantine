@@ -11,7 +11,6 @@ function Demo() {
   const openModal = () => modals.openConfirmModal({
     title: 'Please confirm your action',
     size: 'sm',
-    radius: 'md',
     withCloseButton: false,
     children: (
       <Text size="sm">
@@ -34,7 +33,6 @@ function Demo() {
       modalId: 'test-id',
       title: 'Please confirm your action',
       size: 'sm',
-      radius: 'md',
       withCloseButton: false,
       children: (
         <Text size="sm">

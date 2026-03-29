@@ -54,6 +54,8 @@
   -webkit-tap-highlight-color: transparent;
   border: 1px solid transparent;
   color: var(--mantine-color-text);
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
 
   &:where([data-checked]) {
     padding-inline: var(--chip-checked-padding);

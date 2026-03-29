@@ -410,6 +410,24 @@ const [value, setValue] = useLocalStorage({
 
 The same change applies to `readLocalStorageValue`, `useSessionStorage`, and `readSessionStorageValue`.
 
+## Default border-radius change
+
+In 8.x, the default border-radius (`theme.defaultRadius`) was `sm` (`4px`).
+In 9.x, the default border-radius was changed to `md` (`8px`).
+To keep the previous behavior, set `defaultRadius` to `sm` in the theme:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  defaultRadius: 'sm',
+});
+
+function Demo() {
+  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
+}
+```
+
 ## Notifications pauseResetOnHover default change
 
 In 8.x, hovering over a notification paused the auto close timer only for that notification.

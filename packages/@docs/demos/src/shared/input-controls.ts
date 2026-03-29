@@ -9,7 +9,7 @@ export const inputOnlyControls: ConfiguratorControlOptions[] = [
     libraryValue: 'default',
   },
   { type: 'size', prop: 'size', initialValue: 'sm', libraryValue: 'sm' },
-  { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+  { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: 'md' },
   { type: 'boolean', prop: 'disabled', initialValue: false, libraryValue: false },
   { type: 'boolean', prop: 'error', initialValue: false, libraryValue: false },
 ];
@@ -31,7 +31,7 @@ export const inputControls: ConfiguratorControlOptions[] = [
     libraryValue: 'default',
   },
   { type: 'size', prop: 'size', initialValue: 'sm', libraryValue: 'sm' },
-  { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+  { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: 'md' },
   { type: 'string', prop: 'label', initialValue: 'Input label', libraryValue: '' },
   { type: 'boolean', prop: 'withAsterisk', initialValue: false, libraryValue: false },
   { type: 'string', prop: 'description', initialValue: 'Input description', libraryValue: '' },

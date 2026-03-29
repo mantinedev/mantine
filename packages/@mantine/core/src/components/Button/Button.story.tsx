@@ -373,13 +373,13 @@ export function GroupSection() {
   return (
     <div>
       <Button.Group>
-        <Button variant="default" size="lg" radius="md">
+        <Button variant="default" size="lg">
           <CaretDownIcon color="var(--mantine-color-red-text)" />
         </Button>
         <Button.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)">
           118
         </Button.GroupSection>
-        <Button variant="default" size="lg" radius="md">
+        <Button variant="default" size="lg">
           <CaretUpIcon color="var(--mantine-color-teal-text)" />
         </Button>
       </Button.Group>

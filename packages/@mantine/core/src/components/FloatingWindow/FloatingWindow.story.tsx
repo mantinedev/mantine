@@ -15,7 +15,6 @@ export function Usage() {
         h={200}
         bottom={40}
         right={40}
-        radius="md"
         constrainOffset={20}
         enabled
       >

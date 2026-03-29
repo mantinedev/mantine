@@ -9,7 +9,7 @@ import { ArrowRightIcon } from '@phosphor-icons/react';
 import classes from './Demo.module.css';
 
 function SendFilesButton(props: ButtonProps & React.ComponentProps<'button'>) {
-  return <Button {...props} radius="md" classNames={classes} />;
+  return <Button {...props} classNames={classes} />;
 }
 
 function Demo() {
@@ -81,7 +81,7 @@ const cssCode = `
 `;
 
 function SendFilesButton(props: ButtonProps & React.ComponentProps<'button'>) {
-  return <Button {...props} radius="md" classNames={classes} />;
+  return <Button {...props} classNames={classes} />;
 }
 
 function Demo() {
