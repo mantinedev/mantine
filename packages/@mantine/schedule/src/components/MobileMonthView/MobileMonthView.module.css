@@ -46,6 +46,8 @@
 
 .mobileMonthViewHeaderLabel {
   user-select: none;
+  font-weight: var(--mantine-font-weight-semibold);
+  text-transform: capitalize;
 }
 
 .mobileMonthViewCalendar {
@@ -229,6 +231,8 @@
 
 .mobileMonthViewEventsHeader {
   margin-bottom: var(--mantine-spacing-sm);
+  font-weight: var(--mantine-font-weight-semibold);
+  text-transform: capitalize;
 }
 
 .mobileMonthViewEvent {
@@ -266,4 +270,12 @@
 
 .mobileMonthViewEventTime {
   margin-top: 2px;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+}
+
+.mobileMonthViewNoEvents {
+  color: var(--mantine-color-dimmed);
+  text-align: center;
+  padding-block: var(--mantine-spacing-xl);
 }
