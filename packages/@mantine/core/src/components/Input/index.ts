@@ -29,6 +29,12 @@ import type {
   InputErrorStylesNames,
 } from './InputError/InputError';
 import type {
+  InputSuccessCssVariables,
+  InputSuccessFactory,
+  InputSuccessProps,
+  InputSuccessStylesNames,
+} from './InputSuccess/InputSuccess';
+import type {
   InputLabelCssVariables,
   InputLabelFactory,
   InputLabelProps,
@@ -50,6 +56,7 @@ export { Input } from './Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';
 export { InputDescription } from './InputDescription/InputDescription';
 export { InputError } from './InputError/InputError';
+export { InputSuccess } from './InputSuccess/InputSuccess';
 export { InputLabel } from './InputLabel/InputLabel';
 export { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 export { InputClearButton } from './InputClearButton/InputClearButton';
@@ -78,6 +85,10 @@ export type {
   InputErrorCssVariables,
   InputErrorStylesNames,
   InputErrorFactory,
+  InputSuccessProps,
+  InputSuccessCssVariables,
+  InputSuccessStylesNames,
+  InputSuccessFactory,
   InputLabelProps,
   InputLabelCssVariables,
   InputLabelStylesNames,
@@ -115,6 +126,13 @@ export namespace Input {
     export type StylesNames = InputErrorStylesNames;
     export type CssVariables = InputErrorCssVariables;
     export type Factory = InputErrorFactory;
+  }
+
+  export namespace Success {
+    export type Props = InputSuccessProps;
+    export type StylesNames = InputSuccessStylesNames;
+    export type CssVariables = InputSuccessCssVariables;
+    export type Factory = InputSuccessFactory;
   }
 
   export namespace Label {

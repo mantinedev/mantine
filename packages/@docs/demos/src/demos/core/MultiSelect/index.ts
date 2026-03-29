@@ -8,6 +8,7 @@ export { configurator } from './MultiSelect.demo.configurator';
 export { disabled } from './MultiSelect.demo.disabled';
 export { disabledOptions } from './MultiSelect.demo.disabledOptions';
 export { error } from './MultiSelect.demo.error';
+export { success } from './MultiSelect.demo.success';
 export { groups } from './MultiSelect.demo.groups';
 export { limit } from './MultiSelect.demo.limit';
 export { readOnly } from './MultiSelect.demo.readOnly';

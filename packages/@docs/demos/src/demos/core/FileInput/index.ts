@@ -1,5 +1,6 @@
 export { usage } from './FileInput.demo.usage';
 export { error } from './FileInput.demo.error';
+export { success } from './FileInput.demo.success';
 export { disabled } from './FileInput.demo.disabled';
 export { stylesApi } from './FileInput.demo.stylesApi';
 export { clearable } from './FileInput.demo.clearable';

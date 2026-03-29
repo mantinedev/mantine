@@ -4,6 +4,7 @@ import { InputClearButton } from './InputClearButton/InputClearButton';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
+import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 
@@ -59,6 +60,24 @@ describe('@mantine/core/Input', () => {
     rerender(<Input error={false} />);
     expect(screen.getByRole('textbox')).not.toHaveAttribute('data-error');
     expect(getInputWrapper(container)).not.toHaveAttribute('data-error');
+  });
+
+  it('sets data-success attribute based on success prop', () => {
+    const { rerender, container } = render(<Input success />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('data-success');
+    expect(getInputWrapper(container)).toHaveAttribute('data-success');
+
+    rerender(<Input success={false} />);
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('data-success');
+    expect(getInputWrapper(container)).not.toHaveAttribute('data-success');
+  });
+
+  it('does not set data-success when error is also set', () => {
+    const { container } = render(<Input error success />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('data-error');
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('data-success');
+    expect(getInputWrapper(container)).toHaveAttribute('data-error');
+    expect(getInputWrapper(container)).not.toHaveAttribute('data-success');
   });
 
   it('sets data-multiline attribute based on multiline prop', () => {
@@ -213,6 +232,7 @@ describe('@mantine/core/Input', () => {
     expect(Input.Label).toBe(InputLabel);
     expect(Input.Description).toBe(InputDescription);
     expect(Input.Error).toBe(InputError);
+    expect(Input.Success).toBe(InputSuccess);
     expect(Input.Placeholder).toBe(InputPlaceholder);
     expect(Input.ClearButton).toBe(InputClearButton);
   });

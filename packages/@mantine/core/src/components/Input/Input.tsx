@@ -25,6 +25,7 @@ import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputWrapperContext } from './InputWrapper.context';
 import {
   __InputWrapperProps,
@@ -107,6 +108,9 @@ export interface __InputProps {
   /** Determines whether the input should have red border and red text color when the `error` prop is set @default true */
   withErrorStyles?: boolean;
 
+  /** Determines whether the input should have green border when the `success` prop is set @default true */
+  withSuccessStyles?: boolean;
+
   /** HTML `size` attribute for the input element (number of visible characters) */
   inputSize?: string;
 
@@ -144,6 +148,9 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
 
+  /** Determines whether the input should have success styles */
+  success?: React.ReactNode;
+
   /** Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. @default false */
   multiline?: boolean;
 
@@ -168,6 +175,7 @@ export type InputFactory = PolymorphicFactory<{
   staticComponents: {
     Label: typeof InputLabel;
     Error: typeof InputError;
+    Success: typeof InputSuccess;
     Description: typeof InputDescription;
     Placeholder: typeof InputPlaceholder;
     Wrapper: typeof InputWrapper;
@@ -181,6 +189,7 @@ const defaultProps = {
   rightSectionPointerEvents: 'none',
   withAria: true,
   withErrorStyles: true,
+  withSuccessStyles: true,
   size: 'sm',
   loading: false,
   loadingPosition: 'right',
@@ -217,6 +226,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     size,
     wrapperProps,
     error,
+    success,
     disabled,
     leftSection,
     leftSectionProps,
@@ -234,6 +244,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     id,
     withAria,
     withErrorStyles,
+    withSuccessStyles,
     mod,
     inputSize,
     attributes,
@@ -307,6 +318,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
         mod={[
           {
             error: !!error && withErrorStyles,
+            success: !!success && !error && withSuccessStyles,
             pointer,
             disabled,
             multiline,
@@ -337,7 +349,11 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
           {...rest}
           {...ariaAttributes}
           required={required}
-          mod={{ disabled, error: !!error && withErrorStyles }}
+          mod={{
+            disabled,
+            error: !!error && withErrorStyles,
+            success: !!success && !error && withSuccessStyles,
+          }}
           variant={variant}
           __size={inputSize}
           {...getStyles('input')}
@@ -377,6 +393,7 @@ Input.varsResolver = varsResolver;
 Input.Wrapper = InputWrapper;
 Input.Label = InputLabel;
 Input.Error = InputError;
+Input.Success = InputSuccess;
 Input.Description = InputDescription;
 Input.Placeholder = InputPlaceholder;
 Input.ClearButton = InputClearButton;

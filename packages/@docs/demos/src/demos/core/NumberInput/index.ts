@@ -11,6 +11,7 @@ export { minMax } from './NumberInput.demo.minMax';
 export { strictClamp } from './NumberInput.demo.strictClamp';
 export { usage } from './NumberInput.demo.usage';
 export { error } from './NumberInput.demo.error';
+export { success } from './NumberInput.demo.success';
 export { disabled } from './NumberInput.demo.disabled';
 export { stylesApi } from './NumberInput.demo.stylesApi';
 export { sections } from './NumberInput.demo.sections';

@@ -1,4 +1,4 @@
-import { DataListDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos } from '@docs/demos';
+import { DataListDemos, InputDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -51,3 +51,13 @@ New [ResourcesSchedule](/schedule/resources-schedule) wrapper component combines
 to how `Schedule` combines day, week, month and year views.
 
 <Demo data={ResourcesScheduleDemos.usage} />
+
+## Input success state
+
+All inputs based on `Input` and `Input.Wrapper` now support a `success` prop. When set, it changes the
+input border color to green (`--mantine-color-success`). You can also pass a React node to display
+a success message below the input. If both `error` and `success` props are set, `error` takes precedence.
+
+New `--mantine-color-success` CSS variable has been added (resolves to `teal-6` in light mode and `teal-8` in dark mode).
+
+<Demo data={InputDemos.success} />
