@@ -1,4 +1,4 @@
-import { FloatingWindowDemos } from '@docs/demos';
+import { FloatingWindowDemos, HeatmapDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -23,3 +23,10 @@ The resize handle is fully accessible – it supports keyboard interaction with
 and `Home`/`End` keys (jump to min/max size).
 
 <Demo data={FloatingWindowDemos.resizeHandle} />
+
+## Heatmap month labels position
+
+[Heatmap](/charts/heatmap) now supports `monthLabelsPosition` prop that allows
+displaying month labels at the bottom of the heatmap instead of the top (default).
+
+<Demo data={HeatmapDemos.monthLabelsPosition} />
