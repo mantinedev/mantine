@@ -176,6 +176,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/treemap.mdx',
   },
 
+  SunburstChart: {
+    title: 'SunburstChart',
+    props: ['SunburstChart'],
+    styles: ['SunburstChart'],
+    package: '@mantine/charts',
+    slug: '/charts/sunburst-chart',
+    description: 'Sunburst chart component for hierarchical data',
+    source: '@mantine/charts/src/SunburstChart/SunburstChart.tsx',
+    docs: 'charts/sunburst-chart.mdx',
+  },
+
   SankeyChart: {
     title: 'SankeyChart',
     props: ['SankeyChart'],

@@ -469,6 +469,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Heatmap,
       MDX_DATA.BarsList,
       MDX_DATA.Treemap,
+      MDX_DATA.SunburstChart,
       MDX_DATA.SankeyChart,
     ],
   },
