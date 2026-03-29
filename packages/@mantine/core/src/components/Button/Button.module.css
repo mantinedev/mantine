@@ -130,6 +130,8 @@
   display: flex;
   align-items: center;
   opacity: 1;
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
 
   &:where([data-loading]) {
     opacity: 0.2;
