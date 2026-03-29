@@ -25,7 +25,6 @@ function Demo() {
           w={280}
           p="md"
           withBorder
-          radius="md"
           excludeDragHandleSelector="button"
           initialPosition={{ top: 200, left: 40 }}
           style={{ cursor: 'move' }}
@@ -64,7 +63,6 @@ function Demo() {
           w={280}
           p="md"
           withBorder
-          radius="md"
           excludeDragHandleSelector="button"
           initialPosition={{ top: 200, left: 40 }}
           style={{ cursor: 'move' }}

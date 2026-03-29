@@ -191,15 +191,15 @@ export const Grow = () => (
 
 export const Variants = () => (
   <div style={{ maxWidth: 500, padding: 40 }}>
-    <Wrapper defaultValue="react" variant="default" mt={10} mb={50} radius="md">
+    <Wrapper defaultValue="react" variant="default" mt={10} mb={50}>
       {base}
     </Wrapper>
 
-    <Wrapper defaultValue="react" variant="outline" mt={10} mb={50} radius="md">
+    <Wrapper defaultValue="react" variant="outline" mt={10} mb={50}>
       {base}
     </Wrapper>
 
-    <Wrapper defaultValue="react" variant="pills" mt={10} radius="md">
+    <Wrapper defaultValue="react" variant="pills" mt={10}>
       {base}
     </Wrapper>
   </div>
@@ -213,7 +213,6 @@ export const VerticalVariants = () => (
       variant="default"
       mt={10}
       mb={50}
-      radius="md"
     >
       {verticalBase}
     </Wrapper>
@@ -224,12 +223,11 @@ export const VerticalVariants = () => (
       variant="outline"
       mt={10}
       mb={50}
-      radius="md"
     >
       {verticalBase}
     </Wrapper>
 
-    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10} radius="md">
+    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10}>
       {verticalBase}
     </Wrapper>
   </div>
@@ -243,7 +241,6 @@ export const VerticalPlacement = () => (
       variant="default"
       mt={10}
       mb={50}
-      radius="md"
       placement="right"
     >
       {verticalBase}
@@ -255,7 +252,6 @@ export const VerticalPlacement = () => (
       variant="outline"
       mt={10}
       mb={50}
-      radius="md"
       placement="right"
     >
       {verticalBase}
@@ -266,7 +262,6 @@ export const VerticalPlacement = () => (
       orientation="vertical"
       variant="pills"
       mt={10}
-      radius="md"
       placement="right"
     >
       {verticalBase}

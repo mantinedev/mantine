@@ -17,7 +17,7 @@ export const configurator: MantineDemo = {
   code,
   controls: [
     staticVariantsControl,
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: '100%' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: '100%' },
     { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'color', type: 'color', initialValue: 'gray', libraryValue: 'gray' },
     {

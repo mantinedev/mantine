@@ -92,7 +92,7 @@ function Demo() {
   ));
 
   return (
-    <Accordion chevronPosition="right" variant="contained" radius="md">
+    <Accordion chevronPosition="right" variant="contained">
       {items}
     </Accordion>
   );
@@ -132,7 +132,7 @@ export function AccordionDemo(props: Partial<AccordionProps>) {
   ));
 
   return (
-    <Accordion chevronPosition="right" variant="contained" radius="md" order={3} {...props}>
+    <Accordion chevronPosition="right" variant="contained" order={3} {...props}>
       {items}
     </Accordion>
   );

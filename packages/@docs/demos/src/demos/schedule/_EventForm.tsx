@@ -82,7 +82,6 @@ export function EventForm({
       opened={opened}
       onClose={onClose}
       title={form.values.id ? 'Edit Event' : 'Create Event'}
-      radius="md"
       {...others}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -90,7 +89,6 @@ export function EventForm({
           <TextInput
             label="Event Title"
             placeholder="Enter event title"
-            radius="md"
             data-autofocus
             {...form.getInputProps('title')}
           />
@@ -98,22 +96,21 @@ export function EventForm({
           <DateTimePicker
             label="Start Time"
             clearable
-            radius="md"
             {...form.getInputProps('start')}
           />
-          <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable radius="md" />
+          <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable />
 
           <Group justify="flex-end" gap="sm">
             {form.values.id && onDelete && (
-              <Button color="red" onClick={handleDelete} mie="auto" radius="md">
+              <Button color="red" onClick={handleDelete} mie="auto">
                 Delete
               </Button>
             )}
 
-            <Button variant="default" onClick={onClose} radius="md">
+            <Button variant="default" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" radius="md">
+            <Button type="submit">
               {form.values.id ? 'Update' : 'Create'}
             </Button>
           </Group>
@@ -209,7 +206,6 @@ export function EventForm({
       opened={opened}
       onClose={onClose}
       title={form.values.id ? 'Edit Event' : 'Create Event'}
-      radius="md"
       {...others}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -217,7 +213,6 @@ export function EventForm({
           <TextInput
             label="Event Title"
             placeholder="Enter event title"
-            radius="md"
             data-autofocus
             {...form.getInputProps('title')}
           />
@@ -225,22 +220,21 @@ export function EventForm({
           <DateTimePicker
             label="Start Time"
             clearable
-            radius="md"
             {...form.getInputProps('start')}
           />
-          <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable radius="md" />
+          <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable />
 
           <Group justify="flex-end" gap="sm">
             {form.values.id && onDelete && (
-              <Button color="red" onClick={handleDelete} mie="auto" radius="md">
+              <Button color="red" onClick={handleDelete} mie="auto">
                 Delete
               </Button>
             )}
 
-            <Button variant="default" onClick={onClose} radius="md">
+            <Button variant="default" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" radius="md">
+            <Button type="submit">
               {form.values.id ? 'Update' : 'Create'}
             </Button>
           </Group>

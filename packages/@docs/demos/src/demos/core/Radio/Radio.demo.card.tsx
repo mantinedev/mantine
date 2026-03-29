@@ -49,7 +49,6 @@ function Demo() {
   return (
     <Radio.Card
       className={classes.root}
-      radius="md"
       checked={checked}
       onClick={() => setChecked((c) => !c)}
     >
@@ -73,7 +72,6 @@ function Demo() {
   return (
     <Radio.Card
       className={classes.root}
-      radius="md"
       checked={checked}
       onClick={() => setChecked((c) => !c)}
     >

@@ -16,7 +16,6 @@ function Demo() {
       <ActionIcon
         variant="default"
         size="lg"
-        radius="md"
         onClick={decrement}
         aria-label="Decrement value"
       >
@@ -28,7 +27,6 @@ function Demo() {
       <ActionIcon
         variant="default"
         size="lg"
-        radius="md"
         onClick={increment}
         aria-label="Increment value"
       >
@@ -47,7 +45,6 @@ function Demo() {
       <ActionIcon
         variant="default"
         size="lg"
-        radius="md"
         onClick={decrement}
         aria-label="Decrement value"
       >
@@ -59,7 +56,6 @@ function Demo() {
       <ActionIcon
         variant="default"
         size="lg"
-        radius="md"
         onClick={increment}
         aria-label="Increment value"
       >

@@ -88,7 +88,6 @@ function Card({ image, title, category }: CardProps) {
     <Paper
       shadow="md"
       p="xl"
-      radius="md"
       style={{ backgroundImage: \`url(\${image})\` }}
       className={classes.card}
     >
@@ -178,7 +177,6 @@ export function Card({ image, title, category }: CardProps) {
     <Paper
       shadow="md"
       p="xl"
-      radius="md"
       style={{ backgroundImage: `url(${image})` }}
       className={classes.card}
     >

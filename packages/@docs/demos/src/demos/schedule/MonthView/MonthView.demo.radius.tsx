@@ -7,12 +7,12 @@ import { MonthView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
-  return <MonthView date={new Date()} events={events} radius="md" />;
+  return <MonthView date={new Date()} events={events} radius={0} />;
 }
 `;
 
 function Demo() {
-  return <MonthView date={new Date()} events={regularEvents} radius="md" />;
+  return <MonthView date={new Date()} events={regularEvents} radius={0} />;
 }
 
 export const radius: MantineDemo = {

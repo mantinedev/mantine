@@ -24,7 +24,7 @@ export const DEFAULT_THEME: MantineTheme = {
   respectReducedMotion: false,
   cursorType: 'default',
   defaultGradient: { from: 'blue', to: 'cyan', deg: 45 },
-  defaultRadius: 'sm',
+  defaultRadius: 'md',
   activeClassName: 'mantine-active',
   focusClassName: '',
 

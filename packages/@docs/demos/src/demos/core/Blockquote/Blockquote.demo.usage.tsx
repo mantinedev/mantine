@@ -33,7 +33,7 @@ export const usage: MantineDemo = {
   maxWidth: 380,
   controls: [
     { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: null },
-    { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+    { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: 'md' },
     {
       type: 'number',
       prop: 'iconSize',

@@ -18,7 +18,6 @@ export function Usage() {
         withCloseButton
         onClose={close}
         size="lg"
-        radius="md"
         className="testeasdda"
       >
         <Text size="sm" mb="xs" fw={500}>
@@ -48,7 +47,6 @@ export function Unstyled() {
         withCloseButton
         onClose={close}
         size="lg"
-        radius="md"
         className="testeasdda"
         unstyled
       >

@@ -28,7 +28,6 @@ export function Radius() {
         yearValue={2025}
         monthValue={10}
         popoverProps={{ opened: true }}
-        radius="md"
       />
     </div>
   );

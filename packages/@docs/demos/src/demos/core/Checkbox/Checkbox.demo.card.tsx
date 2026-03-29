@@ -48,7 +48,6 @@ function Demo() {
   return (
     <Checkbox.Card
       className={classes.root}
-      radius="md"
       checked={checked}
       onClick={() => setChecked((c) => !c)}
     >
@@ -73,7 +72,6 @@ function Demo() {
   return (
     <Checkbox.Card
       className={classes.root}
-      radius="md"
       checked={checked}
       onClick={() => setChecked((c) => !c)}
     >

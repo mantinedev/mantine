@@ -211,7 +211,6 @@ export function CustomRadius() {
         date="2025-11-01"
         events={november2025Events}
         selectedDate="2025-11-10"
-        radius="md"
       />
     </Box>
   );

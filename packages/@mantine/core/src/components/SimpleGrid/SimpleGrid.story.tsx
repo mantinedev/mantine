@@ -39,7 +39,7 @@ export function ContainerQueries() {
 
 function GridItem({ children }: { children: React.ReactNode }) {
   return (
-    <Paper withBorder p="md" radius="md">
+    <Paper withBorder p="md">
       <Text size="sm" fw={500}>
         {children}
       </Text>

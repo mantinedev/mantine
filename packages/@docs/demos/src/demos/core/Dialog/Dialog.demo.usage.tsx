@@ -15,7 +15,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog opened={opened} withCloseButton onClose={close} size="lg" radius="md">
+      <Dialog opened={opened} withCloseButton onClose={close} size="lg">
         <Text size="sm" mb="xs" fw={500}>
           Subscribe to email newsletter
         </Text>
@@ -39,7 +39,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog opened={opened} withCloseButton onClose={close} size="lg" radius="md">
+      <Dialog opened={opened} withCloseButton onClose={close} size="lg">
         <Text size="sm" mb="xs" fw={500}>
           Subscribe to email newsletter
         </Text>

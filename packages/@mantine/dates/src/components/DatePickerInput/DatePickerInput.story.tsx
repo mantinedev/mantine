@@ -265,7 +265,6 @@ export function DarkColorSchemeDemo() {
         defaultValue={['2024-10-12', '2024-10-17']}
         label="Date range picker"
         size="lg"
-        radius="md"
       />
 
       <Select
@@ -273,7 +272,6 @@ export function DarkColorSchemeDemo() {
         placeholder="Custom select"
         label="Custom select"
         size="lg"
-        radius="md"
       />
 
       <MultiSelect
@@ -282,7 +280,6 @@ export function DarkColorSchemeDemo() {
         label="Multiselect"
         placeholder="Search items"
         size="lg"
-        radius="md"
         styles={{ pill: { background: 'var(--mantine-color-dark-5)' } }}
       />
 
@@ -294,7 +291,6 @@ export function DarkColorSchemeDemo() {
         decimalScale={2}
         prefix="$ "
         size="lg"
-        radius="md"
       />
 
       <div>
@@ -303,7 +299,6 @@ export function DarkColorSchemeDemo() {
           placeholder="Autocomplete"
           data={[]}
           size="lg"
-          radius="md"
           mb="md"
         />
         <Stack gap="lg">
@@ -325,7 +320,6 @@ export function DarkColorSchemeDemo() {
           withEyeDropper={false}
           label="Color input"
           size="lg"
-          radius="md"
           mb="md"
         />
 
