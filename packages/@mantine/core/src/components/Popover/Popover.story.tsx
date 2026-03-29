@@ -125,7 +125,6 @@ export function Controlled() {
         position="bottom"
         withArrow
         trapFocus
-        radius="md"
         returnFocus
         onClose={() => console.log('closed')}
         onOpen={() => console.log('opened')}
@@ -285,7 +284,6 @@ export function PopoverEvents() {
           position="bottom"
           withArrow
           trapFocus
-          radius="md"
           returnFocus
         >
           <Popover.Target>

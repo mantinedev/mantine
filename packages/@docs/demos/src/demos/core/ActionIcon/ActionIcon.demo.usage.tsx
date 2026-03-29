@@ -33,6 +33,6 @@ export const usage: MantineDemo = {
     interactiveVariantsControl,
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
     { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
   ],
 };

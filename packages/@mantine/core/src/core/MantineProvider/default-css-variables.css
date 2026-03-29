@@ -23,7 +23,7 @@
     Apple Color Emoji, Segoe UI Emoji;
   --mantine-heading-font-weight: 700;
   --mantine-heading-text-wrap: wrap;
-  --mantine-radius-default: calc(0.25rem * var(--mantine-scale));
+  --mantine-radius-default: calc(0.5rem * var(--mantine-scale));
   --mantine-primary-color-filled: var(--mantine-color-blue-filled);
   --mantine-primary-color-filled-hover: var(--mantine-color-blue-filled-hover);
   --mantine-primary-color-light: var(--mantine-color-blue-light);

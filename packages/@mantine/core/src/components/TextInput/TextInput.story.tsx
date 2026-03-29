@@ -129,21 +129,12 @@ export function HomepageCollage() {
           rightSection={<Input.ClearButton />}
           leftSectionWidth={36}
           styles={{ input: { paddingLeft: 39.5 } }}
-          radius="md"
           size="md"
         />
-        <NumberInput
-          label="Age"
-          leftSectionWidth={48}
-          value={29}
-          radius="md"
-          size="md"
-          withAsterisk
-        />
+        <NumberInput label="Age" leftSectionWidth={48} value={29} size="md" withAsterisk />
 
         <ColorInput
           label="Favorite color"
-          radius="md"
           size="md"
           format="rgba"
           defaultValue="rgba(8, 156, 253, 0.76)"
@@ -152,7 +143,6 @@ export function HomepageCollage() {
         <MultiSelect
           label="Skills"
           value={['React', 'Next.js']}
-          radius="md"
           size="md"
           styles={{
             input: {

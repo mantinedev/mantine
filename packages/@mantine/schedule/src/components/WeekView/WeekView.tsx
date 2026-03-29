@@ -307,7 +307,7 @@ const defaultProps = {
 const varsResolver = createVarsResolver<WeekViewFactory>(
   (_theme, { radius, allDaySlotHeight, slotHeight }) => ({
     weekView: {
-      '--week-view-radius': radius ? getRadius(radius) : undefined,
+      '--week-view-radius': radius !== undefined ? getRadius(radius) : undefined,
       '--week-view-all-day-slots-height': rem(allDaySlotHeight),
       '--week-view-slot-height': rem(slotHeight),
     },

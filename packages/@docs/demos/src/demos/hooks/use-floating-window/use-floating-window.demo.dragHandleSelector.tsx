@@ -27,7 +27,6 @@ function Demo() {
           <Paper
             w={280}
             withBorder
-            radius="md"
             pos="fixed"
             style={{ transition: 'box-shadow 70ms ease', zIndex: 400 }}
             shadow={floatingWindow.isDragging ? 'md' : undefined}
@@ -75,7 +74,6 @@ function Demo() {
           <Paper
             w={280}
             withBorder
-            radius="md"
             pos="fixed"
             style={{ transition: 'box-shadow 70ms ease', zIndex: 400 }}
             shadow={floatingWindow.isDragging ? 'md' : undefined}

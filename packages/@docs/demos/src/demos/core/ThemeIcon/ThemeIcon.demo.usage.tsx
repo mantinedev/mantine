@@ -44,7 +44,7 @@ export const usage: MantineDemo = {
         { label: 'white', value: 'white' },
       ],
     },
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
   ],

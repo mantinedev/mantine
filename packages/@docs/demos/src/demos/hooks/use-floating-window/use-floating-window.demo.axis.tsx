@@ -34,7 +34,6 @@ function Demo() {
             w={280}
             p="md"
             withBorder
-            radius="md"
             pos="fixed"
             style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
             shadow={floatingWindow.isDragging ? 'md' : undefined}
@@ -82,7 +81,6 @@ function Demo() {
             w={280}
             p="md"
             withBorder
-            radius="md"
             pos="fixed"
             style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
             shadow={floatingWindow.isDragging ? 'md' : undefined}

@@ -132,7 +132,7 @@ export function WeekendDays() {
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
-      <YearView date="2025-11-01" radius="md" />
+      <YearView date="2025-11-01" />
     </div>
   );
 }

@@ -464,7 +464,7 @@ exports[`default-css-variables-resolver 1`] = `
     "--mantine-primary-color-light": "var(--mantine-color-blue-light)",
     "--mantine-primary-color-light-color": "var(--mantine-color-blue-light-color)",
     "--mantine-primary-color-light-hover": "var(--mantine-color-blue-light-hover)",
-    "--mantine-radius-default": "calc(0.25rem * var(--mantine-scale))",
+    "--mantine-radius-default": "calc(0.5rem * var(--mantine-scale))",
     "--mantine-radius-lg": "calc(1rem * var(--mantine-scale))",
     "--mantine-radius-md": "calc(0.5rem * var(--mantine-scale))",
     "--mantine-radius-sm": "calc(0.25rem * var(--mantine-scale))",

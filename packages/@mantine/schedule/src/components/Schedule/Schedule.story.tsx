@@ -298,7 +298,6 @@ export function ViewSpecificProps() {
     <div style={{ padding: 40 }}>
       <Schedule
         events={events}
-        radius="md"
         dayViewProps={{
           startTime: '08:00:00',
           endTime: '18:00:00',

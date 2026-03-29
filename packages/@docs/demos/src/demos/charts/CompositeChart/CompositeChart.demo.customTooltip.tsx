@@ -17,7 +17,7 @@ function ChartTooltip({ label, payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       <Text fw={500} mb={5}>
         {label}
       </Text>
@@ -61,7 +61,7 @@ function ChartTooltip({ label, payload }: ChartTooltipProps) {
   }
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       <Text fw={500} mb={5}>
         {label}
       </Text>
