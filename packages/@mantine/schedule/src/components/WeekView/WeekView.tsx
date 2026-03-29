@@ -49,6 +49,7 @@ import {
   previousWeek,
   toDateString,
 } from '../../utils';
+import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
@@ -88,7 +89,8 @@ export type WeekViewStylesNames =
   | 'weekViewWeekNumber'
   | 'weekViewBackgroundEvent'
   | CurrentTimeIndicatorStylesNames
-  | CombinedScheduleHeaderStylesNames;
+  | CombinedScheduleHeaderStylesNames
+  | AgendaViewStylesNames;
 
 export type WeekViewCssVariables = {
   weekView: '--week-view-radius' | '--week-view-slot-height' | '--week-view-all-day-slots-height';
@@ -273,6 +275,9 @@ export interface WeekViewProps
     start: DateTimeStringValue;
     end: DateTimeStringValue;
   }) => Record<string, any> | undefined;
+
+  /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
+  withAgenda?: boolean;
 }
 
 export type WeekViewFactory = Factory<{
@@ -377,8 +382,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     canResizeEvent,
     recurrenceExpansionLimit,
     getTimeSlotProps,
+    withAgenda,
     ...others
   } = props;
+
+  const [agendaOpen, setAgendaOpen] = useState(false);
 
   const getStyles = useStyles<WeekViewFactory>({
     name: __staticSelector,
@@ -999,83 +1007,101 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           todayControlProps={todayControlProps}
           viewSelectProps={viewSelectProps}
           stylesApiProps={stylesApiProps}
+          onAgendaClick={withAgenda ? () => setAgendaOpen((v) => !v) : undefined}
+          agendaActive={agendaOpen}
         />
       )}
 
-      <Box
-        {...getStyles('weekViewRoot')}
-        __vars={{
-          '--indicator-offset-index':
-            currentWeekdayIndex === -1 ? undefined : `${currentWeekdayIndex + 1}`,
-          '--number-of-days': withWeekendDays
-            ? '7'
-            : `${7 - ctx.getWeekendDays(weekendDays).length}`,
-        }}
-        mod={{ 'with-weekends': withWeekendDays }}
-      >
-        <ScrollArea.Autosize
-          scrollbarSize={4}
-          {...scrollAreaProps}
-          {...getStyles('weekViewScrollArea', {
-            className: scrollAreaProps?.className,
-            style: scrollAreaProps?.style,
-          })}
-          onScrollPositionChange={(position) => {
-            scrollAreaProps?.onScrollPositionChange?.(position);
-            setScrolled(position.y !== 0);
+      {agendaOpen && (
+        <AgendaView
+          rangeStart={dayjs(weekdays[0]).format('YYYY-MM-DD')}
+          rangeEnd={dayjs(weekdays[weekdays.length - 1]).format('YYYY-MM-DD')}
+          events={events}
+          locale={locale}
+          labels={labels}
+          mode={mode}
+          onEventClick={onEventClick}
+          recurrenceExpansionLimit={recurrenceExpansionLimit}
+          {...stylesApiProps}
+        />
+      )}
+
+      {!agendaOpen && (
+        <Box
+          {...getStyles('weekViewRoot')}
+          __vars={{
+            '--indicator-offset-index':
+              currentWeekdayIndex === -1 ? undefined : `${currentWeekdayIndex + 1}`,
+            '--number-of-days': withWeekendDays
+              ? '7'
+              : `${7 - ctx.getWeekendDays(weekendDays).length}`,
           }}
-          viewportRef={mergedViewportRef}
+          mod={{ 'with-weekends': withWeekendDays }}
         >
-          <Box {...getStyles('weekViewHeader')} mod={{ scrolled }}>
-            <div {...getStyles('weekViewCorner')} key="corner">
-              {withWeekNumber && (
-                <>
-                  <div {...getStyles('weekViewWeekLabel')}>{getLabel('week', labels)}</div>
-                  <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(date)}</div>
-                </>
-              )}
-            </div>
-
-            {weekdaysLabels}
-          </Box>
-
-          {withAllDaySlots && (
-            <div {...getStyles('weekViewAllDaySlots')}>
-              <div {...getStyles('weekViewAllDaySlotsLabel')}>{getLabel('allDay', labels)}</div>
-              <div {...getStyles('weekViewAllDaySlotsList')}>
-                {allDayBackgroundEventNodes}
-                <Box
-                  {...getStyles('weekViewAllDaySlotsEvents')}
-                  __vars={{ '--extra-rows': `${extraRows}` }}
-                >
-                  {allDayEvents}
-                </Box>
-                {allDaySlots}
+          <ScrollArea.Autosize
+            scrollbarSize={4}
+            {...scrollAreaProps}
+            {...getStyles('weekViewScrollArea', {
+              className: scrollAreaProps?.className,
+              style: scrollAreaProps?.style,
+            })}
+            onScrollPositionChange={(position) => {
+              scrollAreaProps?.onScrollPositionChange?.(position);
+              setScrolled(position.y !== 0);
+            }}
+            viewportRef={mergedViewportRef}
+          >
+            <Box {...getStyles('weekViewHeader')} mod={{ scrolled }}>
+              <div {...getStyles('weekViewCorner')} key="corner">
+                {withWeekNumber && (
+                  <>
+                    <div {...getStyles('weekViewWeekLabel')}>{getLabel('week', labels)}</div>
+                    <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(date)}</div>
+                  </>
+                )}
               </div>
-            </div>
-          )}
 
-          <div {...getStyles('weekViewInner')}>
-            <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
+              {weekdaysLabels}
+            </Box>
 
-            {withCurrentTimeIndicator && currentWeekdayIndex !== -1 && (
-              <CurrentTimeIndicator
-                startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
-                endOffset="calc((100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index)) - (var(--number-of-days) - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
-                timeBubbleStartOffset="calc(var(--week-view-slots-label-width) - var(--time-bubble-width))"
-                currentTimeFormat={slotLabelFormat}
-                withTimeBubble={withCurrentTimeBubble}
-                withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
-                locale={locale}
-                startTime={startTime}
-                endTime={endTime}
-                {...stylesApiProps}
-              />
+            {withAllDaySlots && (
+              <div {...getStyles('weekViewAllDaySlots')}>
+                <div {...getStyles('weekViewAllDaySlotsLabel')}>{getLabel('allDay', labels)}</div>
+                <div {...getStyles('weekViewAllDaySlotsList')}>
+                  {allDayBackgroundEventNodes}
+                  <Box
+                    {...getStyles('weekViewAllDaySlotsEvents')}
+                    __vars={{ '--extra-rows': `${extraRows}` }}
+                  >
+                    {allDayEvents}
+                  </Box>
+                  {allDaySlots}
+                </div>
+              </div>
             )}
-            {days}
-          </div>
-        </ScrollArea.Autosize>
-      </Box>
+
+            <div {...getStyles('weekViewInner')}>
+              <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
+
+              {withCurrentTimeIndicator && currentWeekdayIndex !== -1 && (
+                <CurrentTimeIndicator
+                  startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
+                  endOffset="calc((100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index)) - (var(--number-of-days) - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
+                  timeBubbleStartOffset="calc(var(--week-view-slots-label-width) - var(--time-bubble-width))"
+                  currentTimeFormat={slotLabelFormat}
+                  withTimeBubble={withCurrentTimeBubble}
+                  withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
+                  locale={locale}
+                  startTime={startTime}
+                  endTime={endTime}
+                  {...stylesApiProps}
+                />
+              )}
+              {days}
+            </div>
+          </ScrollArea.Autosize>
+        </Box>
+      )}
     </Box>
   );
 

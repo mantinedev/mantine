@@ -787,4 +787,51 @@ describe('@mantine/schedule/WeekView', () => {
       Element.prototype.scrollTo = originalScrollTo;
     });
   });
+
+  describe('withAgenda prop', () => {
+    it('does not render agenda button by default', () => {
+      render(<WeekView {...defaultProps} />);
+      expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
+    });
+
+    it('renders agenda button when withAgenda is true', () => {
+      render(<WeekView {...defaultProps} withAgenda />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+    });
+
+    it('shows AgendaView when agenda button is clicked', async () => {
+      const { container } = render(<WeekView {...defaultProps} withAgenda />);
+
+      expect(
+        container.querySelector('.mantine-WeekView-agendaView')
+      ).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+
+      expect(container.querySelector('.mantine-WeekView-agendaView')).toBeInTheDocument();
+    });
+
+    it('toggles AgendaView off when agenda button is clicked again', async () => {
+      const { container } = render(<WeekView {...defaultProps} withAgenda />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(container.querySelector('.mantine-WeekView-agendaView')).toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(
+        container.querySelector('.mantine-WeekView-agendaView')
+      ).not.toBeInTheDocument();
+    });
+
+    it('passes the visible week as the agenda range', async () => {
+      render(<WeekView {...defaultProps} withAgenda />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(screen.getByText('November 3, 2025 – November 9, 2025')).toBeInTheDocument();
+    });
+
+    it('renders both regular and compact agenda buttons', () => {
+      const { container } = render(<WeekView {...defaultProps} withAgenda />);
+      const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
+      expect(agendaButtons).toHaveLength(2);
+    });
+  });
 });

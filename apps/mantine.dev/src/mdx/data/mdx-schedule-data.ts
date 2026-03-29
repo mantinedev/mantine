@@ -120,6 +120,17 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     docs: 'schedule/resources-schedule.mdx',
   },
 
+  AgendaView: {
+    title: 'AgendaView',
+    package: '@mantine/schedule',
+    slug: '/schedule/agenda-view',
+    description: 'Vertical list view of events grouped by date',
+    props: ['AgendaView'],
+    styles: ['AgendaView'],
+    source: '@mantine/schedule/src/components/AgendaView/AgendaView.tsx',
+    docs: 'schedule/agenda-view.mdx',
+  },
+
   RecurringEventsSchedule: {
     title: 'Recurring events',
     package: '@mantine/schedule',

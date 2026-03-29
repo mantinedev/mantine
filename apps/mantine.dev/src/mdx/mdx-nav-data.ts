@@ -482,6 +482,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.WeekView,
       MDX_DATA.YearView,
       MDX_DATA.MobileMonthView,
+      MDX_DATA.AgendaView,
       MDX_DATA.ResourcesDayView,
       MDX_DATA.ResourcesWeekView,
       MDX_DATA.ResourcesMonthView,

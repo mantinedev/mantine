@@ -182,3 +182,8 @@ export const Demo_viewChange = {
   name: '⭐ Demo: viewChange',
   render: renderDemo(demos.viewChange),
 };
+
+export const Demo_withAgenda = {
+  name: '⭐ Demo: withAgenda',
+  render: renderDemo(demos.withAgenda),
+};

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -46,6 +46,7 @@ import {
   isAllDayEvent,
   toDateString,
 } from '../../utils';
+import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
@@ -80,7 +81,8 @@ export type DayViewStylesNames =
   | MoreEventsStylesNames
   | ScheduleEventStylesNames
   | Exclude<CombinedScheduleHeaderStylesNames, MonthYearSelectStylesNames>
-  | CurrentTimeIndicatorStylesNames;
+  | CurrentTimeIndicatorStylesNames
+  | AgendaViewStylesNames;
 
 export type DayViewCssVariables = {
   dayView: '--day-view-radius' | '--day-view-slot-height' | '--day-view-all-day-slot-height';
@@ -244,6 +246,9 @@ export interface DayViewProps
     start: DateTimeStringValue;
     end: DateTimeStringValue;
   }) => Record<string, any> | undefined;
+
+  /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
+  withAgenda?: boolean;
 }
 
 export type DayViewFactory = Factory<{
@@ -338,8 +343,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
     canResizeEvent,
     recurrenceExpansionLimit,
     getTimeSlotProps,
+    withAgenda,
     ...others
   } = props;
+
+  const [agendaOpen, setAgendaOpen] = useState(false);
 
   const getStyles = useStyles<DayViewFactory>({
     name: __staticSelector,
@@ -760,109 +768,127 @@ export const DayView = factory<DayViewFactory>((_props) => {
           todayControlProps={todayControlProps}
           viewSelectProps={viewSelectProps}
           stylesApiProps={stylesApiProps}
+          onAgendaClick={withAgenda ? () => setAgendaOpen((v) => !v) : undefined}
+          agendaActive={agendaOpen}
         />
       )}
 
-      <ScrollArea.Autosize
-        scrollbarSize={4}
-        {...scrollAreaProps}
-        {...getStyles('dayViewScrollArea', {
-          className: scrollAreaProps?.className,
-          style: scrollAreaProps?.style,
-        })}
-        viewportRef={mergedViewportRef}
-      >
-        <Box {...getStyles('dayViewInner')}>
-          <div {...getStyles('dayViewSlotLabels')}>
-            {withAllDaySlot && (
-              <Box {...getStyles('dayViewSlotLabel')} mod={{ 'all-day': true }}>
-                {getLabel('allDay', labels)}
-              </Box>
-            )}
-            {slotsLabels}
-          </div>
+      {agendaOpen && (
+        <AgendaView
+          rangeStart={dayjs(date).startOf('day').format('YYYY-MM-DD')}
+          rangeEnd={dayjs(date).endOf('day').format('YYYY-MM-DD')}
+          events={events}
+          locale={locale}
+          labels={labels}
+          mode={mode}
+          onEventClick={onEventClick}
+          recurrenceExpansionLimit={recurrenceExpansionLimit}
+          {...stylesApiProps}
+        />
+      )}
 
-          <div {...getStyles('dayViewSlots')}>
-            {withAllDaySlot && (
-              <div {...getStyles('dayViewAllDay')}>
-                {backgroundAllDayEventNodes}
-                <div {...getStyles('dayViewAllDayEvents')}>
-                  {allDayEventsNodes}
-                  {allDayEventsCount.hiddenEventsCount > 0 && (
-                    <MoreEvents
-                      events={eventsData.allDayEvents}
-                      moreEventsCount={allDayEventsCount.hiddenEventsCount}
-                      renderEventBody={renderEventBody}
-                      mode={mode}
-                      {...stylesApiProps}
-                      {...moreEventsProps}
-                    />
-                  )}
-                </div>
-                <UnstyledButton
-                  {...getStyles('dayViewSlot')}
-                  mod={{ 'all-day': true, static: mode === 'static' }}
-                  aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
-                  onClick={
-                    mode === 'static' || !onAllDaySlotClick
-                      ? undefined
-                      : (e) => {
-                          onAllDaySlotClick(dayjs(date).format('YYYY-MM-DD'), e);
-                        }
-                  }
-                />
-              </div>
-            )}
-
-            <div
-              ref={timeSlotsContainerRef}
-              {...getStyles('dayViewTimeSlots')}
-              onDragOver={
-                withDragHandlers
-                  ? (event) => {
-                      const slotIndex = getSlotIndexFromDragPoint(event);
-                      if (slotIndex !== null) {
-                        dragDrop.handleDragOver(event, slotIndex);
-                      }
-                    }
-                  : undefined
-              }
-              onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
-              onDrop={
-                withDragHandlers
-                  ? (event) => {
-                      const slotIndex = getSlotIndexFromDragPoint(event);
-                      if (slotIndex !== null) {
-                        dragDrop.handleDrop(event, slotIndex);
-                      }
-                    }
-                  : undefined
-              }
-            >
-              {backgroundTimedEventNodes}
-
-              {eventsNodes}
-
-              {withCurrentTimeIndicator && (
-                <CurrentTimeIndicator
-                  startOffset="calc(var(--day-view-slot-labels-width) * -1)"
-                  endOffset="0rem"
-                  topOffset="0rem"
-                  timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) * -1 + 30px)"
-                  currentTimeFormat={slotLabelFormat}
-                  withTimeBubble={withCurrentTimeBubble}
-                  withThumb={!withCurrentTimeBubble}
-                  locale={locale}
-                  startTime={startTime}
-                  endTime={endTime}
-                  {...stylesApiProps}
-                />
+      {!agendaOpen && (
+        <ScrollArea.Autosize
+          scrollbarSize={4}
+          {...scrollAreaProps}
+          {...getStyles('dayViewScrollArea', {
+            className: scrollAreaProps?.className,
+            style: scrollAreaProps?.style,
+          })}
+          viewportRef={mergedViewportRef}
+        >
+          <Box {...getStyles('dayViewInner')}>
+            <div {...getStyles('dayViewSlotLabels')}>
+              {withAllDaySlot && (
+                <Box {...getStyles('dayViewSlotLabel')} mod={{ 'all-day': true }}>
+                  {getLabel('allDay', labels)}
+                </Box>
               )}
-              {items}
+              {slotsLabels}
             </div>
-          </div>
-        </Box>
-      </ScrollArea.Autosize>
+
+            <div {...getStyles('dayViewSlots')}>
+              {withAllDaySlot && (
+                <div {...getStyles('dayViewAllDay')}>
+                  {backgroundAllDayEventNodes}
+                  <div {...getStyles('dayViewAllDayEvents')}>
+                    {allDayEventsNodes}
+                    {allDayEventsCount.hiddenEventsCount > 0 && (
+                      <MoreEvents
+                        events={eventsData.allDayEvents}
+                        moreEventsCount={allDayEventsCount.hiddenEventsCount}
+                        renderEventBody={renderEventBody}
+                        mode={mode}
+                        {...stylesApiProps}
+                        {...moreEventsProps}
+                      />
+                    )}
+                  </div>
+                  <UnstyledButton
+                    {...getStyles('dayViewSlot')}
+                    mod={{ 'all-day': true, static: mode === 'static' }}
+                    aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
+                    onClick={
+                      mode === 'static' || !onAllDaySlotClick
+                        ? undefined
+                        : (e) => {
+                            onAllDaySlotClick(dayjs(date).format('YYYY-MM-DD'), e);
+                          }
+                    }
+                  />
+                </div>
+              )}
+
+              <div
+                ref={timeSlotsContainerRef}
+                {...getStyles('dayViewTimeSlots')}
+                onDragOver={
+                  withDragHandlers
+                    ? (event) => {
+                        const slotIndex = getSlotIndexFromDragPoint(event);
+                        if (slotIndex !== null) {
+                          dragDrop.handleDragOver(event, slotIndex);
+                        }
+                      }
+                    : undefined
+                }
+                onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
+                onDrop={
+                  withDragHandlers
+                    ? (event) => {
+                        const slotIndex = getSlotIndexFromDragPoint(event);
+                        if (slotIndex !== null) {
+                          dragDrop.handleDrop(event, slotIndex);
+                        }
+                      }
+                    : undefined
+                }
+              >
+                {backgroundTimedEventNodes}
+
+                {eventsNodes}
+
+                {withCurrentTimeIndicator && (
+                  <CurrentTimeIndicator
+                    startOffset="calc(var(--day-view-slot-labels-width) * -1)"
+                    endOffset="0rem"
+                    topOffset="0rem"
+                    timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) * -1 + 30px)"
+                    currentTimeFormat={slotLabelFormat}
+                    withTimeBubble={withCurrentTimeBubble}
+                    withThumb={!withCurrentTimeBubble}
+                    locale={locale}
+                    startTime={startTime}
+                    endTime={endTime}
+                    {...stylesApiProps}
+                  />
+                )}
+                {items}
+              </div>
+            </div>
+          </Box>
+        </ScrollArea.Autosize>
+      )}
     </Box>
   );
 

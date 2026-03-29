@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -42,6 +42,7 @@ import {
   isSameMonth,
   toDateString,
 } from '../../utils';
+import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
@@ -66,7 +67,8 @@ export type MonthViewStylesNames =
   | 'monthViewWeekdaysCorner'
   | 'monthViewEvents'
   | 'monthViewBackgroundEvent'
-  | CombinedScheduleHeaderStylesNames;
+  | CombinedScheduleHeaderStylesNames
+  | AgendaViewStylesNames;
 
 export type MonthViewCssVariables = {
   monthView: '--month-view-radius' | '--month-view-max-events';
@@ -203,6 +205,9 @@ export interface MonthViewProps
 
   /** Maximum number of events visible per day before "+more" indicator shows, value is clamped between 1 and 10 @default 2 */
   maxEventsPerDay?: number;
+
+  /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
+  withAgenda?: boolean;
 }
 
 export type MonthViewFactory = Factory<{
@@ -288,9 +293,11 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     onExternalEventDrop,
     recurrenceExpansionLimit,
     maxEventsPerDay: _maxEventsPerDay,
+    withAgenda,
     ...others
   } = props;
 
+  const [agendaOpen, setAgendaOpen] = useState(false);
   const maxEventsPerDay = Math.min(10, Math.max(1, _maxEventsPerDay ?? 2));
 
   const getStyles = useStyles<MonthViewFactory>({
@@ -705,28 +712,46 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           todayControlProps={todayControlProps}
           viewSelectProps={viewSelectProps}
           stylesApiProps={stylesApiProps}
+          onAgendaClick={withAgenda ? () => setAgendaOpen((v) => !v) : undefined}
+          agendaActive={agendaOpen}
         />
       )}
 
-      <ScrollArea
-        scrollbarSize={4}
-        {...scrollAreaProps}
-        {...getStyles('monthViewScrollArea', {
-          className: scrollAreaProps?.className,
-          style: scrollAreaProps?.style,
-        })}
-      >
-        <div {...getStyles('monthViewInner')}>
-          {weekdays && (
-            <div {...getStyles('monthViewWeekdays')}>
-              {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
-              {weekdays}
-            </div>
-          )}
+      {agendaOpen && (
+        <AgendaView
+          rangeStart={dayjs(date).startOf('month').format('YYYY-MM-DD')}
+          rangeEnd={dayjs(date).endOf('month').format('YYYY-MM-DD')}
+          events={events}
+          locale={locale}
+          labels={labels}
+          mode={mode}
+          onEventClick={onEventClick}
+          recurrenceExpansionLimit={recurrenceExpansionLimit}
+          {...stylesApiProps}
+        />
+      )}
 
-          {weeks}
-        </div>
-      </ScrollArea>
+      {!agendaOpen && (
+        <ScrollArea
+          scrollbarSize={4}
+          {...scrollAreaProps}
+          {...getStyles('monthViewScrollArea', {
+            className: scrollAreaProps?.className,
+            style: scrollAreaProps?.style,
+          })}
+        >
+          <div {...getStyles('monthViewInner')}>
+            {weekdays && (
+              <div {...getStyles('monthViewWeekdays')}>
+                {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
+                {weekdays}
+              </div>
+            )}
+
+            {weeks}
+          </div>
+        </ScrollArea>
+      )}
     </Box>
   );
 

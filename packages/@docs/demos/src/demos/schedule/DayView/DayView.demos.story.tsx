@@ -157,3 +157,8 @@ export const Demo_localization = {
   name: '⭐ Demo: localization',
   render: renderDemo(demos.localization),
 };
+
+export const Demo_withAgenda = {
+  name: '⭐ Demo: withAgenda',
+  render: renderDemo(demos.withAgenda),
+};

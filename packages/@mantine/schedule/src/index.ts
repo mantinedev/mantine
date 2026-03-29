@@ -21,6 +21,9 @@ export * from './components/ResourcesWeekView';
 export * from './components/ResourcesMonthView';
 export * from './components/ResourcesSchedule';
 
+// AgendaView
+export * from './components/AgendaView';
+
 // Supporting components
 export * from './components/ScheduleEvent';
 export * from './components/ScheduleHeader';

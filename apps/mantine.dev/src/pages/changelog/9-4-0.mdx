@@ -1,4 +1,4 @@
-import { ComboboxPopoverDemos, DataListDemos, InputDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos } from '@docs/demos';
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, InputDemos, MonthViewDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -60,6 +60,21 @@ New [ResourcesSchedule](/schedule/resources-schedule) wrapper component combines
 to how `Schedule` combines day, week, month and year views.
 
 <Demo data={ResourcesScheduleDemos.usage} />
+
+## AgendaView component
+
+New [AgendaView](/schedule/agenda-view) component renders a vertical list of events for a specified
+time period. Events are grouped by date in chronological order.
+
+<Demo data={AgendaViewDemos.usage} />
+
+## withAgenda prop for DayView, WeekView, MonthView and Schedule
+
+`DayView`, `WeekView`, `MonthView` and `Schedule` components now support `withAgenda` prop.
+When enabled, an "Agenda" button is displayed in the header. Clicking it opens an `AgendaView`
+for the currently visible date range.
+
+<Demo data={MonthViewDemos.withAgenda} />
 
 ## Input success state
 

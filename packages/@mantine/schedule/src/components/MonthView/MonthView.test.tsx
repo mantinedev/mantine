@@ -607,4 +607,70 @@ describe('@mantine/schedule/MonthView', () => {
       // handles that internally by setting onClick to undefined when mode is static
     });
   });
+
+  describe('withAgenda prop', () => {
+    const agendaEvents = [
+      {
+        id: 1,
+        title: 'Test Event',
+        start: '2025-11-05 10:00:00',
+        end: '2025-11-05 11:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    it('does not render agenda button by default', () => {
+      render(<MonthView {...defaultProps} />);
+      expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
+    });
+
+    it('renders agenda button when withAgenda is true', () => {
+      render(<MonthView {...defaultProps} withAgenda />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+    });
+
+    it('shows AgendaView when agenda button is clicked', async () => {
+      const { container } = render(
+        <MonthView {...defaultProps} withAgenda events={agendaEvents} />
+      );
+
+      expect(
+        container.querySelector('.mantine-MonthView-agendaView')
+      ).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+
+      expect(
+        container.querySelector('.mantine-MonthView-agendaView')
+      ).toBeInTheDocument();
+    });
+
+    it('toggles AgendaView off when agenda button is clicked again', async () => {
+      const { container } = render(
+        <MonthView {...defaultProps} withAgenda events={agendaEvents} />
+      );
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(
+        container.querySelector('.mantine-MonthView-agendaView')
+      ).toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(
+        container.querySelector('.mantine-MonthView-agendaView')
+      ).not.toBeInTheDocument();
+    });
+
+    it('passes the visible month as the agenda range', async () => {
+      render(<MonthView {...defaultProps} withAgenda events={agendaEvents} />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(screen.getByText('November 1, 2025 – November 30, 2025')).toBeInTheDocument();
+    });
+
+    it('renders both regular and compact agenda buttons', () => {
+      const { container } = render(<MonthView {...defaultProps} withAgenda />);
+      const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
+      expect(agendaButtons).toHaveLength(2);
+    });
+  });
 });

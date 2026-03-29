@@ -22,6 +22,7 @@ export interface ScheduleLabels {
   resource?: string;
   resources?: string;
   resourceSlot?: string;
+  agenda?: string;
 }
 
 export const DEFAULT_SCHEDULE_LABELS: ScheduleLabels = {
@@ -48,6 +49,7 @@ export const DEFAULT_SCHEDULE_LABELS: ScheduleLabels = {
   resource: 'Resource',
   resources: 'Resources',
   resourceSlot: 'Resource time slot',
+  agenda: 'Agenda',
 };
 
 export type ScheduleLabelsOverride = Partial<ScheduleLabels>;

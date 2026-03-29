@@ -332,4 +332,24 @@ describe('@mantine/schedule/Schedule', () => {
 
     expect(screen.getByText('January 15, 2024')).toBeInTheDocument();
   });
+
+  describe('withAgenda prop', () => {
+    it('does not render agenda button by default', () => {
+      render(<Schedule {...defaultProps} />);
+      expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
+    });
+
+    it('renders agenda button when withAgenda is true', () => {
+      render(<Schedule {...defaultProps} withAgenda />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+    });
+
+    it('passes withAgenda to views', () => {
+      const { rerender } = render(<Schedule {...defaultProps} withAgenda defaultView="day" />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+
+      rerender(<Schedule {...defaultProps} withAgenda defaultView="month" />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+    });
+  });
 });

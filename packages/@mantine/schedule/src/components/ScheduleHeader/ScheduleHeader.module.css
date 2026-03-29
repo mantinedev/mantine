@@ -23,6 +23,9 @@
 }
 
 .todayControl {
+  display: flex;
+  gap: var(--schedule-header-gap);
+
   @container (width <= 600px) {
     display: none;
   }
@@ -34,12 +37,22 @@
   }
 }
 
-.compactViewSelect {
+.compactControls {
   display: none;
-  font-weight: var(--mantine-font-weight-medium);
 
   @container (width <= 600px) {
-    display: block;
+    display: flex;
     flex: 1 1 100%;
+    gap: var(--schedule-header-gap);
   }
+}
+
+.compactAgendaControl {
+  flex-shrink: 0;
+  height: var(--input-height, 36px);
+}
+
+.compactViewSelect {
+  font-weight: var(--mantine-font-weight-medium);
+  flex: 1;
 }
