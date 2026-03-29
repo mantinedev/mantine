@@ -427,7 +427,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         />
         <div>
           <Text {...getStyles('mobileMonthViewEventTitle')}>{event.title}</Text>
-          <Text {...getStyles('mobileMonthViewEventTime')} size="xs" c="dimmed">
+          <Text {...getStyles('mobileMonthViewEventTime')}>
             {isAllDay ? 'All day' : `${startTime} – ${endTime}`}
           </Text>
         </div>
@@ -476,9 +476,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} size={20} />
         {dayjs(date).format('YYYY')}
       </UnstyledButton>
-      <Text {...getStyles('mobileMonthViewHeaderLabel')} fw={600} tt="capitalize">
-        {headerLabel}
-      </Text>
+      <Text {...getStyles('mobileMonthViewHeaderLabel')}>{headerLabel}</Text>
     </>
   );
 
@@ -505,16 +503,12 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       </Box>
 
       <Box {...getStyles('mobileMonthViewEventsList')}>
-        <Text {...getStyles('mobileMonthViewEventsHeader')} fw={600} tt="capitalize">
-          {eventsHeader}
-        </Text>
+        <Text {...getStyles('mobileMonthViewEventsHeader')}>{eventsHeader}</Text>
 
         {eventsList.length > 0 ? (
           eventsList
         ) : (
-          <Text {...getStyles('mobileMonthViewNoEvents')} c="dimmed" ta="center" py="xl">
-            {getLabel('noEvents', labels)}
-          </Text>
+          <Text {...getStyles('mobileMonthViewNoEvents')}>{getLabel('noEvents', labels)}</Text>
         )}
       </Box>
     </Box>
