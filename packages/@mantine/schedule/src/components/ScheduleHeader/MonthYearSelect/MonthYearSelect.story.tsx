@@ -24,11 +24,7 @@ export function Usage() {
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthYearSelect
-        yearValue={2025}
-        monthValue={10}
-        popoverProps={{ opened: true }}
-      />
+      <MonthYearSelect yearValue={2025} monthValue={10} popoverProps={{ opened: true }} />
     </div>
   );
 }

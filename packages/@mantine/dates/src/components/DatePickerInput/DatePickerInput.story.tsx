@@ -267,12 +267,7 @@ export function DarkColorSchemeDemo() {
         size="lg"
       />
 
-      <Select
-        data={['React']}
-        placeholder="Custom select"
-        label="Custom select"
-        size="lg"
-      />
+      <Select data={['React']} placeholder="Custom select" label="Custom select" size="lg" />
 
       <MultiSelect
         data={['React', 'Angular']}
@@ -294,13 +289,7 @@ export function DarkColorSchemeDemo() {
       />
 
       <div>
-        <Autocomplete
-          label="Autocomplete"
-          placeholder="Autocomplete"
-          data={[]}
-          size="lg"
-          mb="md"
-        />
+        <Autocomplete label="Autocomplete" placeholder="Autocomplete" data={[]} size="lg" mb="md" />
         <Stack gap="lg">
           <Radio.Group label="Radio" size="lg" defaultValue="react">
             <Group mt={5}>

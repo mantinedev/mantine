@@ -131,13 +131,7 @@ export function HomepageCollage() {
           styles={{ input: { paddingLeft: 39.5 } }}
           size="md"
         />
-        <NumberInput
-          label="Age"
-          leftSectionWidth={48}
-          value={29}
-          size="md"
-          withAsterisk
-        />
+        <NumberInput label="Age" leftSectionWidth={48} value={29} size="md" withAsterisk />
 
         <ColorInput
           label="Favorite color"

@@ -70,11 +70,7 @@ function Demo() {
   const [checked, setChecked] = useState(false);
 
   return (
-    <Radio.Card
-      className={classes.root}
-      checked={checked}
-      onClick={() => setChecked((c) => !c)}
-    >
+    <Radio.Card className={classes.root} checked={checked} onClick={() => setChecked((c) => !c)}>
       <Group wrap="nowrap" align="flex-start">
         <Radio.Indicator />
         <div>

@@ -54,13 +54,7 @@ export function Variants() {
         {_items}
       </Accordion>
 
-      <Accordion
-        defaultValue="flex"
-        style={{ maxWidth: 400 }}
-        mx="auto"
-        mt={50}
-        variant="filled"
-      >
+      <Accordion defaultValue="flex" style={{ maxWidth: 400 }} mx="auto" mt={50} variant="filled">
         {_items}
       </Accordion>
 

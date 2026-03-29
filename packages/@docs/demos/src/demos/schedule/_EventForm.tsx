@@ -93,11 +93,7 @@ export function EventForm({
             {...form.getInputProps('title')}
           />
 
-          <DateTimePicker
-            label="Start Time"
-            clearable
-            {...form.getInputProps('start')}
-          />
+          <DateTimePicker label="Start Time" clearable {...form.getInputProps('start')} />
           <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable />
 
           <Group justify="flex-end" gap="sm">
@@ -110,9 +106,7 @@ export function EventForm({
             <Button variant="default" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit">
-              {form.values.id ? 'Update' : 'Create'}
-            </Button>
+            <Button type="submit">{form.values.id ? 'Update' : 'Create'}</Button>
           </Group>
         </Stack>
       </form>

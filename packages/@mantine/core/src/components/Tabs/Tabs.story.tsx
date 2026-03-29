@@ -207,23 +207,11 @@ export const Variants = () => (
 
 export const VerticalVariants = () => (
   <div style={{ maxWidth: 600, padding: 40 }}>
-    <Wrapper
-      defaultValue="react"
-      orientation="vertical"
-      variant="default"
-      mt={10}
-      mb={50}
-    >
+    <Wrapper defaultValue="react" orientation="vertical" variant="default" mt={10} mb={50}>
       {verticalBase}
     </Wrapper>
 
-    <Wrapper
-      defaultValue="react"
-      orientation="vertical"
-      variant="outline"
-      mt={10}
-      mb={50}
-    >
+    <Wrapper defaultValue="react" orientation="vertical" variant="outline" mt={10} mb={50}>
       {verticalBase}
     </Wrapper>
 
@@ -257,13 +245,7 @@ export const VerticalPlacement = () => (
       {verticalBase}
     </Wrapper>
 
-    <Wrapper
-      defaultValue="react"
-      orientation="vertical"
-      variant="pills"
-      mt={10}
-      placement="right"
-    >
+    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10} placement="right">
       {verticalBase}
     </Wrapper>
   </div>
