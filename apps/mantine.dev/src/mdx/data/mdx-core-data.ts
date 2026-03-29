@@ -499,6 +499,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/VisuallyHidden/VisuallyHidden.tsx',
     docs: 'core/visually-hidden.mdx',
   },
+  DataList: {
+    title: 'DataList',
+    package: '@mantine/core',
+    slug: '/core/data-list',
+    componentPrefix: 'DataList',
+    props: ['DataList', 'DataListItem', 'DataListItemLabel', 'DataListItemValue'],
+    styles: ['DataList'],
+    description: 'Display label-value pairs as a description list',
+    source: '@mantine/core/src/components/DataList/DataList.tsx',
+    docs: 'core/data-list.mdx',
+  },
   Divider: {
     title: 'Divider',
     package: '@mantine/core',

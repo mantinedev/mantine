@@ -39,6 +39,7 @@ export * as ColorSwatchDemos from './demos/core/ColorSwatch';
 export * as ComboboxDemos from './demos/core/Combobox';
 export * as ContainerDemos from './demos/core/Container';
 export * as CopyButtonDemos from './demos/core/CopyButton';
+export * as DataListDemos from './demos/core/DataList';
 export * as DialogDemos from './demos/core/Dialog';
 export * as DividerDemos from './demos/core/Divider';
 export * as DrawerDemos from './demos/core/Drawer';

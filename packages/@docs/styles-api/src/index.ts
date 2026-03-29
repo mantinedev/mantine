@@ -34,6 +34,7 @@ export * from './data/ColorSwatch.styles-api';
 export * from './data/Combobox.styles-api';
 export * from './data/CompositeChart.styles-api';
 export * from './data/Container.styles-api';
+export * from './data/DataList.styles-api';
 export * from './data/Dates.styles-api';
 export * from './data/DayView.styles-api';
 export * from './data/Dialog.styles-api';
