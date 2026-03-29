@@ -47,6 +47,24 @@ from which you should only specify two (for example, `top` and `left`, `bottom` 
 
 <Demo data={FloatingWindowDemos.setPosition} />
 
+## Resize handle
+
+Use `FloatingWindow.ResizeHandle` compound component to add a resize handle to the floating window.
+The `dimensions` prop on `FloatingWindow` controls the resize behavior:
+
+- `initialWidth` / `initialHeight` – initial size of the window in px
+- `minWidth` / `minHeight` – minimum size the window can be resized to
+- `maxWidth` / `maxHeight` – maximum size the window can be resized to
+
+The resize handle respects `constrainToViewport` and `constrainOffset` props – the window
+cannot be resized beyond the viewport boundaries.
+
+`FloatingWindow.ResizeHandle` renders with `role="separator"` and supports keyboard interaction:
+use `Arrow Left`/`Arrow Right` keys to resize width and `Arrow Up`/`Arrow Down` keys to resize
+height in 10px steps. `Home`/`End` keys jump to the minimum/maximum size.
+
+<Demo data={FloatingWindowDemos.resizeHandle} />
+
 ## Lock axis
 
 Use the `axis` option to restrict movement to the specified axis:

@@ -1,3 +1,4 @@
+import { FloatingWindowDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,16 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## FloatingWindow resize handle
+
+[FloatingWindow](/core/floating-window) now supports a `ResizeHandle` compound component
+that allows users to resize the floating window by dragging a handle element.
+Set the `dimensions` prop on `FloatingWindow` to control resize constraints for both
+width (`initialWidth`, `minWidth`, `maxWidth`) and height (`initialHeight`, `minHeight`, `maxHeight`).
+
+The resize handle is fully accessible – it supports keyboard interaction with
+`Arrow Left`/`Arrow Right` keys for width, `Arrow Up`/`Arrow Down` for height (10px steps),
+and `Home`/`End` keys (jump to min/max size).
+
+<Demo data={FloatingWindowDemos.resizeHandle} />
