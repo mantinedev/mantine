@@ -1,4 +1,4 @@
-import { DataListDemos, InputDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos } from '@docs/demos';
+import { ComboboxPopoverDemos, DataListDemos, InputDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,6 +10,15 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## ComboboxPopover component
+
+New [ComboboxPopover](/core/combobox-popover) component allows adding a combobox dropdown
+with selectable options to any button element. Unlike `Select` and `MultiSelect`, it does not
+render an input – you provide your own target element via `ComboboxPopover.Target`. Supports
+single and multiple selection modes with the same `data` format as `Select`.
+
+<Demo data={ComboboxPopoverDemos.usage} />
 
 ## DataList component
 

@@ -719,6 +719,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/multi-select.mdx',
   },
 
+  ComboboxPopover: {
+    title: 'ComboboxPopover',
+    package: '@mantine/core',
+    slug: '/core/combobox-popover',
+    props: ['ComboboxPopover'],
+    styles: ['ComboboxPopover'],
+    description: 'Add combobox dropdown to any button element',
+    source: '@mantine/core/src/components/ComboboxPopover/ComboboxPopover.tsx',
+    docs: 'core/combobox-popover.mdx',
+  },
+
   Pagination: {
     title: 'Pagination',
     package: '@mantine/core',

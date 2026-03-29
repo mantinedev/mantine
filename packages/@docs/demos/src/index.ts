@@ -37,6 +37,7 @@ export * as ColorInputDemos from './demos/core/ColorInput';
 export * as ColorPickerDemos from './demos/core/ColorPicker';
 export * as ColorSwatchDemos from './demos/core/ColorSwatch';
 export * as ComboboxDemos from './demos/core/Combobox';
+export * as ComboboxPopoverDemos from './demos/core/ComboboxPopover';
 export * as ContainerDemos from './demos/core/Container';
 export * as CopyButtonDemos from './demos/core/CopyButton';
 export * as DataListDemos from './demos/core/DataList';
