@@ -123,6 +123,7 @@ export const Timeline = factory<TimelineFactory>((_props) => {
   });
 
   const _children = Children.toArray(children);
+  const hasOpposite = _children.some((item: any) => item.props?.opposite != null);
   const items = _children.map((item: any, index) =>
     cloneElement(item, {
       unstyled,
@@ -138,7 +139,7 @@ export const Timeline = factory<TimelineFactory>((_props) => {
 
   return (
     <TimelineProvider value={{ getStyles }}>
-      <Box {...getStyles('root')} mod={[{ align }, mod]} {...others}>
+      <Box {...getStyles('root')} mod={[{ align, opposite: hasOpposite }, mod]} {...others}>
         {items}
       </Box>
     </TimelineProvider>

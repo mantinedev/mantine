@@ -20,7 +20,8 @@ export type TimelineItemStylesNames =
   | 'itemContent'
   | 'itemBullet'
   | 'item'
-  | 'itemTitle';
+  | 'itemTitle'
+  | 'itemOpposite';
 
 export interface TimelineItemProps
   extends BoxProps, CompoundStylesApiProps<TimelineItemFactory>, ElementProps<'div', 'title'> {
@@ -36,6 +37,9 @@ export interface TimelineItemProps
 
   /** React node that should be rendered inside the bullet – icon, image, avatar, etc. By default, large white dot is displayed. */
   bullet?: React.ReactNode;
+
+  /** Content displayed on the opposite side of the timeline item */
+  opposite?: React.ReactNode;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
   radius?: MantineRadius;
@@ -67,6 +71,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
     __lineActive,
     __vars,
     bullet,
+    opposite,
     radius,
     color,
     lineVariant,
@@ -92,6 +97,10 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
       }}
       {...others}
     >
+      {opposite != null && (
+        <div {...ctx.getStyles('itemOpposite', stylesApiProps)}>{opposite}</div>
+      )}
+
       <Box
         {...ctx.getStyles('itemBullet', stylesApiProps)}
         mod={{ 'with-child': !!bullet, align: __align, active: __active }}
