@@ -1,4 +1,4 @@
-import { FloatingWindowDemos, HeatmapDemos, SunburstChartDemos } from '@docs/demos';
+import { FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -37,3 +37,10 @@ as concentric rings, similar to a treemap plotted in polar coordinates.
 displaying month labels at the bottom of the heatmap instead of the top (default).
 
 <Demo data={HeatmapDemos.monthLabelsPosition} />
+
+## New example: Table virtualization
+
+New [Table](/core/table) example demonstrates how to use `Table.ScrollContainer` with
+`@tanstack/react-virtual` to efficiently render large datasets with 5,000 rows.
+
+<Demo data={TableDemos.virtualized} />
