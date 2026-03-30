@@ -28,24 +28,21 @@ export interface AffixPosition {
 }
 
 export interface AffixBaseProps {
-  /** Root element `z-index` property @default `200`  */
+  /** Root element `z-index` property @default 200  */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Determines whether the component is rendered within `Portal` @default `true` */
+  /** Determines whether the component is rendered within `Portal` @default true */
   withinPortal?: boolean;
 
   /** Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. */
   portalProps?: BasePortalProps;
 
-  /** Affix position on screen @default `{ bottom: 0, right: 0 }` */
+  /** Affix position on screen @default { bottom: 0, right: 0 } */
   position?: AffixPosition;
 }
 
 export interface AffixProps
-  extends BoxProps,
-    AffixBaseProps,
-    StylesApiProps<AffixFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, AffixBaseProps, StylesApiProps<AffixFactory>, ElementProps<'div'> {}
 
 export type AffixFactory = Factory<{
   props: AffixProps;
@@ -70,7 +67,7 @@ const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position }) 
   },
 }));
 
-export const Affix = factory<AffixFactory>((_props, ref) => {
+export const Affix = factory<AffixFactory>((_props) => {
   const props = useProps('Affix', defaultProps, _props);
   const {
     classNames,
@@ -103,10 +100,11 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
 
   return (
     <OptionalPortal {...portalProps} withinPortal={withinPortal}>
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box {...getStyles('root')} {...others} />
     </OptionalPortal>
   );
 });
 
 Affix.classes = classes;
+Affix.varsResolver = varsResolver;
 Affix.displayName = '@mantine/core/Affix';

@@ -1,6 +1,12 @@
+import { createContext } from 'react';
 import { FloatingDelayGroup } from '@floating-ui/react';
 import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../../core';
-import { TooltipGroupProvider } from './TooltipGroup.context';
+
+export interface TooltipGroupContextValue {
+  withinGroup: boolean;
+}
+
+export const TooltipGroupContext = createContext<TooltipGroupContextValue>({ withinGroup: false });
 
 export interface TooltipGroupProps {
   /** `Tooltip` components */
@@ -22,11 +28,11 @@ export function TooltipGroup(props: TooltipGroupProps) {
   const { openDelay, closeDelay, children } = useProps('TooltipGroup', defaultProps, props);
 
   return (
-    <TooltipGroupProvider value>
+    <TooltipGroupContext value={{ withinGroup: true }}>
       <FloatingDelayGroup delay={{ open: openDelay, close: closeDelay }}>
         {children}
       </FloatingDelayGroup>
-    </TooltipGroupProvider>
+    </TooltipGroupContext>
   );
 }
 

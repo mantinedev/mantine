@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalContentStylesNames = 'content' | 'inner';
 
 export interface ModalContentProps
-  extends ModalBaseContentProps,
-    CompoundStylesApiProps<ModalContentFactory> {
+  extends ModalBaseContentProps, CompoundStylesApiProps<ModalContentFactory> {
   __hidden?: boolean;
 }
 
@@ -18,7 +17,7 @@ export type ModalContentFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
+export const ModalContent = factory<ModalContentFactory>((_props) => {
   const props = useProps('ModalContent', null, _props);
   const { classNames, className, style, styles, vars, children, __hidden, ...others } = props;
 
@@ -32,7 +31,6 @@ export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
       data-full-screen={ctx.fullScreen || undefined}
       data-modal-content
       data-hidden={__hidden || undefined}
-      ref={ref}
       {...others}
     >
       <Scroll

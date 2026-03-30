@@ -1,4 +1,4 @@
-import { IconCode, IconCodePlus, IconPencilPlus, IconPlugConnected } from '@tabler/icons-react';
+import { CodeBlockIcon, CodeIcon, NotePencilIcon, PlugIcon } from '@phosphor-icons/react';
 import { SimpleGrid } from '@mantine/core';
 import { Demo } from '@mantinex/demo';
 import { StylesDemos } from '@docs/demos';
@@ -14,25 +14,25 @@ import classes from './HomePageStyles.module.css';
 
 const features: HomePageFeaturesData = [
   {
-    icon: IconCode,
+    icon: CodeIcon,
     title: 'Built with CSS',
     description:
       'Mantine styles are exposed as .css files – styles are performant and do not have any runtime overhead',
   },
   {
-    icon: IconPencilPlus,
+    icon: NotePencilIcon,
     title: 'Override anything',
     description:
       'All Mantine components support Styles API which allows to override any part of component styles with inline styles of classes',
   },
   {
-    icon: IconCodePlus,
+    icon: CodeBlockIcon,
     title: 'PostCSS preset',
     description:
       'postcss-preset-mantine includes mixins and functions to apply dark/light, rtl and responsive styles',
   },
   {
-    icon: IconPlugConnected,
+    icon: PlugIcon,
     title: 'Compatible with any styling solution',
     description:
       'You can bring your own library to style Mantine components (Emotion, Vanilla Extract, Sass, etc.) – you are not limited to any specific tool',

@@ -1,7 +1,6 @@
 import { factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { PaginationIcon } from './Pagination.icons';
-import classes from './Pagination.module.css';
 import { PaginationControl } from './PaginationControl/PaginationControl';
 import { PaginationDots } from './PaginationDots/PaginationDots';
 import {
@@ -17,15 +16,16 @@ import {
   PaginationRootProps,
   PaginationRootStylesNames,
 } from './PaginationRoot/PaginationRoot';
+import classes from './Pagination.module.css';
 
 export type PaginationStylesNames = PaginationRootStylesNames;
 export type PaginationCssVariables = PaginationRootCssVariables;
 
 export interface PaginationProps extends PaginationRootProps {
-  /** If set, first/last controls are displayed @default `false` */
+  /** If set, first/last controls are displayed @default false */
   withEdges?: boolean;
 
-  /** If set, next/previous controls are displayed @default `true` */
+  /** If set, next/previous controls are displayed @default true */
   withControls?: boolean;
 
   /** Props passed down to next/previous/first/last controls */
@@ -46,13 +46,13 @@ export interface PaginationProps extends PaginationRootProps {
   /** Dots icon component */
   dotsIcon?: PaginationIcon;
 
-  /** Key of `theme.spacing`, gap between controls @default `8` */
+  /** Key of `theme.spacing`, gap between controls @default 8 */
   gap?: MantineSpacing;
 
-  /** If set, the pagination is hidden when only one page is available (`total={1}`) @default `false` */
+  /** If set, the pagination is hidden when only one page is available (`total={1}`) @default false */
   hideWithOnePage?: boolean;
 
-  /** If set to `false`, pages controls are hidden @default `true` */
+  /** If set to `false`, page number buttons are hidden, only next/previous controls remain @default `true` */
   withPages?: boolean;
 }
 
@@ -81,7 +81,7 @@ const defaultProps = {
   gap: 8,
 } satisfies Partial<PaginationProps>;
 
-export const Pagination = factory<PaginationFactory>((_props, ref) => {
+export const Pagination = factory<PaginationFactory>((_props) => {
   const props = useProps('Pagination', defaultProps, _props);
   const {
     withEdges,
@@ -104,7 +104,7 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
   }
 
   return (
-    <PaginationRoot ref={ref} total={total} {...others}>
+    <PaginationRoot total={total} {...others}>
       <Group gap={gap}>
         {withEdges && <PaginationFirst icon={firstIcon} {...getControlProps?.('first')} />}
         {withControls && (

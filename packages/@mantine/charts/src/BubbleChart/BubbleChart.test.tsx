@@ -1,4 +1,4 @@
-import { patchConsoleWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, tests } from '@mantine-tests/core';
 import { BubbleChart, BubbleChartProps, BubbleChartStylesNames } from './BubbleChart';
 
 const defaultProps: BubbleChartProps = {
@@ -8,24 +8,12 @@ const defaultProps: BubbleChartProps = {
 };
 
 describe('@mantine/charts/BubbleChart', () => {
-  beforeAll(() => {
-    patchConsoleWarn();
-  });
-
-  afterAll(() => {
-    patchConsoleWarn.release();
-  });
+  autoPatchWarn();
 
   tests.itSupportsSystemProps<BubbleChartProps, BubbleChartStylesNames>({
     component: BubbleChart,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/charts/BubbleChart',
     stylesApiSelectors: ['root'],
   });

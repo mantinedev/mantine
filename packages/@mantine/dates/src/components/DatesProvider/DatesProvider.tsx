@@ -28,8 +28,8 @@ export interface DatesProviderProps {
 
 export function DatesProvider({ settings, children }: DatesProviderProps) {
   return (
-    <DatesProviderContext.Provider value={{ ...DATES_PROVIDER_DEFAULT_SETTINGS, ...settings }}>
+    <DatesProviderContext value={{ ...DATES_PROVIDER_DEFAULT_SETTINGS, ...settings }}>
       {children}
-    </DatesProviderContext.Provider>
+    </DatesProviderContext>
   );
 }

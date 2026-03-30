@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { CardFactory } from './Card';
 
-interface CardContextValue {
+export interface CardContextValue {
   getStyles: GetStylesApi<CardFactory>;
 }
 

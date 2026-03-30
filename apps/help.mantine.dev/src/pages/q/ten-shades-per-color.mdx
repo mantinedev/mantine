@@ -16,15 +16,15 @@ export default Layout(meta);
 
 ## How Mantine colors are defined and used
 
-New colors are added to the `theme.colors` object. Each color must have 10 shades from lightest to darkest.
-Colors specified in `theme.colors` are available in all components that support
+New colors are added to the `theme.colors` object. Each color must have 10 shades from the lightest to the darkest.
+Colors specified in `theme.colors` are available in all components that support the
 `color` prop.
 
-`theme.primaryColor` determines which color from `theme.colors` is used as default color
-in most components that support `color` prop.
+`theme.primaryColor` determines which color from `theme.colors` is used as the default color
+in most components that support the `color` prop.
 
 `theme.primaryShade` determines which shade from `theme.colors[color]` is used
-as default color in components with filled variant.
+as the default color in components with the filled variant.
 
 
 ```tsx
@@ -46,12 +46,12 @@ const theme = createTheme({
     ],
   },
 
-  // theme.primaryColor must be key of theme.colors object,
+  // theme.primaryColor must be a key of the theme.colors object,
   // hex/rgb/other values are not supported
   primaryColor: 'oceanBlue',
 
-  // primaryShade is the index of main color in theme.colors[color] arrays
-  // theme.colors[color][primaryShade] is used in components with filled variant
+  // primaryShade is the index of the main color in theme.colors[color] arrays
+  // theme.colors[color][primaryShade] is used in components with the filled variant
   primaryShade: { light: 6, dark: 8 },
 });
 ```
@@ -60,11 +60,11 @@ const theme = createTheme({
 
 
 Mantine components have different variants and support light and dark color
-schemes. Having 10 shades per color allows maintaining consistent colors with
+schemes. Having 10 shades per color allows for maintaining consistent colors with
 proper contrast and brightness levels across all variants and color schemes.
 
-For example, [Button](https://mantine.dev/core/button) component has `filled`
-and `light` variants which use different shades of `theme.colors` depending on
+For example, the [Button](https://mantine.dev/core/button) component has `filled`
+and `light` variants that use different shades of `theme.colors` depending on the
 color scheme:
 
 <Group>
@@ -89,9 +89,9 @@ In the above example:
 
 ## Can I have just one shade per color?
 
-If you do not plan to use light variant, support different colors for
+If you do not plan to use the light variant, support different colors for
 light/dark color schemes, and you do not rely on color changes for hover
-effects, you can define just one shade per color with `colorsTuple` function:
+effects, you can define just one shade per color with the `colorsTuple` function:
 
 ```tsx
 import { colorsTuple, createTheme } from '@mantine/core';
@@ -103,9 +103,9 @@ const theme = createTheme({
 });
 ```
 
-## Can I have more that 10 shades per color?
+## Can I have more than 10 shades per color?
 
 Yes, it is possible to define more than 10 shades per color, but
-Mantine components will use only the first 10 of them. Other colors
-values will be available in `theme.colors` object and as CSS variables,
+Mantine components will use only the first 10 of them. Other color
+values will be available in the `theme.colors` object and as CSS variables,
 for example `var(--mantine-color-blue-11)`.

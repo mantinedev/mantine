@@ -6,7 +6,7 @@ import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" withBorder>
       <Card.Section component="a" href="https://mantine.dev/">
         <Image
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
@@ -25,7 +25,7 @@ function Demo() {
         activities on and around the fjords of Norway
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md">
+      <Button color="blue" fullWidth mt="md">
         Book classic tour now
       </Button>
     </Card>
@@ -35,7 +35,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" withBorder>
       <Card.Section component="a" href="https://mantine.dev/">
         <Image
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
@@ -54,7 +54,7 @@ function Demo() {
         activities on and around the fjords of Norway
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md">
+      <Button color="blue" fullWidth mt="md">
         Book classic tour now
       </Button>
     </Card>

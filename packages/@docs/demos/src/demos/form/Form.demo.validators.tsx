@@ -1,10 +1,19 @@
-import { Button, Group, NumberInput, TextInput } from '@mantine/core';
-import { hasLength, isEmail, isInRange, isNotEmpty, matches, useForm } from '@mantine/form';
+import { Button, Group, NativeSelect, NumberInput, TextInput } from '@mantine/core';
+import {
+  hasLength,
+  isEmail,
+  isInRange,
+  isNotEmpty,
+  isOneOf,
+  isUrl,
+  matches,
+  useForm,
+} from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
-import { Button, Group, TextInput, NumberInput } from '@mantine/core';
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches, isUrl, isOneOf } from '@mantine/form';
+import { Button, Group, TextInput, NumberInput, NativeSelect } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
@@ -15,6 +24,8 @@ function Demo() {
       email: '',
       favoriteColor: '',
       age: 18,
+      website: '',
+      role: '',
     },
 
     validate: {
@@ -23,6 +34,8 @@ function Demo() {
       email: isEmail('Invalid email'),
       favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
       age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
+      website: isUrl('Invalid URL'),
+      role: isOneOf(['developer', 'designer', 'manager'], 'Pick a valid role'),
     },
   });
 
@@ -66,6 +79,22 @@ function Demo() {
         mt="md"
         key={form.key('age')}
         {...form.getInputProps('age')}
+      />
+      <TextInput
+        label="Your website"
+        placeholder="https://example.com"
+        withAsterisk
+        mt="md"
+        key={form.key('website')}
+        {...form.getInputProps('website')}
+      />
+      <NativeSelect
+        label="Your role"
+        data={['', 'developer', 'designer', 'manager']}
+        withAsterisk
+        mt="md"
+        key={form.key('role')}
+        {...form.getInputProps('role')}
       />
 
       <Group justify="flex-end" mt="md">
@@ -85,6 +114,8 @@ function Demo() {
       email: '',
       favoriteColor: '',
       age: 18,
+      website: '',
+      role: '',
     },
 
     validate: {
@@ -93,6 +124,8 @@ function Demo() {
       email: isEmail('Invalid email'),
       favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
       age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
+      website: isUrl('Invalid URL'),
+      role: isOneOf(['developer', 'designer', 'manager'], 'Pick a valid role'),
     },
   });
 
@@ -136,6 +169,22 @@ function Demo() {
         mt="md"
         key={form.key('age')}
         {...form.getInputProps('age')}
+      />
+      <TextInput
+        label="Your website"
+        placeholder="https://example.com"
+        withAsterisk
+        mt="md"
+        key={form.key('website')}
+        {...form.getInputProps('website')}
+      />
+      <NativeSelect
+        label="Your role"
+        data={['', 'developer', 'designer', 'manager']}
+        withAsterisk
+        mt="md"
+        key={form.key('role')}
+        {...form.getInputProps('role')}
       />
 
       <Group justify="flex-end" mt="md">

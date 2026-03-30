@@ -31,3 +31,7 @@ export function useInViewport<T extends HTMLElement = any>(): UseInViewportRetur
 
   return { ref, inViewport };
 }
+
+export namespace useInViewport {
+  export type ReturnValue<T extends HTMLElement> = UseInViewportReturnValue<T>;
+}

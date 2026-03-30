@@ -25,17 +25,9 @@ describe('@mantine/core/Button', () => {
   tests.itSupportsSystemProps<ButtonProps, ButtonStylesNames>({
     component: Button,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/Button',
     stylesApiSelectors: ['root', 'inner', 'label', 'loader', 'section'],
   });

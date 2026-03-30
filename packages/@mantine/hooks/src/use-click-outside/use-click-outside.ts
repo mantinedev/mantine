@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useRef } from 'react';
 
 type EventType = MouseEvent | TouchEvent;
 
@@ -12,25 +12,25 @@ export function useClickOutside<T extends HTMLElement = any>(
   const ref = useRef<T>(null);
   const eventsList = events || DEFAULT_EVENTS;
 
-  useEffect(() => {
-    const listener = (event: Event) => {
-      const { target } = event ?? {};
-      if (Array.isArray(nodes)) {
-        const shouldIgnore =
-          !document.body.contains(target as Node) && (target as Element)?.tagName !== 'HTML';
-        const shouldTrigger = nodes.every((node) => !!node && !event.composedPath().includes(node));
-        shouldTrigger && !shouldIgnore && callback(event as EventType);
-      } else if (ref.current && !ref.current.contains(target as Node)) {
-        callback(event as EventType);
-      }
-    };
+  const listener = useEffectEvent((event: Event) => {
+    const { target } = event ?? {};
+    if (Array.isArray(nodes)) {
+      const shouldIgnore =
+        !document.body.contains(target as Node) && (target as Element)?.tagName !== 'HTML';
+      const shouldTrigger = nodes.every((node) => !!node && !event.composedPath().includes(node));
+      shouldTrigger && !shouldIgnore && callback(event as EventType);
+    } else if (ref.current && !ref.current.contains(target as Node)) {
+      callback(event as EventType);
+    }
+  });
 
+  useEffect(() => {
     eventsList.forEach((fn) => document.addEventListener(fn, listener));
 
     return () => {
       eventsList.forEach((fn) => document.removeEventListener(fn, listener));
     };
-  }, [ref, callback, nodes]);
+  }, []);
 
   return ref;
 }

@@ -1,0 +1,294 @@
+.monthView {
+  --week-numbers-offset: 0rem;
+  --month-view-border: 1px solid var(--month-view-border-color);
+  --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --day-base-color: var(--mantine-color-text);
+  --min-day-width: 84px;
+
+  &:where([data-with-week-numbers]) {
+    --week-numbers-offset: 42px;
+  }
+
+  @mixin where-light {
+    --month-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --month-view-border-color: var(--mantine-color-dark-4);
+  }
+}
+
+.monthViewWeekdays {
+  display: flex;
+}
+
+.monthViewWeek {
+  display: flex;
+  position: relative;
+  min-width: calc(var(--min-day-width) * 7 + var(--week-numbers-offset));
+}
+
+.monthViewWeekNumber {
+  flex: 0 0 var(--week-numbers-offset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
+  padding: 4px;
+  border-block-start: var(--month-view-border);
+  border-block-end: none;
+  border-inline-start: var(--month-view-border);
+  border-inline-end: none;
+  font-weight: var(--mantine-font-weight-medium);
+  cursor: pointer;
+  user-select: none;
+
+  :where(.monthViewWeek:first-child) & {
+    border-start-start-radius: var(--month-view-radius);
+
+    :where([data-with-weekdays] .monthView) & {
+      border-start-start-radius: 0;
+    }
+  }
+
+  :where(.monthViewWeek:last-child) & {
+    border-block-end: var(--month-view-border);
+    border-end-start-radius: var(--month-view-radius);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.monthViewWeekday {
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  min-width: var(--min-day-width);
+  height: 36px;
+  font-size: var(--mantine-font-size-sm);
+  border-block-start: var(--month-view-border);
+  border-block-end: none;
+  border-inline-start: var(--month-view-border);
+  border-inline-end: none;
+  font-weight: var(--mantine-font-weight-medium);
+  text-align: center;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  user-select: none;
+
+  &:where(:first-child) {
+    border-start-start-radius: var(--month-view-radius);
+
+    :where([data-with-week-numbers] .monthView) & {
+      border-start-start-radius: 0;
+    }
+  }
+
+  &:where(:last-child) {
+    border-inline-end: var(--month-view-border);
+    border-start-end-radius: var(--month-view-radius);
+  }
+}
+
+.monthViewWeekdaysCorner {
+  flex: 0 0 var(--week-numbers-offset);
+  border-block-start: var(--month-view-border);
+  border-inline-start: var(--month-view-border);
+  border-start-start-radius: var(--month-view-radius);
+}
+
+.monthViewDay {
+  min-width: var(--min-day-width);
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  height: calc(52px + var(--month-view-max-events, 2) * 24px);
+  padding: 4px;
+  font-weight: var(--mantine-font-weight-medium);
+  border-block-start: var(--month-view-border);
+  border-block-end: none;
+  border-inline-start: var(--month-view-border);
+  border-inline-end: none;
+  color: var(--day-base-color);
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+
+  &:where(:last-child) {
+    border-inline-end: var(--month-view-border);
+
+    :where(.monthViewWeek:last-child) & {
+      border-block-end: var(--month-view-border);
+      border-end-end-radius: var(--month-view-radius);
+    }
+
+    :where(.monthViewWeek:first-child) & {
+      border-start-end-radius: var(--month-view-radius);
+
+      :where(:not([data-with-weekdays])) .monthView & {
+        border-start-end-radius: var(--month-view-radius);
+      }
+    }
+  }
+
+  &:where(:first-of-type) {
+    :where(.monthViewWeek:first-child) & {
+      border-start-start-radius: var(--month-view-radius);
+
+      :where([data-with-week-numbers]) .monthView & {
+        border-start-start-radius: 0;
+      }
+
+      :where([data-with-weekdays]) .monthView & {
+        border-start-start-radius: 0;
+      }
+    }
+
+    :where(.monthViewWeek:last-child) & {
+      border-end-start-radius: var(--month-view-radius);
+    }
+
+    :where([data-with-week-numbers]) .monthViewWeek:last-child & {
+      border-end-start-radius: 0;
+    }
+  }
+
+  :where(.monthViewWeek:last-child) & {
+    border-block-end: var(--month-view-border);
+  }
+
+  &:where([data-weekend]) {
+    color: var(--mantine-color-red-6);
+  }
+
+  &:where([data-outside]) {
+    color: alpha(var(--day-base-color), 0.4);
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  @mixin hover {
+    &:where(:not([data-static])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-6);
+      }
+    }
+  }
+
+  &:where([data-drop-target]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-blue-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
+    }
+  }
+
+  &:where([data-drag-selected]) {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-light);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+
+      @mixin where-light {
+        border-color: var(--mantine-primary-color-2);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-primary-color-9);
+      }
+    }
+  }
+
+  &:where([data-drag-slot-index]) {
+    touch-action: none;
+  }
+}
+
+.monthViewDayLabel {
+  width: 26px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: var(--mantine-font-size-sm);
+  user-select: none;
+
+  &:where([data-today]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
+}
+
+.monthViewBackgroundEvent {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: var(--month-view-radius);
+  background-color: var(--bg-event-bg);
+  top: 0;
+  bottom: -21px;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: 3px 4px;
+  color: var(--bg-event-color);
+}
+
+.monthViewEvents {
+  position: absolute;
+  inset-inline: 0;
+  inset-inline-start: var(--week-numbers-offset);
+  top: 30px;
+  bottom: 22px;
+  pointer-events: none;
+  z-index: 3;
+}

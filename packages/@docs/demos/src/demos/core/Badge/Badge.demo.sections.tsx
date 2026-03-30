@@ -1,13 +1,13 @@
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { Badge, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Badge, Group } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconAt size={12} />;
+  const icon = <AtIcon size={12} />;
   return (
     <Group>
       <Badge leftSection={icon}>With left section</Badge>
@@ -18,7 +18,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconAt size={12} />;
+  const icon = <AtIcon size={12} />;
   return (
     <Group>
       <Badge leftSection={icon}>With left section</Badge>

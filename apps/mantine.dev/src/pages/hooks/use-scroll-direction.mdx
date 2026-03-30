@@ -1,0 +1,19 @@
+import { UseScrollDirectionDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useScrollDirection);
+
+## Usage
+
+The `use-scroll-direction` hook detects whether the user is currently scrolling up or down.
+It returns `'up'` when the user is scrolling up, `'down'` when scrolling down, and `'unknown'`
+before any scroll event has occurred.
+
+<Demo data={UseScrollDirectionDemos.usage} />
+
+## Definition
+
+```tsx
+function useScrollDirection(): 'up' | 'down' | 'unknown';
+```

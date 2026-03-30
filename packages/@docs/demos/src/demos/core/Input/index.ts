@@ -15,3 +15,4 @@ export { stylesApi } from './Input.demo.stylesApi';
 export { wrapperStylesApi } from './Input.demo.wrapperStylesApi';
 export { error } from './Input.demo.error';
 export { clearButton } from './Input.demo.clearButton';
+export { loading } from './Input.demo.loading';

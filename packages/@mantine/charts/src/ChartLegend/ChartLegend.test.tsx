@@ -1,152 +1,197 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { MantineProvider } from '@mantine/core';
-import { ChartLegend } from './ChartLegend';
+import { render, tests, userEvent } from '@mantine-tests/core';
+import {
+  ChartLegend,
+  ChartLegendProps,
+  ChartLegendStylesNames,
+  getFilteredChartLegendPayload,
+} from './ChartLegend';
 
 const payload = [
   {
     dataKey: 'Apples',
     color: 'var(--mantine-color-indigo-6)',
-    payload: { dataKey: 'Apples', color: 'var(--mantine-color-indigo-6)' },
+    payload: { name: 'Apples', dataKey: 'Apples' },
   },
   {
     dataKey: 'Oranges',
     color: 'var(--mantine-color-blue-6)',
-    payload: { dataKey: 'Oranges', color: 'var(--mantine-color-blue-6)' },
+    payload: { name: 'Oranges', dataKey: 'Oranges' },
   },
   {
     dataKey: 'Tomatoes',
     color: 'var(--mantine-color-teal-6)',
-    payload: { dataKey: 'Tomatoes', color: 'var(--mantine-color-teal-6)' },
+    payload: { name: 'Tomatoes', dataKey: 'Tomatoes' },
   },
 ];
 
-function renderLegend(onHighlight: (area: string | null) => void) {
-  return render(
-    <MantineProvider>
-      <ChartLegend
-        payload={payload}
-        onHighlight={onHighlight}
-        legendPosition="top"
-        data-testid="chart-legend"
-      />
-    </MantineProvider>
-  );
-}
+const series = [
+  { name: 'Apples', label: 'Apples sales', color: 'indigo.6' },
+  { name: 'Oranges', label: 'Oranges sales', color: 'blue.6' },
+  { name: 'Tomatoes', label: 'Tomatoes sales', color: 'teal.6' },
+];
 
-function getLegendItem(labelText: string): HTMLElement {
-  const label = screen.getByText(labelText);
-  const item = label.closest('.mantine-ChartLegend-legendItem');
-  if (!item) throw new Error(`Legend item for "${labelText}" not found`);
-  return item as HTMLElement;
-}
+const defaultProps: ChartLegendProps = {
+  payload,
+  onHighlight: () => {},
+  legendPosition: 'bottom',
+};
 
 describe('@mantine/charts/ChartLegend', () => {
-  it('calls onHighlight with dataKey when mouse enters a legend item', () => {
+  tests.itSupportsSystemProps<ChartLegendProps, ChartLegendStylesNames>({
+    component: ChartLegend,
+    props: defaultProps,
+    selector: '.mantine-ChartLegend-legend',
+    refType: HTMLDivElement,
+    displayName: '@mantine/charts/ChartLegend',
+    stylesApiSelectors: ['legend', 'legendItem', 'legendItemColor', 'legendItemName'],
+  });
+
+  it('renders nothing when payload is undefined', () => {
+    const { container } = render(
+      <ChartLegend payload={undefined} onHighlight={() => {}} legendPosition="bottom" />
+    );
+    expect(container.querySelector('.mantine-ChartLegend-legend')).not.toBeInTheDocument();
+  });
+
+  it('renders correct number of legend items', () => {
+    const { container } = render(<ChartLegend {...defaultProps} />);
+    expect(container.querySelectorAll('.mantine-ChartLegend-legendItem')).toHaveLength(3);
+  });
+
+  it('displays dataKey as label when no series are provided', () => {
+    const { container } = render(<ChartLegend {...defaultProps} />);
+    const names = container.querySelectorAll('.mantine-ChartLegend-legendItemName');
+    expect(names[0]).toHaveTextContent('Apples');
+    expect(names[1]).toHaveTextContent('Oranges');
+    expect(names[2]).toHaveTextContent('Tomatoes');
+  });
+
+  it('displays series labels when series are provided', () => {
+    const { container } = render(<ChartLegend {...defaultProps} series={series} />);
+    const names = container.querySelectorAll('.mantine-ChartLegend-legendItemName');
+    expect(names[0]).toHaveTextContent('Apples sales');
+    expect(names[1]).toHaveTextContent('Oranges sales');
+    expect(names[2]).toHaveTextContent('Tomatoes sales');
+  });
+
+  it('filters out payload items with color set to none', () => {
+    const payloadWithNone = [
+      ...payload,
+      {
+        dataKey: 'Hidden',
+        color: 'none',
+        payload: { name: 'Hidden', dataKey: 'Hidden' },
+      },
+    ];
+    const { container } = render(<ChartLegend {...defaultProps} payload={payloadWithNone} />);
+    expect(container.querySelectorAll('.mantine-ChartLegend-legendItem')).toHaveLength(3);
+  });
+
+  it('calls onHighlight with dataKey on mouse enter and null on mouse leave', async () => {
     const onHighlight = jest.fn();
-    renderLegend(onHighlight);
+    const { container } = render(<ChartLegend {...defaultProps} onHighlight={onHighlight} />);
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
 
-    fireEvent.mouseEnter(getLegendItem('Apples'));
-
-    expect(onHighlight).toHaveBeenCalledTimes(1);
+    await userEvent.hover(items[0]);
     expect(onHighlight).toHaveBeenCalledWith('Apples');
-  });
 
-  it('does NOT call onHighlight(null) when cursor moves between legend items', () => {
-    // This is the core regression test.
-    // Previously, onMouseLeave on each item called onHighlight(null), causing the stuck highlight
-    // bug: when rapid cursor movements triggered mouseenter then mouseleave before React could
-    // re-render, the new DOM node missed the leave event, leaving the highlight stuck.
-    //
-    // The fix moves onHighlight(null) from individual items to the container's onMouseLeave.
-    // When the cursor moves between legend items, no null is emitted between transitions.
-    //
-    // Note: React synthetic events fire onMouseEnter on relatedTarget automatically,
-    // so after mouseLeave(A, { relatedTarget: B }), onHighlight("B") is called.
-    // The key assertion is that onHighlight(null) is NEVER called during item transitions.
-    const onHighlight = jest.fn();
-    renderLegend(onHighlight);
-
-    const applesItem = getLegendItem('Apples');
-    const orangesItem = getLegendItem('Oranges');
-
-    fireEvent.mouseEnter(applesItem);
-    expect(onHighlight).toHaveBeenLastCalledWith('Apples');
-    onHighlight.mockClear();
-
-    // Simulate cursor moving from Apples toward Oranges (still inside container).
-    // React fires onMouseEnter on orangesItem as well, but crucially NOT onHighlight(null).
-    fireEvent.mouseLeave(applesItem, { relatedTarget: orangesItem });
-
-    const nullCalls = onHighlight.mock.calls.filter((c) => c[0] === null);
-    expect(nullCalls).toHaveLength(0);
-  });
-
-  it('calls onHighlight(null) when mouse leaves the legend container entirely', () => {
-    const onHighlight = jest.fn();
-    const { container } = renderLegend(onHighlight);
-
-    fireEvent.mouseEnter(getLegendItem('Apples'));
-    onHighlight.mockClear();
-
-    // Simulate cursor leaving the legend container to an element outside it.
-    const legend = screen.getByTestId('chart-legend');
-    fireEvent.mouseLeave(legend, { relatedTarget: container.parentElement! });
-
-    expect(onHighlight).toHaveBeenCalledTimes(1);
+    await userEvent.unhover(items[0]);
     expect(onHighlight).toHaveBeenCalledWith(null);
   });
 
-  it('transitions highlight from one item to another without intermediate null', () => {
-    // Simulates rapid cursor movement: Apples → Oranges.
-    // The sequence of onHighlight calls should be ["Apples", "Oranges"] with no null in between.
-    const onHighlight = jest.fn();
-    renderLegend(onHighlight);
-
-    const applesItem = getLegendItem('Apples');
-    const orangesItem = getLegendItem('Oranges');
-
-    fireEvent.mouseEnter(applesItem);
-    // React also fires mouseEnter on orangesItem as relatedTarget
-    fireEvent.mouseLeave(applesItem, { relatedTarget: orangesItem });
-
-    const calls = onHighlight.mock.calls.map((c) => c[0]);
-    expect(calls).not.toContain(null);
-    expect(calls[0]).toBe('Apples');
-    // Last call should be Oranges (from React's automatic enter on relatedTarget)
-    expect(calls[calls.length - 1]).toBe('Oranges');
+  it('sets data-without-color attribute when showColor is false', () => {
+    const { container } = render(<ChartLegend {...defaultProps} showColor={false} />);
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
+    expect(items[0]).toHaveAttribute('data-without-color');
   });
 
-  it('clears highlight when cursor leaves the container after hovering an item', () => {
-    const onHighlight = jest.fn();
-    const { container } = renderLegend(onHighlight);
-
-    fireEvent.mouseEnter(getLegendItem('Tomatoes'));
-    expect(onHighlight).toHaveBeenLastCalledWith('Tomatoes');
-
-    const legend = screen.getByTestId('chart-legend');
-    fireEvent.mouseLeave(legend, { relatedTarget: container.parentElement! });
-
-    expect(onHighlight).toHaveBeenLastCalledWith(null);
+  it('does not set data-without-color attribute when showColor is true', () => {
+    const { container } = render(<ChartLegend {...defaultProps} showColor />);
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
+    expect(items[0]).not.toHaveAttribute('data-without-color');
   });
 
-  it('sets highlight for each item in sequence with no null between transitions', () => {
-    const onHighlight = jest.fn();
-    renderLegend(onHighlight);
+  it('sets data-centered modifier when centered is true', () => {
+    const { container } = render(<ChartLegend {...defaultProps} centered />);
+    expect(container.querySelector('.mantine-ChartLegend-legend')).toHaveAttribute('data-centered');
+  });
 
-    const applesItem = getLegendItem('Apples');
-    const orangesItem = getLegendItem('Oranges');
-    const tomatoesItem = getLegendItem('Tomatoes');
+  it('sets data-position modifier based on legendPosition', () => {
+    const { container, rerender } = render(<ChartLegend {...defaultProps} legendPosition="top" />);
+    expect(container.querySelector('.mantine-ChartLegend-legend')).toHaveAttribute(
+      'data-position',
+      'top'
+    );
 
-    // Simulate rapid sequential hover: leave fires enter on next item automatically
-    fireEvent.mouseEnter(applesItem);
-    fireEvent.mouseLeave(applesItem, { relatedTarget: orangesItem });
-    // At this point React already fired mouseEnter on orangesItem
-    fireEvent.mouseLeave(orangesItem, { relatedTarget: tomatoesItem });
-    // At this point React already fired mouseEnter on tomatoesItem
+    rerender(<ChartLegend {...defaultProps} legendPosition="bottom" />);
+    expect(container.querySelector('.mantine-ChartLegend-legend')).toHaveAttribute(
+      'data-position',
+      'bottom'
+    );
+  });
 
-    const calls = onHighlight.mock.calls.map((c) => c[0]);
-    expect(calls).not.toContain(null);
-    expect(calls[0]).toBe('Apples');
-    expect(calls[calls.length - 1]).toBe('Tomatoes');
+  it('handles nested dataKeys by extracting the last segment', () => {
+    const nestedPayload = [
+      {
+        dataKey: 'salad.ApplesProp',
+        color: 'var(--mantine-color-indigo-6)',
+        payload: { name: 'salad.ApplesProp', dataKey: 'salad.ApplesProp' },
+      },
+    ];
+    const nestedSeries = [{ name: 'salad.ApplesProp', label: 'Apple Label', color: 'indigo.6' }];
+
+    const { container } = render(
+      <ChartLegend {...defaultProps} payload={nestedPayload} series={nestedSeries} />
+    );
+    const names = container.querySelectorAll('.mantine-ChartLegend-legendItemName');
+    expect(names[0]).toHaveTextContent('Apple Label');
+  });
+
+  it('uses last segment of nested dataKey as fallback when no series label matches', () => {
+    const nestedPayload = [
+      {
+        dataKey: 'salad.ApplesProp',
+        color: 'var(--mantine-color-indigo-6)',
+        payload: { name: 'salad.ApplesProp', dataKey: 'salad.ApplesProp' },
+      },
+    ];
+
+    const { container } = render(<ChartLegend {...defaultProps} payload={nestedPayload} />);
+    const names = container.querySelectorAll('.mantine-ChartLegend-legendItemName');
+    expect(names[0]).toHaveTextContent('ApplesProp');
+  });
+});
+
+describe('getFilteredChartLegendPayload', () => {
+  it('filters out items with color set to none', () => {
+    const input = [
+      { dataKey: 'Apples', color: 'red', payload: { name: 'Apples', dataKey: 'Apples' } },
+      { dataKey: 'Hidden', color: 'none', payload: { name: 'Hidden', dataKey: 'Hidden' } },
+    ];
+    const result = getFilteredChartLegendPayload(input);
+    expect(result).toHaveLength(1);
+    expect(result[0].dataKey).toBe('Apples');
+  });
+
+  it('extracts last segment from nested dataKeys', () => {
+    const input = [
+      {
+        dataKey: 'salad.ApplesProp',
+        color: 'red',
+        payload: { name: 'salad.ApplesProp', dataKey: 'salad.ApplesProp' },
+      },
+    ];
+    const result = getFilteredChartLegendPayload(input);
+    expect(result[0].dataKey).toBe('ApplesProp');
+    expect(result[0].payload.dataKey).toBe('ApplesProp');
+    expect(result[0].payload.name).toBe('ApplesProp');
+  });
+
+  it('keeps simple dataKeys unchanged', () => {
+    const input = [
+      { dataKey: 'Apples', color: 'red', payload: { name: 'Apples', dataKey: 'Apples' } },
+    ];
+    const result = getFilteredChartLegendPayload(input);
+    expect(result[0].dataKey).toBe('Apples');
   });
 });

@@ -19,9 +19,11 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { MantineTransition, Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
-import classes from './Button.module.css';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import { ButtonGroupSection } from './ButtonGroupSection/ButtonGroupSection';
+import classes from './Button.module.css';
+
+export type ButtonSize = MantineSize | `compact-${MantineSize}` | (string & {});
 
 export type ButtonStylesNames = 'root' | 'inner' | 'loader' | 'section' | 'label';
 export type ButtonVariant =
@@ -51,28 +53,28 @@ export type ButtonCssVariables = {
 export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   'data-disabled'?: boolean;
 
-  /** Controls button `height`, `font-size` and horizontal `padding` @default `'sm'` */
-  size?: MantineSize | `compact-${MantineSize}` | (string & {});
+  /** Controls button `height`, `font-size` and horizontal `padding` @default 'sm' */
+  size?: ButtonSize;
 
-  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default `'center'` */
+  /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default 'center' */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Content displayed on the left side of the button label */
+  /** Content on the left side of the button label */
   leftSection?: React.ReactNode;
 
-  /** Content displayed on the right side of the button label */
+  /** Content on the right side of the button label */
   rightSection?: React.ReactNode;
 
-  /** If set, the button takes 100% width of its parent container @default `false` */
+  /** Sets `width: 100%` @default false */
   fullWidth?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient configuration used for `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** Sets `disabled` attribute, applies disabled styles */
@@ -140,7 +142,7 @@ const varsResolver = createVarsResolver<ButtonFactory>(
   }
 );
 
-export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
+export const Button = polymorphicFactory<ButtonFactory>((_props) => {
   const props = useProps('Button', null, _props);
   const {
     style,
@@ -186,7 +188,6 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
 
   return (
     <UnstyledButton
-      ref={ref}
       {...getStyles('root', { active: !disabled && !loading && !dataDisabled })}
       unstyled={unstyled}
       variant={variant}
@@ -239,6 +240,7 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
 });
 
 Button.classes = classes;
+Button.varsResolver = varsResolver;
 Button.displayName = '@mantine/core/Button';
 Button.Group = ButtonGroup;
 Button.GroupSection = ButtonGroupSection;

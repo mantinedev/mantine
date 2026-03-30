@@ -130,3 +130,8 @@ export function useFileDialog(input: UseFileDialogOptions = {}): UseFileDialogRe
 
   return { files, open, reset };
 }
+
+export namespace useFileDialog {
+  export type Options = UseFileDialogOptions;
+  export type ReturnValue = UseFileDialogReturnValue;
+}

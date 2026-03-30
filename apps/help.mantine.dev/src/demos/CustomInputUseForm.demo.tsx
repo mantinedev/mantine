@@ -9,7 +9,7 @@ import { Button, Text } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { useUncontrolled } from '@mantine/hooks';
 
-interface CustomInputProps extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
+interface CustomInputProps extends Omit<React.ComponentProps<'input'>, 'onChange'> {
   value?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;
@@ -59,7 +59,7 @@ function Demo() {
 }
 `;
 
-interface CustomInputProps extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
+interface CustomInputProps extends Omit<React.ComponentProps<'input'>, 'onChange'> {
   value?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;

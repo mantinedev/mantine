@@ -1,3 +1,4 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 const path = require('path');
 const mantine = require('eslint-config-mantine');
 const jest = require('eslint-plugin-jest');

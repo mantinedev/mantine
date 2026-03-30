@@ -5,5 +5,14 @@
 .root {
   display: grid;
   grid-template-columns: repeat(var(--sg-cols), minmax(0, 1fr));
+  grid-auto-rows: var(--sg-auto-rows, auto);
   gap: var(--sg-spacing-y) var(--sg-spacing-x);
+}
+
+.root[data-auto-cols='auto-fill'] {
+  grid-template-columns: repeat(auto-fill, minmax(var(--sg-min-col-width), 1fr));
+}
+
+.root[data-auto-cols='auto-fit'] {
+  grid-template-columns: repeat(auto-fit, minmax(var(--sg-min-col-width), 1fr));
 }

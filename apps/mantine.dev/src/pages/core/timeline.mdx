@@ -10,13 +10,13 @@ export default Layout(MDX_DATA.Timeline);
 
 ## Line and bullet props
 
-Control timeline appearance with the following props:
+Control the timeline appearance with the following props:
 
-- `active` – index of current active element, all elements before this index will be highlighted with `color`
+- `active` – index of the current active element; all elements before this index will be highlighted with `color`
 - `color` – color from theme that should be used to highlight active items, defaults to `theme.primaryColor`
 - `lineWidth` – controls line width and bullet border
 - `bulletSize` – bullet width, height and border-radius
-- `align` – defines line and bullets position relative to content, also sets text-align
+- `align` – defines the line and bullets position relative to content, also sets text-align
 
 <Demo data={TimelineDemos.configurator} />
 
@@ -26,8 +26,8 @@ Control timeline appearance with the following props:
 
 ## Wrap Timeline.Item
 
-`Timeline` component relies on `Timeline.Item` order. Wrapping `Timeline.Item` is not supported,
-Instead you will need to use different approaches:
+`Timeline` component relies on `Timeline.Item` order. Wrapping `Timeline.Item` is not supported.
+Instead, you will need to use different approaches:
 
 ```tsx
 import { Timeline } from '@mantine/core';

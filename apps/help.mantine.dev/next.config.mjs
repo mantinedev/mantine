@@ -1,9 +1,8 @@
 import createMDX from '@next/mdx';
-import rehypeSlug from 'rehype-slug';
 
 const withMDX = createMDX({
   options: {
-    rehypePlugins: [rehypeSlug],
+    rehypePlugins: ['rehype-slug'],
   },
 });
 
@@ -12,12 +11,10 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   pageExtensions: ['ts', 'tsx', 'mdx'],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
+  turbopack: {},
 };
 
 export default withMDX(nextConfig);

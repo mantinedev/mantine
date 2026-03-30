@@ -11,14 +11,14 @@
   }
 
   &[data-active] {
-    color: var(--mantine-color-blue-light-color);
-    background-color: var(--mantine-color-blue-light);
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-blue-filled);
   }
 }
 
 .name {
   display: block;
-  font-weight: 500;
+  font-weight: 600;
   color: inherit;
 }
 

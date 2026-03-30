@@ -11,14 +11,26 @@ describe('@mantine/core/Heatmap', () => {
   tests.itSupportsSystemProps<HeatmapProps, HeatmapStylesNames>({
     component: Heatmap,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     refType: SVGSVGElement,
     displayName: '@mantine/charts/Heatmap',
     stylesApiSelectors: ['root', 'monthLabel', 'weekdayLabel', 'rect'],
+  });
+
+  it('renders cells with a fill color when all data values are equal', () => {
+    const { container } = render(
+      <Heatmap
+        data={{ '2024-06-01': 5, '2024-06-02': 5, '2024-06-03': 5 }}
+        startDate="2024-06-01"
+        endDate="2024-06-03"
+      />
+    );
+
+    const filledRects = Array.from(container.querySelectorAll<SVGRectElement>('rect')).filter(
+      (rect) => rect.getAttribute('fill') && rect.getAttribute('fill') !== 'transparent'
+    );
+
+    expect(filledRects.length).toBeGreaterThan(0);
+    filledRects.forEach((rect) => expect(rect.getAttribute('fill')).toBeTruthy());
   });
 
   it('adds extra column between months when splitMonths is set', () => {
@@ -39,7 +51,6 @@ describe('@mantine/core/Heatmap', () => {
     const width1 = Number(svg1.getAttribute('width'));
     const width2 = Number(svg2.getAttribute('width'));
 
-    // With splitMonths enabled, width must increase due to separators/extra split columns
     expect(width2).toBeGreaterThan(width1);
   });
 });

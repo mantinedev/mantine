@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -16,23 +17,24 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { Loader } from '../Loader/Loader';
 import { InputContext } from './Input.context';
-import classes from './Input.module.css';
 import { InputClearButton } from './InputClearButton/InputClearButton';
-import { InputClearSection } from './InputClearSection/InputClearSection';
+import { ClearSectionMode, InputClearSection } from './InputClearSection/InputClearSection';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
-import { useInputWrapperContext } from './InputWrapper.context';
+import { InputWrapperContext } from './InputWrapper.context';
 import {
   __InputWrapperProps,
   InputWrapper,
   InputWrapperStylesNames,
 } from './InputWrapper/InputWrapper';
+import classes from './Input.module.css';
 
 // Required to be a separate type for docgen script
-type WrapperProps = React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+type WrapperProps = React.ComponentProps<'div'> & DataAttributes;
 
 export interface __BaseInputProps extends __InputWrapperProps, __InputProps {
   /** Props passed down to the root element */
@@ -70,9 +72,9 @@ export interface __InputProps {
   leftSectionWidth?: React.CSSProperties['width'];
 
   /** Props passed down to the `leftSection` element */
-  leftSectionProps?: React.ComponentPropsWithoutRef<'div'>;
+  leftSectionProps?: React.ComponentProps<'div'>;
 
-  /** Sets `pointer-events` styles on the `leftSection` element @default `'none'` */
+  /** Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default 'none' */
   leftSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Content section displayed on the right side of the input */
@@ -82,30 +84,30 @@ export interface __InputProps {
   rightSectionWidth?: React.CSSProperties['width'];
 
   /** Props passed down to the `rightSection` element */
-  rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
+  rightSectionProps?: React.ComponentProps<'div'>;
 
-  /** Sets `pointer-events` styles on the `rightSection` element @default `'none'` */
+  /** Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default 'none' */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Sets `required` attribute on the `input` element */
   required?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Sets `disabled` attribute on the `input` element */
   disabled?: boolean;
 
-  /** Controls input `height` and horizontal `padding` @default `'sm'` */
+  /** Controls input `height`, horizontal `padding`, and `font-size` @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Determines whether the input should have `cursor: pointer` style @default `false` */
+  /** Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default false */
   pointer?: boolean;
 
-  /** Determines whether the input should have red border and red text color when the `error` prop is set @default `true` */
+  /** Determines whether the input should have red border and red text color when the `error` prop is set @default true */
   withErrorStyles?: boolean;
 
-  /** `size` attribute passed down to the input element */
+  /** HTML `size` attribute for the input element (number of visible characters) */
   inputSize?: string;
 
   /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
@@ -114,8 +116,17 @@ export interface __InputProps {
   /** Determines whether the `__clearSection` should be displayed if it is passed to the component, has no effect if `rightSection` is defined */
   __clearable?: boolean;
 
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  __clearSectionMode?: ClearSectionMode;
+
   /** Right section displayed when both `__clearSection` and `rightSection` are not defined */
   __defaultRightSection?: React.ReactNode;
+
+  /** Displays loading indicator in the left or right section @default false */
+  loading?: boolean;
+
+  /** Position of the loading indicator @default 'right' */
+  loadingPosition?: 'left' | 'right';
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -127,13 +138,13 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
 
-  /** Determines whether the input can have multiple lines, for example when `component="textarea"` @default `false` */
+  /** Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. @default false */
   multiline?: boolean;
 
   /** Input element id */
   id?: string;
 
-  /** Determines whether `aria-` and other accessibility attributes should be added to the input @default `true` */
+  /** Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. @default true */
   withAria?: boolean;
 
   /** Props passed down to the root element of the `Input` component */
@@ -165,6 +176,8 @@ const defaultProps = {
   withAria: true,
   withErrorStyles: true,
   size: 'sm',
+  loading: false,
+  loadingPosition: 'right',
 } satisfies Partial<InputProps>;
 
 const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
@@ -184,7 +197,7 @@ const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
   },
 }));
 
-export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
+export const Input = polymorphicFactory<InputFactory>((_props) => {
   const props = useProps('Input', defaultProps, _props);
   const {
     classNames,
@@ -220,12 +233,15 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     attributes,
     __clearSection,
     __clearable,
+    __clearSectionMode,
     __defaultRightSection,
+    loading,
+    loadingPosition,
     ...others
   } = props;
 
   const { styleProps, rest } = extractStyleProps(others);
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
   const stylesCtx: InputStylesCtx = { offsetBottom: ctx?.offsetBottom, offsetTop: ctx?.offsetTop };
 
   const getStyles = useStyles<InputFactory>({
@@ -254,12 +270,24 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
       }
     : {};
 
+  const loadingIndicator = loading ? (
+    <Loader
+      size={
+        loadingPosition === 'left'
+          ? 'calc(var(--input-left-section-size) / 2)'
+          : 'calc(var(--input-right-section-size) / 2)'
+      }
+    />
+  ) : null;
+
+  const _leftSection = loading && loadingPosition === 'left' ? loadingIndicator : leftSection;
   const _rightSection: React.ReactNode = InputClearSection({
     __clearable,
     __clearSection,
-    rightSection,
+    rightSection: loading && loadingPosition === 'right' ? loadingIndicator : rightSection,
     __defaultRightSection,
     size,
+    __clearSectionMode,
   });
 
   return (
@@ -275,14 +303,14 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
             disabled,
             multiline,
             'data-with-right-section': !!_rightSection,
-            'data-with-left-section': !!leftSection,
+            'data-with-left-section': !!_leftSection,
           },
           mod,
         ]}
         variant={variant}
         size={size}
       >
-        {leftSection && (
+        {_leftSection && (
           <div
             {...leftSectionProps}
             data-position="left"
@@ -291,7 +319,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
               style: leftSectionProps?.style,
             })}
           >
-            {leftSection}
+            {_leftSection}
           </div>
         )}
 
@@ -299,7 +327,6 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
           component="input"
           {...rest}
           {...ariaAttributes}
-          ref={ref}
           required={required}
           mod={{ disabled, error: !!error && withErrorStyles }}
           variant={variant}
@@ -325,6 +352,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
 });
 
 Input.classes = classes;
+Input.varsResolver = varsResolver;
 Input.Wrapper = InputWrapper;
 Input.Label = InputLabel;
 Input.Error = InputError;

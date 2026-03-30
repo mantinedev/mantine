@@ -1,16 +1,16 @@
-import { IconCode, IconExternalLink, IconEye } from '@tabler/icons-react';
+import { ArrowSquareOutIcon, CodeIcon, EyeIcon } from '@phosphor-icons/react';
 import { SegmentedControl, VisuallyHidden } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { SegmentedControl, VisuallyHidden } from '@mantine/core';
-import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
+import { EyeIcon, CodeIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const iconProps = {
     style: { display: 'block' },
     size: 20,
-    stroke: 1.5,
+
   };
 
   return (
@@ -20,7 +20,7 @@ function Demo() {
           value: 'preview',
           label: (
             <>
-              <IconEye {...iconProps} />
+              <EyeIcon {...iconProps} />
               <VisuallyHidden>Preview</VisuallyHidden>
             </>
           ),
@@ -29,8 +29,8 @@ function Demo() {
           value: 'code',
           label: (
             <>
-              <IconCode {...iconProps} />
-              <VisuallyHidden>Code</VisuallyHidden>
+              <CodeIcon {...iconProps} />
+              <VisuallyHidden>CodeIcon</VisuallyHidden>
             </>
           ),
         },
@@ -38,7 +38,7 @@ function Demo() {
           value: 'export',
           label: (
             <>
-              <IconExternalLink {...iconProps} />
+              <ArrowSquareOutIcon {...iconProps} />
               <VisuallyHidden>Export</VisuallyHidden>
             </>
           ),
@@ -53,7 +53,6 @@ function Demo() {
   const iconProps = {
     style: { display: 'block' },
     size: 20,
-    stroke: 1.5,
   };
 
   return (
@@ -63,7 +62,7 @@ function Demo() {
           value: 'preview',
           label: (
             <>
-              <IconEye {...iconProps} />
+              <EyeIcon {...iconProps} />
               <VisuallyHidden>Preview</VisuallyHidden>
             </>
           ),
@@ -72,8 +71,8 @@ function Demo() {
           value: 'code',
           label: (
             <>
-              <IconCode {...iconProps} />
-              <VisuallyHidden>Code</VisuallyHidden>
+              <CodeIcon {...iconProps} />
+              <VisuallyHidden>CodeIcon</VisuallyHidden>
             </>
           ),
         },
@@ -81,7 +80,7 @@ function Demo() {
           value: 'export',
           label: (
             <>
-              <IconExternalLink {...iconProps} />
+              <ArrowSquareOutIcon {...iconProps} />
               <VisuallyHidden>Export</VisuallyHidden>
             </>
           ),

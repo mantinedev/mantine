@@ -13,9 +13,9 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import classes from './Tree.module.css';
 import { TreeNode } from './TreeNode';
 import { TreeController, useTree } from './use-tree';
+import classes from './Tree.module.css';
 
 export interface TreeNodeData {
   label: React.ReactNode;
@@ -50,7 +50,6 @@ export interface RenderTreeNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
-    'data-hovered': boolean | undefined;
   };
 }
 
@@ -65,19 +64,19 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Data used to render nodes */
   data: TreeNodeData[];
 
-  /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value @default `'lg'` */
+  /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value @default 'lg' */
   levelOffset?: MantineSpacing;
 
-  /** If set, tree node with children is expanded on click @default `true` */
+  /** If set, tree node with children is expanded on click @default true */
   expandOnClick?: boolean;
 
-  /** If set, tree node with children is expanded on space key press @default `true` */
+  /** If set, tree node with children is expanded on space key press @default true */
   expandOnSpace?: boolean;
 
-  /** If set, tree node is checked on space key press @default `false` */
+  /** If set, tree node is checked on space key press @default false */
   checkOnSpace?: boolean;
 
-  /** If set, tree node is selected on click @default `false` */
+  /** If set, tree node is selected on click @default false */
   selectOnClick?: boolean;
 
   /** Use-tree hook instance that can be used to manipulate component state */
@@ -86,11 +85,14 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** A function to render tree node label */
   renderNode?: RenderNode;
 
-  /** If set, selection is cleared when user clicks outside of the tree @default `false` */
+  /** If set, selection is cleared when user clicks outside of the tree @default false */
   clearSelectionOnOutsideClick?: boolean;
 
-  /** If set, tree nodes range can be selected with click when `Shift` key is pressed @default `true` */
+  /** If set, tree nodes range can be selected with click when `Shift` key is pressed @default true */
   allowRangeSelection?: boolean;
+
+  /** If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. @default false */
+  keepMounted?: boolean;
 }
 
 function getFlatValues(data: TreeNodeData[]): string[] {
@@ -122,7 +124,7 @@ const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) =
   },
 }));
 
-export const Tree = factory<TreeFactory>((_props, ref) => {
+export const Tree = factory<TreeFactory>((_props) => {
   const props = useProps('Tree', defaultProps, _props);
   const {
     classNames,
@@ -141,7 +143,9 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     expandOnSpace,
     levelOffset,
     checkOnSpace,
+    keepMounted,
     attributes,
+    ref,
     ...others
   } = props;
 
@@ -188,6 +192,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
       checkOnSpace={checkOnSpace}
+      keepMounted={keepMounted}
     />
   ));
 
@@ -208,3 +213,4 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
 
 Tree.displayName = '@mantine/core/Tree';
 Tree.classes = classes;
+Tree.varsResolver = varsResolver;

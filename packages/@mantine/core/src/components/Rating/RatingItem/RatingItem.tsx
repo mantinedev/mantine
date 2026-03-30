@@ -42,7 +42,7 @@ export function RatingItem({
       {!readOnly && (
         <input
           {...ctx.getStyles('input')}
-          onKeyDown={(event) => event.key === ' ' && onChange(value)}
+          onKeyDown={(event) => (event.key === ' ' || event.key === 'Enter') && onChange(value)}
           id={id}
           type="radio"
           data-active={active || undefined}
@@ -59,7 +59,7 @@ export function RatingItem({
         {...ctx.getStyles('label')}
         data-read-only={readOnly || undefined}
         htmlFor={id}
-        onClick={() => onChange(value)}
+        onClick={readOnly ? undefined : () => onChange(value)}
         __vars={{
           '--rating-item-z-index': (fractionValue === 1 ? undefined : active ? 2 : 0)?.toString(),
         }}

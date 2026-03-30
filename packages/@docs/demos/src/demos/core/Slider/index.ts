@@ -14,3 +14,5 @@ export { decimal } from './Slider.demo.decimal';
 export { customSlider } from './Slider.demo.customSlider';
 export { restrictToMarks } from './Slider.demo.restrictToMarks';
 export { domain } from './Slider.demo.domain';
+export { vertical } from './Slider.demo.vertical';
+export { hiddenMarks } from './Slider.demo.hiddenMarks';

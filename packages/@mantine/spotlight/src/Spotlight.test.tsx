@@ -25,14 +25,6 @@ describe('@mantine/core/Spotlight', () => {
   tests.itSupportsSystemProps<SpotlightProps, SpotlightStylesNames>({
     component: Spotlight,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/spotlight/Spotlight',
     stylesApiSelectors: [
       'root',

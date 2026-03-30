@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -17,23 +16,30 @@ export interface SliderRootProps extends BoxProps, ElementProps<'div'> {
   variant?: string;
   thumbSize?: string | number;
   radius?: MantineRadius;
+  orientation?: 'horizontal' | 'vertical';
 }
 
-export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
-  ({ size, disabled, variant, color, thumbSize, radius, ...others }: SliderRootProps, ref) => {
-    const { getStyles } = useSliderContext();
-
-    return (
-      <Box
-        tabIndex={-1}
-        variant={variant}
-        size={size}
-        ref={ref}
-        {...getStyles('root')}
-        {...others}
-      />
-    );
-  }
-);
+export function SliderRoot({
+  size,
+  disabled,
+  variant,
+  color,
+  thumbSize,
+  radius,
+  orientation,
+  ...others
+}: SliderRootProps) {
+  const { getStyles } = useSliderContext();
+  return (
+    <Box
+      tabIndex={-1}
+      variant={variant}
+      size={size}
+      {...getStyles('root')}
+      mod={{ orientation }}
+      {...others}
+    />
+  );
+}
 
 SliderRoot.displayName = '@mantine/core/SliderRoot';

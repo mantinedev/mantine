@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"git merge upstream/master 2>&1\",\"description\":\"Merge upstream master into PR branch\"}",
+  "error": "Exit code 1\nAuto-merging packages/@mantine/charts/src/ChartLegend/ChartLegend.test.tsx\nCONFLICT (add/add): Merge conflict in packages/@mantine/charts/src/ChartLegend/ChartLegend.test.tsx\nAuto-merging packages/@mantine/charts/src/ChartLegend/ChartLegend.tsx\nCONFLICT (content): Merge conflict in packages/@mantine/charts/src/ChartLegend/ChartLegend.tsx\nAutomatic merge failed; fix conflicts and then commit the result.",
+  "timestamp": "2026-03-30T07:16:04.856Z",
+  "retry_count": 1
+}

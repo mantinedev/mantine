@@ -4,7 +4,7 @@
     box-shadow 100ms ease;
 
   &[data-combobox-selected] {
-    font-weight: 500;
+    font-weight: 600;
     transform: scale(1.1);
     box-shadow: var(--mantine-shadow-lg);
   }

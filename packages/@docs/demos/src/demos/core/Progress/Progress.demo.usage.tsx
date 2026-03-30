@@ -21,7 +21,7 @@ export const usage: MantineDemo = {
   maxWidth: 400,
   controls: [
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
     {
       prop: 'value',

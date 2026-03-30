@@ -19,10 +19,10 @@ use [data- attributes](https://mantine.dev/styles/data-attributes/).
 
 First, define data- attributes on the component. In the example below:
 
-- `data-disabled` represents boolean `disabled` attribute. `disabled || undefined` is required
-  to not add `data-disabled="false"` attribute when `disabled` is `false` and allow styling with `&[data-disabled]` selector.
-- `data-orientation` represents `orientation` prop which can be either `horizontal` or `vertical`.
-  In styles you can reference it with `&[data-orientation="horizontal"]` selector.
+- `data-disabled` represents the boolean `disabled` attribute. `disabled || undefined` is required
+  to not add `data-disabled="false"` attribute when `disabled` is `false` and allow styling with the `&[data-disabled]` selector.
+- `data-orientation` represents the `orientation` prop which can be either `horizontal` or `vertical`.
+  In styles, you can reference it with the `&[data-orientation="horizontal"]` selector.
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -46,7 +46,7 @@ function Demo({ disabled, orientation }: DemoProps) {
 }
 ```
 
-Then add styles in `.module.css` file:
+Then add styles in the `.module.css` file:
 
 ```scss
 .root {
@@ -70,7 +70,7 @@ Then add styles in `.module.css` file:
 ## Inline styles
 
 If the value that controls dynamic styles is not represented by a known union
-of values (for example, value can be any valid CSS color), then you can use
+of values (for example, the value can be any valid CSS color), then you can use
 inline styles or [style props](https://mantine.dev/styles/style-props/):
 
 ```tsx
@@ -90,7 +90,7 @@ function Demo({ fontFamily, color }: DemoProps) {
 }
 ```
 
-If you need to customize a deeply nested element, use [styles](https://mantine.dev/styles/styles-api/#styles-prop)
+If you need to customize a deeply nested element, use the [styles](https://mantine.dev/styles/styles-api/#styles-prop)
 prop instead:
 
 ```tsx
@@ -109,17 +109,17 @@ function Demo({ color }: DemoProps) {
 }
 ```
 
-Note that, it is not possible use pseudo-classes (for example, `:hover`, `:first-of-type`)
+Note that it is not possible to use pseudo-classes (for example, `:hover`, `:first-of-type`)
 and media queries inside the `styles` prop. For this purpose, use CSS variables
-with [classNames](https://mantine.dev/styles/styles-api/#classnames-prop) prop.
+with the [classNames](https://mantine.dev/styles/styles-api/#classnames-prop) prop.
 
 ## CSS variables
 
-If none of the methods above works for you (for example, you want to customize, `:hover`
+If none of the methods above work for you (for example, you want to customize `:hover`
 styles based on component prop), use CSS variables
-with [classNames](https://mantine.dev/styles/styles-api/#classnames-prop) prop.
+with the [classNames](https://mantine.dev/styles/styles-api/#classnames-prop) prop.
 
-First, define CSS variables in `style` or `styles` prop:
+First, define CSS variables in the `style` or `styles` prop:
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -138,7 +138,7 @@ function Demo({ color }: DemoProps) {
 }
 ```
 
-Then reference them in `.module.css` file:
+Then reference them in the `.module.css` file:
 
 ```scss
 .root {

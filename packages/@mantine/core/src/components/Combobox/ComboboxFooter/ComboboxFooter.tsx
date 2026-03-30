@@ -13,9 +13,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxFooterStylesNames = 'footer';
 
 export interface ComboboxFooterProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxFooterFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<ComboboxFooterFactory>, ElementProps<'div'> {}
 
 export type ComboboxFooterFactory = Factory<{
   props: ComboboxFooterProps;
@@ -24,7 +22,7 @@ export type ComboboxFooterFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxFooter = factory<ComboboxFooterFactory>((props, ref) => {
+export const ComboboxFooter = factory<ComboboxFooterFactory>((props) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'ComboboxFooter',
     null,
@@ -35,7 +33,6 @@ export const ComboboxFooter = factory<ComboboxFooterFactory>((props, ref) => {
 
   return (
     <Box
-      ref={ref}
       {...ctx.getStyles('footer', { className, classNames, style, styles })}
       {...others}
       onMouseDown={(event) => {

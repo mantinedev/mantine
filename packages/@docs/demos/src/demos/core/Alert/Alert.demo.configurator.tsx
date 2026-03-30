@@ -1,14 +1,14 @@
-import { IconInfoCircle } from '@tabler/icons-react';
+import { InfoIcon } from '@phosphor-icons/react';
 import { Alert } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { staticVariantsControl } from '../../../shared';
 
 const code = `
 import { Alert } from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { InfoIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconInfoCircle />;
+  const icon = <InfoIcon />;
   return (
     <Alert{{props}} icon={icon}>
       {{children}}
@@ -18,7 +18,7 @@ function Demo() {
 `;
 
 function Wrapper(props: any) {
-  return <Alert icon={<IconInfoCircle />} {...props} />;
+  return <Alert icon={<InfoIcon />} {...props} />;
 }
 
 export const configurator: MantineDemo = {
@@ -30,14 +30,14 @@ export const configurator: MantineDemo = {
   controls: [
     { ...(staticVariantsControl as any), initialValue: 'light' },
     { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: null },
-    { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+    { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: 'md' },
     { type: 'boolean', prop: 'withCloseButton', initialValue: false, libraryValue: false },
     { type: 'string', prop: 'title', initialValue: 'Alert title', libraryValue: null },
     {
       type: 'string',
       prop: 'children',
       initialValue:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. At officiis, quae tempore necessitatibus placeat saepe.',
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. AtIcon officiis, quae tempore necessitatibus placeat saepe.',
       libraryValue: null,
     },
   ],

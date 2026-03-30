@@ -3,7 +3,7 @@ import { InputThemeFocusStyles } from '@/demos/InputThemeFocusStyles.demo';
 import { Layout } from '@/layout';
 
 export const meta = {
-  title: 'How can I change inputs focus styles?',
+  title: 'How can I change input focus styles?',
   description: 'Learn how to use Styles API with Mantine inputs',
   slug: 'input-focus-styles',
   category: 'styles',
@@ -16,15 +16,15 @@ export default Layout(meta);
 
 ## Change focus styles of a single input
 
-To change focus styles of a single input, use [Styles API](https://mantine.dev/styles/styles-api).
-Note that in order for this to work correctly with all inputs, you need to use
+To change the focus styles of a single input, use [Styles API](https://mantine.dev/styles/styles-api).
+Note that in order for this to work correctly with all inputs, you need to use the
 `:focus-within` pseudo-class instead of `:focus`:
 
 <Demo data={InputFocusStyles} />
 
 ## Change focus styles of all inputs
 
-To change focus styles of all inputs, use [Styles API](https://mantine.dev/styles/styles-api) with `Input` component
+To change the focus styles of all inputs, use [Styles API](https://mantine.dev/styles/styles-api) with the `Input` component
 in the [theme object](https://mantine.dev/theming/theme-object):
 
 <Demo data={InputThemeFocusStyles} />

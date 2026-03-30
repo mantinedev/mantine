@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,8 +13,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
+import { InputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';
-import { useInputWrapperContext } from '../InputWrapper.context';
 
 export type InputDescriptionStylesNames = 'description';
 export type InputDescriptionCssVariables = {
@@ -21,13 +22,11 @@ export type InputDescriptionCssVariables = {
 };
 
 export interface InputDescriptionProps
-  extends BoxProps,
-    StylesApiProps<InputDescriptionFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<InputDescriptionFactory>, ElementProps<'div'> {
   __staticSelector?: string;
   __inheritStyles?: boolean;
 
-  /** Controls description `font-size` @default `'sm'` */
+  /** Controls description `font-size` @default 'sm' */
   size?: MantineFontSize;
 }
 
@@ -45,7 +44,7 @@ const varsResolver = createVarsResolver<InputDescriptionFactory>((_, { size }) =
   },
 }));
 
-export const InputDescription = factory<InputDescriptionFactory>((_props, ref) => {
+export const InputDescription = factory<InputDescriptionFactory>((_props) => {
   const props = useProps('InputDescription', null, _props);
   const {
     classNames,
@@ -54,14 +53,12 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     styles,
     unstyled,
     vars,
-    size,
     __staticSelector,
     __inheritStyles = true,
     attributes,
-    variant,
     ...others
   } = useProps('InputDescription', null, props);
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
 
   const _getStyles = useStyles<InputDescriptionFactory>({
     name: ['InputWrapper', __staticSelector],
@@ -83,9 +80,6 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
   return (
     <Box
       component="p"
-      ref={ref}
-      variant={variant}
-      size={size}
       {...getStyles('description', ctx?.getStyles ? { className, style } : undefined)}
       {...others}
     />
@@ -93,4 +87,5 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
 });
 
 InputDescription.classes = classes;
+InputDescription.varsResolver = varsResolver;
 InputDescription.displayName = '@mantine/core/InputDescription';

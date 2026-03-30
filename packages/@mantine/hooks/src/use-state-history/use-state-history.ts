@@ -62,3 +62,9 @@ export function useStateHistory<T>(initialValue: T): UseStateHistoryReturnValue<
 
   return [state.history[state.current], handlers, state];
 }
+
+export namespace useStateHistory {
+  export type Handlers<T> = UseStateHistoryHandlers<T>;
+  export type Value<T> = UseStateHistoryValue<T>;
+  export type ReturnValue<T> = UseStateHistoryReturnValue<T>;
+}

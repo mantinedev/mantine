@@ -1,4 +1,4 @@
-export function AvatarPlaceholderIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
+export function AvatarPlaceholderIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg
       {...props}

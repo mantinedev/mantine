@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -14,10 +15,9 @@ import {
   useStyles,
 } from '../../core';
 import { CloseButton, CloseButtonProps } from '../CloseButton';
-import { usePillsInputContext } from '../PillsInput/PillsInput.context';
+import { PillsInputContext } from '../PillsInput/PillsInput.context';
+import { PillGroup, PillGroupContext } from './PillGroup/PillGroup';
 import classes from './Pill.module.css';
-import { usePillGroupContext } from './PillGroup.context';
-import { PillGroup } from './PillGroup/PillGroup';
 
 export type PillStylesNames = 'root' | 'label' | 'remove';
 export type PillVariant = 'default' | 'contrast';
@@ -26,19 +26,19 @@ export type PillCssVariables = {
 };
 
 export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, ElementProps<'div'> {
-  /** Controls pill `font-size` and `padding` @default `'sm'` */
+  /** Controls pill `font-size` and `padding` @default 'sm' */
   size?: MantineSize;
 
-  /** Controls visibility of the remove button @default `false` */
+  /** Controls visibility of the remove button @default false */
   withRemoveButton?: boolean;
 
   /** Called when the remove button is clicked */
   onRemove?: () => void;
 
   /** Props passed down to the remove button */
-  removeButtonProps?: CloseButtonProps & React.ComponentPropsWithoutRef<'button'>;
+  removeButtonProps?: CloseButtonProps & React.ComponentProps<'button'>;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem.  @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem.  @default 'xl' */
   radius?: MantineRadius;
 
   /** Adds disabled attribute, applies disabled styles */
@@ -69,7 +69,7 @@ const varsResolver = createVarsResolver<PillFactory>((_, { radius }, { size }) =
   },
 }));
 
-export const Pill = factory<PillFactory>((_props, ref) => {
+export const Pill = factory<PillFactory>((_props) => {
   const props = useProps('Pill', defaultProps, _props);
   const {
     classNames,
@@ -91,8 +91,8 @@ export const Pill = factory<PillFactory>((_props, ref) => {
     ...others
   } = props;
 
-  const ctx = usePillGroupContext();
-  const pillsInputCtx = usePillsInputContext();
+  const ctx = use(PillGroupContext);
+  const pillsInputCtx = use(PillsInputContext);
   const _size = size || ctx?.size || undefined;
   const _variant = pillsInputCtx?.variant === 'filled' ? 'contrast' : variant || 'default';
 
@@ -114,7 +114,6 @@ export const Pill = factory<PillFactory>((_props, ref) => {
   return (
     <Box
       component="span"
-      ref={ref}
       variant={_variant}
       size={_size}
       {...getStyles('root', { variant: _variant })}
@@ -154,5 +153,6 @@ export const Pill = factory<PillFactory>((_props, ref) => {
 });
 
 Pill.classes = classes;
+Pill.varsResolver = varsResolver;
 Pill.displayName = '@mantine/core/Pill';
 Pill.Group = PillGroup;

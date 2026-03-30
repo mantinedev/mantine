@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useDisclosure, useId } from '@mantine/hooks';
 import { ExtendComponent, Factory, useProps } from '../../../core';
 import { FloatingAxesOffsets, FloatingPosition, useDelayedHover } from '../../../utils/Floating';
@@ -6,7 +7,7 @@ import { TransitionOverride } from '../../Transition';
 import { MenuSubDropdown } from '../MenuSubDropdown/MenuSubDropdown';
 import { MenuSubItem } from '../MenuSubItem/MenuSubItem';
 import { MenuSubTarget } from '../MenuSubTarget/MenuSubTarget';
-import { SubMenuProvider, useSubMenuContext } from './MenuSub.context';
+import { SubMenuContext } from './MenuSub.context';
 
 export type MenuSubFactory = Factory<{
   props: MenuSubProps;
@@ -18,19 +19,19 @@ export interface MenuSubProps extends __PopoverProps {
   /** Called with current state when dropdown opens or closes */
   onChange?: (opened: boolean) => void;
 
-  /** Open delay in ms */
+  /** Open delay in ms, applicable when hover trigger is used */
   openDelay?: number;
 
-  /** Close delay in ms */
+  /** Close delay in ms, applicable when hover trigger is used */
   closeDelay?: number;
 
-  /** Dropdown position relative to the target element @default `'right-start'` */
+  /** Dropdown position relative to the target element @default 'right-start' */
   position?: FloatingPosition;
 
-  /** Offset of the dropdown element @default `0` */
+  /** Offset of the dropdown element @default 0 */
   offset?: number | FloatingAxesOffsets;
 
-  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default `{ duration: 0 }` */
+  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default { duration: 0 } */
   transitionProps?: TransitionOverride;
 }
 
@@ -51,7 +52,7 @@ export function MenuSub(_props: MenuSubProps) {
   const { children, closeDelay, openDelay, ...others } = useProps('MenuSub', defaultProps, _props);
   const id = useId();
   const [opened, { open, close }] = useDisclosure(false);
-  const ctx = useSubMenuContext();
+  const ctx = use(SubMenuContext);
 
   const { openDropdown, closeDropdown } = useDelayedHover({
     open,
@@ -74,7 +75,7 @@ export function MenuSub(_props: MenuSubProps) {
     }, 16);
 
   return (
-    <SubMenuProvider
+    <SubMenuContext
       value={{
         opened,
         close: closeDropdown,
@@ -87,7 +88,7 @@ export function MenuSub(_props: MenuSubProps) {
       <Popover opened={opened} withinPortal={false} withArrow={false} id={id} {...others}>
         {children}
       </Popover>
-    </SubMenuProvider>
+    </SubMenuContext>
   );
 }
 

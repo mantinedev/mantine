@@ -1,0 +1,204 @@
+import { MonthViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MonthView);
+
+## Usage
+
+MonthView displays events in a calendar month grid. It shows event badges in each day cell with support for drag and drop.
+
+<Demo data={MonthViewDemos.usage} />
+
+## With week numbers
+
+Set `withWeekNumbers` to display week numbers in the first column.
+
+<Demo data={MonthViewDemos.withWeekNumbers} />
+
+## Without week days
+
+Set `withWeekDays={false}` to hide the weekday names row.
+
+<Demo data={MonthViewDemos.withoutWeekDays} />
+
+## First day of week
+
+Set `firstDayOfWeek` to control which day starts the week.
+
+<Demo data={MonthViewDemos.firstDayOfWeek} />
+
+## Weekday format
+
+Use `weekdayFormat` prop to customize weekday names.
+
+<Demo data={MonthViewDemos.weekdayFormat} />
+
+## Consistent weeks
+
+Set `consistentWeeks={false}` to only show weeks that have days in the current month.
+
+<Demo data={MonthViewDemos.consistentWeeks} />
+
+## Highlight today
+
+Set `highlightToday={false}` to disable highlighting the current day.
+
+<Demo data={MonthViewDemos.highlightToday} />
+
+## Without outside days
+
+Set `withOutsideDays={false}` to hide days from adjacent months.
+
+<Demo data={MonthViewDemos.withoutOutsideDays} />
+
+## Radius
+
+Use `radius` prop to customize the border radius of events.
+
+<Demo data={MonthViewDemos.radius} />
+
+## Without header
+
+Set `withHeader={false}` to hide the header controls.
+
+<Demo data={MonthViewDemos.withoutHeader} />
+
+## Custom header
+
+You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
+Set `withHeader={false}` on the view and compose the header externally.
+
+<Demo data={MonthViewDemos.customHeader} />
+
+## Max events per day
+
+Use `maxEventsPerDay` prop to control how many events are visible per day before the "+more"
+indicator appears. The value is clamped between 1 and 10. Day cell height adjusts automatically.
+
+<Demo data={MonthViewDemos.maxEventsPerDay} />
+
+## Many events
+
+When a day has many events, the component shows a "More events" indicator.
+
+<Demo data={MonthViewDemos.manyEvents} />
+
+## Drag and drop
+
+Enable drag and drop to move events between days.
+
+<Demo data={MonthViewDemos.dragDrop} />
+
+## External drag and drop
+
+Use `onExternalEventDrop` to allow dragging items from outside the component into
+the schedule. External items must set data in `dataTransfer` during their `onDragStart`.
+The callback receives the `DataTransfer` object and the drop target datetime.
+
+<Demo data={MonthViewDemos.externalDragDrop} />
+
+## Bidirectional drag and drop
+
+Combine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional
+drag and drop. Items dragged from the sidebar are removed from the list and added
+to the schedule. Events dragged from the schedule back to the sidebar are removed
+from the schedule. The schedule sets `application/json` with `{ eventId }` in
+`dataTransfer` when an event is dragged, which the sidebar drop zone reads to
+identify the event.
+
+<Demo data={MonthViewDemos.bidirectionalDragDrop} />
+
+## Full event customization
+
+Use `renderEvent` prop to fully customize event rendering. This function receives the event
+data as the first argument and all props that would be passed to the event root element
+(including children) as the second argument, allowing you to wrap events in custom components
+like HoverCard, Tooltip, or custom wrappers.
+
+<Demo data={MonthViewDemos.renderEvent} />
+
+## Recurring events
+
+MonthView automatically expands recurring events for the visible month.
+See [Recurring events guide](/schedule/recurring-events) for full documentation.
+
+<Demo data={MonthViewDemos.recurringEvents} />
+
+## Background events
+
+Set `display="background"` on an event to render it as a full-width, semi-transparent,
+non-interactive block behind regular events. Background events span the full height of
+the day cell in the month view.
+
+<Demo data={MonthViewDemos.backgroundEvents} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions.
+
+<Demo data={MonthViewDemos.staticMode} />
+
+## Localization
+
+Use `locale` prop to set the dayjs locale for date formatting.
+Combine it with `labels` prop to translate all UI text.
+
+<Demo data={MonthViewDemos.localization} />
+
+## Create and update events
+
+Set `withDragSlotSelect` prop to allow users to drag across day cells to select a date range.
+When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
+Combined with `onDayClick` and `onEventClick` callbacks, this enables a complete event creation
+and editing experience.
+
+<Demo data={MonthViewDemos.eventForm} />
+
+## Responsive styles
+
+MonthView uses [@container queries](https://caniuse.com/css-container-queries) for responsive styles.
+The component automatically adjusts its layout based on the container width, hiding labels
+and reducing padding on smaller screens. Container queries are supported in all modern browsers.
+
+## Accessibility
+
+### Focus management
+
+In the MonthView component, focus is managed to provide an efficient keyboard navigation experience:
+
+- Only the first day in the month view is included in the tab order (has `tabIndex={0}`)
+- All other days have `tabIndex={-1}` and can only be reached via arrow key navigation
+- Outside days (days from adjacent months) are navigable using arrow keys when `withOutsideDays` is `true`
+- Disabled days are skipped during keyboard navigation
+
+This approach reduces the number of tab stops when navigating through the calendar, making it faster for keyboard users to move through the view while still allowing full access to all days via arrow keys.
+
+### Keyboard interactions
+
+Note that the following events will only trigger if focus is on a day control.
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next non-disabled day',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous non-disabled day',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses same day in the next week',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses same day in the previous week',
+    },
+  ]}
+/>
+
+### Day labels
+
+Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025"). This provides screen reader users with complete date information.

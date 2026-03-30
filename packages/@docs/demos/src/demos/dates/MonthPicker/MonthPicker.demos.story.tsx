@@ -77,3 +77,8 @@ export const Demo_locale = {
   name: '⭐ Demo: locale',
   render: renderDemo(demos.locale),
 };
+
+export const Demo_fullWidth = {
+  name: '⭐ Demo: fullWidth',
+  render: renderDemo(demos.fullWidth),
+};

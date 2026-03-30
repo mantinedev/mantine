@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffectEvent, useRef, useState } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
+import { useIsomorphicEffect } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -12,12 +13,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import classes from './ScrollArea.module.css';
 import { ScrollAreaCorner } from './ScrollAreaCorner/ScrollAreaCorner';
 import { ScrollAreaRoot } from './ScrollAreaRoot/ScrollAreaRoot';
 import { ScrollAreaScrollbar } from './ScrollAreaScrollbar/ScrollAreaScrollbar';
 import { ScrollAreaThumb } from './ScrollAreaThumb/ScrollAreaThumb';
 import { ScrollAreaViewport } from './ScrollAreaViewport/ScrollAreaViewport';
+import { useResizeObserver } from './use-resize-observer';
+import classes from './ScrollArea.module.css';
 
 export type ScrollAreaStylesNames =
   | 'root'
@@ -32,48 +34,72 @@ export type ScrollAreaCssVariables = {
 };
 
 export interface ScrollAreaProps
-  extends BoxProps,
-    StylesApiProps<ScrollAreaFactory>,
-    ElementProps<'div'> {
-  /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 0.75rem */
+  extends BoxProps, StylesApiProps<ScrollAreaFactory>, ElementProps<'div'> {
+  /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem) */
   scrollbarSize?: number | string;
 
   /**
-   * Defines scrollbars behavior, `hover` by default
-   * - `hover` – scrollbars are visible when mouse is over the scroll area
-   * - `scroll` – scrollbars are visible when the scroll area is scrolled
-   * - `always` – scrollbars are always visible
-   * - `never` – scrollbars are always hidden
-   * - `auto` – similar to `overflow: auto` – scrollbars are always visible when the content is overflowing
+   * Defines scrollbars behavior
+   * - `'hover'` – scrollbars visible on hover (default)
+   * - `'scroll'` – scrollbars visible during scrolling
+   * - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto)
+   * - `'always'` – scrollbars always visible, even when content doesn't overflow
+   * - `'never'` – scrollbars always hidden
+   * @default 'hover'
    * */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
 
-  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default `1000` */
+  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default 1000 */
   scrollHideDelay?: number;
 
-  /** Axis at which scrollbars must be rendered @default `'xy'` */
+  /**
+   * Axis at which scrollbars must be rendered
+   * - `'x'` - horizontal scrollbar only
+   * - `'y'` - vertical scrollbar only
+   * - `'xy'` - both scrollbars
+   * - `false` - no scrollbars rendered (content remains scrollable via mouse/touch)
+   * @default 'xy'
+   */
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
-  /** Determines whether scrollbars should be offset with padding on given axis @default `false` */
+  /**
+   * Determines whether scrollbars should be offset with padding on given axis
+   * - `true` - adds padding to offset both scrollbars (always)
+   * - `'x'` - adds padding to offset horizontal scrollbar (always)
+   * - `'y'` - adds padding to offset vertical scrollbar (always)
+   * - `'present'` - adds padding only when scrollbars are visible (dynamic)
+   * @default false
+   */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */
-  viewportRef?: React.ForwardedRef<HTMLDivElement>;
+  viewportRef?: React.Ref<HTMLDivElement>;
 
   /** Props passed down to the viewport element */
-  viewportProps?: React.ComponentPropsWithRef<'div'>;
+  viewportProps?: React.ComponentProps<'div'>;
 
   /** Called with current position (`x` and `y` coordinates) when viewport is scrolled */
   onScrollPositionChange?: (position: { x: number; y: number }) => void;
 
-  /** Called when scrollarea is scrolled all the way to the bottom */
+  /**
+   * Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering)
+   */
   onBottomReached?: () => void;
 
   /** Called when scrollarea is scrolled all the way to the top */
   onTopReached?: () => void;
 
+  /** Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) */
+  onLeftReached?: () => void;
+
+  /** Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) */
+  onRightReached?: () => void;
+
   /** Defines `overscroll-behavior` of the viewport */
   overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
+
+  /** Initial scroll position set on mount */
+  startScrollPosition?: { x?: number; y?: number };
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
@@ -125,7 +151,7 @@ const varsResolver = createVarsResolver<ScrollAreaFactory>(
   }
 );
 
-export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
+export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
   const props = useProps('ScrollArea', defaultProps, _props);
   const {
     classNames,
@@ -145,7 +171,10 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     scrollbars,
     onBottomReached,
     onTopReached,
+    onLeftReached,
+    onRightReached,
     overscrollBehavior,
+    startScrollPosition,
     attributes,
     ...others
   } = props;
@@ -153,6 +182,12 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   const [scrollbarHovered, setScrollbarHovered] = useState(false);
   const [verticalThumbVisible, setVerticalThumbVisible] = useState(false);
   const [horizontalThumbVisible, setHorizontalThumbVisible] = useState(false);
+
+  // Refs to track previous boundary states
+  const prevAtTopRef = useRef(true);
+  const prevAtBottomRef = useRef(false);
+  const prevAtLeftRef = useRef(true);
+  const prevAtRightRef = useRef(false);
 
   const getStyles = useStyles<ScrollAreaFactory>({
     name: 'ScrollArea',
@@ -171,34 +206,28 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   const localViewportRef = useRef<HTMLDivElement>(null);
   const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef]);
 
-  useEffect(() => {
-    if (!localViewportRef.current) {
-      return;
+  useIsomorphicEffect(() => {
+    if (startScrollPosition && localViewportRef.current) {
+      localViewportRef.current.scrollTo({
+        left: startScrollPosition.x ?? 0,
+        top: startScrollPosition.y ?? 0,
+      });
     }
+  }, []);
 
-    if (offsetScrollbars !== 'present') {
-      return;
-    }
-
+  useResizeObserver(offsetScrollbars === 'present' ? localViewportRef.current : null, () => {
     const element = localViewportRef.current;
-
-    const observer = new ResizeObserver(() => {
-      const { scrollHeight, clientHeight, scrollWidth, clientWidth } = element;
-      setVerticalThumbVisible(scrollHeight > clientHeight);
-      setHorizontalThumbVisible(scrollWidth > clientWidth);
-    });
-
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [localViewportRef, offsetScrollbars]);
+    if (element) {
+      setVerticalThumbVisible(element.scrollHeight > element.clientHeight);
+      setHorizontalThumbVisible(element.scrollWidth > element.clientWidth);
+    }
+  });
 
   return (
     <ScrollAreaRoot
       getStyles={getStyles}
       type={type === 'never' ? 'always' : type}
       scrollHideDelay={scrollHideDelay}
-      ref={ref}
       scrollbars={scrollbars}
       {...getStyles('root')}
       {...others}
@@ -218,14 +247,37 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
         onScroll={(e) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
-          const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+          const { scrollTop, scrollHeight, clientHeight, scrollLeft, scrollWidth, clientWidth } =
+            e.currentTarget;
+
+          // Vertical boundaries
           // threshold of -0.8 is required for some browsers that use sub-pixel rendering, specifically when zoomed out.
-          if (scrollTop - (scrollHeight - clientHeight) >= -0.8) {
+          const isAtBottom = scrollTop - (scrollHeight - clientHeight) >= -0.8;
+          const isAtTop = scrollTop === 0;
+
+          if (isAtBottom && !prevAtBottomRef.current) {
             onBottomReached?.();
           }
-          if (scrollTop === 0) {
+          if (isAtTop && !prevAtTopRef.current) {
             onTopReached?.();
           }
+
+          prevAtBottomRef.current = isAtBottom;
+          prevAtTopRef.current = isAtTop;
+
+          // Horizontal boundaries
+          const isAtRight = scrollLeft - (scrollWidth - clientWidth) >= -0.8;
+          const isAtLeft = scrollLeft === 0;
+
+          if (isAtRight && !prevAtRightRef.current) {
+            onRightReached?.();
+          }
+          if (isAtLeft && !prevAtLeftRef.current) {
+            onLeftReached?.();
+          }
+
+          prevAtRightRef.current = isAtRight;
+          prevAtLeftRef.current = isAtLeft;
         }}
       >
         {children}
@@ -276,7 +328,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
 
 ScrollArea.displayName = '@mantine/core/ScrollArea';
 
-export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref) => {
+export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => {
   const {
     children,
     classNames,
@@ -297,6 +349,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
     vars,
     onBottomReached,
     onTopReached,
+    startScrollPosition,
     onOverflowChange,
     ...others
   } = useProps('ScrollAreaAutosize', defaultProps, props as ScrollAreaAutosizeProps);
@@ -305,45 +358,35 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
   const viewportObserverRef = useRef<HTMLDivElement>(null);
   const combinedViewportRef = useMergeRefs([viewportRef, viewportObserverRef]);
 
-  const [overflowing, setOverflowing] = useState(false);
-  const didMount = useRef(false);
+  const overflowingRef = useRef(false);
+  const didMountRef = useRef(false);
 
-  useEffect(() => {
-    if (!onOverflowChange) {
-      return;
-    }
-
+  const handleOverflowCheck = useEffectEvent(() => {
     const el = viewportObserverRef.current;
-
-    if (!el) {
+    if (!el || !onOverflowChange) {
       return;
     }
 
-    const update = () => {
-      const isOverflowing = el.scrollHeight > el.clientHeight;
+    const isOverflowing = el.scrollHeight > el.clientHeight;
 
-      if (isOverflowing !== overflowing) {
-        if (didMount.current) {
-          onOverflowChange?.(isOverflowing);
-        } else {
-          didMount.current = true;
-          if (isOverflowing) {
-            onOverflowChange?.(true);
-          }
+    if (isOverflowing !== overflowingRef.current) {
+      if (didMountRef.current) {
+        onOverflowChange(isOverflowing);
+      } else {
+        didMountRef.current = true;
+        if (isOverflowing) {
+          onOverflowChange(true);
         }
-
-        setOverflowing(isOverflowing);
       }
-    };
 
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [onOverflowChange, overflowing]);
+      overflowingRef.current = isOverflowing;
+    }
+  });
+
+  useResizeObserver(onOverflowChange ? viewportObserverRef.current : null, handleOverflowCheck);
 
   return (
-    <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'hidden' }, style]}>
+    <Box {...others} variant={variant} style={[{ display: 'flex', overflow: 'hidden' }, style]}>
       <Box
         style={{
           display: 'flex',
@@ -374,6 +417,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
           scrollbars={scrollbars}
           onBottomReached={onBottomReached}
           onTopReached={onTopReached}
+          startScrollPosition={startScrollPosition}
           data-autosize="true"
         >
           {children}
@@ -384,6 +428,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
 });
 
 ScrollArea.classes = classes;
+ScrollArea.varsResolver = varsResolver;
 ScrollAreaAutosize.displayName = '@mantine/core/ScrollAreaAutosize';
 ScrollAreaAutosize.classes = classes;
 ScrollArea.Autosize = ScrollAreaAutosize;

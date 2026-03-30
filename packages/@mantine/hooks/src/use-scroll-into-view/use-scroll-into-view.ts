@@ -266,3 +266,11 @@ function setScrollParam({ axis, parent, distance }: any) {
     documentElement[method] = distance;
   }
 }
+
+export namespace useScrollIntoView {
+  export type Options = UseScrollIntoViewOptions;
+  export type ReturnValue<
+    Target extends HTMLElement,
+    Parent extends HTMLElement | null,
+  > = UseScrollIntoViewReturnValue<Target, Parent>;
+}

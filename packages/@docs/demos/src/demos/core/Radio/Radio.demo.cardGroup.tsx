@@ -56,7 +56,7 @@ function Demo() {
   const [value, setValue] = useState<string | null>(null);
 
   const cards = data.map((item) => (
-    <Radio.Card className={classes.root} radius="md" value={item.name} key={item.name}>
+    <Radio.Card className={classes.root} value={item.name} key={item.name}>
       <Group wrap="nowrap" align="flex-start">
         <Radio.Indicator />
         <div>
@@ -101,7 +101,7 @@ function Demo() {
   const [value, setValue] = useState<string | null>(null);
 
   const cards = data.map((item) => (
-    <Radio.Card className={classes.root} radius="md" value={item.name} key={item.name}>
+    <Radio.Card className={classes.root} value={item.name} key={item.name}>
       <Group wrap="nowrap" align="flex-start">
         <Radio.Indicator />
         <div>

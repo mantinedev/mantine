@@ -1,20 +1,35 @@
-import { forwardRef } from 'react';
-import { rem, useProps } from '../../../core';
-import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
+import { Factory, factory, rem, useProps } from '../../../core';
+import {
+  ColorSlider,
+  ColorSliderOptions,
+  ColorSliderStylesNames,
+} from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
 
-export interface AlphaSliderProps
-  extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round'> {
+export interface AlphaSliderProps extends ColorSliderOptions {
   color: string;
 }
 
-export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>((props, ref) => {
-  const { value, onChange, onChangeEnd, color, ...others } = useProps('AlphaSlider', null, props);
+export type AlphaSliderFactory = Factory<{
+  props: AlphaSliderProps;
+  ref: HTMLDivElement;
+  stylesNames: ColorSliderStylesNames;
+}>;
+
+const defaultProps = {
+  __staticSelector: 'AlphaSlider',
+} satisfies Partial<AlphaSliderProps>;
+
+export const AlphaSlider = factory<AlphaSliderFactory>((props: AlphaSliderProps) => {
+  const { value, onChange, onChangeEnd, color, ...others } = useProps(
+    'AlphaSlider',
+    defaultProps,
+    props
+  );
 
   return (
     <ColorSlider
       {...others}
-      ref={ref}
       value={value}
       onChange={(val) => onChange?.(round(val, 2))}
       onChangeEnd={(val) => onChangeEnd?.(round(val, 2))}
@@ -42,3 +57,4 @@ export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>((props, 
 });
 
 AlphaSlider.displayName = '@mantine/core/AlphaSlider';
+AlphaSlider.classes = ColorSlider.classes;

@@ -1,4 +1,4 @@
-import { Children, cloneElement } from 'react';
+import { Activity, Children, cloneElement } from 'react';
 import {
   Box,
   BoxProps,
@@ -23,9 +23,9 @@ import {
   useStyles,
 } from '../../core';
 import { StepperProvider } from './Stepper.context';
-import classes from './Stepper.module.css';
 import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
 import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
+import classes from './Stepper.module.css';
 
 export type StepFragmentComponent = React.FC<{ step: number }>;
 
@@ -56,56 +56,57 @@ export type StepperCssVariables = {
 };
 
 export interface StepperProps
-  extends BoxProps,
-    StylesApiProps<StepperFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<StepperFactory>, ElementProps<'div'> {
   /** `Stepper.Step` components */
   children: React.ReactNode;
 
-  /** Called when step is clicked */
+  /** Called when a clickable step is clicked with its 0-based index. Not called for the currently active step. */
   onStepClick?: (stepIndex: number) => void;
 
   /** Index of the active step */
   active: number;
 
-  /** Step icon, default value is `step index + 1` */
+  /** Step icon @default step index + 1 */
   icon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step icon displayed when step is completed, check icon by default */
+  /** Step icon displayed when step is completed @default CheckIcon */
   completedIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step icon displayed when step is in progress, default value is `step index + 1` */
+  /** Step icon displayed when step is in progress @default step index + 1 */
   progressIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default theme.primaryColor */
   color?: MantineColor;
 
   /** Controls size of the step icon, by default icon size is inferred from `size` prop */
   iconSize?: number | string;
 
-  /** Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content */
+  /** Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content @default 'md' */
   contentPadding?: MantineSpacing;
 
-  /** Stepper orientation @default `'horizontal'` */
+  /** Stepper orientation @default 'horizontal' */
   orientation?: 'vertical' | 'horizontal';
 
-  /** Icon position relative to the step body @default `'left'` */
+  /** Icon position relative to the step body @default 'left' */
   iconPosition?: 'right' | 'left';
 
   /** Controls size of various Stepper elements */
   size?: MantineSize;
 
-  /** Key of `theme.radius` or any valid CSS value to set steps border-radius @default `"xl"` */
+  /** Key of `theme.radius` or any valid CSS value to set steps border-radius @default "xl" */
   radius?: MantineRadius;
 
-  /** If set, next steps can be selected @default `true` */
+  /** When true, users can click and jump to any step. When false, users can only navigate to completed steps @default true */
   allowNextStepsSelect?: boolean;
 
-  /** Determines whether steps should wrap to the next line if no space is available @default `true` */
+  /** Determines whether steps should wrap to the next line if no space is available @default true */
   wrap?: boolean;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color */
   autoContrast?: boolean;
+
+  /** If set, all step content is kept mounted. React 19 `Activity` is used to preserve state while content is hidden. @default false */
+  keepMounted?: boolean;
 }
 
 export type StepperFactory = Factory<{
@@ -143,7 +144,7 @@ const varsResolver = createVarsResolver<StepperFactory>(
   })
 );
 
-export const Stepper = factory<StepperFactory>((_props, ref) => {
+export const Stepper = factory<StepperFactory>((_props) => {
   const props = useProps('Stepper', defaultProps, _props);
   const {
     classNames,
@@ -168,6 +169,7 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
     allowNextStepsSelect,
     wrap,
     autoContrast,
+    keepMounted,
     attributes,
     ...others
   } = props;
@@ -250,9 +252,26 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
   const completedContent = completedStep?.props?.children;
   const content = active > _children.length - 1 ? completedContent : stepContent;
 
+  const contentSection = keepMounted ? (
+    <>
+      {_children.map((child, index) => (
+        <Activity key={index} mode={active === index ? 'visible' : 'hidden'}>
+          <div {...getStyles('content')}>{child.props.children}</div>
+        </Activity>
+      ))}
+      {completedStep && (
+        <Activity mode={active > _children.length - 1 ? 'visible' : 'hidden'}>
+          <div {...getStyles('content')}>{completedStep.props.children}</div>
+        </Activity>
+      )}
+    </>
+  ) : (
+    content && <div {...getStyles('content')}>{content}</div>
+  );
+
   return (
     <StepperProvider value={{ getStyles, orientation, iconPosition }}>
-      <Box {...getStyles('root')} ref={ref} size={size} {...others}>
+      <Box {...getStyles('root')} size={size} {...others}>
         <Box
           {...getStyles('steps')}
           mod={{
@@ -263,13 +282,14 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
         >
           {items}
         </Box>
-        {content && <div {...getStyles('content')}>{content}</div>}
+        {contentSection}
       </Box>
     </StepperProvider>
   );
 });
 
 Stepper.classes = classes;
+Stepper.varsResolver = varsResolver;
 Stepper.displayName = '@mantine/core/Stepper';
 Stepper.Completed = StepperCompleted;
 Stepper.Step = StepperStep;

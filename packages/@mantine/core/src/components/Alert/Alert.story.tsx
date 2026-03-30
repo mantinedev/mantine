@@ -1,4 +1,4 @@
-import { IconPhoto } from '@tabler/icons-react';
+import { ImageIcon } from '@phosphor-icons/react';
 import { MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';
 
@@ -7,18 +7,12 @@ export default { title: 'Alert' };
 export function Variants() {
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40, background: 'rgba(0, 0, 0, 0.1)' }}>
-      <Alert
-        icon={<IconPhoto stroke={1.5} />}
-        title="Bummer!"
-        color="red"
-        variant="light"
-        withCloseButton
-      >
+      <Alert icon={<ImageIcon />} title="Bummer!" color="red" variant="light" withCloseButton>
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<ImageIcon />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -29,7 +23,7 @@ export function Variants() {
         lost forever!
       </Alert>
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<ImageIcon />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -41,7 +35,7 @@ export function Variants() {
       </Alert>
 
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<ImageIcon />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -53,7 +47,7 @@ export function Variants() {
       </Alert>
 
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<ImageIcon />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -65,7 +59,7 @@ export function Variants() {
       </Alert>
 
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<ImageIcon />}
         withCloseButton
         title="Bummer!"
         color="red"

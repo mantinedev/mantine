@@ -4,14 +4,7 @@ import { DemoMenuItems } from './_menu-items';
 
 const code = `
 import { Menu, Button, Text } from '@mantine/core';
-import {
-  IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
-  IconArrowsLeftRight,
-} from '@tabler/icons-react';
+import { GearSixIcon, MagnifyingGlassIcon, ImageIcon, ChatCircleIcon, TrashIcon, IconArrowsLeftRight } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -22,17 +15,17 @@ function Demo() {
 
       <Menu.Dropdown>
         <Menu.Label>Application</Menu.Label>
-        <Menu.Item leftSection={<IconSettings size={14} />}>
+        <Menu.Item leftSection={<GearSixIcon size={14} />}>
           Settings
         </Menu.Item>
-        <Menu.Item leftSection={<IconMessageCircle size={14} />}>
+        <Menu.Item leftSection={<ChatCircleIcon size={14} />}>
           Messages
         </Menu.Item>
-        <Menu.Item leftSection={<IconPhoto size={14} />}>
+        <Menu.Item leftSection={<ImageIcon size={14} />}>
           Gallery
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconSearch size={14} />}
+          leftSection={<MagnifyingGlassIcon size={14} />}
           rightSection={
             <Text size="xs" c="dimmed">
               ⌘K
@@ -52,7 +45,7 @@ function Demo() {
         </Menu.Item>
         <Menu.Item
           color="red"
-          leftSection={<IconTrash size={14} />}
+          leftSection={<TrashIcon size={14} />}
         >
           Delete my account
         </Menu.Item>

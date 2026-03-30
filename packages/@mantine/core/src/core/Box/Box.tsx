@@ -1,6 +1,5 @@
-import { forwardRef } from 'react';
 import cx from 'clsx';
-import { createPolymorphicComponent } from '../factory';
+import { polymorphic } from '../factory';
 import { InlineStyles } from '../InlineStyles';
 import { MantineBreakpoint, useMantineSxTransform, useMantineTheme } from '../MantineProvider';
 import { isNumberLike } from '../utils';
@@ -50,7 +49,7 @@ export interface BoxProps extends MantineStyleProps {
 export type ElementProps<
   ElementType extends React.ElementType,
   PropsToOmit extends string = never,
-> = Omit<React.ComponentPropsWithoutRef<ElementType>, 'style' | PropsToOmit>;
+> = Omit<React.ComponentProps<ElementType>, 'style' | PropsToOmit>;
 
 export interface BoxComponentProps extends BoxProps {
   /** Variant passed from parent component, sets `data-variant` */
@@ -60,79 +59,72 @@ export interface BoxComponentProps extends BoxProps {
   size?: string | number;
 }
 
-const _Box = forwardRef<
-  HTMLDivElement,
-  BoxComponentProps & { component: any; className: string; renderRoot: any }
->(
-  (
-    {
-      component,
-      style,
-      __vars,
-      className,
-      variant,
-      mod,
-      size,
-      hiddenFrom,
-      visibleFrom,
-      lightHidden,
-      darkHidden,
-      renderRoot,
-      __size,
-      ...others
-    },
-    ref
-  ) => {
-    const theme = useMantineTheme();
-    const Element = component || 'div';
-    const { styleProps, rest } = extractStyleProps(others);
-    const useSxTransform = useMantineSxTransform();
-    const transformedSx = useSxTransform?.()?.(styleProps.sx);
-    const responsiveClassName = useRandomClassName();
-    const parsedStyleProps = parseStyleProps({
-      styleProps,
+function _Box({
+  component,
+  style,
+  __vars,
+  className,
+  variant,
+  mod,
+  size,
+  hiddenFrom,
+  visibleFrom,
+  lightHidden,
+  darkHidden,
+  renderRoot,
+  __size,
+  ref,
+  ...others
+}: BoxComponentProps & { component: any; className: string; renderRoot: any; ref: any }) {
+  const theme = useMantineTheme();
+  const Element = component || 'div';
+  const { styleProps, rest } = extractStyleProps(others);
+  const useSxTransform = useMantineSxTransform();
+  const transformedSx = useSxTransform?.()?.(styleProps.sx);
+  const responsiveClassName = useRandomClassName();
+  const parsedStyleProps = parseStyleProps({
+    styleProps,
+    theme,
+    data: STYlE_PROPS_DATA,
+  });
+
+  const props = {
+    ref,
+    style: getBoxStyle({
       theme,
-      data: STYlE_PROPS_DATA,
-    });
+      style,
+      vars: __vars,
+      styleProps: parsedStyleProps.inlineStyles,
+    }),
+    className: cx(className, transformedSx, {
+      [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
+      'mantine-light-hidden': lightHidden,
+      'mantine-dark-hidden': darkHidden,
+      [`mantine-hidden-from-${hiddenFrom}`]: hiddenFrom,
+      [`mantine-visible-from-${visibleFrom}`]: visibleFrom,
+    }),
+    'data-variant': variant,
+    'data-size': isNumberLike(size) ? undefined : size || undefined,
+    size: __size,
+    ...getBoxMod(mod),
+    ...rest,
+  };
 
-    const props = {
-      ref,
-      style: getBoxStyle({
-        theme,
-        style,
-        vars: __vars,
-        styleProps: parsedStyleProps.inlineStyles,
-      }),
-      className: cx(className, transformedSx, {
-        [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
-        'mantine-light-hidden': lightHidden,
-        'mantine-dark-hidden': darkHidden,
-        [`mantine-hidden-from-${hiddenFrom}`]: hiddenFrom,
-        [`mantine-visible-from-${visibleFrom}`]: visibleFrom,
-      }),
-      'data-variant': variant,
-      'data-size': isNumberLike(size) ? undefined : size || undefined,
-      size: __size,
-      ...getBoxMod(mod),
-      ...rest,
-    };
+  return (
+    <>
+      {parsedStyleProps.hasResponsiveStyles && (
+        <InlineStyles
+          selector={`.${responsiveClassName}`}
+          styles={parsedStyleProps.styles}
+          media={parsedStyleProps.media}
+        />
+      )}
 
-    return (
-      <>
-        {parsedStyleProps.hasResponsiveStyles && (
-          <InlineStyles
-            selector={`.${responsiveClassName}`}
-            styles={parsedStyleProps.styles}
-            media={parsedStyleProps.media}
-          />
-        )}
-
-        {typeof renderRoot === 'function' ? renderRoot(props) : <Element {...props} />}
-      </>
-    );
-  }
-);
+      {typeof renderRoot === 'function' ? renderRoot(props) : <Element {...props} />}
+    </>
+  );
+}
 
 _Box.displayName = '@mantine/core/Box';
 
-export const Box = createPolymorphicComponent<'div', BoxComponentProps>(_Box);
+export const Box = polymorphic<'div', BoxComponentProps>(_Box);

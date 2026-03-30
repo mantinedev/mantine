@@ -1,9 +1,8 @@
-import { forwardRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { defaultLoaders, Loader, LoaderProps, LoaderStylesNames } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';
 
-const customLoader: MantineLoaderComponent = forwardRef(() => <div data-custom-loader />);
+const customLoader: MantineLoaderComponent = () => <div data-custom-loader />;
 customLoader.displayName = 'CustomLoader';
 
 const defaultProps: LoaderProps = {};
@@ -12,16 +11,8 @@ describe('@mantine/core/Loader', () => {
   tests.itSupportsSystemProps<LoaderProps, LoaderStylesNames>({
     component: Loader,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    size: true,
-    variant: true,
-    extend: true,
-    withProps: true,
-    classes: true,
-    id: true,
-    refType: HTMLSpanElement,
     displayName: '@mantine/core/Loader',
     stylesApiSelectors: ['root'],
   });

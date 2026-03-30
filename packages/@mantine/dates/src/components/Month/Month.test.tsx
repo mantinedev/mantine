@@ -10,15 +10,7 @@ describe('@mantine/dates/Month', () => {
   tests.itSupportsSystemProps<MonthProps, MonthStylesNames>({
     component: Month,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLTableElement,
+    varsResolver: true,
     displayName: '@mantine/dates/Month',
     stylesApiSelectors: ['month'],
   });

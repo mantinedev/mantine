@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import { IconActivity, IconChevronRight, IconFingerprint, IconGauge } from '@tabler/icons-react';
+import { CaretRightIcon, FingerprintIcon, GaugeIcon, HeartbeatIcon } from '@phosphor-icons/react';
 import { Box, Group, NavLink } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons-react';
+import { GaugeIcon, FingerprintIcon, HeartbeatIcon, CaretRightIcon } from '@phosphor-icons/react';
 import { Box, NavLink } from '@mantine/core';
 
 const data = [
-  { icon: IconGauge, label: 'Dashboard', description: 'Item with description' },
+  { icon: GaugeIcon, label: 'Dashboard', description: 'Item with description' },
   {
-    icon: IconFingerprint,
+    icon: FingerprintIcon,
     label: 'Security',
-    rightSection: <IconChevronRight size={16} stroke={1.5} />,
+    rightSection: <CaretRightIcon size={16} />,
   },
-  { icon: IconActivity, label: 'Activity' },
+  { icon: HeartbeatIcon, label: 'Activity' },
 ];
 
 function Demo() {
@@ -29,7 +29,7 @@ function Demo() {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      leftSection={<item.icon size={16} stroke={1.5} />}
+      leftSection={<item.icon size={16} />}
       onClick={() => setActive(index)}
       {{props}}
     />
@@ -40,13 +40,13 @@ function Demo() {
 `;
 
 const data = [
-  { icon: IconGauge, label: 'Dashboard', description: 'Item with description' },
+  { icon: GaugeIcon, label: 'Dashboard', description: 'Item with description' },
   {
-    icon: IconFingerprint,
+    icon: FingerprintIcon,
     label: 'Security',
-    rightSection: <IconChevronRight size={16} stroke={1.5} className="mantine-rotate-rtl" />,
+    rightSection: <CaretRightIcon size={16} className="mantine-rotate-rtl" />,
   },
-  { icon: IconActivity, label: 'Activity' },
+  { icon: HeartbeatIcon, label: 'Activity' },
 ];
 
 function Demo(props: any) {
@@ -60,7 +60,7 @@ function Demo(props: any) {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      leftSection={<item.icon size={16} stroke={1.5} />}
+      leftSection={<item.icon size={16} />}
       onClick={() => setActive(index)}
       {...props}
     />

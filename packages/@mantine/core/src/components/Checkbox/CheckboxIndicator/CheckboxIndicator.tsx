@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -18,7 +19,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useCheckboxCardContext } from '../CheckboxCard/CheckboxCard.context';
+import type { CheckboxIconComponent } from '../Checkbox';
+import { CheckboxCardContext } from '../CheckboxCard/CheckboxCard';
 import { CheckboxIcon } from '../CheckIcon';
 import classes from './CheckboxIndicator.module.css';
 
@@ -29,34 +31,32 @@ export type CheckboxIndicatorCssVariables = {
 };
 
 export interface CheckboxIndicatorProps
-  extends BoxProps,
-    StylesApiProps<CheckboxIndicatorFactory>,
-    ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
+  extends BoxProps, StylesApiProps<CheckboxIndicatorFactory>, ElementProps<'div'> {
+  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls size of the component @default `'sm'` */
+  /** Controls size of the component @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
   iconColor?: MantineColor;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts icon color based on background color for `filled` variant */
   autoContrast?: boolean;
 
   /** Indeterminate state of the checkbox. If set, `checked` prop is ignored. */
   indeterminate?: boolean;
 
-  /** Icon displayed when checkbox is in checked or indeterminate state */
-  icon?: React.FC<{ indeterminate: boolean | undefined; className: string }>;
+  /** Icon for checked or indeterminate state */
+  icon?: CheckboxIconComponent;
 
   /** Determines whether the component should have checked styles */
   checked?: boolean;
 
-  /** Determines whether the component should have disabled styles */
+  /** Indicates disabled state */
   disabled?: boolean;
 }
 
@@ -71,6 +71,7 @@ export type CheckboxIndicatorFactory = Factory<{
 const defaultProps = {
   icon: CheckboxIcon,
   variant: 'filled',
+  radius: 'sm',
 } satisfies Partial<CheckboxIndicatorProps>;
 
 const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(
@@ -96,7 +97,7 @@ const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(
   }
 );
 
-export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref) => {
+export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props) => {
   const props = useProps('CheckboxIndicator', defaultProps, _props);
   const {
     classNames,
@@ -134,7 +135,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     rootSelector: 'indicator',
   });
 
-  const ctx = useCheckboxCardContext();
+  const ctx = use(CheckboxCardContext);
   const _checked =
     typeof checked === 'boolean' || typeof indeterminate === 'boolean'
       ? checked || indeterminate
@@ -142,7 +143,6 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
 
   return (
     <Box
-      ref={ref}
       {...getStyles('indicator', { variant })}
       variant={variant}
       mod={[{ checked: _checked, disabled }, mod]}
@@ -155,3 +155,4 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
 
 CheckboxIndicator.displayName = '@mantine/core/CheckboxIndicator';
 CheckboxIndicator.classes = classes;
+CheckboxIndicator.varsResolver = varsResolver;

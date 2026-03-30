@@ -17,6 +17,7 @@ import {
   MantineColor,
   MantineRadius,
   MantineSize,
+  noop,
   rem,
   StylesApiProps,
   useProps,
@@ -51,13 +52,11 @@ export interface TableOfContentsGetControlPropsPayload {
 }
 
 export interface TableOfContentsProps
-  extends BoxProps,
-    StylesApiProps<TableOfContentsFactory>,
-    ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
+  extends BoxProps, StylesApiProps<TableOfContentsFactory>, ElementProps<'div'> {
+  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls font-size and padding of all elements @default `'md'` */
+  /** Controls font-size and padding of all elements @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
   /** If set, adjusts text color based on background color for `filled` variant */
@@ -80,7 +79,7 @@ export interface TableOfContentsProps
   /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
   depthOffset?: number | string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */
@@ -122,7 +121,7 @@ const varsResolver = createVarsResolver<TableOfContentsFactory>(
   }
 );
 
-export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => {
+export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
   const props = useProps('TableOfContents', defaultProps, _props);
   const {
     classNames,
@@ -171,10 +170,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
   const controls = headingsData.map((data, index) => {
     const controlProps = getControlProps?.({
       active: index === spy.active,
-      data: {
-        ...data,
-        getNode: data.getNode || (() => {}),
-      },
+      data: { ...data, getNode: data.getNode || noop },
     });
 
     return (
@@ -193,7 +189,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
   });
 
   return (
-    <Box ref={ref} variant={variant} {...getStyles('root')} {...others}>
+    <Box variant={variant} {...getStyles('root')} {...others}>
       {controls}
     </Box>
   );
@@ -201,3 +197,4 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
 
 TableOfContents.displayName = '@mantine/core/TableOfContents';
 TableOfContents.classes = classes;
+TableOfContents.varsResolver = varsResolver;

@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerContentStylesNames = 'content' | 'inner';
 
 export interface DrawerContentProps
-  extends ModalBaseContentProps,
-    CompoundStylesApiProps<DrawerContentFactory> {
+  extends ModalBaseContentProps, CompoundStylesApiProps<DrawerContentFactory> {
   __hidden?: boolean;
 }
 
@@ -18,7 +17,7 @@ export type DrawerContentFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerContent = factory<DrawerContentFactory>((_props, ref) => {
+export const DrawerContent = factory<DrawerContentFactory>((_props) => {
   const props = useProps('DrawerContent', null, _props);
   const { classNames, className, style, styles, vars, children, radius, __hidden, ...others } =
     props;
@@ -30,7 +29,6 @@ export const DrawerContent = factory<DrawerContentFactory>((_props, ref) => {
     <ModalBaseContent
       {...ctx.getStyles('content', { className, style, styles, classNames })}
       innerProps={ctx.getStyles('inner', { className, style, styles, classNames })}
-      ref={ref}
       {...others}
       radius={radius || ctx.radius || 0}
       data-hidden={__hidden || undefined}

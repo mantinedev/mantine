@@ -23,5 +23,6 @@ export const SemiCircleProgressStylesApi: StylesApiData<SemiCircleProgressFactor
 
   modifiers: [
     { selector: 'label', modifier: 'data-position', value: 'Value of `labelPosition` prop' },
+    { selector: 'label', modifier: 'data-orientation', value: 'Value of `orientation` prop' },
   ],
 };

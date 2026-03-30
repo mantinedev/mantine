@@ -1,0 +1,213 @@
+.dayView {
+  --slot-height: var(--day-view-slot-height, 64px); /* total height of 1 hour slot */
+  --all-day-slot-height: var(--day-view-all-day-slot-height, 44px); /* height of all day slot */
+  --day-view-slot-labels-width: 80px;
+  --day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  border-radius: var(--day-view-radius);
+  overflow: hidden;
+
+  @mixin where-light {
+    --day-view-border-color: var(--mantine-color-gray-3);
+    --day-view-business-hours-bg: var(--mantine-color-white);
+    --day-view-non-business-hours-bg: var(--mantine-color-gray-0);
+  }
+
+  @mixin where-dark {
+    --day-view-border-color: var(--mantine-color-dark-4);
+    --day-view-business-hours-bg: var(--mantine-color-dark-7);
+    --day-view-non-business-hours-bg: var(--mantine-color-dark-6);
+  }
+}
+
+.dayViewHeader {
+  text-transform: capitalize;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.dayViewScrollArea {
+  border: 1px solid var(--day-view-border-color);
+  border-radius: var(--day-view-radius);
+  overflow: hidden;
+
+  :where(:global(.mantine-ScrollArea-scrollbar)) {
+    z-index: 4;
+  }
+}
+
+.dayViewInner {
+  display: flex;
+}
+
+.dayViewTimeSlots {
+  position: relative;
+
+  &:where(:first-of-type) .dayViewSlot:first-of-type {
+    border-top-color: transparent;
+  }
+}
+
+.dayViewSlotLabels {
+  width: var(--day-view-slot-labels-width);
+}
+
+.dayViewSlotLabel {
+  height: var(--slot-height);
+  border-top: 1px solid var(--day-view-border-color);
+  font-size: var(--mantine-font-size-sm);
+  text-align: right;
+  padding: 4px 8px;
+  font-variant-numeric: tabular-nums;
+
+  &:where([data-all-day]) {
+    height: var(--all-day-slot-height);
+    border-top: 0;
+  }
+
+  &:where(:first-of-type) {
+    border-top: 0;
+  }
+
+  &:where([data-business-hours]) {
+    background-color: var(--day-view-business-hours-bg);
+  }
+
+  &:where([data-non-business-hours]) {
+    background-color: var(--day-view-non-business-hours-bg);
+  }
+}
+
+.dayViewSlots {
+  flex: 1;
+}
+
+.dayViewSlot {
+  display: block;
+  width: 100%;
+  border-top: 1px dotted var(--day-view-border-color);
+  height: calc(var(--slot-height) * var(--slot-size));
+  position: relative;
+
+  &:where(:focus) {
+    z-index: 1;
+  }
+
+  &:where([data-hour-start]) {
+    border-top: 1px solid var(--day-view-border-color);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+
+  &:where([data-all-day]) {
+    height: var(--all-day-slot-height);
+    border-top: 0;
+  }
+
+  &:where([data-business-hours]) {
+    background-color: var(--day-view-business-hours-bg);
+  }
+
+  &:where([data-non-business-hours]) {
+    background-color: var(--day-view-non-business-hours-bg);
+  }
+
+  &:where([data-drop-target]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-blue-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
+    }
+  }
+
+  &:where([data-drag-selected]) {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-light);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+
+      @mixin where-light {
+        border-color: var(--mantine-primary-color-2);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-primary-color-9);
+      }
+    }
+  }
+
+  &:where([data-drag-slot-index]) {
+    touch-action: none;
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.dayViewBackgroundEvent {
+  position: absolute;
+  border-radius: 0;
+  pointer-events: none;
+  z-index: 2;
+  background-color: var(--bg-event-bg);
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: 3px 4px;
+  color: var(--bg-event-color);
+}
+
+.dayViewAllDay {
+  position: relative;
+  height: var(--all-day-slot-height);
+}
+
+.dayViewAllDayEvents {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  z-index: 3;
+}

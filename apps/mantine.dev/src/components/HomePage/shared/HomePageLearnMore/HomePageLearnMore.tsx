@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import { Anchor, AnchorProps, ElementProps } from '@mantine/core';
 import classes from './HomePageLearnMore.module.css';
@@ -18,7 +18,7 @@ export function HomePageLearnMore({
     <Anchor component={Link} href={href} className={cx(classes.root, className)} {...others}>
       <span className={classes.inner}>
         {children}
-        <IconArrowUpRight size={16} />
+        <ArrowUpRightIcon size={16} />
       </span>
     </Anchor>
   );

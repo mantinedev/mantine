@@ -14,11 +14,12 @@ import {
 import classes from './TimeInput.module.css';
 
 export interface TimeInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TimeInputFactory>,
     ElementProps<'input', 'size'> {
-  /** Determines whether seconds input should be displayed @default `false` */
+  /** Determines whether seconds input should be displayed @default false */
   withSeconds?: boolean;
 
   /** Minimum possible string time, if `withSeconds` is true, time should be in format HH:mm:ss, otherwise HH:mm */
@@ -34,7 +35,7 @@ export type TimeInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
+export const TimeInput = factory<TimeInputFactory>((_props) => {
   const props = useProps('TimeInput', null, _props);
   const {
     classNames,
@@ -123,7 +124,6 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
       styles={resolvedStyles}
       unstyled={unstyled}
-      ref={ref}
       value={value}
       step={step ?? (withSeconds ? 1 : 60)}
       {...others}

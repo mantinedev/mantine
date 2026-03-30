@@ -16,9 +16,7 @@ import classes from '../Menu.module.css';
 export type MenuDropdownStylesNames = 'dropdown';
 
 export interface MenuDropdownProps
-  extends BoxProps,
-    CompoundStylesApiProps<MenuDropdownFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<MenuDropdownFactory>, ElementProps<'div'> {}
 
 export type MenuDropdownFactory = Factory<{
   props: MenuDropdownProps;
@@ -27,7 +25,7 @@ export type MenuDropdownFactory = Factory<{
   compound: true;
 }>;
 
-export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
+export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
   const {
     classNames,
     className,
@@ -38,6 +36,7 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
     onMouseLeave,
     onKeyDown,
     children,
+    ref,
     ...others
   } = useProps('MenuDropdown', null, props);
 

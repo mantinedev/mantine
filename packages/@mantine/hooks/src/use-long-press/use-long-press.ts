@@ -96,3 +96,8 @@ function isTouchEvent(event: React.MouseEvent | React.TouchEvent): event is Reac
 function isMouseEvent(event: React.MouseEvent | React.TouchEvent): event is React.MouseEvent {
   return event.nativeEvent instanceof MouseEvent;
 }
+
+export namespace useLongPress {
+  export type Options = UseLongPressOptions;
+  export type ReturnValue = UseLongPressReturnValue;
+}

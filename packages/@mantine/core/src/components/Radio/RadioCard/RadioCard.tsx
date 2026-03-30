@@ -1,3 +1,4 @@
+import { createContext, use } from 'react';
 import {
   BoxProps,
   createVarsResolver,
@@ -12,9 +13,14 @@ import {
   useStyles,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
-import { useRadioGroupContext } from '../RadioGroup.context';
-import { RadioCardProvider } from './RadioCard.context';
+import { RadioGroupContext } from '../RadioGroup/RadioGroup';
 import classes from './RadioCard.module.css';
+
+export interface RadioCardContextValue {
+  checked: boolean;
+}
+
+export const RadioCardContext = createContext<RadioCardContextValue | null>(null);
 
 export type RadioCardStylesNames = 'card';
 export type RadioCardCssVariables = {
@@ -22,19 +28,17 @@ export type RadioCardCssVariables = {
 };
 
 export interface RadioCardProps
-  extends BoxProps,
-    StylesApiProps<RadioCardFactory>,
-    ElementProps<'button', 'onChange'> {
+  extends BoxProps, StylesApiProps<RadioCardFactory>, ElementProps<'button', 'onChange'> {
   /** Checked state */
   checked?: boolean;
 
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Value of the checkbox, used with `Radio.Group` */
+  /** Value of the radio, used with Radio.Group */
   value?: string;
 
   /** Value used to associate all related radio cards, required for accessibility if used outside of `Radio.Group` */
@@ -58,7 +62,7 @@ const varsResolver = createVarsResolver<RadioCardFactory>((_, { radius }) => ({
   },
 }));
 
-export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
+export const RadioCard = factory<RadioCardFactory>((_props) => {
   const props = useProps('RadioCard', defaultProps, _props);
   const {
     classNames,
@@ -94,20 +98,22 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
   });
 
   const { dir } = useDirection();
-  const ctx = useRadioGroupContext();
+  const ctx = use(RadioGroupContext);
   const _checked = typeof checked === 'boolean' ? checked : ctx?.value === value || false;
   const _name = name || ctx?.name;
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
 
+    if (!_name) {
+      return;
+    }
+
     if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.nativeEvent.code)) {
       event.preventDefault();
 
       const siblings = Array.from(
-        document.querySelectorAll<HTMLButtonElement>(
-          `[role="radio"][name="${_name || '__mantine'}"]`
-        )
+        document.querySelectorAll<HTMLButtonElement>(`[role="radio"][name="${_name}"]`)
       );
 
       const currentIndex = siblings.findIndex((element) => element === event.target);
@@ -137,9 +143,8 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
   };
 
   return (
-    <RadioCardProvider value={{ checked: _checked }}>
+    <RadioCardContext value={{ checked: _checked }}>
       <UnstyledButton
-        ref={ref}
         mod={[{ 'with-border': withBorder, checked: _checked }, mod]}
         {...getStyles('card')}
         {...others}
@@ -152,9 +157,10 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
         }}
         onKeyDown={handleKeyDown}
       />
-    </RadioCardProvider>
+    </RadioCardContext>
   );
 });
 
 RadioCard.displayName = '@mantine/core/RadioCard';
 RadioCard.classes = classes;
+RadioCard.varsResolver = varsResolver;

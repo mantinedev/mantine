@@ -84,6 +84,11 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Create headers that are hidden after user scrolls past given distance'
   ),
 
+  useScrollDirection: hDocs(
+    'useScrollDirection',
+    'Detects whether the user is scrolling up or down'
+  ),
+
   useHotkeys: hDocs('useHotkeys', 'Listen for keys combinations on document element'),
   useHover: hDocs('useHover', 'Detects if given element is hovered'),
   useId: hDocs('useId', 'Generates memoized random id'),
@@ -190,7 +195,13 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'useScrollSpy',
     'Track scroll position and detect which heading is currently in the viewport, can be used for table of contents'
   ),
+  useScroller: hDocs(
+    'useScroller',
+    'Manages horizontal scroll behavior with scroll state tracking and drag-to-scroll functionality'
+  ),
+  useFloatingWindow: hDocs('useFloatingWindow', 'Create draggable floating area'),
   useFileDialog: hDocs('useFileDialog', 'Capture one or more files from the user'),
   useLongPress: hDocs('useLongPress', 'Call function on long press'),
   useSelection: hDocs('useSelection', 'Manages selection state of given dataset'),
+  useCollapse: hDocs('useCollapse', 'Animate height from 0 to auto and vice versa'),
 };

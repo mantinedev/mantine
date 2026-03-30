@@ -1,13 +1,13 @@
-import { forwardRef, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { useScrollbarContext } from '../ScrollAreaScrollbar/Scrollbar.context';
 import { addUnlinkedScrollListener, composeEventHandlers } from '../utils';
 
-interface ThumbProps extends React.ComponentPropsWithoutRef<'div'> {}
+interface ThumbProps extends React.ComponentProps<'div'> {}
 
-export const Thumb = forwardRef<HTMLDivElement, ThumbProps>((props, forwardedRef) => {
-  const { style, ...others } = props;
+export function Thumb(props: ThumbProps) {
+  const { style, ref: forwardedRef, ...others } = props;
   const scrollAreaContext = useScrollAreaContext();
   const scrollbarContext = useScrollbarContext();
   const { onThumbPositionChange } = scrollbarContext;
@@ -59,7 +59,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>((props, forwardedRef
       onPointerUp={composeEventHandlers(props.onPointerUp, scrollbarContext.onThumbPointerUp)}
     />
   );
-});
+}
 
 Thumb.displayName = '@mantine/core/ScrollAreaThumb';
 
@@ -67,17 +67,15 @@ interface ScrollAreaThumbProps extends ThumbProps {
   forceMount?: true;
 }
 
-export const ScrollAreaThumb = forwardRef<HTMLDivElement, ScrollAreaThumbProps>(
-  (props, forwardedRef) => {
-    const { forceMount, ...thumbProps } = props;
-    const scrollbarContext = useScrollbarContext();
+export function ScrollAreaThumb(props: ScrollAreaThumbProps) {
+  const { forceMount, ...thumbProps } = props;
+  const scrollbarContext = useScrollbarContext();
 
-    if (forceMount || scrollbarContext.hasThumb) {
-      return <Thumb ref={forwardedRef} {...thumbProps} />;
-    }
-
-    return null;
+  if (forceMount || scrollbarContext.hasThumb) {
+    return <Thumb {...thumbProps} />;
   }
-);
+
+  return null;
+}
 
 ScrollAreaThumb.displayName = '@mantine/core/ScrollAreaThumb';

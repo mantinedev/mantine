@@ -1,4 +1,14 @@
+import type {
+  AffixBaseProps,
+  AffixCssVariables,
+  AffixFactory,
+  AffixPosition,
+  AffixProps,
+  AffixStylesNames,
+} from './Affix';
+
 export { Affix } from './Affix';
+
 export type {
   AffixCssVariables,
   AffixFactory,
@@ -6,4 +16,11 @@ export type {
   AffixStylesNames,
   AffixBaseProps,
   AffixPosition,
-} from './Affix';
+};
+
+export namespace Affix {
+  export type Props = AffixProps;
+  export type StylesNames = AffixStylesNames;
+  export type CssVariables = AffixCssVariables;
+  export type Factory = AffixFactory;
+}

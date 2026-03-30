@@ -6,6 +6,7 @@
 
   svg {
     overflow: visible;
+    outline: 0;
   }
 
   @mixin where-light {

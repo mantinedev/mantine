@@ -82,7 +82,7 @@ export interface UseScrollSpyOptions {
   offset?: number;
 }
 
-export interface UseScrollSpyReturnType {
+export interface UseScrollSpyReturnValue {
   /** Index of the active heading in the `data` array */
   active: number;
 
@@ -102,7 +102,7 @@ export function useScrollSpy({
   getValue = getDefaultValue,
   offset = 0,
   scrollHost,
-}: UseScrollSpyOptions = {}): UseScrollSpyReturnType {
+}: UseScrollSpyOptions = {}): UseScrollSpyReturnValue {
   const [active, setActive] = useState(-1);
   const [initialized, setInitialized] = useState(false);
   const [data, setData] = useState<UseScrollSpyHeadingData[]>([]);
@@ -147,4 +147,9 @@ export function useScrollSpy({
     initialized,
     data,
   };
+}
+
+export namespace useScrollSpy {
+  export type Options = UseScrollSpyOptions;
+  export type ReturnValue = UseScrollSpyReturnValue;
 }

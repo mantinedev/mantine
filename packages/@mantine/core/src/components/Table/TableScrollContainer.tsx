@@ -19,16 +19,14 @@ export type TableScrollContainerCssVariables = {
 };
 
 export interface TableScrollContainerProps
-  extends BoxProps,
-    StylesApiProps<TableScrollContainerFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<TableScrollContainerFactory>, ElementProps<'div'> {
   /** `min-width` of the `Table` at which it should become scrollable */
   minWidth: React.CSSProperties['minWidth'];
 
   /** `max-height` of the `Table` at which it should become scrollable */
   maxHeight?: React.CSSProperties['maxHeight'];
 
-  /** Type of the scroll container, `native` to use native scrollbars, `scrollarea` to use `ScrollArea` component @default `'scrollarea'` */
+  /** Type of the scroll container, `native` to use native scrollbars, `scrollarea` to use `ScrollArea` component @default 'scrollarea' */
   type?: 'native' | 'scrollarea';
 
   /** Props passed down to `ScrollArea` component, not applicable with `type="native"` */
@@ -56,7 +54,7 @@ const varsResolver = createVarsResolver<TableScrollContainerFactory>(
   })
 );
 
-export const TableScrollContainer = factory<TableScrollContainerFactory>((_props, ref) => {
+export const TableScrollContainer = factory<TableScrollContainerFactory>((_props) => {
   const props = useProps('TableScrollContainer', defaultProps, _props);
   const {
     classNames,
@@ -97,7 +95,6 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
           ? { offsetScrollbars: 'xy', ...scrollAreaProps }
           : { offsetScrollbars: 'x', ...scrollAreaProps }
         : {})}
-      ref={ref}
       {...getStyles('scrollContainer')}
       {...others}
     >
@@ -107,4 +104,5 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
 });
 
 TableScrollContainer.classes = classes;
+TableScrollContainer.varsResolver = varsResolver;
 TableScrollContainer.displayName = '@mantine/core/TableScrollContainer';

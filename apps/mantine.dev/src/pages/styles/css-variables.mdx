@@ -13,7 +13,7 @@ Note that not all values are documented on this page, you can find full list of 
 
 ## Typography variables
 
-Typography variables control font family, font size, line height, font weight, and other text-related properties
+Typography variables control the font family, font size, line height, font weight, and other text-related properties
 of all Mantine components.
 
 ### Font family
@@ -25,24 +25,24 @@ The following CSS variables are used to assign font families to all Mantine comp
     {
       variable: '--mantine-font-family',
       description:
-        'Controls font-family property of most Mantine components',
+        'Controls the font-family property of most Mantine components',
       defaultValue: 'system sans-serif fonts',
     },
     {
       variable: '--mantine-font-family-monospace',
-      description: 'Controls font-family property of code blocks',
+      description: 'Controls the font-family property of code blocks',
       defaultValue: 'system monospace fonts',
     },
     {
       variable: '--mantine-font-family-headings',
-      description: 'Controls font-family property of headings',
+      description: 'Controls the font-family property of headings',
       defaultValue: 'system sans-serif fonts',
     },
   ]}
 />
 
 You can control these variables in the [theme](/theming/theme-object). Note that if
-`theme.headings.fontFamily` is not set, `--mantine-font-family-headings` value
+`theme.headings.fontFamily` is not set, the `--mantine-font-family-headings` value
 will be the same as `--mantine-font-family`.
 
 ```tsx
@@ -89,7 +89,7 @@ You can reference font family variables in your CSS:
 }
 ```
 
-And in [ff style prop](/styles/style-props):
+And in the [ff style prop](/styles/style-props):
 
 - `ff="text"` will use `--mantine-font-family` variable
 - `ff="monospace"` will use `--mantine-font-family-monospace` variable
@@ -101,7 +101,7 @@ import { Text } from '@mantine/core';
 function Demo() {
   return (
     <Text ff="monospace">
-      This text uses --mantine-font-family-monospace variable
+      This text uses the --mantine-font-family-monospace variable
     </Text>
   );
 }
@@ -145,7 +145,7 @@ You can reference font size variables in CSS:
 }
 ```
 
-And in [fz style prop](/styles/style-props):
+And in the [fz style prop](/styles/style-props):
 
 ```tsx
 import { Text } from '@mantine/core';

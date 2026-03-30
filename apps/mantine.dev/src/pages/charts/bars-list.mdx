@@ -1,0 +1,87 @@
+import { BarsListDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.BarsList);
+
+## Usage
+
+`BarsList` component displays a list of bars with names and values.
+The only required prop is `data` – an array of objects with `name` and `value` properties.
+
+<Demo data={BarsListDemos.usage} />
+
+## Data format
+
+`BarsList` expects data in the following format:
+
+```tsx
+export const data = [
+  { name: 'React', value: 950000 },
+  { name: 'Vue', value: 320000 },
+  { name: 'Angular', value: 580000 },
+  { name: 'Svelte', value: 145000 },
+];
+```
+
+## Value formatter
+
+Use `valueFormatter` prop to format the value displayed next to the bar.
+The function receives the numeric value and must return a string.
+
+<Demo data={BarsListDemos.valueFormatter} />
+
+## Labels
+
+Use `barsLabel` and `valueLabel` props to display column headers above the bars and values:
+
+<Demo data={BarsListDemos.labels} />
+
+## Bar gap
+
+Control the spacing between bars with the `barGap` prop:
+
+<Demo data={BarsListDemos.barGap} />
+
+## Minimum bar size
+
+Set the minimum bar width with the `minBarSize` prop:
+
+<Demo data={BarsListDemos.minBarSize} />
+
+## Bar height
+
+Control the height of bars with the `barHeight` prop:
+
+<Demo data={BarsListDemos.barHeight} />
+
+## Bar color
+
+Use `barColor` and `barTextColor` props to set the default background and text colors for all bars:
+
+<Demo data={BarsListDemos.barColor} />
+
+## Auto contrast
+
+Set `autoContrast` prop to automatically adjust text color based on background color:
+
+<Demo data={BarsListDemos.autoContrast} />
+
+## Custom colors
+
+Each bar can have its own color by setting the `color` property in the data:
+
+<Demo data={BarsListDemos.customColors} />
+
+## Get bar props
+
+Use `getBarProps` to pass additional props to each bar element.
+For example, it can be used to add custom styling or event handlers:
+
+<Demo data={BarsListDemos.getBarProps} />
+
+## Custom bar rendering
+
+Use `renderBar` to completely customize how each bar is rendered:
+
+<Demo data={BarsListDemos.renderBar} />

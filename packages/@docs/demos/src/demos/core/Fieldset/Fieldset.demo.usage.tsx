@@ -38,6 +38,6 @@ export const usage: MantineDemo = {
       data: ['default', 'filled', 'unstyled'],
     },
 
-    { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: 'sm' },
+    { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: 'md' },
   ],
 };

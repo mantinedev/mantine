@@ -9,14 +9,14 @@ import { Paper, Text } from '@mantine/core';
 import { data } from './data';
 
 interface ChartTooltipProps {
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       {payload.map((item: any) => (
         <Text key={item.name} fz="sm">
           {item.name}: {item.value}
@@ -43,7 +43,7 @@ function Demo() {
 `;
 
 interface ChartTooltipProps {
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ payload }: ChartTooltipProps) {
@@ -52,7 +52,7 @@ function ChartTooltip({ payload }: ChartTooltipProps) {
   }
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       {payload.map((item: any) => (
         <Text key={item.name} fz="sm">
           {item.name}: {item.value}

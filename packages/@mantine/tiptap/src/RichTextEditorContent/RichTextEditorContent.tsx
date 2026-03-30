@@ -14,9 +14,7 @@ import classes from '../RichTextEditor.module.css';
 
 export type RichTextEditorContentStylesNames = 'root';
 export interface RichTextEditorContentProps
-  extends BoxProps,
-    CompoundStylesApiProps<RichTextEditorContentFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<RichTextEditorContentFactory>, ElementProps<'div'> {}
 
 export type RichTextEditorContentFactory = Factory<{
   props: RichTextEditorContentProps;
@@ -25,7 +23,7 @@ export type RichTextEditorContentFactory = Factory<{
   compound: true;
 }>;
 
-export const RichTextEditorContent = factory<RichTextEditorContentFactory>((_props, ref) => {
+export const RichTextEditorContent = factory<RichTextEditorContentFactory>((_props) => {
   const props = useProps('RichTextEditorContent', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
   const ctx = useRichTextEditorContext();
@@ -35,7 +33,6 @@ export const RichTextEditorContent = factory<RichTextEditorContentFactory>((_pro
       <Typography
         {...ctx.getStyles('Typography', { className, style, styles, classNames })}
         unstyled={ctx.unstyled}
-        ref={ref}
       >
         <Box
           component={EditorContent}

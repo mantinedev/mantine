@@ -14,6 +14,7 @@ import { itSupportsInputWrapperProps } from './inputs/it-supports-input-wrapper-
 import { itSupportsSystemProps } from './it-supports-system-props';
 import { itHasClasses } from './shared/it-has-classes';
 import { itHasExtend } from './shared/it-has-extend';
+import { itHasStaticVarsResolver } from './shared/it-has-static-vars-resolver';
 // Shared tests
 import { itIsPolymorphic } from './shared/it-is-polymorphic';
 import { itRendersChildren } from './shared/it-renders-children';
@@ -55,6 +56,7 @@ export const tests = {
   itSupportsSize,
   itHasExtend,
   itHasClasses,
+  itHasStaticVarsResolver,
   itSupportsHiddenVisible,
   itSupportsLightDarkHidden,
   itSupportsId,
@@ -85,7 +87,7 @@ export const tests = {
 
 export { render, renderWithAct } from './render';
 export { wait } from './wait';
-export { patchConsoleError, patchConsoleWarn } from './patch-console-error';
+export { patchConsoleError, patchConsoleWarn, autoPatchWarn } from './patch-console-error';
 export { createContextContainer } from './create-context-container';
 export { inputDefaultProps, inputStylesApiSelectors } from './inputs/inputs-test-props';
 export * from './queries';

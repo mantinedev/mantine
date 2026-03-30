@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { CloseButton, Container, Text, TextInput, Title } from '@mantine/core';
 import classes from './QuestionsListHeader.module.css';
 
@@ -29,7 +29,7 @@ export function QuestionsListHeader({ search, onSearchChange, total }: Questions
           radius="md"
           placeholder="Search questions..."
           leftSectionPointerEvents="none"
-          leftSection={<IconSearch size={26} stroke={1.5} />}
+          leftSection={<MagnifyingGlassIcon size={26} />}
           rightSection={
             search.trim().length > 0 && <CloseButton size="lg" onClick={() => onSearchChange('')} />
           }

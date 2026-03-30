@@ -1,0 +1,328 @@
+import dayjs from 'dayjs';
+import { useRef } from 'react';
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  DataAttributes,
+  ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  MantineRadius,
+  StylesApiProps,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
+} from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
+import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
+import {
+  expandRecurringEvents,
+  getMonthDays,
+  getMonthsByQuarter,
+  isSameMonth,
+  toDateString,
+} from '../../utils';
+import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
+import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
+import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
+import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { getYearViewEvents } from './get-year-view-events/get-year-view-events';
+import { handleYearViewKeyDown, YearViewControlsRef } from './handle-year-view-key-down';
+import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
+import classes from './YearView.module.css';
+
+export type YearViewStylesNames =
+  | 'yearView'
+  | 'yearViewMonths'
+  | 'yearViewMonth'
+  | 'yearViewWeekday'
+  | 'yearViewDay'
+  | 'yearViewWeek'
+  | 'yearViewWeekNumber'
+  | 'yearViewWeekdays'
+  | 'yearViewWeekdaysCorner'
+  | 'yearViewMonthCaption'
+  | 'yearViewDayIndicators'
+  | 'yearViewDayIndicator'
+  | CombinedScheduleHeaderStylesNames;
+
+export type YearViewCssVariables = {
+  yearView: '--year-view-radius';
+};
+
+export interface YearViewProps
+  extends YearViewMonthSettings, BoxProps, StylesApiProps<YearViewFactory>, ElementProps<'div'> {
+  __staticSelector?: string;
+
+  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */
+  date: Date | string;
+
+  /** Called with the new date value when a date is selected */
+  onDateChange?: (value: DateStringValue) => void;
+
+  /** Events to display, must be a stable reference */
+  events?: ScheduleEventData[];
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  radius?: MantineRadius;
+
+  /** If set, highlights the current day @default true */
+  highlightToday?: boolean;
+
+  /** If set, the header is displayed @default true */
+  withHeader?: boolean;
+
+  /** Props passed down to `MonthYearSelect` component in the header */
+  monthYearSelectProps?: Partial<MonthYearSelectProps>;
+
+  /** Called when view level select button is clicked */
+  onViewChange?: (view: ScheduleViewLevel) => void;
+
+  /** Props passed to previous month control */
+  previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to next month control */
+  nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to today control */
+  todayControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to view level select */
+  viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
+  mode?: ScheduleMode;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
+}
+
+export type YearViewFactory = Factory<{
+  props: YearViewProps;
+  ref: HTMLDivElement;
+  stylesNames: YearViewStylesNames;
+  vars: YearViewCssVariables;
+}>;
+
+const defaultProps = {
+  __staticSelector: 'YearView',
+  monthLabelFormat: 'MMMM',
+  withWeekDays: true,
+  highlightToday: true,
+  withHeader: true,
+  withOutsideDays: true,
+  mode: 'default',
+} satisfies Partial<YearViewProps>;
+
+const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) => ({
+  yearView: { '--year-view-radius': radius !== undefined ? getRadius(radius) : undefined },
+}));
+
+export const YearView = factory<YearViewFactory>((_props) => {
+  const props = useProps('YearView', defaultProps, _props);
+  const {
+    // YearView props
+    date,
+    onDateChange,
+    events,
+
+    // YearViewMonth settings
+    monthLabelFormat,
+    withWeekNumbers,
+    withWeekDays,
+    locale,
+    firstDayOfWeek,
+    weekdayFormat,
+    weekendDays,
+    onMonthClick,
+    onDayClick,
+    onWeekNumberClick,
+    getDayProps,
+    getWeekNumberProps,
+    highlightToday,
+    labels,
+    withOutsideDays,
+
+    // ScheduleHeader props
+    withHeader,
+    monthYearSelectProps,
+    onViewChange,
+    previousControlProps,
+    nextControlProps,
+    todayControlProps,
+    viewSelectProps,
+
+    // System props
+    __staticSelector,
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    radius,
+    mode,
+    recurrenceExpansionLimit,
+    ...others
+  } = props;
+
+  const ctx = useDatesContext();
+
+  const getStyles = useStyles<YearViewFactory>({
+    name: __staticSelector,
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    vars,
+    varsResolver,
+    attributes,
+    rootSelector: 'yearView',
+  });
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<YearViewFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const stylesApiProps = {
+    classNames: resolvedClassNames,
+    styles: resolvedStyles,
+    attributes,
+    __staticSelector,
+    radius,
+  };
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(date).startOf('year').toDate(),
+    rangeEnd: dayjs(date).endOf('year').toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
+  const groupedEvents = getYearViewEvents({ date, events: expandedEvents });
+
+  // [monthIndex][weekIndex][dayIndex]
+  const daysRef = useRef<HTMLButtonElement[][][]>([]) as YearViewControlsRef;
+
+  const getFirstDayIndex = (month: string): { weekIndex: number; dayIndex: number } | undefined => {
+    const weeks = getMonthDays({
+      month: dayjs(month).format('YYYY-MM-DD'),
+      firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+      consistentWeeks: true,
+    });
+
+    for (let weekIndex = 0; weekIndex < weeks.length; weekIndex++) {
+      const week = weeks[weekIndex];
+      for (let dayIndex = 0; dayIndex < week.length; dayIndex++) {
+        const dayDate = week[dayIndex];
+        if (isSameMonth(dayDate, month)) {
+          return { weekIndex, dayIndex };
+        }
+      }
+    }
+
+    return undefined;
+  };
+
+  let globalMonthIndex = 0;
+  const months = getMonthsByQuarter(dayjs(date).format('YYYY-MM-DD'))
+    .flat()
+    .map((month) => {
+      const currentMonthIndex = globalMonthIndex;
+      globalMonthIndex++;
+
+      return (
+        <YearViewMonth
+          key={month}
+          month={month}
+          getStyles={getStyles}
+          monthLabelFormat={monthLabelFormat}
+          withWeekNumbers={withWeekNumbers}
+          withWeekDays={withWeekDays}
+          locale={locale}
+          firstDayOfWeek={firstDayOfWeek}
+          weekdayFormat={
+            weekdayFormat ||
+            ((date) => dayjs(date).locale(ctx.getLocale(locale)).format('dd').slice(0, 1))
+          }
+          weekendDays={weekendDays}
+          getDayProps={getDayProps}
+          getWeekNumberProps={getWeekNumberProps}
+          onMonthClick={onMonthClick}
+          onDayClick={onDayClick}
+          onWeekNumberClick={onWeekNumberClick}
+          highlightToday={highlightToday}
+          groupedEvents={groupedEvents}
+          mode={mode}
+          withOutsideDays={withOutsideDays}
+          firstDayIndex={getFirstDayIndex(month)}
+          __getDayRef={(weekIndex, dayIndex, node) => {
+            if (!Array.isArray(daysRef.current[currentMonthIndex])) {
+              daysRef.current[currentMonthIndex] = [];
+            }
+            if (!Array.isArray(daysRef.current[currentMonthIndex][weekIndex])) {
+              daysRef.current[currentMonthIndex][weekIndex] = [];
+            }
+            daysRef.current[currentMonthIndex][weekIndex][dayIndex] = node;
+          }}
+          __onDayKeyDown={(event, payload) => {
+            handleYearViewKeyDown({
+              controlsRef: daysRef,
+              monthIndex: currentMonthIndex,
+              weekIndex: payload.weekIndex,
+              dayIndex: payload.dayIndex,
+              event,
+            });
+          }}
+        />
+      );
+    });
+
+  return (
+    <Box {...getStyles('yearView')} mod={{ static: mode === 'static' }} {...others}>
+      {withHeader && (
+        <ScheduleHeaderBase
+          view="year"
+          navigationHandlers={{
+            previous: () => toDateString(dayjs(date).subtract(1, 'year').startOf('year')),
+            next: () => toDateString(dayjs(date).add(1, 'year').startOf('year')),
+            today: () => toDateString(dayjs()),
+          }}
+          control={{
+            monthYearSelect: {
+              locale,
+              withMonths: false,
+              yearValue: dayjs(date).get('year'),
+              monthValue: dayjs(date).get('month'),
+              onYearChange: (year) =>
+                onDateChange?.(toDateString(dayjs(date).set('year', year).startOf('year'))),
+              ...monthYearSelectProps,
+            },
+          }}
+          labels={labels}
+          onDateChange={onDateChange}
+          onViewChange={onViewChange}
+          previousControlProps={previousControlProps}
+          nextControlProps={nextControlProps}
+          todayControlProps={todayControlProps}
+          viewSelectProps={viewSelectProps}
+          stylesApiProps={stylesApiProps}
+        />
+      )}
+
+      <div {...getStyles('yearViewMonths')}>{months}</div>
+    </Box>
+  );
+});
+
+YearView.displayName = '@mantine/schedule/YearView';
+YearView.classes = classes;
+YearView.varsResolver = varsResolver;

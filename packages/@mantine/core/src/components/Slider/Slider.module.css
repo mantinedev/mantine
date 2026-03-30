@@ -27,6 +27,13 @@
   @mixin dark {
     --slider-track-bg: var(--mantine-color-dark-4);
   }
+
+  &[data-orientation='vertical'] {
+    width: calc(var(--slider-size) * 2);
+    height: 200px;
+    padding-inline: 0;
+    padding-block: var(--slider-size);
+  }
 }
 
 .label {
@@ -47,6 +54,11 @@
 
   @mixin where-dark {
     background-color: var(--mantine-color-dark-4);
+  }
+
+  :where([data-orientation='vertical']) & {
+    top: auto;
+    inset-inline-start: calc(100% + 8px);
   }
 }
 
@@ -97,6 +109,23 @@
     border-color: var(--mantine-color-white);
     background-color: var(--slider-color);
   }
+
+  :where([data-orientation='vertical']) & {
+    left: 50%;
+    top: auto;
+    right: auto;
+    bottom: var(--slider-thumb-offset);
+    transform: translate(-50%, 50%);
+
+    &:where([data-dragging]) {
+      transform: translate(-50%, 50%) scale(1.05);
+    }
+
+    @mixin where-rtl {
+      left: 50%;
+      right: auto;
+    }
+  }
 }
 
 .trackContainer {
@@ -109,6 +138,12 @@
   fieldset:disabled &,
   &:where([data-disabled]) {
     cursor: not-allowed;
+  }
+
+  :where([data-orientation='vertical']) & {
+    flex-direction: column;
+    width: calc(var(--slider-size) * 2);
+    height: 100%;
   }
 }
 
@@ -136,6 +171,17 @@
     background-color: var(--track-bg, var(--slider-track-bg));
     z-index: 0;
   }
+
+  :where([data-orientation='vertical']) & {
+    width: var(--slider-size);
+    height: 100%;
+
+    &::before {
+      inset-inline: 0;
+      top: calc(var(--slider-size) * -1);
+      bottom: calc(var(--slider-size) * -1);
+    }
+  }
 }
 
 .bar {
@@ -156,6 +202,14 @@
   &:where([data-disabled]:not([data-inverted])) {
     background-color: var(--mantine-color-disabled-color);
   }
+
+  :where([data-orientation='vertical']) & {
+    top: auto;
+    bottom: var(--slider-bar-offset);
+    inset-inline-start: 0;
+    width: 100%;
+    height: var(--slider-bar-width);
+  }
 }
 
 .markWrapper {
@@ -165,6 +219,14 @@
   z-index: 2;
   height: 0;
   pointer-events: none;
+
+  :where([data-orientation='vertical']) & {
+    inset-inline-start: 0;
+    top: auto;
+    bottom: calc(var(--mark-offset) + var(--slider-size) / 2);
+    height: 0;
+    width: 0;
+  }
 }
 
 .mark {
@@ -205,5 +267,12 @@
 
   @mixin where-dark {
     color: var(--mantine-color-dark-2);
+  }
+
+  :where([data-orientation='vertical']) & {
+    transform: translate(
+      calc(var(--slider-size) + var(--mantine-spacing-xs) / 2),
+      calc(-50% - var(--slider-size) / 2)
+    );
   }
 }

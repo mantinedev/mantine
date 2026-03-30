@@ -1,96 +1,22 @@
-import { useState } from 'react';
-import { MantineThemeProvider } from '../../core';
-import { Stack } from '../Stack';
-import { Tooltip } from '../Tooltip';
 import { Checkbox } from './Checkbox';
 
 export default { title: 'Checkbox' };
 
-export function WithinDisabledFieldset() {
-  return (
-    <fieldset disabled style={{ padding: 40 }}>
-      <legend>Disabled fieldset</legend>
-      <Checkbox label="Disabled checkbox within fieldset" checked />
-      <Checkbox label="Disabled checkbox" checked disabled mt="md" />
-    </fieldset>
-  );
-}
-
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Checkbox label="Default" variant="outline" value="hello" checked />
-      <Checkbox label="Disabled" checked disabled mt="xl" />
-      <Checkbox label="Indeterminate" indeterminate mt="xl" />
-    </div>
-  );
-}
-
-export function BooleanError() {
-  const [error, setError] = useState(false);
-  return (
-    <div style={{ padding: 40 }}>
+      <Checkbox label="Default" value="hello" />
+      <Checkbox label="Read only" value="hello" readOnly mt="sm" />
+      <Checkbox label="Disabled" checked disabled mt="sm" />
+      <Checkbox label="Indeterminate" indeterminate mt="sm" />
       <Checkbox
-        label="Boolean error"
+        label="With error message"
+        error="Error message"
         value="hello"
-        error={error}
-        onChange={(event) => setError(event.currentTarget.checked)}
+        mt="sm"
+        withErrorStyles={false}
       />
-      <Checkbox
-        label="Boolean error"
-        value="hello"
-        error={error}
-        onChange={(event) => setError(event.currentTarget.checked)}
-      />
-      <Checkbox
-        label="Boolean error"
-        value="hello"
-        error={error}
-        onChange={(event) => setError(event.currentTarget.checked)}
-      />
-      <p>Under checkboxes</p>
-    </div>
-  );
-}
-
-export function AutoContrast() {
-  return (
-    <div style={{ padding: 40 }}>
-      <Checkbox
-        label="Auto contrast icon color"
-        value="hello"
-        defaultChecked
-        color="lime.4"
-        // AutoContrast
-      />
-    </div>
-  );
-}
-
-export function OutlineVariant() {
-  return (
-    <div style={{ padding: 40 }}>
-      <Checkbox variant="outline" label="Default" value="hello" />
-      <Checkbox variant="outline" label="Disabled" checked disabled mt="xl" />
-      <Checkbox variant="outline" label="Indeterminate" indeterminate mt="xl" />
-    </div>
-  );
-}
-
-export function IconColor() {
-  return (
-    <div style={{ padding: 40 }}>
-      <Checkbox label="Default" color="lime.4" iconColor="dark.8" />
-    </div>
-  );
-}
-
-export function WithTooltip() {
-  return (
-    <div style={{ padding: 40 }}>
-      <Tooltip label="Tooltip" refProp="rootRef" position="bottom-start">
-        <Checkbox label="With tooltip" defaultChecked />
-      </Tooltip>
+      <Checkbox label="With boolean error" error value="hello" mt="sm" />
     </div>
   );
 }
@@ -98,7 +24,7 @@ export function WithTooltip() {
 export function CheckboxGroup() {
   return (
     <div style={{ padding: 40 }}>
-      <Checkbox.Group defaultValue={['react']}>
+      <Checkbox.Group defaultValue={['react']} id="test-group" label="Frameworks">
         <Checkbox label="React" value="react" />
         <Checkbox label="Angular" value="ng" />
       </Checkbox.Group>
@@ -106,100 +32,20 @@ export function CheckboxGroup() {
   );
 }
 
-export function CursorPointer() {
+export function UncontrolledForm() {
   return (
-    <MantineThemeProvider theme={{ cursorType: 'pointer' }}>
-      <Checkbox label="Hello" value="1" />
-    </MantineThemeProvider>
-  );
-}
-
-export function Asterisk() {
-  return (
-    <div style={{ width: 300, padding: 20 }}>
-      <Checkbox.Group label="With required asterisk" withAsterisk>
-        <Checkbox value="1" />
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Checkbox group value:', formData.get('frameworks'));
+      }}
+    >
+      <Checkbox.Group label="Frameworks" name="frameworks" hiddenInputValuesSeparator="|">
+        <Checkbox label="React" value="react" />
+        <Checkbox label="Angular" value="ng" />
       </Checkbox.Group>
-      <Checkbox.Group label="Just required" required>
-        <Checkbox value="1" />
-      </Checkbox.Group>
-      <Checkbox.Group label="Required asterisk off" required withAsterisk={false}>
-        <Checkbox value="1" />
-      </Checkbox.Group>
-      <Checkbox.Group label="Required false asterisk on" required={false} withAsterisk>
-        <Checkbox value="1" />
-      </Checkbox.Group>
-    </div>
-  );
-}
-
-export function labelPosition() {
-  return (
-    <Stack style={{ width: 300, padding: 20 }}>
-      <Checkbox labelPosition="left" label="Hello from left" value="1" />
-      <Checkbox labelPosition="right" label="Hello from right" value="1" />
-    </Stack>
-  );
-}
-
-export function WithDescription() {
-  return (
-    <Stack style={{ width: 300, padding: 20 }}>
-      <Checkbox
-        description="This is left Checkbox"
-        labelPosition="left"
-        label="Hello from left "
-        value="1"
-      />
-      <Checkbox
-        description="This is right Checkbox"
-        labelPosition="right"
-        label="Hello from right"
-        value="1"
-      />
-    </Stack>
-  );
-}
-
-export function WithError() {
-  return (
-    <Stack style={{ width: 300, padding: 20 }}>
-      <Checkbox label="Invalid Checkbox without message" value="1" error />
-      <Checkbox error="This is error" labelPosition="right" label="Hello from right" value="1" />
-      <Checkbox error="Invalid Checkbox without label" value="1" />
-    </Stack>
-  );
-}
-
-export function Sizes() {
-  return ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <Checkbox size={size} defaultChecked label={`Size ${size}`} mt="md" key={size} />
-  ));
-}
-
-export function Unstyled() {
-  return <Checkbox label="Unstyled checkbox" unstyled />;
-}
-
-export function Inert() {
-  const [checked, setChecked] = useState(false);
-
-  return (
-    <div style={{ padding: 40 }}>
-      <Stack>
-        <Checkbox
-          label="Inert checkbox (cannot be changed by clicking label or input)"
-          checked={checked}
-          onChange={(event) => setChecked(event.currentTarget.checked)}
-          inert
-        />
-        <Checkbox
-          label="Normal checkbox for comparison"
-          checked={checked}
-          onChange={(event) => setChecked(event.currentTarget.checked)}
-        />
-        <p>Checked state: {checked ? 'true' : 'false'}</p>
-      </Stack>
-    </div>
+      <button type="submit">Submit</button>
+    </form>
   );
 }

@@ -1,3 +1,4 @@
+import { createContext, use } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -12,9 +13,14 @@ import {
   useStyles,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
-import { useCheckboxGroupContext } from '../CheckboxGroup.context';
-import { CheckboxCardProvider } from './CheckboxCard.context';
+import { CheckboxGroupContext } from '../CheckboxGroup/CheckboxGroup';
 import classes from './CheckboxCard.module.css';
+
+export interface CheckboxCardContextValue {
+  checked: boolean;
+}
+
+export const CheckboxCardContext = createContext<CheckboxCardContextValue | null>(null);
 
 export type CheckboxCardStylesNames = 'card';
 export type CheckboxCardCssVariables = {
@@ -22,9 +28,7 @@ export type CheckboxCardCssVariables = {
 };
 
 export interface CheckboxCardProps
-  extends BoxProps,
-    StylesApiProps<CheckboxCardFactory>,
-    ElementProps<'button', 'onChange'> {
+  extends BoxProps, StylesApiProps<CheckboxCardFactory>, ElementProps<'button', 'onChange'> {
   /** Controlled component value */
   checked?: boolean;
 
@@ -37,7 +41,7 @@ export interface CheckboxCardProps
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Value of the checkbox, used with `Checkbox.Group` */
@@ -61,7 +65,7 @@ const varsResolver = createVarsResolver<CheckboxCardFactory>((_, { radius }) => 
   },
 }));
 
-export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
+export const CheckboxCard = factory<CheckboxCardFactory>((_props) => {
   const props = useProps('CheckboxCard', defaultProps, _props);
   const {
     classNames,
@@ -96,7 +100,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     rootSelector: 'card',
   });
 
-  const ctx = useCheckboxGroupContext();
+  const ctx = use(CheckboxGroupContext);
   const _checked =
     typeof checked === 'boolean' ? checked : ctx ? ctx.value.includes(value || '') : undefined;
 
@@ -108,9 +112,8 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
   });
 
   return (
-    <CheckboxCardProvider value={{ checked: _value }}>
+    <CheckboxCardContext value={{ checked: _value }}>
       <UnstyledButton
-        ref={ref}
         mod={[{ 'with-border': withBorder, checked: _value }, mod]}
         {...getStyles('card')}
         {...others}
@@ -122,9 +125,10 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
           setValue(!_value);
         }}
       />
-    </CheckboxCardProvider>
+    </CheckboxCardContext>
   );
 });
 
 CheckboxCard.displayName = '@mantine/core/CheckboxCard';
 CheckboxCard.classes = classes;
+CheckboxCard.varsResolver = varsResolver;

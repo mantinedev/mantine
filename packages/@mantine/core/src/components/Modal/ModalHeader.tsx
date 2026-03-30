@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalHeaderStylesNames = 'header';
 
 export interface ModalHeaderProps
-  extends ModalBaseHeaderProps,
-    CompoundStylesApiProps<ModalHeaderFactory> {}
+  extends ModalBaseHeaderProps, CompoundStylesApiProps<ModalHeaderFactory> {}
 
 export type ModalHeaderFactory = Factory<{
   props: ModalHeaderProps;
@@ -16,7 +15,7 @@ export type ModalHeaderFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalHeader = factory<ModalHeaderFactory>((_props, ref) => {
+export const ModalHeader = factory<ModalHeaderFactory>((_props) => {
   const props = useProps('ModalHeader', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +23,6 @@ export const ModalHeader = factory<ModalHeaderFactory>((_props, ref) => {
 
   return (
     <ModalBaseHeader
-      ref={ref}
       {...ctx.getStyles('header', { classNames, style, styles, className })}
       {...others}
     />

@@ -10,12 +10,11 @@ import {
   getSize,
   MantineGradient,
   MantineRadius,
-  MantineSize,
   StylesApiProps,
   useProps,
   useStyles,
 } from '../../../core';
-import type { ButtonVariant } from '../Button';
+import type { ButtonSize, ButtonVariant } from '../Button';
 import classes from '../Button.module.css';
 
 export type ButtonGroupSectionStylesNames = 'groupSection';
@@ -31,20 +30,18 @@ export type ButtonGroupSectionCssVariables = {
 };
 
 export interface ButtonGroupSectionProps
-  extends BoxProps,
-    StylesApiProps<ButtonGroupSectionFactory>,
-    ElementProps<'div'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  extends BoxProps, StylesApiProps<ButtonGroupSectionFactory>, ElementProps<'div'> {
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient configuration used when `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Controls section `height`, `font-size` and horizontal `padding` @default `'sm'` */
-  size?: MantineSize | `compact-${MantineSize}` | (string & {});
+  /** Controls section `height`, `font-size` and horizontal `padding` @default 'sm' */
+  size?: ButtonSize;
 }
 
 export type ButtonGroupSectionFactory = Factory<{
@@ -81,7 +78,7 @@ const varsResolver = createVarsResolver<ButtonGroupSectionFactory>(
   }
 );
 
-export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, ref) => {
+export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props) => {
   const props = useProps('ButtonGroupSection', null, _props);
   const {
     className,
@@ -90,7 +87,6 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     styles,
     unstyled,
     vars,
-    variant,
     gradient,
     radius,
     autoContrast,
@@ -113,8 +109,9 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     rootSelector: 'groupSection',
   });
 
-  return <Box {...getStyles('groupSection')} ref={ref} variant={variant} {...others} />;
+  return <Box {...getStyles('groupSection')} {...others} />;
 });
 
 ButtonGroupSection.classes = classes;
+ButtonGroupSection.varsResolver = varsResolver;
 ButtonGroupSection.displayName = '@mantine/core/ButtonGroupSection';

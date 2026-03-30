@@ -1,11 +1,11 @@
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { ActionIcon, createTheme, Group, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './ActionIcon.demo.customVariant.module.css';
 
 const code = `
 import { Group, ActionIcon, MantineProvider, createTheme } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import classes from './Demo.module.css';
 
 const theme = createTheme({
@@ -21,10 +21,10 @@ function Demo() {
     <MantineProvider theme={theme}>
       <Group justify="center">
         <ActionIcon size="xl" variant="danger" aria-label="Danger variant">
-          <IconHeart />
+          <HeartIcon />
         </ActionIcon>
         <ActionIcon size="xl" variant="primary" aria-label="Primary variant">
-          <IconHeart />
+          <HeartIcon />
         </ActionIcon>
       </Group>
     </MantineProvider>
@@ -59,10 +59,10 @@ function Demo() {
     <MantineThemeProvider theme={theme}>
       <Group justify="center">
         <ActionIcon size="xl" variant="danger" aria-label="Danger variant">
-          <IconHeart />
+          <HeartIcon />
         </ActionIcon>
         <ActionIcon size="xl" variant="primary" aria-label="Primary variant">
-          <IconHeart />
+          <HeartIcon />
         </ActionIcon>
       </Group>
     </MantineThemeProvider>

@@ -35,9 +35,7 @@ export function getFilteredChartLegendPayload(payload: readonly Record<string, a
 export type ChartLegendStylesNames = 'legendItem' | 'legendItemColor' | 'legendItemName' | 'legend';
 
 export interface ChartLegendProps
-  extends BoxProps,
-    StylesApiProps<ChartLegendFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ChartLegendFactory>, ElementProps<'div'> {
   /** Chart data provided by recharts */
   payload: readonly Record<string, any>[] | undefined;
 
@@ -50,10 +48,10 @@ export interface ChartLegendProps
   /** Data used for labels, only applicable for area charts: AreaChart, LineChart, BarChart */
   series?: ChartSeries[];
 
-  /** Determines whether color swatch should be shown next to the label @default `true` */
+  /** Determines whether color swatch should be shown next to the label @default true */
   showColor?: boolean;
 
-  /** Determines whether the legend should be centered @default `false` */
+  /** Determines whether the legend should be centered @default false */
   centered?: boolean;
 }
 
@@ -63,7 +61,7 @@ export type ChartLegendFactory = Factory<{
   stylesNames: ChartLegendStylesNames;
 }>;
 
-export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
+export const ChartLegend = factory<ChartLegendFactory>((_props) => {
   const props = useProps('ChartLegend', null, _props);
   const {
     classNames,
@@ -93,6 +91,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     styles,
     unstyled,
     attributes,
+    rootSelector: 'legend',
   });
 
   if (!payload) {
@@ -121,7 +120,6 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
 
   return (
     <Box
-      ref={ref}
       mod={[{ position: legendPosition, centered }, mod]}
       {...getStyles('legend')}
       onMouseLeave={() => onHighlight(null)}
@@ -133,3 +131,4 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
 });
 
 ChartLegend.displayName = '@mantine/charts/ChartLegend';
+ChartLegend.classes = classes;

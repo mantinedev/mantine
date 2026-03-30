@@ -29,8 +29,41 @@ export { controlled } from './Form.demo.controlled';
 export { uncontrolled } from './Form.demo.uncontrolled';
 export { onValuesChange } from './Form.demo.onValuesChange';
 export { watch } from './Form.demo.watch';
+export { watchList } from './Form.demo.watchList';
 export { focusError } from './Form.demo.focusError';
 export { submitting } from './Form.demo.submitting';
 export { rootRuleObject } from './Form.demo.rootRuleObject';
 export { rootRuleArray } from './Form.demo.rootRuleArray';
 export { cascadeUpdates } from './Form.demo.cascadeUpdates';
+export { radioGetInputProps } from './Form.demo.radioGetInputProps';
+export { asyncValidation } from './Form.demo.asyncValidation';
+export { asyncValidationDebounce } from './Form.demo.asyncValidationDebounce';
+export {
+  angleSlider,
+  checkbox,
+  checkboxGroup,
+  chip,
+  colorInput,
+  colorPicker,
+  fieldset,
+  fileInput,
+  input,
+  jsonInput,
+  nativeSelect,
+  numberInput,
+  passwordInput,
+  pinInput,
+  radioGroup,
+  rangeSlider,
+  rating,
+  segmentedControl,
+  select,
+  slider,
+  switchDemo,
+  switchGroup,
+  tagsInput,
+  textarea,
+  textInput,
+  autocomplete,
+  multiSelect,
+} from './Form.demo.allComponents';

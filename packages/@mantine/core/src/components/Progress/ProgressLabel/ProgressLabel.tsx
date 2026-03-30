@@ -13,9 +13,7 @@ import classes from '../Progress.module.css';
 export type ProgressLabelStylesNames = 'label';
 
 export interface ProgressLabelProps
-  extends BoxProps,
-    CompoundStylesApiProps<ProgressLabelFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<ProgressLabelFactory>, ElementProps<'div'> {}
 
 export type ProgressLabelFactory = Factory<{
   props: ProgressLabelProps;
@@ -24,7 +22,7 @@ export type ProgressLabelFactory = Factory<{
   compound: true;
 }>;
 
-export const ProgressLabel = factory<ProgressLabelFactory>((props, ref) => {
+export const ProgressLabel = factory<ProgressLabelFactory>((props) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'ProgressLabel',
     null,
@@ -33,13 +31,7 @@ export const ProgressLabel = factory<ProgressLabelFactory>((props, ref) => {
 
   const ctx = useProgressContext();
 
-  return (
-    <Box
-      ref={ref}
-      {...ctx.getStyles('label', { className, style, classNames, styles })}
-      {...others}
-    />
-  );
+  return <Box {...ctx.getStyles('label', { className, style, classNames, styles })} {...others} />;
 });
 
 ProgressLabel.classes = classes;

@@ -13,12 +13,10 @@ import classes from '../Input.module.css';
 export type InputPlaceholderStylesNames = 'placeholder';
 
 export interface InputPlaceholderProps
-  extends BoxProps,
-    StylesApiProps<InputPlaceholderFactory>,
-    ElementProps<'span'> {
+  extends BoxProps, StylesApiProps<InputPlaceholderFactory>, ElementProps<'span'> {
   __staticSelector?: string;
 
-  /** If set, the placeholder has error styles @default `false` */
+  /** If set, the placeholder has error styles @default false */
   error?: React.ReactNode;
 }
 
@@ -28,7 +26,7 @@ export type InputPlaceholderFactory = Factory<{
   stylesNames: InputPlaceholderStylesNames;
 }>;
 
-export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) => {
+export const InputPlaceholder = factory<InputPlaceholderFactory>((_props) => {
   const props = useProps('InputPlaceholder', null, _props);
   const {
     classNames,
@@ -38,7 +36,6 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     unstyled,
     vars,
     __staticSelector,
-    variant,
     error,
     mod,
     attributes,
@@ -63,8 +60,6 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
       {...getStyles('placeholder')}
       mod={[{ error: !!error }, mod]}
       component="span"
-      variant={variant}
-      ref={ref}
       {...others}
     />
   );

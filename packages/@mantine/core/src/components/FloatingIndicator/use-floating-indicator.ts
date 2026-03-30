@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { useMutationObserver, useTimeout } from '@mantine/hooks';
+import { useMutationObserverTarget, useTimeout } from '@mantine/hooks';
 import { getEnv } from '../../core';
 import { toInt } from '../ScrollArea/utils';
 
@@ -24,8 +24,10 @@ function isParent(
 interface UseFloatingIndicatorInput {
   target: HTMLElement | null | undefined;
   parent: HTMLElement | null | undefined;
-  ref: RefObject<HTMLDivElement>;
+  ref: RefObject<HTMLElement | null>;
   displayAfterTransitionEnd?: boolean;
+  onTransitionStart?: () => void;
+  onTransitionEnd?: () => void;
 }
 
 export function useFloatingIndicator({
@@ -33,8 +35,11 @@ export function useFloatingIndicator({
   parent,
   ref,
   displayAfterTransitionEnd,
+  onTransitionStart,
+  onTransitionEnd,
 }: UseFloatingIndicatorInput) {
   const transitionTimeout = useRef<number>(-1);
+  const previousTarget = useRef<HTMLElement | null | undefined>(target);
   const [initialized, setInitialized] = useState(false);
 
   const [hidden, setHidden] = useState(
@@ -86,6 +91,11 @@ export function useFloatingIndicator({
   const parentResizeObserver = useRef<ResizeObserver>(null);
 
   useEffect(() => {
+    if (initialized && previousTarget.current !== target && onTransitionStart) {
+      onTransitionStart();
+    }
+
+    previousTarget.current = target;
     updatePosition();
 
     if (target) {
@@ -124,6 +134,23 @@ export function useFloatingIndicator({
     return undefined;
   }, [parent]);
 
+  useEffect(() => {
+    if (ref.current && onTransitionEnd) {
+      const handleIndicatorTransitionEnd = (event: TransitionEvent) => {
+        if (event.propertyName === 'transform') {
+          onTransitionEnd();
+        }
+      };
+
+      ref.current.addEventListener('transitionend', handleIndicatorTransitionEnd);
+      return () => {
+        ref.current?.removeEventListener('transitionend', handleIndicatorTransitionEnd);
+      };
+    }
+
+    return undefined;
+  }, [onTransitionEnd]);
+
   useTimeout(
     () => {
       // Prevents warning about state update without act
@@ -135,7 +162,7 @@ export function useFloatingIndicator({
     { autoInvoke: true }
   );
 
-  useMutationObserver(
+  useMutationObserverTarget(
     (mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'dir') {

@@ -79,3 +79,8 @@ export function useFocusWithin<T extends HTMLElement = any>({
 
   return { ref: callbackRef, focused };
 }
+
+export namespace useFocusWithin {
+  export type Options = UseFocusWithinOptions;
+  export type ReturnValue<T extends HTMLElement> = UseFocusWithinReturnValue<T>;
+}

@@ -15,18 +15,13 @@ describe('@mantine/core/TabsTab', () => {
   tests.itSupportsSystemProps<TabsTabProps, TabsTabStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/TabsTab',
-    mod: true,
-    extend: true,
-    withProps: true,
-    styleProps: true,
     children: true,
-    classes: true,
     selector: '[role="tab"]',
     stylesApiName: 'Tabs',
     stylesApiSelectors: ['tab', 'tabLabel', 'tabSection'],
     providerStylesApi: false,
+    compound: true,
   });
 
   tests.itSupportsFocusEvents({

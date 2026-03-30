@@ -1,34 +1,37 @@
 import cx from 'clsx';
+import { Primitive } from '../../../core';
 import { CheckIcon } from '../../Checkbox';
 import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';
 import { Combobox } from '../Combobox';
-import classes from '../Combobox.module.css';
 import { ComboboxItem, ComboboxLikeRenderOptionInput, ComboboxParsedItem } from '../Combobox.types';
 import { defaultOptionsFilter, FilterOptionsInput } from './default-options-filter';
 import { isEmptyComboboxData } from './is-empty-combobox-data';
 import { isOptionsGroup } from './is-options-group';
 import { validateOptions } from './validate-options';
+import classes from '../Combobox.module.css';
 
-export type OptionsFilter = (input: FilterOptionsInput) => ComboboxParsedItem[];
+export type OptionsFilter<Value extends Primitive = string> = (
+  input: FilterOptionsInput<Value>
+) => ComboboxParsedItem<Value>[];
 
 export interface OptionsGroup {
   group: string;
-  items: ComboboxItem[];
+  items: ComboboxItem<Primitive>[];
 }
 
-export type OptionsData = (ComboboxItem | OptionsGroup)[];
+export type OptionsData = (ComboboxItem<Primitive> | OptionsGroup)[];
 
 interface OptionProps {
-  data: ComboboxItem | OptionsGroup;
+  data: ComboboxItem<Primitive> | OptionsGroup;
   withCheckIcon?: boolean;
   withAlignedLabels?: boolean;
-  value?: string | string[] | null;
+  value?: Primitive | Primitive[] | null;
   checkIconPosition?: 'left' | 'right';
   unstyled: boolean | undefined;
   renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
 }
 
-function isValueChecked(value: string | string[] | undefined | null, optionValue: string) {
+function isValueChecked(value: Primitive | Primitive[] | undefined | null, optionValue: Primitive) {
   return Array.isArray(value) ? value.includes(optionValue) : value === optionValue;
 }
 
@@ -80,7 +83,7 @@ function Option({
     <Option
       data={item}
       value={value}
-      key={item.value}
+      key={`${item.value}`}
       unstyled={unstyled}
       withCheckIcon={withCheckIcon}
       withAlignedLabels={withAlignedLabels}
@@ -94,7 +97,7 @@ function Option({
 
 export interface OptionsDropdownProps {
   data: OptionsData;
-  filter: OptionsFilter | undefined;
+  filter: OptionsFilter<Primitive> | undefined;
   search: string | undefined;
   limit: number | undefined;
   withScrollArea: boolean | undefined;
@@ -104,7 +107,7 @@ export interface OptionsDropdownProps {
   filterOptions?: boolean;
   withCheckIcon?: boolean;
   withAlignedLabels?: boolean;
-  value?: string | string[] | null;
+  value?: Primitive | Primitive[] | null;
   checkIconPosition?: 'left' | 'right';
   nothingFoundMessage?: React.ReactNode;
   unstyled: boolean | undefined;
@@ -150,7 +153,7 @@ export function OptionsDropdown({
   const options = filteredData.map((item) => (
     <Option
       data={item}
-      key={isOptionsGroup(item) ? item.group : item.value}
+      key={isOptionsGroup(item) ? item.group : `${item.value}`}
       withCheckIcon={withCheckIcon}
       withAlignedLabels={withAlignedLabels}
       value={value}

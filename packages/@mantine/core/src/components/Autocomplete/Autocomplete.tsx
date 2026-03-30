@@ -5,25 +5,28 @@ import {
   ElementProps,
   factory,
   Factory,
+  Primitive,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
 } from '../../core';
 import {
   Combobox,
+  ComboboxGenericData,
+  ComboboxGenericItem,
   ComboboxLikeProps,
   ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
-  ComboboxStringData,
-  ComboboxStringItem,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
+  OptionsFilter,
   useCombobox,
 } from '../Combobox';
 import {
   __BaseInputProps,
   __InputStylesNames,
+  ClearSectionMode,
   InputClearButtonProps,
   InputVariant,
 } from '../Input';
@@ -31,19 +34,20 @@ import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
 
 export type RenderAutocompleteOption = (
-  input: ComboboxLikeRenderOptionInput<ComboboxStringItem>
+  input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>
 ) => React.ReactNode;
 
 export type AutocompleteStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
 export interface AutocompleteProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'pointer'>,
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
   /** Data used to display options. Values must be unique. */
-  data?: ComboboxStringData;
+  data?: ComboboxGenericData;
 
   /** Controlled component value */
   value?: string;
@@ -63,16 +67,19 @@ export interface AutocompleteProps
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Props passed to the clear button */
+  /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
-  /** If set, the clear button is displayed when the component has a value @default `false` */
+  /** If set, the clear button is displayed when the component has a value @default false */
   clearable?: boolean;
 
-  /** If set, the highlighted option is selected when the input loses focus @default `false` */
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
+
+  /** If set, the highlighted option is selected when the input loses focus @default false */
   autoSelectOnBlur?: boolean;
 
-  /** If set, the dropdown opens when the input receives focus @default `true` */
+  /** If set, the dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
 }
 
@@ -83,7 +90,7 @@ export type AutocompleteFactory = Factory<{
   variant: InputVariant;
 }>;
 
-export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
+export const Autocomplete = factory<AutocompleteFactory>((_props) => {
   const props = useProps('Autocomplete', null, _props);
   const {
     classNames,
@@ -120,6 +127,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     clearButtonProps,
     error,
     clearable,
+    clearSectionMode,
     rightSection,
     autoSelectOnBlur,
     openOnFocus = true,
@@ -199,14 +207,14 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       }}
       {...comboboxProps}
     >
-      <Combobox.Target autoComplete={autoComplete}>
+      <Combobox.Target autoComplete={autoComplete} withExpandedAttribute>
         <InputBase
-          ref={ref}
           {...others}
           size={size}
           __staticSelector="Autocomplete"
           __clearSection={clearButton}
           __clearable={clearable && !!_value && !disabled && !readOnly}
+          __clearSectionMode={clearSectionMode}
           rightSection={rightSection}
           disabled={disabled}
           readOnly={readOnly}
@@ -243,7 +251,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       <OptionsDropdown
         data={parsedData}
         hidden={readOnly || disabled}
-        filter={filter}
+        filter={filter as OptionsFilter<Primitive> | undefined}
         search={_value}
         limit={limit}
         hiddenWhenEmpty

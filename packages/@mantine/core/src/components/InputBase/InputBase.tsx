@@ -8,19 +8,17 @@ import {
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
 
 export interface InputBaseProps
-  extends BoxProps,
-    __BaseInputProps,
-    StylesApiProps<InputBaseFactory> {
+  extends BoxProps, __BaseInputProps, StylesApiProps<InputBaseFactory> {
   __staticSelector?: string;
   __stylesApiProps?: Record<string, any>;
 
   /** Props passed down to the root element (`Input.Wrapper` component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** If set, the input can have multiple lines, for example when `component="textarea"` @default `false` */
+  /** If set, the input can have multiple lines, for example when `component="textarea"` @default false */
   multiline?: boolean;
 
-  /** If set, `aria-` and other accessibility attributes are added to the input @default `true` */
+  /** If set, `aria-` and other accessibility attributes are added to the input @default true */
   withAria?: boolean;
 }
 
@@ -38,11 +36,11 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<InputBaseProps>;
 
-export const InputBase = polymorphicFactory<InputBaseFactory>((props, ref) => {
+export const InputBase = polymorphicFactory<InputBaseFactory>((props) => {
   const { inputProps, wrapperProps, ...others } = useInputProps('InputBase', defaultProps, props);
   return (
     <Input.Wrapper {...wrapperProps}>
-      <Input {...inputProps} {...others} ref={ref} />
+      <Input {...inputProps} {...others} />
     </Input.Wrapper>
   );
 });

@@ -1,17 +1,17 @@
-import { IconCameraSelfie, IconPhoto, IconPrinter } from '@tabler/icons-react';
+import { CameraIcon, ImageIcon, PrinterIcon } from '@phosphor-icons/react';
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';
+import { ImageIcon, PrinterIcon, CameraIcon } from '@phosphor-icons/react';
 import { Accordion } from '@mantine/core';
 
 function Demo() {
   return (
-    <Accordion variant="filled" radius="md" defaultValue="photos">
+    <Accordion variant="filled" defaultValue="photos" order={3}>
       <Accordion.Item value="photos">
         <Accordion.Control
-          icon={<IconPhoto size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
+          icon={<ImageIcon size={22} color="var(--mantine-color-dimmed)" />}
         >
           Recent photos
         </Accordion.Control>
@@ -20,7 +20,7 @@ function Demo() {
 
       <Accordion.Item value="print">
         <Accordion.Control
-          icon={<IconPrinter size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
+          icon={<PrinterIcon size={22} color="var(--mantine-color-dimmed)" />}
         >
           Print photos
         </Accordion.Control>
@@ -29,9 +29,9 @@ function Demo() {
 
       <Accordion.Item value="camera">
         <Accordion.Control
-          icon={<IconCameraSelfie size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
+          icon={<CameraIcon size={22} color="var(--mantine-color-dimmed)" />}
         >
-          Camera settings
+          CameraIcon settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
@@ -42,30 +42,24 @@ function Demo() {
 
 function Demo() {
   return (
-    <Accordion variant="filled" radius="md" defaultValue="photos" mih={200}>
+    <Accordion variant="filled" defaultValue="photos" order={3} mih={200}>
       <Accordion.Item value="photos">
-        <Accordion.Control
-          icon={<IconPhoto size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
-        >
+        <Accordion.Control icon={<ImageIcon size={22} color="var(--mantine-color-dimmed)" />}>
           Recent photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="print">
-        <Accordion.Control
-          icon={<IconPrinter size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
-        >
+        <Accordion.Control icon={<PrinterIcon size={22} color="var(--mantine-color-dimmed)" />}>
           Print photos
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
       <Accordion.Item value="camera">
-        <Accordion.Control
-          icon={<IconCameraSelfie size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
-        >
-          Camera settings
+        <Accordion.Control icon={<CameraIcon size={22} color="var(--mantine-color-dimmed)" />}>
+          CameraIcon settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>

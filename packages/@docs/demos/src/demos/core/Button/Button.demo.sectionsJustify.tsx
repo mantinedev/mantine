@@ -1,13 +1,13 @@
-import { IconPhoto } from '@tabler/icons-react';
+import { ImageIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = (props: any) => `
 import { Button } from '@mantine/core';
-import { IconPhoto } from '@tabler/icons-react';
+import { ImageIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconPhoto size={14} />;
+  const icon = <ImageIcon size={14} />;
   return (
     <>
       <Button justify="${props.justify}" fullWidth leftSection={icon} rightSection={icon} variant="default">
@@ -38,7 +38,7 @@ function Demo() {
 `;
 
 function Wrapper(props: any) {
-  const icon = <IconPhoto size={14} />;
+  const icon = <ImageIcon size={14} />;
   return (
     <>
       <Button fullWidth leftSection={icon} rightSection={icon} variant="default" {...props}>

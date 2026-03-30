@@ -10,13 +10,13 @@ export default Layout(MDX_DATA.Button);
 
 ## Full width
 
-If `fullWidth` prop is set `Button` will take 100% of parent width:
+If the `fullWidth` prop is set, the `Button` will take 100% of the parent width:
 
 <Demo data={ButtonDemos.fullWidth} />
 
 ## Left and right sections
 
-`leftSection` and `rightSection` allow adding icons or any other element to the left and right side of the button.
+`leftSection` and `rightSection` allow adding icons or any other element to the left and right sides of the button.
 When a section is added, padding on the corresponding side is reduced.
 
 Note that `leftSection` and `rightSection` are flipped in [RTL](/styles/rtl) mode
@@ -26,18 +26,18 @@ Note that `leftSection` and `rightSection` are flipped in [RTL](/styles/rtl) mod
 
 ## Sections position
 
-`justify` prop sets `justify-content` of `inner` element. You can use it to change the alignment of
-left and right sections. For example, to spread them across the button set `justify="space-between"`.
+The `justify` prop sets the `justify-content` of the `inner` element. You can use it to change the alignment of
+left and right sections. For example, to spread them across the button, set `justify="space-between"`.
 
-If you need to align just one section to the side of the button set `justify` to `space-between`
-and add empty `<span />` to the opposite section.
+If you need to align just one section to the side of the button, set `justify` to `space-between`
+and add an empty `<span />` to the opposite section.
 
 <Demo data={ButtonDemos.sectionsJustify} />
 
 ## Compact size
 
 `Button` supports `xs` – `xl` and `compact-xs` – `compact-xl` sizes. `compact` sizes have
-the same font-size as `xs` – `xl` but reduced padding and height.
+the same font size as `xs` – `xl` but with reduced padding and height.
 
 <Demo data={ButtonDemos.compact} />
 
@@ -47,16 +47,16 @@ the same font-size as `xs` – `xl` but reduced padding and height.
 
 ## Disabled state
 
-To make `Button` disabled, set `disabled` prop, this will prevent any interactions with the button
+To make a `Button` disabled, set the `disabled` prop. This will prevent any interactions with the button
 and add disabled styles. If you want the button to just look disabled but still be interactive,
-set `data-disabled` prop instead. Note that disabled styles are the same for all variants.
+set the `data-disabled` prop instead. Note that disabled styles are the same for all variants.
 
 <Demo data={ButtonDemos.disabled} />
 
 ## Disabled state when Button is link
 
-`<a />` element does not support `disabled` attribute. To make `Button` disabled when it is
-rendered as a link, set `data-disabled` attribute instead and prevent default behavior in
+The `<a />` element does not support the `disabled` attribute. To make a `Button` disabled when it is
+rendered as a link, set the `data-disabled` attribute instead and prevent default behavior in the
 `onClick` event handler.
 
 <Demo data={ButtonDemos.disabledLink} />
@@ -66,35 +66,35 @@ rendered as a link, set `data-disabled` attribute instead and prevent default be
 To customize disabled styles, it is recommended to use both `&:disabled` and `&[data-disabled]`
 selectors:
 
-- `&:disabled` is used to style the button when `disabled` prop is set and
-  also when the button is disabled by the parent component (for example, when `disabled` prop is set on a
-  `<fieldset />` element which contains `Button`).
+- `&:disabled` is used to style the button when the `disabled` prop is set and
+  also when the button is disabled by the parent component (for example, when the `disabled` prop is set on a
+  `<fieldset />` element which contains the `Button`).
 - `&[data-disabled]` is used to style the button when it is not actually disabled but should look like
-  it is (for example, `data-disabled` should be used if you need to use [Tooltip](/core/tooltip) with disabled `Button`
-  or when `Button` is used as a link)
+  it is (for example, `data-disabled` should be used if you need to use [Tooltip](/core/tooltip) with a disabled `Button`
+  or when the `Button` is used as a link)
 
 <Demo data={ButtonDemos.disabledStyles} />
 
 ## Disabled button with Tooltip
 
-`onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when `Button` is disabled, so if you need to use
-[Tooltip](/core/tooltip) with disabled `Button` you need to set `data-disabled` prop on `Button`
-instead of `disabled`. Note that it is also required to change `onClick` event handler to
-`(event) => event.preventDefault()` as `Button` is not actually disabled and will still trigger
+The `onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when a `Button` is disabled, so if you need to use a
+[Tooltip](/core/tooltip) with a disabled `Button`, you need to set the `data-disabled` prop on the `Button`
+instead of `disabled`. Note that it is also required to change the `onClick` event handler to
+`(event) => event.preventDefault()` as the `Button` is not actually disabled and will still trigger the
 `onClick` event.
 
 <Demo data={ButtonDemos.disabledTooltip} />
 
 ## Loading state
 
-When `loading` prop is set, `Button` will be disabled and [Loader](/core/loader) with overlay will be rendered
-in the center of the button. [Loader](/core/loader) color depends on `Button` variant.
+When the `loading` prop is set, the `Button` will be disabled and a [Loader](/core/loader) with overlay will be rendered
+in the center of the button. [Loader](/core/loader) color depends on the `Button` variant.
 
 <Demo data={ButtonDemos.loading} />
 
 ## Loader props
 
-You can customize [Loader](/core/loader) with `loaderProps` prop, it accepts all props that
+You can customize the [Loader](/core/loader) with the `loaderProps` prop, which accepts all props that the
 [Loader](/core/loader) component has:
 
 <Demo data={ButtonDemos.loaderProps} />
@@ -109,15 +109,15 @@ Example of customizing `Button` with [Styles API](/styles/styles-api) and [data-
 
 ## Custom variants
 
-To add new `Button` variants, use [data-variant](/styles/variants-sizes) attribute.
-Usually new variants are added on [theme](/theming/theme-object), this way they are
+To add new `Button` variants, use the [data-variant](/styles/variants-sizes) attribute.
+Usually new variants are added to the [theme](/theming/theme-object), this way they are
 available in all `Button` components in your application.
 
 <Demo data={ButtonDemos.customVariant} />
 
-## Customize variants colors
+## Customize variant colors
 
-You can customize colors for `Button` and other components variants by adding
+You can customize colors for `Button` and other component variants by adding
 [variantColorResolver](/theming/colors#colors-variant-resolver) to your theme.
 
 <Demo data={ThemingDemos.variantColorsResolver} />
