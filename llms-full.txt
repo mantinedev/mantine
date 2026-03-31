@@ -9368,7 +9368,7 @@ function Demo() {
   return (
     <CopyButton value="https://mantine.dev" timeout={2000}>
       {({ copied, copy }) => (
-        <Tooltip label={copied ? 'Copied' : 'CopyIcon'} withArrow position="right">
+        <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
           <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
             {copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
           </ActionIcon>
@@ -24676,7 +24676,7 @@ function Demo() {
           label: (
             <Center style={{ gap: 10 }}>
               <CodeIcon size={16} />
-              <span>CodeIcon</span>
+              <span>Code</span>
             </Center>
           ),
         },
@@ -24797,7 +24797,7 @@ function Demo() {
           label: (
             <>
               <CodeIcon {...iconProps} />
-              <VisuallyHidden>CodeIcon</VisuallyHidden>
+              <VisuallyHidden>Code</VisuallyHidden>
             </>
           ),
         },
@@ -31573,7 +31573,7 @@ function Demo() {
         <Text size="xs" mt={4}>34 minutes ago</Text>
       </Timeline.Item>
 
-      <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
+      <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
         <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
         <Text size="xs" mt={4}>12 minutes ago</Text>
       </Timeline.Item>
@@ -91766,7 +91766,7 @@ Other ways to support the project:
   and provide your feedback on how it can be improved. We are always open to new ideas and suggestions.
 * Send us some [kind words](https://github.com/mantinedev/mantine/discussions/categories/kind-words). We usually receive only
   bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
-* StarIcon the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
+* Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
   people interested in the project.
 * [Contribute](https://mantine.dev/llms/contribute.md) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
   experience with React/TypeScript, you can help us improve the documentation to make it more clear and understandable
@@ -95279,9 +95279,9 @@ function Demo() {
 ```
 
 
-## TableIcon vertical variant
+## Table vertical variant
 
-[TableIcon](https://mantine.dev/llms/core-table.md) component now support `variant="vertical"`:
+[Table](https://mantine.dev/llms/core-table.md) component now support `variant="vertical"`:
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -95321,9 +95321,9 @@ export function Demo() {
 ```
 
 
-## TableIcon tabular numbers
+## Table tabular numbers
 
-[TableIcon](https://mantine.dev/llms/core-table.md) component now supports `tabularNums` prop to render numbers in tabular style. It sets
+[Table](https://mantine.dev/llms/core-table.md) component now supports `tabularNums` prop to render numbers in tabular style. It sets
 `font-variant-numeric: tabular-nums` which makes numbers to have equal width.
 This is useful when you have columns with numbers and you want them to be aligned:
 

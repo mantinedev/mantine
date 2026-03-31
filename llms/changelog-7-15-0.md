@@ -155,9 +155,9 @@ function Demo() {
 ```
 
 
-## TableIcon vertical variant
+## Table vertical variant
 
-[TableIcon](https://mantine.dev/llms/core-table.md) component now support `variant="vertical"`:
+[Table](https://mantine.dev/llms/core-table.md) component now support `variant="vertical"`:
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -197,9 +197,9 @@ export function Demo() {
 ```
 
 
-## TableIcon tabular numbers
+## Table tabular numbers
 
-[TableIcon](https://mantine.dev/llms/core-table.md) component now supports `tabularNums` prop to render numbers in tabular style. It sets
+[Table](https://mantine.dev/llms/core-table.md) component now supports `tabularNums` prop to render numbers in tabular style. It sets
 `font-variant-numeric: tabular-nums` which makes numbers to have equal width.
 This is useful when you have columns with numbers and you want them to be aligned:
 

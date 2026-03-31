@@ -27,7 +27,7 @@ function Demo() {
         <Text size="xs" mt={4}>34 minutes ago</Text>
       </Timeline.Item>
 
-      <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
+      <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
         <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
         <Text size="xs" mt={4}>12 minutes ago</Text>
       </Timeline.Item>

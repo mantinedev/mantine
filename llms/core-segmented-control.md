@@ -232,7 +232,7 @@ function Demo() {
           label: (
             <Center style={{ gap: 10 }}>
               <CodeIcon size={16} />
-              <span>CodeIcon</span>
+              <span>Code</span>
             </Center>
           ),
         },
@@ -353,7 +353,7 @@ function Demo() {
           label: (
             <>
               <CodeIcon {...iconProps} />
-              <VisuallyHidden>CodeIcon</VisuallyHidden>
+              <VisuallyHidden>Code</VisuallyHidden>
             </>
           ),
         },
