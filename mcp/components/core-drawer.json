@@ -1,0 +1,335 @@
+{
+  "id": "core-drawer",
+  "name": "Drawer",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/drawer",
+  "description": "Display overlay area at any side of the screen",
+  "propsCount": 30,
+  "llmUrl": "https://mantine.dev/llms/core-drawer.md",
+  "componentDataUrl": "/mcp/components/core-drawer.json",
+  "searchText": "drawer display overlay area at any side of the screen @mantine/core /core/drawer children closebuttonprops closeonclickoutside closeonescape id keepmounted lockscroll offset onclose onentertransitionend onexittransitionend opened overlayprops padding portalprops position radius removescrollprops returnfocus scrollareacomponent shadow size stackid title transitionprops trapfocus withclosebutton withoverlay withinportal zindex",
+  "source": "@mantine/core/src/components/Drawer/Drawer.tsx",
+  "docs": "core/drawer.mdx",
+  "markdown": "# Drawer\nPackage: @mantine/core\nImport: import { Drawer } from '@mantine/core';\nDescription: Display overlay area at any side of the screen\n\n## Usage\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer opened={opened} onClose={close} title=\"Authentication\">\n        {/* Drawer content */}\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Position\n\nDrawer can be placed on `left` (default), `top`, `right` and `bottom`. Control the drawer position with the `position` prop,\nfor example `<Drawer position=\"top\" />`.\n\n```tsx\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n  const [position, setPosition] = useState<'top' | 'left' | 'right' | 'bottom'>('top');\n  const open = (p: typeof position) => {\n    setPosition(p);\n    setOpened(true);\n  };\n\n  return (\n    <>\n      <Drawer\n        opened={opened}\n        onClose={() => setOpened(false)}\n        padding=\"md\"\n        position={position}\n        withCloseButton={false}\n      >\n        Press escape to close the drawer\n      </Drawer>\n\n      <Group justify=\"center\">\n        <Button variant=\"default\" onClick={() => open('left')}>\n          Left\n        </Button>\n        <Button variant=\"default\" onClick={() => open('right')}>\n          Right\n        </Button>\n        <Button variant=\"default\" onClick={() => open('top')}>\n          Top\n        </Button>\n        <Button variant=\"default\" onClick={() => open('bottom')}>\n          Bottom\n        </Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Offset\n\nSet the `offset` prop to change the drawer offset from the edge of the viewport:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer offset={8} radius=\"md\" opened={opened} onClose={close} title=\"Authentication\">\n        {/* Drawer content */}\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Customize overlay\n\n`Drawer` uses the [Overlay](https://mantine.dev/llms/core-overlay.md) component. You can set any props that [Overlay](https://mantine.dev/llms/core-overlay.md)\nsupports with `overlayProps`:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer\n        opened={opened}\n        onClose={close}\n        title=\"Authentication\"\n        overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}\n      >\n        {/* Drawer content */}\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Sizes\n\nYou can change the drawer width/height (depends on `position`) by setting the `size` prop to a predefined size or any valid width,\nfor example, `size=\"55%\"` or `size={200}`:\n\n```tsx\nimport { Drawer } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Drawer position=\"right\" size=\"xl\" opened onClose={() => {}}>\n      {/* Drawer content */}\n    </Drawer>\n  );\n}\n```\n\n```tsx\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n  const [size, setSize] = useState<number | string>('top');\n  const open = (s: typeof size) => {\n    setSize(s);\n    setOpened(true);\n  };\n\n  const controls = (['xs', 'sm', 'md', 'lg', 'xl', '100%', '40rem', '25%'] as const).map((s) => (\n    <Button variant=\"default\" onClick={() => open(s)} key={s}>\n      {s}\n    </Button>\n  ));\n\n  return (\n    <>\n      <Drawer\n        opened={opened}\n        onClose={() => setOpened(false)}\n        padding=\"md\"\n        size={size}\n        withCloseButton={false}\n      >\n        Press escape to close the drawer\n      </Drawer>\n\n      <Group justify=\"center\">{controls}</Group>\n    </>\n  );\n}\n```\n\n\n## Remove header\n\nTo remove the header, set `withCloseButton={false}`\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer opened={opened} onClose={close} withCloseButton={false}>\n        Drawer without header, press escape or click on overlay to close\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Drawer with scroll\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  const content = Array(100)\n    .fill(0)\n    .map((_, index) => <p key={index}>Drawer with scroll</p>);\n\n  return (\n    <>\n      <Drawer opened={opened} onClose={close} title=\"Header is sticky\">\n        {content}\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Usage with ScrollArea\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button, ScrollArea } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  const content = Array(100)\n    .fill(0)\n    .map((_, index) => <p key={index}>Drawer with scroll</p>);\n\n  return (\n    <>\n      <Drawer\n        opened={opened}\n        onClose={close}\n        title=\"Header is sticky\"\n        scrollAreaComponent={ScrollArea.Autosize}\n      >\n        {content}\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Change transition\n\n`Drawer` is built with the [Transition](https://mantine.dev/llms/core-transition.md) component. Use the `transitionProps`\nprop to customize any [Transition](https://mantine.dev/llms/core-transition.md) properties:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer\n        opened={opened}\n        onClose={close}\n        title=\"Authentication\"\n        transitionProps={{ transition: 'rotate-left', duration: 150, timingFunction: 'linear' }}\n      >\n        {/* Drawer content */}\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## onExitTransitionEnd and onEnterTransitionEnd\n\nThe `onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after\nthe exit/enter transition is finished. For example, this is useful when you want to clear\ndata after the drawer is closed:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Group, Drawer } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [firstOpened, firstHandlers] = useDisclosure(false);\n  const [secondOpened, secondHandlers] = useDisclosure(false);\n  const [drawerData, setDrawerData] = useState({\n    title: '',\n    message: '',\n  });\n\n  return (\n    <>\n      <Drawer\n        opened={firstOpened}\n        onClose={() => {\n          firstHandlers.close();\n          setDrawerData({ title: '', message: '' });\n        }}\n        title={drawerData.title}\n      >\n        {drawerData.message}\n      </Drawer>\n      <Drawer\n        opened={secondOpened}\n        onClose={secondHandlers.close}\n        onExitTransitionEnd={() => setDrawerData({ title: '', message: '' })}\n        title={drawerData.title}\n      >\n        {drawerData.message}\n      </Drawer>\n\n      <Group>\n        <Button\n          onClick={() => {\n            firstHandlers.open();\n            setDrawerData({ title: 'Edit your profile', message: 'Imagine a form here' });\n          }}\n        >\n          Clear data in onClose\n        </Button>\n\n        <Button\n          onClick={() => {\n            secondHandlers.open();\n            setDrawerData({ title: 'Edit your profile', message: 'Imagine a form here' });\n          }}\n        >\n          Clear data in onExitTransitionEnd\n        </Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Initial focus\n\n`Drawer` uses [FocusTrap](https://mantine.dev/llms/core-focus-trap.md) to trap focus. Add the `data-autofocus`\nattribute to the element that should receive initial focus.\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button, TextInput } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer opened={opened} onClose={close} title=\"Focus demo\">\n        <TextInput label=\"First input\" placeholder=\"First input\" />\n        <TextInput\n          data-autofocus\n          label=\"Input with initial focus\"\n          placeholder=\"It has data-autofocus attribute\"\n          mt=\"md\"\n        />\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\nIf you do not want to focus any elements when the drawer is opened, use the `FocusTrap.InitialFocus`\ncomponent to create a visually hidden element that will receive initial focus:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button, TextInput, FocusTrap } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer opened={opened} onClose={close} title=\"Focus demo\">\n        <FocusTrap.InitialFocus />\n        <TextInput label=\"First input\" placeholder=\"First input\" />\n        <TextInput\n          data-autofocus\n          label=\"Input with initial focus\"\n          placeholder=\"It has data-autofocus attribute\"\n          mt=\"md\"\n        />\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\nIf you do not add the `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,\nthe drawer will focus the first focusable element inside it which is usually the close button.\n\n## Control behavior\n\nThe following props can be used to control `Drawer` behavior.\nIn most cases it is not recommended to turn these features off –\nit will make the component less accessible.\n\n* `trapFocus` – determines whether focus should be trapped inside drawer\n* `closeOnEscape` – determines whether the drawer should be closed when `Escape` key is pressed\n* `closeOnClickOutside` – determines whether the drawer should be closed when user clicks on the overlay\n* `returnFocus` – determines whether focus should be returned to the element that was focused before the drawer was opened\n\n## react-remove-scroll settings\n\n`Drawer` uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)\npackage to lock scroll. You can pass props down to the `RemoveScroll` component\nwith `removeScrollProps`:\n\n```tsx\nimport { Drawer } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Drawer\n      removeScrollProps={{ allowPinchZoom: true }}\n      opened\n      onClose={() => {}}\n    >\n      {/* Drawer content */}\n    </Drawer>\n  );\n}\n```\n\n## Change close icon\n\nUse `closeButtonProps` to customize close button:\n\n```tsx\nimport { XCircleIcon } from '@phosphor-icons/react';\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer\n        opened={opened}\n        onClose={close}\n        title=\"Authentication\"\n        closeButtonProps={{\n          icon: <XCircleIcon size={20} />,\n        }}\n      >\n        {/* Drawer content */}\n      </Drawer>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Compound components\n\nYou can use the following compound components to have full control over the `Drawer` rendering:\n\n* `Drawer.Root` – context provider\n* `Drawer.Overlay` – render [Overlay](https://mantine.dev/llms/core-overlay.md)\n* `Drawer.Content` – main drawer element, should include all drawer content\n* `Drawer.Header` – sticky header, usually contains `Drawer.Title` and `Drawer.CloseButton`\n* `Drawer.Title` – `h2` element, `aria-labelledby` of `Drawer.Content` is pointing to this element, usually is rendered inside `Drawer.Header`\n* `Drawer.CloseButton` – close button, usually rendered inside `Drawer.Header`\n* `Drawer.Body` – a place for main content, `aria-describedby` of `Drawer.Content` is pointing to this element\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Drawer, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Drawer.Root opened={opened} onClose={close}>\n        <Drawer.Overlay />\n        <Drawer.Content>\n          <Drawer.Header>\n            <Drawer.Title>Drawer title</Drawer.Title>\n            <Drawer.CloseButton />\n          </Drawer.Header>\n          <Drawer.Body>Drawer content</Drawer.Body>\n        </Drawer.Content>\n      </Drawer.Root>\n\n      <Button variant=\"default\" onClick={open}>\n        Open Drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Drawer.Stack\n\nUse `Drawer.Stack` component to render multiple drawers at the same time.\n`Drawer.Stack` keeps track of opened drawers, manages z-index values, focus trapping\nand `closeOnEscape` behavior. `Drawer.Stack` is designed to be used with `useDrawersStack` hook.\n\nDifferences from using multiple `Drawer` components:\n\n* `Drawer.Stack` manages z-index values – drawers that are opened later will always have higher z-index value disregarding their order in the DOM\n* `Drawer.Stack` disables focus trap and `Escape` key handling for all drawers except the one that is currently opened\n* Drawers that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`\n* Only one overlay is rendered at a time\n\n```tsx\nimport { Button, Group, Drawer, useDrawersStack } from '@mantine/core';\n\nfunction Demo() {\n  const stack = useDrawersStack(['delete-page', 'confirm-action', 'really-confirm-action']);\n\n  return (\n    <>\n      <Drawer.Stack>\n        <Drawer {...stack.register('delete-page')} title=\"Delete this page?\">\n          Are you sure you want to delete this page? This action cannot be undone.\n          <Group mt=\"lg\" justify=\"flex-end\">\n            <Button onClick={stack.closeAll} variant=\"default\">\n              Cancel\n            </Button>\n            <Button onClick={() => stack.open('confirm-action')} color=\"red\">\n              Delete\n            </Button>\n          </Group>\n        </Drawer>\n\n        <Drawer {...stack.register('confirm-action')} title=\"Confirm action\">\n          Are you sure you want to perform this action? This action cannot be undone. If you are\n          sure, press confirm button below.\n          <Group mt=\"lg\" justify=\"flex-end\">\n            <Button onClick={stack.closeAll} variant=\"default\">\n              Cancel\n            </Button>\n            <Button onClick={() => stack.open('really-confirm-action')} color=\"red\">\n              Confirm\n            </Button>\n          </Group>\n        </Drawer>\n\n        <Drawer {...stack.register('really-confirm-action')} title=\"Really confirm action\">\n          Jokes aside. You have confirmed this action. This is your last chance to cancel it. After\n          you press confirm button below, action will be performed and cannot be undone. For real\n          this time. Are you sure you want to proceed?\n          <Group mt=\"lg\" justify=\"flex-end\">\n            <Button onClick={stack.closeAll} variant=\"default\">\n              Cancel\n            </Button>\n            <Button onClick={stack.closeAll} color=\"red\">\n              Confirm\n            </Button>\n          </Group>\n        </Drawer>\n      </Drawer.Stack>\n\n      <Button variant=\"default\" onClick={() => stack.open('delete-page')}>\n        Open drawer\n      </Button>\n    </>\n  );\n}\n```\n\n\nNote that `Drawer.Stack` can only be used with `Drawer` component. Components built with `Drawer.Root`\nand other compound components are not compatible with `Drawer.Stack`.\n\n## useDrawersStack hook\n\n`useDrawersStack` hook provides an easy way to control multiple drawers at the same time.\nIt accepts an array of unique drawers ids and returns an object with the following properties:\n\n```tsx\ninterface UseDrawersStackReturnType<T extends string> {\n  // Current opened state of each drawer\n  state: Record<T, boolean>;\n\n  // Opens drawer with the given id\n  open: (id: T) => void;\n\n  // Closes drawer with the given id\n  close: (id: T) => void;\n\n  // Toggles drawer with the given id\n  toggle: (id: T) => void;\n\n  // Closes all drawers within the stack\n  closeAll: () => void;\n\n  // Returns props for drawer with the given id\n  register: (id: T) => {\n    opened: boolean;\n    onClose: () => void;\n    stackId: T;\n  };\n}\n```\n\nExample of using `useDrawersStack` with `Drawer` component:\n\n```tsx\nimport { Drawer, useDrawersStack } from '@mantine/core';\n\nfunction Demo() {\n  const stack = useDrawersStack(['first', 'second']);\n\n  return (\n    <>\n      <Drawer {...stack.register('first')}>First</Drawer>\n      <Drawer {...stack.register('second')}>Second</Drawer>\n      <Button onClick={() => stack.open('first')}>Open first</Button>\n    </>\n  );\n}\n```\n\n## Fixed elements offset\n\n`Drawer` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)\npackage to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):\n\n```tsx\nimport { RemoveScroll } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <div className={RemoveScroll.classNames.fullWidth}>\n        width: 100%\n      </div>\n      <div className={RemoveScroll.classNames.zeroRight}>\n        right: 0\n      </div>\n    </>\n  );\n}\n```\n\n## Accessibility\n\n`Drawer` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog) on accessibility.\n\nSet `title` props to make component accessible, will add `aria-labelledby` to the content element:\n\n```tsx\nimport { Drawer } from '@mantine/core';\n\nfunction Demo() {\n  return <Drawer title=\"Drawer label\" opened onClose={() => {}} />;\n}\n```\n\nTo set close button `aria-label` use `closeButtonProps`:\n\n```tsx\nimport { Drawer } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Drawer\n      closeButtonProps={{ 'aria-label': 'Close drawer' }}\n      opened\n      onClose={() => {}}\n    />\n  );\n}\n```\n\n\n#### Props\n\n**Drawer props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Drawer content |\n| closeButtonProps | ModalBaseCloseButtonProps | - | Props passed down to the close button |\n| closeOnClickOutside | boolean | - | If set, the modal/drawer is closed when user clicks on the overlay |\n| closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |\n| id | string | - | Id used to connect modal/drawer with body and title |\n| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |\n| lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |\n| offset | string \\| number | - | Drawer container offset from the viewport end |\n| onClose | () => void | required | Called when modal/drawer is closed |\n| onEnterTransitionEnd | () => void | - | Called when enter transition ends |\n| onExitTransitionEnd | () => void | - | Called when exit transition ends |\n| opened | boolean | required | Controls opened state |\n| overlayProps | ModalBaseOverlayProps | - | Props passed down to the `Overlay` component, can be used to configure opacity, `background-color`, styles and other properties |\n| padding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set content, header and footer padding |\n| portalProps | BasePortalProps | - | Props passed down to the Portal component when `withinPortal` is set |\n| position | DrawerPosition | - | Side of the screen on which drawer will be opened |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| removeScrollProps | RemoveScrollProps | - | Props passed down to react-remove-scroll, can be used to customize scroll lock behavior |\n| returnFocus | boolean | - | If set, focus is returned to the last active element when `onClose` is called |\n| scrollAreaComponent | ScrollAreaComponent | - | Scroll area component |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS box-shadow value |\n| size | MantineSize \\| number | - | Controls width of the content area |\n| stackId | string | - | Id of the drawer in the `Drawer.Stack` |\n| title | React.ReactNode | - | Drawer title |\n| transitionProps | TransitionProps | - | Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default |\n| trapFocus | boolean | - | If set, focus is trapped within the modal/drawer |\n| withCloseButton | boolean | - | If set, the close button is displayed |\n| withOverlay | boolean | - | If set, the overlay is displayed |\n| withinPortal | boolean | - | If set, the component is rendered inside `Portal` |\n| zIndex | string \\| number | - | `z-index` CSS property of the root element |\n\n\n#### Styles API\n\nDrawer component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Drawer selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Drawer-root | Root element |\n| inner | .mantine-Drawer-inner | Element used to center modal, has fixed position, takes entire screen |\n| content | .mantine-Drawer-content | `Drawer.Content` root element |\n| header | .mantine-Drawer-header | Contains title and close button |\n| overlay | .mantine-Drawer-overlay | Overlay displayed under the `Drawer.Content` |\n| title | .mantine-Drawer-title | Drawer title (h2 tag), displayed in the header |\n| body | .mantine-Drawer-body | Drawer body, displayed after header |\n| close | .mantine-Drawer-close | Close button |\n\n**Drawer CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --drawer-offset | Controls `margin` of `Drawer.Content` |\n| root | --drawer-size | Controls `width` of `Drawer.Content` |\n| root | --drawer-flex | Controls `flex` property of `Drawer.Content` |\n| root | --drawer-align | Controls `align-items` property of `Drawer.Content` |\n| root | --drawer-justify | Controls `justify-content` property of `Drawer.Content` |\n| root | --drawer-height | Controls `height` property of `Drawer.Content` |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "Drawer content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "closeButtonProps",
+      "description": "Props passed down to the close button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ModalBaseCloseButtonProps"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "closeOnClickOutside",
+      "description": "If set, the modal/drawer is closed when user clicks on the overlay",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "closeOnEscape",
+      "description": "If set, <code>onClose</code> is called when user presses the escape key",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "id",
+      "description": "Id used to connect modal/drawer with body and title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set modal/drawer is not unmounted from the DOM when hidden. <code>display: none</code> styles are applied instead.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "lockScroll",
+      "description": "If set, scroll is locked when <code>opened={true}</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "offset",
+      "description": "Drawer container offset from the viewport end",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "onClose",
+      "description": "Called when modal/drawer is closed",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "onEnterTransitionEnd",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "onExitTransitionEnd",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "opened",
+      "description": "Controls opened state",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to the <code>Overlay</code> component, can be used to configure opacity, <code>background-color</code>, styles and other properties",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ModalBaseOverlayProps"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "padding",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props passed down to the Portal component when <code>withinPortal</code> is set",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "position",
+      "description": "Side of the screen on which drawer will be opened",
+      "required": false,
+      "defaultValue": "'left'",
+      "type": {
+        "name": "DrawerPosition",
+        "raw": "DrawerPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          },
+          {
+            "value": "\"bottom\""
+          },
+          {
+            "value": "\"top\""
+          }
+        ]
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "removeScrollProps",
+      "description": "Props passed down to react-remove-scroll, can be used to customize scroll lock behavior",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RemoveScrollProps"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "returnFocus",
+      "description": "If set, focus is returned to the last active element when <code>onClose</code> is called",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "scrollAreaComponent",
+      "description": "Scroll area component",
+      "required": false,
+      "defaultValue": "'div'",
+      "type": {
+        "name": "ScrollAreaComponent"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any valid CSS box-shadow value",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "size",
+      "description": "Controls width of the content area",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "stackId",
+      "description": "Id of the drawer in the <code>Drawer.Stack</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "title",
+      "description": "Drawer title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props added to the <code>Transition</code> component that used to animate overlay and body, use to configure duration and animation type, <code>{ duration: 200, transition: 'fade-down' }</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "trapFocus",
+      "description": "If set, focus is trapped within the modal/drawer",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "withCloseButton",
+      "description": "If set, the close button is displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "withOverlay",
+      "description": "If set, the overlay is displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "withinPortal",
+      "description": "If set, the component is rendered inside <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Drawer"
+    },
+    {
+      "name": "zIndex",
+      "description": "<code>z-index</code> CSS property of the root element",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Drawer"
+    }
+  ]
+}

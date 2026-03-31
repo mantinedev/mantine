@@ -1,0 +1,127 @@
+{
+  "id": "core-scroller",
+  "name": "Scroller",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/scroller",
+  "description": "Horizontal scroll container with navigation controls",
+  "propsCount": 11,
+  "llmUrl": "https://mantine.dev/llms/core-scroller.md",
+  "componentDataUrl": "/mcp/components/core-scroller.json",
+  "searchText": "scroller horizontal scroll container with navigation controls @mantine/core /core/scroller children controlsize draggable edgegradientcolor endcontrolicon endcontrolprops scrollamount showendcontrol showstartcontrol startcontrolicon startcontrolprops",
+  "source": "@mantine/core/src/components/Scroller/Scroller.tsx",
+  "docs": "core/scroller.mdx",
+  "markdown": "# Scroller\nPackage: @mantine/core\nImport: import { Scroller } from '@mantine/core';\nDescription: Horizontal scroll container with navigation controls\n\n## Usage\n\n`Scroller` is a horizontal scroll container that displays navigation controls (chevron buttons)\nwhen content overflows its container. It supports native scrolling via trackpad, shift + mouse wheel,\nor touch gestures.\n\n```tsx\nimport { Badge, Group, Scroller } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Scroller>\n      <Group gap=\"xs\" wrap=\"nowrap\">\n        {Array.from({ length: 20 }).map((_, index) => (\n          <Badge key={index} variant=\"light\" size=\"lg\">\n            Badge {index + 1}\n          </Badge>\n        ))}\n      </Group>\n    </Scroller>\n  );\n}\n```\n\n\n## Mouse drag scrolling\n\nSet `draggable` prop to enable scrolling by clicking and dragging with the mouse:\n\n```tsx\nimport { Badge, Group, Scroller } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Scroller draggable>\n      <Group gap=\"xs\" wrap=\"nowrap\">\n        {Array.from({ length: 20 }).map((_, index) => (\n          <Badge key={index} variant=\"light\" size=\"lg\" miw=\"fit-content\">\n            Badge {index + 1}\n          </Badge>\n        ))}\n      </Group>\n    </Scroller>\n  );\n}\n```\n\n\n## Scroll amount\n\nUse the `scrollAmount` prop to control how many pixels the container scrolls when clicking\nthe navigation buttons. The default value is `200`.\n\n```tsx\nimport { Badge, Group, Scroller } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Scroller scrollAmount={300}>\n      <Group gap=\"xs\" wrap=\"nowrap\">\n        {Array.from({ length: 30 }).map((_, index) => (\n          <Badge key={index} variant=\"light\" size=\"lg\" miw=\"fit-content\">\n            Badge {index + 1}\n          </Badge>\n        ))}\n      </Group>\n    </Scroller>\n  );\n}\n```\n\n\n## Control size\n\nUse the `controlSize` prop to change the size of the navigation buttons. It accepts any valid\nMantine size value (`xs`, `sm`, `md`, `lg`, `xl`) or a number (converted to pixels).\n\n```tsx\nimport { Badge, Group, Scroller } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Scroller controlSize=\"xl\">\n      <Group gap=\"xs\" wrap=\"nowrap\">\n        {Array.from({ length: 20 }).map((_, index) => (\n          <Badge key={index} variant=\"light\" size=\"lg\" miw=\"fit-content\">\n            Badge {index + 1}\n          </Badge>\n        ))}\n      </Group>\n    </Scroller>\n  );\n}\n```\n\n\n## Custom icons\n\nUse `startControlIcon` and `endControlIcon` props to replace default chevron icons\nwith custom icons:\n\n```tsx\nimport { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react';\nimport { Badge, Group, Scroller } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Scroller\n      startControlIcon={<ArrowLeftIcon size={16} />}\n      endControlIcon={<ArrowRightIcon size={16} />}\n    >\n      <Group gap=\"xs\" wrap=\"nowrap\">\n        {Array.from({ length: 20 }).map((_, index) => (\n          <Badge key={index} variant=\"light\" size=\"lg\" miw=\"fit-content\">\n            Badge {index + 1}\n          </Badge>\n        ))}\n      </Group>\n    </Scroller>\n  );\n}\n```\n\n\n## Usage with Tabs\n\nUse `Scroller` inside [Tabs.List](https://mantine.dev/llms/core-tabs.md) to make the tabs list scrollable when there are too many tabs to fit in the available space:\n\n```tsx\nimport { Scroller, Tabs } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Tabs defaultValue=\"tab-1\">\n      <Tabs.List>\n        <Scroller>\n          <Tabs.Tab value=\"tab-1\">First tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-2\">Second tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-3\">Third tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-4\">Fourth tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-5\">Fifth tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-6\">Sixth tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-7\">Seventh tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-8\">Eighth tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-9\">Ninth tab</Tabs.Tab>\n          <Tabs.Tab value=\"tab-10\">Tenth tab</Tabs.Tab>\n        </Scroller>\n      </Tabs.List>\n    </Tabs>\n  );\n}\n```\n\n\n\n#### Props\n\n**Scroller props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Content to display |\n| controlSize | string \\| number | - | Size of the control buttons, |\n| draggable | boolean | - | Determines whether content can be scrolled by dragging with mouse, `true` by default |\n| edgeGradientColor | string | - | Background color for the gradient fade on controls, `'var(--mantine-color-body)'` by default |\n| endControlIcon | React.ReactNode | - | Icon component for the end control, AccordionChevron by default |\n| endControlProps | React.ComponentProps<\"button\"> | - | Props passed to the end control button |\n| scrollAmount | number | - | Amount of pixels to scroll when clicking the control buttons, `200` by default |\n| showEndControl | boolean | - | Determines whether end control should always be visible regardless of scroll position, `false` by default |\n| showStartControl | boolean | - | Determines whether start control should always be visible regardless of scroll position, `false` by default |\n| startControlIcon | React.ReactNode | - | Icon component for the start control, AccordionChevron by default |\n| startControlProps | React.ComponentProps<\"button\"> | - | Props passed to the start control button |",
+  "props": [
+    {
+      "name": "children",
+      "description": "Content to display",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "controlSize",
+      "description": "Size of the control buttons,",
+      "required": false,
+      "defaultValue": "60px",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "draggable",
+      "description": "Determines whether content can be scrolled by dragging with mouse, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "edgeGradientColor",
+      "description": "Background color for the gradient fade on controls, <code>'var(--mantine-color-body)'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "endControlIcon",
+      "description": "Icon component for the end control, AccordionChevron by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "endControlProps",
+      "description": "Props passed to the end control button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"button\">"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "scrollAmount",
+      "description": "Amount of pixels to scroll when clicking the control buttons, <code>200</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "showEndControl",
+      "description": "Determines whether end control should always be visible regardless of scroll position, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "showStartControl",
+      "description": "Determines whether start control should always be visible regardless of scroll position, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "startControlIcon",
+      "description": "Icon component for the start control, AccordionChevron by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Scroller"
+    },
+    {
+      "name": "startControlProps",
+      "description": "Props passed to the start control button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"button\">"
+      },
+      "sourceComponent": "Scroller"
+    }
+  ]
+}

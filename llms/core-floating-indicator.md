@@ -5,16 +5,18 @@ Description: Display a floating indicator over a group of elements
 
 ## Usage
 
-`FloatingIndicator` is designed to highlight active element in a group.
+`FloatingIndicator` is designed to highlight the active element in a group.
 It can be used to create custom segmented controls, tabs and other similar components.
 
-`FloatingIndicator` renders an element over the `target` element. To calculate the position it is
-required to pass `parent` element which has a relative position.
+`FloatingIndicator` renders an element over the `target` element. To calculate the position, it is
+required to pass a `parent` element. **The parent element must have `position: relative` CSS property** –
+this is essential for correct positioning. The component returns `null` and renders nothing if either
+`target` or `parent` is not provided.
 
-By default, `FloatingIndicator` does not have any visible styles. You can use `className` prop
-or [Styles API](https://mantine.dev/styles/styles-api) to apply styles.
-
-#### Example: segmented
+By default, `FloatingIndicator` does not have any visible styles. You can use the `className` prop
+or [Styles API](https://mantine.dev/llms/styles-styles-api.md) to apply styles. Note that the indicator's `transform`, `width`,
+and `height` styles are set directly via JavaScript to enable smooth position transitions – these
+cannot be overridden via the Styles API.
 
 ```tsx
 import { useState } from 'react';
@@ -62,23 +64,11 @@ function Demo() {
 
 ## Multiple rows
 
-`FloatingIndicator` can be used to highlight active element in a group with multiple rows:
-
-#### Example: direction
+`FloatingIndicator` can be used to highlight the active element in a group with multiple rows:
 
 ```tsx
 import { useState } from 'react';
-import {
-  IconArrowDown,
-  IconArrowDownLeft,
-  IconArrowDownRight,
-  IconArrowLeft,
-  IconArrowRight,
-  IconArrowUp,
-  IconArrowUpLeft,
-  IconArrowUpRight,
-  IconCircle,
-} from '@tabler/icons-react';
+import { ArrowDownIcon, ArrowDownLeftIcon, ArrowDownRightIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, ArrowUpLeftIcon, ArrowUpRightIcon, CircleIcon } from '@phosphor-icons/react';
 import { FloatingIndicator, UnstyledButton } from '@mantine/core';
 import classes from './Demo.module.css';
 
@@ -107,7 +97,7 @@ function Demo() {
           ref={setControlRef('up-left')}
           mod={{ active: active === 'up-left' }}
         >
-          <IconArrowUpLeft size={26} stroke={1.5} />
+          <ArrowUpLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -115,7 +105,7 @@ function Demo() {
           ref={setControlRef('up')}
           mod={{ active: active === 'up' }}
         >
-          <IconArrowUp size={26} stroke={1.5} />
+          <ArrowUpIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -123,7 +113,7 @@ function Demo() {
           ref={setControlRef('up-right')}
           mod={{ active: active === 'up-right' }}
         >
-          <IconArrowUpRight size={26} stroke={1.5} />
+          <ArrowUpRightIcon size={26} />
         </UnstyledButton>
       </div>
       <div className={classes.controlsGroup}>
@@ -133,7 +123,7 @@ function Demo() {
           ref={setControlRef('left')}
           mod={{ active: active === 'left' }}
         >
-          <IconArrowLeft size={26} stroke={1.5} />
+          <ArrowLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -141,7 +131,7 @@ function Demo() {
           ref={setControlRef('center')}
           mod={{ active: active === 'center' }}
         >
-          <IconCircle size={26} stroke={1.5} />
+          <CircleIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -149,7 +139,7 @@ function Demo() {
           ref={setControlRef('right')}
           mod={{ active: active === 'right' }}
         >
-          <IconArrowRight size={26} stroke={1.5} />
+          <ArrowRightIcon size={26} />
         </UnstyledButton>
       </div>
       <div className={classes.controlsGroup}>
@@ -159,7 +149,7 @@ function Demo() {
           ref={setControlRef('down-left')}
           mod={{ active: active === 'down-left' }}
         >
-          <IconArrowDownLeft size={26} stroke={1.5} />
+          <ArrowDownLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -167,7 +157,7 @@ function Demo() {
           ref={setControlRef('down')}
           mod={{ active: active === 'down' }}
         >
-          <IconArrowDown size={26} stroke={1.5} />
+          <ArrowDownIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -175,7 +165,7 @@ function Demo() {
           ref={setControlRef('down-right')}
           mod={{ active: active === 'down-right' }}
         >
-          <IconArrowDownRight size={26} stroke={1.5} />
+          <ArrowDownRightIcon size={26} />
         </UnstyledButton>
       </div>
     </div>
@@ -185,8 +175,6 @@ function Demo() {
 
 
 ## Example: Tabs
-
-#### Example: tabs
 
 ```tsx
 // Demo.tsx
@@ -250,7 +238,7 @@ function Demo() {
 
 .tab {
   z-index: 1;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 100ms ease;
   color: var(--mantine-color-gray-7);
 
@@ -272,13 +260,16 @@ function Demo() {
 
 #### Props
 
+**FloatingIndicator props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| displayAfterTransitionEnd | boolean | - | If set, the indicator is displayed after transition ends.
-Should be set if the component is used inside a container that has <code>transform: scale(n)</code> styles. |
-| parent | HTMLElement | null | required | Parent element with relative position based on which indicator position is calculated |
-| target | HTMLElement | null | required | Target element over which indicator is displayed |
-| transitionDuration | string | number | - | Transition duration in ms |
+| displayAfterTransitionEnd | boolean | - | Controls whether the indicator should be hidden initially and displayed after the parent's transition ends. Set to `true` when the parent container has CSS transitions (e.g., `transform: scale()`) to prevent the indicator from appearing at the wrong position during the parent's animation. |
+| onTransitionEnd | () => void | - | Called when the indicator finishes transitioning to a new position |
+| onTransitionStart | () => void | - | Called when the indicator starts transitioning to a new position |
+| parent | HTMLElement \| null | required | Parent container element that must have `position: relative`. The indicator's position is calculated relative to this element. |
+| target | HTMLElement \| null | required | Target element over which the indicator is displayed. The indicator will be positioned to match the target's size and position. |
+| transitionDuration | string \| number | - | Transition duration in ms |
 
 
 #### Styles API
@@ -289,10 +280,17 @@ FloatingIndicator component supports Styles API. With Styles API, you can custom
 
 | Selector | Static selector | Description |
 |----------|----------------|-------------|
-| root | .mantine-FloatingIndicator-root | Root element |
+| root | .mantine-FloatingIndicator-root | Indicator element that animates to match the target position and size |
 
 **FloatingIndicator CSS variables**
 
 | Selector | Variable | Description |
 |----------|----------|-------------|
 | root | --transition-duration | Controls indicator transition duration |
+
+**FloatingIndicator data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-initialized | Indicator has been initialized and transitions are enabled | - |
+| root | data-hidden | Indicator is hidden (when displayAfterTransitionEnd is true) | - |

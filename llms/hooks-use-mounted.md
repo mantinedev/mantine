@@ -4,7 +4,7 @@ Import: import { UseMounted } from '@mantine/hooks';
 
 ## Usage
 
-`useMounted` hook returns `true` if component is mounted and `false` if it's not.
+The `useMounted` hook returns `true` if the component is mounted and `false` if it's not.
 
 ```tsx
 import { useMounted } from '@mantine/hooks';

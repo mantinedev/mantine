@@ -1,0 +1,169 @@
+{
+  "id": "core-grid",
+  "name": "Grid",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/grid",
+  "description": "Responsive 12 columns grid system",
+  "propsCount": 14,
+  "llmUrl": "https://mantine.dev/llms/core-grid.md",
+  "componentDataUrl": "/mcp/components/core-grid.json",
+  "searchText": "grid responsive 12 columns grid system @mantine/core /core/grid align breakpoints columngap columns gap grow justify overflow rowgap type align offset order span",
+  "source": "@mantine/core/src/components/Grid/Grid.tsx",
+  "docs": "core/grid.mdx",
+  "markdown": "# Grid\nPackage: @mantine/core\nImport: import { Grid } from '@mantine/core';\nDescription: Responsive 12 columns grid system\n\n## Usage\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid>\n      <Grid.Col span={4}>1</Grid.Col>\n      <Grid.Col span={4}>2</Grid.Col>\n      <Grid.Col span={4}>3</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Columns span\n\nThe `Grid.Col` `span` prop controls the ratio of column width to the total width of the row.\nBy default, grid uses a 12 columns layout, so the `span` prop can be any number from 1 to 12.\n\nExamples:\n\n* `<Grid.Col span={3} />` – 3 / 12 = 25% of row width\n* `<Grid.Col span={4} />` – 4 / 12 = 33% of row width\n* `<Grid.Col span={6} />` – 6 / 12 = 50% of row width\n* `<Grid.Col span={12} />` – 12 / 12 = 100% of row width\n\nThe `span` prop also supports object syntax to change column width based on viewport width.\nIt accepts `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12. The syntax\nis the same as in [style props](https://mantine.dev/llms/styles-style-props.md).\n\nIn the following example `span={{ base: 12, md: 6, lg: 3 }}`:\n\n* `base` – 12 / 12 = 100% of row width when viewport width is less than `md` breakpoint\n* `md` – 6 / 12 = 50% of row width when viewport width is between `md` and `lg` breakpoints\n* `lg` – 3 / 12 = 25% of row width when viewport width is greater than `lg` breakpoint\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid>\n      <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>1</Grid.Col>\n      <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>2</Grid.Col>\n      <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>3</Grid.Col>\n      <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>4</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Gap\n\nSet the `gap` prop to control spacing between columns and rows. The prop works the same\nway as [style props](https://mantine.dev/llms/styles-style-props.md) – you can reference `theme.spacing` values\nwith `xs`, `sm`, `md`, `lg` and `xl` strings and use object syntax to change gap\nbased on viewport width:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid gap={{ base: 5, xs: 'md', md: 'xl', xl: 50 }}>\n      <Grid.Col span={4}>1</Grid.Col>\n      <Grid.Col span={4}>2</Grid.Col>\n      <Grid.Col span={4}>3</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Row and column gap\n\nUse `rowGap` and `columnGap` props to set different spacing for rows and columns.\n`rowGap` and `columnGap` override `gap` prop if both are set:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid gap=\"md\" rowGap=\"xl\" columnGap=\"sm\">\n      <Grid.Col span={3}>1</Grid.Col>\n      <Grid.Col span={3}>2</Grid.Col>\n      <Grid.Col span={3}>3</Grid.Col>\n      <Grid.Col span={3}>4</Grid.Col>\n      <Grid.Col span={3}>5</Grid.Col>\n      <Grid.Col span={3}>6</Grid.Col>\n      <Grid.Col span={3}>7</Grid.Col>\n      <Grid.Col span={3}>8</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Grow\n\nIf the `grow` prop is set, the column will grow to fill the remaining space in the row:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid grow={true} gap=\"md\">\n      <Grid.Col span={4}>1</Grid.Col>\n      <Grid.Col span={4}>2</Grid.Col>\n      <Grid.Col span={4}>3</Grid.Col>\n      <Grid.Col span={4}>4</Grid.Col>\n      <Grid.Col span={4}>5</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Column offset\n\nSet the `offset` prop on the `Grid.Col` component to add gaps to the grid. The `offset` prop\nsupports the same syntax as the `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid>\n      <Grid.Col span={3}>1</Grid.Col>\n      <Grid.Col span={3}>2</Grid.Col>\n      <Grid.Col span={3} offset={3}>3</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Order\n\nSet the `order` prop on the `Grid.Col` component to change the order of columns. The `order` prop\nsupports the same syntax as the `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid>\n      <Grid.Col span={3} order={{ base: 2, sm: 1, lg: 3 }}>2</Grid.Col>\n      <Grid.Col span={3} order={{ base: 3, sm: 2, lg: 2 }}>3</Grid.Col>\n      <Grid.Col span={3} order={{ base: 1, sm: 3, lg: 1 }}>1</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Multiple rows\n\nOnce the columns' `span` and `offset` sum exceeds the `columns` prop (12 by default),\ncolumns are moved to the next row:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid>\n      <Grid.Col span={4}>1</Grid.Col>\n      <Grid.Col span={4}>2</Grid.Col>\n      <Grid.Col span={4}>3</Grid.Col>\n      <Grid.Col span={4}>4</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Justify and align\n\nYou can control the `justify-content` and `align-items` CSS properties with the `justify` and `align` props on the `Grid` component:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid justify=\"flex-start\" align=\"flex-start\">\n      <Grid.Col span={3} h={80}>1</Grid.Col>\n      <Grid.Col span={3} h={120}>2</Grid.Col>\n      <Grid.Col span={3} h={100}>3</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Column alignment\n\nUse the `align` prop on individual `Grid.Col` components to control the `align-self` CSS property\nfor each column. This allows you to override the grid's `align` prop for specific columns:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid align=\"stretch\">\n      <Grid.Col span={4} align=\"flex-start\">\n        <div style={{ height: '100px', background: 'var(--mantine-color-blue-light)' }}>\n          flex-start\n        </div>\n      </Grid.Col>\n      <Grid.Col span={4} align=\"center\">\n        <div style={{ height: '100px', background: 'var(--mantine-color-blue-light)' }}>\n          center\n        </div>\n      </Grid.Col>\n      <Grid.Col span={4} align=\"flex-end\">\n        <div style={{ height: '100px', background: 'var(--mantine-color-blue-light)' }}>\n          flex-end\n        </div>\n      </Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Auto sized columns\n\nAll columns in a row with `span=\"auto\"` grow as much as they can to fill the row.\nIn the following example, the second column takes up 50% of the row while the other two columns automatically resize to fill the remaining space:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid>\n      <Grid.Col span=\"auto\">1</Grid.Col>\n      <Grid.Col span={6}>2</Grid.Col>\n      <Grid.Col span=\"auto\">3</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Fit column content\n\nIf you set `span=\"content\"`, the column's size will automatically adjust to match the width of its content:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid>\n      <Grid.Col span=\"content\">fit content</Grid.Col>\n      <Grid.Col span={6}>2</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Change columns count\n\nBy default, grid uses a 12 columns layout. You can change it by setting the `columns` prop on the `Grid` component.\nNote that in this case, columns span and offset will be calculated relative to this value.\n\nIn the following example, the first column takes 50% with 12 span (12/24), second and third take 25% (6/24):\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid columns={24}>\n      <Grid.Col span={12}>1</Grid.Col>\n      <Grid.Col span={6}>2</Grid.Col>\n      <Grid.Col span={6}>3</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Container queries\n\nTo use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)\ninstead of media queries, set `type=\"container\"`. With container queries, all responsive values\nare adjusted based on the container width, not the viewport width.\n\nNote that, when using container queries, it is also required to set `breakpoints` prop\nto the exact container width values.\n\nTo see how the grid changes, resize the root element of the demo\nwith the resize handle located at the bottom right corner of the demo:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    // Wrapper div is added for demonstration purposes only.\n    // It is not required in real projects.\n    <div style={{ resize: 'horizontal', overflow: 'hidden', maxWidth: '100%' }}>\n      <Grid\n        type=\"container\"\n        breakpoints={{ xs: '100px', sm: '200px', md: '300px', lg: '400px', xl: '500px' }}\n      >\n        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>1</Grid.Col>\n        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>2</Grid.Col>\n        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>3</Grid.Col>\n        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>4</Grid.Col>\n      </Grid>\n    </div>\n  );\n}\n```\n\n\n## Browser support\n\nGrid component uses flexbox with native `gap` for layout, which is supported in all modern browsers.\n\n### Container queries\n\nWhen using `type=\"container\"`, the Grid component uses [CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries).\nContainer queries are supported in the following browsers:\n\n* Chrome 105+\n* Safari 16+\n* Firefox 110+\n* Edge 105+\n\nIf you need to support older browsers, use the default `type=\"media\"` which uses standard media queries\ninstead of container queries.\n\nExample with media queries (default):\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid gap=\"md\">\n      <Grid.Col span={{ base: 12, md: 6 }}>1</Grid.Col>\n      <Grid.Col span={{ base: 12, md: 6 }}>2</Grid.Col>\n    </Grid>\n  );\n}\n```\n\nExample with container queries:\n\n```tsx\nimport { Grid } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Grid\n      type=\"container\"\n      breakpoints={{ xs: '100px', sm: '200px', md: '300px', lg: '400px', xl: '500px' }}\n      gap=\"md\"\n    >\n      <Grid.Col span={{ base: 12, md: 6 }}>1</Grid.Col>\n      <Grid.Col span={{ base: 12, md: 6 }}>2</Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n#### Props\n\n**Grid props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| align | AlignItems | - | Sets `align-items` |\n| breakpoints | GridBreakpoints | - | Breakpoints values, only used with `type=\"container\"` |\n| columnGap | StyleProp<MantineSpacing> | - | Column gap, overrides `gap` for horizontal spacing |\n| columns | number | - | Number of columns in each row |\n| gap | StyleProp<MantineSpacing> | - | Gap between columns and rows, key of `theme.spacing` or any valid CSS value |\n| grow | boolean | - | If set, columns in the last row expand to fill all available space |\n| justify | JustifyContent | - | Sets `justify-content` |\n| overflow | Overflow | - | Sets `overflow` CSS property on the root element |\n| rowGap | StyleProp<MantineSpacing> | - | Row gap, overrides `gap` for vertical spacing |\n| type | \"media\" \\| \"container\" | - | Type of queries used for responsive styles |\n\n**Grid.Col props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| align | StyleProp<AlignSelf> | - | Vertical alignment of the column, controls `align-self` CSS property |\n| offset | StyleProp<number> | - | Column start offset – number of empty columns before this column |\n| order | StyleProp<number> | - | Column order, use to reorder columns at different viewport sizes |\n| span | StyleProp<ColSpan> | - | Column span |\n\n\n#### Styles API\n\nGrid component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Grid selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| container | .mantine-Grid-container | Container element, only used with `type=\"container\"` prop |\n| root | .mantine-Grid-root | Root element |\n| inner | .mantine-Grid-inner | Columns wrapper |\n| col | .mantine-Grid-col | `Grid.Col` root element |\n\n**Grid CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --grid-overflow | Controls `overflow` property |\n| root | --grid-align | Controls `align-items` property |\n| root | --grid-justify | Controls `justify-content` property |\n\n**Grid data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-with-gap | CSS variables for gap, rowGap, and columnGap are set. Variables include: --grid-gap, --grid-row-gap, --grid-column-gap, --grid-margin, --grid-col-padding-x, --grid-col-padding-y | true |\n| col | data-with-col-vars | CSS variables for column layout are set. Variables include: --col-flex-grow, --col-flex-basis, --col-width, --col-max-width, --col-offset, --col-order, --col-align-self | true |\n",
+  "props": [
+    {
+      "name": "align",
+      "description": "Sets <code>align-items</code>",
+      "required": false,
+      "defaultValue": "stretch",
+      "type": {
+        "name": "AlignItems"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "breakpoints",
+      "description": "Breakpoints values, only used with <code>type=\"container\"</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "GridBreakpoints"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "columnGap",
+      "description": "Column gap, overrides <code>gap</code> for horizontal spacing",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<MantineSpacing>"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "columns",
+      "description": "Number of columns in each row",
+      "required": false,
+      "defaultValue": "12",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "gap",
+      "description": "Gap between columns and rows, key of <code>theme.spacing</code> or any valid CSS value",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "StyleProp<MantineSpacing>"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "grow",
+      "description": "If set, columns in the last row expand to fill all available space",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "justify",
+      "description": "Sets <code>justify-content</code>",
+      "required": false,
+      "defaultValue": "flex-start",
+      "type": {
+        "name": "JustifyContent"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "overflow",
+      "description": "Sets <code>overflow</code> CSS property on the root element",
+      "required": false,
+      "defaultValue": "'visible'",
+      "type": {
+        "name": "Overflow"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "rowGap",
+      "description": "Row gap, overrides <code>gap</code> for vertical spacing",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<MantineSpacing>"
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "type",
+      "description": "Type of queries used for responsive styles",
+      "required": false,
+      "defaultValue": "'media'",
+      "type": {
+        "name": "\"media\" | \"container\"",
+        "raw": "\"media\" | \"container\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"media\""
+          },
+          {
+            "value": "\"container\""
+          }
+        ]
+      },
+      "sourceComponent": "Grid"
+    },
+    {
+      "name": "align",
+      "description": "Vertical alignment of the column, controls <code>align-self</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<AlignSelf>"
+      },
+      "sourceComponent": "GridCol"
+    },
+    {
+      "name": "offset",
+      "description": "Column start offset – number of empty columns before this column",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<number>"
+      },
+      "sourceComponent": "GridCol"
+    },
+    {
+      "name": "order",
+      "description": "Column order, use to reorder columns at different viewport sizes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<number>"
+      },
+      "sourceComponent": "GridCol"
+    },
+    {
+      "name": "span",
+      "description": "Column span",
+      "required": false,
+      "defaultValue": "12",
+      "type": {
+        "name": "StyleProp<ColSpan>"
+      },
+      "sourceComponent": "GridCol"
+    }
+  ]
+}

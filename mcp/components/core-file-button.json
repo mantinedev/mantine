@@ -1,0 +1,117 @@
+{
+  "id": "core-file-button",
+  "name": "FileButton",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/file-button",
+  "description": "Open file picker with a button click",
+  "propsCount": 10,
+  "llmUrl": "https://mantine.dev/llms/core-file-button.md",
+  "componentDataUrl": "/mcp/components/core-file-button.json",
+  "searchText": "filebutton open file picker with a button click @mantine/core /core/file-button accept capture children disabled form inputprops multiple name onchange resetref",
+  "source": "@mantine/core/src/components/FileButton/FileButton.tsx",
+  "docs": "core/file-button.mdx",
+  "markdown": "# FileButton\nPackage: @mantine/core\nImport: import { FileButton } from '@mantine/core';\nDescription: Open file picker with a button click\n\n## Usage\n\n```tsx\nimport { useState } from 'react';\nimport { FileButton, Button, Group, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [file, setFile] = useState<File | null>(null);\n  return (\n    <>\n      <Group justify=\"center\">\n        <FileButton onChange={setFile} accept=\"image/png,image/jpeg\">\n          {(props) => <Button {...props}>Upload image</Button>}\n        </FileButton>\n      </Group>\n\n      {file && (\n        <Text size=\"sm\" ta=\"center\" mt=\"sm\">\n          Picked file: {file.name}\n        </Text>\n      )}\n    </>\n  );\n}\n```\n\n\n## Multiple files\n\nSet the `multiple` prop to allow picking multiple files:\n\n```tsx\nimport { useState } from 'react';\nimport { FileButton, Button, Group, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [files, setFiles] = useState<File[]>([]);\n  return (\n    <>\n      <Group justify=\"center\">\n        <FileButton onChange={setFiles} accept=\"image/png,image/jpeg\" multiple>\n          {(props) => <Button {...props}>Upload image</Button>}\n        </FileButton>\n      </Group>\n\n      {files.length > 0 && (\n        <Text size=\"sm\" mt=\"sm\">\n          Picked files:\n        </Text>\n      )}\n\n      <ul>\n        {files.map((file, index) => (\n          <li key={index}>{file.name}</li>\n        ))}\n      </ul>\n    </>\n  );\n}\n```\n\n\n## Reset file\n\n`resetRef` should be used to fix the issue with stale value on the hidden input element as input type file cannot be controlled.\nCall `resetRef` when the user selection is cleared:\n\n```tsx\nimport { useState, useRef } from 'react';\nimport { FileButton, Button, Group, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [file, setFile] = useState<File | null>(null);\n  const resetRef = useRef<() => void>(null);\n\n  const clearFile = () => {\n    setFile(null);\n    resetRef.current?.();\n  };\n\n  return (\n    <>\n      <Group justify=\"center\">\n        <FileButton resetRef={resetRef} onChange={setFile} accept=\"image/png,image/jpeg\">\n          {(props) => <Button {...props}>Upload image</Button>}\n        </FileButton>\n        <Button disabled={!file} color=\"red\" onClick={clearFile}>\n          Reset\n        </Button>\n      </Group>\n\n      {file && (\n        <Text size=\"sm\" ta=\"center\" mt=\"sm\">\n          Picked file: {file.name}\n        </Text>\n      )}\n    </>\n  );\n}\n```\n\n\n## Server components\n\nFileButton is not compatible with React Server Components as it uses useEffect and other client-side features. You can use it in client components only.\n\n\n#### Props\n\n**FileButton props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| accept | string | - | File input accept attribute, for example, `\"image/png,image/jpeg\"` |\n| capture | boolean \\| \"user\" \\| \"environment\" | - | Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. |\n| children | (props: { onClick: () => void; }) => ReactNode | required | Function that receives button props and returns react node that should be rendered |\n| disabled | boolean | - | Disables file picker |\n| form | string | - | Input form attribute |\n| inputProps | React.ComponentProps<\"input\"> | - | Passes down props to the input element used to capture files |\n| multiple | boolean | - | If set, user can pick more than one file |\n| name | string | - | Input name attribute |\n| onChange | (payload: Multiple extends true ? File[] : File \\| null) => void | required | Called when files are picked |\n| resetRef | Ref<() => void> | - | Reference of the function that should be called when value changes to null or empty array |",
+  "props": [
+    {
+      "name": "accept",
+      "description": "File input accept attribute, for example, <code>\"image/png,image/jpeg\"</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "capture",
+      "description": "Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean | \"user\" | \"environment\""
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "children",
+      "description": "Function that receives button props and returns react node that should be rendered",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "(props: { onClick: () => void; }) => ReactNode"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "disabled",
+      "description": "Disables file picker",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "form",
+      "description": "Input form attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "inputProps",
+      "description": "Passes down props to the input element used to capture files",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"input\">"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "multiple",
+      "description": "If set, user can pick more than one file",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "name",
+      "description": "Input name attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when files are picked",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "(payload: Multiple extends true ? File[] : File | null) => void"
+      },
+      "sourceComponent": "FileButton"
+    },
+    {
+      "name": "resetRef",
+      "description": "Reference of the function that should be called when value changes to null or empty array",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<() => void>"
+      },
+      "sourceComponent": "FileButton"
+    }
+  ]
+}

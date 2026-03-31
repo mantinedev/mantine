@@ -1,0 +1,210 @@
+{
+  "id": "dates-time-grid",
+  "name": "TimeGrid",
+  "kind": "component",
+  "package": "@mantine/dates",
+  "route": "/dates/time-grid",
+  "description": "Captures time value from the user with a predefined set of options",
+  "propsCount": 16,
+  "llmUrl": "https://mantine.dev/llms/dates-time-grid.md",
+  "componentDataUrl": "/mcp/components/dates-time-grid.json",
+  "searchText": "timegrid captures time value from the user with a predefined set of options @mantine/dates /dates/time-grid allowdeselect ampmlabels data defaultvalue disabletime disabled format getcontrolprops maxtime mintime onchange radius simplegridprops size value withseconds",
+  "source": "@mantine/dates/src/components/TimeGrid/TimeGrid.tsx",
+  "docs": "dates/time-grid.mdx",
+  "markdown": "# TimeGrid\nPackage: @mantine/dates\nImport: import { TimeGrid } from '@mantine/dates';\nDescription: Captures time value from the user with a predefined set of options\n\n## Usage\n\nUse the `TimeGrid` component to capture a time value from the user with a\npredefined set of time slots:\n\n```tsx\nimport { getTimeRange, TimeGrid } from '@mantine/dates';\n\n\nfunction Demo() {\n  return (\n    <TimeGrid\n      data={getTimeRange({ startTime: '10:00', endTime: '21:00', interval: '01:00' })}\n      simpleGridProps={{\n        type: 'container',\n        cols: { base: 1, '180px': 2, '320px': 3 },\n        spacing: 'xs',\n      }}\n       format=\"24h\" withSeconds={false} size=\"sm\" radius=\"sm\"\n    />\n  );\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { TimeGrid } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>('10:00');\n  return <TimeGrid value={value} onChange={setValue} data={['10:00', '12: 00']} />;\n}\n```\n\n## data prop\n\nThe `data` prop accepts an array of time values in 24-hour format. Values\nmust be unique. To generate a time range, use the `getTimeRange` function\nexported from the `@mantine/dates` package:\n\n```tsx\nimport { TimeGrid, getTimeRange } from '@mantine/dates';\n\nfunction WithArray() {\n  return <TimeGrid data={['10:00', '12:00']} />\n}\n\nfunction WithRange() {\n  // In this example we generate time range from 10:00 to 14:00 with 1 hour step:\n  // ['10:00', '11:00', '12:00', '13:00', '14:00']\n  return <TimeGrid data={getTimeRange({ from: '10:00', to: '14:00', step: '01:00' })} />\n}\n```\n\n## Min and max time\n\nSet the `minTime` and `maxTime` props to limit the available time range.\nBoth props accept time values in 24-hour format:\n\n```tsx\nimport { getTimeRange, TimeGrid } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <TimeGrid\n      data={getTimeRange({ startTime: '09:00', endTime: '22:00', interval: '01:00' })}\n      minTime=\"11:00\"\n      maxTime=\"18:00\"\n    />\n  );\n}\n```\n\n\n## Disable specific controls\n\nYou can disable specific time values by providing an array of disabled\nvalues to the `disableTime` prop:\n\n```tsx\nimport { getTimeRange, TimeGrid } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <TimeGrid\n      data={getTimeRange({ startTime: '09:00', endTime: '11:45', interval: '00:15' })}\n      disableTime={['10:45', '11:00', '11:30']}\n    />\n  );\n}\n```\n\n\n## Allow deselect\n\nSet the `allowDeselect` prop to allow deselecting the time value by clicking on\nthe control with the selected value:\n\n```tsx\nimport { getTimeRange, TimeGrid } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <TimeGrid\n      data={getTimeRange({ startTime: '09:00', endTime: '12:00', interval: '01:00' })}\n      defaultValue=\"11:00\"\n      allowDeselect\n    />\n  );\n}\n```\n\n\n## Change AM/PM labels\n\n```tsx\nimport { getTimeRange, TimeGrid } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <TimeGrid\n      data={getTimeRange({ startTime: '09:00', endTime: '22:00', interval: '01:00' })}\n      format=\"12h\"\n      amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }}\n    />\n  );\n}\n```\n\n\n## Disabled\n\nSet the `disabled` prop to disable all controls:\n\n```tsx\nimport { getTimeRange, TimeGrid } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <TimeGrid\n      data={getTimeRange({ startTime: '09:00', endTime: '22:00', interval: '01:00' })}\n      disabled\n    />\n  );\n}\n```\n\n\n\n#### Props\n\n**TimeGrid props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowDeselect | boolean | - | Determines whether the value can be deselected when the current active option is clicked or activated with keyboard |\n| amPmLabels | { am: string; pm: string } | - | Labels used for am/pm values |\n| data | string[] | required | Time data in 24h format to be displayed in the grid, for example `['10:00', '18:30', '22:00']`. Time values must be unique. |\n| defaultValue | string \\| null | - | Uncontrolled component default value |\n| disableTime | string[] \\| ((time: string) => boolean) | - | Array of time values to disable |\n| disabled | boolean | - | If set, all controls are disabled |\n| format | \"12h\" \\| \"24h\" | - | Time format displayed in the grid |\n| getControlProps | (time: string) => ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> & DataAttributes | - | A function to pass props down to control based on the time value |\n| maxTime | string | - | All controls after this time are disabled |\n| minTime | string | - | All controls before this time are disabled |\n| onChange | (value: string \\| null) => void | - | Called when value changes |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| simpleGridProps | SimpleGridProps | - | Props passed down to the underlying `SimpleGrid` component |\n| size | MantineSize | - | Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value |\n| value | string \\| null | - | Controlled component value |\n| withSeconds | boolean | - | Determines whether the seconds part should be displayed |\n\n\n#### Styles API\n\nTimeGrid component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**TimeGrid selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-TimeGrid-root | Root element |\n| control | .mantine-TimeGrid-control | Time grid control |\n| simpleGrid | .mantine-TimeGrid-simpleGrid | SimpleGrid component root |\n\n**TimeGrid CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --time-grid-fz | Controls `font-size` property of all controls |\n| root | --time-grid-radius | Controls `border-radius` property of all controls |\n\n**TimeGrid data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| control | data-active | Current component value is the same as control value | - |\n| control | data-disabled | Component is disabled by one of the props: `minTime`, `maxTime`, `disableTime`, `disabled` | - |\n",
+  "props": [
+    {
+      "name": "allowDeselect",
+      "description": "Determines whether the value can be deselected when the current active option is clicked or activated with keyboard",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "amPmLabels",
+      "description": "Labels used for am/pm values",
+      "required": false,
+      "defaultValue": "{ am: 'AM', pm: 'PM' }",
+      "type": {
+        "name": "{ am: string; pm: string }"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "data",
+      "description": "Time data in 24h format to be displayed in the grid, for example <code>['10:00', '18:30', '22:00']</code>. Time values must be unique.",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | null"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "disableTime",
+      "description": "Array of time values to disable",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[] | ((time: string) => boolean)"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "disabled",
+      "description": "If set, all controls are disabled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "format",
+      "description": "Time format displayed in the grid",
+      "required": false,
+      "defaultValue": "'24h'",
+      "type": {
+        "name": "\"12h\" | \"24h\"",
+        "raw": "TimePickerFormat | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"12h\""
+          },
+          {
+            "value": "\"24h\""
+          }
+        ]
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "getControlProps",
+      "description": "A function to pass props down to control based on the time value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(time: string) => ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> & DataAttributes"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "maxTime",
+      "description": "All controls after this time are disabled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "minTime",
+      "description": "All controls before this time are disabled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string | null) => void"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "simpleGridProps",
+      "description": "Props passed down to the underlying <code>SimpleGrid</code> component",
+      "required": false,
+      "defaultValue": "{ cols: 3, spacing: 'xs' }",
+      "type": {
+        "name": "SimpleGridProps"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "size",
+      "description": "Control <code>font-size</code> of controls, key of <code>theme.fontSizes</code> or any valid CSS value",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | null"
+      },
+      "sourceComponent": "TimeGrid"
+    },
+    {
+      "name": "withSeconds",
+      "description": "Determines whether the seconds part should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TimeGrid"
+    }
+  ]
+}

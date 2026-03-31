@@ -1,0 +1,190 @@
+{
+  "id": "core-indicator",
+  "name": "Indicator",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/indicator",
+  "description": "Display element at the corner of another element",
+  "propsCount": 14,
+  "llmUrl": "https://mantine.dev/llms/core-indicator.md",
+  "componentDataUrl": "/mcp/components/core-indicator.json",
+  "searchText": "indicator display element at the corner of another element @mantine/core /core/indicator autocontrast color disabled inline label maxvalue offset position processing radius showzero size withborder zindex",
+  "source": "@mantine/core/src/components/Indicator/Indicator.tsx",
+  "docs": "core/indicator.mdx",
+  "markdown": "# Indicator\nPackage: @mantine/core\nImport: import { Indicator } from '@mantine/core';\nDescription: Display element at the corner of another element\n\n## Usage\n\n```tsx\nimport { Indicator, Avatar } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Indicator color=\"blue\" position=\"top-end\" radius=\"xl\" size={10} disabled={false} withBorder={false} processing={false}>\n      <Avatar\n        size=\"lg\"\n        radius=\"sm\"\n        src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png\"\n      />\n    </Indicator>\n  );\n}\n```\n\n\n## Inline\n\nWhen the target element has a fixed width, set the `inline` prop to add `display: inline-block;` styles to\nthe Indicator container. Alternatively, you can set width and height with the `style` prop if you still want the root\nelement to keep `display: block`.\n\n```tsx\nimport { Avatar, Indicator } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Indicator inline label=\"New\" size={16}>\n      <Avatar\n        size=\"lg\"\n        radius=\"sm\"\n        src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png\"\n      />\n    </Indicator>\n  );\n}\n```\n\n\n## Offset\n\nSet `offset` to change the indicator position. It is useful when the Indicator component is\nused with children that have border-radius. You can provide a number for uniform offset or an\nobject with `x` and `y` properties for separate horizontal and vertical offsets:\n\n```tsx\nimport { Avatar, Indicator } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Indicator inline size={16} offset={7} position=\"bottom-end\" color=\"red\" withBorder>\n      <Avatar\n        size=\"lg\"\n        radius=\"xl\"\n        src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png\"\n      />\n    </Indicator>\n  );\n}\n```\n\n\n## Processing animation\n\n```tsx\nimport { Avatar, Indicator } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Indicator inline processing color=\"red\" size={12}>\n      <Avatar\n        size=\"lg\"\n        radius=\"sm\"\n        src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png\"\n      />\n    </Indicator>\n  );\n}\n```\n\n\n## Disabled\n\nSet `disabled` to hide the indicator:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Avatar, Indicator, Button, Stack } from '@mantine/core';\n\nfunction Demo() {\n  const [visible, { toggle }] = useDisclosure();\n\n  return (\n    <Stack align=\"center\">\n      <Indicator inline disabled={!visible} color=\"red\" size={12}>\n        <Avatar\n          size=\"lg\"\n          radius=\"sm\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png\"\n        />\n      </Indicator>\n      <Button onClick={toggle}>Toggle indicator</Button>\n    </Stack>\n  );\n}\n```\n\n\n## Max value\n\nSet `maxValue` prop to display `{maxValue}+` when the label exceeds the maximum value. This is useful for\nnotification counters that should not show exact large numbers:\n\n```tsx\nimport { Avatar, Group, Indicator } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Indicator inline label={50} maxValue={99}>\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png\"\n        />\n      </Indicator>\n\n      <Indicator inline label={100} maxValue={99}>\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png\"\n        />\n      </Indicator>\n\n      <Indicator inline label={1000} maxValue={999}>\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png\"\n        />\n      </Indicator>\n    </Group>\n  );\n}\n```\n\n\n## Show zero\n\nBy default, the indicator is displayed when the label is `0`. Set `showZero={false}` to hide the indicator\nwhen the label is `0`:\n\n```tsx\nimport { Avatar, Group, Indicator } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Indicator inline label={0}>\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png\"\n        />\n      </Indicator>\n\n      <Indicator inline label={0} showZero={false}>\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png\"\n        />\n      </Indicator>\n    </Group>\n  );\n}\n```\n\n\n## Auto contrast\n\nSet `autoContrast` prop to automatically adjust text color based on the background color to ensure\nreadable contrast:\n\n```tsx\nimport { Avatar, Group, Indicator } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Indicator inline label=\"99\" color=\"lime.4\">\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png\"\n        />\n      </Indicator>\n\n      <Indicator inline label=\"99\" color=\"lime.4\" autoContrast>\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png\"\n        />\n      </Indicator>\n\n      <Indicator inline label=\"99\" color=\"cyan.9\">\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png\"\n        />\n      </Indicator>\n\n      <Indicator inline label=\"99\" color=\"cyan.9\" autoContrast>\n        <Avatar\n          size=\"lg\"\n          radius=\"xl\"\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png\"\n        />\n      </Indicator>\n    </Group>\n  );\n}\n```\n\n\n\n#### Props\n\n**Indicator props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color value |\n| disabled | boolean | - | Hides the indicator when set |\n| inline | boolean | - | Changes container display from block to inline-block, use when wrapping elements with fixed width |\n| label | React.ReactNode | - | Label displayed inside the indicator, for example, notification count |\n| maxValue | number | - | Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` |\n| offset | number \\| { x: number; y: number; } | - | Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with `x` and `y` properties for separate horizontal and vertical offsets |\n| position | \"bottom-end\" \\| \"bottom-start\" \\| \"top-end\" \\| \"top-start\" \\| \"bottom-center\" \\| \"top-center\" \\| \"middle-center\" \\| \"middle-end\" \\| \"middle-start\" | - | Indicator position relative to the target element |\n| processing | boolean | - | If set, the indicator has processing animation |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| showZero | boolean | - | Determines whether indicator with label `0` should be displayed |\n| size | string \\| number | - | Indicator width and height |\n| withBorder | boolean | - | Adds border to the root element |\n| zIndex | string \\| number | - | Indicator z-index |\n\n\n#### Styles API\n\nIndicator component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Indicator selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Indicator-root | Root element |\n| indicator | .mantine-Indicator-indicator | Indicator element |\n\n**Indicator CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --indicator-bottom | Controls `bottom` style |\n| root | --indicator-left | Controls `left` style |\n| root | --indicator-right | Controls `right` style |\n| root | --indicator-top | Controls `top` style |\n| root | --indicator-radius | Controls `border-radius` |\n| root | --indicator-size | Controls `min-width` and `height` |\n| root | --indicator-translate-x | Controls `translateX` style, used for positioning |\n| root | --indicator-translate-y | Controls `translateY` style, used for positioning |\n| root | --indicator-z-index | Controls `z-index` style |\n| root | --indicator-color | Controls `background-color` |\n| root | --indicator-text-color | Controls `color` |\n\n**Indicator data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-inline | `inline` prop is set | - |\n| indicator | data-with-label | `label` prop is set | - |\n| indicator | data-with-border | `withBorder` prop is set | - |\n| indicator | data-processing | `processing` prop is set | - |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color value",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "disabled",
+      "description": "Hides the indicator when set",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "inline",
+      "description": "Changes container display from block to inline-block, use when wrapping elements with fixed width",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "label",
+      "description": "Label displayed inside the indicator, for example, notification count",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "maxValue",
+      "description": "Maximum value to display. If label is a number greater than this value, it will be displayed as <code>{maxValue}+</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "offset",
+      "description": "Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with <code>x</code> and <code>y</code> properties for separate horizontal and vertical offsets",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number | { x: number; y: number; }"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "position",
+      "description": "Indicator position relative to the target element",
+      "required": false,
+      "defaultValue": "'top-end'",
+      "type": {
+        "name": "\"bottom-end\" | \"bottom-start\" | \"top-end\" | \"top-start\" | \"bottom-center\" | \"top-center\" | \"middle-center\" | \"middle-end\" | \"middle-start\"",
+        "raw": "\"bottom-end\" | \"bottom-start\" | \"top-end\" | \"top-start\" | \"bottom-center\" | \"top-center\" | \"middle-center\" | \"middle-end\" | \"middle-start\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"bottom-end\""
+          },
+          {
+            "value": "\"bottom-start\""
+          },
+          {
+            "value": "\"top-end\""
+          },
+          {
+            "value": "\"top-start\""
+          },
+          {
+            "value": "\"bottom-center\""
+          },
+          {
+            "value": "\"top-center\""
+          },
+          {
+            "value": "\"middle-center\""
+          },
+          {
+            "value": "\"middle-end\""
+          },
+          {
+            "value": "\"middle-start\""
+          }
+        ]
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "processing",
+      "description": "If set, the indicator has processing animation",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "100",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "showZero",
+      "description": "Determines whether indicator with label <code>0</code> should be displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "size",
+      "description": "Indicator width and height",
+      "required": false,
+      "defaultValue": "10",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Indicator"
+    },
+    {
+      "name": "zIndex",
+      "description": "Indicator z-index",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Indicator"
+    }
+  ]
+}

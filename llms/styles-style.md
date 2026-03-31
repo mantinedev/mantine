@@ -2,14 +2,14 @@
 
 # Style prop
 
-All Mantine components that have root element support `style` prop.
-It works similar to React `style` prop, but with some additional features.
+All Mantine components that have a root element support the `style` prop.
+It works similarly to the React `style` prop, but with some additional features.
 
 ## Style object
 
 You can pass a style object to the `style` prop – in this case it works the same way
-as React `style` prop. You can use Mantine [CSS variables](https://mantine.dev/styles/css-variables) in style object
-the same way as in [.css files](https://mantine.dev/styles/css-modules).
+as the React `style` prop. You can use Mantine [CSS variables](https://mantine.dev/llms/styles-css-variables.md) in the style object
+the same way as in [.css files](https://mantine.dev/llms/styles-css-modules.md).
 
 ```tsx
 import { Box, rem } from '@mantine/core';
@@ -28,7 +28,7 @@ function Demo() {
 
 ## Define CSS variables in style prop
 
-You can define CSS variables in the style prop. Note that it only works with Mantine components:
+You can define CSS variables in the style prop. Note that this only works with Mantine components:
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -44,8 +44,8 @@ function Demo() {
 
 ## Style function
 
-You can pass a style function to the `style` prop – in this case it will be called with [theme](https://mantine.dev/theming/theme-object/).
-It is useful when you need to access [theme](https://mantine.dev/theming/theme-object/) properties that are not exposed as [CSS variables](https://mantine.dev/styles/css-variables),
+You can pass a style function to the `style` prop – in this case it will be called with the [theme](https://mantine.dev/llms/theming-theme-object.md).
+It is useful when you need to access [theme](https://mantine.dev/llms/theming-theme-object.md) properties that are not exposed as [CSS variables](https://mantine.dev/llms/styles-css-variables.md),
 for example, properties from `theme.other`.
 
 ```tsx
@@ -65,9 +65,9 @@ function Demo() {
 
 ## Styles array
 
-You can pass an array of style objects and/or functions to `style` prop – in this case, all styles will be merged into one object.
-It is useful when you want to create a wrapper around Mantine component, add inline styles and keep the option to pass
-`style` prop to it.
+You can pass an array of style objects and/or functions to the `style` prop – in this case, all styles will be merged into one object.
+It is useful when you want to create a wrapper around a Mantine component, add inline styles and keep the option to pass
+the `style` prop to it.
 
 ```tsx
 import { Box, MantineStyleProp } from '@mantine/core';

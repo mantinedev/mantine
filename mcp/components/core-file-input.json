@@ -1,0 +1,582 @@
+{
+  "id": "core-file-input",
+  "name": "FileInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/file-input",
+  "description": "Capture files from user",
+  "propsCount": 43,
+  "llmUrl": "https://mantine.dev/llms/core-file-input.md",
+  "componentDataUrl": "/mcp/components/core-file-input.json",
+  "searchText": "fileinput capture files from user @mantine/core /core/file-input accept capture clearbuttonprops clearsectionmode clearable defaultvalue description descriptionprops disabled error errorprops fileinputprops form inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiple name onchange placeholder pointer radius readonly required resetref rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size value valuecomponent withasterisk witherrorstyles wrapperprops",
+  "source": "@mantine/core/src/components/FileInput/FileInput.tsx",
+  "docs": "core/file-input.mdx",
+  "markdown": "# FileInput\nPackage: @mantine/core\nImport: import { FileInput } from '@mantine/core';\nDescription: Capture files from user\n\n## Usage\n\nFileInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. FileInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { FileInput } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <FileInput\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      placeholder=\"Input placeholder\"\n    />\n  );\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  return <FileInput placeholder=\"Upload file\" loading />;\n}\n```\n\n\n## Controlled\n\nWhen `multiple` is `false`:\n\n```tsx\nimport { useState } from 'react';\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<File | null>(null);\n  return <FileInput value={value} onChange={setValue} />;\n}\n```\n\nWhen `multiple` is `true`:\n\n```tsx\nimport { useState } from 'react';\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<File[]>([]);\n  return <FileInput multiple value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`FileInput` can be used with uncontrolled forms the same way as a native `input[type=\"file\"]`.\nSet the `name` attribute to include file input value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `FileInput` with `FormData`:\n\n```tsx\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        const files = formData.getAll('file');\n        console.log('File input value:', files);\n      }}\n    >\n      <FileInput label=\"Upload your file\" name=\"file\" />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Multiple\n\nSet `multiple` to allow the user to pick more than one file:\n\n```tsx\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  return <FileInput label=\"Upload files\" placeholder=\"Upload files\" multiple />;\n}\n```\n\n\n## Accept\n\nSet the `accept` prop to restrict file selection to specific mime types:\n\n```tsx\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <FileInput accept=\"image/png,image/jpeg\" label=\"Upload files\" placeholder=\"Upload files\" />\n  );\n}\n```\n\n\n## Clearable\n\nSet the `clearable` prop to display a clear button in the right section of the input\nwhen a file is selected. Note that if you define a custom right section, the clear button\nwill not be rendered.\n\n```tsx\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  return <FileInput clearable label=\"Upload files\" placeholder=\"Upload files\" />;\n}\n```\n\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport { FileInput, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <FileInput\n        label=\"clearSectionMode='both' (default)\"\n        placeholder=\"Pick file\"\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"both\"\n      />\n\n      <FileInput\n        label=\"clearSectionMode='rightSection'\"\n        placeholder=\"Pick file\"\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"rightSection\"\n      />\n\n      <FileInput\n        label=\"clearSectionMode='clear'\"\n        placeholder=\"Pick file\"\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"clear\"\n      />\n    </Stack>\n  );\n}\n```\n\n\n## Custom value component\n\n```tsx\nimport { FileInput, FileInputProps, Pill } from '@mantine/core';\n\nconst ValueComponent: FileInputProps['valueComponent'] = ({ value }) => {\n  if (value === null) {\n    return null;\n  }\n\n  if (Array.isArray(value)) {\n    return (\n      <Pill.Group>\n        {value.map((file, index) => (\n          <Pill key={index}>{file.name}</Pill>\n        ))}\n      </Pill.Group>\n    );\n  }\n\n  return <Pill>{value.name}</Pill>;\n};\n\nfunction Demo() {\n  return (\n    <FileInput\n      label=\"Upload files\"\n      placeholder=\"Upload files\"\n      multiple\n      valueComponent={ValueComponent}\n    />\n  );\n}\n```\n\n\n## Error state\n\n```tsx\nimport { FileInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <FileInput label=\"Boolean error\" placeholder=\"Boolean error\" error />\n      <FileInput\n        mt=\"md\"\n        label=\"With error message\"\n        placeholder=\"With error message\"\n        error=\"Invalid name\"\n      />\n    </>\n  );\n}\n```\n\n\n## FileInputProps type\n\n`FileInputProps` type is a generic interface which accepts a single type argument:\nthe `multiple` value.\n\n```tsx\nimport type { FileInputProps } from '@mantine/core';\n\ntype SingleInputProps = FileInputProps<false>;\ntype MultipleInputProps = FileInputProps<true>;\n```\n\n\n#### Props\n\n**FileInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| accept | string | - | File input accept attribute, for example, `\"image/png,image/jpeg\"` |\n| capture | boolean \\| \"user\" \\| \"environment\" | - | Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. |\n| clearButtonProps | React.ComponentProps<\"button\"> | - | Props passed down to the clear button |\n| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |\n| clearable | boolean | - | If set, the clear button is displayed in the right section |\n| defaultValue | File \\| File[] \\| null | - | Uncontrolled component default value |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| fileInputProps | React.ComponentProps<\"input\"> | - | Props passed down to the hidden `input[type=\"file\"]` |\n| form | string | - | Input form attribute |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| multiple | boolean | - | If set, user can pick more than one file |\n| name | string | - | Input name attribute |\n| onChange | (payload: Multiple extends true ? File[] : File \\| null) => void | - | Called when value changes |\n| placeholder | React.ReactNode | - | Input placeholder |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| readOnly | boolean | - | If set, the input value cannot be changed |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| resetRef | Ref<() => void> | - | Reference of the function that should be called when value changes to null or empty array |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| value | File \\| File[] \\| null | - | Controlled component value |\n| valueComponent | FC<{ value: File \\| File[] \\| null; }> | - | Value renderer. By default, displays file name. |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nFileInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**FileInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-FileInput-wrapper | Root element of the Input |\n| input | .mantine-FileInput-input | Input element |\n| section | .mantine-FileInput-section | Left and right sections |\n| root | .mantine-FileInput-root | Root element |\n| label | .mantine-FileInput-label | Label element |\n| required | .mantine-FileInput-required | Required asterisk element, rendered inside label |\n| description | .mantine-FileInput-description | Description element |\n| error | .mantine-FileInput-error | Error element |\n| placeholder | .mantine-FileInput-placeholder | Placeholder text |\n",
+  "props": [
+    {
+      "name": "accept",
+      "description": "File input accept attribute, for example, <code>\"image/png,image/jpeg\"</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "capture",
+      "description": "Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean | \"user\" | \"environment\""
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "clearButtonProps",
+      "description": "Props passed down to the clear button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"button\">"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "clearSectionMode",
+      "description": "Determines how the clear button and rightSection are rendered",
+      "required": false,
+      "defaultValue": "'both'",
+      "type": {
+        "name": "ClearSectionMode",
+        "raw": "ClearSectionMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"both\""
+          },
+          {
+            "value": "\"rightSection\""
+          },
+          {
+            "value": "\"clear\""
+          }
+        ]
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "clearable",
+      "description": "If set, the clear button is displayed in the right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "File | File[] | null"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "fileInputProps",
+      "description": "Props passed down to the hidden <code>input[type=\"file\"]</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"input\">"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "form",
+      "description": "Input form attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "multiple",
+      "description": "If set, user can pick more than one file",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "name",
+      "description": "Input name attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(payload: Multiple extends true ? File[] : File | null) => void"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "placeholder",
+      "description": "Input placeholder",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "readOnly",
+      "description": "If set, the input value cannot be changed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "resetRef",
+      "description": "Reference of the function that should be called when value changes to null or empty array",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<() => void>"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "File | File[] | null"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "valueComponent",
+      "description": "Value renderer. By default, displays file name.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<{ value: File | File[] | null; }>"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FileInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "FileInput"
+    }
+  ]
+}

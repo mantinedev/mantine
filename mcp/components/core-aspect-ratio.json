@@ -1,0 +1,27 @@
+{
+  "id": "core-aspect-ratio",
+  "name": "AspectRatio",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/aspect-ratio",
+  "description": "Maintain responsive consistent width/height ratio",
+  "propsCount": 1,
+  "llmUrl": "https://mantine.dev/llms/core-aspect-ratio.md",
+  "componentDataUrl": "/mcp/components/core-aspect-ratio.json",
+  "searchText": "aspectratio maintain responsive consistent width/height ratio @mantine/core /core/aspect-ratio ratio",
+  "source": "@mantine/core/src/components/AspectRatio/AspectRatio.tsx",
+  "docs": "core/aspect-ratio.mdx",
+  "markdown": "# AspectRatio\nPackage: @mantine/core\nImport: import { AspectRatio } from '@mantine/core';\nDescription: Maintain responsive consistent width/height ratio\n\n## Usage\n\n`AspectRatio` maintains a consistent width/height ratio.\nIt can be used to display images, maps, videos, and other media.\n\n```tsx\nimport { AspectRatio } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <AspectRatio ratio={1080 / 720} maw={300} mx=\"auto\">\n      <img\n        src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-5.png\"\n        alt=\"Panda\"\n      />\n    </AspectRatio>\n  );\n}\n```\n\n\n## Map embed\n\n```tsx\nimport { AspectRatio } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <AspectRatio ratio={16 / 9}>\n      <iframe\n        src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.3063874233135!2d-74.04668908358428!3d40.68924937933441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25090129c363d%3A0x40c6a5770d25022b!2sStatue%20of%20Liberty%20National%20Monument!5e0!3m2!1sen!2sru!4v1644262070010!5m2!1sen!2sru\"\n        title=\"Google map\"\n        style={{ border: 0 }}\n      />\n    </AspectRatio>\n  );\n}\n```\n\n\n## Video embed\n\n```tsx\nimport { AspectRatio } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <AspectRatio ratio={16 / 9}>\n      <iframe\n        src=\"https://www.youtube.com/embed/mzJ4vCjSt28\"\n        title=\"YouTube video player\"\n        style={{ border: 0 }}\n        allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\"\n        allowFullScreen\n      />\n    </AspectRatio>\n  );\n}\n```\n\n\n## Inside flex container\n\nBy default, `AspectRatio` does not have a fixed width and height – it will take as much space as possible\nin a regular container. However, when used inside a flex container, it will not stretch to fill the available space.\nTo make it work inside a flexbox container, you need to set the `width` or `flex` property.\n\n```tsx\nimport { AspectRatio, Image } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <div style={{ display: 'flex' }}>\n      <AspectRatio ratio={1} flex=\"0 0 100px\">\n        <Image\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-6.png\"\n          alt=\"Avatar\"\n        />\n      </AspectRatio>\n    </div>\n  );\n}\n```\n\n\n\n#### Props\n\n**AspectRatio props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| ratio | number | - | Aspect ratio, for example, `16 / 9`, `4 / 3`, `1920 / 1080` |\n\n\n#### Styles API\n\nAspectRatio component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**AspectRatio selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-AspectRatio-root | Root element |\n\n**AspectRatio CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --ar-ratio | Aspect ratio |\n",
+  "props": [
+    {
+      "name": "ratio",
+      "description": "Aspect ratio, for example, <code>16 / 9</code>, <code>4 / 3</code>, <code>1920 / 1080</code>",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AspectRatio"
+    }
+  ]
+}

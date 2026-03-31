@@ -1,0 +1,37 @@
+{
+  "id": "core-center",
+  "name": "Center",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/center",
+  "description": "Centers content vertically and horizontally",
+  "propsCount": 2,
+  "llmUrl": "https://mantine.dev/llms/core-center.md",
+  "componentDataUrl": "/mcp/components/core-center.json",
+  "searchText": "center centers content vertically and horizontally @mantine/core /core/center children inline",
+  "source": "@mantine/core/src/components/Center/Center.tsx",
+  "docs": "core/center.mdx",
+  "markdown": "# Center\nPackage: @mantine/core\nImport: import { Center } from '@mantine/core';\nDescription: Centers content vertically and horizontally\n\n## Usage\n\n```tsx\nimport { Center, Box } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Center maw={400} h={100} bg=\"var(--mantine-color-gray-light)\">\n      <Box bg=\"var(--mantine-color-blue-light)\">All elements inside Center are centered</Box>\n    </Center>\n  );\n}\n```\n\n\n## Inline\n\nTo use `Center` with inline elements, set the `inline` prop.\nFor example, you can center a link icon and label:\n\n```tsx\nimport { Center, Anchor, Box } from '@mantine/core';\nimport { ArrowLeftIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Anchor href=\"https://mantine.dev\" target=\"_blank\">\n      <Center inline>\n        <ArrowLeftIcon size={12} />\n        <Box ml={5}>Back to Mantine website</Box>\n      </Center>\n    </Anchor>\n  );\n}\n```\n\n\n\n#### Props\n\n**Center props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Content to center |\n| inline | boolean | - | If set, `inline-flex` is used instead of `flex` |\n\n\n#### Styles API\n\nCenter component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Center selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Center-root | Root element |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "Content to center",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Center"
+    },
+    {
+      "name": "inline",
+      "description": "If set, <code>inline-flex</code> is used instead of <code>flex</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Center"
+    }
+  ]
+}

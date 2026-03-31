@@ -4,31 +4,63 @@ Import: import { UseScrollIntoView } from '@mantine/hooks';
 
 ## Usage
 
-`use-scroll-into-view` handles scroll behavior for any scrollable element. Basic usage works the same way as `element.scrollIntoView()`.
-Hook adjusts scrolling animation with respect to the `reduced-motion` user preference.
+The `use-scroll-into-view` hook handles scroll behavior for any scrollable element. Basic usage works the same way as `element.scrollIntoView()`.
+The hook adjusts the scrolling animation with respect to the `reduced-motion` user preference.
 
+```tsx
+import { useScrollIntoView } from '@mantine/hooks';
+import { Button, Text, Group, Box } from '@mantine/core';
+
+function Demo() {
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
+    offset: 60,
+  });
+
+  return (
+    <Group justify="center">
+      <Button
+        onClick={() =>
+          scrollIntoView({
+            alignment: 'center',
+          })
+        }
+      >
+        Scroll to target
+      </Button>
+      <Box
+        style={{
+          width: '100%',
+          height: '50vh',
+          backgroundColor: 'var(--mantine-color-blue-light)',
+        }}
+      />
+      <Text ref={targetRef}>Hello there</Text>
+    </Group>
+  );
+}
+```
 
 
 ## API
 
-The hook is configured with settings object:
+The hook is configured with a settings object:
 
-* `onScrollFinish` – function that will be called after scroll animation
+* `onScrollFinish` – function that will be called after the scroll animation
 * `easing` – custom math easing function
-* `duration` - duration of scroll animation in milliseconds
-* `axis` - axis of scroll
-* `cancelable` - indicator if animation may be interrupted by user scrolling
-* `offset` - additional distance between the nearest edge and element
+* `duration` - duration of the scroll animation in milliseconds
+* `axis` - axis of the scroll
+* `cancelable` - indicator if the animation may be interrupted by user scrolling
+* `offset` - additional distance between the nearest edge and the element
 * `isList` - indicator that prevents content jumping in scrolling lists with multiple targets, for example Select, Carousel
 
-Hook returns an object with:
+The hook returns an object with:
 
-* `scrollIntoView` – function that starts scroll animation
-* `cancel` – function that stops scroll animation
-* `targetRef` - ref of target HTML node
-* `scrollableRef` - ref of scrollable parent HTML element, if not used document element will be used
+* `scrollIntoView` – function that starts the scroll animation
+* `cancel` – function that stops the scroll animation
+* `targetRef` - ref of the target HTML node
+* `scrollableRef` - ref of the scrollable parent HTML element; if not used, the document element will be used
 
-Returned `scrollIntoView` function accepts single optional argument `alignment` - optional target element alignment relatively to parent based on current axis.
+The returned `scrollIntoView` function accepts a single optional argument `alignment` - optional target element alignment relative to the parent based on the current axis.
 
 ```tsx
 import { useScrollIntoView } from '@mantine/hooks';
@@ -56,10 +88,72 @@ useScrollIntoView({
 
 ## Parent node
 
+```tsx
+import { useScrollIntoView } from '@mantine/hooks';
+import { Button, Text, Group, Paper, Box } from '@mantine/core';
+
+function Demo() {
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<
+    HTMLDivElement,
+    HTMLDivElement
+  >();
+
+  return (
+    <Group justify="center">
+      <Paper ref={scrollableRef} h={300} style={{ overflowY: 'scroll', flex: 1 }}>
+        <Box pt={260} pb={450}>
+          <Paper
+            ref={targetRef}
+            p="xl"
+            style={{
+              backgroundColor: 'var(--mantine-color-blue-light)',
+              width: '100%',
+            }}
+          >
+            <Text>Scroll me into view</Text>
+          </Paper>
+        </Box>
+      </Paper>
+      <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
+    </Group>
+  );
+}
+```
 
 
 ## Scroll X axis
 
+```tsx
+import { useScrollIntoView } from '@mantine/hooks';
+import { Button, Text, Group, Paper, Box } from '@mantine/core';
+
+function Demo() {
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<
+    HTMLDivElement,
+    HTMLDivElement
+  >({ axis: 'x' });
+
+  return (
+    <Group justify="center">
+      <Paper ref={scrollableRef} h={150} w={300} style={{ overflowX: 'scroll' }}>
+        <Box pl={260} pr={450}>
+          <Paper
+            ref={targetRef}
+            p="md"
+            style={{
+              backgroundColor: 'var(--mantine-color-blue-light)',
+              width: 'max-content',
+            }}
+          >
+            <Text>Scroll me into view</Text>
+          </Paper>
+        </Box>
+      </Paper>
+      <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
+    </Group>
+  );
+}
+```
 
 
 ## Definition
@@ -113,7 +207,7 @@ function useScrollIntoView<
 
 ## Exported types
 
-`UseScrollIntoViewOptions` and `UseScrollIntoViewReturnValue` types are exported from `@mantine/hooks` package,
+`UseScrollIntoViewOptions` and `UseScrollIntoViewReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

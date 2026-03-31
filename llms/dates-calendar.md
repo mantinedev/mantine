@@ -5,14 +5,12 @@ Description: Base component for custom date pickers
 
 ## Usage
 
-Use `Calendar` component to create custom date pickers if [DatePicker](https://mantine.dev/dates/date-picker/)
-component does not meet your requirements. `Calendar` supports all [DatePicker](https://mantine.dev/dates/date-picker/)
-props and some other props that are listed in props table – check it out to learn about all component features.
+Use the `Calendar` component to create custom date pickers if the [DatePicker](https://mantine.dev/llms/dates-date-picker.md)
+component does not meet your requirements. `Calendar` supports all [DatePicker](https://mantine.dev/llms/dates-date-picker.md)
+props and some additional props that are listed in the props table – check it out to learn about all component features.
 
-By default, `Calendar` works the same way as [DatePicker](https://mantine.dev/dates/date-picker/) component but does not
-include any logic of dates selection:
-
-#### Example: usage
+By default, `Calendar` works the same way as the [DatePicker](https://mantine.dev/llms/dates-date-picker.md) component but does not
+include any logic for date selection:
 
 ```tsx
 import { Calendar } from '@mantine/dates';
@@ -26,9 +24,7 @@ function Demo() {
 ## Custom date pickers
 
 Use `Calendar` as a base for custom date pickers. For example, you can create a date picker
-that allows user to pick three or less dates:
-
-#### Example: picker
+that allows users to pick three or fewer dates:
 
 ```tsx
 import dayjs from 'dayjs';
@@ -59,8 +55,6 @@ function Demo() {
 
 
 Another custom date picker example – week picker:
-
-#### Example: weekPicker
 
 ```tsx
 import dayjs from 'dayjs';
@@ -118,13 +112,24 @@ function Demo() {
 ```
 
 
+## Full width
+
+Set the `fullWidth` prop to make the calendar stretch to fill 100% of its parent container width:
+
+```tsx
+import { Calendar } from '@mantine/dates';
+
+function Demo() {
+  return <Calendar fullWidth />;
+}
+```
+
+
 ## Static prop
 
-Set `static` prop to display a calendar that user cannot interact with.
-It is useful when you want to display data with in calendar view but do
+Set the `static` prop to display a calendar that users cannot interact with.
+This is useful when you want to display data in a calendar view but do
 not want it to be interactive.
-
-#### Example: isStatic
 
 ```tsx
 import dayjs from 'dayjs';
@@ -152,35 +157,38 @@ function Demo() {
 
 #### Props
 
+**Calendar props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| ariaLabels | CalendarAriaLabels | - | <code>aria-label</code> attributes for controls on different levels |
-| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as <code>numberOfColumns</code> if not set explicitly |
-| date | string | Date | - | Displayed date in controlled mode |
-| decadeLabelFormat | string | ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | <code>dayjs</code> format for decade label or a function that returns decade label based on the date value |
-| defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
-| defaultLevel | "month" | "year" | "decade" | - | Initial displayed level in uncontrolled mode |
+| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |
+| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |
+| date | string \| Date | - | Displayed date in controlled mode |
+| decadeLabelFormat | string \| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |
+| defaultDate | string \| Date | - | Initial displayed date in uncontrolled mode |
+| defaultLevel | "month" \| "year" \| "decade" | - | Initial displayed level in uncontrolled mode |
 | enableKeyboardNavigation | boolean | - | Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) |
 | excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
-| firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
-| getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> & DataAttributes | - | Passes props down to <code>Day</code> components |
+| firstDayOfWeek | 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
+| fullWidth | boolean | - | Determines whether the list should take the full width of its container |
+| getDayAriaLabel | (date: string) => string | - | Assigns `aria-label` to `Day` components based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "vars" \| "classNames" \| "styles"> & DataAttributes | - | Passes props down to `Day` components |
 | getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
 | getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
-| headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
+| headerControlsOrder | ("next" \| "previous" \| "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
 | highlightToday | boolean | - | Determines whether today should be highlighted with a border |
-| level | "month" | "year" | "decade" | - | Current displayed level displayed in controlled mode |
+| level | "month" \| "year" \| "decade" | - | Current displayed level displayed in controlled mode |
 | locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
-| maxDate | string | Date | - | Maximum possible date in <code>YYYY-MM-DD</code> format or Date object |
-| maxLevel | "month" | "year" | "decade" | - | Max level that user can go up to (decade, year, month) |
-| minDate | string | Date | - | Minimum possible date in <code>YYYY-MM-DD</code> format or Date object |
-| minLevel | "month" | "year" | "decade" | - | Min level that user can go down to (decade, year, month) |
-| monthLabelFormat | string | ((date: string) => string) | - | dayjs label format to display month label or a function that returns month label based on month value |
-| monthsListFormat | string | - | <code>dayjs</code> format for months list |
+| maxDate | string \| Date | - | Maximum possible date in `YYYY-MM-DD` format or Date object |
+| maxLevel | "month" \| "year" \| "decade" | - | Max level that user can go up to (decade, year, month) |
+| minDate | string \| Date | - | Minimum possible date in `YYYY-MM-DD` format or Date object |
+| minLevel | "month" \| "year" \| "decade" | - | Min level that user can go down to (decade, year, month) |
+| monthLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display month label or a function that returns month label based on month value |
+| monthsListFormat | string | - | `dayjs` format for months list |
 | nextIcon | React.ReactNode | - | Change next icon |
-| nextLabel | string | - | Next button <code>aria-label</code> |
+| nextLabel | string | - | Next button `aria-label` |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
 | onDateChange | (date: string) => void | - | Called when date changes |
 | onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
@@ -195,16 +203,38 @@ function Demo() {
 | onYearMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters year control |
 | onYearSelect | (date: string) => void | - | Called when user selects year |
 | previousIcon | React.ReactNode | - | Change previous icon |
-| previousLabel | string | - | Previous button <code>aria-label</code> |
+| previousLabel | string | - | Previous button `aria-label` |
 | renderDay | (date: string) => React.ReactNode | - | Controls day value rendering |
 | size | MantineSize | - | Component size |
 | static | boolean | - | Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way |
-| weekdayFormat | string | ((date: string) => string) | - | <code>dayjs</code> format for weekdays names |
-| weekendDays | (0 | 1 | 2 | 3 | 4 | 5 | 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by <code>DatesProvider</code>. |
+| weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
+| weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
-| yearLabelFormat | string | ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
+| yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+
+**Calendar.Header props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| fullWidth | boolean | - | Determines whether the header should take the full width of its container |
+| hasNextLevel | boolean | - | Determines whether next level button should be enabled |
+| headerControlsOrder | ("next" \| "previous" \| "level")[] | - | Controls order |
+| label | React.ReactNode | required | Label displayed between next and previous buttons |
+| levelControlAriaLabel | string | - | Level control `aria-label` |
+| nextDisabled | boolean | - | Disables next control |
+| nextIcon | React.ReactNode | - | Change next icon |
+| nextLabel | string | - | Next button `aria-label` |
+| onLevelClick | () => void | - | Called when the level button is clicked |
+| onNext | () => void | - | Called when the next button is clicked |
+| onPrevious | () => void | - | Called when the previous button is clicked |
+| previousDisabled | boolean | - | Disables previous control |
+| previousIcon | React.ReactNode | - | Change previous icon |
+| previousLabel | string | - | Previous button `aria-label` |
+| size | MantineSize | - | Component size |
+| withNext | boolean | - | Determines whether next control should be rendered |
+| withPrevious | boolean | - | Determines whether previous control should be rendered |
 
 
 #### Styles API
@@ -258,5 +288,5 @@ Calendar component supports Styles API. With Styles API, you can customize style
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| calendarHeaderControl | data-direction | - | - |
+| calendarHeaderControl | data-direction | - | `"previous"` or `"next"` depending on the control type |
 | calendarHeaderControl | data-disabled | Control is disabled for any reason | - |

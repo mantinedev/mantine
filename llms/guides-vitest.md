@@ -2,13 +2,13 @@
 
 # Testing with Vitest
 
-This guide will help you setup [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for your project.
-Note that this guide intended for projects that use [Vite](https://vitejs.dev/) as a bundler, if you are using
-other frameworks/bundlers, it is recommended to use [Jest](https://mantine.dev/guides/jest/) instead.
+This guide will help you set up [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for your project.
+Note that this guide is intended for projects that use [Vite](https://vitejs.dev/) as a bundler. If you're using
+other frameworks/bundlers, we recommend using [Jest](https://mantine.dev/llms/guides-jest.md) instead.
 
 ## Installation
 
-Install vitest and react testing library:
+Install Vitest and React Testing Library:
 
 ```bash
 yarn add vitest jsdom @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event
@@ -22,7 +22,7 @@ If you want to run tests from your IDE, install one of the [extensions](https://
 
 ## Configuration
 
-Add vitest configuration to your Vite config file:
+Add Vitest configuration to your Vite config file:
 
 ```tsx
 import { defineConfig } from 'vite';
@@ -37,7 +37,7 @@ export default defineConfig({
 });
 ```
 
-Then create `vitest.setup.mjs` file in your project root and add the following code to it:
+Then create a `vitest.setup.mjs` file in your project root and add the following code to it:
 
 ```tsx
 import '@testing-library/jest-dom/vitest';
@@ -62,6 +62,10 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+Object.defineProperty(document, 'fonts', {
+  value: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
+});
+
 class ResizeObserver {
   observe() {}
   unobserve() {}
@@ -71,10 +75,10 @@ class ResizeObserver {
 window.ResizeObserver = ResizeObserver;
 ```
 
-The code above mocks `window.matchMedia` and `ResizeObserver` APIs that are not available
-in `jsdom` environment but are required by some Mantine components.
+The code above mocks the `window.matchMedia` and `ResizeObserver` APIs that aren't available
+in the `jsdom` environment but are required by some Mantine components.
 
-Optionally you can add vitest scripts to your `package.json`:
+Optionally, you can add Vitest scripts to your `package.json`:
 
 ```json
 {
@@ -87,8 +91,8 @@ Optionally you can add vitest scripts to your `package.json`:
 
 ## Custom render
 
-All Mantine components require [MantineProvider](https://mantine.dev/theming/mantine-provider/) to be present in the component tree.
-To add [MantineProvider](https://mantine.dev/theming/mantine-provider/) to the component tree in your tests, create a [custom render](https://testing-library.com/docs/react-testing-library/setup/#custom-render)
+All Mantine components require [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) to be present in the component tree.
+To add [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) to the component tree in your tests, create a [custom render](https://testing-library.com/docs/react-testing-library/setup/#custom-render)
 function:
 
 ```tsx
@@ -107,8 +111,8 @@ export function render(ui: React.ReactNode) {
 }
 ```
 
-It is usually more convenient to export all `@testing-library/*` functions that you are planning to use
-from `./testing-utils/index.ts` file:
+It's usually more convenient to export all `@testing-library/*` functions that you're planning to use
+from a `./testing-utils/index.ts` file:
 
 ```tsx
 import userEvent from '@testing-library/user-event';

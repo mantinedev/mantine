@@ -1,0 +1,47 @@
+{
+  "id": "core-paper",
+  "name": "Paper",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/paper",
+  "description": "Renders white or dark background depending on color scheme",
+  "propsCount": 3,
+  "llmUrl": "https://mantine.dev/llms/core-paper.md",
+  "componentDataUrl": "/mcp/components/core-paper.json",
+  "searchText": "paper renders white or dark background depending on color scheme @mantine/core /core/paper radius shadow withborder",
+  "source": "@mantine/core/src/components/Paper/Paper.tsx",
+  "docs": "core/paper.mdx",
+  "markdown": "# Paper\nPackage: @mantine/core\nImport: import { Paper } from '@mantine/core';\nDescription: Renders white or dark background depending on color scheme\n\n## Usage\n\n```tsx\nimport { Text, Paper } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Paper shadow=\"xs\" radius=\"md\" withBorder={false} p=\"xl\">\n      <Text>Paper is the most basic ui component</Text>\n      <Text>\n        Use it to create cards, dropdowns, modals and other components that require background\n        with shadow\n      </Text>\n    </Paper>\n  );\n}\n```\n\n\n\n#### Props\n\n**Paper props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS value to set `box-shadow` |\n| withBorder | boolean | - | Adds border to the root element |\n\n\n#### Styles API\n\nPaper component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Paper selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Paper-root | Root element |\n\n**Paper CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --paper-radius | Controls `border-radius` |\n| root | --paper-shadow | Controls `box-shadow` |\n\n**Paper data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-with-border | `withBorderProp` is set | - |\n",
+  "props": [
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Paper"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any valid CSS value to set <code>box-shadow</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "Paper"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Paper"
+    }
+  ]
+}

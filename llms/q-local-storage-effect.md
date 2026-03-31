@@ -1,0 +1,54 @@
+# The use-local-storage hook returns the real value only after mounting. Is it a bug?
+Learn how Mantine retrieves local storage value
+
+## How use-local-storage hook works
+
+By default, the [use-local-storage](https://mantine.dev/hooks/use-local-storage) hook
+retrieves the value from local storage in `useEffect` only after the component is mounted.
+It is implemented this way to avoid hydration mismatches if the value is used in the
+output markup of the component.
+
+Example:
+
+* `value` during server-side rendering: `dark` (default value)
+* `value` at initial render: `dark` (default value)
+* `value` after mounting: `light` or `dark` depending on the value in local storage (value from local storage)
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useLocalStorage<'light' | 'dark'>({
+    key: 'color-scheme',
+    defaultValue: 'dark',
+  });
+
+  return <div>{value}</div>;
+}
+```
+
+## Reading value in first render
+
+If your application does not have server-side rendering or you do not use the
+`value` in the output markup of the component, you can read the value from local storage
+in the first render. To do that, set the `getInitialValueInEffect: false` option:
+
+Example:
+
+* `value` during server-side rendering: `dark` (default value)
+* `value` at initial render: `light` or `dark` depending on the value in local storage (value from local storage)
+* `value` at subsequent renders: `light` or `dark` depending on the value in local storage (value from local storage)
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useLocalStorage<'light' | 'dark'>({
+    key: 'color-scheme',
+    defaultValue: 'dark',
+    getInitialValueInEffect: false,
+  });
+
+  return <div>{value}</div>;
+}
+```

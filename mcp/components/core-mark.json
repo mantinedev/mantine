@@ -1,0 +1,27 @@
+{
+  "id": "core-mark",
+  "name": "Mark",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/mark",
+  "description": "Highlight part of the text",
+  "propsCount": 1,
+  "llmUrl": "https://mantine.dev/llms/core-mark.md",
+  "componentDataUrl": "/mcp/components/core-mark.json",
+  "searchText": "mark highlight part of the text @mantine/core /core/mark color",
+  "source": "@mantine/core/src/components/Mark/Mark.tsx",
+  "docs": "core/mark.mdx",
+  "markdown": "# Mark\nPackage: @mantine/core\nImport: import { Mark } from '@mantine/core';\nDescription: Highlight part of the text\n\n## Usage\n\n```tsx\nimport { Text, Mark } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Text>\n      Highlight <Mark color=\"yellow\">this chunk</Mark> of the text\n    </Text>\n  );\n}\n```\n\n\n\n#### Props\n\n**Mark props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n\n\n#### Styles API\n\nMark component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Mark selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Mark-root | Root element |\n\n**Mark CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --mark-bg-dark | Controls `background-color` in dark color scheme |\n| root | --mark-bg-light | Controls `background-color` for light color scheme |\n",
+  "props": [
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": "yellow",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Mark"
+    }
+  ]
+}

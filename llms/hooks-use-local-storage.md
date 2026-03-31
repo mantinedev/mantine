@@ -4,24 +4,24 @@ Import: import { UseLocalStorage } from '@mantine/hooks';
 
 ## Usage
 
-`use-local-storage` allows using value from the `localStorage` as react state.
-The hook works the same way as `useState`, but also writes the value to the `localStorage`:
+The `use-local-storage` hook allows you to use a value from `localStorage` as React state.
+The hook works the same way as `useState`, but also writes the value to `localStorage`:
 
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
 
-// The hook will read value from localStorage.getItem('color-scheme')
-// If localStorage is not available or value at a given key does not exist
-// 'dark' will be assigned to value variable
+// The hook will read the value from localStorage.getItem('color-scheme')
+// If localStorage is not available or the value at a given key does not exist,
+// 'dark' will be assigned to the value variable
 const [value, setValue] = useLocalStorage({
   key: 'color-scheme',
   defaultValue: 'dark',
 });
 
-// Value is set both to state and localStorage at 'color-scheme'
+// The value is set both to state and localStorage at 'color-scheme'
 setValue('light');
 
-// You can also use callback like in useState hook to set value
+// You can also use a callback like in the useState hook to set the value
 setValue((current) => (current === 'dark' ? 'light' : 'dark'));
 ```
 
@@ -31,7 +31,7 @@ Example of a color scheme toggle button that uses `use-local-storage` hook
 to store current color scheme in the `localStorage`:
 
 ```tsx
-import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { MoonStarsIcon, SunIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 
@@ -50,7 +50,7 @@ function ColorSchemeToggle() {
 
   return (
     <ActionIcon onClick={toggleColorScheme}>
-      {colorScheme === 'dark' ? <IconSun /> : <IconMoonStars />}
+      {colorScheme === 'dark' ? <SunIcon /> : <MoonStarsIcon />}
     </ActionIcon>
   );
 }
@@ -118,7 +118,7 @@ const [value, setValue] = useLocalStorage({
 
 ## use-session-storage
 
-`use-session-storage` hook works the same way as `use-local-storage` hook but uses `sessionStorage` instead of `window.localStorage`:
+The `use-session-storage` hook works the same way as `use-local-storage` hook but uses `sessionStorage` instead of `window.localStorage`:
 
 ```tsx
 import { useSessionStorage } from '@mantine/hooks';
@@ -189,7 +189,7 @@ function useLocalStorage<T = string>(
 
 ## Exported types
 
-`UseStorageOptions` and `UseStorageReturnValue` types are exported from `@mantine/hooks` package,
+`UseStorageOptions` and `UseStorageReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

@@ -1,0 +1,134 @@
+# How can I load fonts in Vite?
+A guide to load custom fonts in Vite
+
+## Loading local fonts
+
+Create the following folder structure (this example uses the Roboto custom font):
+
+```plaintext
+Roboto/
+├─ Roboto-Bold.woff2
+├─ Roboto-Heavy.woff2
+├─ Roboto.css
+```
+
+In the `Roboto.css` file, add the following code:
+
+```css
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto-Heavy.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+```
+
+Then import the `Roboto.css` file at the root of your application and
+add the font to your [theme](https://mantine.dev/theming/theme-object/):
+
+```tsx
+import {
+  createTheme,
+  DEFAULT_THEME,
+  MantineProvider,
+} from '@mantine/core';
+
+import '@mantine/core/styles.css';
+import './Roboto/Roboto.css';
+
+const theme = createTheme({
+  fontFamily: 'Roboto, sans-serif',
+  fontFamilyMonospace: 'Monaco, Courier, monospace',
+  headings: {
+    // Use default theme if you want to provide default Mantine fonts as a fallback
+    fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>Your app here</MantineProvider>
+  );
+}
+```
+
+## Load fonts from Google Fonts
+
+Select the fonts you want to use at [Google Fonts](https://fonts.google.com/) and copy the
+HTML code snippet. For example, to load the [Roboto](https://fonts.google.com/specimen/Roboto)
+font, the code you receive from Google Fonts will look something like this:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Add the code to the `<head />` of your application's `index.html` file.
+The code will look something like this:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta
+      name="viewport"
+      content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Vite + Mantine App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+Then add the font to your [theme](https://mantine.dev/theming/theme-object/):
+
+```tsx
+import {
+  createTheme,
+  DEFAULT_THEME,
+  MantineProvider,
+} from '@mantine/core';
+
+import '@mantine/core/styles.css';
+
+const theme = createTheme({
+  fontFamily: 'Roboto, sans-serif',
+  fontFamilyMonospace: 'Monaco, Courier, monospace',
+  headings: {
+    // Use default theme if you want to provide default Mantine fonts as a fallback
+    fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>Your app here</MantineProvider>
+  );
+}
+```

@@ -2,20 +2,20 @@
 
 # 6.x → 7.x migration guide
 
-This guide is intended to help you migrate your project styles from 6.x to 7.x.
-It is not intended to be a comprehensive guide to all the changes in 7.x.
-For that, please see the [7.0.0 changelog](https://mantine.dev/changelog/7-0-0).
+This guide will help you migrate your project styles from 6.x to 7.x.
+It's not intended to be a comprehensive guide covering all changes in 7.x.
+For a complete overview, please see the [7.0.0 changelog](https://mantine.dev/llms/changelog-7-0-0.md).
 
 ## Migration to @mantine/emotion
 
-`@mantine/emotion` package is available starting from version 7.9. If you do not want
-to use CSS modules, have a lot of styles created with `createStyles`, `sx` and `styles`
-props, or just prefer CSS-in-JS syntax, you can migrate to `@mantine/emotion`. To view
-the full documentation for `@mantine/emotion` package, visit [this page](https://mantine.dev/styles/emotion).
+The `@mantine/emotion` package has been available since version 7.9. If you don't want
+to use CSS modules, have many styles created with `createStyles`, `sx` and `styles`
+props, or simply prefer CSS-in-JS syntax, you can migrate to `@mantine/emotion`. To view
+the full documentation for the `@mantine/emotion` package, visit [this page](https://mantine.dev/llms/styles-emotion.md).
 
 ### createStyles and Global component
 
-`createStyles` function and `Global` component are no longer available in `@mantine/core` package. Change imports
+The `createStyles` function and `Global` component are no longer available in the `@mantine/core` package. Change imports
 to `@mantine/emotion`:
 
 ```tsx
@@ -28,7 +28,7 @@ import { createStyles, Global } from '@mantine/emotion';
 
 ### sx and styles props
 
-`sx` and styles props available in 7.x the same way as in 6.x after [setup](https://mantine.dev/styles/emotion):
+`sx` and `styles` props are available in 7.x the same way as in 6.x after [setup](https://mantine.dev/llms/styles-emotion.md):
 
 ```tsx
 // 6.x and 7.x, no changes
@@ -48,12 +48,12 @@ function Demo() {
 
 ### theme.colorScheme
 
-In v7 color scheme value is managed by [MantineProvider](https://mantine.dev/theming/mantine-provider),
-[theme object](https://mantine.dev/theming/theme-object) no longer includes `colorScheme` property.
-Although it is still possible to access color scheme value in components with
-[useMantineColorScheme](https://mantine.dev/theming/color-schemes#use-mantine-color-scheme-hook) hook,
-it is not recommended to base your styles on its value. Instead, use `light`/`dark`
-[utilities](https://mantine.dev/styles/emotion#utilities).
+In v7, the color scheme value is managed by [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md),
+and the [theme object](https://mantine.dev/llms/theming-theme-object.md) no longer includes the `colorScheme` property.
+Although it's still possible to access the color scheme value in components with the
+[useMantineColorScheme](https://mantine.dev/llms/theming-color-schemes.md#use-mantine-color-scheme-hook) hook,
+it's not recommended to base your styles on its value. Instead, use the `light`/`dark`
+[utilities](https://mantine.dev/llms/styles-emotion.md#utilities).
 
 Example of 6.x `createStyles` with `theme.colorScheme` migration to 7.0:
 
@@ -93,22 +93,22 @@ const useStyles = createStyles((theme, _, u) => ({
 
 ## Migration to CSS modules
 
-Before getting started, it is recommended to go through [styles](https://mantine.dev/styles/css-modules) documentation.
-Most notable parts:
+Before getting started, we recommend going through the [styles](https://mantine.dev/llms/styles-css-modules.md) documentation.
+The most notable sections are:
 
-* [CSS Modules](https://mantine.dev/styles/css-modules)
-* [Mantine PostCSS preset](https://mantine.dev/styles/postcss-preset)
-* [CSS variables](https://mantine.dev/styles/css-variables)
-* [data-\* attributes](https://mantine.dev/styles/data-attributes)
-* [Styles API](https://mantine.dev/styles/styles-api)
-* [Responsive styles](https://mantine.dev/styles/responsive)
+* [CSS Modules](https://mantine.dev/llms/styles-css-modules.md)
+* [Mantine PostCSS preset](https://mantine.dev/llms/styles-postcss-preset.md)
+* [CSS variables](https://mantine.dev/llms/styles-css-variables.md)
+* [data-\* attributes](https://mantine.dev/llms/styles-data-attributes.md)
+* [Styles API](https://mantine.dev/llms/styles-styles-api.md)
+* [Responsive styles](https://mantine.dev/llms/styles-responsive.md)
 
-Note that this guide assumes that you have [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) installed and configured
+Note that this guide assumes you have [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md) installed and configured
 in your project.
 
 ### createStyles
 
-`createStyles` function is no longer available in 7.0. Use [CSS Modules](https://mantine.dev/styles/css-modules) instead.
+The `createStyles` function is no longer available in 7.0. Use [CSS Modules](https://mantine.dev/llms/styles-css-modules.md) instead.
 
 ```tsx
 // 6.x
@@ -130,7 +130,7 @@ const useStyles = createStyles((theme) => ({
 
 ### sx prop
 
-`sx` and prop is no longer available in 7.0. Use `className` or [style prop](https://mantine.dev/styles/style) instead.
+The `sx` prop is no longer available in 7.0. Use `className` or the [style prop](https://mantine.dev/llms/styles-style.md) instead.
 
 ```tsx
 // 6.x
@@ -154,7 +154,7 @@ function Demo() {
 }
 ```
 
-Nested selectors are not supported in [style prop](https://mantine.dev/styles/style), use `className` instead:
+Nested selectors are not supported in the [style prop](https://mantine.dev/llms/styles-style.md); use `className` instead:
 
 ```tsx
 // 6.x
@@ -175,7 +175,7 @@ function Demo() {
 
 ### styles prop
 
-`styles` prop no longer supports nested selectors. Use
+The `styles` prop no longer supports nested selectors. Use
 `classNames` instead to apply styles to nested elements.
 
 ```tsx
@@ -227,8 +227,8 @@ function Demo() {
 
 ### Global styles
 
-`Global` component and global styles on theme are not available in 7.0. Instead,
-create a global stylesheet (`.css` file) and import it in your application entry point.
+The `Global` component and global styles on the theme are not available in 7.0. Instead,
+create a global stylesheet (`.css` file) and import it at your application entry point.
 
 ```tsx
 // 6.x
@@ -299,8 +299,8 @@ body {
 
 ### theme referencing
 
-All [theme](https://mantine.dev/theming/theme-object) properties are now available as [CSS variables](https://mantine.dev/styles/css-variables). It is recommended to use
-[CSS variables](https://mantine.dev/styles/css-variables) instead of referencing theme object in styles.
+All [theme](https://mantine.dev/llms/theming-theme-object.md) properties are now available as [CSS variables](https://mantine.dev/llms/styles-css-variables.md). We recommend using
+[CSS variables](https://mantine.dev/llms/styles-css-variables.md) instead of referencing the theme object in styles.
 
 ```tsx
 // 6.x
@@ -330,12 +330,12 @@ function Demo() {
 
 ### theme.colorScheme
 
-Color scheme value is managed by [MantineProvider](https://mantine.dev/theming/mantine-provider),
-[theme object](https://mantine.dev/theming/theme-object) no longer includes `colorScheme` property.
-Although it is still possible to access color scheme value in components with
-[useMantineColorScheme](https://mantine.dev/theming/color-schemes#use-mantine-color-scheme-hook) hook,
-it is not recommended to base your styles on its value. Instead, use `light`/`dark`
-[mixins](https://mantine.dev/styles/postcss-preset) or `light-dark` CSS [function](https://mantine.dev/styles/postcss-preset#light-dark-function).
+The color scheme value is managed by [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md),
+and the [theme object](https://mantine.dev/llms/theming-theme-object.md) no longer includes the `colorScheme` property.
+Although it's still possible to access the color scheme value in components with the
+[useMantineColorScheme](https://mantine.dev/llms/theming-color-schemes.md#use-mantine-color-scheme-hook) hook,
+it's not recommended to base your styles on its value. Instead, use the `light`/`dark`
+[mixins](https://mantine.dev/llms/styles-postcss-preset.md) or the `light-dark` CSS [function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function).
 
 Example of 6.x `createStyles` with `theme.colorScheme` migration to 7.0:
 
@@ -382,17 +382,15 @@ const useStyles = createStyles((theme) => ({
 ```
 
 Note that if your application has server-side rendering, you should not render any
-elements based on its value ([more info](https://mantine.dev/theming/color-schemes#color-scheme-value-caveats)).
-Instead, use `light`/`dark` mixins or `light-dark` function to hide/display elements based
-on color scheme value.
+elements based on its value ([more info](https://mantine.dev/llms/theming-color-schemes.md#color-scheme-value-caveats)).
+Instead, use the `light`/`dark` mixins or the `light-dark` function to hide/show elements based
+on the color scheme value.
 
 Color scheme toggle example:
 
-#### Example: colorSchemeControl
-
 ```tsx
 import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons-react';
+import { SunIcon, MoonIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import classes from './Demo.module.css';
 
@@ -407,8 +405,8 @@ function Demo() {
       size="xl"
       aria-label="Toggle color scheme"
     >
-      <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
-      <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+      <SunIcon className={cx(classes.icon, classes.light)} />
+      <MoonIcon className={cx(classes.icon, classes.dark)} />
     </ActionIcon>
   );
 }

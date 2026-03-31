@@ -5,8 +5,6 @@ Description: Pick colors in hex(a), rgb(a), hsl(a) and hsv(a) formats
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { useState } from 'react';
 import { ColorPicker, Text } from '@mantine/core';
@@ -24,27 +22,69 @@ function Demo() {
 ```
 
 
-## Color format
+## Controlled
 
-`ColorPicker` supports hex, hexa, rgb, rgba, hsl and hsla color formats.
-Slider to change opacity and color preview are displayed only for hexa, rgba and hsla formats:
+The `ColorPicker` value must be a string; other types are not supported.
+The `onChange` function is called with a string value as a single argument.
 
-#### Example: formatsConfigurator
+```tsx
+import { useState } from 'react';
+import { ColorPicker } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('#ffffff');
+  return <ColorPicker value={value} onChange={setValue} />;
+}
+```
+
+## Uncontrolled
+
+`ColorPicker` can be used with uncontrolled forms the same way as a native `input` element.
+Set the `name` attribute to include color picker value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `ColorPicker` with `FormData`:
 
 ```tsx
 import { ColorPicker } from '@mantine/core';
 
 function Demo() {
-  return <ColorPicker />;
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Color value:', formData.get('color'));
+      }}
+    >
+      <ColorPicker
+        name="color"
+        defaultValue="#FF0000"
+        format="hex"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Color format
+
+`ColorPicker` supports hex, hexa, rgb, rgba, hsl and hsla color formats.
+The slider to change opacity and color preview are displayed only for hexa, rgba and hsla formats:
+
+```tsx
+import { ColorPicker } from '@mantine/core';
+
+function Demo() {
+  return <ColorPicker format="hex" />;
 }
 ```
 
 
 ## With swatches
 
-You can add predefined color swatches with `swatches` prop:
-
-#### Example: swatches
+You can add predefined color swatches with the `swatches` prop:
 
 ```tsx
 import { ColorPicker } from '@mantine/core';
@@ -62,16 +102,14 @@ function Demo() {
 ```
 
 
-By default, `ColorPicker` will display 7 swatches per row, you can configure it with `swatchesPerRow` prop:
-
-#### Example: swatchesConfigurator
+By default, `ColorPicker` will display 7 swatches per row. You can configure it with the `swatchesPerRow` prop:
 
 ```tsx
 import { ColorPicker } from '@mantine/core';
 
 function Demo() {
   return (
-    <ColorPicker format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
+    <ColorPicker swatchesPerRow={7} format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
       .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
       .join(', ')}]} />
   );
@@ -79,9 +117,7 @@ function Demo() {
 ```
 
 
-To display swatches without picker set `withPicker={false}` and `fullWidth` props:
-
-#### Example: swatchesOnly
+To display swatches without picker, set `withPicker={false}` and `fullWidth` props:
 
 ```tsx
 import { useState } from 'react';
@@ -116,97 +152,24 @@ function Demo() {
 
 `ColorPicker` has 5 predefined sizes: `xs`, `sm`, `md`, `lg` and `xl`:
 
-#### Example: sizeConfigurator
-
 ```tsx
 import { ColorPicker } from '@mantine/core';
 
 function Demo() {
-  return <ColorPicker />;
-}
-```
-
-
-## fullWidth
-
-Set `fullWidth` prop to stretch component to 100% of parent width. In this case the picker will not
-have fixed width, but you can still use `size` prop to control sizes of sliders.
-
-#### Example: fullWidth
-
-```tsx
-import { ColorPicker } from '@mantine/core';
-
-function Demo() {
-  return <ColorPicker fullWidth size="lg" format="rgba" />;
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { ColorPicker } from '@mantine/core';
-
-function Demo() {
-  return (
-    <ColorPicker format="rgba" size="lg" swatches={['#25262b', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5']} />
-  );
-}
-```
-
-
-## HueSlider component
-
-#### Example: hueSlider
-
-```tsx
-import { useState } from 'react';
-import { HueSlider, Text } from '@mantine/core';
-
-function Demo() {
-  const [value, onChange] = useState(250);
-
-  return (
-    <>
-      <Text>Hue value: {value}</Text>
-      <HueSlider value={value} onChange={onChange} />
-    </>
-  );
-}
-```
-
-
-## AlphaSlider component
-
-#### Example: alphaSlider
-
-```tsx
-import { useState } from 'react';
-import { AlphaSlider, Text } from '@mantine/core';
-
-function Demo() {
-  const [value, onChange] = useState(0.55);
-
-  return (
-    <>
-      <Text>Alpha value: {value}</Text>
-      <AlphaSlider color="#1c7ed6" value={value} onChange={onChange} />
-    </>
-  );
+  return <ColorPicker size="sm" />;
 }
 ```
 
 
 ## Accessibility
 
-ColorPicker component is accessible by default:
+The ColorPicker component is accessible by default:
 
 * Saturation, hue and alpha sliders are focusable
-* When moused is used to interact with the slider, focus is moved to the slider
+* When the mouse is used to interact with the slider, focus is moved to the slider
 * All values can be changed with arrows
 
-To make component accessible for screen readers, set `saturationLabel`, `hueLabel` and `alphaLabel`:
+To make the component accessible for screen readers, set `saturationLabel`, `hueLabel` and `alphaLabel`:
 
 ```tsx
 import { ColorPicker } from '@mantine/core';
@@ -225,23 +188,27 @@ function Demo() {
 
 #### Props
 
+**ColorPicker props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| alphaLabel | string | - | Alpha slider <code>aria-label</code> |
+| alphaLabel | string | - | Alpha slider `aria-label` |
 | defaultValue | string | - | Uncontrolled component default value |
 | focusable | boolean | - | If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard |
-| format | ColorFormat | - | Color format |
+| format | 'hex' \| 'hexa' \| 'rgba' \| 'rgb' \| 'hsl' \| 'hsla' | - | Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider |
 | fullWidth | boolean | - | If set, the component takes 100% width of its container |
-| hueLabel | string | - | Hue slider <code>aria-label</code> |
+| hiddenInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props spread to the hidden input |
+| hueLabel | string | - | Hue slider `aria-label` |
+| name | string | - | Hidden input `name` attribute, if not set, the input will not be rendered |
 | onChange | (value: string) => void | - | Called when value changes |
 | onChangeEnd | (value: string) => void | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |
 | onColorSwatchClick | (color: string) => void | - | Called when one of the color swatches is clicked |
-| saturationLabel | string | - | Saturation slider <code>aria-label</code> |
-| size | MantineSize | (string & {}) | - | Controls size of hue, alpha and saturation sliders |
+| saturationLabel | string | - | Saturation slider `aria-label` |
+| size | MantineSize | - | Component size |
 | swatches | string[] | - | A list of colors used to display swatches list below the color picker |
 | swatchesPerRow | number | - | Number of swatches per row |
 | value | string | - | Controlled component value |
-| withPicker | boolean | - | Determines whether the color picker should be displayed |
+| withPicker | boolean | - | If `false`, the component displays only swatches |
 
 
 #### Styles API

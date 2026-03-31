@@ -3,14 +3,10 @@ Package: @mantine/core
 Import: import { Select } from '@mantine/core';
 Description: Custom searchable select
 
-<ComboboxDisclaimer component="Select" />
-
 ## Usage
 
-`Select` allows capturing user input based on suggestions from the list.
-Unlike [Autocomplete](https://mantine.dev/core/autocomplete/), `Select` does not allow entering custom values.
-
-#### Example: usage
+`Select` allows capturing user input based on suggestions from a list.
+Unlike [Autocomplete](https://mantine.dev/llms/core-autocomplete.md), `Select` does not allow entering custom values.
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -27,10 +23,30 @@ function Demo() {
 ```
 
 
+## Loading state
+
+Set `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.
+This is useful for async operations like API calls, searches, or validations:
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte']}
+      loading
+    />
+  );
+}
+```
+
+
 ## Controlled
 
-`Select` value must be a string, other types are not supported.
-`onChange` function is called with a string value as a single argument.
+The `Select` value must be a primitive type (string, number, or boolean).
+The `onChange` function is called with a primitive value as a single argument.
 
 ```tsx
 import { useState } from 'react';
@@ -49,7 +65,7 @@ function Demo() {
 * `value` - string value of the selected option
 * `option` – selected option object
 
-If you prefer object format in state, use second argument of onChange handler:
+If you prefer the object format in state, use the second argument of the onChange handler:
 
 ```tsx
 import { useState } from 'react';
@@ -69,10 +85,8 @@ function Demo() {
 
 ## autoSelectOnBlur
 
-Set `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.
-To see this feature in action: select an option with up/down arrows, then click outside the input:
-
-#### Example: autoSelectOnBlur
+Set the `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.
+Note: This prop only has an effect when `searchable` is set to `true`. To see this feature in action: select an option with the up/down arrows, then click outside the input:
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -93,14 +107,12 @@ function Demo() {
 
 ## Clearable
 
-Set `clearable` prop to display the clear button in the right section. The button is not displayed
+Set the `clearable` prop to display the clear button in the right section. The button is not displayed
 when:
 
 * The component does not have a value
 * The component is disabled
 * The component is read only
-
-#### Example: clearable
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -119,12 +131,52 @@ function Demo() {
 ```
 
 
+```tsx
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Select, Stack } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stack>
+      <Select
+        label="clearSectionMode='both' (default)"
+        placeholder="Pick value"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+        defaultValue="React"
+        clearable
+        rightSection={<CaretDownIcon size={16} />}
+        clearSectionMode="both"
+      />
+
+      <Select
+        label="clearSectionMode='rightSection'"
+        placeholder="Pick value"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+        defaultValue="React"
+        clearable
+        rightSection={<CaretDownIcon size={16} />}
+        clearSectionMode="rightSection"
+      />
+
+      <Select
+        label="clearSectionMode='clear'"
+        placeholder="Pick value"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+        defaultValue="React"
+        clearable
+        rightSection={<CaretDownIcon size={16} />}
+        clearSectionMode="clear"
+      />
+    </Stack>
+  );
+}
+```
+
+
 ## Allow deselect
 
-`allowDeselect` prop determines whether the value should be deselected when user clicks on the selected option.
+The `allowDeselect` prop determines whether the value should be deselected when the user clicks on the selected option.
 By default, `allowDeselect` is `true`:
-
-#### Example: allowDeselect
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -155,11 +207,40 @@ function Demo() {
 ```
 
 
+## Open on focus
+
+Set the `openOnFocus` prop to open the dropdown when the input receives focus.
+Note: This prop only has an effect when `searchable` is set to `true`:
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Select
+        label="Opens on focus"
+        placeholder="Pick value"
+        searchable
+        openOnFocus
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+      <Select
+        label="Does not open on focus"
+        placeholder="Pick value"
+        searchable
+        openOnFocus={false}
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+    </>
+  );
+}
+```
+
+
 ## Searchable
 
-Set `searchable` prop to allow filtering options by user input:
-
-#### Example: searchable
+Set the `searchable` prop to allow filtering options by user input:
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -179,7 +260,7 @@ function Demo() {
 
 ## Controlled search value
 
-You can control search value with `searchValue` and `onSearchChange` props:
+You can control the search value with `searchValue` and `onSearchChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -203,8 +284,6 @@ function Demo() {
 Set the `nothingFoundMessage` prop to display a given message when no options match the search query
 or there is no data available. If the `nothingFoundMessage` prop is not set, the `Select` dropdown will be hidden.
 
-#### Example: nothingFound
-
 ```tsx
 import { Select } from '@mantine/core';
 
@@ -227,8 +306,6 @@ function Demo() {
 Set `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.
 To remove the check icon, set `withCheckIcon={false}`. To align unchecked labels with the checked one, set `withAlignedLabels` prop.
 
-#### Example: checkIcon
-
 ```tsx
 import { Select } from '@mantine/core';
 
@@ -236,7 +313,7 @@ import { Select } from '@mantine/core';
 function Demo() {
   return (
     <Select
-      
+       withCheckIcon={true} withAlignedLabels={false} checkIconPosition="left"
       data={['React', 'Angular', 'Svelte', 'Vue']}
       dropdownOpened
       pb={150}
@@ -249,19 +326,28 @@ function Demo() {
 ```
 
 
-<ComboboxData component="Select" />
+## Value type
+
+`Select` supports primitive values (strings, numbers, booleans) as value type. `Select` automatically
+infers the value type. If you want to set the value type explicitly, pass type argument:
+
+```tsx
+import { Select } from '@mantine/core';
+
+type SelectValue = 'React' | 'Angular' | 'Svelte' | number;
+
+function Demo() {
+  return <Select<SelectValue> data={['React', 'Angular', 'Svelte', 100]} />;
+}
+```
 
 ## Data prop
 
 Data that is used in Select must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.
 
-<ComboboxFiltering component="Select" />
-
 ## Filtering
 
 Select provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.
-
-#### Example: search
 
 ```tsx
 import { Select, ComboboxItem, OptionsFilter } from '@mantine/core';
@@ -291,9 +377,7 @@ function Demo() {
 ## Sort options
 
 By default, options are sorted by their position in the data array. You can change this behavior
-with `filter` function:
-
-#### Example: sort
+with the `filter` function:
 
 ```tsx
 import { Select, ComboboxItem, OptionsFilter } from '@mantine/core';
@@ -322,13 +406,46 @@ function Demo() {
 ```
 
 
-<ComboboxLargeData component="Select" />
+## Fuzzy search with fuse.js
+
+You can implement fuzzy search using the [fuse.js](https://fusejs.io/) library to match options
+even with typos or partial matches:
+
+```tsx
+import { Select, ComboboxItem, OptionsFilter } from '@mantine/core';
+import Fuse from 'fuse.js';
+
+const optionsFilter: OptionsFilter = ({ options, search }) => {
+  if (!search.trim()) {
+    return options;
+  }
+
+  const fuse = new Fuse(options as ComboboxItem[], {
+    keys: ['label'],
+    threshold: 0.3,
+    minMatchCharLength: 1,
+  });
+
+  return fuse.search(search).map((result) => result.item);
+};
+
+function Demo() {
+  return (
+    <Select
+      label="Your country"
+      placeholder="Pick value"
+      data={['Great Britain', 'Russian Federation', 'United States']}
+      filter={optionsFilter}
+      searchable
+    />
+  );
+}
+```
+
 
 ## Large datasets
 
 Select can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.
-
-#### Example: limit
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -353,40 +470,32 @@ function Demo() {
 
 ## renderOption
 
-`renderOption` callback allows you to customize option rendering. It is called with option object and
+The `renderOption` callback allows you to customize option rendering. It is called with an option object and
 checked state. The function must return a React node.
 
-#### Example: renderOption
-
 ```tsx
-import {
-  IconAlignCenter,
-  IconAlignJustified,
-  IconAlignLeft,
-  IconAlignRight,
-  IconCheck,
-} from '@tabler/icons-react';
+import { TextAlignCenterIcon, TextAlignJustifyIcon, TextAlignLeftIcon, TextAlignRightIcon, CheckIcon } from '@phosphor-icons/react';
 import { Group, Select, SelectProps } from '@mantine/core';
 
 const iconProps = {
-  stroke: 1.5,
+
   color: 'currentColor',
   opacity: 0.6,
   size: 18,
 };
 
 const icons: Record<string, React.ReactNode> = {
-  left: <IconAlignLeft {...iconProps} />,
-  center: <IconAlignCenter {...iconProps} />,
-  right: <IconAlignRight {...iconProps} />,
-  justify: <IconAlignJustified {...iconProps} />,
+  left: <TextAlignLeftIcon {...iconProps} />,
+  center: <TextAlignCenterIcon {...iconProps} />,
+  right: <TextAlignRightIcon {...iconProps} />,
+  justify: <TextAlignJustifyIcon {...iconProps} />,
 };
 
 const renderSelectOption: SelectProps['renderOption'] = ({ option, checked }) => (
   <Group flex="1" gap="xs">
     {icons[option.value]}
     {option.label}
-    {checked && <IconCheck style={{ marginInlineStart: 'auto' }} {...iconProps} />}
+    {checked && <CheckIcon style={{ marginInlineStart: 'auto' }} {...iconProps} />}
   </Group>
 );
 
@@ -410,13 +519,11 @@ function Demo() {
 
 ## Scrollable dropdown
 
-By default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/core/scroll-area).
-You can control dropdown max-height with `maxDropdownHeight` prop if you do not change the default settings.
+By default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).
+You can control the dropdown max-height with the `maxDropdownHeight` prop if you do not change the default settings.
 
 If you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,
-you will need to change dropdown styles with [Styles API](https://mantine.dev/styles/styles-api).
-
-#### Example: scrollArea
+you will need to change the dropdown styles with [Styles API](https://mantine.dev/llms/styles-styles-api.md).
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -451,8 +558,6 @@ function Demo() {
 
 ## Group options
 
-#### Example: groups
-
 ```tsx
 import { Select } from '@mantine/core';
 
@@ -473,9 +578,7 @@ function Demo() {
 
 ## Disabled options
 
-When option is disabled, it cannot be selected and is ignored in keyboard navigation.
-
-#### Example: disabledOptions
+When an option is disabled, it cannot be selected and is ignored in keyboard navigation.
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -497,13 +600,9 @@ function Demo() {
 ```
 
 
-<ComboboxProps component="Select" />
-
 ## Inside Popover
 
 To use `Select` inside popover, you need to set `withinPortal: false`:
-
-#### Example: withinPopover
 
 ```tsx
 import { Popover, Button, Select } from '@mantine/core';
@@ -530,10 +629,8 @@ function Demo() {
 
 ## Control dropdown opened state
 
-You can control dropdown opened state with `dropdownOpened` prop. Additionally,
+You can control the dropdown opened state with the `dropdownOpened` prop. Additionally,
 you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
-
-#### Example: dropdownOpened
 
 ```tsx
 import { Select, Button } from '@mantine/core';
@@ -562,12 +659,10 @@ function Demo() {
 ## Dropdown position
 
 By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
-You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
-underlying [Popover](https://mantine.dev/core/popover) component.
+You can change this behavior by setting the `position` and `middlewares` props, which are passed down to the
+underlying [Popover](https://mantine.dev/llms/core-popover.md) component.
 
-Example of dropdown that is always displayed above the input:
-
-#### Example: dropdownPosition
+Example of a dropdown that is always displayed above the input:
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -587,10 +682,8 @@ function Demo() {
 
 ## Dropdown width
 
-To change dropdown width, set `width` prop in `comboboxProps`. By default,
-dropdown width is equal to the input width.
-
-#### Example: dropdownWidth
+To change the dropdown width, set the `width` prop in `comboboxProps`. By default,
+the dropdown width is equal to the input width.
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -610,9 +703,7 @@ function Demo() {
 
 ## Dropdown offset
 
-To change dropdown offset, set `offset` prop in `comboboxProps`:
-
-#### Example: dropdownOffset
+To change the dropdown offset, set the `offset` prop in `comboboxProps`:
 
 ```tsx
 // Demo.tsx
@@ -675,9 +766,7 @@ function Demo() {
 ## Dropdown animation
 
 By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
-which will be passed down to the underlying [Transition](https://mantine.dev/core/transition) component.
-
-#### Example: dropdownAnimation
+which will be passed down to the underlying [Transition](https://mantine.dev/llms/core-transition.md) component.
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -696,8 +785,6 @@ function Demo() {
 
 
 ## Dropdown padding
-
-#### Example: dropdownPadding
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -726,8 +813,6 @@ function Demo() {
 
 ## Dropdown shadow
 
-#### Example: dropdownShadow
-
 ```tsx
 import { Select } from '@mantine/core';
 
@@ -744,20 +829,16 @@ function Demo() {
 ```
 
 
-<InputSections component="Select" />
-
 ## Input sections
 
 Select supports left and right sections to display icons, buttons or other content alongside the input.
 
-#### Example: sections
-
 ```tsx
 import { Select } from '@mantine/core';
-import { IconComponents } from '@tabler/icons-react';
+import { SquaresFourIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconComponents size={16} />;
+  const icon = <SquaresFourIcon size={16} />;
   return (
     <>
       <Select
@@ -783,11 +864,7 @@ function Demo() {
 
 ## Input props
 
-<InputFeatures component="Select" element="input" />
-
 Select component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. Select documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
-
-#### Example: configurator
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -796,7 +873,7 @@ import { Select } from '@mantine/core';
 function Demo() {
   return (
     <Select
-      
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
       placeholder="Select placeholder"
       data={['React', 'Angular', 'Vue', 'Svelte']}
     />
@@ -808,9 +885,7 @@ function Demo() {
 ## Read only
 
 Set `readOnly` to make the input read only. When `readOnly` is set,
-`Select` will not show suggestions and will not call `onChange` function.
-
-#### Example: readOnly
+`Select` will not show suggestions and will not call the `onChange` function.
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -831,9 +906,7 @@ function Demo() {
 ## Disabled
 
 Set `disabled` to disable the input. When `disabled` is set,
-user cannot interact with the input and `Select` will not show suggestions.
-
-#### Example: disabled
+the user cannot interact with the input and `Select` will not show suggestions.
 
 ```tsx
 import { Select } from '@mantine/core';
@@ -851,159 +924,74 @@ function Demo() {
 ```
 
 
-## Error state
-
-#### Example: error
-
-```tsx
-import { Select } from '@mantine/core';
-
-function Demo() {
-  return (
-    <>
-      <Select
-        label="Boolean error"
-        placeholder="Boolean error"
-        error
-        data={['React', 'Angular', 'Vue', 'Svelte']}
-      />
-      <Select
-        mt="md"
-        label="With error message"
-        placeholder="With error message"
-        error="Invalid name"
-        data={['React', 'Angular', 'Vue', 'Svelte']}
-      />
-    </>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { IconAt } from '@tabler/icons-react';
-import { Select } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Select
-     
-      leftSection={<IconAt size={18} stroke={1.5} />}
-      label="Select"
-      description="Description"
-      error="Error"
-      placeholder="Select"
-      data={['React', 'Angular']}
-    />
-  );
-}
-```
-
-
-<GetElementRef component="Select" refType="input" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { Select } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLInputElement>(null);
-  return <Select ref={ref} />;
-}
-```
-
-<InputAccessibility component="Select" />
-
-## Accessibility
-
-Select provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
-
-To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
-only when `clearable` is set.
-
-```tsx
-import { Select } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Select
-      data={[]}
-      clearable
-      clearButtonProps={{
-        'aria-label': 'Clear input',
-      }}
-    />
-  );
-}
-```
-
 
 #### Props
 
+**Select props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| allowDeselect | boolean | - | If set, it becomes possible to deselect value by clicking on the selected option |
-| autoSelectOnBlur | boolean | - | If set, the highlighted option is selected when the input loses focus |
-| checkIconPosition | "left" | "right" | - | Position of the check icon relative to the option label |
+| allowDeselect | boolean | - | Allows deselecting the selected option by clicking it |
+| autoSelectOnBlur | boolean | - | Automatically selects the highlighted option when input loses focus |
+| checkIconPosition | "left" \| "right" | - | Position of the check icon relative to the option label |
 | chevronColor | MantineColor | - | Controls color of the default chevron, by default depends on the color scheme |
 | clearButtonProps | InputClearButtonProps | - | Props passed down to the clear button |
-| clearable | boolean | - | If set, the clear button is displayed in the right section when the component has value |
-| comboboxProps | ComboboxProps | - | Props passed down to <code>Combobox</code> component |
-| data | ComboboxData | - | Data used to generate options. Values must be unique, otherwise an error will be thrown and component will not render. |
+| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
+| clearable | boolean | - | Displays clear button in the right section when component has value |
+| comboboxProps | ComboboxProps | - | Props passed down to `Combobox` component |
+| data | ComboboxData<Value> | - | Data used to generate options. Values must be unique, otherwise an error will be thrown and component will not render. |
 | defaultDropdownOpened | boolean | - | Uncontrolled dropdown initial opened state |
 | defaultSearchValue | string | - | Default search value |
-| defaultValue | string | null | - | Uncontrolled component default value |
-| description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
-| disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
+| defaultValue | Primitive \| null | - | Uncontrolled component default value |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
 | dropdownOpened | boolean | - | Controlled dropdown opened state |
-| error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
-| filter | OptionsFilter | - | Function based on which items are filtered and sorted |
-| hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
-| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
-| inputSize | string | - | <code>size</code> attribute passed down to the input element |
-| inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
-| label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |
+| hiddenInputProps | Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value"> | - | Props passed down to the hidden input |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
-| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
-| leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
-| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
-| limit | number | - | Maximum number of options displayed at a time, <code>Infinity</code> by default |
-| maxDropdownHeight | string | number | - | <code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default |
-| nothingFoundMessage | React.ReactNode | - | Message displayed when no option matches the current search query when the <code>searchable</code> prop is set or there is no data |
-| onChange | (value: string | null, option: ComboboxItem) => void | - | Called when value changes |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| limit | number | - | Maximum number of options displayed at a time, `Infinity` by default |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| maxDropdownHeight | string \| number | - | `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default |
+| nothingFoundMessage | React.ReactNode | - | Message displayed when no options match the search query or when there is no data |
+| onChange | (value: Value \| null, option: ComboboxItem<Value>) => void | - | Called when value changes |
 | onClear | () => void | - | Called when the clear button is clicked |
 | onDropdownClose | () => void | - | Called when dropdown closes |
 | onDropdownOpen | () => void | - | Called when dropdown opens |
-| onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
+| onOptionSubmit | (value: Value) => void | - | Called when option is submitted from dropdown with mouse click or `Enter` key |
 | onSearchChange | (value: string) => void | - | Called when search changes |
-| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
-| pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
-| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
+| openOnFocus | boolean | - | Opens dropdown when input receives focus (requires searchable={true}) |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem<string>>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
-| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
-| rightSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>rightSection</code> element |
-| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
-| scrollAreaProps | ScrollAreaProps | - | Props passed down to the underlying <code>ScrollArea</code> component in the dropdown |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| scrollAreaProps | ScrollAreaProps | - | Props passed down to the underlying `ScrollArea` component in the dropdown |
 | searchValue | string | - | Controlled search value |
 | searchable | boolean | - | Determines whether the select should be searchable |
-| selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
-| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
-| size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
-| value | string | null | - | Controlled component value |
-| withAlignedLabels | boolean | - | If set, unchecked labels are aligned with the checked one |
-| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
-| withCheckIcon | boolean | - | If set, the check icon is displayed near the selected option label |
-| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
-| withScrollArea | boolean | - | Determines whether the options should be wrapped with <code>ScrollArea.AutoSize</code>, <code>true</code> by default |
+| selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, `false` by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| value | Primitive \| null | - | Controlled component value |
+| withAlignedLabels | boolean | - | Aligns unchecked labels with the checked one |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withCheckIcon | boolean | - | Displays check icon near the selected option label |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 

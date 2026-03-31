@@ -2,10 +2,10 @@
 Package: @mantine/form
 Import: import { FormNested } from '@mantine/form';
 
-## Properties paths
+## Property paths
 
-Most of `form` handlers accept property path as the first argument.
-Property path includes keys/indices of objects/arrays at which target property is contained:
+Most `form` handlers accept a property path as the first argument.
+Property path includes keys/indices of objects/arrays in which the target property is contained:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -31,19 +31,17 @@ const form = useForm({
   },
 });
 
-// Props for input that is controlled by user object firstName field
+// Props for input that is controlled by the user object's firstName field
 form.getInputProps('user.firstName');
 
-// Set value of `name` field that is contained in object at second position of fruits array:
+// Set value of `name` field that is contained in the object at the second position of fruits array:
 form.setFieldValue('fruits.1.name', 'Carrot');
 
 // Validate deeply nested field
-form.validateField('deeply.nested.object.0.item');
+await form.validateField('deeply.nested.object.0.item');
 ```
 
 ## Nested objects
-
-#### Example: nested
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -111,7 +109,7 @@ form.setFieldValue('user.occupation', 'Engineer');
 form.setFieldValue('user', { name: 'Jane', occupation: 'Architect' });
 ```
 
-## Nested object values validation
+## Nested object value validation
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -135,19 +133,17 @@ const form = useForm({
   },
 });
 
-form.validate();
+await form.validate();
 form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occupation is too short' }
 ```
 
 ## Nested arrays
 
-#### Example: lists
-
 ```tsx
 import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const form = useForm({
@@ -172,7 +168,7 @@ function Demo() {
         {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <TrashIcon size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -213,14 +209,14 @@ function Demo() {
 
 ## List handlers
 
-`useForm` hook provides the following handlers to manage list state:
+The `useForm` hook provides the following handlers to manage list state:
 
-* `removeListItem` – removes list item at given index
-* `insertListItem` – inserts list item at given index (appends item to the end of the list if index is not specified)
-* `reorderListItem` – reorders list item with given position at specified field
-* `replaceListItem` – replaces list item at given index with new value
+* `removeListItem` – removes a list item at the given index
+* `insertListItem` – inserts a list item at the given index (appends item to the end of the list if index is not specified)
+* `reorderListItem` – reorders a list item with the given position at the specified field
+* `replaceListItem` – replaces a list item at the given index with a new value
 
-## List values validation
+## List value validation
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -246,11 +242,11 @@ const form = useForm({
   },
 });
 
-// Validate list item field
-form.validateField('users.1.name');
+// Validate a list item field
+await form.validateField('users.1.name');
 
-// Or with all other fields
-form.validate();
+// Or validate with all other fields
+await form.validate();
 console.log(form.errors);
 // {
 //  'users.0.age': 'User must be 18 or older',

@@ -5,11 +5,9 @@ Description: Bar chart component with stacked and percent variants
 
 ## Usage
 
-Use `BarChart` component without `type` prop to render a regular bar chart.
-In a regular bar chart, each data series is plotted on its own and does
+Use the `BarChart` component without the `type` prop to render a regular bar chart.
+In a regular bar chart, each data series is plotted independently and does
 not interact with other series.
-
-#### Example: usage
 
 ```tsx
 // Demo.tsx
@@ -28,7 +26,7 @@ function Demo() {
         { name: 'Laptops', color: 'blue.6' },
         { name: 'Tablets', color: 'teal.6' },
       ]}
-      
+       tickLine="y" gridAxis="x" withXAxis={true} withYAxis={true}
     />
   );
 }
@@ -47,11 +45,9 @@ export const data = [
 
 ## Stacked bar chart
 
-Set `type="stacked"` to render a stacked bar chart. In this type of bar chart
+Set `type="stacked"` to render a stacked bar chart. In this type of bar chart,
 stacking is applied along the vertical axis, allowing you to see the overall trend
 as well as the contribution of each individual series to the total.
-
-#### Example: stacked
 
 ```tsx
 // Demo.tsx
@@ -88,9 +84,7 @@ export const data = [
 
 ## Mixed stacked bar chart
 
-You can control how series are stacked by setting `stackId` property in series object:
-
-#### Example: mixedStack
+You can control how series are stacked by setting the `stackId` property in the series object:
 
 ```tsx
 // Demo.tsx
@@ -126,11 +120,9 @@ export const data = [
 
 ## Percent bar chart
 
-Set `type="percent"` to render a percent bar chart. In this type of bar chart
+Set `type="percent"` to render a percent bar chart. In this type of bar chart,
 the y-axis scale is always normalized to 100%, making it easier to compare the
 contribution of each series in terms of percentages.
-
-#### Example: percent
 
 ```tsx
 // Demo.tsx
@@ -170,10 +162,8 @@ export const data = [
 Set `type="waterfall"` to render a waterfall bar chart. This chart type illustrates how an
 initial value is influenced by subsequent positive or negative values,
 with each bar starting where the previous one ended.
-Use the `color` prop inside data to color each bar individually. Note that the series color gets overwritten for this specific bar.
-Use the `standalone` prop inside data to decouple the bar from the flow.
-
-#### Example: waterfall
+Use the `color` prop inside the data to color each bar individually. Note that the series color gets overwritten for this specific bar.
+Use the `standalone` prop inside the data to decouple the bar from the flow.
 
 ```tsx
 // Demo.tsx
@@ -211,12 +201,10 @@ export const data =
 
 ## SVG pattern as bar fill
 
-You can use SVG patterns as bar fill. To do so, set `fill` property in series object to
-a url of the SVG pattern that is defined in the `defs` section of the chart `children`.
+You can use SVG patterns as bar fill. To do so, set the `fill` property in the series object to
+a URL of the SVG pattern that is defined in the `defs` section of the chart `children`.
 
 Example of using diagonal stripes and crosshatch patterns as bar fill:
-
-#### Example: stripes
 
 ```tsx
 // Demo.tsx
@@ -288,14 +276,12 @@ export const data = [
 
 ## Bar color based on value
 
-Use `getBarColor` prop to assign color based on value. `getBarColor` function is
+Use the `getBarColor` prop to assign color based on value. The `getBarColor` function is
 called with two arguments: value and series object. It should return a color
 string (theme color reference or any valid CSS color value).
 
-Note that color returned by `getBarColor` does not impact colors of the legend
+Note that the color returned by `getBarColor` does not impact the colors of the legend
 and tooltip.
-
-#### Example: getBarColor
 
 ```tsx
 // Demo.tsx
@@ -328,10 +314,8 @@ export const data = [
 
 ## Legend
 
-To display chart legend, set `withLegend` prop. When one of the items in the legend
+To display the chart legend, set the `withLegend` prop. When one of the items in the legend
 is hovered, the corresponding data series is highlighted in the chart.
-
-#### Example: legend
 
 ```tsx
 // Demo.tsx
@@ -368,11 +352,9 @@ export const data = [
 
 ## Legend position
 
-You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
-component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+You can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with the `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
 will render the legend at the bottom of the chart and set its height to 50px.
-
-#### Example: legendPosition
 
 ```tsx
 // Demo.tsx
@@ -410,10 +392,8 @@ export const data = [
 
 ## Series labels
 
-By default, series `name` is used as a label. To change it, set `label`
-property in `series` object:
-
-#### Example: seriesLabels
+By default, the series `name` is used as a label. To change it, set the `label`
+property in the `series` object:
 
 ```tsx
 // Demo.tsx
@@ -452,11 +432,9 @@ export const data = [
 
 ## X and Y axis props
 
-Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)
 and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
-can be used to change orientation of axis:
-
-#### Example: axisProps
+can be used to change the orientation of the axis:
 
 ```tsx
 // Demo.tsx
@@ -497,8 +475,6 @@ export const data = [
 
 Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
 
-#### Example: axisLabels
-
 ```tsx
 // Demo.tsx
 import { BarChart } from '@mantine/charts';
@@ -535,9 +511,7 @@ export const data = [
 
 ## X axis offset
 
-Use `xAxisProps` to set padding between the charts ends and the x-axis:
-
-#### Example: xAxisOffset
+Use `xAxisProps` to set padding between the chart ends and the x-axis:
 
 ```tsx
 // Demo.tsx
@@ -574,10 +548,8 @@ export const data = [
 
 ## Y axis scale
 
-Use `yAxisProps` to change domain of the Y axis. For example, if you know that
-your data will always be in the range of 0 to 150, you can set domain to `[0, 150]`:
-
-#### Example: yScale
+Use `yAxisProps` to change the domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 150, you can set the domain to `[0, 150]`:
 
 ```tsx
 // Demo.tsx
@@ -614,10 +586,8 @@ export const data = [
 
 ## Value formatter
 
-To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
-a function that takes number value as an argument and returns formatted value:
-
-#### Example: valueFormatter
+To format values in the tooltip and axis ticks, use the `valueFormat` prop. It accepts
+a function that takes a number value as an argument and returns a formatted value:
 
 ```tsx
 // Demo.tsx
@@ -654,11 +624,9 @@ export const data = [
 
 ## Area color
 
-You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
-
-#### Example: color
 
 ```tsx
 // data.ts
@@ -675,12 +643,10 @@ export const data = [
 
 ## Bar props
 
-You can pass props down to recharts [Bar](https://recharts.org/en-US/api/Bar)
-component with `barProps` prop. `barProps` accepts either an object with props
+You can pass props down to the recharts [Bar](https://recharts.org/en-US/api/Bar)
+component with the `barProps` prop. `barProps` accepts either an object with props
 or a function that receives series data as an argument and returns an object with
 props.
-
-#### Example: barProps
 
 ```tsx
 // Demo.tsx
@@ -715,9 +681,7 @@ export const data = [
 
 ## Minimum bar size
 
-Use `minBarSize` prop to set the minimum size of the bar in px:
-
-#### Example: minBarSize
+Use the `minBarSize` prop to set the minimum size of the bar in px:
 
 ```tsx
 // Demo.tsx
@@ -754,12 +718,10 @@ export const data = [
 
 ## Change bar color depending on color scheme
 
-You can use CSS variables in `color` property. To define a CSS variable that
-changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/styles/postcss-preset/#dark-and-light-mixins)
-or [light-dark function](https://mantine.dev/styles/postcss-preset/#light-dark-function). Example
-of bar that is dark orange in light mode and lime in dark mode:
-
-#### Example: colorSchemeColor
+You can use CSS variables in the `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/llms/styles-postcss-preset.md#dark-and-light-mixins)
+or the [light-dark function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function). Example
+of a bar that is dark orange in light mode and lime in dark mode:
 
 ```tsx
 // Demo.tsx
@@ -804,11 +766,9 @@ export const data = [
 
 ## Stroke dash array
 
-Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
-lines. The value represent the lengths of alternating dashes and gaps. For example,
+Set the `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represents the lengths of alternating dashes and gaps. For example,
 `strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
-
-#### Example: strokeDasharray
 
 ```tsx
 // Demo.tsx
@@ -846,10 +806,8 @@ export const data = [
 ## Grid and text colors
 
 Use `--chart-grid-color` and `--chart-text-color` to change colors of
-grid lines and text within the chart. With [CSS modules](https://mantine.dev/styles/css-modules/), you can change colors
+grid lines and text within the chart. With [CSS modules](https://mantine.dev/llms/styles-css-modules.md), you can change colors
 depending on color scheme:
-
-#### Example: gridColor
 
 ```tsx
 // Demo.module.css
@@ -899,7 +857,7 @@ export const data = [
 ```
 
 
-If your application has only one color scheme, you can use `gridColor` and `textColor`
+If your application has only one color scheme, you can use the `gridColor` and `textColor`
 props instead of CSS variables:
 
 ```tsx
@@ -927,10 +885,8 @@ function Demo() {
 
 ## Tooltip animation
 
-By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+By default, tooltip animation is disabled. To enable it, set the `tooltipAnimationDuration`
 prop to a number of milliseconds to animate the tooltip position change.
-
-#### Example: tooltipAnimation
 
 ```tsx
 // Demo.tsx
@@ -967,9 +923,7 @@ export const data = [
 
 ## Units
 
-Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
-
-#### Example: unit
+Set the `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
 
 ```tsx
 // Demo.tsx
@@ -1006,11 +960,9 @@ export const data = [
 
 ## Custom tooltip
 
-Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
-component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+Use `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter the recharts payload with the `getFilteredChartTooltipPayload`
 function to remove empty values that are used for styling purposes only.
-
-#### Example: customTooltip
 
 ```tsx
 // Demo.tsx
@@ -1020,14 +972,14 @@ import { data } from './data';
 
 interface ChartTooltipProps {
   label: React.ReactNode;
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ label, payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       <Text fw={500} mb={5}>
         {label}
       </Text>
@@ -1072,10 +1024,8 @@ export const data = [
 
 ## Remove tooltip
 
-To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+To remove the tooltip, set `withTooltip={false}`. This also removes the cursor line
 and disables interactions with the chart.
-
-#### Example: noTooltip
 
 ```tsx
 // Demo.tsx
@@ -1112,11 +1062,9 @@ export const data = [
 
 ## Sync multiple BarCharts
 
-You can pass props down to recharts [BarChart](https://recharts.org/en-US/api/BarChart)
-component with `barChartProps` prop. For example, setting `barChartProps={{ syncId: 'any-id' }}`
-will sync tooltip of multiple `BarChart` components with the same `syncId` prop.
-
-#### Example: sync
+You can pass props down to the recharts [BarChart](https://recharts.org/en-US/api/BarChart)
+component with the `barChartProps` prop. For example, setting `barChartProps={{ syncId: 'any-id' }}`
+will sync the tooltip of multiple `BarChart` components with the same `syncId` prop.
 
 ```tsx
 // Demo.tsx
@@ -1170,8 +1118,6 @@ export const data = [
 
 Set `orientation="vertical"` to render a vertical bar chart:
 
-#### Example: vertical
-
 ```tsx
 // Demo.tsx
 import { BarChart } from '@mantine/charts';
@@ -1209,10 +1155,8 @@ export const data = [
 
 ## Reference lines
 
-Use `referenceLines` prop to render reference lines. Reference lines are always
+Use the `referenceLines` prop to render reference lines. Reference lines are always
 rendered behind the chart.
-
-#### Example: referenceLines
 
 ```tsx
 // Demo.tsx
@@ -1256,9 +1200,7 @@ export const data = [
 
 ## Reference area
 
-Use `ReferenceArea` component from recharts to display a reference area:
-
-#### Example: referenceArea
+Use the `ReferenceArea` component from recharts to display a reference area:
 
 ```tsx
 // Demo.tsx
@@ -1283,7 +1225,6 @@ function Demo() {
         x2="March"
         y1={0}
         y2={1250}
-        yAxisId="left"
         fillOpacity={0.3}
         strokeOpacity={0.9}
         fill="var(--mantine-color-gray-4)"
@@ -1315,8 +1256,6 @@ export const data = [
 ## Bar value label
 
 To display value above each bar, set `withBarValueLabel`:
-
-#### Example: barValueLabel
 
 ```tsx
 // Demo.tsx
@@ -1354,12 +1293,10 @@ export const data = [
 
 ## Bar value label props
 
-You can pass props down to recharts [LabelList](https://recharts.org/en-US/api/LabelList)
-component with `valueLabelProps` prop. `valueLabelProps` accepts either an object with props
+You can pass props down to the recharts [LabelList](https://recharts.org/en-US/api/LabelList)
+component with the `valueLabelProps` prop. `valueLabelProps` accepts either an object with props
 or a function that receives series data as an argument and returns an object with
 props.
-
-#### Example: valueLabelProps
 
 ```tsx
 // Demo.tsx
@@ -1374,7 +1311,7 @@ function Demo() {
       dataKey="month"
       valueFormatter={(value) => new Intl.NumberFormat('en-US').format(value)}
       withBarValueLabel
-      valueLabelProps={{ position: 'inside', fill: 'white' }}
+      valueLabelProps={{ position: 'inside', fill: 'white', fontSize: 8 }}
       series={[
         { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
@@ -1397,8 +1334,6 @@ export const data = [
 
 
 ## Bar overlays
-
-#### Example: overlay
 
 ```tsx
 // Demo.tsx
@@ -1462,47 +1397,49 @@ export const data = [
 
 #### Props
 
+**BarChart props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| barChartProps | Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 65 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | - | Props passed down to recharts <code>BarChart</code> component |
+| barChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `BarChart` component |
 | barLabelColor | MantineColor | - | Controls color of the bar label, by default the value is determined by the chart orientation |
-| barProps | ((series: BarChartSeries) => Partial<Omit<Props, "ref">>) | Partial<Omit<Props, "ref">> | - | Props passed down to recharts <code>Bar</code> component |
-| children | React.ReactNode | - | Additional components that are rendered inside recharts <code>BarChart</code> component |
+| barProps | ((series: BarChartSeries) => Partial<Omit<Props, "ref">>) \| Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Bar` component |
+| children | React.ReactNode | - | Additional components that are rendered inside recharts `BarChart` component |
 | cursorFill | MantineColor | - | Fill of hovered bar section, by default value is based on color scheme |
 | data | Record<string, any>[] | required | Data used to display chart. |
-| dataKey | string | required | Key of the <code>data</code> object for x-axis values |
+| dataKey | string | required | Key of the `data` object for x-axis values |
 | fillOpacity | number | - | Controls fill opacity of all bars |
 | getBarColor | (value: number, series: BarChartSeries) => DefaultMantineColor | - | A function to assign dynamic bar color based on its value |
-| gridAxis | "none" | "x" | "y" | "xy" | - | Specifies which lines should be displayed in the grid, <code>'x'</code> by default |
+| gridAxis | "none" \| "x" \| "y" \| "xy" | - | Specifies which lines should be displayed in the grid, `'x'` by default |
 | gridColor | MantineColor | - | Color of the grid and cursor lines, by default depends on color scheme |
-| gridProps | RechartsProps | - | Props passed down to the <code>CartesianGrid</code> component |
-| legendProps | RechartsProps | - | Props passed down to the <code>Legend</code> component |
+| gridProps | RechartsProps | - | Props passed down to the `CartesianGrid` component |
+| legendProps | RechartsProps | - | Props passed down to the `Legend` component |
 | maxBarWidth | number | - | Maximum bar width in px |
 | minBarSize | number | - | Sets minimum height of the bar in px |
-| orientation | "horizontal" | "vertical" | - | Chart orientation, <code>'horizontal'</code> by default |
+| orientation | "horizontal" \| "vertical" | - | Chart orientation, `'horizontal'` by default |
 | referenceLines | ChartReferenceLineProps[] | - | Reference lines that should be displayed on the chart |
 | rightYAxisLabel | string | - | A label to display next to the right y-axis |
-| rightYAxisProps | RechartsProps | - | Props passed down to the <code>YAxis</code> recharts component rendered on the right side |
-| series | BarChartSeries[] | required | An array of objects with <code>name</code> and <code>color</code> keys. Determines which data should be consumed from the <code>data</code> array. |
-| strokeDasharray | string | number | - | Dash array for the grid lines and cursor, <code>'5 5'</code> by default |
-| textColor | MantineColor | - | Color of the text displayed inside the chart, <code>'dimmed'</code> by default |
-| tickLine | "none" | "x" | "y" | "xy" | - | Specifies which axis should have tick line, <code>'y'</code> by default |
-| tooltipAnimationDuration | number | - | Tooltip position animation duration in ms, <code>0</code> by default |
-| tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
+| rightYAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component rendered on the right side |
+| series | BarChartSeries[] | required | An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. |
+| strokeDasharray | string \| number | - | Dash array for the grid lines and cursor, `'5 5'` by default |
+| textColor | MantineColor | - | Color of the text displayed inside the chart, `'dimmed'` by default |
+| tickLine | "none" \| "x" \| "y" \| "xy" | - | Specifies which axis should have tick line, `'y'` by default |
+| tooltipAnimationDuration | number | - | Tooltip position animation duration in ms, `0` by default |
+| tooltipProps | RechartsProps | - | Props passed down to the `Tooltip` component |
 | type | BarChartType | - | Controls how bars are positioned relative to each other |
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
-| valueLabelProps | ((series: BarChartSeries) => Partial<Omit<Props<Record<string, any>>, "ref">>) | Partial<Props<Record<string, any>>> | - | Props passed down to recharts <code>LabelList</code> component |
-| withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar, incompatible with <code>type="stacked"</code> and <code>type="percent"</code> |
-| withLegend | boolean | - | Determines whether chart legend should be displayed, <code>false</code> by default |
-| withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, <code>false</code> by default |
-| withTooltip | boolean | - | Determines whether chart tooltip should be displayed, <code>true</code> by default |
-| withXAxis | boolean | - | Determines whether x-axis should be displayed, <code>true</code> by default |
-| withYAxis | boolean | - | Determines whether y-axis should be displayed, <code>true</code> by default |
+| valueLabelProps | ((series: BarChartSeries) => Partial<Omit<Props, "ref">>) \| Partial<Props> | - | Props passed down to recharts `LabelList` component |
+| withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` |
+| withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
+| withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default |
+| withTooltip | boolean | - | Determines whether chart tooltip should be displayed, `true` by default |
+| withXAxis | boolean | - | Determines whether x-axis should be displayed, `true` by default |
+| withYAxis | boolean | - | Determines whether y-axis should be displayed, `true` by default |
 | xAxisLabel | string | - | A label to display below the x-axis |
-| xAxisProps | RechartsProps | - | Props passed down to the <code>XAxis</code> recharts component |
+| xAxisProps | RechartsProps | - | Props passed down to the `XAxis` recharts component |
 | yAxisLabel | string | - | A label to display next to the y-axis |
-| yAxisProps | RechartsProps | - | Props passed down to the <code>YAxis</code> recharts component |
+| yAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component |
 
 
 #### Styles API

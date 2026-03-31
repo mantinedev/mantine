@@ -8,8 +8,6 @@ Description: Separates list of react nodes with given separator
 `Breadcrumbs` component accepts any number of React nodes as children
 and adds a given separator (defaults to `/`) between them:
 
-#### Example: usage
-
 ```tsx
 import { Breadcrumbs, Anchor } from '@mantine/core';
 
@@ -39,9 +37,11 @@ function Demo() {
 
 #### Props
 
+**Breadcrumbs props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| children | React.ReactNode | required | React nodes that should be separated with <code>separator</code> |
+| children | React.ReactNode | required | React nodes that should be separated with `separator` |
 | separator | React.ReactNode | - | Separator between children |
 | separatorMargin | MantineSpacing | - | Controls spacing between separator and breadcrumb |
 

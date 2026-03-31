@@ -4,8 +4,8 @@ Import: import { UseInputState } from '@mantine/hooks';
 
 ## Usage
 
-`use-input-state` handles state of native inputs (with event in `onChange` handler) and custom inputs (with value in `onChange` handler).
-Hook works with all Mantine and native inputs:
+The `use-input-state` hook handles the state of native inputs (with event in `onChange` handler) and custom inputs (with value in `onChange` handler).
+The hook works with all Mantine and native inputs:
 
 ```tsx
 import { useState } from 'react';

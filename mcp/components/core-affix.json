@@ -1,0 +1,57 @@
+{
+  "id": "core-affix",
+  "name": "Affix",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/affix",
+  "description": "Renders children inside portal at fixed position",
+  "propsCount": 4,
+  "llmUrl": "https://mantine.dev/llms/core-affix.md",
+  "componentDataUrl": "/mcp/components/core-affix.json",
+  "searchText": "affix renders children inside portal at fixed position @mantine/core /core/affix portalprops position withinportal zindex",
+  "source": "@mantine/core/src/components/Affix/Affix.tsx",
+  "docs": "core/affix.mdx",
+  "markdown": "# Affix\nPackage: @mantine/core\nImport: import { Affix } from '@mantine/core';\nDescription: Renders children inside portal at fixed position\n\n## Usage\n\n`Affix` renders a div element with a fixed position inside the [Portal](https://mantine.dev/llms/core-portal.md) component.\nUse it to display elements fixed at any position on the screen, for example, scroll to top button:\n\n```tsx\nimport { ArrowUpIcon } from '@phosphor-icons/react';\nimport { useWindowScroll } from '@mantine/hooks';\nimport { Affix, Button, Text, Transition } from '@mantine/core';\n\nfunction Demo() {\n  const [scroll, scrollTo] = useWindowScroll();\n\n  return (\n    <>\n      <Text ta=\"center\">Affix is located at the bottom of the screen, scroll to see it</Text>\n      <Affix position={{ bottom: 20, right: 20 }}>\n        <Transition transition=\"slide-up\" mounted={scroll.y > 0}>\n          {(transitionStyles) => (\n            <Button\n              leftSection={<ArrowUpIcon size={16} />}\n              style={transitionStyles}\n              onClick={() => scrollTo({ y: 0 })}\n            >\n              Scroll to top\n            </Button>\n          )}\n        </Transition>\n      </Affix>\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**Affix props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| portalProps | BasePortalProps | - | Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. |\n| position | AffixPosition | - | Affix position on screen |\n| withinPortal | boolean | - | Determines whether the component is rendered within `Portal` |\n| zIndex | React.CSSProperties[\"zIndex\"] | - | Root element `z-index` property |\n\n\n#### Styles API\n\nAffix component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Affix selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Affix-root | Root element |\n\n**Affix CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --affix-z-index | Controls `z-index` property |\n| root | --affix-top | Controls `top` property |\n| root | --affix-bottom | Controls `bottom` property |\n| root | --affix-left | Controls `left` property |\n| root | --affix-right | Controls `right` property |\n",
+  "props": [
+    {
+      "name": "portalProps",
+      "description": "Props passed down to the <code>Portal</code> component. Ignored when <code>withinPortal</code> is <code>false</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "Affix"
+    },
+    {
+      "name": "position",
+      "description": "Affix position on screen",
+      "required": false,
+      "defaultValue": "{ bottom: 0, right: 0 }",
+      "type": {
+        "name": "AffixPosition"
+      },
+      "sourceComponent": "Affix"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether the component is rendered within <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Affix"
+    },
+    {
+      "name": "zIndex",
+      "description": "Root element <code>z-index</code> property",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "React.CSSProperties[\"zIndex\"]"
+      },
+      "sourceComponent": "Affix"
+    }
+  ]
+}

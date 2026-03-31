@@ -7,8 +7,8 @@ Description: Base component to create custom inputs
 
 **!important:** In most cases, you should not use `Input` in your application.
 `Input` is a base for other inputs and was not designed to be used directly.
-Use `Input` to create custom inputs, for other cases prefer [TextInput](https://mantine.dev/core/text-input/)
-or other component.
+Use `Input` to create custom inputs. For other cases, prefer [TextInput](https://mantine.dev/llms/core-text-input.md)
+or another component.
 
 ```tsx
 import { Input, TextInput } from '@mantine/core';
@@ -33,38 +33,46 @@ function Correct() {
 
 ## Usage
 
-`Input` component is used as base for some other inputs ([NativeSelect](https://mantine.dev/core/native-select/), [TextInput](https://mantine.dev/core/text-input/), [Textarea](https://mantine.dev/core/textarea/), etc.).
+The `Input` component is used as a base for some other inputs ([NativeSelect](https://mantine.dev/llms/core-native-select.md), [TextInput](https://mantine.dev/llms/core-text-input.md), [Textarea](https://mantine.dev/llms/core-textarea.md), etc.).
 The purpose of the `Input` is to provide shared styles and features to other inputs.
-
-#### Example: usage
 
 ```tsx
 import { Input } from '@mantine/core';
 
 function Demo() {
-  return <Input placeholder="Input component" />;
+  return <Input variant="default" size="sm" radius="md" disabled={false} error={false} placeholder="Input component" />;
 }
 ```
 
 
-<InputSections component="Input" />
+## Loading state
+
+Set `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.
+You can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:
+
+```tsx
+import { Input } from '@mantine/core';
+
+function Demo() {
+  return <Input placeholder="Your email" loading />;
+}
+```
+
 
 ## Input sections
 
 Input supports left and right sections to display icons, buttons or other content alongside the input.
 
-#### Example: sections
-
 ```tsx
 import { useState } from 'react';
-import { Input, CloseButton } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { Input } from '@mantine/core';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const [value, setValue] = useState('Clear me');
   return (
     <>
-      <Input placeholder="Your email" leftSection={<IconAt size={16} />} />
+      <Input placeholder="Your email" leftSection={<AtIcon size={16} />} />
       <Input
         placeholder="Clearable input"
         value={value}
@@ -72,11 +80,12 @@ function Demo() {
         rightSectionPointerEvents="all"
         mt="md"
         rightSection={
-          <CloseButton
-            aria-label="Clear input"
-            onClick={() => setValue('')}
-            style={{ display: value ? undefined : 'none' }}
-          />
+          value ? (
+            <Input.ClearButton
+              aria-label="Clear input"
+              onClick={() => setValue('')}
+            />
+          ) : null
         }
       />
     </>
@@ -87,16 +96,14 @@ function Demo() {
 
 ## Change input element
 
-Input is a [polymorphic component](https://mantine.dev/guides/polymorphic), the default root element is `input`,
+Input is a [polymorphic component](https://mantine.dev/llms/guides-polymorphic.md), the default root element is `input`,
 but it can be changed to any other element or component.
 
 Example of using `Input` as `button` and `select`:
 
-#### Example: component
-
 ```tsx
 import { Input } from '@mantine/core';
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -107,7 +114,7 @@ function Demo() {
 
       <Input
         component="select"
-        rightSection={<IconChevronDown size={14} stroke={1.5} />}
+        rightSection={<CaretDownIcon size={14} />}
         pointer
         mt="md"
       >
@@ -122,8 +129,6 @@ function Demo() {
 
 Example of using [react-imask](https://github.com/uNmAnNeR/imaskjs/tree/master/packages/react-imask) with `Input`:
 
-#### Example: mask
-
 ```tsx
 import { Input } from '@mantine/core';
 import { IMaskInput } from 'react-imask';
@@ -136,19 +141,17 @@ function Demo() {
 
 ## Input.Wrapper component
 
-`Input.Wrapper` component is used in all other inputs
-([TextInput](https://mantine.dev/core/text-input/), [NativeSelect](https://mantine.dev/core/native-select/), [Textarea](https://mantine.dev/core/textarea/), etc.)
-under the hood, you *do not need to wrap your inputs with it, as it is already included in all of them*.
+The `Input.Wrapper` component is used in all other inputs
+([TextInput](https://mantine.dev/llms/core-text-input.md), [NativeSelect](https://mantine.dev/llms/core-native-select.md), [Textarea](https://mantine.dev/llms/core-textarea.md), etc.)
+under the hood. You *do not need to wrap your inputs with it, as it is already included in all of them*.
 Use `Input.Wrapper` only when you want to create custom inputs.
-
-#### Example: wrapper
 
 ```tsx
 import { Input } from '@mantine/core';
 
 function Wrapper() {
   return (
-    <Input.Wrapper>
+    <Input.Wrapper label="Input label" withAsterisk={false} description="Input description" error="Input error" size="sm">
       <Input placeholder="Input inside Input.Wrapper" />
     </Input.Wrapper>
   );
@@ -160,10 +163,8 @@ function Wrapper() {
 
 `inputWrapperOrder` allows configuring the order of `Input.Wrapper` parts.
 It accepts an array of four elements: `label`, `input`, `error` and `description`.
-Note that it is not required to include all of them, you can use only those that you need
-– parts that are not included will not be rendered.
-
-#### Example: inputWrapperOrder
+Note that it is not required to include all of them – you can use only those that you need.
+Parts that are not included will not be rendered.
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -193,11 +194,9 @@ function Demo() {
 
 ## inputContainer
 
-With `inputContainer` prop, you can enhance inputs that use `Input.Wrapper` under the hood,
-for example, you can add [Tooltip](https://mantine.dev/core/tooltip/) to the [TextInput](https://mantine.dev/core/text-input/) when
+With the `inputContainer` prop, you can enhance inputs that use `Input.Wrapper` under the hood.
+For example, you can add a [Tooltip](https://mantine.dev/llms/core-tooltip.md) to the [TextInput](https://mantine.dev/llms/core-text-input.md) when
 the input is focused:
-
-#### Example: inputContainer
 
 ```tsx
 import { useState } from 'react';
@@ -228,8 +227,8 @@ function Demo() {
 
 All components that are based on `Input.Wrapper` support `required` and `withAsterisk` props.
 When set to true, both of these props will add a red asterisk to the end of the label.
-The only difference is whether input element will have `required` attribute, example with
-[TextInput](https://mantine.dev/core/text-input/) component:
+The only difference is whether the input element will have the `required` attribute. Example with
+the [TextInput](https://mantine.dev/llms/core-text-input.md) component:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -247,16 +246,14 @@ function AsteriskDemo() {
 
 ## error prop
 
-All inputs that use `Input.Wrapper` under the hood support `error` prop.
+All inputs that use `Input.Wrapper` under the hood support the `error` prop.
 When set to `true`, it will add a red border to the input. You can also pass a React node to display
-an error message below the input. To only display error message without a red border, set `error` prop
-to React node and `withErrorStyles={false}`:
-
-#### Example: error
+an error message below the input. To only display an error message without a red border, set the `error` prop
+to a React node and `withErrorStyles={false}`:
 
 ```tsx
 import { TextInput } from '@mantine/core';
-import { IconExclamationCircle } from '@tabler/icons-react';
+import { WarningCircleIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -277,7 +274,7 @@ function Demo() {
         withErrorStyles={false}
         rightSectionPointerEvents="none"
         rightSection={
-          <IconExclamationCircle
+          <WarningCircleIcon
             size={20}
             color="var(--mantine-color-error)"
           />
@@ -293,8 +290,6 @@ function Demo() {
 
 `Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom
 form layouts if the default `Input.Wrapper` layout does not meet your requirements.
-
-#### Example: compound
 
 ```tsx
 import { Input } from '@mantine/core';
@@ -313,10 +308,8 @@ function Demo() {
 
 ## Input.Placeholder component
 
-`Input.Placeholder` component can be used to add placeholder to `Input` and `InputBase` components that are based on `button` element
-or do not support placeholder property natively:
-
-#### Example: placeholder
+`Input.Placeholder` component can be used to add a placeholder to `Input` and `InputBase` components that are based on the `button` element
+or do not support the placeholder property natively:
 
 ```tsx
 import { Input } from '@mantine/core';
@@ -333,11 +326,9 @@ function Demo() {
 
 ## Input.ClearButton component
 
-Use `Input.ClearButton` component to add clear button to custom inputs
-based on `Input` component. `size` of the clear button is automatically
+Use the `Input.ClearButton` component to add a clear button to custom inputs
+based on the `Input` component. The `size` of the clear button is automatically
 inherited from the input:
-
-#### Example: clearButton
 
 ```tsx
 import { Input } from '@mantine/core';
@@ -352,7 +343,7 @@ function Demo(){
       onChange={(event) => setValue(event.currentTarget.value)}
       rightSection={value !== '' ? <Input.ClearButton onClick={() => setValue('')} /> : undefined}
       rightSectionPointerEvents="auto"
-      size="md"
+      size="sm"
     />
   );
 }
@@ -361,11 +352,9 @@ function Demo(){
 
 ## Default props on theme
 
-You can add [default props](https://mantine.dev/theming/default-props/) on [theme](https://mantine.dev/theming/theme-object/)
+You can add [default props](https://mantine.dev/llms/theming-default-props.md) on the [theme](https://mantine.dev/llms/theming-theme-object.md)
 to `Input` and `Input.Wrapper` components. These default props will be inherited by all inputs
-that use `Input` and `Input.Wrapper` under the hood ([TextInput](https://mantine.dev/core/text-input/), [NativeSelect](https://mantine.dev/core/native-select/), [Textarea](https://mantine.dev/core/textarea/), etc.):
-
-#### Example: defaultProps
+that use `Input` and `Input.Wrapper` under the hood ([TextInput](https://mantine.dev/llms/core-text-input.md), [NativeSelect](https://mantine.dev/llms/core-native-select.md), [Textarea](https://mantine.dev/llms/core-textarea.md), etc.):
 
 ```tsx
 import { TextInput, NativeSelect, MantineProvider, createTheme, Input } from '@mantine/core';
@@ -409,10 +398,8 @@ function Demo() {
 
 ## Styles on theme
 
-Same as with default props, you can use `Input` and `Input.Wrapper` [Styles API](https://mantine.dev/styles/styles-api/)
-on [theme](https://mantine.dev/theming/theme-object/) to add styles to all inputs:
-
-#### Example: sharedStyles
+Same as with default props, you can use `Input` and `Input.Wrapper` [Styles API](https://mantine.dev/llms/styles-styles-api.md)
+on the [theme](https://mantine.dev/llms/theming-theme-object.md) to add styles to all inputs:
 
 ```tsx
 // Demo.tsx
@@ -463,10 +450,8 @@ function Demo() {
 ## Change focus styles
 
 Use `&:focus-within` selector to change inputs focus styles. You can apply these styles to
-one component with `classNames` prop or to all inputs with [Styles API](https://mantine.dev/styles/styles-api/)
-on [theme](https://mantine.dev/theming/theme-object/).
-
-#### Example: focusStyles
+one component with `classNames` prop or to all inputs with [Styles API](https://mantine.dev/llms/styles-styles-api.md)
+on [theme](https://mantine.dev/llms/theming-theme-object.md).
 
 ```tsx
 // Demo.module.css
@@ -503,8 +488,6 @@ function Demo() {
 
 `InputBase` component combines `Input` and `Input.Wrapper` components and supports `component` prop:
 
-#### Example: inputBase
-
 ```tsx
 import { InputBase } from '@mantine/core';
 import { IMaskInput } from 'react-imask';
@@ -529,53 +512,6 @@ function Demo() {
 }
 ```
 
-
-## Styles API
-
-`Input` and `Input.Wrapper` components support [Styles API](https://mantine.dev/styles/styles-api) –
-you can customize styles of any inner element with `classNames` and `styles` props.
-
-`Input` Styles API selectors:
-
-#### Example: stylesApi
-
-```tsx
-import { Input } from '@mantine/core';
-
-function Demo() {
-  const at = <IconAt size={16} stroke={1.5} />;
-  const chevron = <IconChevronDown size={16} stroke={1.5} />;
-  return <Input placeholder="Input component" leftSection={at} rightSection={chevron} />;
-}
-```
-
-
-`Input.Wrapper` Styles API selectors:
-
-#### Example: wrapperStylesApi
-
-```tsx
-import { Input } from '@mantine/core';
-
-function Demo() {
-  return <Input.Wrapper label="Input label" description="Input description" error="Input error" withAsterisk />;
-}
-```
-
-
-<GetElementRef component="Input" refType="input" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { Input } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLInputElement>(null);
-  return <Input ref={ref} />;
-}
-```
 
 ## Accessibility
 
@@ -615,7 +551,7 @@ function Demo() {
 }
 ```
 
-You can use [use-id](https://mantine.dev/hooks/use-id) to generate unique ids:
+You can use [use-id](https://mantine.dev/llms/hooks-use-id.md) to generate unique ids:
 
 ```tsx
 import { Input } from '@mantine/core';
@@ -634,28 +570,104 @@ function Demo() {
 
 #### Props
 
+**Input props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
-| error | React.ReactNode | - | Determines whether the input should have error styles and <code>aria-invalid</code> attribute |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Determines whether the input should have error styles and `aria-invalid` attribute |
 | id | string | - | Input element id |
-| inputSize | string | - | <code>size</code> attribute passed down to the input element |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
-| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
-| leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
-| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
-| multiline | boolean | - | Determines whether the input can have multiple lines, for example when <code>component="textarea"</code> |
-| pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
-| required | boolean | - | Sets <code>required</code> attribute on the <code>input</code> element |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| multiline | boolean | - | Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| required | boolean | - | Sets `required` attribute on the `input` element |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
-| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
-| rightSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>rightSection</code> element |
-| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
-| size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
-| withAria | boolean | - | Determines whether <code>aria-</code> and other accessibility attributes should be added to the input |
-| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
-| wrapperProps | WrapperProps | - | Props passed down to the root element of the <code>Input</code> component |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| withAria | boolean | - | Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| wrapperProps | WrapperProps | - | Props passed down to the root element of the `Input` component |
+
+**Input.Base props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| multiline | boolean | - | If set, the input can have multiple lines, for example when `component="textarea"` |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| withAria | boolean | - | If set, `aria-` and other accessibility attributes are added to the input |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the root element (`Input.Wrapper` component) |
+
+**Input.Label props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| labelElement | "div" \| "label" | - | Root element of the label |
+| required | boolean | - | If set, the required asterisk is displayed next to the label |
+| size | MantineFontSize | - | Controls label `font-size` |
+
+**Input.Wrapper props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| id | string | - | Static id used as base to generate `aria-` attributes, by default generates random id |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelElement | "div" \| "label" | - | Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| size | MantineFontSize | - | Controls size of `Input.Label`, `Input.Description` and `Input.Error` components |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+
+**Input.Description props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| size | MantineFontSize | - | Controls description `font-size` |
+
+**Input.Error props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| size | MantineFontSize | - | Controls error `font-size` |
 
 
 #### Styles API

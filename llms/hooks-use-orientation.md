@@ -4,28 +4,46 @@ Import: import { UseOrientation } from '@mantine/hooks';
 
 ## Usage
 
-`useOrientation` returns an object with the current orientation of the device:
+The `useOrientation` hook returns an object with the current orientation of the device:
 
+```tsx
+import { Code, Text } from '@mantine/core';
+import { useOrientation } from '@mantine/hooks';
+
+function Demo() {
+  const { angle, type } = useOrientation();
+  return (
+    <>
+      <Text>
+        Angle: <Code>{angle}</Code>
+      </Text>
+      <Text>
+        Type: <Code>{type}</Code>
+      </Text>
+    </>
+  );
+}
+```
 
 
 ## Definition
 
 ```tsx
 interface UseOrientationOptions {
-  /** Default angle value, used until the real can be retrieved
-   * (during server side rendering and before js executes on the page)
-   * If not provided, the default value is `0`
+  /** Default angle value, used until the real value can be retrieved
+   * (during server-side rendering and before JS executes on the page).
+   * If not provided, the default value is `0`.
    * */
   defaultAngle?: number;
 
-  /** Default angle value, used until the real can be retrieved
-   * (during server side rendering and before js executes on the page)
-   * If not provided, the default value is `'landscape-primary'`
+  /** Default type value, used until the real value can be retrieved
+   * (during server-side rendering and before JS executes on the page).
+   * If not provided, the default value is `'landscape-primary'`.
    * */
   defaultType?: OrientationType;
 
-  /** If true, the initial value will be resolved in useEffect (ssr safe)
-   *  If false, the initial value will be resolved in useLayoutEffect (ssr unsafe)
+  /** If true, the initial value will be resolved in useEffect (SSR safe).
+   *  If false, the initial value will be resolved in useLayoutEffect (SSR unsafe).
    *  True by default.
    */
   getInitialValueInEffect?: boolean;
@@ -41,7 +59,7 @@ function useOrientation(options?: UseOrientationOptions): UseOrientationReturnTy
 
 ## Exported types
 
-`UseOrientationOptions` and `UseOrientationReturnType` types are exported from `@mantine/hooks` package,
+`UseOrientationOptions` and `UseOrientationReturnType` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

@@ -20,12 +20,12 @@ const form = useForm({
   },
 });
 
-// Errors object is empty by default
+// The errors object is empty by default
 form.errors; // -> {}
 
 // Errors will be filled when you call form.validate manually
-// or automatically with form.onSubmit handler
-form.validate();
+// or automatically with the form.onSubmit handler
+await form.validate();
 
 form.errors; // ->
 // {
@@ -36,7 +36,7 @@ form.errors; // ->
 
 ## Initial errors
 
-Same as with [initial values](https://mantine.dev/form/values/) you can set initial form errors:
+Same as with [initial values](https://mantine.dev/llms/form-values.md) you can set initial form errors:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -65,7 +65,7 @@ form.errors;
 
 ## setFieldError handler
 
-`form.setFieldError` handler sets error of the given field:
+The `form.setFieldError` handler sets the error for the given field:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -82,7 +82,7 @@ form.errors; // -> { email: 'Invalid email' }
 
 ## clearErrors handler
 
-`form.clearErrors` handler clear all form errors:
+The `form.clearErrors` handler clears all form errors:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -99,7 +99,7 @@ form.errors; // -> {}
 
 ## clearFieldError handler
 
-`form.clearFieldError` handler clears error of the given field:
+The `form.clearFieldError` handler clears the error for the given field:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -113,7 +113,7 @@ form.clearFieldError('name');
 form.errors; // -> { email: 'Invalid email' }
 ```
 
-## Errors as react node
+## Errors as React node
 
 You can use any React node as an error message:
 
@@ -140,18 +140,18 @@ const form = useForm({
   initialErrors: { name: 'name-error', email: null },
 });
 
-form.errors; // -> { name: 'name-error' }, email error is not included in errors object
+form.errors; // -> { name: 'name-error' }, email error is not included in the errors object
 ```
 
 ## FormErrors type
 
-`form.errors` type is `Record<string, React.ReactNode>`, you can import a shorthand `FormErrors` type from `@mantine/form`:
+`form.errors` type is `Record<string, React.ReactNode>`. You can import a shorthand `FormErrors` type from `@mantine/form`:
 
 ```tsx
 import type { FormErrors } from '@mantine/form';
 ```
 
-You can also get type directly from the `form` instance:
+You can also get the type directly from the `form` instance:
 
 ```tsx
 import { useForm } from '@mantine/form';

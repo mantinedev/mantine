@@ -1,0 +1,127 @@
+{
+  "id": "core-avatar",
+  "name": "Avatar",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/avatar",
+  "description": "Display user profile image, initials or fallback icon",
+  "propsCount": 11,
+  "llmUrl": "https://mantine.dev/llms/core-avatar.md",
+  "componentDataUrl": "/mcp/components/core-avatar.json",
+  "searchText": "avatar display user profile image, initials or fallback icon @mantine/core /core/avatar allowedinitialscolors alt autocontrast children color gradient imageprops name radius size src",
+  "source": "@mantine/core/src/components/Avatar/Avatar.tsx",
+  "docs": "core/avatar.mdx",
+  "markdown": "# Avatar\nPackage: @mantine/core\nImport: import { Avatar } from '@mantine/core';\nDescription: Display user profile image, initials or fallback icon\n\n## Usage\n\n```tsx\nimport { Avatar } from '@mantine/core';\nimport { StarIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <>\n      {/* With image */}\n      <Avatar src=\"avatar.png\" alt=\"it's me\" />\n\n      {/* Default placeholder */}\n      <Avatar radius=\"xl\" />\n\n      {/* Letters with xl radius */}\n      <Avatar color=\"cyan\" radius=\"xl\">MK</Avatar>\n\n      {/* Custom placeholder icon */}\n      <Avatar color=\"blue\" radius=\"sm\">\n        <StarIcon size={20} />\n      </Avatar>\n    </>\n  );\n}\n```\n\n\n## Initials\n\nTo display initials instead of the default placeholder, set the `name` prop\nto the name of the person, for example, `name=\"John Doe\"`. If the name\nis set, you can use `color=\"initials\"` to generate a color based on the name:\n\n```tsx\nimport { Avatar, Group } from '@mantine/core';\n\n${namesCode}\n\nfunction Demo() {\n  const avatars = names.map((name) => <Avatar key={name} name={name} color=\"initials\" />);\n  return <Group>{avatars}</Group>;\n}\n```\n\n\n## Allowed initials colors\n\nBy default, all colors from the default theme are allowed for initials. You can restrict them\nby providing the `allowedInitialsColors` prop with an array of colors. Note that the default colors\narray does not include custom colors defined in the theme – you need to provide them manually\nif needed.\n\n```tsx\nimport { Avatar, Group } from '@mantine/core';\n\n${namesCode}\n\nfunction Demo() {\n  const avatars = names.map((name) => (\n    <Avatar key={name} name={name} color=\"initials\" allowedInitialsColors={['blue', 'red']} />\n  ));\n  return <Group>{avatars}</Group>;\n}\n```\n\n\n## Placeholder\n\nIf the image cannot be loaded or is not provided, `Avatar` will display a placeholder instead. By default,\nthe placeholder is an icon, but it can be changed to any React node:\n\n```tsx\nimport { Avatar } from '@mantine/core';\nimport { StarIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <>\n      {/* Default placeholder */}\n      <Avatar src={null} alt=\"no image here\" />\n\n      {/* Default placeholder with custom color */}\n      <Avatar src={null} alt=\"no image here\" color=\"indigo\" />\n\n      {/* Placeholder with initials */}\n      <Avatar src={null} alt=\"Vitaly Rtishchev\" color=\"red\">VR</Avatar>\n\n      {/* Placeholder with custom icon */}\n      <Avatar color=\"blue\" radius=\"xl\">\n        <StarIcon size={20} />\n      </Avatar>\n    </>\n  );\n}\n```\n\n\n## Variants\n\n```tsx\nimport { Avatar } from '@mantine/core';\n\nfunction Demo() {\n  return <Avatar variant=\"filled\" radius=\"md\" size=\"md\" color=\"gray\" src=\"\" />;\n}\n```\n\n\n## Avatar.Group\n\nThe `Avatar.Group` component combines multiple avatars into a stack:\n\n```tsx\nimport { Avatar } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Avatar.Group>\n      <Avatar src=\"image.png\" />\n      <Avatar src=\"image.png\" />\n      <Avatar src=\"image.png\" />\n      <Avatar>+5</Avatar>\n    </Avatar.Group>\n  );\n}\n```\n\n\nNote that you must not wrap child `Avatar` components with any additional elements,\nbut you can wrap `Avatar` with components that do not render any HTML elements\nin the current tree, for example [Tooltip](https://mantine.dev/llms/core-tooltip.md).\n\n```tsx\nimport { Avatar } from '@mantine/core';\n\n// Will not work correctly\nfunction Demo() {\n  return (\n    <Avatar.Group spacing=\"sm\">\n      <div>\n        <Avatar src=\"image.png\" radius=\"xl\" />\n      </div>\n      <Avatar src=\"image.png\" radius=\"xl\" />\n      <Avatar src=\"image.png\" radius=\"xl\" />\n      <Avatar radius=\"xl\">+5</Avatar>\n    </Avatar.Group>\n  );\n}\n```\n\nExample of usage with [Tooltip](https://mantine.dev/llms/core-tooltip.md):\n\n```tsx\nimport { Avatar, Tooltip } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Tooltip.Group openDelay={300} closeDelay={100}>\n      <Avatar.Group spacing=\"sm\">\n        <Tooltip label=\"Salazar Troop\" withArrow>\n          <Avatar src=\"image.png\" radius=\"xl\" />\n        </Tooltip>\n        <Tooltip label=\"Bandit Crimes\" withArrow>\n          <Avatar src=\"image.png\" radius=\"xl\" />\n        </Tooltip>\n        <Tooltip label=\"Jane Rata\" withArrow>\n          <Avatar src=\"image.png\" radius=\"xl\" />\n        </Tooltip>\n        <Tooltip\n          withArrow\n          label={\n            <>\n              <div>John Outcast</div>\n              <div>Levi Capitan</div>\n            </>\n          }\n        >\n          <Avatar radius=\"xl\">+2</Avatar>\n        </Tooltip>\n      </Avatar.Group>\n    </Tooltip.Group>\n  );\n}\n```\n\n\nExample of using `Avatar` as a link:\n\n```tsx\nimport { Avatar } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Avatar\n      component=\"a\"\n      href=\"https://github.com/rtivital\"\n      target=\"_blank\"\n      src=\"avatar.png\"\n      alt=\"it's me\"\n    />\n  );\n}\n```\n\n\n## Accessibility\n\nAvatar renders an `<img />` HTML element. Set the `alt` prop to describe the image –\nit is also used as the `title` attribute for the avatar placeholder when the image cannot be loaded.\n\n```tsx\nimport { Avatar } from '@mantine/core';\n\nfunction Demo() {\n  // ❌ No alt for image\n  return <Avatar src=\"./image.png\" />;\n\n  // ✅ alt is set\n  return <Avatar src=\"./image.png\" alt=\"Rob Johnson\" />;\n\n  // ✅ title is not required, but still recommended\n  return <Avatar>RJ</Avatar>;\n\n  // ✅ title is set on placeholder\n  return <Avatar alt=\"Rob Johnson\">RJ</Avatar>;\n}\n```\n\n\n#### Props\n\n**Avatar props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowedInitialsColors | DefaultMantineColor[] | - | A list of colors that is used for autogenerated initials. By default, all default Mantine colors can be used except gray and dark. |\n| alt | string | - | Image `alt` attribute, also used as `title` attribute for placeholder |\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| children | React.ReactNode | - | Avatar placeholder, displayed when `src={null}` or when the image cannot be loaded |\n| color | DefaultMantineColor \\| \"initials\" | - | Key of `theme.colors` or any valid CSS color |\n| gradient | MantineGradient | - | Gradient configuration for `variant=\"gradient\"` |\n| imageProps | DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> | - | Attributes passed down to `img` element |\n| name | string | - | Name of the user. When `src` is not set, used to display initials and to generate color when `color=\"initials\"` is set. |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| size | MantineSize \\| number | - | Width and height of the avatar, numbers are converted to rem |\n| src | string \\| null | - | Image url, if the image cannot be loaded or `src={null}`, then placeholder is displayed instead |\n\n**Avatar.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n\n#### Styles API\n\nAvatar component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Avatar selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Avatar-root | Root element |\n| image | .mantine-Avatar-image | `img` element |\n| placeholder | .mantine-Avatar-placeholder | Avatar placeholder, displayed when the image cannot be loaded |\n\n**Avatar CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --avatar-bd | Controls placeholder `border` |\n| root | --avatar-bg | Controls placeholder `background` |\n| root | --avatar-color | Controls placeholder text `color` |\n| root | --avatar-size | Controls `width`, `min-width` and `height` |\n| root | --avatar-radius | Controls `border-radius` |\n\n**Avatar.Group selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| group | .mantine-AvatarGroup-group | Root element |\n\n**Avatar.Group CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| group | --ag-spacing | Controls negative spacing between avatars |\n",
+  "props": [
+    {
+      "name": "allowedInitialsColors",
+      "description": "A list of colors that is used for autogenerated initials. By default, all default Mantine colors can be used except gray and dark.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DefaultMantineColor[]"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "alt",
+      "description": "Image <code>alt</code> attribute, also used as <code>title</code> attribute for placeholder",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "children",
+      "description": "Avatar placeholder, displayed when <code>src={null}</code> or when the image cannot be loaded",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": "'gray'",
+      "type": {
+        "name": "DefaultMantineColor | \"initials\""
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "gradient",
+      "description": "Gradient configuration for <code>variant=\"gradient\"</code>",
+      "required": false,
+      "defaultValue": "theme.defaultGradient",
+      "type": {
+        "name": "MantineGradient"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "imageProps",
+      "description": "Attributes passed down to <code>img</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "name",
+      "description": "Name of the user. When <code>src</code> is not set, used to display initials and to generate color when <code>color=\"initials\"</code> is set.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "'1000px'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "size",
+      "description": "Width and height of the avatar, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Avatar"
+    },
+    {
+      "name": "src",
+      "description": "Image url, if the image cannot be loaded or <code>src={null}</code>, then placeholder is displayed instead",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | null"
+      },
+      "sourceComponent": "Avatar"
+    }
+  ]
+}

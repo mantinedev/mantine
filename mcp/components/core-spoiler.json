@@ -1,0 +1,117 @@
+{
+  "id": "core-spoiler",
+  "name": "Spoiler",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/spoiler",
+  "description": "Hide long sections of content under a spoiler",
+  "propsCount": 10,
+  "llmUrl": "https://mantine.dev/llms/core-spoiler.md",
+  "componentDataUrl": "/mcp/components/core-spoiler.json",
+  "searchText": "spoiler hide long sections of content under a spoiler @mantine/core /core/spoiler controlref defaultexpanded expanded hidearialabel hidelabel maxheight onexpandedchange showarialabel showlabel transitionduration",
+  "source": "@mantine/core/src/components/Spoiler/Spoiler.tsx",
+  "docs": "core/spoiler.mdx",
+  "markdown": "# Spoiler\nPackage: @mantine/core\nImport: import { Spoiler } from '@mantine/core';\nDescription: Hide long sections of content under a spoiler\n\n## Usage\n\nUse `Spoiler` to hide a long section of content.\nSet the `maxHeight` prop to control the point at which content will be hidden under the spoiler and the show/hide control appears.\nIf the content height is less than `maxHeight`, the spoiler will just render children.\n\n`hideLabel` and `showLabel` props are required – they are used as the spoiler toggle button label in the corresponding state.\n\n```tsx\nimport { Spoiler } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Spoiler maxHeight={120} showLabel=\"Show more\" hideLabel=\"Hide\">\n      {/* Content here */}\n    </Spoiler>\n  );\n}\n```\n\n\n## Control expanded state\n\nTo control the expanded state, use `expanded` and `onExpandedChange` props. Note that the\n`expanded` prop does not have any effect on spoiler visuals if the content height\nis less than the given `maxHeight`.\n\n```tsx\nimport { useState } from 'react';\nimport { Spoiler } from '@mantine/core';\n\nfunction Demo() {\n  const [expanded, setExpanded] = useState(false);\n\n  return (\n    <Spoiler\n      showLabel=\"Show more\"\n      hideLabel=\"Hide details\"\n      expanded={expanded}\n      onExpandedChange={setExpanded}\n    >\n      {/* Spoiler content */}\n    </Spoiler>\n  );\n}\n```\n\n## Subscribe to expanded state changes\n\nUse `onExpandedChange` to subscribe to expanded state changes:\n\n```tsx\nimport { Spoiler } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Spoiler\n      showLabel=\"Show more\"\n      hideLabel=\"Hide details\"\n      onExpandedChange={(expanded) => console.log(expanded)}\n    >\n      {/* Spoiler content */}\n    </Spoiler>\n  );\n}\n```\n\n## Transition duration\n\nControl the transition duration by setting the `transitionDuration` prop (transition-duration CSS property in ms).\nTo disable animations, set `transitionDuration={0}`:\n\n```tsx\nimport { Spoiler } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Spoiler maxHeight={120} showLabel=\"Show more\" hideLabel=\"Hide\" transitionDuration={0}>\n      {/* Content here */}\n    </Spoiler>\n  );\n}\n```\n\n\n## Get control ref\n\n```tsx\nimport { useRef } from 'react';\nimport { Spoiler } from '@mantine/core';\n\nfunction Demo() {\n  const spoilerControlRef = useRef<HTMLButtonElement>(null);\n  return (\n    <Spoiler\n      controlRef={spoilerControlRef}\n      hideLabel=\"Hide\"\n      showLabel=\"Show\"\n    />\n  );\n}\n```\n\n## Accessibility\n\nThe Spoiler component implements proper ARIA attributes for screen reader support:\n\n* Toggle button has `aria-expanded` indicating the expanded/collapsed state\n* Content region has `role=\"region\"` and is associated with the button via `aria-controls`\n* Keyboard support: Space or Enter key toggles the spoiler when the button is focused\n\n### Best practices for label text\n\nProvide descriptive labels for `showLabel` and `hideLabel` props that clearly indicate the action:\n\n```tsx\n// Good - clear, descriptive labels\n<Spoiler showLabel=\"Show full article\" hideLabel=\"Hide article\" />\n<Spoiler showLabel=\"Expand details\" hideLabel=\"Collapse details\" />\n\n// Avoid vague labels\n<Spoiler showLabel=\"More\" hideLabel=\"Less\" />\n<Spoiler showLabel=\"...\" hideLabel=\"...\" />\n```\n\n### Custom accessibility labels\n\nIf your button labels don't clearly describe the action for screen reader users, use the `showAriaLabel` and `hideAriaLabel` props to provide custom ARIA labels:\n\n```tsx\nimport { Spoiler } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Spoiler\n      showLabel=\"👁️\"\n      hideLabel=\"👁️\"\n      showAriaLabel=\"Show discussion comments\"\n      hideAriaLabel=\"Hide discussion comments\"\n    >\n      {/* Comments content */}\n    </Spoiler>\n  );\n}\n```\n\n\n#### Props\n\n**Spoiler props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| controlRef | Ref<HTMLButtonElement> | - | Ref of the toggle button element |\n| defaultExpanded | boolean | - | Initial expanded state in uncontrolled mode. If `true`, content starts expanded. If `false`, content starts collapsed |\n| expanded | boolean | - | Controlled expanded state value |\n| hideAriaLabel | string | - | Accessible label for the toggle button when expanded. If not set, `hideLabel` is used |\n| hideLabel | React.ReactNode | required | Content displayed in the toggle button when content is expanded (to collapse) |\n| maxHeight | number | - | Maximum height of visible content in px. When content exceeds this height, the toggle control appears |\n| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes (when spoiler visibility is toggled by the user) |\n| showAriaLabel | string | - | Accessible label for the toggle button when collapsed. If not set, `showLabel` is used |\n| showLabel | React.ReactNode | required | Content displayed in the toggle button when content is collapsed (to expand) |\n| transitionDuration | number | - | Spoiler reveal transition duration in ms. Set to 0 to disable animation |\n\n\n#### Styles API\n\nSpoiler component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Spoiler selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Spoiler-root | Root element |\n| content | .mantine-Spoiler-content | Wraps content to set max-height and transition |\n| control | .mantine-Spoiler-control | Show/hide content control |\n\n**Spoiler CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --spoiler-transition-duration | Controls transition duration |\n\n**Spoiler data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-has-spoiler | Whether the control button is shown or not | - |\n",
+  "props": [
+    {
+      "name": "controlRef",
+      "description": "Ref of the toggle button element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<HTMLButtonElement>"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "defaultExpanded",
+      "description": "Initial expanded state in uncontrolled mode. If <code>true</code>, content starts expanded. If <code>false</code>, content starts collapsed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "expanded",
+      "description": "Controlled expanded state value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "hideAriaLabel",
+      "description": "Accessible label for the toggle button when expanded. If not set, <code>hideLabel</code> is used",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "hideLabel",
+      "description": "Content displayed in the toggle button when content is expanded (to collapse)",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "maxHeight",
+      "description": "Maximum height of visible content in px. When content exceeds this height, the toggle control appears",
+      "required": false,
+      "defaultValue": "100",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "onExpandedChange",
+      "description": "Called when expanded state changes (when spoiler visibility is toggled by the user)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(expanded: boolean) => void"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "showAriaLabel",
+      "description": "Accessible label for the toggle button when collapsed. If not set, <code>showLabel</code> is used",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "showLabel",
+      "description": "Content displayed in the toggle button when content is collapsed (to expand)",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Spoiler"
+    },
+    {
+      "name": "transitionDuration",
+      "description": "Spoiler reveal transition duration in ms. Set to 0 to disable animation",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Spoiler"
+    }
+  ]
+}

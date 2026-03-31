@@ -1,0 +1,168 @@
+# How can I load fonts in Next.js?
+A guide to load custom fonts in Next.js with CSS and next/font package
+
+## Loading fonts with next/font package
+
+To load fonts with the [next/font](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts)
+package, create the following folder structure (this example uses the Roboto custom font):
+
+```plaintext
+Roboto/
+├─ Roboto-Bold.woff2
+├─ Roboto-Heavy.woff2
+├─ Roboto.ts
+```
+
+In the `Roboto.ts` file, add the following code:
+
+```tsx
+import localFont from 'next/font/local';
+
+export const roboto = localFont({
+  src: [
+    {
+      path: './Roboto-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './Roboto-Heavy.woff2',
+      weight: '900',
+      style: 'normal',
+    },
+  ],
+});
+```
+
+Then add the font to your [theme](https://mantine.dev/theming/theme-object/):
+
+```tsx
+import '@mantine/core/styles.css';
+
+import {
+  createTheme,
+  DEFAULT_THEME,
+  MantineProvider,
+} from '@mantine/core';
+import { roboto } from './Roboto';
+
+const theme = createTheme({
+  fontFamily: roboto.style.fontFamily,
+  fontFamilyMonospace: 'Monaco, Courier, monospace',
+  headings: {
+    // Use default theme if you want to provide default Mantine fonts as a fallback
+    fontFamily: `${roboto.style.fontFamily}, ${DEFAULT_THEME.fontFamily}`,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>Your app here</MantineProvider>
+  );
+}
+```
+
+## Loading fonts without next/font package
+
+Create the following folder structure (the example with Roboto custom font):
+
+```plaintext
+Roboto/
+├─ Roboto-Bold.woff2
+├─ Roboto-Heavy.woff2
+├─ Roboto.css
+```
+
+In `Roboto.css` file, add the following code:
+
+```css
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto-Heavy.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+```
+
+Then import `Roboto.css` file at the root of your application and
+add the font to your [theme](https://mantine.dev/theming/theme-object/):
+
+```tsx
+import {
+  createTheme,
+  DEFAULT_THEME,
+  MantineProvider,
+} from '@mantine/core';
+
+import '@mantine/core/styles.css';
+import './Roboto/Roboto.css';
+
+const theme = createTheme({
+  fontFamily: 'Roboto, sans-serif',
+  fontFamilyMonospace: 'Monaco, Courier, monospace',
+  headings: {
+    // Use default theme if you want to provide default Mantine fonts as a fallback
+    fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>Your app here</MantineProvider>
+  );
+}
+```
+
+## Load fonts from Google Fonts
+
+Selects fonts you want to use at [Google Fonts](https://fonts.google.com/) and copy
+HTML code snippet. For example, to load [Roboto](https://fonts.google.com/specimen/Roboto)
+font, the code you receive from Google Fonts will look something like this:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Add the code to the [head](https://nextjs.org/docs/pages/api-reference/components/head)
+of your application and add the font to your [theme](https://mantine.dev/theming/theme-object/):
+
+```tsx
+import '@mantine/core/styles.css';
+
+import {
+  createTheme,
+  DEFAULT_THEME,
+  MantineProvider,
+} from '@mantine/core';
+
+const theme = createTheme({
+  fontFamily: 'Roboto, sans-serif',
+  fontFamilyMonospace: 'Monaco, Courier, monospace',
+  headings: {
+    // Use default theme if you want to provide default Mantine fonts as a fallback
+    fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>Your app here</MantineProvider>
+  );
+}
+```
+
+Alternatively, you can download fonts from Google Fonts and load them with
+[next/font](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts)
+package to have Next.js fonts optimization feature.

@@ -1,0 +1,37 @@
+{
+  "id": "core-background-image",
+  "name": "BackgroundImage",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/background-image",
+  "description": "Displays image as background",
+  "propsCount": 2,
+  "llmUrl": "https://mantine.dev/llms/core-background-image.md",
+  "componentDataUrl": "/mcp/components/core-background-image.json",
+  "searchText": "backgroundimage displays image as background @mantine/core /core/background-image radius src",
+  "source": "@mantine/core/src/components/BackgroundImage/BackgroundImage.tsx",
+  "docs": "core/background-image.mdx",
+  "markdown": "# BackgroundImage\nPackage: @mantine/core\nImport: import { BackgroundImage } from '@mantine/core';\nDescription: Displays image as background\n\n## Usage\n\n```tsx\nimport { BackgroundImage, Center, Text, Box } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <Box maw={300} mx=\"auto\">\n      <BackgroundImage\n        src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png\"\n         radius=\"md\"\n      >\n        <Center p=\"md\">\n          <Text c=\"white\">\n            BackgroundImage component can be used to add any content on image. It is useful for hero\n            headers and other similar sections\n          </Text>\n        </Center>\n      </BackgroundImage>\n    </Box>\n  );\n}\n```\n\n\n\n#### Props\n\n**BackgroundImage props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem |\n| src | string | required | Image url |\n\n\n#### Styles API\n\nBackgroundImage component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**BackgroundImage selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-BackgroundImage-root | Root element |\n\n**BackgroundImage CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --bi-radius | Controls `border-radius` |\n",
+  "props": [
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "BackgroundImage"
+    },
+    {
+      "name": "src",
+      "description": "Image url",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "BackgroundImage"
+    }
+  ]
+}

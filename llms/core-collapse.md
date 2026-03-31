@@ -5,14 +5,12 @@ Description: Animate presence with slide down/up transition
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Button, Group, Text, Collapse, Box } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [expanded, { toggle }] = useDisclosure(false);
 
   return (
     <Box maw={400} mx="auto">
@@ -20,7 +18,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle content</Button>
       </Group>
 
-      <Collapse in={opened}>
+      <Collapse expanded={expanded}>
         <Text>{/* ... content */}</Text>
       </Collapse>
     </Box>
@@ -29,22 +27,47 @@ function Demo() {
 ```
 
 
+## Horizontal orientation
+
+```tsx
+import { Button, Collapse, Stack, Typography } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [expanded, handlers] = useDisclosure(false);
+
+  return (
+    <Stack h={240} align="flex-start">
+      <Button onClick={handlers.toggle} w="fit-content">
+        {expanded ? 'Collapse' : 'Expand'}
+      </Button>
+
+      <Collapse expanded={expanded} orientation="horizontal">
+        <Typography bg="var(--mantine-color-blue-light)" p="xs" bdrs="md" w={200}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua.
+        </Typography>
+      </Collapse>
+    </Stack>
+  );
+}
+```
+
+
 ## Change transition
 
-Set following props to control transition:
+Set the following props to control the transition:
 
 * `transitionDuration` – duration in ms
 * `transitionTimingFunction` – timing function (ease, linear, etc.), defaults to `ease`
 * `onTransitionEnd` – called when transition ends (both open and close)
-
-#### Example: transition
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
 import { Button, Group, Text, Collapse, Box } from '@mantine/core';
 
 function Demo() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [expanded, { toggle }] = useDisclosure(false);
 
   return (
     <Box maw={400} mx="auto">
@@ -52,7 +75,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle with linear transition</Button>
       </Group>
 
-      <Collapse in={opened} transitionDuration={1000} transitionTimingFunction="linear">
+      <Collapse expanded={expanded} transitionDuration={1000} transitionTimingFunction="linear">
         <Text>{/* ...content */}</Text>
       </Collapse>
     </Box>
@@ -61,9 +84,7 @@ function Demo() {
 ```
 
 
-## Nested Collapse components
-
-#### Example: nested
+## Example: nested Collapse components
 
 ```tsx
 function Demo() {
@@ -85,14 +106,50 @@ function Demo() {
 ```
 
 
+## use-collapse hook
+
+[use-collapse](https://mantine.dev/llms/hooks-use-collapse.md) is the hook version of the `Collapse` component.
+It allows more flexible usage and control over the collapse behavior.
+
+```tsx
+import { Button, Typography } from '@mantine/core';
+import { useCollapse, useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [expanded, handlers] = useDisclosure(false);
+  const getCollapseProps = useCollapse({ expanded });
+
+  return (
+    <>
+      <Button onClick={handlers.toggle} mb="md">
+        {expanded ? 'Collapse' : 'Expand'}
+      </Button>
+
+      <div {...getCollapseProps()}>
+        <Typography bg="var(--mantine-color-blue-light)" p="xs" bdrs="md">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </Typography>
+      </div>
+    </>
+  );
+}
+```
+
+
 
 #### Props
 
+**Collapse props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| animateOpacity | boolean | - | Determines whether opacity should be animated |
-| in | boolean | required | Opened state |
-| keepMounted | boolean | - | Keep element in DOM when collapsed, useful for nested collapses |
-| onTransitionEnd | () => void | - | Called each time transition ends |
+| animateOpacity | boolean | - | Determines whether the opacity is animated |
+| expanded | boolean | required | Expanded state |
+| keepMounted | boolean | - | If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. |
+| onTransitionEnd | () => void | - | Called when the transition ends |
+| onTransitionStart | () => void | - | Called when transition starts |
+| orientation | "horizontal" \| "vertical" | - | Collapse orientation |
 | transitionDuration | number | - | Transition duration in ms |
 | transitionTimingFunction | string | - | Transition timing function |

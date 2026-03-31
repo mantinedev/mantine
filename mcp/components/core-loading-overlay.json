@@ -1,0 +1,107 @@
+{
+  "id": "core-loading-overlay",
+  "name": "LoadingOverlay",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/loading-overlay",
+  "description": "An overlay with centered loader",
+  "propsCount": 9,
+  "llmUrl": "https://mantine.dev/llms/core-loading-overlay.md",
+  "componentDataUrl": "/mcp/components/core-loading-overlay.json",
+  "searchText": "loadingoverlay an overlay with centered loader @mantine/core /core/loading-overlay loaderprops onenter onentered onexit onexited overlayprops transitionprops visible zindex",
+  "source": "@mantine/core/src/components/LoadingOverlay/LoadingOverlay.tsx",
+  "docs": "core/loading-overlay.mdx",
+  "markdown": "# LoadingOverlay\nPackage: @mantine/core\nImport: import { LoadingOverlay } from '@mantine/core';\nDescription: An overlay with centered loader\n\n## Usage\n\n`LoadingOverlay` renders an overlay with a loader over the parent element with relative position.\nIt is usually used to indicate the loading state of forms.\nNote that elements under the overlay are still focusable with the keyboard, so remember to add additional logic to handle this case.\n\nThe `LoadingOverlay` rendering is controlled by the `visible` prop:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { LoadingOverlay, Button, Group, Box } from '@mantine/core';\n\nfunction Demo() {\n  const [visible, { toggle }] = useDisclosure(false);\n\n  // Note that position: relative is required\n  return (\n    <>\n      <Box pos=\"relative\">\n        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: \"sm\", blur: 2 }} />\n        {/* ...other content */}\n      </Box>\n\n      <Group justify=\"center\">\n        <Button onClick={toggle}>Toggle overlay</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Loader props\n\nYou can pass props down to the [Loader](https://mantine.dev/llms/core-loader.md) component with `loaderProps`:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { LoadingOverlay, Button, Group, Box } from '@mantine/core';\n\nfunction Demo() {\n  const [visible, { toggle }] = useDisclosure(true);\n\n  // Note that position: relative is required\n  return (\n    <>\n      <Box pos=\"relative\">\n        <LoadingOverlay\n          visible={visible}\n          zIndex={1000}\n          overlayProps={{ radius: 'sm', blur: 2 }}\n          loaderProps={{ color: 'pink', type: 'bars' }}\n        />\n        {/* ...other content */}\n      </Box>\n\n      <Group justify=\"center\">\n        <Button onClick={toggle}>Toggle overlay</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Custom inline loaders\n\nTo replace the default loader with any custom content, set `loaderProps={{ children: <div>Your content</div> }}`.\nYou can put any React node inside `loaderProps.children`:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { LoadingOverlay, Button, Group, Box } from '@mantine/core';\n\nfunction Demo() {\n  const [visible, { toggle }] = useDisclosure(false);\n\n  return (\n    <>\n      <Box pos=\"relative\">\n        <LoadingOverlay visible={visible} loaderProps={{ children: 'Loading...' }} />\n        {/* ...other content */}\n      </Box>\n\n      <Group justify=\"center\">\n        <Button onClick={toggle}>Toggle overlay</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**LoadingOverlay props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| loaderProps | LoaderProps | - | Props passed down to `Loader` component |\n| onEnter | () => void | - | Called when transition starts |\n| onEntered | () => void | - | Called when transition ends |\n| onExit | () => void | - | Called when exit transition starts |\n| onExited | () => void | - | Called when exit transition ends |\n| overlayProps | OverlayProps | - | Props passed down to `Overlay` component. Use to customizing blur, opacity, color and other properties. |\n| transitionProps | TransitionProps | - | Props passed down to `Transition` component. Set `duration` to create custom transition or override default transition. |\n| visible | boolean | - | Controls overlay visibility. Typically used with state (useState, useDisclosure). |\n| zIndex | string \\| number | - | Controls `z-index` of both the overlay and loader. The loader receives `z-index + 1`. |\n\n\n#### Styles API\n\nLoadingOverlay component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**LoadingOverlay selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-LoadingOverlay-root | Root element |\n| overlay | .mantine-LoadingOverlay-overlay | `Overlay` component |\n| loader | .mantine-LoadingOverlay-loader | `Loader` component |\n\n**LoadingOverlay CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --lo-z-index | Controls `z-index` of the overlay and loader |\n",
+  "props": [
+    {
+      "name": "loaderProps",
+      "description": "Props passed down to <code>Loader</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "LoaderProps"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "onEnter",
+      "description": "Called when transition starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "onEntered",
+      "description": "Called when transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "onExit",
+      "description": "Called when exit transition starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "onExited",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to <code>Overlay</code> component. Use to customizing blur, opacity, color and other properties.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OverlayProps"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props passed down to <code>Transition</code> component. Set <code>duration</code> to create custom transition or override default transition.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "visible",
+      "description": "Controls overlay visibility. Typically used with state (useState, useDisclosure).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LoadingOverlay"
+    },
+    {
+      "name": "zIndex",
+      "description": "Controls <code>z-index</code> of both the overlay and loader. The loader receives <code>z-index + 1</code>.",
+      "required": false,
+      "defaultValue": "400",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "LoadingOverlay"
+    }
+  ]
+}

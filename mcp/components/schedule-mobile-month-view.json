@@ -1,0 +1,336 @@
+{
+  "id": "schedule-mobile-month-view",
+  "name": "MobileMonthView",
+  "kind": "component",
+  "package": "@mantine/schedule",
+  "route": "/schedule/mobile-month-view",
+  "description": "Mobile-optimized schedule month view component",
+  "propsCount": 28,
+  "llmUrl": "https://mantine.dev/llms/schedule-mobile-month-view.md",
+  "componentDataUrl": "/mcp/components/schedule-mobile-month-view.json",
+  "searchText": "mobilemonthview mobile-optimized schedule month view component @mantine/schedule /schedule/mobile-month-view consistentweeks date defaultselecteddate events eventsheaderformat firstdayofweek getdayprops getweeknumberprops highlighttoday labels locale mode ondatechange ondayclick oneventclick onselecteddatechange onweeknumberclick onyearclick radius recurrenceexpansionlimit renderevent renderheader selecteddate weekdayformat weekenddays withoutsidedays withweekdays withweeknumbers",
+  "source": "@mantine/schedule/src/components/MobileMonthView/MobileMonthView.tsx",
+  "docs": "schedule/mobile-month-view.mdx",
+  "markdown": "# MobileMonthView\nPackage: @mantine/schedule\nImport: import { MobileMonthView } from '@mantine/schedule';\nDescription: Mobile-optimized schedule month view component\n\n## Usage\n\nMobileMonthView is a mobile-optimized calendar view that displays a month grid at the top with event indicators, and a list of events for the selected day at the bottom. This component is designed to work similarly to how calendar applications work on iOS.\n\nThe component does not include drag-and-drop functionality and is optimized for touch interactions on mobile devices.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={regularEvents}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## With week numbers\n\nSet `withWeekNumbers` to display week numbers in the first column.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={regularEvents}\n      withWeekNumbers\n    />\n  );\n}\n```\n\n\n## With outside days\n\nBy default, days from the previous and next months are hidden. Set `withOutsideDays` to display them.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={regularEvents}\n      withOutsideDays\n    />\n  );\n}\n```\n\n\n## Highlight today\n\nSet `highlightToday={false}` to disable highlighting the current day.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={events}\n      highlightToday={false}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## First day of week\n\nSet `firstDayOfWeek` to control which day starts the week. 0 is Sunday, 1 is Monday (default), etc.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={events}\n      firstDayOfWeek={0}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## Custom header\n\nUse `renderHeader` to customize the header. The callback receives the default header element,\nthe current mode, and the current date, allowing you to wrap or replace the default header.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { Badge } from '@mantine/core';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={events}\n      renderHeader={({ defaultHeader }) => (\n        <>\n          {defaultHeader}\n          <Badge variant=\"light\" size=\"sm\">3 events today</Badge>\n        </>\n      )}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## Consistent weeks\n\nSet `consistentWeeks={false}` to only show weeks that have days in the current month.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={events}\n      consistentWeeks={false}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## Weekday format\n\nUse `weekdayFormat` prop to customize the weekday names display. It accepts dayjs format strings.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={events}\n      weekdayFormat=\"ddd\"\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## Without week days\n\nSet `withWeekDays={false}` to hide the weekday names row.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={events}\n      withWeekDays={false}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## Static mode\n\nSet `mode=\"static\"` to disable all interactions. In this mode, days are not clickable and no selection changes occur.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return (\n    <MobileMonthView\n      date={dayjs().format('YYYY-MM-DD')}\n      selectedDate={dayjs().format('YYYY-MM-DD')}\n      events={regularEvents}\n      mode=\"static\"\n    />\n  );\n}\n```\n\n\n## Localization\n\nUse `locale` prop to set the dayjs locale for date formatting.\nCombine it with `labels` prop to translate all UI text.\n\n```tsx\n// Demo.tsx\nimport 'dayjs/locale/es';\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MobileMonthView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <MobileMonthView\n      date={date}\n      onDateChange={setDate}\n      selectedDate={selectedDate}\n      onSelectedDateChange={setSelectedDate}\n      events={events}\n      locale=\"es\"\n      labels={{\n        day: 'Día',\n        week: 'Semana',\n        month: 'Mes',\n        year: 'Año',\n        today: 'Hoy',\n        previous: 'Anterior',\n        next: 'Siguiente',\n        noEvents: 'Sin eventos',\n      }}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisMonth = dayjs().format('YYYY-MM');\n\nexport const events = [\n  {\n    id: 1,\n    title: 'Team Meeting',\n    start: \\`\\${thisMonth}-05 09:00:00\\`,\n    end: \\`\\${thisMonth}-05 10:00:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Project Review',\n    start: \\`\\${thisMonth}-05 14:00:00\\`,\n    end: \\`\\${thisMonth}-05 15:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Conference',\n    start: \\`\\${thisMonth}-10 00:00:00\\`,\n    end: \\`\\${thisMonth}-12 00:00:00\\`,\n    color: 'violet',\n  },\n  // ... more events\n];\n```\n\n\n## Accessibility\n\nMobileMonthView follows the same keyboard navigation patterns as [MonthView](./month-view.mdx#accessibility).\n\n### Focus management\n\nThe first day of the month is included in the tab order (`tabIndex={0}`), while all other days have `tabIndex={-1}`. When a day receives focus via arrow key navigation, the component updates `tabIndex` values so that the newly focused day becomes the tab stop.\n\n### Keyboard interactions\n\n### Day labels\n\nEach day button has an `aria-label` attribute with the full date in the format \"Month Day, Year\" (e.g., \"November 15, 2025\"). This provides screen reader users with complete date information.\n\n\n#### Props\n\n**MobileMonthView props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| consistentWeeks | boolean | - | If set, always renders 6 weeks in the month view |\n| date | string \\| Date | required | Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format |\n| defaultSelectedDate | string \\| Date \\| null | - | Default selected date (uncontrolled) |\n| events | ScheduleEventData[] | - | Events to display |\n| eventsHeaderFormat | string \\| ((date: string) => string) | - | Format for the events list header date |\n| firstDayOfWeek | 0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |\n| getDayProps | (date: string) => Record<string, any> | - | Props passed down to the day button |\n| getWeekNumberProps | (weekStartDate: string) => Record<string, any> | - | Props passed down to the week number button |\n| highlightToday | boolean | - | If set, highlights the current day |\n| labels | Partial<ScheduleLabels> | - | Labels override for i18n |\n| locale | string | - | Locale passed down to dayjs, overrides value defined on `DatesProvider` |\n| mode | ScheduleMode | - | Interaction mode: 'default' allows all interactions, 'static' disables event interactions |\n| onDateChange | (value: string) => void | - | Called with the new date value when a date is selected |\n| onDayClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when day is clicked |\n| onEventClick | (event: ScheduleEventData, e: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when event is clicked |\n| onSelectedDateChange | (value: string \\| null) => void | - | Called when selected date changes |\n| onWeekNumberClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called with first day of the week when week number is clicked |\n| onYearClick | () => void | - | Called when the year back button in the header is clicked |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| recurrenceExpansionLimit | number | - | Max number of generated recurring instances per recurring series |\n| renderEvent | RenderEvent | - | Function to fully customize event rendering, receives all props that would be passed to the root element including children |\n| renderHeader | (input: MobileMonthViewRenderHeaderInput) => ReactNode | - | Custom header renderer, receives object with mode, date, and default header element |\n| selectedDate | string \\| Date \\| null | - | Currently selected date (controlled) |\n| weekdayFormat | string \\| ((date: string) => string) | - | `dayjs` format for weekdays names. By default, the first letter of the weekday. |\n| weekendDays | (0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |\n| withOutsideDays | boolean | - | If set, days from the previous and next months are displayed to fill the weeks |\n| withWeekDays | boolean | - | If set, weekdays names are displayed in the first row |\n| withWeekNumbers | boolean | - | If set, week numbers are displayed in the first column |\n\n\n#### Styles API\n\nMobileMonthView component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**MobileMonthView selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| mobileMonthView | .mantine-MobileMonthView-mobileMonthView | Root element |\n| mobileMonthViewHeader | .mantine-MobileMonthView-mobileMonthViewHeader | Header container with back button and month label |\n| mobileMonthViewHeaderBackButton | .mantine-MobileMonthView-mobileMonthViewHeaderBackButton | Back button with year text |\n| mobileMonthViewHeaderLabel | .mantine-MobileMonthView-mobileMonthViewHeaderLabel | Month and year label in the header |\n| mobileMonthViewCalendar | .mantine-MobileMonthView-mobileMonthViewCalendar | Calendar grid container |\n| mobileMonthViewWeekdays | .mantine-MobileMonthView-mobileMonthViewWeekdays | Weekdays row |\n| mobileMonthViewWeekday | .mantine-MobileMonthView-mobileMonthViewWeekday | Individual weekday name |\n| mobileMonthViewWeekdaysCorner | .mantine-MobileMonthView-mobileMonthViewWeekdaysCorner | Weekdays corner (for week numbers) |\n| mobileMonthViewWeek | .mantine-MobileMonthView-mobileMonthViewWeek | Week row |\n| mobileMonthViewWeekNumber | .mantine-MobileMonthView-mobileMonthViewWeekNumber | Week number button |\n| mobileMonthViewDay | .mantine-MobileMonthView-mobileMonthViewDay | Day cell button |\n| mobileMonthViewDayIndicators | .mantine-MobileMonthView-mobileMonthViewDayIndicators | Day indicators container |\n| mobileMonthViewDayIndicator | .mantine-MobileMonthView-mobileMonthViewDayIndicator | Individual day indicator dot |\n| mobileMonthViewEventsList | .mantine-MobileMonthView-mobileMonthViewEventsList | Events list container |\n| mobileMonthViewEventsHeader | .mantine-MobileMonthView-mobileMonthViewEventsHeader | Events list header (selected date) |\n| mobileMonthViewEvent | .mantine-MobileMonthView-mobileMonthViewEvent | Event item button |\n| mobileMonthViewEventColor | .mantine-MobileMonthView-mobileMonthViewEventColor | Event color indicator |\n| mobileMonthViewEventBody | .mantine-MobileMonthView-mobileMonthViewEventBody | Event body layout container |\n| mobileMonthViewEventTitle | .mantine-MobileMonthView-mobileMonthViewEventTitle | Event title text |\n| mobileMonthViewEventTime | .mantine-MobileMonthView-mobileMonthViewEventTime | Event time label |\n| mobileMonthViewNoEvents | .mantine-MobileMonthView-mobileMonthViewNoEvents | No events message |\n\n**MobileMonthView CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| mobileMonthView | --mobile-month-view-radius | Controls border radius |\n",
+  "props": [
+    {
+      "name": "consistentWeeks",
+      "description": "If set, always renders 6 weeks in the month view",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "date",
+      "description": "Date to display, Date object or date string in <code>YYYY-MM-DD 00:00:00</code> format",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "defaultSelectedDate",
+      "description": "Default selected date (uncontrolled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date | null"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "events",
+      "description": "Events to display",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleEventData[]"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "eventsHeaderFormat",
+      "description": "Format for the events list header date",
+      "required": false,
+      "defaultValue": "'dddd, MMMM D'",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "firstDayOfWeek",
+      "description": "Number 0-6, where 0 – Sunday and 6 – Saturday.",
+      "required": false,
+      "defaultValue": "1 – Monday",
+      "type": {
+        "name": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+        "raw": "DayOfWeek | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "0"
+          },
+          {
+            "value": "2"
+          },
+          {
+            "value": "1"
+          },
+          {
+            "value": "3"
+          },
+          {
+            "value": "4"
+          },
+          {
+            "value": "5"
+          },
+          {
+            "value": "6"
+          }
+        ]
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "getDayProps",
+      "description": "Props passed down to the day button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Record<string, any>"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "getWeekNumberProps",
+      "description": "Props passed down to the week number button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(weekStartDate: string) => Record<string, any>"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "highlightToday",
+      "description": "If set, highlights the current day",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "labels",
+      "description": "Labels override for i18n",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ScheduleLabels>"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "locale",
+      "description": "Locale passed down to dayjs, overrides value defined on <code>DatesProvider</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "mode",
+      "description": "Interaction mode: 'default' allows all interactions, 'static' disables event interactions",
+      "required": false,
+      "defaultValue": "'default'",
+      "type": {
+        "name": "ScheduleMode",
+        "raw": "ScheduleMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"static\""
+          }
+        ]
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "onDateChange",
+      "description": "Called with the new date value when a date is selected",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "onDayClick",
+      "description": "Called when day is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "onEventClick",
+      "description": "Called when event is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData, e: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "onSelectedDateChange",
+      "description": "Called when selected date changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string | null) => void"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "onWeekNumberClick",
+      "description": "Called with first day of the week when week number is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "onYearClick",
+      "description": "Called when the year back button in the header is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "recurrenceExpansionLimit",
+      "description": "Max number of generated recurring instances per recurring series",
+      "required": false,
+      "defaultValue": "2000",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "renderEvent",
+      "description": "Function to fully customize event rendering, receives all props that would be passed to the root element including children",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RenderEvent"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "renderHeader",
+      "description": "Custom header renderer, receives object with mode, date, and default header element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(input: MobileMonthViewRenderHeaderInput) => ReactNode"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "selectedDate",
+      "description": "Currently selected date (controlled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date | null"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "weekdayFormat",
+      "description": "<code>dayjs</code> format for weekdays names. By default, the first letter of the weekday.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "weekendDays",
+      "description": "Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by <code>DatesProvider</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(0 | 1 | 2 | 3 | 4 | 5 | 6)[]"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "withOutsideDays",
+      "description": "If set, days from the previous and next months are displayed to fill the weeks",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "withWeekDays",
+      "description": "If set, weekdays names are displayed in the first row",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MobileMonthView"
+    },
+    {
+      "name": "withWeekNumbers",
+      "description": "If set, week numbers are displayed in the first column",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MobileMonthView"
+    }
+  ]
+}

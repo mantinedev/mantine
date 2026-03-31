@@ -1,0 +1,56 @@
+# Can I have color schemes other than light and dark?
+Learn about the difference between color scheme and theme
+
+## What is color scheme?
+
+In the context of Mantine, the color scheme is a value that impacts the colors of the UI.
+The Mantine color scheme supports only values that are defined by browsers.
+The color scheme value can either be `light`, `dark`, or `auto` (same as in the user OS settings).
+
+## I want to add a custom color scheme. Can I do that?
+
+No, Mantine does not support custom color schemes. If you attempt to do that,
+most of the components will have broken styles. Instead of applying a custom
+color scheme, customize colors with the [theme](https://mantine.dev/theming/theme-object/).
+
+## How can I customize colors with theme?
+
+You can define custom colors in the [theme object](https://mantine.dev/theming/theme-object).
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    sepia: [
+      '#F4ECD8',
+      '#EAD8B7',
+      '#DFC29A',
+      '#D4AC7E',
+      '#C99862',
+      '#BD8447',
+      '#B2702D',
+      '#A55C15',
+      '#924908',
+      '#7A3704',
+    ],
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+Then you can reference these values in components and `.css` files:
+
+```scss
+body {
+  background-color: var(--mantine-color-sepia-0);
+  color: var(--mantine-color-sepia-9);
+}
+```

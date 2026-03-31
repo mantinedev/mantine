@@ -1,0 +1,1106 @@
+{
+  "id": "core-menu",
+  "name": "Menu",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/menu",
+  "description": "Combine a list of secondary actions into single interactive area",
+  "propsCount": 93,
+  "llmUrl": "https://mantine.dev/llms/core-menu.md",
+  "componentDataUrl": "/mcp/components/core-menu.json",
+  "searchText": "menu combine a list of secondary actions into single interactive area @mantine/core /core/menu arrowoffset arrowposition arrowradius arrowsize children clickoutsideevents closedelay closeonclickoutside closeonescape closeonitemclick defaultopened disabled floatingstrategy hidedetached id keepmounted loop menuitemtabindex middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus trigger width witharrow withinitialfocusplaceholder withoverlay withinportal zindex children refprop children closemenuonclick color disabled leftsection rightsection arrowoffset arrowposition arrowradius arrowsize closedelay disabled floatingstrategy hidedetached keepmounted middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops width witharrow withoverlay withinportal zindex children closemenuonclick color disabled leftsection rightsection children refprop",
+  "source": "@mantine/core/src/components/Menu/Menu.tsx",
+  "docs": "core/menu.mdx",
+  "markdown": "# Menu\nPackage: @mantine/core\nImport: import { Menu } from '@mantine/core';\nDescription: Combine a list of secondary actions into single interactive area\n\n## Usage\n\n```tsx\nimport { Menu, Button, Text } from '@mantine/core';\nimport { GearSixIcon, MagnifyingGlassIcon, ImageIcon, ChatCircleIcon, TrashIcon, IconArrowsLeftRight } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Menu shadow=\"md\" width={200}>\n      <Menu.Target>\n        <Button>Toggle menu</Button>\n      </Menu.Target>\n\n      <Menu.Dropdown>\n        <Menu.Label>Application</Menu.Label>\n        <Menu.Item leftSection={<GearSixIcon size={14} />}>\n          Settings\n        </Menu.Item>\n        <Menu.Item leftSection={<ChatCircleIcon size={14} />}>\n          Messages\n        </Menu.Item>\n        <Menu.Item leftSection={<ImageIcon size={14} />}>\n          Gallery\n        </Menu.Item>\n        <Menu.Item\n          leftSection={<MagnifyingGlassIcon size={14} />}\n          rightSection={\n            <Text size=\"xs\" c=\"dimmed\">\n              ⌘K\n            </Text>\n          }\n        >\n          Search\n        </Menu.Item>\n\n        <Menu.Divider />\n\n        <Menu.Label>Danger zone</Menu.Label>\n        <Menu.Item\n          leftSection={<IconArrowsLeftRight size={14} />}\n        >\n          Transfer my data\n        </Menu.Item>\n        <Menu.Item\n          color=\"red\"\n          leftSection={<TrashIcon size={14} />}\n        >\n          Delete my account\n        </Menu.Item>\n      </Menu.Dropdown>\n    </Menu>\n  );\n}\n```\n\n\n## Submenus\n\n```tsx\nimport { Button, Menu } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menu width={200} position=\"bottom-start\">\n      <Menu.Target>\n        <Button>Toggle Menu</Button>\n      </Menu.Target>\n\n      <Menu.Dropdown>\n        <Menu.Item>Dashboard</Menu.Item>\n\n        <Menu.Sub openDelay={120} closeDelay={150}>\n          <Menu.Sub.Target>\n            <Menu.Sub.Item>Products</Menu.Sub.Item>\n          </Menu.Sub.Target>\n\n          <Menu.Sub.Dropdown>\n            <Menu.Item>All products</Menu.Item>\n            <Menu.Item>Categories</Menu.Item>\n            <Menu.Item>Tags</Menu.Item>\n            <Menu.Item>Attributes</Menu.Item>\n            <Menu.Item>Shipping classes</Menu.Item>\n          </Menu.Sub.Dropdown>\n        </Menu.Sub>\n\n        <Menu.Sub>\n          <Menu.Sub.Target>\n            <Menu.Sub.Item>Orders</Menu.Sub.Item>\n          </Menu.Sub.Target>\n\n          <Menu.Sub.Dropdown>\n            <Menu.Item>Open</Menu.Item>\n            <Menu.Item>Completed</Menu.Item>\n            <Menu.Item>Cancelled</Menu.Item>\n          </Menu.Sub.Dropdown>\n        </Menu.Sub>\n\n        <Menu.Sub>\n          <Menu.Sub.Target>\n            <Menu.Sub.Item>Settings</Menu.Sub.Item>\n          </Menu.Sub.Target>\n\n          <Menu.Sub.Dropdown>\n            <Menu.Item>Profile</Menu.Item>\n            <Menu.Item>Security</Menu.Item>\n            <Menu.Item>Notifications</Menu.Item>\n          </Menu.Sub.Dropdown>\n        </Menu.Sub>\n      </Menu.Dropdown>\n    </Menu>\n  );\n}\n```\n\n\n## Controlled\n\nThe dropdown's opened state can be controlled with the `opened` and `onChange` props:\n\n```tsx\nimport { useState } from 'react';\nimport { Menu } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n  return (\n    <Menu opened={opened} onChange={setOpened}>\n      {/* Menu content */}\n    </Menu>\n  );\n}\n```\n\n## Show menu on hover\n\nSet `trigger=\"hover\"` to reveal the dropdown when hovering over the menu target and dropdown.\nThe `closeDelay` and `openDelay` props can be used to control open and close delay in ms.\nNote that:\n\n* If you set `closeDelay={0}` then the menu will close before the user reaches the dropdown, so set `offset={0}` to remove space between the target element and dropdown.\n* Menu with `trigger=\"hover\"` is not accessible – users that navigate with the keyboard will not be able to use it. If you need both hover and click triggers, use `trigger=\"click-hover\"`.\n\n```tsx\nimport { Menu } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menu trigger=\"hover\" openDelay={100} closeDelay={400}>\n      {/* ... menu items */}\n    </Menu>\n  );\n}\n```\n\n\nTo make a `Menu` that is revealed on hover accessible on all devices, use `trigger=\"click-hover\"` instead.\nThe dropdown will be revealed on hover on desktop and on click on mobile devices.\n\n```tsx\nimport { Menu } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menu trigger=\"click-hover\" openDelay={100} closeDelay={400}>\n      {/* ... menu items */}\n    </Menu>\n  );\n}\n```\n\n\n## Disabled items\n\n```tsx\nimport { Menu, Button } from '@mantine/core';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Menu>\n      <Menu.Target>\n        <Button>Toggle menu</Button>\n      </Menu.Target>\n\n      <Menu.Dropdown>\n        <Menu.Item\n          leftSection={<MagnifyingGlassIcon size={14} />}\n          disabled\n        >\n          Search\n        </Menu.Item>\n\n        {/* Other items ... */}\n      </Menu.Dropdown>\n    </Menu>\n  );\n}\n```\n\n\n## Dropdown position\n\n```tsx\nimport { Menu } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menu position=\"bottom\" offset={5} withArrow={false} arrowPosition=\"side\">\n      {/* Menu items */}\n    </Menu>\n  );\n}\n```\n\n\n## Transitions\n\nThe Menu dropdown can be animated with any of the premade transitions from the [Transition](https://mantine.dev/llms/core-transition.md) component:\n\n```tsx\nimport { Menu } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menu transitionProps={{ transition: 'rotate-right', duration: 150 }}>\n      {/* Menu content */}\n    </Menu>\n  );\n}\n```\n\n\n## Custom component as Menu.Item\n\nBy default, `Menu.Item` renders as a button element. To change that, set the `component` prop:\n\n```tsx\nimport { Menu, Button } from '@mantine/core';\nimport { ArrowSquareOutIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Menu width={200} shadow=\"md\">\n      <Menu.Target>\n        <Button>Toggle menu</Button>\n      </Menu.Target>\n\n      <Menu.Dropdown>\n        <Menu.Item component=\"a\" href=\"https://mantine.dev\">\n          Mantine website\n        </Menu.Item>\n        <Menu.Item\n          leftSection={<ArrowSquareOutIcon size={14} />}\n          component=\"a\"\n          href=\"https://mantine.dev\"\n          target=\"_blank\"\n        >\n          External link\n        </Menu.Item>\n      </Menu.Dropdown>\n    </Menu>\n  );\n}\n```\n\n\nNote that the component you pass to the `component` prop should allow spreading props to its root element:\n\n```tsx\nimport { Menu } from '@mantine/core';\n\n// ❌ Will not work with Menu.Item\nfunction IncorrectItem() {\n  return <button type=\"button\">My custom Menu item</button>;\n}\n\n// ✅ Will work correctly with Menu.Item\nconst CorrectItem = ({ ref, ...props }) => (\n  <button type=\"button\" {...props} ref={ref}>\n    My custom Menu item\n  </button>\n);\n\nfunction Demo() {\n  // ❌ Will not work\n  const incorrect = <Menu.Item component={IncorrectItem} />;\n\n  // ✅ Will work\n  const correct = <Menu.Item component={CorrectItem} />;\n}\n```\n\n## Accessibility\n\nMenu follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-links/):\n\n* Dropdown element has `role=\"menu\"` and `aria-labelledby=\"target-id\"` attributes\n* Target element has `aria-haspopup=\"menu\"`, `aria-expanded`, `aria-controls=\"dropdown-id\"` attributes\n* Menu item has `role=\"menuitem\"` attribute\n\nWhilst the dropdown is unopened, the `aria-controls` attribute will be undefined\n\n### Supported target elements\n\nAn uncontrolled Menu with `trigger=\"click\"` (default) will be accessible only when used with a `button` element or component that renders it ([Button](https://mantine.dev/llms/core-button.md), [ActionIcon](https://mantine.dev/llms/core-action-icon.md), etc.).\nOther elements will not support `Space` and `Enter` key presses.\n\n### Hover menu\n\nMenu with `trigger=\"hover\"` is not accessible – it cannot be accessed with the keyboard. Use it only if you do not care about accessibility. If you need both hover and click triggers, use `trigger=\"click-hover\"`.\n\n### Navigation\n\nIf you are using the Menu to build navigation, you can use the options from the demo below to follow the [WAI-ARIA recommendations for navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/).\n\n```tsx\nimport { Group, Menu } from '@mantine/core';\n\nfunction Demo() {\n  const menus = Array(4)\n    .fill(0)\n    .map((e, i) => (\n      <Menu\n        key={i}\n        trigger=\"click-hover\"\n        loop={false}\n        withinPortal={false}\n        trapFocus={false}\n        menuItemTabIndex={0}\n      >\n        {/* ... menu items */}\n      </Menu>\n    ));\n  return <Group>{menus}</Group>;\n}\n```\n\n\n### Keyboard interactions\n\nIf you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={0}`.\n\n\n#### Props\n\n**Menu props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| arrowOffset | number | - | Arrow offset in px |\n| arrowPosition | 'center' \\| 'side' | - | Arrow position |\n| arrowRadius | number | - | Arrow `border-radius` in px |\n| arrowSize | number | - | Arrow size in px |\n| children | React.ReactNode | - | Menu children |\n| clickOutsideEvents | string[] | - | Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling |\n| closeDelay | number | - | Close delay in ms, applicable only to `trigger=\"hover\"` variant |\n| closeOnClickOutside | boolean | - | If set, the dropdown is closed on outside clicks |\n| closeOnEscape | boolean | - | If set, the dropdown is closed when the `Escape` key is pressed |\n| closeOnItemClick | boolean | - | If set, the Menu is closed when one of the items is clicked. Can be overridden per item with `closeMenuOnClick` prop |\n| defaultOpened | boolean | - | Uncontrolled menu initial opened state |\n| disabled | boolean | - | If set, popover dropdown will not be rendered |\n| floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |\n| hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |\n| id | string | - | Id base to create accessibility connections |\n| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |\n| loop | boolean | - | If set, arrow key presses wrap around from last item to first and vice versa |\n| menuItemTabIndex | 0 \\| -1 | - | Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). |\n| middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |\n| offset | number \\| FloatingAxesOffsets | - | Offset of the dropdown element |\n| onChange | (opened: boolean) => void | - | Called when menu opened state changes |\n| onClose | () => void | - | Called when Menu is closed |\n| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |\n| onEnterTransitionEnd | () => void | - | Called when enter transition ends |\n| onExitTransitionEnd | () => void | - | Called when exit transition ends |\n| onOpen | () => void | - | Called when Menu is opened |\n| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |\n| openDelay | number | - | Open delay in ms, applicable only to `trigger=\"hover\"` variant |\n| opened | boolean | - | Controlled menu opened state |\n| overlayProps | OverlayProps & ElementProps<\"div\"> | - | Props passed down to `Overlay` component |\n| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |\n| position | FloatingPosition | - | Dropdown position relative to the target element |\n| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |\n| transitionProps | TransitionProps | - | Props passed down to the `Transition` component. Use to configure duration and animation type. |\n| trapFocus | boolean | - | If set, focus is trapped within the menu dropdown when it is opened |\n| trigger | \"hover\" \\| \"click\" \\| \"click-hover\" | - | Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus |\n| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |\n| withArrow | boolean | - | Determines whether component should have an arrow |\n| withInitialFocusPlaceholder | boolean | - | Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. |\n| withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |\n| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |\n| zIndex | string \\| number | - | Dropdown `z-index` |\n\n**Menu.Item props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Item label |\n| closeMenuOnClick | boolean | - | Controls whether the menu closes when this item is clicked. When undefined, inherits from Menu's `closeOnItemClick` prop. When true or false, overrides the Menu-level setting |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| disabled | boolean | - | Sets disabled attribute, applies disabled styles |\n| leftSection | React.ReactNode | - | Section displayed at the start of the label |\n| rightSection | React.ReactNode | - | Section displayed at the end of the label |\n\n**Menu.Target props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop used to get element ref, useful for forwarding refs to custom components |\n\n**Menu.Sub props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| arrowOffset | number | - | Arrow offset in px |\n| arrowPosition | 'center' \\| 'side' | - | Arrow position |\n| arrowRadius | number | - | Arrow `border-radius` in px |\n| arrowSize | number | - | Arrow size in px |\n| closeDelay | number | - | Close delay in ms, applicable when hover trigger is used |\n| disabled | boolean | - | If set, popover dropdown will not be rendered |\n| floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |\n| hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |\n| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |\n| middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |\n| offset | number \\| FloatingAxesOffsets | - | Offset of the dropdown element |\n| onChange | (opened: boolean) => void | - | Called with current state when dropdown opens or closes |\n| onClose | () => void | - | Called when dropdown closes |\n| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |\n| onEnterTransitionEnd | () => void | - | Called when enter transition ends |\n| onExitTransitionEnd | () => void | - | Called when exit transition ends |\n| onOpen | () => void | - | Called when dropdown opens |\n| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |\n| openDelay | number | - | Open delay in ms, applicable when hover trigger is used |\n| overlayProps | OverlayProps & ElementProps<\"div\"> | - | Props passed down to `Overlay` component |\n| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |\n| position | FloatingPosition | - | Dropdown position relative to the target element |\n| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |\n| transitionProps | TransitionProps | - | Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type |\n| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |\n| withArrow | boolean | - | Determines whether component should have an arrow |\n| withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |\n| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |\n| zIndex | string \\| number | - | Dropdown `z-index` |\n\n**Menu.Sub.Target props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop used to get element ref |\n\n**Menu.Sub.Dropdown props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Menu.Sub.Item props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Item label |\n| closeMenuOnClick | boolean | - | If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| disabled | boolean | - | Sets disabled attribute, applies disabled styles |\n| leftSection | React.ReactNode | - | Section displayed at the start of the label |\n| rightSection | React.ReactNode | - | Section displayed at the end of the label |\n\n**Menu.SubItem props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Item label |\n| closeMenuOnClick | boolean | - | If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| disabled | boolean | - | Sets disabled attribute, applies disabled styles |\n| leftSection | React.ReactNode | - | Section displayed at the start of the label |\n| rightSection | React.ReactNode | - | Section displayed at the end of the label |\n\n**Menu.SubTarget props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop used to get element ref |\n\n\n#### Styles API\n\nMenu component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Menu selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| dropdown | .mantine-Menu-dropdown | Dropdown element |\n| arrow | .mantine-Menu-arrow | Dropdown arrow |\n| overlay | .mantine-Menu-overlay | Overlay element |\n| divider | .mantine-Menu-divider | `Menu.Divider` root element |\n| label | .mantine-Menu-label | `Menu.Label` root element |\n| item | .mantine-Menu-item | `Menu.Item` root element |\n| itemLabel | .mantine-Menu-itemLabel | Label of `Menu.Item` |\n| itemSection | .mantine-Menu-itemSection | Left and right sections of `Menu.Item` |\n| chevron | .mantine-Menu-chevron | Sub menu chevron |\n\n**Menu data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| item | data-disabled | `disabled` prop is set on `Menu.Item` | - |\n",
+  "props": [
+    {
+      "name": "arrowOffset",
+      "description": "Arrow offset in px",
+      "required": false,
+      "defaultValue": "5",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "arrowPosition",
+      "description": "Arrow position",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "'center' | 'side'",
+        "raw": "ArrowPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"center\""
+          },
+          {
+            "value": "\"side\""
+          }
+        ]
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "arrowRadius",
+      "description": "Arrow <code>border-radius</code> in px",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "arrowSize",
+      "description": "Arrow size in px",
+      "required": false,
+      "defaultValue": "7",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "children",
+      "description": "Menu children",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "clickOutsideEvents",
+      "description": "Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling",
+      "required": false,
+      "defaultValue": "['mousedown', 'touchstart', 'keydown']",
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "closeDelay",
+      "description": "Close delay in ms, applicable only to <code>trigger=\"hover\"</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "closeOnClickOutside",
+      "description": "If set, the dropdown is closed on outside clicks",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "closeOnEscape",
+      "description": "If set, the dropdown is closed when the <code>Escape</code> key is pressed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "closeOnItemClick",
+      "description": "If set, the Menu is closed when one of the items is clicked. Can be overridden per item with <code>closeMenuOnClick</code> prop",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "defaultOpened",
+      "description": "Uncontrolled menu initial opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "disabled",
+      "description": "If set, popover dropdown will not be rendered",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "floatingStrategy",
+      "description": "Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy)",
+      "required": false,
+      "defaultValue": "'absolute'",
+      "type": {
+        "name": "FloatingStrategy",
+        "raw": "FloatingStrategy | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"fixed\""
+          },
+          {
+            "value": "\"absolute\""
+          }
+        ]
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "hideDetached",
+      "description": "If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "id",
+      "description": "Id base to create accessibility connections",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "loop",
+      "description": "If set, arrow key presses wrap around from last item to first and vice versa",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "menuItemTabIndex",
+      "description": "Set the <code>tabindex</code> on all menu items. Use <code>0</code> to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern).",
+      "required": false,
+      "defaultValue": "-1",
+      "type": {
+        "name": "0 | -1",
+        "raw": "0 | -1 | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "0"
+          },
+          {
+            "value": "-1"
+          }
+        ]
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "middlewares",
+      "description": "Floating ui middlewares to configure position handling",
+      "required": false,
+      "defaultValue": "{ flip: true, shift: true, inline: false }",
+      "type": {
+        "name": "PopoverMiddlewares"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "offset",
+      "description": "Offset of the dropdown element",
+      "required": false,
+      "defaultValue": "8",
+      "type": {
+        "name": "number | FloatingAxesOffsets"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when menu opened state changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(opened: boolean) => void"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "onClose",
+      "description": "Called when Menu is closed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "onDismiss",
+      "description": "Called when the popover is dismissed by clicking outside or by pressing escape",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "onEnterTransitionEnd",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "onExitTransitionEnd",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "onOpen",
+      "description": "Called when Menu is opened",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "onPositionChange",
+      "description": "Called when dropdown position changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(position: FloatingPosition) => void"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "openDelay",
+      "description": "Open delay in ms, applicable only to <code>trigger=\"hover\"</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "opened",
+      "description": "Controlled menu opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to <code>Overlay</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OverlayProps & ElementProps<\"div\">"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "position",
+      "description": "Dropdown position relative to the target element",
+      "required": false,
+      "defaultValue": "'bottom'",
+      "type": {
+        "name": "FloatingPosition",
+        "raw": "FloatingPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          },
+          {
+            "value": "\"bottom\""
+          },
+          {
+            "value": "\"top\""
+          },
+          {
+            "value": "\"left-end\""
+          },
+          {
+            "value": "\"left-start\""
+          },
+          {
+            "value": "\"right-end\""
+          },
+          {
+            "value": "\"right-start\""
+          },
+          {
+            "value": "\"bottom-end\""
+          },
+          {
+            "value": "\"bottom-start\""
+          },
+          {
+            "value": "\"top-end\""
+          },
+          {
+            "value": "\"top-start\""
+          }
+        ]
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "preventPositionChangeWhenVisible",
+      "description": "Prevents popover from flipping/shifting when it the dropdown is visible",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "returnFocus",
+      "description": "Determines whether focus should be automatically returned to control when dropdown closes",
+      "required": false,
+      "defaultValue": "`true`",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any other valid CSS <code>box-shadow</code> value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props passed down to the <code>Transition</code> component. Use to configure duration and animation type.",
+      "required": false,
+      "defaultValue": "{ duration: 150, transition: 'fade' }",
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "trapFocus",
+      "description": "If set, focus is trapped within the menu dropdown when it is opened",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "trigger",
+      "description": "Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"hover\" | \"click\" | \"click-hover\"",
+        "raw": "\"hover\" | \"click\" | \"click-hover\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"hover\""
+          },
+          {
+            "value": "\"click\""
+          },
+          {
+            "value": "\"click-hover\""
+          }
+        ]
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "width",
+      "description": "Dropdown width, or <code>'target'</code> to make dropdown width the same as target element",
+      "required": false,
+      "defaultValue": "'max-content'",
+      "type": {
+        "name": "PopoverWidth"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "withArrow",
+      "description": "Determines whether component should have an arrow",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "withInitialFocusPlaceholder",
+      "description": "Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management.",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "withOverlay",
+      "description": "Determines whether the overlay should be displayed when the dropdown is opened",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether dropdown should be rendered within the <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "zIndex",
+      "description": "Dropdown <code>z-index</code>",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Menu"
+    },
+    {
+      "name": "children",
+      "description": "Target element",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuTarget"
+    },
+    {
+      "name": "refProp",
+      "description": "Key of the prop used to get element ref, useful for forwarding refs to custom components",
+      "required": false,
+      "defaultValue": "'ref'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MenuTarget"
+    },
+    {
+      "name": "children",
+      "description": "Item label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuItem"
+    },
+    {
+      "name": "closeMenuOnClick",
+      "description": "Controls whether the menu closes when this item is clicked. When undefined, inherits from Menu's <code>closeOnItemClick</code> prop. When true or false, overrides the Menu-level setting",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuItem"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "MenuItem"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets disabled attribute, applies disabled styles",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuItem"
+    },
+    {
+      "name": "leftSection",
+      "description": "Section displayed at the start of the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuItem"
+    },
+    {
+      "name": "rightSection",
+      "description": "Section displayed at the end of the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuItem"
+    },
+    {
+      "name": "arrowOffset",
+      "description": "Arrow offset in px",
+      "required": false,
+      "defaultValue": "5",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "arrowPosition",
+      "description": "Arrow position",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "'center' | 'side'",
+        "raw": "ArrowPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"center\""
+          },
+          {
+            "value": "\"side\""
+          }
+        ]
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "arrowRadius",
+      "description": "Arrow <code>border-radius</code> in px",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "arrowSize",
+      "description": "Arrow size in px",
+      "required": false,
+      "defaultValue": "7",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "closeDelay",
+      "description": "Close delay in ms, applicable when hover trigger is used",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "disabled",
+      "description": "If set, popover dropdown will not be rendered",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "floatingStrategy",
+      "description": "Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy)",
+      "required": false,
+      "defaultValue": "'absolute'",
+      "type": {
+        "name": "FloatingStrategy",
+        "raw": "FloatingStrategy | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"fixed\""
+          },
+          {
+            "value": "\"absolute\""
+          }
+        ]
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "hideDetached",
+      "description": "If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "middlewares",
+      "description": "Floating ui middlewares to configure position handling",
+      "required": false,
+      "defaultValue": "{ flip: true, shift: true, inline: false }",
+      "type": {
+        "name": "PopoverMiddlewares"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "offset",
+      "description": "Offset of the dropdown element",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number | FloatingAxesOffsets"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "onChange",
+      "description": "Called with current state when dropdown opens or closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(opened: boolean) => void"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "onClose",
+      "description": "Called when dropdown closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "onDismiss",
+      "description": "Called when the popover is dismissed by clicking outside or by pressing escape",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "onEnterTransitionEnd",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "onExitTransitionEnd",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "onOpen",
+      "description": "Called when dropdown opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "onPositionChange",
+      "description": "Called when dropdown position changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(position: FloatingPosition) => void"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "openDelay",
+      "description": "Open delay in ms, applicable when hover trigger is used",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to <code>Overlay</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OverlayProps & ElementProps<\"div\">"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "position",
+      "description": "Dropdown position relative to the target element",
+      "required": false,
+      "defaultValue": "'right-start'",
+      "type": {
+        "name": "FloatingPosition",
+        "raw": "FloatingPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          },
+          {
+            "value": "\"bottom\""
+          },
+          {
+            "value": "\"top\""
+          },
+          {
+            "value": "\"left-end\""
+          },
+          {
+            "value": "\"left-start\""
+          },
+          {
+            "value": "\"right-end\""
+          },
+          {
+            "value": "\"right-start\""
+          },
+          {
+            "value": "\"bottom-end\""
+          },
+          {
+            "value": "\"bottom-start\""
+          },
+          {
+            "value": "\"top-end\""
+          },
+          {
+            "value": "\"top-start\""
+          }
+        ]
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "preventPositionChangeWhenVisible",
+      "description": "Prevents popover from flipping/shifting when it the dropdown is visible",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "returnFocus",
+      "description": "Determines whether focus should be automatically returned to control when dropdown closes",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any other valid CSS <code>box-shadow</code> value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props passed down to the <code>Transition</code> component that used to animate dropdown presence, use to configure duration and animation type",
+      "required": false,
+      "defaultValue": "{ duration: 0 }",
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "width",
+      "description": "Dropdown width, or <code>'target'</code> to make dropdown width the same as target element",
+      "required": false,
+      "defaultValue": "'max-content'",
+      "type": {
+        "name": "PopoverWidth"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "withArrow",
+      "description": "Determines whether component should have an arrow",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "withOverlay",
+      "description": "Determines whether the overlay should be displayed when the dropdown is opened",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether dropdown should be rendered within the <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "zIndex",
+      "description": "Dropdown <code>z-index</code>",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "MenuSub"
+    },
+    {
+      "name": "children",
+      "description": "Item label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuSubItem"
+    },
+    {
+      "name": "closeMenuOnClick",
+      "description": "If set, the menu is closed when the item is clicked. Overrides <code>closeOnItemClick</code> prop on the <code>Menu</code> component.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSubItem"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "MenuSubItem"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets disabled attribute, applies disabled styles",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MenuSubItem"
+    },
+    {
+      "name": "leftSection",
+      "description": "Section displayed at the start of the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuSubItem"
+    },
+    {
+      "name": "rightSection",
+      "description": "Section displayed at the end of the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuSubItem"
+    },
+    {
+      "name": "children",
+      "description": "Target element",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MenuSubTarget"
+    },
+    {
+      "name": "refProp",
+      "description": "Key of the prop used to get element ref",
+      "required": false,
+      "defaultValue": "'ref'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MenuSubTarget"
+    }
+  ]
+}

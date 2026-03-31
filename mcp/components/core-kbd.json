@@ -1,0 +1,27 @@
+{
+  "id": "core-kbd",
+  "name": "Kbd",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/kbd",
+  "description": "Display keyboard key",
+  "propsCount": 1,
+  "llmUrl": "https://mantine.dev/llms/core-kbd.md",
+  "componentDataUrl": "/mcp/components/core-kbd.json",
+  "searchText": "kbd display keyboard key @mantine/core /core/kbd size",
+  "source": "@mantine/core/src/components/Kbd/Kbd.tsx",
+  "docs": "core/kbd.mdx",
+  "markdown": "# Kbd\nPackage: @mantine/core\nImport: import { Kbd } from '@mantine/core';\nDescription: Display keyboard key\n\n## Usage\n\n```tsx\nimport { Kbd } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <div dir=\"ltr\">\n      <Kbd>⌘</Kbd> + <Kbd>Shift</Kbd> + <Kbd>M</Kbd>\n    </div>\n  );\n}\n```\n\n\n## Size\n\n```tsx\nimport { Kbd } from '@mantine/core';\n\nfunction Demo() {\n  return <Kbd size=\"sm\">Shift</Kbd>;\n}\n```\n\n\n\n#### Props\n\n**Kbd props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| size | MantineSize \\| number | - | Controls `font-size` and `padding` |\n\n\n#### Styles API\n\nKbd component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Kbd selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Kbd-root | Root element |\n\n**Kbd CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --kbd-fz | Controls `font-size` |\n",
+  "props": [
+    {
+      "name": "size",
+      "description": "Controls <code>font-size</code> and <code>padding</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Kbd"
+    }
+  ]
+}

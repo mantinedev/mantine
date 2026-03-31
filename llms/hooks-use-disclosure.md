@@ -4,9 +4,9 @@ Import: import { UseDisclosure } from '@mantine/hooks';
 
 ## Usage
 
-`use-disclosure` hook manages boolean state. It provides `open`, `close` and `toggle` handlers
+The `use-disclosure` hook manages boolean state. It provides `open`, `close`, and `toggle` handlers
 and accepts optional `onOpen` and `onClose` callbacks. You can use it to manage controlled modals,
-popovers and other similar components:
+popovers, and other similar components:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -64,6 +64,7 @@ interface UseDisclosureOptions {
 }
 
 interface UseDisclosureHandlers {
+  set: (value: boolean) => void;
   open: () => void;
   close: () => void;
   toggle: () => void;
@@ -79,7 +80,7 @@ function useDisclosure(
 
 ## Exported types
 
-`UseDisclosureOptions`, `UseDisclosureHandlers` and `UseDisclosureReturnValue` types are exported from `@mantine/hooks` package,
+`UseDisclosureOptions`, `UseDisclosureHandlers` and `UseDisclosureReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

@@ -1,0 +1,194 @@
+{
+  "id": "core-timeline",
+  "name": "Timeline",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/timeline",
+  "description": "Display list of events in chronological order",
+  "propsCount": 15,
+  "llmUrl": "https://mantine.dev/llms/core-timeline.md",
+  "componentDataUrl": "/mcp/components/core-timeline.json",
+  "searchText": "timeline display list of events in chronological order @mantine/core /core/timeline active align autocontrast bulletsize children color linewidth radius reverseactive bullet children color linevariant radius title",
+  "source": "@mantine/core/src/components/Timeline/Timeline.tsx",
+  "docs": "core/timeline.mdx",
+  "markdown": "# Timeline\nPackage: @mantine/core\nImport: import { Timeline } from '@mantine/core';\nDescription: Display list of events in chronological order\n\n## Usage\n\n```tsx\nimport { Timeline, Text } from '@mantine/core';\nimport { GitBranchIcon, GitPullRequestIcon, GitCommitIcon, ChatCircleDotsIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Timeline active={1} bulletSize={24} lineWidth={2}>\n      <Timeline.Item bullet={<GitBranchIcon size={12} />} title=\"New branch\">\n        <Text c=\"dimmed\" size=\"sm\">You&apos;ve created new branch <Text variant=\"link\" component=\"span\" inherit>fix-notifications</Text> from master</Text>\n        <Text size=\"xs\" mt={4}>2 hours ago</Text>\n      </Timeline.Item>\n\n      <Timeline.Item bullet={<GitCommitIcon size={12} />} title=\"Commits\">\n        <Text c=\"dimmed\" size=\"sm\">You&apos;ve pushed 23 commits to<Text variant=\"link\" component=\"span\" inherit>fix-notifications branch</Text></Text>\n        <Text size=\"xs\" mt={4}>52 minutes ago</Text>\n      </Timeline.Item>\n\n      <Timeline.Item title=\"Pull request\" bullet={<GitPullRequestIcon size={12} />} lineVariant=\"dashed\">\n        <Text c=\"dimmed\" size=\"sm\">You&apos;ve submitted a pull request<Text variant=\"link\" component=\"span\" inherit>Fix incorrect notification message (#187)</Text></Text>\n        <Text size=\"xs\" mt={4}>34 minutes ago</Text>\n      </Timeline.Item>\n\n      <Timeline.Item title=\"CodeIcon review\" bullet={<ChatCircleDotsIcon size={12} />}>\n        <Text c=\"dimmed\" size=\"sm\"><Text variant=\"link\" component=\"span\" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>\n        <Text size=\"xs\" mt={4}>12 minutes ago</Text>\n      </Timeline.Item>\n    </Timeline>\n  );\n}\n```\n\n\n## Line and bullet props\n\nControl the timeline appearance with the following props:\n\n* `active` – index of the current active element; all elements before this index will be highlighted with `color`\n* `color` – color from theme that should be used to highlight active items, defaults to `theme.primaryColor`\n* `lineWidth` – controls line width and bullet border\n* `bulletSize` – bullet width, height and border-radius\n* `align` – defines the line and bullets position relative to content, also sets text-align\n\n```tsx\nimport { Timeline } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Timeline color=\"blue\" radius=\"xl\" active={1} reverseActive={false} lineWidth={4} bulletSize={25} align=\"left\">\n      {/* items */}\n    </Timeline>\n  );\n}\n```\n\n\n## Bullet as React node\n\n```tsx\nimport { ThemeIcon, Text, Avatar, Timeline } from '@mantine/core';\nimport { SunIcon, VideoCameraIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Timeline bulletSize={24}>\n      <Timeline.Item title=\"Default bullet\">\n        <Text c=\"dimmed\" size=\"sm\">\n          Default bullet without anything\n        </Text>\n      </Timeline.Item>\n      <Timeline.Item\n        title=\"Avatar\"\n        bullet={\n          <Avatar\n            size={22}\n            radius=\"xl\"\n            src=\"https://avatars0.githubusercontent.com/u/10353856?s=460&u=88394dfd67727327c1f7670a1764dc38a8a24831&v=4\"\n          />\n        }\n      >\n        <Text c=\"dimmed\" size=\"sm\">\n          Timeline bullet as avatar image\n        </Text>\n      </Timeline.Item>\n      <Timeline.Item title=\"Icon\" bullet={<SunIcon size={13} />}>\n        <Text c=\"dimmed\" size=\"sm\">\n          Timeline bullet as icon\n        </Text>\n      </Timeline.Item>\n      <Timeline.Item\n        title=\"ThemeIcon\"\n        bullet={\n          <ThemeIcon\n            size={22}\n            variant=\"gradient\"\n            gradient={{ from: 'lime', to: 'cyan' }}\n            radius=\"xl\"\n          >\n            <VideoCameraIcon size={13} />\n          </ThemeIcon>\n        }\n      >\n        <Text c=\"dimmed\" size=\"sm\">\n          Timeline bullet as ThemeIcon component\n        </Text>\n      </Timeline.Item>\n    </Timeline>\n  );\n}\n```\n\n\n## Wrap Timeline.Item\n\n`Timeline` component relies on `Timeline.Item` order. Wrapping `Timeline.Item` is not supported.\nInstead, you will need to use different approaches:\n\n```tsx\nimport { Timeline } from '@mantine/core';\n\n// This will not work, step children will not render\nfunction WillNotWork() {\n  return <Timeline.Item title=\"Nope\">It will not work</Timeline.Item>;\n}\n\n// Create a separate component for children\nfunction WillWork() {\n  return <div>This will work as expected!</div>;\n}\n\nfunction Demo() {\n  return (\n    <Timeline active={1}>\n      <Timeline.Item title=\"Regular item\">First item</Timeline.Item>\n      <WillNotWork />\n      <Timeline.Item title=\"Works as expected\">\n        <WillWork />\n      </Timeline.Item>\n      <Timeline.Item title=\"Regular item\">Third item</Timeline.Item>\n    </Timeline>\n  );\n}\n```\n\n\n#### Props\n\n**Timeline props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| active | number | - | Index of the active element |\n| align | \"left\" \\| \"right\" | - | Position of content relative to the bullet |\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| bulletSize | string \\| number | - | Size of the bullet |\n| children | React.ReactNode | - | `Timeline.Item` components |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color to control active item colors |\n| lineWidth | string \\| number | - | Control width of the line |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| reverseActive | boolean | - | If set, the active items direction is reversed without reversing items order |\n\n**Timeline.Item props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| bullet | React.ReactNode | - | React node that should be rendered inside the bullet – icon, image, avatar, etc. By default, large white dot is displayed. |\n| children | React.ReactNode | - | Content displayed below the title |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color to control active item colors |\n| lineVariant | \"dashed\" \\| \"dotted\" \\| \"solid\" | - | Controls line border style |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| title | React.ReactNode | - | Item title, displayed next to the bullet |\n\n\n#### Styles API\n\nTimeline component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Timeline selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Timeline-root | Root element |\n| item | .mantine-Timeline-item | Item root element |\n| itemBody | .mantine-Timeline-itemBody | Item body, wraps title and content |\n| itemTitle | .mantine-Timeline-itemTitle | Item title, controlled by title prop |\n| itemContent | .mantine-Timeline-itemContent | Item content, controlled by children prop |\n| itemBullet | .mantine-Timeline-itemBullet | Item bullet |\n\n**Timeline CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --tl-bullet-size | Controls bullet `width` and `height` |\n| root | --tl-color | Controls active bullet and line colors |\n| root | --tl-icon-color | Controls icon color |\n| root | --tl-line-width | Controls width of the line between bullets |\n| root | --tl-radius | Controls bullet `border-radius` |\n",
+  "props": [
+    {
+      "name": "active",
+      "description": "Index of the active element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "align",
+      "description": "Position of content relative to the bullet",
+      "required": false,
+      "defaultValue": "'left'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "bulletSize",
+      "description": "Size of the bullet",
+      "required": false,
+      "defaultValue": "20",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "children",
+      "description": "<code>Timeline.Item</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to control active item colors",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "lineWidth",
+      "description": "Control width of the line",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "reverseActive",
+      "description": "If set, the active items direction is reversed without reversing items order",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Timeline"
+    },
+    {
+      "name": "bullet",
+      "description": "React node that should be rendered inside the bullet – icon, image, avatar, etc. By default, large white dot is displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TimelineItem"
+    },
+    {
+      "name": "children",
+      "description": "Content displayed below the title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TimelineItem"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to control active item colors",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "TimelineItem"
+    },
+    {
+      "name": "lineVariant",
+      "description": "Controls line border style",
+      "required": false,
+      "defaultValue": "'solid'",
+      "type": {
+        "name": "\"dashed\" | \"dotted\" | \"solid\"",
+        "raw": "\"dashed\" | \"dotted\" | \"solid\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"dashed\""
+          },
+          {
+            "value": "\"dotted\""
+          },
+          {
+            "value": "\"solid\""
+          }
+        ]
+      },
+      "sourceComponent": "TimelineItem"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "TimelineItem"
+    },
+    {
+      "name": "title",
+      "description": "Item title, displayed next to the bullet",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TimelineItem"
+    }
+  ]
+}

@@ -3,46 +3,6 @@ Package: @mantine/core
 Import: import { Alert } from '@mantine/core';
 Description: Attract user attention with important static message
 
-## Usage
-
-#### Example: configurator
-
-```tsx
-import { Alert } from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
-
-function Demo() {
-  const icon = <IconInfoCircle />;
-  return (
-    <Alert icon={icon}>
-      {{children}}
-    </Alert>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Alert } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
-import classes from './Demo.module.css';
-
-function Demo() {
-  const icon = <IconHeart />;
-
-  return (
-    <Alert title="Alert title" icon={icon} withCloseButton>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt corporis natus veniam quis
-      cupiditate enim architecto mollitia numquam temporibus, consectetur nam laboriosam voluptates
-      nemo facilis? Exercitationem aut praesentium quibusdam reiciendis.
-    </Alert>
-  );
-}
-```
-
-
 ## Accessibility
 
 * Root element role set to `alert`
@@ -71,14 +31,16 @@ function AlsoValid() {
 
 #### Props
 
+**Alert props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| closeButtonLabel | string | - | Close button <code>aria-label</code> |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| closeButtonLabel | string | - | Close button `aria-label` |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
 | icon | React.ReactNode | - | Icon displayed next to the title |
 | onClose | () => void | - | Called when the close button is clicked |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | title | React.ReactNode | - | Alert title |
 | withCloseButton | boolean | - | Determines whether close button should be displayed |
 
@@ -113,4 +75,4 @@ Alert component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| title | data-with-close-button | - | - |
+| title | data-with-close-button | `withCloseButton` prop is set | - |

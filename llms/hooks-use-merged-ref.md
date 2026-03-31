@@ -4,9 +4,9 @@ Import: import { UseMergedRef } from '@mantine/hooks';
 
 ## Usage
 
-`use-merged-ref` accepts any number of refs and returns a function that should be passed to the `ref` prop.
-Use this hook when you need to use more than one ref on a single dom node, for example,
-when you want to use [use-click-outside](https://mantine.dev/hooks/use-click-outside/) and [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) hooks and also get a ref for yourself:
+The `use-merged-ref` hook accepts any number of refs and returns a function that should be passed to the `ref` prop.
+Use this hook when you need to use more than one ref on a single DOM node, for example,
+when you want to use [use-click-outside](https://mantine.dev/llms/hooks-use-click-outside.md) and [use-focus-trap](https://mantine.dev/llms/hooks-use-focus-trap.md) hooks and also get a ref for yourself:
 
 ```tsx
 import { useRef } from 'react';
@@ -32,10 +32,10 @@ function Demo() {
 
 ## mergeRefs function
 
-`use-merged-ref` hooks memoizes refs with `useCallback` hook, but in some cases
+The `use-merged-ref` hook memoizes refs with the `useCallback` hook, but in some cases
 memoizing is not a valid strategy, for example, when you are working with a list
-of dynamic components React will complain that different number of hooks was called
-across two renders. To fix that issue, use `mergeRefs` function instead:
+of dynamic components React will complain that a different number of hooks was called
+across two renders. To fix that issue, use the `mergeRefs` function instead:
 
 ```tsx
 import { useRef } from 'react';
@@ -51,7 +51,7 @@ function Demo() {
 
 `mergeRefs` works the same way as `use-merged-ref`, but does not use hooks internally.
 Use it only when you cannot use `use-merged-ref`. Note that `mergeRefs` will not work
-correctly with [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) hook, you are required to
+correctly with [use-focus-trap](https://mantine.dev/llms/hooks-use-focus-trap.md) hook, you are required to
 use `use-merged-ref` with it.
 
 ## assignRef function

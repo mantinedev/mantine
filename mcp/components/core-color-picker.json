@@ -1,0 +1,211 @@
+{
+  "id": "core-color-picker",
+  "name": "ColorPicker",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/color-picker",
+  "description": "Pick colors in hex(a), rgb(a), hsl(a) and hsv(a) formats",
+  "propsCount": 17,
+  "llmUrl": "https://mantine.dev/llms/core-color-picker.md",
+  "componentDataUrl": "/mcp/components/core-color-picker.json",
+  "searchText": "colorpicker pick colors in hex(a), rgb(a), hsl(a) and hsv(a) formats @mantine/core /core/color-picker alphalabel defaultvalue focusable format fullwidth hiddeninputprops huelabel name onchange onchangeend oncolorswatchclick saturationlabel size swatches swatchesperrow value withpicker",
+  "source": "@mantine/core/src/components/ColorPicker/ColorPicker.tsx",
+  "docs": "core/color-picker.mdx",
+  "markdown": "# ColorPicker\nPackage: @mantine/core\nImport: import { ColorPicker } from '@mantine/core';\nDescription: Pick colors in hex(a), rgb(a), hsl(a) and hsv(a) formats\n\n## Usage\n\n```tsx\nimport { useState } from 'react';\nimport { ColorPicker, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [value, onChange] = useState('rgba(47, 119, 150, 0.7)');\n\n  return (\n    <>\n      <ColorPicker format=\"rgba\" value={value} onChange={onChange} />\n      <Text>{value}</Text>\n    </>\n  );\n}\n```\n\n\n## Controlled\n\nThe `ColorPicker` value must be a string; other types are not supported.\nThe `onChange` function is called with a string value as a single argument.\n\n```tsx\nimport { useState } from 'react';\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState('#ffffff');\n  return <ColorPicker value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`ColorPicker` can be used with uncontrolled forms the same way as a native `input` element.\nSet the `name` attribute to include color picker value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `ColorPicker` with `FormData`:\n\n```tsx\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Color value:', formData.get('color'));\n      }}\n    >\n      <ColorPicker\n        name=\"color\"\n        defaultValue=\"#FF0000\"\n        format=\"hex\"\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Color format\n\n`ColorPicker` supports hex, hexa, rgb, rgba, hsl and hsla color formats.\nThe slider to change opacity and color preview are displayed only for hexa, rgba and hsla formats:\n\n```tsx\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorPicker format=\"hex\" />;\n}\n```\n\n\n## With swatches\n\nYou can add predefined color swatches with the `swatches` prop:\n\n```tsx\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorPicker\n      format=\"hex\"\n      swatches={[${Object.keys(DEFAULT_THEME.colors)\n        .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)\n        .join(', ')}]}\n    />\n  );\n}\n```\n\n\nBy default, `ColorPicker` will display 7 swatches per row. You can configure it with the `swatchesPerRow` prop:\n\n```tsx\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorPicker swatchesPerRow={7} format=\"hex\" swatches={[${Object.keys(DEFAULT_THEME.colors)\n      .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)\n      .join(', ')}]} />\n  );\n}\n```\n\n\nTo display swatches without picker, set `withPicker={false}` and `fullWidth` props:\n\n```tsx\nimport { useState } from 'react';\nimport { DEFAULT_THEME, ColorPicker, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [value, onChange] = useState('#fff');\n\n  return (\n    <>\n      <ColorPicker\n        format=\"hex\"\n        value={value}\n        onChange={onChange}\n        withPicker={false}\n        fullWidth\n        swatches={[\n          ...DEFAULT_THEME.colors.red.slice(0, 7),\n          ...DEFAULT_THEME.colors.green.slice(0, 7),\n          ...DEFAULT_THEME.colors.blue.slice(0, 7),\n        ]}\n      />\n\n      <Text>{value}</Text>\n    </>\n  );\n}\n```\n\n\n## Size\n\n`ColorPicker` has 5 predefined sizes: `xs`, `sm`, `md`, `lg` and `xl`:\n\n```tsx\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorPicker size=\"sm\" />;\n}\n```\n\n\n## Accessibility\n\nThe ColorPicker component is accessible by default:\n\n* Saturation, hue and alpha sliders are focusable\n* When the mouse is used to interact with the slider, focus is moved to the slider\n* All values can be changed with arrows\n\nTo make the component accessible for screen readers, set `saturationLabel`, `hueLabel` and `alphaLabel`:\n\n```tsx\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorPicker\n      saturationLabel=\"Saturation\"\n      hueLabel=\"Hue\"\n      alphaLabel=\"Alpha\"\n    />\n  );\n}\n```\n\n\n#### Props\n\n**ColorPicker props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| alphaLabel | string | - | Alpha slider `aria-label` |\n| defaultValue | string | - | Uncontrolled component default value |\n| focusable | boolean | - | If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard |\n| format | 'hex' \\| 'hexa' \\| 'rgba' \\| 'rgb' \\| 'hsl' \\| 'hsla' | - | Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider |\n| fullWidth | boolean | - | If set, the component takes 100% width of its container |\n| hiddenInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props spread to the hidden input |\n| hueLabel | string | - | Hue slider `aria-label` |\n| name | string | - | Hidden input `name` attribute, if not set, the input will not be rendered |\n| onChange | (value: string) => void | - | Called when value changes |\n| onChangeEnd | (value: string) => void | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |\n| onColorSwatchClick | (color: string) => void | - | Called when one of the color swatches is clicked |\n| saturationLabel | string | - | Saturation slider `aria-label` |\n| size | MantineSize | - | Component size |\n| swatches | string[] | - | A list of colors used to display swatches list below the color picker |\n| swatchesPerRow | number | - | Number of swatches per row |\n| value | string | - | Controlled component value |\n| withPicker | boolean | - | If `false`, the component displays only swatches |\n\n\n#### Styles API\n\nColorPicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**ColorPicker selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-ColorPicker-wrapper | Root element |\n| preview | .mantine-ColorPicker-preview | Color preview, displayed only when `format` supports alpha channel |\n| body | .mantine-ColorPicker-body | Contains alpha/hue sliders and color preview |\n| slider | .mantine-ColorPicker-slider | Alpha and hue sliders root |\n| sliderOverlay | .mantine-ColorPicker-sliderOverlay | Element used to display various overlays over hue and alpha sliders |\n| saturation | .mantine-ColorPicker-saturation | Saturation picker |\n| saturationOverlay | .mantine-ColorPicker-saturationOverlay | Element used to display various overlays over saturation picker |\n| sliders | .mantine-ColorPicker-sliders | Contains alpha and hue sliders |\n| thumb | .mantine-ColorPicker-thumb | Thumb of all sliders |\n| swatch | .mantine-ColorPicker-swatch | Color swatch |\n| swatches | .mantine-ColorPicker-swatches | Color swatches list |\n\n**ColorPicker CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| wrapper | --cp-body-spacing | Controls spacing between sliders and saturation |\n| wrapper | --cp-preview-size | Controls size of the preview swatch |\n| wrapper | --cp-width | Controls `width` of the root element |\n| wrapper | --cp-swatch-size | Controls swatch `width` and `height` |\n| wrapper | --cp-thumb-size | Controls thumb `width` and `height` in all sliders and saturation picker |\n| wrapper | --cp-saturation-height | Controls `height` of the saturation picker |\n",
+  "props": [
+    {
+      "name": "alphaLabel",
+      "description": "Alpha slider <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "focusable",
+      "description": "If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "format",
+      "description": "Color format. <code>hexa</code>, <code>rgba</code>, <code>hsla</code> values render alpha channel slider",
+      "required": false,
+      "defaultValue": "'hex'",
+      "type": {
+        "name": "'hex' | 'hexa' | 'rgba' | 'rgb' | 'hsl' | 'hsla'",
+        "raw": "ColorFormat | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"hex\""
+          },
+          {
+            "value": "\"hexa\""
+          },
+          {
+            "value": "\"rgba\""
+          },
+          {
+            "value": "\"rgb\""
+          },
+          {
+            "value": "\"hsl\""
+          },
+          {
+            "value": "\"hsla\""
+          }
+        ]
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "fullWidth",
+      "description": "If set, the component takes 100% width of its container",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "hiddenInputProps",
+      "description": "Props spread to the hidden input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "hueLabel",
+      "description": "Hue slider <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "name",
+      "description": "Hidden input <code>name</code> attribute, if not set, the input will not be rendered",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "onChangeEnd",
+      "description": "Called when the user stops dragging one of the sliders or changes the value with keyboard",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "onColorSwatchClick",
+      "description": "Called when one of the color swatches is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(color: string) => void"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "saturationLabel",
+      "description": "Saturation slider <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "size",
+      "description": "Component size",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "swatches",
+      "description": "A list of colors used to display swatches list below the color picker",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "swatchesPerRow",
+      "description": "Number of swatches per row",
+      "required": false,
+      "defaultValue": "7",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorPicker"
+    },
+    {
+      "name": "withPicker",
+      "description": "If <code>false</code>, the component displays only swatches",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorPicker"
+    }
+  ]
+}

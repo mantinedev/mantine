@@ -5,11 +5,7 @@ Description: Capture color from user
 
 ## Usage
 
-<InputFeatures component="ColorInput" element="input" />
-
 ColorInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. ColorInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
-
-#### Example: usage
 
 ```tsx
 import { ColorInput } from '@mantine/core';
@@ -18,10 +14,24 @@ import { ColorInput } from '@mantine/core';
 function Demo() {
   return (
     <ColorInput
-      
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
       placeholder="Input placeholder"
     />
   );
+}
+```
+
+
+## Loading state
+
+Set `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.
+You can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:
+
+```tsx
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return <ColorInput placeholder="Pick color" loading />;
 }
 ```
 
@@ -40,16 +50,14 @@ function Demo() {
 
 ## Formats
 
-Component supports hex, hexa, rgb, rgba, hsl and hsla color formats.
-Slider to change opacity is displayed only for hexa, rgba and hsla formats:
-
-#### Example: formatsConfigurator
+The component supports hex, hexa, rgb, rgba, hsl and hsla color formats.
+The slider to change opacity is displayed only for hexa, rgba and hsla formats:
 
 ```tsx
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  return <ColorInput defaultValue="#C5D899" />;
+  return <ColorInput defaultValue="#C5D899" format="hex" />;
 }
 ```
 
@@ -57,9 +65,7 @@ function Demo() {
 ## Preserve invalid input
 
 By default, `ColorInput` will revert the value on blur to the last known valid value.
-To change this behavior and keep invalid value, set `fixOnBlur={false}`:
-
-#### Example: fixOnBlur
+To change this behavior and keep the invalid value, set `fixOnBlur={false}`:
 
 ```tsx
 import { ColorInput } from '@mantine/core';
@@ -72,10 +78,8 @@ function Demo() {
 
 ## onChangeEnd
 
-`onChangeEnd` is called when user stops dragging slider or changes input value.
-It is useful when you need to update color only when user finished interaction with the component:
-
-#### Example: onChangeEnd
+`onChangeEnd` is called when the user stops dragging the slider or changes the input value.
+It is useful when you need to update the color only when the user has finished interacting with the component:
 
 ```tsx
 import { useState } from 'react';
@@ -104,9 +108,7 @@ function Demo() {
 
 ## Disable free input
 
-To disable free input set `disallowInput` prop:
-
-#### Example: disallowInput
+To disable free input, set the `disallowInput` prop:
 
 ```tsx
 import { ColorInput } from '@mantine/core';
@@ -121,8 +123,6 @@ function Demo() {
 
 You can add any amount of predefined color swatches:
 
-#### Example: swatches
-
 ```tsx
 import { ColorInput } from '@mantine/core';
 
@@ -130,26 +130,22 @@ function Demo() {
   return (
     <ColorInput
       format="hex"
-      swatches={[${Object.keys(DEFAULT_THEME.colors)
-        .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
-        .join(', ')}]}
+      swatches={['#2e2e2e', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5', '#228be6', '#15aabf', '#12b886', '#40c057', '#82c91e', '#fab005', '#fd7e14']}
     />
   );
 }
 ```
 
 
-By default, there will be 7 swatches per row, you can change this with `swatchesPerRow` prop,
-like in [ColorPicker](https://mantine.dev/core/color-picker/) component:
-
-#### Example: swatchesConfigurator
+By default, there will be 7 swatches per row. You can change this with the `swatchesPerRow` prop,
+like in the [ColorPicker](https://mantine.dev/llms/core-color-picker.md) component:
 
 ```tsx
 import { ColorPicker } from '@mantine/core';
 
 function Demo() {
   return (
-    <ColorPicker format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
+    <ColorPicker swatchesPerRow={7} format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
       .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
       .join(', ')}]} />
   );
@@ -157,12 +153,10 @@ function Demo() {
 ```
 
 
-If you need to restrict color picking to certain colors – disable color picker and disallow free input:
-
-#### Example: swatchesOnly
+If you need to restrict color picking to certain colors – disable the color picker and disallow free input:
 
 ```tsx
-import { ColorInput, DEFAULT_THEME } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -171,11 +165,7 @@ function Demo() {
       label="Your favorite color"
       disallowInput
       withPicker={false}
-      swatches={[
-        ...DEFAULT_THEME.colors.red,
-        ...DEFAULT_THEME.colors.green,
-        ...DEFAULT_THEME.colors.blue,
-      ]}
+      swatches={['#2e2e2e', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5', '#228be6', '#15aabf', '#12b886', '#40c057', '#82c91e', '#fab005', '#fd7e14']}
     />
   );
 }
@@ -184,12 +174,10 @@ function Demo() {
 
 ## Close dropdown on color swatch click
 
-To close the dropdown when one of the color swatches is clicked, set `closeOnColorSwatchClick` prop:
-
-#### Example: closeOnColorSwatchClick
+To close the dropdown when one of the color swatches is clicked, set the `closeOnColorSwatchClick` prop:
 
 ```tsx
-import { ColorInput, DEFAULT_THEME } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -197,11 +185,7 @@ function Demo() {
       closeOnColorSwatchClick
       label="Dropdown is closed when color swatch is clicked"
       placeholder="Click color swatch"
-      swatches={[
-        ...DEFAULT_THEME.colors.red,
-        ...DEFAULT_THEME.colors.green,
-        ...DEFAULT_THEME.colors.blue,
-      ]}
+      swatches={['#2e2e2e', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5', '#228be6', '#15aabf', '#12b886', '#40c057', '#82c91e', '#fab005', '#fd7e14']}
     />
   );
 }
@@ -210,9 +194,7 @@ function Demo() {
 
 ## Hide dropdown
 
-To hide dropdown, set `withPicker={false}`:
-
-#### Example: withPicker
+To hide the dropdown, set `withPicker={false}`:
 
 ```tsx
 import { ColorInput } from '@mantine/core';
@@ -227,11 +209,9 @@ function Demo() {
 
 ## Eye dropper
 
-By default, if [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)
-is available, eye dropper icon will be displayed at the right section of the input.
+By default, if the [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)
+is available, the eye dropper icon will be displayed at the right section of the input.
 To disable it, set `withEyeDropper={false}`:
-
-#### Example: noEyeDropper
 
 ```tsx
 import { ColorInput } from '@mantine/core';
@@ -244,18 +224,16 @@ function Demo() {
 
 ## Change eye dropper icon
 
-You can replace eye dropper icon with any React node using `eyeDropperIcon` prop:
-
-#### Example: eyeDropperIcon
+You can replace the eye dropper icon with any React node using the `eyeDropperIcon` prop:
 
 ```tsx
 import { ColorInput } from '@mantine/core';
-import { IconFocus2 } from '@tabler/icons-react';
+import { CrosshairIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <ColorInput
-      eyeDropperIcon={<IconFocus2 size={18} stroke={1.5} />}
+      eyeDropperIcon={<CrosshairIcon size={18} />}
       label="With custom eye dropper icon"
       placeholder="Pick color"
     />
@@ -264,24 +242,20 @@ function Demo() {
 ```
 
 
-<InputSections component="ColorInput" />
-
 ## Input sections
 
 ColorInput supports left and right sections to display icons, buttons or other content alongside the input.
 
-Note that by default, `ColorPicker` has color preview in the left section and eye dropper button
-in the right section. You can replace these elements with any React node using `leftSection`
+Note that by default, `ColorPicker` has a color preview in the left section and an eye dropper button
+in the right section. You can replace these elements with any React node using the `leftSection`
 and `rightSection` props:
-
-#### Example: sections
 
 ```tsx
 import { ColorInput } from '@mantine/core';
-import { IconColorPicker } from '@tabler/icons-react';
+import { EyedropperIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconColorPicker size={18} stroke={1.5} />;
+  const icon = <EyedropperIcon size={18} />;
 
   return (
     <>
@@ -289,12 +263,14 @@ function Demo() {
         label="With custom left section"
         placeholder="Replaces color swatch"
         leftSection={icon}
+        leftSectionPointerEvents="none"
         withEyeDropper={false}
       />
       <ColorInput
         label="With custom right section"
         placeholder="Replaces eye dropper"
         rightSection={icon}
+        rightSectionPointerEvents="none"
         mt="md"
       />
     </>
@@ -304,8 +280,6 @@ function Demo() {
 
 
 ## Error state
-
-#### Example: error
 
 ```tsx
 import { ColorInput } from '@mantine/core';
@@ -328,8 +302,6 @@ function Demo() {
 
 ## Disabled state
 
-#### Example: disabled
-
 ```tsx
 import { ColorInput } from '@mantine/core';
 
@@ -339,105 +311,54 @@ function Demo() {
 ```
 
 
-## Read only
-
-#### Example: readOnly
-
-```tsx
-import { ColorInput } from '@mantine/core';
-
-function Demo() {
-  return <ColorInput readOnly label="Cannot modify value" defaultValue="#F0FCFE" />;
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { ColorInput } from '@mantine/core';
-
-function Demo() {
-  return (
-    <ColorInput
-      label="Label"
-      placeholder="ColorInput"
-      description="Description"
-      error="Error"
-      withAsterisk
-      swatches={['#000', '#fff', '#f00', '#0f0', '#00f']}
-      format="rgba"
-      
-    />
-  );
-}
-```
-
-
-<GetElementRef component="ColorInput" refType="input" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { ColorInput } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLInputElement>(null);
-  return <ColorInput ref={ref} />;
-}
-```
-
-<InputAccessibility component="ColorInput" />
-
-## Accessibility
-
-ColorInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
-
 
 #### Props
+
+**ColorInput props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | closeOnColorSwatchClick | boolean | - | If set, the dropdown is closed when one of the color swatches is clicked |
 | defaultValue | string | - | Uncontrolled component default value |
-| description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
-| disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
 | disallowInput | boolean | - | If input is not allowed, the user can only pick value with color picker and swatches |
-| error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | eyeDropperButtonProps | Record<string, any> | - | Props passed down to the eye dropper button |
 | eyeDropperIcon | React.ReactNode | - | An icon to replace the default eye dropper icon |
 | fixOnBlur | boolean | - | If set, the input value resets to the last known valid value when the input loses focus |
-| format | ColorFormat | - | Color format |
-| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
-| inputSize | string | - | <code>size</code> attribute passed down to the input element |
-| inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
-| label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
+| format | 'hex' \| 'hexa' \| 'rgba' \| 'rgb' \| 'hsl' \| 'hsla' | - | Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
-| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
-| leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
-| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
 | onChange | (value: string) => void | - | Called when value changes |
 | onChangeEnd | (value: string) => void | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |
-| pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
-| popoverProps | PopoverProps | - | Props passed down to the <code>Popover</code> component |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| popoverProps | PopoverProps | - | Props passed down to the `Popover` component |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
-| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
-| rightSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>rightSection</code> element |
-| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
-| size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
 | swatches | string[] | - | A list of colors used to display swatches list below the color picker |
 | swatchesPerRow | number | - | Number of swatches per row |
 | value | string | - | Controlled component value |
-| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
-| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withEyeDropper | boolean | - | If set, the eye dropper button is displayed in the right section |
-| withPicker | boolean | - | Determines whether the color picker should be displayed |
+| withPicker | boolean | - | If `false`, the component displays only swatches |
 | withPreview | boolean | - | If set, the preview color swatch is displayed in the left section of the input |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 

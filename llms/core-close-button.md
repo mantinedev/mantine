@@ -5,43 +5,39 @@ Description: Button with close icon
 
 ## Usage
 
-`CloseButton` renders a button with `X` icon inside. It is used in other Mantine components like [Drawer](https://mantine.dev/core/drawer) or [Modal](https://mantine.dev/core/modal).
-
-#### Example: usage
+`CloseButton` renders a button with an `X` icon inside. It is used in other Mantine components like [Drawer](https://mantine.dev/llms/core-drawer.md) or [Modal](https://mantine.dev/llms/core-modal.md).
 
 ```tsx
 import { CloseButton } from '@mantine/core';
 
 function Demo() {
-  return <CloseButton />;
+  return <CloseButton size="md" variant="subtle" />;
 }
 ```
 
 
 ## Change icon
 
-You can change icon by passing any react node to the `icon` prop.
+You can change the icon by passing any react node to the `icon` prop.
 It is useful when `CloseButton` is used as a part of other components,
-for example, in [Drawer](https://mantine.dev/core/drawer) or [Modal](https://mantine.dev/core/modal).
-Note that if you use `icon` prop, `iconSize` prop is ignored –
-you will have to set icon size manually.
-
-#### Example: icon
+for example, in [Drawer](https://mantine.dev/llms/core-drawer.md) or [Modal](https://mantine.dev/llms/core-modal.md).
+Note that if you use the `icon` prop, the `iconSize` prop is ignored –
+you will have to set the icon size manually.
 
 ```tsx
-import { IconXboxX } from '@tabler/icons-react';
+import { XCircleIcon } from '@phosphor-icons/react';
 import { CloseButton } from '@mantine/core';
 
 function Demo() {
-  return <CloseButton icon={<IconXboxX size={18} stroke={1.5} />} />;
+  return <CloseButton icon={<XCircleIcon size={18} />} />;
 }
 ```
 
 
 ## Accessibility
 
-To make `CloseButton` accessible for screen readers, you need to either set `aria-label` or
-use [VisuallyHidden](https://mantine.dev/core/visually-hidden) component:
+To make the `CloseButton` accessible for screen readers, you need to either set `aria-label` or
+use the [VisuallyHidden](https://mantine.dev/llms/core-visually-hidden.md) component:
 
 ```tsx
 import { CloseButton, VisuallyHidden } from '@mantine/core';
@@ -62,14 +58,16 @@ function Demo() {
 
 #### Props
 
+**CloseButton props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| children | React.ReactNode | - | Content rendered inside the button. For example <code>VisuallyHidden</code> with label for screen readers. |
-| disabled | boolean | - | Sets <code>disabled</code> attribute, assigns disabled styles |
-| icon | React.ReactNode | - | React node to replace the default close icon. If set, <code>iconSize</code> prop is ignored. |
-| iconSize | string | number | - | <code>X</code> icon <code>width</code> and <code>height</code> |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem. |
-| size | number | MantineSize | (string & {}) | - | Controls width and height of the button. Numbers are converted to rem. |
+| children | React.ReactNode | - | Content rendered inside the button. For example `VisuallyHidden` with label for screen readers. |
+| disabled | boolean | - | Sets `disabled` attribute, assigns disabled styles |
+| icon | React.ReactNode | - | React node to replace the default close icon. If set, `iconSize` prop is ignored. |
+| iconSize | string \| number | - | `X` icon `width` and `height` |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. |
+| size | MantineSize \| number | - | Controls width and height of the button. Numbers are converted to rem. |
 
 
 #### Styles API

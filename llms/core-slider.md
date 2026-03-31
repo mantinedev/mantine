@@ -5,8 +5,6 @@ Description: Slider component
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Slider } from '@mantine/core';
 
@@ -14,7 +12,7 @@ import { Slider } from '@mantine/core';
 function Demo() {
   return (
     <Slider
-      
+       color="blue" size="md" radius="xl" showLabelOnHover={true} labelAlwaysOn={false}
       defaultValue={40}
       marks={[
         { value: 20, label: '20%' },
@@ -39,9 +37,34 @@ function Demo() {
 }
 ```
 
-## Disabled
+## Uncontrolled
 
-#### Example: disabled
+`Slider` can be used in uncontrolled forms the same way as a native input element.
+Set the `name` attribute to include the slider value in the `FormData` object on form submission.
+To set the initial value in uncontrolled mode, use the `defaultValue` prop.
+
+Example usage of uncontrolled `Slider` with `FormData`:
+
+```tsx
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Slider value:', formData.get('volume'));
+      }}
+    >
+      <Slider name="volume" defaultValue={40} min={0} max={100} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Disabled
 
 ```tsx
 import { Slider } from '@mantine/core';
@@ -54,10 +77,8 @@ function Demo() {
 
 ## onChangeEnd
 
-`onChangeEnd` callback is called when user the slider is stopped from being dragged or value is changed with keyboard.
+`onChangeEnd` callback is called when the user stops dragging the slider or when the value is changed with the keyboard.
 You can use it as a debounced callback to avoid too frequent updates.
-
-#### Example: changeEnd
 
 ```tsx
 import { useState } from 'react';
@@ -88,10 +109,8 @@ function Demo() {
 To change label behavior and appearance, set the following props:
 
 * `label` – formatter function, accepts value as an argument, set null to disable label, defaults to `f => f`
-* `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
-* `labelTransitionProps` – props passed down to the [Transition](https://mantine.dev/core/transition) component, can be used to customize label animation
-
-#### Example: label
+* `labelAlwaysOn` – if true, the label will always be displayed; by default the label is visible only when the user is dragging
+* `labelTransitionProps` – props passed down to the [Transition](https://mantine.dev/llms/core-transition.md) component, can be used to customize label animation
 
 ```tsx
 import { Slider, Text } from '@mantine/core';
@@ -124,8 +143,6 @@ function Demo() {
 
 
 ## Min, max and step
-
-#### Example: step
 
 ```tsx
 import { Slider, Text } from '@mantine/core';
@@ -167,11 +184,13 @@ function Demo() {
 
 ## Domain
 
-By default, `min` and `max` values define the possible range of values.
-`domain` prop allows setting the possible range of values independently of the
-`min` and `max` values:
+By default, the `min` and `max` props define both the visual range (track display) and
+the selectable range (possible values). The `domain` prop allows you to independently
+control the selectable range. This is useful when you want to display a wider track
+(for context) but restrict the actual selection to a subset.
 
-#### Example: domain
+In the example below, the track displays from 0 to 100 (`min`/`max`), but the thumb
+can only be dragged between 20 and 80 (`domain`):
 
 ```tsx
 import { Slider } from '@mantine/core';
@@ -197,8 +216,6 @@ function Demo() {
 
 To use `Slider` with decimal values, set `min`, `max` and `step` props:
 
-#### Example: decimal
-
 ```tsx
 import { Slider } from '@mantine/core';
 
@@ -210,7 +227,7 @@ function Demo() {
 
 ## Marks
 
-Add any number of marks to slider by setting `marks` prop to an array of objects:
+Add any number of marks to the slider by setting the `marks` prop to an array of objects:
 
 ```tsx
 const marks = [
@@ -219,9 +236,7 @@ const marks = [
 ];
 ```
 
-Note that mark value is relative to slider value, not width:
-
-#### Example: marks
+Note that the mark value is relative to the slider value, not width:
 
 ```tsx
 import { Slider } from '@mantine/core';
@@ -247,10 +262,8 @@ function Demo() {
 
 ## Restrict selection to marks
 
-Set `restrictToMarks` prop to restrict slider value to marks only. Note that in
-this case `step` prop is ignored:
-
-#### Example: restrictToMarks
+Set the `restrictToMarks` prop to restrict the slider value to marks only. Note that in
+this case the `step` prop is ignored:
 
 ```tsx
 import { RangeSlider, Slider, Stack } from '@mantine/core';
@@ -285,30 +298,26 @@ function Demo() {
 
 ## Thumb size
 
-#### Example: thumbSize
-
 ```tsx
 import { Slider } from '@mantine/core';
 
 function Demo() {
-  return <Slider defaultValue={20} />;
+  return <Slider thumbSize={14} defaultValue={20} />;
 }
 ```
 
 
 ## Thumb children
 
-#### Example: thumbChildren
-
 ```tsx
 import { Slider, RangeSlider } from '@mantine/core';
-import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
+import { HeartIcon, HeartBreakIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <>
       <Slider
-        thumbChildren={<IconHeart size={16} />}
+        thumbChildren={<HeartIcon size={16} />}
         color="red"
         label={null}
         defaultValue={40}
@@ -323,7 +332,7 @@ function Demo() {
         label={null}
         defaultValue={[20, 60]}
         thumbSize={26}
-        thumbChildren={[<IconHeart size={16} key="1" />, <IconHeartBroken size={16} key="2" />]}
+        thumbChildren={[<HeartIcon size={16} key="1" />, <HeartBreakIcon size={16} key="2" />]}
       />
     </>
   );
@@ -336,8 +345,6 @@ function Demo() {
 You can use the `scale` prop to represent the value on a different scale.
 
 In the following demo, the value `x` represents the value `2^x`. Increasing `x` by one increases the represented value by 2 to the power of `x`.
-
-#### Example: scale
 
 ```tsx
 import { RangeSlider, Slider } from '@mantine/core';
@@ -386,106 +393,79 @@ function Demo() {
 ```
 
 
-## Inverted
+## Vertical slider
 
-You can invert the track with the `inverted` prop:
-
-#### Example: inverted
-
-```tsx
-import { Slider } from '@mantine/core';
-
-function Demo() {
-  return <Slider inverted defaultValue={80} />;
-}
-```
-
-
-#### Example: stylesApi
+Set `orientation="vertical"` to render the slider vertically. In vertical orientation,
+the minimum value is at the bottom and the maximum value is at the top.
 
 ```tsx
-import { Slider } from '@mantine/core';
+import { RangeSlider, Slider } from '@mantine/core';
 
-function Demo() {
-  return <Slider marks={[{ value: 20, label: '20%' }, { value: 80, label: '80%' }]} labelAlwaysOn />;
-}
-```
-
-
-Example of using [Styles API](https://mantine.dev/styles/styles-api/) to change `Slider` styles:
-
-#### Example: customize
-
-```tsx
-// Demo.tsx
-import { Slider } from '@mantine/core';
-import classes from './Demo.module.css';
+const marks = [
+  { value: 20, label: '20%' },
+  { value: 50, label: '50%' },
+  { value: 80, label: '80%' },
+];
 
 function Demo() {
   return (
-    <Slider
-      defaultValue={40}
-      size={2}
-      classNames={classes}
-      marks={[
-        { value: 20, label: '20%' },
-        { value: 50, label: '50%' },
-        { value: 80, label: '80%' },
-      ]}
-    />
+    <div style={{ display: 'flex', gap: 40 }}>
+      <Slider orientation="vertical" defaultValue={45} marks={marks} />
+      <RangeSlider orientation="vertical" defaultValue={[25, 65]} marks={marks} />
+    </div>
   );
-}
-
-// Demo.module.css
-.track {
-  &::before {
-    background-color: light-dark(var(--mantine-color-blue-1), var(--mantine-color-dark-3));
-  }
-}
-
-.mark {
-  width: 6px;
-  height: 6px;
-  border-radius: 6px;
-  transform: translateX(-3px) translateY(-2px);
-  border-color: light-dark(var(--mantine-color-blue-1), var(--mantine-color-dark-3));
-
-  &[data-filled] {
-    border-color: var(--mantine-color-blue-6);
-  }
-}
-
-.markLabel {
-  font-size: var(--mantine-font-size-xs);
-  margin-bottom: 5px;
-  margin-top: 0;
-}
-
-.thumb {
-  height: 16px;
-  width: 16px;
-  background-color: var(--mantine-color-white);
-  border-width: 1px;
-  box-shadow: var(--mantine-shadow-sm);
 }
 ```
 
 
-## Vertical slider
+## Hidden marks
 
-`Slider` does not provide vertical orientation as it is very rarely used.
-If you need this feature you can build it yourself with [use-move](https://mantine.dev/hooks/use-move/) hook.
+Hidden marks allow you to snap to specific values without displaying them visually on the track.
+This is useful when you want to create a "sticky" snapping behavior to certain values that
+you don't want to show to the user. Use this feature together with `restrictToMarks` prop:
+
+```tsx
+import { Slider, Text, Box } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState(50);
+
+  return (
+    <Box pb="md">
+      <Text size="sm" mb="xs">
+        Hidden marks allow you to snap to specific values without displaying them visually. Current
+        value: {value}
+      </Text>
+      <Slider
+        value={value}
+        onChange={setValue}
+        min={0}
+        max={100}
+        step={1}
+        restrictToMarks
+        marks={[
+          { value: 0, label: '0%' },
+          { value: 25, hidden: true },
+          { value: 50, label: '50%' },
+          { value: 75, hidden: true },
+          { value: 100, label: '100%' },
+        ]}
+      />
+    </Box>
+  );
+}
+```
+
 
 ## Build custom slider
 
-If `Slider` component does not meet your requirements, you can build a custom slider with [use-move](https://mantine.dev/hooks/use-move/) hook:
-
-#### Example: customSlider
+If the `Slider` component does not meet your requirements, you can build a custom slider with the [use-move](https://mantine.dev/llms/hooks-use-move.md) hook:
 
 ```tsx
 // Demo.tsx
 import { useState } from 'react';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { clamp, useMove } from '@mantine/hooks';
 import classes from './Demo.module.css';
 
@@ -523,7 +503,7 @@ function Demo() {
           className={classes.thumb}
           style={{ left: `calc(${value * 100}% - var(--thumb-width) / 2)` }}
         >
-          <IconGripVertical stroke={1.5} />
+          <DotsSixVerticalIcon />
         </div>
       </div>
     </div>
@@ -621,10 +601,10 @@ function Demo() {
 `Slider` component is accessible by default:
 
 * Thumbs are focusable
-* When the user uses mouse to interact with the slider, focus is moved to the slider track, when the user presses arrows focus is moved to the thumb
-* Value can be changed with arrows with step increment/decrement
+* When the user uses the mouse to interact with the slider, focus is moved to the slider track; when the user presses arrows, focus is moved to the thumb
+* The value can be changed with arrows with step increment/decrement
 
-To label component for screen readers, add labels to thumbs:
+To label the component for screen readers, add labels to thumbs:
 
 ```tsx
 import { Slider } from '@mantine/core';
@@ -639,34 +619,37 @@ function Demo() {
 
 #### Props
 
+**Slider props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color, controls color of track and thumb |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color, controls color of track and thumb |
 | defaultValue | number | - | Uncontrolled component default value |
 | disabled | boolean | - | Disables slider |
-| domain | [number, number] | - | Domain of the slider, defines the full range of possible values |
-| hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
+| domain | [number, number] | - | Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | inverted | boolean | - | Determines whether track value representation should be inverted |
-| label | ReactNode | ((value: number) => ReactNode) | - | Function to generate label or any react node to render instead, set to null to disable label |
+| label | ReactNode \| ((value: number) => ReactNode) | - | Function to generate label or any react node to render instead, set to null to disable label |
 | labelAlwaysOn | boolean | - | Determines whether the label should be visible when the slider is not being dragged or hovered |
-| labelTransitionProps | TransitionProps | - | Props passed down to the <code>Transition</code> component |
-| marks | { value: number; label?: ReactNode; }[] | - | Marks displayed on the track |
+| labelTransitionProps | TransitionProps | - | Props passed down to the `Transition` component |
+| marks | SliderMark[] | - | Marks displayed on the track |
 | max | number | - | Maximum possible value |
 | min | number | - | Minimal possible value |
 | name | string | - | Hidden input name, use with uncontrolled component |
 | onChange | (value: number) => void | - | Called when value changes |
 | onChangeEnd | (value: number) => void | - | Called when user stops dragging slider or changes value with arrows |
+| orientation | "horizontal" \| "vertical" | - | Slider orientation |
 | precision | number | - | Number of significant digits after the decimal point |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | restrictToMarks | boolean | - | Determines whether the selection should be only allowed from the given marks array |
 | scale | (value: number) => number | - | A transformation function to change the scale of the slider |
 | showLabelOnHover | boolean | - | Determines whether the label should be displayed when the slider is hovered |
-| size | number | MantineSize | (string & {}) | - | Controls size of the track |
+| size | MantineSize \| number | - | Controls size of the track |
 | step | number | - | Number by which value will be incremented/decremented with thumb drag and arrows |
 | thumbChildren | React.ReactNode | - | Content rendered inside thumb |
-| thumbLabel | string | - | Thumb <code>aria-label</code> |
-| thumbProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to thumb element |
-| thumbSize | string | number | - | Thumb <code>width</code> and <code>height</code>, by default value is computed based on <code>size</code> prop |
+| thumbLabel | string | - | Thumb `aria-label` |
+| thumbProps | React.ComponentProps<"div"> | - | Props passed down to thumb element |
+| thumbSize | string \| number | - | Thumb `width` and `height`, by default value is computed based on `size` prop |
 | value | number | - | Controlled component value |
 
 
@@ -696,3 +679,9 @@ Slider component supports Styles API. With Styles API, you can customize styles 
 | root | --slider-color | Controls filled track, thumb and marks `background` |
 | root | --slider-thumb-size | Controls thumb `width` and `height` |
 | root | --slider-radius | Controls `border-radius` of track and thumb |
+
+**Slider data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-orientation | Determines slider orientation, `horizontal` by default | - |

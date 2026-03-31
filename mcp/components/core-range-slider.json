@@ -1,0 +1,359 @@
+{
+  "id": "core-range-slider",
+  "name": "RangeSlider",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/range-slider",
+  "description": "RangeSlider component",
+  "propsCount": 33,
+  "llmUrl": "https://mantine.dev/llms/core-range-slider.md",
+  "componentDataUrl": "/mcp/components/core-range-slider.json",
+  "searchText": "rangeslider rangeslider component @mantine/core /core/range-slider color defaultvalue disabled domain hiddeninputprops inverted label labelalwayson labeltransitionprops marks max maxrange min minrange name onchange onchangeend orientation precision pushonoverlap radius restricttomarks scale showlabelonhover size step thumbchildren thumbfromlabel thumblabel thumbprops thumbsize thumbtolabel value",
+  "source": "@mantine/core/src/components/Slider/RangeSlider/RangeSlider.tsx",
+  "docs": "core/range-slider.mdx",
+  "markdown": "# RangeSlider\nPackage: @mantine/core\nImport: import { RangeSlider } from '@mantine/core';\nDescription: RangeSlider component\n\n## Usage\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <RangeSlider\n       color=\"blue\" size=\"md\" radius=\"xl\" showLabelOnHover={true} labelAlwaysOn={false}\n      defaultValue={[20, 60]}\n      marks={[\n        { value: 20, label: '20%' },\n        { value: 50, label: '50%' },\n        { value: 80, label: '80%' },\n      ]}\n    />\n  );\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<[number, number]>([20, 80]);\n  return <RangeSlider value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`RangeSlider` can be used with uncontrolled forms the same way as a native input element.\nSet the `name` attribute to include range slider value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `RangeSlider` with `FormData`:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Range slider value:', formData.get('range'));\n      }}\n    >\n      <RangeSlider\n        name=\"range\"\n        defaultValue={[20, 80]}\n        min={0}\n        max={100}\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Disabled\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <RangeSlider defaultValue={[20, 60]} disabled />;\n}\n```\n\n\n## Control label\n\nTo change the label behavior and appearance, set the following props:\n\n* `label` – formatter function, accepts value as an argument, set to null to disable the label, defaults to `f => f`\n* `labelAlwaysOn` – if true, the label will always be displayed; by default the label is visible only when the user is dragging\n* `labelTransitionProps` – props passed down to the [Transition](https://mantine.dev/llms/core-transition.md) component, can be used to customize the label animation\n\n```tsx\nimport { RangeSlider, Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text size=\"sm\">No label</Text>\n      <RangeSlider defaultValue={[20, 60]} label={null} />\n\n      <Text size=\"sm\" mt=\"xl\">Formatted label</Text>\n      <RangeSlider defaultValue={[20, 60]} label={(value) => `${value} °C`} />\n\n      <Text size=\"sm\" mt=\"xl\">Label always visible</Text>\n      <RangeSlider defaultValue={[20, 60]} labelAlwaysOn />\n\n      <Text size=\"sm\" mt=\"xl\">Custom label transition</Text>\n      <RangeSlider\n        defaultValue={40}\n        labelTransitionProps={{\n          transition: 'skew-down',\n          duration: 150,\n          timingFunction: 'linear',\n        }}\n      />\n    </>\n  );\n}\n```\n\n\n## Min, max and step\n\n```tsx\nimport { RangeSlider, Text } from '@mantine/core';\n\nconst marks = [{ value: 0 }, { value: 25 }, { value: 50 }, { value: 75 }, { value: 100 }];\n\nfunction Demo() {\n  return (\n    <>\n      <Text>Decimal step</Text>\n      <RangeSlider minRange={2} defaultValue={[0, 10]} min={-10} max={10} step={0.1} />\n\n      <Text mt=\"md\">Step matched with marks</Text>\n      <RangeSlider defaultValue={[50, 75]} step={25} marks={marks} />\n    </>\n  );\n}\n```\n\n\n## Domain\n\nBy default, `min` and `max` values define the possible range of values.\nThe `domain` prop allows setting the possible range of values independently of the\n`min` and `max` values:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <RangeSlider\n      domain={[0, 100]}\n      min={10}\n      max={90}\n      defaultValue={[25, 75]}\n      marks={[\n        { value: 10, label: 'min' },\n        { value: 90, label: 'max' },\n      ]}\n    />\n  );\n}\n```\n\n\n## Decimal values\n\nTo use `RangeSlider` with decimal values, set the `min`, `max`, and `step` props:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <RangeSlider min={0} max={1} minRange={0.2} step={0.0005} defaultValue={[0.2, 0.8]} />;\n}\n```\n\n\n## minRange\n\nUse the `minRange` prop to control the minimum range between `from` and `to` values\nin `RangeSlider`. The default value is `10`. This ensures the thumbs must be at least\nthe specified distance apart:\n\n```tsx\nimport { RangeSlider, Text } from '@mantine/core';\nimport { useState } from 'react';\n\nfunction Demo() {\n  const [value, setValue] = useState<[number, number]>([30, 60]);\n\n  return (\n    <>\n      <Text size=\"sm\" mb=\"xs\">\n        Minimum range: 20 (thumbs must be at least 20 units apart)\n      </Text>\n      <RangeSlider\n        value={value}\n        onChange={setValue}\n        minRange={20}\n      />\n      <Text size=\"sm\" mt=\"xs\">\n        Value: [{value[0]}, {value[1]}] - Range: {value[1] - value[0]}\n      </Text>\n    </>\n  );\n}\n```\n\n\n## maxRange\n\nUse the `maxRange` prop to control the maximum range between `from` and `to` values.\nThis limits how wide the selection can be. By default, `maxRange` is set to `Infinity`:\n\n```tsx\nimport { RangeSlider, Text } from '@mantine/core';\nimport { useState } from 'react';\n\nfunction Demo() {\n  const [value, setValue] = useState<[number, number]>([20, 80]);\n\n  return (\n    <>\n      <Text size=\"sm\" mb=\"xs\">\n        Maximum range: 50 (selection cannot be wider than 50 units)\n      </Text>\n      <RangeSlider\n        value={value}\n        onChange={setValue}\n        maxRange={50}\n      />\n      <Text size=\"sm\" mt=\"xs\">\n        Value: [{value[0]}, {value[1]}] - Range: {value[1] - value[0]}\n      </Text>\n    </>\n  );\n}\n```\n\n\n## pushOnOverlap\n\nThe `pushOnOverlap` prop controls whether the thumbs should push each other when they overlap.\nBy default, `pushOnOverlap` is `true`. If you want to disable this behavior, set it to `false`.\n\nExample of `pushOnOverlap={false}`:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <RangeSlider pushOnOverlap={false} defaultValue={[25, 65]} minRange={20} />;\n}\n```\n\n\n## Marks\n\nAdd any number of marks to the slider by setting the `marks` prop to an array of objects:\n\n```tsx\nconst marks = [\n  { value: 20 }, // -> displays mark on slider track\n  { value: 40, label: '40%' }, // -> adds mark label below slider track\n];\n```\n\nNote that mark value is relative to slider value, not width:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <RangeSlider\n        defaultValue={[20, 60]}\n        marks={[{ value: 10 }, { value: 40 }, { value: 95 }]}\n        mb={32}\n      />\n\n      <RangeSlider\n        mb={32}\n        defaultValue={[20, 60]}\n        marks={[\n          { value: 20, label: '20%' },\n          { value: 50, label: '50%' },\n          { value: 80, label: '80%' },\n        ]}\n      />\n    </>\n  );\n}\n```\n\n\n## Restrict selection to marks\n\nSet `restrictToMarks` prop to restrict slider value to marks only. Note that in\nthis case `step` prop is ignored:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <RangeSlider\n      restrictToMarks\n      defaultValue={[5, 15]}\n      marks={[\n        { value: 5 },\n        { value: 15 },\n        { value: 25 },\n        { value: 35 },\n        { value: 70 },\n        { value: 80 },\n        { value: 90 },\n      ]}\n    />\n  );\n}\n```\n\n\n## Inverted\n\nYou can invert the track with the `inverted` prop:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <RangeSlider inverted defaultValue={[20, 60]} />;\n}\n```\n\n\n## Hidden marks\n\nHidden marks allow you to snap to specific values without displaying them visually on the track.\nThis is useful when you want to create a \"sticky\" snapping behavior to certain values that\nyou don't want to show to the user. Use this feature together with `restrictToMarks` prop:\n\n```tsx\nimport { RangeSlider, Text, Box } from '@mantine/core';\nimport { useState } from 'react';\n\nfunction Demo() {\n  const [value, setValue] = useState<[number, number]>([25, 75]);\n\n  return (\n    <Box pb=\"md\">\n      <Text size=\"sm\" mb=\"xs\">\n        Hidden marks allow you to snap to specific values without displaying them visually. Current\n        value: [{value[0]}, {value[1]}]\n      </Text>\n      <RangeSlider\n        value={value}\n        onChange={setValue}\n        min={0}\n        max={100}\n        step={1}\n        minRange={10}\n        restrictToMarks\n        marks={[\n          { value: 0, label: '0%' },\n          { value: 20, hidden: true },\n          { value: 40, hidden: true },\n          { value: 50, label: '50%' },\n          { value: 60, hidden: true },\n          { value: 80, hidden: true },\n          { value: 100, label: '100%' },\n        ]}\n      />\n    </Box>\n  );\n}\n```\n\n\n## Accessibility\n\n`RangeSlider` component is accessible by default:\n\n* Thumbs are focusable\n* When the user uses mouse to interact with the slider, focus is moved to the slider track, when the user presses arrows focus is moved to the thumb\n* Value can be changed with arrows with step increment/decrement\n\nTo label component for screen readers, add labels to thumbs:\n\n```tsx\nimport { RangeSlider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <RangeSlider\n      thumbFromLabel=\"First thumb aria-label\"\n      thumbToLabel=\"Second thumb aria-label\"\n    />\n  );\n}\n```\n\n## Keyboard interactions\n\n\n#### Props\n\n**RangeSlider props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color, controls color of track and thumb |\n| defaultValue | RangeSliderValue | - | Uncontrolled component default value |\n| disabled | boolean | - | Disables slider |\n| domain | [number, number] | - | Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). |\n| hiddenInputProps | React.ComponentProps<\"input\"> | - | Props passed down to the hidden input |\n| inverted | boolean | - | Determines whether track values representation should be inverted |\n| label | ReactNode \\| ((value: number) => ReactNode) | - | Function to generate label or any react node to render instead, set to null to disable label |\n| labelAlwaysOn | boolean | - | Determines whether the label should be visible when the slider is not being dragged or hovered |\n| labelTransitionProps | TransitionProps | - | Props passed down to the `Transition` component |\n| marks | SliderMark[] | - | Marks displayed on the track |\n| max | number | - | Maximum possible value |\n| maxRange | number | - | Maximum range interval |\n| min | number | - | Minimal possible value |\n| minRange | number | - | Minimal range interval between the two thumbs. Consider this value relative to the total range (max - min). |\n| name | string | - | Hidden input name, use with uncontrolled component |\n| onChange | (value: RangeSliderValue) => void | - | Called when value changes |\n| onChangeEnd | (value: RangeSliderValue) => void | - | Called when user stops dragging slider or changes value with arrows |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Slider orientation |\n| precision | number | - | Number of significant digits after the decimal point |\n| pushOnOverlap | boolean | - | Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| restrictToMarks | boolean | - | Determines whether the selection should be only allowed from the given marks array |\n| scale | (value: number) => number | - | A transformation function to change the scale of the slider |\n| showLabelOnHover | boolean | - | Determines whether the label should be displayed when the slider is hovered |\n| size | MantineSize \\| number | - | Controls size of the track |\n| step | number | - | Number by which value will be incremented/decremented with thumb drag and arrows |\n| thumbChildren | React.ReactNode | - | Content rendered inside thumb |\n| thumbFromLabel | string | - | First thumb `aria-label` |\n| thumbLabel | string | - | `aria-label` for both thumbs (overridden by thumbFromLabel/thumbToLabel if provided) |\n| thumbProps | (index: 0 \\| 1) => DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> | - | Props passed down to thumb element based on the thumb index |\n| thumbSize | string \\| number | - | Thumb `width` and `height`, by default value is computed based on `size` prop |\n| thumbToLabel | string | - | Second thumb `aria-label` |\n| value | RangeSliderValue | - | Controlled component value |",
+  "props": [
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color, controls color of track and thumb",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RangeSliderValue"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "disabled",
+      "description": "Disables slider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "domain",
+      "description": "Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain).",
+      "required": false,
+      "defaultValue": "[min, max]",
+      "type": {
+        "name": "[number, number]"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "hiddenInputProps",
+      "description": "Props passed down to the hidden input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"input\">"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "inverted",
+      "description": "Determines whether track values representation should be inverted",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "label",
+      "description": "Function to generate label or any react node to render instead, set to null to disable label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | ((value: number) => ReactNode)"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "labelAlwaysOn",
+      "description": "Determines whether the label should be visible when the slider is not being dragged or hovered",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "labelTransitionProps",
+      "description": "Props passed down to the <code>Transition</code> component",
+      "required": false,
+      "defaultValue": "{ transition: 'fade', duration: 0 }",
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "marks",
+      "description": "Marks displayed on the track",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "SliderMark[]"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "max",
+      "description": "Maximum possible value",
+      "required": false,
+      "defaultValue": "100",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "maxRange",
+      "description": "Maximum range interval",
+      "required": false,
+      "defaultValue": "Infinity",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "min",
+      "description": "Minimal possible value",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "minRange",
+      "description": "Minimal range interval between the two thumbs. Consider this value relative to the total range (max - min).",
+      "required": false,
+      "defaultValue": "10",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "name",
+      "description": "Hidden input name, use with uncontrolled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: RangeSliderValue) => void"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "onChangeEnd",
+      "description": "Called when user stops dragging slider or changes value with arrows",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: RangeSliderValue) => void"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "orientation",
+      "description": "Slider orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "precision",
+      "description": "Number of significant digits after the decimal point",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "pushOnOverlap",
+      "description": "Determines whether the other thumb should be pushed by the current thumb dragging when <code>minRange</code>/<code>maxRange</code> is reached",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "restrictToMarks",
+      "description": "Determines whether the selection should be only allowed from the given marks array",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "scale",
+      "description": "A transformation function to change the scale of the slider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "showLabelOnHover",
+      "description": "Determines whether the label should be displayed when the slider is hovered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "size",
+      "description": "Controls size of the track",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "step",
+      "description": "Number by which value will be incremented/decremented with thumb drag and arrows",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "thumbChildren",
+      "description": "Content rendered inside thumb",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "thumbFromLabel",
+      "description": "First thumb <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "thumbLabel",
+      "description": "<code>aria-label</code> for both thumbs (overridden by thumbFromLabel/thumbToLabel if provided)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "thumbProps",
+      "description": "Props passed down to thumb element based on the thumb index",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(index: 0 | 1) => DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "thumbSize",
+      "description": "Thumb <code>width</code> and <code>height</code>, by default value is computed based on <code>size</code> prop",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "thumbToLabel",
+      "description": "Second thumb <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RangeSlider"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RangeSliderValue"
+      },
+      "sourceComponent": "RangeSlider"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "id": "core-chip",
+  "name": "Chip",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/chip",
+  "description": "Pick one or multiple values with inline controls",
+  "propsCount": 18,
+  "llmUrl": "https://mantine.dev/llms/core-chip.md",
+  "componentDataUrl": "/mcp/components/core-chip.json",
+  "searchText": "chip pick one or multiple values with inline controls @mantine/core /core/chip autocontrast checked children color defaultchecked icon id onchange radius rootref size type wrapperprops children defaultvalue multiple onchange value",
+  "source": "@mantine/core/src/components/Chip/Chip.tsx",
+  "docs": "core/chip.mdx",
+  "markdown": "# Chip\nPackage: @mantine/core\nImport: import { Chip } from '@mantine/core';\nDescription: Pick one or multiple values with inline controls\n\n## Usage\n\n```tsx\nimport { Chip } from '@mantine/core';\n\nfunction Demo() {\n  return <Chip defaultChecked color=\"blue\" variant=\"filled\" size=\"sm\" radius=\"xl\">Awesome chip</Chip>\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { Chip } from '@mantine/core';\n\nfunction Demo() {\n  const [checked, setChecked] = useState(false);\n\n  return (\n    <Chip checked={checked} onChange={() => setChecked((v) => !v)}>\n      My chip\n    </Chip>\n  );\n}\n```\n\n## Change checked icon\n\n```tsx\nimport { Chip } from '@mantine/core';\nimport { XIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Chip\n      icon={<XIcon size={16} />}\n      color=\"red\"\n      variant=\"filled\"\n      defaultChecked\n    >\n      Forbidden\n    </Chip>\n  );\n}\n```\n\n\n## States\n\n```tsx\nfunction Demo() {\n  return (\n    <>\n      <Chip.Group multiple value={['checked', 'checked-disabled']}>\n        <Group justify=\"center\">\n          <Chip value=\"default\" variant=\"outline\">\n            Outline default\n          </Chip>\n          <Chip value=\"checked\" variant=\"outline\">\n            Outline checked\n          </Chip>\n          <Chip value=\"checked-disabled\" disabled variant=\"outline\">\n            Outline checked disabled\n          </Chip>\n        </Group>\n      </Chip.Group>\n\n      <Chip.Group multiple value={['checked', 'checked-disabled']}>\n        <Group justify=\"center\" mt=\"md\">\n          <Chip value=\"default\" variant=\"light\">\n            Light default\n          </Chip>\n          <Chip value=\"checked\" variant=\"light\">\n            Light checked\n          </Chip>\n          <Chip value=\"checked-disabled\" disabled variant=\"light\">\n            Light checked disabled\n          </Chip>\n        </Group>\n      </Chip.Group>\n\n      <Chip.Group multiple value={['checked', 'checked-disabled']}>\n        <Group justify=\"center\" mt=\"md\">\n          <Chip value=\"default\" variant=\"filled\">\n            Filled default\n          </Chip>\n          <Chip value=\"checked\" variant=\"filled\">\n            Filled checked\n          </Chip>\n          <Chip value=\"checked-disabled\" disabled variant=\"filled\">\n            Filled checked disabled\n          </Chip>\n        </Group>\n      </Chip.Group>\n    </>\n  );\n}\n```\n\n\n## Chip with tooltip\n\nTo use `Chip` with [Tooltip](https://mantine.dev/llms/core-tooltip.md) and other similar components, set `refProp=\"rootRef\"`\non the [Tooltip](https://mantine.dev/llms/core-tooltip.md) component:\n\n```tsx\nimport { Tooltip, Chip } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Tooltip label=\"Chip tooltip\" refProp=\"rootRef\">\n      <Chip defaultChecked>Chip with tooltip</Chip>\n    </Tooltip>\n  );\n}\n```\n\n\n## Wrapper props\n\nChip supports additional props that are passed to the wrapper element for more customization options.\n\n## Chip.Group\n\nThe `Chip.Group` component manages the state of child Chip components.\nSet the `multiple` prop to allow multiple chips to be selected at a time:\n\n```tsx\nimport { Chip, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Chip.Group>\n        <Group justify=\"center\">\n          <Chip value=\"1\">Single chip</Chip>\n          <Chip value=\"2\">Can be selected</Chip>\n          <Chip value=\"3\">At a time</Chip>\n        </Group>\n      </Chip.Group>\n\n      <Chip.Group multiple>\n        <Group justify=\"center\" mt=\"md\">\n          <Chip value=\"1\">Multiple chips</Chip>\n          <Chip value=\"2\">Can be selected</Chip>\n          <Chip value=\"3\">At a time</Chip>\n        </Group>\n      </Chip.Group>\n    </>\n  );\n}\n```\n\n\n## Controlled Chip.Group\n\n```tsx\nimport { useState } from 'react';\nimport { Chip } from '@mantine/core';\n\nfunction Single() {\n  // string value when multiple is false (default)\n  const [value, setValue] = useState('react');\n\n  return (\n    <Chip.Group multiple={false} value={value} onChange={setValue}>\n      <Chip value=\"react\">React</Chip>\n      <Chip value=\"ng\">Angular</Chip>\n      <Chip value=\"svelte\">Svelte</Chip>\n      <Chip value=\"vue\">Vue</Chip>\n    </Chip.Group>\n  );\n}\n\nfunction Multiple() {\n  // array of strings value when multiple is true\n  const [value, setValue] = useState(['react']);\n\n  return (\n    <Chip.Group multiple value={value} onChange={setValue}>\n      <Chip value=\"react\">React</Chip>\n      <Chip value=\"ng\">Angular</Chip>\n      <Chip value=\"svelte\">Svelte</Chip>\n      <Chip value=\"vue\">Vue</Chip>\n    </Chip.Group>\n  );\n}\n```\n\n## Deselect radio chip\n\n```tsx\nimport { useState } from 'react';\nimport { Chip, Group } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>('first');\n  const handleChipClick = (event: React.MouseEvent<HTMLInputElement>) => {\n    if (event.currentTarget.value === value) {\n      setValue(null);\n    }\n  };\n\n  return (\n    <Chip.Group multiple={false} value={value} onChange={setValue}>\n      <Group>\n        <Chip value=\"first\" onClick={handleChipClick}>\n          First\n        </Chip>\n        <Chip value=\"second\" onClick={handleChipClick}>\n          Second\n        </Chip>\n        <Chip value=\"third\" onClick={handleChipClick}>\n          Third\n        </Chip>\n      </Group>\n    </Chip.Group>\n  );\n}\n```\n\n\n## Accessibility\n\n`Chip` and `Chip.Group` components are accessible by default – they are built with native radio/checkbox inputs,\nall keyboard events work the same as with native controls.\n\n\n#### Props\n\n**Chip props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on the chip background color for `filled` variant |\n| checked | boolean | - | Controlled checked state |\n| children | React.ReactNode | required | `label` element associated with the input |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color. |\n| defaultChecked | boolean | - | Uncontrolled checked state initial value |\n| icon | React.ReactNode | - | Any element or component to replace the default icon |\n| id | string | - | Unique input id, generated randomly if not provided |\n| onChange | (checked: boolean) => void | - | Calls when checked state changes |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| rootRef | Ref<HTMLDivElement> | - | Assigns ref of the root element |\n| size | MantineSize | - | Controls various properties related to the component size |\n| type | \"checkbox\" \\| \"radio\" | - | Chip input type |\n| wrapperProps | React.ComponentProps<\"div\"> | - | Props passed down to the root element |\n\n**Chip.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | `Chip` components and any other elements |\n| defaultValue | string \\| Value[] \\| null | - | Uncontrolled component initial value |\n| multiple | boolean | - | If set, multiple values can be selected |\n| onChange | (value: Multiple extends true ? Value[] : Value) => void | - | Called when value changes. If `multiple` prop is set, called with an array of selected values. If not, called with a string value of selected chip. |\n| value | string \\| Value[] \\| null | - | Controlled component value |\n\n**Chip.GroupContext props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n\n#### Styles API\n\nChip component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Chip selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Chip-root | Root element |\n| checkIcon | .mantine-Chip-checkIcon | Check icon, visible when checked prop is true |\n| iconWrapper | .mantine-Chip-iconWrapper | Wraps `checkIcon` for alignment |\n| input | .mantine-Chip-input | Input element, hidden by default |\n| label | .mantine-Chip-label | Input label, used as a chip body |\n\n**Chip CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --chip-fz | Controls `font-size` |\n| root | --chip-size | Controls `height` |\n| root | --chip-icon-size | Controls width and height of the icon |\n| root | --chip-padding | Controls horizontal padding when chip is not checked |\n| root | --chip-checked-padding | Controls horizontal padding when chip is checked |\n| root | --chip-radius | Controls `border-radius` |\n| root | --chip-bg | Controls `background-color` when chip is checked |\n| root | --chip-hover | Controls `background-color` when chip is checked and hovered |\n| root | --chip-color | Controls `color` when chip is checked |\n| root | --chip-bd | Controls border when chip is checked |\n| root | --chip-spacing | Controls spacing between check icon and label |\n\n**Chip data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| label | data-checked | Chip is checked | - |\n| label | data-disabled | `disabled` prop is set | - |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on the chip background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "checked",
+      "description": "Controlled checked state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "children",
+      "description": "<code>label</code> element associated with the input",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color.",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "defaultChecked",
+      "description": "Uncontrolled checked state initial value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "icon",
+      "description": "Any element or component to replace the default icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "id",
+      "description": "Unique input id, generated randomly if not provided",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "onChange",
+      "description": "Calls when checked state changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(checked: boolean) => void"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "rootRef",
+      "description": "Assigns ref of the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<HTMLDivElement>"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "size",
+      "description": "Controls various properties related to the component size",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "type",
+      "description": "Chip input type",
+      "required": false,
+      "defaultValue": "'checkbox'",
+      "type": {
+        "name": "\"checkbox\" | \"radio\"",
+        "raw": "\"checkbox\" | \"radio\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"checkbox\""
+          },
+          {
+            "value": "\"radio\""
+          }
+        ]
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "Chip"
+    },
+    {
+      "name": "children",
+      "description": "<code>Chip</code> components and any other elements",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ChipGroup"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component initial value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Value[] | null"
+      },
+      "sourceComponent": "ChipGroup"
+    },
+    {
+      "name": "multiple",
+      "description": "If set, multiple values can be selected",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ChipGroup"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes. If <code>multiple</code> prop is set, called with an array of selected values. If not, called with a string value of selected chip.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: Multiple extends true ? Value[] : Value) => void"
+      },
+      "sourceComponent": "ChipGroup"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Value[] | null"
+      },
+      "sourceComponent": "ChipGroup"
+    }
+  ]
+}

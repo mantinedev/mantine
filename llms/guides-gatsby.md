@@ -2,24 +2,18 @@
 
 # Usage with Gatsby
 
-<GetTemplates type="gatsby" />
-
 ## Generate new application
 
-Follow [Gatsby quick start](https://www.gatsbyjs.com/docs/quick-start/) guide to
-create new Gatsby application:
-
-<NpmScript yarnScript="yarn create gatsby" npmScript="npm init gatsby" />
+Follow the [Gatsby quick start](https://www.gatsbyjs.com/docs/quick-start/) guide to
+create a new Gatsby application:
 
 When asked "Would you like to install a styling system?", select `PostCSS`.
 
 ## Installation
 
-<PackagesInstallation />
-
 ## PostCSS setup
 
-Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
+Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md):
 
 ```bash
 yarn add postcss postcss-preset-mantine postcss-simple-vars
@@ -29,7 +23,7 @@ yarn add postcss postcss-preset-mantine postcss-simple-vars
 npm install postcss postcss-preset-mantine postcss-simple-vars
 ```
 
-Create `postcss.config.cjs` file at the root of your application with the following content:
+Create a `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
 module.exports = {
@@ -50,7 +44,7 @@ module.exports = {
 
 ## Setup
 
-Create `src/theme.ts` file with your theme override:
+Create a `src/theme.ts` file with your theme override:
 
 ```tsx
 // src/theme.ts
@@ -62,7 +56,7 @@ export const theme = createTheme({
 });
 ```
 
-Create `gatsby-ssr.tsx` with the following content:
+Create a `gatsby-ssr.tsx` file with the following content:
 
 ```tsx
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
@@ -84,7 +78,7 @@ export const wrapPageElement = ({ element }) => {
 };
 ```
 
-Create `gatsby-browser.tsx` with the following content:
+Create a `gatsby-browser.tsx` file with the following content:
 
 ```tsx
 // Import styles of packages that you've installed.
@@ -99,7 +93,7 @@ export const wrapPageElement = ({ element }) => {
 };
 ```
 
-All set! Start development server:
+All set! Start the development server:
 
 ```bash
 npm run develop

@@ -3,12 +3,10 @@
 # data attributes
 
 Mantine components use `data-*` attributes to apply styles. These attributes are used as
-a modifier to apply styles based on component state. General rule of Mantine components
+modifiers to apply styles based on component state. The general rule of Mantine component
 styles: one class with shared styles and any number of `data-*` attributes as modifiers.
 
 Example of applying styles with `data-*` attributes:
-
-#### Example: dataAttributes
 
 ```tsx
 // Demo.module.css
@@ -59,11 +57,11 @@ Example of applying styles with `data-*` attributes:
 
 // Demo.tsx
 import { Button, ButtonProps, Group } from '@mantine/core';
-import { IconArrowRight } from '@tabler/icons-react';
+import { ArrowRightIcon } from '@phosphor-icons/react';
 import classes from './Demo.module.css';
 
-function SendFilesButton(props: ButtonProps & React.ComponentPropsWithoutRef<'button'>) {
-  return <Button {...props} radius="md" classNames={classes} />;
+function SendFilesButton(props: ButtonProps & React.ComponentProps<'button'>) {
+  return <Button {...props} classNames={classes} />;
 }
 
 function Demo() {
@@ -71,13 +69,13 @@ function Demo() {
     <Group>
       <SendFilesButton
         leftSection="12"
-        rightSection={<IconArrowRight size={18} />}
+        rightSection={<ArrowRightIcon size={18} />}
       >
         Send files
       </SendFilesButton>
       <SendFilesButton
         leftSection="3"
-        rightSection={<IconArrowRight size={18} />}
+        rightSection={<ArrowRightIcon size={18} />}
         disabled
       >
         Send files
@@ -90,8 +88,8 @@ function Demo() {
 
 ## data attributes values
 
-Most of the `data-*` attributes do not have associated values, they represent boolean
-state or a feature. For example, when the `disabled` prop on [Button](https://mantine.dev/core/button) is set,
+Most of the `data-*` attributes do not have associated values. They represent boolean
+state or a feature. For example, when the `disabled` prop on [Button](https://mantine.dev/llms/core-button.md) is set,
 the `data-disabled` attribute is added to the `<button />` element:
 
 ```tsx
@@ -124,14 +122,14 @@ You can then use this attribute to apply styles to the disabled button:
 }
 ```
 
-When the `disabled` prop is not set, then the `data-disabled` attribute is not added to the
+When the `disabled` prop is not set, the `data-disabled` attribute is not added to the
 button:
 
 ```html
 <button class="my-button">Not disabled button</button>
 ```
 
-In some cases, `data-*` attributes have associated values, for example, a [Button](https://mantine.dev/core/button)
+In some cases, `data-*` attributes have associated values. For example, a [Button](https://mantine.dev/llms/core-button.md)
 component's `section` element has an associated `data-position` attribute which can be
 `left` or `right`. The following example will render two `section` elements, one with
 `data-position="left"` and another with `data-position="right"`:
@@ -181,21 +179,22 @@ You can then use this attribute to apply styles to the left and right sections:
 
 Every component that uses `data-*` attributes has a dedicated section under the `Styles API` tab.
 
-[Button](https://mantine.dev/core/button) component `data-*` attributes table:
-
-<ModifiersTable data={ButtonStylesApi} withTableBorder={false} my="xl" fixedLayout={false} />
+The [Button](https://mantine.dev/llms/core-button.md) component `data-*` attributes table:
 
 How to read the table:
 
-* `selector` column – [Styles API](https://mantine.dev/styles/styles-api) selector (or multiple selectors) to which data attribute is added
+* `selector` column – [Styles API](https://mantine.dev/llms/styles-styles-api.md) selector (or multiple selectors) to which data attribute is added
 * `attribute` column – data attribute name
 * `condition` column – condition based on which the data attribute is added to the element
 * `value` column – value of the data attribute
 
 ## mod prop
 
-All components support `mod` prop, which allows adding data attributes to
-the root element:
+All components support the `mod` prop, which allows adding data attributes to
+the root element. CamelCase keys are converted to kebab-case. If a key starts with `data-`,
+the prefix is not duplicated.
+
+Examples of using `mod` prop:
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -205,6 +204,9 @@ import { Box } from '@mantine/core';
 
 <Box mod={{ opened: true }} />;
 // -> <div data-opened />
+
+<Box mod={{ someValue: 'hello' }} />;
+// -> <div data-some-value="hello" />
 
 <Box mod={{ opened: false }} />;
 // -> <div />

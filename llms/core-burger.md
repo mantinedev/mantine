@@ -5,11 +5,9 @@ Description: Open/close navigation button
 
 ## Usage
 
-`Burger` component renders open/close menu button.
-Set `opened` and `onClick` props to control component state.
-If `opened` prop is set, cross will be rendered, otherwise – burger.
-
-#### Example: usage
+The `Burger` component renders an open/close menu button.
+Set the `opened` and `onClick` props to control the component state.
+If the `opened` prop is set, a cross will be rendered, otherwise a burger icon.
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -17,14 +15,12 @@ import { Burger } from '@mantine/core';
 
 function Demo() {
   const [opened, { toggle }] = useDisclosure();
-  return <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
+  return <Burger size="md" opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
 }
 ```
 
 
-## Change lines size
-
-#### Example: lineWidth
+## Change line size
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -32,29 +28,15 @@ import { Burger } from '@mantine/core';
 
 function Demo() {
   const [opened, { toggle }] = useDisclosure();
-  return <Burger size="xl" opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
+  return <Burger lineSize={2} size="xl" opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
 }
 ```
 
-
-<GetElementRef component="Burger" refType="button" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { Burger } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLButtonElement>(null);
-  return <Burger ref={ref} />;
-}
-```
 
 ## Accessibility
 
-To make `Burger` accessible for screen readers, you need to either set `aria-label` or
-use [VisuallyHidden](https://mantine.dev/core/visually-hidden) component:
+To make the `Burger` accessible for screen readers, you need to either set `aria-label` or
+use the [VisuallyHidden](https://mantine.dev/llms/core-visually-hidden.md) component:
 
 ```tsx
 import { Burger, VisuallyHidden } from '@mantine/core';
@@ -75,14 +57,16 @@ function Demo() {
 
 #### Props
 
+**Burger props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | Key of <code>theme.colors</code> of any valid CSS value, by default <code>theme.white</code> in dark color scheme and <code>theme.black</code> in light |
-| lineSize | string | number | - | Controls height of lines, by default calculated based on <code>size</code> prop |
-| opened | boolean | - | State of the burger, when <code>true</code> burger is transformed into X |
-| size | number | MantineSize | (string & {}) | - | Controls burger <code>width</code> and <code>height</code>, numbers are converted to rem |
-| transitionDuration | number | - | <code>transition-duration</code> property value in ms |
-| transitionTimingFunction | string | - | <code>transition-timing-function</code> property value |
+| color | MantineColor | - | Key of `theme.colors` of any valid CSS value, by default `theme.white` in dark color scheme and `theme.black` in light |
+| lineSize | string \| number | - | Controls height of lines, by default calculated based on `size` prop |
+| opened | boolean | - | State of the burger, when `true` burger is transformed into X |
+| size | MantineSize \| number | - | Controls burger `width` and `height`, numbers are converted to rem |
+| transitionDuration | number | - | `transition-duration` property value in ms |
+| transitionTimingFunction | string | - | `transition-timing-function` property value |
 
 
 #### Styles API

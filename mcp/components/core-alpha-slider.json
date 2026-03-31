@@ -1,0 +1,97 @@
+{
+  "id": "core-alpha-slider",
+  "name": "AlphaSlider",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/alpha-slider",
+  "description": "Slider component for selecting alpha channel in color pickers (0 – 1)",
+  "propsCount": 8,
+  "llmUrl": "https://mantine.dev/llms/core-alpha-slider.md",
+  "componentDataUrl": "/mcp/components/core-alpha-slider.json",
+  "searchText": "alphaslider slider component for selecting alpha channel in color pickers (0 – 1) @mantine/core /core/alpha-slider color focusable onchange onchangeend onscrubend onscrubstart size value",
+  "source": "@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx",
+  "docs": "core/alpha-slider.mdx",
+  "markdown": "# AlphaSlider\nPackage: @mantine/core\nImport: import { AlphaSlider } from '@mantine/core';\nDescription: Slider component for selecting alpha channel in color pickers (0 – 1)\n\n## Usage\n\nUse `AlphaSlider` component to allow users to select alpha (opacity) value of a color.\nIt accepts values from `0` to `1`. `AlphaSlider` is a part of [ColorPicker](https://mantine.dev/llms/core-color-picker.md) component,\nbut can also be used separately.\n\n```tsx\nimport { useState } from 'react';\nimport { AlphaSlider, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [value, onChange] = useState(0.55);\n\n  return (\n    <>\n      <Text>Alpha value: {value}</Text>\n      <AlphaSlider color=\"#1c7ed6\" value={value} onChange={onChange} />\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**AlphaSlider props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| color | string | required | - |\n| focusable | boolean | - | If set, slider thumb can be focused |\n| onChange | (value: number) => void | - | Called when value changes |\n| onChangeEnd | (value: number) => void | - | Called when user stops dragging the slider or uses keyboard to change value |\n| onScrubEnd | () => void | - | Called when user stops dragging the slider |\n| onScrubStart | () => void | - | Called when user starts dragging the slider |\n| size | MantineSize | - | Slider size |\n| value | number | required | Controlled component value |",
+  "props": [
+    {
+      "name": "color",
+      "description": "",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AlphaSlider"
+    },
+    {
+      "name": "focusable",
+      "description": "If set, slider thumb can be focused",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AlphaSlider"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "AlphaSlider"
+    },
+    {
+      "name": "onChangeEnd",
+      "description": "Called when user stops dragging the slider or uses keyboard to change value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "AlphaSlider"
+    },
+    {
+      "name": "onScrubEnd",
+      "description": "Called when user stops dragging the slider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "AlphaSlider"
+    },
+    {
+      "name": "onScrubStart",
+      "description": "Called when user starts dragging the slider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "AlphaSlider"
+    },
+    {
+      "name": "size",
+      "description": "Slider size",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "AlphaSlider"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AlphaSlider"
+    }
+  ]
+}

@@ -1,0 +1,834 @@
+{
+  "id": "core-multi-select",
+  "name": "MultiSelect",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/multi-select",
+  "description": "Custom searchable multi select",
+  "propsCount": 67,
+  "llmUrl": "https://mantine.dev/llms/core-multi-select.md",
+  "componentDataUrl": "/mcp/components/core-multi-select.json",
+  "searchText": "multiselect custom searchable multi select @mantine/core /core/multi-select checkiconposition chevroncolor clearbuttonprops clearsearchonchange clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter hiddeninputprops hiddeninputvaluesdivider hidepickedoptions inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight maxvalues nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onmaxvalues onoptionsubmit onremove onsearchchange openonfocus pointer radius renderoption renderpill required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable selectfirstoptiononchange selectfirstoptionondropdownopen size value withalignedlabels withasterisk withcheckicon witherrorstyles withscrollarea wrapperprops",
+  "source": "@mantine/core/src/components/MultiSelect/MultiSelect.tsx",
+  "docs": "core/multi-select.mdx",
+  "markdown": "# MultiSelect\nPackage: @mantine/core\nImport: import { MultiSelect } from '@mantine/core';\nDescription: Custom searchable multi select\n\n## Usage\n\n`MultiSelect` provides a way to enter multiple values.\n`MultiSelect` is similar to [TagsInput](https://mantine.dev/llms/core-tags-input.md), but it does not allow entering custom values.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      placeholder=\"Pick values\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      loading\n    />\n  );\n}\n```\n\n\n## Controlled\n\nThe `MultiSelect` value must be an array of strings; other types are not supported.\nThe `onChange` function is called with an array of strings as a single argument.\n\n```tsx\nimport { useState } from 'react';\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string[]>([]);\n  return <MultiSelect data={[]} value={value} onChange={setValue} />;\n}\n```\n\n## Clearable\n\nSet the `clearable` prop to display the clear button in the right section. The button is not displayed\nwhen:\n\n* The component does not have a value\n* The component is disabled\n* The component is read only\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      defaultValue={['React']}\n      clearable\n    />\n  );\n}\n```\n\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport { MultiSelect, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <MultiSelect\n        label=\"clearSectionMode='both' (default)\"\n        placeholder=\"Pick values\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue={['React']}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"both\"\n      />\n\n      <MultiSelect\n        label=\"clearSectionMode='rightSection'\"\n        placeholder=\"Pick values\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue={['React']}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"rightSection\"\n      />\n\n      <MultiSelect\n        label=\"clearSectionMode='clear'\"\n        placeholder=\"Pick values\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue={['React']}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"clear\"\n      />\n    </Stack>\n  );\n}\n```\n\n\n## Searchable\n\nSet the `searchable` prop to allow filtering options by user input:\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      searchable\n    />\n  );\n}\n```\n\n\n## Controlled search value\n\nYou can control the search value with the `searchValue` and `onSearchChange` props:\n\n```tsx\nimport { useState } from 'react';\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  const [searchValue, setSearchValue] = useState('');\n  return (\n    <MultiSelect\n      searchable\n      searchValue={searchValue}\n      onSearchChange={setSearchValue}\n      data={[]}\n    />\n  );\n}\n```\n\n## Nothing found\n\nSet the `nothingFoundMessage` prop to display a given message when no options match the search query\nor there is no data available. If the `nothingFoundMessage` prop is not set, the `MultiSelect` dropdown will be hidden.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      searchable\n      nothingFoundMessage=\"Nothing found...\"\n    />\n  );\n}\n```\n\n\n## Checked option icon\n\nSet `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.\nTo remove the check icon, set `withCheckIcon={false}`. To align unchecked labels with checked ones, set `withAlignedLabels` prop.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <MultiSelect\n       withCheckIcon={true} withAlignedLabels={false} checkIconPosition=\"left\"\n      data={['React', 'Angular', 'Svelte', 'Vue']}\n      dropdownOpened\n      pb={150}\n      label=\"Control check icon\"\n      placeholder=\"Pick value\"\n      defaultValue={[\"React\"]}\n    />\n  );\n}\n```\n\n\n## Max selected values\n\nYou can limit the number of selected values with the `maxValues` prop. This will not allow adding more values\nonce the limit is reached.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Select up to 2 libraries\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      maxValues={2}\n    />\n  );\n}\n```\n\n\n## Hide selected options\n\nTo remove selected options from the list of available options, set the `hidePickedOptions` prop:\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      hidePickedOptions\n    />\n  );\n}\n```\n\n\n## Data prop\n\nData that is used in MultiSelect must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.\n\n## Value type\n\n`MultiSelect` supports primitive values (strings, numbers, booleans) as value type. `MultiSelect` automatically\ninfers the value type. If you want to set the value type explicitly, pass type argument:\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\ntype MultiSelectValue = 'React' | 'Angular' | 'Svelte' | number;\n\nfunction Demo() {\n  return <MultiSelect<MultiSelectValue> data={['React', 'Angular', 'Svelte', 100]} />;\n}\n```\n\n## Filtering\n\nMultiSelect provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.\n\n```tsx\nimport { MultiSelect, ComboboxItem, OptionsFilter } from '@mantine/core';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  const splittedSearch = search.toLowerCase().trim().split(' ');\n  return (options as ComboboxItem[]).filter((option) => {\n    const words = option.label.toLowerCase().trim().split(' ');\n    return splittedSearch.every((searchWord) => words.some((word) => word.includes(searchWord)));\n  });\n};\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"What countries have you visited?\"\n      placeholder=\"Pick values\"\n      data={['Great Britain', 'Russian Federation', 'United States']}\n      filter={optionsFilter}\n      searchable\n    />\n  );\n}\n```\n\n\n## Sort options\n\nBy default, options are sorted by their position in the data array. You can change this behavior\nwith the `filter` function:\n\n```tsx\nimport { MultiSelect, ComboboxItem, OptionsFilter } from '@mantine/core';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  const filtered = (options as ComboboxItem[]).filter((option) =>\n    option.label.toLowerCase().trim().includes(search.toLowerCase().trim())\n  );\n\n  filtered.sort((a, b) => a.label.localeCompare(b.label));\n  return filtered;\n};\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick values\"\n      data={['4 – React', '1 – Angular', '3 – Vue', '2 – Svelte']}\n      filter={optionsFilter}\n      searchable\n    />\n  );\n}\n```\n\n\n## Fuzzy search with fuse.js\n\nYou can implement fuzzy search using the [fuse.js](https://fusejs.io/) library to match options\neven with typos or partial matches:\n\n```tsx\nimport { MultiSelect, ComboboxItem, OptionsFilter } from '@mantine/core';\nimport Fuse from 'fuse.js';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  if (!search.trim()) {\n    return options;\n  }\n\n  const fuse = new Fuse(options as ComboboxItem[], {\n    keys: ['label'],\n    threshold: 0.3,\n    minMatchCharLength: 1,\n  });\n\n  return fuse.search(search).map((result) => result.item);\n};\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"What countries have you visited?\"\n      placeholder=\"Pick values\"\n      data={['Great Britain', 'Russian Federation', 'United States', 'Germany', 'France']}\n      filter={optionsFilter}\n      searchable\n    />\n  );\n}\n```\n\n\n## Large datasets\n\nMultiSelect can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nconst largeData = Array(100_000)\n  .fill(0)\n  .map((_, index) => `Option ${index}`);\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"100 000 options autocomplete\"\n      placeholder=\"Use limit to optimize performance\"\n      limit={5}\n      data={largeData}\n      searchable\n    />\n  );\n}\n```\n\n\n## renderOption\n\nThe `renderOption` callback allows you to customize option rendering. It is called with the option object and\nchecked state. The function must return a React node.\n\n```tsx\nimport { MultiSelect, MultiSelectProps, Avatar, Group, Text } from '@mantine/core';\n\nconst usersData: Record<string, { image: string; email: string }> = {\n  'Emily Johnson': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',\n    email: 'emily92@gmail.com',\n  },\n  'Ava Rodriguez': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png',\n    email: 'ava_rose@gmail.com',\n  },\n  'Olivia Chen': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png',\n    email: 'livvy_globe@gmail.com',\n  },\n  'Ethan Barnes': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',\n    email: 'ethan_explorer@gmail.com',\n  },\n  'Mason Taylor': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',\n    email: 'mason_musician@gmail.com',\n  },\n};\n\nconst renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) => (\n  <Group gap=\"sm\">\n    <Avatar src={usersData[option.value].image} size={36} radius=\"xl\" />\n    <div>\n      <Text size=\"sm\">{option.value}</Text>\n      <Text size=\"xs\" opacity={0.5}>\n        {usersData[option.value].email}\n      </Text>\n    </div>\n  </Group>\n);\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      data={['Emily Johnson', 'Ava Rodriguez', 'Olivia Chen', 'Ethan Barnes', 'Mason Taylor']}\n      renderOption={renderMultiSelectOption}\n      maxDropdownHeight={300}\n      label=\"Employees of the month\"\n      placeholder=\"Search for employee\"\n      hidePickedOptions\n      searchable\n    />\n  );\n}\n```\n\n\n## renderPill\n\nThe `renderPill` callback allows you to customize pill rendering. The function receives the option (that was passed to data), value, onRemove and disabled props. It must return a React node.\n\n```tsx\nimport { MultiSelect, Pill, Avatar } from '@mantine/core';\n\nconst users = [\n  { value: 'Emily Johnson', label: 'Emily Johnson', image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png' },\n  { value: 'Ava Rodriguez', label: 'Ava Rodriguez', image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png' },\n  { value: 'Olivia Chen', label: 'Olivia Chen', image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png' },\n  { value: 'Ethan Barnes', label: 'Ethan Barnes', image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png' },\n  { value: 'Mason Taylor', label: 'Mason Taylor', image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png' },\n];\n\nconst usersMap = new Map(users.map((user) => [user.value.toString(), user]));\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      data={users}\n      label=\"Candidates\"\n      placeholder=\"Select candidates\"\n      defaultValue={['Emily Johnson', 'Ava Rodriguez']}\n      renderPill={({ option, onRemove }) => {\n        const user = usersMap.get(option?.value.toString());\n        return (\n          <Pill withRemoveButton onRemove={onRemove}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <Avatar src={user?.image} size={16} />\n              {option?.label}\n            </div>\n          </Pill>\n        );\n      }}\n    />\n  );\n}\n```\n\n\n## Scrollable dropdown\n\nBy default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).\nYou can control the dropdown max-height with the `maxDropdownHeight` prop if you do not change the default settings.\n\nIf you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,\nyou will need to change the dropdown styles with [Styles API](https://mantine.dev/llms/styles-styles-api.md).\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nconst data = Array(100)\n  .fill(0)\n  .map((_, index) => `Option ${index}`);\n\nfunction Demo() {\n  return (\n    <>\n      <MultiSelect\n        label=\"With scroll area (default)\"\n        placeholder=\"Pick value\"\n        data={data}\n        maxDropdownHeight={200}\n      />\n\n      <MultiSelect\n        label=\"With native scroll\"\n        placeholder=\"Pick value\"\n        data={data}\n        withScrollArea={false}\n        styles={{ dropdown: { maxHeight: 200, overflowY: 'auto' } }}\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Group options\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={[\n        { group: 'Frontend', items: ['React', 'Angular'] },\n        { group: 'Backend', items: ['Express', 'Django'] },\n      ]}\n    />\n  );\n}\n```\n\n\n## Disabled options\n\nWhen an option is disabled, it cannot be selected and is ignored in keyboard navigation.\nNote that the user can still enter a disabled option as a value. If you want to prohibit certain values,\nuse a controlled component and filter them out in the `onChange` function.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={[\n        { value: 'react', label: 'React' },\n        { value: 'ng', label: 'Angular' },\n        { value: 'vue', label: 'Vue', disabled: true },\n        { value: 'svelte', label: 'Svelte', disabled: true },\n      ]}\n    />\n  );\n}\n```\n\n\n## Inside Popover\n\nTo use `MultiSelect` inside popover, you need to set `withinPortal: false`:\n\n```tsx\nimport { Popover, Button, MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Popover width={300} position=\"bottom\" withArrow shadow=\"md\">\n      <Popover.Target>\n        <Button>Toggle popover</Button>\n      </Popover.Target>\n      <Popover.Dropdown>\n        <MultiSelect\n          label=\"Your favorite libraries\"\n          placeholder=\"Pick values\"\n          data={['React', 'Angular', 'Vue', 'Svelte']}\n          comboboxProps={{ withinPortal: false }}\n        />\n      </Popover.Dropdown>\n    </Popover>\n  );\n}\n```\n\n\n## Control dropdown opened state\n\nYou can control the dropdown opened state with the `dropdownOpened` prop. Additionally,\nyou can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.\n\n```tsx\nimport { MultiSelect, Button } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [dropdownOpened, { toggle }] = useDisclosure();\n  return (\n    <>\n      <Button onClick={toggle} mb=\"md\">\n        Toggle dropdown\n      </Button>\n\n      <MultiSelect\n        label=\"Your favorite library\"\n        placeholder=\"Pick values\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        dropdownOpened={dropdownOpened}\n      />\n    </>\n  );\n}\n```\n\n\n## Dropdown position\n\nBy default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.\nYou can change this behavior by setting the `position` and `middlewares` props, which are passed down to the\nunderlying [Popover](https://mantine.dev/llms/core-popover.md) component.\n\nExample of a dropdown that is always displayed above the input:\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick values\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ position: 'top', middlewares: { flip: false, shift: false } }}\n    />\n  );\n}\n```\n\n\n## Dropdown width\n\nTo change the dropdown width, set the `width` prop in `comboboxProps`. By default,\nthe dropdown width is equal to the input width.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ width: 200, position: 'bottom-start' }}\n    />\n  );\n}\n```\n\n\n## Dropdown offset\n\nTo change the dropdown offset, set the `offset` prop in `comboboxProps`:\n\n```tsx\n// Demo.tsx\nimport { MultiSelect } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite library\"\n      placeholder=\"Pick values\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      classNames={classes}\n      comboboxProps={{ position: 'bottom', middlewares: { flip: false, shift: false }, offset: 0 }}\n    />\n  );\n}\n\n// Demo.module.css\n.dropdown {\n  border-top-right-radius: 0;\n  border-top-left-radius: 0;\n  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));\n  border-top: 0;\n}\n\n.input {\n  transition: none;\n\n  &[data-expanded] {\n    border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n  }\n}\n```\n\n\n## Dropdown animation\n\nBy default, dropdown animations are disabled. To enable them, you can set `transitionProps`,\nwhich will be passed down to the underlying [Transition](https://mantine.dev/llms/core-transition.md) component.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick values\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}\n    />\n  );\n}\n```\n\n\n## Dropdown padding\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <MultiSelect\n        label=\"Zero padding\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        comboboxProps={{ dropdownPadding: 0 }}\n      />\n      <MultiSelect\n        mt=\"md\"\n        label=\"10px padding\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        comboboxProps={{ dropdownPadding: 10 }}\n      />\n    </>\n  );\n}\n```\n\n\n## Dropdown shadow\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick values\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ shadow: 'md' }}\n    />\n  );\n}\n```\n\n\n## Input sections\n\nMultiSelect supports left and right sections to display icons, buttons or other content alongside the input.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\nimport { SquaresFourIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <SquaresFourIcon size={16} />;\n  return (\n    <>\n      <MultiSelect\n        data={['React', 'Angular', 'Vue']}\n        leftSectionPointerEvents=\"none\"\n        leftSection={icon}\n        label=\"Your favorite libraries\"\n        placeholder=\"Your favorite libraries\"\n      />\n      <MultiSelect\n        mt=\"md\"\n        data={['React', 'Angular', 'Vue']}\n        rightSectionPointerEvents=\"none\"\n        rightSection={icon}\n        label=\"Your favorite libraries\"\n        placeholder=\"Your favorite libraries\"\n      />\n    </>\n  );\n}\n```\n\n\n## Input props\n\nMultiSelect component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. MultiSelect documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <MultiSelect\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      placeholder=\"MultiSelect placeholder\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## Read only\n\nSet `readOnly` to make the input read-only. When `readOnly` is set,\n`MultiSelect` will not show suggestions and will not call the `onChange` function.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      readOnly\n    />\n  );\n}\n```\n\n\n## Disabled\n\nSet `disabled` to disable the input. When `disabled` is set,\nthe user cannot interact with the input and `MultiSelect` will not show suggestions.\n\n```tsx\nimport { MultiSelect } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MultiSelect\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      disabled\n    />\n  );\n}\n```\n\n\n## Backspace key\n\nWhen the search input is empty and the user presses the `Backspace` key, the last selected item is removed. This behavior is built-in and cannot be disabled.\n\n\n#### Props\n\n**MultiSelect props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| checkIconPosition | \"left\" \\| \"right\" | - | Position of the checkmark icon shown next to selected options in the dropdown |\n| chevronColor | MantineColor | - | Controls color of the default chevron |\n| clearButtonProps | InputClearButtonProps | - | Props passed down to the clear button |\n| clearSearchOnChange | boolean | - | Clear search value when item is selected |\n| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |\n| clearable | boolean | - | When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) |\n| comboboxProps | ComboboxProps | - | Props passed down to `Combobox` component |\n| data | ComboboxData<Value> | - | Data used to generate options. Values must be unique, otherwise an error will be thrown and component will not render. |\n| defaultDropdownOpened | boolean | - | Uncontrolled dropdown initial opened state |\n| defaultSearchValue | string | - | Default search value |\n| defaultValue | Value[] | - | Uncontrolled component default value |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| dropdownOpened | boolean | - | Controlled dropdown opened state |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |\n| hiddenInputProps | Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, \"value\"> | - | Props passed down to the hidden input |\n| hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input `value` attribute |\n| hidePickedOptions | boolean | - | When enabled, selected options are hidden from the dropdown list |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| limit | number | - | Maximum number of options displayed at a time, `Infinity` by default |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| maxDropdownHeight | string \\| number | - | `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default |\n| maxValues | number | - | Maximum number of values, no limit if not set |\n| nothingFoundMessage | React.ReactNode | - | Message displayed when no options match the search query (when searchable is enabled) or when the data array is empty. If not set, the dropdown will be hidden instead. |\n| onChange | (value: Value[]) => void | - | Called when value changes |\n| onClear | () => void | - | Called when the clear button is clicked |\n| onDropdownClose | () => void | - | Called when dropdown closes |\n| onDropdownOpen | () => void | - | Called when dropdown opens |\n| onMaxValues | () => void | - | Called when user attemps to select more values than allowed |\n| onOptionSubmit | (value: Value) => void | - | Called when option is submitted from dropdown with mouse click or `Enter` key |\n| onRemove | (value: Value) => void | - | Called with `value` of the removed item |\n| onSearchChange | (value: string) => void | - | Called when search changes |\n| openOnFocus | boolean | - | Controls whether dropdown opens when the input receives focus |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem<string>>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |\n| renderPill | (props: ComboboxRenderPillInput<Value>) => ReactNode | - | A function to render content of the pill |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| scrollAreaProps | ScrollAreaProps | - | Props passed down to the underlying `ScrollArea` component in the dropdown |\n| searchValue | string | - | Controlled search value |\n| searchable | boolean | - | Allows searching through options by user input |\n| selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, `false` by default |\n| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| value | Value[] | - | Controlled component value |\n| withAlignedLabels | boolean | - | If set, unchecked labels are aligned with checked ones |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withCheckIcon | boolean | - | If set, the check icon is displayed near the selected option label |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nMultiSelect component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**MultiSelect selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-MultiSelect-wrapper | Root element of the Input |\n| input | .mantine-MultiSelect-input | Input element |\n| section | .mantine-MultiSelect-section | Left and right sections |\n| root | .mantine-MultiSelect-root | Root element |\n| label | .mantine-MultiSelect-label | Label element |\n| required | .mantine-MultiSelect-required | Required asterisk element, rendered inside label |\n| description | .mantine-MultiSelect-description | Description element |\n| error | .mantine-MultiSelect-error | Error element |\n| pill | .mantine-MultiSelect-pill | Value pill |\n| inputField | .mantine-MultiSelect-inputField | Input field |\n| pillsList | .mantine-MultiSelect-pillsList | List of pills, also contains input field |\n\n**MultiSelect data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| option | data-combobox-selected | Option is selected | - |\n| option | data-combobox-active | Options was activated by keyboard | - |\n| option | data-combobox-disabled | Option is disabled | - |\n",
+  "props": [
+    {
+      "name": "checkIconPosition",
+      "description": "Position of the checkmark icon shown next to selected options in the dropdown",
+      "required": false,
+      "defaultValue": "'left'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "chevronColor",
+      "description": "Controls color of the default chevron",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "clearButtonProps",
+      "description": "Props passed down to the clear button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputClearButtonProps"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "clearSearchOnChange",
+      "description": "Clear search value when item is selected",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "clearSectionMode",
+      "description": "Determines how the clear button and rightSection are rendered",
+      "required": false,
+      "defaultValue": "'both'",
+      "type": {
+        "name": "ClearSectionMode",
+        "raw": "ClearSectionMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"both\""
+          },
+          {
+            "value": "\"rightSection\""
+          },
+          {
+            "value": "\"clear\""
+          }
+        ]
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "clearable",
+      "description": "When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only)",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "comboboxProps",
+      "description": "Props passed down to <code>Combobox</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ComboboxProps"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "data",
+      "description": "Data used to generate options. Values must be unique, otherwise an error will be thrown and component will not render.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ComboboxData<Value>"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "defaultDropdownOpened",
+      "description": "Uncontrolled dropdown initial opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "defaultSearchValue",
+      "description": "Default search value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Value[]"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "dropdownOpened",
+      "description": "Controlled dropdown opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "filter",
+      "description": "Function based on which items are filtered and sorted",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OptionsFilter<Value>"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "hiddenInputProps",
+      "description": "Props passed down to the hidden input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, \"value\">"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "hiddenInputValuesDivider",
+      "description": "Divider used to separate values in the hidden input <code>value</code> attribute",
+      "required": false,
+      "defaultValue": "','",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "hidePickedOptions",
+      "description": "When enabled, selected options are hidden from the dropdown list",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "limit",
+      "description": "Maximum number of options displayed at a time, <code>Infinity</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "maxDropdownHeight",
+      "description": "<code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "maxValues",
+      "description": "Maximum number of values, no limit if not set",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "nothingFoundMessage",
+      "description": "Message displayed when no options match the search query (when searchable is enabled) or when the data array is empty. If not set, the dropdown will be hidden instead.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: Value[]) => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onClear",
+      "description": "Called when the clear button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onDropdownClose",
+      "description": "Called when dropdown closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onDropdownOpen",
+      "description": "Called when dropdown opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onMaxValues",
+      "description": "Called when user attemps to select more values than allowed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onOptionSubmit",
+      "description": "Called when option is submitted from dropdown with mouse click or <code>Enter</code> key",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: Value) => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onRemove",
+      "description": "Called with <code>value</code> of the removed item",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: Value) => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "onSearchChange",
+      "description": "Called when search changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "openOnFocus",
+      "description": "Controls whether dropdown opens when the input receives focus",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "renderOption",
+      "description": "A function to render content of the option, replaces the default content of the option",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(item: ComboboxLikeRenderOptionInput<ComboboxItem<string>>) => ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "renderPill",
+      "description": "A function to render content of the pill",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(props: ComboboxRenderPillInput<Value>) => ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "scrollAreaProps",
+      "description": "Props passed down to the underlying <code>ScrollArea</code> component in the dropdown",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScrollAreaProps"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "searchValue",
+      "description": "Controlled search value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "searchable",
+      "description": "Allows searching through options by user input",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "selectFirstOptionOnChange",
+      "description": "If set, the first option is selected when value changes, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "selectFirstOptionOnDropdownOpen",
+      "description": "If set, the first option is selected when dropdown opens, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Value[]"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "withAlignedLabels",
+      "description": "If set, unchecked labels are aligned with checked ones",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "withCheckIcon",
+      "description": "If set, the check icon is displayed near the selected option label",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "withScrollArea",
+      "description": "Determines whether the options should be wrapped with <code>ScrollArea.AutoSize</code>, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MultiSelect"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "MultiSelect"
+    }
+  ]
+}

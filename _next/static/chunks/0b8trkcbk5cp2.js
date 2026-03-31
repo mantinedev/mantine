@@ -1,0 +1,111 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,289058,e=>{"use strict";var t=e.i(191788),i=e.i(171481);let a=new Map([["bold",t.createElement(t.Fragment,null,t.createElement("path",{d:"M216,28H88A12,12,0,0,0,76,40V76H40A12,12,0,0,0,28,88V216a12,12,0,0,0,12,12H168a12,12,0,0,0,12-12V180h36a12,12,0,0,0,12-12V40A12,12,0,0,0,216,28ZM156,204H52V100H156Zm48-48H180V88a12,12,0,0,0-12-12H100V52H204Z"}))],["duotone",t.createElement(t.Fragment,null,t.createElement("path",{d:"M216,40V168H168V88H88V40Z",opacity:"0.2"}),t.createElement("path",{d:"M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"}))],["fill",t.createElement(t.Fragment,null,t.createElement("path",{d:"M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32Zm-8,128H176V88a8,8,0,0,0-8-8H96V48H208Z"}))],["light",t.createElement(t.Fragment,null,t.createElement("path",{d:"M216,34H88a6,6,0,0,0-6,6V82H40a6,6,0,0,0-6,6V216a6,6,0,0,0,6,6H168a6,6,0,0,0,6-6V174h42a6,6,0,0,0,6-6V40A6,6,0,0,0,216,34ZM162,210H46V94H162Zm48-48H174V88a6,6,0,0,0-6-6H94V46H210Z"}))],["regular",t.createElement(t.Fragment,null,t.createElement("path",{d:"M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"}))],["thin",t.createElement(t.Fragment,null,t.createElement("path",{d:"M216,36H88a4,4,0,0,0-4,4V84H40a4,4,0,0,0-4,4V216a4,4,0,0,0,4,4H168a4,4,0,0,0,4-4V172h44a4,4,0,0,0,4-4V40A4,4,0,0,0,216,36ZM164,212H44V92H164Zm48-48H172V88a4,4,0,0,0-4-4H92V44H212Z"}))]]),r=t.forwardRef((e,r)=>t.createElement(i.default,{ref:r,...e,weights:a}));r.displayName="CopyIcon",e.s(["CopyIcon",0,r],289058)},89837,e=>{"use strict";var t=e.i(191788),i=e.i(171481);let a=new Map([["bold",t.createElement(t.Fragment,null,t.createElement("path",{d:"M71.68,97.22,34.74,128l36.94,30.78a12,12,0,1,1-15.36,18.44l-48-40a12,12,0,0,1,0-18.44l48-40A12,12,0,0,1,71.68,97.22Zm176,21.56-48-40a12,12,0,1,0-15.36,18.44L221.26,128l-36.94,30.78a12,12,0,1,0,15.36,18.44l48-40a12,12,0,0,0,0-18.44ZM164.1,28.72a12,12,0,0,0-15.38,7.18l-64,176a12,12,0,0,0,7.18,15.37A11.79,11.79,0,0,0,96,228a12,12,0,0,0,11.28-7.9l64-176A12,12,0,0,0,164.1,28.72Z"}))],["duotone",t.createElement(t.Fragment,null,t.createElement("path",{d:"M240,128l-48,40H64L16,128,64,88H192Z",opacity:"0.2"}),t.createElement("path",{d:"M69.12,94.15,28.5,128l40.62,33.85a8,8,0,1,1-10.24,12.29l-48-40a8,8,0,0,1,0-12.29l48-40a8,8,0,0,1,10.24,12.3Zm176,27.7-48-40a8,8,0,1,0-10.24,12.3L227.5,128l-40.62,33.85a8,8,0,1,0,10.24,12.29l48-40a8,8,0,0,0,0-12.29ZM162.73,32.48a8,8,0,0,0-10.25,4.79l-64,176a8,8,0,0,0,4.79,10.26A8.14,8.14,0,0,0,96,224a8,8,0,0,0,7.52-5.27l64-176A8,8,0,0,0,162.73,32.48Z"}))],["fill",t.createElement(t.Fragment,null,t.createElement("path",{d:"M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM92.8,145.6a8,8,0,1,1-9.6,12.8l-32-24a8,8,0,0,1,0-12.8l32-24a8,8,0,0,1,9.6,12.8L69.33,128Zm58.89-71.4-32,112a8,8,0,1,1-15.38-4.4l32-112a8,8,0,0,1,15.38,4.4Zm53.11,60.2-32,24a8,8,0,0,1-9.6-12.8L186.67,128,163.2,110.4a8,8,0,1,1,9.6-12.8l32,24a8,8,0,0,1,0,12.8Z"}))],["light",t.createElement(t.Fragment,null,t.createElement("path",{d:"M67.84,92.61,25.37,128l42.47,35.39a6,6,0,1,1-7.68,9.22l-48-40a6,6,0,0,1,0-9.22l48-40a6,6,0,0,1,7.68,9.22Zm176,30.78-48-40a6,6,0,1,0-7.68,9.22L230.63,128l-42.47,35.39a6,6,0,1,0,7.68,9.22l48-40a6,6,0,0,0,0-9.22Zm-81.79-89A6,6,0,0,0,154.36,38l-64,176A6,6,0,0,0,94,221.64a6.15,6.15,0,0,0,2,.36,6,6,0,0,0,5.64-3.95l64-176A6,6,0,0,0,162.05,34.36Z"}))],["regular",t.createElement(t.Fragment,null,t.createElement("path",{d:"M69.12,94.15,28.5,128l40.62,33.85a8,8,0,1,1-10.24,12.29l-48-40a8,8,0,0,1,0-12.29l48-40a8,8,0,0,1,10.24,12.3Zm176,27.7-48-40a8,8,0,1,0-10.24,12.3L227.5,128l-40.62,33.85a8,8,0,1,0,10.24,12.29l48-40a8,8,0,0,0,0-12.29ZM162.73,32.48a8,8,0,0,0-10.25,4.79l-64,176a8,8,0,0,0,4.79,10.26A8.14,8.14,0,0,0,96,224a8,8,0,0,0,7.52-5.27l64-176A8,8,0,0,0,162.73,32.48Z"}))],["thin",t.createElement(t.Fragment,null,t.createElement("path",{d:"M66.56,91.07,22.25,128l44.31,36.93A4,4,0,0,1,64,172a3.94,3.94,0,0,1-2.56-.93l-48-40a4,4,0,0,1,0-6.14l48-40a4,4,0,0,1,5.12,6.14Zm176,33.86-48-40a4,4,0,1,0-5.12,6.14L233.75,128l-44.31,36.93a4,4,0,1,0,5.12,6.14l48-40a4,4,0,0,0,0-6.14ZM161.37,36.24a4,4,0,0,0-5.13,2.39l-64,176a4,4,0,0,0,2.39,5.13A4.12,4.12,0,0,0,96,220a4,4,0,0,0,3.76-2.63l64-176A4,4,0,0,0,161.37,36.24Z"}))]]),r=t.forwardRef((e,r)=>t.createElement(i.default,{ref:r,...e,weights:a}));r.displayName="CodeIcon",e.s(["CodeIcon",0,r],89837)},161465,772197,e=>{"use strict";var t=e.i(391398),i=e.i(958678);e.s(["PageHead",0,function({title:e,description:a}){let r=e?`${e} | Mantine`:"Mantine",n=a||"React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience";return(0,t.jsxs)(i.default,{children:[(0,t.jsx)("title",{children:r}),(0,t.jsx)("meta",{property:"description",name:"description",content:n}),(0,t.jsx)("meta",{property:"og:title",name:"og:title",content:r}),(0,t.jsx)("meta",{property:"og:description",name:"og:description",content:n}),(0,t.jsx)("meta",{property:"twitter:title",name:"twitter:title",content:r}),(0,t.jsx)("meta",{property:"twitter:description",name:"twitter:description",content:n})]})}],772197),e.s([],161465)},976550,e=>{"use strict";var t=e.i(749218),i=e.i(433512),a=e.i(481178),r=e.i(44091),n=e.i(391466),l=e.i(275519),s=e.i(232471),o=e.i(164483),m={root:"m_7f854edf"},d=e.i(391398);let c={position:{bottom:0,right:0},zIndex:(0,t.getDefaultZIndex)("modal"),withinPortal:!0},u=(0,a.createVarsResolver)((e,{zIndex:t,position:a})=>({root:{"--affix-z-index":t?.toString(),"--affix-top":(0,i.getSpacing)(a?.top),"--affix-left":(0,i.getSpacing)(a?.left),"--affix-bottom":(0,i.getSpacing)(a?.bottom),"--affix-right":(0,i.getSpacing)(a?.right)}})),p=(0,l.factory)(e=>{let t=(0,r.useProps)("Affix",c,e),{classNames:i,className:a,style:l,styles:p,unstyled:h,vars:x,portalProps:f,zIndex:v,withinPortal:g,position:b,attributes:j,...y}=t,A=(0,n.useStyles)({name:"Affix",classes:m,props:t,className:a,style:l,classNames:i,styles:p,unstyled:h,attributes:j,vars:x,varsResolver:u});return(0,d.jsx)(o.OptionalPortal,{...f,withinPortal:g,children:(0,d.jsx)(s.Box,{...A("root"),...y})})});p.classes=m,p.varsResolver=u,p.displayName="@mantine/core/Affix",e.s(["Affix",0,p],976550)},943311,e=>{"use strict";var t=e.i(191788),i=e.i(171481);let a=new Map([["bold",t.createElement(t.Fragment,null,t.createElement("path",{d:"M228,128a12,12,0,0,1-12,12H69l51.52,51.51a12,12,0,0,1-17,17l-72-72a12,12,0,0,1,0-17l72-72a12,12,0,0,1,17,17L69,116H216A12,12,0,0,1,228,128Z"}))],["duotone",t.createElement(t.Fragment,null,t.createElement("path",{d:"M112,56V200L40,128Z",opacity:"0.2"}),t.createElement("path",{d:"M216,120H120V56a8,8,0,0,0-13.66-5.66l-72,72a8,8,0,0,0,0,11.32l72,72A8,8,0,0,0,120,200V136h96a8,8,0,0,0,0-16ZM104,180.69,51.31,128,104,75.31Z"}))],["fill",t.createElement(t.Fragment,null,t.createElement("path",{d:"M224,128a8,8,0,0,1-8,8H120v64a8,8,0,0,1-13.66,5.66l-72-72a8,8,0,0,1,0-11.32l72-72A8,8,0,0,1,120,56v64h96A8,8,0,0,1,224,128Z"}))],["light",t.createElement(t.Fragment,null,t.createElement("path",{d:"M222,128a6,6,0,0,1-6,6H54.49l61.75,61.76a6,6,0,1,1-8.48,8.48l-72-72a6,6,0,0,1,0-8.48l72-72a6,6,0,0,1,8.48,8.48L54.49,122H216A6,6,0,0,1,222,128Z"}))],["regular",t.createElement(t.Fragment,null,t.createElement("path",{d:"M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"}))],["thin",t.createElement(t.Fragment,null,t.createElement("path",{d:"M220,128a4,4,0,0,1-4,4H49.66l65.17,65.17a4,4,0,0,1-5.66,5.66l-72-72a4,4,0,0,1,0-5.66l72-72a4,4,0,0,1,5.66,5.66L49.66,124H216A4,4,0,0,1,220,128Z"}))]]),r=t.forwardRef((e,r)=>t.createElement(i.default,{ref:r,...e,weights:a}));r.displayName="ArrowLeftIcon",e.s(["ArrowLeftIcon",0,r],943311)},648863,e=>{"use strict";var t=Object.defineProperty;e.s(["__exportAll",0,(e,i)=>{let a={};for(var r in e)t(a,r,{get:e[r],enumerable:!0});return i||t(a,Symbol.toStringTag,{value:"Module"}),a}])},719834,e=>{"use strict";var t=e.i(191788),i=e.i(171481);let a=new Map([["bold",t.createElement(t.Fragment,null,t.createElement("path",{d:"M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"}))],["duotone",t.createElement(t.Fragment,null,t.createElement("path",{d:"M192,112a80,80,0,1,1-80-80A80,80,0,0,1,192,112Z",opacity:"0.2"}),t.createElement("path",{d:"M229.66,218.34,179.6,168.28a88.21,88.21,0,1,0-11.32,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"}))],["fill",t.createElement(t.Fragment,null,t.createElement("path",{d:"M168,112a56,56,0,1,1-56-56A56,56,0,0,1,168,112Zm61.66,117.66a8,8,0,0,1-11.32,0l-50.06-50.07a88,88,0,1,1,11.32-11.31l50.06,50.06A8,8,0,0,1,229.66,229.66ZM112,184a72,72,0,1,0-72-72A72.08,72.08,0,0,0,112,184Z"}))],["light",t.createElement(t.Fragment,null,t.createElement("path",{d:"M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z"}))],["regular",t.createElement(t.Fragment,null,t.createElement("path",{d:"M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"}))],["thin",t.createElement(t.Fragment,null,t.createElement("path",{d:"M226.83,221.17l-52.7-52.7a84.1,84.1,0,1,0-5.66,5.66l52.7,52.7a4,4,0,0,0,5.66-5.66ZM36,112a76,76,0,1,1,76,76A76.08,76.08,0,0,1,36,112Z"}))]]),r=t.forwardRef((e,r)=>t.createElement(i.default,{ref:r,...e,weights:a}));r.displayName="MagnifyingGlassIcon",e.s(["MagnifyingGlassIcon",0,r],719834)},2054,e=>{"use strict";var t=e.i(433512),i=e.i(481178),a=e.i(317477),r=e.i(44091),n=e.i(391466),l=e.i(275519),s=e.i(232471),o={root:"m_3eebeb36",label:"m_9e365f20"},m=e.i(391398);let d={orientation:"horizontal"},c=(0,i.createVarsResolver)((e,{color:i,variant:r,size:n})=>({root:{"--divider-color":i?(0,a.getThemeColor)(i,e):void 0,"--divider-border-style":r,"--divider-size":(0,t.getSize)(n,"divider-size")}})),u=(0,l.factory)(e=>{let t=(0,r.useProps)("Divider",d,e),{classNames:i,className:a,style:l,styles:u,unstyled:p,vars:h,color:x,orientation:f,label:v,labelPosition:g,mod:b,attributes:j,...y}=t,A=(0,n.useStyles)({name:"Divider",classes:o,props:t,className:a,style:l,classNames:i,styles:u,unstyled:p,attributes:j,vars:h,varsResolver:c});return(0,m.jsx)(s.Box,{mod:[{orientation:f,withLabel:!!v},b],role:"separator",...A("root"),...y,children:v&&(0,m.jsx)(s.Box,{component:"span",mod:{position:g},...A("label"),children:v})})});u.classes=o,u.varsResolver=c,u.displayName="@mantine/core/Divider",e.s(["Divider",0,u],2054)},168854,e=>{"use strict";var t=e.i(391398),i=e.i(38856),a=e.i(648863),r=e.i(2054),n=e.i(883364);let l={type:"code",component:function(){return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(n.Text,{children:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea, perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur aliquid commodi atque sunt officiis natus?"}),(0,t.jsx)(r.Divider,{my:"md"}),(0,t.jsx)(n.Text,{children:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea, perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur aliquid commodi atque sunt officiis natus?"}),(0,t.jsx)(r.Divider,{my:"md"}),(0,t.jsx)(n.Text,{children:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea, perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur aliquid commodi atque sunt officiis natus?"})]})},code:`
+import { Text, Divider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
+
+      <Divider my="md" />
+
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
+
+      <Divider my="md" />
+
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,
+        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur
+        aliquid commodi atque sunt officiis natus?
+      </Text>
+    </>
+  );
+}
+
+`,centered:!0,maxWidth:500};var s=e.i(719834),o=e.i(79897),m=e.i(232471);let d={type:"code",code:`
+import { Divider, Box, Anchor } from '@mantine/core';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
+
+function Demo() {
+  return (
+    <>
+      <Divider my="xs" label="Label on the left" labelPosition="left" />
+      <Divider my="xs" label="Label in the center" labelPosition="center" />
+      <Divider my="xs" label="Label on the right" labelPosition="right" />
+      <Divider
+        my="xs"
+        variant="dashed"
+        labelPosition="center"
+        label={
+          <>
+            <MagnifyingGlassIcon size={12} />
+            <Box ml={5}>Search results</Box>
+          </>
+        }
+      />
+      <Divider
+        my="xs"
+        label={
+          <Anchor href="https://mantine.dev" target="_blank" inherit>
+            Link label
+          </Anchor>
+        }
+      />
+    </>
+  );
+}
+`,component:function(){return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(r.Divider,{my:"xs",label:"Label on the left",labelPosition:"left"}),(0,t.jsx)(r.Divider,{my:"xs",label:"Label in the center",labelPosition:"center"}),(0,t.jsx)(r.Divider,{my:"xs",label:"Label on the right",labelPosition:"right"}),(0,t.jsx)(r.Divider,{my:"xs",variant:"dashed",labelPosition:"center",label:(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(s.MagnifyingGlassIcon,{size:12}),(0,t.jsx)(m.Box,{ml:5,children:"Search results"})]})}),(0,t.jsx)(r.Divider,{my:"xs",label:(0,t.jsx)(o.Anchor,{href:"https://mantine.dev",target:"_blank",inherit:!0,children:"Link label"})})]})}},c={type:"code",code:`
+import { Divider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Divider size="xs" />
+      <Divider size="sm" />
+      <Divider size="md" />
+      <Divider size="lg" />
+      <Divider size="xl" />
+      <Divider size={10} />
+    </>
+  );
+}
+`,component:function(){return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(r.Divider,{my:"xs",size:"xs"}),(0,t.jsx)(r.Divider,{my:"xs",size:"sm"}),(0,t.jsx)(r.Divider,{my:"xs",size:"md"}),(0,t.jsx)(r.Divider,{my:"xs",size:"lg"}),(0,t.jsx)(r.Divider,{my:"xs",size:"xl"}),(0,t.jsx)(r.Divider,{my:"xs",size:10})]})}};var u=e.i(725695);let p={type:"code",code:`
+import { Divider, Group, Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <Text>Label</Text>
+      <Divider orientation="vertical" />
+      <Text>Label</Text>
+      <Divider size="sm" orientation="vertical" />
+      <Text>Label</Text>
+      <Divider size="md" orientation="vertical" />
+      <Text>Label</Text>
+      <Divider size="lg" orientation="vertical" />
+      <Text>Label</Text>
+      <Divider size="xl" orientation="vertical" />
+      <Text>Label</Text>
+    </Group>
+  );
+}
+`,component:function(){return(0,t.jsxs)(u.Group,{children:[(0,t.jsx)(n.Text,{children:"Label"}),(0,t.jsx)(r.Divider,{orientation:"vertical"}),(0,t.jsx)(n.Text,{children:"Label"}),(0,t.jsx)(r.Divider,{size:"sm",orientation:"vertical"}),(0,t.jsx)(n.Text,{children:"Label"}),(0,t.jsx)(r.Divider,{size:"md",orientation:"vertical"}),(0,t.jsx)(n.Text,{children:"Label"}),(0,t.jsx)(r.Divider,{size:"lg",orientation:"vertical"}),(0,t.jsx)(n.Text,{children:"Label"}),(0,t.jsx)(r.Divider,{size:"xl",orientation:"vertical"}),(0,t.jsx)(n.Text,{children:"Label"})]})}},h={type:"code",code:`
+import { Divider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Divider my="sm" />
+      <Divider my="sm" variant="dashed" />
+      <Divider my="sm" variant="dotted" />
+    </>
+  );
+}
+`,component:function(){return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(r.Divider,{my:"sm"}),(0,t.jsx)(r.Divider,{my:"sm",variant:"dashed"}),(0,t.jsx)(r.Divider,{my:"sm",variant:"dotted"})]})}};var x=(0,a.__exportAll)({labels:()=>d,orientation:()=>p,sizes:()=>c,usage:()=>l,variants:()=>h});e.i(603441);var f=e.i(62558);e.i(457450);var v=e.i(418026);let g=(0,f.Layout)(v.MDX_DATA.Divider);function b(e){let a={h2:"h2",...(0,i.useMDXComponents)(),...e.components},{Demo:r}=a;return r||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(a.h2,{id:"usage",children:"Usage"}),"\n",(0,t.jsx)(r,{data:x.usage}),"\n",(0,t.jsx)(a.h2,{id:"variants",children:"Variants"}),"\n",(0,t.jsx)(r,{data:x.variants}),"\n",(0,t.jsx)(a.h2,{id:"with-label",children:"With label"}),"\n",(0,t.jsx)(r,{data:x.labels}),"\n",(0,t.jsx)(a.h2,{id:"sizes",children:"Sizes"}),"\n",(0,t.jsx)(r,{data:x.sizes}),"\n",(0,t.jsx)(a.h2,{id:"vertical-orientation",children:"Vertical orientation"}),"\n",(0,t.jsx)(r,{data:x.orientation})]})}e.s(["default",0,function(e={}){return(0,t.jsx)(g,{...e,children:(0,t.jsx)(b,{...e})})}],168854)},295871,(e,t,i)=>{let a="/core/divider";(window.__NEXT_P=window.__NEXT_P||[]).push([a,()=>e.r(168854)]),t.hot&&t.hot.dispose(function(){window.__NEXT_P.push([a])})},648761,e=>{e.v(t=>Promise.all(["static/chunks/0n..hexfw6r85.js"].map(t=>e.l(t))).then(()=>t(493594)))},828805,e=>{e.v(t=>Promise.all(["static/chunks/18bztvpdorkth.js"].map(t=>e.l(t))).then(()=>t(879466)))}]);

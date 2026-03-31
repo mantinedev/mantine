@@ -4,32 +4,98 @@ Import: import { UseScrollSpy } from '@mantine/hooks';
 
 ## Usage
 
-`use-scroll-spy` hook tracks scroll position and returns index of the
+The `use-scroll-spy` hook tracks the scroll position and returns the index of the
 element that is currently in the viewport. It is useful for creating
-table of contents components (like in mantine.dev sidebar on the right side)
+table of contents components (like in the mantine.dev sidebar on the right side)
 and similar features.
 
+```tsx
+import { Text, UnstyledButton } from '@mantine/core';
+import { useScrollSpy } from '@mantine/hooks';
+
+function Demo() {
+  const spy = useScrollSpy({
+    selector: '#mdx :is(h1, h2, h3, h4, h5, h6)',
+  });
+
+  const headings = spy.data.map((heading, index) => (
+    <li
+      key={heading.id}
+      style={{
+        listStylePosition: 'inside',
+        paddingInlineStart: heading.depth * 20,
+        background: index === spy.active ? 'var(--mantine-color-blue-light)' : undefined,
+      }}
+    >
+      <UnstyledButton onClick={() => heading.getNode().scrollIntoView()}>
+        {heading.value}
+      </UnstyledButton>
+    </li>
+  ));
+
+  return (
+    <div>
+      <Text>Scroll to heading:</Text>
+      <ul style={{ margin: 0, padding: 0 }}>{headings}</ul>
+    </div>
+  );
+}
+```
 
 
 ## Hook options
 
-`use-scroll-spy` accepts an object with options:
+The `use-scroll-spy` hook accepts an object with options:
 
-* `selector` - selector to get headings, by default it is `'h1, h2, h3, h4, h5, h6'`
-* `getDepth` - a function to retrieve depth of heading, by default depth is calculated based on tag name
-* `getValue` - a function to retrieve heading value, by default `element.textContent` is used
+* `selector` - selector to get headings; by default it is `'h1, h2, h3, h4, h5, h6'`
+* `getDepth` - a function to retrieve the depth of a heading; by default depth is calculated based on the tag name
+* `getValue` - a function to retrieve the heading value; by default `element.textContent` is used
 * `scrollHost` - host element to attach scroll event listener, if not provided, `window` is used
 * `offset` - offset from the top of the viewport to use when determining the active heading, by default `0` is used
 
-Example of using custom options to get headings with `data-heading` attribute:
+Example of using custom options to get headings with the `data-heading` attribute:
 
+```tsx
+import { Text, UnstyledButton } from '@mantine/core';
+import { useScrollSpy } from '@mantine/hooks';
+
+function Demo() {
+  const spy = useScrollSpy({
+    selector: '#mdx [data-heading]',
+    getDepth: (element) => Number(element.getAttribute('data-order')),
+    getValue: (element) => element.getAttribute('data-heading') || '',
+  });
+
+  const headings = spy.data.map((heading, index) => (
+    <li
+      key={heading.id}
+      style={{
+        listStylePosition: 'inside',
+        paddingInlineStart: heading.depth * 20,
+        background: index === spy.active ? 'var(--mantine-color-blue-light)' : undefined,
+      }}
+    >
+      <UnstyledButton onClick={() => heading.getNode().scrollIntoView()}>
+        {heading.value}
+      </UnstyledButton>
+    </li>
+  ));
+
+  return (
+    <div>
+      <Text>Scroll to heading:</Text>
+      <ul style={{ margin: 0, padding: 0 }}>{headings}</ul>
+    </div>
+  );
+}
+```
 
 
 ## Reinitializing hook data
 
 By default, `use-scroll-spy` does not track changes in the DOM. If you want
-to update headings data after the parent component has mounted, you can use
-`reinitialize` function:
+to update the headings data after the parent component has mounted, you can use
+the `reinitialize` function:
 
 ```tsx
 import { useEffect } from 'react';
@@ -82,7 +148,7 @@ interface UseScrollSpyOptions {
   offset?: number;
 }
 
-interface UseScrollSpyReturnType {
+interface UseScrollSpyReturnValue {
   /** Index of the active heading in the `data` array */
   active: number;
 
@@ -96,14 +162,14 @@ interface UseScrollSpyReturnType {
   reinitialize: () => void;
 }
 
-function useScrollSpy(options?: UseScrollSpyOptions): UseScrollSpyReturnType
+function useScrollSpy(options?: UseScrollSpyOptions): UseScrollSpyReturnValue
 ```
 
 ## Exported types
 
-`UseScrollSpyOptions` and `UseScrollSpyReturnType` types are exported from `@mantine/hooks` package,
+`UseScrollSpyOptions` and `UseScrollSpyReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx
-import type { UseScrollSpyOptions, UseScrollSpyReturnType } from '@mantine/hooks';
+import type { UseScrollSpyOptions, UseScrollSpyReturnValue } from '@mantine/hooks';
 ```

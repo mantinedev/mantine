@@ -4,16 +4,14 @@
 
 ## Adding custom variants
 
-Most of Mantine components support `variant` prop, it can be used in CSS variables resolver,
-and it is also exposed as `data-variant="{value}"` attribute on the root element of the component.
+Most Mantine components support the `variant` prop. It can be used in CSS variables resolver,
+and it is also exposed as a `data-variant="{value}"` attribute on the root element of the component.
 The easiest way to add custom variants is to add styles that use `[data-variant="{value}"]`.
 
-Example of adding a new variant to the [Input](https://mantine.dev/core/input) component:
+Example of adding a new variant to the [Input](https://mantine.dev/llms/core-input.md) component:
 
 * `underline` variant styles are added
-* `filled` variant is a default variant – you do not need to define any additional styles for it
-
-#### Example: customVariant
+* `filled` variant is the default variant – you do not need to define any additional styles for it
 
 ```tsx
 // Demo.tsx
@@ -61,20 +59,20 @@ function Demo() {
 ```
 
 
-Note that you can add custom variants to every Mantine component that supports [Styles API](https://mantine.dev/styles/styles-api)
+Note that you can add custom variants to every Mantine component that supports the [Styles API](https://mantine.dev/llms/styles-styles-api.md),
 even if there are no variants defined on the library side.
 
 > **Overriding existing variants styles**
 >
 > Apart from adding new variants, you can also override existing ones, for example, you can change the
-> `filled` variant of the [Input](https://mantine.dev/core/input) component with `.input[data-variant="filled"]` selector.
+> `filled` variant of the [Input](https://mantine.dev/llms/core-input.md) component with `.input[data-variant="filled"]` selector.
 
 ## Custom variants types
 
-You can define types for custom variants by creating `mantine.d.ts` file
-in your project and extending `{x}Props` interface with the new variant type.
+You can define types for custom variants by creating a `mantine.d.ts` file
+in your project and extending the `{x}Props` interface with the new variant type.
 
-Example of adding custom variant type to [Button](https://mantine.dev/core/button) component:
+Example of adding a custom variant type to the [Button](https://mantine.dev/llms/core-button.md) component:
 
 ```tsx
 import { ButtonVariant, MantineSize } from '@mantine/core';
@@ -90,12 +88,10 @@ declare module '@mantine/core' {
 
 ## variantColorResolver
 
-[Button](https://mantine.dev/core/button), [Badge](https://mantine.dev/core/badge), [ActionIcon](https://mantine.dev/core/action-icon) and other
-components support custom variants with [variantColorResolver](https://mantine.dev/theming/colors#colors-variant-resolver)
+[Button](https://mantine.dev/llms/core-button.md), [Badge](https://mantine.dev/llms/core-badge.md), [ActionIcon](https://mantine.dev/llms/core-action-icon.md) and other
+components support custom variants with [variantColorResolver](https://mantine.dev/llms/theming-colors.md#colors-variant-resolver)
 – it supports both changing colors and adding new variants. Note that `theme.variantColorResolver` is
-responsible only for colors, if you need to change other properties, use `data-variant` attribute.
-
-#### Example: variantColorsResolver
+responsible only for colors. If you need to change other properties, use the `data-variant` attribute.
 
 ```tsx
 import {
@@ -170,10 +166,8 @@ function Demo() {
 
 ## Sizes with components CSS variables
 
-You can add custom sizes to any component that supports `size` prop by providing a custom
-CSS variables resolver, usually it is done in `theme.components`:
-
-#### Example: vars
+You can add custom sizes to any component that supports the `size` prop by providing a custom
+CSS variables resolver. Usually this is done in `theme.components`:
 
 ```tsx
 // MantineProvider.tsx
@@ -264,10 +258,8 @@ function Demo() {
 
 ## Sizes with data-size attribute
 
-Every component that supports `size` prop exposes it as `data-size="{value}"` attribute on the root element.
+Every component that supports the `size` prop exposes it as a `data-size="{value}"` attribute on the root element.
 You can use it to add custom sizes:
-
-#### Example: dataSize
 
 ```tsx
 // Demo.tsx
@@ -314,8 +306,8 @@ function Demo() {
 
 ## Sizes with static CSS variables
 
-Mantine components sizes are defined with CSS variables (usually on root element), for example,
-[ActionIcon](https://mantine.dev/core/action-icon) component has the following CSS variables:
+Mantine component sizes are defined with CSS variables (usually on the root element). For example,
+the [ActionIcon](https://mantine.dev/llms/core-action-icon.md) component has the following CSS variables:
 
 ```css
 .root {
@@ -327,14 +319,12 @@ Mantine components sizes are defined with CSS variables (usually on root element
 }
 ```
 
-You can override these values with [Styles API](https://mantine.dev/styles/styles-api) or add new sizes values:
-
-#### Example: customSize
+You can override these values with the [Styles API](https://mantine.dev/llms/styles-styles-api.md) or add new size values:
 
 ```tsx
 // Demo.tsx
 import { ActionIcon, createTheme, Group, MantineThemeProvider } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import classes from './Demo.module.css';
 
 const theme = createTheme({
@@ -350,11 +340,11 @@ function Demo() {
     <MantineThemeProvider theme={theme}>
       <Group justify="center">
         <ActionIcon size="xxs" aria-label="Custom xxs size">
-          <IconHeart size={10} />
+          <HeartIcon size={10} />
         </ActionIcon>
 
         <ActionIcon size="xxl" aria-label="Custom xxl size">
-          <IconHeart size={32} />
+          <HeartIcon size={32} />
         </ActionIcon>
       </Group>
     </MantineThemeProvider>
@@ -369,8 +359,8 @@ function Demo() {
 ```
 
 
-Note that some components have more than one CSS variable for size, for example,
-the [Button](https://mantine.dev/core/button) component has the following CSS variables:
+Note that some components have more than one CSS variable for size. For example,
+the [Button](https://mantine.dev/llms/core-button.md) component has the following CSS variables:
 
 ```css
 .root {
@@ -400,5 +390,5 @@ the [Button](https://mantine.dev/core/button) component has the following CSS va
 }
 ```
 
-Usually, it is more convenient to use `data-size` attribute or `vars` on [theme](https://mantine.dev/theming/theme-object)
+Usually, it is more convenient to use the `data-size` attribute or `vars` on the [theme](https://mantine.dev/llms/theming-theme-object.md)
 to customize sizes in this case.

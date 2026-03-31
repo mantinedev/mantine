@@ -1,0 +1,687 @@
+{
+  "id": "core-combobox",
+  "name": "Combobox",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/combobox",
+  "description": "Create custom select, autocomplete or multiselect inputs",
+  "propsCount": 58,
+  "llmUrl": "https://mantine.dev/llms/core-combobox.md",
+  "componentDataUrl": "/mcp/components/core-combobox.json",
+  "searchText": "combobox create custom select, autocomplete or multiselect inputs @mantine/core /core/combobox arrowoffset arrowposition arrowradius arrowsize children disabled dropdownpadding floatingstrategy hidedetached keepmounted middlewares offset onclose ondismiss onentertransitionend onexittransitionend onopen onoptionsubmit onpositionchange overlayprops portalprops position preventpositionchangewhenvisible radius readonly resetselectiononoptionhover returnfocus shadow size store transitionprops width witharrow withoverlay withinportal zindex active disabled selected value autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation children refprop autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation hidden label",
+  "source": "@mantine/core/src/components/Combobox/Combobox.tsx",
+  "docs": "core/combobox.mdx",
+  "markdown": "# Combobox\nPackage: @mantine/core\nImport: import { Combobox } from '@mantine/core';\nDescription: Create custom select, autocomplete or multiselect inputs\n\n## Examples\n\nThis page contains only a small set of examples, as the full code of the demos is long.\nYou can find all 50+ examples on a [separate page](https://mantine.dev/combobox?e=BasicSelect).\n\n## Usage\n\n`Combobox` provides a set of components and hooks to create custom select, multiselect or autocomplete components.\nThe component is very flexible – you have full control of the rendering and logic.\n\n```tsx\nimport { useState } from 'react';\nimport { Input, InputBase, Combobox, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          rightSectionPointerEvents=\"none\"\n          onClick={() => combobox.toggleDropdown()}\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>{options}</Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## useCombobox hook\n\n`useCombobox` hook provides a combobox store. The store contains the current state of the component\nand handlers to update it. The created store must be passed to the `store` prop of `Combobox`:\n\n```tsx\nimport { Combobox, useCombobox } from '@mantine/core';\n\nfunction Demo() {\n  const combobox = useCombobox();\n  return (\n    <Combobox store={combobox}>{/* Your implementation */}</Combobox>\n  );\n}\n```\n\n## useCombobox options\n\nThe `useCombobox` hook accepts an options object with the following properties:\n\n```tsx\ninterface UseComboboxOptions {\n  /** Default value for `dropdownOpened`, `false` by default */\n  defaultOpened?: boolean;\n\n  /** Controlled `dropdownOpened` state */\n  opened?: boolean;\n\n  /** Called when `dropdownOpened` state changes */\n  onOpenedChange?(opened: boolean): void;\n\n  /** Called when dropdown closes with event source: keyboard, mouse or unknown */\n  onDropdownClose?(eventSource: ComboboxDropdownEventSource): void;\n\n  /** Called when dropdown opens with event source: keyboard, mouse or unknown */\n  onDropdownOpen?(eventSource: ComboboxDropdownEventSource): void;\n\n  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */\n  loop?: boolean;\n\n  /** `behavior` passed down to `element.scrollIntoView`, `'instant'` by default */\n  scrollBehavior?: ScrollBehavior;\n}\n```\n\nYou can import the `UseComboboxOptions` type from the `@mantine/core` package:\n\n```tsx\nimport type { UseComboboxOptions } from '@mantine/core';\n```\n\n## Combobox store\n\nThe Combobox store is an object with the following properties:\n\n```tsx\ninterface ComboboxStore {\n  /** Current dropdown opened state */\n  dropdownOpened: boolean;\n\n  /** Opens dropdown */\n  openDropdown(eventSource?: 'keyboard' | 'mouse' | 'unknown'): void;\n\n  /** Closes dropdown */\n  closeDropdown(eventSource?: 'keyboard' | 'mouse' | 'unknown'): void;\n\n  /** Toggles dropdown opened state */\n  toggleDropdown(\n    eventSource?: 'keyboard' | 'mouse' | 'unknown'\n  ): void;\n\n  /** Selected option index */\n  selectedOptionIndex: number;\n\n  /** Selects `Combobox.Option` by index */\n  selectOption(index: number): void;\n\n  /** Selects first `Combobox.Option` with `active` prop.\n   *  If there are no such options, the function does nothing.\n   */\n  selectActiveOption(): string | null;\n\n  /** Selects first `Combobox.Option` that is not disabled.\n   *  If there are no such options, the function does nothing.\n   * */\n  selectFirstOption(): string | null;\n\n  /** Selects next `Combobox.Option` that is not disabled.\n   *  If the current option is the last one, the function selects first option, if `loop` is true.\n   */\n  selectNextOption(): string | null;\n\n  /** Selects previous `Combobox.Option` that is not disabled.\n   *  If the current option is the first one, the function selects last option, if `loop` is true.\n   * */\n  selectPreviousOption(): string | null;\n\n  /** Resets selected option index to -1, removes `data-combobox-selected` from selected option */\n  resetSelectedOption(): void;\n\n  /** Triggers `onClick` event of selected option.\n   *  If there is no selected option, the function does nothing.\n   */\n  clickSelectedOption(): void;\n\n  /** Updates selected option index to currently selected or active option.\n   *  The function is required to be used with searchable components to update selected option index\n   *  when options list changes based on search query.\n   */\n  updateSelectedOptionIndex(target?: 'active' | 'selected'): void;\n\n  /** List id, used for `aria-*` attributes */\n  listId: string | null;\n\n  /** Sets list id */\n  setListId(id: string): void;\n\n  /** Ref of `Combobox.Search` input */\n  searchRef: React.RefObject<HTMLInputElement | null>;\n\n  /** Moves focus to `Combobox.Search` input */\n  focusSearchInput(): void;\n\n  /** Ref of the target element */\n  targetRef: React.RefObject<HTMLElement | null>;\n\n  /** Moves focus to the target element */\n  focusTarget(): void;\n}\n```\n\nYou can import `ComboboxStore` type from `@mantine/core` package:\n\n```tsx\nimport type { ComboboxStore } from '@mantine/core';\n```\n\n## useCombobox handlers\n\nCombobox store handlers can be used to control `Combobox` state.\nFor example, to open the dropdown, call `openDropdown` handler:\n\n```tsx\nimport { Button, Combobox, useCombobox } from '@mantine/core';\n\nfunction Demo() {\n  const combobox = useCombobox();\n\n  return (\n    <Combobox>\n      <Combobox.Target>\n        <Button onClick={() => combobox.openDropdown()}>\n          Open dropdown\n        </Button>\n      </Combobox.Target>\n\n      {/* Your implementation */}\n    </Combobox>\n  );\n}\n```\n\nYou can use store handlers in `useCombobox` options. For example, you can\ncall `selectFirstOption` when the dropdown is opened and `resetSelectedOption`\nwhen it is closed:\n\n```tsx\nimport { Combobox, useCombobox } from '@mantine/core';\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownOpen: () => combobox.selectFirstOption(),\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  return (\n    <Combobox store={combobox}>{/* Your implementation */}</Combobox>\n  );\n}\n```\n\n## Combobox.Target\n\n`Combobox.Target` should be used as a wrapper for the target element or component.\n`Combobox.Target` marks its child as a target for dropdown and sets `aria-*` attributes\nand adds keyboard event listeners to it.\n\n`Combobox.Target` requires a single child element or component. The child component\nmust accept `ref` and `...others` props. You can use any Mantine component as a target without\nany additional configuration, for example, [Button](https://mantine.dev/llms/core-button.md), [TextInput](https://mantine.dev/llms/core-text-input.md)\nor [InputBase](https://mantine.dev/llms/core-input.md#inputbase-component).\n\nExample of using `Combobox.Target` with [TextInput](https://mantine.dev/llms/core-text-input.md) component:\n\n```tsx\nimport { useState } from 'react';\nimport { Combobox, TextInput, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox();\n  const [value, setValue] = useState('');\n  const shouldFilterOptions = !groceries.some((item) => item === value);\n  const filteredOptions = shouldFilterOptions\n    ? groceries.filter((item) => item.toLowerCase().includes(value.toLowerCase().trim()))\n    : groceries;\n\n  const options = filteredOptions.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(optionValue) => {\n        setValue(optionValue);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <TextInput\n          label=\"Pick value or type anything\"\n          placeholder=\"Pick value or type anything\"\n          value={value}\n          onChange={(event) => {\n            setValue(event.currentTarget.value);\n            combobox.openDropdown();\n            combobox.updateSelectedOptionIndex();\n          }}\n          onClick={() => combobox.openDropdown()}\n          onFocus={() => combobox.openDropdown()}\n          onBlur={() => combobox.closeDropdown()}\n        />\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\nExample of using `Combobox.Target` with [Button](https://mantine.dev/llms/core-button.md) component:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Combobox, useCombobox, Text, Box } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const [selectedItem, setSelectedItem] = useState<string | null>(null);\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <>\n      <Box mb=\"xs\">\n        <Text span size=\"sm\" c=\"dimmed\">\n          Selected item:{' '}\n        </Text>\n\n        <Text span size=\"sm\">\n          {selectedItem || 'Nothing selected'}\n        </Text>\n      </Box>\n\n      <Combobox\n        store={combobox}\n        width={250}\n        position=\"bottom-start\"\n        withArrow\n        onOptionSubmit={(val) => {\n          setSelectedItem(val);\n          combobox.closeDropdown();\n        }}\n      >\n        <Combobox.Target>\n          <Button onClick={() => combobox.toggleDropdown()}>Pick item</Button>\n        </Combobox.Target>\n\n        <Combobox.Dropdown>\n          <Combobox.Options>{options}</Combobox.Options>\n        </Combobox.Dropdown>\n      </Combobox>\n    </>\n  );\n}\n```\n\n\n## Split events and dropdown targets\n\nIn some cases, you might need to use different elements as an events target and as a dropdown.\nUse `Combobox.EventsTarget` to add `aria-*` attributes and keyboard event handlers, and\n`Combobox.DropdownTarget` to position the dropdown relative to the target.\n\nYou can have as many `Combobox.EventsTarget` as you need, but only one `Combobox.DropdownTarget`\nper `Combobox`.\n\nExample of using `Combobox.EventsTarget` and `Combobox.DropdownTarget` with [PillsInput](https://mantine.dev/llms/core-pills-input.md) component\nto create a searchable multiselect component:\n\n```tsx\nimport { useState } from 'react';\nimport { PillsInput, Pill, Combobox, CheckIcon, Group, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),\n  });\n\n  const [search, setSearch] = useState('');\n  const [value, setValue] = useState<string[]>([]);\n\n  const handleValueSelect = (val: string) =>\n    setValue((current) =>\n      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]\n    );\n\n  const handleValueRemove = (val: string) =>\n    setValue((current) => current.filter((v) => v !== val));\n\n  const values = value.map((item) => (\n    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>\n      {item}\n    </Pill>\n  ));\n\n  const options = groceries\n    .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))\n    .map((item) => (\n      <Combobox.Option value={item} key={item} active={value.includes(item)}>\n        <Group gap=\"sm\">\n          {value.includes(item) ? <CheckIcon size={12} /> : null}\n          <span>{item}</span>\n        </Group>\n      </Combobox.Option>\n    ));\n\n  return (\n    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>\n      <Combobox.DropdownTarget>\n        <PillsInput onClick={() => combobox.openDropdown()}>\n          <Pill.Group>\n            {values}\n\n            <Combobox.EventsTarget>\n              <PillsInput.Field\n                onFocus={() => combobox.openDropdown()}\n                onBlur={() => combobox.closeDropdown()}\n                value={search}\n                placeholder=\"Search values\"\n                onChange={(event) => {\n                  combobox.updateSelectedOptionIndex();\n                  setSearch(event.currentTarget.value);\n                }}\n                onKeyDown={(event) => {\n                  if (event.key === 'Backspace' && search.length === 0 && value.length > 0) {\n                    event.preventDefault();\n                    handleValueRemove(value[value.length - 1]);\n                  }\n                }}\n              />\n            </Combobox.EventsTarget>\n          </Pill.Group>\n        </PillsInput>\n      </Combobox.DropdownTarget>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          {options.length > 0 ? options : <Combobox.Empty>Nothing found...</Combobox.Empty>}\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Update selected option index\n\n`updateSelectedOptionIndex` handler is required to be called when options list changes.\nUsually, the options list changes when options are filtered based on the search query. In this case,\nyou need to call `updateSelectedOptionIndex` in `onChange` handler of the search input.\n\nExample of using `updateSelectedOptionIndex` handler in searchable select component:\n\n```tsx\nimport { useState } from 'react';\nimport { InputBase, Combobox, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n  const [search, setSearch] = useState('');\n\n  const shouldFilterOptions = groceries.every((item) => item !== search);\n  const filteredOptions = shouldFilterOptions\n    ? groceries.filter((item) => item.toLowerCase().includes(search.toLowerCase().trim()))\n    : groceries;\n\n  const options = filteredOptions.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        setSearch(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          rightSection={<Combobox.Chevron />}\n          rightSectionPointerEvents=\"none\"\n          onClick={() => combobox.openDropdown()}\n          onFocus={() => combobox.openDropdown()}\n          onBlur={() => {\n            combobox.closeDropdown();\n            setSearch(value || '');\n          }}\n          placeholder=\"Search value\"\n          value={search}\n          onChange={(event) => {\n            combobox.updateSelectedOptionIndex();\n            setSearch(event.currentTarget.value);\n          }}\n        />\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Search input\n\nIf you prefer search input inside the dropdown, use `Combobox.Search` component.\nTo focus the search input, call `combobox.focusSearchInput`, usually it is done\nwhen the dropdown is opened. To prevent focus loss after the dropdown is closed,\ncall `combobox.focusTarget`:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Combobox, useCombobox, Text, Box } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const [search, setSearch] = useState('');\n  const [selectedItem, setSelectedItem] = useState<string | null>(null);\n  const combobox = useCombobox({\n    onDropdownClose: () => {\n      combobox.resetSelectedOption();\n      combobox.focusTarget();\n      setSearch('');\n    },\n\n    onDropdownOpen: () => {\n      combobox.focusSearchInput();\n    },\n  });\n\n  const options = groceries\n    .filter((item) => item.toLowerCase().includes(search.toLowerCase().trim()))\n    .map((item) => (\n      <Combobox.Option value={item} key={item}>\n        {item}\n      </Combobox.Option>\n    ));\n\n  return (\n    <>\n      <Box mb=\"xs\">\n        <Text span size=\"sm\" c=\"dimmed\">\n          Selected item:{' '}\n        </Text>\n\n        <Text span size=\"sm\">\n          {selectedItem || 'Nothing selected'}\n        </Text>\n      </Box>\n\n      <Combobox\n        store={combobox}\n        width={250}\n        position=\"bottom-start\"\n        withArrow\n        onOptionSubmit={(val) => {\n          setSelectedItem(val);\n          combobox.closeDropdown();\n        }}\n      >\n        <Combobox.Target withAriaAttributes={false}>\n          <Button onClick={() => combobox.toggleDropdown()}>Pick item</Button>\n        </Combobox.Target>\n\n        <Combobox.Dropdown>\n          <Combobox.Search\n            value={search}\n            onChange={(event) => setSearch(event.currentTarget.value)}\n            placeholder=\"Search groceries\"\n          />\n          <Combobox.Options>\n            {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}\n          </Combobox.Options>\n        </Combobox.Dropdown>\n      </Combobox>\n    </>\n  );\n}\n```\n\n\n## Select first option\n\nUse `combobox.selectFirstOption` function to select the first option. It is useful\nif you want to select the first option when user searching for options in the list.\nIf there are no options available, it will do nothing.\n\n```tsx\nimport { useState, useEffect } from 'react';\nimport { Combobox, TextInput, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState('');\n  const shouldFilterOptions = !groceries.some((item) => item === value);\n  const filteredOptions = shouldFilterOptions\n    ? groceries.filter((item) => item.toLowerCase().includes(value.toLowerCase().trim()))\n    : groceries;\n\n  const options = filteredOptions.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  useEffect(() => {\n    // we need to wait for options to render before we can select first one\n    combobox.selectFirstOption();\n  }, [value]);\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(optionValue) => {\n        setValue(optionValue);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <TextInput\n          label=\"Pick value or type anything\"\n          placeholder=\"Pick value or type anything\"\n          value={value}\n          onChange={(event) => {\n            setValue(event.currentTarget.value);\n            combobox.openDropdown();\n          }}\n          onClick={() => combobox.openDropdown()}\n          onFocus={() => combobox.openDropdown()}\n          onBlur={() => combobox.closeDropdown()}\n        />\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Active option\n\nSet `active` prop on `Combobox.Option` component to mark it as active.\nBy default, an active option does not have any styles, you can use `data-combobox-active`\n[data attribute](https://mantine.dev/llms/styles-data-attributes.md) to style it.\n\n`combobox.selectActiveOption` function selects active option. Usually, it is called\nwhen the dropdown is opened:\n\n```tsx\nimport { useState } from 'react';\nimport { Input, InputBase, Combobox, useCombobox, CheckIcon, Group } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n    onDropdownOpen: (eventSource) => {\n      if (eventSource === 'keyboard') {\n        combobox.selectActiveOption();\n      } else {\n        combobox.updateSelectedOptionIndex('active');\n      }\n    },\n  });\n\n  const [value, setValue] = useState<string | null>('🥦 Broccoli');\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item} active={item === value}>\n      <Group gap=\"xs\">\n        {item === value && <CheckIcon size={12} />}\n        <span>{item}</span>\n      </Group>\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      resetSelectionOnOptionHover\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.updateSelectedOptionIndex('active');\n      }}\n    >\n      <Combobox.Target targetType=\"button\">\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          rightSectionPointerEvents=\"none\"\n          onClick={() => combobox.toggleDropdown()}\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>{options}</Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Options groups\n\nRender `Combobox.Option` components inside `Combobox.Group` to create options group.\n`Combobox.Group` label will be automatically hidden if the group does not have any\nchildren.\n\n```tsx\nimport { useState } from 'react';\nimport { Input, InputBase, Combobox, useCombobox } from '@mantine/core';\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          rightSectionPointerEvents=\"none\"\n          onClick={() => combobox.toggleDropdown()}\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          <Combobox.Group label=\"Fruits\">\n            <Combobox.Option value=\"🍎 Apples\">🍎 Apples</Combobox.Option>\n            <Combobox.Option value=\"🍌 Bananas\">🍌 Bananas</Combobox.Option>\n            <Combobox.Option value=\"🍇 Grape\">🍇 Grape</Combobox.Option>\n          </Combobox.Group>\n\n          <Combobox.Group label=\"Vegetables\">\n            <Combobox.Option value=\"🥦 Broccoli\">🥦 Broccoli</Combobox.Option>\n            <Combobox.Option value=\"🥕 Carrots\">🥕 Carrots</Combobox.Option>\n            <Combobox.Option value=\"🥬 Lettuce\">🥬 Lettuce</Combobox.Option>\n          </Combobox.Group>\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Scrollable list\n\nSet `max-height` style on either `Combobox.Dropdown` or `Combobox.Options` to make the\noptions list scrollable. You can use `mah` [style prop](https://mantine.dev/llms/styles-style-props.md) to set\n`max-height`.\n\n```tsx\nimport { useState } from 'react';\nimport { Input, InputBase, Combobox, useCombobox } from '@mantine/core';\n\nconst groceries = [\n  '🍎 Apples',\n  '🍌 Bananas',\n  '🥦 Broccoli',\n  '🥕 Carrots',\n  '🍫 Chocolate',\n  '🍇 Grapes',\n  '🍋 Lemon',\n  '🥬 Lettuce',\n  '🍄 Mushrooms',\n  '🍊 Oranges',\n  '🥔 Potatoes',\n  '🍅 Tomatoes',\n  '🥚 Eggs',\n  '🥛 Milk',\n  '🍞 Bread',\n  '🍗 Chicken',\n  '🍔 Hamburger',\n  '🧀 Cheese',\n  '🥩 Steak',\n  '🍟 French Fries',\n  '🍕 Pizza',\n  '🥦 Cauliflower',\n  '🥜 Peanuts',\n  '🍦 Ice Cream',\n  '🍯 Honey',\n  '🥖 Baguette',\n  '🍣 Sushi',\n  '🥝 Kiwi',\n  '🍓 Strawberries',\n];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          rightSectionPointerEvents=\"none\"\n          onClick={() => combobox.toggleDropdown()}\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options mah={200} style={{ overflowY: 'auto' }}>\n          {options}\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Scrollable list with ScrollArea\n\nYou can also use [ScrollArea or ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md) components\ninstead of native scrollbars:\n\n```tsx\nimport { useState } from 'react';\nimport { Input, InputBase, Combobox, useCombobox, ScrollArea } from '@mantine/core';\n\nconst groceries = [\n  '🍎 Apples',\n  '🍌 Bananas',\n  '🥦 Broccoli',\n  '🥕 Carrots',\n  '🍫 Chocolate',\n  '🍇 Grapes',\n  '🍋 Lemon',\n  '🥬 Lettuce',\n  '🍄 Mushrooms',\n  '🍊 Oranges',\n  '🥔 Potatoes',\n  '🍅 Tomatoes',\n  '🥚 Eggs',\n  '🥛 Milk',\n  '🍞 Bread',\n  '🍗 Chicken',\n  '🍔 Hamburger',\n  '🧀 Cheese',\n  '🥩 Steak',\n  '🍟 French Fries',\n  '🍕 Pizza',\n  '🥦 Cauliflower',\n  '🥜 Peanuts',\n  '🍦 Ice Cream',\n  '🍯 Honey',\n  '🥖 Baguette',\n  '🍣 Sushi',\n  '🥝 Kiwi',\n  '🍓 Strawberries',\n];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          rightSectionPointerEvents=\"none\"\n          onClick={() => combobox.toggleDropdown()}\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          <ScrollArea.Autosize type=\"scroll\" mah={200}>\n            {options}\n          </ScrollArea.Autosize>\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Hide dropdown\n\nSet `hidden` prop on `Combobox.Dropdown` to hide the dropdown. For example,\nit can be useful when you want to show the dropdown only when there is at least\none option available:\n\n```tsx\nimport { useState } from 'react';\nimport { Combobox, TextInput, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox();\n  const [value, setValue] = useState('');\n  const shouldFilterOptions = !groceries.some((item) => item === value);\n  const filteredOptions = shouldFilterOptions\n    ? groceries.filter((item) => item.toLowerCase().includes(value.toLowerCase().trim()))\n    : groceries;\n\n  const options = filteredOptions.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      onOptionSubmit={(optionValue) => {\n        setValue(optionValue);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <TextInput\n          label=\"Pick value or type anything\"\n          placeholder=\"Pick value or type anything\"\n          value={value}\n          onChange={(event) => {\n            setValue(event.currentTarget.value);\n            combobox.openDropdown();\n          }}\n          onClick={() => combobox.openDropdown()}\n          onFocus={() => combobox.openDropdown()}\n          onBlur={() => combobox.closeDropdown()}\n        />\n      </Combobox.Target>\n\n      <Combobox.Dropdown hidden={options.length === 0}>\n        <Combobox.Options>{options}</Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Control dropdown opened state\n\nTo control the dropdown opened state, pass `opened` to `useCombobox` hook:\n\n```tsx\nimport { useState } from 'react';\nimport { TextInput, Button, Combobox, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n  const combobox = useCombobox({ opened });\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <>\n      <Button mb=\"md\" onClick={() => setOpened((o) => !o)}>\n        Toggle dropdown\n      </Button>\n\n      <Combobox store={combobox}>\n        <Combobox.Target>\n          <TextInput\n            label=\"Autocomplete\"\n            description=\"Dropdown is opened/closed when button is clicked\"\n            placeholder=\"Click button to toggle dropdown\"\n          />\n        </Combobox.Target>\n\n        <Combobox.Dropdown>\n          <Combobox.Options>{options}</Combobox.Options>\n        </Combobox.Dropdown>\n      </Combobox>\n    </>\n  );\n}\n```\n\n\n## Popover props\n\n`Combobox` supports most of [Popover](https://mantine.dev/llms/core-popover.md) props. For example,\nyou can control dropdown position with `position` prop and disable Floating UI\nmiddlewares with `middlewares` prop:\n\n```tsx\nimport { useState } from 'react';\nimport { Input, InputBase, Combobox, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n  });\n\n  const [value, setValue] = useState<string | null>(null);\n\n  const options = groceries.map((item) => (\n    <Combobox.Option value={item} key={item}>\n      {item}\n    </Combobox.Option>\n  ));\n\n  return (\n    <Combobox\n      store={combobox}\n      position=\"bottom\"\n      middlewares={{ flip: false, shift: false }}\n      onOptionSubmit={(val) => {\n        setValue(val);\n        combobox.closeDropdown();\n      }}\n    >\n      <Combobox.Target>\n        <InputBase\n          component=\"button\"\n          type=\"button\"\n          pointer\n          rightSection={<Combobox.Chevron />}\n          rightSectionPointerEvents=\"none\"\n          onClick={() => combobox.toggleDropdown()}\n        >\n          {value || <Input.Placeholder>Pick value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>{options}</Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Virtualization\n\n`useVirtualizedCombobox` hook can be used to create comboboxes with virtualized options list.\nNote that due to the nature of virtualization, the hook requires some additional configuration\ncompared to the `useCombobox` hook. In `useVirtualizedCombobox` hook all operations related to\noption indexing do not rely on the actual DOM structure, instead, you need to preserve values in\nReact state and pass them to the hook.\n\n`useVirtualizedCombobox` does not depend on any specific virtualization library.\nThe recommended option is [@tanstack/react-virtual](https://tanstack.com/virtual/latest):\n\n```tsx\nimport { useState } from 'react';\nimport { useVirtualizer } from '@tanstack/react-virtual';\nimport { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';\n\nconst ITEM_HEIGHT = 36;\n\nconst largeData = Array(10000)\n  .fill(0)\n  .map((_, index) => ({\n    value: `value-${index}`,\n    label: `Label ${index}`,\n    id: `item-${index}`,\n    disabled: false,\n  }));\n\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);\n  const [activeOptionIndex, setActiveOptionIndex] = useState(-1);\n  const [value, setValue] = useState('');\n  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);\n\n  const virtualizer = useVirtualizer({\n    count: largeData.length,\n    getScrollElement: () => scrollParent,\n    estimateSize: () => ITEM_HEIGHT,\n    overscan: 5,\n  });\n\n  const combobox = useVirtualizedCombobox({\n    opened,\n    onOpenedChange: setOpened,\n    onDropdownOpen: () => {\n      if (activeOptionIndex !== -1) {\n        setSelectedOptionIndex(activeOptionIndex);\n        requestAnimationFrame(() => {\n          virtualizer.scrollToIndex(activeOptionIndex, { align: 'auto' });\n        });\n      }\n    },\n    isOptionDisabled: (index) => largeData[index].disabled,\n    totalOptionsCount: largeData.length,\n    getOptionId: (index) => largeData[index].id,\n    selectedOptionIndex,\n    activeOptionIndex,\n    setSelectedOptionIndex: (index) => {\n      setSelectedOptionIndex(index);\n      if (index !== -1) {\n        virtualizer.scrollToIndex(index, { align: 'auto' });\n      }\n    },\n    onSelectedOptionSubmit: onOptionSubmit,\n  });\n\n  function onOptionSubmit(index: number) {\n    const option = largeData[index];\n    setValue(option.value);\n    setActiveOptionIndex(index);\n    combobox.closeDropdown();\n    combobox.resetSelectedOption();\n  }\n\n  return (\n    <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>\n      <Combobox.Target>\n        <InputBase component=\"button\" onClick={() => combobox.toggleDropdown()} pointer>\n          {value || <Input.Placeholder>Pick a value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          <ScrollArea.Autosize\n            mah={220}\n            type=\"scroll\"\n            scrollbarSize={4}\n            viewportRef={setScrollParent}\n            onMouseDown={(event) => event.preventDefault()}\n          >\n            <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>\n              {virtualizer.getVirtualItems().map((virtualItem) => {\n                const item = largeData[virtualItem.index];\n                return (\n                  <Combobox.Option\n                    value={item.value}\n                    key={item.value}\n                    active={virtualItem.index === activeOptionIndex}\n                    selected={virtualItem.index === selectedOptionIndex}\n                    onClick={() => onOptionSubmit(virtualItem.index)}\n                    style={{\n                      position: 'absolute',\n                      top: 0,\n                      left: 0,\n                      width: '100%',\n                      height: virtualItem.size,\n                      transform: `translateY(${virtualItem.start}px)`,\n                    }}\n                  >\n                    {item.label}\n                  </Combobox.Option>\n                );\n              })}\n            </div>\n          </ScrollArea.Autosize>\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\nExample of implementation with [react-virtuoso](https://virtuoso.dev/):\n\n```tsx\nimport { useRef, useState } from 'react';\nimport { Virtuoso, VirtuosoHandle } from 'react-virtuoso';\nimport { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';\n\nconst largeData = Array(10000)\n  .fill(0)\n  .map((_, index) => ({\n    value: `value-${index}`,\n    label: `Label ${index}`,\n    id: `item-${index}`,\n    disabled: false,\n  }));\n\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);\n  const [activeOptionIndex, setActiveOptionIndex] = useState(-1);\n  const [value, setValue] = useState('');\n  const virtuoso = useRef<VirtuosoHandle>(null);\n  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);\n\n  const combobox = useVirtualizedCombobox({\n    opened,\n    onOpenedChange: setOpened,\n    onDropdownOpen: () => {\n      if (activeOptionIndex !== -1) {\n        setSelectedOptionIndex(activeOptionIndex);\n        requestAnimationFrame(() => {\n          virtuoso.current?.scrollToIndex({ index: activeOptionIndex });\n        });\n      }\n    },\n    isOptionDisabled: (index) => largeData[index].disabled,\n    totalOptionsCount: largeData.length,\n    getOptionId: (index) => largeData[index].id,\n    selectedOptionIndex,\n    activeOptionIndex,\n    setSelectedOptionIndex: (index) => {\n      setSelectedOptionIndex(index);\n      if (index !== -1) {\n        virtuoso.current?.scrollIntoView({ index });\n      }\n    },\n    onSelectedOptionSubmit: onOptionSubmit,\n  });\n\n  function onOptionSubmit(index: number) {\n    const option = largeData[index];\n    setValue(option.value);\n    setActiveOptionIndex(index);\n    combobox.closeDropdown();\n    combobox.resetSelectedOption();\n  }\n\n  return (\n    <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>\n      <Combobox.Target>\n        <InputBase component=\"button\" onClick={() => combobox.toggleDropdown()} pointer>\n          {value || <Input.Placeholder>Pick a value</Input.Placeholder>}\n        </InputBase>\n      </Combobox.Target>\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          <ScrollArea.Autosize\n            mah={220}\n            type=\"scroll\"\n            scrollbarSize={4}\n            viewportRef={setScrollParent}\n            onMouseDown={(event) => event.preventDefault()}\n          >\n            <Virtuoso\n              data={largeData}\n              ref={virtuoso}\n              style={{ height: 420 }}\n              customScrollParent={scrollParent ?? undefined}\n              itemContent={(index, item) => (\n                <Combobox.Option\n                  value={item.value}\n                  key={item.value}\n                  active={index === activeOptionIndex}\n                  selected={index === selectedOptionIndex}\n                  onClick={() => onOptionSubmit(index)}\n                >\n                  {item.label}\n                </Combobox.Option>\n              )}\n            />\n          </ScrollArea.Autosize>\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\nYou can find more virtualization examples on the [Combobox examples page](https://mantine.dev/combobox?e=VirtualizedTanstack).\n\nHook options:\n\n```tsx\nexport interface UseVirtualizedComboboxOptions {\n  /** Default value for `dropdownOpened`, `false` by default */\n  defaultOpened?: boolean;\n\n  /** Controlled `dropdownOpened` state */\n  opened?: boolean;\n\n  /** Called when `dropdownOpened` state changes */\n  onOpenedChange?: (opened: boolean) => void;\n\n  /** Called when dropdown closes */\n  onDropdownClose?: (eventSource: ComboboxDropdownEventSource) => void;\n\n  /** Called when dropdown opens */\n  onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;\n\n  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */\n  loop?: boolean;\n\n  /** Function to determine whether the option is disabled */\n  isOptionDisabled?: (optionIndex: number) => boolean;\n\n  /** Total number of options in the virtualized list. Required for proper keyboard navigation and index calculations. */\n  totalOptionsCount: number;\n\n  /** Function that returns the id of the option at the given index. Required for setting aria attributes and element references. */\n  getOptionId: (index: number) => string | null;\n\n  /** Current selected option index. Must be controlled by parent component. */\n  selectedOptionIndex: number;\n\n  /** Callback to update the selected option index. Called when user navigates or selects options. */\n  setSelectedOptionIndex: (index: number) => void;\n\n  /** Currently active/highlighted option index. Used to determine which option to select when selectActiveOption is called. */\n  activeOptionIndex?: number;\n\n  /** Called when the selected option is submitted (e.g., via Enter key or clicking). Receives the selected option index. */\n  onSelectedOptionSubmit: (index: number) => void;\n}\n```\n\n\n#### Props\n\n**Combobox props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| arrowOffset | number | - | Arrow offset in px |\n| arrowPosition | 'center' \\| 'side' | - | Arrow position |\n| arrowRadius | number | - | Arrow `border-radius` in px |\n| arrowSize | number | - | Arrow size in px |\n| children | React.ReactNode | - | Combobox content |\n| disabled | boolean | - | If set, popover dropdown will not be rendered |\n| dropdownPadding | Padding<string \\| number> | - | Controls `padding` of the dropdown |\n| floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |\n| hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |\n| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |\n| middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |\n| offset | number \\| FloatingAxesOffsets | - | Offset of the dropdown element |\n| onClose | () => void | - | Called when dropdown closes |\n| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |\n| onEnterTransitionEnd | () => void | - | Called when enter transition ends |\n| onExitTransitionEnd | () => void | - | Called when exit transition ends |\n| onOpen | () => void | - | Called when dropdown opens |\n| onOptionSubmit | (value: string, optionProps: ComboboxOptionProps) => void | - | Called when item is selected with the `Enter` key or by clicking it |\n| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |\n| overlayProps | OverlayProps & ElementProps<\"div\"> | - | Props passed down to `Overlay` component |\n| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |\n| position | FloatingPosition | - | Dropdown position relative to the target element |\n| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| readOnly | boolean | - | Determines whether the `Combobox` value can be changed |\n| resetSelectionOnOptionHover | boolean | - | Determines whether selection should be reset when option is hovered |\n| returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |\n| size | MantineSize | - | Controls items `font-size` and `padding` |\n| store | ComboboxStore | - | Combobox store, can be used to control combobox state |\n| transitionProps | TransitionProps | - | Props passed down to the `Transition` component. Use to configure duration and animation type. |\n| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |\n| withArrow | boolean | - | Determines whether component should have an arrow |\n| withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |\n| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |\n| zIndex | string \\| number | - | Dropdown `z-index` |\n\n**Combobox..Target props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoComplete | string | - | Input autocomplete attribute |\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop that is used to access element ref |\n| targetType | \"button\" \\| \"input\" | - | Determines which events is handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |\n| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |\n| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |\n| withKeyboardNavigation | boolean | - | If set, the component responds to keyboard events |\n\n**Combobox..Dropdown props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| hidden | boolean | - | Determines whether the dropdown should be hidden, for example, when there are no options to display |\n\n**Combobox..Options props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| labelledBy | string | - | Id of the element that labels the options list |\n\n**Combobox..Option props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| active | boolean | - | Current active state |\n| disabled | boolean | - | Disabled state |\n| selected | boolean | - | Current selected state |\n| value | Primitive | required | Option value |\n\n**Combobox..Search props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Determines whether the input should have error styles and `aria-invalid` attribute |\n| id | string | - | Input element id |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| multiline | boolean | - | Adjusts padding and sizing calculations for multiline inputs (use with `component=\"textarea\"`). Does not make the input multiline by itself. |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Sets `required` attribute on the `input` element |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| withAria | boolean | - | Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. |\n| withAriaAttributes | boolean | - | if set, the search input has `aria-` attribute |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withKeyboardNavigation | boolean | - | if set, the search input handles keyboard navigation |\n| wrapperProps | WrapperProps | - | Props passed down to the root element of the `Input` component |\n\n**Combobox..Empty props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Combobox..Chevron props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| color | MantineColor | - | - |\n| error | React.ReactNode | - | - |\n| size | MantineSize | - | - |\n\n**Combobox..Footer props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Combobox..Header props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Combobox..EventsTarget props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoComplete | string | - | Input autocomplete attribute |\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop is used to access element ref |\n| targetType | \"button\" \\| \"input\" | - | Determines which events should be handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |\n| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |\n| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |\n| withKeyboardNavigation | boolean | - | If set, the component responds to the keyboard events |\n\n**Combobox..DropdownTarget props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop that should be used to access element ref |\n\n**Combobox..Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| label | React.ReactNode | - | Group label |\n\n**Combobox..ClearButton props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| onClear | () => void | required | - |\n| size | MantineSize | - | Size of the button, by default value is based on input context |\n\n**Combobox..HiddenInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| value | Primitive \\| Primitive[] \\| null | required | Input value |\n| valuesDivider | string | - | Divider character to join array values into string |\n\n**Combobox.Option props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| active | boolean | - | Current active state |\n| disabled | boolean | - | Disabled state |\n| selected | boolean | - | Current selected state |\n| value | Primitive | required | Option value |\n\n**Combobox.Dropdown props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| hidden | boolean | - | Determines whether the dropdown should be hidden, for example, when there are no options to display |\n\n**Combobox.Target props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoComplete | string | - | Input autocomplete attribute |\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop that is used to access element ref |\n| targetType | \"button\" \\| \"input\" | - | Determines which events is handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |\n| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |\n| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |\n| withKeyboardNavigation | boolean | - | If set, the component responds to keyboard events |\n\n**Combobox.DropdownTarget props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop that should be used to access element ref |\n\n**Combobox.EventsTarget props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoComplete | string | - | Input autocomplete attribute |\n| children | React.ReactNode | required | Target element |\n| refProp | string | - | Key of the prop is used to access element ref |\n| targetType | \"button\" \\| \"input\" | - | Determines which events should be handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |\n| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |\n| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |\n| withKeyboardNavigation | boolean | - | If set, the component responds to the keyboard events |\n\n**Combobox.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| label | React.ReactNode | - | Group label |\n\n\n#### Styles API\n\nCombobox component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Combobox selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| options | .mantine-Combobox-options | `Combobox.Options` component |\n| dropdown | .mantine-Combobox-dropdown | `Combobox.Dropdown` component |\n| option | .mantine-Combobox-option | `Combobox.Option` component |\n| search | .mantine-Combobox-search | `Combobox.Search` input |\n| empty | .mantine-Combobox-empty | `Combobox.Empty` component |\n| header | .mantine-Combobox-header | `Combobox.Header` component |\n| footer | .mantine-Combobox-footer | `Combobox.Footer` component |\n| group | .mantine-Combobox-group | `Combobox.Group` component |\n| groupLabel | .mantine-Combobox-groupLabel | Label of `Combobox.Group` component |\n\n**Combobox CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| dropdown | --combobox-option-fz | Controls option `font-size` |\n| dropdown | --combobox-option-padding | Controls option `padding` |\n| dropdown | --combobox-padding | Controls dropdown `padding` |\n\n**Combobox data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| option | data-combobox-selected | Option is selected | - |\n| option | data-combobox-active | `active` prop is set | - |\n| option | data-combobox-disabled | `disabled` prop is set | - |\n| dropdown | data-hidden | `hidden` prop is set | - |\n",
+  "props": [
+    {
+      "name": "arrowOffset",
+      "description": "Arrow offset in px",
+      "required": false,
+      "defaultValue": "5",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "arrowPosition",
+      "description": "Arrow position",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "'center' | 'side'",
+        "raw": "ArrowPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"center\""
+          },
+          {
+            "value": "\"side\""
+          }
+        ]
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "arrowRadius",
+      "description": "Arrow <code>border-radius</code> in px",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "arrowSize",
+      "description": "Arrow size in px",
+      "required": false,
+      "defaultValue": "7",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "children",
+      "description": "Combobox content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "disabled",
+      "description": "If set, popover dropdown will not be rendered",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "dropdownPadding",
+      "description": "Controls <code>padding</code> of the dropdown",
+      "required": false,
+      "defaultValue": "4",
+      "type": {
+        "name": "Padding<string | number>"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "floatingStrategy",
+      "description": "Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy)",
+      "required": false,
+      "defaultValue": "'absolute'",
+      "type": {
+        "name": "FloatingStrategy",
+        "raw": "FloatingStrategy | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"fixed\""
+          },
+          {
+            "value": "\"absolute\""
+          }
+        ]
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "hideDetached",
+      "description": "If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "middlewares",
+      "description": "Floating ui middlewares to configure position handling",
+      "required": false,
+      "defaultValue": "{ flip: true, shift: true, inline: false }",
+      "type": {
+        "name": "PopoverMiddlewares"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "offset",
+      "description": "Offset of the dropdown element",
+      "required": false,
+      "defaultValue": "8",
+      "type": {
+        "name": "number | FloatingAxesOffsets"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "onClose",
+      "description": "Called when dropdown closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "onDismiss",
+      "description": "Called when the popover is dismissed by clicking outside or by pressing escape",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "onEnterTransitionEnd",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "onExitTransitionEnd",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "onOpen",
+      "description": "Called when dropdown opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "onOptionSubmit",
+      "description": "Called when item is selected with the <code>Enter</code> key or by clicking it",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string, optionProps: ComboboxOptionProps) => void"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "onPositionChange",
+      "description": "Called when dropdown position changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(position: FloatingPosition) => void"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to <code>Overlay</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OverlayProps & ElementProps<\"div\">"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "position",
+      "description": "Dropdown position relative to the target element",
+      "required": false,
+      "defaultValue": "'bottom'",
+      "type": {
+        "name": "FloatingPosition",
+        "raw": "FloatingPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          },
+          {
+            "value": "\"bottom\""
+          },
+          {
+            "value": "\"top\""
+          },
+          {
+            "value": "\"left-end\""
+          },
+          {
+            "value": "\"left-start\""
+          },
+          {
+            "value": "\"right-end\""
+          },
+          {
+            "value": "\"right-start\""
+          },
+          {
+            "value": "\"bottom-end\""
+          },
+          {
+            "value": "\"bottom-start\""
+          },
+          {
+            "value": "\"top-end\""
+          },
+          {
+            "value": "\"top-start\""
+          }
+        ]
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "preventPositionChangeWhenVisible",
+      "description": "Prevents popover from flipping/shifting when it the dropdown is visible",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "readOnly",
+      "description": "Determines whether the <code>Combobox</code> value can be changed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "resetSelectionOnOptionHover",
+      "description": "Determines whether selection should be reset when option is hovered",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "returnFocus",
+      "description": "Determines whether focus should be automatically returned to control when dropdown closes",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any other valid CSS <code>box-shadow</code> value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "size",
+      "description": "Controls items <code>font-size</code> and <code>padding</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "store",
+      "description": "Combobox store, can be used to control combobox state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ComboboxStore"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props passed down to the <code>Transition</code> component. Use to configure duration and animation type.",
+      "required": false,
+      "defaultValue": "{ duration: 150, transition: 'fade' }",
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "width",
+      "description": "Dropdown width, or <code>'target'</code> to make dropdown width the same as target element",
+      "required": false,
+      "defaultValue": "'max-content'",
+      "type": {
+        "name": "PopoverWidth"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "withArrow",
+      "description": "Determines whether component should have an arrow",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "withOverlay",
+      "description": "Determines whether the overlay should be displayed when the dropdown is opened",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether dropdown should be rendered within the <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "zIndex",
+      "description": "Dropdown <code>z-index</code>",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Combobox"
+    },
+    {
+      "name": "active",
+      "description": "Current active state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxOption"
+    },
+    {
+      "name": "disabled",
+      "description": "Disabled state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxOption"
+    },
+    {
+      "name": "selected",
+      "description": "Current selected state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxOption"
+    },
+    {
+      "name": "value",
+      "description": "Option value",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "Primitive"
+      },
+      "sourceComponent": "ComboboxOption"
+    },
+    {
+      "name": "autoComplete",
+      "description": "Input autocomplete attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ComboboxTarget"
+    },
+    {
+      "name": "children",
+      "description": "Target element",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ComboboxTarget"
+    },
+    {
+      "name": "refProp",
+      "description": "Key of the prop that is used to access element ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ComboboxTarget"
+    },
+    {
+      "name": "targetType",
+      "description": "Determines which events is handled by the target element.\n<code>button</code> target type handles <code>Space</code> and <code>Enter</code> keys to toggle dropdown opened state.",
+      "required": false,
+      "defaultValue": "input",
+      "type": {
+        "name": "\"button\" | \"input\"",
+        "raw": "\"button\" | \"input\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"button\""
+          },
+          {
+            "value": "\"input\""
+          }
+        ]
+      },
+      "sourceComponent": "ComboboxTarget"
+    },
+    {
+      "name": "withAriaAttributes",
+      "description": "If set, the target has <code>aria-</code> attributes",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxTarget"
+    },
+    {
+      "name": "withExpandedAttribute",
+      "description": "If set, the target has <code>aria-expanded</code> attribute",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxTarget"
+    },
+    {
+      "name": "withKeyboardNavigation",
+      "description": "If set, the component responds to keyboard events",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxTarget"
+    },
+    {
+      "name": "children",
+      "description": "Target element",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ComboboxDropdownTarget"
+    },
+    {
+      "name": "refProp",
+      "description": "Key of the prop that should be used to access element ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ComboboxDropdownTarget"
+    },
+    {
+      "name": "autoComplete",
+      "description": "Input autocomplete attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ComboboxEventsTarget"
+    },
+    {
+      "name": "children",
+      "description": "Target element",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ComboboxEventsTarget"
+    },
+    {
+      "name": "refProp",
+      "description": "Key of the prop is used to access element ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ComboboxEventsTarget"
+    },
+    {
+      "name": "targetType",
+      "description": "Determines which events should be handled by the target element.\n<code>button</code> target type handles <code>Space</code> and <code>Enter</code> keys to toggle dropdown opened state.",
+      "required": false,
+      "defaultValue": "input",
+      "type": {
+        "name": "\"button\" | \"input\"",
+        "raw": "\"button\" | \"input\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"button\""
+          },
+          {
+            "value": "\"input\""
+          }
+        ]
+      },
+      "sourceComponent": "ComboboxEventsTarget"
+    },
+    {
+      "name": "withAriaAttributes",
+      "description": "If set, the target has <code>aria-</code> attributes",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxEventsTarget"
+    },
+    {
+      "name": "withExpandedAttribute",
+      "description": "If set, the target has <code>aria-expanded</code> attribute",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxEventsTarget"
+    },
+    {
+      "name": "withKeyboardNavigation",
+      "description": "If set, the component responds to the keyboard events",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxEventsTarget"
+    },
+    {
+      "name": "hidden",
+      "description": "Determines whether the dropdown should be hidden, for example, when there are no options to display",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ComboboxDropdown"
+    },
+    {
+      "name": "label",
+      "description": "Group label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ComboboxGroup"
+    }
+  ]
+}

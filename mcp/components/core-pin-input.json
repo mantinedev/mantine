@@ -1,0 +1,328 @@
+{
+  "id": "core-pin-input",
+  "name": "PinInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/pin-input",
+  "description": "Capture pin code or one time password from the user",
+  "propsCount": 26,
+  "llmUrl": "https://mantine.dev/llms/core-pin-input.md",
+  "componentDataUrl": "/mcp/components/core-pin-input.json",
+  "searchText": "pininput capture pin code or one time password from the user @mantine/core /core/pin-input arialabel autofocus defaultvalue disabled error form gap getinputprops hiddeninputprops id inputmode inputtype length managefocus mask name onchange oncomplete onetimecode placeholder radius readonly rootref size type value",
+  "source": "@mantine/core/src/components/PinInput/PinInput.tsx",
+  "docs": "core/pin-input.mdx",
+  "markdown": "# PinInput\nPackage: @mantine/core\nImport: import { PinInput } from '@mantine/core';\nDescription: Capture pin code or one time password from the user\n\n## Usage\n\n```tsx\nimport { PinInput } from '@mantine/core';\n\nfunction Demo() {\n  return <PinInput size=\"sm\" length={4} mask={false} placeholder=\"○\" disabled={false} error={false} type=\"alphanumeric\" />\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { PinInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState('');\n  return <PinInput value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`PinInput` can be used with uncontrolled forms the same way as a native input element.\nSet the `name` attribute to include pin input value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `PinInput` with `FormData`:\n\n```tsx\nimport { PinInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('PIN value:', formData.get('pin'));\n      }}\n    >\n      <PinInput\n        name=\"pin\"\n        length={4}\n        oneTimeCode\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Regex type\n\nYou can use a regular expression to validate user input. Characters that do not match the given expression\nwill be disregarded. For example, to create a `PinInput` that will accept only numbers from `0` to `3`,\nset `type={/^[0-3]+/}`:\n\n```tsx\nimport { PinInput } from '@mantine/core';\n\nfunction Demo() {\n  return <PinInput type={/^[0-3]*$/} inputType=\"tel\" inputMode=\"numeric\" />;\n}\n```\n\n\n## Accessibility\n\nInputs do not have associated labels. Set `aria-label` to make the component visible to screen readers:\n\n```tsx\nimport { PinInput } from '@mantine/core';\n\nfunction Accessibility() {\n  return <PinInput aria-label=\"One time code\" />;\n}\n```\n\n\n#### Props\n\n**PinInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| ariaLabel | string | - | `aria-label` attribute |\n| autoFocus | boolean | - | If set, the first input is focused when component is mounted |\n| defaultValue | string | - | Uncontrolled component default value |\n| disabled | boolean | - | Adds disabled attribute to all inputs |\n| error | boolean | - | Sets `aria-invalid` attribute and applies error styles to all inputs |\n| form | string | - | Hidden input `form` attribute |\n| gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem |\n| getInputProps | (index: number) => InputProps & ElementProps<\"input\", \"size\"> & DataAttributes | - | Props added to the input element depending on its index |\n| hiddenInputProps | React.ComponentProps<\"input\"> | - | Props passed down to the hidden input |\n| id | string | - | Base id used to generate unique ids for inputs |\n| inputMode | \"search\" \\| \"text\" \\| \"none\" \\| \"tel\" \\| \"url\" \\| \"email\" \\| \"numeric\" \\| \"decimal\" | - | `inputmode` attribute, inferred from the `type` prop if not specified |\n| inputType | HTMLInputTypeAttribute | - | Inputs `type` attribute, inferred from the `type` prop if not specified |\n| length | number | - | Number of inputs |\n| manageFocus | boolean | - | Determines whether focus should be moved automatically to the next input once filled |\n| mask | boolean | - | Changes input type to `\"password\"` |\n| name | string | - | Hidden input `name` attribute |\n| onChange | (value: string) => void | - | Called when value changes |\n| onComplete | (value: string) => void | - | Called when all inputs have value |\n| oneTimeCode | boolean | - | Determines whether `autocomplete=\"one-time-code\"` attribute should be set on all inputs |\n| placeholder | string | - | Inputs placeholder |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| readOnly | boolean | - | If set, the user cannot edit the value |\n| rootRef | Ref<HTMLDivElement> | - | Assigns ref of the root element |\n| size | MantineSize | - | Controls inputs `width` and `height` |\n| type | \"number\" \\| RegExp \\| \"alphanumeric\" | - | Determines which values can be entered |\n| value | string | - | Controlled component value |\n\n\n#### Styles API\n\nPinInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**PinInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-PinInput-root | Root element |\n| pinInput | .mantine-PinInput-pinInput | Input item wrapper |\n| input | .mantine-PinInput-input | Input element |\n\n**PinInput CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --pin-input-size | Controls input `width` and `height` |\n",
+  "props": [
+    {
+      "name": "ariaLabel",
+      "description": "<code>aria-label</code> attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "autoFocus",
+      "description": "If set, the first input is focused when component is mounted",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Adds disabled attribute to all inputs",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "error",
+      "description": "Sets <code>aria-invalid</code> attribute and applies error styles to all inputs",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "form",
+      "description": "Hidden input <code>form</code> attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "gap",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set <code>gap</code> between inputs, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "getInputProps",
+      "description": "Props added to the input element depending on its index",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(index: number) => InputProps & ElementProps<\"input\", \"size\"> & DataAttributes"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "hiddenInputProps",
+      "description": "Props passed down to the hidden input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"input\">"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "id",
+      "description": "Base id used to generate unique ids for inputs",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "inputMode",
+      "description": "<code>inputmode</code> attribute, inferred from the <code>type</code> prop if not specified",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
+        "raw": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"search\""
+          },
+          {
+            "value": "\"text\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"tel\""
+          },
+          {
+            "value": "\"url\""
+          },
+          {
+            "value": "\"email\""
+          },
+          {
+            "value": "\"numeric\""
+          },
+          {
+            "value": "\"decimal\""
+          }
+        ]
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "inputType",
+      "description": "Inputs <code>type</code> attribute, inferred from the <code>type</code> prop if not specified",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "HTMLInputTypeAttribute"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "length",
+      "description": "Number of inputs",
+      "required": false,
+      "defaultValue": "4",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "manageFocus",
+      "description": "Determines whether focus should be moved automatically to the next input once filled",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "mask",
+      "description": "Changes input type to <code>\"password\"</code>",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "name",
+      "description": "Hidden input <code>name</code> attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "onComplete",
+      "description": "Called when all inputs have value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "oneTimeCode",
+      "description": "Determines whether <code>autocomplete=\"one-time-code\"</code> attribute should be set on all inputs",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "placeholder",
+      "description": "Inputs placeholder",
+      "required": false,
+      "defaultValue": "'○'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "readOnly",
+      "description": "If set, the user cannot edit the value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "rootRef",
+      "description": "Assigns ref of the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<HTMLDivElement>"
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls inputs <code>width</code> and <code>height</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "type",
+      "description": "Determines which values can be entered",
+      "required": false,
+      "defaultValue": "'alphanumeric'",
+      "type": {
+        "name": "\"number\" | RegExp | \"alphanumeric\""
+      },
+      "sourceComponent": "PinInput"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PinInput"
+    }
+  ]
+}

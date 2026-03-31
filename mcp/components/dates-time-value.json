@@ -1,0 +1,69 @@
+{
+  "id": "dates-time-value",
+  "name": "TimeValue",
+  "kind": "component",
+  "package": "@mantine/dates",
+  "route": "/dates/time-value",
+  "description": "Display a formatted time value",
+  "propsCount": 4,
+  "llmUrl": "https://mantine.dev/llms/dates-time-value.md",
+  "componentDataUrl": "/mcp/components/dates-time-value.json",
+  "searchText": "timevalue display a formatted time value @mantine/dates /dates/time-value ampmlabels format value withseconds",
+  "source": "@mantine/dates/src/components/TimeValue/TimeValue.tsx",
+  "docs": "dates/time-value.mdx",
+  "markdown": "# TimeValue\nPackage: @mantine/dates\nImport: import { TimeValue } from '@mantine/dates';\nDescription: Display a formatted time value\n\n## Usage\n\nUse the `TimeValue` component to display time in different formats:\n\n```tsx\nimport { Text } from '@mantine/core';\nimport { TimeValue } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <div>\n      <Text>\n        24h format: <TimeValue value=\"18:45:34\" />\n      </Text>\n      <Text>\n        12h format: <TimeValue value=\"18:45:34\" format=\"12h\" />\n      </Text>\n    </div>\n  );\n}\n```\n\n\n## With seconds\n\nUse the `withSeconds` prop to display seconds:\n\n```tsx\nimport { Text } from '@mantine/core';\nimport { TimeValue } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <div>\n      <Text>\n        12h format: <TimeValue value=\"18:45:34\" format=\"12h\" withSeconds />\n      </Text>\n      <Text>\n        24h format: <TimeValue value=\"18:45:34\" withSeconds />\n      </Text>\n    </div>\n  );\n}\n```\n\n\n## AM/PM labels\n\nUse the `amPmLabels` prop to display AM/PM labels:\n\n```tsx\nimport { Text } from '@mantine/core';\nimport { TimeValue } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <div>\n      <Text>\n        Custom AM/PM labels:{' '}\n        <TimeValue value=\"18:45:34\" format=\"12h\" amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }} />\n      </Text>\n    </div>\n  );\n}\n```\n\n\n## Date object\n\nYou can use a `Date` object instead of a string as the `value`:\n\n```tsx\nimport { Text } from '@mantine/core';\nimport { TimeValue } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <div>\n      <Text>\n        24h format: <TimeValue value={new Date(2021, 1, 1, 18, 45, 34)} />\n      </Text>\n      <Text>\n        12h format: <TimeValue format=\"12h\" value={new Date(2021, 1, 1, 18, 45, 34)} />\n      </Text>\n    </div>\n  );\n}\n```\n\n\n\n#### Props\n\n**TimeValue props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| amPmLabels | { am: string; pm: string } | - | AM/PM labels |\n| format | \"12h\" \\| \"24h\" | - | Time format |\n| value | string \\| Date | required | Time to format |\n| withSeconds | boolean | - | Determines whether seconds should be displayed |",
+  "props": [
+    {
+      "name": "amPmLabels",
+      "description": "AM/PM labels",
+      "required": false,
+      "defaultValue": "{ am: 'AM', pm: 'PM' }",
+      "type": {
+        "name": "{ am: string; pm: string }"
+      },
+      "sourceComponent": "TimeValue"
+    },
+    {
+      "name": "format",
+      "description": "Time format",
+      "required": false,
+      "defaultValue": "24h",
+      "type": {
+        "name": "\"12h\" | \"24h\"",
+        "raw": "TimePickerFormat | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"12h\""
+          },
+          {
+            "value": "\"24h\""
+          }
+        ]
+      },
+      "sourceComponent": "TimeValue"
+    },
+    {
+      "name": "value",
+      "description": "Time to format",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "TimeValue"
+    },
+    {
+      "name": "withSeconds",
+      "description": "Determines whether seconds should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TimeValue"
+    }
+  ]
+}

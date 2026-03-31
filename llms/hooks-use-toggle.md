@@ -4,15 +4,29 @@ Import: import { UseToggle } from '@mantine/hooks';
 
 ## Usage
 
-`use-toggle` implements a common state pattern – it switches state between given values:
+The `use-toggle` hook implements a common state pattern – it switches state between given values:
 
+```tsx
+import { Button } from '@mantine/core';
+import { useToggle } from '@mantine/hooks';
+
+function Demo() {
+  const [value, toggle] = useToggle(['blue', 'orange', 'cyan', 'teal']);
+
+  return (
+    <Button color={value} onClick={() => toggle()}>
+      {value}
+    </Button>
+  );
+}
+```
 
 
 ## API
 
-The hook accepts an array as single argument, the first option will be used as the default value.
+The hook accepts an array as a single argument; the first option will be used as the default value.
 
-The hook returns an array with state value and toggle function:
+The hook returns an array with the state value and toggle function:
 
 ```tsx
 import { useToggle } from '@mantine/hooks';
@@ -22,11 +36,11 @@ const [value, toggle] = useToggle(['light', 'dark'] as const);
 toggle(); // -> value == 'light'
 toggle(); // -> value == 'dark'
 
-// You can force specific value, in this case state will be set to given value
+// You can force a specific value; in this case, state will be set to the given value
 toggle('dark'); // -> value == 'dark'
 ```
 
-If you do not provide an array with options, then `use-toggle` will use boolean values with `false` as default:
+If you do not provide an array with options, then `use-toggle` will use boolean values with `false` as the default:
 
 ```tsx
 import { useToggle } from '@mantine/hooks';
@@ -59,8 +73,7 @@ function useToggle<T = boolean>(options?: T[]): UseToggleReturnValue<T>;
 
 ## Exported types
 
-`UseToggleReturnValue` type is exported from `@mantine/hooks` package,
-you can import it in your application:
+The `UseToggleReturnValue` type is exported from `@mantine/hooks`;
 
 ```tsx
 import type { UseToggleReturnValue } from '@mantine/hooks';

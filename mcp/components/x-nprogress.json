@@ -1,0 +1,97 @@
+{
+  "id": "x-nprogress",
+  "name": "NavigationProgress",
+  "kind": "component",
+  "package": "@mantine/nprogress",
+  "route": "/x/nprogress",
+  "description": "Navigation progress bar",
+  "propsCount": 8,
+  "llmUrl": "https://mantine.dev/llms/x-nprogress.md",
+  "componentDataUrl": "/mcp/components/x-nprogress.json",
+  "searchText": "navigationprogress navigation progress bar @mantine/nprogress /x/nprogress color initialprogress portalprops size stepinterval store withinportal zindex",
+  "source": "@mantine/nprogress/src",
+  "docs": "x/nprogress.mdx",
+  "markdown": "# NavigationProgress\nPackage: @mantine/nprogress\nImport: import { NavigationProgress } from '@mantine/nprogress';\nDescription: Navigation progress bar\n\n## Installation\n\n```bash\nyarn add @mantine/nprogress\n```\n\n```bash\nnpm install @mantine/nprogress\n```\n\nAfter installation import package styles at the root of your application:\n\n```tsx\nimport '@mantine/core/styles.css';\n// ‼️ import nprogress styles after core package styles\nimport '@mantine/nprogress/styles.css';\n```\n\n## Setup NavigationProgress\n\nRender the `NavigationProgress` component anywhere in your app within [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md):\n\n```tsx\nimport { MantineProvider } from '@mantine/core';\nimport { NavigationProgress } from '@mantine/nprogress';\n\nfunction Demo() {\n  return (\n    <MantineProvider>\n      <NavigationProgress />\n      {/* Your app here */}\n    </MantineProvider>\n  );\n}\n```\n\n## Usage\n\n```tsx\nimport { Button, Group } from '@mantine/core';\nimport { nprogress, NavigationProgress } from '@mantine/nprogress';\n\nfunction Demo() {\n  return (\n    <>\n      <NavigationProgress />\n      <Group justify=\"center\">\n        <Button onClick={() => nprogress.start()}>Start</Button>\n        <Button onClick={() => nprogress.stop()}>Stop</Button>\n        <Button onClick={() => nprogress.increment()}>Increment</Button>\n        <Button onClick={() => nprogress.decrement()}>Decrement</Button>\n        <Button onClick={() => nprogress.set(50)}>Set 50%</Button>\n        <Button onClick={() => nprogress.reset()}>Reset</Button>\n        <Button onClick={() => nprogress.complete()}>Complete</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n",
+  "props": [
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> of any other valid CSS color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "NavigationProgress"
+    },
+    {
+      "name": "initialProgress",
+      "description": "Initial progress value",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "NavigationProgress"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is <code>true</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Omit<BasePortalProps, \"withinPortal\">"
+      },
+      "sourceComponent": "NavigationProgress"
+    },
+    {
+      "name": "size",
+      "description": "Controls height of the progress bar",
+      "required": false,
+      "defaultValue": "3",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "NavigationProgress"
+    },
+    {
+      "name": "stepInterval",
+      "description": "Step interval in ms",
+      "required": false,
+      "defaultValue": "500",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "NavigationProgress"
+    },
+    {
+      "name": "store",
+      "description": "Component store, controls state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "NprogressStore"
+      },
+      "sourceComponent": "NavigationProgress"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether the progress bar should be rendered within <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NavigationProgress"
+    },
+    {
+      "name": "zIndex",
+      "description": "Progressbar z-index",
+      "required": false,
+      "defaultValue": "getDefaultZIndex('max')",
+      "type": {
+        "name": "React.CSSProperties[\"zIndex\"]"
+      },
+      "sourceComponent": "NavigationProgress"
+    }
+  ]
+}

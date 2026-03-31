@@ -5,13 +5,11 @@ Description: Pick one or multiple values with inline controls
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Chip } from '@mantine/core';
 
 function Demo() {
-  return <Chip defaultChecked>Awesome chip</Chip>
+  return <Chip defaultChecked color="blue" variant="filled" size="sm" radius="xl">Awesome chip</Chip>
 }
 ```
 
@@ -35,16 +33,14 @@ function Demo() {
 
 ## Change checked icon
 
-#### Example: icon
-
 ```tsx
 import { Chip } from '@mantine/core';
-import { IconX } from '@tabler/icons-react';
+import { XIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Chip
-      icon={<IconX size={16} />}
+      icon={<XIcon size={16} />}
       color="red"
       variant="filled"
       defaultChecked
@@ -57,8 +53,6 @@ function Demo() {
 
 
 ## States
-
-#### Example: states
 
 ```tsx
 function Demo() {
@@ -113,10 +107,8 @@ function Demo() {
 
 ## Chip with tooltip
 
-To use `Chip` with [Tooltip](https://mantine.dev/core/tooltip/) and other similar components, set `refProp="rootRef"`
-on the Tooltip component:
-
-#### Example: tooltip
+To use `Chip` with [Tooltip](https://mantine.dev/llms/core-tooltip.md) and other similar components, set `refProp="rootRef"`
+on the [Tooltip](https://mantine.dev/llms/core-tooltip.md) component:
 
 ```tsx
 import { Tooltip, Chip } from '@mantine/core';
@@ -131,18 +123,14 @@ function Demo() {
 ```
 
 
-<WrapperProps component="Chip" />
-
 ## Wrapper props
 
 Chip supports additional props that are passed to the wrapper element for more customization options.
 
 ## Chip.Group
 
-`Chip.Group` component manages state of child Chip components,
-set `multiple` prop to allow multiple chips to be selected at a time:
-
-#### Example: group
+The `Chip.Group` component manages the state of child Chip components.
+Set the `multiple` prop to allow multiple chips to be selected at a time:
 
 ```tsx
 import { Chip, Group } from '@mantine/core';
@@ -208,8 +196,6 @@ function Multiple() {
 
 ## Deselect radio chip
 
-#### Example: deselect
-
 ```tsx
 import { useState } from 'react';
 import { Chip, Group } from '@mantine/core';
@@ -249,21 +235,38 @@ all keyboard events work the same as with native controls.
 
 #### Props
 
+**Chip props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| checked | boolean | - | Checked state for controlled component |
-| children | React.ReactNode | required | <code>label</code> element associated with the input |
-| color | MantineColor | - | Controls components colors based on <code>variant</code> prop. Key of <code>theme.colors</code> or any valid CSS color. |
-| defaultChecked | boolean | - | Default checked state for uncontrolled component |
-| icon | React.ReactNode | - | Any element or component to replace default icon |
-| id | string | - | Unique input id |
+| autoContrast | boolean | - | If set, adjusts text color based on the chip background color for `filled` variant |
+| checked | boolean | - | Controlled checked state |
+| children | React.ReactNode | required | `label` element associated with the input |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color. |
+| defaultChecked | boolean | - | Uncontrolled checked state initial value |
+| icon | React.ReactNode | - | Any element or component to replace the default icon |
+| id | string | - | Unique input id, generated randomly if not provided |
 | onChange | (checked: boolean) => void | - | Calls when checked state changes |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
-| rootRef | ForwardedRef<HTMLDivElement> | - | Assigns ref of the root element |
-| size | MantineSize | - | Controls various properties related to component size |
-| type | "checkbox" | "radio" | - | Chip input type |
-| wrapperProps | Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes | - | Props passed down to the root element |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| rootRef | Ref<HTMLDivElement> | - | Assigns ref of the root element |
+| size | MantineSize | - | Controls various properties related to the component size |
+| type | "checkbox" \| "radio" | - | Chip input type |
+| wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the root element |
+
+**Chip.Group props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | `Chip` components and any other elements |
+| defaultValue | string \| Value[] \| null | - | Uncontrolled component initial value |
+| multiple | boolean | - | If set, multiple values can be selected |
+| onChange | (value: Multiple extends true ? Value[] : Value) => void | - | Called when value changes. If `multiple` prop is set, called with an array of selected values. If not, called with a string value of selected chip. |
+| value | string \| Value[] \| null | - | Controlled component value |
+
+**Chip.GroupContext props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
 
 
 #### Styles API
@@ -301,4 +304,4 @@ Chip component supports Styles API. With Styles API, you can customize styles of
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
 | label | data-checked | Chip is checked | - |
-| label | data-disabled | - | - |
+| label | data-disabled | `disabled` prop is set | - |

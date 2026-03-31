@@ -1,0 +1,37 @@
+{
+  "id": "core-fieldset",
+  "name": "Fieldset",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/fieldset",
+  "description": "Group related elements in a form",
+  "propsCount": 2,
+  "llmUrl": "https://mantine.dev/llms/core-fieldset.md",
+  "componentDataUrl": "/mcp/components/core-fieldset.json",
+  "searchText": "fieldset group related elements in a form @mantine/core /core/fieldset legend radius",
+  "source": "@mantine/core/src/components/Fieldset/Fieldset.tsx",
+  "docs": "core/fieldset.mdx",
+  "markdown": "# Fieldset\nPackage: @mantine/core\nImport: import { Fieldset } from '@mantine/core';\nDescription: Group related elements in a form\n\n## Usage\n\n```tsx\nimport { Fieldset, TextInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Fieldset legend=\"Personal information\" variant=\"default\" radius=\"md\">\n      <TextInput label=\"Your name\" placeholder=\"Your name\" />\n      <TextInput label=\"Email\" placeholder=\"Email\" mt=\"md\" />\n    </Fieldset>\n  );\n}\n```\n\n\n## Disabled\n\n`disabled` prop disables all inputs and buttons inside the fieldset:\n\n```tsx\nimport { Fieldset, TextInput, Button, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Fieldset legend=\"Personal information\" disabled>\n      <TextInput label=\"Your name\" placeholder=\"Your name\" />\n      <TextInput label=\"Email\" placeholder=\"Email\" mt=\"md\" />\n\n      <Group justify=\"flex-end\" mt=\"md\">\n        <Button>Submit</Button>\n      </Group>\n    </Fieldset>\n  );\n}\n```\n\n\n\n#### Props\n\n**Fieldset props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| legend | React.ReactNode | - | Fieldset legend |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n\n\n#### Styles API\n\nFieldset component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Fieldset selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Fieldset-root | Root element |\n| legend | .mantine-Fieldset-legend | Legend element |\n\n**Fieldset CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --fieldset-radius | Controls `border-radius` |\n",
+  "props": [
+    {
+      "name": "legend",
+      "description": "Fieldset legend",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Fieldset"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Fieldset"
+    }
+  ]
+}

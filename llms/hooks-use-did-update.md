@@ -4,7 +4,7 @@ Import: import { UseDidUpdate } from '@mantine/hooks';
 
 ## Usage
 
-`use-did-update` hook works the same way as `useEffect` but it is not called when component is mounted:
+The `use-did-update` hook works the same way as `useEffect` but it is not called when the component is mounted:
 
 ```tsx
 import { useDidUpdate } from '@mantine/hooks';

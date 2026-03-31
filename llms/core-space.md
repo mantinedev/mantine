@@ -7,8 +7,6 @@ Description: Add horizontal or vertical spacing from theme
 
 Use `Space` component to add horizontal or vertical spacing between elements:
 
-#### Example: horizontal
-
 ```tsx
 import { Text, Space } from '@mantine/core';
 
@@ -16,17 +14,13 @@ function Demo() {
   return (
     <>
       <Text>First line</Text>
-      <Space />
+      <Space h="md" />
       <Text>Second line</Text>
     </>
   );
 }
 ```
 
-
-<br />
-
-#### Example: vertical
 
 ```tsx
 import { Text, Space } from '@mantine/core';
@@ -35,7 +29,7 @@ function Demo() {
   return (
     <div style={{ display: 'flex' }}>
       <Text>First line</Text>
-      <Space />
+      <Space w="md" />
       <Text>Second line</Text>
     </div>
   );
@@ -82,6 +76,8 @@ function Demo() {
 
 
 #### Props
+
+**Space props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|

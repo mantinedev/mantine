@@ -1,0 +1,652 @@
+{
+  "id": "core-autocomplete",
+  "name": "Autocomplete",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/autocomplete",
+  "description": "Autocomplete user input with any list of options",
+  "propsCount": 50,
+  "llmUrl": "https://mantine.dev/llms/core-autocomplete.md",
+  "componentDataUrl": "/mcp/components/core-autocomplete.json",
+  "searchText": "autocomplete autocomplete user input with any list of options @mantine/core /core/autocomplete autoselectonblur clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultvalue description descriptionprops disabled dropdownopened error errorprops filter inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight onchange onclear ondropdownclose ondropdownopen onoptionsubmit openonfocus radius renderoption required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops selectfirstoptiononchange selectfirstoptionondropdownopen size value withasterisk witherrorstyles withscrollarea wrapperprops",
+  "source": "@mantine/core/src/components/Autocomplete/Autocomplete.tsx",
+  "docs": "core/autocomplete.mdx",
+  "markdown": "# Autocomplete\nPackage: @mantine/core\nImport: import { Autocomplete } from '@mantine/core';\nDescription: Autocomplete user input with any list of options\n\n## Not a searchable select\n\n`Autocomplete` is not a searchable select, it is a text input with suggestions.\nValues are not enforced to be one of the suggestions – users can type anything.\nIf you need a searchable select, use the [Select](https://mantine.dev/llms/core-select.md) component instead.\nTo learn more about the differences between `Autocomplete` and `Select`, check the\n[help center article](https://help.mantine.dev/q/select-autocomplete-difference).\n\n## Usage\n\n`Autocomplete` provides users with a list of suggestions based on the input,\nhowever users are not limited to suggestions and can type anything.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      placeholder=\"Pick value\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      loading\n    />\n  );\n}\n```\n\n\n## Controlled\n\nThe `Autocomplete` value must be a string; other types are not supported.\nThe `onChange` function is called with a string value as a single argument.\n\n```tsx\nimport { useState } from 'react';\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState('');\n  return <Autocomplete data={[]} value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`Autocomplete` can be used with uncontrolled forms the same way as a native `input` element.\nSet the `name` attribute to include autocomplete value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `Autocomplete` with `FormData`:\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Autocomplete value:', formData.get('country'));\n      }}\n    >\n      <Autocomplete\n        label=\"Select your country\"\n        placeholder=\"Pick one\"\n        name=\"country\"\n        data={['United States', 'Canada', 'Mexico']}\n        defaultValue=\"United States\"\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Select first option on change\n\nSet the `selectFirstOptionOnChange` prop to automatically select the first option in the dropdown when the input value changes.\nThis feature allows users to type a value and immediately press `Enter` to select the first matching option,\nwithout needing to press the arrow down key first.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      selectFirstOptionOnChange\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## autoSelectOnBlur\n\nSet the `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.\nTo see this feature in action: select an option with the up/down arrows, then click outside the input:\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      autoSelectOnBlur\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## Data prop\n\nData that is used in Autocomplete must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.\n\n## Filtering\n\nAutocomplete provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.\n\n```tsx\nimport { Autocomplete, ComboboxItem, OptionsFilter } from '@mantine/core';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  const splittedSearch = search.toLowerCase().trim().split(' ');\n  return (options as ComboboxItem[]).filter((option) => {\n    const words = option.label.toLowerCase().trim().split(' ');\n    return splittedSearch.every((searchWord) => words.some((word) => word.includes(searchWord)));\n  });\n};\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your country\"\n      placeholder=\"Pick value or enter anything\"\n      data={['Great Britain', 'Russian Federation', 'United States']}\n      filter={optionsFilter}\n    />\n  );\n}\n```\n\n\n## Sort options\n\nBy default, options are sorted by their position in the data array. You can change this behavior\nwith the `filter` function:\n\n```tsx\nimport { Autocomplete, ComboboxItem, OptionsFilter } from '@mantine/core';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  const filtered = (options as ComboboxItem[]).filter((option) =>\n    option.label.toLowerCase().trim().includes(search.toLowerCase().trim())\n  );\n\n  filtered.sort((a, b) => a.label.localeCompare(b.label));\n  return filtered;\n};\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['4 – React', '1 – Angular', '3 – Vue', '2 – Svelte']}\n      filter={optionsFilter}\n    />\n  );\n}\n```\n\n\n## Fuzzy search with fuse.js\n\nYou can implement fuzzy search using the [fuse.js](https://fusejs.io/) library to match options\neven with typos or partial matches:\n\n```tsx\nimport { Autocomplete, ComboboxItem, OptionsFilter } from '@mantine/core';\nimport Fuse from 'fuse.js';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  if (!search.trim()) {\n    return options;\n  }\n\n  const fuse = new Fuse(options as ComboboxItem[], {\n    keys: ['label'],\n    threshold: 0.3,\n    minMatchCharLength: 1,\n  });\n\n  return fuse.search(search).map((result) => result.item);\n};\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte', 'Ember']}\n      filter={optionsFilter}\n    />\n  );\n}\n```\n\n\n## Large datasets\n\nAutocomplete can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nconst largeData = Array(100_000)\n  .fill(0)\n  .map((_, index) => `Option ${index}`);\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"100 000 options autocomplete\"\n      placeholder=\"Use limit to optimize performance\"\n      limit={5}\n      data={largeData}\n    />\n  );\n}\n```\n\n\n## renderOption\n\nThe `renderOption` callback allows you to customize option rendering. It is called with an option object.\nThe function must return a React node.\n\n```tsx\nimport { Autocomplete, AutocompleteProps, Avatar, Group, Text } from '@mantine/core';\n\nconst usersData: Record<string, { image: string; email: string }> = {\n  'Emily Johnson': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',\n    email: 'emily92@gmail.com',\n  },\n  'Ava Rodriguez': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png',\n    email: 'ava_rose@gmail.com',\n  },\n  'Olivia Chen': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png',\n    email: 'livvy_globe@gmail.com',\n  },\n  'Ethan Barnes': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',\n    email: 'ethan_explorer@gmail.com',\n  },\n  'Mason Taylor': {\n    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',\n    email: 'mason_musician@gmail.com',\n  },\n};\n\nconst renderAutocompleteOption: AutocompleteProps['renderOption'] = ({ option }) => (\n  <Group gap=\"sm\">\n    <Avatar src={usersData[option.value].image} size={36} radius=\"xl\" />\n    <div>\n      <Text size=\"sm\">{option.value}</Text>\n      <Text size=\"xs\" opacity={0.5}>\n        {usersData[option.value].email}\n      </Text>\n    </div>\n  </Group>\n);\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      data={['Emily Johnson', 'Ava Rodriguez', 'Olivia Chen', 'Ethan Barnes', 'Mason Taylor']}\n      renderOption={renderAutocompleteOption}\n      maxDropdownHeight={300}\n      label=\"Employee of the month\"\n      placeholder=\"Search for employee\"\n    />\n  );\n}\n```\n\n\n## Nothing found message\n\nThe `Autocomplete` component does not support a nothing found message. It is designed to\naccept any string as a value, so it does not make sense to show a nothing found message.\nIf you want to limit user input to suggestions, you can use a searchable [Select](https://mantine.dev/llms/core-select.md)\ncomponent instead. To learn more about the differences between `Autocomplete` and `Select`, check the\n[help center article](https://help.mantine.dev/q/select-autocomplete-difference).\n\n## Scrollable dropdown\n\nBy default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).\nYou can control the dropdown max-height with the `maxDropdownHeight` prop if you do not change the default settings.\n\nIf you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,\nyou will need to change the dropdown styles with [Styles API](https://mantine.dev/llms/styles-styles-api.md).\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nconst data = Array(100)\n  .fill(0)\n  .map((_, index) => `Option ${index}`);\n\nfunction Demo() {\n  return (\n    <>\n      <Autocomplete\n        label=\"With scroll area (default)\"\n        placeholder=\"Pick value or enter anything\"\n        data={data}\n        maxDropdownHeight={200}\n      />\n\n      <Autocomplete\n        label=\"With native scroll\"\n        placeholder=\"Pick value or enter anything\"\n        data={data}\n        withScrollArea={false}\n        styles={{ dropdown: { maxHeight: 200, overflowY: 'auto' } }}\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Group options\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={[\n        { group: 'Frontend', items: ['React', 'Angular'] },\n        { group: 'Backend', items: ['Express', 'Django'] },\n      ]}\n    />\n  );\n}\n```\n\n\n## Disabled options\n\nWhen an option is disabled, it cannot be selected and is ignored in keyboard navigation.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={[\n        { value: 'React' },\n        { value: 'Angular' },\n        { value: 'Vue', disabled: true },\n        { value: 'Svelte', disabled: true },\n      ]}\n    />\n  );\n}\n```\n\n\n## Inside Popover\n\nTo use `Autocomplete` inside popover, you need to set `withinPortal: false`:\n\n```tsx\nimport { Popover, Button, Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Popover width={300} position=\"bottom\" withArrow shadow=\"md\">\n      <Popover.Target>\n        <Button>Toggle popover</Button>\n      </Popover.Target>\n      <Popover.Dropdown>\n        <Autocomplete\n          label=\"Your favorite library\"\n          placeholder=\"Pick value or enter anything\"\n          data={['React', 'Angular', 'Vue', 'Svelte']}\n          comboboxProps={{ withinPortal: false }}\n        />\n      </Popover.Dropdown>\n    </Popover>\n  );\n}\n```\n\n\n## Clearable\n\nSet the `clearable` prop to display the clear button in the right section. The button is not displayed\nwhen:\n\n* The component does not have a value\n* The component is disabled\n* The component is read only\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      clearable\n      defaultValue=\"React\"\n      data={['React', 'Angular']}\n      label=\"Clearable autocomplete\"\n      placeholder=\"Clearable autocomplete\"\n    />\n  );\n}\n```\n\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport { Autocomplete, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <Autocomplete\n        label=\"clearSectionMode='both' (default)\"\n        placeholder=\"Pick value\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue=\"React\"\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"both\"\n      />\n\n      <Autocomplete\n        label=\"clearSectionMode='rightSection'\"\n        placeholder=\"Pick value\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue=\"React\"\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"rightSection\"\n      />\n\n      <Autocomplete\n        label=\"clearSectionMode='clear'\"\n        placeholder=\"Pick value\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue=\"React\"\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"clear\"\n      />\n    </Stack>\n  );\n}\n```\n\n\n## Control dropdown opened state\n\nYou can control the dropdown opened state with the `dropdownOpened` prop. Additionally,\nyou can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.\n\n```tsx\nimport { Autocomplete, Button } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [dropdownOpened, { toggle }] = useDisclosure();\n  return (\n    <>\n      <Button onClick={toggle} mb=\"md\">\n        Toggle dropdown\n      </Button>\n\n      <Autocomplete\n        label=\"Your favorite library\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        dropdownOpened={dropdownOpened}\n      />\n    </>\n  );\n}\n```\n\n\n## Dropdown position\n\nBy default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.\nYou can change this behavior by setting the `position` and `middlewares` props, which are passed down to the\nunderlying [Popover](https://mantine.dev/llms/core-popover.md) component.\n\nExample of dropdown that is always displayed above the input:\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ position: 'top', middlewares: { flip: false, shift: false } }}\n    />\n  );\n}\n```\n\n\n## Dropdown animation\n\nBy default, dropdown animations are disabled. To enable them, you can set `transitionProps`,\nwhich will be passed down to the underlying [Transition](https://mantine.dev/llms/core-transition.md) component.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}\n    />\n  );\n}\n```\n\n\n## Dropdown padding\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Autocomplete\n        label=\"Zero padding\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        comboboxProps={{ dropdownPadding: 0 }}\n      />\n      <Autocomplete\n        mt=\"md\"\n        label=\"10px padding\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        comboboxProps={{ dropdownPadding: 10 }}\n      />\n    </>\n  );\n}\n```\n\n\n## Dropdown shadow\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ shadow: 'md' }}\n    />\n  );\n}\n```\n\n\n## Input sections\n\nAutocomplete supports left and right sections to display icons, buttons or other content alongside the input.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\nimport { SquaresFourIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <SquaresFourIcon size={16} />;\n  return (\n    <>\n      <Autocomplete\n        data={['React', 'Angular', 'Vue']}\n        leftSectionPointerEvents=\"none\"\n        leftSection={icon}\n        label=\"Your favorite library\"\n        placeholder=\"Your favorite library\"\n      />\n      <Autocomplete\n        mt=\"md\"\n        data={['React', 'Angular', 'Vue']}\n        rightSectionPointerEvents=\"none\"\n        rightSection={icon}\n        label=\"Your favorite library\"\n        placeholder=\"Your favorite library\"\n      />\n    </>\n  );\n}\n```\n\n\n## Input props\n\nAutocomplete component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. Autocomplete documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <Autocomplete\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      placeholder=\"Autocomplete placeholder\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## Read only\n\nSet `readOnly` to make the input read only. When `readOnly` is set,\n`Autocomplete` will not show suggestions and will not call the `onChange` function.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      readOnly\n    />\n  );\n}\n```\n\n\n## Disabled\n\nSet `disabled` to disable the input. When `disabled` is set,\nusers cannot interact with the input and `Autocomplete` will not show suggestions.\n\n```tsx\nimport { Autocomplete } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Autocomplete\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      disabled\n    />\n  );\n}\n```\n\n\n\n#### Props\n\n**Autocomplete props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoSelectOnBlur | boolean | - | If set, the highlighted option is selected when the input loses focus |\n| clearButtonProps | InputClearButtonProps | - | Props passed down to the clear button |\n| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |\n| clearable | boolean | - | If set, the clear button is displayed when the component has a value |\n| comboboxProps | ComboboxProps | - | Props passed down to `Combobox` component |\n| data | ComboboxGenericData | - | Data used to display options. Values must be unique. |\n| defaultDropdownOpened | boolean | - | Uncontrolled dropdown initial opened state |\n| defaultValue | string | - | Default value for uncontrolled component |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| dropdownOpened | boolean | - | Controlled dropdown opened state |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| filter | OptionsFilter<string> | - | Function based on which items are filtered and sorted |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| limit | number | - | Maximum number of options displayed at a time, `Infinity` by default |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| maxDropdownHeight | string \\| number | - | `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default |\n| onChange | (value: string) => void | - | Called when value changes |\n| onClear | () => void | - | Called when the clear button is clicked |\n| onDropdownClose | () => void | - | Called when dropdown closes |\n| onDropdownOpen | () => void | - | Called when dropdown opens |\n| onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or `Enter` key |\n| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| renderOption | RenderAutocompleteOption | - | Function to render custom option content |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| scrollAreaProps | ScrollAreaProps | - | Props passed to the underlying `ScrollArea` component in the dropdown |\n| selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, `false` by default |\n| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| value | string | - | Controlled component value |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nAutocomplete component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Autocomplete selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-Autocomplete-wrapper | Root element of the Input |\n| input | .mantine-Autocomplete-input | Input element |\n| section | .mantine-Autocomplete-section | Left and right sections |\n| root | .mantine-Autocomplete-root | Root element |\n| label | .mantine-Autocomplete-label | Label element |\n| required | .mantine-Autocomplete-required | Required asterisk element, rendered inside label |\n| description | .mantine-Autocomplete-description | Description element |\n| error | .mantine-Autocomplete-error | Error element |\n\n**Autocomplete data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| option | data-combobox-selected | Option is selected | - |\n| option | data-combobox-active | Options was activated by keyboard | - |\n| option | data-combobox-disabled | Option is disabled | - |\n",
+  "props": [
+    {
+      "name": "autoSelectOnBlur",
+      "description": "If set, the highlighted option is selected when the input loses focus",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "clearButtonProps",
+      "description": "Props passed down to the clear button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputClearButtonProps"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "clearSectionMode",
+      "description": "Determines how the clear button and rightSection are rendered",
+      "required": false,
+      "defaultValue": "'both'",
+      "type": {
+        "name": "ClearSectionMode",
+        "raw": "ClearSectionMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"both\""
+          },
+          {
+            "value": "\"rightSection\""
+          },
+          {
+            "value": "\"clear\""
+          }
+        ]
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "clearable",
+      "description": "If set, the clear button is displayed when the component has a value",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "comboboxProps",
+      "description": "Props passed down to <code>Combobox</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ComboboxProps"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "data",
+      "description": "Data used to display options. Values must be unique.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ComboboxGenericData"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "defaultDropdownOpened",
+      "description": "Uncontrolled dropdown initial opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Default value for uncontrolled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "dropdownOpened",
+      "description": "Controlled dropdown opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "filter",
+      "description": "Function based on which items are filtered and sorted",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OptionsFilter<string>"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "limit",
+      "description": "Maximum number of options displayed at a time, <code>Infinity</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "maxDropdownHeight",
+      "description": "<code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "onClear",
+      "description": "Called when the clear button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "onDropdownClose",
+      "description": "Called when dropdown closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "onDropdownOpen",
+      "description": "Called when dropdown opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "onOptionSubmit",
+      "description": "Called when option is submitted from dropdown with mouse click or <code>Enter</code> key",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "openOnFocus",
+      "description": "If set, the dropdown opens when the input receives focus",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "renderOption",
+      "description": "Function to render custom option content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RenderAutocompleteOption"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "scrollAreaProps",
+      "description": "Props passed to the underlying <code>ScrollArea</code> component in the dropdown",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScrollAreaProps"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "selectFirstOptionOnChange",
+      "description": "If set, the first option is selected when value changes, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "selectFirstOptionOnDropdownOpen",
+      "description": "If set, the first option is selected when dropdown opens, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "withScrollArea",
+      "description": "Determines whether the options should be wrapped with <code>ScrollArea.AutoSize</code>, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Autocomplete"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "Autocomplete"
+    }
+  ]
+}

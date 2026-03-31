@@ -5,17 +5,15 @@ Description: Compose elements and components in a horizontal flex container
 
 ## Usage
 
-`Group` is a horizontal flex container. If you need a vertical flex container, use [Stack](https://mantine.dev/core/stack)
-component instead. If you need to have full control over flex container properties, use [Flex](https://mantine.dev/core/flex) component.
-
-#### Example: usage
+`Group` is a horizontal flex container. If you need a vertical flex container, use the [Stack](https://mantine.dev/llms/core-stack.md)
+component instead. If you need to have full control over flex container properties, use the [Flex](https://mantine.dev/llms/core-flex.md) component.
 
 ```tsx
 import { Group, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Group>
+    <Group justify="flex-start" gap="md" grow={false}>
       <Button variant="default">First</Button>
       <Button variant="default">Second</Button>
       <Button variant="default">Third</Button>
@@ -27,13 +25,11 @@ function Demo() {
 
 ## preventGrowOverflow
 
-`preventGrowOverflow` prop allows you to control how `Group` children should behave when there is not enough
+The `preventGrowOverflow` prop allows you to control how `Group` children should behave when there is not enough
 space to fit them all on one line. By default, children are not allowed to take more space than
 `(1 / children.length) * 100%` of parent width (`preventGrowOverflow` is set to `true`). To change
 this behavior, set `preventGrowOverflow` to `false` and children will be allowed to grow and take
 as much space as they need.
-
-#### Example: preventGrowOverflow
 
 ```tsx
 import { Group, Button, Box, Text } from '@mantine/core';
@@ -73,7 +69,7 @@ function Demo() {
 ## Group children
 
 **!important** `Group` works correctly only with React elements.
-Strings, numbers, fragments may have incorrect styles if `grow` prop is set:
+Strings, numbers, fragments may have incorrect styles if the `grow` prop is set:
 
 ```tsx
 // Invalid Group usage, do not do this
@@ -93,8 +89,6 @@ function InvalidDemo() {
 }
 ```
 
-<FlexboxGapSupport component="Group" />
-
 ## Browser support
 
 Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.
@@ -102,14 +96,16 @@ Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap
 
 #### Props
 
+**Group props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| align | AlignItems | - | Controls <code>align-items</code> CSS property |
-| gap | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value for <code>gap</code>, numbers are converted to rem |
-| grow | boolean | - | Determines whether each child element should have <code>flex-grow: 1</code> style |
-| justify | JustifyContent | - | Controls <code>justify-content</code> CSS property |
-| preventGrowOverflow | boolean | - | Determines whether children should take only dedicated amount of space (<code>max-width</code> style is set based on the number of children) |
-| wrap | FlexWrap | - | Controls <code>flex-wrap</code> CSS property |
+| align | AlignItems | - | Controls `align-items` CSS property |
+| gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem |
+| grow | boolean | - | Determines whether each child element should have `flex-grow: 1` style |
+| justify | JustifyContent | - | Controls `justify-content` CSS property |
+| preventGrowOverflow | boolean | - | Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) |
+| wrap | FlexWrap | - | Controls `flex-wrap` CSS property |
 
 
 #### Styles API
@@ -135,4 +131,4 @@ Group component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-grow | - | - |
+| root | data-grow | `grow` prop is set | - |

@@ -1,0 +1,137 @@
+{
+  "id": "charts-bars-list",
+  "name": "BarsList",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/bars-list",
+  "description": "Display a list of bars with names and values",
+  "propsCount": 12,
+  "llmUrl": "https://mantine.dev/llms/charts-bars-list.md",
+  "componentDataUrl": "/mcp/components/charts-bars-list.json",
+  "searchText": "barslist display a list of bars with names and values @mantine/charts /charts/bars-list autocontrast barcolor bargap barheight bartextcolor barslabel data getbarprops minbarsize renderbar valueformatter valuelabel",
+  "source": "@mantine/charts/src/BarsList/BarsList.tsx",
+  "docs": "charts/bars-list.mdx",
+  "markdown": "# BarsList\nPackage: @mantine/charts\nImport: import { BarsList } from '@mantine/charts';\nDescription: Display a list of bars with names and values\n\n## Usage\n\n`BarsList` component displays a list of bars with names and values.\nThe only required prop is `data` – an array of objects with `name` and `value` properties.\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <BarsList data={data} />;\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Data format\n\n`BarsList` expects data in the following format:\n\n```tsx\nexport const data = [\n  { name: 'React', value: 950000 },\n  { name: 'Vue', value: 320000 },\n  { name: 'Angular', value: 580000 },\n  { name: 'Svelte', value: 145000 },\n];\n```\n\n## Value formatter\n\nUse `valueFormatter` prop to format the value displayed next to the bar.\nThe function receives the numeric value and must return a string.\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <BarsList data={data} valueFormatter={(value) => value.toLocaleString('en-US')} />;\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Labels\n\nUse `barsLabel` and `valueLabel` props to display column headers above the bars and values:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      barsLabel=\"Traffic Source\"\n      valueLabel=\"Visits\"\n      valueFormatter={(value) => value.toLocaleString('en-US')}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Bar gap\n\nControl the spacing between bars with the `barGap` prop:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      barGap=\"xl\"\n      valueFormatter={(value) => value.toLocaleString('en-US')}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Minimum bar size\n\nSet the minimum bar width with the `minBarSize` prop:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      minBarSize={200}\n      valueFormatter={(value) => value.toLocaleString('en-US')}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Bar height\n\nControl the height of bars with the `barHeight` prop:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      barHeight={48}\n      valueFormatter={(value) => value.toLocaleString('en-US')}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Bar color\n\nUse `barColor` and `barTextColor` props to set the default background and text colors for all bars:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      barColor=\"teal.6\"\n      barTextColor=\"white\"\n      valueFormatter={(value) => value.toLocaleString('en-barsUS')}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Auto contrast\n\nSet `autoContrast` prop to automatically adjust text color based on background color:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      variant=\"filled\"\n      autoContrast\n      valueFormatter={(value) => value.toLocaleString('en-US')}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Custom colors\n\nEach bar can have its own color by setting the `color` property in the data:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      barsLabel=\"Traffic Source\"\n      valueLabel=\"Visits\"\n      variant=\"filled\"\n      valueFormatter={(value) => value.toLocaleString('en-US')}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Get bar props\n\nUse `getBarProps` to pass additional props to each bar element.\nFor example, it can be used to add custom styling or event handlers:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <BarsList\n      data={data}\n      valueFormatter={(value) => value.toLocaleString('en-US')}\n      barTextColor=\"white\"\n      getBarProps={(barData) => ({\n        style: {\n          backgroundColor: barData.value > 500000 ? '#10a37f' : undefined,\n          fontWeight: barData.value > 500000 ? 700 : undefined,\n        },\n      })}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n## Custom bar rendering\n\nUse `renderBar` to completely customize how each bar is rendered:\n\n```tsx\n// Demo.tsx\nimport { BarsList } from '@mantine/charts';\nimport { Tooltip } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const maxValue = Math.max(...data.map((item) => item.value));\n\n  return (\n    <BarsList\n      data={data}\n      barsLabel=\"Traffic Source\"\n      valueLabel=\"Visits\"\n      renderBar={(barData, defaultBar) => {\n        const percentage = ((barData.value / maxValue) * 100).toFixed(1);\n\n        return (\n          <Tooltip\n            label={`${barData.name}: ${percentage}% of total traffic`}\n            position=\"top\"\n            withArrow\n          >\n            {defaultBar}\n          </Tooltip>\n        );\n      }}\n    />\n  );\n}\n\n// data.ts\nexport const data = ${JSON.stringify(data, null, 2)};\n```\n\n\n\n#### Props\n\n**BarsList props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color |\n| barColor | MantineColor | - | Default bar background color, used when item does not have color specified |\n| barGap | MantineSpacing | - | Controls gap between bars |\n| barHeight | string \\| number | - | Bar height |\n| barTextColor | MantineColor | - | Bar text color, overrides autoContrast |\n| barsLabel | string | - | Label displayed above the bars column |\n| data | BarsListBarData[] | required | Data for bars |\n| getBarProps | (data: BarsListBarData) => DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> | - | Function to pass props down to the bar depending on the bar data payload |\n| minBarSize | string \\| number | - | Minimum bar width |\n| renderBar | (data: BarsListBarData, defaultBar: ReactNode) => ReactNode | - | Function to completely customize bar rendering |\n| valueFormatter | (value: number) => string | - | Function to format value display |\n| valueLabel | string | - | Label displayed above the values column |\n\n\n#### Styles API\n\nBarsList component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**BarsList selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-BarsList-root | Root element |\n| labelsRow | .mantine-BarsList-labelsRow | Container for labels row |\n| bar | .mantine-BarsList-bar | Bar container element |\n| barLabel | .mantine-BarsList-barLabel | Bar label element with name inside |\n| barValue | .mantine-BarsList-barValue | Bar value element |\n\n**BarsList CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --bars-list-gap | Controls gap between bars |\n| root | --bars-list-min-bar-size | Controls minimum bar width |\n| root | --bars-list-bar-height | Controls bar height |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "barColor",
+      "description": "Default bar background color, used when item does not have color specified",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "barGap",
+      "description": "Controls gap between bars",
+      "required": false,
+      "defaultValue": "5",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "barHeight",
+      "description": "Bar height",
+      "required": false,
+      "defaultValue": "32",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "barTextColor",
+      "description": "Bar text color, overrides autoContrast",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "barsLabel",
+      "description": "Label displayed above the bars column",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "data",
+      "description": "Data for bars",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "BarsListBarData[]"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "getBarProps",
+      "description": "Function to pass props down to the bar depending on the bar data payload",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(data: BarsListBarData) => DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "minBarSize",
+      "description": "Minimum bar width",
+      "required": false,
+      "defaultValue": "100",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "renderBar",
+      "description": "Function to completely customize bar rendering",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(data: BarsListBarData, defaultBar: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "Function to format value display",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "BarsList"
+    },
+    {
+      "name": "valueLabel",
+      "description": "Label displayed above the values column",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "BarsList"
+    }
+  ]
+}

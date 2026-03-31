@@ -5,10 +5,8 @@ Description: Trap focus at child node
 
 ## Usage
 
-FocusTrap is a component implementation of [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) hook,
-it is used in all Mantine components that require focus trap ([Modal](https://mantine.dev/core/modal/), [DatePicker](https://mantine.dev/dates/date-picker/), [Popover](https://mantine.dev/core/popover/), etc.).
-
-#### Example: usage
+FocusTrap is a component implementation of the [use-focus-trap](https://mantine.dev/llms/hooks-use-focus-trap.md) hook.
+It is used in all Mantine components that require focus trap ([Modal](https://mantine.dev/llms/core-modal.md), [DatePicker](https://mantine.dev/llms/dates-date-picker.md), [Popover](https://mantine.dev/llms/core-popover.md), etc.).
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -36,9 +34,7 @@ function Demo() {
 
 ## Initial focus
 
-To define the element that will receive initial focus set `data-autofocus` attribute:
-
-#### Example: initial
+To define the element that will receive initial focus, set the `data-autofocus` attribute:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -70,9 +66,7 @@ function Demo() {
 element which will receive the focus when the focus trap is activated.
 Once `FocusTrap.InitialFocus` loses focus, it is removed from the tab order.
 
-For example, it is useful if you do not want to focus any elements inside the [Modal](https://mantine.dev/core/modal) when it is opened:
-
-#### Example: initialFocusTrap
+For example, it is useful if you do not want to focus any elements inside the [Modal](https://mantine.dev/llms/core-modal.md) when it is opened:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -105,18 +99,30 @@ function Demo() {
 
 ## Focus trapping logic
 
-* Focus is trapped within child node if `active` prop is `true`
-* When FocusTrap component is mounted or when `active` prop changes from `false` to `true` first element with `data-autofocus` attribute is focused
-* If there are no elements with `data-autofocus` attribute, then the first element that supports keyboard interaction is focused
+* Focus is trapped within the child node if the `active` prop is `true`
+* When the FocusTrap component is mounted or when the `active` prop changes from `false` to `true`, the first element with the `data-autofocus` attribute is focused
+* If there are no elements with the `data-autofocus` attribute, then the first element that supports keyboard interaction is focused
 * If the target element does not have focusable elements or does not support `ref`, then the focus trap will not work
-* Trap stops working when element outside of the `FocusTrap` child is focused
+* Trap stops working when an element outside of the `FocusTrap` child is focused
 
 
 #### Props
 
+**FocusTrap props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| active | boolean | - | If set to <code>false</code>, disables focus trap |
+| active | boolean | - | If set to `false`, disables focus trap |
 | children | any | required | Element to trap focus at, must support ref prop |
-| innerRef | ForwardedRef<any> | - | Ref to combine with the focus trap ref |
+| innerRef | Ref<any> | - | Ref to combine with the focus trap ref |
 | refProp | string | - | Prop that is used to access element ref |
+
+**FocusTrap..InitialFocus props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**FocusTrap.InitialFocus props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|

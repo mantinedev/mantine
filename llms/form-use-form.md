@@ -5,7 +5,7 @@ Description: Manage form state
 
 ## Installation
 
-`@mantine/form` package does not depend on any other libraries, you can use it with or without `@mantine/core` inputs:
+The `@mantine/form` package does not depend on any other libraries. You can use it with or without `@mantine/core` inputs:
 
 ```bash
 yarn add @mantine/form
@@ -16,8 +16,6 @@ npm install @mantine/form
 ```
 
 ## Usage
-
-#### Example: usage
 
 ```tsx
 import { Button, Checkbox, Group, TextInput } from '@mantine/core';
@@ -89,10 +87,10 @@ const form = useForm({
 
 ### Values
 
-[Form values guide](https://mantine.dev/form/values/)
+[Form values guide](https://mantine.dev/llms/form-values.md)
 
 ```tsx
-// get current form values
+// get the current form values
 form.getValues();
 
 // Set all form values
@@ -101,10 +99,10 @@ form.setValues(values);
 // Set all form values using the previous state
 form.setValues((prev) => ({ ...prev, ...values }));
 
-// Set value of single field
+// Set the value of a single field
 form.setFieldValue('path', value);
 
-// Set value of nested field
+// Set the value of a nested field
 form.setFieldValue('user.firstName', 'Jane');
 
 // Resets form values to `initialValues`,
@@ -112,23 +110,23 @@ form.setFieldValue('user.firstName', 'Jane');
 // resets touched and dirty state
 form.reset();
 
-// Reset field at `path` to its initial value
+// Reset the field at `path` to its initial value
 form.resetField('path');
 
-// Sets initial values, used when form is reset
+// Sets initial values, used when the form is reset
 form.setInitialValues({ values: 'object' });
 ```
 
 ### List items
 
-[Nested fields guide](https://mantine.dev/form/nested/)
+[Nested fields guide](https://mantine.dev/llms/form-nested.md)
 
 ```tsx
-// Inserts given list item at the specified path
+// Inserts the given list item at the specified path
 form.insertListItem('fruits', { name: 'Apple', available: true });
 
 // An optional index may be provided to specify the position in a nested field.
-// If the index is provided, item will be inserted at the given position.
+// If the index is provided, the item will be inserted at the given position.
 // If the index is larger than the current list, the element is inserted at the last position.
 form.insertListItem('fruits', { name: 'Orange', available: true }, 1);
 
@@ -139,13 +137,13 @@ form.removeListItem('fruits', 1);
 form.replaceListItem('fruits', 1, { name: 'Apple', available: true });
 
 // Swaps two items of the list at the specified path.
-// You should make sure that there are elements at at the `from` and `to` index.
+// You should make sure that there are elements at the `from` and `to` index.
 form.reorderListItem('fruits', { from: 1, to: 0 });
 ```
 
 ### Validation
 
-[Form validation guide](https://mantine.dev/form/validation/)
+[Form validation guide](https://mantine.dev/llms/form-validation.md)
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -170,45 +168,51 @@ const form = useForm({
   },
 });
 
-// Validates all fields with specified `validate` function or schema, sets form.errors
-form.validate();
+// Validates all fields with the specified `validate` function or schema, sets form.errors
+await form.validate();
 
-// Validates single field at specified path, sets form.errors
-form.validateField('user.firstName');
+// Validates a single field at the specified path, sets form.errors
+await form.validateField('user.firstName');
 
-// Works the same way as form.validate but does not set form.errors
-form.isValid();
-form.isValid('user.firstName');
+// Works the same way as form.validate but does not set form.errors, returns Promise<boolean>
+await form.isValid();
+await form.isValid('user.firstName');
+
+// true while any async validation is running
+form.validating;
+
+// true while async validation is running for a specific field
+form.isValidating('email');
 ```
 
 ### Errors
 
-[Form errors guide](https://mantine.dev/form/errors/)
+[Form errors guide](https://mantine.dev/llms/form-errors.md)
 
-Validation errors occur when defined validation rules were violated, `initialErrors` were specified in useForm properties
+Validation errors occur when defined validation rules were violated, `initialErrors` were specified in useForm properties,
 or validation errors were set manually.
 
 ```tsx
-// get current errors state
+// get the current errors state
 form.errors;
 
 // Set all errors
 form.setErrors({ path: 'Error message', path2: 'Another error' });
 
-// Set error message at specified path
+// Set an error message at the specified path
 form.setFieldError('user.lastName', 'No special characters allowed');
 
 // Clears all errors
 form.clearErrors();
 
-// Clears error of field at specified path
+// Clears the error of the field at the specified path
 form.clearFieldError('path');
 ```
 
 ### onReset and onSubmit
 
-Wrapper function for form `onSubmit` and `onReset` event handler. `onSubmit` handler accepts as second argument a function
-that will be called with errors object when validation fails.
+Wrapper function for the form `onSubmit` and `onReset` event handler. The `onSubmit` handler accepts as a second argument a function
+that will be called with the errors object when validation fails.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -225,7 +229,7 @@ function Demo() {
       {/* Supply handle submit as a single argument to receive validated values */}
       <form onSubmit={form.onSubmit(handleSubmit)} />
 
-      {/* Supply second argument to handle errors */}
+      {/* Supply a second argument to handle errors */}
       <form
         onSubmit={form.onSubmit(
           (values, event) => {
@@ -254,8 +258,8 @@ function Demo() {
 ### onSubmitPreventDefault option
 
 By default, `event.preventDefault()` is called on the form `onSubmit` handler.
-If you want to change this behavior, you can pass `onSubmitPreventDefault` option
-to `useForm` hook. It can have the following values:
+If you want to change this behavior, you can pass the `onSubmitPreventDefault` option
+to the `useForm` hook. It can have the following values:
 
 * `always` (default) - always call `event.preventDefault()`
 * `never` - never call `event.preventDefault()`
@@ -272,39 +276,39 @@ const form = useForm({
 
 ### Touched and dirty
 
-[Touched & dirty guide](https://mantine.dev/form/status/)
+[Touched & dirty guide](https://mantine.dev/llms/form-status.md)
 
 ```tsx
-// Returns true if user interacted with any field inside form in any way
+// Returns true if the user interacted with any field inside the form in any way
 form.isTouched();
 
-// Returns true if user interacted with field at specified path
+// Returns true if the user interacted with the field at the specified path
 form.isTouched('path');
 
 // Set all touched values
 form.setTouched({ 'user.firstName': true, 'user.lastName': false });
 
-// Clears touched status of all fields
+// Clears the touched status of all fields
 form.resetTouched();
 
 // Returns true if form values are not deep equal to initialValues
 form.isDirty();
 
-// Returns true if field value is not deep equal to initialValues
+// Returns true if the field value is not deep equal to initialValues
 form.isDirty('path');
 
-// Sets dirty status of all fields
+// Sets the dirty status of all fields
 form.setDirty({ 'user.firstName': true, 'user.lastName': false });
 
-// Clears dirty status of all fields, saves form.values snapshot
+// Clears the dirty status of all fields, saves form.values snapshot
 // After form.resetDirty is called, form.isDirty will compare
-// form.getValues() to snapshot instead of initialValues
+// form.getValues() to the snapshot instead of initialValues
 form.resetDirty();
 ```
 
 ## UseFormReturnType
 
-`UseFormReturnType` can be used when you want to pass `form` as a prop to another component:
+`UseFormReturnType` can be used when you want to pass the `form` as a prop to another component:
 
 ```tsx
 import { TextInput } from '@mantine/core';

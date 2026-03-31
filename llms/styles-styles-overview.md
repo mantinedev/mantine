@@ -6,33 +6,31 @@ This guide will help you understand how to apply styles to Mantine and custom co
 
 ## Component specific props
 
-Most of the components provide props that allow you to customize their styles. For example,
-[Button](https://mantine.dev/core/button/) component has `color`, `variant`, `size` and `radius` props that control its
+Most components provide props that allow you to customize their styles. For example,
+the [Button](https://mantine.dev/llms/core-button.md) component has `color`, `variant`, `size` and `radius` props that control its
 appearance:
-
-#### Example: configurator
 
 ```tsx
 import { Button } from '@mantine/core';
 
 function Demo() {
-  return <Button>Button</Button>;
+  return <Button variant="filled" color="blue" size="sm" radius="md">Button</Button>;
 }
 ```
 
 
-These props usually control multiple CSS properties, for example `color` and variant props control `color`,
-`background-color` and `border` properties. In most cases, changing components props is the most optimal way to customize Mantine components.
+These props usually control multiple CSS properties. For example, the `color` and `variant` props control `color`,
+`background-color` and `border` properties. In most cases, changing component props is the most optimal way to customize Mantine components.
 
 ## Style props
 
-[Style props](https://mantine.dev/styles/style-props/) work similar to component specific props, but with several differences:
+[Style props](https://mantine.dev/llms/styles-style-props.md) work similarly to component-specific props, but with several differences:
 
-* Style props are not component specific, they can be used with any component.
-* Style props always control a single CSS property. For example, `c` prop controls CSS `color` property, while `color` prop controls a set of properties: `color`, `background-color` and `border-color`.
-* Style props are set in `style` attribute. It is not possible to override them with CSS without using `!important`.
+* Style props are not component-specific; they can be used with any component.
+* Style props always control a single CSS property. For example, the `c` prop controls the CSS `color` property, while the `color` prop controls a set of properties: `color`, `background-color` and `border-color`.
+* Style props are set in the `style` attribute. It is not possible to override them with CSS without using `!important`.
 
-[Style props](https://mantine.dev/styles/style-props/) are useful when you need to change a single CSS property without creating a separate file for styles.
+[Style props](https://mantine.dev/llms/styles-style-props.md) are useful when you need to change a single CSS property without creating a separate file for styles.
 Some of the most common use cases are:
 
 * Changing text color and font-size
@@ -80,15 +78,15 @@ function Demo() {
 }
 ```
 
-Note that [style props](https://mantine.dev/styles/style-props/) were never intended to be used
+Note that [style props](https://mantine.dev/llms/styles-style-props.md) were never intended to be used
 as a primary way of styling components. In most cases, it is better to limit
 the number of style props used per component to 3-4. If you find yourself using
 more than 4 style props, consider creating a separate file with styles – it
-will be easier to maintain and will be more [performant](https://mantine.dev/styles/styles-performance/).
+will be easier to maintain and will be more [performant](https://mantine.dev/llms/styles-styles-performance.md).
 
 ## Style prop
 
-[Style prop](https://mantine.dev/styles/style/) is supported by all Mantine components and allows setting
+[Style prop](https://mantine.dev/llms/styles-style.md) is supported by all Mantine components and allows setting
 CSS properties as well as CSS variables. It is useful in the following cases:
 
 * You want to apply a single CSS property to a component:
@@ -117,14 +115,14 @@ function Demo({ color }: { color: string }) {
 }
 ```
 
-[Style prop](https://mantine.dev/styles/style/) works the same way as React `style` prop. It is not
+[Style prop](https://mantine.dev/llms/styles-style.md) works the same way as React `style` prop. It is not
 recommended to use it as a primary way of styling components. In most cases, it is
 better to create a separate file with styles – it will be easier to maintain and
-will be more [performant](https://mantine.dev/styles/styles-performance/).
+will be more [performant](https://mantine.dev/llms/styles-styles-performance.md).
 
 ## CSS modules
 
-[CSS modules](https://mantine.dev/styles/css-modules/) is the recommended way of applying most of the styles to Mantine components.
+[CSS modules](https://mantine.dev/llms/styles-css-modules.md) is the recommended way of applying most of the styles to Mantine components.
 CSS modules are the most performant and flexible way of styling components.
 
 ```scss
@@ -182,10 +180,10 @@ function Demo({ collapsed }: { collapsed: boolean }) {
 
 ## Theme tokens
 
-You can reference Mantine [theme](https://mantine.dev/theming/theme-object/) values in any styles with
-[CSS variables](https://mantine.dev/styles/css-variables/):
+You can reference Mantine [theme](https://mantine.dev/llms/theming-theme-object.md) values in any styles with
+[CSS variables](https://mantine.dev/llms/styles-css-variables.md):
 
-* In [CSS modules](https://mantine.dev/styles/css-modules/):
+* In [CSS modules](https://mantine.dev/llms/styles-css-modules.md):
 
 ```scss
 .root {
@@ -200,7 +198,7 @@ You can reference Mantine [theme](https://mantine.dev/theming/theme-object/) val
 }
 ```
 
-* In [style props](https://mantine.dev/styles/style-props/):
+* In [style props](https://mantine.dev/llms/styles-style-props.md):
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -219,7 +217,7 @@ function Demo() {
 }
 ```
 
-* In [style prop](https://mantine.dev/styles/style/):
+* In [style prop](https://mantine.dev/llms/styles-style.md):
 
 ```tsx
 import { Box } from '@mantine/core';

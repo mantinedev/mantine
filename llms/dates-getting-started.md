@@ -22,10 +22,10 @@ import '@mantine/dates/styles.css';
 
 ## Do not forget to import styles
 
-Followed installation instructions above but something is not working
+Followed the installation instructions above but something is not working
 (calendars and date pickers have no styles and look broken)?
 You've fallen into the trap of not importing dates styles!
-To fix the issue, import dates styles at the root of your application:
+To fix this issue, import dates styles at the root of your application:
 
 ```tsx
 import '@mantine/dates/styles.css';
@@ -33,7 +33,7 @@ import '@mantine/dates/styles.css';
 
 ## Usage
 
-After installing `@mantine/dates` package and importing styles, you can use all components from it:
+After installing the `@mantine/dates` package and importing styles, you can use all components from it:
 
 
 
@@ -45,15 +45,13 @@ date library in your application, you will need to install it separately.
 
 ## DatesProvider
 
-`DatesProvider` component lets you set various settings that are shared across all
-components exported from `@mantine/dates` package. `DatesProvider` supports the following settings:
+The `DatesProvider` component lets you set various settings that are shared across all
+components exported from the `@mantine/dates` package. `DatesProvider` supports the following settings:
 
-* `locale` – dayjs locale, note that you also need to import corresponding locale module from dayjs. Default value is `en`.
-* `firstDayOfWeek` – number from 0 to 6, where 0 is Sunday and 6 is Saturday. Default value is 1 – Monday.
-* `weekendDays` – an array of numbers from 0 to 6, where 0 is Sunday and 6 is Saturday. Default value is `[0, 6]` – Saturday and Sunday.
-* `consistentWeeks` – boolean, if `true` every month will have 6 weeks. Default value is `false`.
-
-#### Example: usage
+* `locale` – dayjs locale. Note that you also need to import the corresponding locale module from dayjs. The default value is `en`.
+* `firstDayOfWeek` – a number from 0 to 6, where 0 is Sunday and 6 is Saturday. The default value is 1 – Monday.
+* `weekendDays` – an array of numbers from 0 to 6, where 0 is Sunday and 6 is Saturday. The default value is `[0, 6]` – Saturday and Sunday.
+* `consistentWeeks` – boolean. If `true`, every month will have 6 weeks. The default value is `false`.
 
 ```tsx
 import 'dayjs/locale/ru';
@@ -72,10 +70,8 @@ function Demo() {
 
 ## Consistent weeks
 
-If you want to avoid layout shifts, set `consistentWeeks: true` in `DatesProvider` settings.
-This will make sure that every month has 6 weeks, even if outside days are not in the same month.
-
-#### Example: consistentWeeks
+If you want to avoid layout shifts, set `consistentWeeks: true` in the `DatesProvider` settings.
+This will ensure that every month has 6 weeks, even if outside days are not in the same month.
 
 ```tsx
 import { DatePicker, DatesProvider } from '@mantine/dates';
@@ -92,9 +88,9 @@ function Demo() {
 
 ## Custom parse format
 
-Some components like [DateInput](https://mantine.dev/dates/date-input) require [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format)
+Some components like [DateInput](https://mantine.dev/llms/dates-date-input.md) require the [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format)
 dayjs plugin. You need to extend dayjs with this plugin before using components that require it. Note that
-it is usually done once in your application root file, so you don't need to do it every time you use component.
+this is usually done once in your application root file, so you don't need to do it every time you use the component.
 
 ```tsx
 import dayjs from 'dayjs';
@@ -105,10 +101,10 @@ dayjs.extend(customParseFormat);
 
 ## Localization and server components
 
-To add localization you must import `import 'dayjs/locale/x';` in your application (`x` is locale name)
+To add localization, you must import `import 'dayjs/locale/x';` in your application (`x` is the locale name)
 and set `locale` either on `DatesProvider` or on each component individually.
 
-Example of setting locale on DatesProvider:
+Example of setting the locale on DatesProvider:
 
 ```tsx
 import 'dayjs/locale/ru';

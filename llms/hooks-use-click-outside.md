@@ -4,13 +4,35 @@ Import: import { UseClickOutside } from '@mantine/hooks';
 
 ## Usage
 
+```tsx
+import { useState } from 'react';
+import { Paper, Button } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  const ref = useClickOutside(() => setOpened(false));
+
+  return (
+    <>
+      <Button onClick={() => setOpened(true)}>Open dropdown</Button>
+
+      {opened && (
+        <Paper ref={ref} shadow="sm">
+          <span>Click outside to close</span>
+        </Paper>
+      )}
+    </>
+  );
+}
+```
 
 
 ## API
 
-`use-click-outside` hook accepts 3 arguments:
+The `use-click-outside` hook accepts 3 arguments:
 
-* `handler` – function that is called on outside click
+* `handler` – function that is called when clicking outside
 * `events` – optional list of events that trigger outside click, `['mousedown', 'touchstart']` by default
 * `nodes` - optional list of nodes that should not trigger outside click event
 
@@ -33,6 +55,28 @@ function Example() {
 By default, `use-click-outside` listens to `mousedown` and `touchstart` events,
 you can change these events by passing an array of events as second argument:
 
+```tsx
+import { useState } from 'react';
+import { Paper, Button } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  const ref = useClickOutside(() => setOpened(false), ['mouseup', 'touchend']);
+
+  return (
+    <>
+      <Button onClick={() => setOpened(true)}>Open dropdown</Button>
+
+      {opened && (
+        <Paper ref={ref} shadow="sm">
+          <span>Click outside to close</span>
+        </Paper>
+      )}
+    </>
+  );
+}
+```
 
 
 ## Multiple nodes

@@ -5,8 +5,6 @@ Description: Line chart component
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 // Demo.tsx
 import { LineChart } from '@mantine/charts';
@@ -24,7 +22,7 @@ function Demo() {
         { name: 'Oranges', color: 'blue.6' },
         { name: 'Tomatoes', color: 'teal.6' },
       ]}
-      
+       curveType="linear" tickLine="y" gridAxis="x" withXAxis={true} withYAxis={true} withDots={true}
     />
   );
 }
@@ -68,12 +66,10 @@ export const data = [
 ## Gradient type
 
 Set `type="gradient"` to render a line chart with gradient fill. To customize
-gradient colors, use `gradientStops` prop. It accepts an array of objects with
+gradient colors, use the `gradientStops` prop. It accepts an array of objects with
 `offset` and `color` properties. `offset` is a number between 0 and 100 that
-defines the position of the color in the gradient, `color` is a reference to `theme.colors`
+defines the position of the color in the gradient; `color` is a reference to `theme.colors`
 or any valid CSS color.
-
-#### Example: gradient
 
 ```tsx
 // Demo.tsx
@@ -124,10 +120,8 @@ export const data = [
 
 ## Legend
 
-To display chart legend, set `withLegend` prop. When one of the items in the legend
+To display the chart legend, set the `withLegend` prop. When one of the items in the legend
 is hovered, the corresponding data series is highlighted in the chart.
-
-#### Example: legend
 
 ```tsx
 // Demo.tsx
@@ -188,11 +182,9 @@ export const data = [
 
 ## Legend position
 
-You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
-component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+You can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with the `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
 will render the legend at the bottom of the chart and set its height to 50px.
-
-#### Example: legendPosition
 
 ```tsx
 // Demo.tsx
@@ -254,10 +246,8 @@ export const data = [
 
 ## Series labels
 
-By default, series `name` is used as a label. To change it, set `label`
-property in `series` object:
-
-#### Example: seriesLabels
+By default, the series `name` is used as a label. To change it, set the `label`
+property in the `series` object:
 
 ```tsx
 // Demo.tsx
@@ -319,10 +309,8 @@ export const data = [
 
 ## Connect nulls
 
-Use `connectNulls` prop to specify whether to connect a data point across null
+Use the `connectNulls` prop to specify whether to connect a data point across null
 points. By default, `connectNulls` is `true`.
-
-#### Example: connectNulls
 
 ```tsx
 // Demo.tsx
@@ -337,7 +325,7 @@ function Demo() {
       data={data}
       dataKey="date"
       series={[{ name: 'Apples', color: 'indigo.6' }]}
-      
+       curveType="linear" connectNulls={true}
     />
   );
 }
@@ -383,8 +371,6 @@ export const data = [
 ## Points labels
 
 To display labels on data points, set `withPointLabels`:
-
-#### Example: pointLabels
 
 ```tsx
 // Demo.tsx
@@ -445,11 +431,9 @@ export const data = [
 
 ## X and Y axis props
 
-Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)
 and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
-can be used to change orientation of axis:
-
-#### Example: axisProps
+can be used to change the orientation of the axis:
 
 ```tsx
 // Demo.tsx
@@ -514,8 +498,6 @@ export const data = [
 
 Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
 
-#### Example: axisLabels
-
 ```tsx
 // Demo.tsx
 import { LineChart } from '@mantine/charts';
@@ -576,9 +558,7 @@ export const data = [
 
 ## X axis offset
 
-Use `xAxisProps` to set padding between the charts ends and the x-axis:
-
-#### Example: xAxisOffset
+Use `xAxisProps` to set padding between the chart ends and the x-axis:
 
 ```tsx
 // Demo.tsx
@@ -639,10 +619,8 @@ export const data = [
 
 ## Y axis scale
 
-Use `yAxisProps` to change domain of the Y axis. For example, if you know that
-your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
-
-#### Example: yScale
+Use `yAxisProps` to change the domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 100, you can set the domain to `[0, 100]`:
 
 ```tsx
 // Demo.tsx
@@ -701,13 +679,11 @@ export const data = [
 
 ## Right Y axis
 
-To display additional Y axis on the right side of the chart, set `withRightYAxis` prop.
-You can pass props down to recharts [YAxis](https://recharts.org/en-US/api/YAxis)
-component with `rightYAxisProps` prop and assign a label to the right Y axis with
-`rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
+To display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.
+You can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+component with the `rightYAxisProps` prop and assign a label to the right Y axis with
+the `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
 by setting `yAxisId` in the `series` object.
-
-#### Example: rightYAxis
 
 ```tsx
 // Demo.tsx
@@ -746,10 +722,8 @@ export const biaxialData = [
 
 ## Value formatter
 
-To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
-a function that takes number value as an argument and returns formatted value:
-
-#### Example: valueFormatter
+To format values in the tooltip and axis ticks, use the `valueFormat` prop. It accepts
+a function that takes a number value as an argument and returns a formatted value:
 
 ```tsx
 // Demo.tsx
@@ -814,8 +788,6 @@ You can set individual curve types for each line in the `series` array. If you
 do not set a curve type for a line, the series will fall back to `curveType` prop, or
 `monotone` if `curveType` is not set.
 
-#### Example: curveType
-
 ```tsx
 // Demo.tsx
 import { LineChart } from '@mantine/charts';
@@ -876,11 +848,9 @@ export const data = [
 
 ## Line color
 
-You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
-
-#### Example: color
 
 ```tsx
 // data.ts
@@ -921,12 +891,10 @@ export const data = [
 
 ## Change line color depending on color scheme
 
-You can use CSS variables in `color` property. To define a CSS variable that
-changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/styles/postcss-preset/#dark-and-light-mixins)
-or [light-dark function](https://mantine.dev/styles/postcss-preset/#light-dark-function). Example
-of line that is dark orange in light mode and lime in dark mode:
-
-#### Example: colorSchemeColor
+You can use CSS variables in the `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/llms/styles-postcss-preset.md#dark-and-light-mixins)
+or the [light-dark function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function). Example
+of a line that is dark orange in light mode and lime in dark mode:
 
 ```tsx
 // Demo.tsx
@@ -995,11 +963,9 @@ export const data = [
 
 ## Stroke dash array
 
-Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
-lines. The value represent the lengths of alternating dashes and gaps. For example,
+Set the `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represents the lengths of alternating dashes and gaps. For example,
 `strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
-
-#### Example: strokeDasharray
 
 ```tsx
 // Demo.tsx
@@ -1061,10 +1027,8 @@ export const data = [
 ## Grid and text colors
 
 Use `--chart-grid-color` and `--chart-text-color` to change colors of
-grid lines and text within the chart. With [CSS modules](https://mantine.dev/styles/css-modules/), you can change colors
+grid lines and text within the chart. With [CSS modules](https://mantine.dev/llms/styles-css-modules.md), you can change colors
 depending on color scheme:
-
-#### Example: gridColor
 
 ```tsx
 // Demo.module.css
@@ -1137,7 +1101,7 @@ export const data = [
 ```
 
 
-If your application has only one color scheme, you can use `gridColor` and `textColor`
+If your application has only one color scheme, you can use the `gridColor` and `textColor`
 props instead of CSS variables:
 
 ```tsx
@@ -1164,10 +1128,8 @@ function Demo() {
 
 ## Tooltip animation
 
-By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+By default, tooltip animation is disabled. To enable it, set the `tooltipAnimationDuration`
 prop to a number of milliseconds to animate the tooltip position change.
-
-#### Example: tooltipAnimation
 
 ```tsx
 // Demo.tsx
@@ -1228,9 +1190,7 @@ export const data = [
 
 ## Units
 
-Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
-
-#### Example: unit
+Set the `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
 
 ```tsx
 // Demo.tsx
@@ -1291,11 +1251,9 @@ export const data = [
 
 ## Custom tooltip
 
-Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
-component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+Use `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter the recharts payload with the `getFilteredChartTooltipPayload`
 function to remove empty values that are used for styling purposes only.
-
-#### Example: customTooltip
 
 ```tsx
 // Demo.tsx
@@ -1305,14 +1263,14 @@ import { data } from './data';
 
 interface ChartTooltipProps {
   label: React.ReactNode;
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ label, payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       <Text fw={500} mb={5}>
         {label}
       </Text>
@@ -1381,10 +1339,8 @@ export const data = [
 
 ## Remove tooltip
 
-To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+To remove the tooltip, set `withTooltip={false}`. This also removes the cursor line
 and disables interactions with the chart.
-
-#### Example: noTooltip
 
 ```tsx
 // Demo.tsx
@@ -1445,10 +1401,8 @@ export const data = [
 
 ## Customize dots
 
-Use `dotProps` to pass props down to recharts dot in regular state and `activeDotProps`
-to pass props down to recharts dot in active state (when cursor is over the current series).
-
-#### Example: dotProps
+Use `dotProps` to pass props down to the recharts dot in regular state and `activeDotProps`
+to pass props down to the recharts dot in active state (when the cursor is over the current series).
 
 ```tsx
 // Demo.tsx
@@ -1510,9 +1464,7 @@ export const data = [
 
 ## Stroke width
 
-Use `strokeWidth` prop to control the stroke width of all lines:
-
-#### Example: strokeWidth
+Use the `strokeWidth` prop to control the stroke width of all lines:
 
 ```tsx
 // Demo.tsx
@@ -1531,7 +1483,7 @@ function Demo() {
         { name: 'Oranges', color: 'blue.6' },
         { name: 'Tomatoes', color: 'teal.6' },
       ]}
-      
+       strokeWidth={2}
     />
   );
 }
@@ -1574,11 +1526,9 @@ export const data = [
 
 ## Sync multiple LineCharts
 
-You can pass props down to recharts [LineChart](https://recharts.org/en-US/api/LineChart)
-component with `lineChartProps` prop. For example, setting `lineChartProps={{ syncId: 'any-id' }}`
-will sync tooltip of multiple `LineChart` components with the same `syncId` prop.
-
-#### Example: sync
+You can pass props down to the recharts [LineChart](https://recharts.org/en-US/api/LineChart)
+component with the `lineChartProps` prop. For example, setting `lineChartProps={{ syncId: 'any-id' }}`
+will sync the tooltip of multiple `LineChart` components with the same `syncId` prop.
 
 ```tsx
 // Demo.tsx
@@ -1656,8 +1606,6 @@ export const data = [
 
 Set `orientation="vertical"` to render a vertical line chart:
 
-#### Example: vertical
-
 ```tsx
 // Demo.tsx
 import { LineChart } from '@mantine/charts';
@@ -1717,9 +1665,7 @@ export const data = [
 
 ## Dashed line
 
-Set `strokeDasharray` property in `series` to change line style to dashed:
-
-#### Example: lineDasharray
+Set the `strokeDasharray` property in `series` to change the line style to dashed:
 
 ```tsx
 // Demo.tsx
@@ -1781,10 +1727,8 @@ export const data = [
 
 ## Reference lines
 
-Use `referenceLines` prop to render reference lines. Reference lines are always
+Use the `referenceLines` prop to render reference lines. Reference lines are always
 rendered behind the chart.
-
-#### Example: referenceLines
 
 ```tsx
 // Demo.tsx
@@ -1847,9 +1791,7 @@ export const data = [
 
 ## Reference area
 
-Use `ReferenceArea` component from recharts to display a reference area:
-
-#### Example: referenceArea
+Use the `ReferenceArea` component from recharts to display a reference area:
 
 ```tsx
 // Demo.tsx
@@ -1874,7 +1816,6 @@ function Demo() {
         x2="Mar 25"
         y1={1200}
         y2={3200}
-        yAxisId="left"
         fillOpacity={0.3}
         strokeOpacity={0.9}
         fill="var(--mantine-color-gray-4)"
@@ -1930,48 +1871,50 @@ export const data = [
 
 #### Props
 
+**LineChart props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if <code>withDots={false}</code> is set. |
-| children | React.ReactNode | - | Additional components that are rendered inside recharts <code>LineChart</code> component |
-| connectNulls | boolean | - | Determines whether points with <code>null</code> values should be connected |
+| activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
+| children | React.ReactNode | - | Additional components that are rendered inside recharts `LineChart` component |
+| connectNulls | boolean | - | Determines whether points with `null` values should be connected |
 | curveType | LineChartCurveType | - | Type of the curve |
 | data | Record<string, any>[] | required | Data used to display chart |
-| dataKey | string | required | Key of the <code>data</code> object for x-axis values |
-| dotProps | MantineChartDotProps | - | Props passed down to all dots. Ignored if <code>withDots={false}</code> is set. |
+| dataKey | string | required | Key of the `data` object for x-axis values |
+| dotProps | MantineChartDotProps | - | Props passed down to all dots. Ignored if `withDots={false}` is set. |
 | fillOpacity | number | - | Controls fill opacity of all lines |
 | gradientStops | LineChartGradientStop[] | - | Data used to generate gradient stops |
-| gridAxis | "none" | "x" | "y" | "xy" | - | Specifies which lines should be displayed in the grid, <code>'x'</code> by default |
+| gridAxis | "none" \| "x" \| "y" \| "xy" | - | Specifies which lines should be displayed in the grid, `'x'` by default |
 | gridColor | MantineColor | - | Color of the grid and cursor lines, by default depends on color scheme |
-| gridProps | RechartsProps | - | Props passed down to the <code>CartesianGrid</code> component |
-| legendProps | RechartsProps | - | Props passed down to the <code>Legend</code> component |
-| lineChartProps | Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 65 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | - | Props passed down to recharts <code>LineChart</code> component |
-| lineProps | Partial<Omit<Props, "ref">> | ((series: LineChartSeries) => Partial<Omit<Props, "ref">>) | - | Props passed down to recharts <code>Line</code> component |
-| orientation | "horizontal" | "vertical" | - | Chart orientation, <code>'horizontal'</code> by default |
+| gridProps | RechartsProps | - | Props passed down to the `CartesianGrid` component |
+| legendProps | RechartsProps | - | Props passed down to the `Legend` component |
+| lineChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `LineChart` component |
+| lineProps | Partial<Omit<Props, "ref">> \| ((series: LineChartSeries) => Partial<Omit<Props, "ref">>) | - | Props passed down to recharts `Line` component |
+| orientation | "horizontal" \| "vertical" | - | Chart orientation, `'horizontal'` by default |
 | referenceLines | ChartReferenceLineProps[] | - | Reference lines that should be displayed on the chart |
 | rightYAxisLabel | string | - | A label to display next to the right y-axis |
-| rightYAxisProps | RechartsProps | - | Props passed down to the <code>YAxis</code> recharts component rendered on the right side |
-| series | LineChartSeries[] | required | An array of objects with <code>name</code> and <code>color</code> keys. Determines which data should be consumed from the <code>data</code> array. |
-| strokeDasharray | string | number | - | Dash array for the grid lines and cursor, <code>'5 5'</code> by default |
+| rightYAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component rendered on the right side |
+| series | LineChartSeries[] | required | An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. |
+| strokeDasharray | string \| number | - | Dash array for the grid lines and cursor, `'5 5'` by default |
 | strokeWidth | number | - | Stroke width for the chart lines |
-| textColor | MantineColor | - | Color of the text displayed inside the chart, <code>'dimmed'</code> by default |
-| tickLine | "none" | "x" | "y" | "xy" | - | Specifies which axis should have tick line, <code>'y'</code> by default |
-| tooltipAnimationDuration | number | - | Tooltip position animation duration in ms, <code>0</code> by default |
-| tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
+| textColor | MantineColor | - | Color of the text displayed inside the chart, `'dimmed'` by default |
+| tickLine | "none" \| "x" \| "y" \| "xy" | - | Specifies which axis should have tick line, `'y'` by default |
+| tooltipAnimationDuration | number | - | Tooltip position animation duration in ms, `0` by default |
+| tooltipProps | RechartsProps | - | Props passed down to the `Tooltip` component |
 | type | LineChartType | - | Controls styles of the line |
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | withDots | boolean | - | Determines whether dots should be displayed |
-| withLegend | boolean | - | Determines whether chart legend should be displayed, <code>false</code> by default |
+| withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
 | withPointLabels | boolean | - | Determines whether each point should have associated label |
-| withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, <code>false</code> by default |
-| withTooltip | boolean | - | Determines whether chart tooltip should be displayed, <code>true</code> by default |
-| withXAxis | boolean | - | Determines whether x-axis should be displayed, <code>true</code> by default |
-| withYAxis | boolean | - | Determines whether y-axis should be displayed, <code>true</code> by default |
+| withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default |
+| withTooltip | boolean | - | Determines whether chart tooltip should be displayed, `true` by default |
+| withXAxis | boolean | - | Determines whether x-axis should be displayed, `true` by default |
+| withYAxis | boolean | - | Determines whether y-axis should be displayed, `true` by default |
 | xAxisLabel | string | - | A label to display below the x-axis |
-| xAxisProps | RechartsProps | - | Props passed down to the <code>XAxis</code> recharts component |
+| xAxisProps | RechartsProps | - | Props passed down to the `XAxis` recharts component |
 | yAxisLabel | string | - | A label to display next to the y-axis |
-| yAxisProps | RechartsProps | - | Props passed down to the <code>YAxis</code> recharts component |
+| yAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component |
 
 
 #### Styles API

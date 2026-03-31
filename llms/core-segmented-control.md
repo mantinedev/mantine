@@ -5,13 +5,11 @@ Description: A linear set of two or more segments
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { SegmentedControl } from '@mantine/core';
 
 function Demo() {
-  return <SegmentedControl data={['React', 'Angular', 'Vue']} />;
+  return <SegmentedControl orientation="horizontal" fullWidth={false} withItemsBorders={true} size="sm" radius="md" data={['React', 'Angular', 'Vue']} />;
 }
 ```
 
@@ -40,11 +38,47 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`SegmentedControl` can be used with uncontrolled forms the same way as a native input element.
+Set the `name` attribute to include segmented control value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `SegmentedControl` with `FormData`:
+
+```tsx
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Segmented control value:', formData.get('framework'));
+      }}
+    >
+      <SegmentedControl
+        name="framework"
+        defaultValue="react"
+        data={[
+          { label: 'React', value: 'react' },
+          { label: 'Angular', value: 'ng' },
+          { label: 'Vue', value: 'vue' },
+          { label: 'Svelte', value: 'svelte' },
+        ]}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Data prop
 
-`SegmentedControl` support two different data formats:
+`SegmentedControl` supports two different data formats:
 
-1. An array of strings – used when `value` and `label` are the same
+1. An array of primitive values – used when `value` and `label` are the same
 2. An array of objects – used when `value` and `label` are different
 
 ```tsx
@@ -70,12 +104,50 @@ function ArrayOfObjects() {
 }
 ```
 
+## Generic value type
+
+`SegmentedControl` supports generic value type. You can pass primitive values (numbers, strings, boolean, null)
+as the type argument. The generic type is used for `value`, `defaultValue`, `onChange` and `data` props.
+
+```tsx
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SegmentedControl<string | number>
+      data={[
+        { value: 16, label: '16' },
+        { value: 17, label: '17' },
+        { value: '18+', label: '18 or older' },
+      ]}
+    />
+  );
+}
+```
+
+
+Example with strings union:
+
+```tsx
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SegmentedControl<'orange' | 'grape' | 'apple'>
+      data={[
+        { value: 'orange', label: 'Orange' },
+        { value: 'grape', label: 'Grape' },
+        { value: 'apple', label: 'Apple' },
+      ]}
+    />
+  );
+}
+```
+
 ## Disabled
 
-To disable `SegmentedControl` item, use array of objects `data` format and set `disabled: true`
-on the item that you want to disable. To disable the entire component, use `disabled` prop.
-
-#### Example: disabled
+To disable a `SegmentedControl` item, use the array of objects `data` format and set `disabled: true`
+on the item that you want to disable. To disable the entire component, use the `disabled` prop.
 
 ```tsx
 import { SegmentedControl } from '@mantine/core';
@@ -136,13 +208,11 @@ function Demo() {
 
 ## React node as label
 
-You can use any React node as label:
-
-#### Example: labels
+You can use any React node as a label:
 
 ```tsx
 import { Center, SegmentedControl } from '@mantine/core';
-import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
+import { EyeIcon, CodeIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -152,7 +222,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconEye size={16} />
+              <EyeIcon size={16} />
               <span>Preview</span>
             </Center>
           ),
@@ -161,8 +231,8 @@ function Demo() {
           value: 'code',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconCode size={16} />
-              <span>Code</span>
+              <CodeIcon size={16} />
+              <span>CodeIcon</span>
             </Center>
           ),
         },
@@ -170,7 +240,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconExternalLink size={16} />
+              <ArrowSquareOutIcon size={16} />
               <span>Export</span>
             </Center>
           ),
@@ -184,16 +254,33 @@ function Demo() {
 
 ## Color
 
-By default, `SegmentedControl` uses `theme.white` with shadow in light color scheme and `var(--mantine-color-dark-6)` background color for indicator.
-Set `color` prop to change indicator `background-color`:
-
-#### Example: configurator
+By default, `SegmentedControl` uses `theme.white` with shadow in the light color scheme and `var(--mantine-color-dark-6)` background color for the indicator.
+Set the `color` prop to change the indicator `background-color`:
 
 ```tsx
 import { SegmentedControl } from '@mantine/core';
 
 function Demo() {
-  return <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} />;
+  return <SegmentedControl color="blue" data={['React', 'Angular', 'Vue', 'Svelte']} />;
+}
+```
+
+
+## Auto contrast
+
+`SegmentedControl` supports `autoContrast` prop. If set to `true`, the label text color will automatically adjust
+to ensure optimal contrast against the indicator background color:
+
+```tsx
+import { SegmentedControl, Stack } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stack>
+      <SegmentedControl color="lime.4" data={['React', 'Angular', 'Vue', 'Svelte']} />
+      <SegmentedControl color="lime.4" autoContrast data={['React', 'Angular', 'Vue', 'Svelte']} />
+    </Stack>
+  );
 }
 ```
 
@@ -204,8 +291,6 @@ Change transition properties with:
 
 * `transitionDuration` – all transitions duration in ms, `200` by default
 * `transitionTimingFunction` – all transitions timing function, `ease` by default
-
-#### Example: transitions
 
 ```tsx
 import { SegmentedControl, Text } from '@mantine/core';
@@ -232,51 +317,23 @@ function Demo() {
 ```
 
 
-## readOnly
-
-Set `readOnly` prop to prevent value from being changed:
-
-#### Example: readOnly
-
-```tsx
-import { SegmentedControl } from '@mantine/core';
-
-function Demo() {
-  return <SegmentedControl readOnly defaultValue="Angular" data={['React', 'Angular', 'Vue']} />;
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { SegmentedControl } from '@mantine/core';
-
-function Demo() {
-  return <SegmentedControl data={['React', 'Angular', 'Vue']} />;
-}
-```
-
-
 ## Accessibility and usability
 
-`SegmentedControl` uses radio inputs under the hood, it is accessible by default with no extra steps required if you have text in labels.
-Component support the same keyboard events as a regular radio group.
+`SegmentedControl` uses radio inputs under the hood, so it is accessible by default with no extra steps required if you have text in labels.
+The component supports the same keyboard events as a regular radio group.
 
-In case you do not have text in labels (for example, when you want to use `SegmentedControl` with icons only),
-use [VisuallyHidden](https://mantine.dev/core/visually-hidden) to make component accessible:
-
-#### Example: iconsOnly
+If you do not have text in labels (for example, when you want to use `SegmentedControl` with icons only),
+use [VisuallyHidden](https://mantine.dev/llms/core-visually-hidden.md) to make the component accessible:
 
 ```tsx
 import { SegmentedControl, VisuallyHidden } from '@mantine/core';
-import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
+import { EyeIcon, CodeIcon, ArrowSquareOutIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const iconProps = {
     style: { display: 'block' },
     size: 20,
-    stroke: 1.5,
+
   };
 
   return (
@@ -286,7 +343,7 @@ function Demo() {
           value: 'preview',
           label: (
             <>
-              <IconEye {...iconProps} />
+              <EyeIcon {...iconProps} />
               <VisuallyHidden>Preview</VisuallyHidden>
             </>
           ),
@@ -295,8 +352,8 @@ function Demo() {
           value: 'code',
           label: (
             <>
-              <IconCode {...iconProps} />
-              <VisuallyHidden>Code</VisuallyHidden>
+              <CodeIcon {...iconProps} />
+              <VisuallyHidden>CodeIcon</VisuallyHidden>
             </>
           ),
         },
@@ -304,7 +361,7 @@ function Demo() {
           value: 'export',
           label: (
             <>
-              <IconExternalLink {...iconProps} />
+              <ArrowSquareOutIcon {...iconProps} />
               <VisuallyHidden>Export</VisuallyHidden>
             </>
           ),
@@ -319,23 +376,25 @@ function Demo() {
 
 #### Props
 
+**SegmentedControl props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color, changes color of indicator, by default color is based on current color scheme |
-| data | (string | SegmentedControlItem)[] | required | Data based on which controls are rendered |
-| defaultValue | string | - | Uncontrolled component default value |
+| autoContrast | boolean | - | If set, automatically adjusts label text color for optimal contrast against the indicator background color |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color, changes indicator background color. By default, uses white in light mode and dark.5 in dark mode |
+| data | (Value \| SegmentedControlItem<Value>)[] | required | Data based on which controls are rendered |
+| defaultValue | Primitive | - | Uncontrolled component default value |
 | disabled | boolean | - | Determines whether the component is disabled |
 | fullWidth | boolean | - | Determines whether the component should take 100% width of its parent |
-| name | string | - | Name of the radio group, by default random name is generated |
-| onChange | (value: string) => void | - | Called when value changes |
-| orientation | "horizontal" | "vertical" | - | Component orientation |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
-| readOnly | boolean | - | If set to <code>false</code>, prevents changing the value |
-| size | MantineSize | (string & {}) | - | Controls <code>font-size</code>, <code>padding</code> and <code>height</code> properties |
-| transitionDuration | number | - | Indicator <code>transition-duration</code> in ms, set <code>0</code> to turn off transitions |
-| transitionTimingFunction | string | - | Indicator <code>transition-timing-function</code> property |
-| value | string | - | Controlled component value |
+| name | string | - | Name attribute for the radio group. A random name is auto-generated if not provided |
+| onChange | (value: Value) => void | - | Called when value changes |
+| orientation | "horizontal" \| "vertical" | - | Component orientation |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| readOnly | boolean | - | If set to `false`, prevents changing the value |
+| size | MantineSize | - | Controls `font-size`, `padding` and `height` properties |
+| transitionDuration | number | - | Indicator `transition-duration` in ms, set `0` to turn off transitions |
+| transitionTimingFunction | string | - | Indicator `transition-timing-function` property |
+| value | Primitive | - | Controlled component value |
 | withItemsBorders | boolean | - | Determines whether there should be borders between items |
 
 
@@ -368,7 +427,7 @@ SegmentedControl component supports Styles API. With Styles API, you can customi
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-full-width | - | - |
-| root | data-with-items-border | - | - |
-| root | data-disabled | Value of  | - |
-| control | data-orientation | - | Value of  |
+| root | data-full-width | `fullWidth` prop is set | - |
+| root | data-with-items-borders | `withItemsBorders` prop is not `false` | - |
+| root | data-disabled | Value of `disabled` prop | - |
+| control | data-orientation | - | Value of `orientation` prop |

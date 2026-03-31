@@ -4,17 +4,31 @@ Import: import { UseColorScheme } from '@mantine/hooks';
 
 ## Usage
 
-`use-color-scheme` hook returns preferred OS color scheme value (`dark` or `light`)
+The `use-color-scheme` hook returns the preferred OS color scheme value (`dark` or `light`)
 and subscribes to changes:
 
+```tsx
+import { Badge } from '@mantine/core';
+import { useColorScheme } from '@mantine/hooks';
+
+function Demo() {
+  const colorScheme = useColorScheme();
+
+  return (
+    <Badge color={colorScheme === 'dark' ? 'blue' : 'teal'} variant="filled">
+      Your system color scheme is {colorScheme}
+    </Badge>
+  );
+}
+```
 
 
 ## Limitations
 
-`use-color-scheme` uses [use-media-query](https://mantine.dev/hooks/use-media-query/) under the hood.
-It relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+`use-color-scheme` uses [use-media-query](https://mantine.dev/llms/hooks-use-media-query.md) under the hood.
+It relies on the `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
 and always returns the specified initial value (first argument, `light` by default)
-if the API is not available (for example, during the server-side rendering).
+if the API is not available (for example, during server-side rendering).
 
 ```tsx
 // returns 'dark' on server side
@@ -30,7 +44,7 @@ Instead, the value is calculated in `useEffect` and updated after the parent
 component mounts.
 
 If your application does not have server-side rendering, you can enable
-immediate calculation of the initial value by changing `getInitialValueInEffect` option:
+immediate calculation of the initial value by changing the `getInitialValueInEffect` option:
 
 ```tsx
 const colorScheme = useColorScheme('light', { getInitialValueInEffect: true });
@@ -53,7 +67,7 @@ function useColorScheme(
 
 ## Exported types
 
-`UseColorSchemeValue` and `UseMediaQueryOptions` types are exported from `@mantine/hooks` package,
+The `UseColorSchemeValue` and `UseMediaQueryOptions` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

@@ -1,0 +1,39 @@
+# How to use Mantine template on GitHub?
+Learn how to create a new repository based on Mantine template
+
+# Templates
+
+Mantine provides a set of templates for the most common use cases.
+A template is a set of configuration files that are required to
+get started with Mantine and a React framework of your choice.
+You can find a list of all available templates on the [getting started page](https://mantine.dev/getting-started/).
+
+## Prerequisites
+
+In order to use any of the templates, install the following software:
+
+* [Node.js](https://nodejs.org/en/) version 22 or higher
+* [Yarn](https://yarnpkg.com/) version 4 or higher
+
+## Getting started with a template
+
+To get started with one of the templates:
+
+* Open it on GitHub
+* Click the "Use this template" button
+* Click "Create a new repository" in the dropdown
+* Enter a repository name and click "Create repository from template"
+* Clone your new repository
+* Install dependencies by running `yarn`
+* Start the development server by running `yarn dev`/`yarn start` (the exact command depends on the framework of the template)
+
+## Without GitHub account
+
+If you do not have a GitHub account, you can download a template as a ZIP archive:
+
+* Open the template on GitHub
+* Click the "Code" button (it is next to the "Use this template" button)
+* Click "Download ZIP"
+* Extract the downloaded archive
+* Install dependencies by running `yarn`
+* Start the development server by running `yarn dev`/`yarn start` (the exact command depends on the framework of the template)

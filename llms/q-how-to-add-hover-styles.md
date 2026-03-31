@@ -1,0 +1,64 @@
+# How can I add hover styles to an element?
+Learn how to add hover classes to an element with CSS modules, &:hover or @mixin hover
+
+## &:hover
+
+The simplest way to add `:hover` styles to an element is to use the `&` selector:
+
+```scss
+// Element.module.css
+.element {
+  &:hover {
+    background-color: red;
+  }
+}
+```
+
+Then import the styles into your component:
+
+```tsx
+import { Box } from '@mantine/core';
+import styles from './Element.module.css';
+
+export const Element = () => {
+  return <Box className={styles.element}>Element</Box>;
+};
+```
+
+## @mixin hover
+
+If you have [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset/) in your
+project, you can use `@mixin hover` to add hover styles. Unlike `&:hover`,
+`@mixin hover` will also add styles for touch devices.
+
+```scss
+// Import the css file in your component the same way as in &:hover example
+.demo {
+  @mixin hover {
+    color: orange;
+  }
+}
+```
+
+The code above will be transformed into:
+
+```scss
+@media (hover: hover) {
+  .demo:hover {
+    color: orange;
+  }
+}
+
+@media (hover: none) {
+  .demo:active {
+    color: orange;
+  }
+}
+```
+
+## Is there a way to add hover styles inline in JSX?
+
+Mantine does not provide a way to add hover styles inline in JSX as a library feature.
+However, in your project you can use any third-party styling library that supports
+inline styles, for example [styled-components](https://styled-components.com/)
+or [emotion](https://emotion.sh/).

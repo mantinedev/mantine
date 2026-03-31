@@ -4,12 +4,10 @@ Import: import { FormStatus } from '@mantine/form';
 
 ## Touched and dirty state
 
-`form.isTouched` and `form.isDirty` fields provide information about current field status:
+`form.isTouched` and `form.isDirty` fields provide information about the current field status:
 
-* Field is considered to be `touched` when user focused it or its value was changed programmatically with `form.setFieldValue` handler
-* Field is considered to be `dirty` when its value was changed and new value is different from field value specified in `initialValues` (compared with [fast-deep-equal](https://www.npmjs.com/package/fast-deep-equal))
-
-#### Example: status
+* A field is considered to be `touched` when the user focused it or its value was changed programmatically with the `form.setFieldValue` handler
+* A field is considered to be `dirty` when its value was changed and the new value is different from the field value specified in `initialValues` (compared with [fast-deep-equal](https://www.npmjs.com/package/fast-deep-equal))
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -53,24 +51,24 @@ const form = useForm({
   initialValues: { a: 1, nested: { field: '' } },
 });
 
-// Provide path as first argument to get state of single field
+// Provide path as the first argument to get the state of a single field
 form.isTouched('a'); // -> was field 'a' focused or changed?
 form.isDirty('a'); // -> was field 'a' modified?
 form.isDirty('nested.field'); // -> nested fields are also supported
 
-// If field path is not provided,
-// then functions will return form state instead
-form.isTouched(); // -> was any field in form focused or changed?
-form.isDirty(); // -> was any field in form modified?
+// If the field path is not provided,
+// then the functions will return the form state instead
+form.isTouched(); // -> was any field in the form focused or changed?
+form.isDirty(); // -> was any field in the form modified?
 ```
 
 ## touchTrigger option
 
-`touchTrigger` option allows customizing events that change touched state.
+The `touchTrigger` option allows customizing events that change the touched state.
 It accepts two options:
 
-* `change` (default) – field will be considered touched when its value changes or it has been focused
-* `focus` – field will be considered touched only when it has been focused
+* `change` (default) – the field will be considered touched when its value changes or it has been focused
+* `focus` – the field will be considered touched only when it has been focused
 
 Example of using `focus` trigger:
 
@@ -94,8 +92,8 @@ form.isTouched('a'); // -> true
 
 ## Initial values
 
-You can provide initial touched and dirty values with `initialTouched` and `initialDirty` properties.
-Both properties support [the same fields path format as errors](https://mantine.dev/form/errors/):
+You can provide initial touched and dirty values with the `initialTouched` and `initialDirty` properties.
+Both properties support [the same field path format as errors](https://mantine.dev/llms/form-errors.md):
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -110,8 +108,8 @@ const form = useForm({
 
 ## resetTouched and resetDirty
 
-`form.resetTouched` and `form.resetDirty` functions will make all fields clean and untouched.
-Note that `form.reset` will also reset `touched` and `dirty` state:
+The `form.resetTouched` and `form.resetDirty` functions will make all fields clean and untouched.
+Note that `form.reset` will also reset the `touched` and `dirty` state:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -133,7 +131,7 @@ form.resetDirty();
 form.isDirty('a'); // -> false
 ```
 
-To reset values that are used for dirty check call `form.resetDirty` with new values:
+To reset the values that are used for the dirty check, call `form.resetDirty` with new values:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -155,11 +153,9 @@ form.isDirty(); // -> true
 
 ## Submitting state
 
-`form.submitting` field will be set to `true` if function passed to
+The `form.submitting` field will be set to `true` if the function passed to
 `form.onSubmit` returns a promise. After the promise is resolved or rejected,
 `form.submitting` will be set to `false`:
-
-#### Example: submitting
 
 ```tsx
 import { useState } from 'react';
@@ -226,4 +222,34 @@ form.submitting; // -> true
 
 form.setSubmitting(false);
 form.submitting; // -> false
+```
+
+## Validating state
+
+The `form.validating` property is `true` while any async validation is in
+progress. This applies to `form.validate()`, `form.validateField()`,
+`form.isValid()`, and the validation triggered by `form.onSubmit`.
+
+`form.isValidating(path)` returns `true` if a specific field is currently being
+validated. When `form.validate()` or `form.onSubmit` runs all rules, every field
+with a rule is considered validating. When `form.validateField(path)` is called,
+only the targeted field is considered validating.
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { username: '' },
+  validate: {
+    username: async (value) => {
+      // simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      return value === 'admin' ? 'Username is taken' : null;
+    },
+  },
+});
+
+form.validating; // -> false while idle, true during validation
+form.isValidating('username'); // -> true while `username` rule is running
 ```

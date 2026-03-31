@@ -5,10 +5,8 @@ Description: Compose elements and components in a vertical flex container
 
 ## Usage
 
-`Stack` is a vertical flex container. If you need a horizontal flex container, use [Group](https://mantine.dev/core/group)
-component instead. If you need to have full control over flex container properties, use [Flex](https://mantine.dev/core/flex) component.
-
-#### Example: configurator
+`Stack` is a vertical flex container. If you need a horizontal flex container, use [Group](https://mantine.dev/llms/core-group.md)
+component instead. If you need to have full control over flex container properties, use [Flex](https://mantine.dev/llms/core-flex.md) component.
 
 ```tsx
 import { Stack, Button } from '@mantine/core';
@@ -18,7 +16,7 @@ function Demo() {
     <Stack
       h={300}
       bg="var(--mantine-color-body)"
-      
+       align="stretch" justify="center" gap="md"
     >
       <Button variant="default">1</Button>
       <Button variant="default">2</Button>
@@ -29,8 +27,6 @@ function Demo() {
 ```
 
 
-<FlexboxGapSupport component="Stack" />
-
 ## Browser support
 
 Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.
@@ -38,11 +34,13 @@ Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap
 
 #### Props
 
+**Stack props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| align | AlignItems | - | Controls <code>align-items</code> CSS property |
-| gap | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set <code>gap</code> property, numbers are converted to rem |
-| justify | JustifyContent | - | Controls <code>justify-content</code> CSS property |
+| align | AlignItems | - | Controls `align-items` CSS property |
+| gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set `gap` property, numbers are converted to rem |
+| justify | JustifyContent | - | Controls `justify-content` CSS property |
 
 
 #### Styles API

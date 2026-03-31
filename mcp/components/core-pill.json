@@ -1,0 +1,98 @@
+{
+  "id": "core-pill",
+  "name": "Pill",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/pill",
+  "description": "Removable and non-removable tags",
+  "propsCount": 6,
+  "llmUrl": "https://mantine.dev/llms/core-pill.md",
+  "componentDataUrl": "/mcp/components/core-pill.json",
+  "searchText": "pill removable and non-removable tags @mantine/core /core/pill disabled onremove radius removebuttonprops size withremovebutton",
+  "source": "@mantine/core/src/components/Pill/Pill.tsx",
+  "docs": "core/pill.mdx",
+  "markdown": "# Pill\nPackage: @mantine/core\nImport: import { Pill } from '@mantine/core';\nDescription: Removable and non-removable tags\n\n## Usage\n\n```tsx\nimport { Pill } from '@mantine/core';\n\nfunction Demo() {\n  return <Pill size=\"md\" withRemoveButton={false}>React</Pill>;\n}\n```\n\n\n\n#### Props\n\n**Pill props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| disabled | boolean | - | Adds disabled attribute, applies disabled styles |\n| onRemove | () => void | - | Called when the remove button is clicked |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. |\n| removeButtonProps | CloseButtonProps & ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> | - | Props passed down to the remove button |\n| size | MantineSize | - | Controls pill `font-size` and `padding` |\n| withRemoveButton | boolean | - | Controls visibility of the remove button |\n\n**Pill.sInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n**Pill.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Pill.sInputField props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| pointer | boolean | - | If set, cursor is changed to pointer |\n| type | \"hidden\" \\| \"auto\" \\| \"visible\" | - | Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible. |\n\n\n#### Styles API\n\nPill component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Pill selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Pill-root | Root element |\n| label | .mantine-Pill-label | Pill label (children) |\n| remove | .mantine-Pill-remove | Remove button |\n\n**Pill CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --pill-height | Controls `height` of the pill |\n| root | --pill-fz | Controls `font-size` |\n| root | --pill-radius | Controls `border-radius` |\n\n**Pill data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-with-remove | `withRemoveButton` prop is set | - |\n| root | data-disabled | `disabled` prop is set | - |\n\n**Pill.Group selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| group | .mantine-PillGroup-group | Root element |\n\n**Pill.Group CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| group | --pg-gap | Controls `gap` between pills |\n\n**Pillsinput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-Pillsinput-wrapper | Root element of the Input |\n| input | .mantine-Pillsinput-input | Input element |\n| section | .mantine-Pillsinput-section | Left and right sections |\n| root | .mantine-Pillsinput-root | Root element |\n| label | .mantine-Pillsinput-label | Label element |\n| required | .mantine-Pillsinput-required | Required asterisk element, rendered inside label |\n| description | .mantine-Pillsinput-description | Description element |\n| error | .mantine-Pillsinput-error | Error element |\n\n**Pillsinputfield selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| field | .mantine-Pillsinputfield-field | Root element |\n\n**Pillsinputfield data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| field | data-type | - | Value of `type` prop |\n| field | data-disabled | `disabled` prop is set | - |\n",
+  "props": [
+    {
+      "name": "disabled",
+      "description": "Adds disabled attribute, applies disabled styles",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pill"
+    },
+    {
+      "name": "onRemove",
+      "description": "Called when the remove button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Pill"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Pill"
+    },
+    {
+      "name": "removeButtonProps",
+      "description": "Props passed down to the remove button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CloseButtonProps & ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement>"
+      },
+      "sourceComponent": "Pill"
+    },
+    {
+      "name": "size",
+      "description": "Controls pill <code>font-size</code> and <code>padding</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "Pill"
+    },
+    {
+      "name": "withRemoveButton",
+      "description": "Controls visibility of the remove button",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pill"
+    }
+  ]
+}

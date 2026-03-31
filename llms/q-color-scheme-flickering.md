@@ -1,0 +1,52 @@
+# Why do I see color scheme flickering on page load?
+Color scheme flickering is caused by incorrect usage of ColorSchemeScript
+
+## How Mantine applies color scheme
+
+Mantine color scheme is defined by the `data-mantine-color-scheme="{value}"`
+attribute on the `:root` element (usually `html`). This attribute is used by
+all components to assign color scheme-specific styles.
+
+Usually, you do not need to set `data-mantine-color-scheme` attribute manually,
+it is added by `ColorSchemeScript` (before hydration) and `MantineProvider`
+(after the app has been mounted) components automatically.
+
+## Flash of inaccurate color scheme
+
+Flash of inaccurate color scheme (FART) happens when the color scheme selected
+by the user is different from the color scheme value with which the application
+has been initialized. FART can occur only in applications with server-side
+rendering (SSR) or static site generation (SSG).
+
+In most cases, FART is caused by incorrect usage of the `ColorSchemeScript` component.
+For example, a common issue is a mismatch of `defaultColorScheme` values defined
+on `ColorSchemeScript` and `MantineProvider`:
+
+```tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+
+// ❌ Incorrect usage – defaultColorScheme values do not match,
+// this will cause color scheme flickering
+function IncorrectDemo() {
+  return (
+    <>
+      <ColorSchemeScript defaultColorScheme="light" />
+      <MantineProvider defaultColorScheme="auto">
+        {/* Your app here */}
+      </MantineProvider>
+    </>
+  );
+}
+
+// ✅ Correct usage – defaultColorScheme values match, no FART
+function CorrectDemo() {
+  return (
+    <>
+      <ColorSchemeScript defaultColorScheme="light" />
+      <MantineProvider defaultColorScheme="light">
+        {/* Your app here */}
+      </MantineProvider>
+    </>
+  );
+}
+```

@@ -5,22 +5,18 @@ Description: Button component to render button or link
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Button } from '@mantine/core';
 
 function Demo() {
-  return <Button>Button</Button>;
+  return <Button variant="filled" color="blue" size="sm" radius="md">Button</Button>;
 }
 ```
 
 
 ## Full width
 
-If `fullWidth` prop is set `Button` will take 100% of parent width:
-
-#### Example: fullWidth
+If the `fullWidth` prop is set, the `Button` will take 100% of the parent width:
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -33,31 +29,29 @@ function Demo() {
 
 ## Left and right sections
 
-`leftSection` and `rightSection` allow adding icons or any other element to the left and right side of the button.
+`leftSection` and `rightSection` allow adding icons or any other element to the left and right sides of the button.
 When a section is added, padding on the corresponding side is reduced.
 
-Note that `leftSection` and `rightSection` are flipped in [RTL](https://mantine.dev/styles/rtl) mode
+Note that `leftSection` and `rightSection` are flipped in [RTL](https://mantine.dev/llms/styles-rtl.md) mode
 (`leftSection` is displayed on the right and `rightSection` is displayed on the left).
-
-#### Example: sections
 
 ```tsx
 import { Group, Button } from '@mantine/core';
-import { IconPhoto, IconDownload, IconArrowRight } from '@tabler/icons-react';
+import { ImageIcon, DownloadSimpleIcon, ArrowRightIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Group justify="center">
-      <Button leftSection={<IconPhoto size={14} />} variant="default">
+      <Button leftSection={<ImageIcon size={14} />} variant="default">
         Gallery
       </Button>
 
-      <Button rightSection={<IconDownload size={14} />}>Download</Button>
+      <Button rightSection={<DownloadSimpleIcon size={14} />}>Download</Button>
 
       <Button
         variant="light"
-        leftSection={<IconPhoto size={14} />}
-        rightSection={<IconArrowRight size={14} />}
+        leftSection={<ImageIcon size={14} />}
+        rightSection={<ArrowRightIcon size={14} />}
       >
         Visit gallery
       </Button>
@@ -69,36 +63,34 @@ function Demo() {
 
 ## Sections position
 
-`justify` prop sets `justify-content` of `inner` element. You can use it to change the alignment of
-left and right sections. For example, to spread them across the button set `justify="space-between"`.
+The `justify` prop sets the `justify-content` of the `inner` element. You can use it to change the alignment of
+left and right sections. For example, to spread them across the button, set `justify="space-between"`.
 
-If you need to align just one section to the side of the button set `justify` to `space-between`
-and add empty `<span />` to the opposite section.
-
-#### Example: sectionsJustify
+If you need to align just one section to the side of the button, set `justify` to `space-between`
+and add an empty `<span />` to the opposite section.
 
 ```tsx
 import { Button } from '@mantine/core';
-import { IconPhoto } from '@tabler/icons-react';
+import { ImageIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconPhoto size={14} />;
+  const icon = <ImageIcon size={14} />;
   return (
     <>
-      <Button justify="" fullWidth leftSection={icon} rightSection={icon} variant="default">
+      <Button justify="center" fullWidth leftSection={icon} rightSection={icon} variant="default">
         Button label
       </Button>
 
-      <Button justify="" fullWidth leftSection={icon} variant="default" mt="md">
+      <Button justify="center" fullWidth leftSection={icon} variant="default" mt="md">
         Button label
       </Button>
 
-      <Button justify="" fullWidth rightSection={icon} variant="default" mt="md">
+      <Button justify="center" fullWidth rightSection={icon} variant="default" mt="md">
         Button label
       </Button>
 
       <Button
-        justify=""
+        justify="center"
         fullWidth
         rightSection={icon}
         leftSection={<span />}
@@ -116,9 +108,7 @@ function Demo() {
 ## Compact size
 
 `Button` supports `xs` – `xl` and `compact-xs` – `compact-xl` sizes. `compact` sizes have
-the same font-size as `xs` – `xl` but reduced padding and height.
-
-#### Example: compact
+the same font size as `xs` – `xl` but with reduced padding and height.
 
 ```tsx
 import { Button, Group } from '@mantine/core';
@@ -134,17 +124,6 @@ function Demo() {
 ```
 
 
-<Gradient component="Button" />
-
-## Gradient
-
-Button supports Mantine color format in color prop. Color can be specified as:
-- Mantine color name (e.g., 'blue')
-- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
-- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
-
-#### Example: gradient
-
 ```tsx
 import { Button } from '@mantine/core';
 
@@ -152,7 +131,7 @@ function Demo() {
   return (
     <Button
       variant="gradient"
-      gradient={{ from: 'cyan', to: 'blue', deg: 90 }}
+      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
     >
       Gradient button
     </Button>
@@ -163,11 +142,9 @@ function Demo() {
 
 ## Disabled state
 
-To make `Button` disabled, set `disabled` prop, this will prevent any interactions with the button
+To make a `Button` disabled, set the `disabled` prop. This will prevent any interactions with the button
 and add disabled styles. If you want the button to just look disabled but still be interactive,
-set `data-disabled` prop instead. Note that disabled styles are the same for all variants.
-
-#### Example: disabled
+set the `data-disabled` prop instead. Note that disabled styles are the same for all variants.
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -180,11 +157,9 @@ function Demo() {
 
 ## Disabled state when Button is link
 
-`<a />` element does not support `disabled` attribute. To make `Button` disabled when it is
-rendered as a link, set `data-disabled` attribute instead and prevent default behavior in
+The `<a />` element does not support the `disabled` attribute. To make a `Button` disabled when it is
+rendered as a link, set the `data-disabled` attribute instead and prevent default behavior in the
 `onClick` event handler.
-
-#### Example: disabledLink
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -209,14 +184,12 @@ function Demo() {
 To customize disabled styles, it is recommended to use both `&:disabled` and `&[data-disabled]`
 selectors:
 
-* `&:disabled` is used to style the button when `disabled` prop is set and
-  also when the button is disabled by the parent component (for example, when `disabled` prop is set on a
-  `<fieldset />` element which contains `Button`).
+* `&:disabled` is used to style the button when the `disabled` prop is set and
+  also when the button is disabled by the parent component (for example, when the `disabled` prop is set on a
+  `<fieldset />` element which contains the `Button`).
 * `&[data-disabled]` is used to style the button when it is not actually disabled but should look like
-  it is (for example, `data-disabled` should be used if you need to use [Tooltip](https://mantine.dev/core/tooltip) with disabled `Button`
-  or when `Button` is used as a link)
-
-#### Example: disabledStyles
+  it is (for example, `data-disabled` should be used if you need to use [Tooltip](https://mantine.dev/llms/core-tooltip.md) with a disabled `Button`
+  or when the `Button` is used as a link)
 
 ```tsx
 // Demo.module.css
@@ -244,13 +217,11 @@ function Demo() {
 
 ## Disabled button with Tooltip
 
-`onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when `Button` is disabled, so if you need to use
-[Tooltip](https://mantine.dev/core/tooltip) with disabled `Button` you need to set `data-disabled` prop on `Button`
-instead of `disabled`. Note that it is also required to change `onClick` event handler to
-`(event) => event.preventDefault()` as `Button` is not actually disabled and will still trigger
+The `onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when a `Button` is disabled, so if you need to use a
+[Tooltip](https://mantine.dev/llms/core-tooltip.md) with a disabled `Button`, you need to set the `data-disabled` prop on the `Button`
+instead of `disabled`. Note that it is also required to change the `onClick` event handler to
+`(event) => event.preventDefault()` as the `Button` is not actually disabled and will still trigger the
 `onClick` event.
-
-#### Example: disabledTooltip
 
 ```tsx
 import { Button, Tooltip } from '@mantine/core';
@@ -269,10 +240,8 @@ function Demo() {
 
 ## Loading state
 
-When `loading` prop is set, `Button` will be disabled and [Loader](https://mantine.dev/core/loader) with overlay will be rendered
-in the center of the button. [Loader](https://mantine.dev/core/loader) color depends on `Button` variant.
-
-#### Example: loading
+When the `loading` prop is set, the `Button` will be disabled and a [Loader](https://mantine.dev/llms/core-loader.md) with overlay will be rendered
+in the center of the button. [Loader](https://mantine.dev/llms/core-loader.md) color depends on the `Button` variant.
 
 ```tsx
 import { Button, Group, Switch } from '@mantine/core';
@@ -299,127 +268,11 @@ function Demo() {
 ```
 
 
-## Loader props
-
-You can customize [Loader](https://mantine.dev/core/loader) with `loaderProps` prop, it accepts all props that
-[Loader](https://mantine.dev/core/loader) component has:
-
-#### Example: loaderProps
-
-```tsx
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Button loading loaderProps={{ type: 'dots' }}>
-      Loading button
-    </Button>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Button } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
-
-function Demo() {
-  return <Button leftSection={<IconAt size={16} />}>Your email</Button>;
-}
-```
-
-
-Example of customizing `Button` with [Styles API](https://mantine.dev/styles/styles-api) and [data-\* attributes](https://mantine.dev/styles/data-attributes):
-
-#### Example: dataAttributes
-
-```tsx
-// Demo.module.css
-.root {
-  border-top-left-radius: var(--mantine-radius-xl);
-  border-bottom-left-radius: var(--mantine-radius-xl);
-  padding-left: 4px;
-
-  /* The following styles will be applied only when button is disabled */
-  &[data-disabled] {
-    /* You can use Mantine PostCSS mixins inside data attributes */
-    @mixin light {
-      border: 1px solid var(--mantine-color-gray-2);
-    }
-
-    @mixin dark {
-      border: 1px solid var(--mantine-color-dark-4);
-    }
-
-    /* You can target child elements that are inside .root[data-disabled] */
-    & .section[data-position='left'] {
-      opacity: 0.6;
-    }
-  }
-}
-
-.section {
-  /* Apply styles only to left section */
-  &[data-position='left'] {
-    --section-size: calc(var(--button-height) - 8px);
-
-    background-color: var(--mantine-color-body);
-    color: var(--mantine-color-text);
-    height: var(--section-size);
-    width: var(--section-size);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--mantine-radius-xl);
-  }
-
-  &[data-position='right'] {
-    @mixin rtl {
-      transform: rotate(180deg);
-    }
-  }
-}
-
-// Demo.tsx
-import { Button, ButtonProps, Group } from '@mantine/core';
-import { IconArrowRight } from '@tabler/icons-react';
-import classes from './Demo.module.css';
-
-function SendFilesButton(props: ButtonProps & React.ComponentPropsWithoutRef<'button'>) {
-  return <Button {...props} radius="md" classNames={classes} />;
-}
-
-function Demo() {
-  return (
-    <Group>
-      <SendFilesButton
-        leftSection="12"
-        rightSection={<IconArrowRight size={18} />}
-      >
-        Send files
-      </SendFilesButton>
-      <SendFilesButton
-        leftSection="3"
-        rightSection={<IconArrowRight size={18} />}
-        disabled
-      >
-        Send files
-      </SendFilesButton>
-    </Group>
-  );
-}
-```
-
-
 ## Custom variants
 
-To add new `Button` variants, use [data-variant](https://mantine.dev/styles/variants-sizes) attribute.
-Usually new variants are added on [theme](https://mantine.dev/theming/theme-object), this way they are
+To add new `Button` variants, use the [data-variant](https://mantine.dev/llms/styles-variants-sizes.md) attribute.
+Usually new variants are added to the [theme](https://mantine.dev/llms/theming-theme-object.md), this way they are
 available in all `Button` components in your application.
-
-#### Example: customVariant
 
 ```tsx
 // Demo.tsx
@@ -461,12 +314,10 @@ function Demo() {
 ```
 
 
-## Customize variants colors
+## Customize variant colors
 
-You can customize colors for `Button` and other components variants by adding
-[variantColorResolver](https://mantine.dev/theming/colors#colors-variant-resolver) to your theme.
-
-#### Example: variantColorsResolver
+You can customize colors for `Button` and other component variants by adding
+[variantColorResolver](https://mantine.dev/llms/theming-colors.md#colors-variant-resolver) to your theme.
 
 ```tsx
 import {
@@ -539,16 +390,6 @@ function Demo() {
 ```
 
 
-<AutoContrast component="Button" />
-
-## autoContrast
-
-Button supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on Button or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
-
-Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
-
-#### Example: autoContrast
-
 ```tsx
 import { Button, Group } from '@mantine/core';
 
@@ -567,14 +408,12 @@ function Demo() {
 
 ## Button.Group
 
-#### Example: group
-
 ```tsx
 import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button.Group>
+    <Button.Group orientation="horizontal">
       <Button variant="default">First</Button>
       <Button variant="default">Second</Button>
       <Button variant="default">Third</Button>
@@ -605,10 +444,8 @@ function Demo() {
 
 Use `Button.GroupSection` component to render sections that are not buttons inside `Button.Group`:
 
-#### Example: groupSection
-
 ```tsx
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 import { useCounter } from '@mantine/hooks';
 
@@ -617,14 +454,14 @@ function Demo() {
 
   return (
     <Button.Group>
-      <Button variant="default" radius="md" onClick={decrement}>
-        <IconChevronDown color="var(--mantine-color-red-text)" />
+      <Button variant="default" onClick={decrement}>
+        <CaretDownIcon color="var(--mantine-color-red-text)" />
       </Button>
       <Button.GroupSection variant="default" bg="var(--mantine-color-body)" miw={80}>
         {value}
       </Button.GroupSection>
-      <Button variant="default" radius="md" onClick={increment}>
-        <IconChevronUp color="var(--mantine-color-teal-text)" />
+      <Button variant="default" onClick={increment}>
+        <CaretUpIcon color="var(--mantine-color-teal-text)" />
       </Button>
     </Button.Group>
   );
@@ -632,69 +469,43 @@ function Demo() {
 ```
 
 
-<Polymorphic defaultElement="button" changeToElement="a" component="Button" withNext />
-
-## Polymorphic component
-
-Button is a polymorphic component – its default root element is button, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return <Button component="a" />;
-}
-```
-
-You can also use components in component prop, for example, Next.js Link:
-
-```tsx
-import Link from 'next/link';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return <Button component={Link} href="/" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ButtonProps does not extend React.ComponentPropsWithoutRef<'button'> although button is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
-<GetElementRef component="Button" refType="button" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLButtonElement>(null);
-  return <Button ref={ref} />;
-}
-```
-
 
 #### Props
 
+**Button props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
 | children | React.ReactNode | - | Button content |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
-| disabled | boolean | - | Sets <code>disabled</code> attribute, applies disabled styles |
-| fullWidth | boolean | - | If set, the button takes 100% width of its parent container |
-| gradient | MantineGradient | - | Gradient configuration used when <code>variant="gradient"</code> |
-| justify | JustifyContent | - | Sets <code>justify-content</code> of <code>inner</code> element, can be used to change distribution of sections and label |
-| leftSection | React.ReactNode | - | Content displayed on the left side of the button label |
-| loaderProps | LoaderProps | - | Props added to the <code>Loader</code> component (only visible when <code>loading</code> prop is set) |
-| loading | boolean | - | If set, the <code>Loader</code> component is displayed over the button |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
-| rightSection | React.ReactNode | - | Content displayed on the right side of the button label |
-| size | MantineSize | (string & {}) | "compact-xs" | "compact-sm" | "compact-md" | "compact-lg" | "compact-xl" | - | Controls button <code>height</code>, <code>font-size</code> and horizontal <code>padding</code> |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
+| disabled | boolean | - | Sets `disabled` attribute, applies disabled styles |
+| fullWidth | boolean | - | Sets `width: 100%` |
+| gradient | MantineGradient | - | Gradient configuration used for `variant="gradient"` |
+| justify | JustifyContent | - | Sets `justify-content` of `inner` element, can be used to change distribution of sections and label |
+| leftSection | React.ReactNode | - | Content on the left side of the button label |
+| loaderProps | LoaderProps | - | Props added to the `Loader` component (only visible when `loading` prop is set) |
+| loading | boolean | - | If set, the `Loader` component is displayed over the button |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| rightSection | React.ReactNode | - | Content on the right side of the button label |
+| size | ButtonSize | - | Controls button `height`, `font-size` and horizontal `padding` |
+
+**Button.Group props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| borderWidth | string \| number | - | `border-width` of the child `Button` components. Numbers are converted to rem. |
+| children | React.ReactNode | - | `Button` components |
+| orientation | "horizontal" \| "vertical" | - | Orientation of the group |
+
+**Button.GroupSection props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| gradient | MantineGradient | - | Gradient configuration used when `variant="gradient"` |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| size | ButtonSize | - | Controls section `height`, `font-size` and horizontal `padding` |
 
 
 #### Styles API
@@ -730,7 +541,7 @@ Button component supports Styles API. With Styles API, you can customize styles 
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-disabled | - | - |
+| root | data-disabled | `disabled` prop is set | - |
 
 **Button.Group selectors**
 
@@ -748,4 +559,22 @@ Button component supports Styles API. With Styles API, you can customize styles 
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| group | data-orientation | - | Value of  |
+| group | data-orientation | - | Value of `orientation` prop |
+
+**Button.GroupSection selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| groupSection | .mantine-ButtonGroupSection-groupSection | Root element |
+
+**Button.GroupSection CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| groupSection | --section-bg | Controls `background` |
+| groupSection | --section-bd | Control `border` |
+| groupSection | --section-color | Control text `color` |
+| groupSection | --section-radius | Controls `border-radius` |
+| groupSection | --section-height | Controls `height` of the section |
+| groupSection | --section-padding-x | Controls horizontal `padding` of the section |
+| groupSection | --section-fz | Controls `font-size` of the section |

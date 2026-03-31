@@ -32,11 +32,9 @@ function Demo() {
 
 ## Confirm modal
 
-@mantine/modals package includes special modal that can be used for confirmations.
-Component includes confirm and cancel buttons and supports children to display additional
-information about action. Use `openConfirmModal` function to open a confirm modal:
-
-#### Example: confirm
+The @mantine/modals package includes a special modal that can be used for confirmations.
+The component includes confirm and cancel buttons and supports children to display additional
+information about the action. Use the `openConfirmModal` function to open a confirm modal:
 
 ```tsx
 import { Button, Text } from '@mantine/core';
@@ -61,22 +59,20 @@ function Demo() {
 ```
 
 
-`openConfirmModal` function accepts one argument with following properties:
+`openConfirmModal` function accepts one argument with the following properties:
 
-* `modalId` – modal id, defaults to random id, can be used to close modal programmatically
+* `modalId` – modal id, defaults to a random id, can be used to close the modal programmatically
 * `children` – additional modal content displayed before actions
-* `onCancel` – called when cancel button is clicked
-* `onConfirm` – called when confirm button is clicked
-* `closeOnConfirm` – should modal be closed when confirm button is clicked, defaults to `true`
-* `closeOnCancel` – should modal be closed when cancel button is clicked, defaults to `true`
+* `onCancel` – called when the cancel button is clicked
+* `onConfirm` – called when the confirm button is clicked
+* `closeOnConfirm` – should the modal be closed when the confirm button is clicked, defaults to `true`
+* `closeOnCancel` – should the modal be closed when the cancel button is clicked, defaults to `true`
 * `cancelProps` – cancel button props
 * `confirmProps` – confirm button props
-* `groupProps` – buttons [Group](https://mantine.dev/core/group/) props
-* `labels` – cancel and confirm buttons labels, can be defined on ModalsProvider
+* `groupProps` – buttons [Group](https://mantine.dev/llms/core-group.md) props
+* `labels` – cancel and confirm button labels, can be defined on ModalsProvider
 
-Using this properties you can customize confirm modal to match current context requirements:
-
-#### Example: confirmCustomize
+Using these properties, you can customize the confirm modal to match current context requirements:
 
 ```tsx
 import { Button, Text } from '@mantine/core';
@@ -104,7 +100,7 @@ function Demo() {
 ```
 
 
-To setup shared labels for confirm modals set `labels` on `ModalsProvider`:
+To set up shared labels for confirm modals, set `labels` on `ModalsProvider`:
 
 ```tsx
 import { ModalsProvider } from '@mantine/modals';
@@ -120,7 +116,7 @@ function Demo() {
 
 ## Context modals
 
-You can define any amount of modals in ModalsProvider context:
+You can define any number of modals in the ModalsProvider context:
 
 ```tsx
 import { Button, Text } from '@mantine/core';
@@ -150,10 +146,8 @@ function Demo() {
 }
 ```
 
-And then open one of these modals with `modals.openContextModal` function.
-`modals.openContextModal` function accepts 2 arguments: modal key (should match one defined on ModalsProvider) and modal props:
-
-#### Example: context
+And then open one of these modals with the `modals.openContextModal` function.
+The `modals.openContextModal` function accepts 2 arguments: modal key (should match one defined on ModalsProvider) and modal props:
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -182,7 +176,7 @@ function Demo() {
 
 ## Typesafe context modals
 
-By default `innerProps` and `modal` are not typesafe. You can add typesafety with a Typescript module declaration.
+By default, `innerProps` and `modal` are not typesafe. You can add type safety with a TypeScript module declaration.
 
 ```tsx
 const TestModal = ({
@@ -215,7 +209,7 @@ function Demo() {
 }
 ```
 
-Typesafe context modals will force you to use the correct types for `openContextModal`:
+Type-safe context modals will force you to use the correct types for `openContextModal`:
 
 ```tsx
 import { closeModal, openContextModal } from '@mantine/modals';
@@ -225,7 +219,7 @@ openContextModal({
   title: 'Test modal from context',
   innerProps: {
     modalBody:
-      'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      'This modal was defined in ModalsProvider, you can open it anywhere in your app with useModals hook',
   },
 });
 closeModal('demonstration');
@@ -233,9 +227,7 @@ closeModal('demonstration');
 
 ## Content modals
 
-With `modals.open` function you can open a modal with any content:
-
-#### Example: content
+With the `modals.open` function, you can open a modal with any content:
 
 ```tsx
 import { TextInput, Button } from '@mantine/core';
@@ -267,10 +259,8 @@ function Demo() {
 
 ## Multiple opened modals
 
-You can open multiple layers of modals. Every opened modal is added as first element in modals queue.
-To close all opened modals call `modals.closeAll()` function:
-
-#### Example: multipleSteps
+You can open multiple layers of modals. Every opened modal is added as the first element in the modals queue.
+To close all opened modals, call the `modals.closeAll()` function:
 
 ```tsx
 import { Button, Text } from '@mantine/core';
@@ -314,11 +304,9 @@ function Demo() {
 
 ## Modal props
 
-You can pass props down to the [Modal](https://mantine.dev/core/modal) component by adding them to the
-argument of every `modals.x` function. Example of setting `radius`, `size` and `withCloseButton`
+You can pass props down to the [Modal](https://mantine.dev/llms/core-modal.md) component by adding them to the
+argument of every `modals.x` function. Example of setting the `radius`, `size`, and `withCloseButton`
 props:
-
-#### Example: modalProps
 
 ```tsx
 import { Button, Text } from '@mantine/core';
@@ -328,7 +316,6 @@ function Demo() {
   const openModal = () => modals.openConfirmModal({
     title: 'Please confirm your action',
     size: 'sm',
-    radius: 'md',
     withCloseButton: false,
     children: (
       <Text size="sm">
@@ -346,13 +333,11 @@ function Demo() {
 ```
 
 
-## Dynamic Content and the modals manager
+## Dynamic content and the modals manager
 
-The Modals manager allows you to dynamically update the content and properties of both standard and context modals after they are opened.
+The modals manager allows you to dynamically update the content and properties of both standard and context modals after they are opened.
 
 To update regular modals, use the `modals.updateModal` function:
-
-#### Example: updateModal
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -389,12 +374,10 @@ function Demo() {
 
 Context modals can also be updated dynamically using `modals.updateContextModal`:
 
-#### Example: updateContextModal
-
 ```tsx
 import { Button, Text, Stack, Center, Loader } from '@mantine/core';
 import { modals, ContextModalProps, ModalsProvider } from '@mantine/modals';
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon } from '@phosphor-icons/react';
 
 const TestModal = ({
   context,
@@ -408,7 +391,7 @@ const TestModal = ({
         {innerProps.loading ? (
           <Loader size={32}/>
         ): (
-          <IconCheck size={23} color="var(--mantine-color-teal-6)" />
+          <CheckIcon size={23} color="var(--mantine-color-teal-6)" />
         )}
       </Center>
     </Stack>
@@ -461,3 +444,15 @@ function Demo() {
 }
 ```
 
+
+
+#### Props
+
+**Modals.Provider props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Your app |
+| labels | ConfirmLabels | - | Confirm modal labels |
+| modalProps | ModalSettings | - | Shared Modal component props, applied for every modal |
+| modals | Record<string, FC<ContextModalProps<any>>> | - | Predefined modals |

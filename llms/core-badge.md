@@ -5,27 +5,14 @@ Description: Display badge, pill or tag
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Badge } from '@mantine/core';
 
 function Demo() {
-  return <Badge>Badge</Badge>;
+  return <Badge variant="filled" color="blue" size="md" radius="xl">Badge</Badge>;
 }
 ```
 
-
-<Gradient component="Badge" />
-
-## Gradient
-
-Badge supports Mantine color format in color prop. Color can be specified as:
-- Mantine color name (e.g., 'blue')
-- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
-- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
-
-#### Example: gradient
 
 ```tsx
 import { Badge } from '@mantine/core';
@@ -35,7 +22,7 @@ function Demo() {
     <Badge
       size="xl"
       variant="gradient"
-      gradient={{ from: 'cyan', to: 'blue', deg: 90 }}
+      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
     >
       Gradient badge
     </Badge>
@@ -46,9 +33,7 @@ function Demo() {
 
 ## Rounded
 
-Set `circle` prop, to reduce horizontal padding and make badge width equal to its height:
-
-#### Example: rounded
+Set the `circle` prop to reduce horizontal padding and make the badge width equal to its height:
 
 ```tsx
 import { Badge, Group } from '@mantine/core';
@@ -79,14 +64,12 @@ function Demo() {
 
 ## Left and right sections
 
-#### Example: sections
-
 ```tsx
 import { Badge, Group } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconAt size={12} />;
+  const icon = <AtIcon size={12} />;
   return (
     <Group>
       <Badge leftSection={icon}>With left section</Badge>
@@ -99,9 +82,7 @@ function Demo() {
 
 ## Full width
 
-Set `fullWidth` to make badge span full width of its parent element:
-
-#### Example: fullWidth
+Set `fullWidth` to make the badge span the full width of its parent element:
 
 ```tsx
 import { Badge } from '@mantine/core';
@@ -112,179 +93,23 @@ function Demo() {
 ```
 
 
-## Customize variants colors
-
-You can customize colors for `Badge` and other components variants by adding
-[variantColorResolver](https://mantine.dev/theming/colors#colors-variant-resolver) to your theme.
-
-#### Example: variantColorsResolver
-
-```tsx
-import { IconPhoto, IconFingerprint, IconError404 } from '@tabler/icons-react';
-import {
-  Badge,
-  Group,
-  MantineProvider,
-  defaultVariantColorsResolver,
-  VariantColorsResolver,
-  parseThemeColor,
-  rgba,
-  darken,
-} from '@mantine/core';
-
-const variantColorResolver: VariantColorsResolver = (input) => {
-  const defaultResolvedColors = defaultVariantColorsResolver(input);
-  const parsedColor = parseThemeColor({
-    color: input.color || input.theme.primaryColor,
-    theme: input.theme,
-  });
-
-  // Override some properties for variant
-  if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {
-    return {
-      ...defaultResolvedColors,
-      color: 'var(--mantine-color-black)',
-      hoverColor: 'var(--mantine-color-black)',
-    };
-  }
-
-  // Completely override variant
-  if (input.variant === 'light') {
-    return {
-      background: rgba(parsedColor.value, 0.1),
-      hover: rgba(parsedColor.value, 0.15),
-      border: `1px solid ${parsedColor.value}`,
-      color: darken(parsedColor.value, 0.1),
-    };
-  }
-
-  // Add new variants support
-  if (input.variant === 'danger') {
-    return {
-      background: 'var(--mantine-color-red-9)',
-      hover: 'var(--mantine-color-red-8)',
-      color: 'var(--mantine-color-white)',
-      border: 'none',
-    };
-  }
-
-  return defaultResolvedColors;
-};
-
-function Demo() {
-  return (
-    <MantineProvider theme={{ variantColorResolver }}>
-      <Group>
-        <Badge color="lime.4" variant="filled">
-          Lime filled
-        </Badge>
-
-        <Badge color="orange" variant="light">
-          Orange light
-        </Badge>
-
-        <Badge variant="danger">
-          Danger
-        </Badge>
-      </Group>
-    </MantineProvider>
-  );
-}
-```
-
-
-<AutoContrast component="Badge" />
-
-## autoContrast
-
-Badge supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on Badge or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
-
-Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
-
-#### Example: autoContrast
-
-```tsx
-import { Badge, Group } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Group>
-      <Badge size="lg" color="lime.4">
-        Default
-      </Badge>
-      <Badge autoContrast size="lg" color="lime.4">
-        Auto contrast
-      </Badge>
-    </Group>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Badge } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
-
-function Demo() {
-  const icon = <IconAt size={12} />;
-
-  return (
-    <Badge leftSection={icon} rightSection={icon}>
-      Badge component
-    </Badge>
-  );
-}
-```
-
-
-<Polymorphic defaultElement="div" changeToElement="a" component="Badge" withNext />
-
-## Polymorphic component
-
-Badge is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { Badge } from '@mantine/core';
-
-function Demo() {
-  return <Badge component="a" />;
-}
-```
-
-You can also use components in component prop, for example, Next.js Link:
-
-```tsx
-import Link from 'next/link';
-import { Badge } from '@mantine/core';
-
-function Demo() {
-  return <Badge component={Link} href="/" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, BadgeProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
 
 #### Props
 
+**Badge props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
 | children | React.ReactNode | - | Main badge content |
-| circle | boolean | - | If set, badge <code>min-width</code> becomes equal to its <code>height</code> and horizontal padding is removed |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
+| circle | boolean | - | If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
 | fullWidth | boolean | - | Determines whether Badge should take 100% of its parent width |
-| gradient | MantineGradient | - | Gradient configuration used when <code>variant=\"gradient\"</code> |
+| gradient | MantineGradient | - | Gradient configuration used when `variant=\"gradient\"` |
 | leftSection | React.ReactNode | - | Content displayed on the left side of the badge label |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
 | rightSection | React.ReactNode | - | Content displayed on the right side of the badge label |
-| size | MantineSize | (string & {}) | - | Controls <code>font-size</code>, <code>height</code> and horizontal <code>padding</code> |
+| size | MantineSize | - | Controls `font-size`, `height` and horizontal `padding` |
 
 
 #### Styles API
@@ -316,5 +141,5 @@ Badge component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-block | - | - |
+| root | data-block | `fullWidth` prop is set | - |
 | section | data-position | - | Section position: left or right |

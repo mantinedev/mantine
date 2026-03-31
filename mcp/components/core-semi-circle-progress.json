@@ -1,0 +1,153 @@
+{
+  "id": "core-semi-circle-progress",
+  "name": "SemiCircleProgress",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/semi-circle-progress",
+  "description": "Represent progress with semi circle diagram",
+  "propsCount": 10,
+  "llmUrl": "https://mantine.dev/llms/core-semi-circle-progress.md",
+  "componentDataUrl": "/mcp/components/core-semi-circle-progress.json",
+  "searchText": "semicircleprogress represent progress with semi circle diagram @mantine/core /core/semi-circle-progress emptysegmentcolor filldirection filledsegmentcolor label labelposition orientation size thickness transitionduration value",
+  "source": "@mantine/core/src/components/SemiCircleProgress/SemiCircleProgress.tsx",
+  "docs": "core/semi-circle-progress.mdx",
+  "markdown": "# SemiCircleProgress\nPackage: @mantine/core\nImport: import { SemiCircleProgress } from '@mantine/core';\nDescription: Represent progress with semi circle diagram\n\n## Usage\n\n```tsx\nimport { SemiCircleProgress } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <SemiCircleProgress\n       fillDirection=\"left-to-right\" orientation=\"up\" filledSegmentColor=\"blue\" size={200} thickness={12} value={40}\n      label=\"Label\"\n    />\n  );\n}\n```\n\n\n## Change empty segment color\n\nUse `emptySegmentColor` prop to change color of empty segment,\nit accepts key of `theme.colors` or any valid CSS color value:\n\n```tsx\nimport { SemiCircleProgress } from '@mantine/core';\n\nfunction Demo() {\n  return <SemiCircleProgress value={30} emptySegmentColor=\"var(--mantine-color-dimmed)\" />;\n}\n```\n\n\n## Change label position\n\nBy default, the label is displayed at the bottom of the component,\nyou can change its position to `center` by using `labelPosition` prop:\n\n```tsx\nimport { SemiCircleProgress } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <SemiCircleProgress value={30} label=\"Bottom\" mb=\"xl\" />\n      <SemiCircleProgress value={30} label=\"Center\" labelPosition=\"center\" />\n    </>\n  );\n}\n```\n\n\n## Filled segment transition\n\nBy default, transitions are disabled, to enable them, set `transitionDuration` prop\nto a number of milliseconds:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, SemiCircleProgress } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState(30);\n\n  return (\n    <>\n      <SemiCircleProgress value={value} transitionDuration={250} label={`${value}%`} />\n\n      <Button onClick={() => setValue(Math.floor(Math.random() * 100))} mt=\"xl\" fullWidth>\n        Set random value\n      </Button>\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**SemiCircleProgress props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| emptySegmentColor | MantineColor | - | Key of `theme.colors` or any valid CSS color value |\n| fillDirection | \"right-to-left\" \\| \"left-to-right\" | - | Direction from which the circle is filled |\n| filledSegmentColor | MantineColor | - | Key of `theme.colors` or any valid CSS color value |\n| label | React.ReactNode | - | Label rendered inside the circle |\n| labelPosition | \"center\" \\| \"bottom\" | - | Label position relative to the circle center |\n| orientation | \"up\" \\| \"down\" | - | Orientation of the circle |\n| size | number | - | Width of the component and diameter of the full circle in px. The visible SVG height will be size/2 |\n| thickness | number | - | Stroke width of the circle segments in px |\n| transitionDuration | number | - | Transition duration for the filled segment progress changes in ms. Does not affect color transitions |\n| value | number | required | Progress value from `0` to `100` |\n\n\n#### Styles API\n\nSemiCircleProgress component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**SemiCircleProgress selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-SemiCircleProgress-root | Root element |\n| svg | .mantine-SemiCircleProgress-svg | Root svg element |\n| emptySegment | .mantine-SemiCircleProgress-emptySegment | Empty circle segment |\n| filledSegment | .mantine-SemiCircleProgress-filledSegment | Filled circle segment |\n| label | .mantine-SemiCircleProgress-label | Label element |\n\n**SemiCircleProgress CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --scp-empty-segment-color | Color of the empty segment |\n| root | --scp-filled-segment-color | Color of the filled segment |\n| root | --scp-thickness | Controls `strokeWidth` of the circle |\n| root | --scp-transition-duration | Controls transition duration of the filled segment |\n\n**SemiCircleProgress data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| label | data-position | - | Value of `labelPosition` prop |\n| label | data-orientation | - | Value of `orientation` prop |\n",
+  "props": [
+    {
+      "name": "emptySegmentColor",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color value",
+      "required": false,
+      "defaultValue": "'gray.2' in light mode, 'dark.4' in dark mode",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "fillDirection",
+      "description": "Direction from which the circle is filled",
+      "required": false,
+      "defaultValue": "'left-to-right'",
+      "type": {
+        "name": "\"right-to-left\" | \"left-to-right\"",
+        "raw": "\"right-to-left\" | \"left-to-right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"right-to-left\""
+          },
+          {
+            "value": "\"left-to-right\""
+          }
+        ]
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "filledSegmentColor",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color value",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "label",
+      "description": "Label rendered inside the circle",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "labelPosition",
+      "description": "Label position relative to the circle center",
+      "required": false,
+      "defaultValue": "'bottom'",
+      "type": {
+        "name": "\"center\" | \"bottom\"",
+        "raw": "\"center\" | \"bottom\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"center\""
+          },
+          {
+            "value": "\"bottom\""
+          }
+        ]
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "orientation",
+      "description": "Orientation of the circle",
+      "required": false,
+      "defaultValue": "'up'",
+      "type": {
+        "name": "\"up\" | \"down\"",
+        "raw": "\"up\" | \"down\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"up\""
+          },
+          {
+            "value": "\"down\""
+          }
+        ]
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "size",
+      "description": "Width of the component and diameter of the full circle in px. The visible SVG height will be size/2",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "thickness",
+      "description": "Stroke width of the circle segments in px",
+      "required": false,
+      "defaultValue": "12",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "transitionDuration",
+      "description": "Transition duration for the filled segment progress changes in ms. Does not affect color transitions",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SemiCircleProgress"
+    },
+    {
+      "name": "value",
+      "description": "Progress value from <code>0</code> to <code>100</code>",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SemiCircleProgress"
+    }
+  ]
+}

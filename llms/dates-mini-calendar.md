@@ -5,8 +5,6 @@ Description: Compact calendar to display a small number of days in a row
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { useState } from 'react';
 import { MiniCalendar } from '@mantine/dates';
@@ -23,8 +21,6 @@ function Demo() {
 Use `numberOfDays` prop to control how many days are displayed at once.
 The default value is `7`.
 
-#### Example: numberOfDays
-
 ```tsx
 import { MiniCalendar } from '@mantine/dates';
 
@@ -37,8 +33,6 @@ function Demo() {
 ## getDayProps
 
 Use `getDayProps` to add custom props to days, for example, assign styles to weekends:
-
-#### Example: getDayProps
 
 ```tsx
 import dayjs from 'dayjs';
@@ -63,8 +57,6 @@ function Demo() {
 
 Use `minDate` and `maxDate` props to limit date selection:
 
-#### Example: minMax
-
 ```tsx
 import { useState } from 'react';
 import { MiniCalendar } from '@mantine/dates';
@@ -88,9 +80,7 @@ function Demo() {
 ## Localization
 
 You can change localization both on component level with `locale` prop and
-globally with [DatesProvider](https://mantine.dev/dates/getting-started).
-
-#### Example: locale
+globally with [DatesProvider](https://mantine.dev/llms/dates-getting-started.md).
 
 ```tsx
 import 'dayjs/locale/ru';
@@ -122,24 +112,26 @@ function Demo() {
 
 #### Props
 
+**MiniCalendar props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| date | string | Date | - | Controlled component date value, start date of the interval |
-| defaultDate | string | Date | - | Uncontrolled component default value, start date of the interval |
+| date | string \| Date | - | Controlled component date value, start date of the interval |
+| defaultDate | string \| Date | - | Uncontrolled component default value, start date of the interval |
 | getDayProps | (date: string) => Record<string, any> | - | Props passed down to the day component |
 | locale | string | - | dayjs locale used for formatting |
-| maxDate | string | Date | - | Maximum date that can be selected, date object or date string in <code>YYYY-MM-DD</code> format |
-| minDate | string | Date | - | Minimum date that can be selected, date object or date string in <code>YYYY-MM-DD</code> format |
+| maxDate | string \| Date | - | Maximum date that can be selected, date object or date string in `YYYY-MM-DD` format |
+| minDate | string \| Date | - | Minimum date that can be selected, date object or date string in `YYYY-MM-DD` format |
 | monthLabelFormat | string | - | Dayjs format string for month label |
-| nextControlProps | Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & DataAttributes | - | Props passed to next control button |
+| nextControlProps | React.ComponentProps<'button'> | - | Props passed to next control button |
 | numberOfDays | number | - | Number of days to display in the calendar |
-| onChange | (date: string) => void | - | Called with date in <code>YYYY-MM-DD</code> format when date changes |
-| onDateChange | (date: string) => void | - | Called with date in <code>YYYY-MM-DD</code> format when date internal changes |
+| onChange | (date: string) => void | - | Called with date in `YYYY-MM-DD` format when date changes |
+| onDateChange | (date: string) => void | - | Called with date in `YYYY-MM-DD` format when date internal changes |
 | onNext | () => void | - | Called when the next button is clicked |
 | onPrevious | () => void | - | Called when the previous button is clicked |
-| previousControlProps | Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & DataAttributes | - | Props passed to previous control button |
+| previousControlProps | React.ComponentProps<'button'> | - | Props passed to previous control button |
 | size | MantineSize | - | Component size |
-| value | string | Date | null | - | Selected date, controlled value |
+| value | string \| Date \| null | - | Selected date, controlled value |
 
 
 #### Styles API
@@ -167,7 +159,7 @@ MiniCalendar component supports Styles API. With Styles API, you can customize s
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| control | disabled | Next/previous range is after  | - |
-| control | direction | - | - |
-| day | selected | The day matches the  | - |
-| day | disabled | The day is before  | - |
+| control | disabled | Next/previous range is after `maxDate` or before `minDate` | - |
+| control | direction | - | `previous` or `next` |
+| day | selected | The day matches the `value` | - |
+| day | disabled | The day is before `minDate` or after `maxDate` | - |

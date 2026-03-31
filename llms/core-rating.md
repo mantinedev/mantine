@@ -5,13 +5,11 @@ Description: Pick and display rating
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Rating } from '@mantine/core';
 
 function Demo() {
-  return <Rating defaultValue={2} />
+  return <Rating defaultValue={2} color="yellow" size="md" count={5} highlightSelectedOnly={false} />
 }
 ```
 
@@ -28,9 +26,34 @@ function Demo() {
 }
 ```
 
-## Read only
+## Uncontrolled
 
-#### Example: readOnly
+`Rating` can be used with uncontrolled forms the same way as a native input element.
+Set the `name` attribute to include rating value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `Rating` with `FormData`:
+
+```tsx
+import { Rating } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Rating value:', formData.get('rating'));
+      }}
+    >
+      <Rating name="rating" defaultValue={0} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Read only
 
 ```tsx
 import { Rating } from '@mantine/core';
@@ -41,9 +64,37 @@ function Demo() {
 ```
 
 
-## Fractions
+## Allow clear
 
-#### Example: fractions
+Set `allowClear` prop to allow users to reset the rating to 0 by clicking the same rating value again.
+This is useful when you want to give users the ability to undo their rating selection:
+
+```tsx
+import { useState } from 'react';
+import { Group, Rating, Stack, Text } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(3);
+
+  return (
+    <Stack gap="md" align="center">
+      <Text size="sm">Click the same star to clear the rating</Text>
+      <Rating value={value} onChange={setValue} allowClear />
+      <Group gap="xs">
+        <Text size="sm" c="dimmed">
+          Current rating:
+        </Text>
+        <Text size="sm" fw={600}>
+          {value === 0 ? 'Not rated' : value}
+        </Text>
+      </Group>
+    </Stack>
+  );
+}
+```
+
+
+## Fractions
 
 ```tsx
 import { Rating, Group, Stack } from '@mantine/core';
@@ -71,31 +122,21 @@ function Demo() {
 
 ## Custom symbol
 
-#### Example: symbol
-
 ```tsx
 import { Rating } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons-react';
+import { SunIcon, MoonIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  return <Rating emptySymbol={<IconSun size={16} />} fullSymbol={<IconMoon size={16} />} />;
+  return <Rating emptySymbol={<SunIcon size={16} />} fullSymbol={<MoonIcon size={16} />} />;
 }
 ```
 
 
 ## Symbols for each item
 
-#### Example: customSymbol
-
 ```tsx
 import { Rating } from '@mantine/core';
-import {
-  IconMoodCry,
-  IconMoodSad,
-  IconMoodSmile,
-  IconMoodHappy,
-  IconMoodCrazyHappy,
-} from '@tabler/icons-react';
+import { SmileySadIcon, SmileyNervousIcon, SmileyIcon, SmileyMehIcon, SmileyWinkIcon } from '@phosphor-icons/react';
 
 const getIconStyle = (color?: string) => ({
   width: 24,
@@ -108,15 +149,15 @@ const getEmptyIcon = (value: number) => {
 
   switch (value) {
     case 1:
-      return <IconMoodCry style={iconStyle} />;
+      return <SmileySadIcon style={iconStyle} />;
     case 2:
-      return <IconMoodSad style={iconStyle} />;
+      return <SmileyNervousIcon style={iconStyle} />;
     case 3:
-      return <IconMoodSmile style={iconStyle} />;
+      return <SmileyIcon style={iconStyle} />;
     case 4:
-      return <IconMoodHappy style={iconStyle} />;
+      return <SmileyMehIcon style={iconStyle} />;
     case 5:
-      return <IconMoodCrazyHappy style={iconStyle} />;
+      return <SmileyWinkIcon style={iconStyle} />;
     default:
       return null;
   }
@@ -125,15 +166,15 @@ const getEmptyIcon = (value: number) => {
 const getFullIcon = (value: number) => {
   switch (value) {
     case 1:
-      return <IconMoodCry style={getIconStyle('red')} />;
+      return <SmileySadIcon style={getIconStyle('red')} />;
     case 2:
-      return <IconMoodSad style={getIconStyle('orange')} />;
+      return <SmileyNervousIcon style={getIconStyle('orange')} />;
     case 3:
-      return <IconMoodSmile style={getIconStyle('yellow')} />;
+      return <SmileyIcon style={getIconStyle('yellow')} />;
     case 4:
-      return <IconMoodHappy style={getIconStyle('lime')} />;
+      return <SmileyMehIcon style={getIconStyle('lime')} />;
     case 5:
-      return <IconMoodCrazyHappy style={getIconStyle('green')} />;
+      return <SmileyWinkIcon style={getIconStyle('green')} />;
     default:
       return null;
   }
@@ -148,21 +189,24 @@ function Demo() {
 
 #### Props
 
+**Rating props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | Key of <code>theme.colors</code> or any CSS color value |
-| count | number | - | Number of controls |
+| allowClear | boolean | - | When true, clicking the same rating value clears the rating to 0, default is false |
+| color | MantineColor | - | Key of theme.colors or any CSS color value, default is 'yellow' |
+| count | number | - | Number of rating items (stars), default is 5 |
 | defaultValue | number | - | Uncontrolled component default value |
-| emptySymbol | ReactNode | ((value: number) => ReactNode) | - | Icon displayed when the symbol is empty |
-| fractions | number | - | Number of fractions each item can be divided into |
-| fullSymbol | ReactNode | ((value: number) => ReactNode) | - | Icon displayed when the symbol is full |
-| getSymbolLabel | (index: number) => string | - | A function to assign <code>aria-label</code> of the the control at index given in the argument. If not specified, control index is used as <code>aria-label</code>. |
-| highlightSelectedOnly | boolean | - | If set, only the selected symbol changes to full symbol when selected |
-| name | string | - | <code>name</code> attribute passed down to all inputs. By default, <code>name</code> is generated randomly. |
+| emptySymbol | ReactNode \| ((value: number) => ReactNode) | - | Icon displayed for unselected rating items. Can be a function that receives the rating value. |
+| fractions | number | - | Number of fractions each item can be divided into, default is 1 |
+| fullSymbol | ReactNode \| ((value: number) => ReactNode) | - | Icon displayed for selected rating items. Can be a function that receives the rating value. |
+| getSymbolLabel | (index: number) => string | - | Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value) |
+| highlightSelectedOnly | boolean | - | When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false |
+| name | string | - | Name attribute for form submission. If not provided, a unique id will be generated. |
 | onChange | (value: number) => void | - | Called when value changes |
-| onHover | (value: number) => void | - | Called when one of the controls is hovered |
-| readOnly | boolean | - | If set, the user cannot interact with the component |
-| size | number | MantineSize | (string & {}) | - | Controls component size |
+| onHover | (value: number) => void | - | Called when rating item is hovered. Receives -1 when hover ends. |
+| readOnly | boolean | - | When true, rating cannot be changed by user interaction, default is false |
+| size | MantineSize \| number | - | Controls component size |
 | value | number | - | Controlled component value |
 
 
@@ -175,23 +219,23 @@ Rating component supports Styles API. With Styles API, you can customize styles 
 | Selector | Static selector | Description |
 |----------|----------------|-------------|
 | root | .mantine-Rating-root | Root element |
-| starSymbol | .mantine-Rating-starSymbol | Default star icon |
+| starSymbol | .mantine-Rating-starSymbol | Symbol element (star icon by default, or custom symbol) |
 | input | .mantine-Rating-input | Item input, hidden by default |
 | label | .mantine-Rating-label | Item label, used to display star icon |
-| symbolBody | .mantine-Rating-symbolBody | Wrapper around star icon for centering |
-| symbolGroup | .mantine-Rating-symbolGroup | Group of symbols, used to display fractions |
+| symbolBody | .mantine-Rating-symbolBody | Wrapper around star icon, used for clip-path masking in fractional ratings |
+| symbolGroup | .mantine-Rating-symbolGroup | Container for all fractional symbols of a single rating unit |
 
 **Rating CSS variables**
 
 | Selector | Variable | Description |
 |----------|----------|-------------|
 | root | --rating-color | Controls filled star icon color |
-| root | --rating-size | Controls star icon width and height |
 
 **Rating data attributes**
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| label | data-read-only | - | - |
+| label | data-read-only | `readOnly` prop is set | - |
 | input | data-active | Input value is the same as component value | - |
+| symbolGroup | data-active | Symbol group is being hovered | - |
 | starSymbol | data-filled | Associated input value is less or equal to the component value | - |

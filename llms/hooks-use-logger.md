@@ -4,9 +4,20 @@ Import: import { UseLogger } from '@mantine/hooks';
 
 ## Usage
 
-`use-logger` logs given values to the console each time component renders.
-Open devtools to see state changes in console:
+The `use-logger` hook logs given values to the console each time the component renders.
+Open DevTools to see state changes in the console:
 
+```tsx
+import { useState } from 'react';
+import { useLogger } from '@mantine/hooks';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const [count, setCount] = useState(0);
+  useLogger('Demo', [{ count, hello: 'world' }]);
+  return <Button onClick={() => setCount((c) => c + 1)}>Update state ({count})</Button>;
+}
+```
 
 
 ## Definition

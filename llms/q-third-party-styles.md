@@ -1,0 +1,76 @@
+# Can I use Mantine with Emotion/styled-components/tailwindcss?
+Learn about limitations of third-party styles
+
+## I prefer a third-party styling solution, can I use Mantine with it?
+
+All Mantine components are fully compatible with any third-party styling solution and native CSS.
+There are two main strategies to apply styles with a third-party library:
+
+* `className`, `classNames`, `style` and `styles` props
+* with static selectors, for example `.mantine-Text-root`
+
+Example of applying styles with a utility CSS library:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      classNames={{
+        root: 'mt-4',
+        input: 'bg-red-500 text-white',
+      }}
+    />
+  );
+}
+```
+
+Example of applying styles with global CSS:
+
+```css
+/* styles.css */
+
+/* Note that these styles are not scoped and
+   will be applied to all TextInput components */
+.mantine-TextInput-root {
+  margin-top: 0.8rem;
+}
+
+.mantine-TextInput-input {
+  background-color: var(--mantine-color-red-filled);
+  color: var(--mantine-color-white);
+}
+```
+
+You can combine both approaches to achieve the desired results. For example,
+`@emotion/styled` and `styled-components` packages will pass the `className` prop to
+a given component, and you can use static selectors to style inner elements:
+
+```tsx
+import styled from '@emotion/styled';
+import { Slider } from '@mantine/core';
+
+const StyledSlider = styled(Slider)`
+  & .mantine-Slider-bar {
+    background-color: var(--mantine-color-pink-5);
+  }
+
+  & .mantine-Slider-thumb {
+    border-color: var(--mantine-color-pink-5);
+    background-color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
+
+function Demo() {
+  return <StyledSlider defaultValue={40} />;
+}
+```
+
+## Is there any specific setup for Tailwind CSS?
+
+Usually it is enough to [disable preflight](https://tailwindcss.com/docs/preflight#disabling-preflight)
+to prevent global styles from affecting Mantine components.
+If preflight is required in your project, follow one of the guides in the [GitHub discussion](https://github.com/orgs/mantinedev/discussions/1672).

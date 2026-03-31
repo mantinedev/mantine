@@ -5,14 +5,12 @@ Description: Display element at the corner of another element
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Indicator, Avatar } from '@mantine/core';
 
 function Demo() {
   return (
-    <Indicator>
+    <Indicator color="blue" position="top-end" radius="xl" size={10} disabled={false} withBorder={false} processing={false}>
       <Avatar
         size="lg"
         radius="sm"
@@ -26,11 +24,9 @@ function Demo() {
 
 ## Inline
 
-When the target element has a fixed width, set `inline` prop to add `display: inline-block;` styles to
-Indicator container. Alternatively, you can set width and height with `style` prop if you still want the root
+When the target element has a fixed width, set the `inline` prop to add `display: inline-block;` styles to
+the Indicator container. Alternatively, you can set width and height with the `style` prop if you still want the root
 element to keep `display: block`.
-
-#### Example: inline
 
 ```tsx
 import { Avatar, Indicator } from '@mantine/core';
@@ -51,10 +47,9 @@ function Demo() {
 
 ## Offset
 
-Set `offset` to change indicator position. It is useful when Indicator component is
-used with children that have border-radius:
-
-#### Example: offset
+Set `offset` to change the indicator position. It is useful when the Indicator component is
+used with children that have border-radius. You can provide a number for uniform offset or an
+object with `x` and `y` properties for separate horizontal and vertical offsets:
 
 ```tsx
 import { Avatar, Indicator } from '@mantine/core';
@@ -74,8 +69,6 @@ function Demo() {
 
 
 ## Processing animation
-
-#### Example: processing
 
 ```tsx
 import { Avatar, Indicator } from '@mantine/core';
@@ -97,8 +90,6 @@ function Demo() {
 ## Disabled
 
 Set `disabled` to hide the indicator:
-
-#### Example: disabled
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -123,23 +114,147 @@ function Demo() {
 ```
 
 
+## Max value
+
+Set `maxValue` prop to display `{maxValue}+` when the label exceeds the maximum value. This is useful for
+notification counters that should not show exact large numbers:
+
+```tsx
+import { Avatar, Group, Indicator } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <Indicator inline label={50} maxValue={99}>
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+        />
+      </Indicator>
+
+      <Indicator inline label={100} maxValue={99}>
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png"
+        />
+      </Indicator>
+
+      <Indicator inline label={1000} maxValue={999}>
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png"
+        />
+      </Indicator>
+    </Group>
+  );
+}
+```
+
+
+## Show zero
+
+By default, the indicator is displayed when the label is `0`. Set `showZero={false}` to hide the indicator
+when the label is `0`:
+
+```tsx
+import { Avatar, Group, Indicator } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <Indicator inline label={0}>
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+        />
+      </Indicator>
+
+      <Indicator inline label={0} showZero={false}>
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png"
+        />
+      </Indicator>
+    </Group>
+  );
+}
+```
+
+
+## Auto contrast
+
+Set `autoContrast` prop to automatically adjust text color based on the background color to ensure
+readable contrast:
+
+```tsx
+import { Avatar, Group, Indicator } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <Indicator inline label="99" color="lime.4">
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+        />
+      </Indicator>
+
+      <Indicator inline label="99" color="lime.4" autoContrast>
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png"
+        />
+      </Indicator>
+
+      <Indicator inline label="99" color="cyan.9">
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png"
+        />
+      </Indicator>
+
+      <Indicator inline label="99" color="cyan.9" autoContrast>
+        <Avatar
+          size="lg"
+          radius="xl"
+          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png"
+        />
+      </Indicator>
+    </Group>
+  );
+}
+```
+
+
 
 #### Props
 
+**Indicator props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color value |
-| disabled | boolean | - | If set, the indicator is hidden |
-| inline | boolean | - | Determines whether the indicator container should be an inline element |
+| autoContrast | boolean | - | If set, adjusts text color based on background color |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color value |
+| disabled | boolean | - | Hides the indicator when set |
+| inline | boolean | - | Changes container display from block to inline-block, use when wrapping elements with fixed width |
 | label | React.ReactNode | - | Label displayed inside the indicator, for example, notification count |
-| offset | number | - | Indicator offset relative to the target element, usually used for elements with border-radius |
-| position | "bottom-end" | "bottom-start" | "top-end" | "top-start" | "bottom-center" | "top-center" | "middle-center" | "middle-end" | "middle-start" | - | Indicator position relative to the target element |
+| maxValue | number | - | Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` |
+| offset | number \| { x: number; y: number; } | - | Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with `x` and `y` properties for separate horizontal and vertical offsets |
+| position | "bottom-end" \| "bottom-start" \| "top-end" \| "top-start" \| "bottom-center" \| "top-center" \| "middle-center" \| "middle-end" \| "middle-start" | - | Indicator position relative to the target element |
 | processing | boolean | - | If set, the indicator has processing animation |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
-| size | string | number | - | Indicator width and height |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| showZero | boolean | - | Determines whether indicator with label `0` should be displayed |
+| size | string \| number | - | Indicator width and height |
 | withBorder | boolean | - | Adds border to the root element |
-| zIndex | string | number | - | Indicator z-index |
+| zIndex | string \| number | - | Indicator z-index |
 
 
 #### Styles API
@@ -173,7 +288,7 @@ Indicator component supports Styles API. With Styles API, you can customize styl
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-inline | - | - |
-| indicator | data-with-label | - | - |
-| indicator | data-with-border | - | - |
-| indicator | data-processing | - | - |
+| root | data-inline | `inline` prop is set | - |
+| indicator | data-with-label | `label` prop is set | - |
+| indicator | data-with-border | `withBorder` prop is set | - |
+| indicator | data-processing | `processing` prop is set | - |

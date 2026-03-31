@@ -1,0 +1,97 @@
+{
+  "id": "core-alert",
+  "name": "Alert",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/alert",
+  "description": "Attract user attention with important static message",
+  "propsCount": 8,
+  "llmUrl": "https://mantine.dev/llms/core-alert.md",
+  "componentDataUrl": "/mcp/components/core-alert.json",
+  "searchText": "alert attract user attention with important static message @mantine/core /core/alert autocontrast closebuttonlabel color icon onclose radius title withclosebutton",
+  "source": "@mantine/core/src/components/Alert/Alert.tsx",
+  "docs": "core/alert.mdx",
+  "markdown": "# Alert\nPackage: @mantine/core\nImport: import { Alert } from '@mantine/core';\nDescription: Attract user attention with important static message\n\n## Accessibility\n\n* Root element role set to `alert`\n* `aria-describedby` set to body element id, `aria-labelledby` set to title element id if `title` is provided\n* Set `closeButtonLabel` prop to make close button accessible\n\n```tsx\nimport { Alert } from '@mantine/core';\n\nfunction Invalid() {\n  // -> not ok\n  return <Alert withCloseButton />;\n}\n\nfunction Valid() {\n  // -> ok\n  return <Alert withCloseButton closeButtonLabel=\"Dismiss\" />;\n}\n\nfunction AlsoValid() {\n  // -> ok, without close button, closeButtonLabel is not needed\n  return <Alert />;\n}\n```\n\n\n#### Props\n\n**Alert props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| closeButtonLabel | string | - | Close button `aria-label` |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| icon | React.ReactNode | - | Icon displayed next to the title |\n| onClose | () => void | - | Called when the close button is clicked |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| title | React.ReactNode | - | Alert title |\n| withCloseButton | boolean | - | Determines whether close button should be displayed |\n\n\n#### Styles API\n\nAlert component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Alert selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Alert-root | Root element |\n| wrapper | .mantine-Alert-wrapper | Wrapper around `body` and `icon` |\n| body | .mantine-Alert-body | Body element, contains `title` and `message` |\n| title | .mantine-Alert-title | Title element, contains `label` and `icon` |\n| label | .mantine-Alert-label | Title label |\n| message | .mantine-Alert-message | Alert message |\n| icon | .mantine-Alert-icon | Icon element |\n| closeButton | .mantine-Alert-closeButton | Close button |\n\n**Alert CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --alert-bd | Controls `border` |\n| root | --alert-bg | Controls `background` |\n| root | --alert-color | Controls `color` |\n| root | --alert-radius | Controls `border-radius` |\n\n**Alert data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| title | data-with-close-button | `withCloseButton` prop is set | - |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Alert"
+    },
+    {
+      "name": "closeButtonLabel",
+      "description": "Close button <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Alert"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Alert"
+    },
+    {
+      "name": "icon",
+      "description": "Icon displayed next to the title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Alert"
+    },
+    {
+      "name": "onClose",
+      "description": "Called when the close button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Alert"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Alert"
+    },
+    {
+      "name": "title",
+      "description": "Alert title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Alert"
+    },
+    {
+      "name": "withCloseButton",
+      "description": "Determines whether close button should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Alert"
+    }
+  ]
+}

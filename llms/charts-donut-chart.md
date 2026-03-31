@@ -5,9 +5,7 @@ Description: Donut chart component
 
 ## Usage
 
-`DonutChart` is based on [PieChart recharts component](https://recharts.org/en-US/api/PieChart):
-
-#### Example: usage
+`DonutChart` is based on the [PieChart recharts component](https://recharts.org/en-US/api/PieChart):
 
 ```tsx
 // Demo.tsx
@@ -30,9 +28,7 @@ export const data = [
 
 ## Segments labels
 
-Set `withLabels` prop to display labels next to each segment:
-
-#### Example: withLabels
+Set the `withLabels` prop to display labels next to each segment:
 
 ```tsx
 // Demo.tsx
@@ -40,7 +36,7 @@ import { DonutChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <DonutChart withLabels data={data} />;
+  return <DonutChart withLabelsLine={true} labelsType="value" withLabels data={data} />;
 }
 
 // data.ts
@@ -55,11 +51,9 @@ export const data = [
 
 ## Size and thickness
 
-Set `size` prop to control width and height of the chart. Note that if `withLabels` prop is set,
+Set the `size` prop to control the width and height of the chart. Note that if the `withLabels` prop is set,
 the chart height is automatically increased by 80px to make room for labels. You can override
-this behavior by setting `h` [style prop](https://mantine.dev/styles/style-props).
-
-#### Example: size
+this behavior by setting the `h` [style prop](https://mantine.dev/llms/styles-style-props.md).
 
 ```tsx
 // Demo.tsx
@@ -67,7 +61,7 @@ import { DonutChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <DonutChart data={data} />;
+  return <DonutChart size={160} thickness={20} data={data} />;
 }
 
 // data.ts
@@ -82,9 +76,7 @@ export const data = [
 
 ## Padding angle
 
-Use `paddingAngle` prop to control the space between segments:
-
-#### Example: paddingAngle
+Use the `paddingAngle` prop to control the space between segments:
 
 ```tsx
 // Demo.tsx
@@ -92,7 +84,7 @@ import { DonutChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <DonutChart data={data} />;
+  return <DonutChart paddingAngle={10} data={data} />;
 }
 
 // data.ts
@@ -107,11 +99,9 @@ export const data = [
 
 ## Segment color
 
-You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
-
-#### Example: color
 
 ```tsx
 import { DonutChart } from '@mantine/charts';
@@ -120,7 +110,7 @@ function Demo() {
   return (
     <DonutChart
       data={[
-        { name: 'USA', value: 400, color: '' },
+        { name: 'USA', value: 400, color: 'blue' },
         { name: 'Other', value: 200, color: 'gray.6' },
       ]}
     />
@@ -133,8 +123,6 @@ function Demo() {
 
 By default, the tooltip displays data for all segments when hovered over any segment.
 To display data only for the hovered segment, set `tooltipDataSource="segment"`:
-
-#### Example: tooltipDataSource
 
 ```tsx
 // Demo.tsx
@@ -176,8 +164,6 @@ export const data = [
 
 To remove the tooltip, set `withTooltip={false}`:
 
-#### Example: noTooltip
-
 ```tsx
 // Demo.tsx
 import { DonutChart } from '@mantine/charts';
@@ -199,10 +185,8 @@ export const data = [
 
 ## Chart label
 
-To display a label in the center of the chart, use `chartLabel` prop.
+To display a label in the center of the chart, use the `chartLabel` prop.
 It accepts a string or a number:
-
-#### Example: chartLabel
 
 ```tsx
 // Demo.tsx
@@ -225,10 +209,8 @@ export const data = [
 
 ## Start and end angle
 
-Use `startAngle` and `endAngle` props to control the start and end angle of the chart.
+Use the `startAngle` and `endAngle` props to control the start and end angle of the chart.
 For example, to display a half-circle chart, set `startAngle={180}` and `endAngle={0}`:
-
-#### Example: angle
 
 ```tsx
 // Demo.tsx
@@ -249,14 +231,12 @@ export const data = [
 ```
 
 
-Note that even when `startAngle` and `endAngle` props are set, the chart still takes
-the same amount of space as if it was a full circle.
+Note that even when the `startAngle` and `endAngle` props are set, the chart still takes
+the same amount of space as if it were a full circle.
 
 ## Segments stroke
 
-Use `strokeWidth` prop to control the width of the stroke around each segment:
-
-#### Example: strokeWidth
+Use the `strokeWidth` prop to control the width of the stroke around each segment:
 
 ```tsx
 // Demo.tsx
@@ -264,7 +244,7 @@ import { DonutChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <DonutChart data={data} />;
+  return <DonutChart strokeWidth={1} data={data} />;
 }
 
 // data.ts
@@ -277,7 +257,7 @@ export const data = [
 ```
 
 
-To change color of the stroke, use `strokeColor` prop. You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+To change the color of the stroke, use the `strokeColor` prop. You can reference colors from the [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
 
@@ -289,11 +269,9 @@ function Demo() {
 }
 ```
 
-By default, segments stroke color is the same as the background color of the body element
+By default, the segments stroke color is the same as the background color of the body element
 (`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,
-define CSS variable and pass it to the `strokeColor` prop:
-
-#### Example: strokeColor
+define a CSS variable and pass it to the `strokeColor` prop:
 
 ```tsx
 // Demo.tsx
@@ -331,26 +309,28 @@ export const data = [
 
 #### Props
 
+**DonutChart props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| cellProps | ((series: DonutChartCell) => Partial<Omit<Props, "ref">>) | Partial<Omit<Props, "ref">> | - | Props passed down to recharts <code>Cell</code> component |
-| chartLabel | string | number | - | Chart label, displayed in the center of the chart |
-| children | React.ReactNode | - | Additional elements rendered inside <code>PieChart</code> component |
+| cellProps | ((series: DonutChartCell) => Partial<Omit<SVGProps<SVGElement>, "ref">>) \| Partial<Omit<SVGProps<SVGElement>, "ref">> | - | Props passed down to each segment of the chart |
+| chartLabel | string \| number | - | Chart label, displayed in the center of the chart |
+| children | React.ReactNode | - | Additional elements rendered inside `PieChart` component |
 | data | DonutChartCell[] | required | Data used to render chart |
-| endAngle | number | - | Controls angle at which charts ends. Set to <code>0</code> to render the chart as semicircle. |
+| endAngle | number | - | Controls angle at which charts ends. Set to `0` to render the chart as semicircle. |
 | labelColor | MantineColor | - | Controls text color of all labels, by default depends on color scheme |
-| labelsType | "value" | "percent" | - | Type of labels to display, <code>'value'</code> by default |
+| labelsType | "value" \| "percent" | - | Type of labels to display, `'value'` by default |
 | paddingAngle | number | - | Controls padding between segments |
-| pieChartProps | Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 65 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | - | Props passed down to recharts <code>PieChart</code> component |
-| pieProps | Partial<Omit<Props, "ref">> | - | Props passed down to recharts <code>Pie</code> component |
-| size | number | - | Controls chart width and height, height is increased by 40 if <code>withLabels</code> prop is set. Cannot be less than <code>thickness</code>. |
-| startAngle | number | - | Controls angle at which chart starts. Set to <code>180</code> to render the chart as semicircle. |
+| pieChartProps | (PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `PieChart` component |
+| pieProps | Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Pie` component |
+| size | number | - | Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. |
+| startAngle | number | - | Controls angle at which chart starts. Set to `180` to render the chart as semicircle. |
 | strokeColor | MantineColor | - | Controls color of the segments stroke, by default depends on color scheme |
 | strokeWidth | number | - | Controls width of segments stroke |
 | thickness | number | - | Controls thickness of the chart segments |
 | tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
-| tooltipDataSource | "all" | "segment" | - | Determines which data is displayed in the tooltip. <code>'all'</code> – display all values, <code>'segment'</code> – display only hovered segment. |
-| tooltipProps | RechartsProps | - | Props passed down to <code>Tooltip</code> recharts component |
+| tooltipDataSource | "all" \| "segment" | - | Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. |
+| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
 | valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |
 | withLabels | boolean | - | Determines whether each segment should have associated label |
 | withLabelsLine | boolean | - | Determines whether segments labels should have lines that connect the segment with the label |

@@ -5,12 +5,14 @@ Description: Give user feedback for status of the task with circle diagram
 
 ## Usage
 
-Set `sections` prop to an array of:
+The `sections` prop accepts an array of objects with the following properties:
 
-* `value` – number between 0 and 100 – amount of space filled by segment
-* `color` – segment color from theme or any other css color value
+* `value` – number between 0 and 100 representing the percentage of the ring to fill
+* `color` – segment color from theme.colors or any CSS color value
+* `tooltip` (optional) – React node to display when hovering over the section
+* Any valid SVG `<circle>` element props (onClick, onMouseEnter, style, etc.)
 
-#### Example: usage
+**Note:** Section values should sum to 100% or less for expected behavior. Values exceeding 100% total will cause sections to overlap.
 
 ```tsx
 import { RingProgress, Text } from '@mantine/core';
@@ -36,9 +38,7 @@ function Demo() {
 
 ## Size, thickness & rounded caps
 
-Use `size`, `thickness` & `roundCaps` props to configure RingProgress, size and thickness values:
-
-#### Example: configurator
+Use the `size`, `thickness` & `roundCaps` props to configure the RingProgress size and thickness values:
 
 ```tsx
 import { RingProgress } from '@mantine/core';
@@ -46,7 +46,7 @@ import { RingProgress } from '@mantine/core';
 function Demo() {
   return (
     <RingProgress
-      
+       size={120} thickness={12} roundCaps={true}
       sections={[
         { value: 40, color: 'cyan' },
         { value: 15, color: 'orange' },
@@ -60,9 +60,7 @@ function Demo() {
 
 ## Sections tooltips
 
-Add `tooltip` property to section to display floating [Tooltip](https://mantine.dev/core/tooltip/) when user hovers over it:
-
-#### Example: tooltip
+Add a `tooltip` property to a section to display a floating [Tooltip](https://mantine.dev/llms/core-tooltip.md) when the user hovers over it:
 
 ```tsx
 import { RingProgress, Text } from '@mantine/core';
@@ -88,11 +86,89 @@ function Demo() {
 ```
 
 
-## Root color
+## Section gaps
 
-Use `rootColor` property to change the root color:
+Use the `sectionGap` prop to add visual separation between sections. The gap is specified in degrees:
 
-#### Example: rootColor
+```tsx
+import { RingProgress, Stack, Text } from '@mantine/core';
+
+function Demo() {
+  const sections = [
+    { value: 40, color: 'cyan' },
+    { value: 25, color: 'orange' },
+    { value: 15, color: 'grape' },
+  ];
+
+  return (
+    <Stack align="center">
+      <div>
+        <Text size="sm" ta="center" mb="xs">
+          No gap (default)
+        </Text>
+        <RingProgress sections={sections} />
+      </div>
+
+      <div>
+        <Text size="sm" ta="center" mb="xs">
+          5° gap
+        </Text>
+        <RingProgress sections={sections} sectionGap={5} />
+      </div>
+
+      <div>
+        <Text size="sm" ta="center" mb="xs">
+          10° gap
+        </Text>
+        <RingProgress sections={sections} sectionGap={10} />
+      </div>
+    </Stack>
+  );
+}
+```
+
+
+## Start angle
+
+Use the `startAngle` prop to control where the progress starts. The angle is specified in degrees,
+where `0` = right, `90` = bottom, `180` = left, and `270` = top (default):
+
+```tsx
+import { Group, RingProgress, Stack, Text } from '@mantine/core';
+
+function Demo() {
+  const sections = [{ value: 40, color: 'cyan' }];
+
+  return (
+    <Group justify="center">
+      <Stack align="center" gap="xs">
+        <RingProgress sections={sections} startAngle={0} />
+        <Text size="sm">0° (right)</Text>
+      </Stack>
+
+      <Stack align="center" gap="xs">
+        <RingProgress sections={sections} startAngle={90} />
+        <Text size="sm">90° (bottom)</Text>
+      </Stack>
+
+      <Stack align="center" gap="xs">
+        <RingProgress sections={sections} startAngle={180} />
+        <Text size="sm">180° (left)</Text>
+      </Stack>
+
+      <Stack align="center" gap="xs">
+        <RingProgress sections={sections} startAngle={270} />
+        <Text size="sm">270° (top)</Text>
+      </Stack>
+    </Group>
+  );
+}
+```
+
+
+## Background color
+
+Use the `rootColor` prop to customize the color of the unfilled portion of the ring (the background):
 
 ```tsx
 import { RingProgress } from '@mantine/core';
@@ -103,11 +179,9 @@ function Demo() {
 ```
 
 
-## Sections props
+## Section events
 
-You can add any additional props to sections:
-
-#### Example: sectionsProps
+Each section can receive any valid SVG `<circle>` element props, including event handlers like `onClick`, `onMouseEnter`, and `onMouseLeave`:
 
 ```tsx
 import { useState } from 'react';
@@ -136,14 +210,12 @@ function Demo() {
 
 ## Customize label
 
-You can add any React node as label, for example [Text](https://mantine.dev/core/text/) component with some additional styles
-or [ThemeIcon](https://mantine.dev/core/theme-icon/):
-
-#### Example: label
+You can add any React node as a label, for example a [Text](https://mantine.dev/llms/core-text.md) component with custom styling
+or an [ActionIcon](https://mantine.dev/llms/core-action-icon.md):
 
 ```tsx
 import { ActionIcon, RingProgress, Text, Center } from '@mantine/core';
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -162,7 +234,7 @@ function Demo() {
         label={
           <Center>
             <ActionIcon color="teal" variant="light" radius="xl" size="xl">
-              <IconCheck size={22} />
+              <CheckIcon size={22} />
             </ActionIcon>
           </Center>
         }
@@ -175,10 +247,8 @@ function Demo() {
 
 ## Filled segment transition
 
-By default, transitions are disabled, to enable them, set `transitionDuration` prop
+By default, transitions are disabled. To enable them, set the `transitionDuration` prop
 to a number of milliseconds:
-
-#### Example: transitions
 
 ```tsx
 import { useState } from 'react';
@@ -205,15 +275,19 @@ function Demo() {
 
 #### Props
 
+**RingProgress props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | label | React.ReactNode | - | Label displayed in the center of the ring |
-| rootColor | MantineColor | - | Color of the root section, key of theme.colors or CSS color value |
-| roundCaps | boolean | - | Sets whether the edges of the progress circle are rounded |
-| sections | RingProgressSection[] | required | Ring sections |
+| rootColor | MantineColor | - | Color of the unfilled portion of the ring (background). Defaults to gray-2 in light mode, dark-4 in dark mode |
+| roundCaps | boolean | - | Applies rounded line caps to the start and end of visible sections |
+| sectionGap | number | - | Gap between sections in degrees. Reduces the visual size of each section |
+| sections | RingProgressSection[] | required | Array of sections to display in the ring. Each section should have a `value` (0-100), `color`, and optional `tooltip`. Sections can also receive any valid SVG circle element props. |
 | size | number | - | Width and height of the progress ring |
-| thickness | number | - | Ring thickness |
-| transitionDuration | number | - | Transition duration of filled section styles changes in ms |
+| startAngle | number | - | Starting angle in degrees. 0 = right, 90 = bottom, 180 = left, 270 = top |
+| thickness | number | - | Ring thickness in pixels. Cannot exceed size / 4 and will be automatically clamped if necessary |
+| transitionDuration | number | - | Transition duration in milliseconds for section value and color changes |
 
 
 #### Styles API
@@ -224,15 +298,15 @@ RingProgress component supports Styles API. With Styles API, you can customize s
 
 | Selector | Static selector | Description |
 |----------|----------------|-------------|
-| root | .mantine-RingProgress-root | Root element |
-| svg | .mantine-RingProgress-svg | svg element |
-| curve | .mantine-RingProgress-curve | circle element |
-| label | .mantine-RingProgress-label | Label element |
+| root | .mantine-RingProgress-root | Root container element |
+| svg | .mantine-RingProgress-svg | SVG element containing all ring sections |
+| curve | .mantine-RingProgress-curve | Individual ring section (circle element) |
+| label | .mantine-RingProgress-label | Label displayed in the center of the ring |
 
 **RingProgress CSS variables**
 
 | Selector | Variable | Description |
 |----------|----------|-------------|
-| root | --rp-label-offset | Label offset on the left and right sides of the ring |
-| root | --rp-size | Controls `height` and `width` of svg and root elements |
-| root | --rp-transition-duration | Controls transition duration of filled segments |
+| root | --rp-label-offset | Controls horizontal spacing between label and ring edges |
+| root | --rp-size | Controls width and height of the entire component |
+| root | --rp-transition-duration | Controls animation duration for value and color changes |

@@ -1,0 +1,437 @@
+{
+  "id": "x-code-highlight",
+  "name": "CodeHighlight",
+  "kind": "component",
+  "package": "@mantine/code-highlight",
+  "route": "/x/code-highlight",
+  "description": "Highlight code with shiki or highlight.js",
+  "propsCount": 42,
+  "llmUrl": "https://mantine.dev/llms/x-code-highlight.md",
+  "componentDataUrl": "/mcp/components/x-code-highlight.json",
+  "searchText": "codehighlight highlight code with shiki or highlight.js @mantine/code-highlight /x/code-highlight background code codecolorscheme collapsecodelabel controls copiedlabel copylabel defaultexpanded expandcodelabel expanded language maxcollapsedheight onexpandedchange radius withborder withcopybutton withexpandbutton activetab background code codecolorscheme collapsecodelabel controls copiedlabel copylabel defaultactivetab defaultexpanded expandcodelabel expanded getfileicon maxcollapsedheight onexpandedchange ontabchange radius withborder withcopybutton withexpandbutton background code language radius withborder",
+  "source": "@mantine/code-highlight/src",
+  "docs": "x/code-highlight.mdx",
+  "markdown": "# CodeHighlight\nPackage: @mantine/code-highlight\nImport: import { CodeHighlight } from '@mantine/code-highlight';\nDescription: Highlight code with shiki or highlight.js\n\n## Installation\n\n```bash\nyarn add @mantine/code-highlight\n```\n\n```bash\nnpm install @mantine/code-highlight\n```\n\nAfter installation import package styles at the root of your application:\n\n```tsx\nimport '@mantine/core/styles.css';\n// ‼️ import code-highlight styles after core package styles\nimport '@mantine/code-highlight/styles.css';\n```\n\n## Example\n\n`CodeHighlight` component is used to display code snippets with syntax highlighting.\nIt provides a flexible adapter system that allows you to use any code highlighting library\nof your choice.\n\nExample of code highlighting with [shiki](https://shiki.matsu.io/):\n\n\n```tsx\ntype FilterPropsRes<T extends Record<string, any>> = {\n  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];\n};\n\nexport function filterProps<T extends Record<string, any>>(props: T) {\n  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {\n    if (props[key] !== undefined) {\n      acc[key] = props[key];\n    }\n    return acc;\n  }, {} as FilterPropsRes<T>);\n}\n```\n\n```tsx\nimport { CodeHighlight } from '@mantine/code-highlight';\n\nconst exampleCode = `\ntype FilterPropsRes<T extends Record<string, any>> = {\n  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];\n};\n\nexport function filterProps<T extends Record<string, any>>(props: T) {\n  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {\n    if (props[key] !== undefined) {\n      acc[key] = props[key];\n    }\n    return acc;\n  }, {} as FilterPropsRes<T>);\n}\n`;\n\nfunction Demo() {\n  return <CodeHighlight code={exampleCode} language=\"tsx\" radius=\"md\" />;\n}\n```\n\n\n## Adapters\n\n`@mantine/code-highlight` package does not depend on any specific code highlighting library.\nYou can choose one of the default adapters provided by the package or create your own.\n\nDefault adapters:\n\n* `createShikiAdapter` – creates [shiki](https://shiki.matsu.io/) adapter\n* `createHighlightJsAdapter` – creates [highlight.js](https://highlightjs.org/) adapter\n* `plainTextAdapter` – does not highlight code, just displays it as plain text (used by default if no adapter is provided)\n\n## Usage with shiki\n\n[Shiki](https://shiki.matsu.io/) library provides the most advanced syntax highlighting\nfor TypeScript and CSS/Sass code. It uses textmate grammars to highlight code (same as in VSCode).\nThe Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).\nThe Shiki adapter is used for all code highlighting in Mantine documentation.\n\nTo use the shiki adapter, you need to install the `shiki` package:\n\n```bash\nyarn add shiki\n```\n\n```bash\nnpm install shiki\n```\n\nThen wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as the `adapter` prop:\n\n```tsx\nimport { MantineProvider } from '@mantine/core';\nimport { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';\n\n// Shiki requires async code to load the highlighter\nasync function loadShiki() {\n  const { createHighlighter } = await import('shiki');\n  const shiki = await createHighlighter({\n    langs: ['tsx', 'scss', 'html', 'bash', 'json'],\n    // You can load supported themes here\n    themes: [],\n  });\n\n  return shiki;\n}\n\nconst shikiAdapter = createShikiAdapter(loadShiki);\n\nfunction App() {\n  return (\n    <MantineProvider>\n      <CodeHighlightAdapterProvider adapter={shikiAdapter}>\n        {/* Your app here */}\n      </CodeHighlightAdapterProvider>\n    </MantineProvider>\n  );\n}\n```\n\nAfter that, you can use the `CodeHighlight` component in your application:\n\n\n```tsx\ntype FilterPropsRes<T extends Record<string, any>> = {\n  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];\n};\n\nexport function filterProps<T extends Record<string, any>>(props: T) {\n  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {\n    if (props[key] !== undefined) {\n      acc[key] = props[key];\n    }\n    return acc;\n  }, {} as FilterPropsRes<T>);\n}\n```\n\n```tsx\nimport { CodeHighlight } from '@mantine/code-highlight';\n\nconst exampleCode = `\ntype FilterPropsRes<T extends Record<string, any>> = {\n  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];\n};\n\nexport function filterProps<T extends Record<string, any>>(props: T) {\n  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {\n    if (props[key] !== undefined) {\n      acc[key] = props[key];\n    }\n    return acc;\n  }, {} as FilterPropsRes<T>);\n}\n`;\n\nfunction Demo() {\n  return <CodeHighlight code={exampleCode} language=\"tsx\" radius=\"md\" />;\n}\n```\n\n\nAll further code highlighting examples on this page use the shiki adapter.\n\n## Usage with highlight.js\n\n[Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,\nbut it has a smaller bundle size and better performance. Choose the highlight.js adapter if you need\nto highlight basic JavaScript, HTML, and CSS code.\n\nTo use the highlight.js adapter, you need to install the `highlight.js` package:\n\n```bash\nyarn add highlight.js\n```\n\n```bash\nnpm install highlight.js\n```\n\nThen wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as the `adapter` prop:\n\n```tsx\nimport { MantineProvider } from '@mantine/core';\nimport { CodeHighlightAdapterProvider, createHighlightJsAdapter } from '@mantine/code-highlight';\nimport hljs from 'highlight.js/lib/core';\nimport tsLang from 'highlight.js/lib/languages/typescript';\n\nhljs.registerLanguage('typescript', tsLang);\n\nconst highlightJsAdapter = createHighlightJsAdapter(hljs);\n\nfunction App() {\n  return (\n    <MantineProvider>\n      <CodeHighlightAdapterProvider adapter={highlightJsAdapter}>\n        {/* Your app here */}\n      </CodeHighlightAdapterProvider>\n    </MantineProvider>\n  );\n}\n```\n\nThen you need to add styles from one of the highlight.js themes to your application.\nYou can do that by importing a css file from the `highlight.js` package or adding it via\na CDN link to the head of your application:\n\n```html\n<link\n  rel=\"stylesheet\"\n  href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css\"\n/>\n```\n\nAfter that, you can use the `CodeHighlight` component in your application.\n\n## Create custom adapter\n\nYou can create a custom adapter if you want to enhance the default behavior of code highlighting\nor use a different library.\n\nExample of creating a custom shiki adapter with custom themes and logic:\n\n```tsx\nimport { type CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';\n\n// Shiki transformers can be used to highlight diffs and other notations\n// https://shiki.style/packages/transformers\nimport { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers'\n\n// Shiki themes as objects, you can use any VSCode themes\nimport { darkTheme, lightTheme } from './shiki-themes';\n\nasync function loadShiki() {\n  const { createHighlighter } = await import('shiki');\n  const shiki = await createHighlighter({\n    langs: ['tsx', 'scss', 'html', 'bash', 'json'],\n    themes: [],\n  });\n\n  return shiki;\n}\n\n// Pass this adapter to CodeHighlightAdapterProvider component\nexport const customShikiAdapter: CodeHighlightAdapter = {\n  // loadContext is called on the client side to load the shiki highlighter\n  // It is required to be used if your library requires async initialization\n  // The value returned from loadContext is passed to getHighlighter as ctx argument\n  loadContext: loadShiki,\n\n  // ctx is the value returned from loadContext\n  // or null if loadContext is not used or has not resolved yet\n  getHighlighter: (ctx) => {\n    if (!ctx) {\n      return ({ code }) => ({ highlightedCode: code, isHighlighted: false });\n    }\n\n    return ({ code, language, colorScheme }) => ({\n      isHighlighted: true,\n      // stripShikiCodeBlocks removes <pre> and <code> tags from highlighted code\n      highlightedCode: stripShikiCodeBlocks(\n        ctx.codeToHtml(code, {\n          lang: language,\n          theme: (colorScheme === 'light' ? lightTheme : darkTheme) as any,\n          transformers: [transformerNotationDiff(), transformerNotationHighlight()],\n        })\n      ),\n    });\n  },\n};\n```\n\n## Copy button\n\nYou can customize copy button labels with `copyLabel` and `copiedLabel` props.\nIn case you need to remove the copy button, set `withCopyButton={false}`.\n\n\n```tsx\nfunction Button() {\n  return <button>Click me</button>;\n}\n```\n\n```tsx\nimport { CodeHighlight } from '@mantine/code-highlight';\n\nconst exampleCode = `\nfunction Button() {\n  return <button>Click me</button>;\n}\n`;\n\nfunction Demo() {\n  return (\n    <>\n      <CodeHighlight\n        code={`// Custom copy label\nfunction Button() {\n  return <button>Click me</button>;\n}\n`}\n        language=\"tsx\"\n        copyLabel=\"Copy button code\"\n        copiedLabel=\"Copied!\"\n        radius=\"md\"\n      />\n      <CodeHighlight\n        code={`// Without copy button\nfunction Button() {\n  return <button>Click me</button>;\n}\n`}\n        language=\"tsx\"\n        withCopyButton={false}\n        mt=\"md\"\n        radius=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## With tabs\n\n`CodeHighlightTabs` component allows you to organize multiple code blocks into tabs:\n\n```tsx\n// Demo.tsx\nimport { CodeHighlightTabs } from '@mantine/code-highlight';\nimport { tsxCode, cssCode } from './code';\n\nfunction Demo() {\n  return (\n    <CodeHighlightTabs\n      radius=\"md\"\n      code={[\n        { fileName: 'Demo.tsx', code: tsxCode, language: 'tsx' },\n        { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },\n      ]}\n    />\n  );\n}\n\n// code.ts\nexport const tsxCode = `\nimport { Group, Button, MantineProvider, createTheme } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nconst theme = createTheme({\n  components: {\n    Button: Button.extend({\n      classNames: classes,\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Group>\n        <Button variant=\"danger\">Danger variant</Button>\n        <Button variant=\"primary\">Primary variant</Button>\n      </Group>\n    </MantineProvider>\n  );\n}\n`;\n\nexport const cssCode = `\n.root {\n  &[data-variant='danger'] {\n    background-color: var(--mantine-color-red-9);\n    color: var(--mantine-color-red-0);\n  }\n\n  &[data-variant='primary'] {\n    background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);\n    color: var(--mantine-color-white);\n  }\n}\n`;\n```\n\n\n## Tabs with icons\n\nYou can use any React node as tab icon. The example below uses TypeScript and CSS\nicons from the `@mantinex/dev-icons` package, but you can use any other icons library or custom\nicons:\n\n```tsx\nimport { CodeHighlightTabs } from '@mantine/code-highlight';\nimport { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';\n\nconst tsxCode = `\nfunction Button() {\n  return <button>Click me</button>;\n}\n`;\n\nconst cssCode = `\n.button {\n  background-color: transparent;\n  color: var(--mantine-color-blue-9);\n}\n`;\n\nfunction Demo() {\n  const tsIcon = <TypeScriptIcon size={14} />;\n  const cssIcon = <CssIcon size={14} />;\n\n  return (\n    <CodeHighlightTabs\n      radius=\"md\"\n      code={[\n        {\n          fileName: 'Button.tsx',\n          code: tsxCode,\n          language: 'tsx',\n          icon: tsIcon,\n        },\n        {\n          fileName: 'Button.module.css',\n          code: cssCode,\n          language: 'scss',\n          icon: cssIcon,\n        },\n      ]}\n    />\n  );\n}\n```\n\n\n## Tabs icons based on file name\n\nAs an alternative to providing icons manually for each tab, you can use the `getFileIcon` prop\nto assign icons based on file name. `getFileIcon` accepts a file name and must return a React node\nor `null`.\n\n```tsx\nimport { CodeHighlightTabs } from '@mantine/code-highlight';\nimport { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';\n\nconst tsxCode = `\nfunction Button() {\n  return <button>Click me</button>;\n}\n`;\n\nconst cssCode = `\n.button {\n  background-color: transparent;\n  color: var(--mantine-color-blue-9);\n}\n`;\n\nfunction getFileIcon(fileName: string) {\n  if (fileName.endsWith('.ts') || fileName.endsWith('.tsx')) {\n    return <TypeScriptIcon size={14} />;\n  }\n\n  if (fileName.endsWith('.css')) {\n    return <CssIcon size={14} />;\n  }\n\n  return null;\n}\n\nfunction Demo() {\n  return (\n    <CodeHighlightTabs\n      getFileIcon={getFileIcon}\n      radius=\"md\"\n      code={[\n        {\n          fileName: 'Button.tsx',\n          code: tsxCode,\n          language: 'tsx',\n        },\n        {\n          fileName: 'Button.module.css',\n          code: cssCode,\n          language: 'scss',\n        },\n      ]}\n    />\n  );\n}\n```\n\n\n## Expandable code\n\nIf the code snippet is too long, you can make it expandable with `withExpandButton`\nand `defaultExpanded={false}` props. To change the label of the expand/collapse control\ntooltip, use `expandCodeLabel` and `collapseCodeLabel`.\n\n```tsx\n// Demo.tsx\nimport { CodeHighlightTabs } from '@mantine/code-highlight';\nimport { tsxCode, cssCode } from './code';\n\nfunction Demo() {\n  return (\n    <CodeHighlightTabs\n      withExpandButton\n      defaultExpanded={false}\n      expandLabel=\"Show full code\"\n      collapseLabel=\"Show less\"\n      code={[\n        { fileName: 'Demo.tsx', code: tsxCode, language: 'tsx' },\n        { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },\n      ]}\n    />\n  );\n}\n\n// code.ts\nexport const tsxCode = `\nimport { Group, Button, MantineProvider, createTheme } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nconst theme = createTheme({\n  components: {\n    Button: Button.extend({\n      classNames: classes,\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Group>\n        <Button variant=\"danger\">Danger variant</Button>\n        <Button variant=\"primary\">Primary variant</Button>\n      </Group>\n    </MantineProvider>\n  );\n}\n`;\n\nexport const cssCode = `\n.root {\n  &[data-variant='danger'] {\n    background-color: var(--mantine-color-red-9);\n    color: var(--mantine-color-red-0);\n  }\n\n  &[data-variant='primary'] {\n    background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);\n    color: var(--mantine-color-white);\n  }\n}\n`;\n```\n\n\n## Custom controls\n\nUse the `controls` prop with the `CodeHighlightControl` component to add custom controls\nto the code block:\n\n\n```tsx\nfunction greet() {\n  return 'Hello, World!';\n}\n```\n\n```tsx\nimport { CodesandboxLogoIcon, ChatCircleIcon } from '@phosphor-icons/react';\nimport { CodeHighlight, CodeHighlightControl } from '@mantine/code-highlight';\n\nconst exampleCode = `\nfunction greet() {\n  return 'Hello, World!';\n}\n`;\n\nfunction Demo() {\n  return (\n    <CodeHighlight\n      code={exampleCode}\n      language=\"tsx\"\n      radius=\"md\"\n      controls={[\n        <CodeHighlightControl\n          component=\"a\"\n          href=\"https://codesandbox.io\"\n          target=\"_blank\"\n          tooltipLabel=\"Open on codesandbox\"\n          key=\"sandbox\"\n        >\n          <CodesandboxLogoIcon />\n        </CodeHighlightControl>,\n        <CodeHighlightControl tooltipLabel=\"Discuss with GPT\" key=\"gpt\">\n          <ChatCircleIcon />\n        </CodeHighlightControl>,\n      ]}\n    />\n  );\n}\n```\n\n\n## Inline code\n\n`InlineCodeHighlight` component allows you to highlight inline code snippets:\n\n```tsx\nimport { Text } from '@mantine/core';\nimport { InlineCodeHighlight } from '@mantine/code-highlight';\n\nfunction Demo() {\n  return (\n    <Text>\n      You can highlight code inline:{' '}\n      <InlineCodeHighlight\n        code='<InlineCodeHighlight code=\"\" language=\"tsx\" />'\n        language=\"tsx\"\n        withBorder\n      />\n      . Is that not cool?\n    </Text>\n  );\n}\n```\n\n\n\n#### Props\n\n**CodeHighlight props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| background | MantineColor | - | Controls background color of the code. By default, the value depends on color scheme. |\n| code | string | required | Code to highlight |\n| codeColorScheme | (string & {}) \\| \"dark\" \\| \"light\" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |\n| collapseCodeLabel | string | - | Label for collapse button |\n| controls | ReactNode[] | - | Extra controls to display in the controls list |\n| copiedLabel | string | - | Label for copy button in copied state |\n| copyLabel | string | - | Label for copy button in default state |\n| defaultExpanded | boolean | - | Uncontrolled expanded default state |\n| expandCodeLabel | string | - | Label for expand button |\n| expanded | boolean | - | Controlled expanded state |\n| language | string | - | Language of the code, used for syntax highlighting |\n| maxCollapsedHeight | string \\| number | - | Max height of collapsed state |\n| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| withBorder | boolean | - | Adds border to the root element |\n| withCopyButton | boolean | - | Determines whether the copy button should be displayed |\n| withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |\n\n**CodeHighlight.Tabs props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| activeTab | number | - | Index of controlled active tab state |\n| background | MantineColor | - | Controls background color of the code. By default, the value depends on color scheme. |\n| code | CodeHighlightTabsCode[] | required | Code to highlight with meta data (file name and icon) |\n| codeColorScheme | (string & {}) \\| \"dark\" \\| \"light\" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |\n| collapseCodeLabel | string | - | Label for collapse button |\n| controls | ReactNode[] | - | Extra controls to display in the controls list |\n| copiedLabel | string | - | Label for copy button in copied state |\n| copyLabel | string | - | Label for copy button in default state |\n| defaultActiveTab | number | - | Default active tab index |\n| defaultExpanded | boolean | - | Uncontrolled expanded default state |\n| expandCodeLabel | string | - | Label for expand button |\n| expanded | boolean | - | Controlled expanded state |\n| getFileIcon | (fileName: string) => ReactNode | - | Function that returns icon based on file name |\n| maxCollapsedHeight | string \\| number | - | Max height of collapsed state |\n| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes |\n| onTabChange | (tab: number) => void | - | Called when tab changes |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| withBorder | boolean | - | Adds border to the root element |\n| withCopyButton | boolean | - | Determines whether the copy button should be displayed |\n| withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |\n\n\n#### Styles API\n\nCodeHighlight component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**CodeHighlight selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| codeHighlight | .mantine-CodeHighlight-codeHighlight | Root element |\n| showCodeButton | .mantine-CodeHighlight-showCodeButton | Button that reveals full code when it is collapsed |\n| pre | .mantine-CodeHighlight-pre | Pre element, contains code element |\n| code | .mantine-CodeHighlight-code | Code element |\n| control | .mantine-CodeHighlight-control | Control button, copy/collapse, custom controls |\n| controlTooltip | .mantine-CodeHighlight-controlTooltip | Root element of control tooltip |\n| controls | .mantine-CodeHighlight-controls | A wrapper around controls |\n| scrollarea | .mantine-CodeHighlight-scrollarea | Scroll area, contains code |\n\n**CodeHighlight CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| codeHighlight | --ch-background | Background color |\n| codeHighlight | --ch-max-height | Max height of code block in collapsed state |\n| codeHighlight | --ch-radius | Border radius |\n\n**CodeHighlight.Tabs selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| codeHighlight | .mantine-CodeHighlightTabs-codeHighlight | Root element of inner CodeHighlight component |\n| showCodeButton | .mantine-CodeHighlightTabs-showCodeButton | Button that reveals full code when it is collapsed |\n| pre | .mantine-CodeHighlightTabs-pre | Pre element, contains code element |\n| code | .mantine-CodeHighlightTabs-code | Code element |\n| control | .mantine-CodeHighlightTabs-control | Control button, copy/collapse, custom controls |\n| controlTooltip | .mantine-CodeHighlightTabs-controlTooltip | Root element of control tooltip |\n| controls | .mantine-CodeHighlightTabs-controls | A wrapper around controls |\n| scrollarea | .mantine-CodeHighlightTabs-scrollarea | Scroll area, contains code |\n| root | .mantine-CodeHighlightTabs-root | Root element |\n| filesScrollarea | .mantine-CodeHighlightTabs-filesScrollarea | Scrollarea with files list |\n| files | .mantine-CodeHighlightTabs-files | Files names list |\n| file | .mantine-CodeHighlightTabs-file | File name |\n| fileIcon | .mantine-CodeHighlightTabs-fileIcon | File icon |\n",
+  "props": [
+    {
+      "name": "background",
+      "description": "Controls background color of the code. By default, the value depends on color scheme.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "code",
+      "description": "Code to highlight",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "codeColorScheme",
+      "description": "Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(string & {}) | \"dark\" | \"light\""
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "collapseCodeLabel",
+      "description": "Label for collapse button",
+      "required": false,
+      "defaultValue": "'Collapse code'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "controls",
+      "description": "Extra controls to display in the controls list",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode[]"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "copiedLabel",
+      "description": "Label for copy button in copied state",
+      "required": false,
+      "defaultValue": "'Copied'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "copyLabel",
+      "description": "Label for copy button in default state",
+      "required": false,
+      "defaultValue": "'Copy'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "defaultExpanded",
+      "description": "Uncontrolled expanded default state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "expandCodeLabel",
+      "description": "Label for expand button",
+      "required": false,
+      "defaultValue": "'Expand code'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "expanded",
+      "description": "Controlled expanded state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "language",
+      "description": "Language of the code, used for syntax highlighting",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "maxCollapsedHeight",
+      "description": "Max height of collapsed state",
+      "required": false,
+      "defaultValue": "180px",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "onExpandedChange",
+      "description": "Called when expanded state changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(expanded: boolean) => void"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "withCopyButton",
+      "description": "Determines whether the copy button should be displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "withExpandButton",
+      "description": "Determines whether the expand/collapse button should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlight"
+    },
+    {
+      "name": "activeTab",
+      "description": "Index of controlled active tab state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "background",
+      "description": "Controls background color of the code. By default, the value depends on color scheme.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "code",
+      "description": "Code to highlight with meta data (file name and icon)",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "CodeHighlightTabsCode[]"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "codeColorScheme",
+      "description": "Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(string & {}) | \"dark\" | \"light\""
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "collapseCodeLabel",
+      "description": "Label for collapse button",
+      "required": false,
+      "defaultValue": "'Collapse code'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "controls",
+      "description": "Extra controls to display in the controls list",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode[]"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "copiedLabel",
+      "description": "Label for copy button in copied state",
+      "required": false,
+      "defaultValue": "'Copied'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "copyLabel",
+      "description": "Label for copy button in default state",
+      "required": false,
+      "defaultValue": "'Copy'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "defaultActiveTab",
+      "description": "Default active tab index",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "defaultExpanded",
+      "description": "Uncontrolled expanded default state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "expandCodeLabel",
+      "description": "Label for expand button",
+      "required": false,
+      "defaultValue": "'Expand code'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "expanded",
+      "description": "Controlled expanded state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "getFileIcon",
+      "description": "Function that returns icon based on file name",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(fileName: string) => ReactNode"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "maxCollapsedHeight",
+      "description": "Max height of collapsed state",
+      "required": false,
+      "defaultValue": "180px",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "onExpandedChange",
+      "description": "Called when expanded state changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(expanded: boolean) => void"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "onTabChange",
+      "description": "Called when tab changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(tab: number) => void"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "withCopyButton",
+      "description": "Determines whether the copy button should be displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "withExpandButton",
+      "description": "Determines whether the expand/collapse button should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CodeHighlightTabs"
+    },
+    {
+      "name": "background",
+      "description": "Controls background color of the code. By default, the value depends on color scheme.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "InlineCodeHighlight"
+    },
+    {
+      "name": "code",
+      "description": "Code to highlight",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "InlineCodeHighlight"
+    },
+    {
+      "name": "language",
+      "description": "Language of the code, used to determine syntax highlighting",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "InlineCodeHighlight"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "InlineCodeHighlight"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "InlineCodeHighlight"
+    }
+  ]
+}

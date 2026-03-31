@@ -9,42 +9,40 @@ Description: Inline year, multiple years and years range picker
 
 ## Allow deselect
 
-Set `allowDeselect` to allow user to deselect current selected date by clicking on it.
-`allowDeselect` is disregarded when `type` prop is `range` or `multiple`. When date is
-deselected `onChange` is called with `null`.
+Set `allowDeselect` to allow users to deselect the currently selected date by clicking on it.
+`allowDeselect` is disregarded when the `type` prop is `range` or `multiple`. When a date is
+deselected, `onChange` is called with `null`.
 
 
 
 ## Multiple dates
 
-Set `type="multiple"` to allow user to pick multiple dates:
+Set `type="multiple"` to allow users to pick multiple dates:
 
 
 
 ## Dates range
 
-Set `type="range"` to allow user to pick dates range:
+Set `type="range"` to allow users to pick a date range:
 
 
 
 ## Single date in range
 
-By default, it is not allowed to select single date as range – when user clicks the same date second time it is deselected.
-To change this behavior set `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when
+By default, it is not allowed to select a single date as a range – when the user clicks the same date a second time, it is deselected.
+To change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when the
 `type` prop is not `range`.
 
 
 
 ## Default date
 
-Use `defaultDate` prop to set date value that will be used to determine which decade should be displayed initially.
-For example to display `2040 – 2049` decade set `defaultDate={new Date(2040, 1)}`. If value is not specified,
-then `defaultDate` will use `new Date()`. Month, day, minutes and seconds are ignored in provided date object, only year is used –
+Use the `defaultDate` prop to set the date value that will be used to determine which decade should be displayed initially.
+For example, to display the `2040 – 2049` decade, set `defaultDate={new Date(2040, 1)}`. If the value is not specified,
+then `defaultDate` will use `new Date()`. Month, day, minutes and seconds are ignored in the provided date object, only the year is used –
 you can specify any date value.
 
-Note that if you set `date` prop, then `defaultDate` value will be ignored.
-
-#### Example: defaultDate
+Note that if you set the `date` prop, then the `defaultDate` value will be ignored.
 
 ```tsx
 import { useState } from 'react';
@@ -59,11 +57,9 @@ function Demo() {
 
 ## Controlled date
 
-Set `date`, and `onDateChange` props to make currently displayed decade controlled.
-By doing so, you can customize date picking experience, for example, when user selects first date in range,
-you can add 20 years to current date value:
-
-#### Example: controlledDate
+Set the `date` and `onDateChange` props to make the currently displayed decade controlled.
+By doing so, you can customize the date picking experience. For example, when the user selects the first date in a range,
+you can add 20 years to the current date value:
 
 ```tsx
 import dayjs from 'dayjs';
@@ -97,10 +93,8 @@ function Demo() {
 
 ## Min and max date
 
-Set `minDate` and `maxDate` props to define min and max dates. If previous/next page is not available
-then corresponding control will be disabled.
-
-#### Example: minMax
+Set the `minDate` and `maxDate` props to define minimum and maximum dates. If the previous/next page is not available,
+then the corresponding control will be disabled.
 
 ```tsx
 import { useState } from 'react';
@@ -122,11 +116,9 @@ function Demo() {
 
 ## Add props to year control
 
-You can add props to year controls with `getYearControlProps` function. It accepts year date as single argument,
-props returned from the function will be added to year control. For example, it can be used to disable specific
+You can add props to year controls with the `getYearControlProps` function. It accepts a year date as a single argument,
+and props returned from the function will be added to the year control. For example, it can be used to disable a specific
 control or add styles:
-
-#### Example: controlProps
 
 ```tsx
 import dayjs from 'dayjs';
@@ -159,8 +151,23 @@ function Demo() {
 
 ## Number of columns
 
-Set `numberOfColumns` prop to define number of pickers that will be rendered side by side:
+Set the `numberOfColumns` prop to define the number of pickers that will be rendered side by side:
 
+
+
+## Full width
+
+Set the `fullWidth` prop to make the year picker stretch to fill 100% of its parent container width:
+
+```tsx
+import { useState } from 'react';
+import { YearPicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>(null);
+  return <YearPicker fullWidth value={value} onChange={setValue} />;
+}
+```
 
 
 ## Size
@@ -169,9 +176,7 @@ Set `numberOfColumns` prop to define number of pickers that will be rendered sid
 
 ## Change year controls format
 
-Use `yearsListFormat` to change [dayjs format](https://day.js.org/docs/en/display/format) of year control:
-
-#### Example: yearsListFormat
+Use `yearsListFormat` to change the [dayjs format](https://day.js.org/docs/en/display/format) of the year control:
 
 ```tsx
 import { useState } from 'react';
@@ -186,9 +191,7 @@ function Demo() {
 
 ## Change decade label format
 
-Use `decadeLabelFormat` to change [dayjs format](https://day.js.org/docs/en/display/format) of decade label:
-
-#### Example: decadeLabelFormat
+Use `decadeLabelFormat` to change the [dayjs format](https://day.js.org/docs/en/display/format) of the decade label:
 
 ```tsx
 import { useState } from 'react';
@@ -205,7 +208,7 @@ function Demo() {
 
 ### Aria labels
 
-Set `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
+Set the `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
 
 ```tsx
 import { YearPicker } from '@mantine/dates';
@@ -224,7 +227,7 @@ function Demo() {
 
 ### Year control aria-label
 
-Use `getYearControlProps` to customize `aria-label` attribute:
+Use `getYearControlProps` to customize the `aria-label` attribute:
 
 ```tsx
 import { YearPicker } from '@mantine/dates';
@@ -242,37 +245,110 @@ function Demo() {
 
 ### Keyboard interactions
 
-Note that the following events will only trigger if focus is on year control.
+Note that the following events will only trigger if focus is on a year control.
 
 
 #### Props
+
+**YearPicker props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | allowDeselect | boolean | - | Determines whether user can deselect the date by clicking on selected item, applicable only when type="default" |
 | allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type="range" |
-| ariaLabels | CalendarAriaLabels | - | <code>aria-label</code> attributes for controls on different levels |
-| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as <code>numberOfColumns</code> if not set explicitly |
-| date | string | Date | - | Displayed date in controlled mode |
-| decadeLabelFormat | string | ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | <code>dayjs</code> format for decade label or a function that returns decade label based on the date value |
-| defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
-| defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
+| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |
+| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |
+| date | string \| Date | - | Displayed date in controlled mode |
+| decadeLabelFormat | string \| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |
+| defaultDate | string \| Date | - | Initial displayed date in uncontrolled mode |
+| defaultValue | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Default value for uncontrolled component |
+| fullWidth | boolean | - | Determines whether the list should take the full width of its container |
 | getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
-| maxDate | string | Date | - | Maximum possible date in <code>YYYY-MM-DD</code> format or Date object |
-| minDate | string | Date | - | Minimum possible date in <code>YYYY-MM-DD</code> format or Date object |
-| nextLabel | string | - | Next button <code>aria-label</code> |
+| maxDate | string \| Date | - | Maximum possible date in `YYYY-MM-DD` format or Date object |
+| minDate | string \| Date | - | Minimum possible date in `YYYY-MM-DD` format or Date object |
+| nextLabel | string | - | Next button `aria-label` |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
 | onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
 | onDateChange | (date: string) => void | - | Called when date changes |
 | onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
 | onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
 | onYearSelect | (date: string) => void | - | Called when year is selected |
-| previousLabel | string | - | Previous button <code>aria-label</code> |
+| previousLabel | string | - | Previous button `aria-label` |
 | size | MantineSize | - | Component size |
-| type | "range" | "multiple" | "default" | - | Picker type: range, multiple or default |
-| value | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Value for controlled component |
+| type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
+| value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Value for controlled component |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| yearsListFormat | string | - | dayjs format for years list |
+
+**YearPicker.Input props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| allowDeselect | boolean | - | Determines whether user can deselect the date by clicking on selected item, applicable only when type="default" |
+| allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type="range" |
+| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |
+| clearButtonProps | React.ComponentProps<"button"> | - | Props passed down to the clear button |
+| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
+| clearable | boolean | - | If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. |
+| closeOnChange | boolean | - | Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` |
+| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |
+| date | string \| Date | - | Displayed date in controlled mode |
+| decadeLabelFormat | string \| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |
+| defaultDate | string \| Date | - | Initial displayed date in uncontrolled mode |
+| defaultValue | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Default value for uncontrolled component |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| dropdownType | "popover" \| "modal" | - | Type of the dropdown |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| fullWidth | boolean | - | Determines whether the list should take the full width of its container |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| labelSeparator | string | - | Separator between range value |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
+| maxDate | string \| Date | - | Maximum possible date in `YYYY-MM-DD` format or Date object |
+| minDate | string \| Date | - | Minimum possible date in `YYYY-MM-DD` format or Date object |
+| modalProps | Partial<Omit<ModalProps, "children">> | - | Props passed down to `Modal` component |
+| nextLabel | string | - | Next button `aria-label` |
+| numberOfColumns | number | - | Number of columns displayed next to each other |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onDropdownClose | () => void | - | Called when the dropdown is closed |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| placeholder | string | - | Input placeholder |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| previousLabel | string | - | Previous button `aria-label` |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| readOnly | boolean | - | If set, the component value cannot be changed by the user |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Component size |
+| sortDates | boolean | - | Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" |
+| type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
+| value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Value for controlled component |
+| valueFormat | string | - | `dayjs` format to display input value |
+| valueFormatter | DateFormatter | - | A function to format selected dates values into a string. By default, date is formatted based on the input type. |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearsListFormat | string | - | dayjs format for years list |
 
 

@@ -3,12 +3,12 @@
 # Usage with Sass
 
 This guide will explain how to use [Sass](https://sass-lang.com/) in combination with
-[postcss-preset-mantine](https://mantine.dev/styles/postcss-preset). Note that examples on mantine.dev website
+[postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md). Note that the examples on the mantine.dev website
 use only `postcss-preset-mantine` – you will need to modify them to use with Sass.
 
 ## Sass modules
 
-You can use Sass modules the same way as [CSS modules](https://mantine.dev/styles/css-modules):
+You can use Sass modules the same way as [CSS modules](https://mantine.dev/llms/styles-css-modules.md):
 
 * Use `*.module.scss`/`*.module.sass` extension for your files to enable modules
 * Use `*.scss`/`*.sass` extension for global styles
@@ -25,7 +25,7 @@ yarn add sass-embedded
 npm install sass-embedded
 ```
 
-Add mantine resources in your `vite.config.js` file:
+Add Mantine resources in your `vite.config.js` file:
 
 ```tsx
 import path from 'node:path';
@@ -45,7 +45,7 @@ export default defineConfig({
 });
 ```
 
-Create `src/_mantine.scss` file:
+Create the `src/_mantine.scss` file:
 
 ```scss
 @use 'sass:math';

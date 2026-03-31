@@ -1,0 +1,530 @@
+{
+  "id": "charts-area-chart",
+  "name": "AreaChart",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/area-chart",
+  "description": "Area chart component with stacked, percent and split variants",
+  "propsCount": 42,
+  "llmUrl": "https://mantine.dev/llms/charts-area-chart.md",
+  "componentDataUrl": "/mcp/components/charts-area-chart.json",
+  "searchText": "areachart area chart component with stacked, percent and split variants @mantine/charts /charts/area-chart activedotprops areachartprops areaprops children connectnulls curvetype data datakey dotprops fillopacity gridaxis gridcolor gridprops legendprops orientation referencelines rightyaxislabel rightyaxisprops series splitcolors splitoffset strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter withdots withgradient withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops",
+  "source": "@mantine/charts/src/AreaChart/AreaChart.tsx",
+  "docs": "charts/area-chart.mdx",
+  "markdown": "# AreaChart\nPackage: @mantine/charts\nImport: import { AreaChart } from '@mantine/charts';\nDescription: Area chart component with stacked, percent and split variants\n\n## Usage\n\nUse the `AreaChart` component without the `type` prop to render a regular area chart.\nIn a regular area chart, each data series is plotted independently and does\nnot interact with other series.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n       curveType=\"linear\" tickLine=\"y\" gridAxis=\"x\" withGradient={true} withXAxis={true} withYAxis={true} withDots={true}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Stacked area chart\n\nSet `type=\"stacked\"` to render a stacked area chart. In this type of area chart,\nstacking is applied along the vertical axis, allowing you to see the overall trend\nas well as the contribution of each individual series to the total.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Percent area chart\n\nSet `type=\"percent\"` to render a percent area chart. In this type of area chart,\nthe y-axis scale is always normalized to 100%, making it easier to compare the\ncontribution of each series in terms of percentages.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"percent\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Split area chart\n\nSet `type=\"split\"` to render a split area chart. In this type of area chart,\nthe fill color is split into two colors: one for positive values and one for negative\nvalues. Split area charts support only one data series.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"split\"\n      strokeWidth={1}\n      dotProps={{ r: 2, strokeWidth: 1 }}\n      activeDotProps={{ r: 3, strokeWidth: 1 }}\n      series={[{ name: 'Apples', color: 'bright' }]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 110,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: -80,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 26',\n    Apples: -40,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 80,\n  },\n];\n```\n\n\n## Split colors\n\nSet the `splitColors` prop to an array of two colors to customize the fill color of a\nsplit area chart. The first color is used for positive values and the second color\nis used for negative values. The `splitColors` prop is ignored in other types of area charts.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"split\"\n      strokeWidth={1}\n      dotProps={{ r: 2, strokeWidth: 1 }}\n      activeDotProps={{ r: 3, strokeWidth: 1 }}\n      series={[{ name: 'Apples', color: 'bright' }]}\n      splitColors={['violet', 'orange']}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 110,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: -80,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 26',\n    Apples: -40,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 80,\n  },\n];\n```\n\n\n## Legend\n\nTo display the chart legend, set the `withLegend` prop. When one of the items in the legend\nis hovered, the corresponding data series is highlighted in the chart.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      withLegend\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Legend position\n\nYou can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)\ncomponent with the `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`\nwill render the legend at the bottom of the chart and set its height to 50px.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      withLegend\n      legendProps={{ verticalAlign: 'bottom', height: 50 }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Series labels\n\nBy default, the series `name` is used as a label. To change it, set the `label`\nproperty in the `series` object:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      withLegend\n      legendProps={{ verticalAlign: 'bottom' }}\n      series={[\n        { name: 'Apples', label: 'Apples sales', color: 'indigo.6' },\n        { name: 'Oranges', label: 'Oranges sales', color: 'blue.6' },\n        { name: 'Tomatoes', label: 'Tomatoes sales', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Set curve type per line\n\nYou can set individual curve types for each line in the `series` array. If you\ndo not set a curve type for a line, the series will fall back to `curveType` prop, or\n`monotone` if `curveType` is not set.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6', curveType: 'linear' },\n        { name: 'Oranges', color: 'blue.6', curveType: 'bump' },\n        { name: 'Tomatoes', color: 'teal.6', curveType: 'stepAfter' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Connect nulls\n\nUse the `connectNulls` prop to specify whether to connect a data point across null\npoints. By default, `connectNulls` is `true`.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[{ name: 'Apples', color: 'indigo.6' }]}\n       curveType=\"linear\" connectNulls={true}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 110,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 80,\n  },\n  {\n    date: 'Mar 25',\n    Apples: null,\n  },\n  {\n    date: 'Mar 26',\n    Apples: null,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 28',\n    Apples: 120,\n  },\n  {\n    date: 'Mar 29',\n    Apples: 80,\n  },\n];\n```\n\n\n## Points labels\n\nTo display labels on data points, set `withPointLabels`:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      withPointLabels\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## X and Y axis props\n\nUse `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)\nand [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props\ncan be used to change the orientation of the axis:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      tickLine=\"xy\"\n      yAxisProps={{ tickMargin: 15, orientation: 'right' }}\n      xAxisProps={{ tickMargin: 15, orientation: 'top' }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Axis labels\n\nUse `xAxisLabel` and `yAxisLabel` props to display axis labels:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      xAxisLabel=\"Date\"\n      yAxisLabel=\"Amount\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## X axis offset\n\nUse `xAxisProps` to set padding between the chart ends and the x-axis:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      xAxisProps={{ padding: { left: 30, right: 30 } }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Y axis scale\n\nUse `yAxisProps` to change the domain of the Y axis. For example, if you know that\nyour data will always be in the range of 0 to 100, you can set the domain to `[0, 100]`:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      yAxisProps={{ domain: [0, 100] }}\n      series={[{ name: 'Apples', color: 'indigo.6' }]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 50,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 30,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 0,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 28',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 29',\n    Apples: 10,\n  },\n];\n```\n\n\n## Right Y axis\n\nTo display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.\nYou can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)\ncomponent with the `rightYAxisProps` prop and assign a label to the right Y axis with\nthe `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis\nby setting `yAxisId` in the `series` object.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"name\"\n      withRightYAxis\n      yAxisLabel=\"uv\"\n      rightYAxisLabel=\"pv\"\n      series={[\n        { name: 'uv', color: 'pink.6' },\n        { name: 'pv', color: 'cyan.6', yAxisId: 'right' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const biaxialData = [\n  { name: 'Page A', uv: 4000, pv: 2400 },\n  { name: 'Page B', uv: 3000, pv: 1398 },\n  { name: 'Page C', uv: 2000, pv: 9800 },\n  { name: 'Page D', uv: 2780, pv: 3908 },\n  { name: 'Page E', uv: 1890, pv: 4800 },\n  { name: 'Page F', uv: 2390, pv: 3800 },\n  { name: 'Page G', uv: 3490, pv: 4300 },\n];\n```\n\n\n## Rotate x-axis labels\n\nTo rotate x-axis labels, set `xAxisProps.angle` to the number of degrees to rotate:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      tickLine=\"xy\"\n      xAxisProps={{ angle: -20 }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Value formatter\n\nTo format values in the tooltip and axis ticks, use the `valueFormat` prop. It accepts\na function that takes a number value as an argument and returns a formatted value:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      valueFormatter={(value) => new Intl.NumberFormat('en-US').format(value)}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Area color\n\nYou can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted.\n\n```tsx\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Change area color depending on color scheme\n\nYou can use CSS variables in the `color` property. To define a CSS variable that\nchanges depending on the color scheme, use [light/dark mixins](https://mantine.dev/llms/styles-postcss-preset.md#dark-and-light-mixins)\nor the [light-dark function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function). Example\nof an area that is dark orange in light mode and lime in dark mode:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      className={classes.root}\n      series={[{ name: 'Apples', color: 'var(--area-color)' }]}\n    />\n  );\n}\n\n// Demo.module.css\n.root {\n  @mixin light {\n    --area-color: var(--mantine-color-orange-8);\n  }\n\n  @mixin dark {\n    --area-color: var(--mantine-color-lime-4);\n  }\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Stroke dash array\n\nSet the `strokeDasharray` prop to control the stroke dash array of the grid and cursor\nlines. The value represents the lengths of alternating dashes and gaps. For example,\n`strokeDasharray=\"10 5\"` will render a dashed line with 10px dashes and 5px gaps.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      strokeDasharray=\"15 15\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Grid and text colors\n\nUse `--chart-grid-color` and `--chart-text-color` to change colors of\ngrid lines and text within the chart. With [CSS modules](https://mantine.dev/llms/styles-css-modules.md), you can change colors\ndepending on color scheme:\n\n```tsx\n// Demo.module.css\n.root {\n  @mixin light {\n    --chart-grid-color: alpha(var(--mantine-color-black), 0.15);\n    --chart-text-color: var(--mantine-color-gray-7);\n  }\n\n  @mixin dark {\n    --chart-grid-color: alpha(var(--mantine-color-white), 0.15);\n    --chart-text-color: var(--mantine-color-dark-0);\n  }\n}\n\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      className={classes.root}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\nIf your application has only one color scheme, you can use the `gridColor` and `textColor`\nprops instead of CSS variables:\n\n```tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      gridColor=\"gray.5\"\n      textColor=\"gray.9\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n```\n\n## Tooltip animation\n\nBy default, tooltip animation is disabled. To enable it, set the `tooltipAnimationDuration`\nprop to a number of milliseconds to animate the tooltip position change.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      tooltipAnimationDuration={200}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Units\n\nSet the `unit` prop to render a unit label next to the y-axis ticks and tooltip values:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      unit=\"$\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Custom tooltip\n\nUse `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)\ncomponent. Note that it is required to filter the recharts payload with the `getFilteredChartTooltipPayload`\nfunction to remove empty values that are used for styling purposes only.\n\n```tsx\n// Demo.tsx\nimport { AreaChart, getFilteredChartTooltipPayload } from '@mantine/charts';\nimport { Paper, Text } from '@mantine/core';\nimport { data } from './data';\n\ninterface ChartTooltipProps {\n  label: React.ReactNode;\n  payload: readonly Record<string, any>[] | undefined;\n}\n\nfunction ChartTooltip({ label, payload }: ChartTooltipProps) {\n  if (!payload) return null;\n\n  return (\n    <Paper px=\"md\" py=\"sm\" withBorder shadow=\"md\">\n      <Text fw={500} mb={5}>\n        {label}\n      </Text>\n      {getFilteredChartTooltipPayload(payload).map((item: any) => (\n        <Text key={item.name} c={item.color} fz=\"sm\">\n          {item.name}: {item.value}\n        </Text>\n      ))}\n    </Paper>\n  );\n}\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      tooltipProps={{\n        content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,\n      }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Remove tooltip\n\nTo remove the tooltip, set `withTooltip={false}`. This also removes the cursor line\nand disables interactions with the chart.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      withTooltip={false}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Customize dots\n\nUse `dotProps` to pass props down to the recharts dot in regular state and `activeDotProps`\nto pass props down to the recharts dot in active state (when the cursor is over the current series).\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      dotProps={{ r: 6, strokeWidth: 2, stroke: '#fff' }}\n      activeDotProps={{ r: 8, strokeWidth: 1, fill: '#fff' }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Stroke width\n\nUse the `strokeWidth` prop to control the stroke width of all areas:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n       strokeWidth={2}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Fill opacity\n\nUse the `fillOpacity` prop to control the fill opacity of all areas:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n        { name: 'Oranges', color: 'blue.6' },\n      ]}\n       type=\"default\" fillOpacity={0.2} withGradient={true}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Sync multiple AreaCharts\n\nYou can pass props down to the recharts [AreaChart](https://recharts.org/en-US/api/AreaChart)\ncomponent with the `areaChartProps` prop. For example, setting `areaChartProps={{ syncId: 'any-id' }}`\nwill sync the tooltip of multiple `AreaChart` components with the same `syncId` prop.\n\n```tsx\n// Demo.tsx\nimport { Text } from '@mantine/core';\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <>\n      <Text mb=\"md\" pl=\"md\">\n        Apples sales:\n      </Text>\n\n      <AreaChart\n        h={180}\n        data={data}\n        dataKey=\"date\"\n        series={[{ name: 'Apples', color: 'indigo.6' }]}\n        areaChartProps={{ syncId: 'groceries' }}\n      />\n\n      <Text mb=\"md\" pl=\"md\" mt=\"xl\">\n        Tomatoes sales:\n      </Text>\n\n      <AreaChart\n        h={180}\n        data={data}\n        dataKey=\"date\"\n        areaChartProps={{ syncId: 'groceries' }}\n        series={[{ name: 'Tomatoes', color: 'teal.6' }]}\n      />\n    </>\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Vertical orientation\n\nSet `orientation=\"vertical\"` to render a vertical area chart:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      orientation=\"vertical\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Dashed area line\n\nSet the `strokeDasharray` property in `series` to change the line style to dashed:\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      strokeWidth={1}\n      dotProps={{ r: 2 }}\n      activeDotProps={{ r: 3, strokeWidth: 1 }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6', strokeDasharray: '5 5' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Reference lines\n\nUse the `referenceLines` prop to render reference lines. Reference lines are always\nrendered behind the chart.\n\n```tsx\n// Demo.tsx\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      yAxisProps={{ domain: [0, 100] }}\n      referenceLines={[\n        { y: 40, label: 'Average sales', color: 'red.6' },\n        { x: 'Mar 25', label: 'Report out' },\n      ]}\n      series={[{ name: 'Apples', color: 'indigo.6' }]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 50,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 30,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 0,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 28',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 29',\n    Apples: 10,\n  },\n];\n```\n\n\n## Reference area\n\nUse the `ReferenceArea` component from recharts to display a reference area:\n\n```tsx\n// Demo.tsx\nimport { ReferenceArea } from 'recharts';\nimport { AreaChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <AreaChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      type=\"stacked\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    >\n      <ReferenceArea\n        x1=\"Mar 23\"\n        x2=\"Mar 25\"\n        y1={0}\n        y2={10000}\n        fillOpacity={0.3}\n        strokeOpacity={0.9}\n        fill=\"var(--mantine-color-gray-4)\"\n        stroke=\"var(--mantine-color-gray-6)\"\n        strokeWidth={1}\n        label={{\n          value: 'Weekend',\n          position: 'insideTopRight',\n          fontSize: 12,\n          fill: 'var(--mantine-color-bright)',\n        }}\n      />\n    </AreaChart>\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n\n#### Props\n\n**AreaChart props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |\n| areaChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \\| undefined | - | Props passed down to recharts `AreaChart` component |\n| areaProps | ((series: AreaChartSeries) => Partial<Omit<Props<any, any>, \"ref\">>) \\| Partial<Omit<Props<any, any>, \"ref\">> | - | Props passed down to recharts `Area` component |\n| children | React.ReactNode | - | Additional components that are rendered inside recharts `AreaChart` component |\n| connectNulls | boolean | - | If set, points with `null` values are connected |\n| curveType | AreaChartCurveType | - | Type of the curve |\n| data | ChartData | required | Data used to display chart |\n| dataKey | string | required | Key of the `data` object for x-axis values |\n| dotProps | MantineChartDotProps | - | Props passed down to all dots. Ignored if `withDots={false}` is set. |\n| fillOpacity | number | - | Controls fill opacity of all areas |\n| gridAxis | \"none\" \\| \"x\" \\| \"y\" \\| \"xy\" | - | Specifies which lines should be displayed in the grid, `'x'` by default |\n| gridColor | MantineColor | - | Color of the grid and cursor lines, by default depends on color scheme |\n| gridProps | RechartsProps | - | Props passed down to the `CartesianGrid` component |\n| legendProps | RechartsProps | - | Props passed down to the `Legend` component |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Chart orientation, `'horizontal'` by default |\n| referenceLines | ChartReferenceLineProps[] | - | Reference lines that should be displayed on the chart |\n| rightYAxisLabel | string | - | A label to display next to the right y-axis |\n| rightYAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component rendered on the right side |\n| series | AreaChartSeries[] | required | An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. |\n| splitColors | [MantineColor, MantineColor] | - | A tuple of colors used when `type=\"split\"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors |\n| splitOffset | number | - | Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. |\n| strokeDasharray | string \\| number | - | Dash array for the grid lines and cursor, `'5 5'` by default |\n| strokeWidth | number | - | Stroke width for the chart areas |\n| textColor | MantineColor | - | Color of the text displayed inside the chart, `'dimmed'` by default |\n| tickLine | \"none\" \\| \"x\" \\| \"y\" \\| \"xy\" | - | Specifies which axis should have tick line, `'y'` by default |\n| tooltipAnimationDuration | number | - | Tooltip position animation duration in ms, `0` by default |\n| tooltipProps | RechartsProps | - | Props passed down to the `Tooltip` component |\n| type | AreaChartType | - | Controls how chart areas are positioned relative to each other |\n| unit | string | - | Unit displayed next to each tick in y-axis |\n| valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |\n| withDots | boolean | - | Determines whether dots should be displayed |\n| withGradient | boolean | - | Determines whether the chart area should be represented with a gradient instead of the solid color |\n| withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |\n| withPointLabels | boolean | - | If set, each point has an associated label |\n| withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default |\n| withTooltip | boolean | - | Determines whether chart tooltip should be displayed, `true` by default |\n| withXAxis | boolean | - | Determines whether x-axis should be displayed, `true` by default |\n| withYAxis | boolean | - | Determines whether y-axis should be displayed, `true` by default |\n| xAxisLabel | string | - | A label to display below the x-axis |\n| xAxisProps | RechartsProps | - | Props passed down to the `XAxis` recharts component |\n| yAxisLabel | string | - | A label to display next to the y-axis |\n| yAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component |\n\n\n#### Styles API\n\nAreaChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**AreaChart selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-AreaChart-root | Root element |\n| area | .mantine-AreaChart-area | Area of the chart |\n| axis | .mantine-AreaChart-axis | X and Y axis of the chart |\n| container | .mantine-AreaChart-container | Recharts ResponsiveContainer component |\n| grid | .mantine-AreaChart-grid | Recharts CartesianGrid component |\n| legend | .mantine-AreaChart-legend | Legend root element |\n| legendItem | .mantine-AreaChart-legendItem | Legend item representing data series |\n| legendItemColor | .mantine-AreaChart-legendItemColor | Legend item color |\n| legendItemName | .mantine-AreaChart-legendItemName | Legend item name |\n| tooltip | .mantine-AreaChart-tooltip | Tooltip root element |\n| tooltipBody | .mantine-AreaChart-tooltipBody | Tooltip wrapper around all items |\n| tooltipItem | .mantine-AreaChart-tooltipItem | Tooltip item representing data series |\n| tooltipItemBody | .mantine-AreaChart-tooltipItemBody | Tooltip item wrapper around item color and name |\n| tooltipItemColor | .mantine-AreaChart-tooltipItemColor | Tooltip item color |\n| tooltipItemName | .mantine-AreaChart-tooltipItemName | Tooltip item name |\n| tooltipItemData | .mantine-AreaChart-tooltipItemData | Tooltip item data |\n| tooltipLabel | .mantine-AreaChart-tooltipLabel | Label of the tooltip |\n| referenceLine | .mantine-AreaChart-referenceLine | Reference line |\n| axisLabel | .mantine-AreaChart-axisLabel | X and Y axis labels |\n\n**AreaChart CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --chart-grid-color | Controls color of the grid and cursor lines |\n| root | --chart-text-color | Controls color of the axis labels |\n",
+  "props": [
+    {
+      "name": "activeDotProps",
+      "description": "Props passed down to all active dots. Ignored if <code>withDots={false}</code> is set.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineChartDotProps"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "areaChartProps",
+      "description": "Props passed down to recharts <code>AreaChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) | undefined"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "areaProps",
+      "description": "Props passed down to recharts <code>Area</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((series: AreaChartSeries) => Partial<Omit<Props<any, any>, \"ref\">>) | Partial<Omit<Props<any, any>, \"ref\">>"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "children",
+      "description": "Additional components that are rendered inside recharts <code>AreaChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "connectNulls",
+      "description": "If set, points with <code>null</code> values are connected",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "curveType",
+      "description": "Type of the curve",
+      "required": false,
+      "defaultValue": "'monotone'",
+      "type": {
+        "name": "AreaChartCurveType",
+        "raw": "AreaChartCurveType | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"step\""
+          },
+          {
+            "value": "\"linear\""
+          },
+          {
+            "value": "\"bump\""
+          },
+          {
+            "value": "\"natural\""
+          },
+          {
+            "value": "\"monotone\""
+          },
+          {
+            "value": "\"stepBefore\""
+          },
+          {
+            "value": "\"stepAfter\""
+          }
+        ]
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "data",
+      "description": "Data used to display chart",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "ChartData"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "dataKey",
+      "description": "Key of the <code>data</code> object for x-axis values",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "dotProps",
+      "description": "Props passed down to all dots. Ignored if <code>withDots={false}</code> is set.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineChartDotProps"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "fillOpacity",
+      "description": "Controls fill opacity of all areas",
+      "required": false,
+      "defaultValue": "0.2",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "gridAxis",
+      "description": "Specifies which lines should be displayed in the grid, <code>'x'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"none\" | \"x\" | \"y\" | \"xy\"",
+        "raw": "\"none\" | \"x\" | \"y\" | \"xy\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"x\""
+          },
+          {
+            "value": "\"y\""
+          },
+          {
+            "value": "\"xy\""
+          }
+        ]
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "gridColor",
+      "description": "Color of the grid and cursor lines, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "gridProps",
+      "description": "Props passed down to the <code>CartesianGrid</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "legendProps",
+      "description": "Props passed down to the <code>Legend</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "orientation",
+      "description": "Chart orientation, <code>'horizontal'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "referenceLines",
+      "description": "Reference lines that should be displayed on the chart",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ChartReferenceLineProps[]"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "rightYAxisLabel",
+      "description": "A label to display next to the right y-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "rightYAxisProps",
+      "description": "Props passed down to the <code>YAxis</code> recharts component rendered on the right side",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "series",
+      "description": "An array of objects with <code>name</code> and <code>color</code> keys. Determines which data should be consumed from the <code>data</code> array.",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "AreaChartSeries[]"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "splitColors",
+      "description": "A tuple of colors used when <code>type=\"split\"</code> is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors",
+      "required": false,
+      "defaultValue": "['green.7', 'red.7']",
+      "type": {
+        "name": "[MantineColor, MantineColor]"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "splitOffset",
+      "description": "Offset for the split gradient. By default, value is inferred from <code>data</code> and <code>series</code> if possible. Must be generated from the data array with <code>getSplitOffset</code> function.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "strokeDasharray",
+      "description": "Dash array for the grid lines and cursor, <code>'5 5'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "strokeWidth",
+      "description": "Stroke width for the chart areas",
+      "required": false,
+      "defaultValue": "2",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "textColor",
+      "description": "Color of the text displayed inside the chart, <code>'dimmed'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "tickLine",
+      "description": "Specifies which axis should have tick line, <code>'y'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"none\" | \"x\" | \"y\" | \"xy\"",
+        "raw": "\"none\" | \"x\" | \"y\" | \"xy\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"x\""
+          },
+          {
+            "value": "\"y\""
+          },
+          {
+            "value": "\"xy\""
+          }
+        ]
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "tooltipAnimationDuration",
+      "description": "Tooltip position animation duration in ms, <code>0</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "tooltipProps",
+      "description": "Props passed down to the <code>Tooltip</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "type",
+      "description": "Controls how chart areas are positioned relative to each other",
+      "required": false,
+      "defaultValue": "'default'",
+      "type": {
+        "name": "AreaChartType",
+        "raw": "AreaChartType | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"split\""
+          },
+          {
+            "value": "\"stacked\""
+          },
+          {
+            "value": "\"percent\""
+          }
+        ]
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "unit",
+      "description": "Unit displayed next to each tick in y-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format values on Y axis and inside the tooltip",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withDots",
+      "description": "Determines whether dots should be displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withGradient",
+      "description": "Determines whether the chart area should be represented with a gradient instead of the solid color",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withLegend",
+      "description": "Determines whether chart legend should be displayed, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withPointLabels",
+      "description": "If set, each point has an associated label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withRightYAxis",
+      "description": "Determines whether additional y-axis should be displayed on the right side of the chart, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Determines whether chart tooltip should be displayed, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withXAxis",
+      "description": "Determines whether x-axis should be displayed, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "withYAxis",
+      "description": "Determines whether y-axis should be displayed, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "xAxisLabel",
+      "description": "A label to display below the x-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "xAxisProps",
+      "description": "Props passed down to the <code>XAxis</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "yAxisLabel",
+      "description": "A label to display next to the y-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AreaChart"
+    },
+    {
+      "name": "yAxisProps",
+      "description": "Props passed down to the <code>YAxis</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "AreaChart"
+    }
+  ]
+}

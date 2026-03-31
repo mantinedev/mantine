@@ -1,0 +1,23 @@
+# MantineProvider was not found in component tree. What should I do?
+Learn how to resolve MantineProvider issues
+
+<ErrorMessage error="@mantine/core: MantineProvider was not found in component tree, make sure you have it in your app." />
+
+The error above occurs in the following cases:
+
+* You do not have `MantineProvider` in your app at all
+* You are rendering Mantine components outside of the `MantineProvider` context
+* You have different versions of `@mantine/*` packages in your application.
+  For example, you have `@mantine/core@7.0.0` and `@mantine/dates@7.1.0` installed.
+* There was an issue during package installation. Usually this happens with pnpm.
+* Your app has multiple instances of the `@mantine/core` package in the bundle. This may
+  happen if your project is a monorepo and you have multiple node\_modules folders.
+
+Steps to resolve the issue:
+
+* Make sure that you have `MantineProvider` in your app and it wraps all Mantine components.
+* Make sure that you have only one version of `@mantine/core` in your app. If you are using a
+  monorepo, make sure all packages depend on the same version of `@mantine/core`.
+* Reinstall dependencies by removing the `node_modules` folder and running `npm install` or
+  `yarn install` again.
+* If you still have issues, you can use [one of the official templates](https://mantine.dev/getting-started/#get-started-with-a-template) as reference.

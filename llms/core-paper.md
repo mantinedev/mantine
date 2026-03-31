@@ -5,14 +5,12 @@ Description: Renders white or dark background depending on color scheme
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Text, Paper } from '@mantine/core';
 
 function Demo() {
   return (
-    <Paper p="xl">
+    <Paper shadow="xs" radius="md" withBorder={false} p="xl">
       <Text>Paper is the most basic ui component</Text>
       <Text>
         Use it to create cards, dropdowns, modals and other components that require background
@@ -24,44 +22,15 @@ function Demo() {
 ```
 
 
-<Polymorphic defaultElement="div" changeToElement="button" component="Paper" withNext />
-
-## Polymorphic component
-
-Paper is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { Paper } from '@mantine/core';
-
-function Demo() {
-  return <Paper component="button" />;
-}
-```
-
-You can also use components in component prop, for example, Next.js Link:
-
-```tsx
-import Link from 'next/link';
-import { Paper } from '@mantine/core';
-
-function Demo() {
-  return <Paper component={Link} href="/" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, PaperProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
 
 #### Props
 
+**Paper props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any valid CSS value to set <code>box-shadow</code> |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS value to set `box-shadow` |
 | withBorder | boolean | - | Adds border to the root element |
 
 
@@ -86,4 +55,4 @@ Paper component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-with-border | - | - |
+| root | data-with-border | `withBorderProp` is set | - |

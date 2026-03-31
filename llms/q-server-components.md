@@ -1,0 +1,238 @@
+# Can I use Mantine components as server components?
+Learn about use client directive and server components usage
+
+## Difference between server and client components
+
+Server components are rendered **only on the server**, their code is not included in the client bundle.
+In server components you cannot use hooks (`useState`, `useEffect`, `useRef`, custom hooks, for example [useDisclosure](https://mantine.dev/hooks/use-disclosure/)),
+compound components (`<Tabs.Tab />`, `<Popover.Dropdown />`, etc.), callback functions
+as children ([CopyButton example](https://mantine.dev/core/copy-button/#usage)),
+reference `window` object or add any other client-side logic.
+
+Client components are rendered **both on the server and on the client**. They are included in the client bundle and
+can use all the features, including hooks, compound components, callback functions as children, etc.
+
+## Can I use Mantine components as server components?
+
+No, all Mantine components are client components and cannot be used as server components.
+This means that components render **both on the server and on the client, not only on the client.**
+
+## Should I add 'use client' directive to all files?
+
+No, all Mantine components already include `'use client';` directive. You need to add it
+only to the files where you use hooks, compound components, callback functions as children or any other client-side logic.
+
+## Does 'use client' directive affect SEO?
+
+No, `'use client';` directive does not affect SEO. Client components are rendered on the server the
+same way as server components, the only difference is that client components are also included in the client bundle.
+
+## Error: hook is not a function
+
+<ErrorMessage error="Error: (0 , _barrel_optimize_names_useDisclosure_mantine_hooks__WEBPACK_IMPORTED_MODULE_1__.useDisclosure) is not a function or its return value is not iterable" />
+
+This error happens when you try to use hooks in server components. In the example above, you are trying to use
+the `useDisclosure` hook without the `'use client';` directive. To fix it, add the `'use client';` directive to the top of the file.
+
+Example of code that will throw this error:
+
+```tsx
+// ❌ This will throw an error
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const { opened, toggle } = useDisclosure();
+  return (
+    <button onClick={toggle}>{opened ? 'Opened' : 'Closed'}</button>
+  );
+}
+```
+
+Example of code that will work:
+
+```tsx
+// ✅ No error
+'use client';
+
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const { opened, toggle } = useDisclosure();
+  return (
+    <button onClick={toggle}>{opened ? 'Opened' : 'Closed'}</button>
+  );
+}
+```
+
+## Error: function cannot be passed as children
+
+<ErrorMessage error="Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with 'use server'." />
+
+This error happens when you try to pass a callback function as children to a server component.
+If you need to pass a callback function as children, you need to add `'use client';` to the top of the file.
+
+Example of code that will throw this error:
+
+```tsx
+// ❌ This will throw an error
+import { CopyButton } from '@mantine/core';
+
+function Demo() {
+  return (
+    <CopyButton value="https://mantine.dev">
+      {({ copied, copy }) => (
+        <button color={copied ? 'teal' : 'blue'} onClick={copy}>
+          {copied ? 'Copied url' : 'Copy url'}
+        </button>
+      )}
+    </CopyButton>
+  );
+}
+```
+
+Example of code that will work:
+
+```tsx
+// ✅ No error
+'use client';
+
+import { CopyButton } from '@mantine/core';
+
+function Demo() {
+  return (
+    <CopyButton value="https://mantine.dev">
+      {({ copied, copy }) => (
+        <button color={copied ? 'teal' : 'blue'} onClick={copy}>
+          {copied ? 'Copied url' : 'Copy url'}
+        </button>
+      )}
+    </CopyButton>
+  );
+}
+```
+
+## Error: hook usage in server component
+
+<ErrorMessage error="You're importing a component that needs useRef. It only works in a Client Component but none of its parents are marked with 'use client', so they're Server Components by default." />
+
+The error above occurs when you try to use a hook (`useState`, `useRef`, `useReducer`, `useEffect`, any other hook) in a server component.
+To fix it, add the `'use client';` directive to the top of the file.
+
+Example of code that will throw this error:
+
+```tsx
+// ❌ This will throw an error
+import { useRef } from 'react';
+
+function Demo() {
+  const ref = useRef();
+}
+```
+
+Example of code that will work:
+
+```tsx
+// ✅ No error
+'use client';
+
+import { useRef } from 'react';
+
+function Demo() {
+  const ref = useRef();
+}
+```
+
+## Error: compound components in server component
+
+<ErrorMessage error="Could not find the module 'x/node_modules/@mantine/core/esm/components/Popover/Popover.mjs#Popover#Target' in the React Client Manifest. This is probably a bug in the React Server Components bundler." />
+
+The error above occurs when you try to use a compound component (`<Tabs.Tab />`, `<Popover.Dropdown />`, etc.) in a server component.
+To fix it, add the `'use client';` directive to the top of the file or replace compound components with regular components (`TabsTab`, `PopoverDropdown`, etc.).
+
+Example of code that will throw this error:
+
+```tsx
+// ❌ This will throw an error
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover>
+      <Popover.Target>
+        <button>Toggle popover</button>
+      </Popover.Target>
+    </Popover>
+  );
+}
+```
+
+Solution 1: add the `'use client';` directive to the top of the file:
+
+```tsx
+// ✅ No error
+'use client';
+
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover>
+      <Popover.Target>
+        <button>Toggle popover</button>
+      </Popover.Target>
+    </Popover>
+  );
+}
+```
+
+Solution 2: replace compound components with regular components:
+
+```tsx
+// ✅ No error, the 'use client' directive is not required
+import { Popover, PopoverTarget } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover>
+      <PopoverTarget>
+        <button>Toggle popover</button>
+      </PopoverTarget>
+    </Popover>
+  );
+}
+```
+
+## Error: Attempted to call extend() from the server
+
+<ErrorMessage error="Error: Attempted to call extend() from the server but extend is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component." />
+
+The error above occurs when you try to call the `Component.extend` function without the `'use client';` directive.
+To fix it, add the `'use client';` directive to the top of the file.
+
+Example of code that will throw this error:
+
+```tsx
+// ❌ This will throw an error
+import { Button, createTheme } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Button: Button.extend({}),
+  },
+});
+```
+
+Example of code that will work:
+
+```tsx
+// ✅ No error
+'use client';
+
+import { Button, createTheme } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Button: Button.extend({}),
+  },
+});
+```

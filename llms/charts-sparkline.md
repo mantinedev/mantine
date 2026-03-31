@@ -5,10 +5,8 @@ Description: Simplified area chart to show trends
 
 ## Usage
 
-`Sparkline` is a simplified version of [AreaChart](https://mantine.dev/charts/area-chart). It can be used
+`Sparkline` is a simplified version of [AreaChart](https://mantine.dev/llms/charts-area-chart.md). It can be used
 to display a single series of data in a small space.
-
-#### Example: usage
 
 ```tsx
 import { Sparkline } from '@mantine/charts';
@@ -20,7 +18,7 @@ function Demo() {
       w={200}
       h={60}
       data={[10, 20, 40, 20, 40, 10, 50]}
-      
+       curveType="linear" color="blue" fillOpacity={0.6} withGradient={true} strokeWidth={2}
     />
   );
 }
@@ -29,12 +27,10 @@ function Demo() {
 
 ## Change area color depending on color scheme
 
-You can use CSS variables in `color` property. To define a CSS variable that
-changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/styles/postcss-preset/#dark-and-light-mixins)
-or [light-dark function](https://mantine.dev/styles/postcss-preset/#light-dark-function). Example
-of area that is dark orange in light mode and lime in dark mode:
-
-#### Example: colorSchemeColor
+You can use CSS variables in the `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/llms/styles-postcss-preset.md#dark-and-light-mixins)
+or the [light-dark function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function). Example
+of an area that is dark orange in light mode and lime in dark mode:
 
 ```tsx
 // Demo.module.css
@@ -60,16 +56,14 @@ function Demo() {
 
 ## Trend colors
 
-Use `trendColors` prop instead of `color` to change chart color depending on the trend.
-The prop accepts an object with `positive`, `negative` and `neutral` properties:
+Use the `trendColors` prop instead of `color` to change the chart color depending on the trend.
+The prop accepts an object with `positive`, `negative`, and `neutral` properties:
 
-* `positive` - color for positive trend (first value is less than the last value in `data` array)
-* `negative` - color for negative trend (first value is greater than the last value in `data` array)
+* `positive` - color for positive trend (first value is less than the last value in the `data` array)
+* `negative` - color for negative trend (first value is greater than the last value in the `data` array)
 * `neutral` - color for neutral trend (first and last values are equal)
 
-`neutral` is optional, if not provided, the color will be the same as `positive`.
-
-#### Example: trendColors
+`neutral` is optional; if not provided, the color will be the same as `positive`.
 
 ```tsx
 import { Sparkline } from '@mantine/charts';
@@ -117,16 +111,18 @@ function Demo() {
 
 #### Props
 
+**Sparkline props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| areaProps | Omit<Props, "ref" | "data" | "dataKey"> | - | Props passed down to the underlying recharts <code>Area</code> component |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
+| areaProps | Omit<Props<any, any>, "data" \| "ref" \| "dataKey"> | - | Props passed down to the underlying recharts `Area` component |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
 | connectNulls | boolean | - | Determines whether null values should be connected with other values |
 | curveType | AreaChartCurveType | - | Type of the curve |
-| data | (number | null)[] | required | Data used to render the chart |
+| data | (number \| null)[] | required | Data used to render the chart |
 | fillOpacity | number | - | Controls fill opacity of the area |
 | strokeWidth | number | - | Area stroke width |
-| trendColors | SparklineTrendColors | - | If set, <code>color</code> prop is ignored and chart color is determined by the difference between first and last value. |
+| trendColors | SparklineTrendColors | - | If set, `color` prop is ignored and chart color is determined by the difference between first and last value. |
 | withGradient | boolean | - | Determines whether the chart fill should be a gradient |
 
 

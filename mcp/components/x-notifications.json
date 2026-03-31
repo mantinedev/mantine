@@ -1,0 +1,163 @@
+{
+  "id": "x-notifications",
+  "name": "Notifications system",
+  "kind": "component",
+  "package": "@mantine/notifications",
+  "route": "/x/notifications",
+  "description": "Mantine notifications system",
+  "propsCount": 11,
+  "llmUrl": "https://mantine.dev/llms/x-notifications.md",
+  "componentDataUrl": "/mcp/components/x-notifications.json",
+  "searchText": "notifications system mantine notifications system @mantine/notifications /x/notifications autoclose containerwidth limit notificationmaxheight pauseresetonhover portalprops position store transitionduration withinportal zindex",
+  "source": "@mantine/notifications/src",
+  "docs": "x/notifications.mdx",
+  "markdown": "# Notifications system\nPackage: @mantine/notifications\nImport: import { Notifications system } from '@mantine/notifications';\nDescription: Mantine notifications system\n\n## Installation\n\n```bash\nyarn add @mantine/notifications\n```\n\n```bash\nnpm install @mantine/notifications\n```\n\nAfter installation import package styles at the root of your application:\n\n```tsx\nimport '@mantine/core/styles.css';\n// ‼️ import notifications styles after core package styles\nimport '@mantine/notifications/styles.css';\n```\n\nAdd the `Notifications` component anywhere in your application. Note that:\n\n* It is required to render the `Notifications` component inside [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md)\n* You do not need to wrap your application with the `Notifications` component – it is not a provider, it is a regular component\n* You should not render multiple `Notifications` components – if you do that, your notifications will be duplicated\n\n```tsx\nimport { MantineProvider } from '@mantine/core';\nimport { Notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return (\n    <MantineProvider>\n      <Notifications />\n      {/* Your app here */}\n    </MantineProvider>\n  );\n}\n```\n\nAll set! You can now use all notification system features.\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return (\n    <Button\n      onClick={() =>\n        notifications.show({\n          title: 'Default notification',\n          message: 'Do not forget to star Mantine on GitHub! 🌟',\n        })\n      }\n    >\n      Show notification\n    </Button>\n  );\n}\n```\n\n\n## Do not forget to import styles\n\nHave you followed the installation instructions above but something is not working\n(`position` prop not working, notifications are stuck at the bottom)?\nYou've fallen into the trap of not importing notification styles!\nTo fix the issue, import notification styles at the root of your application:\n\n```tsx\nimport '@mantine/notifications/styles.css';\n```\n\n## Functions\n\nThe `@mantine/notifications` package exports a `notifications` object with the following functions:\n\n* `notifications.show` – adds a given notification to the notifications list or queue, depending on the current state and `limit`\n* `notifications.hide` – removes a notification with the given `id` from the notifications state and queue\n* `notifications.update` – updates a notification that was previously added to the state or queue\n* `notifications.updateState` – executes a given callback with current notifications state and queue as an argument and updates state with the returned value\n* `notifications.clean` – removes all notifications from the notifications state and queue\n* `notifications.cleanQueue` – removes all notifications from the queue\n\nAll functions can be imported from the `@mantine/notifications` package and can be used in any part of your application:\n\n```tsx\nimport { notifications } from '@mantine/notifications';\n```\n\nYou can also import these functions separately:\n\n```tsx\n// alias functions\nimport {\n  cleanNotifications, // notifications.clean\n  cleanNotificationsQueue, // notifications.cleanQueue\n  hideNotification, // notifications.hide\n  showNotification, // notifications.show\n  updateNotification, // notifications.update\n  updateNotificationsState, // notifications.updateState\n} from '@mantine/notifications';\n```\n\n## Notification props\n\n`notifications.show` and `notifications.update` functions can be called with an object that has the following properties:\n\n* `id` – notification id, it is used to update and remove notifications; by default, `id` is randomly generated\n* `position` – notification position; by default, the value from the `position` prop of the `Notifications` component is used\n* `withBorder` – determines whether the notification should have a border\n* `withCloseButton` – determines whether the close button should be visible\n* `onClose` – called when the notification is unmounted\n* `onOpen` – called when the notification is mounted\n* `autoClose` – defines timeout in ms after which the notification will be automatically closed; use `false` to disable auto close\n* `message` – required notification body\n* `color, icon, title, radius, className, style, loading` – props passed down to the [Notification](https://mantine.dev/llms/core-notification.md) component\n\nAll properties except `message` are optional.\n\n```tsx\nimport { XIcon } from '@phosphor-icons/react';\nimport { notifications } from '@mantine/notifications';\n\n// Bare minimum – message is required for all notifications\nnotifications.show({ message: 'Hello' });\n\n// Most used notification props\nnotifications.show({\n  id: 'hello-there',\n  position: 'bottom-center',\n  withCloseButton: true,\n  onClose: () => console.log('unmounted'),\n  onOpen: () => console.log('mounted'),\n  autoClose: 5000,\n  title: \"You've been compromised\",\n  message: 'Leave the building immediately',\n  color: 'red',\n  icon: <XIcon />,\n  className: 'my-notification-class',\n  style: { backgroundColor: 'red' },\n  loading: false,\n});\n```\n\nNotifications preview (`message` prop used as `children`):\n\n```tsx\nimport { Notification } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Notification loading={false} withCloseButton={true} withBorder={false} color=\"blue\" radius=\"md\" title=\"We notify you that\" children=\"You are now obligated to give a star to Mantine project on GitHub\">\n      {{children}}\n    </Notification>\n  );\n}\n```\n\n\n## Customize notification styles\n\nYou can use `style`, `className` or [Styles API](https://mantine.dev/llms/styles-styles-api.md) `classNames`, `styles` props to customize notification styles.\nUsually, it is better to override [Notification](https://mantine.dev/llms/core-notification.md) styles with `classNames` prop in the [theme object](https://mantine.dev/llms/theming-theme-object.md).\n\n```tsx\n// Demo.tsx\nimport { Button, Group } from '@mantine/core';\nimport { notifications } from '@mantine/notifications';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <Button\n        onClick={() =>\n          notifications.show({\n            title: 'Notification with custom styles',\n            message: 'It is default blue',\n            classNames: classes,\n          })\n        }\n      >\n        Default notification\n      </Button>\n\n      <Button\n        color=\"red\"\n        onClick={() =>\n          notifications.show({\n            color: 'red',\n            title: 'Notification with custom styles',\n            message: 'It is red',\n            classNames: classes,\n          })\n        }\n      >\n        Error notification\n      </Button>\n    </Group>\n  );\n}\n\n// Demo.module.css\n.root {\n  background-color: var(--notification-color, var(--mantine-primary-color-filled));\n\n  &::before {\n    background-color: var(--mantine-color-white);\n  }\n}\n\n.description,\n.title {\n  color: var(--mantine-color-white);\n}\n\n.closeButton {\n  color: var(--mantine-color-white);\n\n  @mixin hover {\n    background-color: rgba(0, 0, 0, 0.1);\n  }\n}\n```\n\n\n## Notifications container position\n\nYou can define the notification position in the `notifications.show` function. Possible `position` values:\n\n* `top-left`\n* `top-right`\n* `top-center`\n* `bottom-left`\n* `bottom-right`\n* `bottom-center`\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { notifications } from '@mantine/notifications';\n\nconst positions = [\n  'top-left',\n  'top-right',\n  'bottom-left',\n  'bottom-right',\n  'top-center',\n  'bottom-center',\n] as const;\n\nfunction Demo() {\n  const buttons = positions.map((position) => (\n    <Button\n      key={position}\n      onClick={() =>\n        notifications.show({\n          title: `Notification at ${position}`,\n          message: `Notification at ${position} message`,\n          position,\n        })\n      }\n    >\n      {position}\n    </Button>\n  ));\n\n  return <Group>{buttons}</Group>;\n}\n```\n\n\nThe `position` can be defined on the `Notifications` component.\nIn the following example, notifications will be displayed in the top right corner of the screen\nif `position` is not defined in the `notifications.show` function:\n\n```tsx\nimport { Notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return <Notifications position=\"top-right\" zIndex={1000} />;\n}\n```\n\n## Limit and queue\n\nYou can limit the maximum number of notifications that are displayed at a time by setting\nthe `limit` prop on `Notifications`:\n\n```tsx\nimport { Notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return <Notifications limit={5} />;\n}\n```\n\nAll notifications added after the `limit` was reached are added to the queue\nand displayed when a notification from the current state is hidden.\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return (\n    <Button\n      onClick={() => {\n        Array(10).fill(0).forEach((_, index) => {\n          setTimeout(() => {\n            notifications.show({\n              title: `Notification ${index + 1}`,\n              message: 'Most notifications are added to queue',\n            });\n          }, 200 * index);\n        });\n      }}\n    >\n      Show 10 notifications\n    </Button>\n  );\n}\n```\n\n\n## Remove notifications from state and queue\n\nTo remove a specific notification from state or queue, use the `notifications.hide` function:\n\n```tsx\nimport { notifications } from '@mantine/notifications';\n\nconst id = notifications.show({ message: 'Hello!' });\nnotifications.hide(id);\n```\n\nUse the `notifications.cleanQueue` function to remove all notifications from the queue and\n`notifications.clean` to remove all notifications both from the state and queue:\n\n```tsx\nimport { Group, Button } from '@mantine/core';\nimport { notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <Button\n        onClick={() => {\n          Array(10)\n            .fill(0)\n            .forEach((_, index) => {\n              notifications.show({\n                title: `Notification ${index + 1}`,\n                message: 'Most notifications are added to queue',\n                autoClose: false,\n              });\n            });\n        }}\n      >\n        Show 10 notifications\n      </Button>\n\n      <Button variant=\"default\" onClick={() => notifications.cleanQueue()}>\n        Clean queue\n      </Button>\n\n      <Button variant=\"outline\" color=\"red\" onClick={() => notifications.clean()}>\n        Clean all\n      </Button>\n    </Group>\n  );\n}\n```\n\n\n## Update notification\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { notifications } from '@mantine/notifications';\nimport { CheckIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Button\n      onClick={() => {\n        const id = notifications.show({\n          loading: true,\n          title: 'Loading your data',\n          message: 'Data will be loaded in 3 seconds, you cannot close this yet',\n          autoClose: false,\n          withCloseButton: false,\n        });\n\n        setTimeout(() => {\n          notifications.update({\n            id,\n            color: 'teal',\n            title: 'Data was loaded',\n            message: 'Notification will close in 2 seconds, you can close this notification now',\n            icon: <CheckIcon size={18} />,\n            loading: false,\n            autoClose: 2000,\n          });\n        }, 3000);\n      }}\n    >\n      Show update notification\n    </Button>\n  );\n}\n```\n\n\n## Auto close\n\nYou can configure the auto close timeout with `Notifications`:\n\n```tsx\nimport { Notifications } from '@mantine/notifications';\n\n// All notifications will be closed automatically in 4000ms\nfunction Demo() {\n  return <Notifications autoClose={4000} />;\n}\n```\n\nOr per notification in the `notifications.show`/`notifications.update` functions:\n\n```tsx\nimport { notifications } from '@mantine/notifications';\n\nnotifications.show({\n  message: 'I will close in 500ms seconds',\n  autoClose: 500,\n});\n\nnotifications.update({\n  id: 'hello',\n  message: 'I will never close',\n  autoClose: false,\n});\n```\n\n`notifications.show` and `notifications.update` functions' `autoClose` prop has higher priority.\n\n```tsx\nimport { Group, Button } from '@mantine/core';\nimport { notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <Button\n        onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}\n      >\n        Notifications Provider timeout\n      </Button>\n\n      <Button\n        onClick={() =>\n          notifications.show({\n            message: 'I will close in 500ms',\n            autoClose: 500,\n          })\n        }\n      >\n        Closes in 500ms\n      </Button>\n\n      <Button\n        onClick={() =>\n          notifications.show({\n            color: 'blue',\n            title: 'I will never close',\n            message: 'unless you click X',\n            autoClose: false,\n          })\n        }\n      >\n        Never closes automatically\n      </Button>\n    </Group>\n  );\n}\n```\n\n\n## Pause auto close on hover\n\nBy default, hovering over any notification pauses the auto close timer of all\nvisible notifications. You can change this behavior with the `pauseResetOnHover` prop:\n\n* `pauseResetOnHover=\"all\"` (default) – pauses auto close for all notifications when any notification is hovered\n* `pauseResetOnHover=\"notification\"` – pauses auto close only for the hovered notification\n\n```tsx\nimport { Notifications } from '@mantine/notifications';\n\nfunction Demo() {\n  return <Notifications pauseResetOnHover=\"notification\" />;\n}\n```\n\n## Subscribe to notifications state\n\nYou can subscribe to notification state changes with the `useNotifications` hook.\nThe hook returns an object with `notifications` and `queue` arrays. The `notifications`\narray contains all notifications that are currently displayed; `queue` contains\nnotifications that are waiting to be displayed.\n\n```tsx\nfunction Demo() {\n  const [counter, { increment }] = useCounter();\n  const notificationsStore = useNotifications();\n\n  const showNotification = () => {\n    notifications.show({\n      title: `Notification ${counter}`,\n      message: 'Most notifications are added to queue',\n    });\n\n    increment();\n  };\n\n  return (\n    <>\n      <Button onClick={showNotification} mb=\"md\">\n        Show notification\n      </Button>\n\n      <Text>Notifications state</Text>\n      <Code block>{JSON.stringify(notificationsStore.notifications, null, 2)}</Code>\n\n      <Text mt=\"md\">Notifications queue</Text>\n      <Code block>{JSON.stringify(notificationsStore.queue, null, 2)}</Code>\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**Notifications props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoClose | number \\| false | - | Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function |\n| containerWidth | string \\| number | - | Notification width, cannot exceed 100% |\n| limit | number | - | Maximum number of notifications displayed at a time, other new notifications will be added to queue |\n| notificationMaxHeight | string \\| number | - | Notification `max-height`, used for transitions |\n| pauseResetOnHover | \"all\" \\| \"notification\" | - | Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification |\n| portalProps | BasePortalProps | - | Props passed down to the `Portal` component |\n| position | NotificationPosition | - | Notifications default position |\n| store | NotificationsStore | - | Store for notifications state, can be used to create multiple instances of notifications system in your application |\n| transitionDuration | number | - | Notification transition duration in ms |\n| withinPortal | boolean | - | Determines whether notifications container should be rendered inside `Portal` |\n| zIndex | string \\| number | - | Notifications container z-index |\n\n\n#### Styles API\n\nNotifications component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Notifications selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Notifications-root | Notifications container, contains all notifications |\n| notification | .mantine-Notifications-notification | Single notification |\n\n**Notifications CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --notifications-container-width | Controls notifications container `max-width` |\n| root | --notifications-z-index | Controls notifications container `z-index` |\n",
+  "props": [
+    {
+      "name": "autoClose",
+      "description": "Auto close timeout for all notifications in ms, <code>false</code> to disable auto close, can be overwritten for individual notifications in <code>notifications.show</code> function",
+      "required": false,
+      "defaultValue": "4000",
+      "type": {
+        "name": "number | false"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "containerWidth",
+      "description": "Notification width, cannot exceed 100%",
+      "required": false,
+      "defaultValue": "440",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "limit",
+      "description": "Maximum number of notifications displayed at a time, other new notifications will be added to queue",
+      "required": false,
+      "defaultValue": "5",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "notificationMaxHeight",
+      "description": "Notification <code>max-height</code>, used for transitions",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "pauseResetOnHover",
+      "description": "Determines which notifications should pause auto close on hover, <code>'all'</code> – pauses auto close for all notifications when any notification is hovered, <code>'notification'</code> – pauses auto close only for the hovered notification",
+      "required": false,
+      "defaultValue": "'all'",
+      "type": {
+        "name": "\"all\" | \"notification\"",
+        "raw": "\"all\" | \"notification\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"notification\""
+          }
+        ]
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props passed down to the <code>Portal</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "position",
+      "description": "Notifications default position",
+      "required": false,
+      "defaultValue": "'bottom-right'",
+      "type": {
+        "name": "NotificationPosition",
+        "raw": "NotificationPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"bottom-center\""
+          },
+          {
+            "value": "\"top-center\""
+          },
+          {
+            "value": "\"top-left\""
+          },
+          {
+            "value": "\"top-right\""
+          },
+          {
+            "value": "\"bottom-left\""
+          },
+          {
+            "value": "\"bottom-right\""
+          }
+        ]
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "store",
+      "description": "Store for notifications state, can be used to create multiple instances of notifications system in your application",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "NotificationsStore"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "transitionDuration",
+      "description": "Notification transition duration in ms",
+      "required": false,
+      "defaultValue": "250",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether notifications container should be rendered inside <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Notifications"
+    },
+    {
+      "name": "zIndex",
+      "description": "Notifications container z-index",
+      "required": false,
+      "defaultValue": "400",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Notifications"
+    }
+  ]
+}

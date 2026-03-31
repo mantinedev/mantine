@@ -1,0 +1,199 @@
+{
+  "id": "core-floating-window",
+  "name": "FloatingWindow",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/floating-window",
+  "description": "Draggable floating area",
+  "propsCount": 17,
+  "llmUrl": "https://mantine.dev/llms/core-floating-window.md",
+  "componentDataUrl": "/mcp/components/core-floating-window.json",
+  "searchText": "floatingwindow draggable floating area @mantine/core /core/floating-window axis constrainoffset constraintoviewport draghandleselector enabled excludedraghandleselector initialposition ondragend ondragstart onpositionchange portalprops radius setpositionref shadow withborder withinportal zindex",
+  "source": "@mantine/core/src/components/FloatingWindow/FloatingWindow.tsx",
+  "docs": "core/floating-window.mdx",
+  "markdown": "# FloatingWindow\nPackage: @mantine/core\nImport: import { FloatingWindow } from '@mantine/core';\nDescription: Draggable floating area\n\n## Usage\n\n`FloatingWindow` creates a draggable element with a fixed position:\n\n```tsx\nimport { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n\n  return (\n    <>\n      <Button onClick={handlers.toggle} variant=\"default\">\n        {visible ? 'Hide' : 'Show'} floating window\n      </Button>\n\n      {visible && (\n        <FloatingWindow\n          w={280}\n          p=\"md\"\n          withBorder\n          excludeDragHandleSelector=\"button\"\n          initialPosition={{ top: 300, left: 20 }}\n          style={{ cursor: 'move' }}\n        >\n          <Group justify=\"space-between\" mb=\"md\">\n            <Text>Usage demo</Text>\n            <CloseButton onClick={handlers.close} />\n          </Group>\n          <Text fz=\"sm\">This is a floating window. You can drag it around.</Text>\n        </FloatingWindow>\n      )}\n    </>\n  );\n}\n```\n\n\n## Constrain to viewport\n\nUse the `constrainToViewport` prop to restrict element movement to the viewport boundaries.\nIf you do not set the `constrainToViewport` prop, the element can be dragged outside the viewport:\n\n```tsx\nimport { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n  return (\n    <>\n      <Button onClick={handlers.toggle} variant=\"default\">\n        {visible ? 'Hide' : 'Show'} floating window\n      </Button>\n\n      {visible && (\n        <FloatingWindow\n          w={280}\n          p=\"md\"\n          withBorder\n          excludeDragHandleSelector=\"button\"\n          initialPosition={{ top: 300, left: 20 }}\n          style={{ cursor: 'move' }}\n          constrainToViewport={false}\n        >\n          <Group justify=\"space-between\" mb=\"md\">\n            <Text>No constrain demo</Text>\n            <CloseButton onClick={handlers.close} />\n          </Group>\n          <Text fz=\"sm\">\n            The floating window is not constrained by the viewport, it can move out of bounds.\n          </Text>\n        </FloatingWindow>\n      )}\n    </>\n  );\n}\n```\n\n\n## Constrain offset\n\nUse the `constrainOffset` prop to set the offset from the viewport edges when constraining the element:\n\n```tsx\nimport { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n\n  return (\n    <>\n      <Button onClick={handlers.toggle} variant=\"default\">\n        {visible ? 'Hide' : 'Show'} floating window\n      </Button>\n\n      {visible && (\n        <FloatingWindow\n          w={280}\n          p=\"md\"\n          withBorder\n          excludeDragHandleSelector=\"button\"\n          initialPosition={{ top: 300, left: 30 }}\n          style={{ cursor: 'move' }}\n          constrainToViewport\n          constrainOffset={30}\n        >\n          <Group justify=\"space-between\" mb=\"md\">\n            <Text>Constrain offset demo</Text>\n            <CloseButton onClick={handlers.close} />\n          </Group>\n          <Text fz=\"sm\">\n            This floating window has 30px offset, it cannot move closer that 30px to the edge of the\n            viewport.\n          </Text>\n        </FloatingWindow>\n      )}\n    </>\n  );\n}\n```\n\n\n## Drag handle selector\n\nThe `dragHandleSelector` prop allows specifying a selector of an element (or a group of elements) that should be used to drag the floating window.\nIf not specified, the entire root element is used as a drag target.\n\nThe `excludeDragHandleSelector` prop excludes elements within `dragHandleSelector` from the drag event.\nIn the following example, the close button is excluded from the drag event:\n\n```tsx\nimport { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n\n  return (\n    <>\n      <Button onClick={handlers.toggle} variant=\"default\">\n        {visible ? 'Hide' : 'Show'} floating window\n      </Button>\n\n      {visible && (\n        <FloatingWindow\n          w={280}\n          withBorder\n          dragHandleSelector=\".drag-handle\"\n          excludeDragHandleSelector=\"button\"\n          initialPosition={{ top: 300, left: 20 }}\n        >\n          <Group\n            justify=\"space-between\"\n            px=\"md\"\n            py=\"sm\"\n            className=\"drag-handle\"\n            style={{ cursor: 'move' }}\n          >\n            <Text>Drag handle demo</Text>\n            <CloseButton onClick={handlers.close} />\n          </Group>\n          <Text fz=\"sm\" px=\"md\" pb=\"sm\">\n            Drag floating window around with drag handle element.\n          </Text>\n        </FloatingWindow>\n      )}\n    </>\n  );\n}\n```\n\n\n## Enabled prop\n\nUse the `enabled` option to enable or disable dragging:\n\n```tsx\nimport { Button, Chip, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n  const [enabled, setEnabled] = useState(true);\n\n  return (\n    <>\n      <Group>\n        <Button variant=\"default\" onClick={handlers.toggle}>\n          {visible ? 'Hide' : 'Show'} floating window\n        </Button>\n        <Chip checked={enabled} onChange={() => setEnabled((e) => !e)}>\n          Drag {enabled ? 'enabled' : 'disabled'}\n        </Chip>\n      </Group>\n\n      {visible && (\n        <FloatingWindow\n          w={280}\n          p=\"md\"\n          withBorder\n          excludeDragHandleSelector=\"button\"\n          initialPosition={{ top: 300, left: 20 }}\n          style={{ cursor: 'move' }}\n          enabled={enabled}\n        >\n          <Group justify=\"space-between\" mb=\"md\">\n            <Text>Enabled demo</Text>\n            <CloseButton onClick={handlers.close} />\n          </Group>\n          <Text fz=\"sm\">This is a floating window. You can drag it around.</Text>\n        </FloatingWindow>\n      )}\n    </>\n  );\n}\n```\n\n\n## Set position\n\nCall the `setPosition` function to set the position of the element programmatically.\nThis function accepts an object with `top`, `left`, `right` and `bottom` properties,\nfrom which you should only specify two (for example, `top` and `left`, `bottom` and `right`).\n\n```tsx\nimport { useRef } from 'react';\nimport { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';\nimport { SetFloatingWindowPosition, useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n  const setPositionRef = useRef<SetFloatingWindowPosition | null>(null);\n  const setPosition = () => {\n    setPositionRef.current?.({ bottom: 40, right: 40 });\n  };\n\n  return (\n    <>\n      <Group>\n        <Button onClick={handlers.toggle} variant=\"default\">\n          {visible ? 'Hide' : 'Show'} floating window\n        </Button>\n        <Button onClick={setPosition} variant=\"default\">\n          Set position to bottom right corner\n        </Button>\n      </Group>\n\n      {visible && (\n        <FloatingWindow\n          w={280}\n          p=\"md\"\n          withBorder\n          excludeDragHandleSelector=\"button\"\n          initialPosition={{ top: 300, left: 20 }}\n          style={{ cursor: 'move' }}\n          setPositionRef={setPositionRef}\n        >\n          <Group justify=\"space-between\" mb=\"md\">\n            <Text>Set position demo</Text>\n            <CloseButton onClick={handlers.close} />\n          </Group>\n          <Text fz=\"sm\">\n            You can control floating window position programmatically with setPositionRef.\n          </Text>\n        </FloatingWindow>\n      )}\n    </>\n  );\n}\n```\n\n\n## Lock axis\n\nUse the `axis` option to restrict movement to the specified axis:\n\n```tsx\nimport { Button, CloseButton, FloatingWindow, Group, SegmentedControl, Text } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n  const [axis, setAxis] = useState<'x' | 'y'>('y');\n\n  return (\n    <>\n      <Group>\n        <Button onClick={handlers.toggle} variant=\"default\">\n          {visible ? 'Hide' : 'Show'} floating window\n        </Button>\n        <SegmentedControl data={['x', 'y']} onChange={(val) => setAxis(val as 'x')} value={axis} />\n      </Group>\n\n      {visible && (\n        <FloatingWindow\n          w={280}\n          p=\"md\"\n          withBorder\n          excludeDragHandleSelector=\"button\"\n          initialPosition={{ top: 200, left: 40 }}\n          style={{ cursor: 'move' }}\n          axis={axis}\n        >\n          <Group justify=\"space-between\" mb=\"md\">\n            <Text>Axis demo</Text>\n            <CloseButton onClick={handlers.close} />\n          </Group>\n          <Text fz=\"sm\">\n            When you set axis prop, the floating window can be dragged only horizontally or\n            vertically.\n          </Text>\n        </FloatingWindow>\n      )}\n    </>\n  );\n}\n```\n\n\n## use-floating-window hook\n\nIf you prefer the hook API, you can use the [useFloatingWindow](https://mantine.dev/llms/hooks-use-floating-window.md) hook.\nIt supports most of the `FloatingWindow` features:\n\n```tsx\nimport { Button, CloseButton, Group, Paper, Portal, Text } from '@mantine/core';\nimport { useDisclosure, useFloatingWindow } from '@mantine/hooks';\n\nfunction Demo() {\n  const [visible, handlers] = useDisclosure();\n  const floatingWindow = useFloatingWindow({\n    constrainToViewport: true,\n    constrainOffset: 20,\n    excludeDragHandleSelector: 'button',\n    initialPosition: { top: 300, left: 20 },\n  });\n\n  return (\n    <>\n      <Button onClick={handlers.toggle} variant=\"default\">\n        {visible ? 'Hide' : 'Show'} floating window\n      </Button>\n\n      {visible && (\n        <Portal>\n          <Paper\n            w={280}\n            p=\"md\"\n            withBorder\n            pos=\"fixed\"\n            style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}\n            shadow={floatingWindow.isDragging ? 'md' : undefined}\n            ref={floatingWindow.ref}\n          >\n            <Group justify=\"space-between\" mb=\"md\">\n              <Text>Usage demo</Text>\n              <CloseButton onClick={handlers.close} />\n            </Group>\n            <Text fz=\"sm\">This is a floating window. You can drag it around.</Text>\n          </Paper>\n        </Portal>\n      )}\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**FloatingWindow props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| axis | \"x\" \\| \"y\" | - | If set, restricts movement to the specified axis |\n| constrainOffset | number | - | The offset from the viewport edges when constraining the element. Requires `constrainToViewport: true`. |\n| constrainToViewport | boolean | - | If `true`, the element can only move within the current viewport boundaries. |\n| dragHandleSelector | string | - | Selector of an element that should be used to drag floating window. If not specified, the entire root element is used as a drag target. |\n| enabled | boolean | - | If `false`, the element can not be dragged. |\n| excludeDragHandleSelector | string | - | Selector of an element within `dragHandleSelector` that should be excluded from the drag event. |\n| initialPosition | FloatingWindowPositionConfig | - | Initial position. If not set, calculated from element styles. |\n| onDragEnd | () => void | - | Called when the drag stops |\n| onDragStart | () => void | - | Called when the drag starts |\n| onPositionChange | (pos: FloatingWindowPosition) => void | - | Called when the element position changes |\n| portalProps | Omit<PortalProps, \"children\"> | - | Props passed down to `Portal` component |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem |\n| setPositionRef | RefObject<SetFloatingWindowPosition \\| null> | - | Assigns ref to set position programmatically |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS value to set `box-shadow` |\n| withBorder | boolean | - | Adds border to the root element |\n| withinPortal | boolean | - | Determines whether the window should be rendered inside `Portal` |\n| zIndex | React.CSSProperties[\"zIndex\"] | - | `z-index` of the root element |\n\n\n#### Styles API\n\nFloatingWindow component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**FloatingWindow selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-FloatingWindow-root | Root element |\n\n**FloatingWindow data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-dragging | Window is being dragged | - |\n",
+  "props": [
+    {
+      "name": "axis",
+      "description": "If set, restricts movement to the specified axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"x\" | \"y\"",
+        "raw": "\"x\" | \"y\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"x\""
+          },
+          {
+            "value": "\"y\""
+          }
+        ]
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "constrainOffset",
+      "description": "The offset from the viewport edges when constraining the element. Requires <code>constrainToViewport: true</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "constrainToViewport",
+      "description": "If <code>true</code>, the element can only move within the current viewport boundaries.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "dragHandleSelector",
+      "description": "Selector of an element that should be used to drag floating window. If not specified, the entire root element is used as a drag target.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "enabled",
+      "description": "If <code>false</code>, the element can not be dragged.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "excludeDragHandleSelector",
+      "description": "Selector of an element within <code>dragHandleSelector</code> that should be excluded from the drag event.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "initialPosition",
+      "description": "Initial position. If not set, calculated from element styles.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FloatingWindowPositionConfig"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "onDragEnd",
+      "description": "Called when the drag stops",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "onDragStart",
+      "description": "Called when the drag starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "onPositionChange",
+      "description": "Called when the element position changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(pos: FloatingWindowPosition) => void"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props passed down to <code>Portal</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Omit<PortalProps, \"children\">"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "setPositionRef",
+      "description": "Assigns ref to set position programmatically",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RefObject<SetFloatingWindowPosition | null>"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any valid CSS value to set <code>box-shadow</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether the window should be rendered inside <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FloatingWindow"
+    },
+    {
+      "name": "zIndex",
+      "description": "<code>z-index</code> of the root element",
+      "required": false,
+      "defaultValue": "400",
+      "type": {
+        "name": "React.CSSProperties[\"zIndex\"]"
+      },
+      "sourceComponent": "FloatingWindow"
+    }
+  ]
+}

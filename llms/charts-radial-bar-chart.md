@@ -5,9 +5,7 @@ Description: Radial bar chart component
 
 ## Usage
 
-`RadialBarChart` is based on [RadialBarChart recharts component](https://recharts.org/en-US/api/RadialBarChart):
-
-#### Example: usage
+`RadialBarChart` is based on the [RadialBarChart recharts component](https://recharts.org/en-US/api/RadialBarChart):
 
 ```tsx
 // Demo.tsx
@@ -33,21 +31,19 @@ export const data = [
 
 ## Change color
 
-You can reference theme colors or use any valid CSS color in `color` property of `data`:
-
-#### Example: color
+You can reference theme colors or use any valid CSS color in the `color` property of `data`:
 
 ```tsx
 import { RadialBarChart } from '@mantine/charts';
 
 const data = [
-    { name: '18-24', value: 31.47, color: '' },
-    { name: '25-29', value: 26.69, color: '' },
-    { name: '30-34', value: 15.69, color: '' },
-    { name: '35-39', value: 8.22, color: '' },
-    { name: '40-49', value: 8.63, color: '' },
-    { name: '50+', value: 2.63, color: '' },
-    { name: 'unknown', value: 6.67, color: '' },
+    { name: '18-24', value: 31.47, color: 'blue' },
+    { name: '25-29', value: 26.69, color: 'blue' },
+    { name: '30-34', value: 15.69, color: 'blue' },
+    { name: '35-39', value: 8.22, color: 'blue' },
+    { name: '40-49', value: 8.63, color: 'blue' },
+    { name: '50+', value: 2.63, color: 'blue' },
+    { name: 'unknown', value: 6.67, color: 'blue' },
   ];
 
 function Demo() {
@@ -58,9 +54,7 @@ function Demo() {
 
 ## Legend
 
-To show legend, set `withLegend` prop:
-
-#### Example: legend
+To show the legend, set the `withLegend` prop:
 
 ```tsx
 // Demo.tsx
@@ -86,9 +80,7 @@ export const data = [
 
 ## Labels
 
-To show labels, set `withLabels` prop:
-
-#### Example: labels
+To show labels, set the `withLabels` prop:
 
 ```tsx
 // Demo.tsx
@@ -114,9 +106,7 @@ export const data = [
 
 ## Hide tooltip
 
-To hide tooltip, set `withTooltip={false}` prop:
-
-#### Example: noTooltip
+To hide the tooltip, set the `withTooltip={false}` prop:
 
 ```tsx
 // Demo.tsx
@@ -143,18 +133,20 @@ export const data = [
 
 #### Props
 
+**RadialBarChart props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| barSize | number | - | Size of bars in px, <code>20</code> by default |
+| barSize | number | - | Size of bars in px, `20` by default |
 | data | Record<string, any>[] | required | Chart data |
 | dataKey | string | required | Key from data object to use as data key |
 | emptyBackgroundColor | string | - | Color of the empty background, by default depends on the color scheme |
 | endAngle | number | - | Angle at which chart ends |
 | legendProps | RechartsProps | - | Props passed down to recharts Legend component |
-| radialBarChartProps | Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 65 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | - | Props passed down to recharts RadarChartChart component |
+| radialBarChartProps | (PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts RadarChartChart component |
 | radialBarProps | Omit<RadialBarProps, "ref"> | - | Props passed down to recharts RadialBar component |
 | startAngle | number | - | Angle at which chart starts |
-| tooltipProps | RechartsProps | - | Props passed down to <code>Tooltip</code> recharts component |
+| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
 | withBackground | boolean | - | Determines whether empty bars area should be visible |
 | withLabels | boolean | - | Determines whether labels should be displayed |
 | withLegend | boolean | - | Determines whether the legend should be displayed |

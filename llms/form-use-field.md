@@ -5,14 +5,32 @@ Description: use-field hook – manage single field state
 
 ## Usage
 
-`use-field` hook is a simpler alternative to [use-form](https://mantine.dev/form/use-form), it can be used to
-manage state of a single input without the need to create a form:
+The `use-field` hook is a simpler alternative to [use-form](https://mantine.dev/llms/form-use-form.md). It can be used to
+manage the state of a single input without the need to create a form:
 
+```tsx
+import { Button, TextInput } from '@mantine/core';
+import { useField } from '@mantine/form';
+
+function Demo() {
+  const field = useField({
+    initialValue: '',
+    validate: (value) => (value.trim().length < 2 ? 'Value is too short' : null),
+  });
+
+  return (
+    <>
+      <TextInput {...field.getInputProps()} label="Name" placeholder="Enter your name" mb="md" />
+      <Button onClick={field.validate}>Validate</Button>
+    </>
+  );
+}
+```
 
 
 ## use-field API
 
-`use-field` hook accepts the following options object as a single argument:
+The `use-field` hook accepts the following options object as a single argument:
 
 ```tsx
 interface UseFieldInput<T> {
@@ -37,7 +55,7 @@ interface UseFieldInput<T> {
   /** Determines whether the field should be validated when it loses focus, false by default */
   validateOnBlur?: boolean;
 
-  /** Determines whether the field should clear error message when value changes, true by default */
+  /** Determines whether the field should clear the error message when value changes, true by default */
   clearErrorOnChange?: boolean;
 
   /** A function to validate field value, can be sync or async */
@@ -46,7 +64,7 @@ interface UseFieldInput<T> {
   /** Field type, input by default */
   type?: 'input' | 'checkbox';
 
-  /** A function to resolve validation error from the result returned from validate function, should return react node */
+  /** A function to resolve the validation error from the result returned from the validate function, should return a react node */
   resolveValidationError?: (error: unknown) => React.ReactNode;
 }
 ```
@@ -63,22 +81,22 @@ export interface UseFieldReturnType<ValueType> {
   /** Returns current input value */
   getValue: () => ValueType;
 
-  /** Sets input value to the given value */
+  /** Sets the input value to the given value */
   setValue: (value: ValueType) => void;
 
-  /** Resets field value to initial state, sets touched state to false, sets error to null */
+  /** Resets the field value to initial state, sets touched state to false, sets error to null */
   reset: () => void;
 
-  /** Validates current input value when called */
+  /** Validates the current input value when called */
   validate: () => Promise<React.ReactNode | void>;
 
-  /** Set to true when async validate function is called, stays true until the returned promise resolves */
+  /** Set to true when the async validate function is called, stays true until the returned promise resolves */
   isValidating: boolean;
 
   /** Current error message */
   error: React.ReactNode;
 
-  /** Sets error message to the given react node */
+  /** Sets the error message to the given react node */
   setError: (error: React.ReactNode) => void;
 
   /** Returns true if the input has been focused at least once */
@@ -87,59 +105,219 @@ export interface UseFieldReturnType<ValueType> {
   /** Returns true if input value is different from the initial value */
   isDirty: () => boolean;
 
-  /** Resets touched state to false */
+  /** Resets the touched state to false */
   resetTouched: () => void;
 
-  /** key that should be added to the input when mode is uncontrolled */
+  /** key that should be added to the input when the mode is uncontrolled */
   key: number;
 }
 ```
 
 ## Validate on blur
 
-To validate the field on blur, set `validateOnBlur` option to `true`:
+To validate the field on blur, set the `validateOnBlur` option to `true`:
 
+```tsx
+import { TextInput } from '@mantine/core';
+import { useField } from '@mantine/form';
+
+function Demo() {
+  const field = useField({
+    initialValue: '',
+    validateOnBlur: true,
+    validate: (value) => (value.trim().length < 2 ? 'Value is too short' : null),
+  });
+
+  return <TextInput {...field.getInputProps()} label="Name" placeholder="Enter your name" />;
+}
+```
 
 
 ## Validate on change
 
-To validate the field on change, set `validateOnChange` option to `true`:
+To validate the field on change, set the `validateOnChange` option to `true`:
 
+```tsx
+import { TextInput } from '@mantine/core';
+import { useField, isEmail } from '@mantine/form';
+
+function Demo() {
+  const field = useField({
+    initialValue: '',
+    validateOnChange: true,
+    validate: isEmail('Invalid email'),
+  });
+
+  return <TextInput {...field.getInputProps()} label="Email" placeholder="Enter your email" />;
+}
+```
 
 
 ## Async validation
 
-`validate` option accepts both async and sync functions, in both cases the function
+The `validate` option accepts both async and sync functions. In both cases, the function
 must return an error message that will be displayed to the user or `null` if the value
-is valid. To keep track of async validation state, use `isValidating` property:
+is valid. To keep track of async validation state, use the `isValidating` property:
+
+```tsx
+import { Button, Loader, TextInput } from '@mantine/core';
+import { useField } from '@mantine/form';
+
+function validateAsync(value: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    window.setTimeout(() => {
+      resolve(value === 'mantine' ? null : 'Value must be "mantine"');
+    }, 800);
+  });
+}
+
+function Demo() {
+  const field = useField({
+    initialValue: '',
+    validate: validateAsync,
+  });
+
+  return (
+    <>
+      <TextInput
+        {...field.getInputProps()}
+        label="Enter 'mantine'"
+        placeholder="Enter 'mantine'"
+        rightSection={field.isValidating ? <Loader size={18} /> : null}
+        mb="md"
+      />
+      <Button onClick={field.validate}>Validate async</Button>
+    </>
+  );
+}
+```
 
 
-
-Async validation can be used with `validateOnBlur` option, but not recommended with
-`validateOnChange` because it will trigger validation on every key press which may
+Async validation can be used with the `validateOnBlur` option, but it's not recommended with
+`validateOnChange` because it will trigger validation on every key press, which may
 lead to race conditions:
 
+```tsx
+import { Loader, TextInput } from '@mantine/core';
+import { useField } from '@mantine/form';
+
+function validateAsync(value: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    window.setTimeout(() => {
+      resolve(value === 'mantine' ? null : 'Value must be "mantine"');
+    }, 800);
+  });
+}
+
+function Demo() {
+  const field = useField({
+    initialValue: '',
+    validateOnBlur: true,
+    validate: validateAsync,
+  });
+
+  return (
+    <TextInput
+      {...field.getInputProps()}
+      label="Enter 'mantine'"
+      placeholder="Enter 'mantine'"
+      rightSection={field.isValidating ? <Loader size={18} /> : null}
+    />
+  );
+}
+```
 
 
 ## Touched and dirty
 
-To get information about whether the field has been focused at least once, use `isTouched` method
-and to check if the value has been changed from the initial value, use `isDirty` method:
+To get information about whether the field has been focused at least once, use the `isTouched` method.
+To check if the value has been changed from the initial value, use the `isDirty` method:
 
+```tsx
+import { Text, TextInput } from '@mantine/core';
+import { useField } from '@mantine/form';
+
+function Demo() {
+  const field = useField({ initialValue: '' });
+
+  return (
+    <>
+      <TextInput {...field.getInputProps()} label="Name" placeholder="Enter your name" mb="md" />
+
+      <Text fz="sm">
+        Dirty:{' '}
+        <Text span inherit c={field.isDirty() ? 'red' : 'teal'}>
+          {field.isDirty() ? 'dirty' : 'not dirty'}
+        </Text>
+      </Text>
+      <Text fz="sm">
+        Touched:{' '}
+        <Text span inherit c={field.isTouched() ? 'red' : 'teal'}>
+          {field.isTouched() ? 'touched' : 'not touched'}
+        </Text>
+      </Text>
+    </>
+  );
+}
+```
 
 
 ## Clear error on change
 
-By default, the error message is cleared when the value changes, to disable this behavior
-set `clearErrorOnChange` option to `false`:
+By default, the error message is cleared when the value changes. To disable this behavior,
+set the `clearErrorOnChange` option to `false`:
 
+```tsx
+import { Button, TextInput } from '@mantine/core';
+import { useField } from '@mantine/form';
+
+function Demo() {
+  const field = useField({
+    initialValue: '',
+    clearErrorOnChange: false,
+    validate: (value) => (value.trim().length < 2 ? 'Value is too short' : null),
+  });
+
+  return (
+    <>
+      <TextInput {...field.getInputProps()} label="Name" placeholder="Enter your name" mb="md" />
+      <Button onClick={field.validate}>Validate</Button>
+    </>
+  );
+}
+```
 
 
 ## Uncontrolled mode
 
-Uncontrolled mode of `use-field` hook works similar to uncontrolled mode of [use-form](https://mantine.dev/form/uncontrolled).
+The uncontrolled mode of the `use-field` hook works similarly to the uncontrolled mode of [use-form](https://mantine.dev/llms/form-uncontrolled.md).
 In uncontrolled mode, rerenders are minimized and the input value is managed by the input itself.
 It is useful if you experience performance issues with controlled mode, but in most cases controlled
-mode is recommended as it always provides up to date field information as React state.
+mode is recommended as it always provides up-to-date field information as React state.
 
+```tsx
+import { Button, TextInput } from '@mantine/core';
+import { useField } from '@mantine/form';
+
+function Demo() {
+  const field = useField({
+    mode: 'uncontrolled',
+    initialValue: '',
+    validate: (value) => (value.trim().length < 2 ? 'Value is too short' : null),
+  });
+
+  return (
+    <>
+      <TextInput
+        {...field.getInputProps()}
+        key={field.key}
+        label="Name"
+        placeholder="Enter your name"
+        mb="md"
+      />
+      <Button onClick={field.validate}>Validate</Button>
+    </>
+  );
+}
+```
 

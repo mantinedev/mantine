@@ -3,15 +3,15 @@
 # Usage with TypeScript
 
 All `@mantine/*` packages are fully compatible with TypeScript. All examples in the documentation
-are written in TypeScript – you can copy-paste them to your project without any changes.
+are written in TypeScript – you can copy and paste them to your project without any changes.
 
-This guide will help you get familiar with types that `@mantine/core` package exports.
+This guide will help you get familiar with the types that the `@mantine/core` package exports.
 
 ## Components props types
 
-Each `@mantine/` package that exports components, exports props types for these components as well.
-You can import component props types by adding `Props` to the component name,
-for example, you can import Button and DatePicker components props like so:
+Each `@mantine/` package that exports components also exports props types for these components.
+You can import component props types by adding `Props` to the component name.
+For example, you can import Button and DatePicker component props like this:
 
 ```tsx
 import type { ButtonProps } from '@mantine/core';
@@ -19,7 +19,7 @@ import type { DatePickerProps } from '@mantine/dates';
 ```
 
 Note that there are two variations of props types: for polymorphic components and for regular components.
-Regular components props types include `React.ComponentPropsWithoutRef<'X'>`, where `X` is the root element
+Regular component props types include `React.ComponentProps<'X'>`, where `X` is the root element
 type, for example `'div'`.
 
 Example of extending regular component props:
@@ -27,7 +27,7 @@ Example of extending regular component props:
 ```tsx
 import { Group, GroupProps } from '@mantine/core';
 
-// Interface includes `React.ComponentPropsWithoutRef<'div'>`
+// Interface includes `React.ComponentProps<'div'>`
 interface MyGroupProps extends GroupProps {
   spacing: number;
 }
@@ -37,10 +37,12 @@ function MyGroup({ spacing, ...others }: MyGroupProps) {
 }
 ```
 
-[Polymorphic components](https://mantine.dev/guides/polymorphic) props types do not include `React.ComponentPropsWithoutRef<'X'>`
+## Polymorphic components props types
+
+[Polymorphic component](https://mantine.dev/llms/guides-polymorphic.md) props types don't include `React.ComponentProps<'X'>`
 because their root element depends on the `component` prop value.
 
-Example of extending [polymorphic components](https://mantine.dev/guides/polymorphic) props:
+Example of extending [polymorphic component](https://mantine.dev/llms/guides-polymorphic.md) props:
 
 ```tsx
 import { Button, ButtonProps, ElementProps } from '@mantine/core';
@@ -56,31 +58,43 @@ function MyButton({ height, ...others }: MyButtonProps) {
 }
 ```
 
+## Namespace types
+
+All Mantine components export namespaces with related types. For example, [Button](https://mantine.dev/llms/core-button.md)
+component props can be accessed as `Button.Props`:
+
+```tsx
+import {  Button } from '@mantine/core';
+
+// Same as `import type { ButtonProps } from '@mantine/core';`
+type MyButtonProps = Button.Props;
+```
+
 ## ElementProps type
 
-`ElementProps` is a utility type similar to `React.ComponentPropsWithoutRef`, but with additional
-features. It replaces native elements `style` prop with Mantine [style prop](https://mantine.dev/styles/style) and
+`ElementProps` is a utility type similar to `React.ComponentProps`, but with additional
+features. It replaces the native element's `style` prop with Mantine's [style prop](https://mantine.dev/llms/styles-style.md) and
 allows omitting properties that are passed as a second type.
 
 ```tsx
 import { ButtonProps, ElementProps } from '@mantine/core';
 
-// Equivalent of `React.ComponentPropsWithoutRef<'button'>`
+// Equivalent of `React.ComponentProps<'button'>`
 type ButtonElementProps = ElementProps<'button'>;
 
-// Equivalent of `Omit<React.ComponentPropsWithoutRef<'button'>, 'color' | 'onClick'>`
+// Equivalent of `Omit<React.ComponentProps<'button'>, 'color' | 'onClick'>`
 type OmitColor = ElementProps<'button', 'color' | 'onClick'>;
 
 // Removes all Mantine component props from React component props
 // to avoid props types conflicts
-// Equivalent of `Omit<React.ComponentPropsWithoutRef<'button'>, keyof ButtonProps>`
+// Equivalent of `Omit<React.ComponentProps<'button'>, keyof ButtonProps>`
 type OmitButtonProps = ElementProps<'button', keyof ButtonProps>;
 ```
 
 ## MantineTheme type
 
-`MantineTheme` is a type of [theme object](https://mantine.dev/theming/theme-object). You can use it to add types
-to functions that accept theme object as an argument:
+`MantineTheme` is a type of the [theme object](https://mantine.dev/llms/theming-theme-object.md). You can use it to add types
+to functions that accept a theme object as an argument:
 
 ```tsx
 import { MantineTheme, useMantineTheme } from '@mantine/core';
@@ -98,7 +112,7 @@ function Demo() {
 ## MantineThemeOverride type
 
 `MantineThemeOverride` type is a deep partial of `MantineTheme`. It can be used in functions
-that accept theme override as an argument:
+that accept a theme override as an argument:
 
 ```tsx
 import {
@@ -128,8 +142,8 @@ const mergedTheme = mergeThemes([overrideTheme, overrideTheme2]);
 
 ## MantineColorScheme type
 
-`MantineColorScheme` is a union of `'light' | 'dark' | 'auto'` values. You can use to add types
-to function that accept color scheme as an argument:
+`MantineColorScheme` is a union of `'light' | 'dark' | 'auto'` values. You can use it to add types
+to functions that accept color scheme as an argument:
 
 ```tsx
 import {
@@ -149,7 +163,7 @@ function Demo() {
 
 ## MantineSize type
 
-`MantineSize` type is a union of `'xs' | 'sm' | 'md' | 'lg' | 'xl'` values. You can use to add types
+`MantineSize` type is a union of `'xs' | 'sm' | 'md' | 'lg' | 'xl'` values. You can use it to add types
 to various props that accept size as an argument, for example, `radius`, `shadow`, `p`.
 
 ```tsx
@@ -168,8 +182,8 @@ function Demo({ size, radius, shadow }: DemoProps) {
 
 ## Theme object declarations
 
-You can change `theme.other` and `theme.colors` types by extending `MantineTheme` interface
-in `.d.ts` file. Create `mantine.d.ts` anywhere in your project (must be included in `tsconfig.json`)
+You can change `theme.other` and `theme.colors` types by extending the `MantineTheme` interface
+in a `.d.ts` file. Create `mantine.d.ts` anywhere in your project (must be included in `tsconfig.json`)
 to extend theme object types.
 
 To override `theme.other`:
@@ -204,7 +218,7 @@ declare module '@mantine/core' {
 }
 ```
 
-You can also customize size related types for `theme.spacing`, `theme.radius`,
+You can also customize size-related types for `theme.spacing`, `theme.radius`,
 `theme.breakpoints`, `theme.fontSizes`, `theme.lineHeights`, and `theme.shadows` similarly.
 
 To override `theme.spacing` and `theme.radius`
@@ -232,15 +246,15 @@ declare module '@mantine/core' {
 }
 ```
 
-Note that extending theme type is not required, it is only needed if you want to
+Note that extending the theme type isn't required; it's only needed if you want to
 make your theme object types more strict and add autocomplete in your editor.
 
 ## Custom variants types
 
-You can define types for custom [variants](https://mantine.dev/styles/variants-sizes) by
-extending `{x}Props` interface with the new variant type in your `mantine.d.ts` file.
+You can define types for custom [variants](https://mantine.dev/llms/styles-variants-sizes.md) by
+extending the `{x}Props` interface with the new variant type in your `mantine.d.ts` file.
 
-Example of adding custom variant type to [Button](https://mantine.dev/core/button) component:
+Example of adding a custom variant type to the [Button](https://mantine.dev/llms/core-button.md) component:
 
 ```tsx
 import { ButtonVariant, MantineSize } from '@mantine/core';

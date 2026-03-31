@@ -1,0 +1,87 @@
+{
+  "id": "core-flex",
+  "name": "Flex",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/flex",
+  "description": "Compose elements in a flex container",
+  "propsCount": 7,
+  "llmUrl": "https://mantine.dev/llms/core-flex.md",
+  "componentDataUrl": "/mcp/components/core-flex.json",
+  "searchText": "flex compose elements in a flex container @mantine/core /core/flex align columngap direction gap justify rowgap wrap",
+  "source": "@mantine/core/src/components/Flex/Flex.tsx",
+  "docs": "core/flex.mdx",
+  "markdown": "# Flex\nPackage: @mantine/core\nImport: import { Flex } from '@mantine/core';\nDescription: Compose elements in a flex container\n\n## Usage\n\n```tsx\nimport { Flex, Button } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <Flex\n      mih={50}\n      bg=\"rgba(0, 0, 0, .3)\"\n       gap=\"md\" justify=\"flex-start\" align=\"flex-start\" direction=\"row\" wrap=\"wrap\"\n    >\n      <Button>Button 1</Button>\n      <Button>Button 2</Button>\n      <Button>Button 3</Button>\n    </Flex>\n  );\n}\n```\n\n\n## Supported props\n\n## Responsive props\n\n`Flex` component props can have responsive values the same way as other [style props](https://mantine.dev/llms/styles-style-props.md):\n\n```tsx\nimport { Flex, Button } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Flex\n      direction={{ base: 'column', sm: 'row' }}\n      gap={{ base: 'sm', sm: 'lg' }}\n      justify={{ sm: 'center' }}\n    >\n      <Button>Button 1</Button>\n      <Button>Button 2</Button>\n      <Button>Button 3</Button>\n    </Flex>\n  );\n}\n```\n\n\n## Difference from Group and Stack\n\nThe `Flex` component is an alternative to [Group](https://mantine.dev/llms/core-group.md) and [Stack](https://mantine.dev/llms/core-stack.md).\n`Flex` is more flexible – it allows creating both horizontal and vertical flexbox layouts, but requires more configuration.\nUnlike [Group](https://mantine.dev/llms/core-group.md) and [Stack](https://mantine.dev/llms/core-stack.md), `Flex` is [polymorphic](https://mantine.dev/llms/guides-polymorphic.md) and supports responsive props.\n\n## Browser support\n\nFlex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.\n\n\n#### Props\n\n**Flex props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| align | StyleProp<AlignItems> | - | `align-items` CSS property |\n| columnGap | StyleProp<MantineSpacing> | - | `column-gap` CSS property |\n| direction | StyleProp<FlexDirection> | - | `flex-direction` CSS property |\n| gap | StyleProp<MantineSpacing> | - | `gap` CSS property |\n| justify | StyleProp<JustifyContent> | - | `justify-content` CSS property |\n| rowGap | StyleProp<MantineSpacing> | - | `row-gap` CSS property |\n| wrap | StyleProp<FlexWrap> | - | `flex-wrap` CSS property |\n\n\n#### Styles API\n\nFlex component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Flex selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Flex-root | Root element |\n",
+  "props": [
+    {
+      "name": "align",
+      "description": "<code>align-items</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<AlignItems>"
+      },
+      "sourceComponent": "Flex"
+    },
+    {
+      "name": "columnGap",
+      "description": "<code>column-gap</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<MantineSpacing>"
+      },
+      "sourceComponent": "Flex"
+    },
+    {
+      "name": "direction",
+      "description": "<code>flex-direction</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<FlexDirection>"
+      },
+      "sourceComponent": "Flex"
+    },
+    {
+      "name": "gap",
+      "description": "<code>gap</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<MantineSpacing>"
+      },
+      "sourceComponent": "Flex"
+    },
+    {
+      "name": "justify",
+      "description": "<code>justify-content</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<JustifyContent>"
+      },
+      "sourceComponent": "Flex"
+    },
+    {
+      "name": "rowGap",
+      "description": "<code>row-gap</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<MantineSpacing>"
+      },
+      "sourceComponent": "Flex"
+    },
+    {
+      "name": "wrap",
+      "description": "<code>flex-wrap</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<FlexWrap>"
+      },
+      "sourceComponent": "Flex"
+    }
+  ]
+}

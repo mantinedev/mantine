@@ -7,8 +7,8 @@ Import: import { CorePackage } from '@mantine/core';
 [![npm](https://img.shields.io/npm/dm/@mantine/core)](https://www.npmjs.com/package/@mantine/core)
 
 [@mantine/core](https://www.npmjs.com/package/@mantine/core) package
-provides essential components: buttons, inputs, modals, typography and many others.
-`@mantine/core` package is used internally in most of other `@mantine/*` packages –
+provides essential components: buttons, inputs, modals, typography, and many others.
+The `@mantine/core` package is used internally in most of the other `@mantine/*` packages –
 it is required to be installed in your project to use Mantine components.
 
 ## Installation
@@ -29,10 +29,8 @@ import '@mantine/core/styles.css';
 
 ## Usage
 
-Follow the [getting started guide](https://mantine.dev/getting-started) to learn how to
-complete Mantine setup in your project. Example of using [Stepper](https://mantine.dev/core/stepper) component:
-
-#### Example: usage
+Follow the [getting started guide](https://mantine.dev/llms/getting-started.md) to learn how to
+complete the Mantine setup in your project. Example of using the [Stepper](https://mantine.dev/llms/core-stepper.md) component:
 
 ```tsx
 import { useState } from 'react';

@@ -1,0 +1,59 @@
+{
+  "id": "core-container",
+  "name": "Container",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/container",
+  "description": "Center content with padding and max-width",
+  "propsCount": 3,
+  "llmUrl": "https://mantine.dev/llms/core-container.md",
+  "componentDataUrl": "/mcp/components/core-container.json",
+  "searchText": "container center content with padding and max-width @mantine/core /core/container fluid size strategy",
+  "source": "@mantine/core/src/components/Container/Container.tsx",
+  "docs": "core/container.mdx",
+  "markdown": "# Container\nPackage: @mantine/core\nImport: import { Container } from '@mantine/core';\nDescription: Center content with padding and max-width\n\n## Grid strategy\n\nStarting from 8.2.0, `Container` supports the `strategy=\"grid\"` prop which enables more\nfeatures.\n\nDifferences from the default `strategy=\"block\"`:\n\n* Uses `display: grid` instead of `display: block`\n* Does not include default inline padding\n* Does not set `max-width` on the root element (uses grid template columns instead)\n\nFeatures supported by `strategy=\"grid\"`:\n\n* Everything that is supported by `strategy=\"block\"`\n* Children with `data-breakout` attribute take the entire width of the container's parent element\n* Children with `data-container` inside `data-breakout` have the same width as the main grid column\n\nExample of using breakout feature:\n\n```tsx\nimport { Box, Container } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Container strategy=\"grid\" size={500}>\n      <Box bg=\"var(--mantine-color-indigo-light)\" h={50}>\n        Main content\n      </Box>\n\n      <Box data-breakout bg=\"var(--mantine-color-indigo-light)\" mt=\"xs\">\n        <div>Breakout</div>\n\n        <Box data-container bg=\"indigo\" c=\"white\" h={50}>\n          <div>Container inside breakout</div>\n        </Box>\n      </Box>\n    </Container>\n  );\n}\n```\n\n\n## Usage\n\n`Container` centers content and limits its `max-width` to the value specified in the `size` prop.\nNote that the `size` prop does not make `max-width` responsive. For example,\nwhen it is set to `lg` it will always be `lg` regardless of screen size.\n\n```tsx\nimport { Container } from '@mantine/core';\n\nfunction Demo() {\n  const demoProps = {\n    bg: 'var(--mantine-color-blue-light)',\n    h: 50,\n    mt: 'md',\n  };\n\n  return (\n    <>\n      <Container {...demoProps}>Default Container</Container>\n\n      <Container size=\"xs\" {...demoProps}>\n        xs Container\n      </Container>\n\n      <Container px={0} size={480} {...demoProps}>\n        480px Container without padding\n      </Container>\n    </>\n  );\n}\n```\n\n\n## Fluid\n\nSet the `fluid` prop to make the container fluid. It will take 100% of available width,\nwhich is the same as setting `size=\"100%\"`.\n\n```tsx\nimport { Container } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Container fluid h={50} bg=\"var(--mantine-color-blue-light)\">\n      Fluid container has 100% max-width\n    </Container>\n  );\n}\n```\n\n\n## Customize sizes\n\nYou can customize existing `Container` sizes and add new ones with [CSS variables](https://mantine.dev/llms/styles-styles-api.md)\non [theme](https://mantine.dev/llms/theming-theme-object.md):\n\n```tsx\nimport { Container, MantineProvider, createTheme, rem } from '@mantine/core';\n\nconst CONTAINER_SIZES: Record<string, number> = {\n  xxs: 300,\n  xs: 400,\n  sm: 500,\n  md: 600,\n  lg: 700,\n  xl: 800,\n  xxl: 900,\n};\n\nconst theme = createTheme({\n  components: {\n    Container: Container.extend({\n      vars: (_, { size, fluid }) => ({\n        root: {\n          '--container-size': fluid\n            ? '100%'\n            : size !== undefined && size in CONTAINER_SIZES\n              ? rem(CONTAINER_SIZES[size])\n              : rem(size),\n        },\n      }),\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Container size=\"xxs\" bg=\"var(--mantine-color-blue-light)\">\n        Container with custom size\n      </Container>\n    </MantineProvider>\n  );\n}\n```\n\n\n## Responsive max-width\n\nTo make `Container` `max-width` responsive, use [Styles API](https://mantine.dev/llms/styles-styles-api.md) to set\n`classNames`. For example, you can add a `responsive` size that will make the `Container`\n`max-width` different depending on screen size:\n\n```tsx\n// Demo.tsx\nimport cx from 'clsx';\nimport { MantineProvider, Container, createTheme } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nconst theme = createTheme({\n  components: {\n    Container: Container.extend({\n      classNames: (_, { size }) => ({\n        root: cx({ [classes.responsiveContainer]: size === 'responsive' }),\n      }),\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Container size=\"responsive\" bg=\"var(--mantine-color-blue-light)\">\n        Container with responsive size\n      </Container>\n    </MantineProvider>\n  );\n}\n\n// Demo.module.css\n.responsiveContainer {\n  max-width: 300px;\n\n  @media (min-width: em(400px)) {\n    max-width: 400px;\n  }\n\n  @media (min-width: em(600px)) {\n    max-width: 600px;\n  }\n}\n```\n\n\n\n#### Props\n\n**Container props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| fluid | boolean | - | If set, the container takes 100% width of its parent and `size` prop is ignored. |\n| size | MantineSize \\| number | - | `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. |\n| strategy | \"block\" \\| \"grid\" | - | Centering strategy |\n\n\n#### Styles API\n\nContainer component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Container selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Container-root | Root element |\n\n**Container CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --container-size | Controls container `max-width` |\n",
+  "props": [
+    {
+      "name": "fluid",
+      "description": "If set, the container takes 100% width of its parent and <code>size</code> prop is ignored.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Container"
+    },
+    {
+      "name": "size",
+      "description": "<code>max-width</code> of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when <code>fluid</code> prop is set.",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Container"
+    },
+    {
+      "name": "strategy",
+      "description": "Centering strategy",
+      "required": false,
+      "defaultValue": "'block'",
+      "type": {
+        "name": "\"block\" | \"grid\"",
+        "raw": "\"block\" | \"grid\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"block\""
+          },
+          {
+            "value": "\"grid\""
+          }
+        ]
+      },
+      "sourceComponent": "Container"
+    }
+  ]
+}

@@ -4,8 +4,34 @@ Import: import { UseFileDialog } from '@mantine/hooks';
 
 ## Usage
 
-`use-file-dialog` allows capturing one or more files from the user without file input element:
+The `use-file-dialog` hook allows you to capture one or more files from the user without a file input element:
 
+```tsx
+import { Button, Group, List } from '@mantine/core';
+import { useFileDialog } from '@mantine/hooks';
+
+function Demo() {
+  const fileDialog = useFileDialog();
+
+  const pickedFiles = Array.from(fileDialog.files || []).map((file) => (
+    <List.Item key={file.name}>{file.name}</List.Item>
+  ));
+
+  return (
+    <div>
+      <Group>
+        <Button onClick={fileDialog.open}>Pick files</Button>
+        {pickedFiles.length > 0 && (
+          <Button variant="default" onClick={fileDialog.reset}>
+            Reset
+          </Button>
+        )}
+      </Group>
+      {pickedFiles.length > 0 && <List mt="lg">{pickedFiles}</List>}
+    </div>
+  );
+}
+```
 
 
 ## Definition
@@ -48,7 +74,7 @@ function useFileDialog(input?: UseFileDialogOptions): UseFileDialogReturnValue;
 
 ## Exported types
 
-`UseFileDialogOptions` and `UseFileDialogReturnValue` types are exported from `@mantine/hooks` package,
+`UseFileDialogOptions` and `UseFileDialogReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

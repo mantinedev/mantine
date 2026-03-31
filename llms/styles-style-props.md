@@ -3,8 +3,8 @@
 # Style props
 
 With style props, you can add inline styles to any Mantine component.
-Style props add styles to the **root** element, if you need to style nested elements,
-use [Styles API](https://mantine.dev/styles/styles-api/) instead.
+Style props add styles to the **root** element. If you need to style nested elements,
+use [Styles API](https://mantine.dev/llms/styles-styles-api.md) instead.
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -20,13 +20,11 @@ function Demo() {
 
 ## Supported props
 
-All Mantine components that have root element support the following style props:
-
-<StylePropsTable />
+All Mantine components that have a root element support the following style props:
 
 ## Theme values
 
-Some style props can reference values from theme, for example `mt` will use `theme.spacing` value
+Some style props can reference values from the theme. For example, `mt` will use the `theme.spacing` value
 if you set `xs`, `sm`, `md`, `lg`, `xl`:
 
 ```tsx
@@ -54,7 +52,7 @@ function Demo() {
 }
 ```
 
-In `c`, `bd` and `bg` props you can reference colors from `theme.colors`:
+In the `c`, `bd` and `bg` props you can reference colors from `theme.colors`:
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -92,10 +90,8 @@ function Demo() {
 ## Responsive styles
 
 You can use object syntax to add responsive styles with style props.
-Note that responsive style props are [less performant](https://mantine.dev/styles/styles-performance) than regular style props,
-it is not recommended to use them in large lists of elements.
-
-#### Example: responsiveStyleProps
+Note that responsive style props are [less performant](https://mantine.dev/llms/styles-styles-performance.md) than regular style props.
+It is not recommended to use them in large lists of elements.
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -120,7 +116,7 @@ function Demo() {
 Responsive values are calculated the following way:
 
 * `base` value is used when none of breakpoint values are applied
-* `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger that the value of corresponding breakpoint specified in [theme.breakpoints](https://mantine.dev/styles/responsive/)
+* `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger than the value of the corresponding breakpoint specified in [theme.breakpoints](https://mantine.dev/llms/styles-responsive.md)
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -133,7 +129,7 @@ function Demo() {
 In this case the element will have the following styles:
 
 ```css
-/* Base styles added to element and then get overwritten with responsive values */
+/* Base styles added to the element and then get overwritten with responsive values */
 .element {
   width: 20rem;
 }

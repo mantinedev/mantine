@@ -5,8 +5,6 @@ Description: Wrapper for input type radio
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Radio } from '@mantine/core';
 
@@ -14,7 +12,7 @@ import { Radio } from '@mantine/core';
 function Demo() {
   return (
     <Radio
-      
+       labelPosition="right" label="I cannot be unchecked" description="" error="" size="sm" color="blue" variant="filled"
     />
   );
 }
@@ -38,9 +36,35 @@ function Demo() {
 }
 ```
 
-## States
+## Uncontrolled
 
-#### Example: states
+`Radio` can be used with uncontrolled forms the same way as a native `input[type="radio"]`.
+Set the `name` and `value` attributes to include radio value in `FormData` object on form submission.
+To control the initial checked state in uncontrolled forms, use `defaultChecked` prop.
+
+Example usage of uncontrolled `Radio` with `FormData`:
+
+```tsx
+import { Radio } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Radio value:', formData.get('option'));
+      }}
+    >
+      <Radio name="option" value="option1" label="Option 1" />
+      <Radio name="option" value="option2" label="Option 2" defaultChecked />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## States
 
 ```tsx
 import { Radio, Stack } from '@mantine/core';
@@ -61,8 +85,6 @@ function Demo() {
 
 ## Change icon
 
-#### Example: icon
-
 ```tsx
 import { Radio, CheckIcon } from '@mantine/core';
 
@@ -75,8 +97,6 @@ function Demo() {
 
 
 ## Change icon color
-
-#### Example: iconColor
 
 ```tsx
 import { Radio } from '@mantine/core';
@@ -98,8 +118,6 @@ function Demo() {
 
 ## Disabled state
 
-#### Example: disabled
-
 ```tsx
 import { Radio, Group } from '@mantine/core';
 
@@ -117,8 +135,8 @@ function Demo() {
 
 ## Pointer cursor
 
-By default, radio input and label have `cursor: default` (same as native `input[type="radio"]`).
-To change cursor to pointer, set `cursorType` on [theme](https://mantine.dev/theming/theme-object/):
+By default, the radio input and label have `cursor: default` (same as native `input[type="radio"]`).
+To change the cursor to pointer, set `cursorType` on the [theme](https://mantine.dev/llms/theming-theme-object.md):
 
 ```tsx
 import { createTheme, MantineProvider, Radio } from '@mantine/core';
@@ -138,12 +156,10 @@ function Demo() {
 
 ## Radio with tooltip
 
-You can change target element to which tooltip is attached with `refProp`:
+You can change the target element to which the tooltip is attached with `refProp`:
 
-* If `refProp` is not set, the tooltip is attached to the checkbox input
-* If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input and other elements)
-
-#### Example: tooltip
+* If `refProp` is not set, the tooltip is attached to the radio input
+* If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input, and other elements)
 
 ```tsx
 import { Tooltip, Radio } from '@mantine/core';
@@ -164,15 +180,11 @@ function Demo() {
 ```
 
 
-<WrapperProps component="Radio" />
-
 ## Wrapper props
 
 Radio supports additional props that are passed to the wrapper element for more customization options.
 
 ## Radio.Group component
-
-#### Example: groupConfigurator
 
 ```tsx
 import { Radio, Group } from '@mantine/core';
@@ -182,7 +194,7 @@ function Demo() {
   return (
     <Radio.Group
       name="favoriteFramework"
-      
+       label="Select your favorite framework/library" description="This is anonymous" error="" withAsterisk={true}
     >
       <Group mt="xs">
         <Radio value="react" label="React" />
@@ -198,6 +210,26 @@ function Demo() {
 
 ## Radio.Group disabled state
 
+```tsx
+import { Radio, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Radio.Group
+      disabled
+      name="favoriteFramework"
+      label="Select your favorite framework/library"
+      description="This is anonymous"
+    >
+      <Group mt="xs">
+        <Radio label="React" value="react" />
+        <Radio label="Angular" value="nu" />
+        <Radio label="Svelte" value="sv" />
+      </Group>
+    </Radio.Group>
+  );
+}
+```
 
 
 ## Controlled Radio.Group
@@ -229,15 +261,13 @@ function Demo() {
 
 ## Radio.Indicator
 
-`Radio.Indicator` looks exactly the same as `Radio` component, but it does not
-have any semantic meaning, it's just a visual representation of radio state. You
-can use it in any place where you need to display radio state without any interaction
+`Radio.Indicator` looks exactly the same as the `Radio` component, but it does not
+have any semantic meaning; it's just a visual representation of the radio state. You
+can use it in any place where you need to display the radio state without any interaction
 related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
 
-Note that `Radio.Indicator` cannot be focused or selected with keyboard. It is not
-accessible and should not be used as a replacement for `Radio` component.
-
-#### Example: indicator
+Note that `Radio.Indicator` cannot be focused or selected with the keyboard. It is not
+accessible and should not be used as a replacement for the `Radio` component.
 
 ```tsx
 import { Radio, Group } from '@mantine/core';
@@ -255,136 +285,9 @@ function Demo() {
 ```
 
 
-## Radio.Card component
-
-`Radio.Card` component can be used as a replacement for `Radio` to build custom
-cards/buttons/other things that work as radios. The root element of the component
-has `role="radio"` attribute, it is accessible by default and supports the same
-keyboard interactions as `input[type="radio"]`.
-
-#### Example: card
-
-```tsx
-import { useState } from 'react';
-import { Radio, Group, Text } from '@mantine/core';
-import classes from './Demo.module.css';
-
-function Demo() {
-  const [checked, setChecked] = useState(false);
-
-  return (
-    <Radio.Card
-      className={classes.root}
-      radius="md"
-      checked={checked}
-      onClick={() => setChecked((c) => !c)}
-    >
-      <Group wrap="nowrap" align="flex-start">
-        <Radio.Indicator />
-        <div>
-          <Text className={classes.label}>@mantine/core</Text>
-          <Text className={classes.description}>
-            Core components library: inputs, buttons, overlays, etc.
-          </Text>
-        </div>
-      </Group>
-    </Radio.Card>
-  );
-}
-```
-
-
-You can use `Radio.Card` with `Radio.Group` the same way as `Radio` component:
-
-#### Example: cardGroup
-
-```tsx
-import { useState } from 'react';
-import { Radio, Group, Stack, Text } from '@mantine/core';
-import classes from './Demo.module.css';
-
-const data = [
-  {
-    name: '@mantine/core',
-    description: 'Core components library: inputs, buttons, overlays, etc.',
-  },
-  { name: '@mantine/hooks', description: 'Collection of reusable hooks for React applications.' },
-  { name: '@mantine/notifications', description: 'Notifications system' },
-];
-
-function Demo() {
-  const [value, setValue] = useState<string | null>(null);
-
-  const cards = data.map((item) => (
-    <Radio.Card className={classes.root} radius="md" value={item.name} key={item.name}>
-      <Group wrap="nowrap" align="flex-start">
-        <Radio.Indicator />
-        <div>
-          <Text className={classes.label}>{item.name}</Text>
-          <Text className={classes.description}>{item.description}</Text>
-        </div>
-      </Group>
-    </Radio.Card>
-  ));
-
-  return (
-    <>
-      <Radio.Group
-        value={value}
-        onChange={setValue}
-        label="Pick one package to install"
-        description="Choose a package that you will need in your application"
-      >
-        <Stack pt="md" gap="xs">
-          {cards}
-        </Stack>
-      </Radio.Group>
-
-      <Text fz="xs" mt="md">
-        CurrentValue: {value || '–'}
-      </Text>
-    </>
-  );
-}
-```
-
-
-<GetElementRef component="Radio" refType="input" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { Radio } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLInputElement>(null);
-  return <Radio ref={ref} />;
-}
-```
-
-#### Example: stylesApi
-
-```tsx
-import { Radio } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Radio
-      label="Radio"
-      description="Radio description"
-      error="Radio error"
-      defaultChecked
-     
-    />
-  );
-}
-```
-
-
 ## Accessibility
 
-Set `aria-label` or `label` prop to make the radio accessible:
+Set the `aria-label` or `label` prop to make the radio accessible:
 
 ```tsx
 import { Radio } from '@mantine/core';
@@ -394,12 +297,12 @@ function Bad() {
   return <Radio />;
 }
 
-// Ok, input is labelled by aria-label
+// Ok, input is labeled by aria-label
 function GoodAriaLabel() {
   return <Radio aria-label="My radio" />;
 }
 
-// Ok, input is labelled by label element
+// Ok, input is labeled by label element
 function GoodLabel() {
   return <Radio label="My radio" />;
 }
@@ -408,20 +311,82 @@ function GoodLabel() {
 
 #### Props
 
+**Radio props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color to set input color in checked state |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| color | MantineColor | - | Key of theme.colors or any valid CSS color to set radio background color in checked state |
 | description | React.ReactNode | - | Description displayed below the label |
 | error | React.ReactNode | - | Error displayed below the label |
-| icon | FC<RadioIconProps> | - | A component that replaces default check icon |
-| iconColor | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color to set icon color, by default value depends on <code>theme.autoContrast</code> |
-| label | React.ReactNode | - | Content of the <code>label</code> associated with the radio |
-| labelPosition | "left" | "right" | - | Position of the label relative to the input |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius,</code> |
-| rootRef | ForwardedRef<HTMLDivElement> | - | Assigns ref of the root element |
-| size | MantineSize | (string & {}) | - | Controls size of the component |
-| wrapperProps | Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes | - | Props passed down to the root element |
+| icon | FC<RadioIconProps> | - | A component that replaces the default radio icon (centered dot) |
+| iconColor | MantineColor | - | Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting |
+| label | React.ReactNode | - | Content of the `label` associated with the radio |
+| labelPosition | "left" \| "right" | - | Position of the label relative to the input |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| rootRef | Ref<HTMLDivElement> | - | Assigns ref of the root element |
+| size | MantineSize | - | Controls size of the component |
+| withErrorStyles | boolean | - | If set, applies error styles to the radio when `error` prop is set |
+| wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the root element |
+
+**Radio.GroupContext props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**Radio.Group props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | `Radio` components and any other elements |
+| defaultValue | string \| null | - | Uncontrolled component default value |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute, prevents interactions |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| id | string | - | Static id used as base to generate `aria-` attributes, by default generates random id |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelElement | "div" \| "label" | - | Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| name | string | - | `name` attribute of child radio inputs. By default, `name` is generated randomly. |
+| onChange | (value: Value) => void | - | Called when value changes |
+| readOnly | boolean | - | If set, value cannot be changed |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| size | MantineSize | - | Controls size of the `Input.Wrapper` |
+| value | string \| null | - | Controlled component value |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the `Input.Wrapper` |
+
+**Radio.Indicator props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| checked | boolean | - | Checked state |
+| color | MantineColor | - | Key of theme.colors or any valid CSS color to set indicator background color in checked state |
+| disabled | boolean | - | Disabled state |
+| icon | FC<RadioIconProps> | - | A component that replaces the default radio icon (centered dot) |
+| iconColor | MantineColor | - | Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| size | MantineSize | - | Controls size of the component |
+
+**Radio.CardContext props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**Radio.Card props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| checked | boolean | - | Checked state |
+| name | string | - | Value used to associate all related radio cards, required for accessibility if used outside of `Radio.Group` |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| value | string | - | Value of the radio, used with Radio.Group |
+| withBorder | boolean | - | Adds border to the root element |
 
 
 #### Styles API
@@ -456,8 +421,8 @@ Radio component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| radio | data-error | - | - |
-| inner | data-label-position | - | Value of  |
+| radio | data-error | `error` prop is set | - |
+| inner | data-label-position | - | Value of `labelPosition` prop |
 
 **Radio.Group selectors**
 
@@ -490,8 +455,8 @@ Radio component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| indicator | data-checked | - | - |
-| indicator | data-disabled | - | - |
+| indicator | data-checked | `checked` prop is set | - |
+| indicator | data-disabled | `disabled` prop is set | - |
 
 **Radio.Card selectors**
 
@@ -509,5 +474,5 @@ Radio component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| card | data-checked | - | - |
-| card | data-with-border | - | - |
+| card | data-checked | `checked` prop is set | - |
+| card | data-with-border | `withBorder` prop is set | - |

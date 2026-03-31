@@ -5,8 +5,6 @@ Description: Compose elements in a flex container
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Flex, Button } from '@mantine/core';
 
@@ -16,7 +14,7 @@ function Demo() {
     <Flex
       mih={50}
       bg="rgba(0, 0, 0, .3)"
-      
+       gap="md" justify="flex-start" align="flex-start" direction="row" wrap="wrap"
     >
       <Button>Button 1</Button>
       <Button>Button 2</Button>
@@ -29,13 +27,9 @@ function Demo() {
 
 ## Supported props
 
-<StylePropsTable source={FLEX_STYLE_PROPS_DATA} />
-
 ## Responsive props
 
-`Flex` component props can have responsive values the same way as other [style props](https://mantine.dev/styles/style-props/):
-
-#### Example: responsive
+`Flex` component props can have responsive values the same way as other [style props](https://mantine.dev/llms/styles-style-props.md):
 
 ```tsx
 import { Flex, Button } from '@mantine/core';
@@ -58,11 +52,9 @@ function Demo() {
 
 ## Difference from Group and Stack
 
-`Flex` component is an alternative to [Group](https://mantine.dev/core/group/) and [Stack](https://mantine.dev/core/stack/).
-`Flex` is more flexible, it allows creating both horizontal and vertical flexbox layouts, but requires more configuration.
-Unlike [Group](https://mantine.dev/core/group/) and [Stack](https://mantine.dev/core/stack/) `Flex` is [polymorphic](https://mantine.dev/guides/polymorphic/) and supports responsive props.
-
-<FlexboxGapSupport component="Flex" />
+The `Flex` component is an alternative to [Group](https://mantine.dev/llms/core-group.md) and [Stack](https://mantine.dev/llms/core-stack.md).
+`Flex` is more flexible – it allows creating both horizontal and vertical flexbox layouts, but requires more configuration.
+Unlike [Group](https://mantine.dev/llms/core-group.md) and [Stack](https://mantine.dev/llms/core-stack.md), `Flex` is [polymorphic](https://mantine.dev/llms/guides-polymorphic.md) and supports responsive props.
 
 ## Browser support
 
@@ -71,15 +63,17 @@ Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap
 
 #### Props
 
+**Flex props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| align | StyleProp<AlignItems> | - | <code>align-items</code> CSS property |
-| columnGap | StyleProp<MantineSpacing> | - | <code>column-gap</code> CSS property |
-| direction | StyleProp<FlexDirection> | - | <code>flex-direction</code> CSS property |
-| gap | StyleProp<MantineSpacing> | - | <code>gap</code> CSS property |
-| justify | StyleProp<JustifyContent> | - | <code>justify-content</code> CSS property |
-| rowGap | StyleProp<MantineSpacing> | - | <code>row-gap</code> CSS property |
-| wrap | StyleProp<FlexWrap> | - | <code>flex-wrap</code> CSS property |
+| align | StyleProp<AlignItems> | - | `align-items` CSS property |
+| columnGap | StyleProp<MantineSpacing> | - | `column-gap` CSS property |
+| direction | StyleProp<FlexDirection> | - | `flex-direction` CSS property |
+| gap | StyleProp<MantineSpacing> | - | `gap` CSS property |
+| justify | StyleProp<JustifyContent> | - | `justify-content` CSS property |
+| rowGap | StyleProp<MantineSpacing> | - | `row-gap` CSS property |
+| wrap | StyleProp<FlexWrap> | - | `flex-wrap` CSS property |
 
 
 #### Styles API

@@ -1,0 +1,178 @@
+{
+  "id": "core-scroll-area",
+  "name": "ScrollArea",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/scroll-area",
+  "description": "Area with custom scrollbars",
+  "propsCount": 14,
+  "llmUrl": "https://mantine.dev/llms/core-scroll-area.md",
+  "componentDataUrl": "/mcp/components/core-scroll-area.json",
+  "searchText": "scrollarea area with custom scrollbars @mantine/core /core/scroll-area offsetscrollbars onbottomreached onleftreached onrightreached onscrollpositionchange ontopreached overscrollbehavior scrollhidedelay scrollbarsize scrollbars startscrollposition type viewportprops viewportref",
+  "source": "@mantine/core/src/components/ScrollArea/ScrollArea.tsx",
+  "docs": "core/scroll-area.mdx",
+  "markdown": "# ScrollArea\nPackage: @mantine/core\nImport: import { ScrollArea } from '@mantine/core';\nDescription: Area with custom scrollbars\n\n## Usage\n\nThe `ScrollArea` component supports the following props:\n\n* `type` defines scrollbars behavior:\n  * `hover` – scrollbars are visible on hover\n  * `scroll` – scrollbars are visible on scroll\n  * `auto` – similar to `overflow: auto` – scrollbars are always visible when the content is overflowing\n  * `always` – same as `auto`, but scrollbars are always visible regardless of whether the content is overflowing\n  * `never` – scrollbars are always hidden\n* `offsetScrollbars` – adds padding to offset scrollbars with the following options:\n  * `true` – adds padding to offset both scrollbars\n  * `x` – adds padding to offset horizontal scrollbar only\n  * `y` – adds padding to offset vertical scrollbar only\n  * `present` – adds padding only when scrollbars are visible\n* `scrollbarSize` – scrollbar size, controls scrollbar and thumb width/height\n* `scrollHideDelay` – delay in ms to hide scrollbars, applicable only when type is `hover` or `scroll`\n* `overscrollBehavior` – controls [overscroll-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior) of the viewport\n\n```tsx\nimport { ScrollArea } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ScrollArea h={250} type=\"hover\" offsetScrollbars={false} overscrollBehavior=\"auto\" scrollbarSize={10} scrollHideDelay={1000}>\n      {/* ... content */}\n    </ScrollArea>\n  );\n}\n```\n\n\n## Horizontal scrollbars\n\n```tsx\nimport { ScrollArea, Box } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ScrollArea w={300} h={200}>\n      <Box w={600}>\n        {/* ... content */}\n      </Box>\n    </ScrollArea>\n  );\n}\n```\n\n\n## Disable horizontal scrollbars\n\nTo disable horizontal scrollbars, set the `scrollbars=\"y\"` prop:\n\n```tsx\nimport { ScrollArea, Box } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ScrollArea w={300} h={200} scrollbars=\"y\">\n      <Box w={600}>\n        {/* ... content */}\n      </Box>\n    </ScrollArea>\n  );\n}\n```\n\n\n## Subscribe to scroll position changes\n\nSet the `onScrollPositionChange` function to subscribe to scroll position changes.\nIt will be called each time the user scrolls with x and y coordinates:\n\n```tsx\nimport { useState } from 'react';\nimport { Text, ScrollArea, Code, Box } from '@mantine/core';\n\nfunction Demo() {\n  const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });\n\n  return (\n    <>\n      <ScrollArea\n        w={300}\n        h={200}\n        onScrollPositionChange={onScrollPositionChange}\n      >\n        <Box w={600}>\n          {/* ... content */}\n        </Box>\n      </ScrollArea>\n\n      <Text>\n        Scroll position: <Code>{`{ x: ${scrollPosition.x}, y: ${scrollPosition.y} }`}</Code>\n      </Text>\n    </>\n  );\n}\n```\n\n\n## Scroll boundary callbacks\n\n`ScrollArea` component supports callbacks that are triggered when scrolling reaches boundaries:\n\n```tsx\nimport { useState } from 'react';\nimport { Badge, Box, Group, ScrollArea, Stack, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [topReached, setTopReached] = useState(0);\n  const [bottomReached, setBottomReached] = useState(0);\n  const [leftReached, setLeftReached] = useState(0);\n  const [rightReached, setRightReached] = useState(0);\n\n  return (\n    <Stack align=\"center\">\n      <Group>\n        <Badge color=\"blue\">Top: {topReached}</Badge>\n        <Badge color=\"green\">Bottom: {bottomReached}</Badge>\n        <Badge color=\"orange\">Left: {leftReached}</Badge>\n        <Badge color=\"grape\">Right: {rightReached}</Badge>\n      </Group>\n\n      <ScrollArea\n        h={200}\n        w={300}\n        onTopReached={() => setTopReached((c) => c + 1)}\n        onBottomReached={() => setBottomReached((c) => c + 1)}\n        onLeftReached={() => setLeftReached((c) => c + 1)}\n        onRightReached={() => setRightReached((c) => c + 1)}\n      >\n        <Box w={600}>\n          {Array(50)\n            .fill(0)\n            .map((_, i) => (\n              <Text key={i}>\n                Line {i + 1} - This is a long line that requires horizontal scrolling\n              </Text>\n            ))}\n        </Box>\n      </ScrollArea>\n    </Stack>\n  );\n}\n```\n\n\n## Scroll to position\n\nTo programmatically scroll to any position,\nget the viewport element ref with the `viewportRef` prop and call the `scrollTo` method:\n\n```tsx\nimport { useRef } from 'react';\nimport { ScrollArea, Button, Stack, Group } from '@mantine/core';\n\nfunction Demo() {\n  const viewport = useRef<HTMLDivElement>(null);\n\n  const scrollToBottom = () =>\n    viewport.current!.scrollTo({ top: viewport.current!.scrollHeight, behavior: 'smooth' });\n\n  const scrollToCenter = () =>\n    viewport.current!.scrollTo({ top: viewport.current!.scrollHeight / 2, behavior: 'smooth' });\n\n  const scrollToTop = () => viewport.current!.scrollTo({ top: 0, behavior: 'smooth' });\n\n  return (\n    <Stack align=\"center\">\n      <ScrollArea w={300} h={200} viewportRef={viewport}>\n        {/* ... content */}\n      </ScrollArea>\n\n      <Group justify=\"center\">\n        <Button onClick={scrollToBottom}>Scroll to bottom</Button>\n        <Button onClick={scrollToCenter}>Scroll to center</Button>\n        <Button onClick={scrollToTop}>Scroll to top</Button>\n      </Group>\n    </Stack>\n  );\n}\n```\n\n\n## Start scroll position\n\nUse the `startScrollPosition` prop to set the initial scroll position when the component mounts.\nUnlike using `viewportRef` with `useEffect`, this approach avoids the flash of content at position (0, 0):\n\n```tsx\nimport { ScrollArea } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ScrollArea h={200} startScrollPosition={{ y: 250 }}>\n      {/* ... content */}\n    </ScrollArea>\n  );\n}\n```\n\n\n## Styles API\n\n```tsx\n// Demo.tsx\nimport { ScrollArea, Box } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <ScrollArea w={300} h={200} type=\"always\" offsetScrollbars classNames={classes}>\n      <Box w={600}>\n        {/* ... content */}\n      </Box>\n    </ScrollArea>\n  );\n}\n\n// Demo.module.css\n.scrollbar {\n  &,\n  &:hover {\n    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));\n  }\n\n  &[data-orientation='vertical'] .thumb {\n    background-color: var(--mantine-color-red-6);\n  }\n\n  &[data-orientation='horizontal'] .thumb {\n    background-color: var(--mantine-color-blue-6);\n  }\n}\n\n.corner {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));\n  opacity: 1;\n}\n```\n\n\n## Scroll element into view\n\n```tsx\nimport { useState, useRef } from 'react';\nimport { ScrollArea, UnstyledButton, TextInput } from '@mantine/core';\n\nconst groceries: string[] = [\n  '🍎 Apples',\n  '🍌 Bananas',\n  '🍊 Oranges',\n  '🥛 Milk',\n  '🍞 Bread',\n  '🥚 Eggs',\n  '🍗 Chicken',\n  '🥩 Beef',\n  '🍝 Pasta',\n  '🍚 Rice',\n  '🥔 Potatoes',\n  '🧅 Onions',\n  '🍅 Tomatoes',\n  '🥒 Cucumbers',\n  '🥕 Carrots',\n  '🥬 Lettuce',\n  '🍃 Spinach',\n  '🥦 Broccoli',\n  '🧀 Cheese',\n  '🍦 Yogurt',\n  '🧈 Butter',\n  '🍚 Sugar',\n  '🧂 Salt',\n  '🌶️ Pepper',\n  '☕ Coffee',\n  '🍵 Tea',\n  '🥤 Juice',\n  '💧 Water',\n  '🍪 Cookies',\n  '🍫 Chocolate',\n];\n\nfunction Demo() {\n  const viewportRef = useRef<HTMLDivElement>(null);\n  const [query, setQuery] = useState('');\n  const [hovered, setHovered] = useState(-1);\n  const filtered = groceries.filter((item) => item.toLowerCase().includes(query.toLowerCase()));\n  const items = filtered.map((item, index) => (\n    <UnstyledButton\n      data-list-item\n      key={item}\n      display=\"block\"\n      bg={index === hovered ? 'var(--mantine-color-blue-light)' : undefined}\n      w=\"100%\"\n      p={5}\n    >\n      {item}\n    </UnstyledButton>\n  ));\n\n  return (\n    <>\n      <TextInput\n        value={query}\n        onChange={(event) => {\n          setQuery(event.currentTarget.value);\n          setHovered(-1);\n        }}\n        onKeyDown={(event) => {\n          if (event.key === 'ArrowDown') {\n            event.preventDefault();\n            setHovered((current) => {\n              const nextIndex = current + 1 >= filtered.length ? current : current + 1;\n              viewportRef.current\n                ?.querySelectorAll('[data-list-item]')\n                ?.[nextIndex]?.scrollIntoView({ block: 'nearest' });\n              return nextIndex;\n            });\n          }\n\n          if (event.key === 'ArrowUp') {\n            event.preventDefault();\n            setHovered((current) => {\n              const nextIndex = current - 1 < 0 ? current : current - 1;\n              viewportRef.current\n                ?.querySelectorAll('[data-list-item]')\n                ?.[nextIndex]?.scrollIntoView({ block: 'nearest' });\n              return nextIndex;\n            });\n          }\n        }}\n        placeholder=\"Search groceries\"\n      />\n      <ScrollArea h={150} type=\"always\" mt=\"md\" viewportRef={viewportRef}>\n        {items}\n      </ScrollArea>\n    </>\n  );\n}\n```\n\n\n## ScrollArea.Autosize\n\n`ScrollArea.Autosize` component allows to create scrollable containers when given max-height is reached.\nIt also supports a callback for detecting when vertical overflow occurs:\n\n* onOverflowChange – triggered when content exceeds max-height, making the container scrollable or not\n\n```tsx\nimport { useCounter } from '@mantine/hooks';\nimport { ScrollArea, Button, Group } from '@mantine/core';\n\nconst lorem =\n  'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta perspiciatis reiciendis voluptate eaque itaque quos. Natus iure tenetur libero, reprehenderit ad, sequi, in aliquam eos necessitatibus expedita delectus veniam culpa!';\n\nfunction Demo() {\n  const [count, handlers] = useCounter(3, { min: 0, max: 10 });\n  const content = Array(count)\n    .fill(0)\n    .map((_, index) => <p key={index}>{lorem}</p>);\n\n  return (\n    <>\n      <ScrollArea.Autosize mah={300} maw={400} mx=\"auto\">\n        {content}\n      </ScrollArea.Autosize>\n\n      <Group justify=\"center\" mt=\"md\">\n        <Button color=\"red\" onClick={handlers.decrement}>\n          Remove paragraph\n        </Button>\n        <Button onClick={handlers.increment}>\n          Add paragraph\n        </Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## ScrollArea.Autosize with Popover\n\n```tsx\nimport { useState, useRef } from 'react';\nimport { ScrollArea, Popover, TextInput, UnstyledButton, Text, Box } from '@mantine/core';\n\nconst groceries = [\n  'Apples',\n  'Bananas',\n  'Oranges',\n  'Milk',\n  'Bread',\n  'Eggs',\n  'Chicken',\n  'Beef',\n  'Pasta',\n  'Rice',\n  'Potatoes',\n  'Onions',\n  'Tomatoes',\n  'Cucumbers',\n  'Carrots',\n  'Lettuce',\n  'Spinach',\n  'Broccoli',\n  'Cheese',\n  'Yogurt',\n  'Butter',\n  'Sugar',\n  'Salt',\n  'Pepper',\n  'Coffee',\n  'Tea',\n  'Juice',\n  'Water',\n  'Cookies',\n  'Chocolate',\n];\n\nfunction Demo() {\n  const viewportRef = useRef<HTMLDivElement>(null);\n  const [query, setQuery] = useState('');\n  const [opened, setOpened] = useState(false);\n  const [hovered, setHovered] = useState(-1);\n  const filtered = groceries.filter((item) => item.toLowerCase().includes(query.toLowerCase()));\n  const items = filtered.map((item, index) => (\n    <UnstyledButton\n      data-list-item\n      key={item}\n      display=\"block\"\n      bg={index === hovered ? 'var(--mantine-color-blue-light)' : undefined}\n      w=\"100%\"\n      p={5}\n    >\n      {item}\n    </UnstyledButton>\n  ));\n\n  return (\n    <Popover width=\"target\" opened={opened}>\n      <Popover.Target>\n        <TextInput\n          value={query}\n          onFocus={() => setOpened(true)}\n          onBlur={() => setOpened(false)}\n          onChange={(event) => {\n            setQuery(event.currentTarget.value);\n            setHovered(-1);\n          }}\n          onKeyDown={(event) => {\n            if (event.key === 'ArrowDown') {\n              event.preventDefault();\n              setHovered((current) => {\n                const nextIndex = current + 1 >= filtered.length ? current : current + 1;\n                viewportRef.current\n                  ?.querySelectorAll('[data-list-item]')\n                  ?.[nextIndex]?.scrollIntoView({ block: 'nearest' });\n                return nextIndex;\n              });\n            }\n\n            if (event.key === 'ArrowUp') {\n              event.preventDefault();\n              setHovered((current) => {\n                const nextIndex = current - 1 < 0 ? current : current - 1;\n                viewportRef.current\n                  ?.querySelectorAll('[data-list-item]')\n                  ?.[nextIndex]?.scrollIntoView({ block: 'nearest' });\n                return nextIndex;\n              });\n            }\n          }}\n          placeholder=\"Search groceries\"\n        />\n      </Popover.Target>\n      <Popover.Dropdown p={0}>\n        <ScrollArea.Autosize viewportRef={viewportRef} mah={200} type=\"always\" scrollbars=\"y\">\n          <Box px=\"xs\" py={5}>\n            {items.length > 0 ? items : <Text c=\"dimmed\">Nothing found</Text>}\n          </Box>\n        </ScrollArea.Autosize>\n      </Popover.Dropdown>\n    </Popover>\n  );\n}\n```\n\n\n\n#### Props\n\n**ScrollArea props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| offsetScrollbars | boolean \\| \"x\" \\| \"y\" \\| \"present\" | - | Determines whether scrollbars should be offset with padding on given axis - `true` - adds padding to offset both scrollbars (always) - `'x'` - adds padding to offset horizontal scrollbar (always) - `'y'` - adds padding to offset vertical scrollbar (always) - `'present'` - adds padding only when scrollbars are visible (dynamic) |\n| onBottomReached | () => void | - | Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering) |\n| onLeftReached | () => void | - | Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) |\n| onRightReached | () => void | - | Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) |\n| onScrollPositionChange | (position: { x: number; y: number; }) => void | - | Called with current position (`x` and `y` coordinates) when viewport is scrolled |\n| onTopReached | () => void | - | Called when scrollarea is scrolled all the way to the top |\n| overscrollBehavior | OverscrollBehavior | - | Defines `overscroll-behavior` of the viewport |\n| scrollHideDelay | number | - | Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` |\n| scrollbarSize | string \\| number | - | Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem) |\n| scrollbars | false \\| \"x\" \\| \"y\" \\| \"xy\" | - | Axis at which scrollbars must be rendered - `'x'` - horizontal scrollbar only - `'y'` - vertical scrollbar only - `'xy'` - both scrollbars - `false` - no scrollbars rendered (content remains scrollable via mouse/touch) |\n| startScrollPosition | { x?: number; y?: number \\| undefined; } \\| undefined | - | Initial scroll position set on mount |\n| type | \"auto\" \\| \"scroll\" \\| \"always\" \\| \"hover\" \\| \"never\" | - | Defines scrollbars behavior - `'hover'` – scrollbars visible on hover (default) - `'scroll'` – scrollbars visible during scrolling - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto) - `'always'` – scrollbars always visible, even when content doesn't overflow - `'never'` – scrollbars always hidden |\n| viewportProps | React.ComponentProps<\"div\"> | - | Props passed down to the viewport element |\n| viewportRef | Ref<HTMLDivElement> | - | Assigns viewport element (scrollable container) ref |\n\n**ScrollArea.Autosize props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| offsetScrollbars | boolean \\| \"x\" \\| \"y\" \\| \"present\" | - | Determines whether scrollbars should be offset with padding on given axis - `true` - adds padding to offset both scrollbars (always) - `'x'` - adds padding to offset horizontal scrollbar (always) - `'y'` - adds padding to offset vertical scrollbar (always) - `'present'` - adds padding only when scrollbars are visible (dynamic) |\n| onBottomReached | () => void | - | Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering) |\n| onLeftReached | () => void | - | Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) |\n| onOverflowChange | (overflowing: boolean) => void | - | Called when content overflows due to max-height, making the container scrollable |\n| onRightReached | () => void | - | Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) |\n| onScrollPositionChange | (position: { x: number; y: number; }) => void | - | Called with current position (`x` and `y` coordinates) when viewport is scrolled |\n| onTopReached | () => void | - | Called when scrollarea is scrolled all the way to the top |\n| overscrollBehavior | OverscrollBehavior | - | Defines `overscroll-behavior` of the viewport |\n| scrollHideDelay | number | - | Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` |\n| scrollbarSize | string \\| number | - | Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem) |\n| scrollbars | false \\| \"x\" \\| \"y\" \\| \"xy\" | - | Axis at which scrollbars must be rendered - `'x'` - horizontal scrollbar only - `'y'` - vertical scrollbar only - `'xy'` - both scrollbars - `false` - no scrollbars rendered (content remains scrollable via mouse/touch) |\n| startScrollPosition | { x?: number; y?: number \\| undefined; } \\| undefined | - | Initial scroll position set on mount |\n| type | \"auto\" \\| \"scroll\" \\| \"always\" \\| \"hover\" \\| \"never\" | - | Defines scrollbars behavior - `'hover'` – scrollbars visible on hover (default) - `'scroll'` – scrollbars visible during scrolling - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto) - `'always'` – scrollbars always visible, even when content doesn't overflow - `'never'` – scrollbars always hidden |\n| viewportProps | React.ComponentProps<\"div\"> | - | Props passed down to the viewport element |\n| viewportRef | Ref<HTMLDivElement> | - | Assigns viewport element (scrollable container) ref |\n\n\n#### Styles API\n\nScrollArea component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**ScrollArea selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-ScrollArea-root | Root element |\n| content | .mantine-ScrollArea-content | Wraps component children |\n| viewport | .mantine-ScrollArea-viewport | Main scrollable area |\n| scrollbar | .mantine-ScrollArea-scrollbar | Horizontal or vertical scrollbar root |\n| thumb | .mantine-ScrollArea-thumb | Scrollbar thumb |\n| corner | .mantine-ScrollArea-corner | Corner between horizontal and vertical scrollbars |\n\n**ScrollArea CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --scrollarea-scrollbar-size | Scrollbar size |\n",
+  "props": [
+    {
+      "name": "offsetScrollbars",
+      "description": "Determines whether scrollbars should be offset with padding on given axis\n- <code>true</code> - adds padding to offset both scrollbars (always)\n- <code>'x'</code> - adds padding to offset horizontal scrollbar (always)\n- <code>'y'</code> - adds padding to offset vertical scrollbar (always)\n- <code>'present'</code> - adds padding only when scrollbars are visible (dynamic)",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean | \"x\" | \"y\" | \"present\""
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "onBottomReached",
+      "description": "Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "onLeftReached",
+      "description": "Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "onRightReached",
+      "description": "Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "onScrollPositionChange",
+      "description": "Called with current position (<code>x</code> and <code>y</code> coordinates) when viewport is scrolled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(position: { x: number; y: number; }) => void"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "onTopReached",
+      "description": "Called when scrollarea is scrolled all the way to the top",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "overscrollBehavior",
+      "description": "Defines <code>overscroll-behavior</code> of the viewport",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OverscrollBehavior"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "scrollHideDelay",
+      "description": "Scroll hide delay in ms, applicable only when type is set to <code>hover</code> or <code>scroll</code>",
+      "required": false,
+      "defaultValue": "1000",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "scrollbarSize",
+      "description": "Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "scrollbars",
+      "description": "Axis at which scrollbars must be rendered\n- <code>'x'</code> - horizontal scrollbar only\n- <code>'y'</code> - vertical scrollbar only\n- <code>'xy'</code> - both scrollbars\n- <code>false</code> - no scrollbars rendered (content remains scrollable via mouse/touch)",
+      "required": false,
+      "defaultValue": "'xy'",
+      "type": {
+        "name": "false | \"x\" | \"y\" | \"xy\""
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "startScrollPosition",
+      "description": "Initial scroll position set on mount",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "{ x?: number; y?: number | undefined; } | undefined"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "type",
+      "description": "Defines scrollbars behavior\n- <code>'hover'</code> – scrollbars visible on hover (default)\n- <code>'scroll'</code> – scrollbars visible during scrolling\n- <code>'auto'</code> – scrollbars visible only when content overflows (like CSS overflow: auto)\n- <code>'always'</code> – scrollbars always visible, even when content doesn't overflow\n- <code>'never'</code> – scrollbars always hidden",
+      "required": false,
+      "defaultValue": "'hover'",
+      "type": {
+        "name": "\"auto\" | \"scroll\" | \"always\" | \"hover\" | \"never\"",
+        "raw": "\"auto\" | \"scroll\" | \"always\" | \"hover\" | \"never\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"scroll\""
+          },
+          {
+            "value": "\"always\""
+          },
+          {
+            "value": "\"hover\""
+          },
+          {
+            "value": "\"never\""
+          }
+        ]
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "viewportProps",
+      "description": "Props passed down to the viewport element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "ScrollArea"
+    },
+    {
+      "name": "viewportRef",
+      "description": "Assigns viewport element (scrollable container) ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<HTMLDivElement>"
+      },
+      "sourceComponent": "ScrollArea"
+    }
+  ]
+}

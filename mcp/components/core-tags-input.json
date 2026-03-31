@@ -1,0 +1,792 @@
+{
+  "id": "core-tags-input",
+  "name": "TagsInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/tags-input",
+  "description": "Capture a list of values from user with free input and suggestions",
+  "propsCount": 64,
+  "llmUrl": "https://mantine.dev/llms/core-tags-input.md",
+  "componentDataUrl": "/mcp/components/core-tags-input.json",
+  "searchText": "tagsinput capture a list of values from user with free input and suggestions @mantine/core /core/tags-input acceptvalueonblur allowduplicates clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter hiddeninputprops hiddeninputvaluesdivider inputcontainer inputsize inputwrapperorder isduplicate label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight maxtags onchange onclear ondropdownclose ondropdownopen onduplicate onmaxtags onoptionsubmit onremove onsearchchange openonfocus pointer radius renderoption renderpill required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue selectfirstoptiononchange selectfirstoptionondropdownopen size splitchars value withasterisk witherrorstyles withscrollarea wrapperprops",
+  "source": "@mantine/core/src/components/TagsInput/TagsInput.tsx",
+  "docs": "core/tags-input.mdx",
+  "markdown": "# TagsInput\nPackage: @mantine/core\nImport: import { TagsInput } from '@mantine/core';\nDescription: Capture a list of values from user with free input and suggestions\n\n## Usage\n\n`TagsInput` provides a way to enter multiple values. It can be used with suggestions or without them.\n`TagsInput` is similar to [MultiSelect](https://mantine.dev/llms/core-multi-select.md), but it allows entering custom values.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return <TagsInput label=\"Press Enter to submit a tag\" placeholder=\"Enter tag\" />;\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return <TagsInput placeholder=\"Enter tags\" loading />;\n}\n```\n\n\n## Controlled\n\nThe `TagsInput` value must be an array of strings; other types are not supported.\nThe `onChange` function is called with an array of strings as a single argument.\n\n```tsx\nimport { useState } from 'react';\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string[]>([]);\n  return <TagsInput data={[]} value={value} onChange={setValue} />;\n}\n```\n\n## Controlled search value\n\nYou can control the search value with `searchValue` and `onSearchChange` props:\n\n```tsx\nimport { useState } from 'react';\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  const [searchValue, setSearchValue] = useState('');\n  return (\n    <TagsInput\n      searchValue={searchValue}\n      onSearchChange={setSearchValue}\n      data={[]}\n    />\n  );\n}\n```\n\n## Clearable\n\nSet the `clearable` prop to display the clear button in the right section. The button is not displayed\nwhen:\n\n* The component does not have a value\n* The component is disabled\n* The component is read only\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Press Enter to submit a tag\"\n      placeholder=\"Enter tag\"\n      defaultValue={['React']}\n      clearable\n    />\n  );\n}\n```\n\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport { Stack, TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <TagsInput\n        label=\"clearSectionMode='both' (default)\"\n        placeholder=\"Enter tags\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue={['React']}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"both\"\n      />\n\n      <TagsInput\n        label=\"clearSectionMode='rightSection'\"\n        placeholder=\"Enter tags\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue={['React']}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"rightSection\"\n      />\n\n      <TagsInput\n        label=\"clearSectionMode='clear'\"\n        placeholder=\"Enter tags\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        defaultValue={['React']}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"clear\"\n      />\n    </Stack>\n  );\n}\n```\n\n\n## Max selected values\n\nYou can limit the number of selected values with the `maxTags` prop. This will not allow adding more values\nonce the limit is reached.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Press Enter to submit a tag\"\n      description=\"Add up to 3 tags\"\n      placeholder=\"Enter tag\"\n      maxTags={3}\n      defaultValue={['first', 'second']}\n    />\n  );\n}\n```\n\n\n## Accept value on blur\n\nBy default, if the user types a value and blurs the input, the value is added to the list.\nYou can change this behavior by setting `acceptValueOnBlur` to `false`. In this case, the value is added\nonly when the user presses `Enter` or clicks on a suggestion.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <TagsInput\n        label=\"Value IS accepted on blur\"\n        placeholder=\"Enter text, then blur the field\"\n        data={['React', 'Angular', 'Svelte']}\n        acceptValueOnBlur\n      />\n      <TagsInput\n        label=\"Value IS NOT accepted on blur\"\n        placeholder=\"Enter text, then blur the field\"\n        data={['React', 'Angular', 'Svelte']}\n        acceptValueOnBlur={false}\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Allow duplicates\n\nBy default, `TagsInput` does not allow adding duplicate values, but you can change this behavior by\nsetting the `allowDuplicates` prop. A value is considered duplicate if it is already present in the `value` array,\nregardless of the case and trailing whitespace.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Press Enter to submit a tag\"\n      placeholder=\"Duplicates are allowed\"\n      allowDuplicates\n    />\n  );\n}\n```\n\n\n## isDuplicate\n\nYou can use the `isDuplicate` prop to control how duplicates are detected. It is a function that\nreceives two arguments: tag value and current tags. The function must return `true` if the value is a duplicate.\n\nExample of using `isDuplicate` to allow using the same value with different casing:\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Press Enter to submit a tag\"\n      placeholder=\"Enter tag\"\n      isDuplicate={(tagValue, currentTags) => currentTags.some((val) => val === tagValue)}\n      defaultValue={['Tag', 'TAG', 'tag']}\n    />\n  );\n}\n```\n\n\n## Split chars\n\nBy default, `TagsInput` splits values by comma (`,`), you can change this behavior by setting\n`splitChars` prop to an array of strings. All values from `splitChars` cannot be included in the final value.\nValues are also split on paste.\n\nExample of splitting by `,`, `|` and space:\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Press Enter to submit a tag\"\n      placeholder=\"Enter tag\"\n      splitChars={[',', ' ', '|']}\n    />\n  );\n}\n```\n\n\n## With suggestions\n\n`TagsInput` can be used with suggestions, it will render suggestions list under input and allow to select\nsuggestions with keyboard or mouse. Note that user is not limited to suggestions, it is still possible to\nenter custom values. If you want to allow values only from suggestions, use [MultiSelect](https://mantine.dev/llms/core-multi-select.md) component instead.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Press Enter to submit a tag\"\n      placeholder=\"Pick tag from list\"\n      data={['React', 'Angular', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## Data prop\n\nData that is used in TagsInput must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.\n\n## Filtering\n\nTagsInput provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.\n\n```tsx\nimport { TagsInput, ComboboxItem, OptionsFilter } from '@mantine/core';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  const splittedSearch = search.toLowerCase().trim().split(' ');\n  return (options as ComboboxItem[]).filter((option) => {\n    const words = option.label.toLowerCase().trim().split(' ');\n    return splittedSearch.every((searchWord) => words.some((word) => word.includes(searchWord)));\n  });\n};\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"What countries have you visited?\"\n      placeholder=\"Pick value or enter anything\"\n      data={['Great Britain', 'Russian Federation', 'United States']}\n      filter={optionsFilter}\n    />\n  );\n}\n```\n\n\n## Sort options\n\nBy default, options are sorted by their position in the data array. You can change this behavior\nwith `filter` function:\n\n```tsx\nimport { TagsInput, ComboboxItem, OptionsFilter } from '@mantine/core';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  const filtered = (options as ComboboxItem[]).filter((option) =>\n    option.label.toLowerCase().trim().includes(search.toLowerCase().trim())\n  );\n\n  filtered.sort((a, b) => a.label.localeCompare(b.label));\n  return filtered;\n};\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Your favorite libraries\"\n      placeholder=\"Pick value or enter anything\"\n      data={['4 – React', '1 – Angular', '3 – Vue', '2 – Svelte']}\n      filter={optionsFilter}\n    />\n  );\n}\n```\n\n\n## Fuzzy search with fuse.js\n\nYou can implement fuzzy search using the [fuse.js](https://fusejs.io/) library to match options\neven with typos or partial matches:\n\n```tsx\nimport { TagsInput, ComboboxItem, OptionsFilter } from '@mantine/core';\nimport Fuse from 'fuse.js';\n\nconst optionsFilter: OptionsFilter = ({ options, search }) => {\n  if (!search.trim()) {\n    return options;\n  }\n\n  const fuse = new Fuse(options as ComboboxItem[], {\n    keys: ['label'],\n    threshold: 0.3,\n    minMatchCharLength: 1,\n  });\n\n  return fuse.search(search).map((result) => result.item);\n};\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Favorite fruits\"\n      placeholder=\"Pick value or enter anything\"\n      data={['Apple', 'Banana', 'Kiwi', 'Mango', 'Watermelon', 'Raspberry']}\n      filter={optionsFilter}\n    />\n  );\n}\n```\n\n\n## Large datasets\n\nTagsInput can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nconst largeData = Array(100_000)\n  .fill(0)\n  .map((_, index) => `Option ${index}`);\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"100 000 options tags input\"\n      placeholder=\"Use limit to optimize performance\"\n      limit={5}\n      data={largeData}\n    />\n  );\n}\n```\n\n\n## renderOption\n\n`renderOption` callback allows you to customize option rendering. It is called with option object.\nThe function must return a React node.\n\n```tsx\nimport { Group, TagsInput, TagsInputProps, Text } from '@mantine/core';\n\nconst data: Record<string, { emoji: string; description: string }> = {\n  Apples: {\n    emoji: '🍎',\n    description: 'Crisp and juicy snacking delight',\n  },\n  Bread: {\n    emoji: '🍞',\n    description: 'Freshly baked daily essential',\n  },\n  Bananas: {\n    emoji: '🍌',\n    description: 'Perfect for a healthy breakfast',\n  },\n  Eggs: {\n    emoji: '🥚',\n    description: 'Versatile protein source for cooking',\n  },\n  Broccoli: {\n    emoji: '🥦',\n    description: 'Nutrient-rich green vegetable',\n  },\n};\n\nconst renderTagsInputOption: TagsInputProps['renderOption'] = ({ option }) => (\n  <Group>\n    <Text span fz={24}>\n      {data[option.value].emoji}\n    </Text>\n    <div>\n      <Text>{option.value}</Text>\n      <Text size=\"xs\" opacity={0.5}>\n        {data[option.value].description}\n      </Text>\n    </div>\n  </Group>\n);\n\nfunction Demo() {\n  return (\n    <TagsInput\n      data={['Apples', 'Bread', 'Bananas', 'Eggs', 'Broccoli']}\n      renderOption={renderTagsInputOption}\n      label=\"Groceries\"\n      placeholder=\"Pick tag from list or type to add new\"\n      maxDropdownHeight={300}\n    />\n  );\n}\n```\n\n\n## Pill customization\n\n`renderPill` callback allows customizing how pills are rendered. It is called with an object containing\n`option` (combobox item), `value` (string), `onRemove` (function) and `disabled`.\nNote that since `TagsInput` allows adding custom values, `option` property might be generated on the fly.\n\n```tsx\nimport { TagsInput, Pill } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Custom pills\"\n      description=\"Tags are rendered with a star prefix\"\n      placeholder=\"Enter tag\"\n      defaultValue={['React', 'Angular']}\n      renderPill={({ value, onRemove }) => (\n        <Pill withRemoveButton onRemove={onRemove}>\n          ★ {value}\n        </Pill>\n      )}\n    />\n  );\n}\n```\n\n\n## Scrollable dropdown\n\nBy default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).\nYou can control dropdown max-height with `maxDropdownHeight` prop if you do not change the default settings.\n\nIf you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,\nyou will need to change dropdown styles with [Styles API](https://mantine.dev/llms/styles-styles-api.md).\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nconst data = Array(100)\n  .fill(0)\n  .map((_, index) => `Option ${index}`);\n\nfunction Demo() {\n  return (\n    <>\n      <TagsInput\n        label=\"With scroll area (default)\"\n        placeholder=\"Pick value or enter anything\"\n        data={data}\n        maxDropdownHeight={200}\n      />\n\n      <TagsInput\n        label=\"With native scroll\"\n        placeholder=\"Pick value or enter anything\"\n        data={data}\n        withScrollArea={false}\n        styles={{ dropdown: { maxHeight: 200, overflowY: 'auto' } }}\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Group options\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Enter tags\"\n      placeholder=\"Enter tags\"\n      data={[\n        { group: 'Frontend', items: ['React', 'Angular'] },\n        { group: 'Backend', items: ['Express', 'Django'] },\n      ]}\n    />\n  );\n}\n```\n\n\n## Disabled options\n\nWhen option is disabled, it cannot be selected and is ignored in keyboard navigation.\nNote that user can still enter disabled option as a value. If you want to prohibit certain values,\nuse controlled component and filter them out in `onChange` function.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Enter tags\"\n      placeholder=\"Some tags are disabled\"\n      data={[\n        { value: 'React' },\n        { value: 'Angular' },\n        { value: 'Vue', disabled: true },\n        { value: 'Svelte', disabled: true },\n      ]}\n    />\n  );\n}\n```\n\n\n## Inside Popover\n\nTo use `TagsInput` inside popover, you need to set `withinPortal: false`:\n\n```tsx\nimport { Popover, Button, TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Popover width={300} position=\"bottom\" withArrow shadow=\"md\">\n      <Popover.Target>\n        <Button>Toggle popover</Button>\n      </Popover.Target>\n      <Popover.Dropdown>\n        <TagsInput\n          label=\"Your favorite library\"\n          placeholder=\"Pick value or enter anything\"\n          data={['React', 'Angular', 'Vue', 'Svelte']}\n          comboboxProps={{ withinPortal: false }}\n        />\n      </Popover.Dropdown>\n    </Popover>\n  );\n}\n```\n\n\n## Control dropdown opened state\n\nYou can control dropdown opened state with `dropdownOpened` prop. Additionally,\nyou can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.\n\n```tsx\nimport { TagsInput, Button } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [dropdownOpened, { toggle }] = useDisclosure();\n  return (\n    <>\n      <Button onClick={toggle} mb=\"md\">\n        Toggle dropdown\n      </Button>\n\n      <TagsInput\n        label=\"Your favorite library\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        dropdownOpened={dropdownOpened}\n      />\n    </>\n  );\n}\n```\n\n\n## Dropdown position\n\nBy default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.\nYou can change this behavior by setting `position` and `middlewares` props, which are passed down to the\nunderlying [Popover](https://mantine.dev/llms/core-popover.md) component.\n\nExample of dropdown that is always displayed above the input:\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ position: 'top', middlewares: { flip: false, shift: false } }}\n    />\n  );\n}\n```\n\n\n## Dropdown animation\n\nBy default, dropdown animations are disabled. To enable them, you can set `transitionProps`,\nwhich will be passed down to the underlying [Transition](https://mantine.dev/llms/core-transition.md) component.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}\n    />\n  );\n}\n```\n\n\n## Dropdown width\n\nTo change dropdown width, set `width` prop in `comboboxProps`. By default,\ndropdown width is equal to the input width.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ width: 200, position: 'bottom-start' }}\n    />\n  );\n}\n```\n\n\n## Dropdown padding\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <TagsInput\n        label=\"Zero padding\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        comboboxProps={{ dropdownPadding: 0 }}\n      />\n      <TagsInput\n        mt=\"md\"\n        label=\"10px padding\"\n        placeholder=\"Pick value or enter anything\"\n        data={['React', 'Angular', 'Vue', 'Svelte']}\n        comboboxProps={{ dropdownPadding: 10 }}\n      />\n    </>\n  );\n}\n```\n\n\n## Dropdown shadow\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Your favorite library\"\n      placeholder=\"Pick value or enter anything\"\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n      comboboxProps={{ shadow: 'md' }}\n    />\n  );\n}\n```\n\n\n## Input sections\n\nTagsInput supports left and right sections to display icons, buttons or other content alongside the input.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\nimport { SquaresFourIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <SquaresFourIcon size={16} />;\n  return (\n    <>\n      <TagsInput\n        data={['React', 'Angular', 'Vue']}\n        leftSectionPointerEvents=\"none\"\n        leftSection={icon}\n        label=\"Your favorite library\"\n        placeholder=\"Your favorite library\"\n      />\n      <TagsInput\n        mt=\"md\"\n        data={['React', 'Angular', 'Vue']}\n        rightSectionPointerEvents=\"none\"\n        rightSection={icon}\n        label=\"Your favorite library\"\n        placeholder=\"Your favorite library\"\n      />\n    </>\n  );\n}\n```\n\n\n## Input props\n\nTagsInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. TagsInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <TagsInput\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      placeholder=\"TagsInput placeholder\"\n      value={['First', 'Second']}\n      data={['React', 'Angular', 'Vue', 'Svelte']}\n    />\n  );\n}\n```\n\n\n## Read only\n\nSet `readOnly` to make the input read only. When `readOnly` is set,\n`TagsInput` will not show suggestions and will not call `onChange` function.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Read only\"\n      placeholder=\"Enter tag\"\n      readOnly\n      defaultValue={['First', 'Second']}\n    />\n  );\n}\n```\n\n\n## Disabled\n\nSet `disabled` to disable the input. When `disabled` is set,\nuser cannot interact with the input and `TagsInput` will not show suggestions.\n\n```tsx\nimport { TagsInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TagsInput\n      label=\"Disabled\"\n      placeholder=\"Enter tag\"\n      disabled\n      defaultValue={['First', 'Second']}\n    />\n  );\n}\n```\n\n\n\n#### Props\n\n**TagsInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| acceptValueOnBlur | boolean | - | If set, the value typed in by the user but not submitted is accepted when the input is blurred |\n| allowDuplicates | boolean | - | If set, duplicate tags are allowed |\n| clearButtonProps | InputClearButtonProps | - | Props passed down to the clear button |\n| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |\n| clearable | boolean | - | If set, the clear button is displayed in the right section when the component has value |\n| comboboxProps | ComboboxProps | - | Props passed down to `Combobox` component |\n| data | ComboboxGenericData | - | Data displayed in the dropdown. Values must be unique. |\n| defaultDropdownOpened | boolean | - | Uncontrolled dropdown initial opened state |\n| defaultSearchValue | string | - | Default search value |\n| defaultValue | string[] | - | Uncontrolled component default value |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| dropdownOpened | boolean | - | Controlled dropdown opened state |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| filter | OptionsFilter<string> | - | Function based on which items are filtered and sorted |\n| hiddenInputProps | Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, \"value\"> | - | Props passed down to the hidden input |\n| hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input `value` attribute |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| isDuplicate | (value: string, currentValues: string[]) => boolean | - | Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| limit | number | - | Maximum number of options displayed at a time, `Infinity` by default |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| maxDropdownHeight | string \\| number | - | `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default |\n| maxTags | number | - | Maximum number of tags |\n| onChange | (value: string[]) => void | - | Called when value changes |\n| onClear | () => void | - | Called when the clear button is clicked |\n| onDropdownClose | () => void | - | Called when dropdown closes |\n| onDropdownOpen | () => void | - | Called when dropdown opens |\n| onDuplicate | (value: string) => void | - | Called when user tries to submit a duplicated tag |\n| onMaxTags | (value: string) => void | - | Called when user tries to add more tags than maxTags |\n| onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or `Enter` key |\n| onRemove | (value: string) => void | - | Called when tag is removed |\n| onSearchChange | (value: string) => void | - | Called when search changes |\n| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| renderOption | (input: ComboboxLikeRenderOptionInput<ComboboxGenericItem<string>>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |\n| renderPill | (props: ComboboxRenderPillInput<string>) => ReactNode | - | A function to render content of the pill, replaces the default content of the pill |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| scrollAreaProps | ScrollAreaProps | - | Props passed down to the underlying `ScrollArea` component in the dropdown |\n| searchValue | string | - | Controlled search value |\n| selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, `false` by default |\n| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| splitChars | string[] | - | Characters that should trigger tags split, `[',']` by default |\n| value | string[] | - | Controlled component value |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nTagsInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**TagsInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-TagsInput-wrapper | Root element of the Input |\n| input | .mantine-TagsInput-input | Input element |\n| section | .mantine-TagsInput-section | Left and right sections |\n| root | .mantine-TagsInput-root | Root element |\n| label | .mantine-TagsInput-label | Label element |\n| required | .mantine-TagsInput-required | Required asterisk element, rendered inside label |\n| description | .mantine-TagsInput-description | Description element |\n| error | .mantine-TagsInput-error | Error element |\n| pill | .mantine-TagsInput-pill | Value pill |\n| inputField | .mantine-TagsInput-inputField | Input field |\n| pillsList | .mantine-TagsInput-pillsList | List of pills, also contains input field |\n\n**TagsInput data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| option | data-combobox-active | Options was activated by keyboard | - |\n| option | data-combobox-disabled | Option is disabled | - |\n",
+  "props": [
+    {
+      "name": "acceptValueOnBlur",
+      "description": "If set, the value typed in by the user but not submitted is accepted when the input is blurred",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "allowDuplicates",
+      "description": "If set, duplicate tags are allowed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "clearButtonProps",
+      "description": "Props passed down to the clear button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputClearButtonProps"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "clearSectionMode",
+      "description": "Determines how the clear button and rightSection are rendered",
+      "required": false,
+      "defaultValue": "'both'",
+      "type": {
+        "name": "ClearSectionMode",
+        "raw": "ClearSectionMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"both\""
+          },
+          {
+            "value": "\"rightSection\""
+          },
+          {
+            "value": "\"clear\""
+          }
+        ]
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "clearable",
+      "description": "If set, the clear button is displayed in the right section when the component has value",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "comboboxProps",
+      "description": "Props passed down to <code>Combobox</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ComboboxProps"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "data",
+      "description": "Data displayed in the dropdown. Values must be unique.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ComboboxGenericData"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "defaultDropdownOpened",
+      "description": "Uncontrolled dropdown initial opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "defaultSearchValue",
+      "description": "Default search value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "dropdownOpened",
+      "description": "Controlled dropdown opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "filter",
+      "description": "Function based on which items are filtered and sorted",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OptionsFilter<string>"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "hiddenInputProps",
+      "description": "Props passed down to the hidden input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, \"value\">"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "hiddenInputValuesDivider",
+      "description": "Divider used to separate values in the hidden input <code>value</code> attribute",
+      "required": false,
+      "defaultValue": "','",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "isDuplicate",
+      "description": "Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string, currentValues: string[]) => boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "limit",
+      "description": "Maximum number of options displayed at a time, <code>Infinity</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "maxDropdownHeight",
+      "description": "<code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "maxTags",
+      "description": "Maximum number of tags",
+      "required": false,
+      "defaultValue": "Infinity",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string[]) => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onClear",
+      "description": "Called when the clear button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onDropdownClose",
+      "description": "Called when dropdown closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onDropdownOpen",
+      "description": "Called when dropdown opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onDuplicate",
+      "description": "Called when user tries to submit a duplicated tag",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onMaxTags",
+      "description": "Called when user tries to add more tags than maxTags",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onOptionSubmit",
+      "description": "Called when option is submitted from dropdown with mouse click or <code>Enter</code> key",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onRemove",
+      "description": "Called when tag is removed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "onSearchChange",
+      "description": "Called when search changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "openOnFocus",
+      "description": "If set, the dropdown opens when the input receives focus",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "renderOption",
+      "description": "A function to render content of the option, replaces the default content of the option",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(input: ComboboxLikeRenderOptionInput<ComboboxGenericItem<string>>) => ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "renderPill",
+      "description": "A function to render content of the pill, replaces the default content of the pill",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(props: ComboboxRenderPillInput<string>) => ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "scrollAreaProps",
+      "description": "Props passed down to the underlying <code>ScrollArea</code> component in the dropdown",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScrollAreaProps"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "searchValue",
+      "description": "Controlled search value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "selectFirstOptionOnChange",
+      "description": "If set, the first option is selected when value changes, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "selectFirstOptionOnDropdownOpen",
+      "description": "If set, the first option is selected when dropdown opens, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "splitChars",
+      "description": "Characters that should trigger tags split, <code>[',']</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "withScrollArea",
+      "description": "Determines whether the options should be wrapped with <code>ScrollArea.AutoSize</code>, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TagsInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "TagsInput"
+    }
+  ]
+}

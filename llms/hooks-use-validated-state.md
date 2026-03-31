@@ -4,8 +4,8 @@ Import: import { UseValidatedState } from '@mantine/hooks';
 
 ## Usage
 
-`use-validated-state` validates state with a given rule each time state is set.
-It returns an object with current validation state, last valid value and current value:
+The `use-validated-state` hook validates state with a given rule each time the state is set.
+It returns an object with the current validation state, last valid value, and current value:
 
 ```tsx
 import { useValidatedState } from '@mantine/hooks';
@@ -26,6 +26,45 @@ valid; // -> false
 
 ## Example
 
+```tsx
+import { TextInput, Text, Box } from '@mantine/core';
+import { useValidatedState } from '@mantine/hooks';
+
+function Demo() {
+  const [{ value, lastValidValue, valid }, setEmail] = useValidatedState(
+    '',
+    (val) => /^\\S+@\\S+$/.test(val),
+    true
+  );
+
+  return (
+    <Box maw={320} mx="auto" style={{ overflowWrap: 'break-word' }}>
+      <TextInput
+        value={value}
+        onChange={(event) => setEmail(event.currentTarget.value)}
+        withAsterisk
+        error={!valid}
+        placeholder="email@example.com"
+        label="Your email"
+      />
+
+      <Text size="sm" mt="md">
+        <Text inherit c="dimmed" component="span">
+          Current value:
+        </Text>{' '}
+        {value || '[empty string]'}
+      </Text>
+
+      <Text size="sm">
+        <Text inherit c="dimmed" component="span">
+          Last valid value:
+        </Text>{' '}
+        {lastValidValue || '[empty string]'}
+      </Text>
+    </Box>
+  );
+}
+```
 
 
 ## Definition
@@ -38,7 +77,7 @@ interface UseValidatedStateValue<T> {
   /** Last valid value */
   lastValidValue: T | undefined;
 
-  /** True if the current value is valid, false otherwise */
+  /** True if the current value is valid; false otherwise */
   valid: boolean;
 }
 
@@ -58,8 +97,7 @@ function useValidatedState<T>(
 
 ## Exported types
 
-`UseValidatedStateValue` and `UseValidatedStateReturnValue` types are exported from `@mantine/hooks` package,
-you can import them in your application:
+The `UseValidatedStateValue` and `UseValidatedStateReturnValue` types are exported from `@mantine/hooks`;
 
 ```tsx
 import type { UseValidatedStateValue, UseValidatedStateReturnValue } from '@mantine/hooks';

@@ -1,6 +1,6 @@
 # LLMDocumentation
 
-# LLMs.txt
+# Mantine with LLMs
 
 Mantine provides LLM-friendly documentation to help AI tools like **Cursor**, **Windsurf**, **GitHub Copilot**, **ChatGPT**, and **Claude** understand and work with the Mantine UI library.
 
@@ -10,8 +10,8 @@ Mantine provides LLM-friendly documentation to help AI tools like **Cursor**, **
 
 Links:
 
-* [llms.txt](https://mantine.dev/llms.txt) – compact
-* [Download](https://mantine.dev/llms-full.txt) full documentation in single document (~1.8MB)
+* [llms.txt](/llms.txt) – compact
+* [Download](/llms-full.txt) full documentation in single document (~1.8MB)
 
 The LLM documentation includes:
 
@@ -51,6 +51,116 @@ While Copilot doesn't directly support external documentation, you can:
 
 1. Include relevant documentation snippets in your comments
 2. Reference component names and props accurately for better suggestions
+
+## Skills
+
+Mantine also provides skills for AI coding agents in the
+[`mantinedev/skills`](https://github.com/mantinedev/skills) repository.
+
+Currently available skills:
+
+* `mantine-combobox` – Build custom select/autocomplete/multiselect components with `Combobox`
+* `mantine-form` – Build forms with `@mantine/form`, validation, nested fields, and form context
+* `mantine-custom-components` – Create custom components with Mantine factory APIs and Styles API
+
+### Install skills
+
+Install each skill from the repository:
+
+```bash
+npx skills add https://github.com/mantinedev/skills --skill mantine-combobox
+npx skills add https://github.com/mantinedev/skills --skill mantine-form
+npx skills add https://github.com/mantinedev/skills --skill mantine-custom-components
+```
+
+### Use skills
+
+In your AI prompt, explicitly tell the agent to use one of the installed skills.
+
+Examples:
+
+* "Use `$mantine-form` and build a profile form with validation and nested fields"
+* "Use `$mantine-combobox` and create a searchable multi-select with custom option rendering"
+* "Use `$mantine-custom-components` and scaffold a polymorphic component with Styles API support"
+
+If your agent does not support `$skill-name` mentions, reference the skill name in plain text and ask the agent to follow it.
+
+## MCP server (experimental)
+
+Mantine also provides an MCP server package:
+
+* `@mantine/mcp-server`
+
+The server reads Mantine static MCP data published on `mantine.dev` and exposes tools that AI agents can call directly:
+
+* `list_items`
+* `get_item_doc`
+* `get_item_props`
+* `search_docs`
+
+### MCP server configuration
+
+Most MCP-compatible tools support adding servers with a JSON configuration. Use this server definition:
+
+```json
+{
+  "mcpServers": {
+    "mantine": {
+      "command": "npx",
+      "args": ["-y", "@mantine/mcp-server"]
+    }
+  }
+}
+```
+
+To use a different data source (for example, alpha docs or local static files), add env variables:
+
+```json
+{
+  "mcpServers": {
+    "mantine": {
+      "command": "npx",
+      "args": ["-y", "@mantine/mcp-server"],
+      "env": {
+        "MANTINE_MCP_DATA_URL": "https://mantine.dev/mcp"
+      }
+    }
+  }
+}
+```
+
+### Using MCP server with different tools
+
+#### Claude Desktop
+
+1. Open MCP settings in Claude Desktop
+2. Add the `mantine` server configuration above
+3. Start a new chat and ask for Mantine guidance, for example: "Find Button props and give me a usage example"
+
+#### Cursor
+
+1. Open Cursor MCP/server settings
+2. Add the same `mantine` server config
+3. Use agent mode and ask Mantine-specific questions – Cursor will call MCP tools automatically
+
+#### Windsurf
+
+1. Open Windsurf MCP/server settings
+2. Register `@mantine/mcp-server` with the same config
+3. Ask for component docs, props, and examples directly in chat
+
+#### Other MCP clients (VS Code/Cline and others)
+
+If the client supports custom MCP servers, add the same command and args:
+
+* command: `npx`
+* args: `["-y", "@mantine/mcp-server"]`
+
+Then use prompts like:
+
+* "List Mantine items related to input fields"
+* "Get full docs for Button"
+* "Search Mantine docs for color scheme and dark mode"
 
 ## Example prompts
 

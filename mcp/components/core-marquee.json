@@ -1,0 +1,129 @@
+{
+  "id": "core-marquee",
+  "name": "Marquee",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/marquee",
+  "description": "Create continuous scrolling animation for content",
+  "propsCount": 10,
+  "llmUrl": "https://mantine.dev/llms/core-marquee.md",
+  "componentDataUrl": "/mcp/components/core-marquee.json",
+  "searchText": "marquee create continuous scrolling animation for content @mantine/core /core/marquee children duration fadeedgecolor fadeedgesize fadeedges gap orientation pauseonhover repeat reverse",
+  "source": "@mantine/core/src/components/Marquee/Marquee.tsx",
+  "docs": "core/marquee.mdx",
+  "markdown": "# Marquee\nPackage: @mantine/core\nImport: import { Marquee } from '@mantine/core';\nDescription: Create continuous scrolling animation for content\n\n## Usage\n\n`Marquee` component creates a continuous scrolling animation for its children.\nIt is commonly used for displaying logos, testimonials, or any repeating content.\n\n```tsx\nimport { Marquee } from '@mantine/core';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nfunction Demo() {\n  return (\n    <Marquee gap=\"lg\">\n      <MantineLogo width={80} type=\"full\" color=\"blue\" />\n      <MantineLogo width={80} type=\"full\" color=\"cyan\" />\n      <MantineLogo width={80} type=\"full\" color=\"teal\" />\n      <MantineLogo width={80} type=\"full\" color=\"green\" />\n      <MantineLogo width={80} type=\"full\" color=\"lime\" />\n      <MantineLogo width={80} type=\"full\" color=\"yellow\" />\n      <MantineLogo width={80} type=\"full\" color=\"orange\" />\n      <MantineLogo width={80} type=\"full\" color=\"red\" />\n    </Marquee>\n  );\n}\n```\n\n\n## Pause on hover\n\nSet `pauseOnHover` prop to pause the animation when the user hovers over the component:\n\n```tsx\nimport { Marquee } from '@mantine/core';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nfunction Demo() {\n  return (\n    <Marquee pauseOnHover>\n      <MantineLogo width={80} type=\"full\" color=\"blue\" />\n      <MantineLogo width={80} type=\"full\" color=\"cyan\" />\n      <MantineLogo width={80} type=\"full\" color=\"teal\" />\n      <MantineLogo width={80} type=\"full\" color=\"green\" />\n      <MantineLogo width={80} type=\"full\" color=\"lime\" />\n      <MantineLogo width={80} type=\"full\" color=\"yellow\" />\n      <MantineLogo width={80} type=\"full\" color=\"orange\" />\n      <MantineLogo width={80} type=\"full\" color=\"red\" />\n    </Marquee>\n  );\n}\n```\n\n\n## Vertical orientation\n\nSet `orientation=\"vertical\"` to scroll content vertically. Note that you need to set\na fixed height on the container for vertical scrolling:\n\n```tsx\nimport { Marquee } from '@mantine/core';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nfunction Demo() {\n  return (\n    <Marquee orientation=\"vertical\" h={300}>\n      <MantineLogo height={40} type=\"full\" color=\"blue\" />\n      <MantineLogo height={40} type=\"full\" color=\"cyan\" />\n      <MantineLogo height={40} type=\"full\" color=\"teal\" />\n      <MantineLogo height={40} type=\"full\" color=\"green\" />\n      <MantineLogo height={40} type=\"full\" color=\"lime\" />\n      <MantineLogo height={40} type=\"full\" color=\"yellow\" />\n      <MantineLogo height={40} type=\"full\" color=\"orange\" />\n      <MantineLogo height={40} type=\"full\" color=\"red\" />\n    </Marquee>\n  );\n}\n```\n\n\n## Multiple rows\n\nYou can combine multiple `Marquee` components with different directions to create\nmore complex layouts:\n\n```tsx\nimport { Marquee, Stack } from '@mantine/core';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <Marquee>\n        <MantineLogo height={20} type=\"full\" color=\"blue\" />\n        <MantineLogo height={20} type=\"full\" color=\"cyan\" />\n        <MantineLogo height={20} type=\"full\" color=\"teal\" />\n        <MantineLogo height={20} type=\"full\" color=\"green\" />\n      </Marquee>\n      <Marquee reverse>\n        <MantineLogo height={20} type=\"full\" color=\"lime\" />\n        <MantineLogo height={20} type=\"full\" color=\"yellow\" />\n        <MantineLogo height={20} type=\"full\" color=\"orange\" />\n        <MantineLogo height={20} type=\"full\" color=\"red\" />\n      </Marquee>\n    </Stack>\n  );\n}\n```\n\n\n## Fade edges\n\nBy default, `Marquee` displays gradient fade on edges to create a smooth transition effect.\nYou can customize the fade using the following props:\n\n* `fadeEdges` – enables/disables fade gradient (default: `true`)\n* `fadeEdgeColor` – color of the fade gradient (default: `var(--mantine-color-body)`)\n* `fadeEdgeSize` – size of the fade area (default: `5%`)\n\n```tsx\nimport { Marquee, Stack, Text } from '@mantine/core';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <div>\n        <Text size=\"sm\" mb=\"xs\">Default fade (5%)</Text>\n        <Marquee>\n          <MantineLogo width={80} type=\"full\" color=\"blue\" />\n          <MantineLogo width={80} type=\"full\" color=\"cyan\" />\n          <MantineLogo width={80} type=\"full\" color=\"teal\" />\n          <MantineLogo width={80} type=\"full\" color=\"green\" />\n        </Marquee>\n      </div>\n\n      <div>\n        <Text size=\"sm\" mb=\"xs\">Larger fade (15%)</Text>\n        <Marquee fadeEdgeSize=\"15%\">\n          <MantineLogo width={80} type=\"full\" color=\"lime\" />\n          <MantineLogo width={80} type=\"full\" color=\"yellow\" />\n          <MantineLogo width={80} type=\"full\" color=\"orange\" />\n          <MantineLogo width={80} type=\"full\" color=\"red\" />\n        </Marquee>\n      </div>\n\n      <div>\n        <Text size=\"sm\" mb=\"xs\">Custom fade color</Text>\n        <Marquee fadeEdgeColor=\"var(--mantine-color-blue-light)\">\n          <MantineLogo width={80} type=\"full\" color=\"violet\" />\n          <MantineLogo width={80} type=\"full\" color=\"grape\" />\n          <MantineLogo width={80} type=\"full\" color=\"pink\" />\n          <MantineLogo width={80} type=\"full\" color=\"red\" />\n        </Marquee>\n      </div>\n\n      <div>\n        <Text size=\"sm\" mb=\"xs\">No fade</Text>\n        <Marquee fadeEdges={false}>\n          <MantineLogo width={80} type=\"full\" color=\"blue\" />\n          <MantineLogo width={80} type=\"full\" color=\"teal\" />\n          <MantineLogo width={80} type=\"full\" color=\"green\" />\n          <MantineLogo width={80} type=\"full\" color=\"yellow\" />\n        </Marquee>\n      </div>\n    </Stack>\n  );\n}\n```\n\n\n## Customization\n\nUse the following props to customize the marquee behavior:\n\n* `reverse` – reverses animation direction\n* `pauseOnHover` – pauses animation on hover\n* `orientation` – `horizontal` (default) or `vertical` scroll direction\n* `repeat` – number of times children are repeated for seamless scrolling (default: 4)\n* `duration` – animation duration in ms (default: 40000)\n* `gap` – gap between repeated children, key of `theme.spacing` or any valid CSS value\n\n```tsx\nimport { Marquee } from '@mantine/core';\nimport { MantineLogo } from '@mantinex/mantine-logo';\n\nfunction Demo() {\n  return (\n    <Marquee reverse={false} pauseOnHover={false} orientation=\"horizontal\" repeat={4} duration={40000} gap=\"md\" fadeEdges={true} mah={200} maw={400}>\n      <MantineLogo width={120} type=\"full\" color=\"blue\" />\n      <MantineLogo width={120} type=\"full\" color=\"cyan\" />\n      <MantineLogo width={120} type=\"full\" color=\"teal\" />\n      <MantineLogo width={120} type=\"full\" color=\"green\" />\n      <MantineLogo width={120} type=\"full\" color=\"lime\" />\n      <MantineLogo width={120} type=\"full\" color=\"yellow\" />\n      <MantineLogo width={120} type=\"full\" color=\"orange\" />\n      <MantineLogo width={120} type=\"full\" color=\"red\" />\n    </Marquee>\n  );\n}\n```\n\n\n\n#### Props\n\n**Marquee props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Content to scroll |\n| duration | number | - | Animation duration in ms |\n| fadeEdgeColor | string | - | Color of the fade gradient, |\n| fadeEdgeSize | string | - | Size of the fade gradient, |\n| fadeEdges | boolean | - | Whether to show gradient fade on edges, |\n| gap | MantineSpacing | - | Gap between repeated children, key of `theme.spacing` or any valid CSS value |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Scroll orientation |\n| pauseOnHover | boolean | - | Pauses animation on hover |\n| repeat | number | - | Number of times children are repeated inline for seamless scrolling |\n| reverse | boolean | - | Reverses animation direction |\n\n\n#### Styles API\n\nMarquee component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Marquee selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Marquee-root | Root element |\n| content | .mantine-Marquee-content | Animated scrolling container |\n| group | .mantine-Marquee-group | Repeated children wrapper |\n\n**Marquee CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --marquee-duration | Controls animation duration |\n| root | --marquee-gap | Controls gap between items |\n| root | --marquee-repeat | Number of times content is repeated |\n| root | --marquee-fade-color | Controls the fade edge gradient color |\n| root | --marquee-fade-size | Controls the size of the fade gradient |\n\n**Marquee data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-orientation | Value depends on `orientation` prop | horizontal \\| vertical |\n| root | data-reverse | `reverse` prop is set | - |\n| root | data-pause-on-hover | `pauseOnHover` prop is set | - |\n| root | data-fade-edges | `fadeEdges` prop is `true` (default) | - |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "Content to scroll",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "duration",
+      "description": "Animation duration in ms",
+      "required": false,
+      "defaultValue": "40000",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "fadeEdgeColor",
+      "description": "Color of the fade gradient,",
+      "required": false,
+      "defaultValue": "'var(--mantine-color-body)'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "fadeEdgeSize",
+      "description": "Size of the fade gradient,",
+      "required": false,
+      "defaultValue": "'5%'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "fadeEdges",
+      "description": "Whether to show gradient fade on edges,",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "gap",
+      "description": "Gap between repeated children, key of <code>theme.spacing</code> or any valid CSS value",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "orientation",
+      "description": "Scroll orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "pauseOnHover",
+      "description": "Pauses animation on hover",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "repeat",
+      "description": "Number of times children are repeated inline for seamless scrolling",
+      "required": false,
+      "defaultValue": "4",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Marquee"
+    },
+    {
+      "name": "reverse",
+      "description": "Reverses animation direction",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Marquee"
+    }
+  ]
+}

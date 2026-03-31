@@ -5,8 +5,6 @@ Description: Display popover section relative to given target element
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Popover, Text, Button } from '@mantine/core';
 
@@ -27,7 +25,7 @@ function Demo() {
 
 ## Controlled
 
-You can control Popover state with `opened` and `onChange` props:
+You can control the Popover state with the `opened` and `onChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -50,8 +48,6 @@ function Demo() {
 ```
 
 Controlled example with mouse events:
-
-#### Example: hover
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -77,9 +73,7 @@ function Demo() {
 
 ## Focus trap
 
-If you need to use interactive elements (inputs, buttons, etc.) inside `Popover.Dropdown`, set `trapFocus` prop:
-
-#### Example: form
+If you need to use interactive elements (inputs, buttons, etc.) inside `Popover.Dropdown`, set the `trapFocus` prop:
 
 ```tsx
 import { Popover, Button, TextInput } from '@mantine/core';
@@ -102,9 +96,7 @@ function Demo() {
 
 ## Inline elements
 
-Enable `inline` middleware to use `Popover` with inline elements:
-
-#### Example: inline
+Enable the `inline` middleware to use `Popover` with inline elements:
 
 ```tsx
 import { Popover, Mark, Text } from '@mantine/core';
@@ -132,9 +124,7 @@ function Demo() {
 
 ## Same width
 
-Set `width="target"` prop to make Popover dropdown take the same width as target element:
-
-#### Example: sameWidth
+Set the `width="target"` prop to make the Popover dropdown take the same width as the target element:
 
 ```tsx
 import { Popover, Text, Button } from '@mantine/core';
@@ -158,10 +148,8 @@ function Demo() {
 
 ## offset
 
-Set `offset` prop to a number to change dropdown position relative to the target element.
-This way you can control dropdown offset on main axis only.
-
-#### Example: offset
+Set the `offset` prop to a number to change the dropdown position relative to the target element.
+This way you can control the dropdown offset on the main axis only.
 
 ```tsx
 import { Popover, Button, Text } from '@mantine/core';
@@ -172,7 +160,7 @@ function Demo() {
     <Popover
       width={200}
       opened
-      
+       position="bottom" offset={0}
     >
       <Popover.Target>
         <Button>Popover target</Button>
@@ -188,9 +176,7 @@ function Demo() {
 ```
 
 
-To control offset on both axis, pass object with `mainAxis` and `crossAxis` properties:
-
-#### Example: offsetAxis
+To control offset on both axes, pass an object with `mainAxis` and `crossAxis` properties:
 
 ```tsx
 import { Popover, Button, Text } from '@mantine/core';
@@ -201,7 +187,7 @@ function Demo() {
       width={200}
       position="bottom"
       opened
-      offset={{ mainAxis: , crossAxis:  }}
+      offset={{ mainAxis: 0, crossAxis: 0 }}
     >
       <Popover.Target>
         <Button>Popover target</Button>
@@ -219,13 +205,13 @@ function Demo() {
 
 ## Middlewares
 
-You can enable or disable [Floating UI](https://floating-ui.com/) middlewares with
+You can enable or disable [Floating UI](https://floating-ui.com/) middlewares with the
 `middlewares` prop:
 
-* [shift](https://floating-ui.com/docs/shift) middleware shifts the dropdown to keep it in view. It is enabled by default
+* [shift](https://floating-ui.com/docs/shift) middleware shifts the dropdown to keep it in view. It is enabled by default.
 * [flip](https://floating-ui.com/docs/flip) middleware changes the placement of the dropdown to keep it in view. It is enabled by default.
 * [inline](https://floating-ui.com/docs/inline) middleware improves positioning for inline reference elements that span over multiple lines. It is disabled by default.
-* [size](https://floating-ui.com/docs/size) middleware manipulates dropdown size. It is disabled by default.
+* [size](https://floating-ui.com/docs/size) middleware manipulates the dropdown size. It is disabled by default.
 
 Example of turning off `shift` and `flip` middlewares:
 
@@ -246,9 +232,9 @@ function Demo() {
 
 ## Customize middleware options
 
-To customize [Floating UI](https://floating-ui.com/) middlewares options, pass them as
-an object to the `middlewares` prop. For example, to change [shift](https://floating-ui.com/docs/shift)
-middleware padding to `20px` use the following configuration:
+To customize [Floating UI](https://floating-ui.com/) middleware options, pass them as
+an object to the `middlewares` prop. For example, to change the [shift](https://floating-ui.com/docs/shift)
+middleware padding to `20px`, use the following configuration:
 
 ```tsx
 import { Popover } from '@mantine/core';
@@ -267,23 +253,21 @@ function Demo() {
 
 ## Dropdown arrow
 
-Set `withArrow` prop to add an arrow to the dropdown. Arrow is a `div` element rotated with `transform: rotate(45deg)`.
+Set the `withArrow` prop to add an arrow to the dropdown. The arrow is a `div` element rotated with `transform: rotate(45deg)`.
 
-`arrowPosition` prop determines how arrow is position relative to the target element when `position` is set to `*-start` and `*-end` values on `Popover` component.
+The `arrowPosition` prop determines how the arrow is positioned relative to the target element when `position` is set to `*-start` and `*-end` values on the `Popover` component.
 By default, the value is `center` – the arrow is positioned in the center of the target element if it is possible.
 
 If you change `arrowPosition` to `side`, then the arrow will be positioned on the side of the target element,
-and you will be able to control arrow offset with `arrowOffset` prop. Note that when `arrowPosition` is set to `center`,
-`arrowOffset` prop is ignored.
-
-#### Example: arrow
+and you will be able to control the arrow offset with the `arrowOffset` prop. Note that when `arrowPosition` is set to `center`,
+the `arrowOffset` prop is ignored.
 
 ```tsx
 import { Popover, Button, Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <Popover width={200} opened position="bottom-start" withArrow>
+    <Popover width={200} opened position="bottom-start" withArrow arrowPosition="center" arrowOffset={10} arrowSize={7} arrowRadius={0}>
       <Popover.Target>
         <Button>Target element</Button>
       </Popover.Target>
@@ -298,10 +282,8 @@ function Demo() {
 
 ## With overlay
 
-Set `withOverlay` prop to add overlay behind the dropdown. You can pass additional
-configuration to [Overlay](https://mantine.dev/core/overlay/) component with `overlayProps` prop:
-
-#### Example: overlay
+Set the `withOverlay` prop to add an overlay behind the dropdown. You can pass additional
+configuration to the [Overlay](https://mantine.dev/llms/core-overlay.md) component with the `overlayProps` prop:
 
 ```tsx
 import { Popover, Avatar, Text, Group, Anchor, Stack } from '@mantine/core';
@@ -356,15 +338,13 @@ function Demo() {
 
 ## Hide detached
 
-Use `hideDetached` prop to configure how the dropdown behaves when the target
+Use the `hideDetached` prop to configure how the dropdown behaves when the target
 element is hidden with styles (`display: none`, `visibility: hidden`, etc.),
 removed from the DOM, or when the target element is scrolled out of the viewport.
 
 By default, `hideDetached` is enabled – the dropdown is hidden with the target element.
 You can change this behavior with `hideDetached={false}`. To see the difference, try to scroll
 the root element of the following demo:
-
-#### Example: hideDetached
 
 ```tsx
 import { Box, Button, Group, Popover } from '@mantine/core';
@@ -403,16 +383,14 @@ function Demo() {
 
 ## Disabled
 
-Set `disabled` prop to prevent `Popover.Dropdown` from rendering:
-
-#### Example: disabled
+Set the `disabled` prop to prevent `Popover.Dropdown` from rendering:
 
 ```tsx
 import { Popover, Text, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Popover width={200}>
+    <Popover width={200} disabled={false}>
       <Popover.Target>
         <Button>Toggle popover</Button>
       </Popover.Target>
@@ -429,11 +407,9 @@ function Demo() {
 
 By default, `Popover` closes when you click outside of the dropdown. To disable this behavior, set `closeOnClickOutside={false}`.
 
-You can configure events that are used for click outside detection with `clickOutsideEvents` prop.
+You can configure events that are used for click-outside detection with the `clickOutsideEvents` prop.
 By default, `Popover` listens to `mousedown` and `touchstart` events. You can change it to any other
 events, for example, `mouseup` and `touchend`:
-
-#### Example: clickOutsideEvents
 
 ```tsx
 import { Popover, Text, Button } from '@mantine/core';
@@ -455,8 +431,8 @@ function Demo() {
 
 ## onDismiss
 
-If you need to control opened state, but still want to close popover on outside clicks
-and escape key presses, use `onDismiss` prop:
+If you need to control the opened state, but still want to close the popover on outside clicks
+and escape key presses, use the `onDismiss` prop:
 
 ```tsx
 import { useState } from 'react';
@@ -483,8 +459,8 @@ function Demo() {
 
 ## Initial focus
 
-Popover uses [FocusTrap](https://mantine.dev/core/focus-trap/) component to manage focus.
-Add `data-autofocus` attribute to element that should receive initial focus:
+Popover uses the [FocusTrap](https://mantine.dev/llms/core-focus-trap.md) component to manage focus.
+Add the `data-autofocus` attribute to the element that should receive initial focus:
 
 ```tsx
 import { Popover } from '@mantine/core';
@@ -505,24 +481,20 @@ function Demo() {
 }
 ```
 
-<TargetComponent component="Popover" />
-
 ## Target component
 
 The target element determines where the Popover will be positioned relative to.
 
 ## Nested popovers
 
-Nested popovers require children rendering without [Portal](https://mantine.dev/core/portal/). Usually, you
-should disable portal with props of the component that renders popover content, for example,
-[Select](https://mantine.dev/core/select/) has `comboboxProps={{ withinPortal: false }}` prop. Check documentation
+Nested popovers require children rendering without [Portal](https://mantine.dev/llms/core-portal.md). Usually, you
+should disable the portal with props of the component that renders popover content. For example,
+[Select](https://mantine.dev/llms/core-select.md) has a `comboboxProps={{ withinPortal: false }}` prop. Check the documentation
 of the component that you are using to render popover content to find out how to disable the portal.
-If the portal is not disabled, outside click will close all popovers.
+If the portal is not disabled, outside clicks will close all popovers.
 
-Example of disabling portal in [Select](https://mantine.dev/core/select/) and [DatePickerInput](https://mantine.dev/dates/date-picker-input/)
+Example of disabling the portal in [Select](https://mantine.dev/llms/core-select.md) and [DatePickerInput](https://mantine.dev/llms/dates-date-picker-input.md)
 components:
-
-#### Example: portalChildren
 
 ```tsx
 import { Button, Popover, Select } from '@mantine/core';
@@ -561,9 +533,7 @@ Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practi
 * Dropdown element has `role="dialog"` and `aria-labelledby="target-id"` attributes
 * Target element has `aria-haspopup="dialog"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
 
-Whilst the dropdown is unopened, the `aria-controls` attribute will be undefined
-
-Uncontrolled Popover will be accessible only when used with `button` element or component that renders it ([Button](https://mantine.dev/core/button/), [ActionIcon](https://mantine.dev/core/action-icon/), etc.).
+An uncontrolled Popover will be accessible only when used with a `button` element or component that renders it ([Button](https://mantine.dev/llms/core-button.md), [ActionIcon](https://mantine.dev/llms/core-action-icon.md), etc.).
 Other elements will not support `Space` and `Enter` key presses.
 
 ## Keyboard interactions
@@ -571,24 +541,26 @@ Other elements will not support `Space` and `Enter` key presses.
 
 #### Props
 
+**Popover props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | arrowOffset | number | - | Arrow offset in px |
-| arrowPosition | ArrowPosition | - | Arrow position |
-| arrowRadius | number | - | Arrow <code>border-radius</code> in px |
+| arrowPosition | 'center' \| 'side' | - | Arrow position |
+| arrowRadius | number | - | Arrow `border-radius` in px |
 | arrowSize | number | - | Arrow size in px |
-| children | React.ReactNode | - | <code>Popover.Target</code> and <code>Popover.Dropdown</code> components |
+| children | React.ReactNode | - | `Popover.Target` and `Popover.Dropdown` components |
 | clickOutsideEvents | string[] | - | Events that trigger outside clicks |
 | closeOnClickOutside | boolean | - | Determines whether dropdown should be closed on outside clicks |
-| closeOnEscape | boolean | - | Determines whether dropdown should be closed when <code>Escape</code> key is pressed |
+| closeOnEscape | boolean | - | Determines whether dropdown should be closed when `Escape` key is pressed |
 | defaultOpened | boolean | - | Initial opened state for uncontrolled component |
 | disabled | boolean | - | If set, popover dropdown will not be rendered |
 | floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |
 | hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
 | id | string | - | Id base to create accessibility connections |
-| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead. |
+| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
-| offset | number | FloatingAxesOffsets | - | Offset of the dropdown element |
+| offset | number \| FloatingAxesOffsets | - | Offset of the dropdown element |
 | onChange | (opened: boolean) => void | - | Called with current state when dropdown opens or closes |
 | onClose | () => void | - | Called when dropdown closes |
 | onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
@@ -597,22 +569,47 @@ Other elements will not support `Space` and `Enter` key presses.
 | onOpen | () => void | - | Called when dropdown opens |
 | onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
 | opened | boolean | - | Controlled dropdown opened state |
-| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to <code>Overlay</code> component |
-| portalProps | BasePortalProps | - | Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
+| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
-| positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
 | preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any other valid CSS <code>box-shadow</code> value |
-| transitionProps | TransitionProps | - | Props passed down to the <code>Transition</code> component. Use to configure duration and animation type. |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |
+| transitionProps | TransitionProps | - | Props passed down to the `Transition` component. Use to configure duration and animation type. |
 | trapFocus | boolean | - | Determines whether focus should be trapped within dropdown |
-| width | PopoverWidth | - | Dropdown width, or <code>'target'</code> to make dropdown width the same as target element |
+| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |
 | withArrow | boolean | - | Determines whether component should have an arrow |
 | withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |
 | withRoles | boolean | - | Determines whether dropdown and target elements should have accessible roles |
-| withinPortal | boolean | - | Determines whether dropdown should be rendered within the <code>Portal</code> |
-| zIndex | string | number | - | Dropdown <code>z-index</code> |
+| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |
+| zIndex | string \| number | - | Dropdown `z-index` |
+
+**Popover..Target props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Target element |
+| popupType | string | - | Popup accessible type |
+| refProp | string | - | Key of the prop that should be used to access element ref |
+
+**Popover..Dropdown props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**Popover.Target props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Target element |
+| popupType | string | - | Popup accessible type |
+| refProp | string | - | Key of the prop that should be used to access element ref |
+
+**Popover.Dropdown props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
 
 
 #### Styles API

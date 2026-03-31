@@ -6,9 +6,9 @@ Import: import { HooksPackage } from '@mantine/hooks';
 
 [![npm](https://img.shields.io/npm/dm/@mantine/hooks)](https://www.npmjs.com/package/@mantine/hooks)
 
-[@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) package
-provides more than 70 hooks to build custom components. `@mantine/hooks`
-package is used internally in most of other `@mantine/*` packages –
+The [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) package
+provides more than 70 hooks to build custom components. The `@mantine/hooks`
+package is used internally in most other `@mantine/*` packages –
 it is required to be installed in your project to use Mantine components.
 
 ## Installation
@@ -23,20 +23,18 @@ npm install @mantine/hooks
 
 ## Usage
 
-`@mantine/hooks` package can be used in any web React application, state
-management hooks (like [use-pagination](https://mantine.dev/hooks/use-pagination) or [use-queue](https://mantine.dev/hooks/use-queue))
+The `@mantine/hooks` package can be used in any web React application, and state
+management hooks (like [use-pagination](https://mantine.dev/llms/hooks-use-pagination.md) or [use-queue](https://mantine.dev/llms/hooks-use-queue.md))
 are also compatible with React Native. The package can be used even if you
 do not use Mantine components or other Mantine libraries – it is standalone
-and does not have any dependencies except React.
+and has no dependencies except React.
 
-Example of using [use-move](https://mantine.dev/hooks/use-move) hook to create a custom slider:
-
-#### Example: customSlider
+Example of using [use-move](https://mantine.dev/llms/hooks-use-move.md) hook to create a custom slider:
 
 ```tsx
 // Demo.tsx
 import { useState } from 'react';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { clamp, useMove } from '@mantine/hooks';
 import classes from './Demo.module.css';
 
@@ -74,7 +72,7 @@ function Demo() {
           className={classes.thumb}
           style={{ left: `calc(${value * 100}% - var(--thumb-width) / 2)` }}
         >
-          <IconGripVertical stroke={1.5} />
+          <DotsSixVerticalIcon />
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ import '@mantine/code-highlight/styles.css';
 ## Example
 
 `CodeHighlight` component is used to display code snippets with syntax highlighting.
-It provides a flexible adapter system that allows using any code highlighting library
+It provides a flexible adapter system that allows you to use any code highlighting library
 of your choice.
 
 Example of code highlighting with [shiki](https://shiki.matsu.io/):
@@ -44,8 +44,6 @@ export function filterProps<T extends Record<string, any>>(props: T) {
   }, {} as FilterPropsRes<T>);
 }
 ```
-
-#### Example: usage
 
 ```tsx
 import { CodeHighlight } from '@mantine/code-highlight';
@@ -80,16 +78,16 @@ Default adapters:
 
 * `createShikiAdapter` – creates [shiki](https://shiki.matsu.io/) adapter
 * `createHighlightJsAdapter` – creates [highlight.js](https://highlightjs.org/) adapter
-* `plainTextAdapter` – does not highlight code, just displays it as plain text (used by default if no adapter provided)
+* `plainTextAdapter` – does not highlight code, just displays it as plain text (used by default if no adapter is provided)
 
 ## Usage with shiki
 
 [Shiki](https://shiki.matsu.io/) library provides the most advanced syntax highlighting
 for TypeScript and CSS/Sass code. It uses textmate grammars to highlight code (same as in VSCode).
-Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).
-Shiki adapter is used for all code highlighting in Mantine documentation.
+The Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).
+The Shiki adapter is used for all code highlighting in Mantine documentation.
 
-To use shiki adapter you need to install `shiki` package:
+To use the shiki adapter, you need to install the `shiki` package:
 
 ```bash
 yarn add shiki
@@ -99,7 +97,7 @@ yarn add shiki
 npm install shiki
 ```
 
-Then wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as `adapter` prop:
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as the `adapter` prop:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -130,7 +128,7 @@ function App() {
 }
 ```
 
-After that, you can use `CodeHighlight` component in your application:
+After that, you can use the `CodeHighlight` component in your application:
 
 
 ```tsx
@@ -147,8 +145,6 @@ export function filterProps<T extends Record<string, any>>(props: T) {
   }, {} as FilterPropsRes<T>);
 }
 ```
-
-#### Example: usage
 
 ```tsx
 import { CodeHighlight } from '@mantine/code-highlight';
@@ -174,15 +170,15 @@ function Demo() {
 ```
 
 
-All further code highlighting examples on this page are using shiki adapter.
+All further code highlighting examples on this page use the shiki adapter.
 
 ## Usage with highlight.js
 
 [Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,
-but it has smaller bundle size and better performance. Choose highlight.js adapter if you need
+but it has a smaller bundle size and better performance. Choose the highlight.js adapter if you need
 to highlight basic JavaScript, HTML, and CSS code.
 
-To use highlight.js adapter you need to install `highlight.js` package:
+To use the highlight.js adapter, you need to install the `highlight.js` package:
 
 ```bash
 yarn add highlight.js
@@ -192,7 +188,7 @@ yarn add highlight.js
 npm install highlight.js
 ```
 
-Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as `adapter` prop:
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as the `adapter` prop:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -215,9 +211,9 @@ function App() {
 }
 ```
 
-Then you need to add styles of one of the highlight.js themes to your application.
-You can do that by importing css file from `highlight.js` package or adding it via
-CDN link to the head of your application:
+Then you need to add styles from one of the highlight.js themes to your application.
+You can do that by importing a css file from the `highlight.js` package or adding it via
+a CDN link to the head of your application:
 
 ```html
 <link
@@ -226,11 +222,11 @@ CDN link to the head of your application:
 />
 ```
 
-After that, you can use `CodeHighlight` component in your application.
+After that, you can use the `CodeHighlight` component in your application.
 
 ## Create custom adapter
 
-You can create a custom adapter if you want to enhance the default behavior of the code highlighting
+You can create a custom adapter if you want to enhance the default behavior of code highlighting
 or use a different library.
 
 Example of creating a custom shiki adapter with custom themes and logic:
@@ -257,7 +253,7 @@ async function loadShiki() {
 
 // Pass this adapter to CodeHighlightAdapterProvider component
 export const customShikiAdapter: CodeHighlightAdapter = {
-  // loadContext is called on client side to load shiki highlighter
+  // loadContext is called on the client side to load the shiki highlighter
   // It is required to be used if your library requires async initialization
   // The value returned from loadContext is passed to getHighlighter as ctx argument
   loadContext: loadShiki,
@@ -295,8 +291,6 @@ function Button() {
   return <button>Click me</button>;
 }
 ```
-
-#### Example: copy
 
 ```tsx
 import { CodeHighlight } from '@mantine/code-highlight';
@@ -340,9 +334,7 @@ function Button() {
 
 ## With tabs
 
-`CodeHighlightTabs` component allows organizing multiple code blocks into tabs:
-
-#### Example: tabs
+`CodeHighlightTabs` component allows you to organize multiple code blocks into tabs:
 
 ```tsx
 // Demo.tsx
@@ -408,8 +400,6 @@ You can use any React node as tab icon. The example below uses TypeScript and CS
 icons from the `@mantinex/dev-icons` package, but you can use any other icons library or custom
 icons:
 
-#### Example: tabsIcons
-
 ```tsx
 import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';
@@ -456,11 +446,9 @@ function Demo() {
 
 ## Tabs icons based on file name
 
-As an alternative to providing icons manually for each tab, you can use `getFileIcon` prop
-to assign icons based on file name. `getFileIcon` accepts file name and must React node
+As an alternative to providing icons manually for each tab, you can use the `getFileIcon` prop
+to assign icons based on file name. `getFileIcon` accepts a file name and must return a React node
 or `null`.
-
-#### Example: tabsGetIcons
 
 ```tsx
 import { CodeHighlightTabs } from '@mantine/code-highlight';
@@ -517,10 +505,8 @@ function Demo() {
 ## Expandable code
 
 If the code snippet is too long, you can make it expandable with `withExpandButton`
-and `defaultExpanded={false}` props. To change label of the expand/collapse control
+and `defaultExpanded={false}` props. To change the label of the expand/collapse control
 tooltip, use `expandCodeLabel` and `collapseCodeLabel`.
-
-#### Example: expand
 
 ```tsx
 // Demo.tsx
@@ -585,7 +571,7 @@ export const cssCode = `
 
 ## Custom controls
 
-Use `controls` prop with `CodeHighlightControl` component to add custom controls
+Use the `controls` prop with the `CodeHighlightControl` component to add custom controls
 to the code block:
 
 
@@ -595,10 +581,8 @@ function greet() {
 }
 ```
 
-#### Example: customControl
-
 ```tsx
-import { IconBrandCodesandbox, IconMessage2 } from '@tabler/icons-react';
+import { CodesandboxLogoIcon, ChatCircleIcon } from '@phosphor-icons/react';
 import { CodeHighlight, CodeHighlightControl } from '@mantine/code-highlight';
 
 const exampleCode = `
@@ -621,10 +605,10 @@ function Demo() {
           tooltipLabel="Open on codesandbox"
           key="sandbox"
         >
-          <IconBrandCodesandbox />
+          <CodesandboxLogoIcon />
         </CodeHighlightControl>,
         <CodeHighlightControl tooltipLabel="Discuss with GPT" key="gpt">
-          <IconMessage2 />
+          <ChatCircleIcon />
         </CodeHighlightControl>,
       ]}
     />
@@ -635,9 +619,7 @@ function Demo() {
 
 ## Inline code
 
-`InlineCodeHighlight` component allows highlighting inline code snippets:
-
-#### Example: inline
+`InlineCodeHighlight` component allows you to highlight inline code snippets:
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -662,11 +644,13 @@ function Demo() {
 
 #### Props
 
+**CodeHighlight props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | background | MantineColor | - | Controls background color of the code. By default, the value depends on color scheme. |
 | code | string | required | Code to highlight |
-| codeColorScheme | (string & {}) | "dark" | "light" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |
+| codeColorScheme | (string & {}) \| "dark" \| "light" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |
 | collapseCodeLabel | string | - | Label for collapse button |
 | controls | ReactNode[] | - | Extra controls to display in the controls list |
 | copiedLabel | string | - | Label for copy button in copied state |
@@ -675,9 +659,34 @@ function Demo() {
 | expandCodeLabel | string | - | Label for expand button |
 | expanded | boolean | - | Controlled expanded state |
 | language | string | - | Language of the code, used for syntax highlighting |
-| maxCollapsedHeight | string | number | - | Max height of collapsed state |
+| maxCollapsedHeight | string \| number | - | Max height of collapsed state |
 | onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
+| withBorder | boolean | - | Adds border to the root element |
+| withCopyButton | boolean | - | Determines whether the copy button should be displayed |
+| withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |
+
+**CodeHighlight.Tabs props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| activeTab | number | - | Index of controlled active tab state |
+| background | MantineColor | - | Controls background color of the code. By default, the value depends on color scheme. |
+| code | CodeHighlightTabsCode[] | required | Code to highlight with meta data (file name and icon) |
+| codeColorScheme | (string & {}) \| "dark" \| "light" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |
+| collapseCodeLabel | string | - | Label for collapse button |
+| controls | ReactNode[] | - | Extra controls to display in the controls list |
+| copiedLabel | string | - | Label for copy button in copied state |
+| copyLabel | string | - | Label for copy button in default state |
+| defaultActiveTab | number | - | Default active tab index |
+| defaultExpanded | boolean | - | Uncontrolled expanded default state |
+| expandCodeLabel | string | - | Label for expand button |
+| expanded | boolean | - | Controlled expanded state |
+| getFileIcon | (fileName: string) => ReactNode | - | Function that returns icon based on file name |
+| maxCollapsedHeight | string \| number | - | Max height of collapsed state |
+| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes |
+| onTabChange | (tab: number) => void | - | Called when tab changes |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | withBorder | boolean | - | Adds border to the root element |
 | withCopyButton | boolean | - | Determines whether the copy button should be displayed |
 | withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |

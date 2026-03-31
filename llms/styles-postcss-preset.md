@@ -3,7 +3,7 @@
 # Mantine PostCSS preset
 
 `postcss-preset-mantine` provides several CSS functions and mixins to help you write styles.
-It is not required to use it, but highly recommended. All demos that feature styles
+It is not required to use it, but is highly recommended. All demos that feature styles
 assume that you have this preset installed.
 
 `postcss-preset-mantine` includes the following PostCSS plugins:
@@ -26,8 +26,8 @@ npm install postcss-preset-mantine
 
 ## Usage
 
-Note that setting up PostCSS may be different depending on your build tool/framework, check
-a [dedicated framework guide](https://mantine.dev/getting-started) to learn more.
+Note that setting up PostCSS may be different depending on your build tool/framework. Check
+a [dedicated framework guide](https://mantine.dev/llms/getting-started.md) to learn more.
 Add `postcss-preset-mantine` to your `postcss.config.cjs` file (usually it is located in the root of your project):
 
 ```js
@@ -43,8 +43,8 @@ All done! You can now use all the features of the preset.
 ## rem/em functions
 
 `rem` and `em` functions can be used to convert pixels to rem/em units.
-`16px = 1rem` and `16px = 1em`, `em` values are supposed to be used in media queries,
-`rem` everywhere else. You can learn more about units conversions in [this guide](https://mantine.dev/styles/rem).
+`16px = 1rem` and `16px = 1em`. `em` values are supposed to be used in media queries,
+`rem` everywhere else. You can learn more about unit conversions in [this guide](https://mantine.dev/llms/styles-rem.md).
 
 ```scss
 .demo {
@@ -210,7 +210,7 @@ Will be transformed to:
 }
 ```
 
-You can also use `smaller-than` and `larger-than` mixins with [mantine breakpoints](https://mantine.dev/styles/responsive/#breakpoints-variables-in-css-modules):
+You can also use `smaller-than` and `larger-than` mixins with [mantine breakpoints](https://mantine.dev/llms/styles-responsive.md#breakpoints-variables-in-css-modules):
 
 ```scss
 .demo {

@@ -5,9 +5,7 @@ Description: Inline and block code
 
 ## Usage
 
-By default, Code component renders inline `code` html element:
-
-#### Example: usage
+By default, the Code component renders an inline `code` html element:
 
 ```tsx
 import { Code } from '@mantine/core';
@@ -20,9 +18,7 @@ function Demo() {
 
 ## Block code
 
-To render code in `pre` element pass `block` prop to Code component:
-
-#### Example: block
+To render code in a `pre` element, pass the `block` prop to the Code component:
 
 ```tsx
 import { Code } from '@mantine/core';
@@ -41,10 +37,8 @@ function Demo() {
 
 ## Custom color
 
-By default, code color is gray, you can change it to any valid CSS color or to one
-of the [theme.colors](https://mantine.dev/theming/colors):
-
-#### Example: colors
+By default, the code color is gray. You can change it to any valid CSS color or to one
+of the [theme.colors](https://mantine.dev/llms/theming-colors.md):
 
 ```tsx
 import { Code, Group } from '@mantine/core';
@@ -65,10 +59,59 @@ function Demo() {
 
 #### Props
 
+**Code props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| block | boolean | - | If set, code is rendered in <code>pre</code> |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color, controls <code>background-color</code> of the code. By default, calculated based on the color scheme. |
+| block | boolean | - | If set, code is rendered in `pre` |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color, controls `background-color` of the code. By default, calculated based on the color scheme. |
+
+**Code.Highlight props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| background | MantineColor | - | Controls background color of the code. By default, the value depends on color scheme. |
+| code | string | required | Code to highlight |
+| codeColorScheme | (string & {}) \| "dark" \| "light" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |
+| collapseCodeLabel | string | - | Label for collapse button |
+| controls | ReactNode[] | - | Extra controls to display in the controls list |
+| copiedLabel | string | - | Label for copy button in copied state |
+| copyLabel | string | - | Label for copy button in default state |
+| defaultExpanded | boolean | - | Uncontrolled expanded default state |
+| expandCodeLabel | string | - | Label for expand button |
+| expanded | boolean | - | Controlled expanded state |
+| language | string | - | Language of the code, used for syntax highlighting |
+| maxCollapsedHeight | string \| number | - | Max height of collapsed state |
+| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
+| withBorder | boolean | - | Adds border to the root element |
+| withCopyButton | boolean | - | Determines whether the copy button should be displayed |
+| withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |
+
+**Code.HighlightTabs props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| activeTab | number | - | Index of controlled active tab state |
+| background | MantineColor | - | Controls background color of the code. By default, the value depends on color scheme. |
+| code | CodeHighlightTabsCode[] | required | Code to highlight with meta data (file name and icon) |
+| codeColorScheme | (string & {}) \| "dark" \| "light" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |
+| collapseCodeLabel | string | - | Label for collapse button |
+| controls | ReactNode[] | - | Extra controls to display in the controls list |
+| copiedLabel | string | - | Label for copy button in copied state |
+| copyLabel | string | - | Label for copy button in default state |
+| defaultActiveTab | number | - | Default active tab index |
+| defaultExpanded | boolean | - | Uncontrolled expanded default state |
+| expandCodeLabel | string | - | Label for expand button |
+| expanded | boolean | - | Controlled expanded state |
+| getFileIcon | (fileName: string) => ReactNode | - | Function that returns icon based on file name |
+| maxCollapsedHeight | string \| number | - | Max height of collapsed state |
+| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes |
+| onTabChange | (tab: number) => void | - | Called when tab changes |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
+| withBorder | boolean | - | Adds border to the root element |
+| withCopyButton | boolean | - | Determines whether the copy button should be displayed |
+| withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |
 
 
 #### Styles API
@@ -91,7 +134,7 @@ Code component supports Styles API. With Styles API, you can customize styles of
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-block | - | - |
+| root | data-block | `block` prop is set | - |
 
 **Codehighlight selectors**
 

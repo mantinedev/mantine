@@ -3,33 +3,33 @@
 # Vanilla extract integration
 
 [Vanilla extract](https://vanilla-extract.style/) is a TypeScript CSS preprocessor that generates static CSS files at build time.
-It is a great alternative to [CSS Modules](https://mantine.dev/styles/css-modules) if you prefer to write your styles in TypeScript.
+It is a great alternative to [CSS Modules](https://mantine.dev/llms/styles-css-modules.md) if you prefer to write your styles in TypeScript.
 
 ## Vanilla extract vs CSS Modules
 
-[Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/styles/css-modules) do the same thing,
-but with different syntax. Common features of [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/styles/css-modules):
+[Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/llms/styles-css-modules.md) do the same thing,
+but with different syntax. Common features of [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/llms/styles-css-modules.md):
 
 * Styles are generated at build time – no runtime and performance overhead
-* Classes names are scoped to the styles file
+* Class names are scoped to the styles file
 
-Differences between [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/styles/css-modules):
+Differences between [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/llms/styles-css-modules.md):
 
-* Vanilla extract styles are type safe
-* You can use any JavaScript/TypeScript code in Vanilla extract styles, including [color functions](https://mantine.dev/styles/color-functions)
-* With Vanilla extract you do not have access to [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) features like `light-dark` function and `hover` mixin.
-  Because of this, you will not be able to copy-paste all demos from Mantine documentation and use them with Vanilla extract.
+* Vanilla extract styles are type-safe
+* You can use any JavaScript/TypeScript code in Vanilla extract styles, including [color functions](https://mantine.dev/llms/styles-color-functions.md)
+* With Vanilla extract you do not have access to [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md) features like the `light-dark` function and `hover` mixin.
+  Because of this, you will not be able to copy-paste all demos from the Mantine documentation and use them with Vanilla extract.
 * Vanilla extract requires additional configuration and setup that may not be available for your build tool/framework.
   Most popular tools like [Next.js](https://nextjs.org/) and [Vite](https://vitejs.dev/) have plugins for Vanilla extract,
   but if you are using something more niche, you might need to configure it yourself.
 
-Note that you can use both [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/styles/css-modules) in the same project,
+Note that you can use both [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](https://mantine.dev/llms/styles-css-modules.md) in the same project;
 it will not cause any issues: performance will be the same and the bundle size will not be impacted.
 
 ## Installation
 
-Follow the [installation instructions](https://vanilla-extract.style/documentation/getting-started) to install vanilla extract.
-Then install `@mantine/vanilla-extract` package, it exports `themeToVars` function to convert Mantine theme to CSS variables:
+Follow the [installation instructions](https://vanilla-extract.style/documentation/getting-started) to install Vanilla extract.
+Then install the `@mantine/vanilla-extract` package; it exports the `themeToVars` function to convert the Mantine theme to CSS variables:
 
 ```bash
 yarn add @mantine/vanilla-extract
@@ -41,21 +41,14 @@ npm install @mantine/vanilla-extract
 
 ## Templates
 
-You can use one of the following templates to get started or a reference for your own setup.
+You can use one of the following templates to get started or as a reference for your own setup.
 Note that all templates include only minimal setup.
-
-<TemplatesList
-  name={[
-    'vite-vanilla-extract-template',
-    'next-vanilla-extract-template',
-  ]}
-/>
 
 ## Theming
 
 Vanilla extract provides [createTheme](https://vanilla-extract.style/documentation/theming/)
 function which converts given theme object into CSS variables and assigns them to `:root` or other selector.
-You should not use Vanilla extract `createTheme` to generate Mantine theme tokens – all Mantine [theme](https://mantine.dev/theming/theme-object)
+You should not use Vanilla extract `createTheme` to generate Mantine theme tokens – all Mantine [theme](https://mantine.dev/llms/theming-theme-object.md)
 properties are already exposed as CSS variables. Instead, use `themeToVars` function from `@mantine/vanilla-extract` package
 to create an object with CSS variables from Mantine theme:
 
@@ -81,7 +74,7 @@ export const vars = themeToVars(theme);
 
 ## Styling
 
-Import `vars` object in `*.css.ts` files to access Mantine [CSS variables](https://mantine.dev/styles/css-variables):
+Import `vars` object in `*.css.ts` files to access Mantine [CSS variables](https://mantine.dev/llms/styles-css-variables.md):
 
 ```tsx
 // Demo.css.ts
@@ -97,7 +90,7 @@ export const demo = style({
 
 ## rem and em
 
-To convert px to [rem or em](https://mantine.dev/styles/rem) use `rem` and `em` functions from `@mantine/core` package:
+To convert px to [rem or em](https://mantine.dev/llms/styles-rem.md) use `rem` and `em` functions from `@mantine/core` package:
 
 ```tsx
 // Demo.css.ts

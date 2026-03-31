@@ -1,0 +1,177 @@
+{
+  "id": "core-angle-slider",
+  "name": "AngleSlider",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/angle-slider",
+  "description": "Pick angle value between 0 and 360",
+  "propsCount": 16,
+  "llmUrl": "https://mantine.dev/llms/core-angle-slider.md",
+  "componentDataUrl": "/mcp/components/core-angle-slider.json",
+  "searchText": "angleslider pick angle value between 0 and 360 @mantine/core /core/angle-slider defaultvalue disabled formatlabel hiddeninputprops marks name onchange onchangeend onscrubend onscrubstart restricttomarks size step thumbsize value withlabel",
+  "source": "@mantine/core/src/components/AngleSlider/AngleSlider.tsx",
+  "docs": "core/angle-slider.mdx",
+  "markdown": "# AngleSlider\nPackage: @mantine/core\nImport: import { AngleSlider } from '@mantine/core';\nDescription: Pick angle value between 0 and 360\n\n## Usage\n\nUse the `AngleSlider` component to pick an angle value between 0 and 360:\n\n```tsx\nimport { AngleSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <AngleSlider aria-label=\"Angle slider\" size={60} thumbSize={8} withLabel={true} />;\n}\n```\n\n\n## Controlled\n\nThe `AngleSlider` value is a number between 0 and 360.\n\n```tsx\nimport { useState } from 'react';\nimport { AngleSlider } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState(180);\n  return <AngleSlider value={value} onChange={setValue} />;\n}\n```\n\n## AngleSlider with uncontrolled forms\n\n`AngleSlider` can be used with uncontrolled forms.\nSet the `name` attribute to include slider value in `FormData` object on form submission.\nTo control initial value in uncontrolled forms, use `defaultValue` prop.\n\nProps for usage with uncontrolled forms:\n\n* `name` – name attribute passed to the hidden input\n* `hiddenInputProps` – additional props passed to the hidden input\n\nExample of uncontrolled `AngleSlider` with `FormData`:\n\n```tsx\nimport { AngleSlider } from '@mantine/core';\n\nexport function WithFormData() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Checkbox group value:', formData.get('angle'));\n      }}\n    >\n      <AngleSlider name=\"angle\" defaultValue={120} />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## formatLabel\n\nUse the `formatLabel` prop to change the angle label format.\nIt accepts a function that takes the angle value and returns a React node:\n\n```tsx\nimport { AngleSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <AngleSlider aria-label=\"Angle slider\" formatLabel={(value) => `${value}°`} />;\n}\n```\n\n\n## Marks\n\nSet the `marks` prop to display marks on the slider.\nA mark is an object with a value (required, number between 0 and 360) and label (optional, React node).\nTo restrict selection to marks only, set the `restrictToMarks` prop:\n\n```tsx\nimport { AngleSlider, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group p=\"lg\" gap={50}>\n      <AngleSlider\n        aria-label=\"Angle slider\"\n        formatLabel={(value) => `${value}°`}\n        size={100}\n        restrictToMarks\n        marks={[\n          { value: 0 },\n          { value: 45 },\n          { value: 90 },\n          { value: 135 },\n          { value: 180 },\n          { value: 225 },\n          { value: 270 },\n          { value: 315 },\n        ]}\n      />\n\n      <AngleSlider\n        aria-label=\"Angle slider\"\n        formatLabel={(value) => `${value}°`}\n        size={100}\n        marks={[\n          { value: 0, label: '0°' },\n          { value: 45, label: '45°' },\n          { value: 90, label: '90°' },\n          { value: 135, label: '135°' },\n          { value: 180, label: '180°' },\n          { value: 225, label: '225°' },\n          { value: 270, label: '270°' },\n          { value: 315, label: '315°' },\n        ]}\n      />\n    </Group>\n  );\n}\n```\n\n\n## onChangeEnd\n\nThe `onChangeEnd` callback fires when the user stops dragging the slider or changes its value with the keyboard.\nUse it as a debounced callback to prevent frequent updates.\n\n```tsx\nimport { useState } from 'react';\nimport { AngleSlider, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState(0);\n  const [endValue, setEndValue] = useState(0);\n\n  return (\n    <>\n      <AngleSlider value={value} onChange={setValue} onChangeEnd={setEndValue} />\n      <Text mt=\"md\">Current value: {value}</Text>\n      <Text>End value: {endValue}</Text>\n    </>\n  );\n}\n```\n\n\n## disabled\n\nThe `disabled` prop disables the component and prevents user interaction:\n\n```tsx\nimport { AngleSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <AngleSlider aria-label=\"Angle slider\" disabled />;\n}\n```\n\n\n## Accessibility\n\nTo make the component accessible for screen readers, set the `aria-label` prop:\n\n```tsx\nimport { AngleSlider } from '@mantine/core';\n\nfunction Demo() {\n  return <AngleSlider aria-label=\"Gradient angle\" />;\n}\n```\n\nKeyboard interactions when the component is focused:\n\n## Based on use-radial-move\n\n`AngleSlider` is based on the [use-radial-move](https://mantine.dev/llms/hooks-use-radial-move.md) hook.\nYou can build a custom radial slider using this hook if you need more control over the component's behavior.\n\n```tsx\n// Demo.tsx\nimport { useState } from 'react';\nimport { Box } from '@mantine/core';\nimport { useRadialMove } from '@mantine/hooks';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  const [value, setValue] = useState(115);\n  const { ref } = useRadialMove(setValue);\n\n  return (\n    <Box className={classes.root} ref={ref} style={{ '--angle': `${value}deg` }}>\n      <div className={classes.value}>{value}°</div>\n      <div className={classes.thumb} />\n    </Box>\n  );\n}\n\n// Demo.module.css\n.root {\n  position: relative;\n  width: 160px;\n  height: 160px;\n  border-radius: 160px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n\n  --empty-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));\n  --filled-color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-8));\n\n  background-image: conic-gradient(\n    var(--filled-color) 0deg,\n    var(--filled-color) var(--angle, 0deg),\n    var(--empty-color) var(--angle, 0deg)\n  );\n}\n\n.value {\n  background-color: var(--mantine-color-body);\n  width: 132px;\n  height: 132px;\n  border-radius: 132px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.thumb {\n  position: absolute;\n  width: 14px;\n  height: 160px;\n  transform: rotate(var(--angle, 0deg));\n\n  &::before {\n    content: '';\n    position: absolute;\n    width: 14px;\n    height: 14px;\n    background-color: light-dark(var(--mantine-color-white), var(--filled-color));\n    border: 2px solid light-dark(var(--filled-color), var(--mantine-color-white));\n    border-radius: 50%;\n    left: 50%;\n    transform: translateX(-50%);\n  }\n}\n```\n\n\n\n#### Props\n\n**AngleSlider props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| defaultValue | number | - | Uncontrolled component default value |\n| disabled | boolean | - | Sets `data-disabled` attribute, disables interactions |\n| formatLabel | (value: number) => ReactNode | - | A function to format label based on the current value |\n| hiddenInputProps | React.ComponentProps<\"input\"> | - | Props passed down to the hidden input |\n| marks | { value: number; label?: string; }[] \\| undefined | - | Array of marks displayed on the slider |\n| name | string | - | Hidden input name, use with uncontrolled component |\n| onChange | (value: number) => void | - | Called on value change |\n| onChangeEnd | (value: number) => void | - | Called after the selection is finished |\n| onScrubEnd | () => void | - | Called in `onMouseUp` and `onTouchEnd` |\n| onScrubStart | () => void | - | Called in `onMouseDown` and `onTouchStart` |\n| restrictToMarks | boolean | - | If set, the selection is allowed only from the given marks array |\n| size | number | - | Slider size in px |\n| step | number | - | Step between values |\n| thumbSize | number | - | Size of the thumb in px. Calculated based on the `size` value by default. |\n| value | number | - | Controlled component value |\n| withLabel | boolean | - | If set, the label is displayed inside the slider |\n\n\n#### Styles API\n\nAngleSlider component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**AngleSlider selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-AngleSlider-root | Root element |\n| label | .mantine-AngleSlider-label | Label inside the slider |\n| marks | .mantine-AngleSlider-marks | Wrapper for all marks |\n| mark | .mantine-AngleSlider-mark | Mark element |\n| thumb | .mantine-AngleSlider-thumb | Slider thumb |\n\n**AngleSlider CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --slider-size | Controls slider width and height |\n| root | --thumb-size | Controls thumb size |\n\n**AngleSlider data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | disabled | `disabled` prop is set | - |\n",
+  "props": [
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>data-disabled</code> attribute, disables interactions",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "formatLabel",
+      "description": "A function to format label based on the current value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => ReactNode"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "hiddenInputProps",
+      "description": "Props passed down to the hidden input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"input\">"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "marks",
+      "description": "Array of marks displayed on the slider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "{ value: number; label?: string; }[] | undefined"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "name",
+      "description": "Hidden input name, use with uncontrolled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "onChange",
+      "description": "Called on value change",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "onChangeEnd",
+      "description": "Called after the selection is finished",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "onScrubEnd",
+      "description": "Called in <code>onMouseUp</code> and <code>onTouchEnd</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "onScrubStart",
+      "description": "Called in <code>onMouseDown</code> and <code>onTouchStart</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "restrictToMarks",
+      "description": "If set, the selection is allowed only from the given marks array",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "size",
+      "description": "Slider size in px",
+      "required": false,
+      "defaultValue": "60",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "step",
+      "description": "Step between values",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "thumbSize",
+      "description": "Size of the thumb in px. Calculated based on the <code>size</code> value by default.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "AngleSlider"
+    },
+    {
+      "name": "withLabel",
+      "description": "If set, the label is displayed inside the slider",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AngleSlider"
+    }
+  ]
+}

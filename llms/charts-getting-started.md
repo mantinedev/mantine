@@ -20,12 +20,20 @@ import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';
 ```
 
+After installation, import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+// ‼️ import charts styles after core package styles
+import '@mantine/charts/styles.css';
+```
+
 ## Do not forget to import styles
 
-Followed installation instructions above but something is not working
+Followed the installation instructions above but something is not working
 (misplaced tooltips or no colors)?
-You've fallen into the trap of not importing charts styles!
-To fix the issue, import charts styles at the root of your application:
+You've fallen into the trap of not importing chart styles!
+To fix the issue, import chart styles at the root of your application:
 
 ```tsx
 import '@mantine/charts/styles.css';
@@ -33,6 +41,6 @@ import '@mantine/charts/styles.css';
 
 ## Based on recharts
 
-Most of the components in `@mantine/charts` package are based on [recharts](https://recharts.org/) library.
-If you need advanced features that are not covered in `@mantine/charts`
-documentation, reference [recharts documentation](https://recharts.org/en-US/api) for more information.
+Most of the components in the `@mantine/charts` package are based on the [recharts](https://recharts.org/) library.
+If you need advanced features that are not covered in the `@mantine/charts`
+documentation, refer to the [recharts documentation](https://recharts.org/en-US/api) for more information.

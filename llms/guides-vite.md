@@ -2,21 +2,15 @@
 
 # Usage with Vite
 
-<GetTemplates type="vite" />
-
 ## Generate new application
 
-Follow [Vite getting started](https://vitejs.dev/guide/) guide to create new Vite application:
-
-<NpmScript yarnScript="yarn create vite" npmScript="npm create vite@latest" />
+Follow the [Vite getting started](https://vitejs.dev/guide/) guide to create a new Vite application:
 
 ## Installation
 
-<PackagesInstallation />
-
 ## PostCSS setup
 
-Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
+Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md):
 
 ```bash
 yarn add postcss postcss-preset-mantine postcss-simple-vars
@@ -26,7 +20,7 @@ yarn add postcss postcss-preset-mantine postcss-simple-vars
 npm install postcss postcss-preset-mantine postcss-simple-vars
 ```
 
-Create `postcss.config.cjs` file at the root of your application with the following content:
+Create a `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
 module.exports = {
@@ -47,7 +41,7 @@ module.exports = {
 
 ## Setup
 
-Add styles imports and [MantineProvider](https://mantine.dev/theming/mantine-provider/) to your application root component (usually `App.tsx`):
+Add styles imports and [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) to your application root component (usually `App.tsx`):
 
 ```tsx
 // Import styles of packages that you've installed.
@@ -61,7 +55,7 @@ export default function App() {
 }
 ```
 
-All set! Start development server:
+All set! Start the development server:
 
 ```bash
 npm run dev

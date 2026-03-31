@@ -4,6 +4,26 @@ Import: import { UseTimeout } from '@mantine/hooks';
 
 ## Usage
 
+```tsx
+import { useState } from 'react';
+import { Button, Text, Group } from '@mantine/core';
+import { randomId, useTimeout } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  const { start, clear } = useTimeout(() => setValue(randomId()), 1000);
+
+  return (
+    <Group>
+      <Button onClick={start}>Start</Button>
+      <Button onClick={clear} color="red">
+        Clear
+      </Button>
+      <Text>Random value: {value}</Text>
+    </Group>
+  );
+}
+```
 
 
 ## API
@@ -20,11 +40,11 @@ Arguments:
 
 * `callback` – function that will be called after the timer elapses
 * `delay` – number of milliseconds the timer should wait before the specified function is executed
-* `options: { autoInvoke }` - determines whether the timer should be started on mount, defaults to false
+* `options: { autoInvoke }` – determines whether the timer should be started on mount; defaults to false
 
 Return object:
 
-* `start` - starts the timer
+* `start` – starts the timer
 * `clear` – cancels the timer
 
 ## Definition
@@ -48,8 +68,7 @@ function useTimeout(
 
 ## Exported types
 
-`UseTimeoutOptions` and `UseTimeoutReturnValue` types are exported from `@mantine/hooks` package,
-you can import them in your application:
+The `UseTimeoutOptions` and `UseTimeoutReturnValue` types are exported from `@mantine/hooks`;
 
 ```tsx
 import type { UseTimeoutOptions, UseTimeoutReturnValue } from '@mantine/hooks';

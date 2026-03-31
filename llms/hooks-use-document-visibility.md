@@ -4,9 +4,19 @@ Import: import { UseDocumentVisibility } from '@mantine/hooks';
 
 ## Usage
 
-`use-document-visibility` hook returns current [document.visibilityState](https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilityState)
-– it allows detecting if the current tab is active:
+The `use-document-visibility` hook returns the current [document.visibilityState](https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilityState)
+– it allows you to detect if the current tab is active:
 
+```tsx
+import { Text } from '@mantine/core';
+import { useDocumentTitle, useDocumentVisibility } from '@mantine/hooks';
+
+function Demo() {
+  const documentState = useDocumentVisibility();
+  useDocumentTitle(`Document is ${documentState}`);
+  return <Text>Switch to another tab to see document title change</Text>;
+}
+```
 
 
 ## Definition

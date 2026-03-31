@@ -1,0 +1,553 @@
+{
+  "id": "core-hover-card",
+  "name": "HoverCard",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/hover-card",
+  "description": "Display popover section when target element is hovered",
+  "propsCount": 47,
+  "llmUrl": "https://mantine.dev/llms/core-hover-card.md",
+  "componentDataUrl": "/mcp/components/core-hover-card.json",
+  "searchText": "hovercard display popover section when target element is hovered @mantine/core /core/hover-card arrowoffset arrowposition arrowradius arrowsize children clickoutsideevents closedelay closeonclickoutside closeonescape defaultopened disabled floatingstrategy hidedetached id initiallyopened keepmounted middlewares offset onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus width witharrow withoverlay withroles withinportal zindex children eventpropswrappername popuptype refprop children closedelay opendelay",
+  "source": "@mantine/core/src/components/HoverCard/HoverCard.tsx",
+  "docs": "core/hover-card.mdx",
+  "markdown": "# HoverCard\nPackage: @mantine/core\nImport: import { HoverCard } from '@mantine/core';\nDescription: Display popover section when target element is hovered\n\n## Usage\n\n```tsx\nimport { HoverCard, Button, Text, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <HoverCard width={280} shadow=\"md\">\n        <HoverCard.Target>\n          <Button>Hover to reveal the card</Button>\n        </HoverCard.Target>\n        <HoverCard.Dropdown>\n          <Text size=\"sm\">\n            Hover card is revealed when user hovers over target element, it will be hidden once\n            mouse is not over both target and dropdown elements\n          </Text>\n        </HoverCard.Dropdown>\n      </HoverCard>\n    </Group>\n  );\n}\n```\n\n\n## Delays\n\nSet open and close delays in ms with the `openDelay` and `closeDelay` props:\n\n```tsx\nimport { HoverCard, Button, Text, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <HoverCard shadow=\"md\" openDelay={1000}>\n        <HoverCard.Target>\n          <Button>1000ms open delay</Button>\n        </HoverCard.Target>\n        <HoverCard.Dropdown>\n          <Text size=\"sm\">Opened with 1000ms delay</Text>\n        </HoverCard.Dropdown>\n      </HoverCard>\n\n      <HoverCard shadow=\"md\" closeDelay={1000}>\n        <HoverCard.Target>\n          <Button>1000ms close delay</Button>\n        </HoverCard.Target>\n        <HoverCard.Dropdown>\n          <Text size=\"sm\">Will close with 1000ms delay</Text>\n        </HoverCard.Dropdown>\n      </HoverCard>\n    </Group>\n  );\n}\n```\n\n\n## HoverCard delay group\n\nUse the `HoverCard.Group` component to sync open and close delays of multiple `HoverCard` components:\n\n```tsx\nimport { HoverCard, Button, Text, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <HoverCard.Group openDelay={500} closeDelay={100}>\n      <Group justify=\"center\">\n        <HoverCard shadow=\"md\">\n          <HoverCard.Target>\n            <Button>First</Button>\n          </HoverCard.Target>\n          <HoverCard.Dropdown>\n            <Text size=\"sm\">First hover card content</Text>\n          </HoverCard.Dropdown>\n        </HoverCard>\n\n        <HoverCard shadow=\"md\">\n          <HoverCard.Target>\n            <Button>Second</Button>\n          </HoverCard.Target>\n          <HoverCard.Dropdown>\n            <Text size=\"sm\">Second hover card content</Text>\n          </HoverCard.Dropdown>\n        </HoverCard>\n\n        <HoverCard shadow=\"md\">\n          <HoverCard.Target>\n            <Button>Third</Button>\n          </HoverCard.Target>\n          <HoverCard.Dropdown>\n            <Text size=\"sm\">Third hover card content</Text>\n          </HoverCard.Dropdown>\n        </HoverCard>\n      </Group>\n    </HoverCard.Group>\n  );\n}\n```\n\n\n## With interactive elements\n\n`HoverCard` is displayed only when the mouse is over the target element or dropdown.\nYou can use anchors and buttons within dropdowns, using inputs is not recommended:\n\n```tsx\nimport { HoverCard, Avatar, Text, Group, Anchor, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <HoverCard width={320} shadow=\"md\" withArrow openDelay={200} closeDelay={400}>\n        <HoverCard.Target>\n          <Avatar src=\"https://avatars.githubusercontent.com/u/79146003?s=200&v=4\" radius=\"xl\" />\n        </HoverCard.Target>\n        <HoverCard.Dropdown>\n          <Group>\n            <Avatar src=\"https://avatars.githubusercontent.com/u/79146003?s=200&v=4\" radius=\"xl\" />\n            <Stack gap={5}>\n              <Text size=\"sm\" fw={700} style={{ lineHeight: 1 }}>\n                Mantine\n              </Text>\n              <Anchor\n                href=\"https://x.com/mantinedev\"\n                c=\"dimmed\"\n                size=\"xs\"\n                style={{ lineHeight: 1 }}\n              >\n                @mantinedev\n              </Anchor>\n            </Stack>\n          </Group>\n\n          <Text size=\"sm\" mt=\"md\">\n            Customizable React components and hooks library with focus on usability, accessibility\n            and developer experience\n          </Text>\n\n          <Group mt=\"md\" gap=\"xl\">\n            <Text size=\"sm\">\n              <b>0</b> Following\n            </Text>\n            <Text size=\"sm\">\n              <b>1,174</b> Followers\n            </Text>\n          </Group>\n        </HoverCard.Dropdown>\n      </HoverCard>\n    </Group>\n  );\n}\n```\n\n\n## Target component\n\nThe target element determines where the HoverCard will be positioned relative to.\n\n## Accessibility\n\n`HoverCard` is ignored by screen readers and cannot be activated with the keyboard. Use it to display only additional information\nthat is not required to understand the context.\n\n\n#### Props\n\n**HoverCard props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| arrowOffset | number | - | Arrow offset in px |\n| arrowPosition | 'center' \\| 'side' | - | Arrow position |\n| arrowRadius | number | - | Arrow `border-radius` in px |\n| arrowSize | number | - | Arrow size in px |\n| children | React.ReactNode | - | `Popover.Target` and `Popover.Dropdown` components |\n| clickOutsideEvents | string[] | - | Events that trigger outside clicks |\n| closeDelay | number | - | Delay in ms before the dropdown closes after mouse leaves the target or dropdown. Overridden by HoverCard.Group delay if used within a group. |\n| closeOnClickOutside | boolean | - | Determines whether dropdown should be closed on outside clicks |\n| closeOnEscape | boolean | - | Determines whether dropdown should be closed when `Escape` key is pressed |\n| defaultOpened | boolean | - | Initial opened state for uncontrolled component |\n| disabled | boolean | - | If set, popover dropdown will not be rendered |\n| floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |\n| hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |\n| id | string | - | Id base to create accessibility connections |\n| initiallyOpened | boolean | - | Initial opened state |\n| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |\n| middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |\n| offset | number \\| FloatingAxesOffsets | - | Offset of the dropdown element |\n| onClose | () => void | - | Called when the dropdown is closed |\n| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |\n| onEnterTransitionEnd | () => void | - | Called when enter transition ends |\n| onExitTransitionEnd | () => void | - | Called when exit transition ends |\n| onOpen | () => void | - | Called when the dropdown is opened |\n| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |\n| openDelay | number | - | Delay in ms before the dropdown opens after mouse enters the target. Overridden by HoverCard.Group delay if used within a group. |\n| overlayProps | OverlayProps & ElementProps<\"div\"> | - | Props passed down to `Overlay` component |\n| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |\n| position | FloatingPosition | - | Dropdown position relative to the target element |\n| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |\n| transitionProps | TransitionProps | - | Props passed down to the `Transition` component. Use to configure duration and animation type. |\n| trapFocus | boolean | - | Determines whether focus should be trapped within dropdown |\n| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |\n| withArrow | boolean | - | Determines whether component should have an arrow |\n| withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |\n| withRoles | boolean | - | Determines whether dropdown and target elements should have accessible roles |\n| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |\n| zIndex | string \\| number | - | Dropdown `z-index` |\n\n**HoverCard..Target props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Target element |\n| eventPropsWrapperName | string | - | Name of the prop to wrap event listeners in. Use when the target component expects event listeners in a nested object. For example, some components expect `componentProps={{ onMouseEnter, onMouseLeave }}`. |\n| popupType | string | - | Popup accessible type |\n| refProp | string | - | Key of the prop that should be used to access element ref |\n\n**HoverCard..Dropdown props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Dropdown content |\n\n**HoverCard..Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | `HoverCard` components |\n| closeDelay | number | - | Close delay in ms |\n| openDelay | number | - | Open delay in ms |\n\n**HoverCard.Target props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Target element |\n| eventPropsWrapperName | string | - | Name of the prop to wrap event listeners in. Use when the target component expects event listeners in a nested object. For example, some components expect `componentProps={{ onMouseEnter, onMouseLeave }}`. |\n| popupType | string | - | Popup accessible type |\n| refProp | string | - | Key of the prop that should be used to access element ref |\n\n**HoverCard.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | `HoverCard` components |\n| closeDelay | number | - | Close delay in ms |\n| openDelay | number | - | Open delay in ms |",
+  "props": [
+    {
+      "name": "arrowOffset",
+      "description": "Arrow offset in px",
+      "required": false,
+      "defaultValue": "5",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "arrowPosition",
+      "description": "Arrow position",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "'center' | 'side'",
+        "raw": "ArrowPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"center\""
+          },
+          {
+            "value": "\"side\""
+          }
+        ]
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "arrowRadius",
+      "description": "Arrow <code>border-radius</code> in px",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "arrowSize",
+      "description": "Arrow size in px",
+      "required": false,
+      "defaultValue": "7",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "children",
+      "description": "<code>Popover.Target</code> and <code>Popover.Dropdown</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "clickOutsideEvents",
+      "description": "Events that trigger outside clicks",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "closeDelay",
+      "description": "Delay in ms before the dropdown closes after mouse leaves the target or dropdown.\nOverridden by HoverCard.Group delay if used within a group.",
+      "required": false,
+      "defaultValue": "150",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "closeOnClickOutside",
+      "description": "Determines whether dropdown should be closed on outside clicks",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "closeOnEscape",
+      "description": "Determines whether dropdown should be closed when <code>Escape</code> key is pressed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "defaultOpened",
+      "description": "Initial opened state for uncontrolled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "disabled",
+      "description": "If set, popover dropdown will not be rendered",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "floatingStrategy",
+      "description": "Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy)",
+      "required": false,
+      "defaultValue": "'absolute'",
+      "type": {
+        "name": "FloatingStrategy",
+        "raw": "FloatingStrategy | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"fixed\""
+          },
+          {
+            "value": "\"absolute\""
+          }
+        ]
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "hideDetached",
+      "description": "If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "id",
+      "description": "Id base to create accessibility connections",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "initiallyOpened",
+      "description": "Initial opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "middlewares",
+      "description": "Floating ui middlewares to configure position handling",
+      "required": false,
+      "defaultValue": "{ flip: true, shift: true, inline: false }",
+      "type": {
+        "name": "PopoverMiddlewares"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "offset",
+      "description": "Offset of the dropdown element",
+      "required": false,
+      "defaultValue": "8",
+      "type": {
+        "name": "number | FloatingAxesOffsets"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "onClose",
+      "description": "Called when the dropdown is closed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "onDismiss",
+      "description": "Called when the popover is dismissed by clicking outside or by pressing escape",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "onEnterTransitionEnd",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "onExitTransitionEnd",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "onOpen",
+      "description": "Called when the dropdown is opened",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "onPositionChange",
+      "description": "Called when dropdown position changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(position: FloatingPosition) => void"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "openDelay",
+      "description": "Delay in ms before the dropdown opens after mouse enters the target.\nOverridden by HoverCard.Group delay if used within a group.",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to <code>Overlay</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OverlayProps & ElementProps<\"div\">"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "position",
+      "description": "Dropdown position relative to the target element",
+      "required": false,
+      "defaultValue": "'bottom'",
+      "type": {
+        "name": "FloatingPosition",
+        "raw": "FloatingPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          },
+          {
+            "value": "\"bottom\""
+          },
+          {
+            "value": "\"top\""
+          },
+          {
+            "value": "\"left-end\""
+          },
+          {
+            "value": "\"left-start\""
+          },
+          {
+            "value": "\"right-end\""
+          },
+          {
+            "value": "\"right-start\""
+          },
+          {
+            "value": "\"bottom-end\""
+          },
+          {
+            "value": "\"bottom-start\""
+          },
+          {
+            "value": "\"top-end\""
+          },
+          {
+            "value": "\"top-start\""
+          }
+        ]
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "preventPositionChangeWhenVisible",
+      "description": "Prevents popover from flipping/shifting when it the dropdown is visible",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "returnFocus",
+      "description": "Determines whether focus should be automatically returned to control when dropdown closes",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any other valid CSS <code>box-shadow</code> value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props passed down to the <code>Transition</code> component. Use to configure duration and animation type.",
+      "required": false,
+      "defaultValue": "{ duration: 150, transition: 'fade' }",
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "trapFocus",
+      "description": "Determines whether focus should be trapped within dropdown",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "width",
+      "description": "Dropdown width, or <code>'target'</code> to make dropdown width the same as target element",
+      "required": false,
+      "defaultValue": "'max-content'",
+      "type": {
+        "name": "PopoverWidth"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "withArrow",
+      "description": "Determines whether component should have an arrow",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "withOverlay",
+      "description": "Determines whether the overlay should be displayed when the dropdown is opened",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "withRoles",
+      "description": "Determines whether dropdown and target elements should have accessible roles",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether dropdown should be rendered within the <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "zIndex",
+      "description": "Dropdown <code>z-index</code>",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "HoverCard"
+    },
+    {
+      "name": "children",
+      "description": "Target element",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "HoverCardTarget"
+    },
+    {
+      "name": "eventPropsWrapperName",
+      "description": "Name of the prop to wrap event listeners in.\nUse when the target component expects event listeners in a nested object.\nFor example, some components expect <code>componentProps={{ onMouseEnter, onMouseLeave }}</code>.",
+      "required": false,
+      "defaultValue": "undefined (event listeners passed directly to component)",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "HoverCardTarget"
+    },
+    {
+      "name": "popupType",
+      "description": "Popup accessible type",
+      "required": false,
+      "defaultValue": "'dialog'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "HoverCardTarget"
+    },
+    {
+      "name": "refProp",
+      "description": "Key of the prop that should be used to access element ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "HoverCardTarget"
+    },
+    {
+      "name": "children",
+      "description": "<code>HoverCard</code> components",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "HoverCardGroup"
+    },
+    {
+      "name": "closeDelay",
+      "description": "Close delay in ms",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "HoverCardGroup"
+    },
+    {
+      "name": "openDelay",
+      "description": "Open delay in ms",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "HoverCardGroup"
+    }
+  ]
+}

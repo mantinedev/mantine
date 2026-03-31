@@ -1,0 +1,645 @@
+{
+  "id": "dates-calendar",
+  "name": "Calendar",
+  "kind": "component",
+  "package": "@mantine/dates",
+  "route": "/dates/calendar",
+  "description": "Base component for custom date pickers",
+  "propsCount": 52,
+  "llmUrl": "https://mantine.dev/llms/dates-calendar.md",
+  "componentDataUrl": "/mcp/components/dates-calendar.json",
+  "searchText": "calendar base component for custom date pickers @mantine/dates /dates/calendar arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel enablekeyboardnavigation excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday level locale maxdate maxlevel mindate minlevel monthlabelformat monthslistformat nexticon nextlabel numberofcolumns ondatechange onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect previousicon previouslabel renderday size static weekdayformat weekenddays withcellspacing withweeknumbers yearlabelformat yearslistformat",
+  "source": "@mantine/dates/src/components/Calendar/Calendar.tsx",
+  "docs": "dates/calendar.mdx",
+  "markdown": "# Calendar\nPackage: @mantine/dates\nImport: import { Calendar } from '@mantine/dates';\nDescription: Base component for custom date pickers\n\n## Usage\n\nUse the `Calendar` component to create custom date pickers if the [DatePicker](https://mantine.dev/llms/dates-date-picker.md)\ncomponent does not meet your requirements. `Calendar` supports all [DatePicker](https://mantine.dev/llms/dates-date-picker.md)\nprops and some additional props that are listed in the props table – check it out to learn about all component features.\n\nBy default, `Calendar` works the same way as the [DatePicker](https://mantine.dev/llms/dates-date-picker.md) component but does not\ninclude any logic for date selection:\n\n```tsx\nimport { Calendar } from '@mantine/dates';\n\nfunction Demo() {\n  return <Calendar />;\n}\n```\n\n\n## Custom date pickers\n\nUse `Calendar` as a base for custom date pickers. For example, you can create a date picker\nthat allows users to pick three or fewer dates:\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { Calendar } from '@mantine/dates';\n\nfunction Demo() {\n  const [selected, setSelected] = useState<string[]>([]);\n  const handleSelect = (date: string) => {\n    const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));\n    if (isSelected) {\n      setSelected((current) => current.filter((d) => !dayjs(d).isSame(date, 'date')));\n    } else if (selected.length < 3) {\n      setSelected((current) => [...current, date]);\n    }\n  };\n\n  return (\n    <Calendar\n      getDayProps={(date) => ({\n        selected: selected.some((s) => dayjs(date).isSame(s, 'date')),\n        onClick: () => handleSelect(date),\n      })}\n    />\n  );\n}\n```\n\n\nAnother custom date picker example – week picker:\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { Calendar } from '@mantine/dates';\n\nfunction getDay(date: string) {\n  const day = dayjs(date).day();\n  return day === 0 ? 6 : day - 1;\n}\n\nfunction startOfWeek(date: string) {\n  return dayjs(date)\n    .subtract(getDay(date) + 1, 'day')\n    .toDate();\n}\n\nfunction endOfWeek(date: string) {\n  return dayjs(date)\n    .add(6 - getDay(date), 'day')\n    .endOf('day')\n    .toDate();\n}\n\nfunction isInWeekRange(date: string, value: string | null) {\n  return value\n    ? dayjs(date).isBefore(endOfWeek(value)) && dayjs(date).isAfter(startOfWeek(value))\n    : false;\n}\n\nfunction Demo() {\n  const [hovered, setHovered] = useState<string | null>(null);\n  const [value, setValue] = useState<string | null>(null);\n\n  return (\n    <Calendar\n      withCellSpacing={false}\n      getDayProps={(date) => {\n        const isHovered = isInWeekRange(date, hovered);\n        const isSelected = isInWeekRange(date, value);\n        const isInRange = isHovered || isSelected;\n        return {\n          onMouseEnter: () => setHovered(date),\n          onMouseLeave: () => setHovered(null),\n          inRange: isInRange,\n          firstInRange: isInRange && new Date(date).getDay() === 1,\n          lastInRange: isInRange && new Date(date).getDay() === 0,\n          selected: isSelected,\n          onClick: () => setValue(date),\n        };\n      }}\n    />\n  );\n}\n```\n\n\n## Full width\n\nSet the `fullWidth` prop to make the calendar stretch to fill 100% of its parent container width:\n\n```tsx\nimport { Calendar } from '@mantine/dates';\n\nfunction Demo() {\n  return <Calendar fullWidth />;\n}\n```\n\n\n## Static prop\n\nSet the `static` prop to display a calendar that users cannot interact with.\nThis is useful when you want to display data in a calendar view but do\nnot want it to be interactive.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { Indicator } from '@mantine/core';\nimport { Calendar } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <Calendar\n      static\n      renderDay={(date) => {\n        const day = dayjs(date).date();\n        return (\n          <Indicator size={6} color=\"red\" offset={-2} disabled={day !== 16}>\n            <div>{day}</div>\n          </Indicator>\n        );\n      }}\n    />\n  );\n}\n```\n\n\n\n#### Props\n\n**Calendar props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |\n| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |\n| date | string \\| Date | - | Displayed date in controlled mode |\n| decadeLabelFormat | string \\| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |\n| defaultDate | string \\| Date | - | Initial displayed date in uncontrolled mode |\n| defaultLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Initial displayed level in uncontrolled mode |\n| enableKeyboardNavigation | boolean | - | Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) |\n| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |\n| firstDayOfWeek | 0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |\n| fullWidth | boolean | - | Determines whether the list should take the full width of its container |\n| getDayAriaLabel | (date: string) => string | - | Assigns `aria-label` to `Day` components based on date |\n| getDayProps | (date: string) => Omit<Partial<DayProps>, \"vars\" \\| \"classNames\" \\| \"styles\"> & DataAttributes | - | Passes props down to `Day` components |\n| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |\n| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |\n| headerControlsOrder | (\"next\" \\| \"previous\" \\| \"level\")[] | - | Controls order |\n| hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |\n| hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |\n| highlightToday | boolean | - | Determines whether today should be highlighted with a border |\n| level | \"month\" \\| \"year\" \\| \"decade\" | - | Current displayed level displayed in controlled mode |\n| locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |\n| maxDate | string \\| Date | - | Maximum possible date in `YYYY-MM-DD` format or Date object |\n| maxLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Max level that user can go up to (decade, year, month) |\n| minDate | string \\| Date | - | Minimum possible date in `YYYY-MM-DD` format or Date object |\n| minLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Min level that user can go down to (decade, year, month) |\n| monthLabelFormat | string \\| ((date: string) => string) | - | dayjs label format to display month label or a function that returns month label based on month value |\n| monthsListFormat | string | - | `dayjs` format for months list |\n| nextIcon | React.ReactNode | - | Change next icon |\n| nextLabel | string | - | Next button `aria-label` |\n| numberOfColumns | number | - | Number of columns displayed next to each other |\n| onDateChange | (date: string) => void | - | Called when date changes |\n| onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |\n| onMonthMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters month control |\n| onMonthSelect | (date: string) => void | - | Called when user selects month |\n| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |\n| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |\n| onNextYear | (date: string) => void | - | Called when the next year button is clicked |\n| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |\n| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |\n| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |\n| onYearMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters year control |\n| onYearSelect | (date: string) => void | - | Called when user selects year |\n| previousIcon | React.ReactNode | - | Change previous icon |\n| previousLabel | string | - | Previous button `aria-label` |\n| renderDay | (date: string) => React.ReactNode | - | Controls day value rendering |\n| size | MantineSize | - | Component size |\n| static | boolean | - | Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way |\n| weekdayFormat | string \\| ((date: string) => string) | - | `dayjs` format for weekdays names |\n| weekendDays | (0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |\n| withCellSpacing | boolean | - | Determines whether controls should be separated |\n| withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |\n| yearLabelFormat | string \\| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |\n| yearsListFormat | string | - | dayjs format for years list |\n\n**Calendar.Header props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| fullWidth | boolean | - | Determines whether the header should take the full width of its container |\n| hasNextLevel | boolean | - | Determines whether next level button should be enabled |\n| headerControlsOrder | (\"next\" \\| \"previous\" \\| \"level\")[] | - | Controls order |\n| label | React.ReactNode | required | Label displayed between next and previous buttons |\n| levelControlAriaLabel | string | - | Level control `aria-label` |\n| nextDisabled | boolean | - | Disables next control |\n| nextIcon | React.ReactNode | - | Change next icon |\n| nextLabel | string | - | Next button `aria-label` |\n| onLevelClick | () => void | - | Called when the level button is clicked |\n| onNext | () => void | - | Called when the next button is clicked |\n| onPrevious | () => void | - | Called when the previous button is clicked |\n| previousDisabled | boolean | - | Disables previous control |\n| previousIcon | React.ReactNode | - | Change previous icon |\n| previousLabel | string | - | Previous button `aria-label` |\n| size | MantineSize | - | Component size |\n| withNext | boolean | - | Determines whether next control should be rendered |\n| withPrevious | boolean | - | Determines whether previous control should be rendered |\n\n\n#### Styles API\n\nCalendar component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Calendar selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| calendarHeader | .mantine-Calendar-calendarHeader | Calendar header root element |\n| calendarHeaderControl | .mantine-Calendar-calendarHeaderControl | Previous/next calendar header controls |\n| calendarHeaderControlIcon | .mantine-Calendar-calendarHeaderControlIcon | Icon of previous/next calendar header controls |\n| calendarHeaderLevel | .mantine-Calendar-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |\n| levelsGroup | .mantine-Calendar-levelsGroup | Group of months levels |\n| yearsList | .mantine-Calendar-yearsList | Years list table element |\n| yearsListRow | .mantine-Calendar-yearsListRow | Years list row element |\n| yearsListCell | .mantine-Calendar-yearsListCell | Years list cell element |\n| yearsListControl | .mantine-Calendar-yearsListControl | Button used to pick months and years |\n| monthsList | .mantine-Calendar-monthsList | Months list table element |\n| monthsListRow | .mantine-Calendar-monthsListRow | Months list row element |\n| monthsListCell | .mantine-Calendar-monthsListCell | Months list cell element |\n| monthsListControl | .mantine-Calendar-monthsListControl | Button used to pick months and years |\n| monthThead | .mantine-Calendar-monthThead | thead element of month table |\n| monthRow | .mantine-Calendar-monthRow | tr element of month table |\n| monthTbody | .mantine-Calendar-monthTbody | tbody element of month table |\n| monthCell | .mantine-Calendar-monthCell | td element of month table |\n| month | .mantine-Calendar-month | Month table element |\n| weekdaysRow | .mantine-Calendar-weekdaysRow | Weekdays tr element |\n| weekday | .mantine-Calendar-weekday | Weekday th element |\n| day | .mantine-Calendar-day | Month day control |\n| weekNumber | .mantine-Calendar-weekNumber | Week number td element |\n\n**Calendarheader selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| calendarHeader | .mantine-Calendarheader-calendarHeader | Calendar header root element |\n| calendarHeaderControl | .mantine-Calendarheader-calendarHeaderControl | Previous/next calendar header controls |\n| calendarHeaderControlIcon | .mantine-Calendarheader-calendarHeaderControlIcon | Icon of previous/next calendar header controls |\n| calendarHeaderLevel | .mantine-Calendarheader-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |\n\n**Calendarheader CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| calendarHeader | --dch-control-size | Controls size of the previous/next and level controls |\n| calendarHeader | --dch-fz | Controls font-size of the previous/next and level controls |\n\n**Calendarheader data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| calendarHeaderControl | data-direction | - | `\"previous\"` or `\"next\"` depending on the control type |\n| calendarHeaderControl | data-disabled | Control is disabled for any reason | - |\n",
+  "props": [
+    {
+      "name": "ariaLabels",
+      "description": "<code>aria-label</code> attributes for controls on different levels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CalendarAriaLabels"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "columnsToScroll",
+      "description": "Number of columns to scroll with next/prev buttons, same as <code>numberOfColumns</code> if not set explicitly",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "date",
+      "description": "Displayed date in controlled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "decadeLabelFormat",
+      "description": "<code>dayjs</code> format for decade label or a function that returns decade label based on the date value",
+      "required": false,
+      "defaultValue": "\"YYYY\"",
+      "type": {
+        "name": "string | ((startOfDecade: string, endOfDecade: string) => ReactNode)"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "defaultDate",
+      "description": "Initial displayed date in uncontrolled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "defaultLevel",
+      "description": "Initial displayed level in uncontrolled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "enableKeyboardNavigation",
+      "description": "Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "excludeDate",
+      "description": "Callback function to determine whether the day should be disabled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "firstDayOfWeek",
+      "description": "Number 0-6, where 0 – Sunday and 6 – Saturday.",
+      "required": false,
+      "defaultValue": "1 – Monday",
+      "type": {
+        "name": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+        "raw": "DayOfWeek | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "0"
+          },
+          {
+            "value": "2"
+          },
+          {
+            "value": "1"
+          },
+          {
+            "value": "3"
+          },
+          {
+            "value": "4"
+          },
+          {
+            "value": "5"
+          },
+          {
+            "value": "6"
+          }
+        ]
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "fullWidth",
+      "description": "Determines whether the list should take the full width of its container",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "getDayAriaLabel",
+      "description": "Assigns <code>aria-label</code> to <code>Day</code> components based on date",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => string"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "getDayProps",
+      "description": "Passes props down to <code>Day</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Omit<Partial<DayProps>, \"vars\" | \"classNames\" | \"styles\"> & DataAttributes"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "getMonthControlProps",
+      "description": "Passes props down month picker control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Partial<PickerControlProps> & DataAttributes"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "getYearControlProps",
+      "description": "Passes props down to year picker control based on date",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Partial<PickerControlProps> & DataAttributes"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "headerControlsOrder",
+      "description": "Controls order",
+      "required": false,
+      "defaultValue": "['previous', 'level', 'next']",
+      "type": {
+        "name": "(\"next\" | \"previous\" | \"level\")[]"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "hideOutsideDates",
+      "description": "Determines whether outside dates should be hidden",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "hideWeekdays",
+      "description": "Determines whether weekdays row should be hidden",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "highlightToday",
+      "description": "Determines whether today should be highlighted with a border",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "level",
+      "description": "Current displayed level displayed in controlled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "locale",
+      "description": "Dayjs locale, defaults to value defined in DatesProvider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "maxDate",
+      "description": "Maximum possible date in <code>YYYY-MM-DD</code> format or Date object",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "maxLevel",
+      "description": "Max level that user can go up to (decade, year, month)",
+      "required": false,
+      "defaultValue": "'decade'",
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "minDate",
+      "description": "Minimum possible date in <code>YYYY-MM-DD</code> format or Date object",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "minLevel",
+      "description": "Min level that user can go down to (decade, year, month)",
+      "required": false,
+      "defaultValue": "'month'",
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "monthLabelFormat",
+      "description": "dayjs label format to display month label or a function that returns month label based on month value",
+      "required": false,
+      "defaultValue": "\"MMMM YYYY\"",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "monthsListFormat",
+      "description": "<code>dayjs</code> format for months list",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "nextIcon",
+      "description": "Change next icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "nextLabel",
+      "description": "Next button <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "numberOfColumns",
+      "description": "Number of columns displayed next to each other",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onDateChange",
+      "description": "Called when date changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onLevelChange",
+      "description": "Called when level changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(level: CalendarLevel) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onMonthMouseEnter",
+      "description": "Called when mouse enters month control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onMonthSelect",
+      "description": "Called when user selects month",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onNextDecade",
+      "description": "Called when the next decade button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onNextMonth",
+      "description": "Called when the next month button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onNextYear",
+      "description": "Called when the next year button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onPreviousDecade",
+      "description": "Called when the previous decade button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onPreviousMonth",
+      "description": "Called when the previous month button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onPreviousYear",
+      "description": "Called when the previous year button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onYearMouseEnter",
+      "description": "Called when mouse enters year control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "onYearSelect",
+      "description": "Called when user selects year",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "previousIcon",
+      "description": "Change previous icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "previousLabel",
+      "description": "Previous button <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "renderDay",
+      "description": "Controls day value rendering",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => React.ReactNode"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "size",
+      "description": "Component size",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "static",
+      "description": "Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "weekdayFormat",
+      "description": "<code>dayjs</code> format for weekdays names",
+      "required": false,
+      "defaultValue": "'dd'",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "weekendDays",
+      "description": "Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by <code>DatesProvider</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(0 | 1 | 2 | 3 | 4 | 5 | 6)[]"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "withCellSpacing",
+      "description": "Determines whether controls should be separated",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "withWeekNumbers",
+      "description": "Determines whether week numbers should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "yearLabelFormat",
+      "description": "dayjs label format to display year label or a function that returns year label based on year value",
+      "required": false,
+      "defaultValue": "\"YYYY\"",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "Calendar"
+    },
+    {
+      "name": "yearsListFormat",
+      "description": "dayjs format for years list",
+      "required": false,
+      "defaultValue": "'YYYY'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Calendar"
+    }
+  ]
+}

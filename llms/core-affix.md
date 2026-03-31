@@ -5,13 +5,11 @@ Description: Renders children inside portal at fixed position
 
 ## Usage
 
-`Affix` renders a div element with a fixed position inside the [Portal](https://mantine.dev/core/portal) component.
+`Affix` renders a div element with a fixed position inside the [Portal](https://mantine.dev/llms/core-portal.md) component.
 Use it to display elements fixed at any position on the screen, for example, scroll to top button:
 
-#### Example: usage
-
 ```tsx
-import { IconArrowUp } from '@tabler/icons-react';
+import { ArrowUpIcon } from '@phosphor-icons/react';
 import { useWindowScroll } from '@mantine/hooks';
 import { Affix, Button, Text, Transition } from '@mantine/core';
 
@@ -25,7 +23,7 @@ function Demo() {
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftSection={<IconArrowUp size={16} />}
+              leftSection={<ArrowUpIcon size={16} />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >
@@ -43,12 +41,14 @@ function Demo() {
 
 #### Props
 
+**Affix props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| portalProps | BasePortalProps | - | Props passed down to the <code>Portal</code> component. Ignored when <code>withinPortal</code> is <code>false</code>. |
+| portalProps | BasePortalProps | - | Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. |
 | position | AffixPosition | - | Affix position on screen |
-| withinPortal | boolean | - | Determines whether the component is rendered within <code>Portal</code> |
-| zIndex | React.CSSProperties["zIndex"] | - | Root element <code>z-index</code> property |
+| withinPortal | boolean | - | Determines whether the component is rendered within `Portal` |
+| zIndex | React.CSSProperties["zIndex"] | - | Root element `z-index` property |
 
 
 #### Styles API

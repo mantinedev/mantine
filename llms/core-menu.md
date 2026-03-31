@@ -5,18 +5,9 @@ Description: Combine a list of secondary actions into single interactive area
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Menu, Button, Text } from '@mantine/core';
-import {
-  IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
-  IconArrowsLeftRight,
-} from '@tabler/icons-react';
+import { GearSixIcon, MagnifyingGlassIcon, ImageIcon, ChatCircleIcon, TrashIcon, IconArrowsLeftRight } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -27,17 +18,17 @@ function Demo() {
 
       <Menu.Dropdown>
         <Menu.Label>Application</Menu.Label>
-        <Menu.Item leftSection={<IconSettings size={14} />}>
+        <Menu.Item leftSection={<GearSixIcon size={14} />}>
           Settings
         </Menu.Item>
-        <Menu.Item leftSection={<IconMessageCircle size={14} />}>
+        <Menu.Item leftSection={<ChatCircleIcon size={14} />}>
           Messages
         </Menu.Item>
-        <Menu.Item leftSection={<IconPhoto size={14} />}>
+        <Menu.Item leftSection={<ImageIcon size={14} />}>
           Gallery
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconSearch size={14} />}
+          leftSection={<MagnifyingGlassIcon size={14} />}
           rightSection={
             <Text size="xs" c="dimmed">
               ⌘K
@@ -57,7 +48,7 @@ function Demo() {
         </Menu.Item>
         <Menu.Item
           color="red"
-          leftSection={<IconTrash size={14} />}
+          leftSection={<TrashIcon size={14} />}
         >
           Delete my account
         </Menu.Item>
@@ -69,8 +60,6 @@ function Demo() {
 
 
 ## Submenus
-
-#### Example: sub
 
 ```tsx
 import { Button, Menu } from '@mantine/core';
@@ -131,7 +120,7 @@ function Demo() {
 
 ## Controlled
 
-Dropdown opened state can be controlled with `opened` and `onChange` props:
+The dropdown's opened state can be controlled with the `opened` and `onChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -149,14 +138,12 @@ function Demo() {
 
 ## Show menu on hover
 
-Set `trigger="hover"` to reveal dropdown when hovers over menu target and dropdown.
-`closeDelay` and `openDelay` props can be used to control open and close delay in ms.
+Set `trigger="hover"` to reveal the dropdown when hovering over the menu target and dropdown.
+The `closeDelay` and `openDelay` props can be used to control open and close delay in ms.
 Note that:
 
-* If you set `closeDelay={0}` then menu will close before user will reach dropdown, set `offset={0}` to remove space between target element and dropdown.
-* Menu with `trigger="hover"` is not accessible – users that navigate with keyboard will not be able to use it. If you need click-hover hover and click triggers, use `trigger="click-hover"`.
-
-#### Example: hover
+* If you set `closeDelay={0}` then the menu will close before the user reaches the dropdown, so set `offset={0}` to remove space between the target element and dropdown.
+* Menu with `trigger="hover"` is not accessible – users that navigate with the keyboard will not be able to use it. If you need both hover and click triggers, use `trigger="click-hover"`.
 
 ```tsx
 import { Menu } from '@mantine/core';
@@ -171,10 +158,8 @@ function Demo() {
 ```
 
 
-To make `Menu` that is revealed on hover accessible on all devices, use `trigger="click-hover"` instead.
+To make a `Menu` that is revealed on hover accessible on all devices, use `trigger="click-hover"` instead.
 The dropdown will be revealed on hover on desktop and on click on mobile devices.
-
-#### Example: clickHover
 
 ```tsx
 import { Menu } from '@mantine/core';
@@ -191,11 +176,9 @@ function Demo() {
 
 ## Disabled items
 
-#### Example: disabled
-
 ```tsx
 import { Menu, Button } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -206,7 +189,7 @@ function Demo() {
 
       <Menu.Dropdown>
         <Menu.Item
-          leftSection={<IconSearch size={14} />}
+          leftSection={<MagnifyingGlassIcon size={14} />}
           disabled
         >
           Search
@@ -222,14 +205,12 @@ function Demo() {
 
 ## Dropdown position
 
-#### Example: positionConfigurator
-
 ```tsx
 import { Menu } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menu>
+    <Menu position="bottom" offset={5} withArrow={false} arrowPosition="side">
       {/* Menu items */}
     </Menu>
   );
@@ -239,9 +220,7 @@ function Demo() {
 
 ## Transitions
 
-Menu dropdown can be animated with any of premade transitions from [Transition](https://mantine.dev/core/transition/) component:
-
-#### Example: transitions
+The Menu dropdown can be animated with any of the premade transitions from the [Transition](https://mantine.dev/llms/core-transition.md) component:
 
 ```tsx
 import { Menu } from '@mantine/core';
@@ -258,13 +237,11 @@ function Demo() {
 
 ## Custom component as Menu.Item
 
-By default, `Menu.Item` renders as button element, to change that set `component` prop:
-
-#### Example: component
+By default, `Menu.Item` renders as a button element. To change that, set the `component` prop:
 
 ```tsx
 import { Menu, Button } from '@mantine/core';
-import { IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -278,7 +255,7 @@ function Demo() {
           Mantine website
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconExternalLink size={14} />}
+          leftSection={<ArrowSquareOutIcon size={14} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"
@@ -292,7 +269,7 @@ function Demo() {
 ```
 
 
-Note that the component you pass to `component` prop should allow spreading props to its root element:
+Note that the component you pass to the `component` prop should allow spreading props to its root element:
 
 ```tsx
 import { Menu } from '@mantine/core';
@@ -303,14 +280,11 @@ function IncorrectItem() {
 }
 
 // ✅ Will work correctly with Menu.Item
-const CorrectItem = forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<'button'>
->((props, ref) => (
+const CorrectItem = ({ ref, ...props }) => (
   <button type="button" {...props} ref={ref}>
     My custom Menu item
   </button>
-));
+);
 
 function Demo() {
   // ❌ Will not work
@@ -320,90 +294,6 @@ function Demo() {
   const correct = <Menu.Item component={CorrectItem} />;
 }
 ```
-
-## Custom component as target
-
-#### Example: customControl
-
-```tsx
-import { forwardRef } from 'react';
-import { IconChevronRight } from '@tabler/icons-react';
-import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
-
-interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  image: string;
-  name: string;
-  email: string;
-  icon?: React.ReactNode;
-}
-
-const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ image, name, email, icon, ...others }: UserButtonProps, ref) => (
-    <UnstyledButton
-      ref={ref}
-      style={{
-        padding: 'var(--mantine-spacing-md)',
-        color: 'var(--mantine-color-text)',
-        borderRadius: 'var(--mantine-radius-sm)',
-      }}
-      {...others}
-    >
-      <Group>
-        <Avatar src={image} radius="xl" />
-
-        <div style={{ flex: 1 }}>
-          <Text size="sm" fw={500}>
-            {name}
-          </Text>
-
-          <Text c="dimmed" size="xs">
-            {email}
-          </Text>
-        </div>
-
-        {icon || <IconChevronRight size={16} />}
-      </Group>
-    </UnstyledButton>
-  )
-);
-
-function Demo() {
-  return (
-    <Menu withArrow>
-      <Menu.Target>
-        <UserButton
-          image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
-          name="Harriette Spoonlicker"
-          email="hspoonlicker@outlook.com"
-        />
-      </Menu.Target>
-      {/* ... menu items */}
-    </Menu>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Menu } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Menu {...props} opened withArrow position="left">
-      {/* ... menu items */}
-    </Menu>
-  );
-}
-```
-
-
-<TargetComponent component="Menu" />
-
-## Target component
-
-The target element determines where the Menu will be positioned relative to.
 
 ## Accessibility
 
@@ -417,18 +307,16 @@ Whilst the dropdown is unopened, the `aria-controls` attribute will be undefined
 
 ### Supported target elements
 
-Uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with `button` element or component that renders it ([Button](https://mantine.dev/core/button/), [ActionIcon](https://mantine.dev/core/action-icon/), etc.).
+An uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with a `button` element or component that renders it ([Button](https://mantine.dev/llms/core-button.md), [ActionIcon](https://mantine.dev/llms/core-action-icon.md), etc.).
 Other elements will not support `Space` and `Enter` key presses.
 
 ### Hover menu
 
-Menu with `trigger="hover"` is not accessible – it cannot be accessed with keyboard, use it only if you do not care about accessibility. If you need click-hover hover and click triggers, use `trigger="click-hover"`.
+Menu with `trigger="hover"` is not accessible – it cannot be accessed with the keyboard. Use it only if you do not care about accessibility. If you need both hover and click triggers, use `trigger="click-hover"`.
 
 ### Navigation
 
-If you are using the Menu to build a Navigation, you can use the options from the demo below to follow the [WAI-ARIA recommendations for navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/).
-
-#### Example: navigation
+If you are using the Menu to build navigation, you can use the options from the demo below to follow the [WAI-ARIA recommendations for navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/).
 
 ```tsx
 import { Group, Menu } from '@mantine/core';
@@ -460,28 +348,30 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 
 #### Props
 
+**Menu props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | arrowOffset | number | - | Arrow offset in px |
-| arrowPosition | ArrowPosition | - | Arrow position |
-| arrowRadius | number | - | Arrow <code>border-radius</code> in px |
+| arrowPosition | 'center' \| 'side' | - | Arrow position |
+| arrowRadius | number | - | Arrow `border-radius` in px |
 | arrowSize | number | - | Arrow size in px |
 | children | React.ReactNode | - | Menu children |
-| clickOutsideEvents | string[] | - | Events that trigger outside clicks |
-| closeDelay | number | - | Close delay in ms, applicable only to <code>trigger="hover"</code> variant |
+| clickOutsideEvents | string[] | - | Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling |
+| closeDelay | number | - | Close delay in ms, applicable only to `trigger="hover"` variant |
 | closeOnClickOutside | boolean | - | If set, the dropdown is closed on outside clicks |
-| closeOnEscape | boolean | - | If set, the dropdown is closed when the <code>Escape</code> key is pressed |
-| closeOnItemClick | boolean | - | If set, the Menu is closed when one of the items is clicked |
+| closeOnEscape | boolean | - | If set, the dropdown is closed when the `Escape` key is pressed |
+| closeOnItemClick | boolean | - | If set, the Menu is closed when one of the items is clicked. Can be overridden per item with `closeMenuOnClick` prop |
 | defaultOpened | boolean | - | Uncontrolled menu initial opened state |
 | disabled | boolean | - | If set, popover dropdown will not be rendered |
 | floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |
 | hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
 | id | string | - | Id base to create accessibility connections |
-| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead. |
-| loop | boolean | - | If set, arrow key presses loop though items (first to last and last to first) |
-| menuItemTabIndex | 0 | -1 | - | Set the <code>tabindex</code> on all menu items |
+| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
+| loop | boolean | - | If set, arrow key presses wrap around from last item to first and vice versa |
+| menuItemTabIndex | 0 \| -1 | - | Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
-| offset | number | FloatingAxesOffsets | - | Offset of the dropdown element |
+| offset | number \| FloatingAxesOffsets | - | Offset of the dropdown element |
 | onChange | (opened: boolean) => void | - | Called when menu opened state changes |
 | onClose | () => void | - | Called when Menu is closed |
 | onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
@@ -489,25 +379,120 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | onExitTransitionEnd | () => void | - | Called when exit transition ends |
 | onOpen | () => void | - | Called when Menu is opened |
 | onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
-| openDelay | number | - | Open delay in ms, applicable only to <code>trigger="hover"</code> variant |
+| openDelay | number | - | Open delay in ms, applicable only to `trigger="hover"` variant |
 | opened | boolean | - | Controlled menu opened state |
-| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to <code>Overlay</code> component |
-| portalProps | BasePortalProps | - | Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
+| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
-| positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
 | preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any other valid CSS <code>box-shadow</code> value |
-| transitionProps | TransitionProps | - | Props passed down to the <code>Transition</code> component. Use to configure duration and animation type. |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |
+| transitionProps | TransitionProps | - | Props passed down to the `Transition` component. Use to configure duration and animation type. |
 | trapFocus | boolean | - | If set, focus is trapped within the menu dropdown when it is opened |
-| trigger | "hover" | "click" | "click-hover" | - | Event trigger to open menu |
-| width | PopoverWidth | - | Dropdown width, or <code>'target'</code> to make dropdown width the same as target element |
+| trigger | "hover" \| "click" \| "click-hover" | - | Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus |
+| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |
 | withArrow | boolean | - | Determines whether component should have an arrow |
-| withInitialFocusPlaceholder | boolean | - | If set, focus placeholder element is added before items |
+| withInitialFocusPlaceholder | boolean | - | Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. |
 | withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |
-| withinPortal | boolean | - | Determines whether dropdown should be rendered within the <code>Portal</code> |
-| zIndex | string | number | - | Dropdown <code>z-index</code> |
+| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |
+| zIndex | string \| number | - | Dropdown `z-index` |
+
+**Menu.Item props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Item label |
+| closeMenuOnClick | boolean | - | Controls whether the menu closes when this item is clicked. When undefined, inherits from Menu's `closeOnItemClick` prop. When true or false, overrides the Menu-level setting |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
+| disabled | boolean | - | Sets disabled attribute, applies disabled styles |
+| leftSection | React.ReactNode | - | Section displayed at the start of the label |
+| rightSection | React.ReactNode | - | Section displayed at the end of the label |
+
+**Menu.Target props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop used to get element ref, useful for forwarding refs to custom components |
+
+**Menu.Sub props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| arrowOffset | number | - | Arrow offset in px |
+| arrowPosition | 'center' \| 'side' | - | Arrow position |
+| arrowRadius | number | - | Arrow `border-radius` in px |
+| arrowSize | number | - | Arrow size in px |
+| closeDelay | number | - | Close delay in ms, applicable when hover trigger is used |
+| disabled | boolean | - | If set, popover dropdown will not be rendered |
+| floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |
+| hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
+| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
+| middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
+| offset | number \| FloatingAxesOffsets | - | Offset of the dropdown element |
+| onChange | (opened: boolean) => void | - | Called with current state when dropdown opens or closes |
+| onClose | () => void | - | Called when dropdown closes |
+| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
+| onOpen | () => void | - | Called when dropdown opens |
+| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
+| openDelay | number | - | Open delay in ms, applicable when hover trigger is used |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
+| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
+| position | FloatingPosition | - | Dropdown position relative to the target element |
+| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
+| returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |
+| transitionProps | TransitionProps | - | Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type |
+| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |
+| withArrow | boolean | - | Determines whether component should have an arrow |
+| withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |
+| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |
+| zIndex | string \| number | - | Dropdown `z-index` |
+
+**Menu.Sub.Target props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop used to get element ref |
+
+**Menu.Sub.Dropdown props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**Menu.Sub.Item props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Item label |
+| closeMenuOnClick | boolean | - | If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
+| disabled | boolean | - | Sets disabled attribute, applies disabled styles |
+| leftSection | React.ReactNode | - | Section displayed at the start of the label |
+| rightSection | React.ReactNode | - | Section displayed at the end of the label |
+
+**Menu.SubItem props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Item label |
+| closeMenuOnClick | boolean | - | If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
+| disabled | boolean | - | Sets disabled attribute, applies disabled styles |
+| leftSection | React.ReactNode | - | Section displayed at the start of the label |
+| rightSection | React.ReactNode | - | Section displayed at the end of the label |
+
+**Menu.SubTarget props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop used to get element ref |
 
 
 #### Styles API
@@ -532,4 +517,4 @@ Menu component supports Styles API. With Styles API, you can customize styles of
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| item | data-disabled | - | - |
+| item | data-disabled | `disabled` prop is set on `Menu.Item` | - |

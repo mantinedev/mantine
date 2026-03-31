@@ -1,0 +1,77 @@
+{
+  "id": "core-floating-indicator",
+  "name": "FloatingIndicator",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/floating-indicator",
+  "description": "Display a floating indicator over a group of elements",
+  "propsCount": 6,
+  "llmUrl": "https://mantine.dev/llms/core-floating-indicator.md",
+  "componentDataUrl": "/mcp/components/core-floating-indicator.json",
+  "searchText": "floatingindicator display a floating indicator over a group of elements @mantine/core /core/floating-indicator displayaftertransitionend ontransitionend ontransitionstart parent target transitionduration",
+  "source": "@mantine/core/src/components/FloatingIndicator/FloatingIndicator.tsx",
+  "docs": "core/floating-indicator.mdx",
+  "markdown": "# FloatingIndicator\nPackage: @mantine/core\nImport: import { FloatingIndicator } from '@mantine/core';\nDescription: Display a floating indicator over a group of elements\n\n## Usage\n\n`FloatingIndicator` is designed to highlight the active element in a group.\nIt can be used to create custom segmented controls, tabs and other similar components.\n\n`FloatingIndicator` renders an element over the `target` element. To calculate the position, it is\nrequired to pass a `parent` element. **The parent element must have `position: relative` CSS property** –\nthis is essential for correct positioning. The component returns `null` and renders nothing if either\n`target` or `parent` is not provided.\n\nBy default, `FloatingIndicator` does not have any visible styles. You can use the `className` prop\nor [Styles API](https://mantine.dev/llms/styles-styles-api.md) to apply styles. Note that the indicator's `transform`, `width`,\nand `height` styles are set directly via JavaScript to enable smooth position transitions – these\ncannot be overridden via the Styles API.\n\n```tsx\nimport { useState } from 'react';\nimport { FloatingIndicator, UnstyledButton } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nconst data = ['React', 'Vue', 'Angular', 'Svelte'];\n\nfunction Demo() {\n  const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);\n  const [controlsRefs, setControlsRefs] = useState<Record<string, HTMLButtonElement | null>>({});\n  const [active, setActive] = useState(0);\n\n  const setControlRef = (index: number) => (node: HTMLButtonElement) => {\n    controlsRefs[index] = node;\n    setControlsRefs(controlsRefs);\n  };\n\n  const controls = data.map((item, index) => (\n    <UnstyledButton\n      key={item}\n      className={classes.control}\n      ref={setControlRef(index)}\n      onClick={() => setActive(index)}\n      mod={{ active: active === index }}\n    >\n      <span className={classes.controlLabel}>{item}</span>\n    </UnstyledButton>\n  ));\n\n  return (\n    <div className={classes.root} ref={setRootRef}>\n      {controls}\n\n      <FloatingIndicator\n        target={controlsRefs[active]}\n        parent={rootRef}\n        className={classes.indicator}\n      />\n    </div>\n  );\n}\n```\n\n\n## Multiple rows\n\n`FloatingIndicator` can be used to highlight the active element in a group with multiple rows:\n\n```tsx\nimport { useState } from 'react';\nimport { ArrowDownIcon, ArrowDownLeftIcon, ArrowDownRightIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, ArrowUpLeftIcon, ArrowUpRightIcon, CircleIcon } from '@phosphor-icons/react';\nimport { FloatingIndicator, UnstyledButton } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);\n  const [controlsRefs, setControlsRefs] = useState<Record<string, HTMLButtonElement | null>>({});\n  const [active, setActive] = useState('center');\n\n  const setControlRef = (name: string) => (node: HTMLButtonElement) => {\n    controlsRefs[name] = node;\n    setControlsRefs(controlsRefs);\n  };\n\n  return (\n    <div className={classes.root} dir=\"ltr\" ref={setRootRef}>\n      <FloatingIndicator\n        target={controlsRefs[active]}\n        parent={rootRef}\n        className={classes.indicator}\n      />\n\n      <div className={classes.controlsGroup}>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('up-left')}\n          ref={setControlRef('up-left')}\n          mod={{ active: active === 'up-left' }}\n        >\n          <ArrowUpLeftIcon size={26} />\n        </UnstyledButton>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('up')}\n          ref={setControlRef('up')}\n          mod={{ active: active === 'up' }}\n        >\n          <ArrowUpIcon size={26} />\n        </UnstyledButton>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('up-right')}\n          ref={setControlRef('up-right')}\n          mod={{ active: active === 'up-right' }}\n        >\n          <ArrowUpRightIcon size={26} />\n        </UnstyledButton>\n      </div>\n      <div className={classes.controlsGroup}>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('left')}\n          ref={setControlRef('left')}\n          mod={{ active: active === 'left' }}\n        >\n          <ArrowLeftIcon size={26} />\n        </UnstyledButton>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('center')}\n          ref={setControlRef('center')}\n          mod={{ active: active === 'center' }}\n        >\n          <CircleIcon size={26} />\n        </UnstyledButton>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('right')}\n          ref={setControlRef('right')}\n          mod={{ active: active === 'right' }}\n        >\n          <ArrowRightIcon size={26} />\n        </UnstyledButton>\n      </div>\n      <div className={classes.controlsGroup}>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('down-left')}\n          ref={setControlRef('down-left')}\n          mod={{ active: active === 'down-left' }}\n        >\n          <ArrowDownLeftIcon size={26} />\n        </UnstyledButton>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('down')}\n          ref={setControlRef('down')}\n          mod={{ active: active === 'down' }}\n        >\n          <ArrowDownIcon size={26} />\n        </UnstyledButton>\n        <UnstyledButton\n          className={classes.control}\n          onClick={() => setActive('down-right')}\n          ref={setControlRef('down-right')}\n          mod={{ active: active === 'down-right' }}\n        >\n          <ArrowDownRightIcon size={26} />\n        </UnstyledButton>\n      </div>\n    </div>\n  );\n}\n```\n\n\n## Example: Tabs\n\n```tsx\n// Demo.tsx\nimport { useState } from 'react';\nimport { FloatingIndicator, Tabs } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);\n  const [value, setValue] = useState<string | null>('1');\n  const [controlsRefs, setControlsRefs] = useState<Record<string, HTMLButtonElement | null>>({});\n  const setControlRef = (val: string) => (node: HTMLButtonElement) => {\n    controlsRefs[val] = node;\n    setControlsRefs(controlsRefs);\n  };\n\n  return (\n    <Tabs variant=\"none\" value={value} onChange={setValue}>\n      <Tabs.List ref={setRootRef} className={classes.list}>\n        <Tabs.Tab value=\"1\" ref={setControlRef('1')} className={classes.tab}>\n          First tab\n        </Tabs.Tab>\n        <Tabs.Tab value=\"2\" ref={setControlRef('2')} className={classes.tab}>\n          Second tab\n        </Tabs.Tab>\n        <Tabs.Tab value=\"3\" ref={setControlRef('3')} className={classes.tab}>\n          Third tab\n        </Tabs.Tab>\n\n        <FloatingIndicator\n          target={value ? controlsRefs[value] : null}\n          parent={rootRef}\n          className={classes.indicator}\n        />\n      </Tabs.List>\n\n      <Tabs.Panel value=\"1\">First tab content</Tabs.Panel>\n      <Tabs.Panel value=\"2\">Second tab content</Tabs.Panel>\n      <Tabs.Panel value=\"3\">Third tab content</Tabs.Panel>\n    </Tabs>\n  );\n}\n\n// Demo.module.css\n.list {\n  position: relative;\n  margin-bottom: var(--mantine-spacing-md);\n}\n\n.indicator {\n  background-color: var(--mantine-color-white);\n  border-radius: var(--mantine-radius-md);\n  border: 1px solid var(--mantine-color-gray-2);\n  box-shadow: var(--mantine-shadow-sm);\n\n  @mixin dark {\n    background-color: var(--mantine-color-dark-6);\n    border-color: var(--mantine-color-dark-4);\n  }\n}\n\n.tab {\n  z-index: 1;\n  font-weight: 600;\n  transition: color 100ms ease;\n  color: var(--mantine-color-gray-7);\n\n  &[data-active] {\n    color: var(--mantine-color-black);\n  }\n\n  @mixin dark {\n    color: var(--mantine-color-dark-1);\n\n    &[data-active] {\n      color: var(--mantine-color-white);\n    }\n  }\n}\n```\n\n\n\n#### Props\n\n**FloatingIndicator props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| displayAfterTransitionEnd | boolean | - | Controls whether the indicator should be hidden initially and displayed after the parent's transition ends. Set to `true` when the parent container has CSS transitions (e.g., `transform: scale()`) to prevent the indicator from appearing at the wrong position during the parent's animation. |\n| onTransitionEnd | () => void | - | Called when the indicator finishes transitioning to a new position |\n| onTransitionStart | () => void | - | Called when the indicator starts transitioning to a new position |\n| parent | HTMLElement \\| null | required | Parent container element that must have `position: relative`. The indicator's position is calculated relative to this element. |\n| target | HTMLElement \\| null | required | Target element over which the indicator is displayed. The indicator will be positioned to match the target's size and position. |\n| transitionDuration | string \\| number | - | Transition duration in ms |\n\n\n#### Styles API\n\nFloatingIndicator component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**FloatingIndicator selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-FloatingIndicator-root | Indicator element that animates to match the target position and size |\n\n**FloatingIndicator CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --transition-duration | Controls indicator transition duration |\n\n**FloatingIndicator data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-initialized | Indicator has been initialized and transitions are enabled | - |\n| root | data-hidden | Indicator is hidden (when displayAfterTransitionEnd is true) | - |\n",
+  "props": [
+    {
+      "name": "displayAfterTransitionEnd",
+      "description": "Controls whether the indicator should be hidden initially and displayed after the parent's transition ends.\nSet to <code>true</code> when the parent container has CSS transitions (e.g., <code>transform: scale()</code>) to prevent\nthe indicator from appearing at the wrong position during the parent's animation.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FloatingIndicator"
+    },
+    {
+      "name": "onTransitionEnd",
+      "description": "Called when the indicator finishes transitioning to a new position",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "FloatingIndicator"
+    },
+    {
+      "name": "onTransitionStart",
+      "description": "Called when the indicator starts transitioning to a new position",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "FloatingIndicator"
+    },
+    {
+      "name": "parent",
+      "description": "Parent container element that must have <code>position: relative</code>.\nThe indicator's position is calculated relative to this element.",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "HTMLElement | null"
+      },
+      "sourceComponent": "FloatingIndicator"
+    },
+    {
+      "name": "target",
+      "description": "Target element over which the indicator is displayed.\nThe indicator will be positioned to match the target's size and position.",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "HTMLElement | null"
+      },
+      "sourceComponent": "FloatingIndicator"
+    },
+    {
+      "name": "transitionDuration",
+      "description": "Transition duration in ms",
+      "required": false,
+      "defaultValue": "150",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "FloatingIndicator"
+    }
+  ]
+}

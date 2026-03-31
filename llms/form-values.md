@@ -20,9 +20,7 @@ const form = useForm({
 
 ## setValues handler
 
-With `form.setValues` you can set all form values, for example you can set values after you have received a response from the backend API:
-
-#### Example: setValues
+With `form.setValues` you can set all form values. For example, you can set values after you have received a response from the backend API:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -74,7 +72,7 @@ function Demo() {
 
 ## setValues partial
 
-`form.setValues` can also be used to set multiple values at once, payload will be shallow merged with current values state:
+`form.setValues` can also be used to set multiple values at once. The payload will be shallow merged with the current values state:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -90,13 +88,11 @@ form.getValues(); // -> { name: 'John', email: '', age: 21 }
 
 ## Initialize form
 
-When called `form.initialize` handler sets `initialValues` and `values` to the same value
-and marks form as initialized. It can be used only once, next `form.initialize` calls
+When called, the `form.initialize` handler sets `initialValues` and `values` to the same value
+and marks the form as initialized. It can be used only once. Subsequent `form.initialize` calls
 are ignored.
 
 `form.initialize` is useful when you want to sync form values with backend API response:
-
-#### Example: initialize
 
 ```tsx
 import { Button, NumberInput, TextInput } from '@mantine/core';
@@ -172,7 +168,7 @@ function Demo() {
 
   useEffect(() => {
     if (query.data) {
-      // Even if query.data changes, form will be initialized only once
+      // Even if query.data changes, the form will be initialized only once
       form.initialize(query.data);
     }
   }, [query.data]);
@@ -182,9 +178,7 @@ function Demo() {
 Note that `form.initialize` will erase all values that were set before it was called.
 It is usually a good idea to set `readOnly` or `disabled` on all form fields before
 `form.initialize` is called to prevent data loss. You can implement this with
-[enhanceGetInputProps](https://mantine.dev/form/get-input-props/#enhancegetinputprops):
-
-#### Example: enhanceGetInputPropsForm
+[enhanceGetInputProps](https://mantine.dev/llms/form-get-input-props.md#enhancegetinputprops):
 
 ```tsx
 import { NumberInput, TextInput, Button } from '@mantine/core';
@@ -234,9 +228,7 @@ function Demo() {
 
 ## setFieldValue handler
 
-`form.setFieldValue` handler allows to set value of the field at given path:
-
-#### Example: setFieldValue
+The `form.setFieldValue` handler allows you to set the value of the field at the given path:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -282,9 +274,7 @@ function Demo() {
 
 ## reset handler
 
-`form.reset` handler sets values to `initialValues` and clear all errors:
-
-#### Example: reset
+The `form.reset` handler sets values to `initialValues` and clears all errors:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -326,7 +316,7 @@ function Demo() {
 
 ## setInitialValues handler
 
-`form.setInitialValues` handler allows to update `initialValues` after form was initialized:
+The `form.setInitialValues` handler allows you to update `initialValues` after the form was initialized:
 
 ```tsx
 import { useEffect } from 'react';
@@ -345,9 +335,9 @@ function Demo() {
     fetch('/api/user')
       .then((res) => res.json())
       .then((data) => {
-        // Update initial values after form was initialized
+        // Update initial values after the form was initialized
         // These values will be used in form.reset
-        // and to compare values to get dirty state
+        // and to compare values to get the dirty state
         form.setInitialValues(data);
         form.setValues(data);
       });
@@ -357,10 +347,8 @@ function Demo() {
 
 ## transformValues
 
-Use `transformValues` to transform values before they get submitted in `onSubmit` handler.
+Use `transformValues` to transform values before they get submitted in the `onSubmit` handler.
 For example, it can be used to merge several fields into one or to convert types:
-
-#### Example: transformValues
 
 ```tsx
 import { useState } from 'react';
@@ -428,8 +416,8 @@ function Demo() {
 
 ## Get transformed values
 
-You can get transformed values outside of `form.onSubmit` method by calling `form.getTransformedValues`.
-It accepts `values` that need to be transformed as optional argument, if it is not provided, then
+You can get transformed values outside of the `form.onSubmit` method by calling `form.getTransformedValues`.
+It accepts `values` that need to be transformed as an optional argument. If it is not provided, then
 the result of `form.getValues()` transformation will be returned instead:
 
 ```tsx
@@ -458,10 +446,8 @@ function Demo() {
 
 ## onValuesChange
 
-`onValuesChange` function is called every time form values change, use it
-instead of `useEffect` to subscribe to form values changes:
-
-#### Example: onValuesChange
+The `onValuesChange` function is called every time form values change. Use it
+instead of `useEffect` to subscribe to form value changes:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -503,10 +489,8 @@ function Demo() {
 ## form.watch
 
 `form.watch` is an effect function that allows subscribing to changes of a
-specific form field. It accepts field path and a callback function that is
-called with new value, previous value, touched and dirty field states:
-
-#### Example: watch
+specific form field. It accepts a field path and a callback function that is
+called with the new value, previous value, touched and dirty field states:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -535,7 +519,7 @@ function Demo() {
 ```
 
 
-Note that `form.watch` uses `useEffect` under the hood – all hooks rules apply.
+Note that `form.watch` uses `useEffect` under the hood – all hook rules apply.
 For example, you cannot use `form.watch` conditionally or inside loops.
 
 ```tsx
@@ -554,14 +538,93 @@ function Demo() {
 }
 ```
 
+## form.watch with arrays
+
+`form.watch` works with array fields – the callback is triggered when any
+nested field within the array changes or when list operations
+(`insertListItem`, `removeListItem`, `reorderListItem`, `replaceListItem`)
+are performed:
+
+```tsx
+import { useState } from 'react';
+import { Button, Code, Group, NumberInput, Stack, Text, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
+
+function Demo() {
+  const [total, setTotal] = useState(0);
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      products: [
+        { name: 'Apple', price: 2, quantity: 3, key: randomId() },
+        { name: 'Orange', price: 1, quantity: 5, key: randomId() },
+      ],
+    },
+  });
+
+  form.watch('products', ({ value }) => {
+    setTotal(value.reduce((acc, item) => acc + item.price * item.quantity, 0));
+  });
+
+  return (
+    <Stack>
+      <Text fw={700}>Total: ${total}</Text>
+      {form.getValues().products.map((item, index) => (
+        <Group key={item.key} align="flex-end">
+          <TextInput
+            label="Name"
+            style={{ flex: 1 }}
+            key={form.key(`products.${index}.name`)}
+            {...form.getInputProps(`products.${index}.name`)}
+          />
+          <NumberInput
+            label="Price"
+            style={{ width: 80 }}
+            key={form.key(`products.${index}.price`)}
+            {...form.getInputProps(`products.${index}.price`)}
+          />
+          <NumberInput
+            label="Qty"
+            style={{ width: 80 }}
+            key={form.key(`products.${index}.quantity`)}
+            {...form.getInputProps(`products.${index}.quantity`)}
+          />
+          <Button
+            color="red"
+            onClick={() => form.removeListItem('products', index)}
+          >
+            Remove
+          </Button>
+        </Group>
+      ))}
+      <Group>
+        <Button
+          onClick={() =>
+            form.insertListItem('products', {
+              name: '',
+              price: 0,
+              quantity: 1,
+              key: randomId(),
+            })
+          }
+        >
+          Add product
+        </Button>
+      </Group>
+      <Code block>{JSON.stringify(form.getValues(), null, 2)}</Code>
+    </Stack>
+  );
+}
+```
+
+
 ## form.watch cascade
 
-To loosely subscribe to changes, you can set `cascadeUpdates: true`.
-This allows for parent objects to be written to directly, while still having
-subscribers to nested keys updated. Additionally, writes to nested keys
-will bubble up triggering parent key subscriptions as well.
-
-#### Example: cascadeUpdates
+By default, `form.watch` notifies parent watchers when nested fields change
+(upward cascade). To also enable downward cascade (notifying nested field
+watchers when a parent is set directly), set `cascadeUpdates: true`:
 
 ```tsx
 import { Button, Code, Stack, TextInput } from '@mantine/core';
@@ -617,17 +680,17 @@ import { useForm } from '@mantine/form';
 function Demo() {
   const form = useForm({ initialValues: { name: '', age: 0 } });
 
-  // Get inferred form values type, will be `{ name: string; age: number }`
+  // Get the inferred form values type, will be `{ name: string; age: number }`
   type FormValues = typeof form.values;
 
-  // Use values type in handleSubmit function or anywhere else
+  // Use the values type in handleSubmit function or anywhere else
   const handleSubmit = (values: FormValues) => console.log(values);
 }
 ```
 
 ## Get transformed values type
 
-To get transformed values (output of [transformValues](#transformvalues)) use `TransformedValues` type.
+To get transformed values (output of [transformValues](#transformvalues)), use the `TransformedValues` type.
 It is useful when you want to create a custom submit function:
 
 ```tsx
@@ -658,8 +721,8 @@ function Demo() {
 
 ## Set values type
 
-By default, form values types will be inferred from `initialValues`.
-To avoid that, you can pass type to `useForm` hook, this approach is useful when
+By default, form value types will be inferred from `initialValues`.
+To avoid that, you can pass a type to the `useForm` hook. This approach is useful when
 types cannot be correctly inferred or when you want to provide more specific types:
 
 ```tsx
@@ -688,6 +751,40 @@ function Demo() {
       registeredAt: null,
       jobs: [],
     },
+  });
+}
+```
+
+## Set transformed values type
+
+By default, transformed values type is the same as form values type. To set a different type, you can pass a second generic
+argument to the `useForm`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  locationId: string;
+}
+
+interface TransformedValues {
+  name: string;
+  locationId: number;
+}
+
+function Demo() {
+  const form = useForm<FormValues, TransformedValues>({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      locationId: '2',
+    },
+
+    transformValues: (values) => ({
+      ...values,
+      locationId: Number(values.locationId),
+    }),
   });
 }
 ```

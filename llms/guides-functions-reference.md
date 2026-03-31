@@ -2,13 +2,13 @@
 
 # Functions reference
 
-This guides contains a list of functions exported from Mantine packages that
-are not documented anywhere else.
+This guide contains a list of functions exported from Mantine packages that
+are not documented elsewhere.
 
 ## clamp
 
-`clamp` function is exported from `@mantine/hooks`.
-It clamps number within the inclusive lower and upper bounds.
+The `clamp` function is exported from `@mantine/hooks`.
+It clamps a number within the inclusive lower and upper bounds.
 
 ```tsx
 import { clamp } from '@mantine/hooks';
@@ -29,8 +29,8 @@ clamp(10, undefined, 5); // 5
 
 ## lowerFirst
 
-`lowerFirst` function is exported from `@mantine/hooks`.
-It converts first character of a string to lower case.
+The `lowerFirst` function is exported from `@mantine/hooks`.
+It converts the first character of a string to lowercase.
 
 ```tsx
 import { lowerFirst } from '@mantine/hooks';
@@ -41,8 +41,8 @@ lowerFirst('mantine'); // mantine
 
 ## upperFirst
 
-`upperFirst` function is exported from `@mantine/hooks`.
-It converts first character of a string to upper case.
+The `upperFirst` function is exported from `@mantine/hooks`.
+It converts the first character of a string to uppercase.
 
 ```tsx
 import { upperFirst } from '@mantine/hooks';
@@ -53,8 +53,8 @@ upperFirst('mantine'); // Mantine
 
 ## randomId
 
-`randomId` function is exported from `@mantine/hooks`.
-It generates random id with `mantine-` prefix.
+The `randomId` function is exported from `@mantine/hooks`.
+It generates a random id with the `mantine-` prefix.
 
 ```tsx
 import { randomId } from '@mantine/hooks';
@@ -65,8 +65,8 @@ randomId(); // mantine-1q2j3j4j5
 
 ## range
 
-`range` function is exported from `@mantine/hooks`.
-It generates array of numbers from `start` to `end` (inclusive).
+The `range` function is exported from `@mantine/hooks`.
+It generates an array of numbers from `start` to `end` (inclusive).
 
 ```tsx
 import { range } from '@mantine/hooks';
@@ -77,12 +77,229 @@ range(5, 0); // [5, 4, 3, 2, 1, 0]
 
 ## shallowEqual
 
-`shallowEqual` function is exported from `@mantine/hooks`.
-It performs shallow equal check of two objects.
+The `shallowEqual` function is exported from `@mantine/hooks`.
+It performs a shallow equality check of two objects.
 
 ```tsx
 import { shallowEqual } from '@mantine/hooks';
 
 shallowEqual({ a: 1 }, { a: 1 }); // true
 shallowEqual({ a: 1 }, { a: 2 }); // false
+```
+
+## keys
+
+The `keys` function is exported from `@mantine/core`.
+It is a type-safe wrapper around `Object.keys` – it returns
+an array of keys typed as `(keyof T)[]` instead of `string[]`.
+
+```tsx
+import { keys } from '@mantine/core';
+
+const data = { name: 'Mantine', age: 4 };
+const result = keys(data); // ('name' | 'age')[]
+```
+
+## deepMerge
+
+The `deepMerge` function is exported from `@mantine/core`.
+It recursively merges properties of the source object into the target object.
+Arrays are not merged – they are replaced entirely by the source value.
+
+```tsx
+import { deepMerge } from '@mantine/core';
+
+deepMerge({ a: 1, b: { c: 2 } }, { b: { d: 3 } });
+// { a: 1, b: { c: 2, d: 3 } }
+
+deepMerge({ a: 1 }, { a: 2, b: 3 });
+// { a: 2, b: 3 }
+```
+
+## filterProps
+
+The `filterProps` function is exported from `@mantine/core`.
+It removes all `undefined` properties from the given object.
+
+```tsx
+import { filterProps } from '@mantine/core';
+
+filterProps({ a: 1, b: undefined, c: 'hello' });
+// { a: 1, c: 'hello' }
+```
+
+## isElement
+
+The `isElement` function is exported from `@mantine/core`.
+It is a type guard that checks whether a value is a React element.
+Returns `false` for arrays, `null`, and React Fragments.
+
+```tsx
+import { isElement } from '@mantine/core';
+
+isElement(<div />); // true
+isElement('string'); // false
+isElement(null); // false
+isElement(<></>); // false
+```
+
+## isNumberLike
+
+The `isNumberLike` function is exported from `@mantine/core`.
+It checks whether a value is a number or a string that represents
+a CSS numeric value (including `calc()`, `var()`, and CSS units).
+
+```tsx
+import { isNumberLike } from '@mantine/core';
+
+isNumberLike(10); // true
+isNumberLike('10px'); // true
+isNumberLike('1.5rem'); // true
+isNumberLike('calc(100% - 10px)'); // true
+isNumberLike('var(--size)'); // true
+isNumberLike('hello'); // false
+```
+
+## camelToKebabCase
+
+The `camelToKebabCase` function is exported from `@mantine/core`.
+It converts a camelCase string to kebab-case.
+
+```tsx
+import { camelToKebabCase } from '@mantine/core';
+
+camelToKebabCase('backgroundColor'); // 'background-color'
+camelToKebabCase('fontSize'); // 'font-size'
+camelToKebabCase('color'); // 'color'
+```
+
+## getDefaultZIndex
+
+The `getDefaultZIndex` function is exported from `@mantine/core`.
+It returns the default z-index value for a given elevation level.
+
+```tsx
+import { getDefaultZIndex } from '@mantine/core';
+
+getDefaultZIndex('app'); // 100
+getDefaultZIndex('modal'); // 200
+getDefaultZIndex('popover'); // 300
+getDefaultZIndex('overlay'); // 400
+getDefaultZIndex('max'); // 9999
+```
+
+## closeOnEscape
+
+The `closeOnEscape` function is exported from `@mantine/core`.
+It creates a keyboard event handler that calls the given callback
+when the Escape key is pressed.
+
+```tsx
+import { closeOnEscape } from '@mantine/core';
+
+// Basic usage
+<div onKeyDown={closeOnEscape(() => setOpened(false))} />;
+
+// With options
+<div
+  onKeyDown={closeOnEscape(() => setOpened(false), {
+    active: isOpened,
+    onTrigger: () => console.log('closed'),
+  })}
+/>;
+```
+
+## noop
+
+The `noop` function is exported from `@mantine/core`.
+It is a no-operation function that does nothing. Useful as a
+default callback.
+
+```tsx
+import { noop } from '@mantine/core';
+
+const onClick = handler || noop;
+```
+
+## findClosestNumber
+
+The `findClosestNumber` function is exported from `@mantine/core`.
+It finds the number in the given array that is closest to the
+provided value. Returns the value itself if the array is empty.
+
+```tsx
+import { findClosestNumber } from '@mantine/core';
+
+findClosestNumber(3, [1, 5, 10]); // 1
+findClosestNumber(7, [1, 5, 10]); // 5
+findClosestNumber(9, [1, 5, 10]); // 10
+findClosestNumber(5, []); // 5
+```
+
+## toDateString
+
+The `toDateString` function is exported from `@mantine/dates`.
+It converts a date value to a `YYYY-MM-DD` string.
+Accepts `Date`, `string`, `number`, and dayjs objects.
+Returns `null` or `undefined` if the input is `null` or `undefined`.
+
+```tsx
+import { toDateString } from '@mantine/dates';
+
+toDateString(new Date(2025, 0, 15)); // '2025-01-15'
+toDateString('2025-01-15 14:30:00'); // '2025-01-15'
+toDateString(null); // null
+toDateString(undefined); // undefined
+```
+
+## toDateTimeString
+
+The `toDateTimeString` function is exported from `@mantine/dates`.
+It converts a date value to a `YYYY-MM-DD HH:mm:ss` string.
+Accepts `Date`, `string`, `number`, and dayjs objects.
+Returns `null` or `undefined` if the input is `null` or `undefined`.
+
+```tsx
+import { toDateTimeString } from '@mantine/dates';
+
+toDateTimeString(new Date(2025, 0, 15, 14, 30, 0)); // '2025-01-15 14:30:00'
+toDateTimeString('2025-01-15'); // '2025-01-15 00:00:00'
+toDateTimeString(null); // null
+```
+
+## assignTime
+
+The `assignTime` function is exported from `@mantine/dates`.
+It assigns a time string in `HH:mm:ss` format to a date value,
+returning a `YYYY-MM-DD HH:mm:ss` string. If the date value is `null`,
+the current date is used.
+
+```tsx
+import { assignTime } from '@mantine/dates';
+
+assignTime('2025-01-15', '14:30:00'); // '2025-01-15 14:30:00'
+assignTime('2025-01-15 08:00:00', '20:15:30'); // '2025-01-15 20:15:30'
+assignTime(null, '10:00:00'); // '[current date] 10:00:00'
+```
+
+## clampDate
+
+The `clampDate` function is exported from `@mantine/dates`.
+It clamps a date between optional min and max boundaries, returning
+a `YYYY-MM-DD HH:mm:ss` string.
+
+```tsx
+import { clampDate } from '@mantine/dates';
+
+clampDate('2025-01-01', '2025-12-31', '2025-06-15');
+// '2025-06-15 00:00:00' – within range
+
+clampDate('2025-01-01', '2025-12-31', '2024-06-15');
+// '2025-01-01 00:00:00' – clamped to min
+
+clampDate('2025-01-01', '2025-12-31', '2026-06-15');
+// '2025-12-31 00:00:00' – clamped to max
+
+clampDate(undefined, undefined, '2025-06-15');
+// '2025-06-15 00:00:00' – no boundaries
 ```

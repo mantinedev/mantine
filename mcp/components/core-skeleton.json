@@ -1,0 +1,77 @@
+{
+  "id": "core-skeleton",
+  "name": "Skeleton",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/skeleton",
+  "description": "Indicate content loading state",
+  "propsCount": 6,
+  "llmUrl": "https://mantine.dev/llms/core-skeleton.md",
+  "componentDataUrl": "/mcp/components/core-skeleton.json",
+  "searchText": "skeleton indicate content loading state @mantine/core /core/skeleton animate circle height radius visible width",
+  "source": "@mantine/core/src/components/Skeleton/Skeleton.tsx",
+  "docs": "core/skeleton.mdx",
+  "markdown": "# Skeleton\nPackage: @mantine/core\nImport: import { Skeleton } from '@mantine/core';\nDescription: Indicate content loading state\n\n## Usage\n\nUse `Skeleton` to create a placeholder for loading content. `Skeleton` supports the following props:\n\n* `height` – height – any valid CSS value\n* `width` – width - any valid CSS value\n* `radius` – key of `theme.radius` or any valid CSS value to set border-radius\n* `circle` – if true, width, height and border-radius will equal the value specified in the `height` prop\n* `animate` – true by default, controls animation\n\n```tsx\nimport { Skeleton } from '@mantine/core';\n\n  function Demo() {\n    return (\n      <>\n        <Skeletontrue'} height={50} circle mb=\"xl\" />\n        <Skeletontrue'} height={8} radius=\"xl\" />\n        <Skeletontrue'} height={8} mt={6} radius=\"xl\" />\n        <Skeleton${\n          props.animate ? '' : ' animate={false}'\n        } height={8} mt={6} width=\"70%\" radius=\"xl\" />\n      </>\n    );\n  }\n```\n\n\n## With content\n\nIf you want to indicate the loading state of content that is already on the page, wrap it with Skeleton\nand control the loading overlay visibility with the `visible` prop:\n\n```tsx\nimport { useState } from 'react';\nimport { Skeleton, Button } from '@mantine/core';\n\nfunction Demo() {\n  const [loading, setLoading] = useState(true);\n\n  return (\n    <>\n      <Skeleton visible={loading}>\n        Lorem ipsum dolor sit amet...\n        {/* other content */}\n      </Skeleton>\n\n      <Button onClick={() => setLoading((l) => !l)}>\n        Toggle Skeleton\n      </Button>\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**Skeleton props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| animate | boolean | - | Enables animation |\n| circle | boolean | - | If set, Skeleton `width` and `border-radius` are equal to its `height` |\n| height | Height<string \\| number> | - | Skeleton `height`, numbers are converted to rem |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. |\n| visible | boolean | - | Determines whether Skeleton overlay should be displayed |\n| width | React.CSSProperties[\"width\"] | - | Skeleton `width`, numbers are converted to rem, ignored when `circle` prop is set. |\n\n\n#### Styles API\n\nSkeleton component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Skeleton selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Skeleton-root | Root element |\n\n**Skeleton CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --skeleton-height | Controls skeleton `height` |\n| root | --skeleton-width | Controls skeleton `width` |\n| root | --skeleton-radius | Controls skeleton `border-radius` |\n\n**Skeleton data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-visible | `visible` prop is set | - |\n| root | data-animate | `animate` prop is set | - |\n",
+  "props": [
+    {
+      "name": "animate",
+      "description": "Enables animation",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Skeleton"
+    },
+    {
+      "name": "circle",
+      "description": "If set, Skeleton <code>width</code> and <code>border-radius</code> are equal to its <code>height</code>",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Skeleton"
+    },
+    {
+      "name": "height",
+      "description": "Skeleton <code>height</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "auto",
+      "type": {
+        "name": "Height<string | number>"
+      },
+      "sourceComponent": "Skeleton"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Skeleton"
+    },
+    {
+      "name": "visible",
+      "description": "Determines whether Skeleton overlay should be displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Skeleton"
+    },
+    {
+      "name": "width",
+      "description": "Skeleton <code>width</code>, numbers are converted to rem, ignored when <code>circle</code> prop is set.",
+      "required": false,
+      "defaultValue": "100%",
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "Skeleton"
+    }
+  ]
+}

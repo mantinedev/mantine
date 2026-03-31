@@ -1,0 +1,77 @@
+{
+  "id": "core-overflow-list",
+  "name": "OverflowList",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/overflow-list",
+  "description": "Hide items that do not fit in a container and display them as a single collapsed item",
+  "propsCount": 6,
+  "llmUrl": "https://mantine.dev/llms/core-overflow-list.md",
+  "componentDataUrl": "/mcp/components/core-overflow-list.json",
+  "searchText": "overflowlist hide items that do not fit in a container and display them as a single collapsed item @mantine/core /core/overflow-list data gap maxrows maxvisibleitems renderitem renderoverflow",
+  "source": "@mantine/core/src/components/OverflowList/OverflowList.tsx",
+  "docs": "core/overflow-list.mdx",
+  "markdown": "# OverflowList\nPackage: @mantine/core\nImport: import { OverflowList } from '@mantine/core';\nDescription: Hide items that do not fit in a container and display them as a single collapsed item\n\n## Usage\n\n```tsx\n// OverflowListDemo.tsx\nimport { Badge, OverflowList } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <div style={{ resize: 'horizontal', overflow: 'auto', maxWidth: '100%' }}>\n      <OverflowList\n        data={data}\n        gap={4}\n        renderOverflow={(items) => <Badge>+{items.length} more</Badge>}\n        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}\n      />\n    </div>\n  );\n}\n\n// data.ts\nexport const data = [\n  'Apple',\n  'Banana',\n  'Cherry',\n  'Date',\n  'Elderberry',\n  'Fig',\n  'Grape',\n  'Honeydew',\n  'Indian Fig',\n  'Jackfruit',\n  'Kiwi',\n  'Lemon',\n  'Mango',\n  'Nectarine',\n  'Orange',\n  'Papaya',\n];\n```\n\n\n## Data type\n\n`OverflowList` data prop supports an array of any type. By default, `OverflowList` infers\ndata type from the data array automatically. To specify data type explicitly, pass\ngeneric type argument to the component:\n\n```tsx\nimport { OverflowList } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <OverflowList<{ value: string; label: string }>\n      data={[{ value: '1', label: 'Item 1' }]}\n      renderItem={(item) => <div key={item.value}>{item.label}</div>}\n      renderOverflow={(items) => <div>+{items.length} more</div>}\n    />\n  );\n}\n```\n\n## Max rows\n\nUse `maxRows` to limit visible rows count. By default, 1 row is visible.\n\n```tsx\n// OverflowListDemo.tsx\nimport { Badge, OverflowList } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <div style={{ resize: 'horizontal', overflow: 'auto', maxWidth: 500 }}>\n      <OverflowList\n        data={data}\n        gap={4}\n        maxRows={2}\n        renderOverflow={(items) => <Badge>+{items.length} more</Badge>}\n        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}\n      />\n    </div>\n  );\n}\n\n// data.ts\nexport const data = [\n  'Apple',\n  'Banana',\n  'Cherry',\n  'Date',\n  'Elderberry',\n  'Fig',\n  'Grape',\n  'Honeydew',\n  'Indian Fig',\n  'Jackfruit',\n  'Kiwi',\n  'Lemon',\n  'Mango',\n  'Nectarine',\n  'Orange',\n  'Papaya',\n];\n```\n\n\n## Max visible items\n\nUse `maxVisibleItems` to limit visible items count. By default, there is no limit.\n\n```tsx\n// OverflowListDemo.tsx\nimport { Badge, OverflowList } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <div style={{ resize: 'horizontal', overflow: 'auto', maxWidth: '100%' }}>\n      <OverflowList\n        data={data}\n        gap={4}\n        maxVisibleItems={5}\n        renderOverflow={(items) => <Badge>+{items.length} more</Badge>}\n        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}\n      />\n    </div>\n  );\n}\n\n// data.ts\nexport const data = [\n  'Apple',\n  'Banana',\n  'Cherry',\n  'Date',\n  'Elderberry',\n  'Fig',\n  'Grape',\n  'Honeydew',\n  'Indian Fig',\n  'Jackfruit',\n  'Kiwi',\n  'Lemon',\n  'Mango',\n  'Nectarine',\n  'Orange',\n  'Papaya',\n];\n```\n\n\n## Example: overflow with hover card\n\nYou can use any React components in `renderOverflow` function. Example\nof displaying collapsed items inside [HoverCard](https://mantine.dev/llms/core-hover-card.md):\n\n```tsx\n// OverflowListDemo.tsx\nimport { Badge, Center, HoverCard, OverflowList } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <div style={{ resize: 'horizontal', overflow: 'auto', maxWidth: '100%' }}>\n      <OverflowList\n        data={data}\n        gap={4}\n        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}\n        renderOverflow={(items) => (\n          <Center>\n            <HoverCard>\n              <HoverCard.Target>\n                <Badge>+{items.length} more</Badge>\n              </HoverCard.Target>\n              <HoverCard.Dropdown>\n                {items.map((item, index) => (\n                  <div key={index}>{item}</div>\n                ))}\n              </HoverCard.Dropdown>\n            </HoverCard>\n          </Center>\n        )}\n      />\n    </div>\n  );\n}\n\n// data.ts\nexport const data = [\n  'Apple',\n  'Banana',\n  'Cherry',\n  'Date',\n  'Elderberry',\n  'Fig',\n  'Grape',\n  'Honeydew',\n  'Indian Fig',\n  'Jackfruit',\n  'Kiwi',\n  'Lemon',\n  'Mango',\n  'Nectarine',\n  'Orange',\n  'Papaya',\n];\n```\n\n\n\n#### Props\n\n**OverflowList props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| data | T[] | required | Array of items to display |\n| gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem |\n| maxRows | number | - | Number of rows to display |\n| maxVisibleItems | number | - | Maximum number of visible items |\n| renderItem | (item: T, index: number) => ReactNode | required | Function to render item |\n| renderOverflow | (items: T[]) => ReactNode | required | Function to render hidden items |\n\n\n#### Styles API\n\nOverflowList component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**OverflowList selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-OverflowList-root | Root element |\n\n**OverflowList CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --ol-gap | Controls gap between items |\n",
+  "props": [
+    {
+      "name": "data",
+      "description": "Array of items to display",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "T[]"
+      },
+      "sourceComponent": "OverflowList"
+    },
+    {
+      "name": "gap",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value for <code>gap</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'xs'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "OverflowList"
+    },
+    {
+      "name": "maxRows",
+      "description": "Number of rows to display",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "OverflowList"
+    },
+    {
+      "name": "maxVisibleItems",
+      "description": "Maximum number of visible items",
+      "required": false,
+      "defaultValue": "Infinity",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "OverflowList"
+    },
+    {
+      "name": "renderItem",
+      "description": "Function to render item",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "(item: T, index: number) => ReactNode"
+      },
+      "sourceComponent": "OverflowList"
+    },
+    {
+      "name": "renderOverflow",
+      "description": "Function to render hidden items",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "(items: T[]) => ReactNode"
+      },
+      "sourceComponent": "OverflowList"
+    }
+  ]
+}

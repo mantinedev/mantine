@@ -5,9 +5,7 @@ Description: Radar chart component
 
 ## Usage
 
-`RadarChart` is based on recharts [RadarChart](https://recharts.org/en-US/api/RadarChart) component:
-
-#### Example: usage
+`RadarChart` is based on the recharts [RadarChart](https://recharts.org/en-US/api/RadarChart) component:
 
 ```tsx
 // Demo.tsx
@@ -59,8 +57,6 @@ export const data = [
 ## Multiple series
 
 You can display multiple series on the same radar chart:
-
-#### Example: multiple
 
 ```tsx
 // Demo.tsx
@@ -120,11 +116,9 @@ export const data = [
 
 ## Change color
 
-You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
-
-#### Example: color
 
 ```tsx
 // data.ts
@@ -159,8 +153,6 @@ export const data = [
 
 ## Hide/show chart parts
 
-#### Example: parts
-
 ```tsx
 // Demo.tsx
 import { RadarChart } from '@mantine/charts';
@@ -177,7 +169,7 @@ function Demo() {
         { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
         { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
       ]}
-      
+       withPolarGrid={true} withPolarAngleAxis={true} withPolarRadiusAxis={true} withTooltip={false} withDots={false}
     />
   );
 }
@@ -219,8 +211,6 @@ export const data = [
 
 
 ## With tooltip and dots
-
-#### Example: tooltip
 
 ```tsx
 // Demo.tsx
@@ -285,14 +275,12 @@ export const data = [
 
 To pass props down to the underlying recharts components, use the following props:
 
-* `radarChartProps` passed props to [RadarChart](https://recharts.org/en-US/api/RadarChart) component
-* `polarGridProps` passed props to [PolarGrid](https://recharts.org/en-US/api/PolarGrid) component
-* `polarAngleAxisProps` passed props to [PolarAngleAxis](https://recharts.org/en-US/api/PolarAngleAxis) component
-* `polarRadiusAxisProps` passed props to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component
+* `radarChartProps` passes props to the [RadarChart](https://recharts.org/en-US/api/RadarChart) component
+* `polarGridProps` passes props to the [PolarGrid](https://recharts.org/en-US/api/PolarGrid) component
+* `polarAngleAxisProps` passes props to the [PolarAngleAxis](https://recharts.org/en-US/api/PolarAngleAxis) component
+* `polarRadiusAxisProps` passes props to the [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component
 
-Example of passing props down to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component:
-
-#### Example: rechartsProps
+Example of passing props down to the [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component:
 
 ```tsx
 // Demo.tsx
@@ -306,296 +294,7 @@ function Demo() {
       data={data}
       dataKey="product"
       withPolarRadiusAxis
-      polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => `${value}## Usage
-
-`RadarChart` is based on recharts [RadarChart](https://recharts.org/en-US/api/RadarChart) component:
-
-#### Example: usage
-
-```tsx
-// Demo.tsx
-import { RadarChart } from '@mantine/charts';
-import { data } from './data';
-
-function Demo() {
-  return (
-    <RadarChart
-      h={300}
-      data={data}
-      dataKey="product"
-      withPolarRadiusAxis
-      series={[{ name: 'sales', color: 'blue.4', opacity: 0.2 }]}
-    />
-  );
-}
-
-// data.ts
-export const data = [
-  {
-    product: 'Apples',
-    sales: 120,
-  },
-  {
-    product: 'Oranges',
-    sales: 98,
-  },
-  {
-    product: 'Tomatoes',
-    sales: 86,
-  },
-  {
-    product: 'Grapes',
-    sales: 99,
-  },
-  {
-    product: 'Bananas',
-    sales: 85,
-  },
-  {
-    product: 'Lemons',
-    sales: 65,
-  },
-];
-```
-
-
-## Multiple series
-
-You can display multiple series on the same radar chart:
-
-#### Example: multiple
-
-```tsx
-// Demo.tsx
-import { RadarChart } from '@mantine/charts';
-import { data } from './data';
-
-function Demo() {
-  return (
-    <RadarChart
-      h={300}
-      data={data}
-      dataKey="product"
-      withPolarRadiusAxis
-      series={[
-        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
-        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
-      ]}
-    />
-  );
-}
-
-// data.ts
-export const data = [
-  {
-    product: 'Apples',
-    'Sales January': 120,
-    'Sales February': 100,
-  },
-  {
-    product: 'Oranges',
-    'Sales January': 98,
-    'Sales February': 90,
-  },
-  {
-    product: 'Tomatoes',
-    'Sales January': 86,
-    'Sales February': 70,
-  },
-  {
-    product: 'Grapes',
-    'Sales January': 99,
-    'Sales February': 80,
-  },
-  {
-    product: 'Bananas',
-    'Sales January': 85,
-    'Sales February': 120,
-  },
-  {
-    product: 'Lemons',
-    'Sales January': 65,
-    'Sales February': 150,
-  },
-];
-```
-
-
-## Change color
-
-You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
-other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
-color value is also accepted.
-
-#### Example: color
-
-```tsx
-// data.ts
-export const data = [
-  {
-    product: 'Apples',
-    sales: 120,
-  },
-  {
-    product: 'Oranges',
-    sales: 98,
-  },
-  {
-    product: 'Tomatoes',
-    sales: 86,
-  },
-  {
-    product: 'Grapes',
-    sales: 99,
-  },
-  {
-    product: 'Bananas',
-    sales: 85,
-  },
-  {
-    product: 'Lemons',
-    sales: 65,
-  },
-];
-```
-
-
-## Hide/show chart parts
-
-#### Example: parts
-
-```tsx
-// Demo.tsx
-import { RadarChart } from '@mantine/charts';
-import { data } from './data';
-
-
-function Demo() {
-  return (
-    <RadarChart
-      h={300}
-      data={data}
-      dataKey="product"
-      series={[
-        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
-        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
-      ]}
-      
-    />
-  );
-}
-
-// data.ts
-export const data = [
-  {
-    product: 'Apples',
-    'Sales January': 120,
-    'Sales February': 100,
-  },
-  {
-    product: 'Oranges',
-    'Sales January': 98,
-    'Sales February': 90,
-  },
-  {
-    product: 'Tomatoes',
-    'Sales January': 86,
-    'Sales February': 70,
-  },
-  {
-    product: 'Grapes',
-    'Sales January': 99,
-    'Sales February': 80,
-  },
-  {
-    product: 'Bananas',
-    'Sales January': 85,
-    'Sales February': 120,
-  },
-  {
-    product: 'Lemons',
-    'Sales January': 65,
-    'Sales February': 150,
-  },
-];
-```
-
-
-## With tooltip and dots
-
-#### Example: tooltip
-
-```tsx
-// Demo.tsx
-import { RadarChart } from '@mantine/charts';
-import { data } from './data';
-
-
-function Demo() {
-  return (
-    <RadarChart
-      h={300}
-      data={data}
-      dataKey="product"
-      withTooltip
-      withDots
-      series={[
-        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
-        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
-      ]}
-      
-    />
-  );
-}
-
-// data.ts
-export const data = [
-  {
-    product: 'Apples',
-    'Sales January': 120,
-    'Sales February': 100,
-  },
-  {
-    product: 'Oranges',
-    'Sales January': 98,
-    'Sales February': 90,
-  },
-  {
-    product: 'Tomatoes',
-    'Sales January': 86,
-    'Sales February': 70,
-  },
-  {
-    product: 'Grapes',
-    'Sales January': 99,
-    'Sales February': 80,
-  },
-  {
-    product: 'Bananas',
-    'Sales January': 85,
-    'Sales February': 120,
-  },
-  {
-    product: 'Lemons',
-    'Sales January': 65,
-    'Sales February': 150,
-  },
-];
-```
-
-
-## Recharts props
-
-To pass props down to the underlying recharts components, use the following props:
-
-* `radarChartProps` passed props to [RadarChart](https://recharts.org/en-US/api/RadarChart) component
-* `polarGridProps` passed props to [PolarGrid](https://recharts.org/en-US/api/PolarGrid) component
-* `polarAngleAxisProps` passed props to [PolarAngleAxis](https://recharts.org/en-US/api/PolarAngleAxis) component
-* `polarRadiusAxisProps` passed props to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component
-
-Example of passing props down to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component:
-
- }}
+      polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => `${value}$` }}
       series={[
         { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
         { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
@@ -642,9 +341,7 @@ export const data = [
 
 ## Legend
 
-Set `withLegend` prop to display the legend:
-
-#### Example: legend
+Set the `withLegend` prop to display the legend:
 
 ```tsx
 // Demo.tsx
@@ -706,21 +403,23 @@ export const data = [
 
 #### Props
 
+**RadarChart props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if <code>withDots={false}</code> is set. |
-| children | React.ReactNode | - | Additional components that are rendered inside recharts <code>RadarChart</code> component |
+| activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
+| children | React.ReactNode | - | Additional components that are rendered inside recharts `RadarChart` component |
 | data | Record<string, any>[] | required | Data used in the chart |
-| dataKey | string | required | Key of the <code>data</code> object for axis values |
-| dotProps | MantineChartDotProps | - | Props passed down to all dots. Ignored if <code>withDots={false}</code> is set. |
+| dataKey | string | required | Key of the `data` object for axis values |
+| dotProps | MantineChartDotProps | - | Props passed down to all dots. Ignored if `withDots={false}` is set. |
 | gridColor | MantineColor | - | Controls color of the grid lines. By default, color depends on the color scheme. |
 | legendProps | RechartsProps | - | Props passed down to recharts Legend component |
 | polarAngleAxisProps | RechartsProps | - | Props passed down to recharts PolarAngleAxis component |
 | polarGridProps | RechartsProps | - | Props passed down to recharts PolarGrid component |
 | polarRadiusAxisProps | RechartsProps | - | Props passed down to recharts PolarRadiusAxis component |
-| radarChartProps | Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 65 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | - | Props passed down to recharts RadarChart component |
-| radarProps | ((series: RadarChartSeries) => Partial<Omit<Props, "ref">>) | Partial<Omit<Props, "ref">> | - | Props passed down to recharts Radar component |
-| series | RadarChartSeries[] | required | Determines which data should be consumed from the <code>data</code> array. |
+| radarChartProps | (PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts RadarChart component |
+| radarProps | ((series: RadarChartSeries) => Partial<Omit<Props, "ref">>) \| Partial<Omit<Props, "ref">> | - | Props passed down to recharts Radar component |
+| series | RadarChartSeries[] | required | Determines which data should be consumed from the `data` array. |
 | textColor | MantineColor | - | Controls color of all text elements. By default, color depends on the color scheme. |
 | tooltipAnimationDuration | number | - | Tooltip position animation duration in ms |
 | tooltipProps | RechartsProps | - | Props passed down to recharts Tooltip component |

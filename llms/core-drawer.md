@@ -5,8 +5,6 @@ Description: Display overlay area at any side of the screen
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
 import { Drawer, Button } from '@mantine/core';
@@ -31,10 +29,8 @@ function Demo() {
 
 ## Position
 
-Drawer can be placed on `left` (default), `top`, `right` and `bottom`. Control drawer position with `position` prop,
+Drawer can be placed on `left` (default), `top`, `right` and `bottom`. Control the drawer position with the `position` prop,
 for example `<Drawer position="top" />`.
-
-#### Example: positions
 
 ```tsx
 function Demo() {
@@ -79,9 +75,7 @@ function Demo() {
 
 ## Offset
 
-Set `offset` prop to change drawer offset from the edge of the viewport:
-
-#### Example: offset
+Set the `offset` prop to change the drawer offset from the edge of the viewport:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -107,10 +101,8 @@ function Demo() {
 
 ## Customize overlay
 
-`Drawer` uses [Overlay](https://mantine.dev/core/overlay/) component, you can set any props that [Overlay](https://mantine.dev/core/overlay/)
+`Drawer` uses the [Overlay](https://mantine.dev/llms/core-overlay.md) component. You can set any props that [Overlay](https://mantine.dev/llms/core-overlay.md)
 supports with `overlayProps`:
-
-#### Example: overlay
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -141,7 +133,7 @@ function Demo() {
 
 ## Sizes
 
-You can change drawer width/height (depends on `position`) by setting `size` prop to predefined size or any valid width,
+You can change the drawer width/height (depends on `position`) by setting the `size` prop to a predefined size or any valid width,
 for example, `size="55%"` or `size={200}`:
 
 ```tsx
@@ -155,8 +147,6 @@ function Demo() {
   );
 }
 ```
-
-#### Example: sizes
 
 ```tsx
 function Demo() {
@@ -194,9 +184,7 @@ function Demo() {
 
 ## Remove header
 
-To remove header set `withCloseButton={false}`
-
-#### Example: header
+To remove the header, set `withCloseButton={false}`
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -221,8 +209,6 @@ function Demo() {
 
 
 ## Drawer with scroll
-
-#### Example: overflow
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -251,8 +237,6 @@ function Demo() {
 
 
 ## Usage with ScrollArea
-
-#### Example: scrollarea
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -287,10 +271,8 @@ function Demo() {
 
 ## Change transition
 
-`Drawer` is built with [Transition](https://mantine.dev/core/transition/) component. Use `transitionProps`
-prop to customize any [Transition](https://mantine.dev/core/transition/) properties:
-
-#### Example: transitions
+`Drawer` is built with the [Transition](https://mantine.dev/llms/core-transition.md) component. Use the `transitionProps`
+prop to customize any [Transition](https://mantine.dev/llms/core-transition.md) properties:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -321,11 +303,9 @@ function Demo() {
 
 ## onExitTransitionEnd and onEnterTransitionEnd
 
-`onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
-exit/enter transition is finished. For example, this is useful when you want to clear
-data after drawer is closed:
-
-#### Example: transitionEnd
+The `onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
+the exit/enter transition is finished. For example, this is useful when you want to clear
+data after the drawer is closed:
 
 ```tsx
 import { useState } from 'react';
@@ -388,10 +368,8 @@ function Demo() {
 
 ## Initial focus
 
-`Drawer` uses [FocusTrap](https://mantine.dev/core/focus-trap/) to trap focus. Add `data-autofocus`
+`Drawer` uses [FocusTrap](https://mantine.dev/llms/core-focus-trap.md) to trap focus. Add the `data-autofocus`
 attribute to the element that should receive initial focus.
-
-#### Example: initialFocus
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -421,10 +399,8 @@ function Demo() {
 ```
 
 
-If you do not want to focus any elements when the drawer is opened, use `FocusTrap.InitialFocus`
+If you do not want to focus any elements when the drawer is opened, use the `FocusTrap.InitialFocus`
 component to create a visually hidden element that will receive initial focus:
-
-#### Example: initialFocusTrap
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -455,8 +431,8 @@ function Demo() {
 ```
 
 
-If you do not add `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
-drawer will focus the first focusable element inside it which is usually the close button.
+If you do not add the `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
+the drawer will focus the first focusable element inside it which is usually the close button.
 
 ## Control behavior
 
@@ -495,10 +471,8 @@ function Demo() {
 
 Use `closeButtonProps` to customize close button:
 
-#### Example: closeIcon
-
 ```tsx
-import { IconXboxX } from '@tabler/icons-react';
+import { XCircleIcon } from '@phosphor-icons/react';
 import { useDisclosure } from '@mantine/hooks';
 import { Drawer, Button } from '@mantine/core';
 
@@ -512,7 +486,7 @@ function Demo() {
         onClose={close}
         title="Authentication"
         closeButtonProps={{
-          icon: <IconXboxX size={20} stroke={1.5} />,
+          icon: <XCircleIcon size={20} />,
         }}
       >
         {/* Drawer content */}
@@ -532,14 +506,12 @@ function Demo() {
 You can use the following compound components to have full control over the `Drawer` rendering:
 
 * `Drawer.Root` – context provider
-* `Drawer.Overlay` – render [Overlay](https://mantine.dev/core/overlay/)
+* `Drawer.Overlay` – render [Overlay](https://mantine.dev/llms/core-overlay.md)
 * `Drawer.Content` – main drawer element, should include all drawer content
 * `Drawer.Header` – sticky header, usually contains `Drawer.Title` and `Drawer.CloseButton`
 * `Drawer.Title` – `h2` element, `aria-labelledby` of `Drawer.Content` is pointing to this element, usually is rendered inside `Drawer.Header`
 * `Drawer.CloseButton` – close button, usually rendered inside `Drawer.Header`
 * `Drawer.Body` – a place for main content, `aria-describedby` of `Drawer.Content` is pointing to this element
-
-#### Example: composition
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -582,8 +554,6 @@ Differences from using multiple `Drawer` components:
 * `Drawer.Stack` disables focus trap and `Escape` key handling for all drawers except the one that is currently opened
 * Drawers that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`
 * Only one overlay is rendered at a time
-
-#### Example: stack
 
 ```tsx
 import { Button, Group, Drawer, useDrawersStack } from '@mantine/core';
@@ -750,38 +720,40 @@ function Demo() {
 
 #### Props
 
+**Drawer props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | children | React.ReactNode | - | Drawer content |
 | closeButtonProps | ModalBaseCloseButtonProps | - | Props passed down to the close button |
 | closeOnClickOutside | boolean | - | If set, the modal/drawer is closed when user clicks on the overlay |
-| closeOnEscape | boolean | - | If set, <code>onClose</code> is called when user presses the escape key |
+| closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |
 | id | string | - | Id used to connect modal/drawer with body and title |
-| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. <code>display: none</code> styles are applied instead. |
-| lockScroll | boolean | - | If set, scroll is locked when <code>opened={true}</code> |
-| offset | string | number | - | Drawer container offset from the viewport end |
+| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
+| offset | string \| number | - | Drawer container offset from the viewport end |
 | onClose | () => void | required | Called when modal/drawer is closed |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |
 | onExitTransitionEnd | () => void | - | Called when exit transition ends |
 | opened | boolean | required | Controls opened state |
-| overlayProps | ModalBaseOverlayProps | - | Props passed down to the <code>Overlay</code> component, can be used to configure opacity, <code>background-color</code>, styles and other properties |
-| padding | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding |
-| portalProps | BasePortalProps | - | Props passed down to the Portal component when <code>withinPortal</code> is set |
+| overlayProps | ModalBaseOverlayProps | - | Props passed down to the `Overlay` component, can be used to configure opacity, `background-color`, styles and other properties |
+| padding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set content, header and footer padding |
+| portalProps | BasePortalProps | - | Props passed down to the Portal component when `withinPortal` is set |
 | position | DrawerPosition | - | Side of the screen on which drawer will be opened |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | removeScrollProps | RemoveScrollProps | - | Props passed down to react-remove-scroll, can be used to customize scroll lock behavior |
-| returnFocus | boolean | - | If set, focus is returned to the last active element when <code>onClose</code> is called |
+| returnFocus | boolean | - | If set, focus is returned to the last active element when `onClose` is called |
 | scrollAreaComponent | ScrollAreaComponent | - | Scroll area component |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any valid CSS box-shadow value |
-| size | number | MantineSize | (string & {}) | - | Controls width of the content area |
-| stackId | string | - | Id of the drawer in the <code>Drawer.Stack</code> |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS box-shadow value |
+| size | MantineSize \| number | - | Controls width of the content area |
+| stackId | string | - | Id of the drawer in the `Drawer.Stack` |
 | title | React.ReactNode | - | Drawer title |
-| transitionProps | TransitionProps | - | Props added to the <code>Transition</code> component that used to animate overlay and body, use to configure duration and animation type, <code>{ duration: 200, transition: 'fade-down' }</code> by default |
+| transitionProps | TransitionProps | - | Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default |
 | trapFocus | boolean | - | If set, focus is trapped within the modal/drawer |
 | withCloseButton | boolean | - | If set, the close button is displayed |
 | withOverlay | boolean | - | If set, the overlay is displayed |
-| withinPortal | boolean | - | If set, the component is rendered inside <code>Portal</code> |
-| zIndex | string | number | - | <code>z-index</code> CSS property of the root element |
+| withinPortal | boolean | - | If set, the component is rendered inside `Portal` |
+| zIndex | string \| number | - | `z-index` CSS property of the root element |
 
 
 #### Styles API

@@ -5,11 +5,7 @@ Description: Capture password data from user
 
 ## Usage
 
-<InputFeatures component="PasswordInput" element="input" />
-
 PasswordInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. PasswordInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
-
-#### Example: usage
 
 ```tsx
 import { PasswordInput } from '@mantine/core';
@@ -18,10 +14,24 @@ import { PasswordInput } from '@mantine/core';
 function Demo() {
   return (
     <PasswordInput
-      
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
       placeholder="Input placeholder"
     />
   );
+}
+```
+
+
+## Loading state
+
+Set `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.
+You can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:
+
+```tsx
+import { PasswordInput } from '@mantine/core';
+
+function Demo() {
+  return <PasswordInput placeholder="Your password" loading />;
 }
 ```
 
@@ -43,12 +53,40 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`PasswordInput` can be used with uncontrolled forms the same way as a native `input[type="password"]`.
+Set the `name` attribute to include password input value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `PasswordInput` with `FormData`:
+
+```tsx
+import { PasswordInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Password value:', formData.get('password'));
+      }}
+    >
+      <PasswordInput
+        label="Enter your password"
+        name="password"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Controlled visibility toggle
 
-Control visibility state with `visible` and `onVisibilityChange` props,
-for example, the props can be used to sync visibility state between two inputs:
-
-#### Example: controlledVisibility
+Control the visibility state with the `visible` and `onVisibilityChange` props.
+For example, the props can be used to sync visibility state between two inputs:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -78,19 +116,17 @@ function Demo() {
 
 ## Change visibility toggle icon
 
-To change visibility toggle icon, pass a React component that accepts `reveal` prop to `visibilityToggleIcon`:
-
-#### Example: visibilityIcon
+To change the visibility toggle icon, pass a React component that accepts the `reveal` prop to `visibilityToggleIcon`:
 
 ```tsx
 import { PasswordInput } from '@mantine/core';
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
+import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 
 const VisibilityToggleIcon = ({ reveal }: { reveal: boolean }) =>
   reveal ? (
-    <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+    <EyeSlashIcon style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
   ) : (
-    <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+    <EyeIcon style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
   );
 
 function Demo() {
@@ -110,13 +146,11 @@ function Demo() {
 
 ## Strength meter example
 
-Password strength meter example with [Progress](https://mantine.dev/core/progress/) and [Popover](https://mantine.dev/core/popover/) components:
-
-#### Example: strengthMeter
+Password strength meter example with the [Progress](https://mantine.dev/llms/core-progress.md) and [Popover](https://mantine.dev/llms/core-popover.md) components:
 
 ```tsx
 import { useState } from 'react';
-import { IconX, IconCheck } from '@tabler/icons-react';
+import { XIcon, CheckIcon } from '@phosphor-icons/react';
 import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
@@ -127,7 +161,7 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
       mt={7}
       size="sm"
     >
-      {meets ? <IconCheck size={14} /> : <IconX size={14} />}
+      {meets ? <CheckIcon size={14} /> : <XIcon size={14} />}
       <Box ml={10}>{label}</Box>
     </Text>
   );
@@ -137,7 +171,7 @@ const requirements = [
   { re: /[0-9]/, label: 'Includes number' },
   { re: /[a-z]/, label: 'Includes lowercase letter' },
   { re: /[A-Z]/, label: 'Includes uppercase letter' },
-  { re: /[DEMOPLACEHOLDER::PasswordInputDemos.strengthMeter::END+,:;=?@#|'<>.^*()%!-]/, label: 'Includes special symbol' },
+  { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: 'Includes special symbol' },
 ];
 
 function getStrength(password: string) {
@@ -191,7 +225,7 @@ function Demo() {
 
 ## Usage without visibility toggle
 
-If you do not need visibility toggle button, use [TextInput](https://mantine.dev/core/text-input/) component instead:
+If you do not need the visibility toggle button, use the [TextInput](https://mantine.dev/llms/core-text-input.md) component instead:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -201,30 +235,32 @@ function Demo() {
 }
 ```
 
-<InputSections component="PasswordInput" />
-
 ## Input sections
 
 PasswordInput supports left and right sections to display icons, buttons or other content alongside the input.
 
-Note that when `rightSection` prop is used, visibility toggle button is not rendered.
-
-#### Example: sections
+Note that when the `rightSection` prop is used, the visibility toggle button is not rendered.
 
 ```tsx
 import { PasswordInput } from '@mantine/core';
-import { IconLock } from '@tabler/icons-react';
+import { LockIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconLock size={18} stroke={1.5} />;
+  const icon = <LockIcon size={18} />;
 
   return (
     <>
-      <PasswordInput leftSection={icon} label="With left section" placeholder="With left section" />
+      <PasswordInput
+        leftSection={icon}
+        leftSectionPointerEvents="none"
+        label="With left section"
+        placeholder="With left section"
+      />
       <PasswordInput
         rightSection={icon}
         label="With right section"
         placeholder="With right section"
+        rightSectionPointerEvents="none"
         mt="md"
       />
     </>
@@ -234,8 +270,6 @@ function Demo() {
 
 
 ## Error state
-
-#### Example: error
 
 ```tsx
 import { PasswordInput } from '@mantine/core';
@@ -256,115 +290,43 @@ function Demo() {
 ```
 
 
-## Disabled
-
-When `disabled` prop is set, visibility toggle button is hidden:
-
-#### Example: disabled
-
-```tsx
-import { PasswordInput } from '@mantine/core';
-
-function Demo() {
-  return (
-    <PasswordInput disabled label="Disabled password input" placeholder="Disabled password input" />
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { IconLock } from '@tabler/icons-react';
-import { PasswordInput } from '@mantine/core';
-
-function Demo() {
-  return (
-    <PasswordInput
-      label="Label"
-      placeholder="PasswordInput"
-      description="Description"
-      error="Error"
-      withAsterisk
-      leftSection={<IconLock size={18} />}
-      
-    />
-  );
-}
-```
-
-
-<GetElementRef component="PasswordInput" refType="input" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { PasswordInput } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLInputElement>(null);
-  return <PasswordInput ref={ref} />;
-}
-```
-
-<InputAccessibility component="PasswordInput" />
-
-## Accessibility
-
-PasswordInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
-
-To set `aria-label` on the visibility toggle button, use `visibilityToggleButtonProps` prop:
-
-```tsx
-import { PasswordInput } from '@mantine/core';
-
-function Demo() {
-  return (
-    <PasswordInput
-      label="Password"
-      visibilityToggleButtonProps={{
-        'aria-label': 'Toggle password visibility',
-      }}
-    />
-  );
-}
-```
-
 
 #### Props
+
+**PasswordInput props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | defaultVisible | boolean | - | If set, the input value is visible by default |
-| description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
-| disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
-| error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
-| inputSize | string | - | <code>size</code> attribute passed down to the input element |
-| inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
-| label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
-| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
-| leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
-| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
 | onVisibilityChange | (visible: boolean) => void | - | Called when visibility changes |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
-| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
-| rightSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>rightSection</code> element |
-| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
-| size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
 | visibilityToggleButtonProps | Record<string, any> | - | Props passed down to the visibility toggle button |
 | visibilityToggleIcon | FC<{ reveal: boolean; }> | - | A component to replace the visibility toggle icon |
-| visible | boolean | - | If set, the input value is visible visible |
-| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
-| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
+| visible | boolean | - | If set, the input value is visible |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 

@@ -1,0 +1,167 @@
+{
+  "id": "core-rating",
+  "name": "Rating",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/rating",
+  "description": "Pick and display rating",
+  "propsCount": 15,
+  "llmUrl": "https://mantine.dev/llms/core-rating.md",
+  "componentDataUrl": "/mcp/components/core-rating.json",
+  "searchText": "rating pick and display rating @mantine/core /core/rating allowclear color count defaultvalue emptysymbol fractions fullsymbol getsymbollabel highlightselectedonly name onchange onhover readonly size value",
+  "source": "@mantine/core/src/components/Rating/Rating.tsx",
+  "docs": "core/rating.mdx",
+  "markdown": "# Rating\nPackage: @mantine/core\nImport: import { Rating } from '@mantine/core';\nDescription: Pick and display rating\n\n## Usage\n\n```tsx\nimport { Rating } from '@mantine/core';\n\nfunction Demo() {\n  return <Rating defaultValue={2} color=\"yellow\" size=\"md\" count={5} highlightSelectedOnly={false} />\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { Rating } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState(0);\n  return <Rating value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`Rating` can be used with uncontrolled forms the same way as a native input element.\nSet the `name` attribute to include rating value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `Rating` with `FormData`:\n\n```tsx\nimport { Rating } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Rating value:', formData.get('rating'));\n      }}\n    >\n      <Rating name=\"rating\" defaultValue={0} />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Read only\n\n```tsx\nimport { Rating } from '@mantine/core';\n\nfunction Demo() {\n  return <Rating value={3.5} fractions={2} readOnly />;\n}\n```\n\n\n## Allow clear\n\nSet `allowClear` prop to allow users to reset the rating to 0 by clicking the same rating value again.\nThis is useful when you want to give users the ability to undo their rating selection:\n\n```tsx\nimport { useState } from 'react';\nimport { Group, Rating, Stack, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState(3);\n\n  return (\n    <Stack gap=\"md\" align=\"center\">\n      <Text size=\"sm\">Click the same star to clear the rating</Text>\n      <Rating value={value} onChange={setValue} allowClear />\n      <Group gap=\"xs\">\n        <Text size=\"sm\" c=\"dimmed\">\n          Current rating:\n        </Text>\n        <Text size=\"sm\" fw={600}>\n          {value === 0 ? 'Not rated' : value}\n        </Text>\n      </Group>\n    </Stack>\n  );\n}\n```\n\n\n## Fractions\n\n```tsx\nimport { Rating, Group, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <Group>\n        <div>Fractions: 2</div>\n        <Rating fractions={2} defaultValue={1.5} />\n      </Group>\n      <Group>\n        <div>Fractions: 3</div>\n        <Rating fractions={3} defaultValue={2.33333333} />\n      </Group>\n      <Group>\n        <div>Fractions: 4</div>\n        <Rating fractions={4} defaultValue={3.75} />\n      </Group>\n    </Stack>\n  );\n}\n```\n\n\n## Custom symbol\n\n```tsx\nimport { Rating } from '@mantine/core';\nimport { SunIcon, MoonIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return <Rating emptySymbol={<SunIcon size={16} />} fullSymbol={<MoonIcon size={16} />} />;\n}\n```\n\n\n## Symbols for each item\n\n```tsx\nimport { Rating } from '@mantine/core';\nimport { SmileySadIcon, SmileyNervousIcon, SmileyIcon, SmileyMehIcon, SmileyWinkIcon } from '@phosphor-icons/react';\n\nconst getIconStyle = (color?: string) => ({\n  width: 24,\n  height: 24,\n  color: color ? `var(--mantine-color-${color}-7)` : undefined,\n});\n\nconst getEmptyIcon = (value: number) => {\n  const iconStyle = getIconStyle();\n\n  switch (value) {\n    case 1:\n      return <SmileySadIcon style={iconStyle} />;\n    case 2:\n      return <SmileyNervousIcon style={iconStyle} />;\n    case 3:\n      return <SmileyIcon style={iconStyle} />;\n    case 4:\n      return <SmileyMehIcon style={iconStyle} />;\n    case 5:\n      return <SmileyWinkIcon style={iconStyle} />;\n    default:\n      return null;\n  }\n};\n\nconst getFullIcon = (value: number) => {\n  switch (value) {\n    case 1:\n      return <SmileySadIcon style={getIconStyle('red')} />;\n    case 2:\n      return <SmileyNervousIcon style={getIconStyle('orange')} />;\n    case 3:\n      return <SmileyIcon style={getIconStyle('yellow')} />;\n    case 4:\n      return <SmileyMehIcon style={getIconStyle('lime')} />;\n    case 5:\n      return <SmileyWinkIcon style={getIconStyle('green')} />;\n    default:\n      return null;\n  }\n};\n\nfunction Demo() {\n  return <Rating emptySymbol={getEmptyIcon} fullSymbol={getFullIcon} highlightSelectedOnly />;\n}\n```\n\n\n\n#### Props\n\n**Rating props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowClear | boolean | - | When true, clicking the same rating value clears the rating to 0, default is false |\n| color | MantineColor | - | Key of theme.colors or any CSS color value, default is 'yellow' |\n| count | number | - | Number of rating items (stars), default is 5 |\n| defaultValue | number | - | Uncontrolled component default value |\n| emptySymbol | ReactNode \\| ((value: number) => ReactNode) | - | Icon displayed for unselected rating items. Can be a function that receives the rating value. |\n| fractions | number | - | Number of fractions each item can be divided into, default is 1 |\n| fullSymbol | ReactNode \\| ((value: number) => ReactNode) | - | Icon displayed for selected rating items. Can be a function that receives the rating value. |\n| getSymbolLabel | (index: number) => string | - | Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value) |\n| highlightSelectedOnly | boolean | - | When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false |\n| name | string | - | Name attribute for form submission. If not provided, a unique id will be generated. |\n| onChange | (value: number) => void | - | Called when value changes |\n| onHover | (value: number) => void | - | Called when rating item is hovered. Receives -1 when hover ends. |\n| readOnly | boolean | - | When true, rating cannot be changed by user interaction, default is false |\n| size | MantineSize \\| number | - | Controls component size |\n| value | number | - | Controlled component value |\n\n\n#### Styles API\n\nRating component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Rating selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Rating-root | Root element |\n| starSymbol | .mantine-Rating-starSymbol | Symbol element (star icon by default, or custom symbol) |\n| input | .mantine-Rating-input | Item input, hidden by default |\n| label | .mantine-Rating-label | Item label, used to display star icon |\n| symbolBody | .mantine-Rating-symbolBody | Wrapper around star icon, used for clip-path masking in fractional ratings |\n| symbolGroup | .mantine-Rating-symbolGroup | Container for all fractional symbols of a single rating unit |\n\n**Rating CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --rating-color | Controls filled star icon color |\n\n**Rating data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| label | data-read-only | `readOnly` prop is set | - |\n| input | data-active | Input value is the same as component value | - |\n| symbolGroup | data-active | Symbol group is being hovered | - |\n| starSymbol | data-filled | Associated input value is less or equal to the component value | - |\n",
+  "props": [
+    {
+      "name": "allowClear",
+      "description": "When true, clicking the same rating value clears the rating to 0, default is false",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "color",
+      "description": "Key of theme.colors or any CSS color value, default is 'yellow'",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "count",
+      "description": "Number of rating items (stars), default is 5",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "emptySymbol",
+      "description": "Icon displayed for unselected rating items. Can be a function that receives the rating value.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | ((value: number) => ReactNode)"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "fractions",
+      "description": "Number of fractions each item can be divided into, default is 1",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "fullSymbol",
+      "description": "Icon displayed for selected rating items. Can be a function that receives the rating value.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | ((value: number) => ReactNode)"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "getSymbolLabel",
+      "description": "Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(index: number) => string"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "highlightSelectedOnly",
+      "description": "When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "name",
+      "description": "Name attribute for form submission. If not provided, a unique id will be generated.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "onHover",
+      "description": "Called when rating item is hovered. Receives -1 when hover ends.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "readOnly",
+      "description": "When true, rating cannot be changed by user interaction, default is false",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "size",
+      "description": "Controls component size",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Rating"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Rating"
+    }
+  ]
+}

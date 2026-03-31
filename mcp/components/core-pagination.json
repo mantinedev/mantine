@@ -1,0 +1,547 @@
+{
+  "id": "core-pagination",
+  "name": "Pagination",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/pagination",
+  "description": "Display active page and navigate between multiple pages",
+  "propsCount": 53,
+  "llmUrl": "https://mantine.dev/llms/core-pagination.md",
+  "componentDataUrl": "/mcp/components/core-pagination.json",
+  "searchText": "pagination display active page and navigate between multiple pages @mantine/core /core/pagination autocontrast boundaries color defaultvalue disabled dotsicon firsticon gap getcontrolprops getitemprops hidewithonepage lasticon nexticon onchange onfirstpage onlastpage onnextpage onpreviouspage previousicon radius siblings size startvalue total value withcontrols withedges withpages autocontrast boundaries color defaultvalue disabled getitemprops onchange onfirstpage onlastpage onnextpage onpreviouspage radius siblings size startvalue total value icon icon icon icon dotsicon icon active withpadding",
+  "source": "@mantine/core/src/components/Pagination/Pagination.tsx",
+  "docs": "core/pagination.mdx",
+  "markdown": "# Pagination\nPackage: @mantine/core\nImport: import { Pagination } from '@mantine/core';\nDescription: Display active page and navigate between multiple pages\n\n## Usage\n\n```tsx\nimport { Pagination } from '@mantine/core';\n\nfunction Demo() {\n  return <Pagination total={10} color=\"blue\" size=\"md\" radius=\"md\" withControls={true} withEdges={false} disabled={false} />;\n}\n```\n\n\n## Example with chunked content\n\n```tsx\nimport { useState } from 'react';\nimport { randomId } from '@mantine/hooks';\nimport { Pagination, Text } from '@mantine/core';\n\nfunction chunk<T>(array: T[], size: number): T[][] {\n  if (!array.length) {\n    return [];\n  }\n  const head = array.slice(0, size);\n  const tail = array.slice(size);\n  return [head, ...chunk(tail, size)];\n}\n\nconst data = chunk(\n  Array(30)\n    .fill(0)\n    .map((_, index) => ({ id: index, name: randomId() })),\n  5\n);\n\nfunction Demo() {\n  const [activePage, setPage] = useState(1);\n  const items = data[activePage - 1].map((item) => (\n    <Text key={item.id}>\n      id: {item.id}, name: {item.name}\n    </Text>\n  ));\n\n  return (\n    <>\n      {items}\n      <Pagination total={data.length} value={activePage} onChange={setPage} mt=\"sm\" />\n    </>\n  );\n}\n```\n\n\n## Controlled\n\nTo control the component state, provide `value` and `onChange` props:\n\n```tsx\nimport { useState } from 'react';\nimport { Pagination } from '@mantine/core';\n\nfunction Demo() {\n  const [activePage, setPage] = useState(1);\n  return (\n    <Pagination value={activePage} onChange={setPage} total={10} />\n  );\n}\n```\n\n## Siblings\n\nControl the number of active item siblings with the `siblings` prop:\n\n```tsx\nimport { Text, Pagination } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text mb=\"xs\">1 sibling (default)</Text>\n      <Pagination total={20} siblings={1} defaultValue={10} />\n\n      <Text mb=\"xs\" mt=\"xl\">2 siblings</Text>\n      <Pagination total={20} siblings={2} defaultValue={10} />\n\n      <Text mb=\"xs\" mt=\"xl\">3 siblings</Text>\n      <Pagination total={20} siblings={3} defaultValue={10} />\n    </>\n  );\n}\n```\n\n\n## Boundaries\n\nControl the number of items displayed after previous and before next buttons with the `boundaries` prop:\n\n```tsx\nimport { Text, Pagination } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text mb=\"xs\">1 boundary (default)</Text>\n      <Pagination total={20} boundaries={1} defaultValue={10} />\n\n      <Text mt=\"xl\" mb=\"xs\">2 boundaries</Text>\n      <Pagination total={20} boundaries={2} defaultValue={10} />\n\n      <Text mt=\"xl\" mb=\"xs\">3 boundaries</Text>\n      <Pagination total={20} boundaries={3} defaultValue={10} />\n    </>\n  );\n}\n```\n\n\n## Compound components\n\nYou can use the following compound components to have full control over the `Pagination` rendering:\n\n* `Pagination.Root` – context provider\n* `Pagination.Items` – items list\n* `Pagination.Next` – next control\n* `Pagination.Previous` – previous control\n* `Pagination.First` – first control\n* `Pagination.Last` – last control\n\n```tsx\nimport { Group, Pagination } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Pagination.Root total={10}>\n      <Group gap={5} justify=\"center\">\n        <Pagination.First />\n        <Pagination.Previous />\n        <Pagination.Items />\n        <Pagination.Next />\n        <Pagination.Last />\n      </Group>\n    </Pagination.Root>\n  );\n}\n```\n\n\n## Controls as links\n\n```tsx\nimport { Group, Pagination } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      {/* Regular pagination */}\n      <Pagination\n        total={10}\n        withEdges\n        getItemProps={(page) => ({\n          component: 'a',\n          href: `#page-${page}`,\n        })}\n        getControlProps={(control) => {\n          if (control === 'first') {\n            return { component: 'a', href: '#page-0' };\n          }\n\n          if (control === 'last') {\n            return { component: 'a', href: '#page-10' };\n          }\n\n          if (control === 'next') {\n            return { component: 'a', href: '#page-2' };\n          }\n\n          if (control === 'previous') {\n            return { component: 'a', href: '#page-1' };\n          }\n\n          return {};\n        }}\n      />\n\n      {/* Compound pagination */}\n      <Pagination.Root\n        total={10}\n        getItemProps={(page) => ({\n          component: 'a',\n          href: `#page-${page}`,\n        })}\n      >\n        <Group gap={7} mt=\"xl\">\n          <Pagination.First component=\"a\" href=\"#page-0\" />\n          <Pagination.Previous component=\"a\" href=\"#page-1\" />\n          <Pagination.Items />\n          <Pagination.Next component=\"a\" href=\"#page-2\" />\n          <Pagination.Last component=\"a\" href=\"#page-10\" />\n        </Group>\n      </Pagination.Root>\n    </>\n  );\n}\n```\n\n\n## Change icons\n\n```tsx\nimport { Group, Pagination } from '@mantine/core';\nimport { ArrowLineRightIcon, ArrowLineLeftIcon, ArrowLeftIcon, ArrowRightIcon, DotsSixIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <>\n      {/* Regular pagination */}\n      <Pagination\n        total={10}\n        withEdges\n        nextIcon={ArrowRightIcon}\n        previousIcon={ArrowLeftIcon}\n        firstIcon={ArrowLineLeftIcon}\n        lastIcon={ArrowLineRightIcon}\n        dotsIcon={DotsSixIcon}\n      />\n\n      {/* Compound pagination */}\n      <Pagination.Root total={10}>\n        <Group gap={7} mt=\"xl\">\n          <Pagination.First icon={ArrowLineLeftIcon} />\n          <Pagination.Previous icon={ArrowLeftIcon} />\n          <Pagination.Items dotsIcon={DotsSixIcon} />\n          <Pagination.Next icon={ArrowRightIcon} />\n          <Pagination.Last icon={ArrowLineRightIcon} />\n        </Group>\n      </Pagination.Root>\n    </>\n  );\n}\n```\n\n\n```tsx\nimport { Pagination, Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text>autoContrast: off</Text>\n      <Pagination total={10} color=\"lime.4\" />\n\n      <Text mt=\"md\">autoContrast: on</Text>\n      <Pagination total={10} autoContrast color=\"lime.4\" />\n    </>\n  );\n}\n```\n\n\n## Controls size\n\nBy default, pagination controls have reduced size compared to inputs and buttons.\nIf you want controls to have the same size as inputs and buttons, you can use `input-` prefix for the `size` prop:\n\n```tsx\nimport { Button, Group, Pagination, TextInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <div>\n      <Group>\n        <Pagination total={45} size=\"sm\" />\n        <Button size=\"sm\">sm button</Button>\n        <TextInput size=\"sm\" placeholder=\"sm input\" />\n      </Group>\n\n      <Group mt=\"md\">\n        <Pagination total={45} size=\"input-sm\" />\n        <Button size=\"sm\">sm button</Button>\n        <TextInput size=\"sm\" placeholder=\"sm input\" />\n      </Group>\n    </div>\n  );\n}\n```\n\n\n## Start value\n\nSet `startValue` to define the starting page number. For example, with `startValue={5}` and `total={15}`,\nthe pagination range will be from 5 to 15:\n\n```tsx\nimport { Text, Pagination } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text mb=\"xs\">Pages 5–15 (startValue=5, total=15)</Text>\n      <Pagination total={15} startValue={5} defaultValue={5} />\n    </>\n  );\n}\n```\n\n\n## URL synchronization\n\nYou can synchronize pagination state with URL query parameters. This pattern is commonly used for list views where you want to share the URL with a specific page selected.\n\n### Next.js\n\n```tsx\nimport { usePathname, useRouter, useSearchParams } from 'next/navigation';\nimport { Pagination } from '@mantine/core';\n\nfunction Demo() {\n  const router = useRouter();\n  const searchParams = useSearchParams();\n  const pathname = usePathname();\n  const page = Number(searchParams.get('page')) || 1;\n\n  const handlePageChange = (p: number) => {\n    const params = new URLSearchParams(searchParams);\n    params.set('page', p.toString());\n    router.push(`${pathname}?${params.toString()}`);\n  };\n\n  return <Pagination total={10} value={page} onChange={handlePageChange} />;\n}\n```\n\n### react-router-dom\n\n```tsx\nimport { useSearchParams } from 'react-router-dom';\nimport { Pagination } from '@mantine/core';\n\nfunction Demo() {\n  const [searchParams, setSearchParams] = useSearchParams();\n  const page = Number(searchParams.get('page')) || 1;\n\n  const handlePageChange = (p: number) => {\n    setSearchParams({ page: p.toString() });\n  };\n\n  return <Pagination total={10} value={page} onChange={handlePageChange} />;\n}\n```\n\n### nuqs\n\nExample using [nuqs](https://nuqs.dev/):\n\n```tsx\nimport { useQueryState, parseAsInteger } from 'nuqs';\nimport { Pagination } from '@mantine/core';\n\nfunction Demo() {\n  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));\n  return <Pagination total={10} value={page} onChange={setPage} />;\n}\n```\n\n## use-pagination hook\n\nIf you need more flexibility, the `@mantine/hooks` package exports the [use-pagination](https://mantine.dev/llms/hooks-use-pagination.md) hook.\nYou can use it to create custom pagination components.\n\n\n#### Props\n\n**Pagination props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on the active page background color to ensure sufficient contrast |\n| boundaries | number | - | Number of elements visible on the left/right edges |\n| color | MantineColor | - | Key of `theme.colors`, active item color |\n| defaultValue | number | - | Active page for uncontrolled component, must be an integer in [1, total] interval |\n| disabled | boolean | - | Disables all controls, applies disabled styles |\n| dotsIcon | PaginationIcon | - | Dots icon component |\n| firstIcon | PaginationIcon | - | First control icon component |\n| gap | MantineSpacing | - | Key of `theme.spacing`, gap between controls |\n| getControlProps | (control: \"next\" \\| \"previous\" \\| \"first\" \\| \"last\") => Record<string, any> | - | Props passed down to next/previous/first/last controls |\n| getItemProps | (page: number) => Record<string, any> | - | Additional props passed down to controls |\n| hideWithOnePage | boolean | - | If set, the pagination is hidden when only one page is available (`total={1}`) |\n| lastIcon | PaginationIcon | - | Last control icon component |\n| nextIcon | PaginationIcon | - | Next control icon component |\n| onChange | (value: number) => void | - | Called when page changes |\n| onFirstPage | () => void | - | Called when first page control is clicked |\n| onLastPage | () => void | - | Called when last page control is clicked |\n| onNextPage | () => void | - | Called when next page control is clicked |\n| onPreviousPage | () => void | - | Called when previous page control is clicked |\n| previousIcon | PaginationIcon | - | Previous control icon component |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| siblings | number | - | Number of siblings displayed on the left/right side of the selected page |\n| size | number \\| MantineSize \\| (string & {}) \\| \"input-xs\" \\| \"input-sm\" \\| \"input-md\" \\| \"input-lg\" \\| \"input-xl\" | - | `height` and `min-width` of controls |\n| startValue | number | - | Starting page number, defaults to 1 |\n| total | number | required | Total number of pages, must be an integer |\n| value | number | - | Active page for controlled component, must be an integer in [1, total] interval |\n| withControls | boolean | - | If set, next/previous controls are displayed |\n| withEdges | boolean | - | If set, first/last controls are displayed |\n| withPages | boolean | - | If set to `false`, page number buttons are hidden, only next/previous controls remain |\n\n**Pagination.Root props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on the active page background color to ensure sufficient contrast |\n| boundaries | number | - | Number of elements visible on the left/right edges |\n| color | MantineColor | - | Key of `theme.colors`, active item color |\n| defaultValue | number | - | Active page for uncontrolled component, must be an integer in [1, total] interval |\n| disabled | boolean | - | Disables all controls, applies disabled styles |\n| getItemProps | (page: number) => Record<string, any> | - | Additional props passed down to controls |\n| onChange | (value: number) => void | - | Called when page changes |\n| onFirstPage | () => void | - | Called when first page control is clicked |\n| onLastPage | () => void | - | Called when last page control is clicked |\n| onNextPage | () => void | - | Called when next page control is clicked |\n| onPreviousPage | () => void | - | Called when previous page control is clicked |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| siblings | number | - | Number of siblings displayed on the left/right side of the selected page |\n| size | number \\| MantineSize \\| (string & {}) \\| \"input-xs\" \\| \"input-sm\" \\| \"input-md\" \\| \"input-lg\" \\| \"input-xl\" | - | `height` and `min-width` of controls |\n| startValue | number | - | Starting page number, defaults to 1 |\n| total | number | required | Total number of pages, must be an integer |\n| value | number | - | Active page for controlled component, must be an integer in [1, total] interval |\n\n**Pagination.Items props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| dotsIcon | PaginationIcon | - | Dots icon component |\n\n**Pagination.Dots props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| icon | FC<PaginationIconProps> | - | Custom dots icon component, must accept svg element props and size prop |\n\n**Pagination.Next props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| icon | FC<PaginationIconProps> | - | An icon component to replace the default icon |\n\n**Pagination.Previous props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| icon | FC<PaginationIconProps> | - | An icon component to replace the default icon |\n\n**Pagination.First props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| icon | FC<PaginationIconProps> | - | An icon component to replace the default icon |\n\n**Pagination.Last props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| icon | FC<PaginationIconProps> | - | An icon component to replace the default icon |\n\n**Pagination.Control props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| active | boolean | - | Applies active styles, adds `data-active` attribute |\n| withPadding | boolean | - | Applies padding |\n\n\n#### Styles API\n\nPagination component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Pagination selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Pagination-root | Root element |\n| control | .mantine-Pagination-control | Control element: items, next/previous, first/last buttons |\n| dots | .mantine-Pagination-dots | Dots icon wrapper |\n\n**Pagination CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --pagination-active-bg | Active control `background-color` |\n| root | --pagination-active-color | Active control `color` |\n| root | --pagination-control-fz | Controls `font-size` |\n| root | --pagination-control-radius | Controls control `border-radius` |\n| root | --pagination-control-size | Controls control `min-width` and `height` |\n\n**Pagination data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| control | data-active | Control is active | - |\n| control | data-disabled | Control is disabled | - |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on the active page background color to ensure sufficient contrast",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "boundaries",
+      "description": "Number of elements visible on the left/right edges",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code>, active item color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Active page for uncontrolled component, must be an integer in [1, total] interval",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "disabled",
+      "description": "Disables all controls, applies disabled styles",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "dotsIcon",
+      "description": "Dots icon component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "PaginationIcon"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "firstIcon",
+      "description": "First control icon component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "PaginationIcon"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "gap",
+      "description": "Key of <code>theme.spacing</code>, gap between controls",
+      "required": false,
+      "defaultValue": "8",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "getControlProps",
+      "description": "Props passed down to next/previous/first/last controls",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(control: \"next\" | \"previous\" | \"first\" | \"last\") => Record<string, any>"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "getItemProps",
+      "description": "Additional props passed down to controls",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(page: number) => Record<string, any>"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "hideWithOnePage",
+      "description": "If set, the pagination is hidden when only one page is available (<code>total={1}</code>)",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "lastIcon",
+      "description": "Last control icon component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "PaginationIcon"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "nextIcon",
+      "description": "Next control icon component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "PaginationIcon"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when page changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "onFirstPage",
+      "description": "Called when first page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "onLastPage",
+      "description": "Called when last page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "onNextPage",
+      "description": "Called when next page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "onPreviousPage",
+      "description": "Called when previous page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "previousIcon",
+      "description": "Previous control icon component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "PaginationIcon"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "siblings",
+      "description": "Number of siblings displayed on the left/right side of the selected page",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "size",
+      "description": "<code>height</code> and <code>min-width</code> of controls",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "number | MantineSize | (string & {}) | \"input-xs\" | \"input-sm\" | \"input-md\" | \"input-lg\" | \"input-xl\""
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "startValue",
+      "description": "Starting page number, defaults to 1",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "total",
+      "description": "Total number of pages, must be an integer",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "value",
+      "description": "Active page for controlled component, must be an integer in [1, total] interval",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "withControls",
+      "description": "If set, next/previous controls are displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "withEdges",
+      "description": "If set, first/last controls are displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "withPages",
+      "description": "If set to <code>false</code>, page number buttons are hidden, only next/previous controls remain",
+      "required": false,
+      "defaultValue": "`true`",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Pagination"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on the active page background color to ensure sufficient contrast",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "boundaries",
+      "description": "Number of elements visible on the left/right edges",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code>, active item color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Active page for uncontrolled component, must be an integer in [1, total] interval",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "disabled",
+      "description": "Disables all controls, applies disabled styles",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "getItemProps",
+      "description": "Additional props passed down to controls",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(page: number) => Record<string, any>"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when page changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => void"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "onFirstPage",
+      "description": "Called when first page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "onLastPage",
+      "description": "Called when last page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "onNextPage",
+      "description": "Called when next page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "onPreviousPage",
+      "description": "Called when previous page control is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "siblings",
+      "description": "Number of siblings displayed on the left/right side of the selected page",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "size",
+      "description": "<code>height</code> and <code>min-width</code> of controls",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "number | MantineSize | (string & {}) | \"input-xs\" | \"input-sm\" | \"input-md\" | \"input-lg\" | \"input-xl\""
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "startValue",
+      "description": "Starting page number, defaults to 1",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "total",
+      "description": "Total number of pages, must be an integer",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "value",
+      "description": "Active page for controlled component, must be an integer in [1, total] interval",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "PaginationRoot"
+    },
+    {
+      "name": "icon",
+      "description": "An icon component to replace the default icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<PaginationIconProps>"
+      },
+      "sourceComponent": "PaginationFirst"
+    },
+    {
+      "name": "icon",
+      "description": "An icon component to replace the default icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<PaginationIconProps>"
+      },
+      "sourceComponent": "PaginationLast"
+    },
+    {
+      "name": "icon",
+      "description": "An icon component to replace the default icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<PaginationIconProps>"
+      },
+      "sourceComponent": "PaginationNext"
+    },
+    {
+      "name": "icon",
+      "description": "An icon component to replace the default icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<PaginationIconProps>"
+      },
+      "sourceComponent": "PaginationPrevious"
+    },
+    {
+      "name": "dotsIcon",
+      "description": "Dots icon component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "PaginationIcon"
+      },
+      "sourceComponent": "PaginationItems"
+    },
+    {
+      "name": "icon",
+      "description": "Custom dots icon component, must accept svg element props and size prop",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<PaginationIconProps>"
+      },
+      "sourceComponent": "PaginationDots"
+    },
+    {
+      "name": "active",
+      "description": "Applies active styles, adds <code>data-active</code> attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PaginationControl"
+    },
+    {
+      "name": "withPadding",
+      "description": "Applies padding",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PaginationControl"
+    }
+  ]
+}

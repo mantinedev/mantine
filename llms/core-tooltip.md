@@ -5,8 +5,6 @@ Description: Renders tooltip at given element on mouse over or other event
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Tooltip, Button } from '@mantine/core';
 
@@ -23,8 +21,8 @@ function Demo() {
 ## Tooltip children
 
 Tooltip requires an element or a component as a single child –
-strings, fragments, numbers and multiple elements/components are not supported and **will throw error**.
-Custom components must provide a prop to get root element ref,
+strings, fragments, numbers and multiple elements/components are not supported and **will throw an error**.
+Custom components must provide a prop to get the root element ref;
 all Mantine components support ref out of the box.
 
 ```tsx
@@ -42,19 +40,19 @@ function Demo() {
       </Tooltip>
 
       <Tooltip label="Throws">
-        Raw string, NOT OK – will throw error
+        Raw string, NOT OK – will throw an error
       </Tooltip>
 
-      {/* Number, NOT OK – will throw error */}
+      {/* Number, NOT OK – will throw an error */}
       <Tooltip label="Throws">{2}</Tooltip>
 
       <Tooltip label="Throws">
-        <>Fragment, NOT OK, will throw error</>
+        <>Fragment, NOT OK, will throw an error</>
       </Tooltip>
 
       <Tooltip label="Throws">
-        <div>More that one node</div>
-        <div>NOT OK, will throw error</div>
+        <div>More than one node</div>
+        <div>NOT OK, will throw an error</div>
       </Tooltip>
     </>
   );
@@ -63,13 +61,11 @@ function Demo() {
 
 ## Tooltip target
 
-`target` prop is an alternative to `children`. It accepts a string (selector),
-an HTML element or a ref object with HTML element. Use `target` prop when you do
-not render tooltip target as JSX element.
+The `target` prop is an alternative to `children`. It accepts a string (selector),
+an HTML element or a ref object with an HTML element. Use the `target` prop when you do
+not render the tooltip target as a JSX element.
 
-Example of using `target` prop with a string selector:
-
-#### Example: target
+Example of using the `target` prop with a string selector:
 
 ```tsx
 import { Button, Tooltip } from '@mantine/core';
@@ -107,18 +103,17 @@ function Demo() {
 }
 ```
 
-Use `forwardRef` function to forward ref to root element:
+The component must support `ref` prop:
 
 ```tsx
 // Example of code that will work
-import { forwardRef } from 'react';
 import { Tooltip } from '@mantine/core';
 
-const MyComponent = forwardRef<HTMLDivElement>((props, ref) => (
+const MyComponent = ({ ref, ...props }) => (
   <div ref={ref} {...props}>
     My component
   </div>
-));
+);
 
 // Works correctly – ref is forwarded
 function Demo() {
@@ -132,14 +127,12 @@ function Demo() {
 
 ## Color
 
-#### Example: configurator
-
 ```tsx
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tooltip label="Tooltip">
+    <Tooltip label="Tooltip" color="blue">
       <Button>With tooltip</Button>
     </Tooltip>
   );
@@ -149,17 +142,15 @@ function Demo() {
 
 ## Offset
 
-Set `offset` prop to a number to change tooltip position relative to the target element.
-This way you can control tooltip offset on main axis only.
-
-#### Example: offset
+Set the `offset` prop to a number to change the tooltip position relative to the target element.
+This way you can control the tooltip offset on the main axis only.
 
 ```tsx
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tooltip label="Tooltip" opened>
+    <Tooltip label="Tooltip" opened position="top" offset={5}>
       <Button>Button with tooltip</Button>
     </Tooltip>
   );
@@ -167,9 +158,7 @@ function Demo() {
 ```
 
 
-To control offset on both axis, pass object with `mainAxis` and `crossAxis` properties:
-
-#### Example: offsetAxis
+To control the offset on both axes, pass an object with `mainAxis` and `crossAxis` properties:
 
 ```tsx
 import { Tooltip, Button } from '@mantine/core';
@@ -177,10 +166,10 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip
-      position="bottom"
+      position="top"
       opened
       label="Tooltip"
-      offset={{ mainAxis: , crossAxis:  }}
+      offset={{ mainAxis: 5, crossAxis: 0 }}
     >
       <Button>Button with tooltip</Button>
     </Tooltip>
@@ -191,23 +180,21 @@ function Demo() {
 
 ## Arrow
 
-Set `withArrow` prop to add an arrow to the tooltip. Arrow is a `div` element rotated with `transform: rotate(45deg)`.
+Set the `withArrow` prop to add an arrow to the tooltip. The arrow is a `div` element rotated with `transform: rotate(45deg)`.
 
-`arrowPosition` prop determines how arrow is position relative to the target element when `position` is set to `*-start` and `*-end` values on `Popover` component.
+The `arrowPosition` prop determines how the arrow is positioned relative to the target element when `position` is set to `*-start` and `*-end` values on the `Popover` component.
 By default, the value is `center` – the arrow is positioned in the center of the target element if it is possible.
 
 If you change `arrowPosition` to `side`, then the arrow will be positioned on the side of the target element,
-and you will be able to control arrow offset with `arrowOffset` prop. Note that when `arrowPosition` is set to `center`,
-`arrowOffset` prop is ignored.
-
-#### Example: arrow
+and you will be able to control the arrow offset with the `arrowOffset` prop. Note that when `arrowPosition` is set to `center`,
+the `arrowOffset` prop is ignored.
 
 ```tsx
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tooltip label="Tooltip" withArrow opened position="top-start">
+    <Tooltip arrowPosition="center" arrowOffset={10} arrowSize={4} arrowRadius={0} label="Tooltip" withArrow opened position="top-start">
       <Button>Button with tooltip</Button>
     </Tooltip>
   );
@@ -216,8 +203,6 @@ function Demo() {
 
 
 ## Controlled
-
-#### Example: controlled
 
 ```tsx
 import { useState } from 'react';
@@ -239,8 +224,8 @@ function Demo() {
 
 ## Change events
 
-Events that trigger tooltip can be changed with `events` prop, it accepts an object
-with the following properties that determine which events will trigger tooltip:
+Events that trigger the tooltip can be changed with the `events` prop; it accepts an object
+with the following properties that determine which events will trigger the tooltip:
 
 * `hover` – mouse hover event, `true` by default
 * `focus` – focus/blur events excluding clicks on the target element, `false` by default
@@ -263,9 +248,7 @@ function Demo() {
 
 ## Multiline
 
-To enable multiline mode, set `multiline` prop to enable line breaks and `w` [style prop](https://mantine.dev/styles/style-props) to set tooltip width:
-
-#### Example: multiline
+To enable multiline mode, set the `multiline` prop to enable line breaks and the `w` [style prop](https://mantine.dev/llms/styles-style-props.md) to set the tooltip width:
 
 ```tsx
 import { Tooltip, Button } from '@mantine/core';
@@ -288,9 +271,7 @@ function Demo() {
 
 ## Inline
 
-Set `inline` prop to use `Tooltip` with inline elements:
-
-#### Example: inline
+Set the `inline` prop to use `Tooltip` with inline elements:
 
 ```tsx
 import { Tooltip, Mark, Text } from '@mantine/core';
@@ -315,7 +296,7 @@ function Demo() {
 
 ## Change transition
 
-Tooltip is built with [Transition](https://mantine.dev/core/transition/) component, it supports `transitionProps` props:
+Tooltip is built with the [Transition](https://mantine.dev/llms/core-transition.md) component; it supports `transitionProps` props:
 
 ```tsx
 import { Button, Tooltip } from '@mantine/core';
@@ -333,8 +314,6 @@ function Demo() {
 ```
 
 All available premade transitions:
-
-#### Example: transitions
 
 ```tsx
 function Demo() {
@@ -355,9 +334,7 @@ function Demo() {
 
 ## Close and open delay
 
-You can delay tooltip open/close events by setting `openDelay` and `closeDelay` props in ms:
-
-#### Example: delay
+You can delay tooltip open/close events by setting the `openDelay` and `closeDelay` props in ms:
 
 ```tsx
 import { Button, Tooltip, Group } from '@mantine/core';
@@ -379,9 +356,7 @@ function Demo() {
 
 ## Tooltip delay group
 
-`Tooltip.Group` component can be used to sync open and close delays for multiple tooltips:
-
-#### Example: group
+The `Tooltip.Group` component can be used to sync open and close delays for multiple tooltips:
 
 ```tsx
 import { Tooltip, Button, Group } from '@mantine/core';
@@ -408,9 +383,7 @@ function Demo() {
 
 ## Floating tooltip
 
-`Tooltip.Floating` component has the same API as Tooltip component but tooltip will follow mouse:
-
-#### Example: floating
+`Tooltip.Floating` component has the same API as the Tooltip component but the tooltip will follow the mouse:
 
 ```tsx
 import { Box, Tooltip } from '@mantine/core';
@@ -427,65 +400,16 @@ function Demo() {
 ```
 
 
-## Custom components with Tooltip
-
-If you want to build a component that can be used with Tooltip use
-[forwardRef](https://reactjs.org/docs/forwarding-refs.html) or other prop that will allow to get root element ref.
-This logic is applied to Tooltip and Tooltip.Floating components:
-
-```tsx
-import { forwardRef } from 'react';
-import { Tooltip } from '@mantine/core';
-
-// forwardRef function will allow to get root element ref
-const MyBadge = forwardRef<HTMLDivElement, { color: string }>(
-  ({ color }, ref) => (
-    <div ref={ref} color={color}>
-      Badge
-    </div>
-  )
-);
-
-// other props can also be used
-function MyOtherBadge({
-  color,
-  innerRef,
-}: {
-  color: string;
-  innerRef?: React.ForwardedRef<HTMLDivElement>;
-}) {
-  return (
-    <div ref={innerRef} color={color}>
-      Badge
-    </div>
-  );
-}
-
-function Demo() {
-  return (
-    <>
-      <Tooltip label="Can be used as is">
-        <MyBadge color="red" />
-      </Tooltip>
-
-      <Tooltip label="refProp is required" refProp="innerRef">
-        <MyOtherBadge color="orange" />
-      </Tooltip>
-    </>
-  );
-}
-```
-
 ## Accessibility
 
 Tooltip follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/#tooltip):
 
-* Tooltip body has `role="tooltip"` attribute
-* Target element has `aria-describedby` attribute
+* The tooltip body has `role="tooltip"` attribute
+* The target element has `aria-describedby` attribute
 * `Tooltip.Floating` is ignored by screen readers
 
 By default, Tooltip is not triggered by focus events and thus users who use a screen reader
-or navigate with keyboard will not be able to get tooltip content. Set `events` prop to enable
+or navigate with the keyboard will not be able to get tooltip content. Set the `events` prop to enable
 focus/blur tooltip events:
 
 ```tsx
@@ -507,39 +431,40 @@ function Demo() {
 
 #### Props
 
+**Tooltip props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | arrowOffset | number | - | Arrow offset in px |
-| arrowPosition | ArrowPosition | - | Arrow position relative to the tooltip |
-| arrowRadius | number | - | Arrow <code>border-radius</code> in px |
+| arrowPosition | 'center' \| 'side' | - | Arrow position relative to the tooltip |
+| arrowRadius | number | - | Arrow `border-radius` in px |
 | arrowSize | number | - | Arrow size in px |
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| children | React.ReactNode | - | Target element, must support <code>ref</code> prop and <code>...others</code> |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| children | React.ReactNode | - | Target element, must support `ref` prop and `...others` |
 | closeDelay | number | - | Close delay in ms |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color, controls tooltip background, by default set based on current color scheme |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color, controls tooltip background, by default set based on current color scheme |
 | defaultOpened | boolean | - | Uncontrolled tooltip initial opened state |
 | disabled | boolean | - | If set, tooltip element will not be rendered |
 | events | { hover: boolean; focus: boolean; touch: boolean; } | - | Determines which events will be used to show tooltip |
 | floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |
 | inline | boolean | - | Must be set if the tooltip target is an inline element |
-| keepMounted | boolean | - | If set, the tooltip is not unmounted from the DOM when hidden, <code>display: none</code> styles are applied instead |
+| keepMounted | boolean | - | If set, the tooltip is not unmounted from the DOM when hidden, `display: none` styles are applied instead |
 | label | React.ReactNode | required | Tooltip content |
-| middlewares | TooltipMiddlewares | - | Floating ui middlewares to configure position handling, <code>{ flip: true, shift: true, inline: false }</code> by default |
-| multiline | boolean | - | Determines whether content should be wrapped on to the next line, <code>false</code> by default |
-| offset | number | FloatingAxesOffsets | - | Space between target element and tooltip in px |
+| middlewares | TooltipMiddlewares | - | Floating ui middlewares to configure position handling, `{ flip: true, shift: true, inline: false }` by default |
+| multiline | boolean | - | Determines whether content should be wrapped on to the next line, `false` by default |
+| offset | number \| FloatingAxesOffsets | - | Space between target element and tooltip in px |
 | onPositionChange | (position: FloatingPosition) => void | - | Called when tooltip position changes |
 | openDelay | number | - | Open delay in ms |
 | opened | boolean | - | Controlled opened state |
 | portalProps | Omit<BasePortalProps, "withinPortal"> | - | Props to pass down to the portal when withinPortal is true |
-| position | FloatingPosition | - | Tooltip position relative to target element (<code>Tooltip</code> component) or mouse (<code>Tooltip.Floating</code> component) |
-| positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem@default <code>theme.defaultRadius</code> |
-| refProp | string | - | Key of the prop that can be used to access element ref, <code>ref</code> by default |
-| target | string | HTMLElement | RefObject<HTMLElement | null> | null | - | Selector, ref of an element or element itself that should be used for positioning |
-| transitionProps | TransitionProps | - | Props passed down to the <code>Transition</code> component that used to animate tooltip presence, use to configure duration and animation type |
+| position | FloatingPosition | - | Tooltip position relative to target element (`Tooltip` component) or mouse (`Tooltip.Floating` component) |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem@default theme.defaultRadius |
+| refProp | string | - | Key of the prop that can be used to access element ref, `ref` by default |
+| target | string \| HTMLElement \| RefObject<HTMLElement \| null> \| null | - | Selector, ref of an element or element itself that should be used for positioning |
+| transitionProps | TransitionProps | - | Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type |
 | withArrow | boolean | - | If set, the tooltip has an arrow |
-| withinPortal | boolean | - | Determines whether tooltip should be rendered within <code>Portal</code>, <code>true</code> by default |
-| zIndex | string | number | - | Tooltip z-index, <code>300</code> by default |
+| withinPortal | boolean | - | Determines whether tooltip should be rendered within `Portal`, `true` by default |
+| zIndex | string \| number | - | Tooltip z-index, `300` by default |
 
 
 #### Styles API
@@ -565,4 +490,4 @@ Tooltip component supports Styles API. With Styles API, you can customize styles
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| tooltip | data-multiline | - | - |
+| tooltip | data-multiline | `multiline` prop is set | - |

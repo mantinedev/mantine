@@ -5,36 +5,23 @@ Description: Render icon inside element with theme colors
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { ThemeIcon } from '@mantine/core';
-import { IconPhoto } from '@tabler/icons-react';
+import { ImageIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
-    <ThemeIcon>
-      <IconPhoto style={{ width: '70%', height: '70%' }} />
+    <ThemeIcon variant="filled" radius="md" size="md" color="blue">
+      <ImageIcon style={{ width: '70%', height: '70%' }} />
     </ThemeIcon>
   );
 }
 ```
 
 
-<Gradient component="ThemeIcon" />
-
-## Gradient
-
-ThemeIcon supports Mantine color format in color prop. Color can be specified as:
-- Mantine color name (e.g., 'blue')
-- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
-- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
-
-#### Example: gradient
-
 ```tsx
 import { ThemeIcon } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -42,9 +29,9 @@ function Demo() {
       variant="gradient"
       size="xl"
       aria-label="Gradient action icon"
-      gradient={{ from: 'cyan', to: 'blue', deg: 90 }}
+      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
     >
-      <IconHeart />
+      <HeartIcon />
     </ThemeIcon>
   );
 }
@@ -53,13 +40,11 @@ function Demo() {
 
 ## Customize variants colors
 
-You can customize colors for `ThemeIcon` and other components variants by adding
-[variantColorResolver](https://mantine.dev/theming/colors#colors-variant-resolver) to your theme.
-
-#### Example: variantColorsResolver
+You can customize colors for `ThemeIcon` and other component variants by adding
+[variantColorResolver](https://mantine.dev/llms/theming-colors.md#colors-variant-resolver) to your theme.
 
 ```tsx
-import { IconPhoto, IconFingerprint, IconError404 } from '@tabler/icons-react';
+import { ImageIcon, FingerprintIcon, WarningIcon } from '@phosphor-icons/react';
 import {
   ThemeIcon,
   Group,
@@ -115,15 +100,15 @@ function Demo() {
     <MantineProvider theme={{ variantColorResolver }}>
       <Group>
         <ThemeIcon color="lime.4" variant="filled">
-          <IconPhoto size={20} />
+          <ImageIcon size={20} />
         </ThemeIcon>
 
         <ThemeIcon color="orange" variant="light">
-          <IconFingerprint size={20} />
+          <FingerprintIcon size={20} />
         </ThemeIcon>
 
         <ThemeIcon variant="danger">
-          <IconError404 size={20} />
+          <WarningIcon size={20} />
         </ThemeIcon>
       </Group>
     </MantineProvider>
@@ -132,28 +117,18 @@ function Demo() {
 ```
 
 
-<AutoContrast component="ThemeIcon" />
-
-## autoContrast
-
-ThemeIcon supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on ThemeIcon or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
-
-Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
-
-#### Example: autoContrast
-
 ```tsx
-import { IconFingerprint } from '@tabler/icons-react';
+import { FingerprintIcon } from '@phosphor-icons/react';
 import { ThemeIcon, Group } from '@mantine/core';
 
 function Demo() {
   return (
     <Group>
       <ThemeIcon size="lg" color="lime.4">
-        <IconFingerprint size={20} />
+        <FingerprintIcon size={20} />
       </ThemeIcon>
       <ThemeIcon size="lg" color="lime.4" autoContrast>
-        <IconFingerprint size={20} />
+        <FingerprintIcon size={20} />
       </ThemeIcon>
     </Group>
   );
@@ -164,14 +139,16 @@ function Demo() {
 
 #### Props
 
+**ThemeIcon props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
 | children | React.ReactNode | - | Icon displayed inside the component |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color. |
-| gradient | MantineGradient | - | Gradient data used when <code>variant="gradient"</code> |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem. |
-| size | number | MantineSize | (string & {}) | - | Controls width and height of the button. Numbers are converted to rem. |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color. |
+| gradient | MantineGradient | - | Gradient data used when `variant="gradient"` |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. |
+| size | MantineSize \| number | - | Controls width and height of the button. Numbers are converted to rem. |
 
 
 #### Styles API

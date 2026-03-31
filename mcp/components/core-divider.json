@@ -1,0 +1,94 @@
+{
+  "id": "core-divider",
+  "name": "Divider",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/divider",
+  "description": "Horizontal line with optional label or vertical divider",
+  "propsCount": 5,
+  "llmUrl": "https://mantine.dev/llms/core-divider.md",
+  "componentDataUrl": "/mcp/components/core-divider.json",
+  "searchText": "divider horizontal line with optional label or vertical divider @mantine/core /core/divider color label labelposition orientation size",
+  "source": "@mantine/core/src/components/Divider/Divider.tsx",
+  "docs": "core/divider.mdx",
+  "markdown": "# Divider\nPackage: @mantine/core\nImport: import { Divider } from '@mantine/core';\nDescription: Horizontal line with optional label or vertical divider\n\n## Usage\n\n```tsx\nimport { Text, Divider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text>\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,\n        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur\n        aliquid commodi atque sunt officiis natus?\n      </Text>\n\n      <Divider my=\"md\" />\n\n      <Text>\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,\n        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur\n        aliquid commodi atque sunt officiis natus?\n      </Text>\n\n      <Divider my=\"md\" />\n\n      <Text>\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, officiis! Fugit minus ea,\n        perferendis eum consectetur quae vitae. Aliquid, quam reprehenderit? Maiores sed pariatur\n        aliquid commodi atque sunt officiis natus?\n      </Text>\n    </>\n  );\n}\n```\n\n\n## Variants\n\n```tsx\nimport { Divider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Divider my=\"sm\" />\n      <Divider my=\"sm\" variant=\"dashed\" />\n      <Divider my=\"sm\" variant=\"dotted\" />\n    </>\n  );\n}\n```\n\n\n## With label\n\n```tsx\nimport { Divider, Box, Anchor } from '@mantine/core';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <>\n      <Divider my=\"xs\" label=\"Label on the left\" labelPosition=\"left\" />\n      <Divider my=\"xs\" label=\"Label in the center\" labelPosition=\"center\" />\n      <Divider my=\"xs\" label=\"Label on the right\" labelPosition=\"right\" />\n      <Divider\n        my=\"xs\"\n        variant=\"dashed\"\n        labelPosition=\"center\"\n        label={\n          <>\n            <MagnifyingGlassIcon size={12} />\n            <Box ml={5}>Search results</Box>\n          </>\n        }\n      />\n      <Divider\n        my=\"xs\"\n        label={\n          <Anchor href=\"https://mantine.dev\" target=\"_blank\" inherit>\n            Link label\n          </Anchor>\n        }\n      />\n    </>\n  );\n}\n```\n\n\n## Sizes\n\n```tsx\nimport { Divider } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Divider size=\"xs\" />\n      <Divider size=\"sm\" />\n      <Divider size=\"md\" />\n      <Divider size=\"lg\" />\n      <Divider size=\"xl\" />\n      <Divider size={10} />\n    </>\n  );\n}\n```\n\n\n## Vertical orientation\n\n```tsx\nimport { Divider, Group, Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Text>Label</Text>\n      <Divider orientation=\"vertical\" />\n      <Text>Label</Text>\n      <Divider size=\"sm\" orientation=\"vertical\" />\n      <Text>Label</Text>\n      <Divider size=\"md\" orientation=\"vertical\" />\n      <Text>Label</Text>\n      <Divider size=\"lg\" orientation=\"vertical\" />\n      <Text>Label</Text>\n      <Divider size=\"xl\" orientation=\"vertical\" />\n      <Text>Label</Text>\n    </Group>\n  );\n}\n```\n\n\n\n#### Props\n\n**Divider props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color value |\n| label | React.ReactNode | - | Divider label, visible only with `orientation=\"horizontal\"` |\n| labelPosition | \"center\" \\| \"left\" \\| \"right\" | - | Label position |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Divider orientation |\n| size | MantineSize \\| number | - | Controls width/height (depends on orientation) |\n\n\n#### Styles API\n\nDivider component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Divider selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Divider-root | Root element |\n| label | .mantine-Divider-label | Label element |\n\n**Divider CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --divider-border-style | Controls `border-style` |\n| root | --divider-color | Controls `border-color` |\n| root | --divider-size | Controls `border-width` |\n\n**Divider data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-with-label | `label` prop is truthy | - |\n| root | data-orientation | - | Value of `orientation` prop |\n| label | data-position | - | Value of `labelPosition` prop |\n",
+  "props": [
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Divider"
+    },
+    {
+      "name": "label",
+      "description": "Divider label, visible only with <code>orientation=\"horizontal\"</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Divider"
+    },
+    {
+      "name": "labelPosition",
+      "description": "Label position",
+      "required": false,
+      "defaultValue": "'center'",
+      "type": {
+        "name": "\"center\" | \"left\" | \"right\"",
+        "raw": "\"center\" | \"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"center\""
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Divider"
+    },
+    {
+      "name": "orientation",
+      "description": "Divider orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "Divider"
+    },
+    {
+      "name": "size",
+      "description": "Controls width/height (depends on orientation)",
+      "required": false,
+      "defaultValue": "'xs'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Divider"
+    }
+  ]
+}

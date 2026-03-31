@@ -1,0 +1,80 @@
+# My Popover dropdown closes when I click on the dropdown of a nested Popover
+Popover dropdown is closed when it detects click-outside events
+
+## Nested popovers
+
+By default, all popovers and dropdowns are rendered within the [Portal](https://mantine.dev/core/portal/)
+component, which is attached to the `document.body`.
+This allows popovers to be rendered on top of all other elements and to be positioned correctly even if the parent element has `overflow: hidden`.
+
+The [Popover](https://mantine.dev/core/popover/) component uses the [use-click-outside](https://mantine.dev/hooks/use-click-outside/) hook to detect clicks outside of the popover.
+When you click on the nested popover, it detects that click as an outside click and closes the parent popover.
+This happens with every component that uses [Popover](https://mantine.dev/core/popover/) under the hood, including [DatePicker](https://mantine.dev/dates/date-picker/), [Select](https://mantine.dev/select/select/),
+[Menu](https://mantine.dev/menu/menu/), and others.
+
+Example of the issue:
+
+#### Example: NestedPopovers
+
+```tsx
+import { Button, Popover, Select } from '@mantine/core';
+import { InputBase } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover width={200} position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <Button>Toggle popover</Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Select
+          placeholder="Choose your framework"
+          data={[
+            { value: 'react', label: 'React' },
+            { value: 'vue', label: 'Vue' },
+            { value: 'angular', label: 'Angular' },
+          ]}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+
+## How to fix
+
+To fix the issue, set the `withinPortal={false}` prop on the nested popover. Note that
+this option might be a part of another prop (for example, `comboboxProps` in [Select](https://mantine.dev/select/select/)).
+To learn which prop to use, check the documentation of the component you are using.
+
+Example of the fixed issue:
+
+#### Example: NestedPopoversWorking
+
+```tsx
+import { Button, Popover, Select } from '@mantine/core';
+import { InputBase } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover width={200} position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <Button>Toggle popover</Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Select
+          comboboxProps={{ withinPortal: false }}
+          placeholder="Choose your framework"
+          data={[
+            { value: 'react', label: 'React' },
+            { value: 'vue', label: 'Vue' },
+            { value: 'angular', label: 'Angular' },
+          ]}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+

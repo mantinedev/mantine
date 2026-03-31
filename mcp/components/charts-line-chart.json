@@ -1,0 +1,504 @@
+{
+  "id": "charts-line-chart",
+  "name": "LineChart",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/line-chart",
+  "description": "Line chart component",
+  "propsCount": 40,
+  "llmUrl": "https://mantine.dev/llms/charts-line-chart.md",
+  "componentDataUrl": "/mcp/components/charts-line-chart.json",
+  "searchText": "linechart line chart component @mantine/charts /charts/line-chart activedotprops children connectnulls curvetype data datakey dotprops fillopacity gradientstops gridaxis gridcolor gridprops legendprops linechartprops lineprops orientation referencelines rightyaxislabel rightyaxisprops series strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter withdots withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops",
+  "source": "@mantine/charts/src/LineChart/LineChart.tsx",
+  "docs": "charts/line-chart.mdx",
+  "markdown": "# LineChart\nPackage: @mantine/charts\nImport: import { LineChart } from '@mantine/charts';\nDescription: Line chart component\n\n## Usage\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n       curveType=\"linear\" tickLine=\"y\" gridAxis=\"x\" withXAxis={true} withYAxis={true} withDots={true}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Gradient type\n\nSet `type=\"gradient\"` to render a line chart with gradient fill. To customize\ngradient colors, use the `gradientStops` prop. It accepts an array of objects with\n`offset` and `color` properties. `offset` is a number between 0 and 100 that\ndefines the position of the color in the gradient; `color` is a reference to `theme.colors`\nor any valid CSS color.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      series={[{ name: 'temperature', label: 'Avg. Temperature' }]}\n      dataKey=\"date\"\n      type=\"gradient\"\n      gradientStops={[\n        { offset: 0, color: 'red.6' },\n        { offset: 20, color: 'orange.6' },\n        { offset: 40, color: 'yellow.5' },\n        { offset: 70, color: 'lime.5' },\n        { offset: 80, color: 'cyan.5' },\n        { offset: 100, color: 'blue.5' },\n      ]}\n      strokeWidth={5}\n      curveType=\"natural\"\n      yAxisProps={{ domain: [-25, 40] }}\n      valueFormatter={(value) => `${value}°C`}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  { date: 'Jan', temperature: -25 },\n  { date: 'Feb', temperature: -10 },\n  { date: 'Mar', temperature: 5 },\n  { date: 'Apr', temperature: 15 },\n  { date: 'May', temperature: 30 },\n  { date: 'Jun', temperature: 15 },\n  { date: 'Jul', temperature: 30 },\n  { date: 'Aug', temperature: 40 },\n  { date: 'Sep', temperature: 15 },\n  { date: 'Oct', temperature: 20 },\n  { date: 'Nov', temperature: 0 },\n  { date: 'Dec', temperature: -10 },\n];\n```\n\n\n## Legend\n\nTo display the chart legend, set the `withLegend` prop. When one of the items in the legend\nis hovered, the corresponding data series is highlighted in the chart.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      withLegend\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Legend position\n\nYou can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)\ncomponent with the `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`\nwill render the legend at the bottom of the chart and set its height to 50px.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      withLegend\n      legendProps={{ verticalAlign: 'bottom', height: 50 }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Series labels\n\nBy default, the series `name` is used as a label. To change it, set the `label`\nproperty in the `series` object:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      withLegend\n      legendProps={{ verticalAlign: 'bottom' }}\n      series={[\n        { name: 'Apples', label: 'Apples sales', color: 'indigo.6' },\n        { name: 'Oranges', label: 'Oranges sales', color: 'blue.6' },\n        { name: 'Tomatoes', label: 'Tomatoes sales', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Connect nulls\n\nUse the `connectNulls` prop to specify whether to connect a data point across null\npoints. By default, `connectNulls` is `true`.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[{ name: 'Apples', color: 'indigo.6' }]}\n       curveType=\"linear\" connectNulls={true}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 110,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 80,\n  },\n  {\n    date: 'Mar 25',\n    Apples: null,\n  },\n  {\n    date: 'Mar 26',\n    Apples: null,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 28',\n    Apples: 120,\n  },\n  {\n    date: 'Mar 29',\n    Apples: 80,\n  },\n];\n```\n\n\n## Points labels\n\nTo display labels on data points, set `withPointLabels`:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      withLegend\n      withPointLabels\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## X and Y axis props\n\nUse `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)\nand [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props\ncan be used to change the orientation of the axis:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      tickLine=\"xy\"\n      yAxisProps={{ tickMargin: 15, orientation: 'right' }}\n      xAxisProps={{ tickMargin: 15, orientation: 'top' }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Axis labels\n\nUse `xAxisLabel` and `yAxisLabel` props to display axis labels:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      xAxisLabel=\"Date\"\n      yAxisLabel=\"Amount\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## X axis offset\n\nUse `xAxisProps` to set padding between the chart ends and the x-axis:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      xAxisProps={{ padding: { left: 30, right: 30 } }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Y axis scale\n\nUse `yAxisProps` to change the domain of the Y axis. For example, if you know that\nyour data will always be in the range of 0 to 100, you can set the domain to `[0, 100]`:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      yAxisProps={{ domain: [0, 100] }}\n      series={[{ name: 'Apples', color: 'indigo.6' }]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 50,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 30,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 0,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 28',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 29',\n    Apples: 10,\n  },\n];\n```\n\n\n## Right Y axis\n\nTo display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.\nYou can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)\ncomponent with the `rightYAxisProps` prop and assign a label to the right Y axis with\nthe `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis\nby setting `yAxisId` in the `series` object.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"name\"\n      withRightYAxis\n      yAxisLabel=\"uv\"\n      rightYAxisLabel=\"pv\"\n      series={[\n        { name: 'uv', color: 'pink.6' },\n        { name: 'pv', color: 'cyan.6', yAxisId: 'right' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const biaxialData = [\n  { name: 'Page A', uv: 4000, pv: 2400 },\n  { name: 'Page B', uv: 3000, pv: 1398 },\n  { name: 'Page C', uv: 2000, pv: 9800 },\n  { name: 'Page D', uv: 2780, pv: 3908 },\n  { name: 'Page E', uv: 1890, pv: 4800 },\n  { name: 'Page F', uv: 2390, pv: 3800 },\n  { name: 'Page G', uv: 3490, pv: 4300 },\n];\n```\n\n\n## Value formatter\n\nTo format values in the tooltip and axis ticks, use the `valueFormat` prop. It accepts\na function that takes a number value as an argument and returns a formatted value:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      valueFormatter={(value) => new Intl.NumberFormat('en-US').format(value)}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Set curve type per line\n\nYou can set individual curve types for each line in the `series` array. If you\ndo not set a curve type for a line, the series will fall back to `curveType` prop, or\n`monotone` if `curveType` is not set.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6', curveType: 'linear' },\n        { name: 'Oranges', color: 'blue.6', curveType: 'bump' },\n        { name: 'Tomatoes', color: 'teal.6', curveType: 'stepAfter' },\n      ]}\n      \n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Line color\n\nYou can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted.\n\n```tsx\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Change line color depending on color scheme\n\nYou can use CSS variables in the `color` property. To define a CSS variable that\nchanges depending on the color scheme, use [light/dark mixins](https://mantine.dev/llms/styles-postcss-preset.md#dark-and-light-mixins)\nor the [light-dark function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function). Example\nof a line that is dark orange in light mode and lime in dark mode:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      className={classes.root}\n      series={[{ name: 'Apples', color: 'var(--line-color)' }]}\n    />\n  );\n}\n\n// Demo.module.css\n.root {\n  @mixin light {\n    --line-color: var(--mantine-color-orange-8);\n  }\n\n  @mixin dark {\n    --line-color: var(--mantine-color-lime-4);\n  }\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Stroke dash array\n\nSet the `strokeDasharray` prop to control the stroke dash array of the grid and cursor\nlines. The value represents the lengths of alternating dashes and gaps. For example,\n`strokeDasharray=\"10 5\"` will render a dashed line with 10px dashes and 5px gaps.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      strokeDasharray=\"15 15\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Grid and text colors\n\nUse `--chart-grid-color` and `--chart-text-color` to change colors of\ngrid lines and text within the chart. With [CSS modules](https://mantine.dev/llms/styles-css-modules.md), you can change colors\ndepending on color scheme:\n\n```tsx\n// Demo.module.css\n.root {\n  @mixin light {\n    --chart-grid-color: alpha(var(--mantine-color-black), 0.15);\n    --chart-text-color: var(--mantine-color-gray-7);\n  }\n\n  @mixin dark {\n    --chart-grid-color: alpha(var(--mantine-color-white), 0.15);\n    --chart-text-color: var(--mantine-color-dark-0);\n  }\n}\n\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      className={classes.root}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\nIf your application has only one color scheme, you can use the `gridColor` and `textColor`\nprops instead of CSS variables:\n\n```tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      gridColor=\"gray.5\"\n      textColor=\"gray.9\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n```\n\n## Tooltip animation\n\nBy default, tooltip animation is disabled. To enable it, set the `tooltipAnimationDuration`\nprop to a number of milliseconds to animate the tooltip position change.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      tooltipAnimationDuration={200}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Units\n\nSet the `unit` prop to render a unit label next to the y-axis ticks and tooltip values:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      unit=\"$\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Custom tooltip\n\nUse `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)\ncomponent. Note that it is required to filter the recharts payload with the `getFilteredChartTooltipPayload`\nfunction to remove empty values that are used for styling purposes only.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { Paper, Text } from '@mantine/core';\nimport { data } from './data';\n\ninterface ChartTooltipProps {\n  label: React.ReactNode;\n  payload: readonly Record<string, any>[] | undefined;\n}\n\nfunction ChartTooltip({ label, payload }: ChartTooltipProps) {\n  if (!payload) return null;\n\n  return (\n    <Paper px=\"md\" py=\"sm\" withBorder shadow=\"md\">\n      <Text fw={500} mb={5}>\n        {label}\n      </Text>\n      {payload.map((item: any) => (\n        <Text key={item.name} c={item.color} fz=\"sm\">\n          {item.name}: {item.value}\n        </Text>\n      ))}\n    </Paper>\n  );\n}\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      tooltipProps={{\n        content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,\n      }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Remove tooltip\n\nTo remove the tooltip, set `withTooltip={false}`. This also removes the cursor line\nand disables interactions with the chart.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      withTooltip={false}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Customize dots\n\nUse `dotProps` to pass props down to the recharts dot in regular state and `activeDotProps`\nto pass props down to the recharts dot in active state (when the cursor is over the current series).\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      dotProps={{ r: 6, strokeWidth: 2, stroke: '#fff' }}\n      activeDotProps={{ r: 8, strokeWidth: 1, fill: '#fff' }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Stroke width\n\nUse the `strokeWidth` prop to control the stroke width of all lines:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n       strokeWidth={2}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Sync multiple LineCharts\n\nYou can pass props down to the recharts [LineChart](https://recharts.org/en-US/api/LineChart)\ncomponent with the `lineChartProps` prop. For example, setting `lineChartProps={{ syncId: 'any-id' }}`\nwill sync the tooltip of multiple `LineChart` components with the same `syncId` prop.\n\n```tsx\n// Demo.tsx\nimport { Text } from '@mantine/core';\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <>\n      <Text mb=\"md\" pl=\"md\">\n        Apples sales:\n      </Text>\n\n      <LineChart\n        h={180}\n        data={data}\n        dataKey=\"date\"\n        series={[{ name: 'Apples', color: 'indigo.6' }]}\n        lineChartProps={{ syncId: 'groceries' }}\n      />\n\n      <Text mb=\"md\" pl=\"md\" mt=\"xl\">\n        Tomatoes sales:\n      </Text>\n\n      <LineChart\n        h={180}\n        data={data}\n        dataKey=\"date\"\n        lineChartProps={{ syncId: 'groceries' }}\n        series={[{ name: 'Tomatoes', color: 'teal.6' }]}\n      />\n    </>\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Vertical orientation\n\nSet `orientation=\"vertical\"` to render a vertical line chart:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      orientation=\"vertical\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Dashed line\n\nSet the `strokeDasharray` property in `series` to change the line style to dashed:\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      dotProps={{ r: 2 }}\n      activeDotProps={{ r: 3, strokeWidth: 1 }}\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6', strokeDasharray: '5 5' },\n      ]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n## Reference lines\n\nUse the `referenceLines` prop to render reference lines. Reference lines are always\nrendered behind the chart.\n\n```tsx\n// Demo.tsx\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      yAxisProps={{ domain: [0, 100] }}\n      referenceLines={[\n        { y: 40, label: 'Average sales', color: 'red.6' },\n        { x: 'Mar 25', label: 'Report out' },\n      ]}\n      series={[{ name: 'Apples', color: 'indigo.6' }]}\n    />\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 50,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 60,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 40,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 30,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 0,\n  },\n  {\n    date: 'Mar 27',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 28',\n    Apples: 20,\n  },\n  {\n    date: 'Mar 29',\n    Apples: 10,\n  },\n];\n```\n\n\n## Reference area\n\nUse the `ReferenceArea` component from recharts to display a reference area:\n\n```tsx\n// Demo.tsx\nimport { ReferenceArea } from 'recharts';\nimport { LineChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <LineChart\n      h={300}\n      data={data}\n      dataKey=\"date\"\n      series={[\n        { name: 'Apples', color: 'indigo.6' },\n        { name: 'Oranges', color: 'blue.6' },\n        { name: 'Tomatoes', color: 'teal.6' },\n      ]}\n    >\n      <ReferenceArea\n        x1=\"Mar 23\"\n        x2=\"Mar 25\"\n        y1={1200}\n        y2={3200}\n        fillOpacity={0.3}\n        strokeOpacity={0.9}\n        fill=\"var(--mantine-color-gray-4)\"\n        stroke=\"var(--mantine-color-gray-6)\"\n        strokeWidth={1}\n        label={{\n          value: 'Weekend sales target',\n          position: 'insideTopRight',\n          fontSize: 12,\n          fill: 'var(--mantine-color-bright)',\n        }}\n      />\n    </LineChart>\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    date: 'Mar 22',\n    Apples: 2890,\n    Oranges: 2338,\n    Tomatoes: 2452,\n  },\n  {\n    date: 'Mar 23',\n    Apples: 2756,\n    Oranges: 2103,\n    Tomatoes: 2402,\n  },\n  {\n    date: 'Mar 24',\n    Apples: 3322,\n    Oranges: 986,\n    Tomatoes: 1821,\n  },\n  {\n    date: 'Mar 25',\n    Apples: 3470,\n    Oranges: 2108,\n    Tomatoes: 2809,\n  },\n  {\n    date: 'Mar 26',\n    Apples: 3129,\n    Oranges: 1726,\n    Tomatoes: 2290,\n  },\n];\n```\n\n\n\n#### Props\n\n**LineChart props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |\n| children | React.ReactNode | - | Additional components that are rendered inside recharts `LineChart` component |\n| connectNulls | boolean | - | Determines whether points with `null` values should be connected |\n| curveType | LineChartCurveType | - | Type of the curve |\n| data | Record<string, any>[] | required | Data used to display chart |\n| dataKey | string | required | Key of the `data` object for x-axis values |\n| dotProps | MantineChartDotProps | - | Props passed down to all dots. Ignored if `withDots={false}` is set. |\n| fillOpacity | number | - | Controls fill opacity of all lines |\n| gradientStops | LineChartGradientStop[] | - | Data used to generate gradient stops |\n| gridAxis | \"none\" \\| \"x\" \\| \"y\" \\| \"xy\" | - | Specifies which lines should be displayed in the grid, `'x'` by default |\n| gridColor | MantineColor | - | Color of the grid and cursor lines, by default depends on color scheme |\n| gridProps | RechartsProps | - | Props passed down to the `CartesianGrid` component |\n| legendProps | RechartsProps | - | Props passed down to the `Legend` component |\n| lineChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \\| undefined | - | Props passed down to recharts `LineChart` component |\n| lineProps | Partial<Omit<Props, \"ref\">> \\| ((series: LineChartSeries) => Partial<Omit<Props, \"ref\">>) | - | Props passed down to recharts `Line` component |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Chart orientation, `'horizontal'` by default |\n| referenceLines | ChartReferenceLineProps[] | - | Reference lines that should be displayed on the chart |\n| rightYAxisLabel | string | - | A label to display next to the right y-axis |\n| rightYAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component rendered on the right side |\n| series | LineChartSeries[] | required | An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. |\n| strokeDasharray | string \\| number | - | Dash array for the grid lines and cursor, `'5 5'` by default |\n| strokeWidth | number | - | Stroke width for the chart lines |\n| textColor | MantineColor | - | Color of the text displayed inside the chart, `'dimmed'` by default |\n| tickLine | \"none\" \\| \"x\" \\| \"y\" \\| \"xy\" | - | Specifies which axis should have tick line, `'y'` by default |\n| tooltipAnimationDuration | number | - | Tooltip position animation duration in ms, `0` by default |\n| tooltipProps | RechartsProps | - | Props passed down to the `Tooltip` component |\n| type | LineChartType | - | Controls styles of the line |\n| unit | string | - | Unit displayed next to each tick in y-axis |\n| valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |\n| withDots | boolean | - | Determines whether dots should be displayed |\n| withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |\n| withPointLabels | boolean | - | Determines whether each point should have associated label |\n| withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default |\n| withTooltip | boolean | - | Determines whether chart tooltip should be displayed, `true` by default |\n| withXAxis | boolean | - | Determines whether x-axis should be displayed, `true` by default |\n| withYAxis | boolean | - | Determines whether y-axis should be displayed, `true` by default |\n| xAxisLabel | string | - | A label to display below the x-axis |\n| xAxisProps | RechartsProps | - | Props passed down to the `XAxis` recharts component |\n| yAxisLabel | string | - | A label to display next to the y-axis |\n| yAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component |\n\n\n#### Styles API\n\nLineChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**LineChart selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-LineChart-root | Root element |\n| line | .mantine-LineChart-line | Line of the chart |\n| axis | .mantine-LineChart-axis | X and Y axis of the chart |\n| container | .mantine-LineChart-container | Recharts ResponsiveContainer component |\n| grid | .mantine-LineChart-grid | Recharts CartesianGrid component |\n| legend | .mantine-LineChart-legend | Legend root element |\n| legendItem | .mantine-LineChart-legendItem | Legend item representing data series |\n| legendItemColor | .mantine-LineChart-legendItemColor | Legend item color |\n| legendItemName | .mantine-LineChart-legendItemName | Legend item name |\n| tooltip | .mantine-LineChart-tooltip | Tooltip root element |\n| tooltipBody | .mantine-LineChart-tooltipBody | Tooltip wrapper around all items |\n| tooltipItem | .mantine-LineChart-tooltipItem | Tooltip item representing data series |\n| tooltipItemBody | .mantine-LineChart-tooltipItemBody | Tooltip item wrapper around item color and name |\n| tooltipItemColor | .mantine-LineChart-tooltipItemColor | Tooltip item color |\n| tooltipItemName | .mantine-LineChart-tooltipItemName | Tooltip item name |\n| tooltipItemData | .mantine-LineChart-tooltipItemData | Tooltip item data |\n| tooltipLabel | .mantine-LineChart-tooltipLabel | Label of the tooltip |\n| referenceLine | .mantine-LineChart-referenceLine | Reference line |\n| axisLabel | .mantine-LineChart-axisLabel | X and Y axis labels |\n\n**LineChart CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --chart-grid-color | Controls color of the grid and cursor lines |\n| root | --chart-text-color | Controls color of the axis labels |\n",
+  "props": [
+    {
+      "name": "activeDotProps",
+      "description": "Props passed down to all active dots. Ignored if <code>withDots={false}</code> is set.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineChartDotProps"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "children",
+      "description": "Additional components that are rendered inside recharts <code>LineChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "connectNulls",
+      "description": "Determines whether points with <code>null</code> values should be connected",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "curveType",
+      "description": "Type of the curve",
+      "required": false,
+      "defaultValue": "'monotone'",
+      "type": {
+        "name": "LineChartCurveType",
+        "raw": "LineChartCurveType | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"step\""
+          },
+          {
+            "value": "\"linear\""
+          },
+          {
+            "value": "\"bump\""
+          },
+          {
+            "value": "\"natural\""
+          },
+          {
+            "value": "\"monotone\""
+          },
+          {
+            "value": "\"stepBefore\""
+          },
+          {
+            "value": "\"stepAfter\""
+          }
+        ]
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "data",
+      "description": "Data used to display chart",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "Record<string, any>[]"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "dataKey",
+      "description": "Key of the <code>data</code> object for x-axis values",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "dotProps",
+      "description": "Props passed down to all dots. Ignored if <code>withDots={false}</code> is set.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineChartDotProps"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "fillOpacity",
+      "description": "Controls fill opacity of all lines",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "gradientStops",
+      "description": "Data used to generate gradient stops",
+      "required": false,
+      "defaultValue": "[{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }]",
+      "type": {
+        "name": "LineChartGradientStop[]"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "gridAxis",
+      "description": "Specifies which lines should be displayed in the grid, <code>'x'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"none\" | \"x\" | \"y\" | \"xy\"",
+        "raw": "\"none\" | \"x\" | \"y\" | \"xy\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"x\""
+          },
+          {
+            "value": "\"y\""
+          },
+          {
+            "value": "\"xy\""
+          }
+        ]
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "gridColor",
+      "description": "Color of the grid and cursor lines, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "gridProps",
+      "description": "Props passed down to the <code>CartesianGrid</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "legendProps",
+      "description": "Props passed down to the <code>Legend</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "lineChartProps",
+      "description": "Props passed down to recharts <code>LineChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) | undefined"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "lineProps",
+      "description": "Props passed down to recharts <code>Line</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<Props, \"ref\">> | ((series: LineChartSeries) => Partial<Omit<Props, \"ref\">>)"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "orientation",
+      "description": "Chart orientation, <code>'horizontal'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "referenceLines",
+      "description": "Reference lines that should be displayed on the chart",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ChartReferenceLineProps[]"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "rightYAxisLabel",
+      "description": "A label to display next to the right y-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "rightYAxisProps",
+      "description": "Props passed down to the <code>YAxis</code> recharts component rendered on the right side",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "series",
+      "description": "An array of objects with <code>name</code> and <code>color</code> keys. Determines which data should be consumed from the <code>data</code> array.",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "LineChartSeries[]"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "strokeDasharray",
+      "description": "Dash array for the grid lines and cursor, <code>'5 5'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "strokeWidth",
+      "description": "Stroke width for the chart lines",
+      "required": false,
+      "defaultValue": "2",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "textColor",
+      "description": "Color of the text displayed inside the chart, <code>'dimmed'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "tickLine",
+      "description": "Specifies which axis should have tick line, <code>'y'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"none\" | \"x\" | \"y\" | \"xy\"",
+        "raw": "\"none\" | \"x\" | \"y\" | \"xy\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"x\""
+          },
+          {
+            "value": "\"y\""
+          },
+          {
+            "value": "\"xy\""
+          }
+        ]
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "tooltipAnimationDuration",
+      "description": "Tooltip position animation duration in ms, <code>0</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "tooltipProps",
+      "description": "Props passed down to the <code>Tooltip</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "type",
+      "description": "Controls styles of the line",
+      "required": false,
+      "defaultValue": "'default'",
+      "type": {
+        "name": "LineChartType",
+        "raw": "LineChartType | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"gradient\""
+          }
+        ]
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "unit",
+      "description": "Unit displayed next to each tick in y-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format values on Y axis and inside the tooltip",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "withDots",
+      "description": "Determines whether dots should be displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "withLegend",
+      "description": "Determines whether chart legend should be displayed, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "withPointLabels",
+      "description": "Determines whether each point should have associated label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "withRightYAxis",
+      "description": "Determines whether additional y-axis should be displayed on the right side of the chart, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Determines whether chart tooltip should be displayed, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "withXAxis",
+      "description": "Determines whether x-axis should be displayed, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "withYAxis",
+      "description": "Determines whether y-axis should be displayed, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "xAxisLabel",
+      "description": "A label to display below the x-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "xAxisProps",
+      "description": "Props passed down to the <code>XAxis</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "yAxisLabel",
+      "description": "A label to display next to the y-axis",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "LineChart"
+    },
+    {
+      "name": "yAxisProps",
+      "description": "Props passed down to the <code>YAxis</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "LineChart"
+    }
+  ]
+}

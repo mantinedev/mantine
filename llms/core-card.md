@@ -5,17 +5,15 @@ Description: Card with sections
 
 ## Usage
 
-`Card` is a wrapper around [Paper](https://mantine.dev/core/paper/) component with some additional styles and `Card.Section`
-component that allows to split card into sections. If you do not need sections, you use [Paper](https://mantine.dev/core/paper/) component instead.
-
-#### Example: usage
+`Card` is a wrapper around the [Paper](https://mantine.dev/llms/core-paper.md) component with some additional styles and a `Card.Section`
+component that allows you to split the card into sections. If you do not need sections, you can use the [Paper](https://mantine.dev/llms/core-paper.md) component instead.
 
 ```tsx
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" withBorder>
       <Card.Section>
         <Image
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
@@ -34,7 +32,7 @@ function Demo() {
         activities on and around the fjords of Norway
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md">
+      <Button color="blue" fullWidth mt="md">
         Book classic tour now
       </Button>
     </Card>
@@ -43,11 +41,69 @@ function Demo() {
 ```
 
 
+## Horizontal orientation
+
+```tsx
+import { Box, Card, Group, RingProgress, Text } from '@mantine/core';
+
+const completed = 1887;
+const total = 2334;
+const stats = [
+  { value: 447, label: 'Remaining' },
+  { value: 76, label: 'In progress' },
+];
+
+function Demo() {
+  const items = stats.map((stat) => (
+    <div key={stat.label}>
+      <Text>{stat.value}</Text>
+      <Text size="xs" c="dimmed">
+        {stat.label}
+      </Text>
+    </div>
+  ));
+
+  return (
+    <Card padding="sm" withBorder orientation="horizontal">
+      <Card.Section inheritPadding px="xs" withBorder>
+        <RingProgress
+          roundCaps
+          thickness={6}
+          size={150}
+          sections={[{ value: (completed / total) * 100, color: 'blue' }]}
+          label={
+            <div>
+              <Text ta="center" fz="lg">
+                {((completed / total) * 100).toFixed(0)}%
+              </Text>
+              <Text ta="center" fz="xs" c="dimmed">
+                Completed
+              </Text>
+            </div>
+          }
+        />
+      </Card.Section>
+
+      <Card.Section inheritPadding px="md">
+        <Text fz="xl">Project tasks</Text>
+        <Box mt="xs">
+          <Text>1887</Text>
+          <Text fz="xs" c="dimmed">
+            Completed
+          </Text>
+        </Box>
+
+        <Group mt="sm">{items}</Group>
+      </Card.Section>
+    </Card>
+  );
+}
+```
+
+
 ## Polymorphic component
 
-Card is a [polymorphic component](https://mantine.dev/guides/polymorphic/) component, you can change its root element:
-
-#### Example: link
+Card is a [polymorphic component](https://mantine.dev/llms/guides-polymorphic.md), you can change its root element:
 
 ```tsx
 import { Card, Image, Text } from '@mantine/core';
@@ -85,11 +141,11 @@ function Demo() {
 ## Card.Section
 
 `Card.Section` is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
-`Card.Section` works the following way:
+`Card.Section` works in the following way:
 
-* If component is the first child in Card, then it has negative top, left and right margins
+* If the component is the first child in Card, then it has negative top, left and right margins
 * If it is the last child in Card, then it has negative bottom, left and right margins
-* If it is in the middle then, only the left and right margins will be negative
+* If it is in the middle, then only the left and right margins will be negative
 
 ```tsx
 import { Card, Text } from '@mantine/core';
@@ -137,16 +193,14 @@ function Demo() {
 
 ## Polymorphic Card.Section
 
-`Card.Section` is a [polymorphic component](https://mantine.dev/guides/polymorphic/) component, you can change its root element:
-
-#### Example: linkSection
+`Card.Section` is a [polymorphic component](https://mantine.dev/llms/guides-polymorphic.md), you can change its root element:
 
 ```tsx
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" withBorder>
       <Card.Section component="a" href="https://mantine.dev/">
         <Image
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
@@ -165,7 +219,7 @@ function Demo() {
         activities on and around the fjords of Norway
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md">
+      <Button color="blue" fullWidth mt="md">
         Book classic tour now
       </Button>
     </Card>
@@ -176,14 +230,12 @@ function Demo() {
 
 ## withBorder and inheritPadding props
 
-* `withBorder` prop adds top and bottom border to `Card.Section` depending on its position relative to other content and sections
-* `inheritPadding` prop adds the same left and right padding to `Card.Section` as set in `Card` component
-
-#### Example: section
+* `withBorder` prop adds top and bottom borders to `Card.Section` depending on its position relative to other content and sections
+* `inheritPadding` prop adds the same left and right padding to `Card.Section` as set in the `Card` component
 
 ```tsx
 import { ActionIcon, Card, Group, Image, Menu, SimpleGrid, Text } from '@mantine/core';
-import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
+import { DotsThreeIcon, EyeIcon, FileZipIcon, TrashIcon } from '@phosphor-icons/react';
 
 const images = [
   'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png',
@@ -193,26 +245,26 @@ const images = [
 
 function Demo() {
   return (
-    <Card withBorder shadow="sm" radius="md">
+    <Card withBorder shadow="sm">
       <Card.Section withBorder inheritPadding py="xs">
         <Group justify="space-between">
           <Text fw={500}>Review pictures</Text>
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon variant="subtle" color="gray">
-                <IconDots size={16} />
+                <DotsThreeIcon size={16} />
               </ActionIcon>
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item leftSection={<IconFileZip size={14} />}>
+              <Menu.Item leftSection={<FileZipIcon size={14} />}>
                 Download zip
               </Menu.Item>
-              <Menu.Item leftSection={<IconEye size={14} />}>
+              <Menu.Item leftSection={<EyeIcon size={14} />}>
                 Preview all
               </Menu.Item>
               <Menu.Item
-                leftSection={<IconTrash size={14} />}
+                leftSection={<TrashIcon size={14} />}
                 color="red"
               >
                 Delete all
@@ -249,13 +301,23 @@ function Demo() {
 
 #### Props
 
+**Card props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | children | React.ReactNode | - | Card content |
-| padding | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set padding |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any valid CSS value to set <code>box-shadow</code> |
+| orientation | "horizontal" \| "vertical" | - | Card orientation |
+| padding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set padding |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS value to set `box-shadow` |
 | withBorder | boolean | - | Adds border to the card |
+
+**Card.Section props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| inheritPadding | boolean | - | If set, the section inherits padding from the parent `Card` |
+| withBorder | boolean | - | Adds border to the root element |
 
 
 #### Styles API
@@ -278,8 +340,8 @@ Card component supports Styles API. With Styles API, you can customize styles of
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| section | data-first-section | - | - |
-| section | data-last-section | - | - |
-| root | data-with-border | - | - |
-| section | data-with-border | - | - |
-| section | data-inherit-padding | - | - |
+| section | data-first-section | `Card.Section` is the child of the `Card` | - |
+| section | data-last-section | `Card.Section` is the last child of the `Card` | - |
+| root | data-with-border | `withBorder` prop is set on `Card` component | - |
+| section | data-with-border | `withBorder` prop is set on `Card.Section` component | - |
+| section | data-inherit-padding | `inheritPadding` prop is set on `Card.Section` component | - |

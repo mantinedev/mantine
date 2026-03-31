@@ -24,8 +24,6 @@ function Demo() {
 
 ## Example
 
-#### Example: usage
-
 ```tsx
 import { Typography } from '@mantine/core';
 
@@ -56,8 +54,6 @@ function Demo() {
 * kbd
 * code and pre
 
-#### Example: all
-
 ```tsx
 function Demo() {
   return (
@@ -71,6 +67,8 @@ function Demo() {
 
 
 #### Props
+
+**Typography props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|

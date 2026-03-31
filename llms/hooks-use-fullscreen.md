@@ -4,9 +4,23 @@ Import: import { UseFullscreen } from '@mantine/hooks';
 
 ## Usage
 
-`use-fullscreen` allows to enter/exit fullscreen for given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
-By default, if you don't provide `ref`, the hook will target `document.documentElement`:
+The `use-fullscreen` hook allows you to enter/exit fullscreen for a given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
+By default, if you don't provide a `ref`, the hook will target `document.documentElement`:
 
+```tsx
+import { useFullscreenDocument } from '@mantine/hooks';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const { toggle, fullscreen } = useFullscreenDocument();
+
+  return (
+    <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
+      {fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+    </Button>
+  );
+}
+```
 
 
 ## Custom target element
@@ -14,6 +28,30 @@ By default, if you don't provide `ref`, the hook will target `document.documentE
 The hook returns an optional `ref` function that can be passed to an element to act as root.
 Be sure to follow best practices to not [confuse or trap the end user](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide#things_your_users_want_to_know):
 
+```tsx
+
+import { useFullscreenElement } from '@mantine/hooks';
+import { Button, Stack } from '@mantine/core';
+
+function RefDemo() {
+  const { ref, toggle, fullscreen } = useFullscreenElement();
+
+  return (
+    <Stack align="center">
+      <img
+        ref={ref}
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png"
+        alt="For demo"
+        width={200}
+      />
+      <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
+        {fullscreen ? 'Exit Fullscreen' : 'View Image Fullscreen'}
+      </Button>
+    </Stack>
+  );
+}
+
+```
 
 
 ## Mobile Safari limitations
@@ -38,7 +76,7 @@ function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<
 
 ## Exported types
 
-`UseFullscreenReturnValue` type is exported from `@mantine/hooks` package,
+The `UseFullscreenReturnValue` type is exported from the `@mantine/hooks` package;
 you can import it in your application:
 
 ```tsx

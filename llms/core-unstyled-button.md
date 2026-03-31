@@ -9,8 +9,6 @@ Description: Unstyled polymorphic button
 base for all other button components. You can use it to as a base for custom
 polymorphic buttons.
 
-#### Example: usage
-
 ```tsx
 import { UnstyledButton } from '@mantine/core';
 
@@ -20,46 +18,14 @@ function Demo() {
 ```
 
 
-<Polymorphic defaultElement="button" changeToElement="a" component="UnstyledButton" />
-
-## Polymorphic component
-
-UnstyledButton is a polymorphic component – its default root element is button, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { UnstyledButton } from '@mantine/core';
-
-function Demo() {
-  return <UnstyledButton component="a" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, UnstyledButtonProps does not extend React.ComponentPropsWithoutRef<'button'> although button is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
-<GetElementRef component="UnstyledButton" refType="button" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { UnstyledButton } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLButtonElement>(null);
-  return <UnstyledButton ref={ref} />;
-}
-```
-
 
 #### Props
 
+**UnstyledButton props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| size | string | number | - | Size passed from parent component, sets <code>data-size</code> if value is not number like |
+| size | string \| number | - | Size passed from parent component, sets `data-size` if value is not number like |
 
 
 #### Styles API

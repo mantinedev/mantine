@@ -2,14 +2,14 @@
 
 # Testing with Jest
 
-This guide will help you setup [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for your project.
+This guide will help you set up [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for your project.
 Note that this guide only covers shared logic that can be applied to any framework, and
-it does not cover initial setup of [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) as it may vary depending on the framework you are using.
+it doesn't cover the initial setup of [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) as it may vary depending on the framework you're using.
 
 ## Custom render
 
-All Mantine components require [MantineProvider](https://mantine.dev/theming/mantine-provider/) to be present in the component tree.
-To add [MantineProvider](https://mantine.dev/theming/mantine-provider/) to the component tree in your tests, create a [custom render](https://testing-library.com/docs/react-testing-library/setup/#custom-render)
+All Mantine components require [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) to be present in the component tree.
+To add [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) to the component tree in your tests, create a [custom render](https://testing-library.com/docs/react-testing-library/setup/#custom-render)
 function:
 
 ```tsx
@@ -28,8 +28,8 @@ export function render(ui: React.ReactNode) {
 }
 ```
 
-It is usually more convenient to export all `@testing-library/*` functions that you are planning to use
-from `./testing-utils/index.ts` file:
+It's usually more convenient to export all `@testing-library/*` functions that you're planning to use
+from a `./testing-utils/index.ts` file:
 
 ```tsx
 import userEvent from '@testing-library/user-event';
@@ -56,12 +56,12 @@ describe('Welcome component', () => {
 });
 ```
 
-## Mock WEB APIs
+## Mock Web APIs
 
-Most of Mantine components depend on browser APIs like `window.matchMedia` or `ResizeObserver`.
-These APIs are not available in `jest-environment-jsdom` environment and you will need to mock them in your tests.
+Most Mantine components depend on browser APIs like `window.matchMedia` or `ResizeObserver`.
+These APIs aren't available in the `jest-environment-jsdom` environment and you'll need to mock them in your tests.
 
-Create `jest.setup.js` file in your project root and add the following code to it:
+Create a `jest.setup.js` file in your project root and add the following code to it:
 
 ```tsx
 import '@testing-library/jest-dom';
@@ -84,6 +84,10 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+Object.defineProperty(document, 'fonts', {
+  value: { addEventListener: jest.fn(), removeEventListener: jest.fn() },
+});
+
 class ResizeObserver {
   observe() {}
   unobserve() {}
@@ -104,10 +108,10 @@ const config = {
 
 ## Framework specific setup
 
-Jest setup for different frameworks may vary and usually change over time.
-To learn how to setup Jest for your framework, either check [Jest](https://jestjs.io/docs/getting-started)
+Jest setup for different frameworks may vary and usually changes over time.
+To learn how to set up Jest for your framework, either check the [Jest](https://jestjs.io/docs/getting-started)
 and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) documentation
-or check one of the premade [templates](https://mantine.dev/getting-started). Most of the templates include Jest setup, and
+or check one of the premade [templates](https://mantine.dev/llms/getting-started.md). Most of the templates include Jest setup, and
 you can use them as a reference.
 
 ## Testing examples

@@ -5,9 +5,7 @@ Description: Display a formatted time value
 
 ## Usage
 
-Use `TimeValue` component to display time in different formats:
-
-#### Example: usage
+Use the `TimeValue` component to display time in different formats:
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -30,9 +28,7 @@ function Demo() {
 
 ## With seconds
 
-Use `withSeconds` prop to display seconds:
-
-#### Example: withSeconds
+Use the `withSeconds` prop to display seconds:
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -55,9 +51,7 @@ function Demo() {
 
 ## AM/PM labels
 
-Use `amPmLabels` prop to display AM/PM labels:
-
-#### Example: amPmLabels
+Use the `amPmLabels` prop to display AM/PM labels:
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -78,9 +72,7 @@ function Demo() {
 
 ## Date object
 
-You can use `Date` object instead of string as `value`:
-
-#### Example: dateObject
+You can use a `Date` object instead of a string as the `value`:
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -104,9 +96,11 @@ function Demo() {
 
 #### Props
 
+**TimeValue props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | amPmLabels | { am: string; pm: string } | - | AM/PM labels |
-| format | "12h" | "24h" | - | Time format |
-| value | string | Date | required | Time to format |
+| format | "12h" \| "24h" | - | Time format |
+| value | string \| Date | required | Time to format |
 | withSeconds | boolean | - | Determines whether seconds should be displayed |

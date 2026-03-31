@@ -1,0 +1,140 @@
+# How can I add dynamic CSS styles?
+Use data attributes, CSS variables or inline styles
+
+## data- attributes
+
+If the value that controls dynamic styles is a boolean or a known small union of values,
+use [data- attributes](https://mantine.dev/styles/data-attributes/).
+
+First, define data- attributes on the component. In the example below:
+
+* `data-disabled` represents the boolean `disabled` attribute. `disabled || undefined` is required
+  to not add `data-disabled="false"` attribute when `disabled` is `false` and allow styling with the `&[data-disabled]` selector.
+* `data-orientation` represents the `orientation` prop which can be either `horizontal` or `vertical`.
+  In styles, you can reference it with the `&[data-orientation="horizontal"]` selector.
+
+```tsx
+import { Box } from '@mantine/core';
+import classes from './Demo.module.css';
+
+interface DemoProps {
+  disabled: boolean;
+  orientation: 'horizontal' | 'vertical';
+}
+
+function Demo({ disabled, orientation }: DemoProps) {
+  return (
+    <Box
+      data-disabled={disabled || undefined}
+      data-orientation={orientation}
+      className={classes.root}
+    >
+      My demo
+    </Box>
+  );
+}
+```
+
+Then add styles in the `.module.css` file:
+
+```scss
+.root {
+  background: orange;
+  display: flex;
+
+  &[data-disabled] {
+    background: silver;
+  }
+
+  &[data-orientation='horizontal'] {
+    flex-direction: row;
+  }
+
+  &[data-orientation='vertical'] {
+    flex-direction: column;
+  }
+}
+```
+
+## Inline styles
+
+If the value that controls dynamic styles is not represented by a known union
+of values (for example, the value can be any valid CSS color), then you can use
+inline styles or [style props](https://mantine.dev/styles/style-props/):
+
+```tsx
+import { Box } from '@mantine/core';
+
+interface DemoProps {
+  fontFamily: string;
+  color: string;
+}
+
+function Demo({ fontFamily, color }: DemoProps) {
+  return (
+    <Box style={{ backgroundColor: color }} ff={fontFamily}>
+      My demo
+    </Box>
+  );
+}
+```
+
+If you need to customize a deeply nested element, use the [styles](https://mantine.dev/styles/styles-api/#styles-prop)
+prop instead:
+
+```tsx
+import { Button } from '@mantine/core';
+
+interface DemoProps {
+  color: string;
+}
+
+function Demo({ color }: DemoProps) {
+  return (
+    <Button styles={{ label: { backgroundColor: color } }}>
+      My demo
+    </Button>
+  );
+}
+```
+
+Note that it is not possible to use pseudo-classes (for example, `:hover`, `:first-of-type`)
+and media queries inside the `styles` prop. For this purpose, use CSS variables
+with the [classNames](https://mantine.dev/styles/styles-api/#classnames-prop) prop.
+
+## CSS variables
+
+If none of the methods above work for you (for example, you want to customize `:hover`
+styles based on component prop), use CSS variables
+with the [classNames](https://mantine.dev/styles/styles-api/#classnames-prop) prop.
+
+First, define CSS variables in the `style` or `styles` prop:
+
+```tsx
+import { Box } from '@mantine/core';
+import classes from './Demo.module.css';
+
+interface DemoProps {
+  color: string;
+}
+
+function Demo({ color }: DemoProps) {
+  return (
+    <Box style={{ '--demo-hover': color }} className={classes.root}>
+      My demo
+    </Box>
+  );
+}
+```
+
+Then reference them in the `.module.css` file:
+
+```scss
+.root {
+  background: orange;
+
+  &:hover {
+    background: var(--demo-hover);
+  }
+}
+```

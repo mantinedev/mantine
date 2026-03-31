@@ -8,14 +8,10 @@ Description: Create custom select, autocomplete or multiselect inputs
 This page contains only a small set of examples, as the full code of the demos is long.
 You can find all 50+ examples on a [separate page](https://mantine.dev/combobox?e=BasicSelect).
 
-<ExamplesButton link="/combobox?e=BasicSelect" label="Open Combobox examples page" />
-
 ## Usage
 
-`Combobox` provides a set of components and hooks to custom select, multiselect or autocomplete components.
+`Combobox` provides a set of components and hooks to create custom select, multiselect or autocomplete components.
 The component is very flexible – you have full control of the rendering and logic.
-
-#### Example: select
 
 ```tsx
 import { useState } from 'react';
@@ -68,8 +64,8 @@ function Demo() {
 
 ## useCombobox hook
 
-`useCombobox` hook provides combobox store. The store contains the current state of the component
-and handlers to update it. Created store must be passed to the `store` prop of `Combobox`:
+`useCombobox` hook provides a combobox store. The store contains the current state of the component
+and handlers to update it. The created store must be passed to the `store` prop of `Combobox`:
 
 ```tsx
 import { Combobox, useCombobox } from '@mantine/core';
@@ -84,7 +80,7 @@ function Demo() {
 
 ## useCombobox options
 
-`useCombobox` hooks accepts an options object with the following properties:
+The `useCombobox` hook accepts an options object with the following properties:
 
 ```tsx
 interface UseComboboxOptions {
@@ -111,7 +107,7 @@ interface UseComboboxOptions {
 }
 ```
 
-You can import `UseComboboxOptions` type from `@mantine/core` package:
+You can import the `UseComboboxOptions` type from the `@mantine/core` package:
 
 ```tsx
 import type { UseComboboxOptions } from '@mantine/core';
@@ -119,7 +115,7 @@ import type { UseComboboxOptions } from '@mantine/core';
 
 ## Combobox store
 
-Combobox store is an object with the following properties:
+The Combobox store is an object with the following properties:
 
 ```tsx
 interface ComboboxStore {
@@ -255,12 +251,10 @@ and adds keyboard event listeners to it.
 
 `Combobox.Target` requires a single child element or component. The child component
 must accept `ref` and `...others` props. You can use any Mantine component as a target without
-any additional configuration, for example, [Button](https://mantine.dev/core/button/), [TextInput](https://mantine.dev/core/text-input/)
-or [InputBase](https://mantine.dev/core/input/#inputbase-component).
+any additional configuration, for example, [Button](https://mantine.dev/llms/core-button.md), [TextInput](https://mantine.dev/llms/core-text-input.md)
+or [InputBase](https://mantine.dev/llms/core-input.md#inputbase-component).
 
-Example of using `Combobox.Target` with [TextInput](https://mantine.dev/core/text-input/) component:
-
-#### Example: autocomplete
+Example of using `Combobox.Target` with [TextInput](https://mantine.dev/llms/core-text-input.md) component:
 
 ```tsx
 import { useState } from 'react';
@@ -284,11 +278,11 @@ function Demo() {
 
   return (
     <Combobox
+      store={combobox}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
         combobox.closeDropdown();
       }}
-      store={combobox}
     >
       <Combobox.Target>
         <TextInput
@@ -317,9 +311,7 @@ function Demo() {
 ```
 
 
-Example of using `Combobox.Target` with [Button](https://mantine.dev/core/button) component:
-
-#### Example: button
+Example of using `Combobox.Target` with [Button](https://mantine.dev/llms/core-button.md) component:
 
 ```tsx
 import { useState } from 'react';
@@ -384,10 +376,8 @@ Use `Combobox.EventsTarget` to add `aria-*` attributes and keyboard event handle
 You can have as many `Combobox.EventsTarget` as you need, but only one `Combobox.DropdownTarget`
 per `Combobox`.
 
-Example of using `Combobox.EventsTarget` and `Combobox.DropdownTarget` with [PillsInput](https://mantine.dev/core/pills-input) component
+Example of using `Combobox.EventsTarget` and `Combobox.DropdownTarget` with [PillsInput](https://mantine.dev/llms/core-pills-input.md) component
 to create a searchable multiselect component:
-
-#### Example: searchableMultiselect
 
 ```tsx
 import { useState } from 'react';
@@ -477,8 +467,6 @@ you need to call `updateSelectedOptionIndex` in `onChange` handler of the search
 
 Example of using `updateSelectedOptionIndex` handler in searchable select component:
 
-#### Example: searchableSelect
-
 ```tsx
 import { useState } from 'react';
 import { InputBase, Combobox, useCombobox } from '@mantine/core';
@@ -549,8 +537,6 @@ If you prefer search input inside the dropdown, use `Combobox.Search` component.
 To focus the search input, call `combobox.focusSearchInput`, usually it is done
 when the dropdown is opened. To prevent focus loss after the dropdown is closed,
 call `combobox.focusTarget`:
-
-#### Example: buttonSearch
 
 ```tsx
 import { useState } from 'react';
@@ -630,8 +616,6 @@ Use `combobox.selectFirstOption` function to select the first option. It is usef
 if you want to select the first option when user searching for options in the list.
 If there are no options available, it will do nothing.
 
-#### Example: selectFirstOption
-
 ```tsx
 import { useState, useEffect } from 'react';
 import { Combobox, TextInput, useCombobox } from '@mantine/core';
@@ -662,11 +646,11 @@ function Demo() {
 
   return (
     <Combobox
+      store={combobox}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
         combobox.closeDropdown();
       }}
-      store={combobox}
     >
       <Combobox.Target>
         <TextInput
@@ -698,12 +682,10 @@ function Demo() {
 
 Set `active` prop on `Combobox.Option` component to mark it as active.
 By default, an active option does not have any styles, you can use `data-combobox-active`
-[data attribute](https://mantine.dev/styles/data-attributes) to style it.
+[data attribute](https://mantine.dev/llms/styles-data-attributes.md) to style it.
 
 `combobox.selectActiveOption` function selects active option. Usually, it is called
 when the dropdown is opened:
-
-#### Example: activeOption
 
 ```tsx
 import { useState } from 'react';
@@ -771,8 +753,6 @@ Render `Combobox.Option` components inside `Combobox.Group` to create options gr
 `Combobox.Group` label will be automatically hidden if the group does not have any
 children.
 
-#### Example: groups
-
 ```tsx
 import { useState } from 'react';
 import { Input, InputBase, Combobox, useCombobox } from '@mantine/core';
@@ -829,10 +809,8 @@ function Demo() {
 ## Scrollable list
 
 Set `max-height` style on either `Combobox.Dropdown` or `Combobox.Options` to make the
-options list scrollable. You can use `mah` [style prop](https://mantine.dev/styles/style-props) to set
+options list scrollable. You can use `mah` [style prop](https://mantine.dev/llms/styles-style-props.md) to set
 `max-height`.
-
-#### Example: nativeScroll
 
 ```tsx
 import { useState } from 'react';
@@ -917,10 +895,8 @@ function Demo() {
 
 ## Scrollable list with ScrollArea
 
-You can also use [ScrollArea or ScrollArea.Autosize](https://mantine.dev/core/scroll-area) components
+You can also use [ScrollArea or ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md) components
 instead of native scrollbars:
-
-#### Example: scrollArea
 
 ```tsx
 import { useState } from 'react';
@@ -1011,8 +987,6 @@ Set `hidden` prop on `Combobox.Dropdown` to hide the dropdown. For example,
 it can be useful when you want to show the dropdown only when there is at least
 one option available:
 
-#### Example: hiddenDropdown
-
 ```tsx
 import { useState } from 'react';
 import { Combobox, TextInput, useCombobox } from '@mantine/core';
@@ -1035,11 +1009,11 @@ function Demo() {
 
   return (
     <Combobox
+      store={combobox}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
         combobox.closeDropdown();
       }}
-      store={combobox}
     >
       <Combobox.Target>
         <TextInput
@@ -1068,8 +1042,6 @@ function Demo() {
 ## Control dropdown opened state
 
 To control the dropdown opened state, pass `opened` to `useCombobox` hook:
-
-#### Example: controlledDropdown
 
 ```tsx
 import { useState } from 'react';
@@ -1114,11 +1086,9 @@ function Demo() {
 
 ## Popover props
 
-`Combobox` supports most of [Popover](https://mantine.dev/core/popover) props. For example,
+`Combobox` supports most of [Popover](https://mantine.dev/llms/core-popover.md) props. For example,
 you can control dropdown position with `position` prop and disable Floating UI
 middlewares with `middlewares` prop:
-
-#### Example: dropdownPosition
 
 ```tsx
 import { useState } from 'react';
@@ -1171,76 +1141,122 @@ function Demo() {
 ```
 
 
-## Without dropdown
+## Virtualization
 
-You can use `Combobox` without dropdown. To do so, use `Combobox.EventsTarget` instead
-of `Combobox.Target`:
+`useVirtualizedCombobox` hook can be used to create comboboxes with virtualized options list.
+Note that due to the nature of virtualization, the hook requires some additional configuration
+compared to the `useCombobox` hook. In `useVirtualizedCombobox` hook all operations related to
+option indexing do not rely on the actual DOM structure, instead, you need to preserve values in
+React state and pass them to the hook.
 
-#### Example: noDropdown
+`useVirtualizedCombobox` does not depend on any specific virtualization library.
+The recommended option is [@tanstack/react-virtual](https://tanstack.com/virtual/latest):
 
 ```tsx
 import { useState } from 'react';
-import { Combobox, TextInput } from '@mantine/core';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';
+
+const ITEM_HEIGHT = 36;
+
+const largeData = Array(10000)
+  .fill(0)
+  .map((_, index) => ({
+    value: `value-${index}`,
+    label: `Label ${index}`,
+    id: `item-${index}`,
+    disabled: false,
+  }));
 
 function Demo() {
+  const [opened, setOpened] = useState(false);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
+  const [activeOptionIndex, setActiveOptionIndex] = useState(-1);
   const [value, setValue] = useState('');
+  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
+
+  const virtualizer = useVirtualizer({
+    count: largeData.length,
+    getScrollElement: () => scrollParent,
+    estimateSize: () => ITEM_HEIGHT,
+    overscan: 5,
+  });
+
+  const combobox = useVirtualizedCombobox({
+    opened,
+    onOpenedChange: setOpened,
+    onDropdownOpen: () => {
+      if (activeOptionIndex !== -1) {
+        setSelectedOptionIndex(activeOptionIndex);
+        requestAnimationFrame(() => {
+          virtualizer.scrollToIndex(activeOptionIndex, { align: 'auto' });
+        });
+      }
+    },
+    isOptionDisabled: (index) => largeData[index].disabled,
+    totalOptionsCount: largeData.length,
+    getOptionId: (index) => largeData[index].id,
+    selectedOptionIndex,
+    activeOptionIndex,
+    setSelectedOptionIndex: (index) => {
+      setSelectedOptionIndex(index);
+      if (index !== -1) {
+        virtualizer.scrollToIndex(index, { align: 'auto' });
+      }
+    },
+    onSelectedOptionSubmit: onOptionSubmit,
+  });
+
+  function onOptionSubmit(index: number) {
+    const option = largeData[index];
+    setValue(option.value);
+    setActiveOptionIndex(index);
+    combobox.closeDropdown();
+    combobox.resetSelectedOption();
+  }
 
   return (
-    <Combobox onOptionSubmit={setValue}>
-      <Combobox.EventsTarget>
-        <TextInput
-          placeholder="Pick value"
-          value={value}
-          onChange={(event) => setValue(event.currentTarget.value)}
-        />
-      </Combobox.EventsTarget>
-
-      <Combobox.Options mt="sm">
-        <Combobox.Option value="First">First</Combobox.Option>
-        <Combobox.Option value="Second">Second</Combobox.Option>
-        <Combobox.Option value="Third">Third</Combobox.Option>
-      </Combobox.Options>
-    </Combobox>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Combobox, TextInput, useCombobox } from '@mantine/core';
-
-function Demo() {
-  const combobox = useCombobox({ opened: true });
-
-  return (
-    <Combobox store={combobox}>
+    <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>
       <Combobox.Target>
-        <TextInput placeholder="Pick value" />
+        <InputBase component="button" onClick={() => combobox.toggleDropdown()} pointer>
+          {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
+        </InputBase>
       </Combobox.Target>
-
       <Combobox.Dropdown>
-        <Combobox.Header>Combobox header</Combobox.Header>
-        <Combobox.Search placeholder="Search input" />
-
         <Combobox.Options>
-          <Combobox.Group label="First group">
-            <Combobox.Option value="1">First</Combobox.Option>
-            <Combobox.Option value="2">Second</Combobox.Option>
-          </Combobox.Group>
-
-          <Combobox.Group label="Second group">
-            <Combobox.Option value="3">Third</Combobox.Option>
-            <Combobox.Option value="4">Fourth</Combobox.Option>
-          </Combobox.Group>
-
-          <Combobox.Group label="Third group">
-            <Combobox.Empty>Nothing found in this group...</Combobox.Empty>
-          </Combobox.Group>
+          <ScrollArea.Autosize
+            mah={220}
+            type="scroll"
+            scrollbarSize={4}
+            viewportRef={setScrollParent}
+            onMouseDown={(event) => event.preventDefault()}
+          >
+            <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
+              {virtualizer.getVirtualItems().map((virtualItem) => {
+                const item = largeData[virtualItem.index];
+                return (
+                  <Combobox.Option
+                    value={item.value}
+                    key={item.value}
+                    active={virtualItem.index === activeOptionIndex}
+                    selected={virtualItem.index === selectedOptionIndex}
+                    onClick={() => onOptionSubmit(virtualItem.index)}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: virtualItem.size,
+                      transform: `translateY(${virtualItem.start}px)`,
+                    }}
+                  >
+                    {item.label}
+                  </Combobox.Option>
+                );
+              })}
+            </div>
+          </ScrollArea.Autosize>
         </Combobox.Options>
-
-        <Combobox.Footer>Combobox footer</Combobox.Footer>
       </Combobox.Dropdown>
     </Combobox>
   );
@@ -1248,48 +1264,371 @@ function Demo() {
 ```
 
 
+Example of implementation with [react-virtuoso](https://virtuoso.dev/):
+
+```tsx
+import { useRef, useState } from 'react';
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
+import { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';
+
+const largeData = Array(10000)
+  .fill(0)
+  .map((_, index) => ({
+    value: `value-${index}`,
+    label: `Label ${index}`,
+    id: `item-${index}`,
+    disabled: false,
+  }));
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
+  const [activeOptionIndex, setActiveOptionIndex] = useState(-1);
+  const [value, setValue] = useState('');
+  const virtuoso = useRef<VirtuosoHandle>(null);
+  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
+
+  const combobox = useVirtualizedCombobox({
+    opened,
+    onOpenedChange: setOpened,
+    onDropdownOpen: () => {
+      if (activeOptionIndex !== -1) {
+        setSelectedOptionIndex(activeOptionIndex);
+        requestAnimationFrame(() => {
+          virtuoso.current?.scrollToIndex({ index: activeOptionIndex });
+        });
+      }
+    },
+    isOptionDisabled: (index) => largeData[index].disabled,
+    totalOptionsCount: largeData.length,
+    getOptionId: (index) => largeData[index].id,
+    selectedOptionIndex,
+    activeOptionIndex,
+    setSelectedOptionIndex: (index) => {
+      setSelectedOptionIndex(index);
+      if (index !== -1) {
+        virtuoso.current?.scrollIntoView({ index });
+      }
+    },
+    onSelectedOptionSubmit: onOptionSubmit,
+  });
+
+  function onOptionSubmit(index: number) {
+    const option = largeData[index];
+    setValue(option.value);
+    setActiveOptionIndex(index);
+    combobox.closeDropdown();
+    combobox.resetSelectedOption();
+  }
+
+  return (
+    <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>
+      <Combobox.Target>
+        <InputBase component="button" onClick={() => combobox.toggleDropdown()} pointer>
+          {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
+        </InputBase>
+      </Combobox.Target>
+      <Combobox.Dropdown>
+        <Combobox.Options>
+          <ScrollArea.Autosize
+            mah={220}
+            type="scroll"
+            scrollbarSize={4}
+            viewportRef={setScrollParent}
+            onMouseDown={(event) => event.preventDefault()}
+          >
+            <Virtuoso
+              data={largeData}
+              ref={virtuoso}
+              style={{ height: 420 }}
+              customScrollParent={scrollParent ?? undefined}
+              itemContent={(index, item) => (
+                <Combobox.Option
+                  value={item.value}
+                  key={item.value}
+                  active={index === activeOptionIndex}
+                  selected={index === selectedOptionIndex}
+                  onClick={() => onOptionSubmit(index)}
+                >
+                  {item.label}
+                </Combobox.Option>
+              )}
+            />
+          </ScrollArea.Autosize>
+        </Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
+  );
+}
+```
+
+
+You can find more virtualization examples on the [Combobox examples page](https://mantine.dev/combobox?e=VirtualizedTanstack).
+
+Hook options:
+
+```tsx
+export interface UseVirtualizedComboboxOptions {
+  /** Default value for `dropdownOpened`, `false` by default */
+  defaultOpened?: boolean;
+
+  /** Controlled `dropdownOpened` state */
+  opened?: boolean;
+
+  /** Called when `dropdownOpened` state changes */
+  onOpenedChange?: (opened: boolean) => void;
+
+  /** Called when dropdown closes */
+  onDropdownClose?: (eventSource: ComboboxDropdownEventSource) => void;
+
+  /** Called when dropdown opens */
+  onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
+
+  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  loop?: boolean;
+
+  /** Function to determine whether the option is disabled */
+  isOptionDisabled?: (optionIndex: number) => boolean;
+
+  /** Total number of options in the virtualized list. Required for proper keyboard navigation and index calculations. */
+  totalOptionsCount: number;
+
+  /** Function that returns the id of the option at the given index. Required for setting aria attributes and element references. */
+  getOptionId: (index: number) => string | null;
+
+  /** Current selected option index. Must be controlled by parent component. */
+  selectedOptionIndex: number;
+
+  /** Callback to update the selected option index. Called when user navigates or selects options. */
+  setSelectedOptionIndex: (index: number) => void;
+
+  /** Currently active/highlighted option index. Used to determine which option to select when selectActiveOption is called. */
+  activeOptionIndex?: number;
+
+  /** Called when the selected option is submitted (e.g., via Enter key or clicking). Receives the selected option index. */
+  onSelectedOptionSubmit: (index: number) => void;
+}
+```
+
 
 #### Props
+
+**Combobox props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | arrowOffset | number | - | Arrow offset in px |
-| arrowPosition | ArrowPosition | - | Arrow position |
-| arrowRadius | number | - | Arrow <code>border-radius</code> in px |
+| arrowPosition | 'center' \| 'side' | - | Arrow position |
+| arrowRadius | number | - | Arrow `border-radius` in px |
 | arrowSize | number | - | Arrow size in px |
 | children | React.ReactNode | - | Combobox content |
 | disabled | boolean | - | If set, popover dropdown will not be rendered |
-| dropdownPadding | Padding<string | number> | - | Controls <code>padding</code> of the dropdown |
+| dropdownPadding | Padding<string \| number> | - | Controls `padding` of the dropdown |
 | floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |
 | hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
-| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead. |
+| keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
-| offset | number | FloatingAxesOffsets | - | Offset of the dropdown element |
+| offset | number \| FloatingAxesOffsets | - | Offset of the dropdown element |
 | onClose | () => void | - | Called when dropdown closes |
 | onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |
 | onExitTransitionEnd | () => void | - | Called when exit transition ends |
 | onOpen | () => void | - | Called when dropdown opens |
-| onOptionSubmit | (value: string, optionProps: ComboboxOptionProps) => void | - | Called when item is selected with the <code>Enter</code> key or by clicking it |
+| onOptionSubmit | (value: string, optionProps: ComboboxOptionProps) => void | - | Called when item is selected with the `Enter` key or by clicking it |
 | onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
-| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to <code>Overlay</code> component |
-| portalProps | BasePortalProps | - | Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
+| portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
-| positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
 | preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
-| readOnly | boolean | - | Determines whether the <code>Combobox</code> value can be changed |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
+| readOnly | boolean | - | Determines whether the `Combobox` value can be changed |
 | resetSelectionOnOptionHover | boolean | - | Determines whether selection should be reset when option is hovered |
 | returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any other valid CSS <code>box-shadow</code> value |
-| size | MantineSize | (string & {}) | - | Controls items <code>font-size</code> and <code>padding</code> |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |
+| size | MantineSize | - | Controls items `font-size` and `padding` |
 | store | ComboboxStore | - | Combobox store, can be used to control combobox state |
-| transitionProps | TransitionProps | - | Props passed down to the <code>Transition</code> component. Use to configure duration and animation type. |
-| width | PopoverWidth | - | Dropdown width, or <code>'target'</code> to make dropdown width the same as target element |
+| transitionProps | TransitionProps | - | Props passed down to the `Transition` component. Use to configure duration and animation type. |
+| width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |
 | withArrow | boolean | - | Determines whether component should have an arrow |
 | withOverlay | boolean | - | Determines whether the overlay should be displayed when the dropdown is opened |
-| withinPortal | boolean | - | Determines whether dropdown should be rendered within the <code>Portal</code> |
-| zIndex | string | number | - | Dropdown <code>z-index</code> |
+| withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |
+| zIndex | string \| number | - | Dropdown `z-index` |
+
+**Combobox..Target props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoComplete | string | - | Input autocomplete attribute |
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop that is used to access element ref |
+| targetType | "button" \| "input" | - | Determines which events is handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |
+| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |
+| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |
+| withKeyboardNavigation | boolean | - | If set, the component responds to keyboard events |
+
+**Combobox..Dropdown props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| hidden | boolean | - | Determines whether the dropdown should be hidden, for example, when there are no options to display |
+
+**Combobox..Options props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| labelledBy | string | - | Id of the element that labels the options list |
+
+**Combobox..Option props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| active | boolean | - | Current active state |
+| disabled | boolean | - | Disabled state |
+| selected | boolean | - | Current selected state |
+| value | Primitive | required | Option value |
+
+**Combobox..Search props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Determines whether the input should have error styles and `aria-invalid` attribute |
+| id | string | - | Input element id |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| multiline | boolean | - | Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| required | boolean | - | Sets `required` attribute on the `input` element |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| withAria | boolean | - | Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. |
+| withAriaAttributes | boolean | - | if set, the search input has `aria-` attribute |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withKeyboardNavigation | boolean | - | if set, the search input handles keyboard navigation |
+| wrapperProps | WrapperProps | - | Props passed down to the root element of the `Input` component |
+
+**Combobox..Empty props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**Combobox..Chevron props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| color | MantineColor | - | - |
+| error | React.ReactNode | - | - |
+| size | MantineSize | - | - |
+
+**Combobox..Footer props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**Combobox..Header props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+
+**Combobox..EventsTarget props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoComplete | string | - | Input autocomplete attribute |
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop is used to access element ref |
+| targetType | "button" \| "input" | - | Determines which events should be handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |
+| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |
+| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |
+| withKeyboardNavigation | boolean | - | If set, the component responds to the keyboard events |
+
+**Combobox..DropdownTarget props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop that should be used to access element ref |
+
+**Combobox..Group props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| label | React.ReactNode | - | Group label |
+
+**Combobox..ClearButton props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| onClear | () => void | required | - |
+| size | MantineSize | - | Size of the button, by default value is based on input context |
+
+**Combobox..HiddenInput props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| value | Primitive \| Primitive[] \| null | required | Input value |
+| valuesDivider | string | - | Divider character to join array values into string |
+
+**Combobox.Option props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| active | boolean | - | Current active state |
+| disabled | boolean | - | Disabled state |
+| selected | boolean | - | Current selected state |
+| value | Primitive | required | Option value |
+
+**Combobox.Dropdown props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| hidden | boolean | - | Determines whether the dropdown should be hidden, for example, when there are no options to display |
+
+**Combobox.Target props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoComplete | string | - | Input autocomplete attribute |
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop that is used to access element ref |
+| targetType | "button" \| "input" | - | Determines which events is handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |
+| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |
+| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |
+| withKeyboardNavigation | boolean | - | If set, the component responds to keyboard events |
+
+**Combobox.DropdownTarget props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop that should be used to access element ref |
+
+**Combobox.EventsTarget props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoComplete | string | - | Input autocomplete attribute |
+| children | React.ReactNode | required | Target element |
+| refProp | string | - | Key of the prop is used to access element ref |
+| targetType | "button" \| "input" | - | Determines which events should be handled by the target element. `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state. |
+| withAriaAttributes | boolean | - | If set, the target has `aria-` attributes |
+| withExpandedAttribute | boolean | - | If set, the target has `aria-expanded` attribute |
+| withKeyboardNavigation | boolean | - | If set, the component responds to the keyboard events |
+
+**Combobox.Group props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| label | React.ReactNode | - | Group label |
 
 
 #### Styles API
@@ -1323,6 +1662,6 @@ Combobox component supports Styles API. With Styles API, you can customize style
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
 | option | data-combobox-selected | Option is selected | - |
-| option | data-combobox-active | - | - |
-| option | data-combobox-disabled | - | - |
-| dropdown | data-hidden | - | - |
+| option | data-combobox-active | `active` prop is set | - |
+| option | data-combobox-disabled | `disabled` prop is set | - |
+| dropdown | data-hidden | `hidden` prop is set | - |

@@ -2,12 +2,10 @@
 
 # Usage with RedwoodJS
 
-<GetTemplates type="redwood" />
-
 ## Generate new application
 
-Follow [Redwood getting started guide](https://redwoodjs.com/docs/quick-start) guide to
-create new Redwood application:
+Follow the [Redwood getting started guide](https://redwoodjs.com/docs/quick-start) to
+create a new Redwood application:
 
 ```bash
 yarn create redwood-app my-redwood-project --typescript
@@ -15,19 +13,17 @@ yarn create redwood-app my-redwood-project --typescript
 
 ## Installation
 
-**Note that it is recommended to use `yarn` instead of `npm` to install dependencies.**
+**Note that it's recommended to use `yarn` instead of `npm` to install dependencies.**
 
-Open `web` directory before installing dependencies:
+Open the `web` directory before installing dependencies:
 
 ```bash
 cd web
 ```
 
-<PackagesInstallation />
-
 ## PostCSS setup
 
-Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
+Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md):
 
 ```bash
 yarn add postcss postcss-preset-mantine postcss-simple-vars
@@ -37,7 +33,7 @@ yarn add postcss postcss-preset-mantine postcss-simple-vars
 npm install postcss postcss-preset-mantine postcss-simple-vars
 ```
 
-Create `postcss.config.js` file in `web` directory with the following content:
+Create a `postcss.config.js` file in the `web` directory with the following content:
 
 ```js
 module.exports = {
@@ -58,8 +54,8 @@ module.exports = {
 
 ## Setup
 
-Add styles imports, [MantineProvider](https://mantine.dev/theming/mantine-provider) and [ColorSchemeScript](https://mantine.dev/theming/color-schemes)
-to `web/src/App.tsx` file:
+Add styles imports, [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) and [ColorSchemeScript](https://mantine.dev/llms/theming-color-schemes.md)
+to the `web/src/App.tsx` file:
 
 ```tsx
 // Import styles of packages that you've installed.
@@ -88,7 +84,7 @@ const App = () => (
 export default App;
 ```
 
-All set! Start development server:
+All set! Start the development server:
 
 ```bash
 yarn rw dev

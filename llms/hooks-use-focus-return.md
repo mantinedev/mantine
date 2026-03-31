@@ -4,12 +4,10 @@ Import: import { UseFocusReturn } from '@mantine/hooks';
 
 ## Usage
 
-`use-focus-return` automatically returns focus to the last focused element when a given condition is met.
-For example, it is used in [Modal](https://mantine.dev/core/modal/) component to restore focus after the modal was closed.
+The `use-focus-return` hook automatically returns focus to the last focused element when a given condition is met.
+For example, it is used in the [Modal](https://mantine.dev/llms/core-modal.md) component to restore focus after the modal was closed.
 
 Close the modal with the `Escape` key and see how focus returns to the button after the modal closes:
-
-#### Example: usage
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -33,7 +31,7 @@ function Demo() {
 ```
 
 
-In most cases, you should use this hook with [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/).
+In most cases, you should use this hook with [use-focus-trap](https://mantine.dev/llms/hooks-use-focus-trap.md).
 
 ```tsx
 import { useFocusReturn } from '@mantine/hooks';
@@ -49,7 +47,7 @@ useFocusReturn({
 });
 ```
 
-If `shouldReturnFocus` option is set to `false` you can call returned function to focus last active element:
+If the `shouldReturnFocus` option is set to `false`, you can call the returned function to focus the last active element:
 
 ```tsx
 import { useFocusReturn } from '@mantine/hooks';
@@ -78,7 +76,7 @@ function useFocusReturn(options: UseFocusReturnOptions): UseFocusReturnReturnVal
 
 ## Exported types
 
-`UseFocusReturnOptions` and `UseFocusReturnReturnValue` types are exported from `@mantine/hooks` package,
+`UseFocusReturnOptions` and `UseFocusReturnReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

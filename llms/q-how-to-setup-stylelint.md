@@ -1,0 +1,81 @@
+# How can I lint CSS files?
+Learn how to set up Stylelint for Mantine postcss syntax
+
+## Installation
+
+[Stylelint](https://stylelint.io/) is a tool to lint CSS and CSS-like files.
+To get started, install the `stylelint` and `stylelint-config-standard-scss` packages:
+
+<InstallScript packages="stylelint stylelint-config-standard-scss" />
+
+## Configuration
+
+Create a `.stylelintrc.json` file at your project root with the following content:
+
+```json
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "scss/no-duplicate-mixins": null,
+    "scss/at-mixin-pattern": null,
+    "scss/at-rule-no-unknown": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
+  }
+}
+```
+
+The rules above are required to make Stylelint work with Mantine components.
+
+## Mantine Stylelint config
+
+If you want to have the same Stylelint configuration as Mantine, change the `.stylelintrc.json` content to the following:
+
+```json
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "custom-property-pattern": null,
+    "selector-class-pattern": null,
+    "scss/no-duplicate-mixins": null,
+    "declaration-empty-line-before": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "alpha-value-notation": null,
+    "custom-property-empty-line-before": null,
+    "property-no-vendor-prefix": null,
+    "color-function-notation": null,
+    "length-zero-no-unit": null,
+    "selector-not-notation": null,
+    "no-descending-specificity": null,
+    "comment-empty-line-before": null,
+    "scss/at-mixin-pattern": null,
+    "scss/at-rule-no-unknown": null,
+    "value-keyword-case": null,
+    "media-feature-range-notation": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
+  }
+}
+```
+
+## Additional tools
+
+Add an npm script to your `package.json` to lint all css files in your project:
+
+```json
+{
+  "scripts": {
+    "stylelint": "stylelint '**/*.css' --cache"
+  }
+}
+```
+
+To enable linting in your editor, install the [stylelint VSCode extension](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint).

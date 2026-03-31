@@ -4,9 +4,61 @@ Import: import { UseDebouncedCallback } from '@mantine/hooks';
 
 ## Usage
 
-`use-debounced-callback` creates a debounced version of the given function,
+The `use-debounced-callback` hook creates a debounced version of the given function,
 delaying its execution until a specified time has elapsed since the last invocation.
 
+```tsx
+import { useState } from 'react';
+import { Loader, Text, TextInput } from '@mantine/core';
+import { useDebouncedCallback } from '@mantine/hooks';
+
+function getSearchResults(query: string): Promise<{ id: number; title: string }[]> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(
+        query.trim() === ''
+          ? []
+          : Array(5)
+              .fill(0)
+              .map((_, index) => ({ id: index, title: `${query} ${index + 1}` }))
+      );
+    }, 1000);
+  });
+}
+
+function Demo() {
+  const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState<{ id: number; title: string }[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleSearch = useDebouncedCallback(async (query: string) => {
+    setLoading(true);
+    setSearchResults(await getSearchResults(query));
+    setLoading(false);
+  }, 500);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.currentTarget.value);
+    handleSearch(event.currentTarget.value);
+  };
+
+  return (
+    <>
+      <TextInput
+        value={search}
+        onChange={handleChange}
+        placeholder="Search..."
+        rightSection={loading && <Loader size={20} />}
+      />
+      {searchResults.map((result) => (
+        <Text key={result.id} size="sm">
+          {result.title}
+        </Text>
+      ))}
+    </>
+  );
+}
+```
 
 
 ## flushOnUnmount option
@@ -56,7 +108,7 @@ function useDebouncedCallback<T extends (...args: any[]) => any>(
 
 ## Exported types
 
-`UseDebouncedCallbackOptions` and `UseDebouncedCallbackReturnValue` types are exported from `@mantine/hooks` package,
+The `UseDebouncedCallbackOptions` and `UseDebouncedCallbackReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

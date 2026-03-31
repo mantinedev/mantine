@@ -1,0 +1,106 @@
+{
+  "id": "core-image",
+  "name": "Image",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/image",
+  "description": "Image with optional fallback",
+  "propsCount": 5,
+  "llmUrl": "https://mantine.dev/llms/core-image.md",
+  "componentDataUrl": "/mcp/components/core-image.json",
+  "searchText": "image image with optional fallback @mantine/core /core/image fallbacksrc fit onerror radius src",
+  "source": "@mantine/core/src/components/Image/Image.tsx",
+  "docs": "core/image.mdx",
+  "markdown": "# Image\nPackage: @mantine/core\nImport: import { Image } from '@mantine/core';\nDescription: Image with optional fallback\n\n## Usage\n\n`Image` is a wrapper for `img` with minimal styles. By default, the image\nwill take 100% of the parent width. The image size can be controlled with `w`\nand `h` [style props](https://mantine.dev/llms/styles-style-props.md).\n\n```tsx\nimport { Image } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Image\n      radius=\"md\"\n      src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png\"\n    />\n  );\n}\n```\n\n\n## Image height\n\nIn most cases, you will need to set the image height to prevent layout jumps when\nthe image is loading. You can do so with the `h` [style props](https://mantine.dev/llms/styles-style-props.md).\n\n```tsx\nimport { Image } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Image\n      radius=\"md\"\n      h={200}\n      src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-10.png\"\n    />\n  );\n}\n```\n\n\n## Image fit\n\nBy default the image has `object-fit: cover` style - it will\nresize to cover the parent element. To change this behavior, set `w=\"auto\"` and `fit=\"contain\"` props.\n\n```tsx\nimport { Image } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Image\n      radius=\"md\"\n      h={200}\n      w=\"auto\"\n      fit=\"contain\"\n      src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-9.png\"\n    />\n  );\n}\n```\n\n\n## Fallback image\n\nSet the `fallbackSrc` prop to display a fallback image when the image fails to load:\n\n```tsx\nimport { Image } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Image\n      radius=\"md\"\n      src={null}\n      h={200}\n      fallbackSrc=\"https://placehold.co/600x400?text=Placeholder\"\n    />\n  );\n}\n```\n\n\n## Usage with Next.js Image\n\nThe `Image` component is a [polymorphic component](https://mantine.dev/llms/guides-polymorphic.md), its root element can be changed with the `component` prop.\nYou can use it with `next/image` and other similar components.\n\n```tsx\nimport NextImage from 'next/image';\nimport { Image } from '@mantine/core';\nimport myImage from './my-image.jpg';\n\nfunction Demo() {\n  return <Image component={NextImage} src={myImage} alt=\"My image\" />;\n}\n```\n\n\n#### Props\n\n**Image props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| fallbackSrc | string | - | Image url used as a fallback if the image cannot be loaded |\n| fit | ObjectFit | - | Controls `object-fit` style |\n| onError | (event: SyntheticEvent<HTMLImageElement, Event>) => void | - | Called when image fails to load |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| src | any | - | Image url |\n\n\n#### Styles API\n\nImage component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Image selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Image-root | Root element |\n\n**Image CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --image-object-fit | Controls `object-fit` property |\n| root | --image-radius | Controls `border-radius` property |\n\n**Image data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-fallback | Image failed to load | - |\n",
+  "props": [
+    {
+      "name": "fallbackSrc",
+      "description": "Image url used as a fallback if the image cannot be loaded",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Image"
+    },
+    {
+      "name": "fit",
+      "description": "Controls <code>object-fit</code> style",
+      "required": false,
+      "defaultValue": "'cover'",
+      "type": {
+        "name": "ObjectFit",
+        "raw": "ObjectFit | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"contain\""
+          },
+          {
+            "value": "\"cover\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"scale-down\""
+          }
+        ]
+      },
+      "sourceComponent": "Image"
+    },
+    {
+      "name": "onError",
+      "description": "Called when image fails to load",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: SyntheticEvent<HTMLImageElement, Event>) => void"
+      },
+      "sourceComponent": "Image"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Image"
+    },
+    {
+      "name": "src",
+      "description": "Image url",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "any"
+      },
+      "sourceComponent": "Image"
+    }
+  ]
+}

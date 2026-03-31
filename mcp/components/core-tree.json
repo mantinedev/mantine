@@ -1,0 +1,127 @@
+{
+  "id": "core-tree",
+  "name": "Tree",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/tree",
+  "description": "Display a Tree structure",
+  "propsCount": 11,
+  "llmUrl": "https://mantine.dev/llms/core-tree.md",
+  "componentDataUrl": "/mcp/components/core-tree.json",
+  "searchText": "tree display a tree structure @mantine/core /core/tree allowrangeselection checkonspace clearselectiononoutsideclick data expandonclick expandonspace keepmounted leveloffset rendernode selectonclick tree",
+  "source": "@mantine/core/src/components/Tree/Tree.tsx",
+  "docs": "core/tree.mdx",
+  "markdown": "# Tree\nPackage: @mantine/core\nImport: import { Tree } from '@mantine/core';\nDescription: Display a Tree structure\n\n## Usage\n\nThe `Tree` component is used to display hierarchical data. The `Tree` component\nhas minimal styling by default; you can customize styles with [Styles API](https://mantine.dev/llms/styles-styles-api.md).\n\n```tsx\nimport { Tree } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return <Tree data={data} />;\n}\n```\n\n\n## Data prop\n\nData passed to the `data` prop should follow these rules:\n\n* Data must be a stable reference (memoized)\n* Data must be an array\n* Each item in the array represents a node in the tree\n* Each node must be an object with `value` and `label` keys\n* Each node can have a `children` key with an array of child nodes\n* The `value` of each node must be unique\n\nValid data example:\n\n```tsx\n// ✅ Valid data, all values are unique\nconst data = [\n  {\n    value: 'src',\n    label: 'src',\n    children: [\n      { value: 'src/components', label: 'components' },\n      { value: 'src/hooks', label: 'hooks' },\n    ],\n  },\n  { value: 'package.json', label: 'package.json' },\n];\n```\n\nInvalid data example:\n\n```tsx\n// ❌ Invalid data, values are not unique (components is used twice)\nconst data = [\n  {\n    value: 'src',\n    label: 'src',\n    children: [{ value: 'components', label: 'components' }],\n  },\n  { value: 'components', label: 'components' },\n];\n```\n\n## Data type\n\nYou can import the `TreeNodeData` type to define the data type for your tree:\n\n```tsx\nimport { TreeNodeData } from '@mantine/core';\n\nconst data: TreeNodeData[] = [\n  {\n    value: 'src',\n    label: 'src',\n    children: [\n      { value: 'src/components', label: 'components' },\n      { value: 'src/hooks', label: 'hooks' },\n    ],\n  },\n  { value: 'package.json', label: 'package.json' },\n];\n```\n\n## renderNode\n\nUse the `renderNode` prop to customize node rendering.\nThe `renderNode` function receives an object with the following properties as a single argument:\n\n```tsx\nexport interface RenderTreeNodePayload {\n  /** Node level in the tree */\n  level: number;\n\n  /** `true` if the node is expanded, applicable only for nodes with `children` */\n  expanded: boolean;\n\n  /** `true` if the node has non-empty `children` array */\n  hasChildren: boolean;\n\n  /** `true` if the node is selected */\n  selected: boolean;\n\n  /** Node data from the `data` prop of `Tree` */\n  node: TreeNodeData;\n\n  /** Tree controller instance, return value of `useTree` hook */\n  tree: TreeController;\n\n  /** Props to spread into the root node element */\n  elementProps: {\n    className: string;\n    style: React.CSSProperties;\n    onClick: (event: React.MouseEvent) => void;\n    'data-selected': boolean | undefined;\n    'data-value': string;\n  };\n}\n```\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport { Group, Tree } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Tree\n      data={data}\n      levelOffset={23}\n      renderNode={({ node, expanded, hasChildren, elementProps }) => (\n        <Group gap={5} {...elementProps}>\n          {hasChildren && (\n            <CaretDownIcon\n              size={18}\n              style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}\n            />\n          )}\n\n          <span>{node.label}</span>\n        </Group>\n      )}\n    />\n  );\n}\n```\n\n\n## useTree hook\n\n`useTree` hook can be used to control selected and expanded state of the tree.\n\nThe hook accepts an object with the following properties:\n\n```tsx\nexport interface UseTreeInput {\n  /** Initial expanded state of all nodes, uncontrolled state */\n  initialExpandedState?: TreeExpandedState;\n\n  /** Expanded state of all nodes, controlled state */\n  expandedState?: TreeExpandedState;\n\n  /** Called when the tree expanded state changes */\n  onExpandedStateChange?: (expandedState: TreeExpandedState) => void;\n\n  /** Initial selected state of nodes */\n  initialSelectedState?: string[];\n\n  /** Selected state of all nodes, controlled state */\n  selectedState?: string[];\n\n  /** Called when the tree selected state changes */\n  onSelectedStateChange?: (selectedState: string[]) => void;\n\n  /** Initial checked state of nodes */\n  initialCheckedState?: string[];\n\n  /** Checked state of all nodes, controlled state */\n  checkedState?: string[];\n\n  /** Called when the tree checked state changes */\n  onCheckedStateChange?: (checkedState: string[]) => void;\n\n  /** Determines whether multiple node can be selected at a time */\n  multiple?: boolean;\n\n  /** Called with the node value when it is expanded */\n  onNodeExpand?: (value: string) => void;\n\n  /** Called with the node value when it is collapsed */\n  onNodeCollapse?: (value: string) => void;\n}\n```\n\nAnd returns an object with the following properties:\n\n```tsx\nexport interface UseTreeReturnType {\n  /** Determines whether multiple node can be selected at a time */\n  multiple: boolean;\n\n  /** A record of `node.value` and boolean values that represent nodes expanded state */\n  expandedState: TreeExpandedState;\n\n  /** An array of selected nodes values */\n  selectedState: string[];\n\n  /** An array of checked nodes values */\n  checkedState: string[];\n\n  /** A value of the node that was last clicked\n   * Anchor node is used to determine range of selected nodes for multiple selection\n   */\n  anchorNode: string | null;\n\n  /** Initializes tree state based on provided data, called automatically by the Tree component */\n  initialize: (data: TreeNodeData[]) => void;\n\n  /** Toggles expanded state of the node with provided value */\n  toggleExpanded: (value: string) => void;\n\n  /** Collapses node with provided value */\n  collapse: (value: string) => void;\n\n  /** Expands node with provided value */\n  expand: (value: string) => void;\n\n  /** Expands all nodes */\n  expandAllNodes: () => void;\n\n  /** Collapses all nodes */\n  collapseAllNodes: () => void;\n\n  /** Sets expanded state */\n  setExpandedState: React.Dispatch<\n    React.SetStateAction<TreeExpandedState>\n  >;\n\n  /** Toggles selected state of the node with provided value */\n  toggleSelected: (value: string) => void;\n\n  /** Selects node with provided value */\n  select: (value: string) => void;\n\n  /** Deselects node with provided value */\n  deselect: (value: string) => void;\n\n  /** Clears selected state */\n  clearSelected: () => void;\n\n  /** Sets selected state */\n  setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;\n\n  /** Checks node with provided value */\n  checkNode: (value: string) => void;\n\n  /** Unchecks node with provided value */\n  uncheckNode: (value: string) => void;\n\n  /** Checks all nodes */\n  checkAllNodes: () => void;\n\n  /** Unchecks all nodes */\n  uncheckAllNodes: () => void;\n\n  /** Sets checked state */\n  setCheckedState: React.Dispatch<React.SetStateAction<string[]>>;\n\n  /** Returns all checked nodes with status */\n  getCheckedNodes: () => CheckedNodeStatus[];\n\n  /** Returns `true` if node with provided value is checked */\n  isNodeChecked: (value: string) => boolean;\n\n  /** Returns `true` if node with provided value is indeterminate */\n  isNodeIndeterminate: (value: string) => boolean;\n}\n```\n\nYou can pass the value returned by the `useTree` hook to the `tree` prop of the `Tree` component\nto control tree state:\n\n```tsx\nimport { Button, Group, Tree, useTree } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const tree = useTree();\n\n  return (\n    <>\n      <Tree data={data} tree={tree} />\n      <Group mt=\"md\">\n        <Button onClick={() => tree.expandAllNodes()}>Expand all</Button>\n        <Button onClick={() => tree.collapseAllNodes()}>Collapse all</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Checked state\n\n`Tree` can be used to display checked state with checkboxes.\nTo implement checked state, you need to render `Checkbox.Indicator` in the `renderNode` function:\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport { Checkbox, Group, RenderTreeNodePayload, Tree } from '@mantine/core';\nimport { data } from './data';\n\nconst renderTreeNode = ({\n  node,\n  expanded,\n  hasChildren,\n  elementProps,\n  tree,\n}: RenderTreeNodePayload) => {\n  const checked = tree.isNodeChecked(node.value);\n  const indeterminate = tree.isNodeIndeterminate(node.value);\n\n  return (\n    <Group gap=\"xs\" {...elementProps}>\n      <Checkbox.Indicator\n        checked={checked}\n        indeterminate={indeterminate}\n        onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}\n      />\n\n      <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>\n        <span>{node.label}</span>\n\n        {hasChildren && (\n          <CaretDownIcon\n            size={14}\n            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}\n          />\n        )}\n      </Group>\n    </Group>\n  );\n};\n\nfunction Demo() {\n  return <Tree data={data} levelOffset={23} expandOnClick={false} renderNode={renderTreeNode} />;\n}\n```\n\n\nTo check/uncheck nodes, use `checkAllNodes` and `uncheckAllNodes` functions:\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport {\n  Button,\n  Checkbox,\n  getTreeExpandedState,\n  Group,\n  RenderTreeNodePayload,\n  Tree,\n  useTree,\n} from '@mantine/core';\nimport { data } from './data';\n\nconst renderTreeNode = ({\n  node,\n  expanded,\n  hasChildren,\n  elementProps,\n  tree,\n}: RenderTreeNodePayload) => {\n  const checked = tree.isNodeChecked(node.value);\n  const indeterminate = tree.isNodeIndeterminate(node.value);\n\n  return (\n    <Group gap=\"xs\" {...elementProps}>\n      <Checkbox.Indicator\n        checked={checked}\n        indeterminate={indeterminate}\n        onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}\n      />\n\n      <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>\n        <span>{node.label}</span>\n\n        {hasChildren && (\n          <CaretDownIcon\n            size={14}\n            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}\n          />\n        )}\n      </Group>\n    </Group>\n  );\n};\n\nfunction Demo() {\n  const tree = useTree({\n    initialExpandedState: getTreeExpandedState(data, '*'),\n    initialCheckedState: [\n      'node_modules',\n      'node_modules/@mantine/core/index.d.ts',\n      'node_modules/@mantine/form/package.json',\n    ],\n  });\n\n  return (\n    <>\n      <Group mb=\"md\">\n        <Button onClick={() => tree.checkAllNodes()}>CheckIcon all</Button>\n        <Button onClick={() => tree.uncheckAllNodes()}>Uncheck all</Button>\n      </Group>\n\n      <Tree\n        tree={tree}\n        data={data}\n        levelOffset={23}\n        expandOnClick={false}\n        renderNode={renderTreeNode}\n      />\n    </>\n  );\n}\n```\n\n\n## Initial expanded state\n\nExpanded state is an object of `node.value` and boolean values that represent nodes expanded state.\nTo change initial expanded state, pass `initialExpandedState` to the `useTree` hook.\nTo generate expanded state from data with expanded nodes, you can use `getTreeExpandedState` function:\nit accepts data and an array of expanded nodes values and returns expanded state object.\n\nIf `'*'` is passed as the second argument to `getTreeExpandedState`, all nodes will be expanded:\n\n```tsx\nimport { getTreeExpandedState } from '@mantine/core';\n\n// Expand two given nodes\ngetTreeExpandedState(data, ['src', 'src/components']);\n\n// Expand all nodes\ngetTreeExpandedState(data, '*');\n```\n\n```tsx\nimport { getTreeExpandedState, Tree, useTree } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const tree = useTree({\n    initialExpandedState: getTreeExpandedState(data, ['src', 'src/components']),\n  });\n\n  return <Tree data={data} tree={tree} />;\n}\n```\n\n\n## Example: files tree\n\n```tsx\nimport { FolderSimpleIcon, FolderOpenIcon } from '@phosphor-icons/react';\nimport { Group, RenderTreeNodePayload, Tree } from '@mantine/core';\nimport { CssIcon, NpmIcon, TypeScriptCircleIcon } from '@mantinex/dev-icons';\nimport { data, dataCode } from './data';\nimport classes from './Demo.module.css';\n\ninterface FileIconProps {\n  name: string;\n  isFolder: boolean;\n  expanded: boolean;\n}\n\nfunction FileIcon({ name, isFolder, expanded }: FileIconProps) {\n  if (name.endsWith('package.json')) {\n    return <NpmIcon size={14} />;\n  }\n\n  if (name.endsWith('.ts') || name.endsWith('.tsx') || name.endsWith('tsconfig.json')) {\n    return <TypeScriptCircleIcon size={14} />;\n  }\n\n  if (name.endsWith('.css')) {\n    return <CssIcon size={14} />;\n  }\n\n  if (isFolder) {\n    return expanded ? (\n      <FolderOpenIcon color=\"var(--mantine-color-yellow-9)\" size={14} />\n    ) : (\n      <FolderSimpleIcon color=\"var(--mantine-color-yellow-9)\" size={14} />\n    );\n  }\n\n  return null;\n}\n\nfunction Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {\n  return (\n    <Group gap={5} {...elementProps}>\n      <FileIcon name={node.value} isFolder={hasChildren} expanded={expanded} />\n      <span>{node.label}</span>\n    </Group>\n  );\n}\n\nfunction Demo() {\n  return (\n    <Tree\n      classNames={classes}\n      selectOnClick\n      clearSelectionOnOutsideClick\n      data={data}\n      renderNode={(payload) => <Leaf {...payload} />}\n    />\n  );\n}\n```\n\n\n\n#### Props\n\n**Tree props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowRangeSelection | boolean | - | If set, tree nodes range can be selected with click when `Shift` key is pressed |\n| checkOnSpace | boolean | - | If set, tree node is checked on space key press |\n| clearSelectionOnOutsideClick | boolean | - | If set, selection is cleared when user clicks outside of the tree |\n| data | TreeNodeData[] | required | Data used to render nodes |\n| expandOnClick | boolean | - | If set, tree node with children is expanded on click |\n| expandOnSpace | boolean | - | If set, tree node with children is expanded on space key press |\n| keepMounted | boolean | - | If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. |\n| levelOffset | MantineSpacing | - | Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value |\n| renderNode | RenderNode | - | A function to render tree node label |\n| selectOnClick | boolean | - | If set, tree node is selected on click |\n| tree | UseTreeReturnType | - | Use-tree hook instance that can be used to manipulate component state |\n\n\n#### Styles API\n\nTree component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Tree selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Tree-root | Root element |\n| node | .mantine-Tree-node | Node element (li), contains label and subtree elements |\n| subtree | .mantine-Tree-subtree | Subtree element (ul) |\n| label | .mantine-Tree-label | Node label |\n\n**Tree CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --level-offset | Controls offset of nested tree levels |\n",
+  "props": [
+    {
+      "name": "allowRangeSelection",
+      "description": "If set, tree nodes range can be selected with click when <code>Shift</code> key is pressed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "checkOnSpace",
+      "description": "If set, tree node is checked on space key press",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "clearSelectionOnOutsideClick",
+      "description": "If set, selection is cleared when user clicks outside of the tree",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "data",
+      "description": "Data used to render nodes",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "TreeNodeData[]"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "expandOnClick",
+      "description": "If set, tree node with children is expanded on click",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "expandOnSpace",
+      "description": "If set, tree node with children is expanded on space key press",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, subtree content is kept mounted when collapsed. React 19 <code>Activity</code> is used to preserve state.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "levelOffset",
+      "description": "Horizontal padding of each subtree level, key of <code>theme.spacing</code> or any valid CSS value",
+      "required": false,
+      "defaultValue": "'lg'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "renderNode",
+      "description": "A function to render tree node label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RenderNode"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "selectOnClick",
+      "description": "If set, tree node is selected on click",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Tree"
+    },
+    {
+      "name": "tree",
+      "description": "Use-tree hook instance that can be used to manipulate component state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "UseTreeReturnType"
+      },
+      "sourceComponent": "Tree"
+    }
+  ]
+}

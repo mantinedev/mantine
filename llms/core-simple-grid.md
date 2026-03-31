@@ -7,16 +7,14 @@ Description: Responsive grid in which each item takes equal amount of space
 
 `SimpleGrid` is a responsive grid system with equal-width columns.
 It uses CSS grid layout. If you need to set different widths for columns, use
-[Grid](https://mantine.dev/core/grid) component instead.
-
-#### Example: usage
+[Grid](https://mantine.dev/llms/core-grid.md) component instead.
 
 ```tsx
 import { SimpleGrid } from '@mantine/core';
 
 function Demo() {
   return (
-    <SimpleGrid>
+    <SimpleGrid cols={3} spacing="md" verticalSpacing="md">
       <div>1</div>
       <div>2</div>
       <div>3</div>
@@ -30,7 +28,9 @@ function Demo() {
 
 ## spacing and verticalSpacing props
 
-`spacing` prop is used both for horizontal and vertical spacing if `verticalSpacing` is not set:
+The `spacing` prop controls horizontal spacing between columns. By default, it is also used
+for vertical spacing between rows. If you want different vertical spacing, set the
+`verticalSpacing` prop explicitly:
 
 ```tsx
 import { SimpleGrid } from '@mantine/core';
@@ -47,7 +47,7 @@ const VerticalSpacing = () => (
 ## Responsive props
 
 `cols`, `spacing` and `verticalSpacing` props support object notation for responsive values,
-it works the same way as [style props](https://mantine.dev/styles/style-props): the object may have `base`, `xs`,
+it works the same way as [style props](https://mantine.dev/llms/styles-style-props.md): the object may have `base`, `xs`,
 `sm`, `md`, `lg` and `xl` key, and values from those keys will be applied according to current
 viewport width.
 
@@ -58,8 +58,6 @@ In the following example, `cols={{ base: 1, sm: 2, lg: 5 }}` means:
 * 5 columns if viewport width is greater than `lg` breakpoint
 
 Same logic applies to `spacing` and `verticalSpacing` props.
-
-#### Example: responsive
 
 ```tsx
 import { SimpleGrid } from '@mantine/core';
@@ -94,8 +92,6 @@ reference `theme.breakpoints` values in keys. It is required to use exact px or 
 To see how the grid changes, resize the root element of the demo
 with the resize handle located at the bottom right corner of the demo:
 
-#### Example: container
-
 ```tsx
 import { SimpleGrid } from '@mantine/core';
 
@@ -121,10 +117,88 @@ function Demo() {
 ```
 
 
+## Auto-fill columns
+
+Set the `minColWidth` prop to use CSS Grid `auto-fill` to automatically adjust the number
+of columns based on available space and minimum column width. When `minColWidth` is set,
+the `cols` prop is ignored.
+
+```tsx
+import { SimpleGrid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SimpleGrid minColWidth="200px">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+    </SimpleGrid>
+  );
+}
+```
+
+
+## auto-fill vs auto-fit
+
+By default, `minColWidth` uses `auto-fill` behavior. You can change it to `auto-fit` with the
+`autoFlow` prop. The difference between the two:
+
+* `auto-fill` creates as many tracks as possible without overflowing the container, leaving empty tracks if items don't fill the row
+* `auto-fit` works the same way but collapses empty tracks, allowing items to stretch and fill the remaining space
+
+```tsx
+import { SimpleGrid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      {/* auto-fill: empty tracks are preserved, items do not stretch */}
+      <SimpleGrid minColWidth="200px" autoFlow="auto-fill">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </SimpleGrid>
+
+      {/* auto-fit: empty tracks are collapsed, items stretch to fill the row */}
+      <SimpleGrid minColWidth="200px" autoFlow="auto-fit">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </SimpleGrid>
+    </>
+  );
+}
+```
+
+
+## Auto rows
+
+Set the `autoRows` prop to control the size of implicitly created grid rows.
+This is useful when you need all rows to have equal height or a minimum height.
+
+```tsx
+import { SimpleGrid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SimpleGrid cols={3} autoRows="minmax(100px, auto)">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+    </SimpleGrid>
+  );
+}
+```
+
+
 ## Browser support
 
 `SimpleGrid` uses [CSS Grid Layout](https://caniuse.com/css-grid), it is supported in all modern browsers.
-If you need to support older browsers, use [Grid](https://mantine.dev/core/grid) (flexbox based) component instead.
+If you need to support older browsers, use [Grid](https://mantine.dev/llms/core-grid.md) (flexbox based) component instead.
 
 When `type="container"` is set, `SimpleGrid` uses [container queries](https://caniuse.com/css-container-queries).
 Since February 2023, container queries are supported in all modern browsers. If you need to support older browsers,
@@ -133,12 +207,17 @@ do not use container queries option.
 
 #### Props
 
+**SimpleGrid props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| autoFlow | "auto-fit" \| "auto-fill" | - | Grid repeat type when minColWidth is set |
+| autoRows | string | - | Sets the size of implicitly created grid rows |
 | cols | StyleProp<number> | - | Number of columns |
+| minColWidth | string \| number | - | Minimum column width when using auto-fit/auto-fill. When set, cols prop is ignored |
 | spacing | StyleProp<MantineSpacing> | - | Spacing between columns |
-| type | "media" | "container" | - | Determines typeof of queries that are used for responsive styles |
-| verticalSpacing | StyleProp<MantineSpacing> | - | Spacing between rows |
+| type | "media" \| "container" | - | Determines type of queries that are used for responsive styles |
+| verticalSpacing | StyleProp<MantineSpacing> | - | Spacing between rows. When not set, falls back to spacing value |
 
 
 #### Styles API

@@ -1,0 +1,107 @@
+{
+  "id": "core-overlay",
+  "name": "Overlay",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/overlay",
+  "description": "Overlays parent element with div element with any color and opacity",
+  "propsCount": 9,
+  "llmUrl": "https://mantine.dev/llms/core-overlay.md",
+  "componentDataUrl": "/mcp/components/core-overlay.json",
+  "searchText": "overlay overlays parent element with div element with any color and opacity @mantine/core /core/overlay backgroundopacity blur center children color fixed gradient radius zindex",
+  "source": "@mantine/core/src/components/Overlay/Overlay.tsx",
+  "docs": "core/overlay.mdx",
+  "markdown": "# Overlay\nPackage: @mantine/core\nImport: import { Overlay } from '@mantine/core';\nDescription: Overlays parent element with div element with any color and opacity\n\n## Usage\n\n`Overlay` takes 100% of the width and height of the parent container or viewport if the `fixed` prop is set.\nSet the `color` and `backgroundOpacity` props to change the `Overlay` background-color. Note that the `backgroundOpacity` prop\ndoes not change the CSS opacity property; it changes the background-color. For example, if you set\n`color=\"#000\"` and `backgroundOpacity={0.85}`, the background-color will be `rgba(0, 0, 0, 0.85)`:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Overlay, AspectRatio } from '@mantine/core';\n\nfunction Demo() {\n  const [visible, setVisible] = useState(true);\n  return (\n    <>\n      <AspectRatio ratio={16 / 9} maw={400} mx=\"auto\" pos=\"relative\">\n        <img\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png\"\n          alt=\"Demo\"\n        />\n        {visible && <Overlay color=\"#000\" backgroundOpacity={0.85} />}\n      </AspectRatio>\n      <Button onClick={() => setVisible((v) => !v)} fullWidth maw={200} mx=\"auto\" mt=\"xl\">\n        Toggle overlay\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Gradient\n\nSet the `gradient` prop to use background-image instead of background-color. When the `gradient` prop is set,\nthe `color` and `backgroundOpacity` props are ignored.\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Overlay, AspectRatio } from '@mantine/core';\n\nfunction Demo() {\n  const [visible, setVisible] = useState(true);\n  return (\n    <>\n      <AspectRatio ratio={16 / 9} maw={400} mx=\"auto\" pos=\"relative\">\n        <img\n          src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png\"\n          alt=\"Demo\"\n        />\n        {visible && (\n          <Overlay\n            gradient=\"linear-gradient(145deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 100%)\"\n            opacity={0.85}\n          />\n        )}\n      </AspectRatio>\n      <Button onClick={() => setVisible((v) => !v)} fullWidth maw={200} mx=\"auto\" mt=\"xl\">\n        Toggle overlay\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Blur\n\nSet the `blur` prop to add `backdrop-filter: blur({value})` styles.\nNote that `backdrop-filter` [is not supported in all browsers](https://caniuse.com/css-backdrop-filter).\n\n```tsx\nimport { Overlay, AspectRatio } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <AspectRatio ratio={16 / 9} maw={400} mx=\"auto\" pos=\"relative\">\n      <img\n        src=\"https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png\"\n        alt=\"Demo\"\n      />\n      <Overlay color=\"#000\" backgroundOpacity={0.35} blur={15} />\n    </AspectRatio>\n  );\n}\n```\n\n\n\n#### Props\n\n**Overlay props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| backgroundOpacity | number | - | Overlay `background-color` opacity 0–1, ignored when `gradient` prop is set |\n| blur | string \\| number | - | Overlay background blur in px (converted to rem). Applies `backdrop-filter: blur()`. Note: backdrop-filter is not supported in all browsers. |\n| center | boolean | - | Centers content inside the overlay using flexbox (sets display: flex, align-items: center, justify-content: center) |\n| children | React.ReactNode | - | Content inside overlay |\n| color | BackgroundColor | - | Overlay `background-color` |\n| fixed | boolean | - | Changes position from `absolute` to `fixed` (viewport-relative instead of parent-relative) |\n| gradient | string | - | Changes overlay to gradient. If set, both `color` and `backgroundOpacity` props are ignored. |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |\n| zIndex | string \\| number | - | Overlay z-index |\n\n\n#### Styles API\n\nOverlay component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Overlay selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Overlay-root | Root element |\n\n**Overlay CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --overlay-bg | Controls `background-color` |\n| root | --overlay-filter | Controls `backdrop-filter` |\n| root | --overlay-radius | Controls `border-radius` |\n| root | --overlay-z-index | Controls `z-index` |\n\n**Overlay data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-center | `center` prop is set | - |\n| root | data-fixed | `fixed` prop is set | - |\n",
+  "props": [
+    {
+      "name": "backgroundOpacity",
+      "description": "Overlay <code>background-color</code> opacity 0–1, ignored when <code>gradient</code> prop is set",
+      "required": false,
+      "defaultValue": "0.6",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "blur",
+      "description": "Overlay background blur in px (converted to rem). Applies <code>backdrop-filter: blur()</code>. Note: backdrop-filter is not supported in all browsers.",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "center",
+      "description": "Centers content inside the overlay using flexbox (sets display: flex, align-items: center, justify-content: center)",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "children",
+      "description": "Content inside overlay",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "color",
+      "description": "Overlay <code>background-color</code>",
+      "required": false,
+      "defaultValue": "#000",
+      "type": {
+        "name": "BackgroundColor"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "fixed",
+      "description": "Changes position from <code>absolute</code> to <code>fixed</code> (viewport-relative instead of parent-relative)",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "gradient",
+      "description": "Changes overlay to gradient. If set, both <code>color</code> and <code>backgroundOpacity</code> props are ignored.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Overlay"
+    },
+    {
+      "name": "zIndex",
+      "description": "Overlay z-index",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Overlay"
+    }
+  ]
+}

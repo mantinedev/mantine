@@ -5,16 +5,14 @@ Description: Blockquote with optional cite
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Blockquote } from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { InfoIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconInfoCircle />;
+  const icon = <InfoIcon />;
   return (
-    <Blockquote cite="– Forrest Gump" icon={icon} mt="xl">
+    <Blockquote color="blue" radius="md" iconSize={38} cite="– Forrest Gump" icon={icon} mt="xl">
       Life is like an npm install – you never know what you are going to get.
     </Blockquote>
   );
@@ -25,13 +23,15 @@ function Demo() {
 
 #### Props
 
+**Blockquote props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | cite | React.ReactNode | - | Reference to a cited quote |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
 | icon | React.ReactNode | - | Blockquote icon, displayed at the top left side |
-| iconSize | string | number | - | Controls icon <code>width</code> and <code>height</code>, numbers are converted to rem |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
+| iconSize | string \| number | - | Controls icon `width` and `height`, numbers are converted to rem |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
 
 
 #### Styles API

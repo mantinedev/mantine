@@ -1,0 +1,231 @@
+{
+  "id": "core-progress",
+  "name": "Progress",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/progress",
+  "description": "Give user feedback for status of the task",
+  "propsCount": 19,
+  "llmUrl": "https://mantine.dev/llms/core-progress.md",
+  "componentDataUrl": "/mcp/components/core-progress.json",
+  "searchText": "progress give user feedback for status of the task @mantine/core /core/progress animated autocontrast color orientation radius size striped transitionduration value autocontrast orientation radius size transitionduration animated color striped value witharia",
+  "source": "@mantine/core/src/components/Progress/Progress.tsx",
+  "docs": "core/progress.mdx",
+  "markdown": "# Progress\nPackage: @mantine/core\nImport: import { Progress } from '@mantine/core';\nDescription: Give user feedback for status of the task\n\n## Usage\n\n```tsx\nimport { Progress } from '@mantine/core';\n\nfunction Demo() {\n  return <Progress color=\"blue\" radius=\"md\" size=\"md\" value={50} striped={false} animated={false} />;\n}\n```\n\n\n## Compound components\n\n```tsx\nimport { Progress } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Progress.Root size=\"xl\">\n      <Progress.Section value={35} color=\"cyan\">\n        <Progress.Label>Documents</Progress.Label>\n      </Progress.Section>\n      <Progress.Section value={28} color=\"pink\">\n        <Progress.Label>Photos</Progress.Label>\n      </Progress.Section>\n      <Progress.Section value={15} color=\"orange\">\n        <Progress.Label>Other</Progress.Label>\n      </Progress.Section>\n    </Progress.Root>\n  );\n}\n```\n\n\n## Vertical orientation\n\n```tsx\nimport { Progress } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Progress value={80} orientation=\"vertical\" h={200} />\n      <Progress value={60} color=\"orange\" size=\"xl\" orientation=\"vertical\" h={200} animated />\n\n      <Progress.Root size=\"xl\" autoContrast orientation=\"vertical\" h={200}>\n        <Progress.Section value={40} color=\"lime.4\">\n          <Progress.Label>Documents</Progress.Label>\n        </Progress.Section>\n        <Progress.Section value={20} color=\"yellow.4\">\n          <Progress.Label>Apps</Progress.Label>\n        </Progress.Section>\n        <Progress.Section value={20} color=\"cyan.7\">\n          <Progress.Label>Other</Progress.Label>\n        </Progress.Section>\n      </Progress.Root>\n    </Group>\n  );\n}\n```\n\n\n## With tooltips\n\n```tsx\nimport { Progress, Tooltip } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Progress.Root size={40}>\n      <Tooltip label=\"Documents – 33Gb\">\n        <Progress.Section value={33} color=\"cyan\">\n          <Progress.Label>Documents</Progress.Label>\n        </Progress.Section>\n      </Tooltip>\n\n      <Tooltip label=\"Photos – 28Gb\">\n        <Progress.Section value={28} color=\"pink\">\n          <Progress.Label>Photos</Progress.Label>\n        </Progress.Section>\n      </Tooltip>\n\n      <Tooltip label=\"Other – 15Gb\">\n        <Progress.Section value={15} color=\"orange\">\n          <Progress.Label>Other</Progress.Label>\n        </Progress.Section>\n      </Tooltip>\n    </Progress.Root>\n  );\n}\n```\n\n\n## Section width transition\n\nSet `transitionDuration` to a number of milliseconds to enable width transition:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Progress } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState(50);\n  return (\n    <>\n      <Progress value={value} size=\"lg\" transitionDuration={200} />\n      <Button onClick={() => setValue(Math.random() * 100)} mt=\"md\">\n        Set random value\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Accessibility\n\n* Progress section has the `role=\"progressbar\"` attribute\n* Progress section has the `aria-valuenow` attribute with the current value\n* `aria-valuemin` and `aria-valuemax` attributes are always set to `0` and `100` as the component does not support other values\n\nSet the `aria-label` attribute to label the progress:\n\n```tsx\nimport { Progress } from '@mantine/core';\n\nfunction Demo() {\n  return <Progress aria-label=\"Uploading progress\" value={10} />;\n}\n\nfunction DemoCompound() {\n  return (\n    <Progress.Root>\n      <Progress.Section aria-label=\"Uploading progress\" value={10} />\n    </Progress.Root>\n  );\n}\n```\n\n\n#### Props\n\n**Progress props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| animated | boolean | - | If set, the sections stripes are animated (automatically enables striped) |\n| autoContrast | boolean | - | If set, adjusts label text color based on section background color for readability |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS value |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Controls orientation |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| size | MantineSize \\| number | - | Controls track height |\n| striped | boolean | - | If set, the section has stripes |\n| transitionDuration | number | - | Controls sections width transition duration, value is specified in ms |\n| value | number | required | Value of the progress |\n\n**Progress.Section props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| animated | boolean | - | If set, the sections stripes are animated, `striped` prop is ignored |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS value |\n| striped | boolean | - | If set, the section has stripes |\n| value | number | required | Value of the section in 0–100 range |\n| withAria | boolean | - | Determines whether `aria-*` props should be added to the root element |\n\n**Progress.Root props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts label text color based on section background color for readability |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Controls orientation |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| size | MantineSize \\| number | - | Controls track height |\n| transitionDuration | number | - | Controls sections width transition duration, value is specified in ms |\n\n\n#### Styles API\n\nProgress component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Progress selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Progress-root | Root element |\n| section | .mantine-Progress-section | `Progress.Section` root element |\n| label | .mantine-Progress-label | `Progress.Label` root element |\n\n**Progress CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --progress-radius | Controls `border-radius` of track and sections |\n| root | --progress-size | Controls height of progress bar |\n| root | --progress-transition-duration | Controls width `transition-duration` of progress bar |\n\n**Progress data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-orientation | `orientation` prop | vertical \\| horizontal |\n| section | data-striped | `striped` or `animated` props are set | - |\n| section | data-animated | `animated` prop is set | - |\n",
+  "props": [
+    {
+      "name": "animated",
+      "description": "If set, the sections stripes are animated (automatically enables striped)",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts label text color based on section background color for readability",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS value",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "orientation",
+      "description": "Controls orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "size",
+      "description": "Controls track height",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "striped",
+      "description": "If set, the section has stripes",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "transitionDuration",
+      "description": "Controls sections width transition duration, value is specified in ms",
+      "required": false,
+      "defaultValue": "100",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "value",
+      "description": "Value of the progress",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Progress"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts label text color based on section background color for readability",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ProgressRoot"
+    },
+    {
+      "name": "orientation",
+      "description": "Controls orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "ProgressRoot"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "ProgressRoot"
+    },
+    {
+      "name": "size",
+      "description": "Controls track height",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "ProgressRoot"
+    },
+    {
+      "name": "transitionDuration",
+      "description": "Controls sections width transition duration, value is specified in ms",
+      "required": false,
+      "defaultValue": "100",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "ProgressRoot"
+    },
+    {
+      "name": "animated",
+      "description": "If set, the sections stripes are animated, <code>striped</code> prop is ignored",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ProgressSection"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS value",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "ProgressSection"
+    },
+    {
+      "name": "striped",
+      "description": "If set, the section has stripes",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ProgressSection"
+    },
+    {
+      "name": "value",
+      "description": "Value of the section in 0–100 range",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "ProgressSection"
+    },
+    {
+      "name": "withAria",
+      "description": "Determines whether <code>aria-*</code> props should be added to the root element",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ProgressSection"
+    }
+  ]
+}

@@ -4,14 +4,12 @@ Import: import { FormValidators } from '@mantine/form';
 
 ## Usage
 
-`@mantine/form` package exports several functions that can be used in [validation rules object](https://mantine.dev/form/validation/#validation-with-rules-object).
-Validation functions are tiny in size and provide basic validation, if you have complex validation requirements, use other types of [validation](https://mantine.dev/form/validation/).
-
-#### Example: validators
+The `@mantine/form` package exports several functions that can be used in [validation rules object](https://mantine.dev/llms/form-validation.md#validation-with-rules-object).
+Validation functions are tiny in size and provide basic validation. If you have complex validation requirements, use other types of [validation](https://mantine.dev/llms/form-validation.md).
 
 ```tsx
-import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
-import { Button, Group, TextInput, NumberInput } from '@mantine/core';
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches, isUrl, isOneOf } from '@mantine/form';
+import { Button, Group, TextInput, NumberInput, NativeSelect } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
@@ -22,6 +20,8 @@ function Demo() {
       email: '',
       favoriteColor: '',
       age: 18,
+      website: '',
+      role: '',
     },
 
     validate: {
@@ -30,6 +30,8 @@ function Demo() {
       email: isEmail('Invalid email'),
       favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
       age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
+      website: isUrl('Invalid URL'),
+      role: isOneOf(['developer', 'designer', 'manager'], 'Pick a valid role'),
     },
   });
 
@@ -73,6 +75,22 @@ function Demo() {
         mt="md"
         key={form.key('age')}
         {...form.getInputProps('age')}
+      />
+      <TextInput
+        label="Your website"
+        placeholder="https://example.com"
+        withAsterisk
+        mt="md"
+        key={form.key('website')}
+        {...form.getInputProps('website')}
+      />
+      <NativeSelect
+        label="Your role"
+        data={['', 'developer', 'designer', 'manager']}
+        withAsterisk
+        mt="md"
+        key={form.key('role')}
+        {...form.getInputProps('role')}
       />
 
       <Group justify="flex-end" mt="md">
@@ -86,14 +104,12 @@ function Demo() {
 
 ## Optional error
 
-Last argument of all validator functions below is optional. If error is not set, then fields with failed validation will
-only have invalid styles without error message:
-
-#### Example: validatorsEmpty
+The last argument of all validator functions below is optional. If the error is not set, then fields with failed validation will
+only have invalid styles without an error message:
 
 ```tsx
-import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
-import { Button, Group, TextInput, NumberInput } from '@mantine/core';
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches, isUrl, isOneOf } from '@mantine/form';
+import { Button, Group, TextInput, NumberInput, NativeSelect } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
@@ -104,6 +120,8 @@ function Demo() {
       email: '',
       favoriteColor: '',
       age: 18,
+      website: '',
+      role: '',
     },
 
     validate: {
@@ -112,6 +130,8 @@ function Demo() {
       email: isEmail(),
       favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/),
       age: isInRange({ min: 18, max: 99 }),
+      website: isUrl(),
+      role: isOneOf(['developer', 'designer', 'manager']),
     },
   });
 
@@ -156,6 +176,22 @@ function Demo() {
         key={form.key('age')}
         {...form.getInputProps('age')}
       />
+      <TextInput
+        label="Your website"
+        placeholder="https://example.com"
+        withAsterisk
+        mt="md"
+        key={form.key('website')}
+        {...form.getInputProps('website')}
+      />
+      <NativeSelect
+        label="Your role"
+        data={['', 'developer', 'designer', 'manager']}
+        withAsterisk
+        mt="md"
+        key={form.key('role')}
+        {...form.getInputProps('role')}
+      />
 
       <Group justify="flex-end" mt="md">
         <Button type="submit">Submit</Button>
@@ -168,7 +204,7 @@ function Demo() {
 
 ## isNotEmpty
 
-`isNotEmpty` checks that form value is not empty. Empty string, empty array, `false`, `null` and `undefined`
+`isNotEmpty` checks that the form value is not empty. Empty string, empty array, `false`, `null` and `undefined`
 values are considered to be empty. Strings are trimmed before validation.
 
 ```tsx
@@ -201,7 +237,7 @@ const form = useForm({
 
 ## isEmail
 
-`isEmail` uses `/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/` regexp to determine whether form value is an email:
+`isEmail` uses `/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/` regexp to determine whether the form value is an email:
 
 ```tsx
 import { isEmail, useForm } from '@mantine/form';
@@ -220,7 +256,7 @@ const form = useForm({
 
 ## matches
 
-`matches` checks whether form value matches given regexp. If form value is not a string, validation will be failed.
+`matches` checks whether the form value matches the given regexp. If the form value is not a string, validation will fail.
 
 ```tsx
 import { matches, useForm } from '@mantine/form';
@@ -239,7 +275,7 @@ const form = useForm({
 
 ## isInRange
 
-`isInRange` checks whether form value is within given `min`-`max` range. If form value is not a number, validation will be failed.
+`isInRange` checks whether the form value is within the given `min`-`max` range. If the form value is not a number, validation will fail.
 
 ```tsx
 import { isInRange, useForm } from '@mantine/form';
@@ -265,8 +301,8 @@ const form = useForm({
 
 ## hasLength
 
-`hasLength` check whether form value length is within given `min`-`max` range.
-`hasLength` will work correctly with strings, arrays and any other objects that have `length` property.
+`hasLength` checks whether the form value length is within the given `min`-`max` range.
+`hasLength` will work correctly with strings, arrays and any other objects that have a `length` property.
 Strings are trimmed before validation.
 
 ```tsx
@@ -301,7 +337,7 @@ const form = useForm({
 
 ## matchesField
 
-`matchesField` checks whether form value is the same as value in other form field.
+`matchesField` checks whether the form value is the same as the value in another form field.
 Note that `matchesField` can only work with primitive values (arrays and objects cannot be compared).
 
 ```tsx
@@ -325,7 +361,7 @@ const form = useForm({
 
 ## isJSONString
 
-`isJSONString` checks whether form value is a valid JSON string.
+`isJSONString` checks whether the form value is a valid JSON string.
 
 ```tsx
 import { isJSONString, useForm } from '@mantine/form';
@@ -342,9 +378,69 @@ const form = useForm({
 });
 ```
 
+## isUrl
+
+`isUrl` checks whether the form value is a valid URL. By default, only `http` and `https` protocols are allowed
+and `localhost` is rejected. You can customize this behavior by passing options as the first argument.
+
+```tsx
+import { isUrl, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    website: '',
+    internalUrl: '',
+    ftpServer: '',
+  },
+
+  validate: {
+    // Basic URL validation
+    website: isUrl('Invalid URL'),
+
+    // Allow localhost URLs
+    internalUrl: isUrl(
+      { allowLocalhost: true },
+      'Invalid URL'
+    ),
+
+    // Allow custom protocols
+    ftpServer: isUrl(
+      { protocols: ['ftp', 'https'] },
+      'Invalid FTP or HTTPS URL'
+    ),
+  },
+});
+```
+
+## isOneOf
+
+`isOneOf` checks whether the form value is included in the given list of allowed values.
+Uses strict equality for comparison.
+
+```tsx
+import { isOneOf, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    role: '',
+    priority: 0,
+  },
+
+  validate: {
+    role: isOneOf(
+      ['admin', 'user', 'moderator'],
+      'Invalid role'
+    ),
+    priority: isOneOf([1, 2, 3], 'Priority must be 1, 2, or 3'),
+  },
+});
+```
+
 ## isNotEmptyHTML
 
-`isNotEmptyHTML` checks that form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
+`isNotEmptyHTML` checks that the form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
 
 ```tsx
 import { isNotEmptyHTML, useForm } from '@mantine/form';

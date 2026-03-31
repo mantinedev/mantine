@@ -5,11 +5,9 @@ Description: Captures time value from the user
 
 ## Usage
 
-`TimePicker` component is an alternative to [TimeInput](https://mantine.dev/dates/time-input) that offers more
-features, it supports 24-hour and 12-hour formats, dropdown with hours, minutes and seconds, and
+The `TimePicker` component is an alternative to [TimeInput](https://mantine.dev/llms/dates-time-input.md) that offers more
+features. It supports 24-hour and 12-hour formats, a dropdown with hours, minutes and seconds, and
 more.
-
-#### Example: usage
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -22,12 +20,12 @@ function Demo() {
 
 ## Controlled
 
-`TimePicker` component value is a string in `hh:mm:ss` or `hh:mm` 24-hour format (for example `18:34:55`, `18:34`).
-Empty string is used to represent no value. `onChange` function is called only when the entered value is valid.
+The `TimePicker` component value is a string in `hh:mm:ss` or `hh:mm` 24-hour format (for example `18:34:55`).
+An empty string is used to represent no value. The `onChange` function is called only when the entered value is valid.
 The input value is considered valid in the following cases:
 
-* All inputs are empty. In this case `onChange` is called with an empty string.
-* All inputs are filled. For example if `withSeconds` prop is set and the user entered `12:34:56`, `onChange` will be called with `12:34:56`. But if the user entered `12:34`, `onChange` will not be called because seconds value is missing.
+* All inputs are empty. In this case, `onChange` is called with an empty string.
+* All inputs are filled. For example, if the `withSeconds` prop is set and the user entered `12:34:56`, `onChange` will be called with `12:34:56`. But if the user entered `12:34`, `onChange` will not be called because the seconds value is missing.
 
 ```tsx
 import { useState } from 'react';
@@ -41,11 +39,9 @@ function Demo() {
 
 ## With seconds
 
-Set `withSeconds` prop to enable seconds input. Note that if this prop is used,
+Set the `withSeconds` prop to enable seconds input. Note that if this prop is used,
 `onChange` is not called until all inputs are filled – it is not possible
 to enter only hours and minutes.
-
-#### Example: withSeconds
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -58,10 +54,8 @@ function Demo() {
 
 ## 12-hour format
 
-Set `format="12h"` to use 12-hour format. Note that `onChange` is called only when all inputs are filled
-including am/pm input.
-
-#### Example: format12h
+Set `format="12h"` to use 12-hour format. Note that `onChange` is called only when all inputs are filled,
+including the am/pm input.
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -74,9 +68,7 @@ function Demo() {
 
 ## Change am/pm labels
 
-To change am/pm labels use `amPmLabels` prop. Example of changing labels to Hindi:
-
-#### Example: amPmLabels
+To change am/pm labels, use the `amPmLabels` prop. Example of changing labels to Hindi:
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -91,9 +83,7 @@ function Demo() {
 
 ## Min and max values
 
-Set `min` and `max` props to limit available time range:
-
-#### Example: minMax
+Set the `min` and `max` props to limit the available time range:
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -111,10 +101,8 @@ function Demo() {
 
 ## With dropdown
 
-Set `withDropdown` prop to display the dropdown with hours, minutes, seconds and am/pm selects.
+Set the `withDropdown` prop to display a dropdown with hours, minutes, seconds and am/pm selects.
 By default, the dropdown is visible when one of the inputs is focused.
-
-#### Example: withDropdown
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -136,8 +124,6 @@ Use `hoursStep`, `minutesStep` and `secondsStep` props to control step for each 
 These props are used to control value by which the input is incremented or decremented when
 up/down arrow keys are pressed and to generate corresponding values range in the dropdown.
 
-#### Example: steps
-
 ```tsx
 import { TimePicker } from '@mantine/dates';
 
@@ -158,13 +144,11 @@ function Demo() {
 
 ## Control dropdown opened state
 
-Use `popoverProps` to pass props down to the underlying [Popover](https://mantine.dev/core/popover) component:
-
-#### Example: controlledDropdown
+Use `popoverProps` to pass props down to the underlying [Popover](https://mantine.dev/llms/core-popover.md) component:
 
 ```tsx
 import { useState } from 'react';
-import { IconClock } from '@tabler/icons-react';
+import { ClockIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
 import { TimePicker } from '@mantine/dates';
 
@@ -177,7 +161,7 @@ function Demo() {
       withDropdown
       rightSection={
         <ActionIcon onClick={() => setDropdownOpened(true)} variant="default">
-          <IconClock size={18} stroke={1.5} />
+          <ClockIcon size={18} />
         </ActionIcon>
       }
       value={value}
@@ -203,8 +187,6 @@ You can define time presets with `presets` prop. Presets are displayed in the dr
 Time values for presets should be in `hh:mm:ss` or `hh:mm` 24-hour time format. Presets
 display value is generated based on `format`, `amPmLabels` and `withSeconds` props.
 
-#### Example: presets
-
 ```tsx
 import { TimePicker } from '@mantine/dates';
 
@@ -223,8 +205,6 @@ function Demo() {
 ## Time presets groups
 
 To group presets use an array of objects with `label` and `values` keys:
-
-#### Example: presetsGroups
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -251,8 +231,6 @@ function Demo() {
 If you need to generate a range of time values, use `getTimeRange` function exported from
 `@mantine/dates` package. The function accepts start, end time and interval in `hh:mm:ss` format.
 
-#### Example: presetsRange
-
 ```tsx
 import { getTimeRange, TimePicker } from '@mantine/dates';
 
@@ -272,11 +250,9 @@ function Demo() {
 
 By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
 You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
-underlying [Popover](https://mantine.dev/core/popover) component.
+underlying [Popover](https://mantine.dev/llms/core-popover.md) component.
 
 Example of dropdown that is always displayed above the input:
-
-#### Example: dropdownPosition
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -302,8 +278,6 @@ To change dropdown width, set `width` prop in `comboboxProps`. By default,
 dropdown width is adjusted to fit all content. Example of dropdown width set
 to the input width:
 
-#### Example: dropdownWidth
-
 ```tsx
 import { TimePicker } from '@mantine/dates';
 
@@ -327,8 +301,6 @@ function Demo() {
 
 By default, `TimePicker` handles only time in 24-hour format (for example `17:33:43` or `19:22`) for paste events.
 With `pasteSplit` prop you can create a custom paste time parser:
-
-#### Example: pasteSplit
 
 ```tsx
 import { Code, Text } from '@mantine/core';
@@ -371,8 +343,6 @@ function Demo() {
 Set `clearable` prop to display a clear button in the right section of the input.
 The clear button is visible when at least one of the fields has value.
 
-#### Example: clearable
-
 ```tsx
 import { TimePicker } from '@mantine/dates';
 
@@ -382,9 +352,44 @@ function Demo() {
 ```
 
 
-## Disabled
+```tsx
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Stack } from '@mantine/core';
+import { TimePicker } from '@mantine/dates';
 
-#### Example: disabled
+function Demo() {
+  return (
+    <Stack>
+      <TimePicker
+        label="clearSectionMode='both' (default)"
+        defaultValue="12:30"
+        clearable
+        rightSection={<CaretDownIcon size={16} />}
+        clearSectionMode="both"
+      />
+
+      <TimePicker
+        label="clearSectionMode='rightSection'"
+        defaultValue="12:30"
+        clearable
+        rightSection={<CaretDownIcon size={16} />}
+        clearSectionMode="rightSection"
+      />
+
+      <TimePicker
+        label="clearSectionMode='clear'"
+        defaultValue="12:30"
+        clearable
+        rightSection={<CaretDownIcon size={16} />}
+        clearSectionMode="clear"
+      />
+    </Stack>
+  );
+}
+```
+
+
+## Disabled
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -397,8 +402,6 @@ function Demo() {
 
 ## Read only
 
-#### Example: readOnly
-
 ```tsx
 import { TimePicker } from '@mantine/dates';
 
@@ -410,11 +413,7 @@ function Demo() {
 
 ## Input props
 
-<InputFeatures component="TimePicker" element="div" />
-
 TimePicker component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all div element props. TimePicker documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
-
-#### Example: configurator
 
 ```tsx
 import { TimePicker } from '@mantine/dates';
@@ -424,7 +423,7 @@ function Demo() {
   return (
     <TimePicker
       withDropdown
-      
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
     />
   );
 }
@@ -498,72 +497,77 @@ Keyboard interactions:
 
 #### Props
 
+**TimePicker props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| amPmInputLabel | string | - | <code>aria-label</code> of am/pm input |
+| amPmInputLabel | string | - | `aria-label` of am/pm input |
 | amPmLabels | { am: string; pm: string } | - | Labels used for am/pm values |
 | amPmRef | Ref<HTMLSelectElement> | - | A ref object to get node reference of the am/pm select |
-| amPmSelectProps | React.ComponentPropsWithoutRef<"select"> | - | Props passed down to am/pm select |
+| amPmSelectProps | ClassAttributes<HTMLSelectElement> & SelectHTMLAttributes<HTMLSelectElement> & DataAttributes | - | Props passed down to am/pm select |
 | clearButtonProps | CloseButtonProps | - | Props passed down to clear button |
+| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
 | clearable | boolean | - | Determines whether the clear button should be displayed |
 | defaultValue | string | - | Uncontrolled component default value |
-| description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
 | disabled | boolean | - | If set, the component becomes disabled |
-| error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
-| form | string | - | <code>form</code> prop passed down to the hidden input |
-| format | "12h" | "24h" | - | Time format, <code>'24h'</code> by default |
-| hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
-| hoursInputLabel | string | - | <code>aria-label</code> of hours input |
-| hoursInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to hours input |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| form | string | - | `form` prop passed down to the hidden input |
+| format | "12h" \| "24h" | - | Time format, `'24h'` by default |
+| hiddenInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props passed down to the hidden input |
+| hoursInputLabel | string | - | `aria-label` of hours input |
+| hoursInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props passed down to hours input |
 | hoursPlaceholder | string | - | Hours input placeholder, |
 | hoursRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the hours input |
 | hoursStep | number | - | Number by which hours are incremented/decremented |
-| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
-| inputSize | string | - | <code>size</code> attribute passed down to the input element |
-| inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
-| label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
-| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
-| leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
-| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
-| max | string | - | Max possible time value in <code>hh:mm:ss</code> format |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| max | string | - | Max possible time value in `hh:mm:ss` format |
 | maxDropdownContentHeight | number | - | Maximum height of the content displayed in the dropdown in px |
-| min | string | - | Min possible time value in <code>hh:mm:ss</code> format |
-| minutesInputLabel | string | - | <code>aria-label</code> of minutes input |
-| minutesInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to minutes input |
+| min | string | - | Min possible time value in `hh:mm:ss` format |
+| minutesInputLabel | string | - | `aria-label` of minutes input |
+| minutesInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props passed down to minutes input |
 | minutesPlaceholder | string | - | Minutes input placeholder, |
 | minutesRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the minutes input |
 | minutesStep | number | - | Number by which minutes are incremented/decremented |
-| name | string | - | <code>name</code> prop passed down to the hidden input |
+| name | string | - | `name` prop passed down to the hidden input |
 | onBlur | (event: FocusEvent<HTMLDivElement, Element>) => void | - | Called once when the focus is no longer on any of the inputs |
 | onChange | (value: string) => void | - | Called when the value changes |
 | onFocus | (event: FocusEvent<HTMLInputElement, Element>) => void | - | Called once when one of the inputs is focused, not called when focused is shifted between hours, minutes, seconds and am/pm inputs |
-| pasteSplit | TimePickerPasteSplit | - | A function to transform paste values, by default time in 24h format can be parsed on paste for example <code>23:34:22</code> |
-| pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
-| popoverProps | PopoverProps | - | Props passed down to <code>Popover</code> component |
+| pasteSplit | TimePickerPasteSplit | - | A function to transform paste values, by default time in 24h format can be parsed on paste for example `23:34:22` |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| popoverProps | PopoverProps | - | Props passed down to `Popover` component |
 | presets | TimePickerPresets | - | Time presets to display in the dropdown |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the value cannot be updated |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | reverseTimeControlsList | boolean | - | If set, the time controls list are reversed, |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
-| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
-| rightSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>rightSection</code> element |
-| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
-| scrollAreaProps | ScrollAreaProps | - | Props passed down to all underlying <code>ScrollArea</code> components |
-| secondsInputLabel | string | - | <code>aria-label</code> of seconds input |
-| secondsInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to seconds input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| scrollAreaProps | ScrollAreaProps | - | Props passed down to all underlying `ScrollArea` components |
+| secondsInputLabel | string | - | `aria-label` of seconds input |
+| secondsInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props passed down to seconds input |
 | secondsPlaceholder | string | - | Seconds input placeholder, |
 | secondsRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the seconds input |
 | secondsStep | number | - | Number by which seconds are incremented/decremented |
-| size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
 | value | string | - | Controlled component value |
-| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withDropdown | boolean | - | Determines whether the dropdown with time controls list should be visible when the input has focus |
-| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withSeconds | boolean | - | Determines whether the seconds input should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 

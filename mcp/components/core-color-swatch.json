@@ -1,0 +1,67 @@
+{
+  "id": "core-color-swatch",
+  "name": "ColorSwatch",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/color-swatch",
+  "description": "Displays color",
+  "propsCount": 5,
+  "llmUrl": "https://mantine.dev/llms/core-color-swatch.md",
+  "componentDataUrl": "/mcp/components/core-color-swatch.json",
+  "searchText": "colorswatch displays color @mantine/core /core/color-swatch children color radius size withshadow",
+  "source": "@mantine/core/src/components/ColorSwatch/ColorSwatch.tsx",
+  "docs": "core/color-swatch.mdx",
+  "markdown": "# ColorSwatch\nPackage: @mantine/core\nImport: import { ColorSwatch } from '@mantine/core';\nDescription: Displays color\n\n## Usage\n\n```tsx\nimport { ColorSwatch, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <ColorSwatch color=\"#009790\" />\n      <ColorSwatch color=\"rgba(234, 22, 174, 0.5)\" />\n      <ColorSwatch color=\"var(--mantine-color-orange-5)\" />\n    </Group>\n  );\n}\n```\n\n\n## withShadow\n\nBy default, `ColorSwatch` has an inner box-shadow to make it more visible on light backgrounds.\nYou can disable it by setting the `withShadow={false}` prop:\n\n```tsx\nimport { ColorSwatch } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorSwatch color=\"rgba(255, 255, 255, 0.7)\" withShadow={true} />;\n}\n```\n\n\nExample of using `ColorSwatch` as a button:\n\n```tsx\nimport { useState } from 'react';\nimport { ColorSwatch, CheckIcon } from '@mantine/core';\n\nfunction Demo() {\n  const [checked, setChecked] = useState(true);\n\n  return (\n    <ColorSwatch\n      component=\"button\"\n      color=\"var(--mantine-color-grape-6)\"\n      onClick={() => setChecked((c) => !c)}\n      style={{ color: '#fff', cursor: 'pointer' }}\n    >\n      {checked && <CheckIcon size={12} />}\n    </ColorSwatch>\n  );\n}\n```\n\n\n\n#### Props\n\n**ColorSwatch props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Children inside the swatch |\n| color | string | required | Valid CSS color to display |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem. |\n| size | React.CSSProperties[\"width\"] | - | Swatch `width` and `height`, any valid CSS value, numbers are converted to rem. |\n| withShadow | boolean | - | If set, the swatch has inner `box-shadow` |\n\n\n#### Styles API\n\nColorSwatch component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**ColorSwatch selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-ColorSwatch-root | Root element |\n| alphaOverlay | .mantine-ColorSwatch-alphaOverlay | Overlay with checkerboard pattern |\n| shadowOverlay | .mantine-ColorSwatch-shadowOverlay | Overlay with inner box-shadow |\n| colorOverlay | .mantine-ColorSwatch-colorOverlay | Overlay with given color background |\n| childrenOverlay | .mantine-ColorSwatch-childrenOverlay | Overlay with `children` inside |\n\n**ColorSwatch CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --cs-radius | Controls `border-radius` of all overlays and `root` element |\n| root | --cs-size | Controls `width`, `height`, `min-width` and `min-height` of the `root` element |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "Children inside the swatch",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ColorSwatch"
+    },
+    {
+      "name": "color",
+      "description": "Valid CSS color to display",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorSwatch"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "1000",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "ColorSwatch"
+    },
+    {
+      "name": "size",
+      "description": "Swatch <code>width</code> and <code>height</code>, any valid CSS value, numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "28",
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "ColorSwatch"
+    },
+    {
+      "name": "withShadow",
+      "description": "If set, the swatch has inner <code>box-shadow</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorSwatch"
+    }
+  ]
+}

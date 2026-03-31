@@ -43,8 +43,6 @@ Stats are counted automatically each time new version is published:
 
 Download Mantine logos in `.svg` format:
 
-<LogoAssets />
-
 You can also install `@mantinex/mantine-logo` package and import `MantineLogo` component.
 Note that the package depends on `@mantine/core` and `@mantine/hooks` packages.
 
@@ -56,13 +54,11 @@ yarn add @mantinex/mantine-logo
 npm install @mantinex/mantine-logo
 ```
 
-#### Example: logo
-
 ```tsx
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 function Demo() {
-  return <MantineLogo />;
+  return <MantineLogo color="blue" type="full" size={30} />;
 }
 ```
 

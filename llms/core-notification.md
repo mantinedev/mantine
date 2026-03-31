@@ -5,59 +5,16 @@ Description: Show dynamic notifications and alerts to user, part of notification
 
 ## Usage
 
-Notification is a base component for notification system.
-Build your own or use [@mantine/notifications](https://mantine.dev/x/notifications/) package.
-
-#### Example: configurator
+Notification is a base component for the notification system.
+Build your own or use the [@mantine/notifications](https://mantine.dev/llms/x-notifications.md) package.
 
 ```tsx
 import { Notification } from '@mantine/core';
 
 function Demo() {
   return (
-    <Notification>
+    <Notification loading={false} withCloseButton={true} withBorder={false} color="blue" radius="md" title="We notify you that" children="You are now obligated to give a star to Mantine project on GitHub">
       {{children}}
-    </Notification>
-  );
-}
-```
-
-
-## With icon
-
-#### Example: icon
-
-```tsx
-import { IconX, IconCheck } from '@tabler/icons-react';
-import { Notification } from '@mantine/core';
-
-function Demo() {
-  const xIcon = <IconX size={20} />;
-  const checkIcon = <IconCheck size={20} />;
-
-  return (
-    <>
-      <Notification icon={xIcon} color="red" title="Bummer!">
-        Something went wrong
-      </Notification>
-      <Notification icon={checkIcon} color="teal" title="All good!" mt="md">
-        Everything is fine
-      </Notification>
-    </>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Notification } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Notification title="We notify you that">
-      You are now obligated to give a star to Mantine project on GitHub
     </Notification>
   );
 }
@@ -66,7 +23,7 @@ function Demo() {
 
 ## Accessibility
 
-To support screen readers, set close button aria-label or title with `closeButtonProps`:
+To support screen readers, set the close button's aria-label or title with `closeButtonProps`:
 
 ```tsx
 import { Notification } from '@mantine/core';
@@ -83,19 +40,37 @@ function Demo() {
 
 #### Props
 
+**Notification props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| children | React.ReactNode | - | Main notification message |
-| closeButtonProps | Record<string, any> | - | Props passed down to the close button |
-| color | MantineColor | - | Controls notification line or icon color, key of <code>theme.colors</code> or any valid CSS color |
+| children | React.ReactNode | - | Notification description, displayed below the title. When no title is provided, this serves as the main message. |
+| closeButtonProps | ElementProps<"button"> & DataAttributes | - | Props passed down to the close button |
+| color | MantineColor | - | Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. |
 | icon | React.ReactNode | - | Notification icon, replaces color line |
-| loaderProps | LoaderProps | - | Props passed down to the <code>Loader</code> component |
-| loading | boolean | - | If set, the <code>Loader</code> component is displayed instead of the icon |
+| loaderProps | LoaderProps | - | Props passed down to the `Loader` component |
+| loading | boolean | - | If set, displays a `Loader` component instead of the icon. Takes precedence over the `icon` prop if both are provided. |
 | onClose | () => void | - | Called when the close button is clicked |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
 | title | React.ReactNode | - | Notification title, displayed above the message body |
 | withBorder | boolean | - | Adds border to the root element |
 | withCloseButton | boolean | - | If set, the close button is visible |
+
+**Notification.s props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoClose | number \| false | - | Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function |
+| containerWidth | string \| number | - | Notification width, cannot exceed 100% |
+| limit | number | - | Maximum number of notifications displayed at a time, other new notifications will be added to queue |
+| notificationMaxHeight | string \| number | - | Notification `max-height`, used for transitions |
+| pauseResetOnHover | "all" \| "notification" | - | Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification |
+| portalProps | BasePortalProps | - | Props passed down to the `Portal` component |
+| position | NotificationPosition | - | Notifications default position |
+| store | NotificationsStore | - | Store for notifications state, can be used to create multiple instances of notifications system in your application |
+| transitionDuration | number | - | Notification transition duration in ms |
+| withinPortal | boolean | - | Determines whether notifications container should be rendered inside `Portal` |
+| zIndex | string \| number | - | Notifications container z-index |
 
 
 #### Styles API
@@ -125,9 +100,9 @@ Notification component supports Styles API. With Styles API, you can customize s
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-with-icon | - | - |
-| root | data-with-border | - | - |
-| description | data-with-title | - | - |
+| root | data-with-icon | `icon` prop is set | - |
+| root | data-with-border | `withBorder` prop is set | - |
+| description | data-with-title | `title` prop is set | - |
 
 **Notifications selectors**
 

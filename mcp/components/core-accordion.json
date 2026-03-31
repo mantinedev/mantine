@@ -1,0 +1,240 @@
+{
+  "id": "core-accordion",
+  "name": "Accordion",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/accordion",
+  "description": "Divide content into collapsible sections",
+  "propsCount": 19,
+  "llmUrl": "https://mantine.dev/llms/core-accordion.md",
+  "componentDataUrl": "/mcp/components/core-accordion.json",
+  "searchText": "accordion divide content into collapsible sections @mantine/core /core/accordion chevron chevroniconsize chevronposition chevronsize defaultvalue disablechevronrotation keepmounted loop multiple onchange order radius transitionduration value value chevron children disabled icon",
+  "source": "@mantine/core/src/components/Accordion/Accordion.tsx",
+  "docs": "core/accordion.mdx",
+  "markdown": "# Accordion\nPackage: @mantine/core\nImport: import { Accordion } from '@mantine/core';\nDescription: Divide content into collapsible sections\n\n## Usage\n\nAccordion allows users to expand and collapse sections of content.\nIt helps manage large amounts of information in a limited space\nby showing only section headers initially and revealing content upon interaction.\n\nAccordion is commonly used for:\n\n* FAQ sections: displaying questions as headers with answers revealed when clicked\n* Forms: organizing long forms into sections, for example, personal info, shipping, and payment\n* Menus: nested navigation in sidebars or mobile views\n\n```tsx\n// Demo.tsx\nimport { Accordion } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const items = data.map((item) => (\n    <Accordion.Item key={item.value} value={item.value}>\n      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>\n      <Accordion.Panel>{item.description}</Accordion.Panel>\n    </Accordion.Item>\n  ));\n\n  return (\n    <Accordion variant=\"default\" radius=\"md\" chevronPosition=\"right\" chevronIconSize={16} disableChevronRotation={false} order={3} defaultValue=\"Apples\">\n      {items}\n    </Accordion>\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    emoji: '🍎',\n    value: 'Apples',\n    description:\n      'Crisp and refreshing fruit. Apples are known for their versatility and nutritional benefits. They come in a variety of flavors and are great for snacking, baking, or adding to salads.',\n  },\n  {\n    emoji: '🍌',\n    value: 'Bananas',\n    description:\n      'Naturally sweet and potassium-rich fruit. Bananas are a popular choice for their energy-boosting properties and can be enjoyed as a quick snack, added to smoothies, or used in baking.',\n  },\n  {\n    emoji: '🥦',\n    value: 'Broccoli',\n    description:\n      'Nutrient-packed green vegetable. Broccoli is packed with vitamins, minerals, and fiber. It has a distinct flavor and can be enjoyed steamed, roasted, or added to stir-fries.',\n  },\n];\n```\n\n\n## order prop\n\nThe `order` prop (used in all demos on this page) sets the heading level for the `Accordion.Control` root element.\nAccording to [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html),\nit is required to use `h2`-`h6` heading levels to fit correctly within the outline of the page.\n\nAll examples on this page use `order={3}`, which means that all `button` elements of\n`Accordion.Control` are wrapped with an `h3` tag (`h2` tags are used for the documentation sections).\n\nThe `order` prop is not enforced by the library but is required if your application\nmust meet accessibility standards.\n\n## Change chevron\n\nUse the `chevron` prop to change the chevron icon. When `chevron` is set,\nthe `chevronIconSize` prop is ignored. To remove the chevron icon, use `chevron={null}`.\n\nTo customize chevron styles, use [Styles API](https://mantine.dev/llms/styles-styles-api.md) with the\n[data-rotate](https://mantine.dev/llms/styles-data-attributes.md) attribute. This attribute is set when the item\nis opened if the `disableChevronRotation` prop is not set.\n\nExample of a custom chevron icon with rotation styles:\n\n```tsx\n// Demo.module.css\n.chevron {\n  &[data-rotate] {\n    transform: rotate(45deg);\n  }\n}\n\n.icon {\n  width: 16px;\n  height: 16px;\n}\n\n// data.ts\nexport const data = [\n  {\n    emoji: '🍎',\n    value: 'Apples',\n    description:\n      'Crisp and refreshing fruit. Apples are known for their versatility and nutritional benefits. They come in a variety of flavors and are great for snacking, baking, or adding to salads.',\n  },\n  {\n    emoji: '🍌',\n    value: 'Bananas',\n    description:\n      'Naturally sweet and potassium-rich fruit. Bananas are a popular choice for their energy-boosting properties and can be enjoyed as a quick snack, added to smoothies, or used in baking.',\n  },\n  {\n    emoji: '🥦',\n    value: 'Broccoli',\n    description:\n      'Nutrient-packed green vegetable. Broccoli is packed with vitamins, minerals, and fiber. It has a distinct flavor and can be enjoyed steamed, roasted, or added to stir-fries.',\n  },\n];\n```\n\n\n## Custom control label\n\nYou can use any React node as a label for `Accordion.Control` component.\nWhen you use nested elements in `Accordion.Control`, it is recommended to\nset `aria-label` attribute to make the control accessible for screen readers.\n\n```tsx\nimport { Flex, Avatar, Text, Accordion } from '@mantine/core';\n\nconst charactersList = [\n  {\n    id: 'bender',\n    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',\n    label: 'Bender Bending Rodríguez',\n    description: 'Fascinated with cooking, though has no sense of taste',\n    content: \"Bender Bending Rodríguez, (born September 4, 2996), designated Bending Unit 22, and commonly known as Bender, is a bending unit created by a division of MomCorp in Tijuana, Mexico, and his serial number is 2716057. His mugshot id number is 01473. He is Fry's best friend.\",\n  },\n\n  {\n    id: 'carol',\n    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',\n    label: 'Carol Miller',\n    description: 'One of the richest people on Earth',\n    content: \"Carol Miller (born January 30, 2880), better known as Mom, is the evil chief executive officer and shareholder of 99.7% of Momcorp, one of the largest industrial conglomerates in the universe and the source of most of Earth's robots. She is also one of the main antagonists of the Futurama series.\",\n  },\n\n  {\n    id: 'homer',\n    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',\n    label: 'Homer Simpson',\n    description: 'Overweight, lazy, and often ignorant',\n    content: 'Homer Jay Simpson (born May 12) is the main protagonist and one of the five main characters of The Simpsons series(or show). He is the spouse of Marge Simpson and father of Bart, Lisa and Maggie Simpson.',\n  },\n];\n\ninterface AccordionLabelProps {\n  label: string;\n  image: string;\n  description: string;\n}\n\nfunction AccordionLabel({ label, image, description }: AccordionLabelProps) {\n  return (\n    <Flex component=\"span\" gap=\"md\" align=\"center\" wrap=\"nowrap\">\n      <Avatar src={image} radius=\"xl\" size=\"lg\" alt={label} />\n      <div>\n        <Text span>{label}</Text>\n        <Text span display=\"block\" size=\"sm\" c=\"dimmed\" fw={400}>\n          {description}\n        </Text>\n      </div>\n    </Flex>\n  );\n}\n\nfunction Demo() {\n  const items = charactersList.map((item) => (\n    <Accordion.Item value={item.id} key={item.label}>\n      <Accordion.Control aria-label={item.label}>\n        <AccordionLabel {...item} />\n      </Accordion.Control>\n      <Accordion.Panel>\n        <Text size=\"sm\">{item.content}</Text>\n      </Accordion.Panel>\n    </Accordion.Item>\n  ));\n\n  return (\n    <Accordion chevronPosition=\"right\" variant=\"contained\">\n      {items}\n    </Accordion>\n  );\n}\n```\n\n\n## With icons\n\nUse the `icon` prop to display any element in the left section of the `Accordion.Control`:\n\n```tsx\nimport { ImageIcon, PrinterIcon, CameraIcon } from '@phosphor-icons/react';\nimport { Accordion } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Accordion variant=\"filled\" defaultValue=\"photos\" order={3}>\n      <Accordion.Item value=\"photos\">\n        <Accordion.Control\n          icon={<ImageIcon size={22} color=\"var(--mantine-color-dimmed)\" />}\n        >\n          Recent photos\n        </Accordion.Control>\n        <Accordion.Panel>Content</Accordion.Panel>\n      </Accordion.Item>\n\n      <Accordion.Item value=\"print\">\n        <Accordion.Control\n          icon={<PrinterIcon size={22} color=\"var(--mantine-color-dimmed)\" />}\n        >\n          Print photos\n        </Accordion.Control>\n        <Accordion.Panel>Content</Accordion.Panel>\n      </Accordion.Item>\n\n      <Accordion.Item value=\"camera\">\n        <Accordion.Control\n          icon={<CameraIcon size={22} color=\"var(--mantine-color-dimmed)\" />}\n        >\n          CameraIcon settings\n        </Accordion.Control>\n        <Accordion.Panel>Content</Accordion.Panel>\n      </Accordion.Item>\n    </Accordion>\n  );\n}\n```\n\n\n## Change transition\n\nTo change transition duration, set `transitionDuration` prop:\n\n\n\nTo disable transitions, set `transitionDuration` to 0:\n\n\n\n## Default opened items\n\nFor `multiple={false}`, set `defaultValue` as string:\n\n```tsx\nimport { Accordion } from '@mantine/core';\n\nfunction Demo() {\n  // Second item will be opened by default\n  return (\n    <Accordion defaultValue=\"item-2\">\n      <Accordion.Item value=\"item-1\">{/* item-1 */}</Accordion.Item>\n      <Accordion.Item value=\"item-2\">{/* item-2 */}</Accordion.Item>\n    </Accordion>\n  );\n}\n```\n\nFor `multiple={true}`, set `defaultValue` as an array of strings:\n\n```tsx\nimport { Accordion } from '@mantine/core';\n\nfunction Demo() {\n  // Both items are opened by default\n  return (\n    <Accordion multiple defaultValue={['item-1', 'item-2']}>\n      <Accordion.Item value=\"item-1\">{/* item-1 */}</Accordion.Item>\n      <Accordion.Item value=\"item-2\">{/* item-2 */}</Accordion.Item>\n    </Accordion>\n  );\n}\n```\n\n## Control opened state\n\nFor `multiple={false}`, set `value` as string:\n\n```tsx\nimport { useState } from 'react';\nimport { Accordion } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n\n  return (\n    <Accordion value={value} onChange={setValue}>\n      <Accordion.Item value=\"item-1\">{/* item-1 */}</Accordion.Item>\n      <Accordion.Item value=\"item-2\">{/* item-2 */}</Accordion.Item>\n    </Accordion>\n  );\n}\n```\n\nFor `multiple={true}`, set `value` as an array of strings:\n\n```tsx\nimport { useState } from 'react';\nimport { Accordion } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string[]>([]);\n\n  return (\n    <Accordion multiple value={value} onChange={setValue}>\n      <Accordion.Item value=\"item-1\">{/* item-1 */}</Accordion.Item>\n      <Accordion.Item value=\"item-2\">{/* item-2 */}</Accordion.Item>\n    </Accordion>\n  );\n}\n```\n\n## Compose controls\n\nPutting a button or link inside `Accordion.Control` is a common mistake when\nusing Accordion. The `Accordion.Control` root element is a `button`. Putting interactive\nelements inside other interactive elements is forbidden – you will receive a DOM\nvalidation error from React if you try to implement the following component:\n\n```tsx\nimport { Accordion } from '@mantine/core';\n\n// ❌ Incorrect usage: do not do this\nfunction Demo() {\n  return (\n    <Accordion.Item value=\"item-1\">\n      <Accordion.Control>\n        <Group>\n          <span>Control 1</span>\n          <button>My action</button>\n        </Group>\n      </Accordion.Control>\n      <Accordion.Panel>Panel 1</Accordion.Panel>\n    </Accordion.Item>\n  );\n}\n```\n\nInstead of putting interactive elements inside the `Accordion.Control`, render them\nnext to it. For example, you can add an [ActionIcon](https://mantine.dev/llms/core-action-icon.md) or [Menu](https://mantine.dev/llms/core-menu.md)\nto the right side of the original control. If you need to display an interactive element\nover the `Accordion.Control`, use `position: absolute` instead.\n\n```tsx\nimport { Accordion, ActionIcon, AccordionControlProps, Center } from '@mantine/core';\nimport { DotsThreeIcon } from '@phosphor-icons/react';\n\nfunction AccordionControl(props: AccordionControlProps) {\n  return (\n    <Center>\n      <Accordion.Control {...props} />\n      <ActionIcon size=\"lg\" variant=\"subtle\" color=\"gray\" aria-label=\"More options\">\n        <DotsThreeIcon size={20} />\n      </ActionIcon>\n    </Center>\n  );\n}\n\nfunction Demo() {\n  return (\n    <Accordion chevronPosition=\"left\" order={3}>\n      <Accordion.Item value=\"item-1\">\n        <AccordionControl>Control 1</AccordionControl>\n        <Accordion.Panel>Panel 1</Accordion.Panel>\n      </Accordion.Item>\n\n      <Accordion.Item value=\"item-2\">\n        <AccordionControl>Control 2</AccordionControl>\n        <Accordion.Panel>Panel 2</Accordion.Panel>\n      </Accordion.Item>\n\n      <Accordion.Item value=\"item-3\">\n        <AccordionControl>Control 3</AccordionControl>\n        <Accordion.Panel>Panel 3</Accordion.Panel>\n      </Accordion.Item>\n    </Accordion>\n  );\n}\n```\n\n\n## Disabled items\n\nSet the `disabled` prop on the `Accordion.Control` component to disable it.\nWhen you disable items, users cannot activate them with the mouse or keyboard,\nand arrow key navigation will skip them:\n\n```tsx\n// Demo.tsx\nimport { Accordion } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const items = data.map((item) => (\n    <Accordion.Item key={item.value} value={item.value}>\n      <Accordion.Control icon={item.emoji} disabled={item.value === 'Bananas'}>\n        {item.value}\n      </Accordion.Control>\n      <Accordion.Panel>{item.description}</Accordion.Panel>\n    </Accordion.Item>\n  ));\n\n  return (\n    <Accordion defaultValue=\"Apples\" order={3}>\n      {items}\n    </Accordion>\n  );\n}\n\n// data.ts\nexport const data = [\n  {\n    emoji: '🍎',\n    value: 'Apples',\n    description:\n      'Crisp and refreshing fruit. Apples are known for their versatility and nutritional benefits. They come in a variety of flavors and are great for snacking, baking, or adding to salads.',\n  },\n  {\n    emoji: '🍌',\n    value: 'Bananas',\n    description:\n      'Naturally sweet and potassium-rich fruit. Bananas are a popular choice for their energy-boosting properties and can be enjoyed as a quick snack, added to smoothies, or used in baking.',\n  },\n  {\n    emoji: '🥦',\n    value: 'Broccoli',\n    description:\n      'Nutrient-packed green vegetable. Broccoli is packed with vitamins, minerals, and fiber. It has a distinct flavor and can be enjoyed steamed, roasted, or added to stir-fries.',\n  },\n];\n```\n\n\n## TypeScript\n\nThe `AccordionProps` type exported from `@mantine/core` is a generic that accepts a boolean type\ndescribing the `multiple` state:\n\n```tsx\nimport type { AccordionProps } from '@mantine/core';\n\ntype MultipleAccordionProps = AccordionProps<true>;\ntype DefaultAccordionProps = AccordionProps<false>;\n```\n\n## Accessibility\n\nThe Accordion component implements the [WAI-ARIA accessibility pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).\n\n## Keyboard interactions\n\n\n#### Props\n\n**Accordion props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| chevron | React.ReactNode | - | Custom chevron icon |\n| chevronIconSize | string \\| number | - | Size of the default chevron icon. Ignored when `chevron` prop is set. Use `chevronSize` instead when using custom chevron. |\n| chevronPosition | \"left\" \\| \"right\" | - | Position of the chevron relative to the item label |\n| chevronSize | string \\| number | - | Size of the chevron icon container |\n| defaultValue | string \\| string[] \\| null | - | Uncontrolled component default value |\n| disableChevronRotation | boolean | - | If set, chevron rotation is disabled |\n| keepMounted | boolean | - | If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. |\n| loop | boolean | - | If set, arrow keys loop through items (first to last and last to first) |\n| multiple | boolean | - | If set, multiple items can be opened at the same time |\n| onChange | (value: AccordionValue<Multiple>) => void | - | Called when value changes, payload type depends on `multiple` prop |\n| order | 2 \\| 3 \\| 4 \\| 5 \\| 6 | - | Sets heading level (h2-h6) for `Accordion.Control` elements to meet WAI-ARIA requirements. Has no visual effect. |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. |\n| transitionDuration | number | - | Transition duration in ms |\n| value | string \\| string[] \\| null | - | Controlled component value |\n\n**Accordion.Item props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| value | string | required | Value that is used to manage the accordion state |\n\n**Accordion.Control props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| chevron | React.ReactNode | - | Custom chevron icon |\n| children | React.ReactNode | - | Control label |\n| disabled | boolean | - | Sets `disabled` attribute, prevents interactions |\n| icon | React.ReactNode | - | Icon displayed next to the label |\n\n\n#### Styles API\n\nAccordion component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Accordion selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Accordion-root | Root element |\n| item | .mantine-Accordion-item | `Accordion.Item` root element |\n| control | .mantine-Accordion-control | `Accordion.Control` root element |\n| chevron | .mantine-Accordion-chevron | `Accordion.Control` chevron container element |\n| label | .mantine-Accordion-label | `Accordion.Control` label |\n| icon | .mantine-Accordion-icon | `Accordion.Control` icon |\n| itemTitle | .mantine-Accordion-itemTitle | `Accordion.Control` title (h2-h6) tag |\n| panel | .mantine-Accordion-panel | `Accordion.Panel` root element |\n| content | .mantine-Accordion-content | Wrapper element of `Accordion.Panel` `children` |\n\n**Accordion CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --accordion-chevron-size | Controls chevron container element `width` and `min-width` |\n| root | --accordion-radius | Controls `border-radius` in various elements, depending on variant |\n| root | --accordion-transition-duration | Controls all animations `transition-duration` |\n",
+  "props": [
+    {
+      "name": "chevron",
+      "description": "Custom chevron icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "chevronIconSize",
+      "description": "Size of the default chevron icon. Ignored when <code>chevron</code> prop is set. Use <code>chevronSize</code> instead when using custom chevron.",
+      "required": false,
+      "defaultValue": "16",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "chevronPosition",
+      "description": "Position of the chevron relative to the item label",
+      "required": false,
+      "defaultValue": "right",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "AccordionChevronPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "chevronSize",
+      "description": "Size of the chevron icon container",
+      "required": false,
+      "defaultValue": "auto",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | string[] | null"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "disableChevronRotation",
+      "description": "If set, chevron rotation is disabled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set to <code>false</code>, panels are unmounted when collapsed. By default, panels stay mounted when collapsed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "loop",
+      "description": "If set, arrow keys loop through items (first to last and last to first)",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "multiple",
+      "description": "If set, multiple items can be opened at the same time",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes, payload type depends on <code>multiple</code> prop",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: AccordionValue<Multiple>) => void"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "order",
+      "description": "Sets heading level (h2-h6) for <code>Accordion.Control</code> elements to meet WAI-ARIA requirements. Has no visual effect.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "2 | 3 | 4 | 5 | 6",
+        "raw": "AccordionHeadingOrder | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "2"
+          },
+          {
+            "value": "3"
+          },
+          {
+            "value": "4"
+          },
+          {
+            "value": "5"
+          },
+          {
+            "value": "6"
+          }
+        ]
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "transitionDuration",
+      "description": "Transition duration in ms",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | string[] | null"
+      },
+      "sourceComponent": "Accordion"
+    },
+    {
+      "name": "value",
+      "description": "Value that is used to manage the accordion state",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "AccordionItem"
+    },
+    {
+      "name": "chevron",
+      "description": "Custom chevron icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "AccordionControl"
+    },
+    {
+      "name": "children",
+      "description": "Control label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "AccordionControl"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute, prevents interactions",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "AccordionControl"
+    },
+    {
+      "name": "icon",
+      "description": "Icon displayed next to the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "AccordionControl"
+    }
+  ]
+}

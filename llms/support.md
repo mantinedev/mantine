@@ -60,7 +60,7 @@ There are many ways to support the project:
   bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
 * Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
   people interested in the project.
-* [Contribute](https://mantine.dev/contribute) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
+* [Contribute](https://mantine.dev/llms/contribute.md) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
   experience with React/TypeScript, you can help us improve the documentation to make it more clear and understandable
   for new developers. If you are an experienced React developer, you can help us with open [issues](https://github.com/mantinedev/mantine/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
 * If you are using Mantine at work and your company wants to support the project, you can allocate some time

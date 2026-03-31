@@ -5,8 +5,6 @@ Description: Represent progress with semi circle diagram
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { SemiCircleProgress } from '@mantine/core';
 
@@ -14,7 +12,7 @@ import { SemiCircleProgress } from '@mantine/core';
 function Demo() {
   return (
     <SemiCircleProgress
-      
+       fillDirection="left-to-right" orientation="up" filledSegmentColor="blue" size={200} thickness={12} value={40}
       label="Label"
     />
   );
@@ -26,8 +24,6 @@ function Demo() {
 
 Use `emptySegmentColor` prop to change color of empty segment,
 it accepts key of `theme.colors` or any valid CSS color value:
-
-#### Example: emptySegmentColor
 
 ```tsx
 import { SemiCircleProgress } from '@mantine/core';
@@ -42,8 +38,6 @@ function Demo() {
 
 By default, the label is displayed at the bottom of the component,
 you can change its position to `center` by using `labelPosition` prop:
-
-#### Example: labelPosition
 
 ```tsx
 import { SemiCircleProgress } from '@mantine/core';
@@ -63,8 +57,6 @@ function Demo() {
 
 By default, transitions are disabled, to enable them, set `transitionDuration` prop
 to a number of milliseconds:
-
-#### Example: transitions
 
 ```tsx
 import { useState } from 'react';
@@ -89,18 +81,20 @@ function Demo() {
 
 #### Props
 
+**SemiCircleProgress props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| emptySegmentColor | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color value, by default the value is determined based on the color scheme value |
-| fillDirection | "right-to-left" | "left-to-right" | - | Direction from which the circle is filled |
-| filledSegmentColor | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color value |
+| emptySegmentColor | MantineColor | - | Key of `theme.colors` or any valid CSS color value |
+| fillDirection | "right-to-left" \| "left-to-right" | - | Direction from which the circle is filled |
+| filledSegmentColor | MantineColor | - | Key of `theme.colors` or any valid CSS color value |
 | label | React.ReactNode | - | Label rendered inside the circle |
-| labelPosition | "center" | "bottom" | - | Label position relative to the circle center |
-| orientation | "up" | "down" | - | Orientation of the circle |
-| size | number | - | Diameter of the svg in px |
-| thickness | number | - | Circle thickness in px |
-| transitionDuration | number | - | Transition duration of filled section styles changes in ms |
-| value | number | required | Progress value from <code>0</code> to <code>100</code> |
+| labelPosition | "center" \| "bottom" | - | Label position relative to the circle center |
+| orientation | "up" \| "down" | - | Orientation of the circle |
+| size | number | - | Width of the component and diameter of the full circle in px. The visible SVG height will be size/2 |
+| thickness | number | - | Stroke width of the circle segments in px |
+| transitionDuration | number | - | Transition duration for the filled segment progress changes in ms. Does not affect color transitions |
+| value | number | required | Progress value from `0` to `100` |
 
 
 #### Styles API
@@ -130,4 +124,5 @@ SemiCircleProgress component supports Styles API. With Styles API, you can custo
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| label | data-position | - | Value of  |
+| label | data-position | - | Value of `labelPosition` prop |
+| label | data-orientation | - | Value of `orientation` prop |

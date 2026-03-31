@@ -1,0 +1,125 @@
+{
+  "id": "core-number-formatter",
+  "name": "NumberFormatter",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/number-formatter",
+  "description": "Format number with thousands/decimal separators and suffix/prefix",
+  "propsCount": 9,
+  "llmUrl": "https://mantine.dev/llms/core-number-formatter.md",
+  "componentDataUrl": "/mcp/components/core-number-formatter.json",
+  "searchText": "numberformatter format number with thousands/decimal separators and suffix/prefix @mantine/core /core/number-formatter allownegative decimalscale decimalseparator fixeddecimalscale prefix suffix thousandseparator thousandsgroupstyle value",
+  "source": "@mantine/core/src/components/NumberFormatter/NumberFormatter.tsx",
+  "docs": "core/number-formatter.mdx",
+  "markdown": "# NumberFormatter\nPackage: @mantine/core\nImport: import { NumberFormatter } from '@mantine/core';\nDescription: Format number with thousands/decimal separators and suffix/prefix\n\n## Usage\n\nUse `NumberFormatter` to format numbers. It supports the same formatting-related props\nas the [NumberInput](https://mantine.dev/llms/core-number-input.md) component.\n\n```tsx\nimport { NumberFormatter } from '@mantine/core';\n\nfunction Demo() {\n  return <NumberFormatter prefix=\"$ \" value={1000000} thousandSeparator />;\n}\n```\n\n\n## Prefix and suffix\n\nSet the `prefix` and `suffix` props to add a given string to the start or end of the value:\n\n```tsx\nimport { NumberFormatter } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <div>\n        With prefix: <NumberFormatter prefix=\"$ \" value={100} />\n      </div>\n      <div>\n        With suffix: <NumberFormatter value={100} suffix=\" RUB\" />\n      </div>\n    </>\n  );\n}\n```\n\n\n## Thousands separator\n\nSet the `thousandSeparator` prop to separate thousands with a character. You can control\nthe grouping logic with `thousandsGroupStyle`, which accepts: `thousand`, `lakh`, `wan`, `none` values.\n\n```tsx\nimport { NumberFormatter } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <div>\n        With default separator: <NumberFormatter thousandSeparator value={1000000} />\n      </div>\n      <div>\n        With custom separator:{' '}\n        <NumberFormatter thousandSeparator=\".\" decimalSeparator=\",\" value={1000000} />\n      </div>\n    </>\n  );\n}\n```\n\n\n## Decimal scale\n\nThe `decimalScale` prop controls the number of allowed decimal places:\n\n```tsx\nimport { NumberFormatter } from '@mantine/core';\n\nfunction Demo() {\n  return <NumberFormatter value={5 / 3} decimalScale={2} />;\n}\n```\n\n\n\n#### Props\n\n**NumberFormatter props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowNegative | boolean | - | If set, negative values are allowed |\n| decimalScale | number | - | Limits the number of digits that are displayed after the decimal point |\n| decimalSeparator | string | - | Character used as a decimal separator, `'.'` by default |\n| fixedDecimalScale | boolean | - | If set, zeros are added after `decimalSeparator` to match given `decimalScale`. |\n| prefix | string | - | Prefix added before the value |\n| suffix | string | - | Suffix added after the value |\n| thousandSeparator | string \\| boolean | - | A character used to separate thousands |\n| thousandsGroupStyle | \"none\" \\| \"thousand\" \\| \"lakh\" \\| \"wan\" | - | Defines the thousand grouping style |\n| value | string \\| number | - | Value to format |",
+  "props": [
+    {
+      "name": "allowNegative",
+      "description": "If set, negative values are allowed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "decimalScale",
+      "description": "Limits the number of digits that are displayed after the decimal point",
+      "required": false,
+      "defaultValue": "Infinity",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "decimalSeparator",
+      "description": "Character used as a decimal separator, <code>'.'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "fixedDecimalScale",
+      "description": "If set, zeros are added after <code>decimalSeparator</code> to match given <code>decimalScale</code>.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "prefix",
+      "description": "Prefix added before the value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "suffix",
+      "description": "Suffix added after the value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "thousandSeparator",
+      "description": "A character used to separate thousands",
+      "required": false,
+      "defaultValue": "','",
+      "type": {
+        "name": "string | boolean"
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "thousandsGroupStyle",
+      "description": "Defines the thousand grouping style",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"none\" | \"thousand\" | \"lakh\" | \"wan\"",
+        "raw": "\"none\" | \"thousand\" | \"lakh\" | \"wan\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"thousand\""
+          },
+          {
+            "value": "\"lakh\""
+          },
+          {
+            "value": "\"wan\""
+          }
+        ]
+      },
+      "sourceComponent": "NumberFormatter"
+    },
+    {
+      "name": "value",
+      "description": "Value to format",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "NumberFormatter"
+    }
+  ]
+}

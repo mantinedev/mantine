@@ -5,11 +5,9 @@ Description: Navigation link
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Badge, NavLink } from '@mantine/core';
-import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } from '@tabler/icons-react';
+import { HouseIcon, GaugeIcon, CaretRightIcon, HeartbeatIcon, ProhibitIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -17,20 +15,20 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="With icon"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
       />
       <NavLink
         href="#required-for-focus"
         label="With right section"
-        leftSection={<IconGauge size={16} stroke={1.5} />}
+        leftSection={<GaugeIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
       />
       <NavLink
         href="#required-for-focus"
         label="Disabled"
-        leftSection={<IconCircleOff size={16} stroke={1.5} />}
+        leftSection={<ProhibitIcon size={16} />}
         disabled
       />
       <NavLink
@@ -46,9 +44,9 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Active subtle"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
+        leftSection={<HeartbeatIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
         variant="subtle"
         active
@@ -56,18 +54,18 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Active light"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
+        leftSection={<HeartbeatIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
         active
       />
       <NavLink
         href="#required-for-focus"
         label="Active filled"
-        leftSection={<IconActivity size={16} stroke={1.5} />}
+        leftSection={<HeartbeatIcon size={16} />}
         rightSection={
-          <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+          <CaretRightIcon size={12} className="mantine-rotate-rtl" />
         }
         variant="filled"
         active
@@ -80,29 +78,27 @@ function Demo() {
 
 ## Active
 
-Set `active` prop to add active styles to `NavLink`.
+Set the `active` prop to add active styles to `NavLink`.
 
 Note that if you're using a React Router `NavLink` inside `renderRoot`, the active styles will be based on the
-[`aria-current` attribute that's set by React Router](https://reactrouter.com/en/main/components/nav-link#aria-current)
+[`aria-current` attribute that's set by React Router](https://reactrouter.com/en/main/components/nav-link#aria-current),
 so you won't need to explicitly set the `active` prop.
 
-You can customize active styles with `color` and `variant` props:
-
-#### Example: active
+You can customize active styles with the `color` and `variant` props:
 
 ```tsx
 import { useState } from 'react';
-import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons-react';
+import { GaugeIcon, FingerprintIcon, HeartbeatIcon, CaretRightIcon } from '@phosphor-icons/react';
 import { Box, NavLink } from '@mantine/core';
 
 const data = [
-  { icon: IconGauge, label: 'Dashboard', description: 'Item with description' },
+  { icon: GaugeIcon, label: 'Dashboard', description: 'Item with description' },
   {
-    icon: IconFingerprint,
+    icon: FingerprintIcon,
     label: 'Security',
-    rightSection: <IconChevronRight size={16} stroke={1.5} />,
+    rightSection: <CaretRightIcon size={16} />,
   },
-  { icon: IconActivity, label: 'Activity' },
+  { icon: HeartbeatIcon, label: 'Activity' },
 ];
 
 function Demo() {
@@ -116,9 +112,9 @@ function Demo() {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      leftSection={<item.icon size={16} stroke={1.5} />}
+      leftSection={<item.icon size={16} />}
       onClick={() => setActive(index)}
-      
+       color="blue" variant="light"
     />
   ));
 
@@ -126,16 +122,6 @@ function Demo() {
 }
 ```
 
-
-<AutoContrast component="NavLink" />
-
-## autoContrast
-
-NavLink supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on NavLink or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
-
-Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
-
-#### Example: autoContrast
 
 ```tsx
 import { NavLink } from '@mantine/core';
@@ -153,13 +139,11 @@ function Demo() {
 
 ## Nested NavLinks
 
-To create nested links put `NavLink` as children of another `NavLink`:
-
-#### Example: nested
+To create nested links, put `NavLink` as children of another `NavLink`:
 
 ```tsx
 import { NavLink } from '@mantine/core';
-import { IconGauge, IconFingerprint } from '@tabler/icons-react';
+import { GaugeIcon, FingerprintIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -167,7 +151,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="First parent link"
-        leftSection={<IconGauge size={16} stroke={1.5} />}
+        leftSection={<GaugeIcon size={16} />}
         childrenOffset={28}
       >
         <NavLink href="#required-for-focus" label="First child link" />
@@ -182,7 +166,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Second parent link"
-        leftSection={<IconFingerprint size={16} stroke={1.5} />}
+        leftSection={<FingerprintIcon size={16} />}
         childrenOffset={28}
         defaultOpened
       >
@@ -196,68 +180,26 @@ function Demo() {
 ```
 
 
-<Polymorphic defaultElement="a" changeToElement="button" component="NavLink" withNext />
-
-## Polymorphic component
-
-NavLink is a polymorphic component – its default root element is a, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { NavLink } from '@mantine/core';
-
-function Demo() {
-  return <NavLink component="button" />;
-}
-```
-
-You can also use components in component prop, for example, Next.js Link:
-
-```tsx
-import Link from 'next/link';
-import { NavLink } from '@mantine/core';
-
-function Demo() {
-  return <NavLink component={Link} href="/" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, NavLinkProps does not extend React.ComponentPropsWithoutRef<'a'> although a is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
-<GetElementRef component="NavLink" refType="a" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { NavLink } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLAnchorElement>(null);
-  return <NavLink ref={ref} />;
-}
-```
-
 
 #### Props
+
+**NavLink props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | active | boolean | - | Determines whether the link should have active styles |
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| children | React.ReactNode | - | Child <code>NavLink</code> components |
-| childrenOffset | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set collapsed links <code>padding-left</code> |
-| color | MantineColor | - | Key of <code>theme.colors</code> of any valid CSS color to control active styles |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| children | React.ReactNode | - | Child `NavLink` components |
+| childrenOffset | MantineSpacing | - | Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color to control active styles |
 | defaultOpened | boolean | - | Uncontrolled nested items collapse initial state |
 | description | React.ReactNode | - | Link description, displayed below the label |
 | disableRightSectionRotation | boolean | - | If set, right section will not be rotated when collapse is opened |
 | disabled | boolean | - | If set, disabled styles will be added to the root element |
+| keepMounted | boolean | - | If set to `false`, child `NavLinks` are unmounted when collapsed |
 | label | React.ReactNode | - | Main link label |
 | leftSection | React.ReactNode | - | Section displayed on the left side of the label |
-| noWrap | boolean | - | If set, label and description do not wrap to the next line |
+| noWrap | boolean | - | If set, label and description are truncated with ellipsis instead of wrapping |
 | onChange | (opened: boolean) => void | - | Called when open state changes |
 | onClick | MouseEventHandler<HTMLElement> | - | Called when the root element is clicked |
 | onKeyDown | KeyboardEventHandler<HTMLElement> | - | Called on keydown of the root element |
@@ -294,4 +236,4 @@ NavLink component supports Styles API. With Styles API, you can customize styles
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-active | - | - |
+| root | data-active | `active` prop is set | - |

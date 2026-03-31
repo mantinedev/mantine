@@ -17,8 +17,6 @@ const elements = [
 ];
 ```
 
-#### Example: usage
-
 ```tsx
 import { Table } from '@mantine/core';
 
@@ -51,15 +49,13 @@ function Demo() {
 
 ## data prop
 
-You can use `data` prop to automatically generate table rows from array of React nodes.
-`data` prop accepts an object with the following properties:
+You can use the `data` prop to automatically generate table rows from an array of React nodes.
+The `data` prop accepts an object with the following properties:
 
 * `head` – an array of React nodes (`React.ReactNode[]`) to render `Table.Th` in `Table.Thead`
 * `foot` – an array of React nodes (`React.ReactNode[]`) to render `Table.Th` in `Table.Tfoot`
 * `body` - an array of arrays of React nodes (`React.ReactNode[][]`) to render `Table.Td` in `Table.Tbody`
 * `caption` – a React node to render `Table.Caption`
-
-#### Example: data
 
 ```tsx
 import { Table, TableData } from '@mantine/core';
@@ -84,11 +80,9 @@ function Demo() {
 
 ## Sticky header
 
-Set `stickyHeader` to make table header sticky. To customize top position of the header use `stickyHeaderOffset` prop:
-it is useful when you have a fixed header in your application. For example, Mantine documentation website has a fixed
+Set `stickyHeader` to make the table header sticky. To customize the top position of the header, use the `stickyHeaderOffset` prop:
+it is useful when you have a fixed header in your application. For example, the Mantine documentation website has a fixed
 header with 60px height:
-
-#### Example: stickyHeader
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -131,16 +125,14 @@ function Demo() {
 
 ## Spacing
 
-To control spacing use `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and any valid CSS value to set cell padding:
-
-#### Example: spacingConfigurator
+To control spacing, use the `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and any valid CSS value to set cell padding:
 
 ```tsx
 import { Table } from '@mantine/core';
 
 function Demo() {
   return (
-    <Table>
+    <Table horizontalSpacing="xs" verticalSpacing="xs">
       {/* {...rows} */}
     </Table>
   );
@@ -150,9 +142,7 @@ function Demo() {
 
 ## Caption and tfoot
 
-Table support tfoot and caption elements. Set `captionSide` prop (top or bottom) to change caption position.
-
-#### Example: captions
+Table supports tfoot and caption elements. Set the `captionSide` prop (top or bottom) to change the caption position.
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -190,14 +180,12 @@ function Demo() {
 
 ## Striped and rows hover
 
-#### Example: configurator
-
 ```tsx
 import { Table } from '@mantine/core';
 
 function Demo() {
   return (
-    <Table>
+    <Table striped={false} highlightOnHover={false} withTableBorder={false} withColumnBorders={false} withRowBorders={true}>
       {/* {...rows} */}
     </Table>
   );
@@ -207,10 +195,8 @@ function Demo() {
 
 ## Scroll container
 
-To prevent viewport overflow wrap `Table` with `Table.ScrollContainer`.
-The component accepts `minWidth` prop which sets minimum width below which table will be scrollable.
-
-#### Example: scrollContainer
+To prevent viewport overflow, wrap `Table` with `Table.ScrollContainer`.
+The component accepts a `minWidth` prop which sets the minimum width below which the table will be scrollable.
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -244,10 +230,8 @@ function Demo() {
 ```
 
 
-By default, `Table.ScrollContainer` uses [ScrollArea](https://mantine.dev/core/scroll-area), you can change it
+By default, `Table.ScrollContainer` uses [ScrollArea](https://mantine.dev/llms/core-scroll-area.md), you can change it
 to native scrollbars by setting `type="native"`:
-
-#### Example: scrollContainerNative
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -281,9 +265,7 @@ function Demo() {
 ```
 
 
-You can also set `maxHeight` prop on `Table.ScrollContainer` to limit table height:
-
-#### Example: scrollContainerMaxHeight
+You can also set the `maxHeight` prop on `Table.ScrollContainer` to limit the table height:
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -319,9 +301,7 @@ function Demo() {
 
 ## Vertical variant
 
-Set `variant="vertical"` to render table with vertical layout:
-
-#### Example: vertical
+Set `variant="vertical"` to render the table with a vertical layout:
 
 ```tsx
 import { Table } from '@mantine/core';
@@ -363,11 +343,9 @@ export function Demo() {
 
 ## Tabular numbers
 
-Set `tabularNums` prop to render numbers in tabular style. It sets
-`font-variant-numeric: tabular-nums` which makes numbers to have equal width.
+Set the `tabularNums` prop to render numbers in tabular style. It sets
+`font-variant-numeric: tabular-nums` which makes numbers have equal width.
 This is useful when you have columns with numbers and you want them to be aligned:
-
-#### Example: tabularNums
 
 ```tsx
 import { NumberFormatter, Table } from '@mantine/core';
@@ -391,7 +369,7 @@ function Demo() {
   ));
 
   return (
-    <Table>
+    <Table tabularNums={true}>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Product</Table.Th>
@@ -406,8 +384,6 @@ function Demo() {
 
 
 ## Example: Table with row selection
-
-#### Example: rowSelection
 
 ```tsx
 import { useState } from 'react';
@@ -470,24 +446,41 @@ function Demo() {
 
 #### Props
 
+**Table props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| borderColor | MantineColor | - | Color of table borders, key of <code>theme.colors</code> or any valid CSS color |
-| captionSide | "bottom" | "top" | - | Side of the <code>Table.Caption</code> |
-| data | TableData | - | Data used to generate table, ignored if <code>children</code> prop is set |
-| highlightOnHover | boolean | - | If set, table rows background changes to <code>highlightOnHoverColor</code> when hovered |
-| highlightOnHoverColor | MantineColor | - | Background color of table rows when hovered, key of <code>theme.colors</code> or any valid CSS color |
-| horizontalSpacing | MantineSpacing | - | Horizontal cells spacing, key of <code>theme.spacing</code> or any valid CSS value for padding, numbers are converted to rem |
-| layout | TableLayout | - | Value of <code>table-layout</code> style |
-| stickyHeader | boolean | - | If set, <code>Table.Thead</code> is sticky |
-| stickyHeaderOffset | string | number | - | Offset from top at which <code>Table.Thead</code> should become sticky |
-| striped | boolean | "odd" | "even" | - | If set, every odd/even row background changes to <code>strippedColor</code>, if set to <code>true</code>, then <code>odd</code> value will be used |
-| stripedColor | MantineColor | - | Background color of striped rows, key of <code>theme.colors</code> or any valid CSS color |
-| tabularNums | boolean | - | If set, <code>font-variant-numeric: tabular-nums</code> style is applied |
-| verticalSpacing | MantineSpacing | - | Vertical cells spacing, key of <code>theme.spacing</code> or any valid CSS value for padding, numbers are converted to rem |
+| borderColor | MantineColor | - | Color of table borders, key of `theme.colors` or any valid CSS color |
+| captionSide | "bottom" \| "top" | - | Side of the `Table.Caption` |
+| data | TableData | - | Data used to generate table, ignored if `children` prop is set |
+| highlightOnHover | boolean | - | If set, table rows background changes to `highlightOnHoverColor` when hovered |
+| highlightOnHoverColor | MantineColor | - | Background color of table rows when hovered, key of `theme.colors` or any valid CSS color |
+| horizontalSpacing | MantineSpacing | - | Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem |
+| layout | TableLayout | - | Value of `table-layout` style |
+| stickyHeader | boolean | - | If set, `Table.Thead` is sticky |
+| stickyHeaderOffset | string \| number | - | Offset from top at which `Table.Thead` should become sticky |
+| striped | boolean \| "odd" \| "even" | - | If set, every odd/even row background changes to `stripedColor`, if set to `true`, then `odd` value will be used |
+| stripedColor | MantineColor | - | Background color of striped rows, key of `theme.colors` or any valid CSS color |
+| tabularNums | boolean | - | If set, `font-variant-numeric: tabular-nums` style is applied |
+| verticalSpacing | MantineSpacing | - | Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem |
 | withColumnBorders | boolean | - | If set, the table has borders between columns |
 | withRowBorders | boolean | - | If set, the table has borders between rows |
 | withTableBorder | boolean | - | If set, the table has the outer border |
+
+**Table.OfContents props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color value |
+| depthOffset | string \| number | - | Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default |
+| getControlProps | (payload: TableOfContentsGetControlPropsPayload) => UnstyledButtonProps & ElementProps<"button"> & Record<...> | - | A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. |
+| initialData | InitialTableOfContentsData[] | - | Data used to render content until actual values are retrieved from the DOM |
+| minDepthToOffset | number | - | Minimum `depth` value that requires offset, `1` by default |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| reinitializeRef | RefObject<() => void> | - | A function to reinitialize headings from `use-scroll-spy` hook |
+| scrollSpyOptions | UseScrollSpyOptions | - | Options passed down to `use-scroll-spy` hook |
+| size | MantineSize \| number | - | Controls font-size and padding of all elements |
 
 
 #### Styles API
@@ -521,7 +514,7 @@ Table component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| table | data-with-table-border | - | - |
+| table | data-with-table-border | `withTableBorder` prop is set on `Table` component | - |
 
 **Tableofcontents selectors**
 

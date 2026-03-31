@@ -6,10 +6,8 @@ Description: Image with optional fallback
 ## Usage
 
 `Image` is a wrapper for `img` with minimal styles. By default, the image
-will take 100% of parent width. The image size can be controlled with `w`
-and `h` [style props](https://mantine.dev/styles/style-props).
-
-#### Example: usage
+will take 100% of the parent width. The image size can be controlled with `w`
+and `h` [style props](https://mantine.dev/llms/styles-style-props.md).
 
 ```tsx
 import { Image } from '@mantine/core';
@@ -27,10 +25,8 @@ function Demo() {
 
 ## Image height
 
-In most case, you will need to set image height to prevent layout jumps when
-image is loading. You can do so with `h` [style props](https://mantine.dev/styles/style-props).
-
-#### Example: height
+In most cases, you will need to set the image height to prevent layout jumps when
+the image is loading. You can do so with the `h` [style props](https://mantine.dev/llms/styles-style-props.md).
 
 ```tsx
 import { Image } from '@mantine/core';
@@ -50,9 +46,7 @@ function Demo() {
 ## Image fit
 
 By default the image has `object-fit: cover` style - it will
-resize to cover parent element. To change this behavior, set `w="auto"` and `fit="contain"` props.
-
-#### Example: contain
+resize to cover the parent element. To change this behavior, set `w="auto"` and `fit="contain"` props.
 
 ```tsx
 import { Image } from '@mantine/core';
@@ -73,9 +67,7 @@ function Demo() {
 
 ## Fallback image
 
-Set `fallbackSrc` prop to display fallback image when image fails to load:
-
-#### Example: fallback
+Set the `fallbackSrc` prop to display a fallback image when the image fails to load:
 
 ```tsx
 import { Image } from '@mantine/core';
@@ -95,7 +87,7 @@ function Demo() {
 
 ## Usage with Next.js Image
 
-`Image` component is a [polymorphic component](https://mantine.dev/guides/polymorphic), its root element can be changed with `component` prop.
+The `Image` component is a [polymorphic component](https://mantine.dev/llms/guides-polymorphic.md), its root element can be changed with the `component` prop.
 You can use it with `next/image` and other similar components.
 
 ```tsx
@@ -111,12 +103,14 @@ function Demo() {
 
 #### Props
 
+**Image props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | fallbackSrc | string | - | Image url used as a fallback if the image cannot be loaded |
-| fit | ObjectFit | - | Controls <code>object-fit</code> style |
+| fit | ObjectFit | - | Controls `object-fit` style |
 | onError | (event: SyntheticEvent<HTMLImageElement, Event>) => void | - | Called when image fails to load |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
 | src | any | - | Image url |
 
 

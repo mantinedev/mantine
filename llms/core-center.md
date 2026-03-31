@@ -5,8 +5,6 @@ Description: Centers content vertically and horizontally
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Center, Box } from '@mantine/core';
 
@@ -22,20 +20,18 @@ function Demo() {
 
 ## Inline
 
-To use `Center` with inline elements set `inline` prop.
-For example, you can center link icon and label:
-
-#### Example: inline
+To use `Center` with inline elements, set the `inline` prop.
+For example, you can center a link icon and label:
 
 ```tsx
 import { Center, Anchor, Box } from '@mantine/core';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { ArrowLeftIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Anchor href="https://mantine.dev" target="_blank">
       <Center inline>
-        <IconArrowLeft size={12} />
+        <ArrowLeftIcon size={12} />
         <Box ml={5}>Back to Mantine website</Box>
       </Center>
     </Anchor>
@@ -44,33 +40,15 @@ function Demo() {
 ```
 
 
-<Polymorphic defaultElement="div" changeToElement="button" component="Center" />
-
-## Polymorphic component
-
-Center is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { Center } from '@mantine/core';
-
-function Demo() {
-  return <Center component="button" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, CenterProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
 
 #### Props
+
+**Center props**
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | children | React.ReactNode | - | Content to center |
-| inline | boolean | - | If set, <code>inline-flex</code> is used instead of <code>flex</code> |
+| inline | boolean | - | If set, `inline-flex` is used instead of `flex` |
 
 
 #### Styles API

@@ -1,0 +1,47 @@
+{
+  "id": "core-stack",
+  "name": "Stack",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/stack",
+  "description": "Compose elements and components in a vertical flex container",
+  "propsCount": 3,
+  "llmUrl": "https://mantine.dev/llms/core-stack.md",
+  "componentDataUrl": "/mcp/components/core-stack.json",
+  "searchText": "stack compose elements and components in a vertical flex container @mantine/core /core/stack align gap justify",
+  "source": "@mantine/core/src/components/Stack/Stack.tsx",
+  "docs": "core/stack.mdx",
+  "markdown": "# Stack\nPackage: @mantine/core\nImport: import { Stack } from '@mantine/core';\nDescription: Compose elements and components in a vertical flex container\n\n## Usage\n\n`Stack` is a vertical flex container. If you need a horizontal flex container, use [Group](https://mantine.dev/llms/core-group.md)\ncomponent instead. If you need to have full control over flex container properties, use [Flex](https://mantine.dev/llms/core-flex.md) component.\n\n```tsx\nimport { Stack, Button } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack\n      h={300}\n      bg=\"var(--mantine-color-body)\"\n       align=\"stretch\" justify=\"center\" gap=\"md\"\n    >\n      <Button variant=\"default\">1</Button>\n      <Button variant=\"default\">2</Button>\n      <Button variant=\"default\">3</Button>\n    </Stack>\n  );\n}\n```\n\n\n## Browser support\n\nFlex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.\n\n\n#### Props\n\n**Stack props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| align | AlignItems | - | Controls `align-items` CSS property |\n| gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set `gap` property, numbers are converted to rem |\n| justify | JustifyContent | - | Controls `justify-content` CSS property |\n\n\n#### Styles API\n\nStack component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Stack selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Stack-root | Root element |\n\n**Stack CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --stack-align | Controls `align-items` property |\n| root | --stack-justify | Controls `justify-content` property |\n| root | --stack-gap | Controls `gap` property |\n",
+  "props": [
+    {
+      "name": "align",
+      "description": "Controls <code>align-items</code> CSS property",
+      "required": false,
+      "defaultValue": "'stretch'",
+      "type": {
+        "name": "AlignItems"
+      },
+      "sourceComponent": "Stack"
+    },
+    {
+      "name": "gap",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set <code>gap</code> property, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Stack"
+    },
+    {
+      "name": "justify",
+      "description": "Controls <code>justify-content</code> CSS property",
+      "required": false,
+      "defaultValue": "'flex-start'",
+      "type": {
+        "name": "JustifyContent"
+      },
+      "sourceComponent": "Stack"
+    }
+  ]
+}

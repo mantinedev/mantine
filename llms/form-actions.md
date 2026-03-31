@@ -4,11 +4,11 @@ Import: import { FormActions } from '@mantine/form';
 
 ## Usage
 
-Form actions allow changing state of the form from anywhere in your application.
-The mechanism of form actions is similar to [notifications system](https://mantine.dev/x/notifications/),
-[modals manager](https://mantine.dev/x/modals/) and other similar packages.
+Form actions allow you to change the form state from anywhere in your application.
+The form actions mechanism is similar to the [notifications system](https://mantine.dev/llms/x-notifications.md),
+[modals manager](https://mantine.dev/llms/x-modals.md) and other similar packages.
 
-To use form actions, set `name` property in [use-form](https://mantine.dev/form/use-form/) settings:
+To use form actions, set the `name` property in [use-form](https://mantine.dev/llms/form-use-form.md) settings:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -30,7 +30,7 @@ function Demo() {
 }
 ```
 
-Then call `createFormActions` function with the same form name as specified in `useForm` settings:
+Then call the `createFormActions` function with the same form name as specified in `useForm` settings:
 
 ```tsx
 // Import type of form values from the file where you defined useForm
@@ -72,7 +72,7 @@ function ExternalComponent() {
 
 ## Form name
 
-Form name must be a string that contains only letters, numbers and dashes:
+Form names must be strings that contain only letters, numbers and dashes:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -90,12 +90,12 @@ const invalid = useForm({
 });
 ```
 
-Note that form names must be unique, if you have multiple forms with the same name, form actions will
-update the state of all forms with the same name.
+Note that form names must be unique. If you have multiple forms with the same name, form actions will
+update the state of all forms with that name.
 
 ## Form actions
 
-`createFormActions` function returns an object with the following methods:
+The `createFormActions` function returns an object with the following methods:
 
 * `setFieldValue`
 * `setValues`
@@ -115,5 +115,5 @@ update the state of all forms with the same name.
 * `resetDirty`
 * `resetTouched`
 
-All methods work similar to [use-form](https://mantine.dev/form/use-form/) hooks methods –
-functions accept the same arguments but do not return anything.
+All methods work similarly to [use-form](https://mantine.dev/llms/form-use-form.md) hook methods –
+the functions accept the same arguments but do not return anything.

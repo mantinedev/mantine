@@ -4,7 +4,7 @@ Import: import { UseWindowEvent } from '@mantine/hooks';
 
 ## Usage
 
-`use-window-event` adds event listener to `window` object on component mount and removes it on unmount:
+The `use-window-event` hook adds an event listener to the `window` object on component mount and removes it on unmount:
 
 ```tsx
 import { useEffect } from 'react';
@@ -24,7 +24,7 @@ useWindowEvent('keydown', handler);
 
 ## Example
 
-Search focus with `⌘ + K` on mac or `Ctrl + K` on windows and linux on Mantine docs website:
+Search focus with `⌘ + K` on macOS or `Ctrl + K` on Windows and Linux on the Mantine docs website:
 
 ```tsx
 import { useRef } from 'react';

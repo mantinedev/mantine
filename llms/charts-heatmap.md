@@ -6,12 +6,10 @@ Description: Heatmap chart component
 ## Usage
 
 `Heatmap` is used to display data in a table where each column represents a week.
-The only required prop is `data` – object where keys are dates in `YYYY-MM-DD` format and values are numbers.
+The only required prop is `data` – an object where keys are dates in `YYYY-MM-DD` format and values are numbers.
 
-`startDate` and `endDate` props are optional, they are used to define heatmap range.
-If not set, heatmap will display data for the last year.
-
-#### Example: usage
+The `startDate` and `endDate` props are optional; they are used to define the heatmap range.
+If not set, the heatmap will display data for the last year.
 
 ```tsx
 // Demo.tsx
@@ -47,11 +45,9 @@ export const data = {
 
 ## With tooltip
 
-Set `withTooltip` and `getTooltipLabel` props to display tooltip when
+Set the `withTooltip` and `getTooltipLabel` props to display a tooltip when
 `Heatmap` cells are hovered. `getTooltipLabel` is called with date and value
-and must return string to display in tooltip.
-
-#### Example: tooltip
+and must return a string to display in the tooltip.
 
 ```tsx
 // Demo.tsx
@@ -82,11 +78,9 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 ## Change colors
 
-`Heatmap` colors can be changed with `colors` prop. It should be an array of any
+`Heatmap` colors can be changed with the `colors` prop. It should be an array of any
 valid CSS color values (hex, rgba, CSS variables, etc.). By default, `Heatmap`
 uses 4 colors to indicate heat level, but you can pass any number of colors.
-
-#### Example: colors
 
 ```tsx
 // Demo.tsx
@@ -118,8 +112,6 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 If you want to change colors depending on the color scheme,
 you should define those colors in `.css` file:
-
-#### Example: cssColors
 
 ```tsx
 // Demo.tsx
@@ -160,7 +152,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 ```
 
 
-Note that in this case, you can only use 4 colors without passing `colors` prop.
+Note that in this case, you can only use 4 colors without passing the `colors` prop.
 If you need more colors, you should pass them manually to the component:
 
 ```tsx
@@ -203,10 +195,10 @@ const data = {
 ```
 
 Based on the domain, `Heatmap` calculates colors for each rect: 1 – min heat level,
-4 – max heat level. To specify domain manually, use `domain` prop. It is useful
+4 – max heat level. To specify the domain manually, use the `domain` prop. It is useful
 when your data does not cover the whole range of possible values. For example,
 the subset of data passed to the heatmap has values from 1 to 4, but the actual
-range is from 1 to 10. In this case, you can pass `[1, 10]` to `domain` prop:
+range is from 1 to 10. In this case, you can pass `[1, 10]` to the `domain` prop:
 
 ```tsx
 import { Heatmap } from '@mantine/charts';
@@ -225,9 +217,7 @@ function Demo() {
 
 ## Weekdays and months labels
 
-Set `withMonthLabels` and `withWeekdayLabels` props to display chart labels:
-
-#### Example: labels
+Set the `withMonthLabels` and `withWeekdayLabels` props to display chart labels:
 
 ```tsx
 // Demo.tsx
@@ -253,11 +243,9 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 ## Change labels text
 
-To change labels, use `weekdayLabels` and `monthLabels` props.
-`weekdayLabels` prop must be an array of 7 strings with weekday names starting from Sunday.
-`monthLabels` prop must be an array of 12 strings with month names starting from January.
-
-#### Example: labelsText
+To change labels, use the `weekdayLabels` and `monthLabels` props.
+The `weekdayLabels` prop must be an array of 7 strings with weekday names starting from Sunday.
+The `monthLabels` prop must be an array of 12 strings with month names starting from January.
 
 ```tsx
 // Demo.tsx
@@ -298,8 +286,6 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 ## Rect size, gap and radius
 
-#### Example: rectSize
-
 ```tsx
 // Demo.tsx
 import { Heatmap } from '@mantine/charts';
@@ -313,7 +299,7 @@ function Demo() {
       withWeekdayLabels
       startDate="2024-02-16"
       endDate="2024-04-16"
-      
+       rectSize={10} rectRadius={2} gap={1}
     />
   );
 }
@@ -326,9 +312,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 ## Pass props to rect
 
 Use `getRectProps` to pass props to each rect. For example,
-it can be used to add onClick handler to each rect:
-
-#### Example: getRectProps
+it can be used to add an onClick handler to each rect:
 
 ```tsx
 // Demo.tsx
@@ -354,8 +338,6 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 
 ## Hide outside dates
-
-#### Example: withOutsideDates
 
 ```tsx
 // Demo.tsx
@@ -384,9 +366,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 ## First day of week
 
-The default first day of the week is Monday, you can change it with `firstDayOfWeek` prop:
-
-#### Example: firstDayOfWeek
+The default first day of the week is Monday; you can change it with the `firstDayOfWeek` prop:
 
 ```tsx
 // Demo.tsx
@@ -418,8 +398,6 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 Use `splitMonths` to separate months visually with a spacer column and show only days that belong to the current month in each column. Month labels will be shifted by one column when `splitMonths` is enabled and months with fewer than 2 weeks are not labeled.
 
-#### Example: splitMonths
-
 ```tsx
 // Demo.tsx
 import { Heatmap } from '@mantine/charts';
@@ -445,28 +423,30 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 #### Props
 
+**Heatmap props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | colors | string[] | - | Colors array, used to calculate color for each value, by default 4 shades of green colors are used |
-| data | Record<string, number> | required | Heatmap data, key is date in <code>YYYY-MM-DD</code> format (interpreted as a UTC calendar day) |
+| data | Record<string, number> | required | Heatmap data, key is date in `YYYY-MM-DD` format (interpreted as a UTC calendar day) |
 | domain | [number, number] | - | Heatmap domain, array of 2 numbers, min and max values, calculated from data by default |
-| endDate | string | Date | - | Heatmap end date. Current date by default. Date is normalized to UTC midnight of the intended calendar day. |
-| firstDayOfWeek | 0 | 2 | 1 | 3 | 4 | 5 | 6 | - | First day of week, 0 – Sunday, 1 – Monday. |
+| endDate | string \| Date | - | Heatmap end date. Current date by default. Date is normalized to UTC midnight of the intended calendar day. |
+| firstDayOfWeek | 0 \| 2 \| 1 \| 3 \| 4 \| 5 \| 6 | - | First day of week, 0 – Sunday, 1 – Monday. |
 | fontSize | number | - | Font size of month and weekday labels |
 | gap | number | - | Gap between rects in px |
-| getRectProps | (input: HeatmapRectData) => Omit<SVGProps<SVGRectElement>, "ref"> | - | Props passed down to each rect depending on its date and associated value |
+| getRectProps | (input: HeatmapRectData) => SVGProps<SVGRectElement> | - | Props passed down to each rect depending on its date and associated value |
 | getTooltipLabel | (input: HeatmapRectData) => ReactNode | - | A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible |
 | monthLabels | string[] | - | Month labels, array of 12 elements, can be used for localization |
 | monthsLabelsHeight | number | - | Height of month labels row |
 | rectRadius | number | - | Rect radius in px |
 | rectSize | number | - | Size of day rect in px |
 | splitMonths | boolean | - | If set, inserts a spacer column between months |
-| startDate | string | Date | - | Heatmap start date. Current date - 1 year by default. Date is normalized to UTC midnight of the intended calendar day. |
-| tooltipProps | Partial<TooltipFloatingProps> | - | Props passed down to the <code>Tooltip.Floating</code> component |
+| startDate | string \| Date | - | Heatmap start date. Current date - 1 year by default. Date is normalized to UTC midnight of the intended calendar day. |
+| tooltipProps | Partial<TooltipFloatingProps> | - | Props passed down to the `Tooltip.Floating` component |
 | weekdayLabels | string[] | - | Weekday labels, array of 7 elements, can be used for localization |
 | weekdaysLabelsWidth | number | - | Width of weekday labels column |
 | withMonthLabels | boolean | - | If set, month labels are displayed |
-| withOutsideDates | boolean | - | If set, trailing dates that do not fall into the given <code>startDate</code> – <code>endDate</code> range are displayed to fill empty space. |
+| withOutsideDates | boolean | - | If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. |
 | withTooltip | boolean | - | If set, tooltip is displayed on rect hover |
 | withWeekdayLabels | boolean | - | If set, weekday labels are displayed |
 

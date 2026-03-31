@@ -1,0 +1,63 @@
+# How to integrate custom input with use-form hook?
+Learn how to add use-form support for custom inputs
+
+## How @mantine/form works
+
+The [use-form](https://mantine.dev/form/use-form) hook is used to store form values,
+errors, touched, dirty, and validation state. In order to support all `@mantine/form`
+features (including `form.getInputProps()`), custom inputs must accept the following props:
+
+* `value` – input value in controlled mode
+* `defaultValue` – input value in uncontrolled mode
+* `onChange` – input change handler used for both controlled and uncontrolled modes
+* `error` – validation error message
+* `onBlur` – used to set the field as touched
+
+## use-uncontrolled hook
+
+In most cases, the easiest way to add support for both controlled and uncontrolled modes is to use the
+[use-uncontrolled](https://mantine.dev/hooks/use-uncontrolled) hook. It allows you to use `value` and
+`defaultValue` props together and automatically handles controlled/uncontrolled mode switching.
+
+Example of a custom input that supports both controlled and uncontrolled modes:
+
+```tsx
+import { useUncontrolled } from '@mantine/hooks';
+
+interface CustomInputProps {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+}
+
+function CustomInput({
+  value,
+  defaultValue,
+  onChange,
+}: CustomInputProps) {
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: 'Final',
+    onChange,
+  });
+
+  return (
+    <input
+      type="text"
+      value={_value}
+      onChange={(event) => handleChange(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+## Full example
+
+In the following example, the `CustomInput` component supports all `@mantine/form` features:
+
+* `value`, `defaultValue`, and `onChange` are used to control the input value
+* `error` is used to display the validation error message
+* `onBlur` (part of `...others` props) is used to set the field as touched
+
+

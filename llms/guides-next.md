@@ -2,22 +2,16 @@
 
 # Usage with Next.js
 
-<GetTemplates type="next" />
-
 ## Generate new application
 
-Follow [create-next-app](https://nextjs.org/docs/pages/api-reference/create-next-app) guide to
-create new Next.js application:
-
-<NpmScript yarnScript="yarn create next-app --typescript" npmScript="npx create-next-app@latest --typescript" />
+Follow the [create-next-app](https://nextjs.org/docs/pages/api-reference/create-next-app) guide to
+create a new Next.js application:
 
 ## Installation
 
-<PackagesInstallation />
-
 ## PostCSS setup
 
-Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
+Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md):
 
 ```bash
 yarn add postcss postcss-preset-mantine postcss-simple-vars
@@ -27,7 +21,7 @@ yarn add postcss postcss-preset-mantine postcss-simple-vars
 npm install postcss postcss-preset-mantine postcss-simple-vars
 ```
 
-Create `postcss.config.cjs` file at the root of your application with the following content:
+Create a `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
 module.exports = {
@@ -48,7 +42,7 @@ module.exports = {
 
 ## Setup with pages router
 
-Add styles imports and [MantineProvider](https://mantine.dev/theming/mantine-provider) to the `pages/_app.tsx` file:
+Add styles imports and [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) to the `pages/_app.tsx` file:
 
 ```tsx
 // Import styles of packages that you've installed.
@@ -71,8 +65,8 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 ```
 
-Create `pages/_document.tsx` file with [ColorSchemeScript](https://mantine.dev/theming/color-schemes) component.
-Note that it is required even if you use only one color scheme in your application.
+Create a `pages/_document.tsx` file with the [ColorSchemeScript](https://mantine.dev/llms/theming-color-schemes.md) component.
+Note that it's required even if you use only one color scheme in your application.
 
 ```tsx
 import { Head, Html, Main, NextScript } from 'next/document';
@@ -93,7 +87,7 @@ export default function Document() {
 }
 ```
 
-All set! Start development server:
+All set! Start the development server:
 
 ```bash
 npm run dev
@@ -101,7 +95,7 @@ npm run dev
 
 ## Setup with app router
 
-Add [MantineProvider](https://mantine.dev/theming/mantine-provider), [ColorSchemeScript](https://mantine.dev/theming/color-schemes)
+Add [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md), [ColorSchemeScript](https://mantine.dev/llms/theming-color-schemes.md)
 and styles imports to the `app/layout.tsx` file:
 
 ```tsx
@@ -134,7 +128,7 @@ export default function RootLayout({
 }
 ```
 
-All set! Start development server:
+All set! Start the development server:
 
 ```bash
 npm run dev
@@ -162,20 +156,20 @@ function Demo() {
 
 ## Server components
 
-All Mantine components use `useContext` hook to support [default props](https://mantine.dev/theming/default-props)
-and [Styles API](https://mantine.dev/styles/styles-api). Mantine components cannot be used as server components.
-It means that components will render both on the server and client.
+All Mantine components require context to support [default props](https://mantine.dev/llms/theming-default-props.md)
+and [Styles API](https://mantine.dev/llms/styles-styles-api.md). Mantine components cannot be used as server components.
+This means that components will render both on the server and client.
 
-Entry points of all `@mantine/*` packages (`index.js` files) have `'use client';` directive at the
-top of the file – you do not need to add `'use client';` to your pages/layouts/components.
+Entry points of all `@mantine/*` packages (`index.js` files) have the `'use client';` directive at the
+top of the file – you don't need to add `'use client';` to your pages/layouts/components.
 
 ## Compound components in server components
 
-Some components like [Popover](https://mantine.dev/core/popover) have associated compound components (`Component.XXX`),
+Some components like [Popover](https://mantine.dev/llms/core-popover.md) have associated compound components (`Component.XXX`),
 where `XXX` is a compound component name. Compound components cannot be used in server components.
-Instead, use `ComponentXXX` syntax or add `'use client';` directive to the top of the file.
+Instead, use the `ComponentXXX` syntax or add the `'use client';` directive to the top of the file.
 
-Example that will not work in server components:
+Example that won't work in server components:
 
 ```tsx
 import { Popover } from '@mantine/core';
@@ -231,7 +225,7 @@ export default function Page() {
 
 ## app router tree shaking
 
-To enable tree shaking with app router, enable experimental `optimizePackageImports` feature in
+To enable tree shaking with app router, enable the experimental `optimizePackageImports` feature in
 your `next.config.mjs`:
 
 ```tsx
@@ -245,6 +239,6 @@ export default {
 
 ## Troubleshooting
 
-If you have any issues with Mantine in your Next.js application, please check
+If you have any issues with Mantine in your Next.js application, please check the
 [Help Center article](https://help.mantine.dev/q/server-components) that covers
-most common issues with app router and server components.
+the most common issues with app router and server components.

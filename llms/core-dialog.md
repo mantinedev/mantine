@@ -5,17 +5,15 @@ Description: Display a fixed overlay dialog at any side of the screen
 
 ## Usage
 
-`Dialog` is a simplified version of [Modal](https://mantine.dev/core/modal/) component.
-It does not include most of accessibility and usability [Modal](https://mantine.dev/core/modal/) features:
+`Dialog` is a simplified version of the [Modal](https://mantine.dev/llms/core-modal.md) component.
+It does not include most of the accessibility and usability [Modal](https://mantine.dev/llms/core-modal.md) features:
 
 * Focus trap is not available
 * Does not close on click outside
-* Does not have overlay
+* Does not have an overlay
 
-Use `Dialog` to attract attention with not important information or action,
-for example, you can create an email subscription form:
-
-#### Example: usage
+Use `Dialog` to attract attention with non-important information or actions.
+For example, you can create an email subscription form:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -30,7 +28,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog opened={opened} withCloseButton onClose={close} size="lg" radius="md">
+      <Dialog opened={opened} withCloseButton onClose={close} size="lg">
         <Text size="sm" mb="xs" fw={500}>
           Subscribe to email newsletter
         </Text>
@@ -48,7 +46,7 @@ function Demo() {
 
 ## Change position
 
-`Dialog` is rendered in [Portal](https://mantine.dev/core/portal/) and has fixed position, set `position` prop to control dialog's position:
+`Dialog` is rendered in [Portal](https://mantine.dev/llms/core-portal.md) and has a fixed position. Set the `position` prop to control the dialog's position:
 
 ```tsx
 import { Dialog } from '@mantine/core';
@@ -69,29 +67,31 @@ function Demo() {
 
 ## Accessibility
 
-`Dialog` is not accessible and most likely will not be announced by screen reader,
-make sure you do not put any important information. In most cases it would be better
-to select [Modal](https://mantine.dev/core/modal/), [Drawer](https://mantine.dev/core/drawer/) or [Notifications](https://mantine.dev/x/notifications/).
+`Dialog` is not accessible and most likely will not be announced by screen readers.
+Make sure you do not put any important information in it. In most cases it would be better
+to select [Modal](https://mantine.dev/llms/core-modal.md), [Drawer](https://mantine.dev/llms/core-drawer.md) or [Notifications](https://mantine.dev/llms/x-notifications.md).
 
 
 #### Props
 
+**Dialog props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | children | React.ReactNode | - | Dialog content |
-| keepMounted | boolean | - | If set, dialog is not unmounted from the DOM when hidden, <code>display: none</code> styles are applied instead |
-| onClose | () => void | - | Called when the close button is clicked |
+| keepMounted | boolean | - | If set, the component uses `display: none` to hide the root element instead of removing the DOM node |
+| onClose | () => void | - | Called on close button click |
 | opened | boolean | required | Opened state |
-| portalProps | BasePortalProps | - | Props passed down to the <code>Portal</code> component. Ignored when <code>withinPortal</code> is <code>false</code>. |
+| portalProps | BasePortalProps | - | Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. |
 | position | AffixPosition | - | Affix position on screen |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any valid CSS value to set <code>box-shadow</code> |
-| size | number | MantineSize | (string & {}) | - | Controls <code>width</code> of the dialog |
-| transitionProps | TransitionProps | - | Props passed down to the underlying <code>Transition</code> component |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS value to set `box-shadow` |
+| size | MantineSize \| number | - | Controls `width` of the dialog |
+| transitionProps | TransitionProps | - | Props passed down to the underlying `Transition` component |
 | withBorder | boolean | - | Adds border to the root element |
-| withCloseButton | boolean | - | If set, the close button is displayed |
-| withinPortal | boolean | - | Determines whether the component is rendered within <code>Portal</code> |
-| zIndex | React.CSSProperties["zIndex"] | - | Root element <code>z-index</code> property |
+| withCloseButton | boolean | - | If set, displays the close button |
+| withinPortal | boolean | - | Determines whether the component is rendered within `Portal` |
+| zIndex | React.CSSProperties["zIndex"] | - | Root element `z-index` property |
 
 
 #### Styles API

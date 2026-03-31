@@ -1,0 +1,765 @@
+{
+  "id": "core-number-input",
+  "name": "NumberInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/number-input",
+  "description": "Capture number from user",
+  "propsCount": 58,
+  "llmUrl": "https://mantine.dev/llms/core-number-input.md",
+  "componentDataUrl": "/mcp/components/core-number-input.json",
+  "searchText": "numberinput capture number from user @mantine/core /core/number-input allowdecimal allowleadingzeros allownegative alloweddecimalseparators clampbehavior decimalscale decimalseparator defaultvalue description descriptionprops disabled error errorprops fixeddecimalscale handlersref hidecontrols inputcontainer inputsize inputwrapperorder isallowed label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition max min onchange onmaxreached onminreached onvaluechange prefix radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth selectallonfocus size startvalue step stepholddelay stepholdinterval suffix thousandseparator thousandsgroupstyle trimleadingzeroesonblur type value valueisnumericstring withasterisk witherrorstyles withkeyboardevents wrapperprops",
+  "source": "@mantine/core/src/components/NumberInput/NumberInput.tsx",
+  "docs": "core/number-input.mdx",
+  "markdown": "# NumberInput\nPackage: @mantine/core\nImport: import { NumberInput } from '@mantine/core';\nDescription: Capture number from user\n\n## Usage\n\n`NumberInput` is based on [react-number-format](https://www.npmjs.com/package/react-number-format).\nIt supports most of the props from the `NumericFormat` component in the original package.\n\nNumberInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. NumberInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <NumberInput\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      placeholder=\"Input placeholder\"\n    />\n  );\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return <NumberInput placeholder=\"Age\" loading />;\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | number>('');\n  return <NumberInput value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`NumberInput` can be used with uncontrolled forms the same way as a native `input[type=\"number\"]`.\nSet the `name` attribute to include number input value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `NumberInput` with `FormData`:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Number input value:', formData.get('quantity'));\n      }}\n    >\n      <NumberInput\n        label=\"Enter quantity\"\n        name=\"quantity\"\n        defaultValue=\"1\"\n        min=\"1\"\n        max=\"100\"\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Value type\n\nThe `value`, `defaultValue`, and `onChange` props can be either string or number. In all cases\nwhen the `NumberInput` value can be represented as a number, the `onChange` function is called\nwith a number (for example `55`, `1.28`, `-100`, etc.). But there are several cases when\nit is not possible to represent the value as a number:\n\n* Empty state is represented as an empty string – `''`\n* Numbers that are larger than `Number.MAX_SAFE_INTEGER - 1` or smaller than `Number.MIN_SAFE_INTEGER + 1` are represented as strings – `'90071992547409910'`\n* Numbers with trailing decimal separators or trailing decimal zeros are represented as strings – `0.`, `0.0`, `-0.00`, etc.\n\n## BigInt values\n\n`NumberInput` also supports `bigint` values. BigInt mode is inferred from `value` or `defaultValue`:\n\n* `value`/`defaultValue` can be `bigint | string`\n* `onChange` receives `bigint | string`\n* `min`, `max`, `step`, and `startValue` support `bigint`\n* BigInt mode is integer-only (`allowDecimal`/decimal formatting props do not enable decimal parsing)\n\n`string` is still used as a fallback for intermediate states (for example `''` or `'-'`).\n\n```tsx\nimport { useState } from 'react';\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<bigint | string>(BigInt('12345678901234567890'));\n\n  return (\n    <NumberInput\n      label=\"BigInt value\"\n      description=\"BigInt mode is inferred from defaultValue/value\"\n      value={value}\n      onChange={setValue}\n      step={BigInt(10)}\n      min={BigInt(0)}\n      thousandSeparator=\",\"\n      prefix=\"$\"\n    />\n  );\n}\n```\n\n\n## onChange vs onValueChange\n\n`NumberInput` provides two callback props for handling value changes:\n\n* **`onChange`**: Receives a simplified value (`number | string` in default mode, `bigint | string` in BigInt mode). This is the recommended callback for most use cases. The value is a number/bigint when possible, and a string in edge cases (empty input, very large numbers, trailing decimals, intermediate BigInt input states).\n\n* **`onValueChange`**: Receives the full payload from `react-number-format`, which includes:\n  * `floatValue`: The numeric value (or `undefined`)\n  * `formattedValue`: The formatted string value (with prefix/suffix/separators)\n  * `value`: The raw unformatted string value\n  * Additional metadata about the change source\n\nUse `onValueChange` when you need access to the formatted value or metadata about the change (e.g., whether it came from user typing, increment/decrement buttons, or programmatic changes). For simple form handling, `onChange` is sufficient.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      prefix=\"$\"\n      thousandSeparator=\",\"\n      // onChange receives: 1234\n      onChange={(value) => console.log('Simple value:', value)}\n      // onValueChange receives: { floatValue: 1234, formattedValue: '$1,234', value: '1234' }\n      onValueChange={(payload) => console.log('Full payload:', payload)}\n    />\n  );\n}\n```\n\n## min and max\n\nSet the `min` and `max` props to limit the input value:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      label=\"Enter value between 10 and 20\"\n      placeholder=\"Don't enter more than 20 and less than 10\"\n      min={10}\n      max={20}\n    />\n  );\n}\n```\n\n\n## Clamp behavior\n\nBy default, the value is clamped when the input is blurred. If you set `clampBehavior=\"strict\"`,\nit will not be possible to enter a value outside of the min/max range. Note that this option\nmay cause issues if you have tight `min` and `max`, for example `min={10}` and `max={20}`.\nIf you need to disable value clamping entirely, set `clampBehavior=\"none\"`.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      label=\"Strict clamping between 0 and 100\"\n      placeholder=\"Enter a number\"\n      clampBehavior=\"strict\"\n      min={0}\n      max={100}\n    />\n  );\n}\n```\n\n\n## Prefix and suffix\n\nSet the `prefix` and `suffix` props to add a given string to the start or end of the input value:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <NumberInput\n        label=\"With prefix\"\n        placeholder=\"Dollars\"\n        prefix=\"$\"\n        defaultValue={100}\n        mb=\"md\"\n      />\n      <NumberInput\n        label=\"With suffix\"\n        placeholder=\"Percents\"\n        suffix=\"%\"\n        defaultValue={100}\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Negative numbers\n\nBy default, negative numbers are allowed. Set `allowNegative={false}` to allow only positive numbers.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      label=\"Negative number are not allowed\"\n      placeholder=\"Do not enter negative numbers\"\n      allowNegative={false}\n    />\n  );\n}\n```\n\n\n## Decimal numbers\n\nBy default, decimal numbers are allowed. Set `allowDecimal={false}` to allow only integers.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      label=\"Decimals are not allowed\"\n      placeholder=\"Do not enter decimal numbers\"\n      allowDecimal={false}\n    />\n  );\n}\n```\n\n\n## Decimal scale\n\nThe `decimalScale` controls how many decimal places are allowed:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      label=\"You can enter only 2 digits after decimal point\"\n      placeholder=\"Do not enter more than 2\"\n      decimalScale={2}\n    />\n  );\n}\n```\n\n\n## Fixed decimal scale\n\nSet `fixedDecimalScale` to always display a fixed number of decimal places:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      label=\"Always show 2 digits after decimal point\"\n      placeholder=\"Do not enter more that 2\"\n      decimalScale={2}\n      fixedDecimalScale\n      defaultValue={2.2}\n    />\n  );\n}\n```\n\n\n## Decimal separator\n\nSet `decimalSeparator` to change the decimal separator character:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <NumberInput\n      label=\"Custom decimal separator\"\n      placeholder=\"You can change it\"\n      decimalSeparator=\",\"\n      defaultValue={20.573}\n    />\n  );\n}\n```\n\n\n## Thousand separator\n\nSet the `thousandSeparator` prop to separate thousands with a character. You can control\nthe grouping logic with `thousandsGroupStyle`, which accepts: `thousand`, `lakh`, `wan`, `none` values.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <NumberInput\n        label=\"Thousands are separated with a comma\"\n        placeholder=\"Thousands are separated with a comma\"\n        thousandSeparator=\",\"\n        defaultValue={1_000_000}\n      />\n\n      <NumberInput\n        label=\"Thousands are separated with a space\"\n        placeholder=\"Thousands are separated with a space\"\n        thousandSeparator=\" \"\n        defaultValue={1_000_000}\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Trim leading zeros on blur\n\nBy default, leading zeros are removed when the input loses focus (e.g., `00100` becomes `100`).\nYou can disable this behavior by setting `trimLeadingZeroesOnBlur={false}`:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <NumberInput\n        label=\"Leading zeros removed on blur\"\n        placeholder=\"Type 00100 and click outside\"\n        trimLeadingZeroesOnBlur\n        defaultValue=\"00100\"\n      />\n\n      <NumberInput\n        label=\"Leading zeros preserved\"\n        placeholder=\"Type 00100 and click outside\"\n        trimLeadingZeroesOnBlur={false}\n        defaultValue=\"00100\"\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Input sections\n\nNumberInput supports left and right sections to display icons, buttons or other content alongside the input.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\nimport { CurrencyEthIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <CurrencyEthIcon size={20} />;\n  return (\n    <>\n      <NumberInput leftSection={icon} label=\"With left section\" placeholder=\"With left section\" />\n      <NumberInput\n        rightSection={icon}\n        label=\"With right section\"\n        placeholder=\"With right section\"\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Increment/decrement controls\n\nBy default, the right section is occupied by increment and decrement buttons.\nTo hide them, set the `hideControls` prop. You can also use the `rightSection` prop to render anything\nin the right section to replace the default controls.\n\n```tsx\nimport { NumberInput } from '@mantine/core';\nimport { ChartScatterIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <>\n      <NumberInput label=\"Hide controls\" placeholder=\"Hide controls\" hideControls />\n      <NumberInput\n        label=\"Custom right section\"\n        placeholder=\"Custom right section\"\n        mt=\"md\"\n        rightSection={<ChartScatterIcon />}\n        rightSectionPointerEvents=\"none\"\n      />\n    </>\n  );\n}\n```\n\n\n## Increment/decrement on hold\n\nSet the `stepHoldDelay` and `stepHoldInterval` props to define behavior when increment/decrement controls are clicked and held:\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <NumberInput\n        label=\"Step on hold\"\n        description=\"Step value when clicking and holding increment/decrement buttons\"\n        stepHoldDelay={500}\n        stepHoldInterval={100}\n      />\n\n      <NumberInput\n        label=\"Step the value with interval function\"\n        description=\"Steps get faster over time when holding the control button\"\n        stepHoldDelay={500}\n        stepHoldInterval={(t) => Math.max(1000 / t ** 2, 25)}\n      />\n    </>\n  );\n}\n```\n\n\n## Custom increment and decrement controls\n\nYou can get a ref with `increment` and `decrement` functions to create custom controls:\n\n```tsx\nimport { useRef } from 'react';\nimport { NumberInput, Group, Button, NumberInputHandlers } from '@mantine/core';\n\nfunction Demo() {\n  const handlersRef = useRef<NumberInputHandlers>(null);\n  return (\n    <>\n      <NumberInput\n        label=\"Click buttons to change value\"\n        placeholder=\"Click the buttons\"\n        handlersRef={handlersRef}\n        step={2}\n        min={10}\n        max={20}\n        defaultValue={15}\n      />\n\n      <Group mt=\"md\" justify=\"center\">\n        <Button onClick={() => handlersRef.current?.decrement()} variant=\"default\">\n          Decrement by 2\n        </Button>\n\n        <Button onClick={() => handlersRef.current?.increment()} variant=\"default\">\n          Increment by 2\n        </Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Error state\n\n```tsx\nimport { NumberInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <NumberInput label=\"Boolean error\" placeholder=\"Boolean error\" error />\n      <NumberInput\n        mt=\"md\"\n        label=\"With error message\"\n        placeholder=\"With error message\"\n        error=\"Invalid name\"\n      />\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**NumberInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowDecimal | boolean | - | If set, decimal values are allowed |\n| allowLeadingZeros | boolean | - | Determines whether leading zeros are allowed during input. If `false`, leading zeros are removed as you type (e.g., typing `007` results in `7`). Works in conjunction with `trimLeadingZeroesOnBlur`. |\n| allowNegative | boolean | - | Determines whether negative numbers are allowed. If `false`, the input will not accept negative values, and the decrement button will stop at `0` (when `min` is not set). |\n| allowedDecimalSeparators | string[] | - | Characters which when pressed result in a decimal separator. These characters will be replaced by the `decimalSeparator` in the input value. |\n| clampBehavior | \"none\" \\| \"blur\" \\| \"strict\" | - | Controls how values are clamped to the `min`/`max` range: - `'blur'` (default): User can type any value, but it's clamped when the input loses focus - `'strict'`: User cannot type values outside the range - `'none'`: No clamping; `min`/`max` only apply to increment/decrement controls and arrow keys |\n| decimalScale | number | - | Limits the number of digits that can be entered after the decimal point |\n| decimalSeparator | string | - | Character used as a decimal separator. Generally used with `allowedDecimalSeparators` prop. |\n| defaultValue | string \\| NumberInputNumericType | - | Uncontrolled component default value |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| fixedDecimalScale | boolean | - | If `true`, automatically pads the decimal part with zeros to match `decimalScale` (e.g., with `decimalScale={2}`, typing `5.1` displays as `5.10`). Requires `decimalScale` to be set. |\n| handlersRef | Ref<NumberInputHandlers> \\| undefined | - | Increment/decrement handlers |\n| hideControls | boolean | - | If set, the up/down controls are hidden |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| isAllowed | (values: NumberFormatValues) => boolean | - | A function to validate the input value. If this function returns `false`, the `onChange` will not be called and the input value will not change. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| max | NumberInputNumericType | - | Maximum possible value |\n| min | NumberInputNumericType | - | Minimum possible value |\n| onChange | (value: NumberInputValue<T>) => void | - | Called when value changes |\n| onMaxReached | () => void | - | Called when the decrement button or arrow down key is pressed and the value has reached the minimum |\n| onMinReached | () => void | - | Called when the increment button or arrow up key is pressed and the value has reached the maximum |\n| onValueChange | OnValueChange | - | Called when value changes with `react-number-format` payload |\n| prefix | string | - | Prefix added before the input value |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| selectAllOnFocus | boolean | - | If set, all text is selected when the input receives focus |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| startValue | NumberInputNumericType | - | Value used when incrementing/decrementing an empty input. If `min` is set and `startValue < min`, `min` is used instead. |\n| step | NumberInputNumericType | - | Number by which value will be incremented/decremented with up/down controls and keyboard arrows |\n| stepHoldDelay | number | - | Initial delay in milliseconds before stepping the value. |\n| stepHoldInterval | number \\| ((stepCount: number) => number) | - | Interval in milliseconds between value steps when increment/decrement button is held down. Can be a number or a function `(stepCount) => number` for dynamic intervals. Requires `stepHoldDelay` to be set. |\n| suffix | string | - | Suffix added after the input value |\n| thousandSeparator | string \\| boolean | - | A character used to separate thousands |\n| thousandsGroupStyle | \"none\" \\| \"thousand\" \\| \"lakh\" \\| \"wan\" | - | Defines the thousand grouping style. 'thousand' (1,000), 'lakh' (1,00,000), 'wan' (1,0000), 'none'. |\n| trimLeadingZeroesOnBlur | boolean | - | If set, leading zeros are removed on blur. For example, `00100` -> `100` |\n| type | \"text\" \\| \"tel\" \\| \"password\" | - | Controls input `type` attribute |\n| value | string \\| NumberInputNumericType | - | Controlled component value |\n| valueIsNumericString | boolean | - | Advanced: Set to `true` if you're passing numeric strings (e.g., `\"12345\"`) and using formatting props like `prefix` or `suffix`. In most cases, you don't need this prop. See [react-number-format docs](https://www.npmjs.com/package/react-number-format) for details. |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withKeyboardEvents | boolean | - | If set, up/down keyboard events increment/decrement value |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nNumberInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**NumberInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-NumberInput-wrapper | Root element of the Input |\n| input | .mantine-NumberInput-input | Input element |\n| section | .mantine-NumberInput-section | Left and right sections |\n| root | .mantine-NumberInput-root | Root element |\n| label | .mantine-NumberInput-label | Label element |\n| required | .mantine-NumberInput-required | Required asterisk element, rendered inside label |\n| description | .mantine-NumberInput-description | Description element |\n| error | .mantine-NumberInput-error | Error element |\n| controls | .mantine-NumberInput-controls | Increment and decrement buttons wrapper |\n| control | .mantine-NumberInput-control | Increment and decrement buttons |\n\n**NumberInput CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| controls | --ni-chevron-size | Controls `width` and `height` of the default chevron icon |\n\n**NumberInput data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| control | data-direction | - | `up` or `down` depending on the control |\n",
+  "props": [
+    {
+      "name": "allowDecimal",
+      "description": "If set, decimal values are allowed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "allowLeadingZeros",
+      "description": "Determines whether leading zeros are allowed during input. If <code>false</code>, leading zeros are removed as you type (e.g., typing <code>007</code> results in <code>7</code>). Works in conjunction with <code>trimLeadingZeroesOnBlur</code>.",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "allowNegative",
+      "description": "Determines whether negative numbers are allowed. If <code>false</code>, the input will not accept negative values, and the decrement button will stop at <code>0</code> (when <code>min</code> is not set).",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "allowedDecimalSeparators",
+      "description": "Characters which when pressed result in a decimal separator. These characters will be replaced by the <code>decimalSeparator</code> in the input value.",
+      "required": false,
+      "defaultValue": "['.', ',']",
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "clampBehavior",
+      "description": "Controls how values are clamped to the <code>min</code>/<code>max</code> range:\n- <code>'blur'</code> (default): User can type any value, but it's clamped when the input loses focus\n- <code>'strict'</code>: User cannot type values outside the range\n- <code>'none'</code>: No clamping; <code>min</code>/<code>max</code> only apply to increment/decrement controls and arrow keys",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"none\" | \"blur\" | \"strict\"",
+        "raw": "\"none\" | \"blur\" | \"strict\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"blur\""
+          },
+          {
+            "value": "\"strict\""
+          }
+        ]
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "decimalScale",
+      "description": "Limits the number of digits that can be entered after the decimal point",
+      "required": false,
+      "defaultValue": "Infinity",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "decimalSeparator",
+      "description": "Character used as a decimal separator. Generally used with <code>allowedDecimalSeparators</code> prop.",
+      "required": false,
+      "defaultValue": "'.'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | NumberInputNumericType"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "fixedDecimalScale",
+      "description": "If <code>true</code>, automatically pads the decimal part with zeros to match <code>decimalScale</code> (e.g., with <code>decimalScale={2}</code>, typing <code>5.1</code> displays as <code>5.10</code>). Requires <code>decimalScale</code> to be set.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "handlersRef",
+      "description": "Increment/decrement handlers",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<NumberInputHandlers> | undefined"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "hideControls",
+      "description": "If set, the up/down controls are hidden",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "isAllowed",
+      "description": "A function to validate the input value. If this function returns <code>false</code>, the <code>onChange</code> will not be called and the input value will not change.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(values: NumberFormatValues) => boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "max",
+      "description": "Maximum possible value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "NumberInputNumericType"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "min",
+      "description": "Minimum possible value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "NumberInputNumericType"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: NumberInputValue<T>) => void"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "onMaxReached",
+      "description": "Called when the decrement button or arrow down key is pressed and the value has reached the minimum",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "onMinReached",
+      "description": "Called when the increment button or arrow up key is pressed and the value has reached the maximum",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "onValueChange",
+      "description": "Called when value changes with <code>react-number-format</code> payload",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "OnValueChange"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "prefix",
+      "description": "Prefix added before the input value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "selectAllOnFocus",
+      "description": "If set, all text is selected when the input receives focus",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "startValue",
+      "description": "Value used when incrementing/decrementing an empty input. If <code>min</code> is set and <code>startValue < min</code>, <code>min</code> is used instead.",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "NumberInputNumericType"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "step",
+      "description": "Number by which value will be incremented/decremented with up/down controls and keyboard arrows",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "NumberInputNumericType"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "stepHoldDelay",
+      "description": "Initial delay in milliseconds before stepping the value.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "stepHoldInterval",
+      "description": "Interval in milliseconds between value steps when increment/decrement button is held down. Can be a number or a function <code>(stepCount) => number</code> for dynamic intervals. Requires <code>stepHoldDelay</code> to be set.",
+      "required": false,
+      "defaultValue": "undefined",
+      "type": {
+        "name": "number | ((stepCount: number) => number)"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "suffix",
+      "description": "Suffix added after the input value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "thousandSeparator",
+      "description": "A character used to separate thousands",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "thousandsGroupStyle",
+      "description": "Defines the thousand grouping style. 'thousand' (1,000), 'lakh' (1,00,000), 'wan' (1,0000), 'none'.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"none\" | \"thousand\" | \"lakh\" | \"wan\"",
+        "raw": "\"none\" | \"thousand\" | \"lakh\" | \"wan\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"thousand\""
+          },
+          {
+            "value": "\"lakh\""
+          },
+          {
+            "value": "\"wan\""
+          }
+        ]
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "trimLeadingZeroesOnBlur",
+      "description": "If set, leading zeros are removed on blur. For example, <code>00100</code> -> <code>100</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "type",
+      "description": "Controls input <code>type</code> attribute",
+      "required": false,
+      "defaultValue": "'text'",
+      "type": {
+        "name": "\"text\" | \"tel\" | \"password\"",
+        "raw": "\"text\" | \"tel\" | \"password\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"text\""
+          },
+          {
+            "value": "\"tel\""
+          },
+          {
+            "value": "\"password\""
+          }
+        ]
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | NumberInputNumericType"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "valueIsNumericString",
+      "description": "Advanced: Set to <code>true</code> if you're passing numeric strings (e.g., <code>\"12345\"</code>) and using formatting props like <code>prefix</code> or <code>suffix</code>. In most cases, you don't need this prop. See [react-number-format docs](https://www.npmjs.com/package/react-number-format) for details.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "withKeyboardEvents",
+      "description": "If set, up/down keyboard events increment/decrement value",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "NumberInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "NumberInput"
+    }
+  ]
+}

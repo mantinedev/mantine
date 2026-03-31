@@ -5,8 +5,6 @@ Description: Displays color
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { ColorSwatch, Group } from '@mantine/core';
 
@@ -24,41 +22,19 @@ function Demo() {
 
 ## withShadow
 
-By default, `ColorSwatch` has an inner box-shadow to make it more visible on light backgrounds,
-you can disable it by setting `withShadow={false}` prop:
-
-#### Example: shadow
+By default, `ColorSwatch` has an inner box-shadow to make it more visible on light backgrounds.
+You can disable it by setting the `withShadow={false}` prop:
 
 ```tsx
 import { ColorSwatch } from '@mantine/core';
 
 function Demo() {
-  return <ColorSwatch color="rgba(255, 255, 255, 0.7)" />;
+  return <ColorSwatch color="rgba(255, 255, 255, 0.7)" withShadow={true} />;
 }
 ```
 
 
-<Polymorphic defaultElement="div" changeToElement="button" component="ColorSwatch" />
-
-## Polymorphic component
-
-ColorSwatch is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { ColorSwatch } from '@mantine/core';
-
-function Demo() {
-  return <ColorSwatch component="button" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ColorSwatchProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
-#### Example: component
+Example of using `ColorSwatch` as a button:
 
 ```tsx
 import { useState } from 'react';
@@ -84,13 +60,15 @@ function Demo() {
 
 #### Props
 
+**ColorSwatch props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| children | React.ReactNode | - | Content displayed inside the swatch |
+| children | React.ReactNode | - | Children inside the swatch |
 | color | string | required | Valid CSS color to display |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem. |
-| size | React.CSSProperties["width"] | - | Controls <code>width</code> and <code>height</code> of the swatch, any valid CSS value, numbers are converted to rem. |
-| withShadow | boolean | - | Determines whether the swatch should have inner <code>box-shadow</code> |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem. |
+| size | React.CSSProperties["width"] | - | Swatch `width` and `height`, any valid CSS value, numbers are converted to rem. |
+| withShadow | boolean | - | If set, the swatch has inner `box-shadow` |
 
 
 #### Styles API

@@ -1,0 +1,57 @@
+{
+  "id": "core-focus-trap",
+  "name": "FocusTrap",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/focus-trap",
+  "description": "Trap focus at child node",
+  "propsCount": 4,
+  "llmUrl": "https://mantine.dev/llms/core-focus-trap.md",
+  "componentDataUrl": "/mcp/components/core-focus-trap.json",
+  "searchText": "focustrap trap focus at child node @mantine/core /core/focus-trap active children innerref refprop",
+  "source": "@mantine/core/src/components/FocusTrap/FocusTrap.tsx",
+  "docs": "core/focus-trap.mdx",
+  "markdown": "# FocusTrap\nPackage: @mantine/core\nImport: import { FocusTrap } from '@mantine/core';\nDescription: Trap focus at child node\n\n## Usage\n\nFocusTrap is a component implementation of the [use-focus-trap](https://mantine.dev/llms/hooks-use-focus-trap.md) hook.\nIt is used in all Mantine components that require focus trap ([Modal](https://mantine.dev/llms/core-modal.md), [DatePicker](https://mantine.dev/llms/dates-date-picker.md), [Popover](https://mantine.dev/llms/core-popover.md), etc.).\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { FocusTrap, TextInput, Button, Box } from '@mantine/core';\n\nfunction Demo() {\n  const [active, { toggle }] = useDisclosure(false);\n\n  return (\n    <Box maw={400} mx=\"auto\">\n      <Button onClick={toggle}>{active ? 'Deactivate' : 'Activate'} focus trap</Button>\n\n      <FocusTrap active={active}>\n        <div>\n          <TextInput mt=\"sm\" label=\"First input\" placeholder=\"First input\" />\n          <TextInput mt=\"sm\" label=\"Second input\" placeholder=\"Second input\" />\n          <TextInput mt=\"sm\" label=\"Third input\" placeholder=\"Third input\" />\n        </div>\n      </FocusTrap>\n    </Box>\n  );\n}\n```\n\n\n## Initial focus\n\nTo define the element that will receive initial focus, set the `data-autofocus` attribute:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { FocusTrap, TextInput, Button, Box } from '@mantine/core';\n\nfunction Demo() {\n  const [active, { toggle }] = useDisclosure(false);\n\n  return (\n    <Box maw={400} mx=\"auto\">\n      <Button onClick={toggle}>{active ? 'Deactivate' : 'Activate'} focus trap</Button>\n\n      <FocusTrap active={active}>\n        <div>\n          <TextInput mt=\"sm\" label=\"First input\" placeholder=\"First input\" />\n          <TextInput mt=\"sm\" label=\"Second input\" placeholder=\"Second input\" data-autofocus />\n          <TextInput mt=\"sm\" label=\"Third input\" placeholder=\"Third input\" />\n        </div>\n      </FocusTrap>\n    </Box>\n  );\n}\n```\n\n\n## FocusTrap.InitialFocus\n\n`FocusTrap.InitialFocus` is a special component that adds a visually hidden\nelement which will receive the focus when the focus trap is activated.\nOnce `FocusTrap.InitialFocus` loses focus, it is removed from the tab order.\n\nFor example, it is useful if you do not want to focus any elements inside the [Modal](https://mantine.dev/llms/core-modal.md) when it is opened:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Modal, Button, TextInput, FocusTrap } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { open, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Modal opened={opened} onClose={close} title=\"Focus demo\">\n        <FocusTrap.InitialFocus />\n        <TextInput label=\"First input\" placeholder=\"First input\" />\n        <TextInput\n          data-autofocus\n          label=\"Input with initial focus\"\n          placeholder=\"It has data-autofocus attribute\"\n          mt=\"md\"\n        />\n      </Modal>\n\n      <Button variant=\"default\" onClick={open}>\n        Open modal\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Focus trapping logic\n\n* Focus is trapped within the child node if the `active` prop is `true`\n* When the FocusTrap component is mounted or when the `active` prop changes from `false` to `true`, the first element with the `data-autofocus` attribute is focused\n* If there are no elements with the `data-autofocus` attribute, then the first element that supports keyboard interaction is focused\n* If the target element does not have focusable elements or does not support `ref`, then the focus trap will not work\n* Trap stops working when an element outside of the `FocusTrap` child is focused\n\n\n#### Props\n\n**FocusTrap props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| active | boolean | - | If set to `false`, disables focus trap |\n| children | any | required | Element to trap focus at, must support ref prop |\n| innerRef | Ref<any> | - | Ref to combine with the focus trap ref |\n| refProp | string | - | Prop that is used to access element ref |\n\n**FocusTrap..InitialFocus props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**FocusTrap.InitialFocus props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|",
+  "props": [
+    {
+      "name": "active",
+      "description": "If set to <code>false</code>, disables focus trap",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FocusTrap"
+    },
+    {
+      "name": "children",
+      "description": "Element to trap focus at, must support ref prop",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "any"
+      },
+      "sourceComponent": "FocusTrap"
+    },
+    {
+      "name": "innerRef",
+      "description": "Ref to combine with the focus trap ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<any>"
+      },
+      "sourceComponent": "FocusTrap"
+    },
+    {
+      "name": "refProp",
+      "description": "Prop that is used to access element ref",
+      "required": false,
+      "defaultValue": "ref",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "FocusTrap"
+    }
+  ]
+}

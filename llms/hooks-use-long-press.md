@@ -4,6 +4,16 @@ Import: import { UseLongPress } from '@mantine/hooks';
 
 ## Usage
 
+```tsx
+import { Button } from '@mantine/core';
+import { useLongPress } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  const handlers = useLongPress(() => notifications.show({ message: 'Long press triggered' }));
+  return <Button {...handlers}>Press and hold</Button>;
+}
+```
 
 
 ## Definition
@@ -39,7 +49,7 @@ function useLongPress(
 
 ## Exported types
 
-`UseLongPressOptions` and `UseLongPressReturnValue` types are exported from `@mantine/hooks` package,
+`UseLongPressOptions` and `UseLongPressReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

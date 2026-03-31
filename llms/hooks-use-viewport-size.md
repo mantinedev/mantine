@@ -4,9 +4,17 @@ Import: import { UseViewportSize } from '@mantine/hooks';
 
 ## Usage
 
-`use-viewport-size` returns current viewport's `width` and `height`, it subscribes to `resize` and `orientationchange` events,
-during ssr hook will return `{ width: 0, height: 0 }`:
+The `use-viewport-size` hook returns the current viewport's `width` and `height`. It subscribes to `resize` and `orientationchange` events.
+During SSR, the hook will return `{ width: 0, height: 0 }`:
 
+```tsx
+import { useViewportSize } from '@mantine/hooks';
+
+function Demo() {
+  const { height, width } = useViewportSize();
+  return <>Width: {width}, height: {height}</>;
+}
+```
 
 
 ## Definition

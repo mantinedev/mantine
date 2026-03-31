@@ -1,0 +1,117 @@
+{
+  "id": "core-badge",
+  "name": "Badge",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/badge",
+  "description": "Display badge, pill or tag",
+  "propsCount": 10,
+  "llmUrl": "https://mantine.dev/llms/core-badge.md",
+  "componentDataUrl": "/mcp/components/core-badge.json",
+  "searchText": "badge display badge, pill or tag @mantine/core /core/badge autocontrast children circle color fullwidth gradient leftsection radius rightsection size",
+  "source": "@mantine/core/src/components/Badge/Badge.tsx",
+  "docs": "core/badge.mdx",
+  "markdown": "# Badge\nPackage: @mantine/core\nImport: import { Badge } from '@mantine/core';\nDescription: Display badge, pill or tag\n\n## Usage\n\n```tsx\nimport { Badge } from '@mantine/core';\n\nfunction Demo() {\n  return <Badge variant=\"filled\" color=\"blue\" size=\"md\" radius=\"xl\">Badge</Badge>;\n}\n```\n\n\n```tsx\nimport { Badge } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Badge\n      size=\"xl\"\n      variant=\"gradient\"\n      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}\n    >\n      Gradient badge\n    </Badge>\n  );\n}\n```\n\n\n## Rounded\n\nSet the `circle` prop to reduce horizontal padding and make the badge width equal to its height:\n\n```tsx\nimport { Badge, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Badge size=\"xs\" circle>\n        1\n      </Badge>\n      <Badge size=\"sm\" circle>\n        7\n      </Badge>\n      <Badge size=\"md\" circle>\n        9\n      </Badge>\n      <Badge size=\"lg\" circle>\n        3\n      </Badge>\n      <Badge size=\"xl\" circle>\n        8\n      </Badge>\n    </Group>\n  );\n}\n```\n\n\n## Left and right sections\n\n```tsx\nimport { Badge, Group } from '@mantine/core';\nimport { AtIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <AtIcon size={12} />;\n  return (\n    <Group>\n      <Badge leftSection={icon}>With left section</Badge>\n      <Badge rightSection={icon}>With right section</Badge>\n    </Group>\n  );\n}\n```\n\n\n## Full width\n\nSet `fullWidth` to make the badge span the full width of its parent element:\n\n```tsx\nimport { Badge } from '@mantine/core';\n\nfunction Demo() {\n  return <Badge fullWidth>Full width badge</Badge>;\n}\n```\n\n\n\n#### Props\n\n**Badge props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| children | React.ReactNode | - | Main badge content |\n| circle | boolean | - | If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| fullWidth | boolean | - | Determines whether Badge should take 100% of its parent width |\n| gradient | MantineGradient | - | Gradient configuration used when `variant=\\\"gradient\\\"` |\n| leftSection | React.ReactNode | - | Content displayed on the left side of the badge label |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| rightSection | React.ReactNode | - | Content displayed on the right side of the badge label |\n| size | MantineSize | - | Controls `font-size`, `height` and horizontal `padding` |\n\n\n#### Styles API\n\nBadge component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Badge selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Badge-root | Root element |\n| section | .mantine-Badge-section | Left and right sections |\n| label | .mantine-Badge-label | Badge children |\n\n**Badge CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --badge-bd | Controls `border` |\n| root | --badge-bg | Controls `background` |\n| root | --badge-color | Controls text `color` |\n| root | --badge-dot-color | Controls dot `color`, only applicable when `variant=\"dot\"` |\n| root | --badge-fz | Controls `font-size` |\n| root | --badge-height | Controls `height` |\n| root | --badge-padding-x | Controls horizontal `padding` |\n| root | --badge-radius | Controls `border-radius` |\n\n**Badge data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-block | `fullWidth` prop is set | - |\n| section | data-position | - | Section position: left or right |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "children",
+      "description": "Main badge content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "circle",
+      "description": "If set, badge <code>min-width</code> becomes equal to its <code>height</code> and horizontal padding is removed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "fullWidth",
+      "description": "Determines whether Badge should take 100% of its parent width",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "gradient",
+      "description": "Gradient configuration used when <code>variant=\\\"gradient\\\"</code>",
+      "required": false,
+      "defaultValue": "theme.defaultGradient",
+      "type": {
+        "name": "MantineGradient"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content displayed on the left side of the badge label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content displayed on the right side of the badge label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Badge"
+    },
+    {
+      "name": "size",
+      "description": "Controls <code>font-size</code>, <code>height</code> and horizontal <code>padding</code>",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "Badge"
+    }
+  ]
+}

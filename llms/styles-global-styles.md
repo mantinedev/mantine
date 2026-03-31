@@ -2,7 +2,7 @@
 
 # Global styles
 
-`@mantine/core` package includes some global styles that are required for components to work correctly.
+The `@mantine/core` package includes some global styles that are required for components to work correctly.
 If you override these styles, some components might not work as expected.
 
 Global styles are automatically imported with:
@@ -11,7 +11,7 @@ Global styles are automatically imported with:
 import '@mantine/core/styles.css';
 ```
 
-If you want to import styles [per component](https://mantine.dev/styles/css-files-list), you need to import all global
+If you want to import styles [per component](https://mantine.dev/llms/styles-css-files-list.md), you need to import all global
 styles manually:
 
 ```tsx
@@ -22,7 +22,7 @@ import '@mantine/core/styles/global.css';
 
 ## CSS reset
 
-`@mantine/core` package includes minimal CSS reset – it includes only basic styles required for components to work
+The `@mantine/core` package includes minimal CSS reset – it includes only basic styles required for components to work
 in modern browsers. If you need to support older browsers, you can additionally include [normalize.css](https://necolas.github.io/normalize.css/)
 or any other CSS reset of your choice.
 
@@ -52,7 +52,7 @@ select {
 
 ## Body and :root elements styles
 
-`@mantine/core` package includes the following `body` and `:root` elements styles:
+The `@mantine/core` package includes the following `body` and `:root` element styles:
 
 ```css
 :root {
@@ -73,18 +73,16 @@ body {
 
 ## Static classes
 
-`@mantine/core` package includes the following static classes:
+The `@mantine/core` package includes the following static classes:
 
 * `mantine-active` – contains `:active` styles
 * `mantine-focus-auto` – contains `:focus-visible` styles
 * `mantine-focus-always` – contains `:focus` styles
 * `mantine-focus-never` – removes default browser focus ring
-* `mantine-visible-from-{breakpoint}` – shows element when screen width is greater than breakpoint, for example `mantine-visible-from-sm`
-* `mantine-hidden-from-{breakpoint}` – hides element when screen width is greater than breakpoint, for example `mantine-hidden-from-sm`
+* `mantine-visible-from-{breakpoint}` – shows element when screen width is greater than the breakpoint, for example `mantine-visible-from-sm`
+* `mantine-hidden-from-{breakpoint}` – hides element when screen width is greater than the breakpoint, for example `mantine-hidden-from-sm`
 
 You can use these classes with any components or elements:
-
-#### Example: globalClasses
 
 ```tsx
 import { Group } from '@mantine/core';
@@ -112,13 +110,13 @@ function Demo() {
 
 ## Add global styles in your application
 
-It is recommended to use [CSS modules](https://mantine.dev/styles/css-modules) to apply styles to Mantine components
-with `className` prop or with [Styles API](https://mantine.dev/styles/styles-api). CSS modules files names usually
-end with `.module.css`, if you want to add global styles to your application, create a file with
-`.css` extension but without `.module` part, for example `global.css`.
+It is recommended to use [CSS modules](https://mantine.dev/llms/styles-css-modules.md) to apply styles to Mantine components
+with the `className` prop or with [Styles API](https://mantine.dev/llms/styles-styles-api.md). CSS modules file names usually
+end with `.module.css`. If you want to add global styles to your application, create a file with
+a `.css` extension but without the `.module` part, for example `global.css`.
 
-In global `.css` files you can reference all Mantine [CSS variables](https://mantine.dev/styles/css-variables) and
-change styles of `<body />`, `:root` and other elements. For example, to change body background-color:
+In global `.css` files you can reference all Mantine [CSS variables](https://mantine.dev/llms/styles-css-variables.md) and
+change styles of `<body />`, `:root`, and other elements. For example, to change the body background-color:
 
 ```css
 body {

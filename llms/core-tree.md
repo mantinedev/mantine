@@ -5,10 +5,8 @@ Description: Display a Tree structure
 
 ## Usage
 
-`Tree` component is used to display hierarchical data. `Tree` component
-has minimal styling by default, you can customize styles with [Styles API](https://mantine.dev/styles/styles-api).
-
-#### Example: usage
+The `Tree` component is used to display hierarchical data. The `Tree` component
+has minimal styling by default; you can customize styles with [Styles API](https://mantine.dev/llms/styles-styles-api.md).
 
 ```tsx
 import { Tree } from '@mantine/core';
@@ -28,7 +26,7 @@ Data passed to the `data` prop should follow these rules:
 * Data must be an array
 * Each item in the array represents a node in the tree
 * Each node must be an object with `value` and `label` keys
-* Each node can have `children` key with an array of child nodes
+* Each node can have a `children` key with an array of child nodes
 * The `value` of each node must be unique
 
 Valid data example:
@@ -64,7 +62,7 @@ const data = [
 
 ## Data type
 
-You can import `TreeNodeData` type to define data type for your tree:
+You can import the `TreeNodeData` type to define the data type for your tree:
 
 ```tsx
 import { TreeNodeData } from '@mantine/core';
@@ -84,8 +82,8 @@ const data: TreeNodeData[] = [
 
 ## renderNode
 
-Use `renderNode` prop to customize node rendering.
-`renderNode` function receives an object with the following properties as a single argument:
+Use the `renderNode` prop to customize node rendering.
+The `renderNode` function receives an object with the following properties as a single argument:
 
 ```tsx
 export interface RenderTreeNodePayload {
@@ -114,15 +112,12 @@ export interface RenderTreeNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
-    'data-hovered': boolean | undefined;
   };
 }
 ```
 
-#### Example: renderNode
-
 ```tsx
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Group, Tree } from '@mantine/core';
 import { data } from './data';
 
@@ -134,7 +129,7 @@ function Demo() {
       renderNode={({ node, expanded, hasChildren, elementProps }) => (
         <Group gap={5} {...elementProps}>
           {hasChildren && (
-            <IconChevronDown
+            <CaretDownIcon
               size={18}
               style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
             />
@@ -157,14 +152,32 @@ The hook accepts an object with the following properties:
 
 ```tsx
 export interface UseTreeInput {
-  /** Initial expanded state of all nodes */
-  initialExpandedState?: Record<string, boolean>;
+  /** Initial expanded state of all nodes, uncontrolled state */
+  initialExpandedState?: TreeExpandedState;
+
+  /** Expanded state of all nodes, controlled state */
+  expandedState?: TreeExpandedState;
+
+  /** Called when the tree expanded state changes */
+  onExpandedStateChange?: (expandedState: TreeExpandedState) => void;
 
   /** Initial selected state of nodes */
   initialSelectedState?: string[];
 
+  /** Selected state of all nodes, controlled state */
+  selectedState?: string[];
+
+  /** Called when the tree selected state changes */
+  onSelectedStateChange?: (selectedState: string[]) => void;
+
   /** Initial checked state of nodes */
   initialCheckedState?: string[];
+
+  /** Checked state of all nodes, controlled state */
+  checkedState?: string[];
+
+  /** Called when the tree checked state changes */
+  onCheckedStateChange?: (checkedState: string[]) => void;
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
@@ -236,12 +249,6 @@ export interface UseTreeReturnType {
   /** Sets selected state */
   setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
 
-  /** A value of the node that is currently hovered */
-  hoveredNode: string | null;
-
-  /** Sets hovered node */
-  setHoveredNode: React.Dispatch<React.SetStateAction<string | null>>;
-
   /** Checks node with provided value */
   checkNode: (value: string) => void;
 
@@ -271,8 +278,6 @@ export interface UseTreeReturnType {
 You can pass the value returned by the `useTree` hook to the `tree` prop of the `Tree` component
 to control tree state:
 
-#### Example: controller
-
 ```tsx
 import { Button, Group, Tree, useTree } from '@mantine/core';
 import { data } from './data';
@@ -298,10 +303,8 @@ function Demo() {
 `Tree` can be used to display checked state with checkboxes.
 To implement checked state, you need to render `Checkbox.Indicator` in the `renderNode` function:
 
-#### Example: checked
-
 ```tsx
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Checkbox, Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { data } from './data';
 
@@ -327,7 +330,7 @@ const renderTreeNode = ({
         <span>{node.label}</span>
 
         {hasChildren && (
-          <IconChevronDown
+          <CaretDownIcon
             size={14}
             style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
@@ -345,10 +348,8 @@ function Demo() {
 
 To check/uncheck nodes, use `checkAllNodes` and `uncheckAllNodes` functions:
 
-#### Example: checkAllNodes
-
 ```tsx
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import {
   Button,
   Checkbox,
@@ -382,7 +383,7 @@ const renderTreeNode = ({
         <span>{node.label}</span>
 
         {hasChildren && (
-          <IconChevronDown
+          <CaretDownIcon
             size={14}
             style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
@@ -405,7 +406,7 @@ function Demo() {
   return (
     <>
       <Group mb="md">
-        <Button onClick={() => tree.checkAllNodes()}>Check all</Button>
+        <Button onClick={() => tree.checkAllNodes()}>CheckIcon all</Button>
         <Button onClick={() => tree.uncheckAllNodes()}>Uncheck all</Button>
       </Group>
 
@@ -441,8 +442,6 @@ getTreeExpandedState(data, ['src', 'src/components']);
 getTreeExpandedState(data, '*');
 ```
 
-#### Example: expandedState
-
 ```tsx
 import { getTreeExpandedState, Tree, useTree } from '@mantine/core';
 import { data } from './data';
@@ -459,10 +458,8 @@ function Demo() {
 
 ## Example: files tree
 
-#### Example: files
-
 ```tsx
-import { IconFolder, IconFolderOpen } from '@tabler/icons-react';
+import { FolderSimpleIcon, FolderOpenIcon } from '@phosphor-icons/react';
 import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { CssIcon, NpmIcon, TypeScriptCircleIcon } from '@mantinex/dev-icons';
 import { data, dataCode } from './data';
@@ -489,9 +486,9 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
   if (isFolder) {
     return expanded ? (
-      <IconFolderOpen color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={14} />
     ) : (
-      <IconFolder color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={14} />
     );
   }
 
@@ -524,15 +521,18 @@ function Demo() {
 
 #### Props
 
+**Tree props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| allowRangeSelection | boolean | - | If set, tree nodes range can be selected with click when <code>Shift</code> key is pressed |
+| allowRangeSelection | boolean | - | If set, tree nodes range can be selected with click when `Shift` key is pressed |
 | checkOnSpace | boolean | - | If set, tree node is checked on space key press |
 | clearSelectionOnOutsideClick | boolean | - | If set, selection is cleared when user clicks outside of the tree |
 | data | TreeNodeData[] | required | Data used to render nodes |
 | expandOnClick | boolean | - | If set, tree node with children is expanded on click |
 | expandOnSpace | boolean | - | If set, tree node with children is expanded on space key press |
-| levelOffset | MantineSpacing | - | Horizontal padding of each subtree level, key of <code>theme.spacing</code> or any valid CSS value |
+| keepMounted | boolean | - | If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. |
+| levelOffset | MantineSpacing | - | Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value |
 | renderNode | RenderNode | - | A function to render tree node label |
 | selectOnClick | boolean | - | If set, tree node is selected on click |
 | tree | UseTreeReturnType | - | Use-tree hook instance that can be used to manipulate component state |

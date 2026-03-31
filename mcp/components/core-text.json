@@ -1,0 +1,87 @@
+{
+  "id": "core-text",
+  "name": "Text",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/text",
+  "description": "Display text",
+  "propsCount": 7,
+  "llmUrl": "https://mantine.dev/llms/core-text.md",
+  "componentDataUrl": "/mcp/components/core-text.json",
+  "searchText": "text display text @mantine/core /core/text gradient inherit inline lineclamp size span truncate",
+  "source": "@mantine/core/src/components/Text/Text.tsx",
+  "docs": "core/text.mdx",
+  "markdown": "# Text\nPackage: @mantine/core\nImport: import { Text } from '@mantine/core';\nDescription: Display text\n\n## Usage\n\n```tsx\nimport { Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text size=\"xs\">Extra small text</Text>\n      <Text size=\"sm\">Small text</Text>\n      <Text size=\"md\">Default text</Text>\n      <Text size=\"lg\">Large text</Text>\n      <Text size=\"xl\">Extra large text</Text>\n      <Text fw={500}>Semibold</Text>\n      <Text fw={700}>Bold</Text>\n      <Text fs=\"italic\">Italic</Text>\n      <Text td=\"underline\">Underlined</Text>\n      <Text td=\"line-through\">Strikethrough</Text>\n      <Text c=\"dimmed\">Dimmed text</Text>\n      <Text c=\"blue\">Blue text</Text>\n      <Text c=\"teal.4\">Teal 4 text</Text>\n      <Text tt=\"uppercase\">Uppercase</Text>\n      <Text tt=\"capitalize\">capitalized text</Text>\n      <Text ta=\"center\">Aligned to center</Text>\n      <Text ta=\"right\">Aligned to right</Text>\n    </>\n  );\n}\n```\n\n\n```tsx\nimport { Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Text\n      size=\"xl\"\n      fw={900}\n      variant=\"gradient\"\n      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}\n    >\n      Gradient Text\n    </Text>\n  );\n}\n```\n\n\n## Truncate\n\nSet the `truncate` prop to add `text-overflow: ellipsis` styles:\n\n```tsx\nimport { Text, Box } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Box w={300}>\n      <Text truncate=\"end\">\n        Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde provident eos fugiat id\n        necessitatibus magni ducimus molestias. Placeat, consequatur. Quisquam, quae magnam\n        perspiciatis excepturi iste sint itaque sunt laborum. Nihil?\n      </Text>\n    </Box>\n  );\n}\n```\n\n\n## Line clamp\n\nSpecify the maximum number of lines with the `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)\nCSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on the text element:\n\n```tsx\nimport { Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Text size=\"md\" lineClamp={4}>\n      {/* Text content */}\n    </Text>\n  );\n}\n```\n\n\nLine clamp can also be used with any children (not only strings), for example with [Typography](https://mantine.dev/llms/core-typography.md):\n\n```tsx\nimport { Typography, Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Text lineClamp={3} component=\"div\">\n      <Typography>\n        <h3>Line clamp with Typography</h3>\n        <p>\n          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt nulla quam aut sed\n          corporis voluptates praesentium inventore, sapiente ex tempore sit consequatur debitis\n          non! Illo cum ipsa reiciendis quidem facere, deserunt eos totam impedit. Vel ab, ipsum\n          veniam aperiam odit molestiae incidunt minus, sint eos iusto earum quaerat vitae\n          perspiciatis.\n        </p>\n      </Typography>\n    </Text>\n  );\n}\n```\n\n\n## Inherit styles\n\nText always applies font-size, font-family and line-height styles,\nbut in some cases this is not the desired behavior. To force Text to inherit parent\nstyles, set the `inherit` prop. For example, highlight part of [Title](https://mantine.dev/llms/core-title.md):\n\n```tsx\nimport { Text, Title } from '@mantine/core';\n\nfunction Demo() {\n  return <Title order={3}>Title in which you want to <Text span c=\"blue\" inherit>highlight</Text> something</Title>;\n}\n```\n\n\n## span prop\n\nUse the `span` prop as a shorthand for `component=\"span\"`:\n\n```tsx\nimport { Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Text span>Same as below</Text>\n      <Text component=\"span\">Same as above</Text>\n    </>\n  );\n}\n```\n\n\n#### Props\n\n**Text props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| gradient | MantineGradient | - | Gradient configuration, ignored when `variant` is not `gradient` |\n| inherit | boolean | - | Determines whether font properties should be inherited from the parent |\n| inline | boolean | - | Sets `line-height` to 1 for centering |\n| lineClamp | number | - | Number of lines after which Text will be truncated |\n| size | MantineSize \\| (string & {}) | - | Controls `font-size` and `line-height` |\n| span | boolean | - | Shorthand for `component=\"span\"` |\n| truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |\n\n**Text.Input props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n**Text.area props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autosize | boolean | - | If set, enables textarea height growing with its content |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| maxRows | number | - | Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set |\n| minRows | number | - | Minimum rows of autosize textarea, ignored if `autosize` prop is not set |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| resize | Resize | - | Controls `resize` CSS property |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nText component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Text selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Text-root | Root element |\n\n**Text CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --text-fz | Controls `font-size` property |\n| root | --text-lh | Controls `line-height` property |\n| root | --text-gradient | Text fill gradient |\n| root | --text-line-clamp | Number of lines that should be visible |\n\n**Text data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-truncate | `truncate` prop is set | Value of `truncate` prop |\n| root | data-line-clamp | `lineClamp` prop is a number | - |\n| root | data-inline | `inline` prop is set | - |\n| root | data-inherit | `inherit` prop is set | - |\n\n**Textinput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-Textinput-wrapper | Root element of the Input |\n| input | .mantine-Textinput-input | Input element |\n| section | .mantine-Textinput-section | Left and right sections |\n| root | .mantine-Textinput-root | Root element |\n| label | .mantine-Textinput-label | Label element |\n| required | .mantine-Textinput-required | Required asterisk element, rendered inside label |\n| description | .mantine-Textinput-description | Description element |\n| error | .mantine-Textinput-error | Error element |\n\n**Textarea selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-Textarea-wrapper | Root element of the Input |\n| input | .mantine-Textarea-input | Input element |\n| section | .mantine-Textarea-section | Left and right sections |\n| root | .mantine-Textarea-root | Root element |\n| label | .mantine-Textarea-label | Label element |\n| required | .mantine-Textarea-required | Required asterisk element, rendered inside label |\n| description | .mantine-Textarea-description | Description element |\n| error | .mantine-Textarea-error | Error element |\n",
+  "props": [
+    {
+      "name": "gradient",
+      "description": "Gradient configuration, ignored when <code>variant</code> is not <code>gradient</code>",
+      "required": false,
+      "defaultValue": "theme.defaultGradient",
+      "type": {
+        "name": "MantineGradient"
+      },
+      "sourceComponent": "Text"
+    },
+    {
+      "name": "inherit",
+      "description": "Determines whether font properties should be inherited from the parent",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Text"
+    },
+    {
+      "name": "inline",
+      "description": "Sets <code>line-height</code> to 1 for centering",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Text"
+    },
+    {
+      "name": "lineClamp",
+      "description": "Number of lines after which Text will be truncated",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Text"
+    },
+    {
+      "name": "size",
+      "description": "Controls <code>font-size</code> and <code>line-height</code>",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | (string & {})"
+      },
+      "sourceComponent": "Text"
+    },
+    {
+      "name": "span",
+      "description": "Shorthand for <code>component=\"span\"</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Text"
+    },
+    {
+      "name": "truncate",
+      "description": "Side on which Text must be truncated, if <code>true</code>, text is truncated from the start",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "TextTruncate"
+      },
+      "sourceComponent": "Text"
+    }
+  ]
+}

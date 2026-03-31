@@ -1,0 +1,134 @@
+{
+  "id": "charts-sparkline",
+  "name": "Sparkline",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/sparkline",
+  "description": "Simplified area chart to show trends",
+  "propsCount": 9,
+  "llmUrl": "https://mantine.dev/llms/charts-sparkline.md",
+  "componentDataUrl": "/mcp/components/charts-sparkline.json",
+  "searchText": "sparkline simplified area chart to show trends @mantine/charts /charts/sparkline areaprops color connectnulls curvetype data fillopacity strokewidth trendcolors withgradient",
+  "source": "@mantine/charts/src/Sparkline/Sparkline.tsx",
+  "docs": "charts/sparkline.mdx",
+  "markdown": "# Sparkline\nPackage: @mantine/charts\nImport: import { Sparkline } from '@mantine/charts';\nDescription: Simplified area chart to show trends\n\n## Usage\n\n`Sparkline` is a simplified version of [AreaChart](https://mantine.dev/llms/charts-area-chart.md). It can be used\nto display a single series of data in a small space.\n\n```tsx\nimport { Sparkline } from '@mantine/charts';\n\n\nfunction Demo() {\n  return (\n    <Sparkline\n      w={200}\n      h={60}\n      data={[10, 20, 40, 20, 40, 10, 50]}\n       curveType=\"linear\" color=\"blue\" fillOpacity={0.6} withGradient={true} strokeWidth={2}\n    />\n  );\n}\n```\n\n\n## Change area color depending on color scheme\n\nYou can use CSS variables in the `color` property. To define a CSS variable that\nchanges depending on the color scheme, use [light/dark mixins](https://mantine.dev/llms/styles-postcss-preset.md#dark-and-light-mixins)\nor the [light-dark function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function). Example\nof an area that is dark orange in light mode and lime in dark mode:\n\n```tsx\n// Demo.module.css\n.root {\n  @mixin light {\n    --chart-color: var(--mantine-color-orange-8);\n  }\n\n  @mixin dark {\n    --chart-color: var(--mantine-color-lime-4);\n  }\n}\n\n// Demo.tsx\nimport { Sparkline } from '@mantine/charts';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return <Sparkline w={200} h={80} data={[10, 20, 40, 20, 40, 10, 50]} className={classes.root} />;\n}\n```\n\n\n## Trend colors\n\nUse the `trendColors` prop instead of `color` to change the chart color depending on the trend.\nThe prop accepts an object with `positive`, `negative`, and `neutral` properties:\n\n* `positive` - color for positive trend (first value is less than the last value in the `data` array)\n* `negative` - color for negative trend (first value is greater than the last value in the `data` array)\n* `neutral` - color for neutral trend (first and last values are equal)\n\n`neutral` is optional; if not provided, the color will be the same as `positive`.\n\n```tsx\nimport { Sparkline } from '@mantine/charts';\nimport { Stack, Text } from '@mantine/core';\n\nconst positiveTrend = [10, 20, 40, 20, 40, 10, 50];\nconst negativeTrend = [50, 40, 20, 40, 20, 40, 10];\nconst neutralTrend = [10, 20, 40, 20, 40, 10, 50, 5, 10];\n\nfunction Demo() {\n  return (\n    <Stack gap=\"sm\">\n      <Text>Positive trend:</Text>\n      <Sparkline\n        w={200}\n        h={60}\n        data={positiveTrend}\n        trendColors={{ positive: 'teal.6', negative: 'red.6', neutral: 'gray.5' }}\n        fillOpacity={0.2}\n      />\n\n      <Text mt=\"md\">Negative trend:</Text>\n      <Sparkline\n        w={200}\n        h={60}\n        data={negativeTrend}\n        trendColors={{ positive: 'teal.6', negative: 'red.6', neutral: 'gray.5' }}\n        fillOpacity={0.2}\n      />\n\n      <Text mt=\"md\">Neutral trend:</Text>\n      <Sparkline\n        w={200}\n        h={60}\n        data={neutralTrend}\n        trendColors={{ positive: 'teal.6', negative: 'red.6', neutral: 'gray.5' }}\n        fillOpacity={0.2}\n      />\n    </Stack>\n  );\n}\n```\n\n\n\n#### Props\n\n**Sparkline props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| areaProps | Omit<Props<any, any>, \"data\" \\| \"ref\" \\| \"dataKey\"> | - | Props passed down to the underlying recharts `Area` component |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| connectNulls | boolean | - | Determines whether null values should be connected with other values |\n| curveType | AreaChartCurveType | - | Type of the curve |\n| data | (number \\| null)[] | required | Data used to render the chart |\n| fillOpacity | number | - | Controls fill opacity of the area |\n| strokeWidth | number | - | Area stroke width |\n| trendColors | SparklineTrendColors | - | If set, `color` prop is ignored and chart color is determined by the difference between first and last value. |\n| withGradient | boolean | - | Determines whether the chart fill should be a gradient |\n\n\n#### Styles API\n\nSparkline component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Sparkline selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Sparkline-root | Root element |\n\n**Sparkline CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --chart-color | Controls stroke and fill color |\n",
+  "props": [
+    {
+      "name": "areaProps",
+      "description": "Props passed down to the underlying recharts <code>Area</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Omit<Props<any, any>, \"data\" | \"ref\" | \"dataKey\">"
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "connectNulls",
+      "description": "Determines whether null values should be connected with other values",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "curveType",
+      "description": "Type of the curve",
+      "required": false,
+      "defaultValue": "'linear'",
+      "type": {
+        "name": "AreaChartCurveType",
+        "raw": "AreaChartCurveType | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"step\""
+          },
+          {
+            "value": "\"linear\""
+          },
+          {
+            "value": "\"bump\""
+          },
+          {
+            "value": "\"natural\""
+          },
+          {
+            "value": "\"monotone\""
+          },
+          {
+            "value": "\"stepBefore\""
+          },
+          {
+            "value": "\"stepAfter\""
+          }
+        ]
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "data",
+      "description": "Data used to render the chart",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "(number | null)[]"
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "fillOpacity",
+      "description": "Controls fill opacity of the area",
+      "required": false,
+      "defaultValue": "0.6",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "strokeWidth",
+      "description": "Area stroke width",
+      "required": false,
+      "defaultValue": "2",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "trendColors",
+      "description": "If set, <code>color</code> prop is ignored and chart color is determined by the difference between first and last value.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "SparklineTrendColors"
+      },
+      "sourceComponent": "Sparkline"
+    },
+    {
+      "name": "withGradient",
+      "description": "Determines whether the chart fill should be a gradient",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Sparkline"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# Browser zooms in when input is focused. What should I do?
+Use meta tag to disable browser scaling or increase input size
+
+The browser zooms in when some Mantine inputs are focused because by default all
+Mantine inputs have `size="sm"` with a `14px` font-size. To prevent the browser from zooming
+in, you can increase the input size:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return <TextInput size="md" />;
+}
+```
+
+You can use the `user-scalable=no` meta tag in the `<head />` of your application
+to disable browser scaling. Note that this will disable zooming for the entire
+application and may cause accessibility issues.
+
+```html
+<meta
+  name="viewport"
+  content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+/>
+```

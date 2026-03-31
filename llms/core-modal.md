@@ -5,8 +5,6 @@ Description: An accessible overlay dialog
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
@@ -30,8 +28,6 @@ function Demo() {
 
 
 ## Center modal vertically
-
-#### Example: centered
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -57,9 +53,7 @@ function Demo() {
 
 ## Remove header
 
-To remove header set `withCloseButton={false}`:
-
-#### Example: header
+To remove the header, set `withCloseButton={false}`:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -85,10 +79,8 @@ function Demo() {
 
 ## Change size
 
-You can change modal width by setting `size` prop to predefined size or any valid width, for example, `55%` or `50rem`.
-`Modal` width cannot exceed `100vw`.
-
-#### Example: sizes
+You can change the modal width by setting the `size` prop to a predefined size or any valid width, for example, `55%` or `50rem`.
+The `Modal` width cannot exceed `100vw`.
 
 ```tsx
 function Demo() {
@@ -128,9 +120,7 @@ function Demo() {
 
 ## Size auto
 
-`Modal` with `size="auto"` will have width to fit its content:
-
-#### Example: sizeAuto
+`Modal` with `size="auto"` will have width that fits its content:
 
 ```tsx
 import { useDisclosure, useCounter } from '@mantine/hooks';
@@ -170,10 +160,8 @@ function Demo() {
 
 ## Fullscreen
 
-Fullscreen modal will take the entire screen, it is usually better to change transition to `fade`
-when `fullScreen` prop is set:
-
-#### Example: fullScreen
+A fullscreen modal will take the entire screen. It is usually better to change the transition to `fade`
+when the `fullScreen` prop is set:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -204,10 +192,8 @@ function Demo() {
 ```
 
 
-To switch Modal to fullscreen on devices with small screens only use [use-media-query](https://mantine.dev/hooks/use-media-query/) hook.
-`size` prop is ignored if `fullScreen` prop is set:
-
-#### Example: fullScreenMobile
+To switch Modal to fullscreen on devices with small screens only, use the [use-media-query](https://mantine.dev/llms/hooks-use-media-query.md) hook.
+The `size` prop is ignored if the `fullScreen` prop is set:
 
 ```tsx
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
@@ -240,10 +226,8 @@ function Demo() {
 
 ## Customize overlay
 
-`Modal` uses [Overlay](https://mantine.dev/core/overlay/) component, you can set any props that [Overlay](https://mantine.dev/core/overlay/)
+`Modal` uses the [Overlay](https://mantine.dev/llms/core-overlay.md) component. You can set any props that [Overlay](https://mantine.dev/llms/core-overlay.md)
 supports with `overlayProps`:
-
-#### Example: overlay
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -277,8 +261,6 @@ function Demo() {
 
 ## Modal with scroll
 
-#### Example: overflow
-
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
@@ -306,8 +288,6 @@ function Demo() {
 
 
 ## Usage with ScrollArea
-
-#### Example: scrollarea
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -342,9 +322,7 @@ function Demo() {
 
 ## Change offsets
 
-Use `xOffset`/`yOffset` to configure horizontal/vertical content offsets:
-
-#### Example: offset
+Use `xOffset`/`yOffset` to configure the horizontal/vertical content offsets:
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -370,10 +348,8 @@ function Demo() {
 
 ## Change transitions
 
-`Modal` is built with [Transition](https://mantine.dev/core/transition/) component. Use `transitionProps`
-prop to customize any [Transition](https://mantine.dev/core/transition/) properties:
-
-#### Example: transitions
+`Modal` is built with the [Transition](https://mantine.dev/llms/core-transition.md) component. Use the `transitionProps`
+prop to customize any [Transition](https://mantine.dev/llms/core-transition.md) properties:
 
 ```tsx
 import { useState } from 'react';
@@ -419,11 +395,9 @@ function Demo() {
 
 ## onExitTransitionEnd and onEnterTransitionEnd
 
-`onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
-exit/enter transition is finished. For example, this is useful when you want to clear
-data after modal is closed:
-
-#### Example: transitionEnd
+The `onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
+the exit/enter transition is finished. For example, this is useful when you want to clear
+data after the modal is closed:
 
 ```tsx
 import { useState } from 'react';
@@ -486,10 +460,8 @@ function Demo() {
 
 ## Initial focus
 
-Modal uses [FocusTrap](https://mantine.dev/core/focus-trap/) to trap focus. Add `data-autofocus`
+Modal uses [FocusTrap](https://mantine.dev/llms/core-focus-trap.md) to trap focus. Add the `data-autofocus`
 attribute to the element that should receive initial focus.
-
-#### Example: initialFocus
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -519,10 +491,8 @@ function Demo() {
 ```
 
 
-If you do not want to focus any elements when the modal is opened, use `FocusTrap.InitialFocus`
+If you do not want to focus any elements when the modal is opened, use the `FocusTrap.InitialFocus`
 component to create a visually hidden element that will receive initial focus:
-
-#### Example: initialFocusTrap
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -553,8 +523,8 @@ function Demo() {
 ```
 
 
-If you do not add `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
-modal will focus the first focusable element inside it which is usually the close button.
+If you do not add the `data-autofocus` attribute and do not use `FocusTrap.InitialFocus`,
+the modal will focus the first focusable element inside it, which is usually the close button.
 
 ## Control behavior
 
@@ -562,14 +532,14 @@ The following props can be used to control `Modal` behavior.
 In most cases, it is not recommended to turn these features off –
 it will make the component less accessible.
 
-* `trapFocus` – determines whether focus should be trapped inside modal
-* `closeOnEscape` – determines whether the modal should be closed when `Escape` key is pressed
-* `closeOnClickOutside` – determines whether the modal should be closed when user clicks on the overlay
+* `trapFocus` – determines whether focus should be trapped inside the modal
+* `closeOnEscape` – determines whether the modal should be closed when the `Escape` key is pressed
+* `closeOnClickOutside` – determines whether the modal should be closed when the user clicks on the overlay
 * `returnFocus` – determines whether focus should be returned to the element that was focused before the modal was opened
 
 ## react-remove-scroll settings
 
-`Modal` uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+`Modal` uses the [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
 package to lock scroll. You can pass props down to the `RemoveScroll` component
 with `removeScrollProps`:
 
@@ -589,12 +559,10 @@ function Demo() {
 
 ## Change close icon
 
-Use `closeButtonProps` to customize close button:
-
-#### Example: closeIcon
+Use `closeButtonProps` to customize the close button:
 
 ```tsx
-import { IconXboxX } from '@tabler/icons-react';
+import { XCircleIcon } from '@phosphor-icons/react';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
 
@@ -608,7 +576,7 @@ function Demo() {
         onClose={close}
         title="Authentication"
         closeButtonProps={{
-          icon: <IconXboxX size={20} stroke={1.5} />,
+          icon: <XCircleIcon size={20} />,
         }}
       >
         {/* Modal content */}
@@ -628,14 +596,12 @@ function Demo() {
 You can use the following compound components to have full control over the `Modal` rendering:
 
 * `Modal.Root` – context provider
-* `Modal.Overlay` – render [Overlay](https://mantine.dev/core/overlay/)
+* `Modal.Overlay` – render [Overlay](https://mantine.dev/llms/core-overlay.md)
 * `Modal.Content` – main modal element, should include all modal content
 * `Modal.Header` – sticky header, usually contains `Modal.Title` and `Modal.CloseButton`
-* `Modal.Title` – `h2` element, `aria-labelledby` of `Modal.Content` is pointing to this element, usually is rendered inside `Modal.Header`
+* `Modal.Title` – `h2` element, the `aria-labelledby` of `Modal.Content` is pointing to this element, usually rendered inside `Modal.Header`
 * `Modal.CloseButton` – close button, usually rendered inside `Modal.Header`
-* `Modal.Body` – a place for main content, `aria-describedby` of `Modal.Content` is pointing to this element
-
-#### Example: composition
+* `Modal.Body` – a place for main content, the `aria-describedby` of `Modal.Content` is pointing to this element
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -668,18 +634,16 @@ function Demo() {
 
 ## Modal.Stack
 
-Use `Modal.Stack` component to render multiple modals at the same time.
-`Modal.Stack` keeps track of opened modals, manages z-index values, focus trapping
-and `closeOnEscape` behavior. `Modal.Stack` is designed to be used with `useModalsStack` hook.
+Use the `Modal.Stack` component to render multiple modals at the same time.
+`Modal.Stack` keeps track of opened modals, manages z-index values, focus trapping,
+and `closeOnEscape` behavior. `Modal.Stack` is designed to be used with the `useModalsStack` hook.
 
 Differences from using multiple `Modal` components:
 
-* `Modal.Stack` manages z-index values – modals that are opened later will always have higher z-index value disregarding their order in the DOM
+* `Modal.Stack` manages z-index values – modals that are opened later will always have a higher z-index value regardless of their order in the DOM
 * `Modal.Stack` disables focus trap and `Escape` key handling for all modals except the one that is currently opened
 * Modals that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`
 * Only one overlay is rendered at a time
-
-#### Example: stack
 
 ```tsx
 import { Button, Group, Modal, useModalsStack } from '@mantine/core';
@@ -739,13 +703,13 @@ function Demo() {
 ```
 
 
-Note that `Modal.Stack` can only be used with `Modal` component. Components built with `Modal.Root`
+Note that `Modal.Stack` can only be used with the `Modal` component. Components built with `Modal.Root`
 and other compound components are not compatible with `Modal.Stack`.
 
 ## useModalsStack hook
 
-`useModalsStack` hook provides an easy way to control multiple modals at the same time.
-It accepts an array of unique modals ids and returns an object with the following properties:
+The `useModalsStack` hook provides an easy way to control multiple modals at the same time.
+It accepts an array of unique modal IDs and returns an object with the following properties:
 
 ```tsx
 interface UseModalsStackReturnType<T extends string> {
@@ -773,7 +737,7 @@ interface UseModalsStackReturnType<T extends string> {
 }
 ```
 
-Example of using `useModalsStack` with `Modal` component:
+Example of using `useModalsStack` with the `Modal` component:
 
 ```tsx
 import { Modal, useModalsStack } from '@mantine/core';
@@ -793,8 +757,8 @@ function Demo() {
 
 ## Fixed elements offset
 
-`Modal` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
-package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
+The `Modal` component uses the [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+package to lock scroll. To properly size these elements, add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
 
 ```tsx
 import { RemoveScroll } from '@mantine/core';
@@ -815,9 +779,9 @@ function Demo() {
 
 ## Accessibility
 
-`Modal` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog) on accessibility.
+The `Modal` component follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog) on accessibility.
 
-Set `title` props to make component accessible, will add `aria-labelledby` to the content element:
+Set the `title` prop to make the component accessible, which will add `aria-labelledby` to the content element:
 
 ```tsx
 import { Modal } from '@mantine/core';
@@ -827,7 +791,7 @@ function Demo() {
 }
 ```
 
-To set close button `aria-label` use `closeButtonProps`:
+To set the close button's `aria-label`, use `closeButtonProps`:
 
 ```tsx
 import { Modal } from '@mantine/core';
@@ -846,40 +810,76 @@ function Demo() {
 
 #### Props
 
+**Modal props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | centered | boolean | - | If set, the modal is centered vertically |
 | children | React.ReactNode | - | Modal content |
 | closeButtonProps | ModalBaseCloseButtonProps | - | Props passed down to the close button |
 | closeOnClickOutside | boolean | - | If set, the modal/drawer is closed when user clicks on the overlay |
-| closeOnEscape | boolean | - | If set, <code>onClose</code> is called when user presses the escape key |
+| closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |
 | fullScreen | boolean | - | If set, the modal takes the entire screen |
 | id | string | - | Id used to connect modal/drawer with body and title |
-| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. <code>display: none</code> styles are applied instead. |
-| lockScroll | boolean | - | If set, scroll is locked when <code>opened={true}</code> |
+| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | onClose | () => void | required | Called when modal/drawer is closed |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |
 | onExitTransitionEnd | () => void | - | Called when exit transition ends |
 | opened | boolean | required | Controls opened state |
-| overlayProps | ModalBaseOverlayProps | - | Props passed down to the <code>Overlay</code> component, use to configure opacity, <code>background-color</code>, styles and other properties |
-| padding | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding |
-| portalProps | BasePortalProps | - | Props passed down to the Portal component when <code>withinPortal</code> is set |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
+| overlayProps | ModalBaseOverlayProps | - | Props passed down to the `Overlay` component, use to configure opacity, `background-color`, styles and other properties |
+| padding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set content, header and footer padding |
+| portalProps | BasePortalProps | - | Props passed down to the Portal component when `withinPortal` is set |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
 | removeScrollProps | RemoveScrollProps | - | Props passed down to react-remove-scroll, can be used to customize scroll lock behavior |
-| returnFocus | boolean | - | If set, focus is returned to the last active element when <code>onClose</code> is called |
+| returnFocus | boolean | - | If set, focus is returned to the last active element when `onClose` is called |
 | scrollAreaComponent | ScrollAreaComponent | - | Scroll area component |
-| shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any valid CSS box-shadow value |
-| size | number | MantineSize | (string & {}) | - | Controls width of the content area |
-| stackId | string | - | Id of the modal in the <code>Modal.Stack</code> |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS box-shadow value |
+| size | MantineSize \| number | - | Controls width of the content area |
+| stackId | string | - | Id of the modal in the `Modal.Stack` |
 | title | React.ReactNode | - | Modal title |
-| transitionProps | TransitionProps | - | Props added to the <code>Transition</code> component that used to animate overlay and body, use to configure duration and animation type, <code>{ duration: 200, transition: 'fade-down' }</code> by default |
+| transitionProps | TransitionProps | - | Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default |
 | trapFocus | boolean | - | If set, focus is trapped within the modal/drawer |
 | withCloseButton | boolean | - | If set, the close button is rendered |
 | withOverlay | boolean | - | If set, the overlay is rendered |
-| withinPortal | boolean | - | If set, the component is rendered inside <code>Portal</code> |
-| xOffset | MarginLeft<string | number> | - | Left/right modal offset |
-| yOffset | MarginTop<string | number> | - | Top/bottom modal offset |
-| zIndex | string | number | - | <code>z-index</code> CSS property of the root element |
+| withinPortal | boolean | - | If set, the component is rendered inside `Portal` |
+| xOffset | MarginLeft<string \| number> | - | Left/right modal offset |
+| yOffset | MarginTop<string \| number> | - | Top/bottom modal offset |
+| zIndex | string \| number | - | `z-index` CSS property of the root element |
+
+**Modal.Base props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Modal/drawer content |
+| closeOnClickOutside | boolean | - | If set, the modal/drawer is closed when user clicks on the overlay |
+| closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |
+| id | string | - | Id used to connect modal/drawer with body and title |
+| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
+| onClose | () => void | required | Called when modal/drawer is closed |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
+| opened | boolean | required | Controls opened state |
+| padding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set content, header and footer padding |
+| portalProps | BasePortalProps | - | Props passed down to the Portal component when `withinPortal` is set |
+| removeScrollProps | RemoveScrollProps | - | Props passed down to react-remove-scroll, can be used to customize scroll lock behavior |
+| returnFocus | boolean | - | If set, focus is returned to the last active element when `onClose` is called |
+| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS box-shadow value |
+| size | MantineSize \| number | - | Controls width of the content area |
+| transitionProps | TransitionProps | - | Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default |
+| trapFocus | boolean | - | If set, focus is trapped within the modal/drawer |
+| withinPortal | boolean | - | If set, the component is rendered inside `Portal` |
+| zIndex | string \| number | - | `z-index` CSS property of the root element |
+
+**Modal.sProvider props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Your app |
+| labels | ConfirmLabels | - | Confirm modal labels |
+| modalProps | ModalSettings | - | Shared Modal component props, applied for every modal |
+| modals | Record<string, FC<ContextModalProps<any>>> | - | Predefined modals |
 
 
 #### Styles API
@@ -910,5 +910,5 @@ Modal component supports Styles API. With Styles API, you can customize styles o
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-full-screen | - | - |
-| root | data-centered | - | - |
+| root | data-full-screen | `fullScreen` prop is set | - |
+| root | data-centered | `centered` prop is set | - |

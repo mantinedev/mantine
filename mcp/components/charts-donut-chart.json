@@ -1,0 +1,261 @@
+{
+  "id": "charts-donut-chart",
+  "name": "DonutChart",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/donut-chart",
+  "description": "Donut chart component",
+  "propsCount": 22,
+  "llmUrl": "https://mantine.dev/llms/charts-donut-chart.md",
+  "componentDataUrl": "/mcp/components/charts-donut-chart.json",
+  "searchText": "donutchart donut chart component @mantine/charts /charts/donut-chart cellprops chartlabel children data endangle labelcolor labelstype paddingangle piechartprops pieprops size startangle strokecolor strokewidth thickness tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withtooltip",
+  "source": "@mantine/charts/src/DonutChart/DonutChart.tsx",
+  "docs": "charts/donut-chart.mdx",
+  "markdown": "# DonutChart\nPackage: @mantine/charts\nImport: import { DonutChart } from '@mantine/charts';\nDescription: Donut chart component\n\n## Usage\n\n`DonutChart` is based on the [PieChart recharts component](https://recharts.org/en-US/api/PieChart):\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Segments labels\n\nSet the `withLabels` prop to display labels next to each segment:\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart withLabelsLine={true} labelsType=\"value\" withLabels data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Size and thickness\n\nSet the `size` prop to control the width and height of the chart. Note that if the `withLabels` prop is set,\nthe chart height is automatically increased by 80px to make room for labels. You can override\nthis behavior by setting the `h` [style prop](https://mantine.dev/llms/styles-style-props.md).\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart size={160} thickness={20} data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Padding angle\n\nUse the `paddingAngle` prop to control the space between segments:\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart paddingAngle={10} data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Segment color\n\nYou can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted.\n\n```tsx\nimport { DonutChart } from '@mantine/charts';\n\nfunction Demo() {\n  return (\n    <DonutChart\n      data={[\n        { name: 'USA', value: 400, color: 'blue' },\n        { name: 'Other', value: 200, color: 'gray.6' },\n      ]}\n    />\n  );\n}\n```\n\n\n## Tooltip data source\n\nBy default, the tooltip displays data for all segments when hovered over any segment.\nTo display data only for the hovered segment, set `tooltipDataSource=\"segment\"`:\n\n```tsx\n// Demo.tsx\nimport { Group, Text } from '@mantine/core';\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Group gap={50}>\n      <div>\n        <Text fz=\"xs\" mb=\"sm\" ta=\"center\">\n          Data only for hovered segment\n        </Text>\n        <DonutChart data={data} tooltipDataSource=\"segment\" mx=\"auto\" />\n      </div>\n\n      <div>\n        <Text fz=\"xs\" mb=\"sm\" ta=\"center\">\n          Data only for all segments\n        </Text>\n        <DonutChart data={data} mx=\"auto\" />\n      </div>\n    </Group>\n  );\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Without tooltip\n\nTo remove the tooltip, set `withTooltip={false}`:\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart data={data} withTooltip={false} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Chart label\n\nTo display a label in the center of the chart, use the `chartLabel` prop.\nIt accepts a string or a number:\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart data={data} chartLabel=\"Users by country\" />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Start and end angle\n\nUse the `startAngle` and `endAngle` props to control the start and end angle of the chart.\nFor example, to display a half-circle chart, set `startAngle={180}` and `endAngle={0}`:\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart data={data} startAngle={180} endAngle={0} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\nNote that even when the `startAngle` and `endAngle` props are set, the chart still takes\nthe same amount of space as if it were a full circle.\n\n## Segments stroke\n\nUse the `strokeWidth` prop to control the width of the stroke around each segment:\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <DonutChart strokeWidth={1} data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\nTo change the color of the stroke, use the `strokeColor` prop. You can reference colors from the [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted.\n\n```tsx\nimport { DonutChart } from '@mantine/charts';\n\nfunction Demo() {\n  return <DonutChart data={[]} strokeColor=\"red.5\" />;\n}\n```\n\nBy default, the segments stroke color is the same as the background color of the body element\n(`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,\ndefine a CSS variable and pass it to the `strokeColor` prop:\n\n```tsx\n// Demo.tsx\nimport { DonutChart } from '@mantine/charts';\nimport { data } from './data';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <div className={classes.root}>\n      <DonutChart data={data} strokeColor=\"var(--card-bg)\" />\n    </div>\n  );\n}\n\n// Demo.module.css\n.root {\n  --card-bg: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));\n\n  background-color: var(--card-bg);\n  padding: var(--mantine-spacing-md);\n  border-radius: var(--mantine-radius-md);\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n\n#### Props\n\n**DonutChart props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| cellProps | ((series: DonutChartCell) => Partial<Omit<SVGProps<SVGElement>, \"ref\">>) \\| Partial<Omit<SVGProps<SVGElement>, \"ref\">> | - | Props passed down to each segment of the chart |\n| chartLabel | string \\| number | - | Chart label, displayed in the center of the chart |\n| children | React.ReactNode | - | Additional elements rendered inside `PieChart` component |\n| data | DonutChartCell[] | required | Data used to render chart |\n| endAngle | number | - | Controls angle at which charts ends. Set to `0` to render the chart as semicircle. |\n| labelColor | MantineColor | - | Controls text color of all labels, by default depends on color scheme |\n| labelsType | \"value\" \\| \"percent\" | - | Type of labels to display, `'value'` by default |\n| paddingAngle | number | - | Controls padding between segments |\n| pieChartProps | (PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \\| undefined | - | Props passed down to recharts `PieChart` component |\n| pieProps | Partial<Omit<Props, \"ref\">> | - | Props passed down to recharts `Pie` component |\n| size | number | - | Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. |\n| startAngle | number | - | Controls angle at which chart starts. Set to `180` to render the chart as semicircle. |\n| strokeColor | MantineColor | - | Controls color of the segments stroke, by default depends on color scheme |\n| strokeWidth | number | - | Controls width of segments stroke |\n| thickness | number | - | Controls thickness of the chart segments |\n| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |\n| tooltipDataSource | \"all\" \\| \"segment\" | - | Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. |\n| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |\n| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |\n| withLabels | boolean | - | Determines whether each segment should have associated label |\n| withLabelsLine | boolean | - | Determines whether segments labels should have lines that connect the segment with the label |\n| withTooltip | boolean | - | Determines whether the tooltip should be displayed when one of the section is hovered |\n\n\n#### Styles API\n\nDonutChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**DonutChart selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-DonutChart-root | Root element |\n| label | .mantine-DonutChart-label | Chart label, controlled by `chartLabel` prop |\n| tooltip | .mantine-DonutChart-tooltip | Tooltip root element |\n| tooltipBody | .mantine-DonutChart-tooltipBody | Tooltip wrapper around all items |\n| tooltipItem | .mantine-DonutChart-tooltipItem | Tooltip item representing data series |\n| tooltipItemBody | .mantine-DonutChart-tooltipItemBody | Tooltip item wrapper around item color and name |\n| tooltipItemColor | .mantine-DonutChart-tooltipItemColor | Tooltip item color |\n| tooltipItemName | .mantine-DonutChart-tooltipItemName | Tooltip item name |\n| tooltipItemData | .mantine-DonutChart-tooltipItemData | Tooltip item data |\n| tooltipLabel | .mantine-DonutChart-tooltipLabel | Label of the tooltip |\n\n**DonutChart CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --chart-labels-color | Controls color of the chart labels |\n| root | --chart-size | Controls size of the chart |\n| root | --chart-stroke-color | Controls color of the chart stroke |\n",
+  "props": [
+    {
+      "name": "cellProps",
+      "description": "Props passed down to each segment of the chart",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((series: DonutChartCell) => Partial<Omit<SVGProps<SVGElement>, \"ref\">>) | Partial<Omit<SVGProps<SVGElement>, \"ref\">>"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "chartLabel",
+      "description": "Chart label, displayed in the center of the chart",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "children",
+      "description": "Additional elements rendered inside <code>PieChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "data",
+      "description": "Data used to render chart",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "DonutChartCell[]"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "endAngle",
+      "description": "Controls angle at which charts ends. Set to <code>0</code> to render the chart as semicircle.",
+      "required": false,
+      "defaultValue": "360",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "labelColor",
+      "description": "Controls text color of all labels, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "labelsType",
+      "description": "Type of labels to display, <code>'value'</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"value\" | \"percent\"",
+        "raw": "\"value\" | \"percent\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"value\""
+          },
+          {
+            "value": "\"percent\""
+          }
+        ]
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "paddingAngle",
+      "description": "Controls padding between segments",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "pieChartProps",
+      "description": "Props passed down to recharts <code>PieChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) | undefined"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "pieProps",
+      "description": "Props passed down to recharts <code>Pie</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<Props, \"ref\">>"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "size",
+      "description": "Controls chart width and height, height is increased by 40 if <code>withLabels</code> prop is set. Cannot be less than <code>thickness</code>.",
+      "required": false,
+      "defaultValue": "80",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "startAngle",
+      "description": "Controls angle at which chart starts. Set to <code>180</code> to render the chart as semicircle.",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "strokeColor",
+      "description": "Controls color of the segments stroke, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "strokeWidth",
+      "description": "Controls width of segments stroke",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "thickness",
+      "description": "Controls thickness of the chart segments",
+      "required": false,
+      "defaultValue": "20",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "tooltipAnimationDuration",
+      "description": "Tooltip animation duration in ms",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "tooltipDataSource",
+      "description": "Determines which data is displayed in the tooltip. <code>'all'</code> – display all values, <code>'segment'</code> – display only hovered segment.",
+      "required": false,
+      "defaultValue": "'all'",
+      "type": {
+        "name": "\"all\" | \"segment\"",
+        "raw": "\"all\" | \"segment\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"segment\""
+          }
+        ]
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "tooltipProps",
+      "description": "Props passed down to <code>Tooltip</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format values inside the tooltip",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "withLabels",
+      "description": "Determines whether each segment should have associated label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "withLabelsLine",
+      "description": "Determines whether segments labels should have lines that connect the segment with the label",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DonutChart"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Determines whether the tooltip should be displayed when one of the section is hovered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DonutChart"
+    }
+  ]
+}

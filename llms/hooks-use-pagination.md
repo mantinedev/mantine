@@ -4,10 +4,8 @@ Import: import { UsePagination } from '@mantine/hooks';
 
 ## Usage
 
-`use-pagination` is a state management hook for [Pagination](https://mantine.dev/core/pagination/) component,
+The `use-pagination` hook is a state management hook for the [Pagination](https://mantine.dev/llms/core-pagination.md) component;
 it manages pagination with controlled and uncontrolled state:
-
-#### Example: usage
 
 ```tsx
 function Demo() {
@@ -41,7 +39,7 @@ pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
 
 ## Controlled
 
-The hook supports controlled mode, provide `page` and `onChange` props to manage state from outside:
+The hook supports controlled mode; provide `page` and `onChange` props to manage state from outside:
 
 ```tsx
 import { useState } from 'react';
@@ -66,8 +64,6 @@ import { usePagination } from '@mantine/hooks';
 
 const pagination = usePagination({ total: 20, siblings: 3 });
 ```
-
-#### Example: siblings
 
 ```tsx
 import { Text, Pagination } from '@mantine/core';
@@ -99,8 +95,6 @@ import { usePagination } from '@mantine/hooks';
 const pagination = usePagination({ total: 20, boundaries: 3 });
 ```
 
-#### Example: boundaries
-
 ```tsx
 import { Text, Pagination } from '@mantine/core';
 
@@ -121,11 +115,62 @@ function Demo() {
 ```
 
 
+## Start value
+
+Set `startValue` to define the starting page number. For example, with `startValue={5}` and `total={15}`,
+the pagination range will be from 5 to 15:
+
+```tsx
+import { Button, Group, Text } from '@mantine/core';
+import { usePagination } from '@mantine/hooks';
+
+function Demo() {
+  const pagination = usePagination({ total: 15, startValue: 5, initialPage: 5 });
+
+  return (
+    <>
+      <Text>Active page: {pagination.active}</Text>
+      <Text>Range: [{pagination.range.join(', ')}]</Text>
+      <Group mt="md" gap={4}>
+        <Button size="compact-sm" variant="default" onClick={pagination.first}>
+          First
+        </Button>
+        <Button size="compact-sm" variant="default" onClick={pagination.previous}>
+          Previous
+        </Button>
+        {pagination.range.map((page, index) =>
+          page === 'dots' ? (
+            <span key={index}>...</span>
+          ) : (
+            <Button
+              size="compact-sm"
+              key={index}
+              onClick={() => pagination.setPage(page)}
+              variant={pagination.active === page ? 'filled' : 'default'}
+              miw={34}
+            >
+              {page}
+            </Button>
+          )
+        )}
+        <Button size="compact-sm" variant="default" onClick={pagination.next}>
+          Next
+        </Button>
+        <Button size="compact-sm" variant="default" onClick={pagination.last}>
+          Last
+        </Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
 ## Definition
 
 ```tsx
 export interface UsePaginationOptions {
-  /** Page selected on initial render, defaults to 1 */
+  /** Page selected on initial render, defaults to 1 or startValue if provided */
   initialPage?: number;
 
   /** Controlled active page number */
@@ -142,6 +187,9 @@ export interface UsePaginationOptions {
 
   /** Callback fired after change of each page */
   onChange?: (page: number) => void;
+
+  /** Starting page number, defaults to 1 */
+  startValue?: number;
 }
 
 export interface UsePaginationReturnValue {
@@ -172,7 +220,7 @@ function usePagination(settings: UsePaginationOptions): UsePaginationReturnValue
 
 ## Exported types
 
-`UsePaginationOptions` and `UsePaginationReturnValue` types are exported from `@mantine/hooks` package,
+`UsePaginationOptions` and `UsePaginationReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

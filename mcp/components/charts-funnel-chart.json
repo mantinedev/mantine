@@ -1,0 +1,194 @@
+{
+  "id": "charts-funnel-chart",
+  "name": "FunnelChart",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/funnel-chart",
+  "description": "Funnel chart component",
+  "propsCount": 15,
+  "llmUrl": "https://mantine.dev/llms/charts-funnel-chart.md",
+  "componentDataUrl": "/mcp/components/charts-funnel-chart.json",
+  "searchText": "funnelchart funnel chart component @mantine/charts /charts/funnel-chart children data funnelchartprops funnelprops labelcolor labelsposition size strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withtooltip",
+  "source": "@mantine/charts/src/FunnelChart/FunnelChart.tsx",
+  "docs": "charts/funnel-chart.mdx",
+  "markdown": "# FunnelChart\nPackage: @mantine/charts\nImport: import { FunnelChart } from '@mantine/charts';\nDescription: Funnel chart component\n\n## Usage\n\n`FunnelChart` is based on the [FunnelChart recharts component](https://recharts.org/en-US/api/FunnelChart):\n\n```tsx\n// Demo.tsx\nimport { FunnelChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <FunnelChart data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Segments labels\n\nSet the `withLabels` prop to display labels next to each segment.\nUse the `labelPosition` prop to control the position of labels relative to the corresponding segment.\n\n```tsx\n// Demo.tsx\nimport { FunnelChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <FunnelChart labelsPosition=\"right\" withLabels data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Size and thickness\n\nSet the `size` prop to control the width and height of the chart.\nYou can override this behavior by setting the `h` [style prop](https://mantine.dev/llms/styles-style-props.md).\n\n```tsx\n// Demo.tsx\nimport { FunnelChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <FunnelChart size={160} data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Segment color\n\nYou can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted.\n\n```tsx\nimport { FunnelChart } from '@mantine/charts';\n\nfunction Demo() {\n  return (\n    <FunnelChart\n      data={[\n        { name: 'USA', value: 400, color: 'blue' },\n        { name: 'Other', value: 200, color: 'gray.6' },\n      ]}\n    />\n  );\n}\n```\n\n\n## Tooltip data source\n\nBy default, the tooltip displays data for all segments when hovered over any segment.\nTo display data only for the hovered segment, set `tooltipDataSource=\"segment\"`:\n\n```tsx\n// Demo.tsx\nimport { Group, Text } from '@mantine/core';\nimport { FunnelChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Group gap={50}>\n      <div>\n        <Text fz=\"xs\" mb=\"sm\" ta=\"center\">\n          Data only for hovered segment\n        </Text>\n        <FunnelChart data={data} tooltipDataSource=\"segment\" mx=\"auto\" />\n      </div>\n\n      <div>\n        <Text fz=\"xs\" mb=\"sm\" ta=\"center\">\n          Data only for all segments\n        </Text>\n        <FunnelChart data={data} mx=\"auto\" />\n      </div>\n    </Group>\n  );\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Without tooltip\n\nTo remove the tooltip, set `withTooltip={false}`:\n\n```tsx\n// Demo.tsx\nimport { FunnelChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <FunnelChart data={data} withTooltip={false} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n## Segments stroke\n\nUse the `strokeWidth` prop to control the width of the stroke around each segment:\n\n```tsx\n// Demo.tsx\nimport { FunnelChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <FunnelChart strokeWidth={1} data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\nTo change the color of the stroke, use the `strokeColor` prop. You can reference colors from the [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted.\n\n```tsx\nimport { FunnelChart } from '@mantine/charts';\n\nfunction Demo() {\n  return <FunnelChart data={[]} strokeColor=\"red.5\" />;\n}\n```\n\nBy default, the segments stroke color is the same as the background color of the body element\n(`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,\ndefine a CSS variable and pass it to the `strokeColor` prop:\n\n```tsx\n// Demo.tsx\nimport { FunnelChart } from '@mantine/charts';\nimport { data } from './data';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <div className={classes.root}>\n      <FunnelChart data={data} strokeColor=\"var(--card-bg)\" />\n    </div>\n  );\n}\n\n// Demo.module.css\n.root {\n  --card-bg: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));\n\n  background-color: var(--card-bg);\n  padding: var(--mantine-spacing-md);\n  border-radius: var(--mantine-radius-md);\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.6' },\n  { name: 'India', value: 300, color: 'yellow.6' },\n  { name: 'Japan', value: 100, color: 'teal.6' },\n  { name: 'Other', value: 200, color: 'gray.6' },\n];\n```\n\n\n\n#### Props\n\n**FunnelChart props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Additional elements rendered inside `FunnelChart` component |\n| data | FunnelChartCell[] | required | Data used to render chart |\n| funnelChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \\| undefined | - | Props passed down to recharts `FunnelChart` component |\n| funnelProps | Partial<Omit<Props, \"ref\">> | - | Props passed down to recharts `Pie` component |\n| labelColor | MantineColor | - | Controls text color of all labels |\n| labelsPosition | \"left\" \\| \"right\" \\| \"inside\" | - | Controls labels position relative to the segment |\n| size | number | - | Controls chart width and height |\n| strokeColor | MantineColor | - | Controls color of the segments stroke, by default depends on color scheme |\n| strokeWidth | number | - | Controls width of segments stroke |\n| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |\n| tooltipDataSource | \"all\" \\| \"segment\" | - | Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. |\n| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |\n| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and labels |\n| withLabels | boolean | - | Determines whether each segment should have associated label |\n| withTooltip | boolean | - | Determines whether the tooltip should be displayed when a section is hovered |\n\n\n#### Styles API\n\nFunnelChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**FunnelChart selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-FunnelChart-root | Root element |\n| tooltip | .mantine-FunnelChart-tooltip | Tooltip root element |\n| tooltipBody | .mantine-FunnelChart-tooltipBody | Tooltip wrapper around all items |\n| tooltipItem | .mantine-FunnelChart-tooltipItem | Tooltip item representing data series |\n| tooltipItemBody | .mantine-FunnelChart-tooltipItemBody | Tooltip item wrapper around item color and name |\n| tooltipItemColor | .mantine-FunnelChart-tooltipItemColor | Tooltip item color |\n| tooltipItemName | .mantine-FunnelChart-tooltipItemName | Tooltip item name |\n| tooltipItemData | .mantine-FunnelChart-tooltipItemData | Tooltip item data |\n| tooltipLabel | .mantine-FunnelChart-tooltipLabel | Label of the tooltip |\n\n**FunnelChart CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --chart-labels-color | Controls color of the chart labels |\n| root | --chart-size | Controls size of the chart |\n| root | --chart-stroke-color | Controls color of the chart stroke |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "Additional elements rendered inside <code>FunnelChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "data",
+      "description": "Data used to render chart",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "FunnelChartCell[]"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "funnelChartProps",
+      "description": "Props passed down to recharts <code>FunnelChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) | undefined"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "funnelProps",
+      "description": "Props passed down to recharts <code>Pie</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<Props, \"ref\">>"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "labelColor",
+      "description": "Controls text color of all labels",
+      "required": false,
+      "defaultValue": "'white'",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "labelsPosition",
+      "description": "Controls labels position relative to the segment",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\" | \"inside\"",
+        "raw": "\"left\" | \"right\" | \"inside\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          },
+          {
+            "value": "\"inside\""
+          }
+        ]
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "size",
+      "description": "Controls chart width and height",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "strokeColor",
+      "description": "Controls color of the segments stroke, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "strokeWidth",
+      "description": "Controls width of segments stroke",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "tooltipAnimationDuration",
+      "description": "Tooltip animation duration in ms",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "tooltipDataSource",
+      "description": "Determines which data is displayed in the tooltip. <code>'all'</code> – display all values, <code>'segment'</code> – display only hovered segment.",
+      "required": false,
+      "defaultValue": "'all'",
+      "type": {
+        "name": "\"all\" | \"segment\"",
+        "raw": "\"all\" | \"segment\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"segment\""
+          }
+        ]
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "tooltipProps",
+      "description": "Props passed down to <code>Tooltip</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format values inside the tooltip and labels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "withLabels",
+      "description": "Determines whether each segment should have associated label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FunnelChart"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Determines whether the tooltip should be displayed when a section is hovered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "FunnelChart"
+    }
+  ]
+}

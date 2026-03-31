@@ -4,9 +4,32 @@ Import: import { UseFocusWithin } from '@mantine/hooks';
 
 ## Usage
 
-`use-focus-within` hook detects if any element within the other element has focus.
-It works the same way as `:focus-within` CSS selector:
+The `use-focus-within` hook detects if any element within another element has focus.
+It works the same way as the `:focus-within` CSS selector:
 
+```tsx
+import { useFocusWithin } from '@mantine/hooks';
+import { TextInput, Button, Box, Text } from '@mantine/core';
+
+function Demo() {
+  const { ref, focused } = useFocusWithin();
+
+  return (
+    <div ref={ref}>
+      <Box
+        p="xl"
+        style={{
+          backgroundColor: focused ? 'var(--mantine-color-blue-light)' : 'transparent',
+        }}
+      >
+        <Text size="sm">One of elements has focus: {focused.toString()}</Text>
+        <TextInput label="Focus this input" placeholder="Styles will be added to parent" />
+        <Button mt="md">Button</Button>
+      </Box>
+    </div>
+  );
+}
+```
 
 
 ## Definition
@@ -29,7 +52,7 @@ function useFocusWithin<T extends HTMLElement = any>(
 
 ## Exported types
 
-`UseFocusWithinOptions` and `UseFocusWithinReturnValue` types are exported from `@mantine/hooks` package,
+`UseFocusWithinOptions` and `UseFocusWithinReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

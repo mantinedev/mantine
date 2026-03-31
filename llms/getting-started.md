@@ -20,22 +20,16 @@ bootstrap a project from a template [in this article](https://help.mantine.dev/q
 
 Templates list:
 
-<TemplatesList />
-
 ## Community templates
 
 Community templates are created and maintained by the community members. These templates
 include additional features and third-party integrations. You are welcome
 to share your template with the community by following [this guide](https://help.mantine.dev/q/submit-template).
 
-<TemplatesList community />
-
 ## Framework guide
 
 If you want to add Mantine to an existing project or prefer to set up everything manually,
 follow one of the guides below to get started with Mantine and your preferred framework.
-
-<FrameworksGuides />
 
 ## Can I use Mantine with create-react-app?
 
@@ -46,9 +40,7 @@ If you still prefer to use Create React App, follow [this guide](https://help.ma
 
 ## Get started without framework
 
-<PackagesInstallation />
-
-Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
+Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md):
 
 ```bash
 yarn add postcss postcss-preset-mantine postcss-simple-vars
@@ -99,7 +91,7 @@ import '@mantine/core/styles.css';
 // ...
 ```
 
-Wrap your application with [MantineProvider](https://mantine.dev/theming/mantine-provider/):
+Wrap your application with [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md):
 
 ```tsx
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -117,7 +109,7 @@ function Demo() {
 }
 ```
 
-If your application has server side rendering, add [ColorSchemeScript](https://mantine.dev/theming/color-schemes)
+If your application has server side rendering, add [ColorSchemeScript](https://mantine.dev/llms/theming-color-schemes.md)
 to the `<head />` of your application and spread `mantineHtmlProps` on the `<html />` element
 to [avoid seeing a hydration warning](https://help.mantine.dev/q/color-scheme-hydration-warning):
 
@@ -171,21 +163,19 @@ Then create `.vscode/settings.json` file in the root folder of your project with
 Before you jump into the code, it is recommended to learn more about Mantine theming and styling options.
 The most important documentation pages are:
 
-* [Theme object](https://mantine.dev/theming/theme-object) – learn about available theme properties
-* [Colors](https://mantine.dev/theming/colors) – learn how to add/replace colors in the theme object
-* [CSS modules](https://mantine.dev/styles/css-modules) – learn how to use CSS modules with Mantine
-* [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) – learn about `postcss-preset-mantine` functions and mixins
-* [Responsive styles](https://mantine.dev/styles/responsive) – learn how to apply responsive styles to components
-* [Styles API](https://mantine.dev/styles/styles-api) – learn how to style internal elements of any component
-* [Polymorphic components](https://mantine.dev/guides/polymorphic) – learn how to use polymorphic components to change rendered element
+* [Theme object](https://mantine.dev/llms/theming-theme-object.md) – learn about available theme properties
+* [Colors](https://mantine.dev/llms/theming-colors.md) – learn how to add/replace colors in the theme object
+* [CSS modules](https://mantine.dev/llms/styles-css-modules.md) – learn how to use CSS modules with Mantine
+* [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md) – learn about `postcss-preset-mantine` functions and mixins
+* [Responsive styles](https://mantine.dev/llms/styles-responsive.md) – learn how to apply responsive styles to components
+* [Styles API](https://mantine.dev/llms/styles-styles-api.md) – learn how to style internal elements of any component
+* [Polymorphic components](https://mantine.dev/llms/guides-polymorphic.md) – learn how to use polymorphic components to change rendered element
 
 ## Support Mantine
 
 All contributions to the projects are welcome and appreciated.
 Contribute financially by [sponsoring the project on OpenCollective](https://opencollective.com/mantinedev).
 Your sponsorship will help us to maintain the project and develop new features.
-
-<Button rightSection={<IconHeartFilled size={22} color="var(--mantine-color-red-7)" />} size="lg" miw={300} justify="space-between" children="Sponsor Mantine" variant="default" radius="md" component="a" href="https://opencollective.com/mantinedev" />
 
 Other ways to support the project:
 
@@ -199,9 +189,9 @@ Other ways to support the project:
   and provide your feedback on how it can be improved. We are always open to new ideas and suggestions.
 * Send us some [kind words](https://github.com/mantinedev/mantine/discussions/categories/kind-words). We usually receive only
   bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
-* Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
+* StarIcon the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
   people interested in the project.
-* [Contribute](https://mantine.dev/contribute) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
+* [Contribute](https://mantine.dev/llms/contribute.md) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
   experience with React/TypeScript, you can help us improve the documentation to make it more clear and understandable
   for new developers. If you are an experienced React developer, you can help us with open [issues](https://github.com/mantinedev/mantine/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
 * If you are using Mantine at work and your company wants to support the project, you can allocate some time

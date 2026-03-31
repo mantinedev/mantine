@@ -5,9 +5,7 @@ Description: Funnel chart component
 
 ## Usage
 
-`FunnelChart` is based on [FunnelChart recharts component](https://recharts.org/en-US/api/FunnelChart):
-
-#### Example: usage
+`FunnelChart` is based on the [FunnelChart recharts component](https://recharts.org/en-US/api/FunnelChart):
 
 ```tsx
 // Demo.tsx
@@ -30,10 +28,8 @@ export const data = [
 
 ## Segments labels
 
-Set `withLabels` prop to display labels next to each segment.
-Use `labelPosition` prop to control the position of labels relative to the corresponding segment.
-
-#### Example: withLabels
+Set the `withLabels` prop to display labels next to each segment.
+Use the `labelPosition` prop to control the position of labels relative to the corresponding segment.
 
 ```tsx
 // Demo.tsx
@@ -41,7 +37,7 @@ import { FunnelChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <FunnelChart withLabels data={data} />;
+  return <FunnelChart labelsPosition="right" withLabels data={data} />;
 }
 
 // data.ts
@@ -56,10 +52,8 @@ export const data = [
 
 ## Size and thickness
 
-Set `size` prop to control width and height of the chart.
-You can override this behavior by setting `h` [style prop](https://mantine.dev/styles/style-props).
-
-#### Example: size
+Set the `size` prop to control the width and height of the chart.
+You can override this behavior by setting the `h` [style prop](https://mantine.dev/llms/styles-style-props.md).
 
 ```tsx
 // Demo.tsx
@@ -67,7 +61,7 @@ import { FunnelChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <FunnelChart data={data} />;
+  return <FunnelChart size={160} data={data} />;
 }
 
 // data.ts
@@ -82,11 +76,9 @@ export const data = [
 
 ## Segment color
 
-You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
-
-#### Example: color
 
 ```tsx
 import { FunnelChart } from '@mantine/charts';
@@ -95,7 +87,7 @@ function Demo() {
   return (
     <FunnelChart
       data={[
-        { name: 'USA', value: 400, color: '' },
+        { name: 'USA', value: 400, color: 'blue' },
         { name: 'Other', value: 200, color: 'gray.6' },
       ]}
     />
@@ -108,8 +100,6 @@ function Demo() {
 
 By default, the tooltip displays data for all segments when hovered over any segment.
 To display data only for the hovered segment, set `tooltipDataSource="segment"`:
-
-#### Example: tooltipDataSource
 
 ```tsx
 // Demo.tsx
@@ -151,8 +141,6 @@ export const data = [
 
 To remove the tooltip, set `withTooltip={false}`:
 
-#### Example: noTooltip
-
 ```tsx
 // Demo.tsx
 import { FunnelChart } from '@mantine/charts';
@@ -174,9 +162,7 @@ export const data = [
 
 ## Segments stroke
 
-Use `strokeWidth` prop to control the width of the stroke around each segment:
-
-#### Example: strokeWidth
+Use the `strokeWidth` prop to control the width of the stroke around each segment:
 
 ```tsx
 // Demo.tsx
@@ -184,7 +170,7 @@ import { FunnelChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <FunnelChart data={data} />;
+  return <FunnelChart strokeWidth={1} data={data} />;
 }
 
 // data.ts
@@ -197,7 +183,7 @@ export const data = [
 ```
 
 
-To change color of the stroke, use `strokeColor` prop. You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+To change the color of the stroke, use the `strokeColor` prop. You can reference colors from the [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
 
@@ -209,11 +195,9 @@ function Demo() {
 }
 ```
 
-By default, segments stroke color is the same as the background color of the body element
+By default, the segments stroke color is the same as the background color of the body element
 (`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,
-define CSS variable and pass it to the `strokeColor` prop:
-
-#### Example: strokeColor
+define a CSS variable and pass it to the `strokeColor` prop:
 
 ```tsx
 // Demo.tsx
@@ -251,20 +235,22 @@ export const data = [
 
 #### Props
 
+**FunnelChart props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| children | React.ReactNode | - | Additional elements rendered inside <code>FunnelChart</code> component |
+| children | React.ReactNode | - | Additional elements rendered inside `FunnelChart` component |
 | data | FunnelChartCell[] | required | Data used to render chart |
-| funnelChartProps | Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 65 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | - | Props passed down to recharts <code>FunnelChart</code> component |
-| funnelProps | Partial<Omit<FunnelProps, "ref">> | - | Props passed down to recharts <code>Pie</code> component |
+| funnelChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `FunnelChart` component |
+| funnelProps | Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Pie` component |
 | labelColor | MantineColor | - | Controls text color of all labels |
-| labelsPosition | "left" | "right" | "inside" | - | Controls labels position relative to the segment |
+| labelsPosition | "left" \| "right" \| "inside" | - | Controls labels position relative to the segment |
 | size | number | - | Controls chart width and height |
 | strokeColor | MantineColor | - | Controls color of the segments stroke, by default depends on color scheme |
 | strokeWidth | number | - | Controls width of segments stroke |
 | tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
-| tooltipDataSource | "all" | "segment" | - | Determines which data is displayed in the tooltip. <code>'all'</code> – display all values, <code>'segment'</code> – display only hovered segment. |
-| tooltipProps | RechartsProps | - | Props passed down to <code>Tooltip</code> recharts component |
+| tooltipDataSource | "all" \| "segment" | - | Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. |
+| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
 | valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and labels |
 | withLabels | boolean | - | Determines whether each segment should have associated label |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed when a section is hovered |

@@ -5,10 +5,8 @@ Description: Format number with thousands/decimal separators and suffix/prefix
 
 ## Usage
 
-Use `NumberFormatter` to format numbers. It supports the same formatting related props
-as [NumberInput](https://mantine.dev/core/number-input/) component.
-
-#### Example: usage
+Use `NumberFormatter` to format numbers. It supports the same formatting-related props
+as the [NumberInput](https://mantine.dev/llms/core-number-input.md) component.
 
 ```tsx
 import { NumberFormatter } from '@mantine/core';
@@ -21,9 +19,7 @@ function Demo() {
 
 ## Prefix and suffix
 
-Set `prefix` and `suffix` props to add given string to the start or end of the value:
-
-#### Example: prefixSuffix
+Set the `prefix` and `suffix` props to add a given string to the start or end of the value:
 
 ```tsx
 import { NumberFormatter } from '@mantine/core';
@@ -45,10 +41,8 @@ function Demo() {
 
 ## Thousands separator
 
-Set `thousandSeparator` prop to separate thousands with a character. You can control
-grouping logic with `thousandsGroupStyle`, it accepts: `thousand`, `lakh`, `wan`, `none` values.
-
-#### Example: thousandsSeparator
+Set the `thousandSeparator` prop to separate thousands with a character. You can control
+the grouping logic with `thousandsGroupStyle`, which accepts: `thousand`, `lakh`, `wan`, `none` values.
 
 ```tsx
 import { NumberFormatter } from '@mantine/core';
@@ -71,9 +65,7 @@ function Demo() {
 
 ## Decimal scale
 
-`decimalScale` prop controls the number of allowed decimal places:
-
-#### Example: decimalScale
+The `decimalScale` prop controls the number of allowed decimal places:
 
 ```tsx
 import { NumberFormatter } from '@mantine/core';
@@ -87,14 +79,16 @@ function Demo() {
 
 #### Props
 
+**NumberFormatter props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | allowNegative | boolean | - | If set, negative values are allowed |
 | decimalScale | number | - | Limits the number of digits that are displayed after the decimal point |
-| decimalSeparator | string | - | Character used as a decimal separator, <code>'.'</code> by default |
-| fixedDecimalScale | boolean | - | If set, zeros are added after <code>decimalSeparator</code> to match given <code>decimalScale</code>. |
+| decimalSeparator | string | - | Character used as a decimal separator, `'.'` by default |
+| fixedDecimalScale | boolean | - | If set, zeros are added after `decimalSeparator` to match given `decimalScale`. |
 | prefix | string | - | Prefix added before the value |
 | suffix | string | - | Suffix added after the value |
-| thousandSeparator | string | boolean | - | A character used to separate thousands |
-| thousandsGroupStyle | "none" | "thousand" | "lakh" | "wan" | - | Defines the thousand grouping style |
-| value | string | number | - | Value to format |
+| thousandSeparator | string \| boolean | - | A character used to separate thousands |
+| thousandsGroupStyle | "none" \| "thousand" \| "lakh" \| "wan" | - | Defines the thousand grouping style |
+| value | string \| number | - | Value to format |

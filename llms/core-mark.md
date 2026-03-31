@@ -5,15 +5,13 @@ Description: Highlight part of the text
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Text, Mark } from '@mantine/core';
 
 function Demo() {
   return (
     <Text>
-      Highlight <Mark>this chunk</Mark> of the text
+      Highlight <Mark color="yellow">this chunk</Mark> of the text
     </Text>
   );
 }
@@ -23,9 +21,11 @@ function Demo() {
 
 #### Props
 
+**Mark props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
 
 
 #### Styles API

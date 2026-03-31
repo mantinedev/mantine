@@ -1,0 +1,1242 @@
+{
+  "id": "dates-date-picker-input",
+  "name": "DatePickerInput",
+  "kind": "component",
+  "package": "@mantine/dates",
+  "route": "/dates/date-picker-input",
+  "description": "Date, multiple dates and dates range picker input",
+  "propsCount": 97,
+  "llmUrl": "https://mantine.dev/llms/dates-date-picker-input.md",
+  "componentDataUrl": "/mcp/components/dates-date-picker-input.json",
+  "searchText": "datepickerinput date, multiple dates and dates range picker input @mantine/dates /dates/date-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype enablekeyboardnavigation error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates type value valueformat valueformatter weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withweeknumbers wrapperprops yearlabelformat yearslistformat",
+  "source": "@mantine/dates/src/components/DatePickerInput/DatePickerInput.tsx",
+  "docs": "dates/date-picker-input.mdx",
+  "markdown": "# DatePickerInput\nPackage: @mantine/dates\nImport: import { DatePickerInput } from '@mantine/dates';\nDescription: Date, multiple dates and dates range picker input\n\n## DatePicker props\n\n`DatePickerInput` supports most of the [DatePicker](https://mantine.dev/llms/dates-date-picker.md) props.\nRead through the [DatePicker](https://mantine.dev/llms/dates-date-picker.md) documentation to learn about all component features that are not listed on this page.\n\n## Usage\n\n\n\n## Multiple dates\n\nSet `type=\"multiple\"` to allow users to pick multiple dates:\n\n\n\n## Dates range\n\nSet `type=\"range\"` to allow users to pick a date range:\n\n\n\n## Presets\n\nUse the `presets` prop to add custom date presets. Presets are displayed next to the calendar:\n\n```tsx\nimport dayjs from 'dayjs';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <DatePickerInput\n      label=\"With presets\"\n      placeholder=\"Select date\"\n      presets={[\n        { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD'), label: 'Yesterday' },\n        { value: dayjs().format('YYYY-MM-DD'), label: 'Today' },\n        { value: dayjs().add(1, 'day').format('YYYY-MM-DD'), label: 'Tomorrow' },\n        { value: dayjs().add(1, 'month').format('YYYY-MM-DD'), label: 'Next month' },\n        { value: dayjs().add(1, 'year').format('YYYY-MM-DD'), label: 'Next year' },\n        { value: dayjs().subtract(1, 'month').format('YYYY-MM-DD'), label: 'Last month' },\n        { value: dayjs().subtract(1, 'year').format('YYYY-MM-DD'), label: 'Last year' },\n      ]}\n    />\n  );\n}\n```\n\n\nTo use `presets` with `type=\"range\"`, define the value as a tuple of two dates:\n\n```tsx\nimport dayjs from 'dayjs';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  const today = dayjs();\n\n  return (\n    <DatePickerInput\n      type=\"range\"\n      presets={[\n        {\n          value: [today.subtract(2, 'day').format('YYYY-MM-DD'), today.format('YYYY-MM-DD')],\n          label: 'Last two days',\n        },\n        {\n          value: [today.subtract(7, 'day').format('YYYY-MM-DD'), today.format('YYYY-MM-DD')],\n          label: 'Last 7 days',\n        },\n        {\n          value: [today.startOf('month').format('YYYY-MM-DD'), today.format('YYYY-MM-DD')],\n          label: 'This month',\n        },\n        {\n          value: [\n            today.subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),\n            today.subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),\n          ],\n          label: 'Last month',\n        },\n        {\n          value: [\n            today.subtract(1, 'year').startOf('year').format('YYYY-MM-DD'),\n            today.subtract(1, 'year').endOf('year').format('YYYY-MM-DD'),\n          ],\n          label: 'Last year',\n        },\n      ]}\n    />\n  );\n}\n```\n\n\n## Open picker in modal\n\nBy default, [DatePicker](https://mantine.dev/llms/dates-date-picker.md) is rendered inside [Popover](https://mantine.dev/llms/core-popover.md).\nYou can change that to [Modal](https://mantine.dev/llms/core-modal.md) by setting `dropdownType=\"modal\"`:\n\n\n\n## Value format\n\nUse the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label:\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <DatePickerInput\n      valueFormat=\"YYYY MMM DD\"\n      type=\"multiple\"\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n    />\n  );\n}\n```\n\n\n## Value formatter\n\n`valueFormatter` is a more powerful alternative to the `valueFormat` prop.\nIt allows formatting the value label with a custom function.\nThe function is the same for all component types (`default`, `multiple` and `range`)\n– you need to perform additional checks inside the function to handle different types.\n\nExample of using a custom formatter function with `type=\"multiple\"`:\n\n\n\n## Clearable\n\nSet the `clearable` prop to display a clear button in the right section. Note that if you set the `rightSection`\nprop, the clear button will not be displayed.\n\n\n\n```tsx\nimport { CaretDownIcon } from '@phosphor-icons/react';\nimport { Stack } from '@mantine/core';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <DatePickerInput\n        label=\"clearSectionMode='both' (default)\"\n        placeholder=\"Pick date\"\n        defaultValue={new Date()}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"both\"\n      />\n\n      <DatePickerInput\n        label=\"clearSectionMode='rightSection'\"\n        placeholder=\"Pick date\"\n        defaultValue={new Date()}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"rightSection\"\n      />\n\n      <DatePickerInput\n        label=\"clearSectionMode='clear'\"\n        placeholder=\"Pick date\"\n        defaultValue={new Date()}\n        clearable\n        rightSection={<CaretDownIcon size={16} />}\n        clearSectionMode=\"clear\"\n      />\n    </Stack>\n  );\n}\n```\n\n\n## Disabled state\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <DatePickerInput\n      valueFormat=\"YYYY MMM DD\"\n      type=\"multiple\"\n      label=\"Disabled\"\n      placeholder=\"Pick date\"\n      disabled\n    />\n  );\n}\n```\n\n\n## Min and max dates\n\n`minDate` and `maxDate` props define the minimum and maximum dates that can be picked.\nYou can specify `minDate` and `maxDate` as `Date` objects:\n\n```tsx\nimport { useState } from 'react';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <DatePickerInput\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      value={value}\n      onChange={setValue}\n      minDate={new Date(2022, 1, 10)}\n      maxDate={new Date(2022, 1, 28)}\n    />\n  );\n}\n```\n\n\n## Default level\n\n`defaultLevel` prop allows setting the initial level of the picker.\nAllowed values are `month`, `year` and `decade`.\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <>\n      <DatePickerInput\n        defaultLevel=\"decade\"\n        label=\"Decade level\"\n        placeholder=\"Decade level\"\n        mb=\"md\"\n      />\n      <DatePickerInput\n        defaultLevel=\"year\"\n        label=\"Year level\"\n        placeholder=\"Year level\"\n      />\n    </>\n  );\n}\n```\n\n\n## Max level\n\n`maxLevel` prop allows to set the maximum level that can be reached by clicking on the label in the header.\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <>\n      <DatePickerInput\n        maxLevel=\"year\"\n        label=\"Year max level\"\n        placeholder=\"Year max level\"\n        mb=\"md\"\n      />\n      <DatePickerInput\n        maxLevel=\"month\"\n        label=\"Month max level\"\n        placeholder=\"Month max level\"\n      />\n    </>\n  );\n}\n```\n\n\n## Control props\n\n`getDayProps`, `getYearControlProps` and `getMonthControlProps` props allow passing props to the control component based on the date.\nIt is useful for disabling specific dates or customising styles/className.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { DatePickerInput, DatePickerInputProps } from '@mantine/dates';\n\nconst getDayProps: DatePickerInputProps['getDayProps'] = (date) => {\n  const d = dayjs(date);\n\n  if (d.day() === 5 && d.date() === 13) {\n    return {\n      style: {\n        backgroundColor: 'var(--mantine-color-red-filled)',\n        color: 'var(--mantine-color-white)',\n      },\n    };\n  }\n\n  return {};\n};\n\nconst getYearControlProps: DatePickerInputProps['getYearControlProps'] = (date) => {\n  const d = dayjs(date);\n\n  if (d.year() === new Date().getFullYear()) {\n    return {\n      style: {\n        color: 'var(--mantine-color-blue-filled)',\n        fontWeight: 700,\n      },\n    };\n  }\n\n  if (d.year() === new Date().getFullYear() + 1) {\n    return { disabled: true };\n  }\n\n  return {};\n};\n\nconst getMonthControlProps: DatePickerInputProps['getMonthControlProps'] = (date) => {\n  const d = dayjs(date);\n  if (d.month() === 1) {\n    return {\n      style: {\n        color: 'var(--mantine-color-blue-filled)',\n        fontWeight: 700,\n      },\n    };\n  }\n\n  if (d.month() === 5) {\n    return { disabled: true };\n  }\n\n  return {};\n};\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <DatePickerInput\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      value={value}\n      onChange={setValue}\n      getDayProps={getDayProps}\n      getYearControlProps={getYearControlProps}\n      getMonthControlProps={getMonthControlProps}\n    />\n  );\n}\n```\n\n\n## Exclude dates\n\n`excludeDate` prop allows disabling specific dates.\nIt accepts a function that receives a date and returns `true` if the date should be disabled.\nIn the following example, all weekends are disabled:\n\n```tsx\nimport { useState } from 'react';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <DatePickerInput\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      value={value}\n      onChange={setValue}\n      excludeDate={(date) => new Date(date).getDay() === 0 || new Date(date).getDay() === 6}\n    />\n  );\n}\n```\n\n\n## Hide outside dates\n\n`hideOutsideDates` prop allows hiding dates that do not belong to the current month.\n\n```tsx\nimport { useState } from 'react';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <DatePickerInput\n      hideOutsideDates\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      value={value}\n      onChange={setValue}\n    />\n  );\n}\n```\n\n\n## Hide weekdays\n\n`hideWeekdays` prop allows hiding weekdays names.\n\n```tsx\nimport { useState } from 'react';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <DatePickerInput\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      value={value}\n      onChange={setValue}\n      hideWeekdays\n    />\n  );\n}\n```\n\n\n## Weekend days\n\n`weekendDays` prop allows changing which days are considered weekends.\nIt accepts an array of weekday indices (0-6). 0 is Sunday, 6 is Saturday.\nBy default, `[0, 6]` are used.\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <DatePickerInput\n      weekendDays={[1, 2]}\n      label=\"Weekend days are Monday and Tuesday\"\n      placeholder=\"Pick date\"\n    />\n  );\n}\n```\n\n\n## First day of week\n\n`firstDayOfWeek` prop allows changing the first day of the week.\nIt accepts a weekday index (0-6). 0 is Sunday, 6 is Saturday.\nBy default, `1` (Monday) is used.\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <>\n      <DatePickerInput\n        firstDayOfWeek={0}\n        label=\"Sunday as first day of week\"\n        placeholder=\"Sunday as first day of week\"\n        mb=\"md\"\n      />\n      <DatePickerInput\n        firstDayOfWeek={6}\n        label=\"Saturday as first day of week\"\n        placeholder=\"Saturday as first day of week\"\n      />\n    </>\n  );\n}\n```\n\n\n## Label format\n\n`decadeLabelFormat`, `yearLabelFormat` and `monthLabelFormat` props allow changing the format of the label in the header.\nThe props accept a [dayjs format string](https://day.js.org/docs/en/display/format).\n\n```tsx\nimport { useState } from 'react';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <DatePickerInput\n      defaultLevel=\"decade\"\n      decadeLabelFormat=\"YY\"\n      yearLabelFormat=\"YYYY [year]\"\n      monthLabelFormat=\"MM/YY\"\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      value={value}\n      onChange={setValue}\n    />\n  );\n}\n```\n\n\n## List format\n\n`monthsListFormat` and `yearsListFormat` props allow changing the format of the month and year labels in the list.\nThe props accept a [dayjs format string](https://day.js.org/docs/en/display/format).\n\n```tsx\nimport { useState } from 'react';\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <DatePickerInput\n      monthsListFormat=\"MM\"\n      yearsListFormat=\"YY\"\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      value={value}\n      onChange={setValue}\n    />\n  );\n}\n```\n\n\n## With week numbers\n\n`withWeekNumbers` prop allows displaying week numbers.\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <DatePickerInput\n      withWeekNumbers\n      label=\"With week numbers\"\n      placeholder=\"Pick date\"\n    />\n  );\n}\n```\n\n\n## Render day\n\n`renderDay` prop allows customising the day control. It is useful for adding indicators or other elements to the day control.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { Indicator } from '@mantine/core';\nimport { DatePickerInput, DatePickerInputProps } from '@mantine/dates';\n\nconst dayRenderer: DatePickerInputProps['renderDay'] = (date) => {\n  const day = dayjs(date).date();\n  return (\n    <Indicator size={6} color=\"red\" offset={-5} disabled={day !== 16}>\n      <div>{day}</div>\n    </Indicator>\n  );\n};\n\nfunction Demo() {\n  return (\n    <DatePickerInput\n      label=\"Pick date\"\n      placeholder=\"Pick date\"\n      renderDay={dayRenderer}\n    />\n  );\n}\n```\n\n\n## Header controls order\n\n`headerControlsOrder` prop allows changing the order of the controls in the header.\nIt accepts an array of strings: `level`, `previous` and `next`.\nStyles of the controls can be customised with `styles` prop.\n\n```tsx\nimport { DatePickerInput } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <DatePickerInput\n      defaultDate={new Date(2022, 1)}\n      headerControlsOrder={['level', 'previous', 'next']}\n      styles={{\n        calendarHeaderLevel: {\n          justifyContent: 'flex-start',\n          paddingInlineStart: 8,\n        },\n      }}\n      label=\"Header controls order\"\n      placeholder=\"Header controls order\"\n    />\n  );\n}\n```\n\n\n## Input props\n\nDatePickerInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all button element props. DatePickerInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n\n\n## With icon\n\n\n\n## Accessibility\n\nDatePickerInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.\n\n\n#### Props\n\n**DatePickerInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowDeselect | boolean | - | Determines whether user can deselect the date by clicking on selected item, applicable only when type=\"default\" |\n| allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type=\"range\" |\n| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |\n| clearButtonProps | React.ComponentProps<\"button\"> | - | Props passed down to the clear button |\n| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |\n| clearable | boolean | - | If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. |\n| closeOnChange | boolean | - | Determines whether the dropdown is closed when date is selected, not applicable with `type=\"multiple\"` |\n| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |\n| date | string \\| Date | - | Displayed date in controlled mode |\n| decadeLabelFormat | string \\| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |\n| defaultDate | string \\| Date | - | Initial displayed date in uncontrolled mode |\n| defaultLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Initial displayed level (uncontrolled) |\n| defaultValue | DateValue \\| DatesRangeValue<DateValue> \\| DateValue[] | - | Default value for uncontrolled component |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| dropdownType | \"popover\" \\| \"modal\" | - | Type of the dropdown |\n| enableKeyboardNavigation | boolean | - | Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |\n| firstDayOfWeek | 0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |\n| fullWidth | boolean | - | Determines whether the list should take the full width of its container |\n| getDayAriaLabel | (date: string) => string | - | Assigns `aria-label` to `Day` components based on date |\n| getDayProps | (date: string) => Omit<Partial<DayProps>, \"vars\" \\| \"classNames\" \\| \"styles\"> & DataAttributes | - | Passes props down to `Day` components |\n| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |\n| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |\n| headerControlsOrder | (\"next\" \\| \"previous\" \\| \"level\")[] | - | Controls order |\n| hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |\n| hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |\n| highlightToday | boolean | - | Determines whether today should be highlighted with a border |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| labelSeparator | string | - | Separator between range value |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| level | \"month\" \\| \"year\" \\| \"decade\" | - | Current displayed level (controlled) |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |\n| maxDate | string \\| Date | - | Maximum possible date in `YYYY-MM-DD` format or Date object |\n| maxLevel | \"month\" \\| \"year\" \\| \"decade\" | - | - |\n| minDate | string \\| Date | - | Minimum possible date in `YYYY-MM-DD` format or Date object |\n| modalProps | Partial<Omit<ModalProps, \"children\">> | - | Props passed down to `Modal` component |\n| monthLabelFormat | string \\| ((date: string) => string) | - | dayjs label format to display month label or a function that returns month label based on month value |\n| monthsListFormat | string | - | `dayjs` format for months list |\n| nextIcon | React.ReactNode | - | Change next icon |\n| nextLabel | string | - | Next button `aria-label` |\n| numberOfColumns | number | - | Number of columns displayed next to each other |\n| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |\n| onDateChange | (date: string) => void | - | Called when date changes |\n| onDropdownClose | () => void | - | Called when the dropdown is closed |\n| onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |\n| onMonthMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters month control |\n| onMonthSelect | (date: string) => void | - | Called when user selects month |\n| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |\n| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |\n| onNextYear | (date: string) => void | - | Called when the next year button is clicked |\n| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |\n| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |\n| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |\n| onYearMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters year control |\n| onYearSelect | (date: string) => void | - | Called when user selects year |\n| placeholder | string | - | Input placeholder |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| popoverProps | Partial<Omit<PopoverProps, \"children\">> | - | Props passed down to `Popover` component |\n| presets | DatePickerPreset<Type>[] | - | Predefined values to pick from |\n| previousIcon | React.ReactNode | - | Change previous icon |\n| previousLabel | string | - | Previous button `aria-label` |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| readOnly | boolean | - | If set, the component value cannot be changed by the user |\n| renderDay | (date: string) => React.ReactNode | - | Controls day value rendering |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Component size |\n| sortDates | boolean | - | Determines whether dates values should be sorted before `onChange` call, only applicable with type=\"multiple\" |\n| type | \"range\" \\| \"multiple\" \\| \"default\" | - | Picker type: range, multiple or default |\n| value | DateValue \\| DatesRangeValue<DateValue> \\| DateValue[] | - | Value for controlled component |\n| valueFormat | string | - | `dayjs` format for input value |\n| valueFormatter | DateFormatter | - | A function to format selected dates values into a string. By default, date is formatted based on the input type. |\n| weekdayFormat | string \\| ((date: string) => string) | - | `dayjs` format for weekdays names |\n| weekendDays | (0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withCellSpacing | boolean | - | Determines whether controls should be separated |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n| yearLabelFormat | string \\| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |\n| yearsListFormat | string | - | dayjs format for years list |\n\n\n#### Styles API\n\nDatePickerInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**DatePickerInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| calendarHeader | .mantine-DatePickerInput-calendarHeader | Calendar header root element |\n| calendarHeaderControl | .mantine-DatePickerInput-calendarHeaderControl | Previous/next calendar header controls |\n| calendarHeaderControlIcon | .mantine-DatePickerInput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |\n| calendarHeaderLevel | .mantine-DatePickerInput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |\n| levelsGroup | .mantine-DatePickerInput-levelsGroup | Group of months levels |\n| yearsList | .mantine-DatePickerInput-yearsList | Years list table element |\n| yearsListRow | .mantine-DatePickerInput-yearsListRow | Years list row element |\n| yearsListCell | .mantine-DatePickerInput-yearsListCell | Years list cell element |\n| yearsListControl | .mantine-DatePickerInput-yearsListControl | Button used to pick months and years |\n| monthsList | .mantine-DatePickerInput-monthsList | Months list table element |\n| monthsListRow | .mantine-DatePickerInput-monthsListRow | Months list row element |\n| monthsListCell | .mantine-DatePickerInput-monthsListCell | Months list cell element |\n| monthsListControl | .mantine-DatePickerInput-monthsListControl | Button used to pick months and years |\n| monthThead | .mantine-DatePickerInput-monthThead | thead element of month table |\n| monthRow | .mantine-DatePickerInput-monthRow | tr element of month table |\n| monthTbody | .mantine-DatePickerInput-monthTbody | tbody element of month table |\n| monthCell | .mantine-DatePickerInput-monthCell | td element of month table |\n| month | .mantine-DatePickerInput-month | Month table element |\n| weekdaysRow | .mantine-DatePickerInput-weekdaysRow | Weekdays tr element |\n| weekday | .mantine-DatePickerInput-weekday | Weekday th element |\n| day | .mantine-DatePickerInput-day | Month day control |\n| weekNumber | .mantine-DatePickerInput-weekNumber | Week number td element |\n| datePickerRoot | .mantine-DatePickerInput-datePickerRoot | Date picker root element, contains calendar and presets |\n| presetsList | .mantine-DatePickerInput-presetsList | Presets wrapper element |\n| presetButton | .mantine-DatePickerInput-presetButton | Preset button |\n| placeholder | .mantine-DatePickerInput-placeholder | Placeholder element |\n",
+  "props": [
+    {
+      "name": "allowDeselect",
+      "description": "Determines whether user can deselect the date by clicking on selected item, applicable only when type=\"default\"",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "allowSingleDateInRange",
+      "description": "Determines whether a single day can be selected as range, applicable only when type=\"range\"",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "ariaLabels",
+      "description": "<code>aria-label</code> attributes for controls on different levels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CalendarAriaLabels"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "clearButtonProps",
+      "description": "Props passed down to the clear button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"button\">"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "clearSectionMode",
+      "description": "Determines how the clear button and rightSection are rendered",
+      "required": false,
+      "defaultValue": "'both'",
+      "type": {
+        "name": "ClearSectionMode",
+        "raw": "ClearSectionMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"both\""
+          },
+          {
+            "value": "\"rightSection\""
+          },
+          {
+            "value": "\"clear\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "clearable",
+      "description": "If set, clear button is displayed in the <code>rightSection</code> when the component has value. Ignored if <code>rightSection</code> prop is set.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "closeOnChange",
+      "description": "Determines whether the dropdown is closed when date is selected, not applicable with <code>type=\"multiple\"</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "columnsToScroll",
+      "description": "Number of columns to scroll with next/prev buttons, same as <code>numberOfColumns</code> if not set explicitly",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "date",
+      "description": "Displayed date in controlled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "decadeLabelFormat",
+      "description": "<code>dayjs</code> format for decade label or a function that returns decade label based on the date value",
+      "required": false,
+      "defaultValue": "\"YYYY\"",
+      "type": {
+        "name": "string | ((startOfDecade: string, endOfDecade: string) => ReactNode)"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "defaultDate",
+      "description": "Initial displayed date in uncontrolled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "defaultLevel",
+      "description": "Initial displayed level (uncontrolled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Default value for uncontrolled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DateValue | DatesRangeValue<DateValue> | DateValue[]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "dropdownType",
+      "description": "Type of the dropdown",
+      "required": false,
+      "defaultValue": "'popover'",
+      "type": {
+        "name": "\"popover\" | \"modal\"",
+        "raw": "\"popover\" | \"modal\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"popover\""
+          },
+          {
+            "value": "\"modal\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "enableKeyboardNavigation",
+      "description": "Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "excludeDate",
+      "description": "Callback function to determine whether the day should be disabled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "firstDayOfWeek",
+      "description": "Number 0-6, where 0 – Sunday and 6 – Saturday.",
+      "required": false,
+      "defaultValue": "1 – Monday",
+      "type": {
+        "name": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+        "raw": "DayOfWeek | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "0"
+          },
+          {
+            "value": "2"
+          },
+          {
+            "value": "1"
+          },
+          {
+            "value": "3"
+          },
+          {
+            "value": "4"
+          },
+          {
+            "value": "5"
+          },
+          {
+            "value": "6"
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "fullWidth",
+      "description": "Determines whether the list should take the full width of its container",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "getDayAriaLabel",
+      "description": "Assigns <code>aria-label</code> to <code>Day</code> components based on date",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "getDayProps",
+      "description": "Passes props down to <code>Day</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Omit<Partial<DayProps>, \"vars\" | \"classNames\" | \"styles\"> & DataAttributes"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "getMonthControlProps",
+      "description": "Passes props down month picker control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Partial<PickerControlProps> & DataAttributes"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "getYearControlProps",
+      "description": "Passes props down to year picker control based on date",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Partial<PickerControlProps> & DataAttributes"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "headerControlsOrder",
+      "description": "Controls order",
+      "required": false,
+      "defaultValue": "['previous', 'level', 'next']",
+      "type": {
+        "name": "(\"next\" | \"previous\" | \"level\")[]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "hideOutsideDates",
+      "description": "Determines whether outside dates should be hidden",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "hideWeekdays",
+      "description": "Determines whether weekdays row should be hidden",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "highlightToday",
+      "description": "Determines whether today should be highlighted with a border",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "labelSeparator",
+      "description": "Separator between range value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "level",
+      "description": "Current displayed level (controlled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "locale",
+      "description": "Dayjs locale, defaults to value defined in DatesProvider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "maxDate",
+      "description": "Maximum possible date in <code>YYYY-MM-DD</code> format or Date object",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "maxLevel",
+      "description": "",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "minDate",
+      "description": "Minimum possible date in <code>YYYY-MM-DD</code> format or Date object",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "modalProps",
+      "description": "Props passed down to <code>Modal</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<ModalProps, \"children\">>"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "monthLabelFormat",
+      "description": "dayjs label format to display month label or a function that returns month label based on month value",
+      "required": false,
+      "defaultValue": "\"MMMM YYYY\"",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "monthsListFormat",
+      "description": "<code>dayjs</code> format for months list",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "nextIcon",
+      "description": "Change next icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "nextLabel",
+      "description": "Next button <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "numberOfColumns",
+      "description": "Number of columns displayed next to each other",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: DatePickerValue<Type, string>) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onDateChange",
+      "description": "Called when date changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onDropdownClose",
+      "description": "Called when the dropdown is closed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onLevelChange",
+      "description": "Called when level changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(level: CalendarLevel) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onMonthMouseEnter",
+      "description": "Called when mouse enters month control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onMonthSelect",
+      "description": "Called when user selects month",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onNextDecade",
+      "description": "Called when the next decade button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onNextMonth",
+      "description": "Called when the next month button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onNextYear",
+      "description": "Called when the next year button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onPreviousDecade",
+      "description": "Called when the previous decade button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onPreviousMonth",
+      "description": "Called when the previous month button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onPreviousYear",
+      "description": "Called when the previous year button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onYearMouseEnter",
+      "description": "Called when mouse enters year control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "onYearSelect",
+      "description": "Called when user selects year",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "placeholder",
+      "description": "Input placeholder",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "popoverProps",
+      "description": "Props passed down to <code>Popover</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<PopoverProps, \"children\">>"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "presets",
+      "description": "Predefined values to pick from",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DatePickerPreset<Type>[]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "previousIcon",
+      "description": "Change previous icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "previousLabel",
+      "description": "Previous button <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "readOnly",
+      "description": "If set, the component value cannot be changed by the user",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "renderDay",
+      "description": "Controls day value rendering",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "size",
+      "description": "Component size",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "sortDates",
+      "description": "Determines whether dates values should be sorted before <code>onChange</code> call, only applicable with type=\"multiple\"",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "type",
+      "description": "Picker type: range, multiple or default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"range\" | \"multiple\" | \"default\"",
+        "raw": "DatePickerType | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"multiple\""
+          },
+          {
+            "value": "\"range\""
+          }
+        ]
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "value",
+      "description": "Value for controlled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DateValue | DatesRangeValue<DateValue> | DateValue[]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "valueFormat",
+      "description": "<code>dayjs</code> format for input value",
+      "required": false,
+      "defaultValue": "\"MMMM D, YYYY\"",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format selected dates values into a string. By default, date is formatted based on the input type.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DateFormatter"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "weekdayFormat",
+      "description": "<code>dayjs</code> format for weekdays names",
+      "required": false,
+      "defaultValue": "'dd'",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "weekendDays",
+      "description": "Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by <code>DatesProvider</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(0 | 1 | 2 | 3 | 4 | 5 | 6)[]"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "withCellSpacing",
+      "description": "Determines whether controls should be separated",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "withWeekNumbers",
+      "description": "Determines whether week numbers should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "yearLabelFormat",
+      "description": "dayjs label format to display year label or a function that returns year label based on year value",
+      "required": false,
+      "defaultValue": "\"YYYY\"",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "DatePickerInput"
+    },
+    {
+      "name": "yearsListFormat",
+      "description": "dayjs format for years list",
+      "required": false,
+      "defaultValue": "'YYYY'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "DatePickerInput"
+    }
+  ]
+}

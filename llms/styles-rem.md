@@ -5,10 +5,8 @@
 ## rem units
 
 All Mantine components use `rem` units to apply size styles (`margin`, `padding`, `width`, etc.).
-By default, `1rem` is considered to be `16px` as it is a default setting in most browsers.
-All components scale based on the user's browser font-size settings or font-size of `html`/`:root`.
-
-#### Example: remSlider
+By default, `1rem` is considered to be `16px`, as it is the default setting in most browsers.
+All components scale based on the user's browser font-size settings or font-size of the `html`/`:root`.
 
 ```tsx
 import { Slider } from '@mantine/core';
@@ -30,10 +28,10 @@ function Demo() {
 
 ## rem units scaling
 
-If you want to change font-size of `:root`/`html` element and preserve Mantine components sizes,
-set `scale` on [theme](https://mantine.dev/theming/theme-object) to the value of `1 / htmlFontSize`.
+If you want to change the font-size of the `:root`/`html` element and preserve Mantine component sizes,
+set `scale` on the [theme](https://mantine.dev/llms/theming-theme-object.md) to the value of `1 / htmlFontSize`.
 
-For example, if you set `html` font-size to `10px` and want to scale Mantine components accordingly, you need
+For example, if you set the `html` font-size to `10px` and want to scale Mantine components accordingly, you need
 to set `scale` to `1 / (10 / 16)` (16 – default font-size) = `1 / 0.625` = `1.6`:
 
 ```css
@@ -60,7 +58,7 @@ function Demo() {
 
 ## em units
 
-`em` units are used in media queries the same way as `rem` units, but they are not affected by font-size specified on `html`/`:root` element.
+`em` units are used in media queries the same way as `rem` units, but they are not affected by the font-size specified on the `html`/`:root` element.
 `1em` is considered to be `16px`.
 
 ## px conversions
@@ -82,7 +80,7 @@ function DemoRem() {
 }
 ```
 
-The same conversion happens in [style props](https://mantine.dev/styles/style-props/):
+The same conversion happens in [style props](https://mantine.dev/llms/styles-style-props.md):
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -133,8 +131,8 @@ px('10rem'); // -> 160
 
 ## rem/em functions in css files
 
-You can use `rem` and `em` function in [css files](https://mantine.dev/styles/css-modules) if
-[postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) is installed:
+You can use `rem` and `em` function in [css files](https://mantine.dev/llms/styles-css-modules.md) if
+[postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md) is installed:
 
 ```css
 .demo {
@@ -149,7 +147,7 @@ You can use `rem` and `em` function in [css files](https://mantine.dev/styles/cs
 ## Convert px to rem automatically in css files
 
 To convert `px` to `rem` automatically in css files, enable `autoRem` option in
-[postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) configuration:
+[postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md) configuration:
 
 ```js
 module.exports = {

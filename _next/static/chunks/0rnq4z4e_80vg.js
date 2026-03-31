@@ -1,0 +1,20 @@
+__turbopack_load_page_chunks__("/form/recipes", [
+  "static/chunks/14nnk3aktch7a.js",
+  "static/chunks/10hlnf8a4qbqz.js",
+  "static/chunks/04qlxbvnx~vmc.js",
+  "static/chunks/0j4n2q0zuhkea.js",
+  "static/chunks/03jgx-zt5zxs9.js",
+  "static/chunks/0r3sqbgwzllen.js",
+  "static/chunks/0-~lhg~4-i.al.js",
+  "static/chunks/0o-qc8djxm43j.js",
+  "static/chunks/03u2fukarj74..js",
+  "static/chunks/072z6klo7c-sj.js",
+  "static/chunks/0d4q3dys~tqqr.js",
+  "static/chunks/0mi834-ahhewv.js",
+  "static/chunks/0ke.m7i5ht6es.js",
+  "static/chunks/0_zy_3xw495.e.js",
+  "static/chunks/06g_4301dm~g1.css",
+  "static/chunks/0nwh6cog1rjyz.css",
+  "static/chunks/0bhh5m6n92r1r.css",
+  "static/chunks/turbopack-0bz.ekzr8t4d_.js"
+])

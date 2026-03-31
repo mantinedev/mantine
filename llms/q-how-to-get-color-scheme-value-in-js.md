@@ -1,0 +1,108 @@
+# How can I get current color scheme value in JavaScript?
+How to use useMantineColorScheme and useComputedColorScheme hooks to get current color scheme value in JavaScript
+
+## Get color scheme value in component
+
+To get the color scheme value in a component, use the `useMantineColorScheme` hook:
+
+```tsx
+import { useMantineColorScheme } from '@mantine/core';
+
+function Demo() {
+  // colorScheme is `'dark' | 'light' | 'auto'`
+  const { colorScheme } = useMantineColorScheme();
+}
+```
+
+If you want to get the computed color scheme, use the `useComputedColorScheme` hook instead.
+It will resolve the `auto` value to `dark` or `light` based on user preferences:
+
+```tsx
+import { useComputedColorScheme } from '@mantine/core';
+
+function Demo() {
+  // colorScheme is `'dark' | 'light'`
+  const colorScheme = useComputedColorScheme();
+}
+```
+
+Note that both hooks use `localStorage` to store the color scheme value.
+It is not possible to get the color scheme value on the server side – the value
+will always fall back to `light` during SSR.
+
+## Get color scheme value outside of component
+
+To get the color scheme value outside of a component, create a utility function
+that will parse the color scheme value from the `data-mantine-color-scheme` attribute:
+
+```tsx
+import { MantineColorScheme } from '@mantine/core';
+
+export function getColorScheme() {
+  return document.documentElement.getAttribute(
+    'data-mantine-color-scheme'
+  ) as MantineColorScheme;
+}
+```
+
+Then use it in any place of your application:
+
+```tsx
+import { getColorScheme } from './getColorScheme';
+
+const colorScheme = getColorScheme();
+```
+
+Note that this approach will not work on the server side.
+
+## I want to hide/show some elements based on color scheme value
+
+Using the approaches described above to get the color scheme value is not compatible with SSR.
+For example, if you want to conditionally render some elements based on the color scheme value,
+you will get a hydration mismatch or other error:
+
+```tsx
+import { useComputedColorScheme } from '@mantine/core';
+import { getColorScheme } from './getColorScheme';
+
+// ❌ Not compatible with SSR
+function Demo() {
+  const colorScheme = useComputedColorScheme();
+
+  return (
+    <div>
+      {colorScheme === 'dark' && <div>Dark mode</div>}
+      {getColorScheme() === 'light' && <div>Light mode</div>}
+    </div>
+  );
+}
+```
+
+Instead of relying on JavaScript code to hide/show elements,
+render both elements and hide them with styles based on the color scheme value
+using the `data-mantine-color-scheme` attribute. All Mantine components have
+`lightHidden` and `darkHidden` props that hide the element based on the color scheme value.
+You can also use [light/dark mixins](https://mantine.dev/theming/color-schemes/#color-scheme-value-caveats)
+or the `light-dark` function from [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset/)
+to hide elements based on the color scheme value.
+
+#### Example: HideShowColorScheme
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Button color="cyan" lightHidden>
+        Visible in dark color scheme only
+      </Button>
+
+      <Button color="pink" darkHidden>
+        Visible in light color scheme only
+      </Button>
+    </>
+  );
+}
+```
+

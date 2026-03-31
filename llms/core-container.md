@@ -5,7 +5,7 @@ Description: Center content with padding and max-width
 
 ## Grid strategy
 
-Starting from 8.2.0, `Container` supports `strategy="grid"` prop which enables more
+Starting from 8.2.0, `Container` supports the `strategy="grid"` prop which enables more
 features.
 
 Differences from the default `strategy="block"`:
@@ -21,8 +21,6 @@ Features supported by `strategy="grid"`:
 * Children with `data-container` inside `data-breakout` have the same width as the main grid column
 
 Example of using breakout feature:
-
-#### Example: breakout
 
 ```tsx
 import { Box, Container } from '@mantine/core';
@@ -49,11 +47,9 @@ function Demo() {
 
 ## Usage
 
-`Container` centers content and limits its `max-width` to the value specified in `size` prop.
-Note that the `size` prop does not make `max-width` responsive, for example,
-when it set to `lg` it will always be `lg` regardless of screen size.
-
-#### Example: usage
+`Container` centers content and limits its `max-width` to the value specified in the `size` prop.
+Note that the `size` prop does not make `max-width` responsive. For example,
+when it is set to `lg` it will always be `lg` regardless of screen size.
 
 ```tsx
 import { Container } from '@mantine/core';
@@ -84,10 +80,8 @@ function Demo() {
 
 ## Fluid
 
-Set `fluid` prop to make container fluid, it will take 100% of available width,
-it is the same as setting `size="100%"`.
-
-#### Example: fluid
+Set the `fluid` prop to make the container fluid. It will take 100% of available width,
+which is the same as setting `size="100%"`.
 
 ```tsx
 import { Container } from '@mantine/core';
@@ -104,10 +98,8 @@ function Demo() {
 
 ## Customize sizes
 
-You can customize existing `Container` sizes and add new ones with [CSS variables](https://mantine.dev/styles/styles-api)
-on [theme](https://mantine.dev/theming/theme-object):
-
-#### Example: sizes
+You can customize existing `Container` sizes and add new ones with [CSS variables](https://mantine.dev/llms/styles-styles-api.md)
+on [theme](https://mantine.dev/llms/theming-theme-object.md):
 
 ```tsx
 import { Container, MantineProvider, createTheme, rem } from '@mantine/core';
@@ -152,11 +144,9 @@ function Demo() {
 
 ## Responsive max-width
 
-To make `Container` `max-width` responsive, use [Styles API](https://mantine.dev/styles/styles-api) to set
-`classNames`. For example, you can add `responsive` size that will make `Container`
+To make `Container` `max-width` responsive, use [Styles API](https://mantine.dev/llms/styles-styles-api.md) to set
+`classNames`. For example, you can add a `responsive` size that will make the `Container`
 `max-width` different depending on screen size:
-
-#### Example: responsive
 
 ```tsx
 // Demo.tsx
@@ -202,11 +192,13 @@ function Demo() {
 
 #### Props
 
+**Container props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| fluid | boolean | - | If set, the container takes 100% width of its parent and <code>size</code> prop is ignored. |
-| size | number | MantineSize | (string & {}) | - | <code>max-width</code> of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when <code>fluid</code> prop is set. |
-| strategy | "block" | "grid" | - | Centering strategy |
+| fluid | boolean | - | If set, the container takes 100% width of its parent and `size` prop is ignored. |
+| size | MantineSize \| number | - | `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. |
+| strategy | "block" \| "grid" | - | Centering strategy |
 
 
 #### Styles API

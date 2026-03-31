@@ -3,12 +3,12 @@
 # Right-to-left direction
 
 All Mantine components support right-to-left direction out of the box.
-You can preview how components work with RTL direction by clicking direction control
+You can preview how components work with RTL direction by clicking the direction control
 in the top right corner or pressing `Ctrl + Shift + L`.
 
 ## DirectionProvider
 
-`DirectionProvider` component is used to set direction for all components inside it.
+The `DirectionProvider` component is used to set direction for all components inside it.
 It is required to wrap your application with `DirectionProvider` if you are planning to
 either use RTL direction or change direction dynamically.
 
@@ -22,7 +22,7 @@ export interface DirectionProviderProps {
   /** Direction set as a default value, `ltr` by default */
   initialDirection?: 'rtl' | 'ltr';
 
-  /** Determines whether direction should be updated on mount based on `dir` attribute set on root element (usually html element), `true` by default  */
+  /** Determines whether direction should be updated on mount based on the `dir` attribute set on the root element (usually the html element), `true` by default  */
   detectDirection?: boolean;
 }
 ```
@@ -43,9 +43,9 @@ function Demo() {
 
 ## dir attribute
 
-It is required to set `dir` attribute on the root element of your application, usually it is `html` element.
-`DirectionProvider` will use its value to set direction on mount if `detectDirection` prop is set to `true`.
-Note that this guide does not cover setting `dir` attribute for different frameworks – follow your framework
+It is required to set the `dir` attribute on the root element of your application, usually the `html` element.
+The `DirectionProvider` will use its value to set direction on mount if the `detectDirection` prop is set to `true`.
+Note that this guide does not cover setting the `dir` attribute for different frameworks – follow your framework's
 documentation to learn how to do it.
 
 ```html
@@ -67,20 +67,18 @@ documentation to learn how to do it.
 
 You can use it to create direction control in your application:
 
-#### Example: directionControl
-
 ```tsx
 import { ActionIcon, useDirection } from '@mantine/core';
-import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
+import { TextAlignLeftIcon, TextAlignRightIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const { toggleDirection, dir } = useDirection();
   return (
-    <ActionIcon onClick={() => toggleDirection()} variant="default" radius="md" size="lg">
+    <ActionIcon onClick={() => toggleDirection()} variant="default" size="lg">
       {dir === 'rtl' ? (
-        <IconTextDirectionLtr stroke={1.5} />
+        <TextAlignLeftIcon />
       ) : (
-        <IconTextDirectionRtl stroke={1.5} />
+        <TextAlignRightIcon />
       )}
     </ActionIcon>
   );
@@ -90,9 +88,7 @@ function Demo() {
 
 ## rtl mixin
 
-If you have [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) installed then you can use `rtl` mixin in `.css` files:
-
-#### Example: rtlMixin
+If you have [postcss-preset-mantine](https://mantine.dev/llms/styles-postcss-preset.md) installed, then you can use the `rtl` mixin in `.css` files:
 
 ```tsx
 // Demo.module.css

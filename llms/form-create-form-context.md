@@ -5,7 +5,7 @@ Description: Add context support to use-form with createFormContext
 
 ## Usage
 
-`createFormContext` function creates context provider and hook to get form object from context:
+The `createFormContext` function creates a context provider and hook to get the form object from context:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -18,9 +18,9 @@ interface FormValues {
 }
 
 // createFormContext returns a tuple with 3 items:
-// FormProvider is a component that sets form context
-// useFormContext hook return form object that was previously set in FormProvider
-// useForm hook works the same way as useForm exported from the package but has predefined type
+// FormProvider is a component that sets the form context
+// useFormContext hook returns the form object that was previously set in FormProvider
+// useForm hook works the same way as useForm exported from the package but has a predefined type
 const [FormProvider, useFormContext, useForm] =
   createFormContext<FormValues>();
 
@@ -58,7 +58,7 @@ export function Context() {
 
 ## Store context in separate file
 
-Usually it is a good idea to store form context in separate file to avoid dependencies cycle:
+Usually it's a good idea to store the form context in a separate file to avoid dependency cycles:
 
 ```tsx
 // form-context.ts file

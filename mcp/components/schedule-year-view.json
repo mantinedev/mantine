@@ -1,0 +1,336 @@
+{
+  "id": "schedule-year-view",
+  "name": "YearView",
+  "kind": "component",
+  "package": "@mantine/schedule",
+  "route": "/schedule/year-view",
+  "description": "Standalone schedule year view component",
+  "propsCount": 28,
+  "llmUrl": "https://mantine.dev/llms/schedule-year-view.md",
+  "componentDataUrl": "/mcp/components/schedule-year-view.json",
+  "searchText": "yearview standalone schedule year view component @mantine/schedule /schedule/year-view date events firstdayofweek getdayprops getweeknumberprops highlighttoday labels locale mode monthlabelformat monthyearselectprops nextcontrolprops ondatechange ondayclick onmonthclick onviewchange onweeknumberclick previouscontrolprops radius recurrenceexpansionlimit todaycontrolprops viewselectprops weekdayformat weekenddays withheader withoutsidedays withweekdays withweeknumbers",
+  "source": "@mantine/schedule/src/components/YearView/YearView.tsx",
+  "docs": "schedule/year-view.mdx",
+  "markdown": "# YearView\nPackage: @mantine/schedule\nImport: import { YearView } from '@mantine/schedule';\nDescription: Standalone schedule year view component\n\n## Usage\n\nYearView displays all 12 months of a year in a grid layout. Event indicators are shown as colored dots in day cells.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <YearView\n      date={date}\n      onDateChange={setDate}\n      events={events}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisYear = dayjs().format('YYYY');\n\nconst events = [\n  {\n    id: 1,\n    title: 'New Year',\n    start: \\\\\\`\\\\\\${thisYear}-01-01 00:00:00\\\\\\`,\n    end: dayjs(\\\\\\`\\\\\\${thisYear}-01-01\\\\\\`).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Spring Event',\n    start: \\\\\\`\\\\\\${thisYear}-03-15 00:00:00\\\\\\`,\n    end: dayjs(\\\\\\`\\\\\\${thisYear}-03-15\\\\\\`).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'green',\n  },\n];\n```\n\n\n## With week numbers\n\nSet `withWeekNumbers` to display week numbers in the first column of each month.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} withWeekNumbers />;\n}\n```\n\n\n## Without week days\n\nSet `withWeekDays={false}` to hide the weekday names row in each month.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} withWeekDays={false} />;\n}\n```\n\n\n## Hide outside days\n\nSet `withOutsideDays={false}` to hide days from adjacent months.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} withOutsideDays={false} />;\n}\n```\n\n\n## First day of week\n\nSet `firstDayOfWeek` to control which day starts the week.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} firstDayOfWeek={0} />;\n}\n```\n\n\n## Weekday format\n\nUse `weekdayFormat` prop to customize weekday names.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} weekdayFormat=\"dd\" />;\n}\n```\n\n\n## Highlight today\n\nSet `highlightToday={false}` to disable highlighting the current day.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} highlightToday={false} />;\n}\n```\n\n\n## Without header\n\nSet `withHeader={false}` to hide the header controls.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} withHeader={false} />;\n}\n```\n\n\n## Custom header\n\nYou can build a custom header using `ScheduleHeader` compound components combined with your own controls.\nSet `withHeader={false}` on the view and compose the header externally.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { DateStringValue, ScheduleHeader, YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState<DateStringValue>(\n    dayjs().format('YYYY-MM-DD')\n  );\n\n  return (\n    <div>\n      <ScheduleHeader>\n        <ScheduleHeader.Previous\n          onClick={() =>\n            setDate(\n              dayjs(date)\n                .subtract(1, 'year')\n                .startOf('year')\n                .format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.MonthYearSelect\n          withMonths={false}\n          yearValue={dayjs(date).year()}\n          monthValue={dayjs(date).month()}\n          onYearChange={(year) =>\n            setDate(\n              dayjs(date)\n                .year(year)\n                .startOf('year')\n                .format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Next\n          onClick={() =>\n            setDate(\n              dayjs(date)\n                .add(1, 'year')\n                .startOf('year')\n                .format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Today\n          onClick={() =>\n            setDate(\n              dayjs().format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Control\n          style={{ marginInlineStart: 'auto' }}\n          onClick={() => window.print()}\n        >\n          Print\n        </ScheduleHeader.Control>\n      </ScheduleHeader>\n\n      <YearView\n        date={date}\n        onDateChange={setDate}\n        events={events}\n        withHeader={false}\n      />\n    </div>\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisYear = dayjs().format('YYYY');\n\nconst events = [\n  {\n    id: 1,\n    title: 'New Year',\n    start: \\\\\\`\\\\\\${thisYear}-01-01 00:00:00\\\\\\`,\n    end: dayjs(\\\\\\`\\\\\\${thisYear}-01-01\\\\\\`).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Spring Event',\n    start: \\\\\\`\\\\\\${thisYear}-03-15 00:00:00\\\\\\`,\n    end: dayjs(\\\\\\`\\\\\\${thisYear}-03-15\\\\\\`).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'green',\n  },\n];\n```\n\n\n## Recurring events\n\nYearView automatically expands recurring events for the visible year.\nSee [Recurring events guide](https://mantine.dev/llms/schedule-recurring-events.md) for full documentation.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { YearView } from '@mantine/schedule';\n\nconst year = dayjs().year();\n\nconst events = [\n  {\n    id: 'yearly-series',\n    title: 'Monthly architecture review (series)',\n    start: `${year}-01-10 09:00:00`,\n    end: `${year}-01-10 10:00:00`,\n    color: 'blue',\n    recurrence: {\n      rrule: 'FREQ=MONTHLY;COUNT=12',\n      exdate: [`${year}-11-10 09:00:00`],\n    },\n  },\n  {\n    id: 'yearly-series-override',\n    title: 'Monthly architecture review (moved in Nov)',\n    start: `${year}-11-10 13:00:00`,\n    end: `${year}-11-10 14:00:00`,\n    color: 'grape',\n    recurringEventId: 'yearly-series',\n    recurrenceId: `${year}-11-10 09:00:00`,\n  },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState(`${year}-01-01`);\n  return <YearView date={date} onDateChange={setDate} events={events} withWeekNumbers />;\n}\n```\n\n\n## Static mode\n\nSet `mode=\"static\"` to disable all interactions.\n\n```tsx\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <YearView date={new Date()} events={events} mode=\"static\" />;\n}\n```\n\n\n## Localization\n\nUse `locale` prop to set the dayjs locale for date formatting.\nCombine it with `labels` prop to translate all UI text.\n\n```tsx\n// Demo.tsx\nimport 'dayjs/locale/es';\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { YearView } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <YearView\n      date={date}\n      onDateChange={setDate}\n      events={events}\n      locale=\"es\"\n      labels={{\n        day: 'Día',\n        week: 'Semana',\n        month: 'Mes',\n        year: 'Año',\n        today: 'Hoy',\n        previous: 'Anterior',\n        next: 'Siguiente',\n      }}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst thisYear = dayjs().format('YYYY');\n\nconst events = [\n  {\n    id: 1,\n    title: 'New Year',\n    start: \\\\\\`\\\\\\${thisYear}-01-01 00:00:00\\\\\\`,\n    end: dayjs(\\\\\\`\\\\\\${thisYear}-01-01\\\\\\`).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Spring Event',\n    start: \\\\\\`\\\\\\${thisYear}-03-15 00:00:00\\\\\\`,\n    end: dayjs(\\\\\\`\\\\\\${thisYear}-03-15\\\\\\`).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'green',\n  },\n];\n```\n\n\n## Responsive styles\n\nYearView uses [@container queries](https://caniuse.com/css-container-queries) for responsive styles.\nThe component automatically adjusts its layout based on the container width, hiding labels\nand reducing padding on smaller screens. Container queries are supported in all modern browsers.\n\n## Accessibility\n\n### Focus management\n\nIn the YearView component, focus is managed to provide an efficient keyboard navigation experience:\n\n* Only the first day of each month is included in the tab order (has `tabIndex={0}`)\n* All other days within a month have `tabIndex={-1}` and can only be reached via arrow key navigation\n* Outside days (days from adjacent months displayed in the current month view) are not focusable\n* Disabled days are skipped during keyboard navigation\n\nThis approach reduces the number of tab stops when navigating through the calendar, making it faster for keyboard users to move between months while still allowing full access to all days via arrow keys.\n\n### Keyboard interactions\n\nNote that the following events will only trigger if focus is on a day control.\n\n### Day labels\n\nEach day button has an `aria-label` attribute with the full date in the format \"Month Day, Year\" (e.g., \"November 15, 2025\"). This provides screen reader users with complete date information.\n\n\n#### Props\n\n**YearView props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| date | string \\| Date | required | Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format |\n| events | ScheduleEventData[] | - | Events to display, must be a stable reference |\n| firstDayOfWeek | 0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday |\n| getDayProps | (date: string) => Record<string, any> | - | Props passed down to the day button |\n| getWeekNumberProps | (weekStartDate: string) => Record<string, any> | - | Props passed down to the week number button |\n| highlightToday | boolean | - | If set, highlights the current day |\n| labels | Partial<ScheduleLabels> | - | Labels override for i18n |\n| locale | string | - | Locale passed down to dayjs, overrides value defined on `DatesProvider` |\n| mode | ScheduleMode | - | Interaction mode: 'default' allows all interactions, 'static' disables event interactions |\n| monthLabelFormat | string \\| ((date: string) => string) | - | `dayjs` format for month label |\n| monthYearSelectProps | Partial<MonthYearSelectProps> | - | Props passed down to `MonthYearSelect` component in the header |\n| nextControlProps | React.ComponentProps<'button'> | - | Props passed to next month control |\n| onDateChange | (value: string) => void | - | Called with the new date value when a date is selected |\n| onDayClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when day is clicked |\n| onMonthClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called with the first day of the month when month label is clicked |\n| onViewChange | (view: ScheduleViewLevel) => void | - | Called when view level select button is clicked |\n| onWeekNumberClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called with first day of the week when week number is clicked |\n| previousControlProps | React.ComponentProps<'button'> | - | Props passed to previous month control |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| recurrenceExpansionLimit | number | - | Max number of generated recurring instances per recurring series |\n| todayControlProps | React.ComponentProps<'button'> | - | Props passed to today control |\n| viewSelectProps | Partial<ViewSelectProps> & DataAttributes | - | Props passed to view level select |\n| weekdayFormat | string \\| ((date: string) => string) | - | `dayjs` format for weekdays names |\n| weekendDays | (0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |\n| withHeader | boolean | - | If set, the header is displayed |\n| withOutsideDays | boolean | - | If true, days from adjacent months are displayed |\n| withWeekDays | boolean | - | If set, weekdays names are displayed in the first row |\n| withWeekNumbers | boolean | - | If set, show week numbers |\n\n\n#### Styles API\n\nYearView component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**YearView selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| yearView | .mantine-YearView-yearView | Root element |\n| yearViewMonths | .mantine-YearView-yearViewMonths | Container for all months |\n| yearViewMonth | .mantine-YearView-yearViewMonth | Individual month container |\n| yearViewWeekday | .mantine-YearView-yearViewWeekday | Weekday name cell |\n| yearViewDay | .mantine-YearView-yearViewDay | Day cell |\n| yearViewWeek | .mantine-YearView-yearViewWeek | Week row |\n| yearViewWeekNumber | .mantine-YearView-yearViewWeekNumber | Week number indicator |\n| yearViewWeekdays | .mantine-YearView-yearViewWeekdays | Weekdays row |\n| yearViewWeekdaysCorner | .mantine-YearView-yearViewWeekdaysCorner | Top-left corner in weekdays row |\n| yearViewMonthCaption | .mantine-YearView-yearViewMonthCaption | Month name label |\n| yearViewDayIndicators | .mantine-YearView-yearViewDayIndicators | Container for day event indicators |\n| yearViewDayIndicator | .mantine-YearView-yearViewDayIndicator | Individual day event indicator |\n| header | .mantine-YearView-header | Header container, part of ScheduleHeader |\n| headerControl | .mantine-YearView-headerControl | Header control element, part of ScheduleHeader |\n| viewSelect | .mantine-YearView-viewSelect | View select element, part of ScheduleHeader |\n| monthYearSelectTarget | .mantine-YearView-monthYearSelectTarget | Month/year select target button, part of MonthYearSelect |\n| monthYearSelectDropdown | .mantine-YearView-monthYearSelectDropdown | Month/year select dropdown, part of MonthYearSelect |\n| monthYearSelectControl | .mantine-YearView-monthYearSelectControl | Month/year select control, part of MonthYearSelect |\n| monthYearSelectList | .mantine-YearView-monthYearSelectList | Month/year select list, part of MonthYearSelect |\n| monthYearSelectLabel | .mantine-YearView-monthYearSelectLabel | Month/year select label, part of MonthYearSelect |\n\n**YearView CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| yearView | --year-view-radius | Controls `border-radius` of the year view |\n\n**YearView data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| yearViewDay | data-today | Day is today | - |\n| yearViewDay | data-weekend | Day is a weekend day | - |\n| yearViewDay | data-outside | Day is outside current month | - |\n| yearView | data-static | `mode=\"static\"` is set | - |\n",
+  "props": [
+    {
+      "name": "date",
+      "description": "Date to display, Date object or date string in <code>YYYY-MM-DD 00:00:00</code> format",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "events",
+      "description": "Events to display, must be a stable reference",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleEventData[]"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "firstDayOfWeek",
+      "description": "Number 0-6, where 0 – Sunday and 6 – Saturday",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+        "raw": "DayOfWeek | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "0"
+          },
+          {
+            "value": "2"
+          },
+          {
+            "value": "1"
+          },
+          {
+            "value": "3"
+          },
+          {
+            "value": "4"
+          },
+          {
+            "value": "5"
+          },
+          {
+            "value": "6"
+          }
+        ]
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "getDayProps",
+      "description": "Props passed down to the day button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Record<string, any>"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "getWeekNumberProps",
+      "description": "Props passed down to the week number button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(weekStartDate: string) => Record<string, any>"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "highlightToday",
+      "description": "If set, highlights the current day",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "labels",
+      "description": "Labels override for i18n",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ScheduleLabels>"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "locale",
+      "description": "Locale passed down to dayjs, overrides value defined on <code>DatesProvider</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "mode",
+      "description": "Interaction mode: 'default' allows all interactions, 'static' disables event interactions",
+      "required": false,
+      "defaultValue": "default",
+      "type": {
+        "name": "ScheduleMode",
+        "raw": "ScheduleMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"static\""
+          }
+        ]
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "monthLabelFormat",
+      "description": "<code>dayjs</code> format for month label",
+      "required": false,
+      "defaultValue": "'MMMM'",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "monthYearSelectProps",
+      "description": "Props passed down to <code>MonthYearSelect</code> component in the header",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<MonthYearSelectProps>"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "nextControlProps",
+      "description": "Props passed to next month control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<'button'>"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "onDateChange",
+      "description": "Called with the new date value when a date is selected",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "onDayClick",
+      "description": "Called when day is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "onMonthClick",
+      "description": "Called with the first day of the month when month label is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "onViewChange",
+      "description": "Called when view level select button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(view: ScheduleViewLevel) => void"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "onWeekNumberClick",
+      "description": "Called with first day of the week when week number is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "previousControlProps",
+      "description": "Props passed to previous month control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<'button'>"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "recurrenceExpansionLimit",
+      "description": "Max number of generated recurring instances per recurring series",
+      "required": false,
+      "defaultValue": "2000",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "todayControlProps",
+      "description": "Props passed to today control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<'button'>"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "viewSelectProps",
+      "description": "Props passed to view level select",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ViewSelectProps> & DataAttributes"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "weekdayFormat",
+      "description": "<code>dayjs</code> format for weekdays names",
+      "required": false,
+      "defaultValue": "'d'",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "weekendDays",
+      "description": "Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by <code>DatesProvider</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(0 | 1 | 2 | 3 | 4 | 5 | 6)[]"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "withHeader",
+      "description": "If set, the header is displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "withOutsideDays",
+      "description": "If true, days from adjacent months are displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "withWeekDays",
+      "description": "If set, weekdays names are displayed in the first row",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "YearView"
+    },
+    {
+      "name": "withWeekNumbers",
+      "description": "If set, show week numbers",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "YearView"
+    }
+  ]
+}

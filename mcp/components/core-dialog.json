@@ -1,0 +1,157 @@
+{
+  "id": "core-dialog",
+  "name": "Dialog",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/dialog",
+  "description": "Display a fixed overlay dialog at any side of the screen",
+  "propsCount": 14,
+  "llmUrl": "https://mantine.dev/llms/core-dialog.md",
+  "componentDataUrl": "/mcp/components/core-dialog.json",
+  "searchText": "dialog display a fixed overlay dialog at any side of the screen @mantine/core /core/dialog children keepmounted onclose opened portalprops position radius shadow size transitionprops withborder withclosebutton withinportal zindex",
+  "source": "@mantine/core/src/components/Dialog/Dialog.tsx",
+  "docs": "core/dialog.mdx",
+  "markdown": "# Dialog\nPackage: @mantine/core\nImport: import { Dialog } from '@mantine/core';\nDescription: Display a fixed overlay dialog at any side of the screen\n\n## Usage\n\n`Dialog` is a simplified version of the [Modal](https://mantine.dev/llms/core-modal.md) component.\nIt does not include most of the accessibility and usability [Modal](https://mantine.dev/llms/core-modal.md) features:\n\n* Focus trap is not available\n* Does not close on click outside\n* Does not have an overlay\n\nUse `Dialog` to attract attention with non-important information or actions.\nFor example, you can create an email subscription form:\n\n```tsx\nimport { useDisclosure } from '@mantine/hooks';\nimport { Dialog, Group, Button, TextInput, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, { toggle, close }] = useDisclosure(false);\n\n  return (\n    <>\n      <Group justify=\"center\">\n        <Button onClick={toggle}>Toggle dialog</Button>\n      </Group>\n\n      <Dialog opened={opened} withCloseButton onClose={close} size=\"lg\">\n        <Text size=\"sm\" mb=\"xs\" fw={500}>\n          Subscribe to email newsletter\n        </Text>\n\n        <Group align=\"flex-end\">\n          <TextInput placeholder=\"hello@gluesticker.com\" style={{ flex: 1 }} />\n          <Button onClick={close}>Subscribe</Button>\n        </Group>\n      </Dialog>\n    </>\n  );\n}\n```\n\n\n## Change position\n\n`Dialog` is rendered in [Portal](https://mantine.dev/llms/core-portal.md) and has a fixed position. Set the `position` prop to control the dialog's position:\n\n```tsx\nimport { Dialog } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Dialog position={{ top: 20, left: 20 }} opened>\n        Dialog in top left corner\n      </Dialog>\n      <Dialog position={{ bottom: 20, left: 20 }} opened>\n        Dialog in bottom left corner\n      </Dialog>\n    </>\n  );\n}\n```\n\n## Accessibility\n\n`Dialog` is not accessible and most likely will not be announced by screen readers.\nMake sure you do not put any important information in it. In most cases it would be better\nto select [Modal](https://mantine.dev/llms/core-modal.md), [Drawer](https://mantine.dev/llms/core-drawer.md) or [Notifications](https://mantine.dev/llms/x-notifications.md).\n\n\n#### Props\n\n**Dialog props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Dialog content |\n| keepMounted | boolean | - | If set, the component uses `display: none` to hide the root element instead of removing the DOM node |\n| onClose | () => void | - | Called on close button click |\n| opened | boolean | required | Opened state |\n| portalProps | BasePortalProps | - | Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. |\n| position | AffixPosition | - | Affix position on screen |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS value to set `box-shadow` |\n| size | MantineSize \\| number | - | Controls `width` of the dialog |\n| transitionProps | TransitionProps | - | Props passed down to the underlying `Transition` component |\n| withBorder | boolean | - | Adds border to the root element |\n| withCloseButton | boolean | - | If set, displays the close button |\n| withinPortal | boolean | - | Determines whether the component is rendered within `Portal` |\n| zIndex | React.CSSProperties[\"zIndex\"] | - | Root element `z-index` property |\n\n\n#### Styles API\n\nDialog component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Dialog selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Dialog-root | Root element |\n| closeButton | .mantine-Dialog-closeButton | Close button |\n\n**Dialog CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --dialog-size | Controls `width` of the dialog |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "Dialog content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, the component uses <code>display: none</code> to hide the root element instead of removing the DOM node",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "onClose",
+      "description": "Called on close button click",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "opened",
+      "description": "Opened state",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props passed down to the <code>Portal</code> component. Ignored when <code>withinPortal</code> is <code>false</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "position",
+      "description": "Affix position on screen",
+      "required": false,
+      "defaultValue": "{ bottom: 0, right: 0 }",
+      "type": {
+        "name": "AffixPosition"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any valid CSS value to set <code>box-shadow</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "size",
+      "description": "Controls <code>width</code> of the dialog",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props passed down to the underlying <code>Transition</code> component",
+      "required": false,
+      "defaultValue": "{ transition: 'pop-top-right', duration: 200 }",
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "withCloseButton",
+      "description": "If set, displays the close button",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "withinPortal",
+      "description": "Determines whether the component is rendered within <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dialog"
+    },
+    {
+      "name": "zIndex",
+      "description": "Root element <code>z-index</code> property",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "React.CSSProperties[\"zIndex\"]"
+      },
+      "sourceComponent": "Dialog"
+    }
+  ]
+}

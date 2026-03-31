@@ -2,11 +2,11 @@
 
 # Colors
 
-Mantine uses [open-color](https://yeun.github.io/open-color/) in default theme with some additions.
+Mantine uses [open-color](https://yeun.github.io/open-color/) in the default theme with some additions.
 Each color has 10 shades.
 
-Colors are exposed on the [theme object](https://mantine.dev/theming/theme-object) as an array of strings,
-you can access color shade by color name and index (0-9), colors with larger index are darker:
+Colors are exposed on the [theme object](https://mantine.dev/llms/theming-theme-object.md) as an array of strings.
+You can access a color shade by color name and index (0-9); colors with a larger index are darker:
 
 ```tsx
 import { useMantineTheme } from '@mantine/core';
@@ -27,7 +27,7 @@ function Demo() {
 }
 ```
 
-Colors are also exposed as [CSS variables](https://mantine.dev/styles/css-variables):
+Colors are also exposed as [CSS variables](https://mantine.dev/llms/styles-css-variables.md):
 
 ```scss
 .demo {
@@ -39,11 +39,9 @@ Colors are also exposed as [CSS variables](https://mantine.dev/styles/css-variab
 
 ## Adding extra colors
 
-You can add any number of extra colors to `theme.colors` object.
-This will allow you to use them in all components that support `color` prop, for example
-[Button](https://mantine.dev/core/button), [Badge](https://mantine.dev/core/badge) and [Switch](https://mantine.dev/core/switch).
-
-#### Example: colorsOverride
+You can add any number of extra colors to the `theme.colors` object.
+This will allow you to use them in all components that support the `color` prop, for example
+[Button](https://mantine.dev/llms/core-button.md), [Badge](https://mantine.dev/llms/core-badge.md), and [Switch](https://mantine.dev/llms/core-switch.md).
 
 ```tsx
 import { Group, Button, MantineProvider, createTheme } from '@mantine/core';
@@ -72,7 +70,7 @@ function Demo() {
 
 > **10 shades per color**
 >
-> Colors override must include **at least 10 shades per color**. Otherwise, you will get a TypeScript error
+> A colors override must include **at least 10 shades per color**. Otherwise, you will get a TypeScript error
 > and some variants will not have proper colors. If you only have one color value, you can either
 > pick the remaining colors manually or use the [colors generator tool](https://mantine.dev/colors-generator).
 >
@@ -81,8 +79,8 @@ function Demo() {
 
 ## Virtual colors
 
-Virtual color is a special color which values should be different for light and dark color schemes.
-To define a virtual color, use `virtualColor` function which accepts an object with the following
+A virtual color is a special color whose values should be different for light and dark color schemes.
+To define a virtual color, use the `virtualColor` function which accepts an object with the following
 properties as a single argument:
 
 * `name` – color name, must be the same as the key in `theme.colors` object
@@ -90,8 +88,6 @@ properties as a single argument:
 * `dark` – a key of `theme.colors` object for dark color scheme
 
 To see the demo in action, switch between light and dark color schemes (`Ctrl + J`):
-
-#### Example: virtualColors
 
 ```tsx
 // App.tsx
@@ -132,9 +128,9 @@ export function Demo() {
 
 ## colorsTuple
 
-Use `colorsTuple` function to:
+Use the `colorsTuple` function to:
 
-* Use single color as the same color for all shades
+* Use a single color as the same color for all shades
 * Transform dynamic string arrays to Mantine color tuple (the array should still have 10 values)
 
 ```tsx
@@ -159,9 +155,7 @@ You can use the following color formats in `theme.colors`:
 * HSL: `hsl(0, 0%, 100%)`, `hsla(0, 0%, 100%, 0.5)`
 * OKLCH: `oklch(96.27% 0.0217 238.66)`, `oklch(96.27% 0.0217 238.66 / 0.5)`
 
-Example of adding oklch color to theme:
-
-#### Example: oklch
+Example of adding an oklch color to theme:
 
 ```tsx
 import { MantineProvider, createTheme, Group, Button } from '@mantine/core';
@@ -208,8 +202,6 @@ function Demo() {
 * As a default value for most of the components that support `color` prop
 * To set default focus ring outline color
 
-#### Example: primaryColor
-
 ```tsx
 import { Group, Button, MantineProvider, createTheme } from '@mantine/core';
 
@@ -235,8 +227,8 @@ function Demo() {
 
 > **CSS color values at `theme.primaryColor`**
 >
-> Value of `theme.primaryColor` must be a key of `theme.colors` object. For example, `blue`, `orange` or `green`.
-> You cannot assign CSS color values, for example, the following code will throw an error during theme merging:
+> The value of `theme.primaryColor` must be a key of the `theme.colors` object. For example, `blue`, `orange`, or `green`.
+> You cannot assign CSS color values; for example, the following code will throw an error during theme merging:
 >
 > ```tsx
 > import { MantineProvider } from '@mantine/core';
@@ -256,16 +248,14 @@ function Demo() {
 
 ## primaryShade
 
-`theme.primaryShade` is a number from 0 to 9. It determines which shade will be used for the components that have `color` prop.
-
-#### Example: primaryShadeConfigurator
+`theme.primaryShade` is a number from 0 to 9. It determines which shade will be used for components that have a `color` prop.
 
 ```tsx
 import { MantineProvider, Button, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <MantineProvider theme={{ primaryShade:  }}>
+    <MantineProvider theme={{ primaryShade: 6 }}>
       <Group>
         <Button>Filled</Button>
         <Button variant="light">Light</Button>
@@ -298,8 +288,6 @@ Components that support changing their color have `color` prop. This prop suppor
 * Key of `theme.colors`, for example, `blue` or `green`
 * Key of `theme.colors` with color index, for example, `blue.5` or `green.9`
 * CSS color value, for example, `#fff` or `rgba(0, 0, 0, 0.5)`
-
-#### Example: colorProp
 
 ```tsx
 import { Group, Button, Text } from '@mantine/core';
@@ -346,9 +334,7 @@ function Demo() {
 
 ## Colors index reference
 
-You can reference colors by index in `color` prop and [style props](https://mantine.dev/styles/style-props), for example `c` prop:
-
-#### Example: colorsIndexConfigurator
+You can reference colors by index in the `color` prop and [style props](https://mantine.dev/llms/styles-style-props.md), for example the `c` prop:
 
 ```tsx
 import { Button, Text } from '@mantine/core';
@@ -356,8 +342,8 @@ import { Button, Text } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <Text c="blue.">Text with blue. color</Text>
-      <Button color="cyan.">Button</Button>
+      <Text c="blue.6">Text with blue.6 color</Text>
+      <Button color="cyan.6">Button</Button>
     </>
   );
 }
@@ -366,22 +352,20 @@ function Demo() {
 
 ## Difference between color and c props
 
-`color` prop is used to control multiple CSS properties of the component. These properties can vary across different components,
-but usually `color` prop controls `background`, `color` and `border-color` CSS properties. For example,
-when you set `color="#C3FF36"` on [Button](https://mantine.dev/core/button) component (with `variant="filled"`), it will set the following CSS properties:
+The `color` prop is used to control multiple CSS properties of the component. These properties can vary across different components,
+but usually the `color` prop controls `background`, `color`, and `border-color` CSS properties. For example,
+when you set `color="#C3FF36"` on the [Button](https://mantine.dev/llms/core-button.md) component (with `variant="filled"`), it will set the following CSS properties:
 
 * `background-color` to `#C3FF36`
-* `background-color` when button is hovered to `#B0E631` (`#C3FF36` darkened by 10%)
+* `background-color` when the button is hovered to `#B0E631` (`#C3FF36` darkened by 10%)
 * `color` to `var(--mantine-color-white)`
 * `border-color` to `transparent`
 
-`c` is a [style prop](https://mantine.dev/styles/style-props) – it is responsible for setting a single CSS property `color` (color of the text).
+`c` is a [style prop](https://mantine.dev/llms/styles-style-props.md) – it is responsible for setting a single CSS property `color` (color of the text).
 You can combine both props to achieve better contrast between text and background. In the following example:
 
-* `color` prop sets all `background: #C3FF36` and `color: var(--mantine-color-white)`
-* `c` prop overrides color styles to `color: var(--mantine-color-black)`
-
-#### Example: colorAndCProps
+* The `color` prop sets `background: #C3FF36` and `color: var(--mantine-color-white)`
+* The `c` prop overrides color styles to `color: var(--mantine-color-black)`
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -399,7 +383,7 @@ function Demo() {
 ## Colors variant resolver
 
 `theme.variantColorResolver` is a function that is used to determine which colors will be used
-in different variants in the following components: [Alert](https://mantine.dev/core/alert), [Avatar](https://mantine.dev/core/avatar), [Button](https://mantine.dev/core/button), [Badge](https://mantine.dev/core/badge) and [ActionIcon](https://mantine.dev/core/action-icon).
+in different variants in the following components: [Alert](https://mantine.dev/llms/core-alert.md), [Avatar](https://mantine.dev/llms/core-avatar.md), [Button](https://mantine.dev/llms/core-button.md), [Badge](https://mantine.dev/llms/core-badge.md), and [ActionIcon](https://mantine.dev/llms/core-action-icon.md).
 
 It accepts an object argument with the following properties:
 
@@ -431,9 +415,7 @@ interface VariantColorResolverResult {
 ```
 
 You can use `theme.variantColorResolver` to customize colors handling by default variants
-or to add new variants support:
-
-#### Example: variantColorsResolver
+or to add support for new variants:
 
 ```tsx
 import {
@@ -508,8 +490,8 @@ function Demo() {
 
 ## Colors generation
 
-You can use [colors generator](https://mantine.dev/colors-generator) to generate 10 shades of color based on a single value
-or install `@mantine/colors-generator` package to generate dynamic colors in your application:
+You can use the [colors generator](https://mantine.dev/colors-generator) to generate 10 shades of color based on a single value
+or install the `@mantine/colors-generator` package to generate dynamic colors in your application:
 
 ```bash
 yarn add chroma-js @mantine/colors-generator
@@ -519,9 +501,9 @@ yarn add chroma-js @mantine/colors-generator
 npm install chroma-js @mantine/colors-generator
 ```
 
-The package exports `generateColors` function that accepts a color value and returns an array of 10 shades.
-Note that `generateColors` function works best with darker colors (blue, violet, red) and may produce
-colors with poor contrast for lighter colors (yellow, teal, orange). Usually, it is better to generate
+The package exports a `generateColors` function that accepts a color value and returns an array of 10 shades.
+Note that the `generateColors` function works best with darker colors (blue, violet, red) and may produce
+colors with poor contrast for lighter colors (yellow, teal, orange). Usually, it's better to generate
 colors in advance to avoid contrast issues.
 
 ```tsx
@@ -544,8 +526,6 @@ function Demo() {
 ```
 
 ## Default colors
-
-<ThemeColors />
 
 ## Add custom colors types
 

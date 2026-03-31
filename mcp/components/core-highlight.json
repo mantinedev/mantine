@@ -1,0 +1,137 @@
+{
+  "id": "core-highlight",
+  "name": "Highlight",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/highlight",
+  "description": "Highlight given part of a string with mark",
+  "propsCount": 12,
+  "llmUrl": "https://mantine.dev/llms/core-highlight.md",
+  "componentDataUrl": "/mcp/components/core-highlight.json",
+  "searchText": "highlight highlight given part of a string with mark @mantine/core /core/highlight children color gradient highlight highlightstyles inherit inline lineclamp size span truncate wholeword",
+  "source": "@mantine/core/src/components/Highlight/Highlight.tsx",
+  "docs": "core/highlight.mdx",
+  "markdown": "# Highlight\nPackage: @mantine/core\nImport: import { Highlight } from '@mantine/core';\nDescription: Highlight given part of a string with mark\n\n## Usage\n\nUse the Highlight component to highlight substrings within text using the HTML `<mark>` element.\n\nPass the text as children and specify which substring(s) to highlight with the `highlight` prop.\nMatching is **case-insensitive** and highlights all occurrences of the matched substring.\n\n```tsx\nimport { Highlight } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Highlight color=\"yellow\" highlight=\"this\" children=\"Highlight This, definitely THIS and also this!\">\n      {{children}}\n    </Highlight>\n  );\n}\n```\n\n\n## Matching behavior\n\n* **Case-insensitive**: 'hello' matches 'Hello', 'HELLO', 'hElLo', etc.\n* **All occurrences**: Every instance of the matched substring is highlighted\n* **Special characters**: Regex special characters like `[`, `]`, `(`, `)` are automatically escaped and treated as literal text\n* **Whitespace**: Leading and trailing whitespace in highlight strings is trimmed and ignored\n* **Empty strings**: Empty or whitespace-only highlight strings are ignored\n\n## Highlight multiple substrings\n\nTo highlight multiple substrings, provide an array of values.\nWhen multiple substrings are provided, longer matches take precedence to avoid partial overlaps.\n\n```tsx\nimport { Highlight } from '@mantine/core';\n\nfunction Demo() {\n  return <Highlight highlight={['this', 'that']}>Highlight this and also that</Highlight>;\n}\n```\n\n\n## Custom colors per term\n\nYou can assign different colors to different highlighted terms by providing an array of objects with `text` and `color` properties:\n\n```tsx\nimport { Highlight } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Highlight\n      highlight={[\n        { text: 'error', color: 'red' },\n        { text: 'warning', color: 'yellow' },\n        { text: 'success', color: 'green' },\n      ]}\n    >\n      Error: Invalid input. Warning: Check this field. Success: All tests passed.\n    </Highlight>\n  );\n}\n```\n\n\n## Whole word matching\n\nUse the `wholeWord` prop to match only complete words. When enabled, 'the' will not match 'there' or 'theme':\n\n```tsx\nimport { Highlight, Stack, Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack gap=\"md\">\n      <div>\n        <Text size=\"sm\" fw={500} mb={5}>\n          With whole word matching (wholeWord={'{'}true{'}'})\n        </Text>\n        <Highlight highlight=\"the\" wholeWord>\n          The theme is there\n        </Highlight>\n      </div>\n\n      <div>\n        <Text size=\"sm\" fw={500} mb={5}>\n          Without whole word matching (default)\n        </Text>\n        <Highlight highlight=\"the\">The theme is there</Highlight>\n      </div>\n    </Stack>\n  );\n}\n```\n\n\n## Change highlight styles\n\nDefault [Mark](https://mantine.dev/llms/core-mark.md) styles can be overwritten with the `highlightStyles` prop,\nwhich accepts either an object with styles or a function that receives the theme as a parameter and returns styles:\n\n```tsx\nimport { Highlight } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Highlight\n      ta=\"center\"\n      highlight={['highlighted', 'default']}\n      highlightStyles={{\n        backgroundImage:\n          'linear-gradient(45deg, var(--mantine-color-cyan-5), var(--mantine-color-indigo-5))',\n        fontWeight: 700,\n        WebkitBackgroundClip: 'text',\n        WebkitTextFillColor: 'transparent',\n      }}\n    >\n      You can change styles of highlighted part if you do not like default styles\n    </Highlight>\n  );\n}\n```\n\n\n## Text props\n\nHighlight is based on the [Text](https://mantine.dev/llms/core-text.md) component - all Text props except `color` are available.\nUse the `color` prop to change the highlight background color, not the text color.\n\n```tsx\nimport { Highlight } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Highlight\n      component=\"a\"\n      href=\"https://mantine.dev\"\n      target=\"_blank\"\n      highlight=\"mantine\"\n      fw={500}\n      c=\"var(--mantine-color-anchor)\"\n    >\n      Mantine website\n    </Highlight>\n  );\n}\n```\n\n\n\n#### Props\n\n**Highlight props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | string | required | String in which to highlight substrings |\n| color | string \\| (string & {}) | - | Default background color for all highlighted text. Key of `theme.colors` or any valid CSS color, passed to `Mark` component. Can be overridden per term when using HighlightTerm objects. |\n| gradient | MantineGradient | - | Gradient configuration, ignored when `variant` is not `gradient` |\n| highlight | string \\| string[] \\| HighlightTerm[] | required | Substring(s) to highlight in `children`. Can be: - string: single term - string[]: multiple terms with same color - HighlightTerm[]: multiple terms with custom colors per term  - Matching is case-insensitive - Regex special characters are automatically escaped - When multiple substrings are provided, longer matches take precedence - Empty strings and whitespace-only strings are ignored |\n| highlightStyles | CSSProperties \\| ((theme: MantineTheme) => CSSProperties) | - | Styles applied to `mark` elements |\n| inherit | boolean | - | Determines whether font properties should be inherited from the parent |\n| inline | boolean | - | Sets `line-height` to 1 for centering |\n| lineClamp | number | - | Number of lines after which Text will be truncated |\n| size | MantineSize \\| (string & {}) | - | Controls `font-size` and `line-height` |\n| span | boolean | - | Shorthand for `component=\"span\"` |\n| truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |\n| wholeWord | boolean | - | Only match whole words (adds word boundaries to regex). When enabled, 'the' will not match 'there'. |\n\n\n#### Styles API\n\nHighlight component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Highlight selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Highlight-root | Root element |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "String in which to highlight substrings",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "color",
+      "description": "Default background color for all highlighted text.\nKey of <code>theme.colors</code> or any valid CSS color, passed to <code>Mark</code> component.\nCan be overridden per term when using HighlightTerm objects.",
+      "required": false,
+      "defaultValue": "'yellow'",
+      "type": {
+        "name": "string | (string & {})"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "gradient",
+      "description": "Gradient configuration, ignored when <code>variant</code> is not <code>gradient</code>",
+      "required": false,
+      "defaultValue": "theme.defaultGradient",
+      "type": {
+        "name": "MantineGradient"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "highlight",
+      "description": "Substring(s) to highlight in <code>children</code>. Can be:\n- string: single term\n- string[]: multiple terms with same color\n- HighlightTerm[]: multiple terms with custom colors per term\n\n- Matching is case-insensitive\n- Regex special characters are automatically escaped\n- When multiple substrings are provided, longer matches take precedence\n- Empty strings and whitespace-only strings are ignored",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string | string[] | HighlightTerm[]"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "highlightStyles",
+      "description": "Styles applied to <code>mark</code> elements",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CSSProperties | ((theme: MantineTheme) => CSSProperties)"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "inherit",
+      "description": "Determines whether font properties should be inherited from the parent",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "inline",
+      "description": "Sets <code>line-height</code> to 1 for centering",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "lineClamp",
+      "description": "Number of lines after which Text will be truncated",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "size",
+      "description": "Controls <code>font-size</code> and <code>line-height</code>",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | (string & {})"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "span",
+      "description": "Shorthand for <code>component=\"span\"</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "truncate",
+      "description": "Side on which Text must be truncated, if <code>true</code>, text is truncated from the start",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "TextTruncate"
+      },
+      "sourceComponent": "Highlight"
+    },
+    {
+      "name": "wholeWord",
+      "description": "Only match whole words (adds word boundaries to regex).\nWhen enabled, 'the' will not match 'there'.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Highlight"
+    }
+  ]
+}

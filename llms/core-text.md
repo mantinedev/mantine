@@ -5,8 +5,6 @@ Description: Display text
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Text } from '@mantine/core';
 
@@ -36,17 +34,6 @@ function Demo() {
 ```
 
 
-<Gradient component="Text" />
-
-## Gradient
-
-Text supports Mantine color format in color prop. Color can be specified as:
-- Mantine color name (e.g., 'blue')
-- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
-- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
-
-#### Example: gradient
-
 ```tsx
 import { Text } from '@mantine/core';
 
@@ -56,7 +43,7 @@ function Demo() {
       size="xl"
       fw={900}
       variant="gradient"
-      gradient={{ from: 'cyan', to: 'blue', deg: 90 }}
+      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
     >
       Gradient Text
     </Text>
@@ -67,9 +54,7 @@ function Demo() {
 
 ## Truncate
 
-Set `truncate` prop to add `text-overflow: ellipsis` styles:
-
-#### Example: truncate
+Set the `truncate` prop to add `text-overflow: ellipsis` styles:
 
 ```tsx
 import { Text, Box } from '@mantine/core';
@@ -77,7 +62,7 @@ import { Text, Box } from '@mantine/core';
 function Demo() {
   return (
     <Box w={300}>
-      <Text>
+      <Text truncate="end">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde provident eos fugiat id
         necessitatibus magni ducimus molestias. Placeat, consequatur. Quisquam, quae magnam
         perspiciatis excepturi iste sint itaque sunt laborum. Nihil?
@@ -90,17 +75,15 @@ function Demo() {
 
 ## Line clamp
 
-Specify maximum number of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
-CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on text element:
-
-#### Example: linesConfigurator
+Specify the maximum number of lines with the `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on the text element:
 
 ```tsx
 import { Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <Text>
+    <Text size="md" lineClamp={4}>
       {/* Text content */}
     </Text>
   );
@@ -108,9 +91,7 @@ function Demo() {
 ```
 
 
-Line clamp can also be used with any children (not only strings), for example with [Typography](https://mantine.dev/core/typography/):
-
-#### Example: lineClamp
+Line clamp can also be used with any children (not only strings), for example with [Typography](https://mantine.dev/llms/core-typography.md):
 
 ```tsx
 import { Typography, Text } from '@mantine/core';
@@ -137,10 +118,8 @@ function Demo() {
 ## Inherit styles
 
 Text always applies font-size, font-family and line-height styles,
-but in some cases this is not a desired behavior. To force Text to inherit parent
-styles set `inherit` prop. For example, highlight part of [Title](https://mantine.dev/core/title/):
-
-#### Example: inherit
+but in some cases this is not the desired behavior. To force Text to inherit parent
+styles, set the `inherit` prop. For example, highlight part of [Title](https://mantine.dev/llms/core-title.md):
 
 ```tsx
 import { Text, Title } from '@mantine/core';
@@ -151,29 +130,9 @@ function Demo() {
 ```
 
 
-<Polymorphic defaultElement="p" changeToElement="a" component="Text" />
-
-## Polymorphic component
-
-Text is a polymorphic component – its default root element is p, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { Text } from '@mantine/core';
-
-function Demo() {
-  return <Text component="a" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, TextProps does not extend React.ComponentPropsWithoutRef<'p'> although p is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
 ## span prop
 
-Use `span` prop as a shorthand for `component="span"`:
+Use the `span` prop as a shorthand for `component="span"`:
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -191,16 +150,85 @@ function Demo() {
 
 #### Props
 
+**Text props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | @deprecated Use <code>c</code> prop instead |
-| gradient | MantineGradient | - | Gradient configuration, ignored when <code>variant</code> is not <code>gradient</code> |
+| gradient | MantineGradient | - | Gradient configuration, ignored when `variant` is not `gradient` |
 | inherit | boolean | - | Determines whether font properties should be inherited from the parent |
-| inline | boolean | - | Sets <code>line-height</code> to 1 for centering |
+| inline | boolean | - | Sets `line-height` to 1 for centering |
 | lineClamp | number | - | Number of lines after which Text will be truncated |
-| size | MantineSize | (string & {}) | - | Controls <code>font-size</code> and <code>line-height</code> |
-| span | boolean | - | Shorthand for <code>component="span"</code> |
-| truncate | TextTruncate | - | Side on which Text must be truncated, if <code>true</code>, text is truncated from the start |
+| size | MantineSize \| (string & {}) | - | Controls `font-size` and `line-height` |
+| span | boolean | - | Shorthand for `component="span"` |
+| truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |
+
+**Text.Input props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
+
+**Text.area props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autosize | boolean | - | If set, enables textarea height growing with its content |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| maxRows | number | - | Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set |
+| minRows | number | - | Minimum rows of autosize textarea, ignored if `autosize` prop is not set |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| resize | Resize | - | Controls `resize` CSS property |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
 #### Styles API
@@ -226,10 +254,10 @@ Text component supports Styles API. With Styles API, you can customize styles of
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-truncate | - | Value of  |
-| root | data-line-clamp | - | - |
-| root | data-inline | - | - |
-| root | data-inherit | - | - |
+| root | data-truncate | `truncate` prop is set | Value of `truncate` prop |
+| root | data-line-clamp | `lineClamp` prop is a number | - |
+| root | data-inline | `inline` prop is set | - |
+| root | data-inherit | `inherit` prop is set | - |
 
 **Textinput selectors**
 

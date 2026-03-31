@@ -1,0 +1,61 @@
+# Why can I not use value/label data structure with Autocomplete/TagsInput?
+Learn the difference between Autocomplete and Select components
+
+## Data structure
+
+[Autocomplete](https://mantine.dev/core/autocomplete) and [TagsInput](https://mantine.dev/core/tags-input)
+allow users to enter any string value – the selection is not limited to a predefined list of options.
+If you decide to use these components, your application must handle free user input.
+
+Example of Autocomplete usage with `data` prop:
+
+```tsx
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return <Autocomplete data={['React', 'Vue']} />;
+}
+```
+
+In this example, the user can select either `React` or `Vue` from the list of options
+or enter any other string value, for example, `Angular`.
+
+## Value/label data split
+
+Unlike [Select](https://mantine.dev/core/select) and [MultiSelect](https://mantine.dev/core/multi-select)
+components, data in `{ value: string; label: string; }` format is not supported in Autocomplete and TagsInput.
+This is done on purpose to avoid confusion and make it clear that users can enter any string value.
+
+Consider the following example:
+
+```tsx
+import { Autocomplete } from '@mantine/core';
+
+const data = [
+  { value: '18361', label: 'React' },
+  { value: '09411', label: 'Vue' },
+];
+
+function Demo() {
+  return (
+    <Autocomplete data={data} onChange={(val) => console.log(val)} />
+  );
+}
+```
+
+If Autocomplete supported `{ value: string; label: string; }` data structure:
+
+* When the user selects `React` from the list, `18361` would be logged to the console
+* When the user selects `Vue` from the list, `09411` would be logged to the console
+* When the user enters `Angular` or any other value not present in the list, what should be logged to the console?
+* When the user enters `React`, should `18361` be logged to the console or should it be treated as free user input?
+
+To avoid confusion and make it clear that users can enter any string value, Autocomplete and TagsInput
+do not support `{ value: string; label: string; }` data structure.
+
+## Difference between Autocomplete and Select
+
+If you need to limit user input to a predefined list of options,
+consider using a searchable [Select](https://mantine.dev/core/select) instead.
+To learn more about the difference between Autocomplete and Select components,
+check out [this guide](https://help.mantine.dev/q/select-autocomplete-difference).

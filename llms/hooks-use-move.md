@@ -4,13 +4,53 @@ Import: import { UseMove } from '@mantine/hooks';
 
 ## Usage
 
-`use-move` handles move behavior over any element:
+The `use-move` hook handles move behavior over any element:
 
+```tsx
+import { useState } from 'react';
+import { Group, Text, Code } from '@mantine/core';
+import { useMove } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useState({ x: 0.2, y: 0.6 });
+  const { ref, active } = useMove(setValue);
+
+  return (
+    <>
+      <Group justify="center">
+        <div
+          ref={ref}
+          style={{
+            width: 400,
+            height: 120,
+            backgroundColor: 'var(--mantine-color-blue-light)',
+            position: 'relative',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: `calc(${value.x * 100}% - 8px)`,
+              top: `calc(${value.y * 100}% - 8px)`,
+              width: 16,
+              height: 16,
+              backgroundColor: active ? 'var(--mantine-color-teal-7)' : 'var(--mantine-color-blue-7)',
+            }}
+          />
+        </div>
+      </Group>
+      <Text ta="center" mt="sm">
+        Values <Code>{`{ x: ${Math.round(value.x * 100)}, y: ${Math.round(value.y * 100)} }`}</Code>
+      </Text>
+    </>
+  );
+}
+```
 
 
 ## API
 
-The hook accepts a callback that is called when user moves pressed mouse over the given element
+The hook accepts a callback that is called when the user moves the pressed mouse over the given element
 and returns an object with `ref` and active state:
 
 ```tsx
@@ -18,26 +58,76 @@ import { useMove } from '@mantine/hooks';
 
 const {
   ref, // -> pass ref to target element
-  active, // -> is user changing something right now?
+  active, // -> is the user changing something right now?
 } = useMove(({ x, y }) => console.log({ x, y }));
 ```
 
-`x` and `y` values are always between `0` and `1`, you can use them to calculate value in your boundaries.
+The `x` and `y` values are always between `0` and `1`; you can use them to calculate the value in your boundaries.
 
 ## Horizontal slider
 
 You can ignore changes for one of the axis:
 
+```tsx
+import { useState } from 'react';
+import { Group, Text } from '@mantine/core';
+import { useMove } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useState(0.2);
+  const { ref } = useMove(({ x }) => setValue(x));
+
+  return (
+    <>
+      <Group justify="center">
+        <div
+          ref={ref}
+          style={{
+            width: 400,
+            height: 16,
+            backgroundColor: 'var(--mantine-color-blue-light)',
+            position: 'relative',
+          }}
+        >
+          {/* Filled bar */}
+          <div
+            style={{
+              width: `${value * 100}%`,
+              height: 16,
+              backgroundColor: 'var(--mantine-color-blue-filled)',
+              opacity: 0.7,
+            }}
+          />
+
+          {/* Thumb */}
+          <div
+            style={{
+              position: 'absolute',
+              left: `calc(${value * 100}% - 8px)`,
+              top: 0,
+              width: 16,
+              height: 16,
+              backgroundColor: 'var(--mantine-color-blue-7)',
+            }}
+          />
+        </div>
+      </Group>
+
+      <Text ta="center" mt="sm">
+        Value: {Math.round(value * 100)}
+      </Text>
+    </>
+  );
+}
+```
 
 
 ## Horizontal slider with styles
 
-#### Example: customSlider
-
 ```tsx
 // Demo.tsx
 import { useState } from 'react';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { clamp, useMove } from '@mantine/hooks';
 import classes from './Demo.module.css';
 
@@ -75,7 +165,7 @@ function Demo() {
           className={classes.thumb}
           style={{ left: `calc(${value * 100}% - var(--thumb-width) / 2)` }}
         >
-          <IconGripVertical stroke={1.5} />
+          <DotsSixVerticalIcon />
         </div>
       </div>
     </div>
@@ -172,10 +262,122 @@ function Demo() {
 
 Moving the slider down increases the value, to reverse that set value to `1 - y` in your `setValue` function:
 
+```tsx
+import { useState } from 'react';
+import { Group, Text } from '@mantine/core';
+import { useMove } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useState(0.2);
+  const { ref } = useMove(({ y }) => setValue(1 - y));
+
+  return (
+    <>
+      <Group justify="center">
+        <div
+          ref={ref}
+          style={{
+            width: 16,
+            height: 120,
+            backgroundColor: 'var(--mantine-color-blue-light)',
+            position: 'relative',
+          }}
+        >
+          {/* Filled bar */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              height: `${value * 100}%`,
+              width: 16,
+              backgroundColor: 'var(--mantine-color-blue-filled)',
+              opacity: 0.7,
+            }}
+          />
+
+          {/* Thumb */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: `calc(${value * 100}% - 8px)`,
+              left: 0,
+              width: 16,
+              height: 16,
+              backgroundColor: 'var(--mantine-color-blue-7)',
+            }}
+          />
+        </div>
+      </Group>
+
+      <Text ta="center" mt="sm">
+        Value: {Math.round(value * 100)}
+      </Text>
+    </>
+  );
+}
+```
 
 
 ## Color picker
 
+```tsx
+import { useState } from 'react';
+import { useMove } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useState({ x: 0.2, y: 0.6 });
+  const { ref } = useMove(setValue);
+
+  return (
+    <div>
+      <div
+        ref={ref}
+        style={{
+          width: 300,
+          height: 150,
+          backgroundColor: 'red',
+          position: 'relative',
+        }}
+      >
+        {/* Gradient overlays */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'linear-gradient(90deg, #fff, transparent)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'linear-gradient(0deg, #000, transparent)',
+          }}
+        />
+
+        {/* Thumb */}
+        <div
+          style={{
+            position: 'absolute',
+            left: `calc(${value.x * 100}% - 8px)`,
+            top: `calc(${value.y * 100}% - 8px)`,
+            width: 16,
+            height: 16,
+            border: '2px solid #fff',
+            borderRadius: 16,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+```
 
 
 ## clampUseMovePosition
@@ -232,7 +434,7 @@ function useMove<T extends HTMLElement = any>(
 
 ## Exported types
 
-`UseMovePosition`, `UseMoveReturnValue` and `UseMoveHandlers` types are exported from `@mantine/hooks` package,
+`UseMovePosition`, `UseMoveReturnValue` and `UseMoveHandlers` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

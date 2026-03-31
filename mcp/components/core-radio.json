@@ -1,0 +1,532 @@
+{
+  "id": "core-radio",
+  "name": "Radio",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/radio",
+  "description": "Wrapper for input type radio",
+  "propsCount": 47,
+  "llmUrl": "https://mantine.dev/llms/core-radio.md",
+  "componentDataUrl": "/mcp/components/core-radio.json",
+  "searchText": "radio wrapper for input type radio @mantine/core /core/radio autocontrast color description error icon iconcolor label labelposition radius rootref size witherrorstyles wrapperprops children defaultvalue description descriptionprops disabled error errorprops id inputcontainer inputwrapperorder label labelelement labelprops name onchange readonly required size value withasterisk wrapperprops autocontrast checked color disabled icon iconcolor radius size checked name radius value withborder",
+  "source": "@mantine/core/src/components/Radio/Radio.tsx",
+  "docs": "core/radio.mdx",
+  "markdown": "# Radio\nPackage: @mantine/core\nImport: import { Radio } from '@mantine/core';\nDescription: Wrapper for input type radio\n\n## Usage\n\n```tsx\nimport { Radio } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <Radio\n       labelPosition=\"right\" label=\"I cannot be unchecked\" description=\"\" error=\"\" size=\"sm\" color=\"blue\" variant=\"filled\"\n    />\n  );\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { Radio } from '@mantine/core';\n\nfunction Demo() {\n  const [checked, setChecked] = useState(false);\n  return (\n    <Radio\n      checked={checked}\n      onChange={(event) => setChecked(event.currentTarget.checked)}\n    />\n  );\n}\n```\n\n## Uncontrolled\n\n`Radio` can be used with uncontrolled forms the same way as a native `input[type=\"radio\"]`.\nSet the `name` and `value` attributes to include radio value in `FormData` object on form submission.\nTo control the initial checked state in uncontrolled forms, use `defaultChecked` prop.\n\nExample usage of uncontrolled `Radio` with `FormData`:\n\n```tsx\nimport { Radio } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Radio value:', formData.get('option'));\n      }}\n    >\n      <Radio name=\"option\" value=\"option1\" label=\"Option 1\" />\n      <Radio name=\"option\" value=\"option2\" label=\"Option 2\" defaultChecked />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## States\n\n```tsx\nimport { Radio, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <Radio checked={false} onChange={() => {}} label=\"Default radio\" />\n      <Radio checked onChange={() => {}} label=\"Checked radio\" />\n      <Radio checked variant=\"outline\" onChange={() => {}} label=\"Outline checked radio\" />\n      <Radio disabled label=\"Disabled radio\" />\n      <Radio disabled checked onChange={() => {}} label=\"Disabled checked radio\" />\n    </Stack>\n  );\n}\n```\n\n\n## Change icon\n\n```tsx\nimport { Radio, CheckIcon } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Radio icon={CheckIcon} label=\"Custom check icon\" name=\"check\" value=\"check\" defaultChecked />\n  );\n}\n```\n\n\n## Change icon color\n\n```tsx\nimport { Radio } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Radio\n      iconColor=\"dark.8\"\n      color=\"lime.4\"\n      label=\"Custom icon color\"\n      name=\"check\"\n      value=\"check\"\n      defaultChecked\n    />\n  );\n}\n```\n\n\n## Disabled state\n\n```tsx\nimport { Radio, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Radio checked disabled label=\"React\" value=\"react\" />\n      <Radio disabled label=\"Angular\" value=\"nu\" />\n      <Radio disabled label=\"Svelte\" value=\"sv\" />\n    </Group>\n  );\n}\n```\n\n\n## Pointer cursor\n\nBy default, the radio input and label have `cursor: default` (same as native `input[type=\"radio\"]`).\nTo change the cursor to pointer, set `cursorType` on the [theme](https://mantine.dev/llms/theming-theme-object.md):\n\n```tsx\nimport { createTheme, MantineProvider, Radio } from '@mantine/core';\n\nconst theme = createTheme({\n  cursorType: 'pointer',\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Radio label=\"Pointer cursor\" />\n    </MantineProvider>\n  );\n}\n```\n\n## Radio with tooltip\n\nYou can change the target element to which the tooltip is attached with `refProp`:\n\n* If `refProp` is not set, the tooltip is attached to the radio input\n* If `refProp=\"rootRef\"` is set, the tooltip is attached to the root element (contains label, input, and other elements)\n\n```tsx\nimport { Tooltip, Radio } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Tooltip label=\"Radio with tooltip\">\n        <Radio label=\"Tooltip on radio only\" />\n      </Tooltip>\n\n      <Tooltip label=\"Radio with tooltip\" refProp=\"rootRef\">\n        <Radio label=\"Tooltip the entire element\" mt=\"md\" />\n      </Tooltip>\n    </>\n  );\n}\n```\n\n\n## Wrapper props\n\nRadio supports additional props that are passed to the wrapper element for more customization options.\n\n## Radio.Group component\n\n```tsx\nimport { Radio, Group } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <Radio.Group\n      name=\"favoriteFramework\"\n       label=\"Select your favorite framework/library\" description=\"This is anonymous\" error=\"\" withAsterisk={true}\n    >\n      <Group mt=\"xs\">\n        <Radio value=\"react\" label=\"React\" />\n        <Radio value=\"svelte\" label=\"Svelte\" />\n        <Radio value=\"ng\" label=\"Angular\" />\n        <Radio value=\"vue\" label=\"Vue\" />\n      </Group>\n    </Radio.Group>\n  );\n}\n```\n\n\n## Radio.Group disabled state\n\n```tsx\nimport { Radio, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Radio.Group\n      disabled\n      name=\"favoriteFramework\"\n      label=\"Select your favorite framework/library\"\n      description=\"This is anonymous\"\n    >\n      <Group mt=\"xs\">\n        <Radio label=\"React\" value=\"react\" />\n        <Radio label=\"Angular\" value=\"nu\" />\n        <Radio label=\"Svelte\" value=\"sv\" />\n      </Group>\n    </Radio.Group>\n  );\n}\n```\n\n\n## Controlled Radio.Group\n\n```tsx\nimport { useState } from 'react';\nimport { Radio } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState('react');\n\n  return (\n    <Radio.Group\n      value={value}\n      onChange={setValue}\n      name=\"favoriteFramework\"\n      label=\"Select your favorite framework/library\"\n      description=\"This is anonymous\"\n      withAsterisk\n    >\n      <Radio value=\"react\" label=\"React\" />\n      <Radio value=\"svelte\" label=\"Svelte\" />\n      <Radio value=\"ng\" label=\"Angular\" />\n      <Radio value=\"vue\" label=\"Vue\" />\n    </Radio.Group>\n  );\n}\n```\n\n## Radio.Indicator\n\n`Radio.Indicator` looks exactly the same as the `Radio` component, but it does not\nhave any semantic meaning; it's just a visual representation of the radio state. You\ncan use it in any place where you need to display the radio state without any interaction\nrelated to the indicator. For example, it is useful in cards based on buttons, trees, etc.\n\nNote that `Radio.Indicator` cannot be focused or selected with the keyboard. It is not\naccessible and should not be used as a replacement for the `Radio` component.\n\n```tsx\nimport { Radio, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Radio.Indicator />\n      <Radio.Indicator checked />\n      <Radio.Indicator disabled />\n      <Radio.Indicator disabled checked />\n    </Group>\n  );\n}\n```\n\n\n## Accessibility\n\nSet the `aria-label` or `label` prop to make the radio accessible:\n\n```tsx\nimport { Radio } from '@mantine/core';\n\n// Not ok, input is not labeled\nfunction Bad() {\n  return <Radio />;\n}\n\n// Ok, input is labeled by aria-label\nfunction GoodAriaLabel() {\n  return <Radio aria-label=\"My radio\" />;\n}\n\n// Ok, input is labeled by label element\nfunction GoodLabel() {\n  return <Radio label=\"My radio\" />;\n}\n```\n\n\n#### Props\n\n**Radio props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| color | MantineColor | - | Key of theme.colors or any valid CSS color to set radio background color in checked state |\n| description | React.ReactNode | - | Description displayed below the label |\n| error | React.ReactNode | - | Error displayed below the label |\n| icon | FC<RadioIconProps> | - | A component that replaces the default radio icon (centered dot) |\n| iconColor | MantineColor | - | Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting |\n| label | React.ReactNode | - | Content of the `label` associated with the radio |\n| labelPosition | \"left\" \\| \"right\" | - | Position of the label relative to the input |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| rootRef | Ref<HTMLDivElement> | - | Assigns ref of the root element |\n| size | MantineSize | - | Controls size of the component |\n| withErrorStyles | boolean | - | If set, applies error styles to the radio when `error` prop is set |\n| wrapperProps | React.ComponentProps<\"div\"> | - | Props passed down to the root element |\n\n**Radio.GroupContext props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Radio.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | `Radio` components and any other elements |\n| defaultValue | string \\| null | - | Uncontrolled component default value |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute, prevents interactions |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| id | string | - | Static id used as base to generate `aria-` attributes, by default generates random id |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelElement | \"div\" \\| \"label\" | - | Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| name | string | - | `name` attribute of child radio inputs. By default, `name` is generated randomly. |\n| onChange | (value: Value) => void | - | Called when value changes |\n| readOnly | boolean | - | If set, value cannot be changed |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| size | MantineSize | - | Controls size of the `Input.Wrapper` |\n| value | string \\| null | - | Controlled component value |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| wrapperProps | React.ComponentProps<\"div\"> | - | Props passed down to the `Input.Wrapper` |\n\n**Radio.Indicator props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| checked | boolean | - | Checked state |\n| color | MantineColor | - | Key of theme.colors or any valid CSS color to set indicator background color in checked state |\n| disabled | boolean | - | Disabled state |\n| icon | FC<RadioIconProps> | - | A component that replaces the default radio icon (centered dot) |\n| iconColor | MantineColor | - | Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| size | MantineSize | - | Controls size of the component |\n\n**Radio.CardContext props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Radio.Card props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| checked | boolean | - | Checked state |\n| name | string | - | Value used to associate all related radio cards, required for accessibility if used outside of `Radio.Group` |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| value | string | - | Value of the radio, used with Radio.Group |\n| withBorder | boolean | - | Adds border to the root element |\n\n\n#### Styles API\n\nRadio component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Radio selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Radio-root | Root element |\n| radio | .mantine-Radio-radio | Input element (`input[type=\"radio\"]`) |\n| icon | .mantine-Radio-icon | Radio icon, used to display checked icon |\n| inner | .mantine-Radio-inner | Wrapper for `icon` and `input` |\n| body | .mantine-Radio-body | Input body, contains all other elements |\n| labelWrapper | .mantine-Radio-labelWrapper | Contains `label`, `description` and `error` |\n| label | .mantine-Radio-label | Label element |\n| description | .mantine-Radio-description | Description displayed below the label |\n| error | .mantine-Radio-error | Error message displayed below the label |\n\n**Radio CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --radio-color | Controls checked radio `background-color` |\n| root | --radio-radius | Controls radio `border-radius` |\n| root | --radio-size | Controls radio `width` and `height` |\n| root | --radio-icon-color | Controls radio icon `color` |\n| root | --radio-icon-size | Controls radio icon `width` and `height` |\n\n**Radio data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| radio | data-error | `error` prop is set | - |\n| inner | data-label-position | - | Value of `labelPosition` prop |\n\n**Radio.Group selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-RadioGroup-root | Root element |\n| label | .mantine-RadioGroup-label | Label element |\n| required | .mantine-RadioGroup-required | Required asterisk element, rendered inside label |\n| description | .mantine-RadioGroup-description | Description element |\n| error | .mantine-RadioGroup-error | Error element |\n\n**Radio.Indicator selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| indicator | .mantine-RadioIndicator-indicator | Root element |\n| icon | .mantine-RadioIndicator-icon | Radio icon |\n\n**Radio.Indicator CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| indicator | --radio-color | Controls checked radio `background-color` |\n| indicator | --radio-radius | Controls radio `border-radius` |\n| indicator | --radio-size | Controls radio `width` and `height` |\n| indicator | --radio-icon-color | Controls radio icon `color` |\n| indicator | --radio-icon-size | Controls radio icon `width` and `height` |\n\n**Radio.Indicator data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| indicator | data-checked | `checked` prop is set | - |\n| indicator | data-disabled | `disabled` prop is set | - |\n\n**Radio.Card selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| card | .mantine-RadioCard-card | Root element |\n\n**Radio.Card CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| card | --card-radius | Controls card `border-radius` |\n\n**Radio.Card data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| card | data-checked | `checked` prop is set | - |\n| card | data-with-border | `withBorder` prop is set | - |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "color",
+      "description": "Key of theme.colors or any valid CSS color to set radio background color in checked state",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "description",
+      "description": "Description displayed below the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "error",
+      "description": "Error displayed below the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "icon",
+      "description": "A component that replaces the default radio icon (centered dot)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<RadioIconProps>"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "iconColor",
+      "description": "Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "label",
+      "description": "Content of the <code>label</code> associated with the radio",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "labelPosition",
+      "description": "Position of the label relative to the input",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "rootRef",
+      "description": "Assigns ref of the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<HTMLDivElement>"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "size",
+      "description": "Controls size of the component",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "If set, applies error styles to the radio when <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "Radio"
+    },
+    {
+      "name": "children",
+      "description": "<code>Radio</code> components and any other elements",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | null"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute, prevents interactions",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "id",
+      "description": "Static id used as base to generate <code>aria-</code> attributes, by default generates random id",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "labelElement",
+      "description": "Root element for the label. Use <code>'div'</code> when wrapper contains multiple input elements and you need to handle <code>htmlFor</code> manually.",
+      "required": false,
+      "defaultValue": "'label'",
+      "type": {
+        "name": "\"div\" | \"label\"",
+        "raw": "\"div\" | \"label\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"div\""
+          },
+          {
+            "value": "\"label\""
+          }
+        ]
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "name",
+      "description": "<code>name</code> attribute of child radio inputs. By default, <code>name</code> is generated randomly.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: Value) => void"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "readOnly",
+      "description": "If set, value cannot be changed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "size",
+      "description": "Controls size of the <code>Input.Wrapper</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | null"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the <code>Input.Wrapper</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "RadioGroup"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "checked",
+      "description": "Checked state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "color",
+      "description": "Key of theme.colors or any valid CSS color to set indicator background color in checked state",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "disabled",
+      "description": "Disabled state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "icon",
+      "description": "A component that replaces the default radio icon (centered dot)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "FC<RadioIconProps>"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "iconColor",
+      "description": "Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "size",
+      "description": "Controls size of the component",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "RadioIndicator"
+    },
+    {
+      "name": "checked",
+      "description": "Checked state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioCard"
+    },
+    {
+      "name": "name",
+      "description": "Value used to associate all related radio cards, required for accessibility if used outside of <code>Radio.Group</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RadioCard"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "RadioCard"
+    },
+    {
+      "name": "value",
+      "description": "Value of the radio, used with Radio.Group",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "RadioCard"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "RadioCard"
+    }
+  ]
+}

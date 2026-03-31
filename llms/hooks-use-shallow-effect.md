@@ -4,7 +4,7 @@ Import: import { UseShallowEffect } from '@mantine/hooks';
 
 ## Usage
 
-`use-shallow-effect` works exactly like `useEffect`, but performs shallow dependencies comparison instead of referential comparison:
+The `use-shallow-effect` hook works exactly like `useEffect`, but performs shallow dependency comparison instead of referential comparison:
 
 ```tsx
 import { useEffect } from 'react';
@@ -17,7 +17,7 @@ useEffect(() => {}, [{ a: 1 }]);
 useShallowEffect(() => {}, [{ a: 1 }]);
 ```
 
-Hook works with primitive values, arrays and objects:
+The hook works with primitive values, arrays, and objects:
 
 ```tsx
 import { useShallowEffect } from '@mantine/hooks';
@@ -31,7 +31,7 @@ useShallowEffect(() => {}, [[1], [2], [3]]);
 // Objects with primitive values will not trigger callback
 useShallowEffect(() => {}, [{ a: 1 }, { b: 2 }]);
 
-// Arrays with objects will trigger callback since values are not shallow equal
+// Arrays with objects will trigger the callback since values are not shallow equal
 useShallowEffect(() => {}, [[{ a: 1 }], [{ b: 2 }]]);
 ```
 

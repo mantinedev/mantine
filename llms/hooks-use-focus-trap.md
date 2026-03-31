@@ -4,8 +4,8 @@ Import: import { UseFocusTrap } from '@mantine/hooks';
 
 ## Usage
 
-`use-focus-trap` traps focus at the given node, for example in modal, drawer or menu.
-Node must include at least one focusable element. When the node unmounts, the focus trap is automatically released.
+The `use-focus-trap` hook traps focus at the given node, for example in a modal, drawer, or menu.
+The node must include at least one focusable element. When the node unmounts, the focus trap is automatically released.
 
 ```tsx
 import { useFocusTrap } from '@mantine/hooks';
@@ -57,7 +57,7 @@ function Demo() {
 
 ## Combine with other ref based hooks
 
-To combine `use-focus-trap` with other ref based hooks, use [use-merged-ref](https://mantine.dev/hooks/use-merged-ref/) hook:
+To combine `use-focus-trap` with other ref-based hooks, use the [use-merged-ref](https://mantine.dev/llms/hooks-use-merged-ref.md) hook:
 
 ```tsx
 import { useRef } from 'react';
@@ -83,8 +83,8 @@ function Demo() {
 
 ## Initial focus
 
-By default, focus trap will move focus to the first interactive element.
-To specify the element that should receive initial focus, add `data-autofocus` attribute:
+By default, the focus trap will move focus to the first interactive element.
+To specify the element that should receive initial focus, add the `data-autofocus` attribute:
 
 ```tsx
 import { useFocusTrap } from '@mantine/hooks';
@@ -95,7 +95,7 @@ function Demo() {
   return (
     <div ref={focusTrapRef}>
       <input />
-      {/* Second input in modal will have initial focus */}
+      {/* The second input in the modal will have initial focus */}
       <input data-autofocus />
       <input />
     </div>

@@ -4,10 +4,8 @@ Import: import { FormValidation } from '@mantine/form';
 
 ## Validation with rules object
 
-To validate form with rules object, provide an object of functions which take field value as an argument
-and return error message (any React node) or null if field is valid:
-
-#### Example: rulesValidation
+To validate a form with a rules object, provide an object of functions which take the field value as an argument
+and return an error message (any React node) or null if the field is valid:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -63,12 +61,13 @@ function Demo() {
 
 Each form rule receives the following arguments:
 
-* `value` – value of field
+* `value` – value of the field
 * `values` – all form values
 * `path` – field path, for example `user.email` or `cart.0.price`
+* `signal` – an `AbortSignal` that is aborted when a newer validation supersedes the current one (useful for cancelling in-flight async requests)
 
-`path` argument can be used to get information about field location relative to other fields,
-for example you can get index of array element:
+The `path` argument can be used to get information about the field location relative to other fields.
+For example, you can get the index of an array element:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -87,14 +86,12 @@ const form = useForm({
 ## formRootRule
 
 `formRootRule` is a special rule path that can be used to validate objects and arrays
-alongside with their nested fields. For example, it is useful when you want to capture
-a list of values, validate each value individually and then validate the list itself
+alongside their nested fields. For example, it is useful when you want to capture
+a list of values, validate each value individually, and then validate the list itself
 to not be empty:
 
-#### Example: rootRuleArray
-
 ```tsx
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
@@ -107,7 +104,7 @@ function Demo() {
     },
     validate: {
       employees: {
-        [formRootRule]: isNotEmpty('At least one employee is required'),
+        [formRootRule]: isNotEmpty('AtIcon least one employee is required'),
         name: isNotEmpty('Name is required'),
       },
     },
@@ -128,7 +125,7 @@ function Demo() {
         {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <TrashIcon size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -176,9 +173,7 @@ function Demo() {
 ```
 
 
-Another example is to validate an object fields combination:
-
-#### Example: rootRuleObject
+Another example is to validate an object's field combination:
 
 ```tsx
 import { Button, Text, TextInput } from '@mantine/core';
@@ -235,10 +230,8 @@ function Demo() {
 
 ## Validation based on other form values
 
-You can get all form values as a second rule function argument to perform field validation based on other
-form values. For example, you can validate that password confirmation is the same as password:
-
-#### Example: password
+You can get all form values as the second rule function argument to perform field validation based on other
+form values. For example, you can validate that the password confirmation is the same as the password:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -286,14 +279,12 @@ function Demo() {
 ```
 
 
-## Function based validation
+## Function-based validation
 
 Another approach to handle validation is to provide a function to `validate`.
-Function takes form values as single argument and should return object that contains
-errors of corresponding fields. If field is valid or field validation is not required, you can either return null or simply omit it
+The function takes form values as a single argument and should return an object that contains
+errors of corresponding fields. If a field is valid or field validation is not required, you can either return null or simply omit it
 from the validation results.
-
-#### Example: validateFunction
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -343,7 +334,7 @@ function Demo() {
 
 ## Validate fields on change
 
-To validate all fields on change set `validateInputOnChange` option to `true`:
+To validate all fields on change, set the `validateInputOnChange` option to `true`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -353,8 +344,6 @@ const form = useForm({
   validateInputOnChange: true,
 });
 ```
-
-#### Example: liveValidation
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -407,7 +396,7 @@ function Demo() {
 ```
 
 
-You can also provide an array of fields paths to validate only those values:
+You can also provide an array of field paths to validate only those values:
 
 ```tsx
 import { FORM_INDEX, useForm } from '@mantine/form';
@@ -421,8 +410,6 @@ const form = useForm({
   ],
 });
 ```
-
-#### Example: liveFieldValidation
 
 ```tsx
 import { useForm, FORM_INDEX } from '@mantine/form';
@@ -499,7 +486,7 @@ function Demo() {
 
 ## Validate fields on blur
 
-To validate all fields on blur set `validateInputOnBlur` option to `true`:
+To validate all fields on blur, set the `validateInputOnBlur` option to `true`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -509,8 +496,6 @@ const form = useForm({
   validateInputOnBlur: true,
 });
 ```
-
-#### Example: blurValidation
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -563,7 +548,7 @@ function Demo() {
 ```
 
 
-You can also provide an array of fields paths to validate only those values:
+You can also provide an array of field paths to validate only those values:
 
 ```tsx
 import { FORM_INDEX, useForm } from '@mantine/form';
@@ -573,8 +558,6 @@ const form = useForm({
   validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`],
 });
 ```
-
-#### Example: blurFieldValidation
 
 ```tsx
 import { useForm, FORM_INDEX } from '@mantine/form';
@@ -651,7 +634,7 @@ function Demo() {
 
 ## Clear field error on change
 
-By default, field error is cleared when value changes. To change this, set `clearInputErrorOnChange` to `false`:
+By default, the field error is cleared when the value changes. To change this, set `clearInputErrorOnChange` to `false`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -661,8 +644,6 @@ const form = useForm({
   clearInputErrorOnChange: false,
 });
 ```
-
-#### Example: clearErrorOnChange
 
 ```tsx
 import { TextInput, Checkbox, Button, Group } from '@mantine/core';
@@ -710,13 +691,11 @@ function Demo() {
 
 ## Validation in onSubmit handler
 
-`form.onSubmit` accepts two arguments: first argument is `handleSubmit` function that will be called with form values, when validation
-was completed without errors, second argument is `handleErrors` function, it is called with errors object when validation was completed with errors.
+`form.onSubmit` accepts two arguments: the first argument is the `handleSubmit` function that will be called with form values when validation
+was completed without errors. The second argument is the `handleErrors` function, which is called with the errors object when validation was completed with errors.
 
-You can use `handleErrors` function to perform certain actions when user tries to submit form without values,
-for example, you can show a notification:
-
-#### Example: onSubmitErrors
+You can use the `handleErrors` function to perform certain actions when the user tries to submit the form without values.
+For example, you can show a notification:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -767,8 +746,9 @@ function Demo() {
 
 ## isValid handler
 
-`form.isValid` performs form validation with given validation functions, rules object or schema, but unlike
-`form.validate` it does not set `form.errors` and just returns boolean value that indicates whether form is valid.
+`form.isValid` performs form validation with the given validation functions, rules object, or schema, but unlike
+`form.validate`, it does not set `form.errors` and just returns a boolean value indicating whether the form is valid.
+If any of the validation rules are async, `form.isValid` returns a `Promise<boolean>` instead.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -782,24 +762,181 @@ const form = useForm({
   },
 });
 
-// get validation status of all values
+// With sync rules, returns boolean directly
 form.isValid(); // -> false
-
-// get validation status of field
 form.isValid('name'); // -> false
 ```
 
-## Focus first invalid field
+## Async validation
+
+Validation rules can be async – return a `Promise` that resolves to an error message or `null`.
+When all rules are synchronous, `form.validate()`, `form.validateField()` and `form.isValid()` return
+their results directly (not wrapped in a `Promise`). When any rule is async, these methods return promises instead.
+TypeScript infers the correct return type based on your validation rules, so you get precise types without manual annotations.
+
+The `form.validating` property is `true` while any async validation is in progress, and `form.isValidating(path)` can be used to check individual fields.
+The `validating` state is never set for forms with only synchronous rules.
+
+Each rule receives an `AbortSignal` as the fourth argument. The signal is aborted when a newer validation
+supersedes the current one, which you can use to cancel in-flight HTTP requests and avoid race conditions.
+
+```tsx
+import { Button, Group, Loader, TextInput } from '@mantine/core';
+import { isEmail, useForm } from '@mantine/form';
+
+// Simulates an async API call to check if the username is available
+function checkUsernameAvailability(username: string, signal?: AbortSignal): Promise<string | null> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      const taken = ['admin', 'user', 'test', 'mantine'];
+      resolve(taken.includes(username.toLowerCase()) ? 'Username is already taken' : null);
+    }, 800);
+
+    signal?.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { username: '', email: '' },
+    validate: {
+      username: async (value, _values, _path, signal) => {
+        if (value.trim().length < 3) {
+          return 'Username must be at least 3 characters';
+        }
+        return checkUsernameAvailability(value, signal);
+      },
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Username"
+        placeholder="Pick a username"
+        key={form.key('username')}
+        disabled={form.submitting}
+        rightSection={form.validating ? <Loader size={16} /> : null}
+        {...form.getInputProps('username')}
+      />
+
+      <TextInput
+        withAsterisk
+        mt="md"
+        label="Email"
+        placeholder="your@email.com"
+        key={form.key('email')}
+        disabled={form.submitting}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit" loading={form.submitting}>
+          Submit
+        </Button>
+      </Group>
+    </form>
+  );
+}
+```
+
+
+## Async validation with debounce
+
+When using async validation with `validateInputOnChange`, you can set `validateDebounce` to avoid
+firing an API call on every keystroke. The debounce applies only to field-level validation triggered
+by `validateInputOnChange` and `validateInputOnBlur` – it does not affect explicit `form.validate()` calls
+or `form.onSubmit()`.
+
+```tsx
+import { Button, Group, Loader, TextInput } from '@mantine/core';
+import { useForm, isEmail } from '@mantine/form';
+
+// Simulates an async API call to check if the username is available
+function checkUsernameAvailability(username: string, signal?: AbortSignal): Promise<string | null> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      const taken = ['admin', 'user', 'test', 'mantine'];
+      resolve(taken.includes(username.toLowerCase()) ? 'Username is already taken' : null);
+    }, 800);
+
+    signal?.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { username: '', email: '' },
+
+    // Debounce async validation by 500ms – prevents firing
+    // an API call on every keystroke
+    validateDebounce: 500,
+    validateInputOnChange: ['username'],
+
+    validate: {
+      username: async (value, _values, _path, signal) => {
+        if (value.trim().length < 3) {
+          return 'Username must be at least 3 characters';
+        }
+        return checkUsernameAvailability(value, signal);
+      },
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Username"
+        description="Try: admin, user, test, mantine"
+        placeholder="Pick a username"
+        key={form.key('username')}
+        disabled={form.submitting}
+        rightSection={form.isValidating('username') ? <Loader size={16} /> : null}
+        {...form.getInputProps('username')}
+      />
+
+      <TextInput
+        withAsterisk
+        mt="md"
+        label="Email"
+        placeholder="your@email.com"
+        key={form.key('email')}
+        disabled={form.submitting}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit" loading={form.submitting}>
+          Submit
+        </Button>
+      </Group>
+    </form>
+  );
+}
+```
+
+
+## Focus the first invalid field
 
 The second argument of the `form.onSubmit` function is a callback function that is called
-with the [errors object](https://mantine.dev/form/errors) when form validation fails.
+with the [errors object](https://mantine.dev/llms/form-errors.md) when form validation fails.
 You can use this callback to focus the first invalid field or perform any other action.
 
 To get the DOM node of any input, use `form.getInputNode('path-to-field')`. Note that
 in order for this feature to work, you need to spread `form.getInputProps('path-to-field')` to
 the input element.
-
-#### Example: focusError
 
 ```tsx
 import { Button, Group, TextInput } from '@mantine/core';

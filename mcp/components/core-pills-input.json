@@ -1,0 +1,442 @@
+{
+  "id": "core-pills-input",
+  "name": "PillsInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/pills-input",
+  "description": "Base component for custom tags inputs and multi selects",
+  "propsCount": 29,
+  "llmUrl": "https://mantine.dev/llms/core-pills-input.md",
+  "componentDataUrl": "/mcp/components/core-pills-input.json",
+  "searchText": "pillsinput base component for custom tags inputs and multi selects @mantine/core /core/pills-input description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size withasterisk witherrorstyles wrapperprops pointer type",
+  "source": "@mantine/core/src/components/PillsInput/PillsInput.tsx",
+  "docs": "core/pills-input.mdx",
+  "markdown": "# PillsInput\nPackage: @mantine/core\nImport: import { PillsInput } from '@mantine/core';\nDescription: Base component for custom tags inputs and multi selects\n\n## Usage\n\n`PillsInput` is a utility component that can be used to create custom tag inputs, multi-selects, and\nother similar components. By itself it does not include any logic; it only renders given children.\nUsually, `PillsInput` is used in combination with the [Pill](https://mantine.dev/llms/core-pill.md) component.\n\n```tsx\nimport { PillsInput, Pill } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <PillsInput label=\"PillsInput\">\n      <Pill.Group>\n        <Pill>React</Pill>\n        <Pill>Vue</Pill>\n        <Pill>Svelte</Pill>\n        <PillsInput.Field placeholder=\"Enter tags\" />\n      </Pill.Group>\n    </PillsInput>\n  );\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { PillsInput, Pill } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <PillsInput label=\"Enter items\" loading>\n      <Pill.Group>\n        <Pill>React</Pill>\n        <Pill>Vue</Pill>\n        <PillsInput.Field placeholder=\"Enter value\" />\n      </Pill.Group>\n    </PillsInput>\n  );\n}\n```\n\n\n## Input props\n\nPillsInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all div element props. PillsInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { PillsInput, Pill } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <PillsInput\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n    >\n      <Pill.Group>\n        <Pill>React</Pill>\n        <Pill>Vue</Pill>\n        <Pill>Svelte</Pill>\n        <PillsInput.Field placeholder=\"Enter tags\" />\n      </Pill.Group>\n    </PillsInput>\n  );\n}\n```\n\n\n## Searchable select example\n\nCombine `PillsInput` with [Combobox](https://mantine.dev/llms/core-combobox.md) to create a searchable multiselect:\n\n```tsx\nimport { useState } from 'react';\nimport { PillsInput, Pill, Combobox, CheckIcon, Group, useCombobox } from '@mantine/core';\n\nconst groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];\n\nfunction Demo() {\n  const combobox = useCombobox({\n    onDropdownClose: () => combobox.resetSelectedOption(),\n    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),\n  });\n\n  const [search, setSearch] = useState('');\n  const [value, setValue] = useState<string[]>([]);\n\n  const handleValueSelect = (val: string) =>\n    setValue((current) =>\n      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]\n    );\n\n  const handleValueRemove = (val: string) =>\n    setValue((current) => current.filter((v) => v !== val));\n\n  const values = value.map((item) => (\n    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>\n      {item}\n    </Pill>\n  ));\n\n  const options = groceries\n    .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))\n    .map((item) => (\n      <Combobox.Option value={item} key={item} active={value.includes(item)}>\n        <Group gap=\"sm\">\n          {value.includes(item) ? <CheckIcon size={12} /> : null}\n          <span>{item}</span>\n        </Group>\n      </Combobox.Option>\n    ));\n\n  return (\n    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>\n      <Combobox.DropdownTarget>\n        <PillsInput onClick={() => combobox.openDropdown()}>\n          <Pill.Group>\n            {values}\n\n            <Combobox.EventsTarget>\n              <PillsInput.Field\n                onFocus={() => combobox.openDropdown()}\n                onBlur={() => combobox.closeDropdown()}\n                value={search}\n                placeholder=\"Search values\"\n                onChange={(event) => {\n                  combobox.updateSelectedOptionIndex();\n                  setSearch(event.currentTarget.value);\n                }}\n                onKeyDown={(event) => {\n                  if (event.key === 'Backspace' && search.length === 0 && value.length > 0) {\n                    event.preventDefault();\n                    handleValueRemove(value[value.length - 1]);\n                  }\n                }}\n              />\n            </Combobox.EventsTarget>\n          </Pill.Group>\n        </PillsInput>\n      </Combobox.DropdownTarget>\n\n      <Combobox.Dropdown>\n        <Combobox.Options>\n          {options.length > 0 ? options : <Combobox.Empty>Nothing found...</Combobox.Empty>}\n        </Combobox.Options>\n      </Combobox.Dropdown>\n    </Combobox>\n  );\n}\n```\n\n\n## Accessibility\n\nIf `PillsInput` is used without the label prop, it will not be announced properly by screen readers:\n\n```tsx\nimport { PillsInput } from '@mantine/core';\n\n// Inaccessible input – screen readers will not announce it properly\nfunction Demo() {\n  return (\n    <PillsInput>\n      <PillsInput.Field />\n    </PillsInput>\n  );\n}\n```\n\nSet `aria-label` on the `PillsInput.Field` component to make the input accessible.\nIn this case the label will not be visible, but screen readers will announce it:\n\n```tsx\nimport { PillsInput } from '@mantine/core';\n\n// Accessible input – it has aria-label\nfunction Demo() {\n  return (\n    <PillsInput>\n      <PillsInput.Field aria-label=\"Enter tags\" />\n    </PillsInput>\n  );\n}\n```\n\nIf the `label` prop is set, the input will be accessible and it is not required to set `aria-label`:\n\n```tsx\nimport { PillsInput } from '@mantine/core';\n\n// Accessible input – it has associated label element\nfunction Demo() {\n  return (\n    <PillsInput label=\"Enter tags\">\n      <PillsInput.Field />\n    </PillsInput>\n  );\n}\n```\n\n\n#### Props\n\n**PillsInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n**PillsInput.Field props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| pointer | boolean | - | If set, cursor is changed to pointer |\n| type | \"hidden\" \\| \"auto\" \\| \"visible\" | - | Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible. |\n\n\n#### Styles API\n\nPillsInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**PillsInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-PillsInput-wrapper | Root element of the Input |\n| input | .mantine-PillsInput-input | Input element |\n| section | .mantine-PillsInput-section | Left and right sections |\n| root | .mantine-PillsInput-root | Root element |\n| label | .mantine-PillsInput-label | Label element |\n| required | .mantine-PillsInput-required | Required asterisk element, rendered inside label |\n| description | .mantine-PillsInput-description | Description element |\n| error | .mantine-PillsInput-error | Error element |\n\n**PillsInputfield selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| field | .mantine-PillsInputfield-field | Root element |\n\n**PillsInputfield data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| field | data-type | - | Value of `type` prop |\n| field | data-disabled | `disabled` prop is set | - |\n",
+  "props": [
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "PillsInput"
+    },
+    {
+      "name": "pointer",
+      "description": "If set, cursor is changed to pointer",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "PillsInputField"
+    },
+    {
+      "name": "type",
+      "description": "Controls input styles when focused. If <code>auto</code> the input is hidden when not focused. If <code>visible</code> the input will always remain visible.",
+      "required": false,
+      "defaultValue": "'visible'",
+      "type": {
+        "name": "\"hidden\" | \"auto\" | \"visible\"",
+        "raw": "\"hidden\" | \"auto\" | \"visible\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"hidden\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"visible\""
+          }
+        ]
+      },
+      "sourceComponent": "PillsInputField"
+    }
+  ]
+}

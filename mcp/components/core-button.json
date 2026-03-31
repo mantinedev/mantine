@@ -1,0 +1,229 @@
+{
+  "id": "core-button",
+  "name": "Button",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/button",
+  "description": "Button component to render button or link",
+  "propsCount": 20,
+  "llmUrl": "https://mantine.dev/llms/core-button.md",
+  "componentDataUrl": "/mcp/components/core-button.json",
+  "searchText": "button button component to render button or link @mantine/core /core/button autocontrast children color disabled fullwidth gradient justify leftsection loaderprops loading radius rightsection size borderwidth children orientation autocontrast gradient radius size",
+  "source": "@mantine/core/src/components/Button/Button.tsx",
+  "docs": "core/button.mdx",
+  "markdown": "# Button\nPackage: @mantine/core\nImport: import { Button } from '@mantine/core';\nDescription: Button component to render button or link\n\n## Usage\n\n```tsx\nimport { Button } from '@mantine/core';\n\nfunction Demo() {\n  return <Button variant=\"filled\" color=\"blue\" size=\"sm\" radius=\"md\">Button</Button>;\n}\n```\n\n\n## Full width\n\nIf the `fullWidth` prop is set, the `Button` will take 100% of the parent width:\n\n```tsx\nimport { Button } from '@mantine/core';\n\nfunction Demo() {\n  return <Button fullWidth>Full width button</Button>;\n}\n```\n\n\n## Left and right sections\n\n`leftSection` and `rightSection` allow adding icons or any other element to the left and right sides of the button.\nWhen a section is added, padding on the corresponding side is reduced.\n\nNote that `leftSection` and `rightSection` are flipped in [RTL](https://mantine.dev/llms/styles-rtl.md) mode\n(`leftSection` is displayed on the right and `rightSection` is displayed on the left).\n\n```tsx\nimport { Group, Button } from '@mantine/core';\nimport { ImageIcon, DownloadSimpleIcon, ArrowRightIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <Button leftSection={<ImageIcon size={14} />} variant=\"default\">\n        Gallery\n      </Button>\n\n      <Button rightSection={<DownloadSimpleIcon size={14} />}>Download</Button>\n\n      <Button\n        variant=\"light\"\n        leftSection={<ImageIcon size={14} />}\n        rightSection={<ArrowRightIcon size={14} />}\n      >\n        Visit gallery\n      </Button>\n    </Group>\n  );\n}\n```\n\n\n## Sections position\n\nThe `justify` prop sets the `justify-content` of the `inner` element. You can use it to change the alignment of\nleft and right sections. For example, to spread them across the button, set `justify=\"space-between\"`.\n\nIf you need to align just one section to the side of the button, set `justify` to `space-between`\nand add an empty `<span />` to the opposite section.\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { ImageIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <ImageIcon size={14} />;\n  return (\n    <>\n      <Button justify=\"center\" fullWidth leftSection={icon} rightSection={icon} variant=\"default\">\n        Button label\n      </Button>\n\n      <Button justify=\"center\" fullWidth leftSection={icon} variant=\"default\" mt=\"md\">\n        Button label\n      </Button>\n\n      <Button justify=\"center\" fullWidth rightSection={icon} variant=\"default\" mt=\"md\">\n        Button label\n      </Button>\n\n      <Button\n        justify=\"center\"\n        fullWidth\n        rightSection={icon}\n        leftSection={<span />}\n        variant=\"default\"\n        mt=\"md\"\n      >\n        Button label\n      </Button>\n    </>\n  );\n}\n```\n\n\n## Compact size\n\n`Button` supports `xs` – `xl` and `compact-xs` – `compact-xl` sizes. `compact` sizes have\nthe same font size as `xs` – `xl` but with reduced padding and height.\n\n```tsx\nimport { Button, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <Button size=\"md\">Regular md</Button>\n      <Button size=\"compact-md\">Compact md</Button>\n    </Group>\n  );\n}\n```\n\n\n```tsx\nimport { Button } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Button\n      variant=\"gradient\"\n      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}\n    >\n      Gradient button\n    </Button>\n  );\n}\n```\n\n\n## Disabled state\n\nTo make a `Button` disabled, set the `disabled` prop. This will prevent any interactions with the button\nand add disabled styles. If you want the button to just look disabled but still be interactive,\nset the `data-disabled` prop instead. Note that disabled styles are the same for all variants.\n\n```tsx\nimport { Button } from '@mantine/core';\n\nfunction Demo() {\n  return <Button disabled>Disabled button</Button>;\n}\n```\n\n\n## Disabled state when Button is link\n\nThe `<a />` element does not support the `disabled` attribute. To make a `Button` disabled when it is\nrendered as a link, set the `data-disabled` attribute instead and prevent default behavior in the\n`onClick` event handler.\n\n```tsx\nimport { Button } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Button\n      component=\"a\"\n      href=\"https://mantine.dev\"\n      data-disabled\n      onClick={(event) => event.preventDefault()}\n    >\n      Disabled link\n    </Button>\n  );\n}\n```\n\n\n## Customize disabled styles\n\nTo customize disabled styles, it is recommended to use both `&:disabled` and `&[data-disabled]`\nselectors:\n\n* `&:disabled` is used to style the button when the `disabled` prop is set and\n  also when the button is disabled by the parent component (for example, when the `disabled` prop is set on a\n  `<fieldset />` element which contains the `Button`).\n* `&[data-disabled]` is used to style the button when it is not actually disabled but should look like\n  it is (for example, `data-disabled` should be used if you need to use [Tooltip](https://mantine.dev/llms/core-tooltip.md) with a disabled `Button`\n  or when the `Button` is used as a link)\n\n```tsx\n// Demo.module.css\n.button {\n  &:disabled,\n  &[data-disabled] {\n    border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));\n    background-color: transparent;\n  }\n}\n\n// Demo.tsx\nimport { Button } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <Button className={classes.button} disabled>\n      Disabled with styles\n    </Button>\n  );\n}\n```\n\n\n## Disabled button with Tooltip\n\nThe `onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when a `Button` is disabled, so if you need to use a\n[Tooltip](https://mantine.dev/llms/core-tooltip.md) with a disabled `Button`, you need to set the `data-disabled` prop on the `Button`\ninstead of `disabled`. Note that it is also required to change the `onClick` event handler to\n`(event) => event.preventDefault()` as the `Button` is not actually disabled and will still trigger the\n`onClick` event.\n\n```tsx\nimport { Button, Tooltip } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Tooltip label=\"Tooltip for disabled button\">\n      <Button data-disabled onClick={(event) => event.preventDefault()}>\n        Disabled button with tooltip\n      </Button>\n    </Tooltip>\n  );\n}\n```\n\n\n## Loading state\n\nWhen the `loading` prop is set, the `Button` will be disabled and a [Loader](https://mantine.dev/llms/core-loader.md) with overlay will be rendered\nin the center of the button. [Loader](https://mantine.dev/llms/core-loader.md) color depends on the `Button` variant.\n\n```tsx\nimport { Button, Group, Switch } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\n\nfunction Demo() {\n  const [loading, { toggle }] = useDisclosure();\n  return (\n    <>\n      <Group>\n        <Button loading={loading}>Filled button</Button>\n        <Button variant=\"light\" loading={loading}>\n          Light button\n        </Button>\n        <Button variant=\"outline\" loading={loading}>\n          Outline button\n        </Button>\n      </Group>\n\n      <Switch checked={loading} onChange={toggle} label=\"Loading state\" mt=\"md\" />\n    </>\n  );\n}\n```\n\n\n## Custom variants\n\nTo add new `Button` variants, use the [data-variant](https://mantine.dev/llms/styles-variants-sizes.md) attribute.\nUsually new variants are added to the [theme](https://mantine.dev/llms/theming-theme-object.md), this way they are\navailable in all `Button` components in your application.\n\n```tsx\n// Demo.tsx\nimport { Group, Button, MantineProvider, createTheme } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nconst theme = createTheme({\n  components: {\n    Button: Button.extend({\n      classNames: classes,\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Group>\n        <Button variant=\"danger\">Danger variant</Button>\n        <Button variant=\"primary\">Primary variant</Button>\n      </Group>\n    </MantineProvider>\n  );\n}\n\n// Demo.module.css\n.root {\n  &[data-variant='danger'] {\n    background-color: var(--mantine-color-red-9);\n    color: var(--mantine-color-red-0);\n  }\n\n  &[data-variant='primary'] {\n    background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);\n    color: var(--mantine-color-white);\n    border-width: 0;\n  }\n}\n```\n\n\n## Customize variant colors\n\nYou can customize colors for `Button` and other component variants by adding\n[variantColorResolver](https://mantine.dev/llms/theming-colors.md#colors-variant-resolver) to your theme.\n\n```tsx\nimport {\n  Button,\n  Group,\n  MantineProvider,\n  defaultVariantColorsResolver,\n  VariantColorsResolver,\n  parseThemeColor,\n  rgba,\n  darken,\n} from '@mantine/core';\n\nconst variantColorResolver: VariantColorsResolver = (input) => {\n  const defaultResolvedColors = defaultVariantColorsResolver(input);\n  const parsedColor = parseThemeColor({\n    color: input.color || input.theme.primaryColor,\n    theme: input.theme,\n  });\n\n  // Override some properties for variant\n  if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {\n    return {\n      ...defaultResolvedColors,\n      color: 'var(--mantine-color-black)',\n      hoverColor: 'var(--mantine-color-black)',\n    };\n  }\n\n  // Completely override variant\n  if (input.variant === 'light') {\n    return {\n      background: rgba(parsedColor.value, 0.1),\n      hover: rgba(parsedColor.value, 0.15),\n      border: `1px solid ${parsedColor.value}`,\n      color: darken(parsedColor.value, 0.1),\n    };\n  }\n\n  // Add new variants support\n  if (input.variant === 'danger') {\n    return {\n      background: 'var(--mantine-color-red-9)',\n      hover: 'var(--mantine-color-red-8)',\n      color: 'var(--mantine-color-white)',\n      border: 'none',\n    };\n  }\n\n  return defaultResolvedColors;\n};\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={{ variantColorResolver }}>\n      <Group>\n        <Button color=\"lime.4\" variant=\"filled\">\n          Lime filled button\n        </Button>\n\n        <Button color=\"orange\" variant=\"light\">\n          Orange light button\n        </Button>\n\n        <Button variant=\"danger\">Danger button</Button>\n      </Group>\n    </MantineProvider>\n  );\n}\n```\n\n\n```tsx\nimport { Button, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Button color=\"lime.4\">Default</Button>\n      <Button color=\"lime.4\" autoContrast>\n        Auto contrast\n      </Button>\n    </Group>\n  );\n}\n```\n\n\n## Button.Group\n\n```tsx\nimport { Button } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Button.Group orientation=\"horizontal\">\n      <Button variant=\"default\">First</Button>\n      <Button variant=\"default\">Second</Button>\n      <Button variant=\"default\">Third</Button>\n    </Button.Group>\n  );\n}\n```\n\n\nNote that you must not wrap child `Button` components with any additional elements:\n\n```tsx\nimport { Button } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Button.Group>\n      <div>\n        <Button>This will not work</Button>\n      </div>\n      <Button>Buttons will have incorrect borders</Button>\n    </Button.Group>\n  );\n}\n```\n\n## Button.GroupSection\n\nUse `Button.GroupSection` component to render sections that are not buttons inside `Button.Group`:\n\n```tsx\nimport { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';\nimport { Button } from '@mantine/core';\nimport { useCounter } from '@mantine/hooks';\n\nfunction Demo() {\n  const [value, { increment, decrement }] = useCounter(135, { min: 0 });\n\n  return (\n    <Button.Group>\n      <Button variant=\"default\" onClick={decrement}>\n        <CaretDownIcon color=\"var(--mantine-color-red-text)\" />\n      </Button>\n      <Button.GroupSection variant=\"default\" bg=\"var(--mantine-color-body)\" miw={80}>\n        {value}\n      </Button.GroupSection>\n      <Button variant=\"default\" onClick={increment}>\n        <CaretUpIcon color=\"var(--mantine-color-teal-text)\" />\n      </Button>\n    </Button.Group>\n  );\n}\n```\n\n\n\n#### Props\n\n**Button props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| children | React.ReactNode | - | Button content |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| disabled | boolean | - | Sets `disabled` attribute, applies disabled styles |\n| fullWidth | boolean | - | Sets `width: 100%` |\n| gradient | MantineGradient | - | Gradient configuration used for `variant=\"gradient\"` |\n| justify | JustifyContent | - | Sets `justify-content` of `inner` element, can be used to change distribution of sections and label |\n| leftSection | React.ReactNode | - | Content on the left side of the button label |\n| loaderProps | LoaderProps | - | Props added to the `Loader` component (only visible when `loading` prop is set) |\n| loading | boolean | - | If set, the `Loader` component is displayed over the button |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| rightSection | React.ReactNode | - | Content on the right side of the button label |\n| size | ButtonSize | - | Controls button `height`, `font-size` and horizontal `padding` |\n\n**Button.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| borderWidth | string \\| number | - | `border-width` of the child `Button` components. Numbers are converted to rem. |\n| children | React.ReactNode | - | `Button` components |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Orientation of the group |\n\n**Button.GroupSection props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| gradient | MantineGradient | - | Gradient configuration used when `variant=\"gradient\"` |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| size | ButtonSize | - | Controls section `height`, `font-size` and horizontal `padding` |\n\n\n#### Styles API\n\nButton component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Button selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Button-root | Root element |\n| loader | .mantine-Button-loader | Loader component, displayed only when `loading` prop is set |\n| inner | .mantine-Button-inner | Contains all other elements, child of the `root` element |\n| section | .mantine-Button-section | Left and right sections of the button |\n| label | .mantine-Button-label | Button children |\n\n**Button CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --button-bg | Controls `background` |\n| root | --button-bd | Control `border` |\n| root | --button-hover | Controls `background` when hovered |\n| root | --button-color | Control text `color` |\n| root | --button-hover-color | Control text `color` when hovered |\n| root | --button-radius | Controls `border-radius` |\n| root | --button-height | Controls `height` of the button |\n| root | --button-padding-x | Controls horizontal `padding` of the button |\n| root | --button-fz | Controls `font-size` of the button |\n| root | --button-justify | Controls `justify-content` of `inner` element |\n\n**Button data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-disabled | `disabled` prop is set | - |\n\n**Button.Group selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| group | .mantine-ButtonGroup-group | Root element |\n\n**Button.Group CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| group | --button-border-width | `border-width` of child `Button` components |\n\n**Button.Group data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| group | data-orientation | - | Value of `orientation` prop |\n\n**Button.GroupSection selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| groupSection | .mantine-ButtonGroupSection-groupSection | Root element |\n\n**Button.GroupSection CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| groupSection | --section-bg | Controls `background` |\n| groupSection | --section-bd | Control `border` |\n| groupSection | --section-color | Control text `color` |\n| groupSection | --section-radius | Controls `border-radius` |\n| groupSection | --section-height | Controls `height` of the section |\n| groupSection | --section-padding-x | Controls horizontal `padding` of the section |\n| groupSection | --section-fz | Controls `font-size` of the section |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "children",
+      "description": "Button content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute, applies disabled styles",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "fullWidth",
+      "description": "Sets <code>width: 100%</code>",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "gradient",
+      "description": "Gradient configuration used for <code>variant=\"gradient\"</code>",
+      "required": false,
+      "defaultValue": "theme.defaultGradient",
+      "type": {
+        "name": "MantineGradient"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "justify",
+      "description": "Sets <code>justify-content</code> of <code>inner</code> element, can be used to change distribution of sections and label",
+      "required": false,
+      "defaultValue": "'center'",
+      "type": {
+        "name": "JustifyContent"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content on the left side of the button label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "loaderProps",
+      "description": "Props added to the <code>Loader</code> component (only visible when <code>loading</code> prop is set)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "LoaderProps"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "loading",
+      "description": "If set, the <code>Loader</code> component is displayed over the button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content on the right side of the button label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "size",
+      "description": "Controls button <code>height</code>, <code>font-size</code> and horizontal <code>padding</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "ButtonSize"
+      },
+      "sourceComponent": "Button"
+    },
+    {
+      "name": "borderWidth",
+      "description": "<code>border-width</code> of the child <code>Button</code> components. Numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "ButtonGroup"
+    },
+    {
+      "name": "children",
+      "description": "<code>Button</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ButtonGroup"
+    },
+    {
+      "name": "orientation",
+      "description": "Orientation of the group",
+      "required": false,
+      "defaultValue": "horizontal",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "ButtonGroup"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ButtonGroupSection"
+    },
+    {
+      "name": "gradient",
+      "description": "Gradient configuration used when <code>variant=\"gradient\"</code>",
+      "required": false,
+      "defaultValue": "theme.defaultGradient",
+      "type": {
+        "name": "MantineGradient"
+      },
+      "sourceComponent": "ButtonGroupSection"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "ButtonGroupSection"
+    },
+    {
+      "name": "size",
+      "description": "Controls section <code>height</code>, <code>font-size</code> and horizontal <code>padding</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "ButtonSize"
+      },
+      "sourceComponent": "ButtonGroupSection"
+    }
+  ]
+}

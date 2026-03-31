@@ -1,0 +1,329 @@
+{
+  "id": "core-checkbox",
+  "name": "Checkbox",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/checkbox",
+  "description": "Capture boolean input from user",
+  "propsCount": 30,
+  "llmUrl": "https://mantine.dev/llms/core-checkbox.md",
+  "componentDataUrl": "/mcp/components/core-checkbox.json",
+  "searchText": "checkbox capture boolean input from user @mantine/core /core/checkbox autocontrast color description error icon iconcolor id indeterminate label labelposition radius rootref size witherrorstyles wrapperprops autocontrast checked color disabled icon iconcolor indeterminate radius size checked defaultchecked onchange radius value withborder",
+  "source": "@mantine/core/src/components/Checkbox/Checkbox.tsx",
+  "docs": "core/checkbox.mdx",
+  "markdown": "# Checkbox\nPackage: @mantine/core\nImport: import { Checkbox } from '@mantine/core';\nDescription: Capture boolean input from user\n\n## Usage\n\n```tsx\nimport { Checkbox } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <Checkbox\n      defaultChecked\n       labelPosition=\"right\" label=\"I agree to sell my privacy\" description=\"\" error=\"\" color=\"blue\" variant=\"filled\" radius=\"sm\" size=\"sm\" disabled={false} indeterminate={false}\n    />\n  );\n}\n```\n\n\n## Controlled state\n\nUse `checked` and `onChange` props to control `Checkbox` state:\n\n```tsx\nimport { useState } from 'react';\nimport { Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  const [checked, setChecked] = useState(false);\n  return (\n    <Checkbox\n      checked={checked}\n      onChange={(event) => setChecked(event.currentTarget.checked)}\n    />\n  );\n}\n```\n\n## Checkbox with @mantine/form\n\nExample of using `Checkbox` with [@mantine/form](https://mantine.dev/llms/form-use-form.md):\n\n```tsx\nimport { Button, Checkbox } from '@mantine/core';\nimport { isNotEmpty, useForm } from '@mantine/form';\n\nfunction Demo() {\n  const form = useForm({\n    mode: 'uncontrolled',\n    initialValues: { terms: false },\n    validate: {\n      terms: isNotEmpty('You must accept terms and conditions'),\n    },\n  });\n\n  return (\n    <form onSubmit={form.onSubmit((values) => console.log(values))}>\n      <Checkbox\n        label=\"I accept the terms and conditions\"\n        key={form.key('terms')}\n        {...form.getInputProps('terms', { type: 'checkbox' })}\n      />\n\n      <Button type=\"submit\" mt=\"md\">\n        Submit\n      </Button>\n    </form>\n  );\n}\n```\n\n\n## Checkbox with uncontrolled forms\n\n`Checkbox` can be used with uncontrolled forms the same way as native `input[type=\"checkbox\"]`.\nSet the `name` attribute to include checkbox value in `FormData` object on form submission.\nTo control initial checked state in uncontrolled forms, use `defaultChecked` prop.\n\nExample usage of uncontrolled `Checkbox` with `FormData`:\n\n```tsx\nimport { Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Checkbox value:', !!formData.get('terms'));\n      }}\n    >\n      <Checkbox label=\"Accept terms and conditions\" name=\"terms\" defaultChecked />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## States\n\n```tsx\nimport { Checkbox, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <Checkbox checked={false} onChange={() => {}} label=\"Default checkbox\" />\n      <Checkbox checked={false} onChange={() => {}} indeterminate label=\"Indeterminate checkbox\" />\n      <Checkbox checked onChange={() => {}} label=\"Checked checkbox\" />\n      <Checkbox checked variant=\"outline\" onChange={() => {}} label=\"Outline checked checkbox\" />\n      <Checkbox\n        variant=\"outline\"\n        onChange={() => {}}\n        indeterminate\n        label=\"Outline indeterminate checkbox\"\n      />\n      <Checkbox disabled label=\"Disabled checkbox\" />\n      <Checkbox disabled checked onChange={() => {}} label=\"Disabled checked checkbox\" />\n      <Checkbox disabled indeterminate label=\"Disabled indeterminate checkbox\" />\n    </Stack>\n  );\n}\n```\n\n\n## Error state\n\nUse the `error` prop to display error message below the checkbox label.\nIf you want to apply error styles to checkbox without error message, user boolean `error` prop.\nIf you want to display error message without applying error styles, set `withErrorStyles={false}`.\n\n```tsx\nimport { Checkbox, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <Checkbox label=\"With boolean error\" error />\n      <Checkbox label=\"With error message\" error=\"Must be checked\" />\n      <Checkbox label=\"With error message\" error=\"No error styles\" withErrorStyles={false} />\n    </Stack>\n  );\n}\n```\n\n\n## Change icons\n\n```tsx\nimport { Checkbox, CheckboxIconComponent } from '@mantine/core';\nimport { BiohazardIcon, RadioactiveIcon } from '@phosphor-icons/react';\n\nconst CheckboxIcon: CheckboxIconComponent = ({ indeterminate, ...others }) =>\n  indeterminate ? <RadioactiveIcon {...others} /> : <BiohazardIcon {...others} />;\n\nfunction Demo() {\n  return (\n    <>\n      <Checkbox icon={CheckboxIcon} label=\"Custom icon\" defaultChecked />\n      <Checkbox icon={CheckboxIcon} label=\"Custom icon: indeterminate\" indeterminate mt=\"sm\" />\n    </>\n  );\n}\n```\n\n\n## Change icon color\n\nUse the `iconColor` prop to change the icon color. You can reference colors from `theme.colors` or use any valid CSS color:\n\n```tsx\nimport { Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Checkbox\n      defaultChecked\n      color=\"lime.4\"\n      iconColor=\"dark.8\"\n      size=\"md\"\n      label=\"Bright lime checkbox\"\n    />\n  );\n}\n```\n\n\n## Indeterminate state\n\n`Checkbox` supports indeterminate state. When the `indeterminate` prop is set,\nthe `checked` prop is ignored (checkbox always has checked styles):\n\n```tsx\nimport { useListState, randomId } from '@mantine/hooks';\nimport { Checkbox } from '@mantine/core';\n\nconst initialValues = [\n  { label: 'Receive email notifications', checked: false, key: randomId() },\n  { label: 'Receive sms notifications', checked: false, key: randomId() },\n  { label: 'Receive push notifications', checked: false, key: randomId() },\n];\n\nexport function IndeterminateCheckbox() {\n  const [values, handlers] = useListState(initialValues);\n\n  const allChecked = values.every((value) => value.checked);\n  const indeterminate = values.some((value) => value.checked) && !allChecked;\n\n  const items = values.map((value, index) => (\n    <Checkbox\n      mt=\"xs\"\n      ml={33}\n      label={value.label}\n      key={value.key}\n      checked={value.checked}\n      onChange={(event) => handlers.setItemProp(index, 'checked', event.currentTarget.checked)}\n    />\n  ));\n\n  return (\n    <>\n      <Checkbox\n        checked={allChecked}\n        indeterminate={indeterminate}\n        label=\"Receive all notifications\"\n        onChange={() =>\n          handlers.setState((current) =>\n            current.map((value) => ({ ...value, checked: !allChecked }))\n          )\n        }\n      />\n      {items}\n    </>\n  );\n}\n```\n\n\n## Label with link\n\n```tsx\nimport { Checkbox, Anchor } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Checkbox\n      label={\n        <>\n          I accept{' '}\n          <Anchor href=\"https://mantine.dev\" target=\"_blank\" inherit>\n            terms and conditions\n          </Anchor>\n        </>\n      }\n    />\n  );\n}\n```\n\n\n## Checkbox with tooltip\n\nYou can change the target element to which the tooltip is attached with `refProp`:\n\n* If `refProp` is not set, the tooltip is attached to the checkbox input\n* If `refProp=\"rootRef\"` is set, the tooltip is attached to the root element (contains label, input and other elements)\n\n```tsx\nimport { Tooltip, Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Tooltip label=\"Checkbox with tooltip\">\n        <Checkbox label=\"Tooltip on checkbox only\" />\n      </Tooltip>\n\n      <Tooltip label=\"Checkbox with tooltip\" refProp=\"rootRef\">\n        <Checkbox label=\"Tooltip the entire element\" mt=\"md\" />\n      </Tooltip>\n    </>\n  );\n}\n```\n\n\n## Pointer cursor\n\nBy default, checkbox input and label have `cursor: default` (same as native `input[type=\"checkbox\"]`).\nTo change the cursor to pointer, set `cursorType` on [theme](https://mantine.dev/llms/theming-theme-object.md):\n\n```tsx\nimport { MantineProvider, createTheme, Checkbox } from '@mantine/core';\n\nconst theme = createTheme({\n  cursorType: 'pointer',\n});\n\nfunction Demo() {\n  return (\n    <>\n      <Checkbox label=\"Default cursor\" />\n\n      <MantineProvider theme={theme}>\n        <Checkbox label=\"Pointer cursor\" mt=\"md\" />\n      </MantineProvider>\n    </>\n  );\n}\n```\n\n\n```tsx\nimport { Checkbox, Stack } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <Checkbox checked label=\"regular checkbox\" size=\"lg\" color=\"lime.4\" />\n      <Checkbox autoContrast checked label=\"autoContrast checkbox\" size=\"lg\" color=\"lime.4\" />\n    </Stack>\n  );\n}\n```\n\n\n## Add custom sizes\n\nYou can add any number of custom sizes with [data-size](https://mantine.dev/llms/styles-data-attributes.md) attribute:\n\n```tsx\n// Demo.tsx\nimport { MantineProvider, Checkbox, createTheme } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nconst theme = createTheme({\n  components: {\n    Checkbox: Checkbox.extend({ classNames: classes }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Checkbox size=\"xxs\" label=\"Extra small checkbox\" />\n      <Checkbox size=\"xxl\" label=\"Extra large checkbox\" mt=\"md\" />\n    </MantineProvider>\n  );\n}\n\n// Demo.module.css\n.root {\n  --checkbox-size-xxl: 42px;\n  --checkbox-size-xxs: 14px;\n\n  &[data-size='xxl'] {\n    .label {\n      font-size: 22px;\n      line-height: 40px;\n    }\n  }\n\n  &[data-size='xxs'] {\n    .label {\n      font-size: 10px;\n      line-height: 14px;\n    }\n  }\n}\n```\n\n\n## Wrapper props\n\nCheckbox supports additional props that are passed to the wrapper element for more customization options.\n\n## Checkbox.Group\n\n`Checkbox.Group` manages the state of multiple checkboxes, it accepts `value` and `onChange`\nprops, which are used to control the state of checkboxes inside the group. The `value` prop should be an array of strings, where each string is the value of a checkbox.\nThe `onChange` prop should be a function that receives the new value as an array of strings.\n\n```tsx\nimport { useState } from 'react';\nimport { Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string[]>([]);\n\n  return (\n    <Checkbox.Group value={value} onChange={setValue}>\n      <Checkbox value=\"react\" label=\"React\" />\n      <Checkbox value=\"svelte\" label=\"Svelte\" />\n    </Checkbox.Group>\n  );\n}\n```\n\n`Checkbox.Group` component supports all [Input.Wrapper](https://mantine.dev/llms/core-input.md#inputwrapper-component)\nprops.\n\n```tsx\nimport { Checkbox, Group } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <Checkbox.Group\n      defaultValue={['react']}\n       label=\"Select your favorite frameworks/libraries\" description=\"This is anonymous\" error=\"\" withAsterisk={true}\n    >\n      <Group mt=\"xs\">\n        <Checkbox value=\"react\" label=\"React\" />\n        <Checkbox value=\"svelte\" label=\"Svelte\" />\n        <Checkbox value=\"ng\" label=\"Angular\" />\n        <Checkbox value=\"vue\" label=\"Vue\" />\n      </Group>\n    </Checkbox.Group>\n  );\n}\n```\n\n\n## Checkbox.Group disabled\n\n```tsx\nimport { Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Checkbox.Group disabled>\n      <Stack>\n        <Checkbox value=\"react\" label=\"React\" />\n        <Checkbox value=\"svelte\" label=\"Svelte\" />\n        <Checkbox value=\"angular\" label=\"Angular\" />\n        <Checkbox value=\"vue\" label=\"Vue\" />\n      </Stack>\n    </Checkbox.Group>\n  );\n}\n```\n\n\n## maxSelectedValues\n\nUse `maxSelectedValues` prop to limit the number of selected values in `Checkbox.Group`.\nWhen the limit is reached, the remaining checkboxes are disabled and cannot be selected.\n\n```tsx\nimport { Checkbox, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Checkbox.Group defaultValue={['react']} maxSelectedValues={2}>\n      <Group>\n        <Checkbox value=\"react\" label=\"React\" />\n        <Checkbox value=\"svelte\" label=\"Svelte\" />\n        <Checkbox value=\"ng\" label=\"Angular\" />\n        <Checkbox value=\"vue\" label=\"Vue\" />\n      </Group>\n    </Checkbox.Group>\n  );\n}\n```\n\n\n## Checkbox.Group with @mantine/form\n\nExample of using `Checkbox.Group` with [@mantine/form](https://mantine.dev/llms/form-use-form.md):\n\n```tsx\nimport { Button, Checkbox, Group } from '@mantine/core';\nimport { hasLength, useForm } from '@mantine/form';\n\ninterface FormValues {\n  frameworks: string[];\n}\n\nfunction Demo() {\n  const form = useForm<FormValues>({\n    mode: 'uncontrolled',\n    initialValues: { frameworks: [] },\n    validate: {\n      frameworks: hasLength({ min: 1 }, 'Select at least one framework'),\n    },\n  });\n\n  return (\n    <form onSubmit={form.onSubmit((values) => console.log(values))}>\n      <Checkbox.Group\n        {...form.getInputProps('frameworks')}\n        key={form.key('frameworks')}\n        label=\"Select your favorite frameworks/libraries\"\n        withAsterisk\n      >\n        <Group my={5}>\n          <Checkbox value=\"react\" label=\"React\" />\n          <Checkbox value=\"svelte\" label=\"Svelte\" />\n          <Checkbox value=\"ng\" label=\"Angular\" />\n          <Checkbox value=\"vue\" label=\"Vue\" />\n        </Group>\n      </Checkbox.Group>\n\n      <Button type=\"submit\" mt=\"md\">\n        Submit\n      </Button>\n    </form>\n  );\n}\n```\n\n\n## Checkbox.Group with uncontrolled forms\n\n`Checkbox.Group` can be used with uncontrolled forms, it renders a hidden input\nwhich joins all checked values into a single string using `hiddenInputValuesSeparator` prop.\n\nProps for usage with uncontrolled forms:\n\n* `name` – name attribute passed to the hidden input\n* `hiddenInputValuesSeparator` – string used to join checked values into a single string, `','` by default\n* `hiddenInputProps` – additional props passed to the hidden input\n\n```tsx\nexport function UncontrolledForm() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('Checkbox group value:', formData.get('frameworks'));\n      }}\n    >\n      <Checkbox.Group label=\"Frameworks\" name=\"frameworks\" hiddenInputValuesSeparator=\"|\">\n        <Checkbox label=\"React\" value=\"react\" />\n        <Checkbox label=\"Angular\" value=\"ng\" />\n      </Checkbox.Group>\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Checkbox.Indicator\n\n`Checkbox.Indicator` looks exactly the same as the `Checkbox` component, but it does not\nhave any semantic meaning, it's just a visual representation of checkbox state. You\ncan use it in any place where you need to display checkbox state without any interaction\nrelated to the indicator. For example, it is useful in cards based on buttons, trees, etc.\n\nNote that `Checkbox.Indicator` cannot be focused or selected with keyboard. It is not\naccessible and should not be used as a replacement for the `Checkbox` component.\n\n```tsx\nimport { Checkbox, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <Checkbox.Indicator />\n      <Checkbox.Indicator checked />\n      <Checkbox.Indicator indeterminate />\n      <Checkbox.Indicator disabled />\n      <Checkbox.Indicator disabled checked />\n      <Checkbox.Indicator disabled indeterminate />\n    </Group>\n  );\n}\n```\n\n\n## Example: Table with row selection\n\n```tsx\nimport { useState } from 'react';\nimport { Table, Checkbox } from '@mantine/core';\n\nconst elements = [\n  { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },\n  { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },\n  { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },\n  { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },\n  { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },\n];\n\nfunction Demo() {\n  const [selectedRows, setSelectedRows] = useState<number[]>([]);\n\n  const rows = elements.map((element) => (\n    <Table.Tr\n      key={element.name}\n      bg={selectedRows.includes(element.position) ? 'var(--mantine-color-blue-light)' : undefined}\n    >\n      <Table.Td>\n        <Checkbox\n          aria-label=\"Select row\"\n          checked={selectedRows.includes(element.position)}\n          onChange={(event) =>\n            setSelectedRows(\n              event.currentTarget.checked\n                ? [...selectedRows, element.position]\n                : selectedRows.filter((position) => position !== element.position)\n            )\n          }\n        />\n      </Table.Td>\n      <Table.Td>{element.position}</Table.Td>\n      <Table.Td>{element.name}</Table.Td>\n      <Table.Td>{element.symbol}</Table.Td>\n      <Table.Td>{element.mass}</Table.Td>\n    </Table.Tr>\n  ));\n\n  return (\n    <Table>\n      <Table.Thead>\n        <Table.Tr>\n          <Table.Th />\n          <Table.Th>Element position</Table.Th>\n          <Table.Th>Element name</Table.Th>\n          <Table.Th>Symbol</Table.Th>\n          <Table.Th>Atomic mass</Table.Th>\n        </Table.Tr>\n      </Table.Thead>\n      <Table.Tbody>{rows}</Table.Tbody>\n    </Table>\n  );\n}\n```\n\n\n## Example: Customize with Styles API\n\n```tsx\n// Demo.tsx\nimport { useState } from 'react';\nimport { Checkbox } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  const [checked, setChecked] = useState(false);\n\n  return (\n    <Checkbox\n      classNames={classes}\n      label=\"Checkbox button\"\n      checked={checked}\n      onChange={(event) => setChecked(event.currentTarget.checked)}\n      wrapperProps={{\n        onClick: () => setChecked((c) => !c),\n      }}\n    />\n  );\n}\n\n// Demo.module.css\n.root {\n  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));\n  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);\n  border-radius: var(--mantine-radius-md);\n  font-weight: 600;\n  transition:\n    color 100ms ease,\n    background-color 100ms ease,\n    border-color 100ms ease;\n  cursor: pointer;\n\n  &[data-checked] {\n    background-color: var(--mantine-color-blue-filled);\n    border-color: var(--mantine-color-blue-filled);\n    color: var(--mantine-color-white);\n  }\n\n  & * {\n    pointer-events: none;\n    user-select: none;\n  }\n}\n```\n\n\n## wrapperProps\n\nMost of the `Checkbox` props are passed down to the `input` element.\nIf you want to pass props to the root element instead, use `wrapperProps` prop.\n\n```tsx\nimport { Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Checkbox\n      label=\"My checkbox\"\n      wrapperProps={{ 'data-root-element': true }}\n    />\n  );\n}\n```\n\n## id attribute\n\nBy default, `Checkbox` generates a random `id` attribute for the input element\nto associate it with the label. You can supply your own `id` attribute with `id` prop.\nIt will be used in `id` attribute of the input element and `htmlFor` attribute of the label element.\n\n```tsx\nimport { Checkbox } from '@mantine/core';\n\nfunction Demo() {\n  return <Checkbox id=\"my-checkbox\" label=\"My checkbox\" />;\n}\n```\n\n## Accessibility\n\nCheckbox component is based on the native `input[type=\"checkbox\"]` element, so it is accessible by default.\n\nSet `aria-label` or `label` prop to make the checkbox accessible for screen readers:\n\n```tsx\nimport { Checkbox } from '@mantine/core';\n\n// Not ok, input is not labeled\nfunction Bad() {\n  return <Checkbox />;\n}\n\n// Ok, input is labelled by aria-label\nfunction GoodAriaLabel() {\n  return <Checkbox aria-label=\"My checkbox\" />;\n}\n\n// Ok, input is labelled by label element\nfunction GoodLabel() {\n  return <Checkbox label=\"My checkbox\" />;\n}\n```\n\n\n#### Props\n\n**Checkbox props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts icon color based on background color for `filled` variant |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color to set input background color in checked state |\n| description | React.ReactNode | - | Description below the label |\n| error | React.ReactNode | - | Error message below the label |\n| icon | CheckboxIconComponent | - | Icon for checked or indeterminate state |\n| iconColor | MantineColor | - | Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. |\n| id | string | - | Unique input id |\n| indeterminate | boolean | - | Indeterminate state of the checkbox. If set, `checked` prop is dismissed. |\n| label | React.ReactNode | - | `label` associated with the checkbox |\n| labelPosition | \"left\" \\| \"right\" | - | Position of the label relative to the input |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| rootRef | Ref<HTMLDivElement> | - | Root element ref |\n| size | MantineSize | - | Controls size of the component |\n| withErrorStyles | boolean | - | If set, applies error styles to the checkbox when `error` prop is set |\n| wrapperProps | React.ComponentProps<\"div\"> | - | Props passed down to the root element |\n\n**Checkbox.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Checkbox.Indicator props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts icon color based on background color for `filled` variant |\n| checked | boolean | - | Determines whether the component should have checked styles |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color to set input background color in checked state |\n| disabled | boolean | - | Indicates disabled state |\n| icon | CheckboxIconComponent | - | Icon for checked or indeterminate state |\n| iconColor | MantineColor | - | Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` |\n| indeterminate | boolean | - | Indeterminate state of the checkbox. If set, `checked` prop is ignored. |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| size | MantineSize | - | Controls size of the component |\n\n**Checkbox.CardContext props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n**Checkbox.Card props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| checked | boolean | - | Controlled component value |\n| defaultChecked | boolean | - | Uncontrolled component default value |\n| onChange | (checked: boolean) => void | - | Called when value changes |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| value | string | - | Value of the checkbox, used with `Checkbox.Group` |\n| withBorder | boolean | - | Adds border to the root element |\n\n\n#### Styles API\n\nCheckbox component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Checkbox selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Checkbox-root | Root element |\n| input | .mantine-Checkbox-input | Input element (`input[type=\"checkbox\"]`) |\n| icon | .mantine-Checkbox-icon | Checkbox icon, used to display checkmark and indeterminate state icon |\n| inner | .mantine-Checkbox-inner | Wrapper for `icon` and `input` |\n| body | .mantine-Checkbox-body | Input body, contains all other elements |\n| labelWrapper | .mantine-Checkbox-labelWrapper | Contains `label`, `description` and `error` |\n| label | .mantine-Checkbox-label | Label element |\n| description | .mantine-Checkbox-description | Description displayed below the label |\n| error | .mantine-Checkbox-error | Error message displayed below the label |\n\n**Checkbox CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --checkbox-color | Controls checked checkbox `background-color` |\n| root | --checkbox-radius | Controls checkbox `border-radius` |\n| root | --checkbox-size | Controls checkbox `width` and `height` |\n| root | --checkbox-icon-color | Controls checkbox icon `color` |\n\n**Checkbox data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-checked | `checked` prop is set | - |\n| input | data-error | `error` prop is set | - |\n| input | data-indeterminate | `indeterminate` prop is set | - |\n| inner | data-label-position | - | Value of `labelPosition` prop |\n\n**Checkbox.Group selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-CheckboxGroup-root | Root element |\n| label | .mantine-CheckboxGroup-label | Label element |\n| required | .mantine-CheckboxGroup-required | Required asterisk element, rendered inside label |\n| description | .mantine-CheckboxGroup-description | Description element |\n| error | .mantine-CheckboxGroup-error | Error element |\n\n**Checkbox.Indicator selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| indicator | .mantine-CheckboxIndicator-indicator | Root element |\n| icon | .mantine-CheckboxIndicator-icon | Checkbox icon |\n\n**Checkbox.Indicator CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| indicator | --checkbox-color | Controls checked checkbox `background-color` |\n| indicator | --checkbox-radius | Controls checkbox `border-radius` |\n| indicator | --checkbox-size | Controls checkbox `width` and `height` |\n| indicator | --checkbox-icon-color | Controls checkbox icon `color` |\n\n**Checkbox.Indicator data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| indicator | data-checked | `checked` prop is set | - |\n| indicator | data-disabled | `disabled` prop is set | - |\n\n**Checkbox.Card selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| card | .mantine-CheckboxCard-card | Root element |\n\n**Checkbox.Card CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| card | --card-radius | Controls card `border-radius` |\n\n**Checkbox.Card data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| card | data-checked | `checked` prop is set | - |\n| card | data-with-border | `withBorder` prop is set | - |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts icon color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to set input background color in checked state",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "description",
+      "description": "Description below the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "error",
+      "description": "Error message below the label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "icon",
+      "description": "Icon for checked or indeterminate state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CheckboxIconComponent"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "iconColor",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to set icon color. By default, depends on <code>theme.autoContrast</code>.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "id",
+      "description": "Unique input id",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "indeterminate",
+      "description": "Indeterminate state of the checkbox. If set, <code>checked</code> prop is dismissed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "label",
+      "description": "<code>label</code> associated with the checkbox",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "labelPosition",
+      "description": "Position of the label relative to the input",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "rootRef",
+      "description": "Root element ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<HTMLDivElement>"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "size",
+      "description": "Controls size of the component",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "If set, applies error styles to the checkbox when <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "Checkbox"
+    },
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts icon color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "checked",
+      "description": "Determines whether the component should have checked styles",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to set input background color in checked state",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "disabled",
+      "description": "Indicates disabled state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "icon",
+      "description": "Icon for checked or indeterminate state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CheckboxIconComponent"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "iconColor",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to set icon color, by default value depends on <code>theme.autoContrast</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "indeterminate",
+      "description": "Indeterminate state of the checkbox. If set, <code>checked</code> prop is ignored.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "size",
+      "description": "Controls size of the component",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "CheckboxIndicator"
+    },
+    {
+      "name": "checked",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CheckboxCard"
+    },
+    {
+      "name": "defaultChecked",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CheckboxCard"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(checked: boolean) => void"
+      },
+      "sourceComponent": "CheckboxCard"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "CheckboxCard"
+    },
+    {
+      "name": "value",
+      "description": "Value of the checkbox, used with <code>Checkbox.Group</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "CheckboxCard"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "CheckboxCard"
+    }
+  ]
+}

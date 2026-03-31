@@ -2,13 +2,13 @@
 
 # CSS files list
 
-This page contains a list of CSS files that you can import from `@mantine/core` package
+This page contains a list of CSS files that you can import from the `@mantine/core` package
 as a replacement for `@mantine/core/styles.css`.
 
 ## Components dependencies
 
-Some components require additional styles to work properly. For example, [Button](https://mantine.dev/core/button/)
-component is based on [UnstyledButton](https://mantine.dev/core/unstyled-button/). If you want to use [Button](https://mantine.dev/core/button/),
+Some components require additional styles to work properly. For example, the [Button](https://mantine.dev/llms/core-button.md)
+component is based on [UnstyledButton](https://mantine.dev/llms/core-unstyled-button.md). If you want to use [Button](https://mantine.dev/llms/core-button.md),
 you need to import styles for `UnstyledButton` as well.
 
 ```tsx
@@ -16,9 +16,9 @@ import '@mantine/core/styles/UnstyledButton.css';
 import '@mantine/core/styles/Button.css';
 ```
 
-Some components like [Select](https://mantine.dev/core/select/) do not have any styles on their own – they are built
+Some components like [Select](https://mantine.dev/llms/core-select.md) do not have any styles of their own – they are built
 on top of other components. To find out which components are used in a particular component, check
-the component source code.
+the component's source code.
 
 If you are not sure which components are used in a particular component, you can import
 all styles for components that are reused in other components:
@@ -43,7 +43,7 @@ import '@mantine/core/styles/ActionIcon.css';
 
 ## Global styles
 
-All Mantine components depend on global styles, you need to import them before
+All Mantine components depend on global styles. You need to import them before
 all other styles:
 
 * `baseline.css` – a minimal CSS reset, sets `box-sizing: border-box` and changes font properties
@@ -58,9 +58,9 @@ import '@mantine/core/styles/global.css';
 
 ## Import order
 
-It is important to keep correct styles import order. For example, if you want to use
-[Button](https://mantine.dev/core/button/) component, you need to import styles for
-[UnstyledButton](https://mantine.dev/core/unstyled-button/) first and then import styles for [Button](https://mantine.dev/core/button/).
+It is important to maintain the correct styles import order. For example, if you want to use
+the [Button](https://mantine.dev/llms/core-button.md) component, you need to import styles for
+[UnstyledButton](https://mantine.dev/llms/core-unstyled-button.md) first and then import styles for [Button](https://mantine.dev/llms/core-button.md).
 
 ```tsx
 // ✅ Correct order – Button styles will override UnstyledButton styles
@@ -77,6 +77,4 @@ import '@mantine/core/styles/UnstyledButton.css';
 ## Files list
 
 Note that if you cannot find a particular file in the list below, it means that
-the component does not have any styles on its own or it is built on top of other components.
-
-<CssFilesList />
+the component does not have any styles of its own or it is built on top of other components.

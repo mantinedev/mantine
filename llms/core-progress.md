@@ -5,20 +5,16 @@ Description: Give user feedback for status of the task
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Progress } from '@mantine/core';
 
 function Demo() {
-  return <Progress />;
+  return <Progress color="blue" radius="md" size="md" value={50} striped={false} animated={false} />;
 }
 ```
 
 
 ## Compound components
-
-#### Example: compound
 
 ```tsx
 import { Progress } from '@mantine/core';
@@ -42,8 +38,6 @@ function Demo() {
 
 
 ## Vertical orientation
-
-#### Example: vertical
 
 ```tsx
 import { Progress } from '@mantine/core';
@@ -72,8 +66,6 @@ function Demo() {
 
 
 ## With tooltips
-
-#### Example: tooltips
 
 ```tsx
 import { Progress, Tooltip } from '@mantine/core';
@@ -106,9 +98,7 @@ function Demo() {
 
 ## Section width transition
 
-Set `transitionDuration` to a number of ms to enable width transition:
-
-#### Example: transition
+Set `transitionDuration` to a number of milliseconds to enable width transition:
 
 ```tsx
 import { useState } from 'react';
@@ -128,105 +118,13 @@ function Demo() {
 ```
 
 
-## Example: progress with segments
-
-#### Example: segments
-
-```tsx
-import { useState } from 'react';
-import { Group, PasswordInput, Progress } from '@mantine/core';
-
-const requirements = [
-  { re: /[0-9]/, label: 'Includes number' },
-  { re: /[a-z]/, label: 'Includes lowercase letter' },
-  { re: /[A-Z]/, label: 'Includes uppercase letter' },
-  { re: /[DEMOPLACEHOLDER::ProgressDemos.segments::END+,:;=?@#|'<>.^*()%!-]/, label: 'Includes special symbol' },
-];
-
-function getStrength(password: string) {
-  if (password.length < 5) {
-    return 10;
-  }
-
-  let multiplier = password.length > 5 ? 0 : 1;
-
-  requirements.forEach((requirement) => {
-    if (!requirement.re.test(password)) {
-      multiplier += 1;
-    }
-  });
-
-  return Math.max(100 - (100 / (requirements.length + 1)) * multiplier, 10);
-}
-
-function getStrengthColor(strength: number) {
-  switch (true) {
-    case strength < 30:
-      return 'red';
-    case strength < 50:
-      return 'orange';
-    case strength < 70:
-      return 'yellow';
-    default:
-      return 'teal';
-  }
-}
-
-function Demo() {
-  const [value, setValue] = useState('');
-  const strength = getStrength(value);
-  const color = getStrengthColor(strength);
-
-  return (
-    <div>
-      <PasswordInput
-        value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
-        placeholder="Enter password"
-        label="Enter password"
-      />
-
-      <Group grow gap={5} mt="xs">
-        <Progress
-          size="xs"
-          color={color}
-          value={value.length > 0 ? 100 : 0}
-          transitionDuration={0}
-        />
-        <Progress size="xs" color={color} transitionDuration={0} value={strength < 30 ? 0 : 100} />
-        <Progress size="xs" color={color} transitionDuration={0} value={strength < 50 ? 0 : 100} />
-        <Progress size="xs" color={color} transitionDuration={0} value={strength < 70 ? 0 : 100} />
-      </Group>
-    </div>
-  );
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Progress } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Progress.Root size="xl">
-      <Progress.Section value={35}>
-        <Progress.Label>Documents</Progress.Label>
-      </Progress.Section>
-    </Progress.Root>
-  );
-}
-```
-
-
 ## Accessibility
 
-* Progress section has `role="progressbar"` attribute
-* Progress section has `aria-valuenow` attribute with current value
-* `aria-valuemin` and `aria-valuemax` attributes are always set to `0` and `100` as component does not support other values
+* Progress section has the `role="progressbar"` attribute
+* Progress section has the `aria-valuenow` attribute with the current value
+* `aria-valuemin` and `aria-valuemax` attributes are always set to `0` and `100` as the component does not support other values
 
-Set `aria-label` attribute to label progress:
+Set the `aria-label` attribute to label the progress:
 
 ```tsx
 import { Progress } from '@mantine/core';
@@ -247,17 +145,39 @@ function DemoCompound() {
 
 #### Props
 
+**Progress props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| animated | boolean | - | If set, the sections stripes are animated, <code>striped</code> prop is ignored |
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS value |
-| orientation | "horizontal" | "vertical" | - | Controls orientation |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
-| size | number | MantineSize | (string & {}) | - | Controls track height |
+| animated | boolean | - | If set, the sections stripes are animated (automatically enables striped) |
+| autoContrast | boolean | - | If set, adjusts label text color based on section background color for readability |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS value |
+| orientation | "horizontal" \| "vertical" | - | Controls orientation |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| size | MantineSize \| number | - | Controls track height |
 | striped | boolean | - | If set, the section has stripes |
 | transitionDuration | number | - | Controls sections width transition duration, value is specified in ms |
 | value | number | required | Value of the progress |
+
+**Progress.Section props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| animated | boolean | - | If set, the sections stripes are animated, `striped` prop is ignored |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS value |
+| striped | boolean | - | If set, the section has stripes |
+| value | number | required | Value of the section in 0–100 range |
+| withAria | boolean | - | Determines whether `aria-*` props should be added to the root element |
+
+**Progress.Root props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| autoContrast | boolean | - | If set, adjusts label text color based on section background color for readability |
+| orientation | "horizontal" \| "vertical" | - | Controls orientation |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| size | MantineSize \| number | - | Controls track height |
+| transitionDuration | number | - | Controls sections width transition duration, value is specified in ms |
 
 
 #### Styles API
@@ -284,5 +204,6 @@ Progress component supports Styles API. With Styles API, you can customize style
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| section | data-striped | - | - |
-| section | data-animated | - | - |
+| root | data-orientation | `orientation` prop | vertical \| horizontal |
+| section | data-striped | `striped` or `animated` props are set | - |
+| section | data-animated | `animated` prop is set | - |

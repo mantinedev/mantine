@@ -1,0 +1,574 @@
+# CustomComponents
+
+# Create custom components
+
+This guide will help you understand how to create custom components that integrate
+with Mantine's theming, styling, and other core features.
+
+`ExampleComponent` will be used as an example throughout this guide:
+
+```tsx
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  MantineRadius,
+  StylesApiProps,
+  useProps,
+  useStyles,
+} from '@mantine/core';
+import classes from './ExampleComponent.module.css';
+
+export type ExampleComponentStylesNames = 'root' | 'inner';
+export type ExampleComponentVariant = 'filled' | 'outline';
+export type ExampleComponentCssVariables = {
+  root: '--radius';
+};
+
+export interface ExampleComponentProps
+  extends BoxProps, StylesApiProps<ExampleComponentFactory>, ElementProps<'div'> {
+  /** Component border-radius */
+  radius: MantineRadius;
+}
+
+export type ExampleComponentFactory = Factory<{
+  props: ExampleComponentProps;
+  ref: HTMLDivElement;
+  stylesNames: ExampleComponentStylesNames;
+  vars: ExampleComponentCssVariables;
+  variant: ExampleComponentVariant;
+}>;
+
+const defaultProps = {
+  radius: 'md',
+} satisfies Partial<ExampleComponentProps>;
+
+const varsResolver = createVarsResolver<ExampleComponentFactory>((_theme, { radius }) => ({
+  root: {
+    '--radius': getRadius(radius),
+  },
+}));
+
+export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
+  const props = useProps('ExampleComponent', defaultProps, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    radius,
+    children,
+    ...others
+  } = props;
+
+  const getStyles = useStyles<ExampleComponentFactory>({
+    name: 'ExampleComponent',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
+    vars,
+    varsResolver,
+  });
+
+  return (
+    <Box {...getStyles('root')} {...others}>
+      <div {...getStyles('inner')}>{children}</div>
+    </Box>
+  );
+});
+
+ExampleComponent.displayName = 'ExampleComponent';
+ExampleComponent.classes = classes;
+```
+
+## Factory type
+
+`Factory` type is used to group all types related to the component: variant, Styles API selectors, ref type,
+CSS variables and other properties described later. All properties except `props` are optional.
+
+```tsx
+// Usage with Styles API when the component has related styles
+export type ExampleComponentFactory = Factory<{
+  props: ExampleComponentProps;
+  ref: HTMLDivElement;
+  stylesNames: ExampleComponentStylesNames;
+  vars: ExampleComponentCssVariables;
+  variant: ExampleComponentVariant;
+}>;
+
+// Component has no styles or does not expose Styles API features
+export type ExampleComponentFactory = Factory<{
+  props: ExampleComponentProps;
+  ref: HTMLDivElement;
+}>;
+```
+
+The created `ExampleComponentFactory` is then passed as the first type argument to all helper functions
+imported from `@mantine/core` package: `useStyles`, `createVarsResolver` and `factory` in the example above.
+
+`Factory` type is used for validation and IDE autocomplete. It does not modify the passed type:
+
+```tsx
+export type ExampleComponentFactory = {
+  props: ExampleComponentProps;
+  ref: HTMLDivElement;
+};
+
+// Both examples are the same, Factory only used for validation, it can be omitted
+export type ExampleComponentFactory = Factory<{
+  props: ExampleComponentProps;
+  ref: HTMLDivElement;
+}>;
+```
+
+## factory function
+
+`factory` function is used to type props and assign shared static properties: `extend` and `withProps`.
+
+```tsx
+export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
+  // ... component body
+});
+
+// Optionally, you can assign displayName and classes
+ExampleComponent.displayName = 'ExampleComponent';
+ExampleComponent.classes = classes;
+```
+
+## Box component
+
+[Box](https://mantine.dev/llms/core-box.md) component is a base for all other components. To create custom components,
+use it as the root element and spread `...others` props to it to support [style props](https://mantine.dev/llms/styles-style-props.md).
+
+To add [style props](https://mantine.dev/llms/styles-style-props.md) types to component, extend `BoxProps`.
+
+```tsx
+// Extend props with `BoxProps` to add style props types
+export interface ExampleComponentProps
+  extends BoxProps, StylesApiProps<ExampleComponentFactory>, ElementProps<'div'> {
+}
+
+export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
+  const props = useProps('ExampleComponent', defaultProps, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    radius,
+    children,
+    ...others
+  } = props;
+
+  // Spread ...others props to the Box component to support style props
+  return (
+    <Box {...others}>{children}</Box>
+  );
+});
+```
+
+## ElementProps type
+
+`ElementProps` is used to retrieve the props a component accepts. Can either be passed a string,
+indicating a DOM element (e.g. `'div'`, `'span'`, etc.) or the type of a React component. The second
+type argument is optional and may be used to omit props types from the original component/element.
+
+`ElementProps` reassigns `style` prop signature to make it compatible with Mantine components and allow
+CSS variables usage.
+
+Examples of `ElementProps` type usage:
+
+```tsx
+// Root element is `div`, extend component props with ElementProps<'div'>
+export interface ExampleComponentProps extends ElementProps<'div'> {}
+
+// Type conflict: `input` element has html attributes `color` and `size`,
+// but we want to define our own types. To fix types conflict, use the second
+// type argument with `'color' | 'size'` union to omit `color` and `size` from
+// `input` html props.
+export interface ExampleComponentProps extends ElementProps<'input', 'color' | 'size'> {
+  color: 'blue' | 'red';
+  size: 'sm' | 'lg';
+}
+```
+
+## useProps hook
+
+`useProps` hook is used to support [default props](https://mantine.dev/llms/theming-default-props.md). It accepts arguments:
+
+* Component name which is used to reference component in [theme](https://mantine.dev/llms/theming-theme-object.md)
+* Default props on component level
+* Component props
+
+`useProps` merges props using the order:
+
+1. Component props – highest priority
+2. [Default props](https://mantine.dev/llms/theming-default-props.md) on theme – lower priority
+3. Default props define on component level – used only if prop is not defined in previous steps
+
+Example of using `useProps`:
+
+```tsx
+const defaultProps = {
+  radius: 'md',
+} satisfies Partial<ExampleComponentProps>;
+
+export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
+  const props = useProps('ExampleComponent', defaultProps, _props);
+  // Extract individual props only after processing with useProps
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    radius,
+    children,
+    ...others
+  } = props;
+
+  // ... component body
+});
+```
+
+`defaultProps` passed to `useProps` must use `satisfies Partial<ExampleComponentProps>` type assertion
+to correctly type props:
+
+```tsx
+export interface ExampleComponentProps
+  extends BoxProps, StylesApiProps<ExampleComponentFactory>, ElementProps<'div'> {
+  /** Component border-radius */
+  radius?: MantineRadius;
+}
+
+// ✅ useProps can infer types correctly
+// `radius` prop is `MantineRadius`
+const defaultProps = {
+  radius: 'md',
+} satisfies Partial<ExampleComponentProps>;
+
+// ❌ useProps cannot infer types correctly
+// `radius` prop is `MantineRadius | undefined`
+const defaultProps: Partial<ExampleComponentProps> = {
+  radius: 'md',
+};
+```
+
+You can use [defaultProps](https://mantine.dev/llms/theming-default-props.md) the following way:
+
+```tsx
+import { MantineProvider, Button, Group, createTheme } from '@mantine/core';
+import { ExampleComponent } from './ExampleComponent';
+
+const theme = createTheme({
+  components: {
+    ExampleComponent: ExampleComponent.extend({
+      defaultProps: {
+        radius: 'sm',
+      },
+    }),
+  },
+});
+```
+
+## useStyles hook
+
+`useStyles` hook is used to support [Styles API](https://mantine.dev/llms/styles-styles-api.md) features:
+`classNames`, `styles`, `attributes` and other related properties.
+
+`useStyles` returns `getStyles` function, which returns an object that should be
+spread (`{...getStyles('root')}`) to an element.
+
+```tsx
+// 🔝 See full component code above
+const getStyles = useStyles<ExampleComponentFactory>({
+  // Component name, used to generate static selectors (.mantine-ExampleComponent-root)
+  // and for `classNames`, `styles` support in theme object
+  name: 'ExampleComponent',
+
+  // CSS modules classes, usually imported from `*.module.css` file directly
+  classes,
+
+  // Component props returned from `useProps` hook,
+  // used for resolving `classNames` and `styles` with callback function notation
+  props,
+
+  // Element that must have `className` and `style` passed to the component
+  // optional, `root` is the default value
+  rootSelector: 'root',
+
+  // className and style are added to the root element (rootSelector)
+  className,
+  style,
+
+  // classNames, attributes and styles are resolved automatically by useStyles hook
+  classNames,
+  attributes,
+  styles,
+
+  // `getStyles` omits all styles if unstyled is set
+  unstyled,
+
+  // CSS variables resolver, defined in component file, described later
+  varsResolver,
+
+  // CSS variables resolved override, defined in user application
+  vars,
+});
+```
+
+## getStyles function
+
+`getStyles` function is returned by `useStyles` hook. The first argument is a Styles API selector,
+the second argument can be used to add `className` or `style` to the returned object.
+
+```tsx
+<Box {...getStyles('root')}>
+  <div {...getStyles('inner', { className: 'custom-class', style: { color: 'red' } })}>
+    {children}
+  </div>
+</Box>
+```
+
+## varsResolver
+
+Use `varsResolver` to transform component props into CSS variables.
+
+Example of `varsResolver` usage in [Button](https://mantine.dev/llms/core-button.md) component:
+
+```tsx
+import { getFontSize, getSize, createVarsResolver } from '@mantine/core';
+
+const varsResolver = createVarsResolver<ButtonFactory>(
+  (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      gradient,
+      variant: variant || 'filled',
+      autoContrast,
+    });
+
+    return {
+      root: {
+        '--button-justify': justify,
+        '--button-height': getSize(size, 'button-height'),
+        '--button-padding-x': getSize(size, 'button-padding-x'),
+        '--button-fz': size?.includes('compact')
+          ? getFontSize(size.replace('compact-', ''))
+          : getFontSize(size),
+        '--button-radius': radius === undefined ? undefined : getRadius(radius),
+        '--button-bg': color || variant ? colors.background : undefined,
+        '--button-hover': color || variant ? colors.hover : undefined,
+        '--button-color': colors.color,
+        '--button-bd': color || variant ? colors.border : undefined,
+        '--button-hover-color': color || variant ? colors.hoverColor : undefined,
+      },
+    };
+  }
+);
+```
+
+## Compound components
+
+Compound components (`Button.Group`, `Input.Wrapper`, etc.) are defined as static properties
+on the main component and assigned as type in the main component factory.
+
+Example of assigning compound components in [Tabs](https://mantine.dev/llms/core-tabs.md) component:
+
+```tsx
+export type TabsFactory = Factory<{
+  props: TabsProps;
+  ref: HTMLDivElement;
+  variant: TabsVariant;
+  stylesNames: TabsStylesNames;
+  vars: TabsCssVariables;
+
+  // Set compound components types
+  staticComponents: {
+    Tab: typeof TabsTab;
+    Panel: typeof TabsPanel;
+    List: typeof TabsList;
+  };
+}>;
+
+export const Tabs = factory<TabsFactory>((_props) => {
+  // ... component body
+});
+
+// Assign compound components
+Tabs.Tab = TabsTab;
+Tabs.Panel = TabsPanel;
+Tabs.List = TabsList;
+```
+
+## Namespace exports
+
+Mantine components support namespace exports to group related types with the component.
+For example, `Button` component exports related types as `Button.*`:
+
+```tsx
+import { Button } from '@mantine/core';
+
+// Props type, does not require separate import
+type Props = Button.Props;
+```
+
+To implement this feature, add namespace exports at the end of the component file or `index.ts`.
+Example of [Button](https://mantine.dev/llms/core-button.md) component namespace exports:
+
+```tsx
+export namespace Button {
+  export type Props = ButtonProps;
+  export type StylesNames = ButtonStylesNames;
+  export type CssVariables = ButtonCssVariables;
+  export type Factory = ButtonFactory;
+  export type Variant = ButtonVariant;
+  export type Size = ButtonSize;
+
+  export namespace Group {
+    export type Props = ButtonGroupProps;
+    export type StylesNames = ButtonGroupStylesNames;
+    export type CssVariables = ButtonGroupCssVariables;
+    export type Factory = ButtonGroupFactory;
+  }
+
+  export namespace GroupSection {
+    export type Props = ButtonGroupSectionProps;
+    export type StylesNames = ButtonGroupSectionStylesNames;
+    export type CssVariables = ButtonGroupSectionCssVariables;
+    export type Factory = ButtonGroupSectionFactory;
+  }
+}
+```
+
+## polymorphicFactory
+
+`polymorphicFactory` is used to create [polymorphic components](https://mantine.dev/llms/guides-polymorphic.md).
+Use `polymorphicFactory` instead of `factory` if you need to change the root element.
+For example, [Button](https://mantine.dev/llms/core-button.md) component is polymorphic: the default root element is `button`,
+but it can be changed to `a` or any other element using `component` and `renderRoot` props.
+
+`polymorphicFactory` operates only with types, it does not modify the component behavior compared
+to `factory`. Types of components created with `polymorphicFactory` add overhead for TypeScript and
+slow down IDE autocomplete, use it only when necessary.
+
+Full polymorphic component example:
+
+```tsx
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
+} from '@mantine/core';
+import classes from './PolymorphicExample.module.css';
+
+export type PolymorphicExampleStylesNames = 'root';
+export type PolymorphicExampleVariant = string;
+export type PolymorphicExampleCssVariables = {
+  root: '--test';
+};
+
+export interface PolymorphicExampleProps
+  extends BoxProps, StylesApiProps<PolymorphicExampleFactory> {}
+
+export type PolymorphicExampleFactory = PolymorphicFactory<{
+  props: PolymorphicExampleProps;
+  defaultRef: HTMLDivElement;
+  defaultComponent: 'div';
+  stylesNames: PolymorphicExampleStylesNames;
+  vars: PolymorphicExampleCssVariables;
+  variant: PolymorphicExampleVariant;
+}>;
+
+const defaultProps = {} satisfies Partial<PolymorphicExampleProps>;
+
+const varsResolver = createVarsResolver<PolymorphicExampleFactory>(() => ({
+  root: {
+    '--test': 'test',
+  },
+}));
+
+export const PolymorphicExample = polymorphicFactory<PolymorphicExampleFactory>((_props) => {
+  const props = useProps('PolymorphicExample', defaultProps, _props);
+  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
+
+  const getStyles = useStyles<PolymorphicExampleFactory>({
+    name: 'PolymorphicExample',
+    props,
+    classes,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
+    vars,
+    varsResolver,
+  });
+
+  return <Box {...getStyles('root')} {...others} />;
+});
+
+PolymorphicExample.displayName = '@mantine/core/PolymorphicExample';
+```
+
+## genericFactory
+
+Use `genericFactory` to create components accepting generic type arguments.
+For example, [Accordion](https://mantine.dev/llms/core-accordion.md) component `value` and `onChange` props type
+depend on the `multiple` prop value.
+
+```tsx
+type AccordionValue<Multiple extends boolean> = Multiple extends true
+  ? string[]
+  : string | null;
+
+// Define props interface with generic type argument
+export interface AccordionProps<Multiple extends boolean = false>
+  extends
+    BoxProps,
+    StylesApiProps<AccordionFactory>,
+    ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
+  // props that depend on the generic type argument
+  multiple?: Multiple;
+  value?: AccordionValue<Multiple>;
+  defaultValue?: AccordionValue<Multiple>;
+  onChange?: (value: AccordionValue<Multiple>) => void;
+
+  // ... other props
+}
+export type AccordionFactory = Factory<{
+  // Signature with generic type argument
+  signature: <Multiple extends boolean = false>(
+    props: AccordionProps<Multiple>
+  ) => React.JSX.Element;
+
+  // other properties same as in regular factory
+  props: AccordionProps;
+  ref: HTMLDivElement;
+  // ...
+}>;
+```

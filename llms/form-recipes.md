@@ -4,8 +4,6 @@ Import: import { FormRecipes } from '@mantine/form';
 
 ## Set initial values with async request
 
-#### Example: asyncSetValues
-
 ```tsx
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
@@ -57,8 +55,6 @@ function Demo() {
 
 ## Save form values to local storage
 
-#### Example: localStorage
-
 ```tsx
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
@@ -107,13 +103,11 @@ function Demo() {
 
 ## List items reordering
 
-#### Example: dnd
-
 ```tsx
 import { Group, TextInput, Button, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -128,7 +122,7 @@ function SortableItem({ id, index, form }) {
   return (
     <Group ref={setNodeRef} mt="xs" style={style} {...attributes}>
       <Center {...listeners}>
-        <IconGripVertical size={18} />
+        <DotsSixVerticalIcon size={18} />
       </Center>
       <TextInput
         placeholder="John Doe"
@@ -197,8 +191,6 @@ function Demo() {
 
 ## Form with multiple steps
 
-#### Example: stepper
-
 ```tsx
 import { useState } from 'react';
 import { Stepper, Button, Group, TextInput, PasswordInput, Code } from '@mantine/core';
@@ -241,13 +233,12 @@ function Demo() {
     },
   });
 
-  const nextStep = () =>
-    setActive((current) => {
-      if (form.validate().hasErrors) {
-        return current;
-      }
-      return current < 3 ? current + 1 : current;
-    });
+  const nextStep = async () => {
+    const result = await form.validate();
+    if (!result.hasErrors) {
+      setActive((current) => (current < 3 ? current + 1 : current));
+    }
+  };
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 

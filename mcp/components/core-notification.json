@@ -1,0 +1,127 @@
+{
+  "id": "core-notification",
+  "name": "Notification",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/notification",
+  "description": "Show dynamic notifications and alerts to user, part of notifications system",
+  "propsCount": 11,
+  "llmUrl": "https://mantine.dev/llms/core-notification.md",
+  "componentDataUrl": "/mcp/components/core-notification.json",
+  "searchText": "notification show dynamic notifications and alerts to user, part of notifications system @mantine/core /core/notification children closebuttonprops color icon loaderprops loading onclose radius title withborder withclosebutton",
+  "source": "@mantine/core/src/components/Notification/Notification.tsx",
+  "docs": "core/notification.mdx",
+  "markdown": "# Notification\nPackage: @mantine/core\nImport: import { Notification } from '@mantine/core';\nDescription: Show dynamic notifications and alerts to user, part of notifications system\n\n## Usage\n\nNotification is a base component for the notification system.\nBuild your own or use the [@mantine/notifications](https://mantine.dev/llms/x-notifications.md) package.\n\n```tsx\nimport { Notification } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Notification loading={false} withCloseButton={true} withBorder={false} color=\"blue\" radius=\"md\" title=\"We notify you that\" children=\"You are now obligated to give a star to Mantine project on GitHub\">\n      {{children}}\n    </Notification>\n  );\n}\n```\n\n\n## Accessibility\n\nTo support screen readers, set the close button's aria-label or title with `closeButtonProps`:\n\n```tsx\nimport { Notification } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Notification\n      closeButtonProps={{ 'aria-label': 'Hide notification' }}\n    />\n  );\n}\n```\n\n\n#### Props\n\n**Notification props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Notification description, displayed below the title. When no title is provided, this serves as the main message. |\n| closeButtonProps | ElementProps<\"button\"> & DataAttributes | - | Props passed down to the close button |\n| color | MantineColor | - | Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. |\n| icon | React.ReactNode | - | Notification icon, replaces color line |\n| loaderProps | LoaderProps | - | Props passed down to the `Loader` component |\n| loading | boolean | - | If set, displays a `Loader` component instead of the icon. Takes precedence over the `icon` prop if both are provided. |\n| onClose | () => void | - | Called when the close button is clicked |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| title | React.ReactNode | - | Notification title, displayed above the message body |\n| withBorder | boolean | - | Adds border to the root element |\n| withCloseButton | boolean | - | If set, the close button is visible |\n\n**Notification.s props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoClose | number \\| false | - | Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function |\n| containerWidth | string \\| number | - | Notification width, cannot exceed 100% |\n| limit | number | - | Maximum number of notifications displayed at a time, other new notifications will be added to queue |\n| notificationMaxHeight | string \\| number | - | Notification `max-height`, used for transitions |\n| pauseResetOnHover | \"all\" \\| \"notification\" | - | Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification |\n| portalProps | BasePortalProps | - | Props passed down to the `Portal` component |\n| position | NotificationPosition | - | Notifications default position |\n| store | NotificationsStore | - | Store for notifications state, can be used to create multiple instances of notifications system in your application |\n| transitionDuration | number | - | Notification transition duration in ms |\n| withinPortal | boolean | - | Determines whether notifications container should be rendered inside `Portal` |\n| zIndex | string \\| number | - | Notifications container z-index |\n\n\n#### Styles API\n\nNotification component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Notification selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Notification-root | Root element |\n| loader | .mantine-Notification-loader | Loader component, displayed only when `loading` prop is set |\n| icon | .mantine-Notification-icon | Icon component, displayed only when `icon` prop is set |\n| body | .mantine-Notification-body | Notification body, contains all other elements |\n| title | .mantine-Notification-title | Title element, displayed only when `title` prop is set |\n| description | .mantine-Notification-description | Description displayed below the title |\n| closeButton | .mantine-Notification-closeButton | Close button element |\n\n**Notification CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --notification-radius | Controls `border-radius` |\n| root | --notification-color | Controls icon color or notification line color |\n\n**Notification data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-with-icon | `icon` prop is set | - |\n| root | data-with-border | `withBorder` prop is set | - |\n| description | data-with-title | `title` prop is set | - |\n\n**Notifications selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Notifications-root | Notifications container, contains all notifications |\n| notification | .mantine-Notifications-notification | Single notification |\n\n**Notifications CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --notifications-container-width | Controls notifications container `max-width` |\n| root | --notifications-z-index | Controls notifications container `z-index` |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "Notification description, displayed below the title. When no title is provided, this serves as the main message.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "closeButtonProps",
+      "description": "Props passed down to the close button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ElementProps<\"button\"> & DataAttributes"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "color",
+      "description": "Controls icon background color or notification accent line color, key of <code>theme.colors</code> or any valid CSS color. When <code>icon</code> is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left.",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "icon",
+      "description": "Notification icon, replaces color line",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "loaderProps",
+      "description": "Props passed down to the <code>Loader</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "LoaderProps"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "loading",
+      "description": "If set, displays a <code>Loader</code> component instead of the icon. Takes precedence over the <code>icon</code> prop if both are provided.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "onClose",
+      "description": "Called when the close button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "title",
+      "description": "Notification title, displayed above the message body",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "withBorder",
+      "description": "Adds border to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Notification"
+    },
+    {
+      "name": "withCloseButton",
+      "description": "If set, the close button is visible",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Notification"
+    }
+  ]
+}

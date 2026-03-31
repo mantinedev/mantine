@@ -5,14 +5,12 @@ Description: Group related elements in a form
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Fieldset, TextInput } from '@mantine/core';
 
 function Demo() {
   return (
-    <Fieldset legend="Personal information">
+    <Fieldset legend="Personal information" variant="default" radius="md">
       <TextInput label="Your name" placeholder="Your name" />
       <TextInput label="Email" placeholder="Email" mt="md" />
     </Fieldset>
@@ -23,9 +21,7 @@ function Demo() {
 
 ## Disabled
 
-Set `disabled` prop to disable all inputs and buttons inside the fieldset:
-
-#### Example: disabled
+`disabled` prop disables all inputs and buttons inside the fieldset:
 
 ```tsx
 import { Fieldset, TextInput, Button, Group } from '@mantine/core';
@@ -48,10 +44,12 @@ function Demo() {
 
 #### Props
 
+**Fieldset props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | legend | React.ReactNode | - | Fieldset legend |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
 
 
 #### Styles API

@@ -1,0 +1,102 @@
+{
+  "id": "core-title",
+  "name": "Title",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/title",
+  "description": "h1-h6 heading",
+  "propsCount": 4,
+  "llmUrl": "https://mantine.dev/llms/core-title.md",
+  "componentDataUrl": "/mcp/components/core-title.json",
+  "searchText": "title h1-h6 heading @mantine/core /core/title lineclamp order size textwrap",
+  "source": "@mantine/core/src/components/Title/Title.tsx",
+  "docs": "core/title.mdx",
+  "markdown": "# Title\nPackage: @mantine/core\nImport: import { Title } from '@mantine/core';\nDescription: h1-h6 heading\n\n## Usage\n\nUse the Title component to render h1-h6 headings with Mantine [theme](https://mantine.dev/llms/theming-theme-object.md) styles.\nBy default, `Title` has no margins and paddings.\nYou can change `font-size`, `font-weight` and `line-height` per heading with [theme.headings](https://mantine.dev/llms/theming-typography.md).\n\nSet the `order` prop to render a specific element (h1-h6); the default order is `1`:\n\n```tsx\nimport { Title } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Title order={1}>This is h1 title</Title>\n      <Title order={2}>This is h2 title</Title>\n      <Title order={3}>This is h3 title</Title>\n      <Title order={4}>This is h4 title</Title>\n      <Title order={5}>This is h5 title</Title>\n      <Title order={6}>This is h6 title</Title>\n    </>\n  );\n}\n```\n\n\n## Size\n\nYou can change the Title `size` independent of its `order`:\n\n* If you set the size to `h1`-`h6`, then the component will add corresponding `font-size` and `line-height` from the [theme](https://mantine.dev/llms/theming-theme-object.md)\n* If you set the size to any other value, then `line-height` will be calculated based on `order` – `size` will impact only `font-size`\n\n```tsx\nimport { Title } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Title order={3} size=\"h1\">\n        H3 heading with h1 font-size\n      </Title>\n      <Title size=\"h4\">H1 heading with h4 font-size</Title>\n      <Title size={16}>H1 heading with 16px size</Title>\n      <Title size=\"xs\">H1 heading with xs size</Title>\n    </>\n  );\n}\n```\n\n\n## Text wrap\n\nUse the `textWrap` prop to control the [text-wrap](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap)\nCSS property. It controls how text inside an element is wrapped.\n\n```tsx\nimport { Title } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Title order={3} textWrap=\"wrap\">\n      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi voluptatibus inventore iusto\n      cum dolore molestiae perspiciatis! Totam repudiandae impedit maxime!\n    </Title>\n  );\n}\n```\n\n\nYou can also set `textWrap` on [theme](https://mantine.dev/llms/theming-theme-object.md):\n\n```tsx\nimport { createTheme, MantineProvider, Title } from '@mantine/core';\n\nconst theme = createTheme({\n  headings: {\n    textWrap: 'wrap',\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Title>Some very long title that should wrap</Title>\n    </MantineProvider>\n  );\n}\n```\n\n## Line clamp\n\nSet the `lineClamp` prop to truncate text after the specified number of lines:\n\n```tsx\nimport { Title, Box } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Box maw={400}>\n      <Title order={2} lineClamp={2}>\n        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque quas dolorum. Quo\n        amet earum alias consequuntur quam accusamus a quae beatae, odio, quod provident consectetur\n        non repudiandae enim adipisci?\n      </Title>\n    </Box>\n  )\n}\n```\n\n\n\n#### Props\n\n**Title props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| lineClamp | number | - | Number of lines after which heading will be truncated |\n| order | TitleOrder | - | Heading order (1-6), controls `font-size` style if `size` prop is not set |\n| size | TitleSize | - | Changes title size, if not set, then size is controlled by `order` prop |\n| textWrap | \"wrap\" \\| \"nowrap\" \\| \"balance\" \\| \"pretty\" \\| \"stable\" | - | Heading `text-wrap` CSS property |\n\n\n#### Styles API\n\nTitle component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Title selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Title-root | Root element |\n\n**Title CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --title-fw | Title `font-weight`, by default value from `theme.headings` |\n| root | --title-fz | Title `font-size`, by default value from `theme.headings` |\n| root | --title-lh | Title `line-height`, by default value from `theme.headings` |\n| root | --title-line-clamp | Controls `-webkit-line-clamp` css property |\n| root | --title-text-wrap | Controls `text-wrap` css property |\n\n**Title data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-order | - | Value of the `order` prop |\n| root | data-line-clamp | `lineClamp` prop is a number | - |\n",
+  "props": [
+    {
+      "name": "lineClamp",
+      "description": "Number of lines after which heading will be truncated",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Title"
+    },
+    {
+      "name": "order",
+      "description": "Heading order (1-6), controls <code>font-size</code> style if <code>size</code> prop is not set",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "TitleOrder",
+        "raw": "TitleOrder | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "2"
+          },
+          {
+            "value": "1"
+          },
+          {
+            "value": "3"
+          },
+          {
+            "value": "4"
+          },
+          {
+            "value": "5"
+          },
+          {
+            "value": "6"
+          }
+        ]
+      },
+      "sourceComponent": "Title"
+    },
+    {
+      "name": "size",
+      "description": "Changes title size, if not set, then size is controlled by <code>order</code> prop",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "TitleSize"
+      },
+      "sourceComponent": "Title"
+    },
+    {
+      "name": "textWrap",
+      "description": "Heading <code>text-wrap</code> CSS property",
+      "required": false,
+      "defaultValue": "'wrap'",
+      "type": {
+        "name": "\"wrap\" | \"nowrap\" | \"balance\" | \"pretty\" | \"stable\"",
+        "raw": "\"wrap\" | \"nowrap\" | \"balance\" | \"pretty\" | \"stable\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"wrap\""
+          },
+          {
+            "value": "\"nowrap\""
+          },
+          {
+            "value": "\"balance\""
+          },
+          {
+            "value": "\"pretty\""
+          },
+          {
+            "value": "\"stable\""
+          }
+        ]
+      },
+      "sourceComponent": "Title"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "id": "core-group",
+  "name": "Group",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/group",
+  "description": "Compose elements and components in a horizontal flex container",
+  "propsCount": 6,
+  "llmUrl": "https://mantine.dev/llms/core-group.md",
+  "componentDataUrl": "/mcp/components/core-group.json",
+  "searchText": "group compose elements and components in a horizontal flex container @mantine/core /core/group align gap grow justify preventgrowoverflow wrap",
+  "source": "@mantine/core/src/components/Group/Group.tsx",
+  "docs": "core/group.mdx",
+  "markdown": "# Group\nPackage: @mantine/core\nImport: import { Group } from '@mantine/core';\nDescription: Compose elements and components in a horizontal flex container\n\n## Usage\n\n`Group` is a horizontal flex container. If you need a vertical flex container, use the [Stack](https://mantine.dev/llms/core-stack.md)\ncomponent instead. If you need to have full control over flex container properties, use the [Flex](https://mantine.dev/llms/core-flex.md) component.\n\n```tsx\nimport { Group, Button } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group justify=\"flex-start\" gap=\"md\" grow={false}>\n      <Button variant=\"default\">First</Button>\n      <Button variant=\"default\">Second</Button>\n      <Button variant=\"default\">Third</Button>\n    </Group>\n  );\n}\n```\n\n\n## preventGrowOverflow\n\nThe `preventGrowOverflow` prop allows you to control how `Group` children should behave when there is not enough\nspace to fit them all on one line. By default, children are not allowed to take more space than\n`(1 / children.length) * 100%` of parent width (`preventGrowOverflow` is set to `true`). To change\nthis behavior, set `preventGrowOverflow` to `false` and children will be allowed to grow and take\nas much space as they need.\n\n```tsx\nimport { Group, Button, Box, Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Box style={{ overflow: 'hidden' }}>\n      <Box maw={500} p=\"md\" mx=\"auto\" bg=\"var(--mantine-color-blue-light)\">\n        <Text size=\"sm\" mb={5}>\n          preventGrowOverflow: true – each child width is always limited to 33% of parent width\n          (since there are 3 children)\n        </Text>\n\n        <Group grow wrap=\"nowrap\">\n          <Button variant=\"default\">First button</Button>\n          <Button variant=\"default\">Second button with large content</Button>\n          <Button variant=\"default\">Third button</Button>\n        </Group>\n\n        <Text size=\"sm\" mb={5} mt=\"md\">\n          preventGrowOverflow: false – children will grow based on their content, they can take more\n          than 33% of parent width\n        </Text>\n\n        <Group grow preventGrowOverflow={false} wrap=\"nowrap\">\n          <Button variant=\"default\">First button</Button>\n          <Button variant=\"default\">Second button with large content</Button>\n          <Button variant=\"default\">Third button</Button>\n        </Group>\n      </Box>\n    </Box>\n  );\n}\n```\n\n\n## Group children\n\n**!important** `Group` works correctly only with React elements.\nStrings, numbers, fragments may have incorrect styles if the `grow` prop is set:\n\n```tsx\n// Invalid Group usage, do not do this\nimport { Group } from '@mantine/core';\n\nfunction InvalidDemo() {\n  return (\n    <Group grow>\n      First string\n      <>\n        <div>element inside fragment</div>\n        <div>another inside fragment</div>\n      </>\n      {20}\n    </Group>\n  );\n}\n```\n\n## Browser support\n\nFlex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.\n\n\n#### Props\n\n**Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| align | AlignItems | - | Controls `align-items` CSS property |\n| gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem |\n| grow | boolean | - | Determines whether each child element should have `flex-grow: 1` style |\n| justify | JustifyContent | - | Controls `justify-content` CSS property |\n| preventGrowOverflow | boolean | - | Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) |\n| wrap | FlexWrap | - | Controls `flex-wrap` CSS property |\n\n\n#### Styles API\n\nGroup component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Group selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Group-root | Root element |\n\n**Group CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --group-align | Controls `align-items` property |\n| root | --group-justify | Controls `justify-content` property |\n| root | --group-gap | Controls `gap` property |\n| root | --group-wrap | Controls `flex-wrap` property |\n\n**Group data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-grow | `grow` prop is set | - |\n",
+  "props": [
+    {
+      "name": "align",
+      "description": "Controls <code>align-items</code> CSS property",
+      "required": false,
+      "defaultValue": "'center'",
+      "type": {
+        "name": "AlignItems"
+      },
+      "sourceComponent": "Group"
+    },
+    {
+      "name": "gap",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value for <code>gap</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Group"
+    },
+    {
+      "name": "grow",
+      "description": "Determines whether each child element should have <code>flex-grow: 1</code> style",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Group"
+    },
+    {
+      "name": "justify",
+      "description": "Controls <code>justify-content</code> CSS property",
+      "required": false,
+      "defaultValue": "'flex-start'",
+      "type": {
+        "name": "JustifyContent"
+      },
+      "sourceComponent": "Group"
+    },
+    {
+      "name": "preventGrowOverflow",
+      "description": "Determines whether children should take only dedicated amount of space (<code>max-width</code> style is set based on the number of children)",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Group"
+    },
+    {
+      "name": "wrap",
+      "description": "Controls <code>flex-wrap</code> CSS property",
+      "required": false,
+      "defaultValue": "'wrap'",
+      "type": {
+        "name": "FlexWrap",
+        "raw": "FlexWrap | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"wrap\""
+          },
+          {
+            "value": "\"nowrap\""
+          },
+          {
+            "value": "\"wrap-reverse\""
+          }
+        ]
+      },
+      "sourceComponent": "Group"
+    }
+  ]
+}

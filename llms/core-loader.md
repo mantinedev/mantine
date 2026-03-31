@@ -5,49 +5,43 @@ Description: Indicate loading state
 
 ## Usage
 
-`Loader` component supports 3 types of loaders: `oval`, `bars` and `dots` by default. All
+The `Loader` component supports 3 types of loaders by default: `oval`, `bars`, and `dots`. All
 loaders are animated with CSS for better performance.
-
-#### Example: configurator
 
 ```tsx
 import { Loader } from '@mantine/core';
 
 function Demo() {
-  return <Loader />;
+  return <Loader color="blue" size="md" type="oval" />;
 }
 ```
 
 
 ## Size prop
 
-You can pass any valid CSS values and numbers to `size` prop. Numbers are treated as px, but
-converted to [rem](https://mantine.dev/styles/rem). For example, `size={32}` will produce
+You can pass any valid CSS values or numbers to the `size` prop. Numbers are treated as px, but
+converted to [rem](https://mantine.dev/llms/styles-rem.md). For example, `size={32}` will produce the
 `--loader-size: 2rem` CSS variable.
-
-#### Example: size
 
 ```tsx
 import { Loader } from '@mantine/core';
 
 function Demo() {
-  return <Loader />;
+  return <Loader size={30} />;
 }
 ```
 
 
 ## Adding custom loaders
 
-`Loader` component is used in other components ([Button](https://mantine.dev/core/button), [ActionIcon](https://mantine.dev/core/action-icon), [LoadingOverlay](https://mantine.dev/core/loading-overlay), etc.).
-You can change loader type with [default props](https://mantine.dev/theming/default-props) by setting `type`.
-You can also add a custom CSS or SVG loader with `loaders` [default prop](https://mantine.dev/theming/default-props).
+The `Loader` component is used in other components ([Button](https://mantine.dev/llms/core-button.md), [ActionIcon](https://mantine.dev/llms/core-action-icon.md), [LoadingOverlay](https://mantine.dev/llms/core-loading-overlay.md), etc.).
+You can change the loader type with [default props](https://mantine.dev/llms/theming-default-props.md) by setting `type`.
+You can also add a custom CSS or SVG loader with the `loaders` [default prop](https://mantine.dev/llms/theming-default-props.md).
 
 ### Custom CSS only loader
 
-Note that in order for `size` and `color` props to work with custom loaders, you need to
-use `--loader-size` and `--loader-color` CSS variables in your loader styles.
-
-#### Example: cssLoader
+Note that in order for the `size` and `color` props to work with custom loaders, you need to
+use the `--loader-size` and `--loader-color` CSS variables in your loader styles.
 
 ```tsx
 import { MantineProvider, Loader } from '@mantine/core';
@@ -76,17 +70,15 @@ function Demo() {
 
 ### Custom SVG loader
 
-It is recommended to use CSS only loaders, as SVG based animations may have the following issues:
+It is recommended to use CSS-only loaders, as SVG-based animations may have the following issues:
 
-* High CPU usage – loader may look glitchy on low-end devices
-* Loader animation may not start playing until js is loaded – user may see static loader
+* High CPU usage – the loader may look glitchy on low-end devices
+* Loader animation may not start playing until JS is loaded – users may see a static loader
 
-In your SVG loader, you need to use `--loader-size` and `--loader-color` variables the same
-way as in CSS only custom loader in order for `size` and `color` props to work. Usually,
+In your SVG loader, you need to use the `--loader-size` and `--loader-color` variables the same
+way as in CSS-only custom loaders in order for the `size` and `color` props to work. Usually,
 you would need to set `width` and `height` to `var(--loader-size)` and `fill`/`stroke` to
 `var(--loader-color)`.
-
-#### Example: customType
 
 ```tsx
 import { MantineProvider, Loader } from '@mantine/core';
@@ -115,11 +107,9 @@ function Demo() {
 
 ## children prop
 
-`Loader` supports `children` prop. If you pass anything to `children`, it will be rendered
-instead of the loader. This is useful when you want to control `Loader` representation
-in components that use `loaderProps`, for example [Button](https://mantine.dev/core/button/), [LoadingOverlay](https://mantine.dev/core/loading-overlay/), [Dropzone](https://mantine.dev/x/dropzone/).
-
-#### Example: customLoader
+The `Loader` supports the `children` prop. If you pass anything to `children`, it will be rendered
+instead of the loader. This is useful when you want to control the `Loader` representation
+in components that use `loaderProps`, for example [Button](https://mantine.dev/llms/core-button.md), [LoadingOverlay](https://mantine.dev/llms/core-loading-overlay.md), [Dropzone](https://mantine.dev/llms/x-dropzone.md).
 
 ```tsx
 import { useDisclosure } from '@mantine/hooks';
@@ -147,13 +137,15 @@ function Demo() {
 
 #### Props
 
+**Loader props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | children | React.ReactNode | - | Overrides default loader with given content |
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
-| loaders | Partial<Record<(string & {}) | "bars" | "dots" | "oval", MantineLoaderComponent>> | - | Object of loaders components, can be customized via default props or inline. |
-| size | number | MantineSize | (string & {}) | - | Controls <code>width</code> and <code>height</code> of the loader. <code>Loader</code> has predefined <code>xs</code>-<code>xl</code> values. Numbers are converted to rem. |
-| type | (string & {}) | "bars" | "dots" | "oval" | - | Loader type, key of <code>loaders</code> prop |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |
+| loaders | Partial<Record<(string & {}) \| "bars" \| "dots" \| "oval", MantineLoaderComponent>> | - | Object of loaders components, can be customized via default props or inline. |
+| size | MantineSize \| number | - | Controls `width` and `height` of the loader. `Loader` has predefined `xs`-`xl` values. Numbers are converted to rem. |
+| type | (string & {}) \| "bars" \| "dots" \| "oval" | - | Loader type, key of `loaders` prop |
 
 
 #### Styles API

@@ -1,0 +1,47 @@
+{
+  "id": "core-breadcrumbs",
+  "name": "Breadcrumbs",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/breadcrumbs",
+  "description": "Separates list of react nodes with given separator",
+  "propsCount": 3,
+  "llmUrl": "https://mantine.dev/llms/core-breadcrumbs.md",
+  "componentDataUrl": "/mcp/components/core-breadcrumbs.json",
+  "searchText": "breadcrumbs separates list of react nodes with given separator @mantine/core /core/breadcrumbs children separator separatormargin",
+  "source": "@mantine/core/src/components/Breadcrumbs/Breadcrumbs.tsx",
+  "docs": "core/breadcrumbs.mdx",
+  "markdown": "# Breadcrumbs\nPackage: @mantine/core\nImport: import { Breadcrumbs } from '@mantine/core';\nDescription: Separates list of react nodes with given separator\n\n## Usage\n\n`Breadcrumbs` component accepts any number of React nodes as children\nand adds a given separator (defaults to `/`) between them:\n\n```tsx\nimport { Breadcrumbs, Anchor } from '@mantine/core';\n\nconst items = [\n  { title: 'Mantine', href: '#' },\n  { title: 'Mantine hooks', href: '#' },\n  { title: 'use-id', href: '#' },\n].map((item, index) => (\n  <Anchor href={item.href} key={index}>\n    {item.title}\n  </Anchor>\n));\n\nfunction Demo() {\n  return (\n    <>\n      <Breadcrumbs>{items}</Breadcrumbs>\n      <Breadcrumbs separator=\"→\" separatorMargin=\"md\" mt=\"xs\">\n        {items}\n      </Breadcrumbs>\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**Breadcrumbs props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | React nodes that should be separated with `separator` |\n| separator | React.ReactNode | - | Separator between children |\n| separatorMargin | MantineSpacing | - | Controls spacing between separator and breadcrumb |\n\n\n#### Styles API\n\nBreadcrumbs component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Breadcrumbs selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Breadcrumbs-root | Root element |\n| separator | .mantine-Breadcrumbs-separator | Separator between children |\n| breadcrumb | .mantine-Breadcrumbs-breadcrumb | Breadcrumb item |\n\n**Breadcrumbs CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --bc-separator-margin | Control left and right `margin` of separator |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "React nodes that should be separated with <code>separator</code>",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Breadcrumbs"
+    },
+    {
+      "name": "separator",
+      "description": "Separator between children",
+      "required": false,
+      "defaultValue": "'/'",
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Breadcrumbs"
+    },
+    {
+      "name": "separatorMargin",
+      "description": "Controls spacing between separator and breadcrumb",
+      "required": false,
+      "defaultValue": "'xs'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Breadcrumbs"
+    }
+  ]
+}

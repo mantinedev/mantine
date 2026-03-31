@@ -5,17 +5,26 @@ Description: Display keyboard key
 
 ## Usage
 
+```tsx
+import { Kbd } from '@mantine/core';
+
+function Demo() {
+  return (
+    <div dir="ltr">
+      <Kbd>⌘</Kbd> + <Kbd>Shift</Kbd> + <Kbd>M</Kbd>
+    </div>
+  );
+}
+```
 
 
 ## Size
-
-#### Example: size
 
 ```tsx
 import { Kbd } from '@mantine/core';
 
 function Demo() {
-  return <Kbd>Shift</Kbd>;
+  return <Kbd size="sm">Shift</Kbd>;
 }
 ```
 
@@ -23,9 +32,11 @@ function Demo() {
 
 #### Props
 
+**Kbd props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| size | number | MantineSize | (string & {}) | - | Controls <code>font-size</code> and <code>padding</code> |
+| size | MantineSize \| number | - | Controls `font-size` and `padding` |
 
 
 #### Styles API

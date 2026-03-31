@@ -1,0 +1,147 @@
+{
+  "id": "core-transition",
+  "name": "Transition",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/transition",
+  "description": "Animate presence of component with pre-made animations",
+  "propsCount": 13,
+  "llmUrl": "https://mantine.dev/llms/core-transition.md",
+  "componentDataUrl": "/mcp/components/core-transition.json",
+  "searchText": "transition animate presence of component with pre-made animations @mantine/core /core/transition children duration enterdelay exitdelay exitduration keepmounted mounted onenter onentered onexit onexited timingfunction transition",
+  "source": "@mantine/core/src/components/Transition/Transition.tsx",
+  "docs": "core/transition.mdx",
+  "markdown": "# Transition\nPackage: @mantine/core\nImport: import { Transition } from '@mantine/core';\nDescription: Animate presence of component with pre-made animations\n\n## Usage\n\nThe Transition component is designed to animate the presence of elements with\nfixed or absolute positioning, such as dropdowns, modals, or tooltips. Other Mantine\ncomponents (like [Modal](https://mantine.dev/llms/core-modal.md) and [Tooltip](https://mantine.dev/llms/core-tooltip.md)) use Transition internally\nfor their animations.\n\nNote that the Transition component is not intended to be a comprehensive solution for all\nanimations. It is a simple utility for animating the presence of elements\nwith fixed or absolute positioning. If you need to implement more complex animations,\nconsider using [Motion](https://motion.dev/), [React Spring](https://www.react-spring.dev/),\nor other dedicated animation libraries.\n\nExample usage of the Transition component:\n\n```tsx\nimport { Transition } from '@mantine/core';\n\nfunction Demo({ opened }: { opened: boolean }) {\n  return (\n    <Transition mounted={opened} transition=\"fade\">\n      {(styles) => <div style={styles}>Your modal</div>}\n    </Transition>\n  );\n}\n```\n\n## Premade transitions\n\nMantine includes several premade transitions:\n\n```tsx\nfunction Demo() {\n  const transitions = keys(MANTINE_TRANSITIONS).map((transition) => (\n    <Tooltip key={transition} label={transition} transitionProps={{ transition, duration: 300 }}>\n      <Badge variant=\"light\">{transition}</Badge>\n    </Tooltip>\n  ));\n\n  return (\n    <Group justify=\"center\" style={{ cursor: 'default' }}>\n      {transitions}\n    </Group>\n  );\n}\n```\n\n\nTo use one of them, set the `transition` property to one of these values:\n\n```tsx\nimport { Transition } from '@mantine/core';\n\nfunction Demo({ opened }: { opened: boolean }) {\n  return (\n    <Transition\n      mounted={opened}\n      transition=\"fade\"\n      duration={400}\n      timingFunction=\"ease\"\n    >\n      {(styles) => <div style={styles}>Your modal</div>}\n    </Transition>\n  );\n}\n```\n\n## Custom transitions\n\nYou can create your own transition. `transition` is an object with 4 properties:\n\n* `in` – styles for mounted state\n* `out` – styles for unmounted state\n* `common` (optional) – styles for both mounted and unmounted states\n* `transitionProperty` – properties which participate in the transition\n\n```tsx\nimport { useState } from 'react';\nimport { useClickOutside } from '@mantine/hooks';\nimport { Transition, Paper, Button, Box } from '@mantine/core';\n\nconst scaleY = {\n  in: { opacity: 1, transform: 'scaleY(1)' },\n  out: { opacity: 0, transform: 'scaleY(0)' },\n  common: { transformOrigin: 'top' },\n  transitionProperty: 'transform, opacity',\n};\n\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n  const clickOutsideRef = useClickOutside(() => setOpened(false));\n\n  return (\n    <Box\n      maw={200}\n      pos=\"relative\"\n      style={{ display: 'flex', justifyContent: 'center', margin: 'auto' }}\n    >\n      <Button onClick={() => setOpened(true)}>Open dropdown</Button>\n      <Transition\n        mounted={opened}\n        transition={scaleY}\n        duration={200}\n        timingFunction=\"ease\"\n        keepMounted\n      >\n        {(transitionStyle) => (\n          <Paper\n            shadow=\"md\"\n            p=\"xl\"\n            h={120}\n            pos=\"absolute\"\n            top={0}\n            left={0}\n            right={0}\n            ref={clickOutsideRef}\n            style={{ ...transitionStyle, zIndex: 1 }}\n          >\n            Dropdown\n          </Paper>\n        )}\n      </Transition>\n    </Box>\n  );\n}\n```\n\n\n## Enter and exit delay\n\nUse the `enterDelay` and `exitDelay` props to delay the transition start. Values are in milliseconds:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Flex, Paper, Transition } from '@mantine/core';\n\nexport function Demo() {\n  const [opened, setOpened] = useState(false);\n\n  return (\n    <Flex maw={200} pos=\"relative\" justify=\"center\" m=\"auto\">\n      <Button onClick={() => setOpened(true)}>Open dropdown</Button>\n\n      <Transition mounted={opened} transition=\"pop\" enterDelay={500} exitDelay={300}>\n        {(transitionStyle) => (\n          <Paper\n            shadow=\"md\"\n            p=\"xl\"\n            h={120}\n            pos=\"absolute\"\n            inset={0}\n            bottom=\"auto\"\n            onClick={() => setOpened(false)}\n            style={{ ...transitionStyle, zIndex: 1 }}\n          >\n            Click to close\n          </Paper>\n        )}\n      </Transition>\n    </Flex>\n  );\n}\n```\n\n\n## Reduced motion\n\nTransition respects the `prefers-reduced-motion` media query and your theme's\n`respectReducedMotion` setting. When reduced motion is preferred, all\ntransitions complete instantly:\n\n```tsx\nimport { createTheme, MantineProvider, Transition } from '@mantine/core';\n\nconst theme = createTheme({\n  respectReducedMotion: true, // default\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Transition mounted transition=\"fade\" duration={400}>\n        {(styles) => <div style={styles}>Content</div>}\n      </Transition>\n    </MantineProvider>\n  );\n}\n```\n\nThis improves accessibility for users with vestibular disorders who may\nexperience motion sickness from animations.\n\n## Lifecycle callbacks\n\nUse lifecycle callbacks to perform actions at different stages of the transition:\n\n* `onEnter` - Called when enter transition starts\n* `onEntered` - Called when enter transition completes\n* `onExit` - Called when exit transition starts\n* `onExited` - Called when exit transition completes\n\n```tsx\nimport { Transition } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Transition\n      mounted\n      transition=\"fade\"\n      duration={200}\n      onEnter={() => console.log('Enter started')}\n      onEntered={() => console.log('Enter completed')}\n      onExit={() => console.log('Exit started')}\n      onExited={() => console.log('Exit completed')}\n    >\n      {(styles) => <div style={styles}>Content</div>}\n    </Transition>\n  );\n}\n```\n\n## Keep mounted\n\nBy default, the element is unmounted from the DOM when the transition is\ncomplete. Use `keepMounted` to keep the element mounted with `display: none`:\n\n```tsx\nimport { Transition } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Transition mounted={false} keepMounted transition=\"fade\">\n      {(styles) => <div style={styles}>Content</div>}\n    </Transition>\n  );\n}\n```\n\nThis is useful when you want to:\n\n* Preserve element state during hide/show\n* Avoid remounting overhead\n* Maintain focus/scroll position\n\n\n#### Props\n\n**Transition props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | (styles: CSSProperties) => Element | required | Render function with transition styles argument |\n| duration | number | - | Transition duration in ms |\n| enterDelay | number | - | Delay in ms before enter transition starts |\n| exitDelay | number | - | Delay in ms before exit transition starts |\n| exitDuration | number | - | Exit transition duration in ms |\n| keepMounted | boolean | - | If set, the element is kept in the DOM when hidden. React 19 `Activity` is used to preserve state while the element is not visible. |\n| mounted | boolean | required | Determines whether component should be mounted to the DOM |\n| onEnter | () => void | - | Called when enter transition starts |\n| onEntered | () => void | - | Called when enter transition ends |\n| onExit | () => void | - | Called when exit transition starts |\n| onExited | () => void | - | Called when exit transition ends |\n| timingFunction | string | - | Transition timing function |\n| transition | MantineTransition | - | Transition name or object |",
+  "props": [
+    {
+      "name": "children",
+      "description": "Render function with transition styles argument",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "(styles: CSSProperties) => Element"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "duration",
+      "description": "Transition duration in ms",
+      "required": false,
+      "defaultValue": "250",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "enterDelay",
+      "description": "Delay in ms before enter transition starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "exitDelay",
+      "description": "Delay in ms before exit transition starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "exitDuration",
+      "description": "Exit transition duration in ms",
+      "required": false,
+      "defaultValue": "250",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, the element is kept in the DOM when hidden. React 19 <code>Activity</code> is used to preserve state while the element is not visible.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "mounted",
+      "description": "Determines whether component should be mounted to the DOM",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "onEnter",
+      "description": "Called when enter transition starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "onEntered",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "onExit",
+      "description": "Called when exit transition starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "onExited",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "timingFunction",
+      "description": "Transition timing function",
+      "required": false,
+      "defaultValue": "ease",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Transition"
+    },
+    {
+      "name": "transition",
+      "description": "Transition name or object",
+      "required": false,
+      "defaultValue": "fade",
+      "type": {
+        "name": "MantineTransition"
+      },
+      "sourceComponent": "Transition"
+    }
+  ]
+}

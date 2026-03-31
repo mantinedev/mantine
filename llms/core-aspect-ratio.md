@@ -6,9 +6,7 @@ Description: Maintain responsive consistent width/height ratio
 ## Usage
 
 `AspectRatio` maintains a consistent width/height ratio.
-It can be used to display images, maps, videos and other media.
-
-#### Example: image
+It can be used to display images, maps, videos, and other media.
 
 ```tsx
 import { AspectRatio } from '@mantine/core';
@@ -28,8 +26,6 @@ function Demo() {
 
 ## Map embed
 
-#### Example: map
-
 ```tsx
 import { AspectRatio } from '@mantine/core';
 
@@ -48,8 +44,6 @@ function Demo() {
 
 
 ## Video embed
-
-#### Example: video
 
 ```tsx
 import { AspectRatio } from '@mantine/core';
@@ -72,11 +66,9 @@ function Demo() {
 
 ## Inside flex container
 
-By default, `AspectRatio` does not have fixed width and height, it will take as much space as possible
+By default, `AspectRatio` does not have a fixed width and height – it will take as much space as possible
 in a regular container. However, when used inside a flex container, it will not stretch to fill the available space.
-To make it work inside flexbox container, you need to set `width` or `flex` property.
-
-#### Example: flex
+To make it work inside a flexbox container, you need to set the `width` or `flex` property.
 
 ```tsx
 import { AspectRatio, Image } from '@mantine/core';
@@ -99,9 +91,11 @@ function Demo() {
 
 #### Props
 
+**AspectRatio props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| ratio | number | - | Aspect ratio, for example, <code>16 / 9</code>, <code>4 / 3</code>, <code>1920 / 1080</code> |
+| ratio | number | - | Aspect ratio, for example, `16 / 9`, `4 / 3`, `1920 / 1080` |
 
 
 #### Styles API

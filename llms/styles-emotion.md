@@ -2,15 +2,15 @@
 
 # Usage with Emotion
 
-Prior to version 7.0 Mantine used [Emotion](https://emotion.sh/) as a styling solution.
-It was replaced with [CSS modules](https://mantine.dev/styles/css-modules/) in version 7.0, but you can still
+Prior to version 7.0, Mantine used [Emotion](https://emotion.sh/) as a styling solution.
+It was replaced with [CSS modules](https://mantine.dev/llms/styles-css-modules.md) in version 7.0, but you can still
 use Emotion with Mantine if you prefer it over CSS modules.
 
-Note that `createStyles` function, `sx` and `styles` prop work different from the same
+Note that the `createStyles` function, `sx` and `styles` props work differently from the same
 features in [version 6.x](https://v6.mantine.dev/styles/create-styles/). If you are planning
-to upgrade from version 6.x to 7.x, follow the [migration guide](https://mantine.dev/guides/6x-to-7x/).
+to upgrade from version 6.x to 7.x, follow the [migration guide](https://mantine.dev/llms/guides-6x-to-7x.md).
 
-`@mantine/emotion` package is compatible with `@mantine/core` 7.9.0 and higher. Before
+The `@mantine/emotion` package is compatible with `@mantine/core` 7.9.0 and higher. Before
 installing, make sure that you are using the latest version of all `@mantine/*` packages.
 
 ## Caveats and support
@@ -19,28 +19,28 @@ installing, make sure that you are using the latest version of all `@mantine/*` 
 and injected into the DOM at runtime. This approach has some limitations:
 
 * **Limited server-side rendering support** – modern frameworks like Next.js with app router
-  do not fully support emotion or require additional configuration.
+  do not fully support Emotion or require additional configuration.
 * **Runtime overhead** – styles are generated and injected at runtime, which can lead to
-  performance issues on pages with a lot of components.
+  performance issues on pages with many components.
 * **Additional bundle size** – your bundle will include `@emotion/react` (21.2kB minified),
   `@mantine/emotion` (~2kb minified) and all styles that you use in your components.
 
-`@mantine/emotion` package can be used with the following frameworks:
+The `@mantine/emotion` package can be used with the following frameworks:
 
 * **Vite** and **CRA** with basic setup
-* **Next.js with pages router** with additional setup for server side rendering provided by the package
-* **Next.js with app router** with additional setup for server side rendering provided by Emotion
+* **Next.js with pages router** with additional setup for server-side rendering provided by the package
+* **Next.js with app router** with additional setup for server-side rendering provided by Emotion
 * Any other framework that does not require server-side rendering with basic setup
 
-There is no official support (the package probably can be used but it's not tested and documentation is not provided) for:
+There is no official support (the package can probably be used but it's not tested and documentation is not provided) for:
 
 * **React Router**
 * **Gatsby**
 * **Redwood**
 * Any other framework that has server-side rendering
 
-Note that Emotion is not recommended for new projects, if you are starting a new project with Mantine,
-consider using [CSS modules](https://mantine.dev/styles/css-modules/) instead.
+Note that Emotion is not recommended for new projects. If you are starting a new project with Mantine,
+consider using [CSS modules](https://mantine.dev/llms/styles-css-modules.md) instead.
 
 ## Usage with Vite
 
@@ -530,7 +530,7 @@ function Demo() {
 
 ## styles in theme
 
-You can add styles to Mantine components with [Styles API](https://mantine.dev/styles/styles-api/) using
+You can add styles to Mantine components with [Styles API](https://mantine.dev/llms/styles-styles-api.md) using
 Emotion with `styles` prop. Note that to avoid types collisions, you should not use
 `Component.extend` method and just pass component configuration object directly.
 
@@ -562,14 +562,12 @@ export const theme = createTheme({
 `createStyles` function accepts a function to generate styles with [Emotion](https://emotion.sh/).
 The function receives 3 arguments that will be described more detailed in the following demos:
 
-* `theme` – [Mantine theme object](https://mantine.dev/theming/theme-object)
+* `theme` – [Mantine theme object](https://mantine.dev/llms/theming-theme-object.md)
 * `params` – object with additional parameters that can be passed to the function in `useStyles` hook
 * `u` - object with utilities to generate selectors
 
 `createStyles` function returns `useStyles` hook that should be called in the component
 that uses given styles:
-
-#### Example: usage
 
 ```tsx
 import { createStyles } from '@mantine/emotion';
@@ -639,8 +637,6 @@ function Demo() {
 
 You can add pseudo-classes the same way as in any css-preprocessor like Sass:
 
-#### Example: pseudo
-
 ```tsx
 import { createStyles } from '@mantine/emotion';
 
@@ -694,8 +690,6 @@ function Demo() {
 You can receive any amount of parameters as second argument of `createStyles` function,
 latter you will need to pass those parameters as argument to `useStyles` hook:
 
-#### Example: parameters
-
 ```tsx
 import { createStyles } from '@mantine/emotion';
 
@@ -740,8 +734,6 @@ function Demo() {
 
 Since `createStyles` produces scoped class names you will need to create a reference to selector
 in order to get static selector. Use `u.ref` function to assign static selectors:
-
-#### Example: composition
 
 ```tsx
 import { createStyles } from '@mantine/emotion';
@@ -801,8 +793,6 @@ To merge class names use `cx` function, it has the same api as [clsx](https://ww
 **!important:** Do not use external libraries like [classnames](https://www.npmjs.com/package/classnames)
 or [clsx](https://www.npmjs.com/package/clsx) with class names created with `createStyles` function
 as it will produce styles collisions.
-
-#### Example: cx
 
 ```tsx
 import { useState } from 'react';
@@ -867,9 +857,7 @@ function Demo() {
 ### Media queries
 
 You can use nested media queries like in Sass. Within query body you can use `theme.breakpoints`
-defined with [MantineProvider](https://mantine.dev/theming/mantine-provider) or just static values:
-
-#### Example: media
+defined with [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) or just static values:
 
 ```tsx
 import { em, getBreakpointValue } from '@mantine/core';
@@ -905,8 +893,6 @@ function Demo() {
 
 
 ### Keyframes
-
-#### Example: keyframes
 
 ```tsx
 import { createStyles, keyframes } from '@mantine/emotion';

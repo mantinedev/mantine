@@ -4,8 +4,25 @@ Import: import { UseWindowScroll } from '@mantine/hooks';
 
 ## Usage
 
-`use-window-scroll` returns current scroll position and a function to scroll smoothly to given position:
+The `use-window-scroll` hook returns the current scroll position and a function to scroll smoothly to a given position:
 
+```tsx
+import { useWindowScroll } from '@mantine/hooks';
+import { Button, Text, Group } from '@mantine/core';
+
+function Demo() {
+  const [scroll, scrollTo] = useWindowScroll();
+
+  return (
+    <Group justify="center">
+      <Text>
+        Scroll position x: {scroll.x}, y: {scroll.y}
+      </Text>
+      <Button onClick={() => scrollTo({ y: 0 })}>Scroll to top</Button>
+    </Group>
+  );
+}
+```
 
 
 ## Definition
@@ -24,8 +41,7 @@ function useWindowScroll(): UseWindowScrollReturnValue;
 
 ## Exported types
 
-`UseWindowScrollTo`, `UseWindowScrollPosition` and `UseWindowScrollReturnValue` types are exported from `@mantine/hooks` package,
-you can import them in your application:
+The `UseWindowScrollTo`, `UseWindowScrollPosition`, and `UseWindowScrollReturnValue` types are exported from `@mantine/hooks`;
 
 ```tsx
 import type { UseWindowScrollTo, UseWindowScrollPosition, UseWindowScrollReturnValue } from '@mantine/hooks';

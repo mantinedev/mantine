@@ -1,0 +1,417 @@
+{
+  "id": "schedule-schedule",
+  "name": "Schedule",
+  "kind": "component",
+  "package": "@mantine/schedule",
+  "route": "/schedule/schedule",
+  "description": "Schedule component with day, week, month and year views",
+  "propsCount": 34,
+  "llmUrl": "https://mantine.dev/llms/schedule-schedule.md",
+  "componentDataUrl": "/mcp/components/schedule-schedule.json",
+  "searchText": "schedule schedule component with day, week, month and year views @mantine/schedule /schedule/schedule candragevent canresizeevent date dayviewprops defaultdate defaultview events labels layout locale mobilemonthviewprops mode monthviewprops onalldayslotclick ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange radius recurrenceexpansionlimit rendereventbody view weekviewprops withdragslotselect witheventresize witheventsdraganddrop yearviewprops",
+  "source": "@mantine/schedule/src/components/Schedule/Schedule.tsx",
+  "docs": "schedule/schedule.mdx",
+  "markdown": "# Schedule\nPackage: @mantine/schedule\nImport: import { Schedule } from '@mantine/schedule';\nDescription: Schedule component with day, week, month and year views\n\n## Usage\n\nSchedule is a unified component that combines all schedule views (Day, Week, Month, Year) with automatic\nview switching. Use the view selector in the header to switch between different views.\n\n```tsx\n// Demo.tsx\nimport { Schedule } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <Schedule events={events} />;\n}\n\n// data.ts\nimport dayjs from 'dayjs';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\n\nconst events = [\n  {\n    id: 1,\n    title: 'Morning Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Team Meeting',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Code Review',\n    start: \\`\\${tomorrow} 14:00:00\\`,\n    end: \\`\\${tomorrow} 15:00:00\\`,\n    color: 'violet',\n  },\n  {\n    id: 4,\n    title: 'All Day Conference',\n    start: \\`\\${today} 00:00:00\\`,\n    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'red',\n  },\n];\n```\n\n\n## Controlled state\n\nControl the current view and date externally using the `view`, `onViewChange`, `date`, and `onDateChange` props.\nThis allows you to build custom navigation or integrate with other components.\n\n```tsx\nimport { useState } from 'react';\nimport { Text } from '@mantine/core';\nimport { Schedule, ScheduleViewLevel } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  const [view, setView] = useState<ScheduleViewLevel>('week');\n  const [date, setDate] = useState(new Date());\n\n  return (\n    <div>\n      <Text size=\"sm\" mb=\"md\">\n        Current view: <b>{view}</b>\n      </Text>\n\n      <Schedule\n        view={view}\n        onViewChange={setView}\n        date={date}\n        onDateChange={(newDate) => setDate(new Date(newDate))}\n        events={events}\n      />\n    </div>\n  );\n}\n```\n\n\n## View-specific props\n\nCustomize each view by passing view-specific props via `dayViewProps`, `weekViewProps`, `monthViewProps`,\nand `yearViewProps`. These props are forwarded to the corresponding view component.\n\nFor example, you can set different time ranges for Day and Week views, or customize the first day of week\nfor Month and Year views.\n\n```tsx\nimport { Schedule } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return (\n    <Schedule\n      events={events}\n      dayViewProps={{\n        startTime: '08:00:00',\n        endTime: '18:00:00',\n        intervalMinutes: 30,\n      }}\n      weekViewProps={{\n        startTime: '08:00:00',\n        endTime: '18:00:00',\n        withWeekendDays: false,\n      }}\n      monthViewProps={{\n        withWeekNumbers: true,\n        firstDayOfWeek: 0,\n      }}\n      yearViewProps={{\n        withWeekNumbers: true,\n      }}\n    />\n  );\n}\n```\n\n\n## Default view\n\nSet `defaultView` to control which view is shown initially when using uncontrolled mode.\n\n```tsx\nimport { Schedule } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return <Schedule events={events} defaultView=\"month\" />;\n}\n```\n\n\n## Custom header\n\nYou can build a custom header using `ScheduleHeader` compound components combined with your own controls.\nDisable the default header on all views by passing `withHeader={false}` through view-specific props.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport {\n  DateStringValue,\n  getStartOfWeek,\n  Schedule,\n  ScheduleHeader,\n  ScheduleViewLevel,\n} from '@mantine/schedule';\nimport { events } from './data';\n\nfunction getNavigationHandlers(\n  date: DateStringValue,\n  view: ScheduleViewLevel\n) {\n  const d = dayjs(date);\n  switch (view) {\n    case 'day':\n      return {\n        previous: d.subtract(1, 'day'),\n        next: d.add(1, 'day'),\n      };\n    case 'week':\n      return {\n        previous: d.subtract(1, 'week'),\n        next: d.add(1, 'week'),\n      };\n    case 'month':\n      return {\n        previous: d.subtract(1, 'month').startOf('month'),\n        next: d.add(1, 'month').startOf('month'),\n      };\n    case 'year':\n      return {\n        previous: d.subtract(1, 'year').startOf('year'),\n        next: d.add(1, 'year').startOf('year'),\n      };\n  }\n}\n\nfunction getHeaderLabel(date: DateStringValue, view: ScheduleViewLevel) {\n  const d = dayjs(date);\n  switch (view) {\n    case 'day':\n      return d.format('dddd, MMMM D, YYYY');\n    case 'week': {\n      const start = dayjs(\n        getStartOfWeek({ date, firstDayOfWeek: 1 })\n      );\n      const end = start.add(6, 'day');\n      if (start.month() === end.month()) {\n        return `${start.format('MMM D')} – ${end.format('D, YYYY')}`;\n      }\n      return `${start.format('MMM D')} – ${end.format('MMM D, YYYY')}`;\n    }\n    case 'month':\n      return d.format('MMMM YYYY');\n    case 'year':\n      return d.format('YYYY');\n  }\n}\n\nfunction Demo() {\n  const [date, setDate] = useState<DateStringValue>(\n    dayjs().format('YYYY-MM-DD')\n  );\n  const [view, setView] = useState<ScheduleViewLevel>('week');\n\n  const nav = getNavigationHandlers(date, view);\n\n  return (\n    <div>\n      <ScheduleHeader>\n        <ScheduleHeader.Previous\n          onClick={() =>\n            setDate(\n              nav.previous.format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Control interactive={false} miw={200}>\n          {getHeaderLabel(date, view)}\n        </ScheduleHeader.Control>\n        <ScheduleHeader.Next\n          onClick={() =>\n            setDate(\n              nav.next.format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Today\n          onClick={() =>\n            setDate(\n              dayjs().format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Control onClick={() => window.print()}>\n          Print\n        </ScheduleHeader.Control>\n        <div style={{ marginInlineStart: 'auto' }}>\n          <ScheduleHeader.ViewSelect\n            value={view}\n            onChange={setView}\n          />\n        </div>\n      </ScheduleHeader>\n\n      <Schedule\n        date={date}\n        onDateChange={setDate}\n        view={view}\n        onViewChange={setView}\n        events={events}\n        dayViewProps={{ withHeader: false }}\n        weekViewProps={{ withHeader: false }}\n        monthViewProps={{ withHeader: false }}\n        yearViewProps={{ withHeader: false }}\n      />\n    </div>\n  );\n}\n```\n\n\n## Common props\n\nThe following props are shared across all views:\n\n* `events` - Events to display\n* `locale` - Date formatting locale\n* `radius` - Border radius\n* `labels` - Label overrides for i18n\n* `renderEventBody` - Custom event renderer\n* `withDragDrop` - Enable drag and drop\n* `onEventDrop` - Drag and drop handler\n* `canDragEvent` - Drag permission callback\n* `withEventResize` - Enable event resizing\n* `onEventResize` - Resize handler\n* `canResizeEvent` - Resize permission callback\n* `mode` - Interaction mode (`default` or `static`)\n\nThese props are automatically passed to all views. For view-specific customization, use the\n`dayViewProps`, `weekViewProps`, `monthViewProps`, and `yearViewProps` props.\n\n## Drag and drop\n\nEnable event drag and drop by setting `withEventsDragAndDrop` prop. Events can be dragged\nto different time slots and days across all views.\n\n```tsx\nimport { useState } from 'react';\nimport dayjs from 'dayjs';\nimport { Schedule, ScheduleEventData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\n\nconst initialEvents: ScheduleEventData[] = [\n  {\n    id: 1,\n    title: 'Morning Standup',\n    start: `${today} 09:00:00`,\n    end: `${today} 09:30:00`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Team Meeting',\n    start: `${today} 10:00:00`,\n    end: `${today} 11:30:00`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Lunch Break',\n    start: `${today} 12:00:00`,\n    end: `${today} 13:00:00`,\n    color: 'orange',\n  },\n  {\n    id: 4,\n    title: 'Code Review',\n    start: `${tomorrow} 14:00:00`,\n    end: `${tomorrow} 15:00:00`,\n    color: 'violet',\n  },\n  {\n    id: 5,\n    title: 'Client Call',\n    start: `${tomorrow} 15:30:00`,\n    end: `${tomorrow} 16:30:00`,\n    color: 'cyan',\n  },\n  {\n    id: 6,\n    title: 'All Day Conference',\n    start: `${today} 00:00:00`,\n    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'red',\n  },\n];\n\nfunction Demo() {\n  const [events, setEvents] = useState(initialEvents);\n\n  const handleEventDrop = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {\n    setEvents((prev) =>\n      prev.map((event) =>\n        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event\n      )\n    );\n  };\n\n  return (\n    <Schedule\n      events={events}\n      withEventsDragAndDrop\n      onEventDrop={handleEventDrop}\n    />\n  );\n}\n```\n\n\n## Create and update events\n\nSet `withDragSlotSelect` prop to allow users to drag across time slots or day cells to select a range.\nWhen the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.\nCombined with `onTimeSlotClick`, `onAllDaySlotClick`, `onDayClick`, and `onEventClick` callbacks,\nthis enables a complete event creation and editing experience across all views.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useRef, useState } from 'react';\nimport { PlusIcon } from '@phosphor-icons/react';\nimport { ActionIcon, Box, Group } from '@mantine/core';\nimport { Schedule, ScheduleEventData } from '@mantine/schedule';\nimport { EventData, EventForm } from './EventForm';\nimport { events } from './events';\n\nfunction Demo() {\n  const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);\n  const [formOpened, setFormOpened] = useState(false);\n  const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);\n  const mobileSelectedDate = useRef<string>(dayjs().format('YYYY-MM-DD'));\n\n  const handleTimeSlotClick = ({ slotStart, slotEnd }: { slotStart: string; slotEnd: string }) => {\n    setSelectedEventData({\n      title: '',\n      start: new Date(slotStart),\n      end: new Date(slotEnd),\n      color: 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleAllDaySlotClick = (slotDate: string) => {\n    setSelectedEventData({\n      title: '',\n      start: dayjs(slotDate).startOf('day').toDate(),\n      end: dayjs(slotDate).endOf('day').toDate(),\n      color: 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleDayClick = (date: string) => {\n    setSelectedEventData({\n      title: '',\n      start: dayjs(date).startOf('day').toDate(),\n      end: dayjs(date).endOf('day').toDate(),\n      color: 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleEventClick = (event: ScheduleEventData) => {\n    setSelectedEventData({\n      id: event.id,\n      title: event.title,\n      start: new Date(event.start),\n      end: new Date(event.end),\n      color: event.color || 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleSubmit = (values: EventData) => {\n    if (values.id) {\n      setAllEvents((prev) =>\n        prev.map((event) =>\n          event.id === values.id\n            ? {\n                ...event,\n                title: values.title,\n                start: dayjs(values.start).toISOString(),\n                end: dayjs(values.end).toISOString(),\n                color: values.color || 'blue',\n              }\n            : event\n        )\n      );\n    } else {\n      setAllEvents((prev) => [\n        ...prev,\n        {\n          id: Math.random().toString(36).substring(2, 11),\n          title: values.title,\n          start: dayjs(values.start).toISOString(),\n          end: dayjs(values.end).toISOString(),\n          color: values.color || 'blue',\n        },\n      ]);\n    }\n  };\n\n  const handleSlotDragEnd = (rangeStart: string, rangeEnd: string) => {\n    setSelectedEventData({\n      title: '',\n      start: new Date(rangeStart),\n      end: new Date(rangeEnd),\n      color: 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleDeleteEvent = () => {\n    if (selectedEventData?.id) {\n      setAllEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));\n    }\n  };\n\n  const handleCreateEvent = () => {\n    const selectedDate = mobileSelectedDate.current;\n    setSelectedEventData({\n      title: '',\n      start: dayjs(selectedDate).startOf('day').toDate(),\n      end: dayjs(selectedDate).endOf('day').toDate(),\n      color: 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  return (\n    <Box style={{ resize: 'horizontal', overflow: 'auto', minWidth: 300, maxWidth: '100%' }}>\n      <Schedule\n        events={allEvents}\n        onTimeSlotClick={handleTimeSlotClick}\n        onAllDaySlotClick={handleAllDaySlotClick}\n        onDayClick={handleDayClick}\n        onSlotDragEnd={handleSlotDragEnd}\n        onEventClick={handleEventClick}\n        withDragSlotSelect\n        layout=\"responsive\"\n        mobileMonthViewProps={{\n          onSelectedDateChange: (date) => {\n            if (date) {\n              mobileSelectedDate.current = date;\n            }\n          },\n          renderHeader: ({ defaultHeader }) => (\n            <Group justify=\"space-between\" w=\"100%\">\n              <Group justify=\"space-between\" flex=\"1\">\n                {defaultHeader}\n              </Group>\n              <ActionIcon\n                variant=\"default\"\n                mx=\"sm\"\n                size=\"lg\"\n                onClick={handleCreateEvent}\n                aria-label=\"Create new event\"\n              >\n                <PlusIcon size={18} />\n              </ActionIcon>\n            </Group>\n          ),\n        }}\n      />\n\n      <EventForm\n        opened={formOpened}\n        onClose={() => setFormOpened(false)}\n        onExitTransitionEnd={() => setSelectedEventData(null)}\n        values={selectedEventData}\n        onSubmit={handleSubmit}\n        onDelete={selectedEventData?.id ? handleDeleteEvent : undefined}\n      />\n    </Box>\n  );\n}\n\n// EventForm.tsx\nimport { useEffect } from 'react';\nimport { Modal, TextInput, Button, Stack, Group, Checkbox } from '@mantine/core';\nimport { DateTimePicker } from '@mantine/dates';\nimport { useForm } from '@mantine/form';\n\ninterface EventData {\n  id?: string | number;\n  title: string;\n  start: Date;\n  end: Date;\n  color?: string;\n  isAllDay?: boolean;\n}\n\ninterface EventFormProps {\n  opened: boolean;\n  onClose: () => void;\n  initialData: EventData | null;\n  onSave: (data: EventData) => void;\n  onDelete?: () => void;\n}\n\nexport function EventForm({\n  opened,\n  onClose,\n  values,\n  onSubmit,\n  onDelete,\n  ...others\n}: EventFormProps) {\n  const form = useForm({\n    initialValues: {\n      id: values?.id,\n      title: values?.title || '',\n      start: values?.start || new Date(),\n      end: values?.end || new Date(),\n      color: values?.color || 'blue',\n    },\n    validate: {\n      title: isNotEmpty('Event title is required'),\n      start: isNotEmpty('Start time is required'),\n      end: (value, { start }) => {\n        if (!value) {\n          return 'End time is required';\n        }\n\n        if (dayjs(value).isBefore(dayjs(start))) {\n          return 'End time must be after start time';\n        }\n\n        return null;\n      },\n    },\n  });\n\n  useEffect(() => {\n    form.setValues({\n      id: values?.id,\n      title: values?.title || '',\n      start: values?.start || new Date(),\n      end: values?.end || new Date(),\n      color: values?.color || 'blue',\n    });\n  }, [values]);\n\n  const handleSubmit = (values: EventData) => {\n    onSubmit({\n      id: values.id,\n      title: values.title,\n      start: values.start,\n      end: values.end,\n      color: values.color,\n    });\n    onClose();\n  };\n\n  const handleDelete = () => {\n    onDelete?.();\n    onClose();\n  };\n\n  return (\n    <Modal\n      opened={opened}\n      onClose={onClose}\n      title={form.values.id ? 'Edit Event' : 'Create Event'}\n      {...others}\n    >\n      <form onSubmit={form.onSubmit(handleSubmit)}>\n        <Stack gap=\"md\">\n          <TextInput\n            label=\"Event Title\"\n            placeholder=\"Enter event title\"\n            data-autofocus\n            {...form.getInputProps('title')}\n          />\n\n          <DateTimePicker\n            label=\"Start Time\"\n            clearable\n            {...form.getInputProps('start')}\n          />\n          <DateTimePicker label=\"End Time\" {...form.getInputProps('end')} clearable />\n\n          <Group justify=\"flex-end\" gap=\"sm\">\n            {form.values.id && onDelete && (\n              <Button color=\"red\" onClick={handleDelete} mie=\"auto\">\n                Delete\n              </Button>\n            )}\n\n            <Button variant=\"default\" onClick={onClose}>\n              Cancel\n            </Button>\n            <Button type=\"submit\">\n              {form.values.id ? 'Update' : 'Create'}\n            </Button>\n          </Group>\n        </Stack>\n      </form>\n    </Modal>\n  );\n}\n\n// events.ts\nimport dayjs from 'dayjs';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\n\nconst events = [\n  {\n    id: 1,\n    title: 'Morning Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Team Meeting',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Code Review',\n    start: \\`\\${tomorrow} 14:00:00\\`,\n    end: \\`\\${tomorrow} 15:00:00\\`,\n    color: 'violet',\n  },\n  {\n    id: 4,\n    title: 'All Day Conference',\n    start: \\`\\${today} 00:00:00\\`,\n    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),\n    color: 'red',\n  },\n];\n```\n\n\n## External drag and drop\n\nUse `onExternalEventDrop` to allow dragging items from outside the component into\nthe schedule. External items must set data in `dataTransfer` during their `onDragStart`.\nThe callback receives the `DataTransfer` object and the drop target datetime.\n\n```tsx\nimport { useRef, useState } from 'react';\nimport dayjs from 'dayjs';\nimport { Box, Grid, Text } from '@mantine/core';\nimport { Schedule, ScheduleEventData } from '@mantine/schedule';\n\nconst sidebarItems = [\n  { title: 'Quick Sync', duration: 30, color: 'teal' },\n  { title: 'Workshop', duration: 120, color: 'orange' },\n  { title: 'One-on-One', duration: 60, color: 'violet' },\n];\n\nfunction Demo() {\n  const [events, setEvents] = useState<ScheduleEventData[]>([]);\n  const nextId = useRef(1);\n\n  const handleExternalDrop = (dataTransfer: DataTransfer, dropDateTime: string) => {\n    const raw = dataTransfer.getData('text/plain');\n    if (!raw) {\n      return;\n    }\n\n    const data = JSON.parse(raw);\n    const start = dayjs(dropDateTime);\n    const end = start.add(data.duration, 'minutes');\n\n    setEvents((prev) => [\n      ...prev,\n      {\n        id: nextId.current++,\n        title: data.title,\n        start: start.format('YYYY-MM-DD HH:mm:ss'),\n        end: end.format('YYYY-MM-DD HH:mm:ss'),\n        color: data.color,\n      },\n    ]);\n  };\n\n  const handleEventDrop = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {\n    setEvents((prev) =>\n      prev.map((event) =>\n        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event\n      )\n    );\n  };\n\n  return (\n    <Grid>\n      <Grid.Col span={{ base: 12, sm: 3 }}>\n        <Text fw={500} mb=\"xs\">Drag to schedule</Text>\n        {sidebarItems.map((item) => (\n          <Box\n            key={item.title}\n            draggable\n            onDragStart={(e) => {\n              e.dataTransfer.setData('text/plain', JSON.stringify(item));\n              e.dataTransfer.effectAllowed = 'copy';\n            }}\n            style={{\n              padding: '8px 12px',\n              marginBottom: 8,\n              borderRadius: 4,\n              cursor: 'grab',\n              backgroundColor: `var(--mantine-color-${item.color}-light)`,\n              color: `var(--mantine-color-${item.color}-light-color)`,\n            }}\n          >\n            <Text size=\"sm\" fw={500}>{item.title}</Text>\n            <Text size=\"xs\">{item.duration} min</Text>\n          </Box>\n        ))}\n      </Grid.Col>\n      <Grid.Col span={{ base: 12, sm: 9 }}>\n        <Schedule\n          events={events}\n          withEventsDragAndDrop\n          onEventDrop={handleEventDrop}\n          onExternalEventDrop={handleExternalDrop}\n        />\n      </Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Bidirectional drag and drop\n\nCombine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional\ndrag and drop. Items dragged from the sidebar are removed from the list and added\nto the schedule. Events dragged from the schedule back to the sidebar are removed\nfrom the schedule. The schedule sets `application/json` with `{ eventId }` in\n`dataTransfer` when an event is dragged, which the sidebar drop zone reads to\nidentify the event.\n\n```tsx\nimport { useRef, useState } from 'react';\nimport dayjs from 'dayjs';\nimport { Box, Grid, Text } from '@mantine/core';\nimport { Schedule, ScheduleEventData } from '@mantine/schedule';\n\ninterface SidebarItem {\n  title: string;\n  duration: number;\n  color: string;\n}\n\nconst initialSidebarItems: SidebarItem[] = [\n  { title: 'Quick Sync', duration: 30, color: 'teal' },\n  { title: 'Workshop', duration: 120, color: 'orange' },\n  { title: 'One-on-One', duration: 60, color: 'violet' },\n];\n\nfunction Demo() {\n  const [sidebarItems, setSidebarItems] = useState(initialSidebarItems);\n  const [events, setEvents] = useState<ScheduleEventData[]>([]);\n  const [sidebarHighlight, setSidebarHighlight] = useState(false);\n  const nextId = useRef(1);\n\n  const handleExternalDrop = (dataTransfer: DataTransfer, dropDateTime: string) => {\n    const raw = dataTransfer.getData('text/plain');\n    if (!raw) {\n      return;\n    }\n\n    const data = JSON.parse(raw);\n    const start = dayjs(dropDateTime);\n    const end = start.add(data.duration, 'minutes');\n\n    setEvents((prev) => [\n      ...prev,\n      {\n        id: nextId.current++,\n        title: data.title,\n        start: start.format('YYYY-MM-DD HH:mm:ss'),\n        end: end.format('YYYY-MM-DD HH:mm:ss'),\n        color: data.color,\n      },\n    ]);\n    setSidebarItems((prev) => prev.filter((item) => item.title !== data.title));\n  };\n\n  const handleEventDrop = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {\n    setEvents((prev) =>\n      prev.map((event) =>\n        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event\n      )\n    );\n  };\n\n  const handleSidebarDrop = (e: React.DragEvent) => {\n    e.preventDefault();\n    setSidebarHighlight(false);\n    const raw = e.dataTransfer.getData('application/json');\n    if (!raw) {\n      return;\n    }\n\n    const { eventId } = JSON.parse(raw);\n    const event = events.find((ev) => String(ev.id) === String(eventId));\n    if (!event) {\n      return;\n    }\n\n    const duration = dayjs(event.end).diff(dayjs(event.start), 'minutes');\n    setSidebarItems((prev) => [\n      ...prev,\n      { title: event.title, duration, color: event.color || 'blue' },\n    ]);\n    setEvents((prev) => prev.filter((ev) => ev.id !== event.id));\n  };\n\n  return (\n    <Grid>\n      <Grid.Col span={{ base: 12, sm: 3 }}>\n        <Box\n          onDragOver={(e) => {\n            e.preventDefault();\n            e.dataTransfer.dropEffect = 'move';\n            setSidebarHighlight(true);\n          }}\n          onDragLeave={() => setSidebarHighlight(false)}\n          onDrop={handleSidebarDrop}\n          style={{\n            padding: 8,\n            borderRadius: 8,\n            border: sidebarHighlight\n              ? '2px dashed var(--mantine-color-blue-5)'\n              : '2px dashed transparent',\n            transition: 'border-color 150ms',\n          }}\n        >\n          <Text fw={500} mb=\"xs\">Unscheduled</Text>\n          {sidebarItems.map((item) => (\n            <Box\n              key={item.title}\n              draggable\n              onDragStart={(e) => {\n                e.dataTransfer.setData('text/plain', JSON.stringify(item));\n                e.dataTransfer.effectAllowed = 'copy';\n              }}\n              style={{\n                padding: '8px 12px',\n                marginBottom: 8,\n                borderRadius: 4,\n                cursor: 'grab',\n                backgroundColor: `var(--mantine-color-${item.color}-light)`,\n                color: `var(--mantine-color-${item.color}-light-color)`,\n              }}\n            >\n              <Text size=\"sm\" fw={500}>{item.title}</Text>\n              <Text size=\"xs\">{item.duration} min</Text>\n            </Box>\n          ))}\n          {sidebarItems.length === 0 && (\n            <Text size=\"xs\" c=\"dimmed\">Drag events here to unschedule</Text>\n          )}\n        </Box>\n      </Grid.Col>\n      <Grid.Col span={{ base: 12, sm: 9 }}>\n        <Schedule\n          events={events}\n          withEventsDragAndDrop\n          onEventDrop={handleEventDrop}\n          onExternalEventDrop={handleExternalDrop}\n        />\n      </Grid.Col>\n    </Grid>\n  );\n}\n```\n\n\n## Event resize\n\nEnable event resizing by setting `withEventResize` prop. Users can drag the top or bottom\nedge of an event to adjust its start or end time. Use `onEventResize` callback to handle\nthe resize. Event resize works in both Day and Week views and can be combined with drag and drop.\n\n```tsx\nimport { useState } from 'react';\nimport dayjs from 'dayjs';\nimport { Schedule, ScheduleEventData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\n\nconst initialEvents: ScheduleEventData[] = [\n  {\n    id: 1,\n    title: 'Morning Standup',\n    start: `${today} 09:00:00`,\n    end: `${today} 09:30:00`,\n    color: 'blue',\n  },\n  {\n    id: 2,\n    title: 'Team Meeting',\n    start: `${today} 10:00:00`,\n    end: `${today} 11:30:00`,\n    color: 'green',\n  },\n  {\n    id: 3,\n    title: 'Lunch Break',\n    start: `${today} 12:00:00`,\n    end: `${today} 13:00:00`,\n    color: 'orange',\n  },\n  {\n    id: 4,\n    title: 'Code Review',\n    start: `${tomorrow} 14:00:00`,\n    end: `${tomorrow} 15:00:00`,\n    color: 'violet',\n  },\n  {\n    id: 5,\n    title: 'Client Call',\n    start: `${tomorrow} 15:30:00`,\n    end: `${tomorrow} 16:30:00`,\n    color: 'cyan',\n  },\n];\n\nfunction Demo() {\n  const [events, setEvents] = useState(initialEvents);\n\n  const handleEventUpdate = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {\n    setEvents((prev) =>\n      prev.map((event) =>\n        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event\n      )\n    );\n  };\n\n  return (\n    <Schedule\n      events={events}\n      withEventsDragAndDrop\n      onEventDrop={handleEventUpdate}\n      withEventResize\n      onEventResize={handleEventUpdate}\n    />\n  );\n}\n```\n\n\n## Recurring events\n\nSchedule automatically expands recurring events for the visible date range in each view.\nSee [Recurring events guide](https://mantine.dev/llms/schedule-recurring-events.md) for full documentation.\n\n```tsx\nimport { useState } from 'react';\nimport { Schedule } from '@mantine/schedule';\n\nconst events = [\n  {\n    id: 'schedule-series',\n    title: 'Weekly planning (series)',\n    start: '2024-01-15 10:00:00',\n    end: '2024-01-15 11:00:00',\n    color: 'blue',\n    recurrence: {\n      rrule: 'FREQ=WEEKLY;BYDAY=MO,WE;COUNT=16',\n      exdate: ['2024-01-17 10:00:00'],\n    },\n  },\n  {\n    id: 'schedule-series-override',\n    title: 'Weekly planning (moved one occurrence)',\n    start: '2024-01-17 16:00:00',\n    end: '2024-01-17 17:00:00',\n    color: 'grape',\n    recurringEventId: 'schedule-series',\n    recurrenceId: '2024-01-17 10:00:00',\n  },\n  {\n    id: 'schedule-one-off',\n    title: 'One-off roadmap review',\n    start: '2024-01-18 12:00:00',\n    end: '2024-01-18 13:00:00',\n    color: 'green',\n  },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState('2024-01-15');\n  return <Schedule view=\"week\" date={date} onDateChange={setDate} events={events} />;\n}\n```\n\n\n## Background events\n\nSet `display=\"background\"` on an event to render it as a full-width, non-interactive\nblock behind regular events. Background events work in Day, Week, and Month views.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { Schedule, ScheduleEventData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\n\nconst events: ScheduleEventData[] = [\n  {\n    id: 'lunch-block',\n    title: 'Lunch break',\n    start: `${today} 12:00:00`,\n    end: `${today} 13:00:00`,\n    color: 'gray',\n    display: 'background',\n  },\n  {\n    id: 'focus-time',\n    title: 'Focus time',\n    start: `${today} 14:00:00`,\n    end: `${today} 16:00:00`,\n    color: 'blue',\n    display: 'background',\n  },\n  {\n    id: 'team-meeting',\n    title: 'Team meeting',\n    start: `${today} 10:00:00`,\n    end: `${today} 11:00:00`,\n    color: 'violet',\n  },\n  {\n    id: 'code-review',\n    title: 'Code review',\n    start: `${today} 14:30:00`,\n    end: `${today} 15:30:00`,\n    color: 'green',\n  },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState(today);\n\n  return (\n    <Schedule\n      date={date}\n      onDateChange={setDate}\n      events={events}\n    />\n  );\n}\n```\n\n\n## Responsive layout\n\nSchedule supports `layout=\"responsive\"` prop that automatically switches between views\nbased on the container width. Resize the container below to see the view change.\n\n```tsx\nimport { Box } from '@mantine/core';\nimport { Schedule } from '@mantine/schedule';\nimport { events } from './data';\n\nfunction Demo() {\n  return (\n    <Box style={{ resize: 'horizontal', overflow: 'auto', minWidth: 300, maxWidth: '100%' }}>\n      <Schedule events={events} layout=\"responsive\" />\n    </Box>\n  );\n}\n```\n\n\n## View components\n\nFor more control over individual views, use the view components directly:\n\n* [DayView](https://mantine.dev/llms/schedule-day-view.md) - Single day with time slots\n* [WeekView](https://mantine.dev/llms/schedule-week-view.md) - Full week with time slots\n* [MonthView](https://mantine.dev/llms/schedule-month-view.md) - Calendar month grid\n* [YearView](https://mantine.dev/llms/schedule-year-view.md) - Full year overview\n\n\n#### Props\n\n**Schedule props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| canDragEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be dragged |\n| canResizeEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be resized |\n| date | string \\| Date | - | Current date to display (controlled) |\n| dayViewProps | Partial<Omit<DayViewProps, ScheduleCommonProps>> | - | Props specific to DayView (includes `startTime`, `endTime`, `intervalMinutes`, etc.) |\n| defaultDate | string \\| Date | - | Default date (uncontrolled) |\n| defaultView | ScheduleViewLevel | - | Default view level (uncontrolled) |\n| events | ScheduleEventData[] | - | Events to display across all views |\n| labels | Partial<ScheduleLabels> | - | Labels override for i18n |\n| layout | ScheduleLayout | - | Layout mode: - `'default'` uses same views on all screen sizes - `'responsive'` switches to YearView/MobileMonthView on small screens |\n| locale | string | - | Locale for date formatting (overrides `DatesProvider`) |\n| mobileMonthViewProps | Partial<Omit<MobileMonthViewProps, ScheduleCommonProps>> | - | Props specific to MobileMonthView (used in responsive layout) |\n| mode | ScheduleMode | - | Interaction mode: - `'default'` allows all interactions - `'static'` disables event interactions |\n| monthViewProps | Partial<Omit<MonthViewProps, ScheduleCommonProps>> | - | Props specific to MonthView (includes `firstDayOfWeek`, `weekendDays`, etc.) |\n| onAllDaySlotClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when all-day slot is clicked in DayView/WeekView |\n| onDateChange | (date: string) => void | - | Called when date changes via navigation |\n| onDayClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when day is clicked in MonthView |\n| onEventClick | (event: ScheduleEventData, e: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when event is clicked in any view |\n| onEventDragEnd | () => void | - | Called when any event drag ends |\n| onEventDragStart | (event: ScheduleEventData) => void | - | Called when any event drag starts |\n| onEventDrop | (data: { eventId: string \\| number; newStart: string; newEnd: string; event: ScheduleEventData; }) => void | - | Called when event is dropped |\n| onEventResize | (data: { eventId: string \\| number; newStart: string; newEnd: string; event: ScheduleEventData; }) => void | - | Called when event is resized |\n| onExternalEventDrop | (dataTransfer: DataTransfer, dropDateTime: string) => void | - | Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. |\n| onSlotDragEnd | (rangeStart: string, rangeEnd: string) => void | - | Called when a slot range is selected by dragging |\n| onTimeSlotClick | (data: { slotStart: string; slotEnd: string; nativeEvent: MouseEvent<HTMLButtonElement, MouseEvent>; }) => void | - | Called when time slot is clicked in DayView/WeekView |\n| onViewChange | (view: ScheduleViewLevel) => void | - | Called when view level changes |\n| radius | MantineRadius \\| number | - | Key of theme.radius or any valid CSS value to set border-radius |\n| recurrenceExpansionLimit | number | - | Max number of generated recurring instances per recurring series |\n| renderEventBody | RenderEventBody | - | Custom event body renderer |\n| view | ScheduleViewLevel | - | Current view level (controlled) |\n| weekViewProps | Partial<Omit<WeekViewProps, ScheduleCommonProps>> | - | Props specific to WeekView (includes `startTime`, `endTime`, `intervalMinutes`, etc.) |\n| withDragSlotSelect | boolean | - | If set, enables drag-to-select slot ranges |\n| withEventResize | boolean | - | If true, events can be resized by dragging their edges |\n| withEventsDragAndDrop | boolean | - | Enable drag and drop for events |\n| yearViewProps | Partial<Omit<YearViewProps, ScheduleCommonProps>> | - | Props specific to YearView (includes `firstDayOfWeek`, `weekendDays`, etc.) |\n\n\n#### Styles API\n\nSchedule component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Schedule selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Schedule-root | Root element |\n| desktopView | .mantine-Schedule-desktopView | Desktop view container (visible on large screens when layout=\"responsive\") |\n| mobileView | .mantine-Schedule-mobileView | Mobile view container (visible on small screens when layout=\"responsive\") |\n| dayView | .mantine-Schedule-dayView | DayView root element |\n| dayViewInner | .mantine-Schedule-dayViewInner | DayView inner container |\n| dayViewScrollArea | .mantine-Schedule-dayViewScrollArea | DayView scroll area component |\n| dayViewAllDay | .mantine-Schedule-dayViewAllDay | DayView all-day events container |\n| dayViewAllDayEvents | .mantine-Schedule-dayViewAllDayEvents | DayView all-day events wrapper |\n| dayViewSlot | .mantine-Schedule-dayViewSlot | DayView individual time slot |\n| dayViewSlots | .mantine-Schedule-dayViewSlots | DayView slots container |\n| dayViewTimeSlots | .mantine-Schedule-dayViewTimeSlots | DayView time slots container |\n| dayViewSlotLabel | .mantine-Schedule-dayViewSlotLabel | DayView time slot label |\n| dayViewSlotLabels | .mantine-Schedule-dayViewSlotLabels | DayView slot labels container |\n| dayViewBackgroundEvent | .mantine-Schedule-dayViewBackgroundEvent | DayView background event element |\n| weekView | .mantine-Schedule-weekView | WeekView root element |\n| weekViewRoot | .mantine-Schedule-weekViewRoot | WeekView root container |\n| weekViewHeader | .mantine-Schedule-weekViewHeader | WeekView header row |\n| weekViewInner | .mantine-Schedule-weekViewInner | WeekView inner container |\n| weekViewAllDaySlotsEvents | .mantine-Schedule-weekViewAllDaySlotsEvents | WeekView all-day events container |\n| weekViewAllDaySlots | .mantine-Schedule-weekViewAllDaySlots | WeekView all-day slots container |\n| weekViewAllDaySlotsList | .mantine-Schedule-weekViewAllDaySlotsList | WeekView all-day slots list |\n| weekViewAllDaySlot | .mantine-Schedule-weekViewAllDaySlot | WeekView individual all-day slot |\n| weekViewAllDaySlotsLabel | .mantine-Schedule-weekViewAllDaySlotsLabel | WeekView all-day slots label |\n| weekViewScrollArea | .mantine-Schedule-weekViewScrollArea | WeekView scroll area |\n| weekViewCorner | .mantine-Schedule-weekViewCorner | WeekView top-left corner |\n| weekViewSlotLabels | .mantine-Schedule-weekViewSlotLabels | WeekView slot labels container |\n| weekViewSlotLabel | .mantine-Schedule-weekViewSlotLabel | WeekView individual slot label |\n| weekViewDayLabel | .mantine-Schedule-weekViewDayLabel | WeekView day label |\n| weekViewDayWeekday | .mantine-Schedule-weekViewDayWeekday | WeekView weekday label |\n| weekViewDay | .mantine-Schedule-weekViewDay | WeekView day column |\n| weekViewDayNumber | .mantine-Schedule-weekViewDayNumber | WeekView day number |\n| weekViewDaySlot | .mantine-Schedule-weekViewDaySlot | WeekView individual day slot |\n| weekViewDaySlots | .mantine-Schedule-weekViewDaySlots | WeekView day slots container |\n| weekViewWeekLabel | .mantine-Schedule-weekViewWeekLabel | WeekView week label |\n| weekViewWeekNumber | .mantine-Schedule-weekViewWeekNumber | WeekView week number |\n| weekViewBackgroundEvent | .mantine-Schedule-weekViewBackgroundEvent | WeekView background event element |\n| monthView | .mantine-Schedule-monthView | MonthView root element |\n| monthViewScrollArea | .mantine-Schedule-monthViewScrollArea | MonthView scroll area wrapper |\n| monthViewInner | .mantine-Schedule-monthViewInner | MonthView inner container |\n| monthViewWeek | .mantine-Schedule-monthViewWeek | MonthView week row |\n| monthViewDay | .mantine-Schedule-monthViewDay | MonthView day cell |\n| monthViewDayLabel | .mantine-Schedule-monthViewDayLabel | MonthView day number label |\n| monthViewWeekNumber | .mantine-Schedule-monthViewWeekNumber | MonthView week number |\n| monthViewWeekday | .mantine-Schedule-monthViewWeekday | MonthView weekday name |\n| monthViewWeekdays | .mantine-Schedule-monthViewWeekdays | MonthView weekdays row |\n| monthViewWeekdaysCorner | .mantine-Schedule-monthViewWeekdaysCorner | MonthView top-left corner |\n| monthViewEvents | .mantine-Schedule-monthViewEvents | MonthView events container |\n| monthViewBackgroundEvent | .mantine-Schedule-monthViewBackgroundEvent | MonthView background event element |\n| yearView | .mantine-Schedule-yearView | YearView root element |\n| yearViewMonths | .mantine-Schedule-yearViewMonths | YearView months container |\n| yearViewMonth | .mantine-Schedule-yearViewMonth | YearView individual month |\n| yearViewWeekday | .mantine-Schedule-yearViewWeekday | YearView weekday name |\n| yearViewDay | .mantine-Schedule-yearViewDay | YearView day cell |\n| yearViewWeek | .mantine-Schedule-yearViewWeek | YearView week row |\n| yearViewWeekNumber | .mantine-Schedule-yearViewWeekNumber | YearView week number |\n| yearViewWeekdays | .mantine-Schedule-yearViewWeekdays | YearView weekdays row |\n| yearViewWeekdaysCorner | .mantine-Schedule-yearViewWeekdaysCorner | YearView top-left corner |\n| yearViewMonthCaption | .mantine-Schedule-yearViewMonthCaption | YearView month caption |\n| yearViewDayIndicators | .mantine-Schedule-yearViewDayIndicators | YearView day indicators container |\n| yearViewDayIndicator | .mantine-Schedule-yearViewDayIndicator | YearView individual day indicator |\n| mobileMonthView | .mantine-Schedule-mobileMonthView | MobileMonthView root element |\n| mobileMonthViewCalendar | .mantine-Schedule-mobileMonthViewCalendar | MobileMonthView calendar grid |\n| mobileMonthViewWeekdays | .mantine-Schedule-mobileMonthViewWeekdays | MobileMonthView weekdays row |\n| mobileMonthViewWeekday | .mantine-Schedule-mobileMonthViewWeekday | MobileMonthView individual weekday |\n| mobileMonthViewWeekdaysCorner | .mantine-Schedule-mobileMonthViewWeekdaysCorner | MobileMonthView weekdays corner (for week numbers) |\n| mobileMonthViewWeek | .mantine-Schedule-mobileMonthViewWeek | MobileMonthView week row |\n| mobileMonthViewWeekNumber | .mantine-Schedule-mobileMonthViewWeekNumber | MobileMonthView week number |\n| mobileMonthViewDay | .mantine-Schedule-mobileMonthViewDay | MobileMonthView day cell |\n| mobileMonthViewDayIndicators | .mantine-Schedule-mobileMonthViewDayIndicators | MobileMonthView day indicators container |\n| mobileMonthViewDayIndicator | .mantine-Schedule-mobileMonthViewDayIndicator | MobileMonthView individual day indicator |\n| mobileMonthViewEventsList | .mantine-Schedule-mobileMonthViewEventsList | MobileMonthView events list container |\n| mobileMonthViewEventsHeader | .mantine-Schedule-mobileMonthViewEventsHeader | MobileMonthView events list header |\n| mobileMonthViewHeader | .mantine-Schedule-mobileMonthViewHeader | MobileMonthView header with back button and label |\n| mobileMonthViewHeaderBackButton | .mantine-Schedule-mobileMonthViewHeaderBackButton | MobileMonthView header back button |\n| mobileMonthViewHeaderLabel | .mantine-Schedule-mobileMonthViewHeaderLabel | MobileMonthView header month/year label |\n| mobileMonthViewEvent | .mantine-Schedule-mobileMonthViewEvent | MobileMonthView event item |\n| mobileMonthViewEventBody | .mantine-Schedule-mobileMonthViewEventBody | MobileMonthView event body button |\n| mobileMonthViewEventTitle | .mantine-Schedule-mobileMonthViewEventTitle | MobileMonthView event title |\n| mobileMonthViewEventTime | .mantine-Schedule-mobileMonthViewEventTime | MobileMonthView event time label |\n| mobileMonthViewEventColor | .mantine-Schedule-mobileMonthViewEventColor | MobileMonthView event color indicator |\n| mobileMonthViewNoEvents | .mantine-Schedule-mobileMonthViewNoEvents | MobileMonthView no events message |\n| header | .mantine-Schedule-header | ScheduleHeader container |\n| headerControl | .mantine-Schedule-headerControl | ScheduleHeader control element |\n| viewSelect | .mantine-Schedule-viewSelect | ViewSelect element |\n| monthYearSelectTarget | .mantine-Schedule-monthYearSelectTarget | MonthYearSelect target button |\n| monthYearSelectDropdown | .mantine-Schedule-monthYearSelectDropdown | MonthYearSelect dropdown |\n| monthYearSelectControl | .mantine-Schedule-monthYearSelectControl | MonthYearSelect control |\n| monthYearSelectList | .mantine-Schedule-monthYearSelectList | MonthYearSelect list |\n| monthYearSelectLabel | .mantine-Schedule-monthYearSelectLabel | MonthYearSelect label |\n| event | .mantine-Schedule-event | ScheduleEvent element |\n| eventInner | .mantine-Schedule-eventInner | ScheduleEvent inner element |\n| eventResizeHandle | .mantine-Schedule-eventResizeHandle | ScheduleEvent resize handle element |\n| moreEventsButton | .mantine-Schedule-moreEventsButton | MoreEvents button |\n| moreEventsList | .mantine-Schedule-moreEventsList | MoreEvents list |\n| moreEventsDropdown | .mantine-Schedule-moreEventsDropdown | MoreEvents dropdown |\n| currentTimeIndicator | .mantine-Schedule-currentTimeIndicator | CurrentTimeIndicator container |\n| currentTimeIndicatorLine | .mantine-Schedule-currentTimeIndicatorLine | CurrentTimeIndicator line |\n| currentTimeIndicatorThumb | .mantine-Schedule-currentTimeIndicatorThumb | CurrentTimeIndicator thumb |\n| currentTimeIndicatorTimeBubble | .mantine-Schedule-currentTimeIndicatorTimeBubble | CurrentTimeIndicator time bubble |\n",
+  "props": [
+    {
+      "name": "canDragEvent",
+      "description": "Function to determine if event can be dragged",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData) => boolean"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "canResizeEvent",
+      "description": "Function to determine if event can be resized",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData) => boolean"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "date",
+      "description": "Current date to display (controlled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "dayViewProps",
+      "description": "Props specific to DayView (includes <code>startTime</code>, <code>endTime</code>, <code>intervalMinutes</code>, etc.)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<DayViewProps, ScheduleCommonProps>>"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "defaultDate",
+      "description": "Default date (uncontrolled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "defaultView",
+      "description": "Default view level (uncontrolled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleViewLevel",
+        "raw": "ScheduleViewLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"week\""
+          },
+          {
+            "value": "\"day\""
+          },
+          {
+            "value": "\"year\""
+          }
+        ]
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "events",
+      "description": "Events to display across all views",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleEventData[]"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "labels",
+      "description": "Labels override for i18n",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ScheduleLabels>"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "layout",
+      "description": "Layout mode:\n- <code>'default'</code> uses same views on all screen sizes\n- <code>'responsive'</code> switches to YearView/MobileMonthView on small screens",
+      "required": false,
+      "defaultValue": "'default'",
+      "type": {
+        "name": "ScheduleLayout",
+        "raw": "ScheduleLayout | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"responsive\""
+          }
+        ]
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "locale",
+      "description": "Locale for date formatting (overrides <code>DatesProvider</code>)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "mobileMonthViewProps",
+      "description": "Props specific to MobileMonthView (used in responsive layout)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<MobileMonthViewProps, ScheduleCommonProps>>"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "mode",
+      "description": "Interaction mode:\n- <code>'default'</code> allows all interactions\n- <code>'static'</code> disables event interactions",
+      "required": false,
+      "defaultValue": "'default'",
+      "type": {
+        "name": "ScheduleMode",
+        "raw": "ScheduleMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"static\""
+          }
+        ]
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "monthViewProps",
+      "description": "Props specific to MonthView (includes <code>firstDayOfWeek</code>, <code>weekendDays</code>, etc.)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<MonthViewProps, ScheduleCommonProps>>"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onAllDaySlotClick",
+      "description": "Called when all-day slot is clicked in DayView/WeekView",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onDateChange",
+      "description": "Called when date changes via navigation",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onDayClick",
+      "description": "Called when day is clicked in MonthView",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onEventClick",
+      "description": "Called when event is clicked in any view",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData, e: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onEventDragEnd",
+      "description": "Called when any event drag ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onEventDragStart",
+      "description": "Called when any event drag starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onEventDrop",
+      "description": "Called when event is dropped",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(data: { eventId: string | number; newStart: string; newEnd: string; event: ScheduleEventData; }) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onEventResize",
+      "description": "Called when event is resized",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(data: { eventId: string | number; newStart: string; newEnd: string; event: ScheduleEventData; }) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onExternalEventDrop",
+      "description": "Called when an external item is dropped onto the schedule. Receives the <code>DataTransfer</code> object and the drop target datetime.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(dataTransfer: DataTransfer, dropDateTime: string) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onSlotDragEnd",
+      "description": "Called when a slot range is selected by dragging",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(rangeStart: string, rangeEnd: string) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onTimeSlotClick",
+      "description": "Called when time slot is clicked in DayView/WeekView",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(data: { slotStart: string; slotEnd: string; nativeEvent: MouseEvent<HTMLButtonElement, MouseEvent>; }) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "onViewChange",
+      "description": "Called when view level changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(view: ScheduleViewLevel) => void"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "radius",
+      "description": "Key of theme.radius or any valid CSS value to set border-radius",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "recurrenceExpansionLimit",
+      "description": "Max number of generated recurring instances per recurring series",
+      "required": false,
+      "defaultValue": "2000",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "renderEventBody",
+      "description": "Custom event body renderer",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RenderEventBody"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "view",
+      "description": "Current view level (controlled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleViewLevel",
+        "raw": "ScheduleViewLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"week\""
+          },
+          {
+            "value": "\"day\""
+          },
+          {
+            "value": "\"year\""
+          }
+        ]
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "weekViewProps",
+      "description": "Props specific to WeekView (includes <code>startTime</code>, <code>endTime</code>, <code>intervalMinutes</code>, etc.)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<WeekViewProps, ScheduleCommonProps>>"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "withDragSlotSelect",
+      "description": "If set, enables drag-to-select slot ranges",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "withEventResize",
+      "description": "If true, events can be resized by dragging their edges",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "withEventsDragAndDrop",
+      "description": "Enable drag and drop for events",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Schedule"
+    },
+    {
+      "name": "yearViewProps",
+      "description": "Props specific to YearView (includes <code>firstDayOfWeek</code>, <code>weekendDays</code>, etc.)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<YearViewProps, ScheduleCommonProps>>"
+      },
+      "sourceComponent": "Schedule"
+    }
+  ]
+}

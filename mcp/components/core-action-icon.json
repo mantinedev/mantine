@@ -1,0 +1,149 @@
+{
+  "id": "core-action-icon",
+  "name": "ActionIcon",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/action-icon",
+  "description": "Icon button",
+  "propsCount": 12,
+  "llmUrl": "https://mantine.dev/llms/core-action-icon.md",
+  "componentDataUrl": "/mcp/components/core-action-icon.json",
+  "searchText": "actionicon icon button @mantine/core /core/action-icon autocontrast children color disabled gradient loaderprops loading radius size borderwidth children orientation",
+  "source": "@mantine/core/src/components/ActionIcon/ActionIcon.tsx",
+  "docs": "core/action-icon.mdx",
+  "markdown": "# ActionIcon\nPackage: @mantine/core\nImport: import { ActionIcon } from '@mantine/core';\nDescription: Icon button\n\n## Usage\n\n```tsx\nimport { ActionIcon } from '@mantine/core';\nimport { SlidersHorizontalIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <ActionIcon variant=\"filled\" color=\"blue\" size=\"md\" radius=\"md\" aria-label=\"Settings\">\n      <SlidersHorizontalIcon style={{ width: '70%', height: '70%' }} />\n    </ActionIcon>\n  );\n}\n```\n\n\n```tsx\nimport { ActionIcon } from '@mantine/core';\nimport { HeartIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <ActionIcon\n      variant=\"gradient\"\n      size=\"xl\"\n      aria-label=\"Gradient action icon\"\n      gradient={{ from: 'blue', to: 'cyan', deg: 90 }}\n    >\n      <HeartIcon />\n    </ActionIcon>\n  );\n}\n```\n\n\n## Size\n\nYou can use any valid CSS value in the `size` prop, which is used to set the `width`, `min-width`, `min-height` and `height`\nproperties. Note that the `size` prop does not control the child [icon](https://mantine.dev/llms/guides-icons.md) size – you need to\nset it manually on the icon component. When `size` is a number, the value is treated as `px` units and\nconverted to [rem](https://mantine.dev/llms/styles-rem.md) units.\n\n```tsx\nimport { ActionIcon } from '@mantine/core';\nimport { HeartIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <ActionIcon size={42} variant=\"default\" aria-label=\"ActionIcon with size as a number\">\n      <HeartIcon size={24} />\n    </ActionIcon>\n  );\n}\n```\n\n\nIf you want `ActionIcon` to have the same size as Mantine inputs, use the `size=\"input-sm\"` prop:\n\n```tsx\nimport { ActionIcon, Group, TextInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <TextInput placeholder=\"sm size input\" size=\"sm\" />\n      <ActionIcon size=\"input-sm\" variant=\"default\" aria-label=\"ActionIcon the same size as inputs\">\n        SM\n      </ActionIcon>\n    </Group>\n  );\n}\n```\n\n\n## Disabled state\n\nTo make `ActionIcon` disabled, set the `disabled` prop. This will prevent any interactions with the button\nand add disabled styles. If you want the button to just look disabled but still be interactive,\nset the `data-disabled` prop instead. Note that disabled styles are the same for all variants.\n\n```tsx\nimport { ActionIcon, Group } from '@mantine/core';\nimport { HeartIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <ActionIcon size=\"xl\" disabled aria-label=\"Disabled and not interactive\">\n        <HeartIcon />\n      </ActionIcon>\n\n      <ActionIcon size=\"xl\" data-disabled aria-label=\"Has disabled styles but still interactive\">\n        <HeartIcon />\n      </ActionIcon>\n    </Group>\n  );\n}\n```\n\n\n## Disabled state when ActionIcon is link\n\nThe `<a />` element does not support the `disabled` attribute. To make `ActionIcon` disabled when it is\nrendered as a link, set the `data-disabled` attribute instead and prevent default behavior in the\n`onClick` event handler.\n\n```tsx\nimport { ActionIcon } from '@mantine/core';\nimport { ArrowSquareOutIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <ActionIcon\n      component=\"a\"\n      href=\"https://mantine.dev\"\n      data-disabled\n      size=\"xl\"\n      aria-label=\"Open in a new tab\"\n      onClick={(event) => event.preventDefault()}\n    >\n      <ArrowSquareOutIcon />\n    </ActionIcon>\n  );\n}\n```\n\n\n## Customize disabled styles\n\nTo customize disabled styles, it is recommended to use both `&:disabled` and `&[data-disabled]`\nselectors:\n\n* `&:disabled` is used to style the button when the `disabled` prop is set and\n  also when the button is disabled by the parent component (for example, when the `disabled` prop is set on a\n  `<fieldset />` element which contains `ActionIcon`).\n* `&[data-disabled]` is used to style the button when it is not actually disabled but should look like\n  it is (for example, `data-disabled` should be used if you need to use [Tooltip](https://mantine.dev/llms/core-tooltip.md) with a disabled `ActionIcon`\n  or when `ActionIcon` is used as a link)\n\n```tsx\n// Demo.module.css\n.button {\n  &:disabled,\n  &[data-disabled] {\n    border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));\n    background-color: transparent;\n  }\n}\n\n// Demo.tsx\nimport { ActionIcon } from '@mantine/core';\nimport { HeartIcon } from '@phosphor-icons/react';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <ActionIcon size=\"xl\" className={classes.button} disabled aria-label=\"Disabled with styles\">\n      <HeartIcon />\n    </ActionIcon>\n  );\n}\n```\n\n\n## Disabled button with Tooltip\n\nThe `onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when `ActionIcon` is disabled, so if you need to use\n[Tooltip](https://mantine.dev/llms/core-tooltip.md) with a disabled `ActionIcon`, you need to set the `data-disabled` prop on `ActionIcon`\ninstead of `disabled`. Note that it is also required to change the `onClick` event handler to\n`(event) => event.preventDefault()` as `ActionIcon` is not actually disabled and will still trigger\nthe `onClick` event.\n\n```tsx\nimport { ActionIcon, Tooltip } from '@mantine/core';\nimport { HeartIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Tooltip label=\"Tooltip for disabled button\">\n      <ActionIcon\n        aria-label=\"Hover to see tooltip\"\n        size=\"xl\"\n        data-disabled\n        onClick={(event) => event.preventDefault()}\n      >\n        <HeartIcon />\n      </ActionIcon>\n    </Tooltip>\n  );\n}\n```\n\n\n## Loading state\n\nWhen the `loading` prop is set, `ActionIcon` will be disabled and a [Loader](https://mantine.dev/llms/core-loader.md) with overlay will be rendered\nin the center of the button. The [Loader](https://mantine.dev/llms/core-loader.md) color depends on the `ActionIcon` variant.\n\n```tsx\nimport { ActionIcon, Group, Switch } from '@mantine/core';\nimport { useDisclosure } from '@mantine/hooks';\nimport { HeartIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const [loading, { toggle }] = useDisclosure();\n  return (\n    <>\n      <Group>\n        <ActionIcon loading={loading} aria-label=\"Like\">\n          <HeartIcon size={18} />\n        </ActionIcon>\n        <ActionIcon variant=\"light\" loading={loading} aria-label=\"Like\">\n          <HeartIcon size={18} />\n        </ActionIcon>\n        <ActionIcon variant=\"outline\" loading={loading} aria-label=\"Like\">\n          <HeartIcon size={18} />\n        </ActionIcon>\n      </Group>\n\n      <Switch checked={loading} onChange={toggle} label=\"Loading state\" mt=\"md\" />\n    </>\n  );\n}\n```\n\n\n## Loader props\n\nYou can customize the [Loader](https://mantine.dev/llms/core-loader.md) with the `loaderProps` prop, which accepts all props that the\n[Loader](https://mantine.dev/llms/core-loader.md) component has:\n\n```tsx\nimport { ActionIcon } from '@mantine/core';\n\nfunction Demo() {\n  return <ActionIcon size=\"xl\" loading loaderProps={{ type: 'dots' }} aria-label=\"Loading...\" />;\n}\n```\n\n\n## Add custom variants\n\nTo add new `ActionIcon` variants, use the [data-variant](https://mantine.dev/llms/styles-variants-sizes.md) attribute.\nUsually new variants are added to the [theme](https://mantine.dev/llms/theming-theme-object.md). This way they are\navailable in all `ActionIcon` components in your application.\n\n```tsx\n// Demo.tsx\nimport { Group, ActionIcon, MantineProvider, createTheme } from '@mantine/core';\nimport { HeartIcon } from '@phosphor-icons/react';\nimport classes from './Demo.module.css';\n\nconst theme = createTheme({\n  components: {\n    ActionIcon: ActionIcon.extend({\n      classNames: classes,\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      <Group justify=\"center\">\n        <ActionIcon size=\"xl\" variant=\"danger\" aria-label=\"Danger variant\">\n          <HeartIcon />\n        </ActionIcon>\n        <ActionIcon size=\"xl\" variant=\"primary\" aria-label=\"Primary variant\">\n          <HeartIcon />\n        </ActionIcon>\n      </Group>\n    </MantineProvider>\n  );\n}\n\n// Demo.module.css\n.root {\n  &[data-variant='danger'] {\n    background-color: var(--mantine-color-red-9);\n    color: var(--mantine-color-red-0);\n  }\n\n  &[data-variant='primary'] {\n    background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);\n    color: var(--mantine-color-white);\n  }\n}\n```\n\n\n## Customize variants colors\n\nYou can customize colors for `ActionIcon` and other components variants by adding\n[variantColorResolver](https://mantine.dev/llms/theming-colors.md#colors-variant-resolver) to your theme.\n\n```tsx\nimport { ImageIcon, FingerprintIcon, WarningIcon } from '@phosphor-icons/react';\nimport {\n  ActionIcon,\n  Group,\n  MantineProvider,\n  defaultVariantColorsResolver,\n  VariantColorsResolver,\n  parseThemeColor,\n  rgba,\n  darken,\n} from '@mantine/core';\n\nconst variantColorResolver: VariantColorsResolver = (input) => {\n  const defaultResolvedColors = defaultVariantColorsResolver(input);\n  const parsedColor = parseThemeColor({\n    color: input.color || input.theme.primaryColor,\n    theme: input.theme,\n  });\n\n  // Override some properties for variant\n  if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {\n    return {\n      ...defaultResolvedColors,\n      color: 'var(--mantine-color-black)',\n      hoverColor: 'var(--mantine-color-black)',\n    };\n  }\n\n  // Completely override variant\n  if (input.variant === 'light') {\n    return {\n      background: rgba(parsedColor.value, 0.1),\n      hover: rgba(parsedColor.value, 0.15),\n      border: `1px solid ${parsedColor.value}`,\n      color: darken(parsedColor.value, 0.1),\n    };\n  }\n\n  // Add new variants support\n  if (input.variant === 'danger') {\n    return {\n      background: 'var(--mantine-color-red-9)',\n      hover: 'var(--mantine-color-red-8)',\n      color: 'var(--mantine-color-white)',\n      border: 'none',\n    };\n  }\n\n  return defaultResolvedColors;\n};\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={{ variantColorResolver }}>\n      <Group>\n        <ActionIcon color=\"lime.4\" variant=\"filled\" size=\"lg\" aria-label=\"Photo\">\n          <ImageIcon size={20} />\n        </ActionIcon>\n\n        <ActionIcon color=\"orange\" variant=\"light\" size=\"lg\" aria-label=\"FingerprintIcon\">\n          <FingerprintIcon size={20} />\n        </ActionIcon>\n\n        <ActionIcon variant=\"danger\" size=\"lg\" aria-label=\"Error 404\">\n          <WarningIcon size={20} />\n        </ActionIcon>\n      </Group>\n    </MantineProvider>\n  );\n}\n```\n\n\n```tsx\nimport { FingerprintIcon } from '@phosphor-icons/react';\nimport { ActionIcon, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group>\n      <ActionIcon aria-label=\"default action icon\" size=\"lg\" color=\"lime.4\">\n        <FingerprintIcon size={20} />\n      </ActionIcon>\n      <ActionIcon autoContrast aria-label=\"autoContrast action icon\" size=\"lg\" color=\"lime.4\">\n        <FingerprintIcon size={20} />\n      </ActionIcon>\n    </Group>\n  );\n}\n```\n\n\n## Add custom sizes\n\n`ActionIcon` sizes are defined by `--ai-size-{x}` CSS variables. The easiest way to add new sizes is to\ndefine additional `--ai-size-{x}` variables on the `root` element:\n\n```tsx\n// Demo.tsx\nimport { ActionIcon, createTheme, Group, MantineThemeProvider } from '@mantine/core';\nimport { HeartIcon } from '@phosphor-icons/react';\nimport classes from './Demo.module.css';\n\nconst theme = createTheme({\n  components: {\n    ActionIcon: ActionIcon.extend({\n      classNames: classes,\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineThemeProvider theme={theme}>\n      <Group justify=\"center\">\n        <ActionIcon size=\"xxs\" aria-label=\"Custom xxs size\">\n          <HeartIcon size={10} />\n        </ActionIcon>\n\n        <ActionIcon size=\"xxl\" aria-label=\"Custom xxl size\">\n          <HeartIcon size={32} />\n        </ActionIcon>\n      </Group>\n    </MantineThemeProvider>\n  );\n}\n\n// Demo.module.css\n.root {\n  --ai-size-xxs: 16px;\n  --ai-size-xxl: 50px;\n}\n```\n\n\n## ActionIcon.Group\n\n```tsx\nimport { ActionIcon } from '@mantine/core';\nimport { ImageIcon, GearSixIcon, HeartIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <ActionIcon.Group orientation=\"horizontal\">\n      <ActionIcon variant=\"default\" size=\"lg\" aria-label=\"Gallery\">\n        <ImageIcon size={20} />\n      </ActionIcon>\n\n      <ActionIcon variant=\"default\" size=\"lg\" aria-label=\"Settings\">\n        <GearSixIcon size={20} />\n      </ActionIcon>\n\n      <ActionIcon variant=\"default\" size=\"lg\" aria-label=\"Likes\">\n        <HeartIcon size={20} />\n      </ActionIcon>\n    </ActionIcon.Group>\n  );\n}\n```\n\n\nNote that you must not wrap child `ActionIcon` components with any additional elements:\n\n```tsx\nimport { ActionIcon } from '@mantine/core';\n\n// Will not work correctly\nfunction Demo() {\n  return (\n    <ActionIcon.Group>\n      <div>\n        <ActionIcon>This will not work</ActionIcon>\n      </div>\n      <ActionIcon>ActionIcons will have incorrect borders</ActionIcon>\n    </ActionIcon.Group>\n  );\n}\n```\n\n## ActionIcon.GroupSection\n\nUse the `ActionIcon.GroupSection` component to render sections that are not `ActionIcon` inside `ActionIcon.Group`:\n\n```tsx\nimport { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';\nimport { ActionIcon } from '@mantine/core';\nimport { useCounter } from '@mantine/hooks';\n\nfunction Demo() {\n  const [value, { increment, decrement }] = useCounter(135, { min: 0 });\n\n  return (\n    <ActionIcon.Group>\n      <ActionIcon\n        variant=\"default\"\n        size=\"lg\"\n        onClick={decrement}\n        aria-label=\"Decrement value\"\n      >\n        <CaretDownIcon color=\"var(--mantine-color-red-text)\" />\n      </ActionIcon>\n      <ActionIcon.GroupSection variant=\"default\" size=\"lg\" bg=\"var(--mantine-color-body)\" miw={60}>\n        {value}\n      </ActionIcon.GroupSection>\n      <ActionIcon\n        variant=\"default\"\n        size=\"lg\"\n        onClick={increment}\n        aria-label=\"Increment value\"\n      >\n        <CaretUpIcon color=\"var(--mantine-color-teal-text)\" />\n      </ActionIcon>\n    </ActionIcon.Group>\n  );\n}\n```\n\n\n## Accessibility\n\nTo make `ActionIcon` accessible for screen readers, you need to either set `aria-label` or\nuse the [VisuallyHidden](https://mantine.dev/llms/core-visually-hidden.md) component:\n\n```tsx\nimport { HeartIcon } from '@phosphor-icons/react';\nimport { ActionIcon, VisuallyHidden } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <ActionIcon aria-label=\"Like post\">\n        <HeartIcon />\n      </ActionIcon>\n\n      <ActionIcon>\n        <VisuallyHidden>Like post</VisuallyHidden>\n        <HeartIcon />\n      </ActionIcon>\n    </>\n  );\n}\n```\n\n\n#### Props\n\n**ActionIcon props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| children | React.ReactNode | - | Icon element |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color. |\n| disabled | boolean | - | Sets `disabled` attribute, prevents interactions |\n| gradient | MantineGradient | - | Gradient values used with `variant=\"gradient\"`. |\n| loaderProps | LoaderProps | - | Props passed down to the `Loader` component. Ignored when `loading` prop is not set. |\n| loading | boolean | - | If set, `Loader` component is displayed instead of the `children` |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. |\n| size | number \\| MantineSize \\| (string & {}) \\| \"input-xs\" \\| \"input-sm\" \\| \"input-md\" \\| \"input-lg\" \\| \"input-xl\" | - | Controls width and height of the button. Numbers are converted to rem. |\n\n**ActionIcon.Group props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| borderWidth | string \\| number | - | `border-width` of the child components. |\n| children | React.ReactNode | - | `ActionIcon` and `ActionIcon.GroupSection` components only |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Group orientation |\n\n\n#### Styles API\n\nActionIcon component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**ActionIcon selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-ActionIcon-root | Root element |\n| loader | .mantine-ActionIcon-loader | `Loader` component, rendered inside root element when `loading` prop is set |\n| icon | .mantine-ActionIcon-icon | Inner icon wrapper |\n\n**ActionIcon CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --ai-bg | Controls `background` |\n| root | --ai-hover | Controls `background` when hovered |\n| root | --ai-bd | Controls `border` |\n| root | --ai-color | Controls icon `color` |\n| root | --ai-hover-color | Controls icon `color` when hovered |\n| root | --ai-radius | Controls `border-radius` |\n| root | --ai-size | Controls `width`, `height`, `min-width` and `min-height` styles |\n\n**ActionIcon data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-disabled | `disabled` prop is set | - |\n\n**ActionIcon.Group selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| group | .mantine-ActionIconGroup-group | Root element |\n\n**ActionIcon.Group CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n\n**ActionIcon.Group data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| group | data-orientation | - | Value of `orientation` prop |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "children",
+      "description": "Icon element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color.",
+      "required": false,
+      "defaultValue": "theme.primaryColor.",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute, prevents interactions",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "gradient",
+      "description": "Gradient values used with <code>variant=\"gradient\"</code>.",
+      "required": false,
+      "defaultValue": "theme.defaultGradient.",
+      "type": {
+        "name": "MantineGradient"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "loaderProps",
+      "description": "Props passed down to the <code>Loader</code> component. Ignored when <code>loading</code> prop is not set.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "LoaderProps"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "loading",
+      "description": "If set, <code>Loader</code> component is displayed instead of the <code>children</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "size",
+      "description": "Controls width and height of the button. Numbers are converted to rem.",
+      "required": false,
+      "defaultValue": "'md'.",
+      "type": {
+        "name": "number | MantineSize | (string & {}) | \"input-xs\" | \"input-sm\" | \"input-md\" | \"input-lg\" | \"input-xl\""
+      },
+      "sourceComponent": "ActionIcon"
+    },
+    {
+      "name": "borderWidth",
+      "description": "<code>border-width</code> of the child components.",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "ActionIconGroup"
+    },
+    {
+      "name": "children",
+      "description": "<code>ActionIcon</code> and <code>ActionIcon.GroupSection</code> components only",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ActionIconGroup"
+    },
+    {
+      "name": "orientation",
+      "description": "Group orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "ActionIconGroup"
+    }
+  ]
+}

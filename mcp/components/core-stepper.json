@@ -1,0 +1,421 @@
+{
+  "id": "core-stepper",
+  "name": "Stepper",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/stepper",
+  "description": "Display content divided into a steps sequence",
+  "propsCount": 32,
+  "llmUrl": "https://mantine.dev/llms/core-stepper.md",
+  "componentDataUrl": "/mcp/components/core-stepper.json",
+  "searchText": "stepper display content divided into a steps sequence @mantine/core /core/stepper active allownextstepsselect autocontrast children color completedicon contentpadding icon iconposition iconsize keepmounted onstepclick orientation progressicon radius size wrap allowstepclick allowstepselect color completedicon description icon iconposition iconsize label loading orientation progressicon state step withicon",
+  "source": "@mantine/core/src/components/Stepper/Stepper.tsx",
+  "docs": "core/stepper.mdx",
+  "markdown": "# Stepper\nPackage: @mantine/core\nImport: import { Stepper } from '@mantine/core';\nDescription: Display content divided into a steps sequence\n\n## Usage\n\n```tsx\nimport { useState } from 'react';\nimport { Stepper, Button, Group } from '@mantine/core';\n\nfunction Demo() {\n  const [active, setActive] = useState(1);\n  const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));\n  const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));\n\n  return (\n    <>\n      <Stepper active={active} onStepClick={setActive}>\n        <Stepper.Step label=\"First step\" description=\"Create an account\">\n          Step 1 content: Create an account\n        </Stepper.Step>\n        <Stepper.Step label=\"Second step\" description=\"Verify email\">\n          Step 2 content: Verify email\n        </Stepper.Step>\n        <Stepper.Step label=\"Final step\" description=\"Get full access\">\n          Step 3 content: Get full access\n        </Stepper.Step>\n        <Stepper.Completed>\n          Completed, click back button to get to previous step\n        </Stepper.Completed>\n      </Stepper>\n\n      <Group justify=\"center\" mt=\"xl\">\n        <Button variant=\"default\" onClick={prevStep}>Back</Button>\n        <Button onClick={nextStep}>Next step</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Allow step select\n\nTo disable step selection, set the `allowStepSelect` prop on the `Stepper.Step` component.\nIt can be used to prevent the user from reaching the next steps while letting them go back and forth between steps they've already reached before:\n\n```tsx\nimport { useState } from 'react';\nimport { Stepper, Button, Group } from '@mantine/core';\n\nfunction Demo() {\n  const [active, setActive] = useState(1);\n  const [highestStepVisited, setHighestStepVisited] = useState(active);\n\n  const handleStepChange = (nextStep: number) => {\n    const isOutOfBounds = nextStep > 3 || nextStep < 0;\n\n    if (isOutOfBounds) {\n      return;\n    }\n\n    setActive(nextStep);\n    setHighestStepVisited((hSC) => Math.max(hSC, nextStep));\n  };\n\n  // Allow the user to freely go back and forth between visited steps.\n  const shouldAllowSelectStep = (step: number) => highestStepVisited >= step && active !== step;\n\n  return (\n    <>\n      <Stepper active={active} onStepClick={setActive}>\n        <Stepper.Step\n          label=\"First step\"\n          description=\"Create an account\"\n          allowStepSelect={shouldAllowSelectStep(0)}\n        >\n          Step 1 content: Create an account\n        </Stepper.Step>\n        <Stepper.Step\n          label=\"Second step\"\n          description=\"Verify email\"\n          allowStepSelect={shouldAllowSelectStep(1)}\n        >\n          Step 2 content: Verify email\n        </Stepper.Step>\n        <Stepper.Step\n          label=\"Final step\"\n          description=\"Get full access\"\n          allowStepSelect={shouldAllowSelectStep(2)}\n        >\n          Step 3 content: Get full access\n        </Stepper.Step>\n\n        <Stepper.Completed>\n          Completed, click back button to get to previous step\n        </Stepper.Completed>\n      </Stepper>\n\n      <Group justify=\"center\" mt=\"xl\">\n        <Button variant=\"default\" onClick={() => handleStepChange(active - 1)}>\n          Back\n        </Button>\n        <Button onClick={() => handleStepChange(active + 1)}>Next step</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Disable next steps selection\n\nAnother way to disable the selection of upcoming steps is to use the `allowNextStepsSelect` directly on the `Stepper` component.\nThis is useful when you don't need to control the behavior specifically for each step.\n\n```tsx\nimport { useState } from 'react';\nimport { Stepper, Button, Group } from '@mantine/core';\n\nfunction Demo() {\n  const [active, setActive] = useState(1);\n  const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));\n  const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));\n\n  return (\n    <>\n      <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false}>\n        <Stepper.Step label=\"First step\" description=\"Create an account\">\n          Step 1 content: Create an account\n        </Stepper.Step>\n        <Stepper.Step label=\"Second step\" description=\"Verify email\">\n          Step 2 content: Verify email\n        </Stepper.Step>\n        <Stepper.Step label=\"Final step\" description=\"Get full access\">\n          Step 3 content: Get full access\n        </Stepper.Step>\n        <Stepper.Completed>\n          Completed, click back button to get to previous step\n        </Stepper.Completed>\n      </Stepper>\n\n      <Group justify=\"center\" mt=\"xl\">\n        <Button variant=\"default\" onClick={prevStep}>Back</Button>\n        <Button onClick={nextStep}>Next step</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Color, radius and size\n\n```tsx\nimport { Stepper } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stepper color=\"blue\" radius=\"xl\" size=\"md\" active={1}>\n      <Stepper.Step label=\"Step 1\" description=\"Create an account\" />\n      <Stepper.Step label=\"Step 2\" description=\"Verify email\" />\n    </Stepper>\n  );\n}\n```\n\n\nComponent size is controlled by two props: `size` and `iconSize`.\nThe `size` prop controls icon size, label and description font size.\n`iconSize` allows you to overwrite the icon size separately from other size values:\n\n```tsx\nimport { Stepper } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stepper iconSize={42} active={1}>\n      <Stepper.Step label=\"Step 1\" description=\"Create an account\" />\n      <Stepper.Step label=\"Step 2\" description=\"Verify email\" />\n    </Stepper>\n  );\n}\n```\n\n\n## With custom icons\n\nYou can replace the step icon by setting the `icon` prop on the `Stepper.Step` component.\nTo change the completed check icon, set `completedIcon` on the `Stepper` component.\nYou can use any React node as an icon: component, string, number:\n\n```tsx\nimport { useState } from 'react';\nimport { UserCheckIcon, EnvelopeOpenIcon, ShieldCheckIcon, CheckCircleIcon } from '@phosphor-icons/react';\nimport { Stepper } from '@mantine/core';\n\nfunction Demo() {\n  const [active, setActive] = useState(1);\n\n  return (\n    <Stepper\n      active={active}\n      onStepClick={setActive}\n      completedIcon={<CheckCircleIcon size={18} />}\n    >\n      <Stepper.Step\n        icon={<UserCheckIcon size={18} />}\n        label=\"Step 1\"\n        description=\"Create an account\"\n      />\n      <Stepper.Step\n        icon={<EnvelopeOpenIcon size={18} />}\n        label=\"Step 2\"\n        description=\"Verify email\"\n      />\n      <Stepper.Step\n        icon={<ShieldCheckIcon size={18} />}\n        label=\"Step 3\"\n        description=\"Get full access\"\n      />\n    </Stepper>\n  );\n}\n```\n\n\nYou can use `Stepper` with icons only. Note that in this case, you will have to\nset `aria-label` or `title` on the `Stepper.Step` component to make it accessible:\n\n```tsx\nimport { useState } from 'react';\nimport { Stepper } from '@mantine/core';\nimport { UserCheckIcon, EnvelopeOpenIcon, ShieldCheckIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const [active, setActive] = useState(0);\n\n  return (\n    <Stepper active={active} onStepClick={setActive}>\n      <Stepper.Step icon={<UserCheckIcon size={18} />} />\n      <Stepper.Step icon={<EnvelopeOpenIcon size={18} />} />\n      <Stepper.Step icon={<ShieldCheckIcon size={18} />} />\n    </Stepper>\n  );\n}\n```\n\n\nYou can also change the completed icon for each step, for example, to indicate an error state:\n\n```tsx\nimport { Stepper } from '@mantine/core';\nimport { XCircleIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Stepper active={2}>\n      <Stepper.Step label=\"Step 1\" description=\"Create an account\" />\n      <Stepper.Step\n        label=\"Step 2\"\n        description=\"Verify email\"\n        color=\"red\"\n        completedIcon={<XCircleIcon size={20} />}\n      />\n      <Stepper.Step label=\"Step 3\" description=\"Get full access\" />\n    </Stepper>\n  );\n}\n```\n\n\n## Vertical orientation\n\n```tsx\nimport { useState } from 'react';\nimport { Stepper } from '@mantine/core';\n\nfunction Demo() {\n  const [active, setActive] = useState(1);\n\n  return (\n    <Stepper active={active} onStepClick={setActive} orientation=\"vertical\">\n      <Stepper.Step label=\"Step 1\" description=\"Create an account\" />\n      <Stepper.Step label=\"Step 2\" description=\"Verify email\" />\n      <Stepper.Step label=\"Step 3\" description=\"Get full access\" />\n    </Stepper>\n  );\n}\n```\n\n\n## Icon position\n\nTo change the step icon and body arrangement, set `iconPosition=\"right\"`:\n\n```tsx\nimport { useState } from 'react';\nimport { Stepper } from '@mantine/core';\n\nfunction Demo() {\n  const [active, setActive] = useState(1);\n\n  return (\n    <Stepper active={active} onStepClick={setActive} iconPosition=\"right\">\n      <Stepper.Step label=\"Step 1\" description=\"Create an account\" />\n      <Stepper.Step label=\"Step 2\" description=\"Verify email\" />\n      <Stepper.Step label=\"Step 3\" description=\"Get full access\" />\n    </Stepper>\n  );\n}\n```\n\n\n## Get step ref\n\nYou can get refs of the step button and stepper root element (div):\n\n```tsx\nimport { useRef } from 'react';\nimport { Stepper } from '@mantine/core';\n\nfunction MyStepper() {\n  const firstStep = useRef<HTMLButtonElement>(null);\n  const stepper = useRef<HTMLDivElement>(null);\n\n  return (\n    <Stepper ref={stepper} active={0}>\n      <Stepper.Step label=\"First step\" ref={firstStep} />\n      <Stepper.Step label=\"Second step\" />\n    </Stepper>\n  );\n}\n```\n\n## Wrap Stepper.Step\n\n`Stepper` component relies on `Stepper.Step` order. Wrapping `Stepper.Step` is not supported.\nInstead, you will need to use different approaches:\n\n```tsx\nimport { Stepper } from '@mantine/core';\n\n// This will not work, step children will not render\nfunction WillNotWork() {\n  return (\n    <Stepper.Step label=\"Nope\" description=\"It will not work\">\n      This part will not render\n    </Stepper.Step>\n  );\n}\n\n// Create a separate component for children\nfunction WillWork() {\n  return <div>This will work as expected!</div>;\n}\n\nfunction Demo() {\n  return (\n    <Stepper active={1}>\n      <Stepper.Step label=\"Regular step\">First step</Stepper.Step>\n      {/* Wrapped Stepper.Step will not render children, do not do that */}\n      <WillNotWork />\n      <Stepper.Step label=\"Step with custom content\">\n        <WillWork />\n      </Stepper.Step>\n      <Stepper.Step label=\"Regular step\">Third step</Stepper.Step>\n    </Stepper>\n  );\n}\n```\n\n## Accessibility\n\n`<Stepper.Step />` components render a button element; set `aria-label` or `title` props\nto make the component visible for screen readers in case you do not specify `label` or `description`:\n\n```tsx\nimport { Stepper } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Stepper active={0}>\n      {/* Not ok, no label for screen reader */}\n      <Stepper.Step />\n\n      {/* Ok, label and description */}\n      <Stepper.Step label=\"Step 1\" description=\"Create an account\" />\n\n      {/* Ok, aria-label */}\n      <Stepper.Step aria-label=\"Create an account\" />\n    </Stepper>\n  );\n}\n```\n\n## Keyboard Navigation\n\nStepper supports full keyboard navigation:\n\n* **Tab / Shift+Tab** - Move focus between clickable steps\n* **Space / Enter** - Activate the focused step\n* Each step is a button element with proper ARIA attributes\n\nInactive steps that are not clickable are skipped during Tab navigation. The tabIndex is automatically managed based on whether a step is clickable or not.\n\n\n#### Props\n\n**Stepper props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| active | number | required | Index of the active step |\n| allowNextStepsSelect | boolean | - | When true, users can click and jump to any step. When false, users can only navigate to completed steps |\n| autoContrast | boolean | - | When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color |\n| children | React.ReactNode | required | `Stepper.Step` components |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps |\n| completedIcon | ReactNode \\| StepFragmentComponent | - | Step icon displayed when step is completed |\n| contentPadding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content |\n| icon | ReactNode \\| StepFragmentComponent | - | Step icon |\n| iconPosition | \"left\" \\| \"right\" | - | Icon position relative to the step body |\n| iconSize | string \\| number | - | Controls size of the step icon, by default icon size is inferred from `size` prop |\n| keepMounted | boolean | - | If set, all step content is kept mounted. React 19 `Activity` is used to preserve state while content is hidden. |\n| onStepClick | (stepIndex: number) => void | - | Called when a clickable step is clicked with its 0-based index. Not called for the currently active step. |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Stepper orientation |\n| progressIcon | ReactNode \\| StepFragmentComponent | - | Step icon displayed when step is in progress |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set steps border-radius |\n| size | MantineSize | - | Controls size of various Stepper elements |\n| wrap | boolean | - | Determines whether steps should wrap to the next line if no space is available |\n\n**Stepper.Step props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowStepClick | boolean | - | Set to false to disable clicks on step |\n| allowStepSelect | boolean | - | Should step selection be allowed |\n| color | MantineColor | - | Key of `theme.colors`, by default controlled by Stepper component |\n| completedIcon | ReactNode \\| StepFragmentComponent | - | Step icon displayed when step is completed |\n| description | ReactNode \\| StepFragmentComponent | - | Step description |\n| icon | ReactNode \\| StepFragmentComponent | - | Step icon, defaults to `step index + 1` when rendered within Stepper |\n| iconPosition | \"left\" \\| \"right\" | - | Icon position relative to step body, controlled by Stepper component |\n| iconSize | string \\| number | - | Icon wrapper size |\n| label | ReactNode \\| StepFragmentComponent | - | Step label, render after icon |\n| loading | boolean | - | Indicates loading state of the step |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Component orientation |\n| progressIcon | ReactNode \\| StepFragmentComponent | - | Step icon displayed when step is in progress |\n| state | \"stepInactive\" \\| \"stepProgress\" \\| \"stepCompleted\" | - | Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed |\n| step | number | - | 0-based step index, automatically set by Stepper component |\n| withIcon | boolean | - | When false, hides the step icon. Useful for creating compact steppers with only labels |\n\n\n#### Styles API\n\nStepper component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Stepper selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Stepper-root | Root element |\n| steps | .mantine-Stepper-steps | Steps controls wrapper |\n| separator | .mantine-Stepper-separator | Separator line between step controls |\n| verticalSeparator | .mantine-Stepper-verticalSeparator | Vertical separator line between step controls |\n| content | .mantine-Stepper-content | Current step content wrapper |\n| stepWrapper | .mantine-Stepper-stepWrapper | Wrapper for the step icon and separator |\n| step | .mantine-Stepper-step | Step control button |\n| stepIcon | .mantine-Stepper-stepIcon | Step icon wrapper |\n| stepCompletedIcon | .mantine-Stepper-stepCompletedIcon | Completed step icon, rendered within stepIcon |\n| stepIconContent | .mantine-Stepper-stepIconContent | Step icon content wrapper for non-completed steps, rendered within stepIcon |\n| stepBody | .mantine-Stepper-stepBody | Contains stepLabel and stepDescription |\n| stepLabel | .mantine-Stepper-stepLabel | Step label |\n| stepDescription | .mantine-Stepper-stepDescription | Step description |\n| stepLoader | .mantine-Stepper-stepLoader | Step loader |\n\n**Stepper CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --stepper-color | Controls color of the active step and separator |\n| root | --stepper-icon-color | Controls `color` of the step icon |\n| root | --stepper-icon-size | Controls `width` and `height` of the icons |\n| root | --stepper-content-padding | Controls `padding-top` of the content |\n| root | --stepper-radius | Controls `border-radius` of the step icon |\n| root | --stepper-fz | Controls `font-size` of various elements |\n| root | --stepper-spacing | Controls various spacings |\n\n**Stepper data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| stepIcon | data-progress | Step is current | - |\n| stepIcon | data-completed | Step is completed | - |\n",
+  "props": [
+    {
+      "name": "active",
+      "description": "Index of the active step",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "allowNextStepsSelect",
+      "description": "When true, users can click and jump to any step. When false, users can only navigate to completed steps",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "autoContrast",
+      "description": "When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "children",
+      "description": "<code>Stepper.Step</code> components",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color, controls colors of active and progress steps",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "completedIcon",
+      "description": "Step icon displayed when step is completed",
+      "required": false,
+      "defaultValue": "CheckIcon",
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "contentPadding",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set <code>padding-top</code> of the content",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "icon",
+      "description": "Step icon",
+      "required": false,
+      "defaultValue": "step index + 1",
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "iconPosition",
+      "description": "Icon position relative to the step body",
+      "required": false,
+      "defaultValue": "'left'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "iconSize",
+      "description": "Controls size of the step icon, by default icon size is inferred from <code>size</code> prop",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set, all step content is kept mounted. React 19 <code>Activity</code> is used to preserve state while content is hidden.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "onStepClick",
+      "description": "Called when a clickable step is clicked with its 0-based index. Not called for the currently active step.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(stepIndex: number) => void"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "orientation",
+      "description": "Stepper orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "progressIcon",
+      "description": "Step icon displayed when step is in progress",
+      "required": false,
+      "defaultValue": "step index + 1",
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set steps border-radius",
+      "required": false,
+      "defaultValue": "\"xl\"",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "size",
+      "description": "Controls size of various Stepper elements",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "wrap",
+      "description": "Determines whether steps should wrap to the next line if no space is available",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Stepper"
+    },
+    {
+      "name": "allowStepClick",
+      "description": "Set to false to disable clicks on step",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "allowStepSelect",
+      "description": "Should step selection be allowed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code>, by default controlled by Stepper component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "completedIcon",
+      "description": "Step icon displayed when step is completed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "description",
+      "description": "Step description",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "icon",
+      "description": "Step icon, defaults to <code>step index + 1</code> when rendered within Stepper",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "iconPosition",
+      "description": "Icon position relative to step body, controlled by Stepper component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "iconSize",
+      "description": "Icon wrapper size",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "label",
+      "description": "Step label, render after icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "loading",
+      "description": "Indicates loading state of the step",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "orientation",
+      "description": "Component orientation",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "progressIcon",
+      "description": "Step icon displayed when step is in progress",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ReactNode | StepFragmentComponent"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "state",
+      "description": "Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"stepInactive\" | \"stepProgress\" | \"stepCompleted\"",
+        "raw": "\"stepInactive\" | \"stepProgress\" | \"stepCompleted\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"stepInactive\""
+          },
+          {
+            "value": "\"stepProgress\""
+          },
+          {
+            "value": "\"stepCompleted\""
+          }
+        ]
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "step",
+      "description": "0-based step index, automatically set by Stepper component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "StepperStep"
+    },
+    {
+      "name": "withIcon",
+      "description": "When false, hides the step icon. Useful for creating compact steppers with only labels",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "StepperStep"
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "id": "x-carousel",
+  "name": "Carousel",
+  "kind": "component",
+  "package": "@mantine/carousel",
+  "route": "/x/carousel",
+  "description": "Embla based carousel component",
+  "propsCount": 24,
+  "llmUrl": "https://mantine.dev/llms/x-carousel.md",
+  "componentDataUrl": "/mcp/components/x-carousel.json",
+  "searchText": "carousel embla based carousel component @mantine/carousel /x/carousel children controlsize controlsoffset emblaoptions getemblaapi getindicatorprops height includegapinsize initialslide nextcontrolicon nextcontrolprops onnextslide onpreviousslide onslidechange orientation plugins previouscontrolicon previouscontrolprops slidegap slidesize type withcontrols withindicators withkeyboardevents",
+  "source": "@mantine/carousel/src",
+  "docs": "x/carousel.mdx",
+  "markdown": "# Carousel\nPackage: @mantine/carousel\nImport: import { Carousel } from '@mantine/carousel';\nDescription: Embla based carousel component\n\n## Installation\n\n```bash\nyarn add embla-carousel@^8.5.2 embla-carousel-react@^8.5.2 @mantine/carousel\n```\n\n```bash\nnpm install embla-carousel@^8.5.2 embla-carousel-react@^8.5.2 @mantine/carousel\n```\n\nAfter installation import package styles at the root of your application:\n\n```tsx\nimport '@mantine/core/styles.css';\n// ‼️ import carousel styles after core package styles\nimport '@mantine/carousel/styles.css';\n```\n\n## Do not forget to import styles\n\nHave you followed the installation instructions above but something is not working\n(Carousel slides are rendered vertically, no controls or indicators)?\nYou've fallen into the trap of not importing carousel styles!\nTo fix the issue, import carousel styles at the root of your application:\n\n```tsx\nimport '@mantine/carousel/styles.css';\n```\n\n## Documentation demos\n\nThe demos presented on this page use blue background color for demonstration purposes. To simplify\ndemo code, background color and other demo-only styles are not included in the demo code.\nWhen you copy and paste demo code to your project, it will not have blue background color.\n\n## Usage\n\n`@mantine/carousel` package is based on [embla carousel](https://www.embla-carousel.com/):\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nfunction Demo() {\n  return (\n    <Carousel withIndicators height={200}>\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## Options\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\n\nfunction Demo() {\n  return (\n    <Carousel\n      slideSize=\"70%\"\n      height={200}\n       orientation=\"horizontal\" slideGap=\"md\" controlsOffset=\"sm\" controlSize={26} withControls={true} withIndicators={false}\n    >\n      {/* ...slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## Embla options\n\nYou can pass configuration options directly to embla carousel with the `emblaOptions` prop.\nYou can find embla options description in the [embla options reference](https://www.embla-carousel.com/api/options/).\n\nExample of passing `loop`, `dragFree` and `align` options:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nfunction Demo() {\n  return (\n    <Carousel\n      slideSize=\"70%\"\n      height={200}\n      emblaOptions={{\n        loop: true,\n        dragFree: false,\n        align: 'center'\n      }}\n    >\n      {/* ...slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## Size and gap\n\nSet `slideSize` and `slideGap` on the `Carousel` component to control the size and gap of every slide:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nfunction Demo() {\n  return (\n    <Carousel\n      withIndicators\n      height={200}\n      slideSize=\"33.333333%\"\n      slideGap=\"md\"\n      emblaOptions={{ loop: true, align: 'start', slidesToScroll: 3 }}\n    >\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## Responsive styles\n\n`slideSize` and `slideGap` props work the same way as [style props](https://mantine.dev/llms/styles-style-props.md),\nyou can pass an object with values for different breakpoints:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nfunction Demo() {\n  return (\n    <Carousel\n      withIndicators\n      height={200}\n      slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}\n      slideGap={{ base: 0, sm: 'md' }}\n      emblaOptions={{ loop: true, align: 'start' }}\n    >\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## Container queries\n\nTo use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)\ninstead of media queries, set `type=\"container\"`. With container queries, slide size and gap\nwill be adjusted based on the container width, not the viewport width.\n\nNote that when using container queries, `slideSize` and `slideGap` props cannot\nreference `theme.breakpoints` values in keys. You are required to use exact px or em values.\n\nTo see how the slide size and gap changes, resize the root element of the demo\nwith the resize handle located at the bottom right corner of the demo:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nfunction Demo() {\n  return (\n    // Wrapper div is added for demonstration purposes only,\n    // It is not required in real projects\n    <div\n      style={{\n        resize: 'horizontal',\n        overflow: 'hidden',\n        maxWidth: '100%',\n        minWidth: 250,\n        padding: 10,\n      }}\n    >\n      <Carousel\n        withIndicators\n        height={200}\n        type=\"container\"\n        slideSize={{ base: '100%', '300px': '50%', '500px': '33.333333%' }}\n        slideGap={{ base: 0, '300px': 'md', '500px': 'lg' }}\n        emblaOptions={{ loop: true, align: 'start' }}\n      >\n        <Carousel.Slide>1</Carousel.Slide>\n        <Carousel.Slide>2</Carousel.Slide>\n        <Carousel.Slide>3</Carousel.Slide>\n        {/* ...other slides */}\n      </Carousel>\n    </div>\n  );\n}\n```\n\n\n## Drag free\n\n`dragFree` will disable slide snap points – users will be able to stop dragging at any position:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nfunction Demo() {\n  return (\n    <Carousel\n      withIndicators\n      height={200}\n      emblaOptions={{ dragFree: true, align: 'start' }}\n      slideGap=\"md\"\n    >\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## Vertical orientation\n\nA carousel with `orientation=\"vertical\"` requires the `height` prop to be set:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nfunction Demo() {\n  return (\n    <Carousel orientation=\"vertical\" height={200} withIndicators>\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## Controls icons\n\nYou can replace default next/previous controls icons with any React nodes:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\nimport { ArrowRightIcon, ArrowLeftIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <Carousel\n      height={180}\n      nextControlIcon={<ArrowRightIcon size={16} />}\n      previousControlIcon={<ArrowLeftIcon size={16} />}\n    >\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n```\n\n\n## 100% height\n\nSet `height=\"100%\"` to make the Carousel take 100% height of the container. Note that in this case:\n\n* the container element must have `display: flex` styles\n* the carousel root element must have `flex: 1` styles\n* the container element must have fixed height\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nexport function PercentageHeight() {\n  return (\n    <div style={{ height: 400, display: 'flex' }}>\n      <Carousel withIndicators height=\"100%\" flex={1}>\n        <Carousel.Slide>1</Carousel.Slide>\n        <Carousel.Slide>2</Carousel.Slide>\n        <Carousel.Slide>3</Carousel.Slide>\n      </Carousel>\n    </div>\n  );\n}\n```\n\n## Get embla instance\n\nYou can get the [embla instance](https://www.embla-carousel.com/api/methods/) with the `getEmblaApi` prop.\nYou will be able to enhance the carousel with additional logic after that using embla api methods:\n\n```tsx\nimport { useCallback, useEffect, useState } from 'react';\nimport { EmblaCarouselType } from 'embla-carousel';\nimport { Carousel } from '@mantine/carousel';\nimport { Progress } from '@mantine/core';\n\nfunction Demo() {\n  const [scrollProgress, setScrollProgress] = useState(0);\n  const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);\n\n  const handleScroll = useCallback(() => {\n    if (!embla) {\n      return;\n    }\n    const progress = Math.max(0, Math.min(1, embla.scrollProgress()));\n    setScrollProgress(progress * 100);\n  }, [embla, setScrollProgress]);\n\n  useEffect(() => {\n    if (embla) {\n      embla.on('scroll', handleScroll);\n      handleScroll();\n    }\n  }, [embla]);\n\n  return (\n    <>\n      <Carousel\n        emblaOptions={{ dragFree: true }}\n        slideSize=\"50%\"\n        slideGap=\"md\"\n        height={200}\n        getEmblaApi={setEmbla}\n        initialSlide={2}\n      >\n        <Slides count={12} />\n      </Carousel>\n      <Progress value={scrollProgress} maw={320} size=\"sm\" mt=\"xl\" mx=\"auto\" />\n    </>\n  );\n}\n```\n\n\n## Indicator styles\n\n```tsx\n// Demo.tsx\nimport { Carousel } from '@mantine/carousel';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <Carousel withIndicators height={200} classNames={classes}>\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n\n// Demo.module.css\n.indicator {\n  width: 12px;\n  height: 4px;\n  transition: width 250ms ease;\n\n  &[data-active] {\n    width: 40px;\n  }\n}\n```\n\n\n## Hide inactive controls\n\n```tsx\n// Demo.tsx\nimport { Carousel } from '@mantine/carousel';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <Carousel height={200} classNames={classes}>\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n\n// Demo.module.css\n.control {\n  &[data-inactive] {\n    opacity: 0;\n    cursor: default;\n  }\n}\n```\n\n\n## Show controls on hover\n\n```tsx\n// Demo.tsx\nimport { Carousel } from '@mantine/carousel';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <Carousel height={200} classNames={classes}>\n      <Carousel.Slide>1</Carousel.Slide>\n      <Carousel.Slide>2</Carousel.Slide>\n      <Carousel.Slide>3</Carousel.Slide>\n      {/* ...other slides */}\n    </Carousel>\n  );\n}\n\n// Demo.module.css\n.controls {\n  transition: opacity 150ms ease;\n  opacity: 0;\n}\n\n.root {\n  &:hover {\n    .controls {\n      opacity: 1;\n    }\n  }\n}\n```\n\n\n## Example: Images carousel\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\nimport { Image } from '@mantine/core';\n\nconst images = [\n  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png',\n  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-2.png',\n  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png',\n  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png',\n  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-5.png',\n];\n\nfunction Demo() {\n  const slides = images.map((url) => (\n    <Carousel.Slide key={url}>\n      <Image src={url} />\n    </Carousel.Slide>\n  ));\n\n  return (\n    <Carousel withIndicators height={200}>\n      {slides}\n    </Carousel>\n  );\n}\n```\n\n\n## Example: Cards carousel\n\n```tsx\n// Demo.tsx\nimport { Carousel } from '@mantine/carousel';\nimport { useMediaQuery } from '@mantine/hooks';\nimport { Button, Paper, Title, useMantineTheme, Text } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nconst data = [\n  {\n    image:\n      'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',\n    title: 'Best forests to visit in North America',\n    category: 'nature',\n  },\n  {\n    image:\n      'https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',\n    title: 'Hawaii beaches review: better than you think',\n    category: 'beach',\n  },\n  {\n    image:\n      'https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',\n    title: 'Mountains at night: 12 best locations to enjoy the view',\n    category: 'nature',\n  },\n  {\n    image:\n      'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',\n    title: 'Aurora in Norway: when to visit for best experience',\n    category: 'nature',\n  },\n  {\n    image:\n      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',\n    title: 'Best places to visit this winter',\n    category: 'tourism',\n  },\n  {\n    image:\n      'https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',\n    title: 'Active volcanos reviews: travel at your own risk',\n    category: 'nature',\n  },\n];\n\ninterface CardProps {\n  image: string;\n  title: string;\n  category: string;\n}\n\nfunction Card({ image, title, category }: CardProps) {\n  return (\n    <Paper\n      shadow=\"md\"\n      p=\"xl\"\n      style={{ backgroundImage: `url(${image})` }}\n      className={classes.card}\n    >\n      <div>\n        <Text className={classes.category} size=\"xs\">\n          {category}\n        </Text>\n        <Title order={3} className={classes.title}>\n          {title}\n        </Title>\n      </div>\n      <Button variant=\"white\" color=\"dark\">\n        Read article\n      </Button>\n    </Paper>\n  );\n}\n\nfunction Demo() {\n  const theme = useMantineTheme();\n  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);\n  const slides = data.map((item) => (\n    <Carousel.Slide key={item.title}>\n      <Card {...item} />\n    </Carousel.Slide>\n  ));\n\n  return (\n    <Carousel\n      slideSize={{ base: '100%', sm: '50%' }}\n      slideGap={{ base: 'xl', sm: 2 }}\n      emblaOptions={{ align: 'start', slidesToScroll: mobile ? 1 : 2 }}\n    >\n      {slides}\n    </Carousel>\n  );\n}\n\n// Demo.module.css\n.card {\n  height: 440px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: flex-start;\n  background-size: cover;\n  background-position: center;\n}\n\n.title {\n  font-weight: 900;\n  color: var(--mantine-color-white);\n  line-height: 1.2;\n  font-size: 32px;\n  margin-top: var(--mantine-spacing-xs);\n  cursor: default;\n}\n\n.category {\n  color: var(--mantine-color-white);\n  opacity: 0.7;\n  font-weight: 700;\n  text-transform: uppercase;\n  cursor: default;\n}\n```\n\n\n## Accessibility\n\nSet `aria-label` or `aria-labelledby` on the `Carousel` component to make it accessible for screen readers:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nexport function AccessibleCarousel() {\n  return (\n    <Carousel aria-label=\"Gallery of nature pictures\">\n      <Carousel.Slide>...</Carousel.Slide>\n      <Carousel.Slide>...</Carousel.Slide>\n      <Carousel.Slide>...</Carousel.Slide>\n    </Carousel>\n  );\n}\n```\n\nSet `aria-label` for next/previous controls with `nextControlProps` and `previousControlProps` props:\n\n```tsx\nimport { Carousel } from '@mantine/carousel';\n\nexport function AccessibleControlsCarousel() {\n  return (\n    <Carousel\n      aria-label=\"Gallery of nature pictures\"\n      nextControlProps={{ 'aria-label': 'Next slide' }}\n      previousControlProps={{ 'aria-label': 'Previous slide' }}\n    >\n      <Carousel.Slide>...</Carousel.Slide>\n      <Carousel.Slide>...</Carousel.Slide>\n      <Carousel.Slide>...</Carousel.Slide>\n    </Carousel>\n  );\n}\n```\n\n\n#### Props\n\n**Carousel props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | `Carousel.Slide` components |\n| controlSize | React.CSSProperties[\"width\"] | - | Controls size of the next and previous controls |\n| controlsOffset | MantineSpacing | - | Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value |\n| emblaOptions | Partial<OptionsType> | - | Options passed down to embla carousel |\n| getEmblaApi | (embla: EmblaCarouselType) => void | - | Get embla API as ref |\n| getIndicatorProps | (index: number) => ElementProps<\"button\"> & DataAttributes | - | Function to get props for indicator button |\n| height | Height<string \\| number> | - | Slides container `height`, required for vertical orientation |\n| includeGapInSize | boolean | - | Determines whether gap between slides should be treated as part of the slide size |\n| initialSlide | number | - | Index of initial slide |\n| nextControlIcon | React.ReactNode | - | Icon of the next control |\n| nextControlProps | React.ComponentProps<\"button\"> | - | Props passed down to next control |\n| onNextSlide | () => void | - | Called when next slide is shown |\n| onPreviousSlide | () => void | - | Called when previous slider is shown |\n| onSlideChange | (index: number) => void | - | Called with slide index when slide changes |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Carousel orientation |\n| plugins | CreatePluginType<LoosePluginType, {}>[] | - | A list of embla plugins |\n| previousControlIcon | React.ReactNode | - | Icon of the previous control |\n| previousControlProps | React.ComponentProps<\"button\"> | - | Props passed down to previous control |\n| slideGap | StyleProp<MantineSpacing> | - | Key of theme.spacing or number to set gap between slides |\n| slideSize | StyleProp<string \\| number> | - | Controls slide width based on viewport width |\n| type | \"media\" \\| \"container\" | - | Determines type of queries used for responsive styles |\n| withControls | boolean | - | Determines whether next/previous controls should be displayed |\n| withIndicators | boolean | - | Determines whether indicators should be displayed |\n| withKeyboardEvents | boolean | - | Determines whether arrow key should switch slides |\n\n\n#### Styles API\n\nCarousel component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Carousel selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Carousel-root | Root element |\n| slide | .mantine-Carousel-slide | `Carousel.Slide` root element |\n| container | .mantine-Carousel-container | Slides container |\n| viewport | .mantine-Carousel-viewport | Main element, contains slides container and all controls |\n| controls | .mantine-Carousel-controls | Next/previous controls container |\n| control | .mantine-Carousel-control | Next/previous control |\n| indicators | .mantine-Carousel-indicators | Indicators container |\n| indicator | .mantine-Carousel-indicator | Indicator button |\n\n**Carousel CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --carousel-control-size | Controls `width` and `height` of the next/previous buttons |\n| root | --carousel-controls-offset | Controls offsets of the next/previous buttons |\n| root | --carousel-height | Controls height of the carousel |\n\n**Carousel data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-orientation | - | Value of `orientation` prop |\n| root | data-include-gap-in-size | `includeGapInSize` prop is set | - |\n| control | data-inactive | No previous/next slides are available | - |\n| indicator | data-active | Associated slide is active | - |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "<code>Carousel.Slide</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "controlSize",
+      "description": "Controls size of the next and previous controls",
+      "required": false,
+      "defaultValue": "26",
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "controlsOffset",
+      "description": "Controls position of the next and previous controls, key of <code>theme.spacing</code> or any valid CSS value",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "emblaOptions",
+      "description": "Options passed down to embla carousel",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<OptionsType>"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "getEmblaApi",
+      "description": "Get embla API as ref",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(embla: EmblaCarouselType) => void"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "getIndicatorProps",
+      "description": "Function to get props for indicator button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(index: number) => ElementProps<\"button\"> & DataAttributes"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "height",
+      "description": "Slides container <code>height</code>, required for vertical orientation",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Height<string | number>"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "includeGapInSize",
+      "description": "Determines whether gap between slides should be treated as part of the slide size",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "initialSlide",
+      "description": "Index of initial slide",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "nextControlIcon",
+      "description": "Icon of the next control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "nextControlProps",
+      "description": "Props passed down to next control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"button\">"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "onNextSlide",
+      "description": "Called when next slide is shown",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "onPreviousSlide",
+      "description": "Called when previous slider is shown",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "onSlideChange",
+      "description": "Called with slide index when slide changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(index: number) => void"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "orientation",
+      "description": "Carousel orientation",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "plugins",
+      "description": "A list of embla plugins",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CreatePluginType<LoosePluginType, {}>[]"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "previousControlIcon",
+      "description": "Icon of the previous control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "previousControlProps",
+      "description": "Props passed down to previous control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"button\">"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "slideGap",
+      "description": "Key of theme.spacing or number to set gap between slides",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "StyleProp<MantineSpacing>"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "slideSize",
+      "description": "Controls slide width based on viewport width",
+      "required": false,
+      "defaultValue": "'100%'",
+      "type": {
+        "name": "StyleProp<string | number>"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "type",
+      "description": "Determines type of queries used for responsive styles",
+      "required": false,
+      "defaultValue": "'media'",
+      "type": {
+        "name": "\"media\" | \"container\"",
+        "raw": "\"media\" | \"container\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"media\""
+          },
+          {
+            "value": "\"container\""
+          }
+        ]
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "withControls",
+      "description": "Determines whether next/previous controls should be displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "withIndicators",
+      "description": "Determines whether indicators should be displayed",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Carousel"
+    },
+    {
+      "name": "withKeyboardEvents",
+      "description": "Determines whether arrow key should switch slides",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Carousel"
+    }
+  ]
+}

@@ -5,8 +5,6 @@ Description: Bubble chart component
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 // Demo.tsx
 import { BubbleChart } from '@mantine/charts';
@@ -41,11 +39,9 @@ export const data = [
 
 ## Change color
 
-You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
-
-#### Example: color
 
 ```tsx
 // Demo.tsx
@@ -60,7 +56,7 @@ function Demo() {
       data={data}
       range={[16, 225]}
       dataKey={{ x: 'hour', y: 'index', z: 'value' }}
-      
+       color="blue"
     />
   );
 }
@@ -81,12 +77,10 @@ export const data = [
 
 ## Change area color depending on color scheme
 
-You can use CSS variables in `color` property. To define a CSS variable that
-changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/styles/postcss-preset/#dark-and-light-mixins)
-or [light-dark function](https://mantine.dev/styles/postcss-preset/#light-dark-function). Example
-of area that is dark orange in light mode and lime in dark mode:
-
-#### Example: colorSchemeColor
+You can use CSS variables in the `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](https://mantine.dev/llms/styles-postcss-preset.md#dark-and-light-mixins)
+or the [light-dark function](https://mantine.dev/llms/styles-postcss-preset.md#light-dark-function). Example
+of an area that is dark orange in light mode and lime in dark mode:
 
 ```tsx
 // Demo.tsx
@@ -135,10 +129,8 @@ export const data = [
 
 ## Remove tooltip
 
-To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+To remove the tooltip, set `withTooltip={false}`. This also removes the cursor line
 and disables interactions with the chart.
-
-#### Example: noTooltip
 
 ```tsx
 // Demo.tsx
@@ -173,10 +165,8 @@ export const data = [
 
 ## Value formatter
 
-To format values in the tooltip, use `valueFormat` prop. It accepts
-a function that takes number value as an argument and returns formatted value:
-
-#### Example: valueFormatter
+To format values in the tooltip, use the `valueFormat` prop. It accepts
+a function that takes a number value as an argument and returns a formatted value:
 
 ```tsx
 // Demo.tsx
@@ -214,10 +204,8 @@ export const data = [
 ## Grid and text colors
 
 Use `--chart-grid-color` and `--chart-text-color` to change colors of
-grid lines and text within the chart. With [CSS modules](https://mantine.dev/styles/css-modules/), you can change colors
+grid lines and text within the chart. With [CSS modules](https://mantine.dev/llms/styles-css-modules.md), you can change colors
 depending on color scheme:
-
-#### Example: gridColor
 
 ```tsx
 // Demo.tsx
@@ -266,7 +254,7 @@ export const data = [
 ```
 
 
-If your application has only one color scheme, you can use `gridColor` and `textColor`
+If your application has only one color scheme, you can use the `gridColor` and `textColor`
 props instead of CSS variables:
 
 ```tsx
@@ -292,22 +280,24 @@ function Demo() {
 
 #### Props
 
+**BubbleChart props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | Color of the chart items. Key of <code>theme.colors</code> or any valid CSS color. |
+| color | MantineColor | - | Color of the chart items. Key of `theme.colors` or any valid CSS color. |
 | data | Record<string, any>[] | required | Chart data |
 | dataKey | BubbleChartDataKey | required | Data keys for x, y and z axis |
 | gridColor | MantineColor | - | Color of the grid and cursor lines, by default depends on color scheme |
 | label | string | - | Chart label displayed next to the x axis |
 | range | [number, number] | required | Z axis range |
-| scatterProps | Partial<Omit<Props, "ref">> | - | Props passed down to the <code>Scatter</code> component |
+| scatterProps | Partial<Omit<Props, "ref">> | - | Props passed down to the `Scatter` component |
 | textColor | MantineColor | - | Color of the text displayed inside the chart |
-| tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
+| tooltipProps | RechartsProps | - | Props passed down to the `Tooltip` component |
 | valueFormatter | (value: number) => string | - | Function to format z axis values |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed |
-| xAxisProps | RechartsProps | - | Props passed down to the <code>XAxis</code> recharts component |
-| yAxisProps | RechartsProps | - | Props passed down to the <code>YAxis</code> recharts component |
-| zAxisProps | RechartsProps | - | Props passed down to the <code>ZAxis</code> recharts component |
+| xAxisProps | RechartsProps | - | Props passed down to the `XAxis` recharts component |
+| yAxisProps | RechartsProps | - | Props passed down to the `YAxis` recharts component |
+| zAxisProps | Omit<Props<any, any>, "ref"> | - | Props passed down to the `ZAxis` recharts component |
 
 
 #### Styles API

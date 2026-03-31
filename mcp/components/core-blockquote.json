@@ -1,0 +1,67 @@
+{
+  "id": "core-blockquote",
+  "name": "Blockquote",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/blockquote",
+  "description": "Blockquote with optional cite",
+  "propsCount": 5,
+  "llmUrl": "https://mantine.dev/llms/core-blockquote.md",
+  "componentDataUrl": "/mcp/components/core-blockquote.json",
+  "searchText": "blockquote blockquote with optional cite @mantine/core /core/blockquote cite color icon iconsize radius",
+  "source": "@mantine/core/src/components/Blockquote/Blockquote.tsx",
+  "docs": "core/blockquote.mdx",
+  "markdown": "# Blockquote\nPackage: @mantine/core\nImport: import { Blockquote } from '@mantine/core';\nDescription: Blockquote with optional cite\n\n## Usage\n\n```tsx\nimport { Blockquote } from '@mantine/core';\nimport { InfoIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <InfoIcon />;\n  return (\n    <Blockquote color=\"blue\" radius=\"md\" iconSize={38} cite=\"– Forrest Gump\" icon={icon} mt=\"xl\">\n      Life is like an npm install – you never know what you are going to get.\n    </Blockquote>\n  );\n}\n```\n\n\n\n#### Props\n\n**Blockquote props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| cite | React.ReactNode | - | Reference to a cited quote |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color |\n| icon | React.ReactNode | - | Blockquote icon, displayed at the top left side |\n| iconSize | string \\| number | - | Controls icon `width` and `height`, numbers are converted to rem |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n\n\n#### Styles API\n\nBlockquote component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Blockquote selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Blockquote-root | Root element |\n| icon | .mantine-Blockquote-icon | Icon element |\n| cite | .mantine-Blockquote-cite | Cite element |\n\n**Blockquote CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --bq-bd | Controls `border` |\n| root | --bq-bg-dark | Controls `background-color` in dark color scheme |\n| root | --bq-bg-light | Controls `background-color` in light color scheme |\n| root | --bq-icon-size | Controls `width` and `height` of the icon |\n| root | --bq-radius | Controls `border-radius` |\n",
+  "props": [
+    {
+      "name": "cite",
+      "description": "Reference to a cited quote",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Blockquote"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Blockquote"
+    },
+    {
+      "name": "icon",
+      "description": "Blockquote icon, displayed at the top left side",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Blockquote"
+    },
+    {
+      "name": "iconSize",
+      "description": "Controls icon <code>width</code> and <code>height</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "40",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Blockquote"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Blockquote"
+    }
+  ]
+}

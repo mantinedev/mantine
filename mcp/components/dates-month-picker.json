@@ -1,0 +1,448 @@
+{
+  "id": "dates-month-picker",
+  "name": "MonthPicker",
+  "kind": "component",
+  "package": "@mantine/dates",
+  "route": "/dates/month-picker",
+  "description": "Inline month, multiple months and months range picker",
+  "propsCount": 35,
+  "llmUrl": "https://mantine.dev/llms/dates-month-picker.md",
+  "componentDataUrl": "/mcp/components/dates-month-picker.json",
+  "searchText": "monthpicker inline month, multiple months and months range picker @mantine/dates /dates/month-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue fullwidth getmonthcontrolprops getyearcontrolprops level locale maxdate maxlevel mindate monthslistformat nextlabel numberofcolumns onchange ondatechange onlevelchange onmonthselect onnextdecade onnextyear onpreviousdecade onpreviousyear previouslabel size type value withcellspacing yearlabelformat yearslistformat",
+  "source": "@mantine/dates/src/components/MonthPicker/MonthPicker.tsx",
+  "docs": "dates/month-picker.mdx",
+  "markdown": "# MonthPicker\nPackage: @mantine/dates\nImport: import { MonthPicker } from '@mantine/dates';\nDescription: Inline month, multiple months and months range picker\n\n## Usage\n\n\n\n## Allow deselect\n\nSet `allowDeselect` to allow users to deselect the currently selected date by clicking on it.\n`allowDeselect` is disregarded when the `type` prop is `range` or `multiple`. When a date is\ndeselected, `onChange` is called with `null`.\n\n\n\n## Multiple dates\n\nSet `type=\"multiple\"` to allow users to pick multiple dates:\n\n\n\n## Dates range\n\nSet `type=\"range\"` to allow users to pick a date range:\n\n\n\n## Single date in range\n\nBy default, it is not allowed to select a single date as a range – when the user clicks the same date a second time, it is deselected.\nTo change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when the\n`type` prop is not `range`.\n\n\n\n## Default date\n\nUse the `defaultDate` prop to set the date value that will be used to determine which year should be displayed initially.\nFor example, to display the `2015` year, set `defaultDate={new Date(2015, 1)}`. If the value is not specified,\nthen `defaultDate` will use `new Date()`. Month, day, minutes and seconds are ignored in the provided date object, only the year is used –\nyou can specify any date value.\n\nNote that if you set the `date` prop, then the `defaultDate` value will be ignored.\n\n```tsx\nimport { useState } from 'react';\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return <MonthPicker defaultDate=\"2015-02-01\" value={value} onChange={setValue} />;\n}\n```\n\n\n## Controlled date\n\nSet the `date` and `onDateChange` props to make the currently displayed year and decade controlled.\nBy doing so, you can customize the date picking experience. For example, when the user selects the first date in a range,\nyou can add one year to the current date value:\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<[string | null, string | null]>([null, null]);\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  const handleChange = (val: [string | null, string | null]) => {\n    if (val[0] !== null && val[1] === null) {\n      setDate((current) => dayjs(current).add(1, 'year').format('YYYY-MM-DD'));\n    }\n\n    setValue(val);\n  };\n\n  return (\n    <MonthPicker\n      date={date}\n      onDateChange={setDate}\n      type=\"range\"\n      value={value}\n      onChange={handleChange}\n    />\n  );\n}\n```\n\n\n## Min and max date\n\nSet the `minDate` and `maxDate` props to define minimum and maximum dates. If the previous/next page is not available,\nthen the corresponding control will be disabled.\n\n```tsx\nimport { useState } from 'react';\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <MonthPicker\n      value={value}\n      onChange={setValue}\n      defaultDate=\"2022-02-01\"\n      minDate=\"2022-02-01\"\n      maxDate=\"2022-09-01\"\n    />\n  );\n}\n```\n\n\n## Add props to year and month control\n\nYou can add props to year and month controls with the `getYearControlProps` and `getMonthControlProps` functions. Both functions accept a date as a single argument,\nand props returned from the function will be added to the year/month control. For example, it can be used to disable a specific\ncontrol or add styles:\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { MonthPicker, MonthPickerProps } from '@mantine/dates';\n\nconst getYearControlProps: MonthPickerProps['getYearControlProps'] = (date) => {\n  if (dayjs(date).year() === new Date().getFullYear()) {\n    return {\n      style: {\n        color: 'var(--mantine-color-blue-filled)',\n        fontWeight: 700,\n      },\n    };\n  }\n\n  if (dayjs(date).year() === new Date().getFullYear() + 1) {\n    return { disabled: true };\n  }\n\n  return {};\n};\n\nconst getMonthControlProps: MonthPickerProps['getMonthControlProps'] = (date) => {\n  if (dayjs(date).month() === 1) {\n    return {\n      style: {\n        color: 'var(--mantine-color-blue-filled)',\n        fontWeight: 700,\n      },\n    };\n  }\n\n  if (dayjs(date).month() === 5) {\n    return { disabled: true };\n  }\n\n  return {};\n};\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <MonthPicker\n      value={value}\n      onChange={setValue}\n      getYearControlProps={getYearControlProps}\n      getMonthControlProps={getMonthControlProps}\n    />\n  );\n}\n```\n\n\n## Number of columns\n\nSet the `numberOfColumns` prop to define the number of pickers that will be rendered side by side:\n\n\n\n## Max level\n\nTo disallow users from going to the decade level, set `maxLevel=\"year\"`:\n\n```tsx\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  return <MonthPicker maxLevel=\"year\" />;\n}\n```\n\n\n## Full width\n\nSet the `fullWidth` prop to make the month picker stretch to fill 100% of its parent container width:\n\n```tsx\nimport { useState } from 'react';\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return <MonthPicker fullWidth value={value} onChange={setValue} />;\n}\n```\n\n\n## Size\n\n\n\n## Change year and months controls format\n\nUse the `yearsListFormat` and `monthsListFormat` props to change the [dayjs format](https://day.js.org/docs/en/display/format) of year/month controls:\n\n```tsx\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  return <MonthPicker monthsListFormat=\"MM\" yearsListFormat=\"YY\" />;\n}\n```\n\n\n## Change label format\n\nUse `decadeLabelFormat` and `yearLabelFormat` to change the [dayjs format](https://day.js.org/docs/en/display/format) of the decade/year label:\n\n```tsx\nimport { useState } from 'react';\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  const [value, setValue] = useState<string | null>(null);\n  return (\n    <MonthPicker\n      decadeLabelFormat=\"YY\"\n      yearLabelFormat=\"YYYY [year]\"\n      value={value}\n      onChange={setValue}\n    />\n  );\n}\n```\n\n\n## Localization\n\nUsually it is better to specify the `@mantine/dates` package locale in [DatesProvider](https://mantine.dev/llms/dates-getting-started.md),\nbut you can also override the locale per component:\n\n```tsx\nimport 'dayjs/locale/ru';\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  return <MonthPicker locale=\"ru\" />;\n}\n```\n\n\n## Accessibility\n\n### Aria labels\n\nSet the `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:\n\n```tsx\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <MonthPicker\n      ariaLabels={{\n        nextDecade: 'Next decade',\n        previousDecade: 'Previous decade',\n        nextYear: 'Next year',\n        previousYear: 'Previous year',\n        yearLevelControl: 'Change to decade view',\n      }}\n    />\n  );\n}\n```\n\n### Year/month control aria-label\n\nUse `getYearControlProps`/`getMonthControlProps` to customize the `aria-label` attribute:\n\n```tsx\nimport { MonthPicker } from '@mantine/dates';\n\nfunction Demo() {\n  return (\n    <MonthPicker\n      getYearControlProps={(date) => ({\n        'aria-label': `Select year ${date.getFullYear()}`,\n      })}\n      getMonthControlProps={(date) => ({\n        'aria-label': `Select month ${date.getFullYear()}/${date.getMonth()}`,\n      })}\n    />\n  );\n}\n```\n\n### Keyboard interactions\n\nNote that the following events will only trigger if focus is on a month control.\n\n\n#### Props\n\n**MonthPicker props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowDeselect | boolean | - | Determines whether user can deselect the date by clicking on selected item, applicable only when type=\"default\" |\n| allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type=\"range\" |\n| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |\n| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |\n| date | string \\| Date | - | Displayed date in controlled mode |\n| decadeLabelFormat | string \\| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |\n| defaultDate | string \\| Date | - | Initial displayed date in uncontrolled mode |\n| defaultLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Initial displayed level (uncontrolled) |\n| defaultValue | DateValue \\| DatesRangeValue<DateValue> \\| DateValue[] | - | Default value for uncontrolled component |\n| fullWidth | boolean | - | Determines whether the list should take the full width of its container |\n| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |\n| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |\n| level | \"month\" \\| \"year\" \\| \"decade\" | - | Current displayed level (controlled) |\n| locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |\n| maxDate | string \\| Date | - | Maximum possible date in `YYYY-MM-DD` format or Date object |\n| maxLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Max level that user can go up to |\n| minDate | string \\| Date | - | Minimum possible date in `YYYY-MM-DD` format or Date object |\n| monthsListFormat | string | - | `dayjs` format for months list |\n| nextLabel | string | - | Next button `aria-label` |\n| numberOfColumns | number | - | Number of columns displayed next to each other |\n| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |\n| onDateChange | (date: string) => void | - | Called when date changes |\n| onLevelChange | (level: MonthPickerLevel) => void | - | Called when level changes |\n| onMonthSelect | (date: string) => void | - | Called when month is selected |\n| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |\n| onNextYear | (date: string) => void | - | Called when the next year button is clicked |\n| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |\n| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |\n| previousLabel | string | - | Previous button `aria-label` |\n| size | MantineSize | - | Component size |\n| type | \"range\" \\| \"multiple\" \\| \"default\" | - | Picker type: range, multiple or default |\n| value | DateValue \\| DatesRangeValue<DateValue> \\| DateValue[] | - | Value for controlled component |\n| withCellSpacing | boolean | - | Determines whether controls should be separated |\n| yearLabelFormat | string \\| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |\n| yearsListFormat | string | - | dayjs format for years list |\n\n**MonthPicker.Input props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowDeselect | boolean | - | Determines whether user can deselect the date by clicking on selected item, applicable only when type=\"default\" |\n| allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type=\"range\" |\n| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |\n| clearButtonProps | React.ComponentProps<\"button\"> | - | Props passed down to the clear button |\n| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |\n| clearable | boolean | - | If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. |\n| closeOnChange | boolean | - | Determines whether the dropdown is closed when date is selected, not applicable with `type=\"multiple\"` |\n| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |\n| date | string \\| Date | - | Displayed date in controlled mode |\n| decadeLabelFormat | string \\| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |\n| defaultDate | string \\| Date | - | Initial displayed date in uncontrolled mode |\n| defaultLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Initial displayed level (uncontrolled) |\n| defaultValue | DateValue \\| DatesRangeValue<DateValue> \\| DateValue[] | - | Default value for uncontrolled component |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| dropdownType | \"popover\" \\| \"modal\" | - | Type of the dropdown |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| fullWidth | boolean | - | Determines whether the list should take the full width of its container |\n| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |\n| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| labelSeparator | string | - | Separator between range value |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| level | \"month\" \\| \"year\" \\| \"decade\" | - | Current displayed level (controlled) |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |\n| maxDate | string \\| Date | - | Maximum possible date in `YYYY-MM-DD` format or Date object |\n| maxLevel | \"month\" \\| \"year\" \\| \"decade\" | - | Max level that user can go up to |\n| minDate | string \\| Date | - | Minimum possible date in `YYYY-MM-DD` format or Date object |\n| modalProps | Partial<Omit<ModalProps, \"children\">> | - | Props passed down to `Modal` component |\n| monthsListFormat | string | - | `dayjs` format for months list |\n| nextLabel | string | - | Next button `aria-label` |\n| numberOfColumns | number | - | Number of columns displayed next to each other |\n| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |\n| onDateChange | (date: string) => void | - | Called when date changes |\n| onDropdownClose | () => void | - | Called when the dropdown is closed |\n| onLevelChange | (level: MonthPickerLevel) => void | - | Called when level changes |\n| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |\n| onNextYear | (date: string) => void | - | Called when the next year button is clicked |\n| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |\n| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |\n| placeholder | string | - | Input placeholder |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| popoverProps | Partial<Omit<PopoverProps, \"children\">> | - | Props passed down to `Popover` component |\n| previousLabel | string | - | Previous button `aria-label` |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| readOnly | boolean | - | If set, the component value cannot be changed by the user |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Component size |\n| sortDates | boolean | - | Determines whether dates values should be sorted before `onChange` call, only applicable with type=\"multiple\" |\n| type | \"range\" \\| \"multiple\" \\| \"default\" | - | Picker type: range, multiple or default |\n| value | DateValue \\| DatesRangeValue<DateValue> \\| DateValue[] | - | Value for controlled component |\n| valueFormat | string | - | `dayjs` format for input value |\n| valueFormatter | DateFormatter | - | A function to format selected dates values into a string. By default, date is formatted based on the input type. |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withCellSpacing | boolean | - | Determines whether controls should be separated |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n| yearLabelFormat | string \\| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |\n| yearsListFormat | string | - | dayjs format for years list |\n\n\n#### Styles API\n\nMonthPicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**MonthPicker selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| calendarHeader | .mantine-MonthPicker-calendarHeader | Calendar header root element |\n| calendarHeaderControl | .mantine-MonthPicker-calendarHeaderControl | Previous/next calendar header controls |\n| calendarHeaderControlIcon | .mantine-MonthPicker-calendarHeaderControlIcon | Icon of previous/next calendar header controls |\n| calendarHeaderLevel | .mantine-MonthPicker-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |\n| levelsGroup | .mantine-MonthPicker-levelsGroup | Group of years levels |\n| yearsList | .mantine-MonthPicker-yearsList | Years list table element |\n| yearsListRow | .mantine-MonthPicker-yearsListRow | Years list row element |\n| yearsListCell | .mantine-MonthPicker-yearsListCell | Years list cell element |\n| yearsListControl | .mantine-MonthPicker-yearsListControl | Button used to pick months and years |\n| monthsList | .mantine-MonthPicker-monthsList | Months list table element |\n| monthsListRow | .mantine-MonthPicker-monthsListRow | Months list row element |\n| monthsListCell | .mantine-MonthPicker-monthsListCell | Months list cell element |\n| monthsListControl | .mantine-MonthPicker-monthsListControl | Button used to pick months and years |\n\n**MonthPickerinput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| calendarHeader | .mantine-MonthPickerinput-calendarHeader | Calendar header root element |\n| calendarHeaderControl | .mantine-MonthPickerinput-calendarHeaderControl | Previous/next calendar header controls |\n| calendarHeaderControlIcon | .mantine-MonthPickerinput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |\n| calendarHeaderLevel | .mantine-MonthPickerinput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |\n| levelsGroup | .mantine-MonthPickerinput-levelsGroup | Group of years levels |\n| yearsList | .mantine-MonthPickerinput-yearsList | Years list table element |\n| yearsListRow | .mantine-MonthPickerinput-yearsListRow | Years list row element |\n| yearsListCell | .mantine-MonthPickerinput-yearsListCell | Years list cell element |\n| yearsListControl | .mantine-MonthPickerinput-yearsListControl | Button used to pick months and years |\n| monthsList | .mantine-MonthPickerinput-monthsList | Months list table element |\n| monthsListRow | .mantine-MonthPickerinput-monthsListRow | Months list row element |\n| monthsListCell | .mantine-MonthPickerinput-monthsListCell | Months list cell element |\n| monthsListControl | .mantine-MonthPickerinput-monthsListControl | Button used to pick months and years |\n| placeholder | .mantine-MonthPickerinput-placeholder | Placeholder element |\n",
+  "props": [
+    {
+      "name": "allowDeselect",
+      "description": "Determines whether user can deselect the date by clicking on selected item, applicable only when type=\"default\"",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "allowSingleDateInRange",
+      "description": "Determines whether a single day can be selected as range, applicable only when type=\"range\"",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "ariaLabels",
+      "description": "<code>aria-label</code> attributes for controls on different levels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CalendarAriaLabels"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "columnsToScroll",
+      "description": "Number of columns to scroll with next/prev buttons, same as <code>numberOfColumns</code> if not set explicitly",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "date",
+      "description": "Displayed date in controlled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "decadeLabelFormat",
+      "description": "<code>dayjs</code> format for decade label or a function that returns decade label based on the date value",
+      "required": false,
+      "defaultValue": "\"YYYY\"",
+      "type": {
+        "name": "string | ((startOfDecade: string, endOfDecade: string) => ReactNode)"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "defaultDate",
+      "description": "Initial displayed date in uncontrolled mode",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "defaultLevel",
+      "description": "Initial displayed level (uncontrolled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Default value for uncontrolled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DateValue | DatesRangeValue<DateValue> | DateValue[]"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "fullWidth",
+      "description": "Determines whether the list should take the full width of its container",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "getMonthControlProps",
+      "description": "Passes props down month picker control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Partial<PickerControlProps> & DataAttributes"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "getYearControlProps",
+      "description": "Passes props down to year picker control based on date",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => Partial<PickerControlProps> & DataAttributes"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "level",
+      "description": "Current displayed level (controlled)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "locale",
+      "description": "Dayjs locale, defaults to value defined in DatesProvider",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "maxDate",
+      "description": "Maximum possible date in <code>YYYY-MM-DD</code> format or Date object",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "maxLevel",
+      "description": "Max level that user can go up to",
+      "required": false,
+      "defaultValue": "'decade'",
+      "type": {
+        "name": "\"month\" | \"year\" | \"decade\"",
+        "raw": "CalendarLevel | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"month\""
+          },
+          {
+            "value": "\"year\""
+          },
+          {
+            "value": "\"decade\""
+          }
+        ]
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "minDate",
+      "description": "Minimum possible date in <code>YYYY-MM-DD</code> format or Date object",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "monthsListFormat",
+      "description": "<code>dayjs</code> format for months list",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "nextLabel",
+      "description": "Next button <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "numberOfColumns",
+      "description": "Number of columns displayed next to each other",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: DatePickerValue<Type, string>) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onDateChange",
+      "description": "Called when date changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onLevelChange",
+      "description": "Called when level changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(level: MonthPickerLevel) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onMonthSelect",
+      "description": "Called when month is selected",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onNextDecade",
+      "description": "Called when the next decade button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onNextYear",
+      "description": "Called when the next year button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onPreviousDecade",
+      "description": "Called when the previous decade button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "onPreviousYear",
+      "description": "Called when the previous year button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(date: string) => void"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "previousLabel",
+      "description": "Previous button <code>aria-label</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "size",
+      "description": "Component size",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "type",
+      "description": "Picker type: range, multiple or default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"range\" | \"multiple\" | \"default\"",
+        "raw": "DatePickerType | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"multiple\""
+          },
+          {
+            "value": "\"range\""
+          }
+        ]
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "value",
+      "description": "Value for controlled component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DateValue | DatesRangeValue<DateValue> | DateValue[]"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "withCellSpacing",
+      "description": "Determines whether controls should be separated",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "yearLabelFormat",
+      "description": "dayjs label format to display year label or a function that returns year label based on year value",
+      "required": false,
+      "defaultValue": "\"YYYY\"",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "MonthPicker"
+    },
+    {
+      "name": "yearsListFormat",
+      "description": "dayjs format for years list",
+      "required": false,
+      "defaultValue": "'YYYY'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MonthPicker"
+    }
+  ]
+}

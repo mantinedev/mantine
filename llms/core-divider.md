@@ -5,8 +5,6 @@ Description: Horizontal line with optional label or vertical divider
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Text, Divider } from '@mantine/core';
 
@@ -42,8 +40,6 @@ function Demo() {
 
 ## Variants
 
-#### Example: variants
-
 ```tsx
 import { Divider } from '@mantine/core';
 
@@ -61,11 +57,9 @@ function Demo() {
 
 ## With label
 
-#### Example: labels
-
 ```tsx
 import { Divider, Box, Anchor } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -79,7 +73,7 @@ function Demo() {
         labelPosition="center"
         label={
           <>
-            <IconSearch size={12} />
+            <MagnifyingGlassIcon size={12} />
             <Box ml={5}>Search results</Box>
           </>
         }
@@ -100,8 +94,6 @@ function Demo() {
 
 ## Sizes
 
-#### Example: sizes
-
 ```tsx
 import { Divider } from '@mantine/core';
 
@@ -121,8 +113,6 @@ function Demo() {
 
 
 ## Vertical orientation
-
-#### Example: orientation
 
 ```tsx
 import { Divider, Group, Text } from '@mantine/core';
@@ -150,13 +140,15 @@ function Demo() {
 
 #### Props
 
+**Divider props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color value, by default value depends on color scheme |
-| label | React.ReactNode | - | Divider label, visible only when <code>orientation</code> is <code>horizontal</code> |
-| labelPosition | "center" | "left" | "right" | - | Controls label position |
-| orientation | "horizontal" | "vertical" | - | Controls orientation |
-| size | number | MantineSize | (string & {}) | - | Controls width/height (depends on orientation) |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color value |
+| label | React.ReactNode | - | Divider label, visible only with `orientation="horizontal"` |
+| labelPosition | "center" \| "left" \| "right" | - | Label position |
+| orientation | "horizontal" \| "vertical" | - | Divider orientation |
+| size | MantineSize \| number | - | Controls width/height (depends on orientation) |
 
 
 #### Styles API
@@ -182,6 +174,6 @@ Divider component supports Styles API. With Styles API, you can customize styles
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| root | data-with-label | - | - |
-| root | data-orientation | - | Value of  |
-| label | data-position | - | Value of  |
+| root | data-with-label | `label` prop is truthy | - |
+| root | data-orientation | - | Value of `orientation` prop |
+| label | data-position | - | Value of `labelPosition` prop |

@@ -1,0 +1,327 @@
+{
+  "id": "x-dropzone",
+  "name": "Dropzone",
+  "kind": "component",
+  "package": "@mantine/dropzone",
+  "route": "/x/dropzone",
+  "description": "Capture files from user with drag and drop",
+  "propsCount": 31,
+  "llmUrl": "https://mantine.dev/llms/x-dropzone.md",
+  "componentDataUrl": "/mcp/components/x-dropzone.json",
+  "searchText": "dropzone capture files from user with drag and drop @mantine/dropzone /x/dropzone accept acceptcolor activateonclick activateondrag activateonkeyboard autofocus disabled drageventsbubbling enablepointerevents getfilesfromevent inputprops loaderprops loading maxfiles maxsize multiple name ondragenter ondragleave ondragover ondrop ondropany onfiledialogcancel onfiledialogopen onreject openref preventdropondocument radius rejectcolor usefsaccessapi validator",
+  "source": "@mantine/dropzone/src",
+  "docs": "x/dropzone.mdx",
+  "markdown": "# Dropzone\nPackage: @mantine/dropzone\nImport: import { Dropzone } from '@mantine/dropzone';\nDescription: Capture files from user with drag and drop\n\n## Installation\n\n```bash\nyarn add @mantine/dropzone\n```\n\n```bash\nnpm install @mantine/dropzone\n```\n\nAfter installation import package styles at the root of your application:\n\n```tsx\nimport '@mantine/core/styles.css';\n// ‼️ import dropzone styles after core package styles\nimport '@mantine/dropzone/styles.css';\n```\n\n## Usage\n\n`Dropzone` lets you capture one or more files from the user.\nThe component is based on [react-dropzone](https://react-dropzone.js.org/) and supports all of its core features:\n\n* Accepts/rejects files based on provided mime types\n* Limits individual file size\n* Renders given children and provides context-based components to display elements based on current status\n\n```tsx\nimport { Group, Text } from '@mantine/core';\nimport { UploadSimpleIcon, ImageIcon, XIcon } from '@phosphor-icons/react';\nimport { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';\n\nexport function BaseDemo(props: Partial<DropzoneProps>) {\n  return (\n    <Dropzone\n      onDrop={(files) => console.log('accepted files', files)}\n      onReject={(files) => console.log('rejected files', files)}\n      maxSize={5 * 1024 ** 2}\n      accept={IMAGE_MIME_TYPE}\n      {...props}\n    >\n      <Group justify=\"center\" gap=\"xl\" mih={220} style={{ pointerEvents: 'none' }}>\n        <Dropzone.Accept>\n          <UploadSimpleIcon size={52} color=\"var(--mantine-color-blue-6)\" />\n        </Dropzone.Accept>\n        <Dropzone.Reject>\n          <XIcon size={52} color=\"var(--mantine-color-red-6)\" />\n        </Dropzone.Reject>\n        <Dropzone.Idle>\n          <ImageIcon size={52} color=\"var(--mantine-color-dimmed)\" />\n        </Dropzone.Idle>\n\n        <div>\n          <Text size=\"xl\" inline>\n            Drag images here or click to select files\n          </Text>\n          <Text size=\"sm\" c=\"dimmed\" inline mt={7}>\n            Attach as many files as you like, each file should not exceed 5mb\n          </Text>\n        </div>\n      </Group>\n    </Dropzone>\n  );\n}\n```\n\n\n## Dropzone.Accept, Dropzone.Reject and Dropzone.Idle\n\n`Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components are visible only when the user performs a certain action:\n\n* `Dropzone.Accept` is visible only when the user drags a file that can be accepted over the dropzone\n* `Dropzone.Reject` is visible only when the user drags a file that cannot be accepted over the dropzone\n* `Dropzone.Idle` is visible when the user does not drag anything over the dropzone\n\n## Loading state\n\nSet the `loading` prop to indicate a loading state with the [LoadingOverlay](https://mantine.dev/llms/core-loading-overlay.md) component.\nWhen the `loading` prop is true, users cannot drop or select new files (`Dropzone` becomes disabled):\n\n```tsx\nimport { Dropzone } from '@mantine/dropzone';\n\nfunction Demo() {\n  return (\n    <Dropzone loading onDrop={() => {}}>\n      {/* children */}\n    </Dropzone>\n  );\n}\n```\n\n\n## Disabled state\n\nIf you want to implement your own loading state, you can disable `Dropzone` without `LoadingOverlay`.\nSame as with `loading`, when `Dropzone` is disabled, users cannot drop or select new files:\n\n```tsx\n// Demo.tsx\nimport { Dropzone } from '@mantine/dropzone';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <Dropzone disabled className={classes.disabled} onDrop={() => {}}>\n      {/* children... */}\n    </Dropzone>\n  );\n}\n\n// Demo.module.css\n.disabled {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));\n  border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));\n  cursor: not-allowed;\n\n  & * {\n    color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));\n  }\n}\n```\n\n\n## Open file browser manually\n\nTo open the file browser from outside of the component, use the `openRef` prop to get a function that will trigger the file browser:\n\n```tsx\nimport { useRef } from 'react';\nimport { Button, Group } from '@mantine/core';\nimport { Dropzone } from '@mantine/dropzone';\n\nfunction Demo() {\n  const openRef = useRef<() => void>(null);\n\n  return (\n    <>\n      <Dropzone openRef={openRef} onDrop={() => {}}>\n        {/* children */}\n      </Dropzone>\n\n      <Group justify=\"center\" mt=\"md\">\n        <Button onClick={() => openRef.current?.()}>Select files</Button>\n      </Group>\n    </>\n  );\n}\n```\n\n\n## Enable child pointer events\n\nBy default, Dropzone disables pointer events on its children for dragging events to work. When `activateOnClick={false}`,\nclicking on any children inside Dropzone will not do anything.\nHowever, you can set the style `pointerEvents: 'all'` to make children clickable.\nNote that you need to set these styles only on interactive elements, such as buttons or links.\n\n```tsx\nimport { useRef } from 'react';\nimport { Button, Group } from '@mantine/core';\nimport { Dropzone } from '@mantine/dropzone';\n\nfunction Demo() {\n  const openRef = useRef<() => void>(null);\n\n  return (\n    <Dropzone openRef={openRef} onDrop={() => {}} activateOnClick={false}>\n      <Group justify=\"center\">\n        <Button onClick={() => openRef.current?.()} style={{ pointerEvents: 'all' }}>\n          Select files\n        </Button>\n      </Group>\n    </Dropzone>\n  );\n}\n```\n\n\n## Mime types\n\nTo specify file types provide an object with the keys set to the [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)\nand the values as an array of file extensions. Find more examples of accepting specific file types\nin the [react-dropzone documentation](https://react-dropzone.js.org/#section-accepting-specific-file-types).\n\n```tsx\nimport { Dropzone } from '@mantine/dropzone';\n\nfunction Demo() {\n  return (\n    <Dropzone\n      accept={{\n        'image/*': [], // All images\n        'text/html': ['.html', '.htm'],\n      }}\n      onDrop={() => {}}\n    >\n      {/* children */}\n    </Dropzone>\n  );\n}\n```\n\nYou can also specify file types by providing an array of mime types to the `accept` prop:\n\n```tsx\nimport { Dropzone } from '@mantine/dropzone';\n\nfunction Demo() {\n  return (\n    <Dropzone\n      accept={[\n        'image/png',\n        'image/jpeg',\n        'image/svg+xml',\n        'image/gif',\n      ]}\n      onDrop={() => {}}\n    >\n      {/* children */}\n    </Dropzone>\n  );\n}\n```\n\nTo save some research time, you can use the `MIME_TYPES` variable exported from `@mantine/dropzone`:\n\n```tsx\nimport { Dropzone, MIME_TYPES } from '@mantine/dropzone';\n\nfunction Demo() {\n  return (\n    <Dropzone\n      accept={[\n        MIME_TYPES.png,\n        MIME_TYPES.jpeg,\n        MIME_TYPES.svg,\n        MIME_TYPES.gif,\n      ]}\n      onDrop={() => {}}\n    >\n      {/* children */}\n    </Dropzone>\n  );\n}\n```\n\n`MIME_TYPES` includes the following data:\n\nAdditionally, you can use grouped mime types:\n\n```tsx\nimport { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';\n\nfunction Demo() {\n  return (\n    <Dropzone accept={IMAGE_MIME_TYPE} onDrop={() => {}}>\n      {/* children */}\n    </Dropzone>\n  );\n}\n```\n\n## Styles API\n\n`Dropzone` root element has the following data attributes to change styles based on current status:\n\n* `data-loading` – when `loading` prop is `true`\n* `data-accept` – when user drags files that can be accepted over the dropzone\n* `data-reject` – when user drags files that cannot be accepted over the dropzone\n* `data-idle` – default state – the user does not drag any files over the dropzone\n\n```tsx\n// Demo.tsx\nimport { Text } from '@mantine/core';\nimport { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <Dropzone onDrop={() => {}} accept={IMAGE_MIME_TYPE} className={classes.root}>\n      <Text ta=\"center\">Drop images here</Text>\n    </Dropzone>\n  );\n}\n\n// Demo.module.css\n.root {\n  min-height: 120px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: 0;\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));\n\n  &[data-accept] {\n    color: var(--mantine-color-white);\n    background-color: var(--mantine-color-blue-6);\n  }\n\n  &[data-reject] {\n    color: var(--mantine-color-white);\n    background-color: var(--mantine-color-red-6);\n  }\n}\n```\n\n\n## Images previews\n\n```tsx\nimport { useState } from 'react';\nimport { Text, Image, SimpleGrid } from '@mantine/core';\nimport { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from '@mantine/dropzone';\n\nfunction Demo() {\n  const [files, setFiles] = useState<FileWithPath[]>([]);\n\n  const previews = files.map((file, index) => {\n    const imageUrl = URL.createObjectURL(file);\n    return <Image key={index} src={imageUrl} onLoad={() => URL.revokeObjectURL(imageUrl)} />;\n  });\n\n  return (\n    <div>\n      <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>\n        <Text ta=\"center\">Drop images here</Text>\n      </Dropzone>\n\n      <SimpleGrid cols={{ base: 1, sm: 4 }} mt={previews.length > 0 ? 'xl' : 0}>\n        {previews}\n      </SimpleGrid>\n    </div>\n  );\n}\n```\n\n\n## Get ref\n\n```tsx\nimport { useEffect, useRef } from 'react';\nimport { Dropzone } from '@mantine/dropzone';\n\nfunction Demo() {\n  const dropzoneRef = useRef<HTMLDivElement>(null);\n\n  useEffect(() => {\n    dropzoneRef.current?.focus();\n  }, []);\n\n  return (\n    <Dropzone ref={dropzoneRef} onDrop={() => {}}>\n      {/* children */}\n    </Dropzone>\n  );\n}\n```\n\n## Dropzone.FullScreen component\n\n`Dropzone.FullScreen` lets you capture files dropped to the browser window instead of a specific area.\nIt supports the same props as the `Dropzone` component.\n\nTo preview the component, click the button and drop images to the browser window:\n\n```tsx\nimport { useState } from 'react';\nimport { Group, Text, Button } from '@mantine/core';\nimport { UploadSimpleIcon, ImageIcon, XIcon } from '@phosphor-icons/react';\nimport { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';\n\nfunction Demo() {\n  const [active, setActive] = useState(false);\n\n  return (\n    <>\n      <Group justify=\"center\">\n        <Button color={active ? 'red' : 'blue'} onClick={() => setActive((d) => !d)}>\n          {active ? 'Deactivate' : 'Activate'} full screen dropzone\n        </Button>\n      </Group>\n\n      <Dropzone.FullScreen\n        active={active}\n        accept={IMAGE_MIME_TYPE}\n        onDrop={(files) => {\n          console.log(files);\n          setActive(false);\n        }}\n      >\n        <Group justify=\"center\" gap=\"xl\" mih={220} style={{ pointerEvents: 'none' }}>\n          <Dropzone.Accept>\n            <UploadSimpleIcon size={52} color=\"var(--mantine-color-blue-6)\" />\n          </Dropzone.Accept>\n          <Dropzone.Reject>\n            <XIcon size={52} color=\"var(--mantine-color-red-6)\" />\n          </Dropzone.Reject>\n          <Dropzone.Idle>\n            <ImageIcon size={52} color=\"var(--mantine-color-dimmed)\" />\n          </Dropzone.Idle>\n\n          <div>\n            <Text size=\"xl\" inline>\n              Drag images here or click to select files\n            </Text>\n            <Text size=\"sm\" c=\"dimmed\" inline mt={7}>\n              Attach as many files as you like, each file should not exceed 5mb\n            </Text>\n          </div>\n        </Group>\n      </Dropzone.FullScreen>\n    </>\n  );\n}\n```\n\n\n\n#### Props\n\n**Dropzone props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| accept | string[] \\| Accept | - | Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. |\n| acceptColor | MantineColor | - | Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` |\n| activateOnClick | boolean | - | If `false`, disables click to open the native file selection dialog |\n| activateOnDrag | boolean | - | If `false`, disables drag 'n' drop |\n| activateOnKeyboard | boolean | - | If `false`, disables Space/Enter to open the native file selection dialog. Note that it also stops tracking the focus state. |\n| autoFocus | boolean | - | Set to autofocus the root element |\n| disabled | boolean | - | Determines whether files capturing should be disabled |\n| dragEventsBubbling | boolean | - | If `false`, stops drag event propagation to parents |\n| enablePointerEvents | boolean | - | Determines whether pointer events should be enabled on the inner element |\n| getFilesFromEvent | (event: DropEvent) => Promise<(File \\| DataTransferItem)[]> | - | Use this to provide a custom file aggregator |\n| inputProps | InputHTMLAttributes<HTMLInputElement> | - | Props passed down to the internal Input component |\n| loaderProps | LoaderProps | - | Props passed down to the Loader component |\n| loading | boolean | - | Determines whether a loading overlay should be displayed over the dropzone |\n| maxFiles | number | - | Maximum number of files that can be picked at once |\n| maxSize | number | - | Maximum file size in bytes |\n| multiple | boolean | - | Determines whether multiple files can be dropped to the dropzone or selected from file system picker |\n| name | string | - | Name of the form control. Submitted with the form as part of a name/value pair. |\n| onDragEnter | (event: DragEvent<HTMLElement>) => void | - | Called when the `dragenter` event occurs |\n| onDragLeave | (event: DragEvent<HTMLElement>) => void | - | Called when the `dragleave` event occurs |\n| onDragOver | (event: DragEvent<HTMLElement>) => void | - | Called when the `dragover` event occurs |\n| onDrop | (files: FileWithPath[]) => void | required | Called when valid files are dropped to the dropzone |\n| onDropAny | (files: FileWithPath[], fileRejections: FileRejection[]) => void | - | Called when any files are dropped to the dropzone |\n| onFileDialogCancel | () => void | - | Called when user closes the file selection dialog with no selection |\n| onFileDialogOpen | () => void | - | Called when user opens the file selection dialog |\n| onReject | (fileRejections: FileRejection[]) => void | - | Called when dropped files do not meet file restrictions |\n| openRef | Ref<() => void> \\| undefined | - | A ref function which when called opens the file system file picker |\n| preventDropOnDocument | boolean | - | If `false`, allow dropped items to take over the current browser window |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| rejectColor | MantineColor | - | Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` |\n| useFsAccessApi | boolean | - | Set to true to use the File System Access API to open the file picker instead of using an `input type=\"file\"` click event |\n| validator | <T extends File>(file: T) => FileError \\| FileError[] \\| null | - | Custom validation function. It must return null if there's no errors. |\n\n**Dropzone.FullScreen props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| accept | string[] \\| Accept | - | Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. |\n| acceptColor | MantineColor | - | Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` |\n| activateOnClick | boolean | - | If `false`, disables click to open the native file selection dialog |\n| activateOnDrag | boolean | - | If `false`, disables drag 'n' drop |\n| activateOnKeyboard | boolean | - | If `false`, disables Space/Enter to open the native file selection dialog. Note that it also stops tracking the focus state. |\n| active | boolean | - | Determines whether user can drop files to browser window |\n| autoFocus | boolean | - | Set to autofocus the root element |\n| disabled | boolean | - | Determines whether files capturing should be disabled |\n| dragEventsBubbling | boolean | - | If `false`, stops drag event propagation to parents |\n| enablePointerEvents | boolean | - | Determines whether pointer events should be enabled on the inner element |\n| getFilesFromEvent | (event: DropEvent) => Promise<(File \\| DataTransferItem)[]> | - | Use this to provide a custom file aggregator |\n| inputProps | InputHTMLAttributes<HTMLInputElement> | - | Props passed down to the internal Input component |\n| loaderProps | LoaderProps | - | Props passed down to the Loader component |\n| loading | boolean | - | Determines whether a loading overlay should be displayed over the dropzone |\n| maxFiles | number | - | Maximum number of files that can be picked at once |\n| maxSize | number | - | Maximum file size in bytes |\n| multiple | boolean | - | Determines whether multiple files can be dropped to the dropzone or selected from file system picker |\n| name | string | - | Name of the form control. Submitted with the form as part of a name/value pair. |\n| onDragEnter | (event: DragEvent<HTMLElement>) => void | - | Called when the `dragenter` event occurs |\n| onDragLeave | (event: DragEvent<HTMLElement>) => void | - | Called when the `dragleave` event occurs |\n| onDragOver | (event: DragEvent<HTMLElement>) => void | - | Called when the `dragover` event occurs |\n| onDrop | (files: FileWithPath[]) => void | required | Called when valid files are dropped to the dropzone |\n| onDropAny | (files: FileWithPath[], fileRejections: FileRejection[]) => void | - | Called when any files are dropped to the dropzone |\n| onFileDialogCancel | () => void | - | Called when user closes the file selection dialog with no selection |\n| onFileDialogOpen | () => void | - | Called when user opens the file selection dialog |\n| onReject | (fileRejections: FileRejection[]) => void | - | Called when dropped files do not meet file restrictions |\n| openRef | Ref<() => void> \\| undefined | - | A ref function which when called opens the file system file picker |\n| portalProps | Omit<BasePortalProps, \"withinPortal\"> | - | Props to pass down to the portal when withinPortal is `true` |\n| preventDropOnDocument | boolean | - | If `false`, allow dropped items to take over the current browser window |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| rejectColor | MantineColor | - | Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` |\n| useFsAccessApi | boolean | - | Set to true to use the File System Access API to open the file picker instead of using an `input type=\"file\"` click event |\n| validator | <T extends File>(file: T) => FileError \\| FileError[] \\| null | - | Custom validation function. It must return null if there's no errors. |\n| withinPortal | boolean | - | Determines whether component should be rendered within `Portal` |\n| zIndex | React.CSSProperties[\"zIndex\"] | - | Z-index value |\n\n\n#### Styles API\n\nDropzone component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Dropzone selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Dropzone-root | Dropzone root element |\n| inner | .mantine-Dropzone-inner | Dropzone inner element (wraps children) |\n\n**Dropzone CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --dropzone-accept-bg | Controls `background-color` when file is accepted |\n| root | --dropzone-reject-bg | Controls `background-color` when file is rejected |\n| root | --dropzone-accept-color | Controls `color` when file is accepted |\n| root | --dropzone-reject-color | Controls `color` when file is rejected |\n| root | --dropzone-radius | Controls `border-radius` |\n\n**Dropzone data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-accept | Files that are dragged over the dropzone are accepted | - |\n| root | data-reject | Files that are dragged over the dropzone are rejected | - |\n| root | data-idle | Dropzone is idle | - |\n| root | data-loading | `loading` prop is set | - |\n| root | data-disabled | `disabled` prop is set | - |\n| root | data-activate-on-click | `activateOnClick` prop is `true` | - |\n\n**Dropzonefullscreen selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Dropzonefullscreen-root | Dropzone root element |\n| inner | .mantine-Dropzonefullscreen-inner | Dropzone inner element (wraps children) |\n| fullScreen | .mantine-Dropzonefullscreen-fullScreen | Dropzone.Fullscreen root element |\n",
+  "props": [
+    {
+      "name": "accept",
+      "description": "Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[] | Accept"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "acceptColor",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to set colors of <code>Dropzone.Accept</code>",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "activateOnClick",
+      "description": "If <code>false</code>, disables click to open the native file selection dialog",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "activateOnDrag",
+      "description": "If <code>false</code>, disables drag 'n' drop",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "activateOnKeyboard",
+      "description": "If <code>false</code>, disables Space/Enter to open the native file selection dialog. Note that it also stops tracking the focus state.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "autoFocus",
+      "description": "Set to autofocus the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "disabled",
+      "description": "Determines whether files capturing should be disabled",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "dragEventsBubbling",
+      "description": "If <code>false</code>, stops drag event propagation to parents",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "enablePointerEvents",
+      "description": "Determines whether pointer events should be enabled on the inner element",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "getFilesFromEvent",
+      "description": "Use this to provide a custom file aggregator",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: DropEvent) => Promise<(File | DataTransferItem)[]>"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "inputProps",
+      "description": "Props passed down to the internal Input component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputHTMLAttributes<HTMLInputElement>"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "loaderProps",
+      "description": "Props passed down to the Loader component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "LoaderProps"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "loading",
+      "description": "Determines whether a loading overlay should be displayed over the dropzone",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "maxFiles",
+      "description": "Maximum number of files that can be picked at once",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "maxSize",
+      "description": "Maximum file size in bytes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "multiple",
+      "description": "Determines whether multiple files can be dropped to the dropzone or selected from file system picker",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "name",
+      "description": "Name of the form control. Submitted with the form as part of a name/value pair.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onDragEnter",
+      "description": "Called when the <code>dragenter</code> event occurs",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: DragEvent<HTMLElement>) => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onDragLeave",
+      "description": "Called when the <code>dragleave</code> event occurs",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: DragEvent<HTMLElement>) => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onDragOver",
+      "description": "Called when the <code>dragover</code> event occurs",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: DragEvent<HTMLElement>) => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onDrop",
+      "description": "Called when valid files are dropped to the dropzone",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "(files: FileWithPath[]) => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onDropAny",
+      "description": "Called when any files are dropped to the dropzone",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(files: FileWithPath[], fileRejections: FileRejection[]) => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onFileDialogCancel",
+      "description": "Called when user closes the file selection dialog with no selection",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onFileDialogOpen",
+      "description": "Called when user opens the file selection dialog",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "onReject",
+      "description": "Called when dropped files do not meet file restrictions",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(fileRejections: FileRejection[]) => void"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "openRef",
+      "description": "A ref function which when called opens the file system file picker",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Ref<() => void> | undefined"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "preventDropOnDocument",
+      "description": "If <code>false</code>, allow dropped items to take over the current browser window",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "rejectColor",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color to set colors of <code>Dropzone.Reject</code>",
+      "required": false,
+      "defaultValue": "'red'",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "useFsAccessApi",
+      "description": "Set to true to use the File System Access API to open the file picker instead of using an <code>input type=\"file\"</code> click event",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Dropzone"
+    },
+    {
+      "name": "validator",
+      "description": "Custom validation function. It must return null if there's no errors.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "<T extends File>(file: T) => FileError | FileError[] | null"
+      },
+      "sourceComponent": "Dropzone"
+    }
+  ]
+}

@@ -5,8 +5,6 @@ Description: Capture boolean input from user
 
 ## Usage
 
-#### Example: configurator
-
 ```tsx
 import { Switch } from '@mantine/core';
 
@@ -15,7 +13,7 @@ function Demo() {
   return (
     <Switch
       defaultChecked
-      
+       color="blue" withThumbIndicator={true} labelPosition="right" label="I agree to sell my privacy" description="" error="" size="sm" radius="xl" disabled={false}
     />
   );
 }
@@ -39,9 +37,34 @@ function Demo() {
 }
 ```
 
-## States
+## Uncontrolled
 
-#### Example: states
+`Switch` can be used with uncontrolled forms the same way as a native `input[type="checkbox"]`.
+Set the `name` attribute to include switch value in `FormData` object on form submission.
+To control the initial checked state in uncontrolled forms, use `defaultChecked` prop.
+
+Example usage of uncontrolled `Switch` with `FormData`:
+
+```tsx
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Switch value:', !!formData.get('notifications'));
+      }}
+    >
+      <Switch label="Enable notifications" name="notifications" defaultChecked />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## States
 
 ```tsx
 import { Switch, Stack } from '@mantine/core';
@@ -60,8 +83,6 @@ function Demo() {
 
 
 ## Inner Labels
-
-#### Example: labels
 
 ```tsx
 import { Switch, Group } from '@mantine/core';
@@ -82,19 +103,17 @@ function Demo() {
 
 ## Icon labels
 
-#### Example: iconLabels
-
 ```tsx
 import { Switch } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { SunIcon, MoonStarsIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Switch
       size="md"
       color="dark.4"
-      onLabel={<IconSun size={16} stroke={2.5} color="var(--mantine-color-yellow-4)" />}
-      offLabel={<IconMoonStars size={16} stroke={2.5} color="var(--mantine-color-blue-6)" />}
+      onLabel={<SunIcon size={16} color="var(--mantine-color-yellow-4)" />}
+      offLabel={<MoonStarsIcon size={16} color="var(--mantine-color-blue-6)" />}
     />
   );
 }
@@ -103,12 +122,10 @@ function Demo() {
 
 ## Thumb icon
 
-#### Example: thumbIcon
-
 ```tsx
 import { useState } from 'react';
 import { Switch } from '@mantine/core';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { CheckIcon, XIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const [checked, setChecked] = useState(false);
@@ -122,9 +139,9 @@ function Demo() {
       label="Switch with thumb icon"
       thumbIcon={
         checked ? (
-          <IconCheck size={12} color="var(--mantine-color-teal-6)" stroke={3} />
+          <CheckIcon size={12} color="var(--mantine-color-teal-6)" />
         ) : (
-          <IconX size={12} color="var(--mantine-color-red-6)" stroke={3} />
+          <XIcon size={12} color="var(--mantine-color-red-6)" />
         )
       }
     />
@@ -135,9 +152,7 @@ function Demo() {
 
 ## With tooltip
 
-Set `refProp="rootRef"` on [Tooltip](https://mantine.dev/core/tooltip/) and other similar components to make them work with `Switch`:
-
-#### Example: tooltip
+Set `refProp="rootRef"` on [Tooltip](https://mantine.dev/llms/core-tooltip.md) and other similar components to make them work with `Switch`:
 
 ```tsx
 import { Switch, Tooltip } from '@mantine/core';
@@ -154,8 +169,8 @@ function Demo() {
 
 ## Pointer cursor
 
-By default, switch input and label have `cursor: default` (same as native `input[type="checkbox"]`).
-To change cursor to pointer, set `cursorType` on [theme](https://mantine.dev/theming/theme-object/):
+By default, the switch input and label have `cursor: default` (same as native `input[type="checkbox"]`).
+To change the cursor to pointer, set `cursorType` on the [theme](https://mantine.dev/llms/theming-theme-object.md):
 
 ```tsx
 import { createTheme, MantineProvider, Switch } from '@mantine/core';
@@ -173,15 +188,11 @@ function Demo() {
 }
 ```
 
-<WrapperProps component="Switch" />
-
 ## Wrapper props
 
 Switch supports additional props that are passed to the wrapper element for more customization options.
 
 ## Switch.Group
-
-#### Example: groupConfigurator
 
 ```tsx
 import { Switch, Group } from '@mantine/core';
@@ -190,7 +201,7 @@ function Demo() {
   return (
     <Switch.Group
       defaultValue={['react']}
-      
+       label="Select your favorite framework/library" description="This is anonymous" error="" withAsterisk={true}
     >
       <Group mt="xs">
         <Switch value="react" label="React" />
@@ -204,8 +215,82 @@ function Demo() {
 ```
 
 
+## Switch.Group with uncontrolled forms
+
+`Switch.Group` can be used with uncontrolled forms, it renders a hidden input
+which joins all checked values into a single string using `hiddenInputValuesSeparator` prop.
+
+Props for usage with uncontrolled forms:
+
+* `name` – name attribute passed to the hidden input
+* `hiddenInputValuesSeparator` – string used to join checked values into a single string, `','` by default
+* `hiddenInputProps` – additional props passed to the hidden input
+
+```tsx
+export function UncontrolledForm() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Switch group value:', formData.get('frameworks'));
+      }}
+    >
+      <Switch.Group label="Frameworks" name="frameworks" hiddenInputValuesSeparator="|">
+        <Switch label="React" value="react" />
+        <Switch label="Angular" value="ng" />
+      </Switch.Group>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## maxSelectedValues
+
+Use `maxSelectedValues` prop to limit the number of selected values in `Switch.Group`.
+When the limit is reached, the remaining switches are disabled and cannot be selected.
+
+```tsx
+import { Group, Switch } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Switch.Group defaultValue={['react']} maxSelectedValues={2}>
+      <Group>
+        <Switch value="react" label="React" />
+        <Switch value="svelte" label="Svelte" />
+        <Switch value="ng" label="Angular" />
+        <Switch value="vue" label="Vue" />
+      </Group>
+    </Switch.Group>
+  );
+}
+```
+
+
 ## Switch.Group disabled
 
+```tsx
+import { Switch, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Switch.Group
+      disabled
+      label="Select your favorite framework/library"
+      description="This is anonymous"
+    >
+      <Group mt="xs">
+        <Switch value="react" label="React" />
+        <Switch value="svelte" label="Svelte" />
+        <Switch value="ng" label="Angular" />
+        <Switch value="vue" label="Vue" />
+      </Group>
+    </Switch.Group>
+  );
+}
+```
 
 
 ## Controlled Switch.Group
@@ -226,52 +311,6 @@ function Demo() {
 }
 ```
 
-## Change styles based on checked state
-
-#### Example: styles
-
-```tsx
-// Demo.module.css
-.track {
-  transition:
-    background-color 200ms ease,
-    border-color 200ms ease;
-
-  input:checked + & {
-    background-color: var(--mantine-color-lime-5);
-    border-color: var(--mantine-color-lime-5);
-
-    & > .thumb {
-      background-color: var(--mantine-color-black);
-
-      &::before {
-        background-color: var(--mantine-color-lime-5);
-      }
-    }
-  }
-}
-
-// Demo.tsx
-import { Switch } from '@mantine/core';
-import classes from './Demo.module.css';
-
-function Demo() {
-  return <Switch classNames={classes} size="lg" />;
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { Switch } from '@mantine/core';
-
-function Demo() {
-  return <Switch label="Switch component" description="Switch description" error="Switch error />;
-}
-```
-
-
 ## Get input ref
 
 ```tsx
@@ -286,7 +325,7 @@ function Demo() {
 
 ## Accessibility
 
-`Switch` is a regular `input[type="checkbox"]`. Set `aria-label` if the `Switch` is used without `label` prop:
+`Switch` is a regular `input[type="checkbox"]`. Set `aria-label` if the `Switch` is used without the `label` prop:
 
 ```tsx
 import { Switch } from '@mantine/core';
@@ -310,22 +349,29 @@ function AlsoGood() {
 
 #### Props
 
+**Switch props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color to set input color in checked state |
+| color | MantineColor | - | Key of `theme.colors` or any valid CSS color to set input color in checked state |
 | description | React.ReactNode | - | Description displayed below the label |
 | error | React.ReactNode | - | Error displayed below the label |
 | id | string | - | Id used to bind input and label, if not passed, unique id will be generated instead |
-| label | React.ReactNode | - | Content of the <code>label</code> associated with the radio |
-| labelPosition | "left" | "right" | - | Position of the label relative to the input |
-| offLabel | React.ReactNode | - | Inner label when the <code>Switch</code> is in unchecked state |
-| onLabel | React.ReactNode | - | Inner label when the <code>Switch</code> is in checked state |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius,</code> |
-| rootRef | ForwardedRef<HTMLDivElement> | - | Assigns ref of the root element |
-| size | MantineSize | (string & {}) | - | Controls size of all elements |
+| label | React.ReactNode | - | Content of the label associated with the switch |
+| labelPosition | "left" \| "right" | - | Position of the label relative to the input |
+| offLabel | React.ReactNode | - | Inner label when the `Switch` is in unchecked state |
+| onLabel | React.ReactNode | - | Inner label when the `Switch` is in checked state |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| rootRef | Ref<HTMLDivElement> | - | Assigns ref of the root element |
+| size | MantineSize | - | Controls size of all elements |
 | thumbIcon | React.ReactNode | - | Icon inside the thumb of the switch |
-| withThumbIndicator | boolean | - | If set, the indicator will be displayed inside thumb |
-| wrapperProps | Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes | - | Props passed down to the root element |
+| withThumbIndicator | boolean | - | If set, displays a colored dot inside the thumb that matches the track background color |
+| wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the root element |
+
+**Switch.Group props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
 
 
 #### Styles API
@@ -363,7 +409,7 @@ Switch component supports Styles API. With Styles API, you can customize styles 
 
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
-| track | data-error | - | - |
+| track | data-error | `error` prop is set | - |
 
 **Switch.Group selectors**
 

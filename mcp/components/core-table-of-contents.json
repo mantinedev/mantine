@@ -1,0 +1,117 @@
+{
+  "id": "core-table-of-contents",
+  "name": "TableOfContents",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/table-of-contents",
+  "description": "Renders a list of headings on the page and tracks current heading visible in the viewport",
+  "propsCount": 10,
+  "llmUrl": "https://mantine.dev/llms/core-table-of-contents.md",
+  "componentDataUrl": "/mcp/components/core-table-of-contents.json",
+  "searchText": "tableofcontents renders a list of headings on the page and tracks current heading visible in the viewport @mantine/core /core/table-of-contents autocontrast color depthoffset getcontrolprops initialdata mindepthtooffset radius reinitializeref scrollspyoptions size",
+  "source": "@mantine/core/src/components/TableOfContents/TableOfContents.tsx",
+  "docs": "core/table-of-contents.mdx",
+  "markdown": "# TableOfContents\nPackage: @mantine/core\nImport: import { TableOfContents } from '@mantine/core';\nDescription: Renders a list of headings on the page and tracks current heading visible in the viewport\n\n## Usage\n\nUse the `TableOfContents` component to display a table of contents like\nin the sidebar of mantine.dev documentation. The component tracks\nthe scroll position and highlights the current heading in the list.\n\n```tsx\nimport { TableOfContents } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <TableOfContents\n       variant=\"filled\" color=\"blue\" size=\"md\" radius=\"md\"\n      scrollSpyOptions={{\n        selector: '#mdx :is(h1, h2, h3, h4, h5, h6)',\n      }}\n      getControlProps={({ data }) => ({\n        onClick: () => data.getNode().scrollIntoView(),\n        children: data.value,\n      })}\n    />\n  );\n}\n```\n\n\n## use-scroll-spy options\n\n`TableOfContents` is based on the [use-scroll-spy](https://mantine.dev/llms/hooks-use-scroll-spy.md) hook.\nYou can pass options down to the `use-scroll-spy` hook using the `scrollSpyOptions` prop.\n\nExample of customizing selector, depth and value retrieval:\n\n```tsx\nimport { TableOfContents } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TableOfContents\n      scrollSpyOptions={{\n        selector: '#mdx [data-heading]',\n        getDepth: (element) => Number(element.getAttribute('data-order')),\n        getValue: (element) => element.getAttribute('data-heading') || '',\n      }}\n    />\n  );\n}\n```\n\n## Pass props to controls\n\nYou can pass props down to controls rendered by the `TableOfContents` component\nwith the `getControlProps` function. It accepts an object with `active` and `data`\nproperties and should return a props object.\n\nExample of changing controls to links:\n\n```tsx\nimport { TableOfContents } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TableOfContents\n      getControlProps={({ active, data }) => ({\n        component: 'a',\n        href: `#${data.id}`,\n        style: { color: active ? 'blue' : 'gray' },\n        children: data.value,\n      })}\n    />\n  );\n}\n```\n\n## Initial data\n\n`TableOfContents` retrieves data on mount. If you want to render headings\nbefore the `TableOfContents` component is mounted (for example during server-side rendering),\nyou can pass the `initialData` prop with an array of headings data. `initialData` is replaced\nwith actual data on mount.\n\n```tsx\nimport { TableOfContents } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TableOfContents\n      initialData={[\n        { id: '1', value: 'Heading 1', depth: 1 },\n        { id: '2', value: 'Heading 2', depth: 2 },\n        { id: '3', value: 'Heading 3', depth: 3 },\n      ]}\n    />\n  );\n}\n```\n\n## Depth offset\n\nUse the `minDepthToOffset` prop to set the minimum depth at which offset should be applied.\nBy default, `minDepthToOffset` is `1`, which means that first and second level headings\nwill not be offset. Set it to `0` to apply offset to all headings.\n\nTo control the offset value in px, set the `depthOffset` prop:\n\n```tsx\nimport { TableOfContents } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TableOfContents\n      minDepthToOffset={0}\n      depthOffset={40}\n      size=\"sm\"\n      scrollSpyOptions={{\n        selector: 'h1, h2, h3, h4, h5, h6',\n      }}\n      getControlProps={({ data }) => ({\n        onClick: () => data.getNode().scrollIntoView(),\n        children: data.value,\n      })}\n    />\n  );\n}\n```\n\n\n```tsx\nimport { TableOfContents } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <TableOfContents\n      minDepthToOffset={0}\n      depthOffset={40}\n      size=\"sm\"\n      scrollSpyOptions={{\n        selector: 'h1, h2, h3, h4, h5, h6',\n      }}\n      getControlProps={({ data }) => ({\n        onClick: () => data.getNode().scrollIntoView(),\n        children: data.value,\n      })}\n    />\n  );\n}\n```\n\n\n## Styles API\n\nExample of customizing `TableOfContents` with [Styles API](https://mantine.dev/llms/styles-styles-api.md) and [data-\\* attributes](https://mantine.dev/llms/styles-data-attributes.md):\n\n```tsx\n// Demo.tsx\nimport { TableOfContents } from '@mantine/core';\nimport classes from './Demo.module.css';\n\nfunction Demo() {\n  return (\n    <TableOfContents\n      size=\"sm\"\n      variant=\"none\"\n      classNames={classes}\n      minDepthToOffset={0}\n      depthOffset={40}\n      scrollSpyOptions={{\n        selector: 'h1, h2, h3, h4, h5, h6',\n      }}\n      getControlProps={({ data }) => ({\n        onClick: () => data.getNode().scrollIntoView(),\n        children: data.value,\n      })}\n    />\n  );\n}\n\n// Demo.module.css\n.control {\n  transition: transform 100ms ease;\n\n  &[data-active] {\n    background-color: var(--mantine-color-lime-4);\n    color: var(--mantine-color-black);\n    transform: scale(1.1);\n  }\n}\n```\n\n\n## Reinitialize\n\nBy default, `TableOfContents` does not track changes in the DOM. If you want\nto update headings data after the parent component has mounted, you can use\n`reinitializeRef` to get the reinitialize function from the [use-scroll-spy](https://mantine.dev/llms/hooks-use-scroll-spy.md) hook:\n\n```tsx\nimport { useRef, useLayoutEffect } from 'react';\nimport { TableOfContents } from '@mantine/core';\n\nfunction Demo({ dependency }) {\n  const reinitializeRef = useRef(() => {});\n\n  useLayoutEffect(() => {\n    reinitializeRef.current();\n  }, [dependency]);\n\n  return <TableOfContents reinitializeRef={reinitializeRef} />;\n}\n```\n\n\n#### Props\n\n**TableOfContents props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color value |\n| depthOffset | string \\| number | - | Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default |\n| getControlProps | (payload: TableOfContentsGetControlPropsPayload) => UnstyledButtonProps & ElementProps<\"button\"> & Record<...> | - | A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. |\n| initialData | InitialTableOfContentsData[] | - | Data used to render content until actual values are retrieved from the DOM |\n| minDepthToOffset | number | - | Minimum `depth` value that requires offset, `1` by default |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| reinitializeRef | RefObject<() => void> | - | A function to reinitialize headings from `use-scroll-spy` hook |\n| scrollSpyOptions | UseScrollSpyOptions | - | Options passed down to `use-scroll-spy` hook |\n| size | MantineSize \\| number | - | Controls font-size and padding of all elements |\n\n\n#### Styles API\n\nTableOfContents component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**TableOfContents selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-TableOfContents-root | Root element |\n| control | .mantine-TableOfContents-control | Control element |\n\n**TableOfContents CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --toc-bg | Background color of active control |\n| root | --toc-color | Text color of active control |\n| root | --toc-depth-offset | Offset between of control depending on depth |\n| root | --toc-radius | Border-radius of control |\n| root | --toc-size | Controls font-size and padding of all elements |\n\n**TableOfContents data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| control | data-active | Associated heading is currently the best match in the viewport | - |\n",
+  "props": [
+    {
+      "name": "autoContrast",
+      "description": "If set, adjusts text color based on background color for <code>filled</code> variant",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color value",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "depthOffset",
+      "description": "Controls padding on the left side of control, multiplied by (<code>depth</code> - <code>minDepthToOffset</code>), <code>20px</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "getControlProps",
+      "description": "A function to pass props down to controls, accepts values from <code>use-scroll-spy</code> hook as an argument and active state.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(payload: TableOfContentsGetControlPropsPayload) => UnstyledButtonProps & ElementProps<\"button\"> & Record<...>"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "initialData",
+      "description": "Data used to render content until actual values are retrieved from the DOM",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InitialTableOfContentsData[]"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "minDepthToOffset",
+      "description": "Minimum <code>depth</code> value that requires offset, <code>1</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "reinitializeRef",
+      "description": "A function to reinitialize headings from <code>use-scroll-spy</code> hook",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RefObject<() => void>"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "scrollSpyOptions",
+      "description": "Options passed down to <code>use-scroll-spy</code> hook",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "UseScrollSpyOptions"
+      },
+      "sourceComponent": "TableOfContents"
+    },
+    {
+      "name": "size",
+      "description": "Controls font-size and padding of all elements",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "TableOfContents"
+    }
+  ]
+}

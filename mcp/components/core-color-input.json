@@ -1,0 +1,591 @@
+{
+  "id": "core-color-input",
+  "name": "ColorInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/color-input",
+  "description": "Capture color from user",
+  "propsCount": 43,
+  "llmUrl": "https://mantine.dev/llms/core-color-input.md",
+  "componentDataUrl": "/mcp/components/core-color-input.json",
+  "searchText": "colorinput capture color from user @mantine/core /core/color-input closeoncolorswatchclick defaultvalue description descriptionprops disabled disallowinput error errorprops eyedropperbuttonprops eyedroppericon fixonblur format inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition onchange onchangeend pointer popoverprops radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size swatches swatchesperrow value withasterisk witherrorstyles witheyedropper withpicker withpreview wrapperprops",
+  "source": "@mantine/core/src/components/ColorInput/ColorInput.tsx",
+  "docs": "core/color-input.mdx",
+  "markdown": "# ColorInput\nPackage: @mantine/core\nImport: import { ColorInput } from '@mantine/core';\nDescription: Capture color from user\n\n## Usage\n\nColorInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. ColorInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <ColorInput\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      placeholder=\"Input placeholder\"\n    />\n  );\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorInput placeholder=\"Pick color\" loading />;\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState('');\n  return <ColorInput value={value} onChange={setValue} />;\n}\n```\n\n## Formats\n\nThe component supports hex, hexa, rgb, rgba, hsl and hsla color formats.\nThe slider to change opacity is displayed only for hexa, rgba and hsla formats:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorInput defaultValue=\"#C5D899\" format=\"hex\" />;\n}\n```\n\n\n## Preserve invalid input\n\nBy default, `ColorInput` will revert the value on blur to the last known valid value.\nTo change this behavior and keep the invalid value, set `fixOnBlur={false}`:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorInput fixOnBlur={false} label=\"Value is not fixed on blur\" placeholder=\"May contain invalid value\" />;\n}\n```\n\n\n## onChangeEnd\n\n`onChangeEnd` is called when the user stops dragging the slider or changes the input value.\nIt is useful when you need to update the color only when the user has finished interacting with the component:\n\n```tsx\nimport { useState } from 'react';\nimport { ColorInput, Text } from '@mantine/core';\n\nfunction Demo() {\n  const [changeEndValue, setChangeEndValue] = useState('#FFFFFF');\n\n  return (\n    <>\n      <Text mb=\"md\">\n        Change end value: <b>{changeEndValue}</b>\n      </Text>\n\n      <ColorInput\n        label=\"Pick color\"\n        placeholder=\"Pick color\"\n        defaultValue=\"#FFFFFF\"\n        onChangeEnd={setChangeEndValue}\n      />\n    </>\n  );\n}\n```\n\n\n## Disable free input\n\nTo disable free input, set the `disallowInput` prop:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorInput disallowInput />;\n}\n```\n\n\n## With swatches\n\nYou can add any amount of predefined color swatches:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorInput\n      format=\"hex\"\n      swatches={['#2e2e2e', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5', '#228be6', '#15aabf', '#12b886', '#40c057', '#82c91e', '#fab005', '#fd7e14']}\n    />\n  );\n}\n```\n\n\nBy default, there will be 7 swatches per row. You can change this with the `swatchesPerRow` prop,\nlike in the [ColorPicker](https://mantine.dev/llms/core-color-picker.md) component:\n\n```tsx\nimport { ColorPicker } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorPicker swatchesPerRow={7} format=\"hex\" swatches={[${Object.keys(DEFAULT_THEME.colors)\n      .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)\n      .join(', ')}]} />\n  );\n}\n```\n\n\nIf you need to restrict color picking to certain colors – disable the color picker and disallow free input:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorInput\n      placeholder=\"Pick color\"\n      label=\"Your favorite color\"\n      disallowInput\n      withPicker={false}\n      swatches={['#2e2e2e', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5', '#228be6', '#15aabf', '#12b886', '#40c057', '#82c91e', '#fab005', '#fd7e14']}\n    />\n  );\n}\n```\n\n\n## Close dropdown on color swatch click\n\nTo close the dropdown when one of the color swatches is clicked, set the `closeOnColorSwatchClick` prop:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorInput\n      closeOnColorSwatchClick\n      label=\"Dropdown is closed when color swatch is clicked\"\n      placeholder=\"Click color swatch\"\n      swatches={['#2e2e2e', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5', '#228be6', '#15aabf', '#12b886', '#40c057', '#82c91e', '#fab005', '#fd7e14']}\n    />\n  );\n}\n```\n\n\n## Hide dropdown\n\nTo hide the dropdown, set `withPicker={false}`:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <ColorInput withPicker={false} pointer label=\"Without dropdown\" placeholder=\"Enter value\" />\n  );\n}\n```\n\n\n## Eye dropper\n\nBy default, if the [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)\nis available, the eye dropper icon will be displayed at the right section of the input.\nTo disable it, set `withEyeDropper={false}`:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorInput withEyeDropper={false} label=\"Without eye dropper\" placeholder=\"Not fun\" />;\n}\n```\n\n\n## Change eye dropper icon\n\nYou can replace the eye dropper icon with any React node using the `eyeDropperIcon` prop:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\nimport { CrosshairIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <ColorInput\n      eyeDropperIcon={<CrosshairIcon size={18} />}\n      label=\"With custom eye dropper icon\"\n      placeholder=\"Pick color\"\n    />\n  );\n}\n```\n\n\n## Input sections\n\nColorInput supports left and right sections to display icons, buttons or other content alongside the input.\n\nNote that by default, `ColorPicker` has a color preview in the left section and an eye dropper button\nin the right section. You can replace these elements with any React node using the `leftSection`\nand `rightSection` props:\n\n```tsx\nimport { ColorInput } from '@mantine/core';\nimport { EyedropperIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  const icon = <EyedropperIcon size={18} />;\n\n  return (\n    <>\n      <ColorInput\n        label=\"With custom left section\"\n        placeholder=\"Replaces color swatch\"\n        leftSection={icon}\n        leftSectionPointerEvents=\"none\"\n        withEyeDropper={false}\n      />\n      <ColorInput\n        label=\"With custom right section\"\n        placeholder=\"Replaces eye dropper\"\n        rightSection={icon}\n        rightSectionPointerEvents=\"none\"\n        mt=\"md\"\n      />\n    </>\n  );\n}\n```\n\n\n## Error state\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <ColorInput label=\"Boolean error\" placeholder=\"Boolean error\" error />\n      <ColorInput\n        mt=\"md\"\n        label=\"With error message\"\n        placeholder=\"With error message\"\n        error=\"Invalid name\"\n      />\n    </>\n  );\n}\n```\n\n\n## Disabled state\n\n```tsx\nimport { ColorInput } from '@mantine/core';\n\nfunction Demo() {\n  return <ColorInput disabled label=\"Disabled input\" placeholder=\"Disabled input\" />;\n}\n```\n\n\n\n#### Props\n\n**ColorInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| closeOnColorSwatchClick | boolean | - | If set, the dropdown is closed when one of the color swatches is clicked |\n| defaultValue | string | - | Uncontrolled component default value |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| disallowInput | boolean | - | If input is not allowed, the user can only pick value with color picker and swatches |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| eyeDropperButtonProps | Record<string, any> | - | Props passed down to the eye dropper button |\n| eyeDropperIcon | React.ReactNode | - | An icon to replace the default eye dropper icon |\n| fixOnBlur | boolean | - | If set, the input value resets to the last known valid value when the input loses focus |\n| format | 'hex' \\| 'hexa' \\| 'rgba' \\| 'rgb' \\| 'hsl' \\| 'hsla' | - | Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| onChange | (value: string) => void | - | Called when value changes |\n| onChangeEnd | (value: string) => void | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| popoverProps | PopoverProps | - | Props passed down to the `Popover` component |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| swatches | string[] | - | A list of colors used to display swatches list below the color picker |\n| swatchesPerRow | number | - | Number of swatches per row |\n| value | string | - | Controlled component value |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withEyeDropper | boolean | - | If set, the eye dropper button is displayed in the right section |\n| withPicker | boolean | - | If `false`, the component displays only swatches |\n| withPreview | boolean | - | If set, the preview color swatch is displayed in the left section of the input |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nColorInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**ColorInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-ColorInput-wrapper | Root element |\n| input | .mantine-ColorInput-input | Input element |\n| section | .mantine-ColorInput-section | Left and right sections |\n| root | .mantine-ColorInput-root | Root element |\n| label | .mantine-ColorInput-label | Label element |\n| required | .mantine-ColorInput-required | Required asterisk element, rendered inside label |\n| description | .mantine-ColorInput-description | Description element |\n| error | .mantine-ColorInput-error | Error element |\n| preview | .mantine-ColorInput-preview | Color preview, displayed only when `format` supports alpha channel |\n| body | .mantine-ColorInput-body | Contains alpha/hue sliders and color preview |\n| slider | .mantine-ColorInput-slider | Alpha and hue sliders root |\n| sliderOverlay | .mantine-ColorInput-sliderOverlay | Element used to display various overlays over hue and alpha sliders |\n| saturation | .mantine-ColorInput-saturation | Saturation picker |\n| saturationOverlay | .mantine-ColorInput-saturationOverlay | Element used to display various overlays over saturation picker |\n| sliders | .mantine-ColorInput-sliders | Contains alpha and hue sliders |\n| thumb | .mantine-ColorInput-thumb | Thumb of all sliders |\n| swatch | .mantine-ColorInput-swatch | Color swatch |\n| swatches | .mantine-ColorInput-swatches | Color swatches list |\n| dropdown | .mantine-ColorInput-dropdown | Popover dropdown |\n| colorPreview | .mantine-ColorInput-colorPreview | Color swatch preview in input left section |\n| eyeDropperButton | .mantine-ColorInput-eyeDropperButton | Eye dropper button |\n| eyeDropperIcon | .mantine-ColorInput-eyeDropperIcon | Default eye dropper icon |\n\n**ColorInput CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| colorPreview | --ci-preview-size | Controls `width` and `height` of color preview |\n",
+  "props": [
+    {
+      "name": "closeOnColorSwatchClick",
+      "description": "If set, the dropdown is closed when one of the color swatches is clicked",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "disallowInput",
+      "description": "If input is not allowed, the user can only pick value with color picker and swatches",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "eyeDropperButtonProps",
+      "description": "Props passed down to the eye dropper button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Record<string, any>"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "eyeDropperIcon",
+      "description": "An icon to replace the default eye dropper icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "fixOnBlur",
+      "description": "If set, the input value resets to the last known valid value when the input loses focus",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "format",
+      "description": "Color format. <code>hexa</code>, <code>rgba</code>, <code>hsla</code> values render alpha channel slider",
+      "required": false,
+      "defaultValue": "'hex'",
+      "type": {
+        "name": "'hex' | 'hexa' | 'rgba' | 'rgb' | 'hsl' | 'hsla'",
+        "raw": "ColorFormat | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"hex\""
+          },
+          {
+            "value": "\"hexa\""
+          },
+          {
+            "value": "\"rgba\""
+          },
+          {
+            "value": "\"rgb\""
+          },
+          {
+            "value": "\"hsl\""
+          },
+          {
+            "value": "\"hsla\""
+          }
+        ]
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "onChangeEnd",
+      "description": "Called when the user stops dragging one of the sliders or changes the value with keyboard",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "popoverProps",
+      "description": "Props passed down to the <code>Popover</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "PopoverProps"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "swatches",
+      "description": "A list of colors used to display swatches list below the color picker",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "swatchesPerRow",
+      "description": "Number of swatches per row",
+      "required": false,
+      "defaultValue": "7",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "withEyeDropper",
+      "description": "If set, the eye dropper button is displayed in the right section",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "withPicker",
+      "description": "If <code>false</code>, the component displays only swatches",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "withPreview",
+      "description": "If set, the preview color swatch is displayed in the left section of the input",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ColorInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "ColorInput"
+    }
+  ]
+}

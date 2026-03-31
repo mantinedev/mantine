@@ -4,7 +4,7 @@ Import: import { UseListState } from '@mantine/hooks';
 
 ## Usage
 
-`use-list-state` provides an API to work with list state:
+The `use-list-state` hook provides an API to work with list state:
 
 ```tsx
 import { useListState } from '@mantine/hooks';
@@ -88,8 +88,6 @@ The hook provides handlers to work with array data:
 * `filter` - filter values with callback function
 
 ## Indeterminate state checkbox example
-
-#### Example: indeterminate
 
 ```tsx
 import { useListState, randomId } from '@mantine/hooks';

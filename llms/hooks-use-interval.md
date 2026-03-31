@@ -4,11 +4,35 @@ Import: import { UseInterval } from '@mantine/hooks';
 
 ## Usage
 
+```tsx
+import { useState, useEffect } from 'react';
+import { useInterval } from '@mantine/hooks';
+import { Stack, Button, Text } from '@mantine/core';
+
+function Demo() {
+  const [seconds, setSeconds] = useState(0);
+  const interval = useInterval(() => setSeconds((s) => s + 1), 1000);
+
+  useEffect(() => {
+    interval.start();
+    return interval.stop;
+  }, []);
+
+  return (
+    <Stack align="center">
+      <Text>Page loaded <b>{seconds}</b> seconds ago</Text>
+      <Button onClick={interval.toggle} color={interval.active ? 'red' : 'teal'}>
+        {interval.active ? 'Stop' : 'Start'} counting
+      </Button>
+    </Stack>
+  );
+}
+```
 
 
 ## Auto invoke interval
 
-To automatically start interval when component is mounted, set `autoInvoke` option to `true`:
+To automatically start the interval when the component is mounted, set the `autoInvoke` option to `true`:
 
 ```tsx
 import { useInterval } from '@mantine/hooks';
@@ -35,7 +59,7 @@ Arguments:
 
 Return object:
 
-* `start` – start interval
+* `start` – start the interval
 * `stop` – stop interval
 * `toggle` – toggle interval
 * `active` – current interval status
@@ -71,7 +95,7 @@ function useInterval(
 
 ## Exported types
 
-`UseIntervalOptions` and `UseIntervalReturnValue` types are exported from `@mantine/hooks` package,
+`UseIntervalOptions` and `UseIntervalReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

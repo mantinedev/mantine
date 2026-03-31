@@ -4,7 +4,7 @@
 
 ## Global styles imports
 
-If you used separate styles imports from `@mantine/core/styles/global.css` , you need to update imports to use new files.
+If you used separate styles imports from `@mantine/core/styles/global.css`, you need to update imports to use new files.
 Note that if you previously imported `@mantine/core/styles.css`, no changes are required – all new files are already included in `styles.css`.
 
 7.x version import:
@@ -23,7 +23,7 @@ import '@mantine/core/styles/default-css-variables.css';
 import '@mantine/core/styles/global.css';
 ```
 
-If you used `@mantine/core/styles.css`, no changes are required,
+If you used `@mantine/core/styles.css`, no changes are required;
 the import works the same in 7.x and 8.x versions:
 
 ```tsx
@@ -33,11 +33,11 @@ import '@mantine/core/styles.css';
 
 ## Portal reuseTargetNode
 
-`reuseTargetNode` prop of [Portal](https://mantine.dev/core/portal) component is now enabled by default.
+The `reuseTargetNode` prop of the [Portal](https://mantine.dev/llms/core-portal.md) component is now enabled by default.
 This option improves performance by reusing the target node between portal renders, but
 in some edge cases, it might cause issues with `z-index` stacking context.
 
-If you experience issues with `z-index`, change `reuseTargetNode` prop to `false` in theme:
+If you experience issues with `z-index`, change the `reuseTargetNode` prop to `false` in theme:
 
 ```tsx
 import { createTheme, Portal } from '@mantine/core';
@@ -56,9 +56,9 @@ export const theme = createTheme({
 
 ## Switch withThumbIndicator
 
-[Switch](https://mantine.dev/core/switch) component default styles were updated, it now
-includes checked state indicator inside the thumb. If you want to use
-old styles without indicator, set `withThumbIndicator` prop to `false` in theme:
+The [Switch](https://mantine.dev/llms/core-switch.md) component's default styles have been updated; it now
+includes a checked state indicator inside the thumb. If you want to use the
+old styles without the indicator, set the `withThumbIndicator` prop to `false` in the theme:
 
 ```tsx
 import { createTheme, Switch } from '@mantine/core';
@@ -103,13 +103,13 @@ export function Demo8x() {
 
 ## DatesProvider timezone
 
-`DatesProvider` component no longer supports `timezone` option:
+The `DatesProvider` component no longer supports the `timezone` option:
 
 ```tsx
 import { DatesProvider } from '@mantine/dates';
 
 function Demo7x() {
-  // ❌ timezone option is no longer supported
+  // ❌ The timezone option is no longer supported
   return (
     <DatesProvider settings={{ timezone: 'UTC', consistentWeeks: true }}>
       App
@@ -118,7 +118,7 @@ function Demo7x() {
 }
 
 function Demo8x() {
-  // ✅ Remove timezone option
+  // ✅ Remove the timezone option
   return (
     <DatesProvider settings={{ consistentWeeks: true }}>
       App
@@ -127,7 +127,7 @@ function Demo8x() {
 }
 ```
 
-If you need to handle timezones in your application, you can use a dedicated dates library
+If you need to handle timezones in your application, you can use a dedicated date library
 ([dayjs](https://day.js.org/), [luxon](https://moment.github.io/luxon/#/), [date-fns](https://date-fns.org/))
 to update timezone values. Example of using Mantine components with [dayjs](https://day.js.org/):
 
@@ -138,8 +138,8 @@ import { DatePicker } from '@mantine/dates';
 function Demo() {
   const [value, setValue] = useState<string | null>('2022-08-21');
 
-  // Mantine components use strings as values, you can pass these
-  // strings to a dates library of your choice to assign timezone
+  // Mantine components use strings as values; you can pass these
+  // strings to a date library of your choice to assign a timezone
   const dateWithTimeZone = dayjs(value).tz("America/Toronto").toDate();
 
   return <DatePicker value={value} onChange={setValue} />;
@@ -148,22 +148,22 @@ function Demo() {
 
 ## DateTimePicker timeInputProps
 
-[DateTimePicker](https://mantine.dev/dates/date-time-picker) component no longer accepts `timeInputProps` prop,
-as the underlying [TimeInput](https://mantine.dev/dates/time-input) component was replaced with [TimePicker](https://mantine.dev/dates/time-picker).
-To pass props down to [TimePicker](https://mantine.dev/dates/time-picker) component, use `timePickerProps` prop instead.
+The [DateTimePicker](https://mantine.dev/llms/dates-date-time-picker.md) component no longer accepts the `timeInputProps` prop,
+as the underlying [TimeInput](https://mantine.dev/llms/dates-time-input.md) component was replaced with [TimePicker](https://mantine.dev/llms/dates-time-picker.md).
+To pass props down to the [TimePicker](https://mantine.dev/llms/dates-time-picker.md) component, use the `timePickerProps` prop instead.
 
 7.x version:
 
 ```tsx
 import { DateTimePicker } from '@mantine/dates';
-import { IconClock } from '@tabler/icons-react';
+import { ClockIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <DateTimePicker
       // ❌ timeInputProps is no longer available
       timeInputProps={{
-        leftSection: <IconClock size={16} stroke={1.5} />,
+        leftSection: <ClockIcon size={16} />,
       }}
     />
   );
@@ -180,7 +180,7 @@ function Demo() {
     <DateTimePicker
       // ✅ Use timePickerProps instead of timeInputProps
       timePickerProps={{
-        leftSection: <IconClock size={16} stroke={1.5} />,
+        leftSection: <ClockIcon size={16} />,
         minutesStep: 5,
         withDropdown: true,
       }}
@@ -191,11 +191,11 @@ function Demo() {
 
 ## CodeHighlight usage
 
-[@mantine/code-highlight](https://mantine.dev/x/code-highlight) package no longer depends on [highlight.js](https://highlightjs.org).
-You can follow the [updated documentation](https://mantine.dev/x/code-highlight/) to set up syntax highlighting with [shiki](https://shiki.matsu.io/).
+The [@mantine/code-highlight](https://mantine.dev/llms/x-code-highlight.md) package no longer depends on [highlight.js](https://highlightjs.org).
+You can follow the [updated documentation](https://mantine.dev/llms/x-code-highlight.md) to set up syntax highlighting with [shiki](https://shiki.matsu.io/).
 
-If you want to continue using [highlight.js](https://highlightjs.org/), in your application,
-install `highlight.js` package:
+If you want to continue using [highlight.js](https://highlightjs.org/) in your application,
+install the `highlight.js` package:
 
 ```bash
 yarn add highlight.js
@@ -205,7 +205,7 @@ yarn add highlight.js
 npm install highlight.js
 ```
 
-Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as `adapter` prop:
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as the `adapter` prop:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -228,8 +228,8 @@ function App() {
 }
 ```
 
-Then you need to add styles of one of the highlight.js themes to your application.
-You can do that by importing css file from `highlight.js` package or adding it via
+Then you need to add styles from one of the highlight.js themes to your application.
+You can do that by importing a CSS file from the `highlight.js` package or adding it via a
 CDN link to the head of your application:
 
 ```html
@@ -239,12 +239,12 @@ CDN link to the head of your application:
 />
 ```
 
-After that, you can use `CodeHighlight` component in your application the same way you did in 7.x version.
+After that, you can use the `CodeHighlight` component in your application the same way you did in the 7.x version.
 
 ## Menu data-hovered attribute
 
-[Menu.Item](https://mantine.dev/core/menu) no longer uses `data-hovered` attribute to indicate hovered state.
-If you used `data-hovered` in your styles, you need to change it `:hover` and `:focus` selectors
+[Menu.Item](https://mantine.dev/llms/core-menu.md) no longer uses the `data-hovered` attribute to indicate hovered state.
+If you used `data-hovered` in your styles, you need to change it to `:hover` and `:focus` selectors
 instead:
 
 ```scss
@@ -267,9 +267,7 @@ instead:
 
 ## Popover hideDetached
 
-[Popover](https://mantine.dev/core/popover) now supports `hideDetached` prop to automatically close popover when target element is removed from the DOM:
-
-#### Example: hideDetached
+[Popover](https://mantine.dev/llms/core-popover.md) now supports the `hideDetached` prop to automatically close the popover when the target element is removed from the DOM:
 
 ```tsx
 import { Box, Button, Group, Popover } from '@mantine/core';
@@ -306,7 +304,7 @@ function Demo() {
 ```
 
 
-By default, `hideDetached` is enabled – the behavior has changed from 7.x version.
+By default, `hideDetached` is enabled – the behavior has changed from the 7.x version.
 If you prefer to keep the old behavior, you can disable `hideDetached` for all components:
 
 ```tsx
@@ -327,7 +325,7 @@ export const theme = createTheme({
 
 ## Carousel changes
 
-Starting from 8.x version, [@mantine/carousel](https://mantine.dev/x/carousel) package requires
+Starting from the 8.x version, the [@mantine/carousel](https://mantine.dev/llms/x-carousel.md) package requires
 `embla-carousel` and `embla-carousel-react` packages with version 8.x.
 
 You need to update embla dependencies:
@@ -340,7 +338,7 @@ yarn add embla-carousel@^8.5.2 embla-carousel-react@^8.5.2
 npm install embla-carousel@^8.5.2 embla-carousel-react@^8.5.2
 ```
 
-Update embla props that were previously passed to `Carousel` component
+Update embla props that were previously passed to the `Carousel` component
 to `emblaOptions`. Full list of props:
 
 * `loop`
@@ -367,7 +365,7 @@ function Demo8x() {
 }
 ```
 
-`useAnimationOffsetEffect` hook was removed, it is no longer required, you need to
+The `useAnimationOffsetEffect` hook was removed; it is no longer required, and you need to
 remove it from your code:
 
 ```tsx
@@ -380,7 +378,7 @@ function Demo7x() {
   return <Carousel getEmblaApi={setEmbla} />;
 }
 
-// ✅ 8.x – remove useAnimationOffsetEffect entirely, it is not required
+// ✅ 8.x – remove useAnimationOffsetEffect entirely; it is not required
 import { Carousel } from '@mantine/carousel';
 
 function Demo8x() {
@@ -388,11 +386,11 @@ function Demo8x() {
 }
 ```
 
-`Embla` type is no longer exported from `@mantine/carousel` package,
-you need to change this import to reference `embla-carousel` package instead:
+The `Embla` type is no longer exported from the `@mantine/carousel` package;
+you need to change this import to reference the `embla-carousel` package instead:
 
 ```tsx
-// ❌ 7.x – Embla type is no longer available in 8.x
+// ❌ 7.x – The Embla type is no longer available in 8.x
 import { Carousel, Embla } from '@mantine/carousel';
 
 function Demo7x() {
@@ -400,7 +398,7 @@ function Demo7x() {
   return <Carousel getEmblaApi={setEmbla} />;
 }
 
-// ✅ 8.x – replace Embla type import
+// ✅ 8.x – replace the Embla type import
 import { Carousel } from '@mantine/carousel';
 import { EmblaCarouselType } from 'embla-carousel';
 

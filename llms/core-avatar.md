@@ -5,11 +5,9 @@ Description: Display user profile image, initials or fallback icon
 
 ## Usage
 
-#### Example: usage
-
 ```tsx
 import { Avatar } from '@mantine/core';
-import { IconStar } from '@tabler/icons-react';
+import { StarIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -25,7 +23,7 @@ function Demo() {
 
       {/* Custom placeholder icon */}
       <Avatar color="blue" radius="sm">
-        <IconStar size={20} />
+        <StarIcon size={20} />
       </Avatar>
     </>
   );
@@ -35,11 +33,9 @@ function Demo() {
 
 ## Initials
 
-To display initials instead of the default placeholder, set `name` prop
+To display initials instead of the default placeholder, set the `name` prop
 to the name of the person, for example, `name="John Doe"`. If the name
-is set, you can use `color="initials"` to generate color based on the name:
-
-#### Example: initials
+is set, you can use `color="initials"` to generate a color based on the name:
 
 ```tsx
 import { Avatar, Group } from '@mantine/core';
@@ -55,12 +51,10 @@ function Demo() {
 
 ## Allowed initials colors
 
-By default, all colors from the default theme are allowed for initials, you can restrict them
-by providing `allowedInitialsColors` prop with an array of colors. Note that the default colors
-array does not include custom colors defined in the theme, you need to provide them manually
+By default, all colors from the default theme are allowed for initials. You can restrict them
+by providing the `allowedInitialsColors` prop with an array of colors. Note that the default colors
+array does not include custom colors defined in the theme – you need to provide them manually
 if needed.
-
-#### Example: allowedColors
 
 ```tsx
 import { Avatar, Group } from '@mantine/core';
@@ -78,14 +72,12 @@ function Demo() {
 
 ## Placeholder
 
-If the image cannot be loaded or not provided, `Avatar` will display a placeholder instead. By default,
-placeholder is an icon, but it can be changed to any React node:
-
-#### Example: placeholders
+If the image cannot be loaded or is not provided, `Avatar` will display a placeholder instead. By default,
+the placeholder is an icon, but it can be changed to any React node:
 
 ```tsx
 import { Avatar } from '@mantine/core';
-import { IconStar } from '@tabler/icons-react';
+import { StarIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -101,7 +93,7 @@ function Demo() {
 
       {/* Placeholder with custom icon */}
       <Avatar color="blue" radius="xl">
-        <IconStar size={20} />
+        <StarIcon size={20} />
       </Avatar>
     </>
   );
@@ -111,22 +103,18 @@ function Demo() {
 
 ## Variants
 
-#### Example: configurator
-
 ```tsx
 import { Avatar } from '@mantine/core';
 
 function Demo() {
-  return <Avatar />;
+  return <Avatar variant="filled" radius="md" size="md" color="gray" src="" />;
 }
 ```
 
 
 ## Avatar.Group
 
-`Avatar.Group` component combines multiple avatars into a stack:
-
-#### Example: group
+The `Avatar.Group` component combines multiple avatars into a stack:
 
 ```tsx
 import { Avatar } from '@mantine/core';
@@ -145,8 +133,8 @@ function Demo() {
 
 
 Note that you must not wrap child `Avatar` components with any additional elements,
-but you can use wrap `Avatar` with components that do not render any HTML elements
-in the current tree, for example [Tooltip](https://mantine.dev/core/tooltip).
+but you can wrap `Avatar` with components that do not render any HTML elements
+in the current tree, for example [Tooltip](https://mantine.dev/llms/core-tooltip.md).
 
 ```tsx
 import { Avatar } from '@mantine/core';
@@ -166,9 +154,7 @@ function Demo() {
 }
 ```
 
-Example of usage with [Tooltip](https://mantine.dev/core/tooltip/):
-
-#### Example: groupTooltip
+Example of usage with [Tooltip](https://mantine.dev/llms/core-tooltip.md):
 
 ```tsx
 import { Avatar, Tooltip } from '@mantine/core';
@@ -204,40 +190,7 @@ function Demo() {
 ```
 
 
-<Polymorphic defaultElement="div" changeToElement="button" component="Avatar" withNext />
-
-## Polymorphic component
-
-Avatar is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
-
-```tsx
-import { Avatar } from '@mantine/core';
-
-function Demo() {
-  return <Avatar component="button" />;
-}
-```
-
-You can also use components in component prop, for example, Next.js Link:
-
-```tsx
-import Link from 'next/link';
-import { Avatar } from '@mantine/core';
-
-function Demo() {
-  return <Avatar component={Link} href="/" />;
-}
-```
-
-**Polymorphic components with TypeScript**
-
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, AvatarProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
-
-If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
-
-Example using `Avatar` as a link:
-
-#### Example: link
+Example of using `Avatar` as a link:
 
 ```tsx
 import { Avatar } from '@mantine/core';
@@ -258,28 +211,22 @@ function Demo() {
 
 ## Accessibility
 
-Avatar renders `<img />` HTML element. Set `alt` prop to describe image,
-it is also used as `title` attribute for avatar placeholder when the image cannot be loaded.
+Avatar renders an `<img />` HTML element. Set the `alt` prop to describe the image –
+it is also used as the `title` attribute for the avatar placeholder when the image cannot be loaded.
 
 ```tsx
 import { Avatar } from '@mantine/core';
 
-function NotOk() {
+function Demo() {
   // ❌ No alt for image
   return <Avatar src="./image.png" />;
-}
 
-function Ok() {
   // ✅ alt is set
   return <Avatar src="./image.png" alt="Rob Johnson" />;
-}
 
-function Ehh() {
   // ✅ title is not required, but still recommended
   return <Avatar>RJ</Avatar>;
-}
 
-function OkPlaceholder() {
   // ✅ title is set on placeholder
   return <Avatar alt="Rob Johnson">RJ</Avatar>;
 }
@@ -288,19 +235,26 @@ function OkPlaceholder() {
 
 #### Props
 
+**Avatar props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | allowedInitialsColors | DefaultMantineColor[] | - | A list of colors that is used for autogenerated initials. By default, all default Mantine colors can be used except gray and dark. |
-| alt | string | - | Image <code>alt</code> attribute, also used as <code>title</code> attribute for placeholder |
-| autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
-| children | React.ReactNode | - | Avatar placeholder, displayed when <code>src={null}</code> or when the image cannot be loaded |
-| color | DefaultMantineColor | "initials" | - | Key of <code>theme.colors</code> or any valid CSS color |
-| gradient | MantineGradient | - | Gradient configuration for <code>variant="gradient"</code> |
-| imageProps | React.ComponentPropsWithoutRef<"img"> | - | Attributes passed down to <code>img</code> element |
-| name | string | - | Name of the user. When <code>src</code> is not set, used to display initials and to generate color when <code>color="initials"</code> is set. |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
-| size | number | MantineSize | (string & {}) | - | Width and height of the avatar, numbers are converted to rem |
-| src | string | null | - | Image url, if the image cannot be loaded or <code>src={null}</code>, then placeholder is displayed instead |
+| alt | string | - | Image `alt` attribute, also used as `title` attribute for placeholder |
+| autoContrast | boolean | - | If set, adjusts text color based on background color for `filled` variant |
+| children | React.ReactNode | - | Avatar placeholder, displayed when `src={null}` or when the image cannot be loaded |
+| color | DefaultMantineColor \| "initials" | - | Key of `theme.colors` or any valid CSS color |
+| gradient | MantineGradient | - | Gradient configuration for `variant="gradient"` |
+| imageProps | DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> | - | Attributes passed down to `img` element |
+| name | string | - | Name of the user. When `src` is not set, used to display initials and to generate color when `color="initials"` is set. |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
+| size | MantineSize \| number | - | Width and height of the avatar, numbers are converted to rem |
+| src | string \| null | - | Image url, if the image cannot be loaded or `src={null}`, then placeholder is displayed instead |
+
+**Avatar.Group props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
 
 
 #### Styles API

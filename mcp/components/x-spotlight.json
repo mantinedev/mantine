@@ -1,0 +1,1387 @@
+{
+  "id": "x-spotlight",
+  "name": "Spotlight",
+  "kind": "component",
+  "package": "@mantine/spotlight",
+  "route": "/x/spotlight",
+  "description": "Command center for your application",
+  "propsCount": 125,
+  "llmUrl": "https://mantine.dev/llms/x-spotlight.md",
+  "componentDataUrl": "/mcp/components/x-spotlight.json",
+  "searchText": "spotlight command center for your application @mantine/spotlight /x/spotlight actions centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled filter forceopened fullscreen highlightquery id keepmounted limit lockscroll maxheight nothingfound onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollareaprops scrollable searchprops shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled forceopened fullscreen id keepmounted lockscroll maxheight onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollable shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex children closespotlightontrigger description dimmedsections highlightcolor highlightquery keywords label leftsection rightsection children label disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size witharia witherrorstyles wrapperprops",
+  "source": "@mantine/spotlight/src",
+  "docs": "x/spotlight.mdx",
+  "markdown": "# Spotlight\nPackage: @mantine/spotlight\nImport: import { Spotlight } from '@mantine/spotlight';\nDescription: Command center for your application\n\n## Installation\n\n```bash\nyarn add @mantine/spotlight\n```\n\n```bash\nnpm install @mantine/spotlight\n```\n\nAfter installation import package styles at the root of your application:\n\n```tsx\nimport '@mantine/core/styles.css';\n// ‼️ import spotlight styles after core package styles\nimport '@mantine/spotlight/styles.css';\n```\n\n## Usage\n\nThe `Spotlight` component can be used as a search or as a command center for your application.\nIt is used as a search on the mantine.dev website; you can trigger it with the `Ctrl + K` shortcut.\n`Spotlight` is based on the [Modal](https://mantine.dev/llms/core-modal.md) component and supports most of its props.\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';\nimport { HouseIcon, GaugeIcon, FileTextIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nconst actions: SpotlightActionData[] = [\n  {\n    id: 'home',\n    label: 'Home',\n    description: 'Get to home page',\n    onClick: () => console.log('Home'),\n    leftSection: <HouseIcon size={24} />,\n  },\n  {\n    id: 'dashboard',\n    label: 'Dashboard',\n    description: 'Get full information about current system status',\n    onClick: () => console.log('Dashboard'),\n    leftSection: <GaugeIcon size={24} />,\n  },\n  {\n    id: 'documentation',\n    label: 'Documentation',\n    description: 'Visit documentation to lean more about all features',\n    onClick: () => console.log('Documentation'),\n    leftSection: <FileTextIcon size={24} />,\n  },\n];\n\nfunction Demo() {\n  return (\n    <>\n      <Button onClick={spotlight.open}>Open spotlight</Button>\n      <Spotlight\n        actions={actions}\n        nothingFound=\"Nothing found...\"\n        highlightQuery\n        searchProps={{\n          leftSection: <MagnifyingGlassIcon size={20} />,\n          placeholder: 'Search...',\n        }}\n      />\n    </>\n  );\n}\n```\n\n\n## Actions\n\nThe `@mantine/spotlight` package exports an object with actions that can be used to control the spotlight:\n\n```tsx\nimport { spotlight } from '@mantine/spotlight';\n\nspotlight.open(); // -> opens spotlight\nspotlight.close(); // -> closes spotlight\nspotlight.toggle(); // -> toggles spotlight opened state\n```\n\nThese actions can be passed to event listeners or used anywhere in your application\n(not limited to React components):\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { spotlight } from '@mantine/spotlight';\n\nfunction Demo() {\n  return <Button onClick={spotlight.open}>Open spotlight</Button>;\n}\n```\n\nYou can also import actions directly from the `@mantine/spotlight` package if you prefer this syntax:\n\n```tsx\nimport {\n  closeSpotlight,\n  openSpotlight,\n  toggleSpotlight,\n} from '@mantine/spotlight';\n\nopenSpotlight(); // same as spotlight.open()\ncloseSpotlight(); // same as spotlight.close()\ntoggleSpotlight(); // same as spotlight.toggle()\n```\n\n## Spotlight store\n\nThe `spotlight` object documented above uses the default store; it works fine if you have only one spotlight\nin your application. In case you need multiple spotlights, you need to create your own store for each of them:\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { createSpotlight, Spotlight } from '@mantine/spotlight';\n\n// You can import `firstSpotlight` and `secondSpotlight` anywhere\n// in your application and use `open`, `close` and `toggle` actions\n// to control spotlight the same way as with default `spotlight` object\nexport const [firstStore, firstSpotlight] = createSpotlight();\nexport const [secondStore, secondSpotlight] = createSpotlight();\n\nfunction Demo() {\n  return (\n    <>\n      <Button onClick={firstSpotlight.open}>\n        Open first spotlight\n      </Button>\n      <Button onClick={secondSpotlight.open}>\n        Open second spotlight\n      </Button>\n\n      <Spotlight store={firstStore} actions={[]} />\n      <Spotlight store={secondStore} actions={[]} />\n    </>\n  );\n}\n```\n\n## Keyboard shortcuts\n\n`Spotlight` uses the [use-hotkeys](https://mantine.dev/llms/hooks-use-hotkeys.md) hook to handle keyboard shortcuts.\nBy default, `Ctrl + K` and `Cmd + K` shortcuts are used to open spotlight; you can change them\nwith the `shortcut` prop:\n\n```tsx\nimport { Spotlight } from '@mantine/spotlight';\n\nfunction SingleShortcut() {\n  return <Spotlight shortcut=\"mod + J\" actions={[]} />;\n}\n\n// Same as on mantine.dev\nfunction MultipleShortcuts() {\n  return (\n    <Spotlight shortcut={['mod + K', 'mod + P', '/']} actions={[]} />\n  );\n}\n\n// Disable shortcut\nfunction NoShortcut() {\n  return <Spotlight shortcut={null} actions={[]} />;\n}\n```\n\n## Limit prop\n\nUse the `limit` prop to limit the maximum number of actions that can be displayed at a time.\nUsually, 5–7 actions is a good number. The `limit` prop is crucial for performance in case\nyou have a lot of actions; it will prevent the spotlight from rendering all of them at once.\n\nThe example below renders 3000 actions, but only 7 of them are displayed at a time:\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nconst actions: SpotlightActionData[] = Array(3000)\n  .fill(0)\n  .map((_, index) => ({\n    id: `action-${index}`,\n    label: `Action ${index}`,\n    description: `Action ${index} description`,\n  }));\n\nfunction Demo() {\n  return (\n    <>\n      <Button onClick={spotlight.open}>Open spotlight</Button>\n      <Spotlight\n        actions={actions}\n        nothingFound=\"Nothing found...\"\n        highlightQuery\n        limit={7}\n        searchProps={{\n          leftSection: <MagnifyingGlassIcon size={20} />,\n          placeholder: 'Search...',\n        }}\n      />\n    </>\n  );\n}\n```\n\n\n## Custom filter function\n\nBy default, `Spotlight` uses a simple filter that matches actions by `label`, `description`, and `keywords`.\nYou can customize the filtering logic by providing a custom `filter` function. The `filter` function\nreceives the search query and actions array, and should return filtered actions.\n\nThe custom `filter` function signature:\n\n```tsx\ntype SpotlightFilterFunction = (\n  query: string,\n  actions: SpotlightActions[]\n) => SpotlightActions[];\n```\n\n## Fuzzy search with fuse.js\n\nYou can implement fuzzy search using [fuse.js](https://fusejs.io/) library. This is useful if you want\nto match actions even with typos or partial matches:\n\n```tsx\nimport Fuse from 'fuse.js';\nimport { Button } from '@mantine/core';\nimport {\n  Spotlight,\n  SpotlightActionData,\n  SpotlightFilterFunction,\n  spotlight,\n} from '@mantine/spotlight';\nimport { HouseIcon, GaugeIcon, FileTextIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nconst actions: SpotlightActionData[] = [\n  {\n    id: 'home',\n    label: 'Home',\n    description: 'Get to home page',\n    onClick: () => console.log('Home'),\n    leftSection: <HouseIcon size={24} />,\n  },\n  {\n    id: 'dashboard',\n    label: 'Dashboard',\n    description: 'Get full information about current system status',\n    onClick: () => console.log('Dashboard'),\n    leftSection: <GaugeIcon size={24} />,\n  },\n  {\n    id: 'documentation',\n    label: 'Documentation',\n    description: 'Visit documentation to learn more about all features',\n    onClick: () => console.log('Documentation'),\n    leftSection: <FileTextIcon size={24} />,\n  },\n  {\n    id: 'settings',\n    label: 'Settings',\n    description: 'Manage application preferences and configurations',\n    onClick: () => console.log('Settings'),\n    leftSection: <HouseIcon size={24} />,\n  },\n];\n\nconst fuzzySearchFilter: SpotlightFilterFunction = (query, searchActions) => {\n  if (!query.trim()) {\n    return searchActions;\n  }\n\n  const flatActions = searchActions.reduce<any[]>((acc, item) => {\n    if ('actions' in item) {\n      return [...acc, ...item.actions.map((action) => ({ ...action, group: item.group }))];\n    }\n    return [...acc, item];\n  }, []);\n\n  const fuse = new Fuse(flatActions, {\n    keys: ['label', 'description'],\n    threshold: 0.3,\n    minMatchCharLength: 1,\n  });\n\n  const results = fuse.search(query).map((result) => result.item);\n\n  const groups: Record<string, any> = {};\n  const result: any[] = [];\n\n  results.forEach((action) => {\n    if (action.group) {\n      if (!groups[action.group]) {\n        groups[action.group] = { pushed: false, data: { group: action.group, actions: [] } };\n      }\n      groups[action.group].data.actions.push(action);\n      if (!groups[action.group].pushed) {\n        groups[action.group].pushed = true;\n        result.push(groups[action.group].data);\n      }\n    } else {\n      result.push(action);\n    }\n  });\n\n  return result;\n};\n\nfunction Demo() {\n  return (\n    <>\n      <Button onClick={spotlight.open}>Open spotlight</Button>\n      <Spotlight\n        actions={actions}\n        filter={fuzzySearchFilter}\n        nothingFound=\"Nothing found...\"\n        highlightQuery\n        searchProps={{\n          leftSection: <MagnifyingGlassIcon size={20} />,\n          placeholder: 'Search...',\n        }}\n      />\n    </>\n  );\n}\n```\n\n\n## Scrollable actions list\n\nBy default, the `Spotlight` actions list is not scrollable. If you have a lot of actions that\nyou need to display at a time, set the `scrollable` and `maxHeight` props. Note that there are\ncaveats with both approaches:\n\n* When the `scrollable` prop is not set, the actions list height is not limited and the spotlight\n  body will grow to fit all actions. This can result in a very long spotlight body that will\n  overflow the viewport. To prevent this, use the `limit` prop to define the maximum number of actions\n  that can be displayed at a time. Usually, 5–7 actions is a good number.\n* When the `scrollable` prop is set, the actions list height will always equal the value of the `maxHeight` prop\n  (it will not shrink if there are not enough actions to fill the space). When there are more\n  actions than can fit into the list, it will become scrollable. Scrolling logic is handled\n  by the [ScrollArea](https://mantine.dev/llms/core-scroll-area.md) component.\n\nIn other words, if you want the actions list to shrink, do not set the `scrollable` prop and use the `limit`\nprop. If you want the actions list to always have a fixed height, set the `scrollable` and `maxHeight` props.\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nconst actions: SpotlightActionData[] = Array(100)\n  .fill(0)\n  .map((_, index) => ({\n    id: `action-${index}`,\n    label: `Action ${index}`,\n    description: `Action ${index} description`,\n  }));\n\nfunction Demo() {\n  return (\n    <>\n      <Button onClick={spotlight.open}>Open spotlight</Button>\n      <Spotlight\n        actions={actions}\n        nothingFound=\"Nothing found...\"\n        highlightQuery\n        scrollable\n        maxHeight={350}\n        searchProps={{\n          leftSection: <MagnifyingGlassIcon size={20} />,\n          placeholder: 'Search...',\n        }}\n      />\n    </>\n  );\n}\n```\n\n\n## Actions groups\n\n`Spotlight` supports action groups; you can use them to group actions by category:\n\n```tsx\nimport { Button } from '@mantine/core';\nimport { Spotlight, SpotlightActionData, SpotlightActionGroupData, spotlight } from '@mantine/spotlight';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nconst actions: (SpotlightActionGroupData | SpotlightActionData)[] = [\n  {\n    group: 'Pages',\n    actions: [\n      { id: 'home', label: 'Home page', description: 'Where we present the product' },\n      { id: 'careers', label: 'Careers page', description: 'Where we list open positions' },\n      { id: 'about-us', label: 'About us page', description: 'Where we tell what we do' },\n    ],\n  },\n\n  {\n    group: 'Apps',\n    actions: [\n      { id: 'svg-compressor', label: 'SVG compressor', description: 'Compress SVG images' },\n      { id: 'base64', label: 'Base 64 converter', description: 'Convert data to base 64 format' },\n      { id: 'fake-data', label: 'Fake data generator', description: 'Lorem ipsum generator' },\n    ],\n  },\n];\n\nfunction Demo() {\n  return (\n    <>\n      <Button onClick={spotlight.open}>Open spotlight</Button>\n      <Spotlight\n        actions={actions}\n        nothingFound=\"Nothing found...\"\n        highlightQuery\n        searchProps={{\n          leftSection: <MagnifyingGlassIcon size={20} />,\n          placeholder: 'Search...',\n        }}\n      />\n    </>\n  );\n}\n```\n\n\n## Compound components\n\nIf you need more control over spotlight rendering and logic, use compound components.\nAvailable components:\n\n* `Spotlight.Root` – root component, should be used as a wrapper for all other components, accepts all props to customize logic\n* `Spotlight.Search` – search input\n* `Spotlight.ActionsList` – list of actions, required to wrap all actions and actions groups\n* `Spotlight.Action` – action button\n* `Spotlight.ActionsGroup` - group of actions\n* `Spotlight.Empty` – empty state (nothing found)\n\n```tsx\nimport { useState } from 'react';\nimport { Spotlight, spotlight } from '@mantine/spotlight';\nimport { Button } from '@mantine/core';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nconst data = ['Home', 'About us', 'Contacts', 'Blog', 'Careers', 'Terms of service'];\n\nfunction Demo() {\n  const [query, setQuery] = useState('');\n\n  const items = data\n    .filter((item) => item.toLowerCase().includes(query.toLowerCase().trim()))\n    .map((item) => <Spotlight.Action key={item} label={item} />);\n\n  return (\n    <>\n      <Button onClick={spotlight.open}>Open spotlight</Button>\n\n      <Spotlight.Root query={query} onQueryChange={setQuery}>\n        <Spotlight.Search placeholder=\"Search...\" leftSection={<MagnifyingGlassIcon />} />\n        <Spotlight.ActionsList>\n          {items.length > 0 ? items : <Spotlight.Empty>Nothing found...</Spotlight.Empty>}\n        </Spotlight.ActionsList>\n      </Spotlight.Root>\n    </>\n  );\n}\n```\n\n\nFor example, with the compound components pattern, you can customize action contents:\n\n```tsx\nimport { useState } from 'react';\nimport { Spotlight, spotlight } from '@mantine/spotlight';\nimport { Badge, Button, Center, Group, Text } from '@mantine/core';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nconst data = [\n  {\n    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',\n    title: 'Bender Bending Rodríguez',\n    description: 'Fascinated with cooking, though has no sense of taste',\n    new: true,\n  },\n\n  {\n    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',\n    title: 'Carol Miller',\n    description: 'One of the richest people on Earth',\n    new: false,\n  },\n  {\n    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',\n    title: 'Homer Simpson',\n    description: 'Overweight, lazy, and often ignorant',\n    new: false,\n  },\n  {\n    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',\n    title: 'Spongebob Squarepants',\n    description: 'Not just a sponge',\n    new: false,\n  },\n];\n\nfunction Demo() {\n  const [query, setQuery] = useState('');\n\n  const items = data\n  .filter((item) => item.title.toLowerCase().includes(query.toLowerCase().trim()))\n  .map((item) => (\n    <Spotlight.Action key={item.title} onClick={() => console.log(item)}>\n      <Group wrap=\"nowrap\" w=\"100%\">\n        {item.image && (\n          <Center>\n            <img src={item.image} alt={item.title} width={50} height={50} />\n          </Center>\n        )}\n\n        <div style={{ flex: 1 }}>\n          <Text>{item.title}</Text>\n\n          {item.description && (\n            <Text opacity={0.6} size=\"xs\">\n              {item.description}\n            </Text>\n          )}\n        </div>\n\n        {item.new && <Badge variant=\"default\">new</Badge>}\n      </Group>\n    </Spotlight.Action>\n  ));\n\n  return (\n    <>\n      <Button onClick={spotlight.open}>Open spotlight</Button>\n\n      <Spotlight.Root query={query} onQueryChange={setQuery}>\n        <Spotlight.Search placeholder=\"Search...\" leftSection={<MagnifyingGlassIcon />} />\n        <Spotlight.ActionsList>\n          {items.length > 0 ? items : <Spotlight.Empty>Nothing found...</Spotlight.Empty>}\n        </Spotlight.ActionsList>\n      </Spotlight.Root>\n    </>\n  );\n}\n```\n\n\n## Fixed elements offset\n\nThe `Spotlight` component uses the [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)\npackage to lock scroll. To properly size these `elements`, add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):\n\n```tsx\nimport { RemoveScroll } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <div className={RemoveScroll.classNames.fullWidth}>\n        width: 100%\n      </div>\n      <div className={RemoveScroll.classNames.zeroRight}>\n        right: 0\n      </div>\n    </>\n  );\n}\n```\n\n\n#### Props\n\n**Spotlight props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| actions | SpotlightActions[] | required | Actions data, passed down to `Spotlight.Action` component |\n| centered | boolean | - | If set, the modal is centered vertically |\n| children | React.ReactNode | - | Modal content |\n| clearQueryOnClose | boolean | - | Determines whether the search query should be cleared when the spotlight is closed |\n| closeOnActionTrigger | boolean | - | Determines whether spotlight should be closed when one of the actions is triggered |\n| closeOnClickOutside | boolean | - | If set, the modal/drawer is closed when user clicks on the overlay |\n| closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |\n| disabled | boolean | - | If set, spotlight will not be rendered |\n| filter | SpotlightFilterFunction | - | Function to filter actions data based on search query, by default actions are filtered by title, description and keywords |\n| forceOpened | boolean | - | Forces opened state, useful for tests |\n| fullScreen | boolean | - | If set, the modal takes the entire screen |\n| highlightQuery | boolean | - | Determines whether search query should be highlighted in action label |\n| id | string | - | Id used to connect modal/drawer with body and title |\n| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |\n| limit | number | - | Maximum number of actions displayed at a time |\n| lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |\n| maxHeight | MaxHeight<string \\| number> | - | Spotlight content max-height. Ignored unless `scrollable` prop is set. |\n| nothingFound | React.ReactNode | - | Message displayed when none of the actions match given `filter` |\n| onEnterTransitionEnd | () => void | - | Called when enter transition ends |\n| onExitTransitionEnd | () => void | - | Called when exit transition ends |\n| onQueryChange | (query: string) => void | - | Called when query changes |\n| onSpotlightClose | () => void | - | Called when spotlight closes |\n| onSpotlightOpen | () => void | - | Called when spotlight opens |\n| overlayProps | ModalBaseOverlayProps | - | Props passed down to the `Overlay` component, use to configure opacity, `background-color`, styles and other properties |\n| padding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set content, header and footer padding |\n| portalProps | BasePortalProps | - | Props passed down to the Portal component when `withinPortal` is set |\n| query | string | - | Controlled Spotlight search query |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| removeScrollProps | RemoveScrollProps | - | Props passed down to react-remove-scroll, can be used to customize scroll lock behavior |\n| returnFocus | boolean | - | If set, focus is returned to the last active element when `onClose` is called |\n| scrollAreaComponent | ScrollAreaComponent | - | Scroll area component |\n| scrollAreaProps | Partial<ScrollAreaAutosizeProps> | - | Props passed down to the `ScrollArea` component |\n| scrollable | boolean | - | Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored |\n| searchProps | SpotlightSearchProps | - | Props passed down to the `Spotlight.Search` |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS box-shadow value |\n| shortcut | string \\| string[] \\| null | - | Keyboard shortcut or a list of shortcuts to trigger spotlight |\n| size | MantineSize \\| number | - | Controls width of the content area |\n| stackId | string | - | Id of the modal in the `Modal.Stack` |\n| store | SpotlightStore | - | Spotlight store, can be used to create multiple instances of spotlight |\n| tagsToIgnore | string[] | - | A list of tags which when focused will be ignored by shortcut |\n| title | React.ReactNode | - | Modal title |\n| transitionProps | TransitionProps | - | Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default |\n| trapFocus | boolean | - | If set, focus is trapped within the modal/drawer |\n| triggerOnContentEditable | boolean | - | Determines whether shortcut should trigger based in contentEditable |\n| withOverlay | boolean | - | If set, the overlay is rendered |\n| withinPortal | boolean | - | If set, the component is rendered inside `Portal` |\n| xOffset | MarginLeft<string \\| number> | - | Left/right modal offset |\n| yOffset | MarginTop<string \\| number> | - | Top/bottom modal offset |\n| zIndex | string \\| number | - | `z-index` CSS property of the root element |\n\n**Spotlight.Action props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Children override default action elements, if passed, label, description and sections are hidden |\n| closeSpotlightOnTrigger | boolean | - | Determines whether the spotlight should be closed when action is triggered, overrides `closeOnActionTrigger` prop set on `Spotlight` |\n| description | string | - | Action description, pass string to use in default filter |\n| dimmedSections | boolean | - | Determines whether left and right sections should have dimmed styles |\n| highlightColor | MantineColor | - | Key of `theme.colors` of any valid CSS color that will be used to highlight search query |\n| highlightQuery | boolean | - | Determines whether search query should be highlighted in action label |\n| keywords | string \\| string[] | - | Keywords that are used for default filtering, not displayed anywhere, can be a string: \"react,router,javascript\" or an array: ['react', 'router', 'javascript'] |\n| label | string | - | Action label, pass string to use in default filter |\n| leftSection | React.ReactNode | - | Section displayed on the left side of the label, for example, icon |\n| rightSection | React.ReactNode | - | Section displayed on the right side of the label, for example, hotkey |\n\n**Spotlight.ActionsGroup props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | `Spotlight.Action` components |\n| label | string | - | Group label |\n\n**Spotlight.Root props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| centered | boolean | - | If set, the modal is centered vertically |\n| children | React.ReactNode | - | Modal content |\n| clearQueryOnClose | boolean | - | Determines whether the search query should be cleared when the spotlight is closed |\n| closeOnActionTrigger | boolean | - | Determines whether spotlight should be closed when one of the actions is triggered |\n| closeOnClickOutside | boolean | - | If set, the modal/drawer is closed when user clicks on the overlay |\n| closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |\n| disabled | boolean | - | If set, spotlight will not be rendered |\n| forceOpened | boolean | - | Forces opened state, useful for tests |\n| fullScreen | boolean | - | If set, the modal takes the entire screen |\n| id | string | - | Id used to connect modal/drawer with body and title |\n| keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |\n| lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |\n| maxHeight | MaxHeight<string \\| number> | - | Spotlight content max-height. Ignored unless `scrollable` prop is set. |\n| onEnterTransitionEnd | () => void | - | Called when enter transition ends |\n| onExitTransitionEnd | () => void | - | Called when exit transition ends |\n| onQueryChange | (query: string) => void | - | Called when query changes |\n| onSpotlightClose | () => void | - | Called when spotlight closes |\n| onSpotlightOpen | () => void | - | Called when spotlight opens |\n| overlayProps | ModalBaseOverlayProps | - | Props passed down to the `Overlay` component, use to configure opacity, `background-color`, styles and other properties |\n| padding | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set content, header and footer padding |\n| portalProps | BasePortalProps | - | Props passed down to the Portal component when `withinPortal` is set |\n| query | string | - | Controlled Spotlight search query |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| removeScrollProps | RemoveScrollProps | - | Props passed down to react-remove-scroll, can be used to customize scroll lock behavior |\n| returnFocus | boolean | - | If set, focus is returned to the last active element when `onClose` is called |\n| scrollAreaComponent | ScrollAreaComponent | - | Scroll area component |\n| scrollable | boolean | - | Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored |\n| shadow | MantineShadow | - | Key of `theme.shadows` or any valid CSS box-shadow value |\n| shortcut | string \\| string[] \\| null | - | Keyboard shortcut or a list of shortcuts to trigger spotlight |\n| size | MantineSize \\| number | - | Controls width of the content area |\n| stackId | string | - | Id of the modal in the `Modal.Stack` |\n| store | SpotlightStore | - | Spotlight store, can be used to create multiple instances of spotlight |\n| tagsToIgnore | string[] | - | A list of tags which when focused will be ignored by shortcut |\n| title | React.ReactNode | - | Modal title |\n| transitionProps | TransitionProps | - | Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default |\n| trapFocus | boolean | - | If set, focus is trapped within the modal/drawer |\n| triggerOnContentEditable | boolean | - | Determines whether shortcut should trigger based in contentEditable |\n| withOverlay | boolean | - | If set, the overlay is rendered |\n| withinPortal | boolean | - | If set, the component is rendered inside `Portal` |\n| xOffset | MarginLeft<string \\| number> | - | Left/right modal offset |\n| yOffset | MarginTop<string \\| number> | - | Top/bottom modal offset |\n| zIndex | string \\| number | - | `z-index` CSS property of the root element |\n\n**Spotlight.Search props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Determines whether the input should have error styles and `aria-invalid` attribute |\n| id | string | - | Input element id |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| multiline | boolean | - | Adjusts padding and sizing calculations for multiline inputs (use with `component=\"textarea\"`). Does not make the input multiline by itself. |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Sets `required` attribute on the `input` element |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| withAria | boolean | - | Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element of the `Input` component |\n\n\n#### Styles API\n\nSpotlight component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Spotlight selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Spotlight-root | Root element |\n| inner | .mantine-Spotlight-inner | Element used to center modal, has fixed position, takes entire screen |\n| content | .mantine-Spotlight-content | `Modal.Content` root element |\n| header | .mantine-Spotlight-header | Contains title and close button |\n| overlay | .mantine-Spotlight-overlay | Overlay displayed under the `Modal.Content` |\n| title | .mantine-Spotlight-title | Modal title (h2 tag), displayed in the header |\n| body | .mantine-Spotlight-body | Modal body, displayed after header |\n| close | .mantine-Spotlight-close | Close button |\n| search | .mantine-Spotlight-search | Search input (`Spotlight.Search`) |\n| actionsList | .mantine-Spotlight-actionsList | Actions list (`Spotlight.ActionsList`) |\n| empty | .mantine-Spotlight-empty | Empty state (`Spotlight.Empty`) |\n| footer | .mantine-Spotlight-footer | Footer (`Spotlight.Footer`) |\n| action | .mantine-Spotlight-action | Action (`Spotlight.Action`) |\n| actionBody | .mantine-Spotlight-actionBody | Body of the action, contains label and description |\n| actionLabel | .mantine-Spotlight-actionLabel | `Spotlight.Action` label |\n| actionDescription | .mantine-Spotlight-actionDescription | `Spotlight.Action` description |\n| actionSection | .mantine-Spotlight-actionSection | `Spotlight.Action` left and right sections |\n| actionsGroup | .mantine-Spotlight-actionsGroup | `Spotlight.ActionsGroup` root element |\n\n**Spotlight data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| action | data-selected | Action is selected with up/down keys | - |\n| actionSection | data-position | - | Section position: left or right |\n| actionSection | data-dimmed | `dimmedSections` prop is set on `Spotlight.Action` component | - |\n",
+  "props": [
+    {
+      "name": "actions",
+      "description": "Actions data, passed down to <code>Spotlight.Action</code> component",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "SpotlightActions[]"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "centered",
+      "description": "If set, the modal is centered vertically",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "children",
+      "description": "Modal content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "clearQueryOnClose",
+      "description": "Determines whether the search query should be cleared when the spotlight is closed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "closeOnActionTrigger",
+      "description": "Determines whether spotlight should be closed when one of the actions is triggered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "closeOnClickOutside",
+      "description": "If set, the modal/drawer is closed when user clicks on the overlay",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "closeOnEscape",
+      "description": "If set, <code>onClose</code> is called when user presses the escape key",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "disabled",
+      "description": "If set, spotlight will not be rendered",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "filter",
+      "description": "Function to filter actions data based on search query, by default actions are filtered by title, description and keywords",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "SpotlightFilterFunction"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "forceOpened",
+      "description": "Forces opened state, useful for tests",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "fullScreen",
+      "description": "If set, the modal takes the entire screen",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "highlightQuery",
+      "description": "Determines whether search query should be highlighted in action label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "id",
+      "description": "Id used to connect modal/drawer with body and title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set modal/drawer is not unmounted from the DOM when hidden. <code>display: none</code> styles are applied instead.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "limit",
+      "description": "Maximum number of actions displayed at a time",
+      "required": false,
+      "defaultValue": "Infinity",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "lockScroll",
+      "description": "If set, scroll is locked when <code>opened={true}</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "maxHeight",
+      "description": "Spotlight content max-height. Ignored unless <code>scrollable</code> prop is set.",
+      "required": false,
+      "defaultValue": "400",
+      "type": {
+        "name": "MaxHeight<string | number>"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "nothingFound",
+      "description": "Message displayed when none of the actions match given <code>filter</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "onEnterTransitionEnd",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "onExitTransitionEnd",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "onQueryChange",
+      "description": "Called when query changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(query: string) => void"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "onSpotlightClose",
+      "description": "Called when spotlight closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "onSpotlightOpen",
+      "description": "Called when spotlight opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to the <code>Overlay</code> component, use to configure opacity, <code>background-color</code>, styles and other properties",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ModalBaseOverlayProps"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "padding",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props passed down to the Portal component when <code>withinPortal</code> is set",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "query",
+      "description": "Controlled Spotlight search query",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "removeScrollProps",
+      "description": "Props passed down to react-remove-scroll, can be used to customize scroll lock behavior",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RemoveScrollProps"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "returnFocus",
+      "description": "If set, focus is returned to the last active element when <code>onClose</code> is called",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "scrollAreaComponent",
+      "description": "Scroll area component",
+      "required": false,
+      "defaultValue": "'div'",
+      "type": {
+        "name": "ScrollAreaComponent"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "scrollAreaProps",
+      "description": "Props passed down to the <code>ScrollArea</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ScrollAreaAutosizeProps>"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "scrollable",
+      "description": "Determines whether the actions list should be scrollable. If not set, <code>maxHeight</code> is ignored",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "searchProps",
+      "description": "Props passed down to the <code>Spotlight.Search</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "SpotlightSearchProps"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any valid CSS box-shadow value",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "shortcut",
+      "description": "Keyboard shortcut or a list of shortcuts to trigger spotlight",
+      "required": false,
+      "defaultValue": "'mod + K'",
+      "type": {
+        "name": "string | string[] | null"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "size",
+      "description": "Controls width of the content area",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "stackId",
+      "description": "Id of the modal in the <code>Modal.Stack</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "store",
+      "description": "Spotlight store, can be used to create multiple instances of spotlight",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "SpotlightStore"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "tagsToIgnore",
+      "description": "A list of tags which when focused will be ignored by shortcut",
+      "required": false,
+      "defaultValue": "['input', 'textarea', 'select']",
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "title",
+      "description": "Modal title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props added to the <code>Transition</code> component that used to animate overlay and body, use to configure duration and animation type, <code>{ duration: 200, transition: 'fade-down' }</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "trapFocus",
+      "description": "If set, focus is trapped within the modal/drawer",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "triggerOnContentEditable",
+      "description": "Determines whether shortcut should trigger based in contentEditable",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "withOverlay",
+      "description": "If set, the overlay is rendered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "withinPortal",
+      "description": "If set, the component is rendered inside <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "xOffset",
+      "description": "Left/right modal offset",
+      "required": false,
+      "defaultValue": "5vw",
+      "type": {
+        "name": "MarginLeft<string | number>"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "yOffset",
+      "description": "Top/bottom modal offset",
+      "required": false,
+      "defaultValue": "5dvh",
+      "type": {
+        "name": "MarginTop<string | number>"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "zIndex",
+      "description": "<code>z-index</code> CSS property of the root element",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Spotlight"
+    },
+    {
+      "name": "centered",
+      "description": "If set, the modal is centered vertically",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "children",
+      "description": "Modal content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "clearQueryOnClose",
+      "description": "Determines whether the search query should be cleared when the spotlight is closed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "closeOnActionTrigger",
+      "description": "Determines whether spotlight should be closed when one of the actions is triggered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "closeOnClickOutside",
+      "description": "If set, the modal/drawer is closed when user clicks on the overlay",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "closeOnEscape",
+      "description": "If set, <code>onClose</code> is called when user presses the escape key",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "disabled",
+      "description": "If set, spotlight will not be rendered",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "forceOpened",
+      "description": "Forces opened state, useful for tests",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "fullScreen",
+      "description": "If set, the modal takes the entire screen",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "id",
+      "description": "Id used to connect modal/drawer with body and title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "keepMounted",
+      "description": "If set modal/drawer is not unmounted from the DOM when hidden. <code>display: none</code> styles are applied instead.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "lockScroll",
+      "description": "If set, scroll is locked when <code>opened={true}</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "maxHeight",
+      "description": "Spotlight content max-height. Ignored unless <code>scrollable</code> prop is set.",
+      "required": false,
+      "defaultValue": "400",
+      "type": {
+        "name": "MaxHeight<string | number>"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "onEnterTransitionEnd",
+      "description": "Called when enter transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "onExitTransitionEnd",
+      "description": "Called when exit transition ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "onQueryChange",
+      "description": "Called when query changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(query: string) => void"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "onSpotlightClose",
+      "description": "Called when spotlight closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "onSpotlightOpen",
+      "description": "Called when spotlight opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "overlayProps",
+      "description": "Props passed down to the <code>Overlay</code> component, use to configure opacity, <code>background-color</code>, styles and other properties",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ModalBaseOverlayProps"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "padding",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "portalProps",
+      "description": "Props passed down to the Portal component when <code>withinPortal</code> is set",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "BasePortalProps"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "query",
+      "description": "Controlled Spotlight search query",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "removeScrollProps",
+      "description": "Props passed down to react-remove-scroll, can be used to customize scroll lock behavior",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RemoveScrollProps"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "returnFocus",
+      "description": "If set, focus is returned to the last active element when <code>onClose</code> is called",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "scrollAreaComponent",
+      "description": "Scroll area component",
+      "required": false,
+      "defaultValue": "'div'",
+      "type": {
+        "name": "ScrollAreaComponent"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "scrollable",
+      "description": "Determines whether the actions list should be scrollable. If not set, <code>maxHeight</code> is ignored",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "shadow",
+      "description": "Key of <code>theme.shadows</code> or any valid CSS box-shadow value",
+      "required": false,
+      "defaultValue": "'xl'",
+      "type": {
+        "name": "MantineShadow"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "shortcut",
+      "description": "Keyboard shortcut or a list of shortcuts to trigger spotlight",
+      "required": false,
+      "defaultValue": "'mod + K'",
+      "type": {
+        "name": "string | string[] | null"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "size",
+      "description": "Controls width of the content area",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize | number"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "stackId",
+      "description": "Id of the modal in the <code>Modal.Stack</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "store",
+      "description": "Spotlight store, can be used to create multiple instances of spotlight",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "SpotlightStore"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "tagsToIgnore",
+      "description": "A list of tags which when focused will be ignored by shortcut",
+      "required": false,
+      "defaultValue": "['input', 'textarea', 'select']",
+      "type": {
+        "name": "string[]"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "title",
+      "description": "Modal title",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "transitionProps",
+      "description": "Props added to the <code>Transition</code> component that used to animate overlay and body, use to configure duration and animation type, <code>{ duration: 200, transition: 'fade-down' }</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "TransitionProps"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "trapFocus",
+      "description": "If set, focus is trapped within the modal/drawer",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "triggerOnContentEditable",
+      "description": "Determines whether shortcut should trigger based in contentEditable",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "withOverlay",
+      "description": "If set, the overlay is rendered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "withinPortal",
+      "description": "If set, the component is rendered inside <code>Portal</code>",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "xOffset",
+      "description": "Left/right modal offset",
+      "required": false,
+      "defaultValue": "5vw",
+      "type": {
+        "name": "MarginLeft<string | number>"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "yOffset",
+      "description": "Top/bottom modal offset",
+      "required": false,
+      "defaultValue": "5dvh",
+      "type": {
+        "name": "MarginTop<string | number>"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "zIndex",
+      "description": "<code>z-index</code> CSS property of the root element",
+      "required": false,
+      "defaultValue": "200",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "SpotlightRoot"
+    },
+    {
+      "name": "children",
+      "description": "Children override default action elements, if passed, label, description and sections are hidden",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "closeSpotlightOnTrigger",
+      "description": "Determines whether the spotlight should be closed when action is triggered, overrides <code>closeOnActionTrigger</code> prop set on <code>Spotlight</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "description",
+      "description": "Action description, pass string to use in default filter",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "dimmedSections",
+      "description": "Determines whether left and right sections should have dimmed styles",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "highlightColor",
+      "description": "Key of <code>theme.colors</code> of any valid CSS color that will be used to highlight search query",
+      "required": false,
+      "defaultValue": "'yellow'",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "highlightQuery",
+      "description": "Determines whether search query should be highlighted in action label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "keywords",
+      "description": "Keywords that are used for default filtering, not displayed anywhere, can be a string: \"react,router,javascript\" or an array: ['react', 'router', 'javascript']",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | string[]"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "label",
+      "description": "Action label, pass string to use in default filter",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "leftSection",
+      "description": "Section displayed on the left side of the label, for example, icon",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "rightSection",
+      "description": "Section displayed on the right side of the label, for example, hotkey",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightAction"
+    },
+    {
+      "name": "children",
+      "description": "<code>Spotlight.Action</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightActionsGroup"
+    },
+    {
+      "name": "label",
+      "description": "Group label",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightActionsGroup"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "error",
+      "description": "Determines whether the input should have error styles and <code>aria-invalid</code> attribute",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "id",
+      "description": "Input element id",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "multiline",
+      "description": "Adjusts padding and sizing calculations for multiline inputs (use with <code>component=\"textarea\"</code>). Does not make the input multiline by itself.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "required",
+      "description": "Sets <code>required</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "withAria",
+      "description": "Determines whether <code>aria-</code> and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling.",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SpotlightSearch"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element of the <code>Input</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "SpotlightSearch"
+    }
+  ]
+}

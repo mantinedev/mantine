@@ -1,0 +1,55 @@
+# GettingStartedSchedule
+Package: @mantine/schedule
+Import: import { GettingStartedSchedule } from '@mantine/schedule';
+
+# Mantine schedule
+
+[![npm](https://img.shields.io/npm/dm/@mantine/schedule)](https://www.npmjs.com/package/@mantine/schedule)
+
+`@mantine/schedule` package provides a set of components for building
+calendar scheduling interfaces – day, week, month, and year views
+with event display, drag-and-drop, and time slot interactions.
+
+## Installation
+
+```bash
+yarn add @mantine/schedule @mantine/dates dayjs
+```
+
+```bash
+npm install @mantine/schedule @mantine/dates dayjs
+```
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+// ‼️ import dates styles after core package styles
+import '@mantine/dates/styles.css';
+```
+
+After installation, import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+// ‼️ import schedule styles after core and dates package styles
+import '@mantine/schedule/styles.css';
+```
+
+## Do not forget to import styles
+
+Followed the installation instructions above but something is not working
+(schedule components have no styles and look broken)?
+You've fallen into the trap of not importing schedule styles!
+To fix the issue, import schedule styles at the root of your application:
+
+```tsx
+import '@mantine/schedule/styles.css';
+```
+
+## dayjs
+
+`@mantine/schedule` components use [dayjs](https://day.js.org/) under the hood for date manipulations and formatting.
+dayjs is a required dependency – you cannot change it to another date library. If you want to use a different
+date library in your application, you will need to install it separately.

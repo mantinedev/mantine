@@ -1,0 +1,28 @@
+# Native browser validation does not work in some components, what should I do?
+Learn why native browser validation does not work in some components
+
+## Native browser validation
+
+Native browser validation works with most Mantine inputs.
+For example, it can be used with [TextInput](https://mantine.dev/core/text-input),
+[Textarea](https://mantine.dev/core/textarea), [NativeSelect](https://mantine.dev/core/native-select), and
+other components.
+
+However, some components like [Select](https://mantine.dev/core/select),
+[MultiSelect](https://mantine.dev/core/multi-select), [Slider](https://mantine.dev/core/slider),
+or [DatePicker](https://mantine.dev/dates/date-picker) do not support native
+browser validation. These components provide custom UI
+elements for data input, and browsers do not treat them as
+native inputs.
+
+## Is there a workaround to use native browser validation?
+
+No, there is no workaround to use native browser validation
+for components with custom UI elements.
+
+## What should I do instead?
+
+If you are building a form that requires the usage of Mantine inputs
+with custom UI, you should validate form data after it has been
+submitted. You can use the [@mantine/form](https://mantine.dev/form/use-form) package
+to perform form validation on submit.

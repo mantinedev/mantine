@@ -1,0 +1,170 @@
+{
+  "id": "core-list",
+  "name": "List",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/list",
+  "description": "Display ordered or unordered list",
+  "propsCount": 12,
+  "llmUrl": "https://mantine.dev/llms/core-list.md",
+  "componentDataUrl": "/mcp/components/core-list.json",
+  "searchText": "list display ordered or unordered list @mantine/core /core/list center children icon liststyletype reversed size spacing start type withpadding children icon",
+  "source": "@mantine/core/src/components/List/List.tsx",
+  "docs": "core/list.mdx",
+  "markdown": "# List\nPackage: @mantine/core\nImport: import { List } from '@mantine/core';\nDescription: Display ordered or unordered list\n\n## Usage\n\n```tsx\nimport { List } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <List type=\"unordered\" size=\"md\" withPadding={false}>\n      <List.Item>Clone or download repository from GitHub</List.Item>\n      <List.Item>Install dependencies with yarn</List.Item>\n      <List.Item>To start development server run npm start command</List.Item>\n      <List.Item>Run tests to make sure your changes do not break the build</List.Item>\n      <List.Item>Submit a pull request once you are done</List.Item>\n    </List>\n  );\n}\n```\n\n\n## With icons\n\nYou can replace list bullets with an icon. To do so, provide the following props:\n\n* `icon` on the List component will be used as the default icon for all list elements\n* `icon` on the List.Item component will override the context icon from List\n* `spacing` – spacing between list items from the theme or any valid CSS value to set spacing, defaults to `0`\n* `center` – center item content with the icon\n* `size` – set font size from the theme\n\n```tsx\nimport { List, ThemeIcon } from '@mantine/core';\nimport { CheckCircleIcon, CircleDashedIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <List\n      spacing=\"xs\"\n      size=\"sm\"\n      center\n      icon={\n        <ThemeIcon color=\"teal\" size={24} radius=\"xl\">\n          <CheckCircleIcon size={16} />\n        </ThemeIcon>\n      }\n    >\n      <List.Item>Clone or download repository from GitHub</List.Item>\n      <List.Item>Install dependencies with yarn</List.Item>\n      <List.Item>To start development server run npm start command</List.Item>\n      <List.Item>Run tests to make sure your changes do not break the build</List.Item>\n      <List.Item\n        icon={\n          <ThemeIcon color=\"blue\" size={24} radius=\"xl\">\n            <CircleDashedIcon size={16} />\n          </ThemeIcon>\n        }\n      >\n        Submit a pull request once you are done\n      </List.Item>\n    </List>\n  );\n}\n```\n\n\n## Nested lists\n\nSet the `withPadding` prop to offset nested lists and `listStyleType` to control the bullet type:\n\n```tsx\nimport { List } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <List listStyleType=\"disc\">\n      <List.Item>\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\n        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation\n      </List.Item>\n      <List.Item>First order item</List.Item>\n      <List.Item>\n        First order item with list\n        <List withPadding listStyleType=\"disc\">\n          <List.Item>Nested item</List.Item>\n          <List.Item>Nested item</List.Item>\n          <List.Item>\n            Nested item with list\n            <List withPadding listStyleType=\"disc\">\n              <List.Item>Even more nested</List.Item>\n              <List.Item>Even more nested</List.Item>\n            </List>\n          </List.Item>\n          <List.Item>Nested item</List.Item>\n        </List>\n      </List.Item>\n      <List.Item>First order item</List.Item>\n    </List>\n  );\n}\n```\n\n\n## Ordered list numbering\n\n### Start from specific number\n\nUse the `start` prop to begin numbering from a specific value:\n\n```tsx\nimport { List } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <List type=\"ordered\" start={5}>\n      <List.Item>This is item #5</List.Item>\n      <List.Item>This is item #6</List.Item>\n      <List.Item>This is item #7</List.Item>\n      <List.Item>This is item #8</List.Item>\n    </List>\n  );\n}\n```\n\n\n### Reversed numbering\n\nUse the `reversed` prop to create countdown lists:\n\n```tsx\nimport { List } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <List type=\"ordered\" reversed>\n      <List.Item>This is item #3</List.Item>\n      <List.Item>This is item #2</List.Item>\n      <List.Item>This is item #1</List.Item>\n    </List>\n  );\n}\n```\n\n\n### Custom item values\n\nUse the `value` prop on individual `List.Item` components to set specific numbers:\n\n```tsx\nimport { List } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <List type=\"ordered\">\n      <List.Item>First item</List.Item>\n      <List.Item value={5}>This item is #5</List.Item>\n      <List.Item>This item is #6 (continues from previous)</List.Item>\n      <List.Item value={10}>This item is #10</List.Item>\n      <List.Item>This item is #11</List.Item>\n    </List>\n  );\n}\n```\n\n\n\n#### Props\n\n**List props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| center | boolean | - | Vertically centers list items with their icons |\n| children | React.ReactNode | - | `List.Item` components |\n| icon | React.ReactNode | - | Icon to replace default list markers. Applied to all items unless overridden on individual List.Item components |\n| listStyleType | ListStyleType | - | Controls CSS `list-style-type` property. Overrides the default list marker style based on list type |\n| reversed | boolean | - | Reverses the order of list items (only works with type=\"ordered\") |\n| size | MantineSize | - | Controls `font-size` and `line-height` |\n| spacing | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set spacing between items |\n| start | number | - | Starting value for ordered list numbering (only works with type=\"ordered\") |\n| type | \"ordered\" \\| \"unordered\" | - | List type |\n| withPadding | boolean | - | Adds extra horizontal padding to the list, useful for nested lists |\n\n**List.Item props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Item content |\n| icon | React.ReactNode | - | Icon to replace item bullet |\n\n\n#### Styles API\n\nList component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**List selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-List-root | Root element |\n| item | .mantine-List-item | ListItem root element |\n| itemIcon | .mantine-List-itemIcon | ListItem icon |\n| itemLabel | .mantine-List-itemLabel | ListItem content |\n| itemWrapper | .mantine-List-itemWrapper | ListItem wrapper element, container, icon and content |\n\n**List CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --list-fz | Controls `font-size` |\n| root | --list-lh | Controls `line-height` |\n| root | --list-spacing | Controls spacing between items |\n\n**List data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-with-padding | `withPadding` prop is set | - |\n| item | data-centered | `center` prop is set on List component | - |\n| item | data-with-icon | `icon` prop is set on ListItem component | - |\n",
+  "props": [
+    {
+      "name": "center",
+      "description": "Vertically centers list items with their icons",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "children",
+      "description": "<code>List.Item</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "icon",
+      "description": "Icon to replace default list markers. Applied to all items unless overridden on individual List.Item components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "listStyleType",
+      "description": "Controls CSS <code>list-style-type</code> property. Overrides the default list marker style based on list type",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ListStyleType"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "reversed",
+      "description": "Reverses the order of list items (only works with type=\"ordered\")",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "size",
+      "description": "Controls <code>font-size</code> and <code>line-height</code>",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "spacing",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set spacing between items",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "start",
+      "description": "Starting value for ordered list numbering (only works with type=\"ordered\")",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "type",
+      "description": "List type",
+      "required": false,
+      "defaultValue": "'unordered'",
+      "type": {
+        "name": "\"ordered\" | \"unordered\"",
+        "raw": "\"ordered\" | \"unordered\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"ordered\""
+          },
+          {
+            "value": "\"unordered\""
+          }
+        ]
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "withPadding",
+      "description": "Adds extra horizontal padding to the list, useful for nested lists",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "List"
+    },
+    {
+      "name": "children",
+      "description": "Item content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ListItem"
+    },
+    {
+      "name": "icon",
+      "description": "Icon to replace item bullet",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "ListItem"
+    }
+  ]
+}

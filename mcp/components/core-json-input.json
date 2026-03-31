@@ -1,0 +1,569 @@
+{
+  "id": "core-json-input",
+  "name": "JsonInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/json-input",
+  "description": "Capture json data from user",
+  "propsCount": 39,
+  "llmUrl": "https://mantine.dev/llms/core-json-input.md",
+  "componentDataUrl": "/mcp/components/core-json-input.json",
+  "searchText": "jsoninput capture json data from user @mantine/core /core/json-input autosize defaultvalue description descriptionprops deserialize disabled error errorprops formatonblur indentspaces inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxrows minrows onchange pointer radius required resize rightsection rightsectionpointerevents rightsectionprops rightsectionwidth serialize size validationerror value withasterisk witherrorstyles wrapperprops",
+  "source": "@mantine/core/src/components/JsonInput/JsonInput.tsx",
+  "docs": "core/json-input.mdx",
+  "markdown": "# JsonInput\nPackage: @mantine/core\nImport: import { JsonInput } from '@mantine/core';\nDescription: Capture json data from user\n\n## Usage\n\n`JsonInput` is based on the [Textarea](https://mantine.dev/llms/core-textarea.md) component.\nIt includes JSON validation logic and an option to format the input value on blur:\n\n```tsx\nimport { JsonInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <JsonInput\n      label=\"Your package.json\"\n      placeholder=\"Textarea will autosize to fit the content\"\n      validationError=\"Invalid JSON\"\n      formatOnBlur\n      autosize\n      minRows={4}\n    />\n  );\n}\n```\n\n\n## Loading state\n\nSet `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.\nYou can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:\n\n```tsx\nimport { JsonInput } from '@mantine/core';\n\nfunction Demo() {\n  return <JsonInput placeholder=\"Enter JSON\" formatOnBlur autosize minRows={4} loading />;\n}\n```\n\n\n## Controlled\n\n```tsx\nimport { useState } from 'react';\nimport { JsonInput } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState('');\n  return <JsonInput value={value} onChange={setValue} />;\n}\n```\n\n## Uncontrolled\n\n`JsonInput` can be used with uncontrolled forms the same way as a native `textarea` element.\nSet the `name` attribute to include json input value in `FormData` object on form submission.\nTo control the initial value in uncontrolled forms, use the `defaultValue` prop.\n\nExample usage of uncontrolled `JsonInput` with `FormData`:\n\n```tsx\nimport { JsonInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <form\n      onSubmit={(event) => {\n        event.preventDefault();\n        const formData = new FormData(event.currentTarget);\n        console.log('JSON input value:', formData.get('data'));\n      }}\n    >\n      <JsonInput\n        label=\"Enter JSON\"\n        name=\"data\"\n        defaultValue=\"{}\"\n        formatOnBlur\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```\n\n## Custom serialization\n\nYou can provide custom `serialize` and `deserialize` functions to support data formats beyond standard JSON.\nThis is useful when you need to handle types like `Date`, `Map`, `Set`, `undefined`, or other non-JSON-serializable values.\n\nThe example below shows how to use [superjson](https://github.com/blitz-js/superjson) library to handle extended data types:\n\n```tsx\nimport { useState } from 'react';\nimport { JsonInput } from '@mantine/core';\nimport superjson from 'superjson';\n\nfunction Demo() {\n  const [value, setValue] = useState(\n    superjson.stringify(\n      {\n        name: 'John Doe',\n        createdAt: new Date(),\n        tags: new Set(['admin', 'user']),\n        metadata: new Map([['role', 'developer']]),\n      },\n      null,\n      2\n    )\n  );\n\n  return (\n    <JsonInput\n      label=\"Extended JSON with superjson\"\n      description=\"Supports Date, Map, Set, BigInt, RegExp, and more\"\n      placeholder=\"Enter extended JSON\"\n      value={value}\n      onChange={setValue}\n      serialize={(val) => superjson.stringify(val, null, 2)}\n      deserialize={superjson.parse}\n      validationError=\"Invalid extended JSON format\"\n      formatOnBlur\n      autosize\n      minRows={6}\n    />\n  );\n}\n```\n\nThe `deserialize` function must throw an error when the input is invalid. Both `serialize` and `deserialize`\nfunctions are used for formatting when `formatOnBlur` is enabled.\n\n## Input props\n\nJsonInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all textarea element props. JsonInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { JsonInput } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <JsonInput\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      placeholder=\"Input placeholder\"\n    />\n  );\n}\n```\n\n\n\n#### Props\n\n**JsonInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| autosize | boolean | - | If set, enables textarea height growing with its content |\n| defaultValue | string | - | Uncontrolled component default value |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| deserialize | ((text: string, reviver?: ((this: any, key: string, value: any) => any)) => any) \\| undefined | - | Function to deserialize string value for formatting and validation. Must throw an error if the string is invalid JSON. |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| formatOnBlur | boolean | - | Determines whether the value should be formatted on blur |\n| indentSpaces | number | - | Number of spaces to use as white space for formatting. Passed as the third argument to `serialize` function. |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| maxRows | number | - | Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set |\n| minRows | number | - | Minimum rows of autosize textarea, ignored if `autosize` prop is not set |\n| onChange | (value: string) => void | - | Called when value changes |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| resize | Resize | - | Controls `resize` CSS property |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| serialize | { (value: any, replacer?: ((this: any, key: string, value: any) => any), space?: string \\| number \\| undefined): string; (value: any, replacer?: (string \\| number)[] \\| null \\| undefined, space?: string \\| ... 1 more ... \\| undefined): string; } \\| undefined | - | Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level. |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| validationError | React.ReactNode | - | Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the `error` prop when validation fails. |\n| value | string | - | Controlled component value |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nJsonInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**JsonInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-JsonInput-wrapper | Root element of the Input |\n| input | .mantine-JsonInput-input | Input element |\n| section | .mantine-JsonInput-section | Left and right sections |\n| root | .mantine-JsonInput-root | Root element |\n| label | .mantine-JsonInput-label | Label element |\n| required | .mantine-JsonInput-required | Required asterisk element, rendered inside label |\n| description | .mantine-JsonInput-description | Description element |\n| error | .mantine-JsonInput-error | Error element |\n",
+  "props": [
+    {
+      "name": "autosize",
+      "description": "If set, enables textarea height growing with its content",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled component default value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "deserialize",
+      "description": "Function to deserialize string value for formatting and validation. Must throw an error if the string is invalid JSON.",
+      "required": false,
+      "defaultValue": "JSON.parse",
+      "type": {
+        "name": "((text: string, reviver?: ((this: any, key: string, value: any) => any)) => any) | undefined"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "formatOnBlur",
+      "description": "Determines whether the value should be formatted on blur",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "indentSpaces",
+      "description": "Number of spaces to use as white space for formatting. Passed as the third argument to <code>serialize</code> function.",
+      "required": false,
+      "defaultValue": "2",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "maxRows",
+      "description": "Maximum rows for autosize textarea to grow, ignored if <code>autosize</code> prop is not set",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "minRows",
+      "description": "Minimum rows of autosize textarea, ignored if <code>autosize</code> prop is not set",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "resize",
+      "description": "Controls <code>resize</code> CSS property",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "Resize",
+        "raw": "Resize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"block\""
+          },
+          {
+            "value": "\"inline\""
+          },
+          {
+            "value": "\"both\""
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "serialize",
+      "description": "Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level.",
+      "required": false,
+      "defaultValue": "JSON.stringify",
+      "type": {
+        "name": "{ (value: any, replacer?: ((this: any, key: string, value: any) => any), space?: string | number | undefined): string; (value: any, replacer?: (string | number)[] | null | undefined, space?: string | ... 1 more ... | undefined): string; } | undefined"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "validationError",
+      "description": "Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the <code>error</code> prop when validation fails.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "value",
+      "description": "Controlled component value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "JsonInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "JsonInput"
+    }
+  ]
+}

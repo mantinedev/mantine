@@ -1,0 +1,47 @@
+{
+  "id": "core-portal",
+  "name": "Portal",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/portal",
+  "description": "Renders component outside of parent element tree",
+  "propsCount": 3,
+  "llmUrl": "https://mantine.dev/llms/core-portal.md",
+  "componentDataUrl": "/mcp/components/core-portal.json",
+  "searchText": "portal renders component outside of parent element tree @mantine/core /core/portal children reusetargetnode target",
+  "source": "@mantine/core/src/components/Portal/Portal.tsx",
+  "docs": "core/portal.mdx",
+  "markdown": "# Portal\nPackage: @mantine/core\nImport: import { Portal } from '@mantine/core';\nDescription: Renders component outside of parent element tree\n\n## Usage\n\nPortal is a wrapper component for the [ReactDOM.createPortal](https://reactjs.org/docs/portals.html) API.\nRender any component or element at the end of `document.body` or at a given element. The [Modal](https://mantine.dev/llms/core-modal.md) and [Drawer](https://mantine.dev/llms/core-drawer.md) components are wrapped in Portal by default.\n\nUse Portal to render a component or an element at a different place (defaults to the end of `document.body`).\nPortal is useful when you want to prevent parent styles from interfering with children.\nUsually all these styles are related to `position` and `z-index` properties,\nand portals are used for components with fixed position, for example, modals.\n\n```tsx\nimport { useState } from 'react';\nimport { Portal } from '@mantine/core';\n\nfunction Demo() {\n  const [opened, setOpened] = useState(false);\n\n  return (\n    <main style={{ position: 'relative', zIndex: 1 }}>\n      {opened && (\n        <Portal>\n          <div>Your modal content</div>\n        </Portal>\n      )}\n\n      <button onClick={() => setOpened(true)} type=\"button\">\n        Open modal\n      </button>\n    </main>\n  );\n}\n```\n\nIn the example above, the div element is rendered outside of the parent main (before the closing body tag),\nbut still receives the `opened` and `onClose` props. The element will not be affected by the parent z-index.\n\n## Reuse target node\n\nBy default, Portal reuses the same target node for all instances (`reuseTargetNode={true}`).\nTo create a new target node for each instance, set `reuseTargetNode={false}`. In the following\nexample, all three paragraphs will be rendered in separate target nodes:\n\n```tsx\nimport { Portal } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Portal reuseTargetNode={false}>\n        <p>First</p>\n      </Portal>\n\n      <Portal reuseTargetNode={false}>\n        <p>Second</p>\n      </Portal>\n\n      <Portal reuseTargetNode={false}>\n        <p>Third</p>\n      </Portal>\n    </>\n  );\n}\n```\n\n## Specify target DOM node\n\nYou can specify the DOM node where the portal will be rendered by passing the `target` prop:\n\n```tsx\nimport { Portal } from '@mantine/core';\n\nconst container = document.createElement('div');\ndocument.body.appendChild(container);\n\nfunction Demo() {\n  return <Portal target={container}>My portal</Portal>;\n}\n```\n\nAlternatively, you can specify a selector to render the portal in an existing element:\n\n```tsx\nimport { Portal } from '@mantine/core';\n\nfunction Demo() {\n  return <Portal target=\"#portal-container\">My portal</Portal>;\n}\n```\n\nIf you don't specify the target element, a new one will be created and appended to the `document.body` for each Portal component.\n\n## Server side rendering\n\n`createPortal` is not supported during server-side rendering.\nAll components inside Portal are rendered only after the application was mounted to the DOM.\n\n## OptionalPortal component\n\nThe `OptionalPortal` component lets you configure whether children should be rendered in `Portal`.\nIt accepts the same props as the `Portal` component:\n\n```tsx\nimport { OptionalPortal } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <OptionalPortal withinPortal>\n        This text is rendered in Portal\n      </OptionalPortal>\n      <OptionalPortal withinPortal={false}>\n        This text is rendered as regular child\n      </OptionalPortal>\n    </>\n  );\n}\n```\n\n\n#### Props\n\n**Portal props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | required | Content to render inside the portal |\n| reuseTargetNode | boolean | - | When true and target is not specified, all Portal instances share a single container node appended to document.body. When false, each Portal creates its own container node.  Has no effect when target is specified. |\n| target | string \\| HTMLElement | - | Target element where portal should be rendered. Accepts: - HTMLElement: Renders portal inside this element - string: CSS selector - renders inside first matching element - undefined: Uses shared portal node or creates new one based on `reuseTargetNode`  Note: If selector doesn't match any element, portal will not render |",
+  "props": [
+    {
+      "name": "children",
+      "description": "Content to render inside the portal",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Portal"
+    },
+    {
+      "name": "reuseTargetNode",
+      "description": "When true and target is not specified, all Portal instances share a single\ncontainer node appended to document.body. When false, each Portal creates\nits own container node.\n\nHas no effect when target is specified.",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Portal"
+    },
+    {
+      "name": "target",
+      "description": "Target element where portal should be rendered. Accepts:\n- HTMLElement: Renders portal inside this element\n- string: CSS selector - renders inside first matching element\n- undefined: Uses shared portal node or creates new one based on <code>reuseTargetNode</code>\n\nNote: If selector doesn't match any element, portal will not render",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | HTMLElement"
+      },
+      "sourceComponent": "Portal"
+    }
+  ]
+}

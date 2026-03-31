@@ -5,11 +5,7 @@ Description: Capture string input from user
 
 ## Usage
 
-<InputFeatures component="TextInput" element="input" />
-
 TextInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. TextInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
-
-#### Example: usage
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -18,10 +14,24 @@ import { TextInput } from '@mantine/core';
 function Demo() {
   return (
     <TextInput
-      
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
       placeholder="Input placeholder"
     />
   );
+}
+```
+
+
+## Loading state
+
+Set `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.
+You can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return <TextInput placeholder="Your email" loading />;
 }
 ```
 
@@ -43,20 +53,43 @@ function Demo() {
 }
 ```
 
-<InputSections component="TextInput" />
+## Uncontrolled
+
+`TextInput` can be used with uncontrolled forms the same way as a native `input[type="text"]`.
+Set the `name` attribute to include text input value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `TextInput` with `FormData`:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Text input value:', formData.get('name'));
+      }}
+    >
+      <TextInput label="Enter your name" name="name" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
 
 ## Input sections
 
 TextInput supports left and right sections to display icons, buttons or other content alongside the input.
 
-#### Example: sections
-
 ```tsx
 import { TextInput } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconAt size={16} />;
+  const icon = <AtIcon size={16} />;
   return (
     <>
       <TextInput
@@ -80,8 +113,6 @@ function Demo() {
 
 ## Error state
 
-#### Example: error
-
 ```tsx
 import { TextInput } from '@mantine/core';
 
@@ -101,90 +132,39 @@ function Demo() {
 ```
 
 
-## Disabled state
-
-#### Example: disabled
-
-```tsx
-import { TextInput } from '@mantine/core';
-
-function Demo() {
-  return <TextInput disabled label="Disabled input" placeholder="Disabled input" />;
-}
-```
-
-
-#### Example: stylesApi
-
-```tsx
-import { IconAt } from '@tabler/icons-react';
-import { TextInput } from '@mantine/core';
-
-function Demo() {
-  return (
-    <TextInput
-      label="Label"
-      placeholder="TextInput"
-      description="Description"
-      error="Error"
-      withAsterisk
-      leftSection={<IconAt size={18} />}
-      
-    />
-  );
-}
-```
-
-
-<GetElementRef component="TextInput" refType="input" />
-
-## Get element ref
-
-```tsx
-import { useRef } from 'react';
-import { TextInput } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLInputElement>(null);
-  return <TextInput ref={ref} />;
-}
-```
-
-<InputAccessibility component="TextInput" />
-
-## Accessibility
-
-TextInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
-
 
 #### Props
 
+**TextInput props**
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
-| disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
-| error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
-| inputSize | string | - | <code>size</code> attribute passed down to the input element |
-| inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
-| label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
-| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
-| leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
-| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
-| pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
-| radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
-| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
-| rightSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>rightSection</code> element |
-| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
-| size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
-| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
-| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 

@@ -4,14 +4,34 @@ Import: import { UseStateHistory } from '@mantine/hooks';
 
 ## Usage
 
-`useStateHistory` hook is used to create a state with history, it returns current value, handlers to
-go back/forward and a history object with all previous values and current index.
+The `useStateHistory` hook creates a state with history. It returns the current value, handlers to
+go back/forward, and a history object with all previous values and the current index.
 
+```tsx
+import { Button, Code, Group, Text } from '@mantine/core';
+import { useStateHistory } from '@mantine/hooks';
+
+function Demo() {
+  const [value, handlers, history] = useStateHistory(1);
+  return (
+    <>
+      <Text>Current value: {value}</Text>
+      <Group my="md">
+        <Button onClick={() => handlers.set(Math.ceil(Math.random() * 100) + 1)}>Set value</Button>
+        <Button onClick={() => handlers.back()}>Back</Button>
+        <Button onClick={() => handlers.forward()}>Forward</Button>
+        <Button onClick={() => handlers.reset()}>Reset</Button>
+      </Group>
+      <Code block>{JSON.stringify(history, null, 2)}</Code>
+    </>
+  );
+}
+```
 
 
 ## Definition
 
-`UseStateHistoryHandlers` and `StateHistory` interfaces are exported from `@mantine/hooks`
+The `UseStateHistoryHandlers` and `StateHistory` interfaces are exported from the `@mantine/hooks`
 package.
 
 ```tsx
@@ -38,8 +58,7 @@ function useStateHistory<T>(initialValue: T): UseStateHistoryReturnValue<T>;
 
 ## Exported types
 
-`UseStateHistoryHandlers`, `UseStateHistoryReturnValue` and `UseStateHistoryValue` types are exported from `@mantine/hooks` package,
-you can import them in your application:
+The `UseStateHistoryHandlers`, `UseStateHistoryReturnValue`, and `UseStateHistoryValue` types are exported from `@mantine/hooks`;
 
 ```tsx
 import type { UseStateHistoryHandlers, UseStateHistoryReturnValue, UseStateHistoryValue } from '@mantine/hooks';
