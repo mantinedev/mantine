@@ -473,7 +473,10 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         mod={{ static: mode === 'static' }}
         tabIndex={mode === 'static' ? -1 : 0}
       >
-        <AccordionChevron style={{ transform: `rotate(${dir === 'rtl' ? -90 : 90}deg)` }} size={20} />
+        <AccordionChevron
+          style={{ transform: `rotate(${dir === 'rtl' ? -90 : 90}deg)` }}
+          size={20}
+        />
         {dayjs(date).format('YYYY')}
       </UnstyledButton>
       <Text {...getStyles('mobileMonthViewHeaderLabel')}>{headerLabel}</Text>
