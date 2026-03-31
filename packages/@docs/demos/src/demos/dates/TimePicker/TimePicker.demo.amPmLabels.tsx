@@ -12,9 +12,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return (
-    <TimePicker label="Enter time" format="12h" amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }} />
-  );
+  return <TimePicker label="Enter time" format="12h" amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }} />;
 }
 
 export const amPmLabels: MantineDemo = {
