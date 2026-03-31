@@ -37,22 +37,25 @@ Merge chain: master (origin) → 9.0 (origin) → 9.1 (gitlab) → 9.2 (gitlab)
 
 ### 3. Fetch latest from all involved remotes
 
-**Important:** Some remotes (e.g., `gitlab`) may have a fetch refspec that maps to `refs/remotes/origin/*`, which means fetching from them will overwrite `origin`'s tracking refs. To avoid this, always fetch `origin` **last** so its refs are authoritative.
+**Critical:** The `master` branch is the source of truth and always lives on `origin` (GitHub). Always fetch `origin` **first and last** to ensure its tracking refs are never stale or overwritten by other remotes.
 
-Collect all unique remotes in the chain, then fetch them in order with `origin` last:
 ```bash
-# Fetch non-origin remotes first
+# Always fetch origin first
+git fetch origin
+
+# Fetch non-origin remotes
 git fetch <other-remote>
-# Fetch origin last to ensure its refs are not overwritten
+
+# Always fetch origin again last (in case another remote's refspec overwrote origin refs)
 git fetch origin
 ```
 
 ### 4. Update master from origin
 
-After fetching, ensure `master` is up to date with `origin/master`:
+After fetching, **hard-reset** master to `origin/master` to ensure it exactly matches the remote (in case local master diverged or was stale from a prior bad fetch):
 ```bash
 git checkout master
-git merge origin/master --ff-only
+git reset --hard origin/master
 ```
 
 ### 5. Execute merges sequentially
