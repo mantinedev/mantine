@@ -33,11 +33,11 @@ If `npm run syncpack` (list-mismatches) still reports errors after fix, resolve 
 npm run test:all
 ```
 
-This runs prettier, syncpack, typecheck, lint, and jest.
+This runs oxfmt, syncpack, typecheck, lint, and jest.
 
 If there are formatting/lint errors, fix them:
 ```bash
-npm run prettier:write
+npm run format:write
 npx eslint --fix packages apps/mantine.dev/src apps/help.mantine.dev/src scripts --cache
 ```
 

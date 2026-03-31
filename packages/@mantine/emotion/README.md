@@ -10,10 +10,10 @@ Emotion bindings for @mantine/core
 
 ```bash
 # With yarn
-yarn add @mantine/emotion
+yarn add @mantine/emotion @mantine/core @mantine/hooks @emotion/react
 
 # With npm
-npm install @mantine/emotion
+npm install @mantine/emotion @mantine/core @mantine/hooks @emotion/react
 ```
 
 ## License
