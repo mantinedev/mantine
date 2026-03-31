@@ -112,7 +112,7 @@ export function ScheduleHeaderNext(props: HeaderControlProps) {
 
   return (
     <HeaderControl data-type="next" aria-label={getLabel('next', props.labels)} square {...props}>
-      <AccordionChevron transform={`rotate(${dir === 'rtl' ? 90 : -90} 0 0)`} />
+      <AccordionChevron style={{ transform: `rotate(${dir === 'rtl' ? 90 : -90}deg)` }} />
     </HeaderControl>
   );
 }
@@ -127,7 +127,7 @@ export function ScheduleHeaderPrevious(props: HeaderControlProps) {
       square
       {...props}
     >
-      <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
+      <AccordionChevron style={{ transform: `rotate(${dir === 'rtl' ? -90 : 90}deg)` }} />
     </HeaderControl>
   );
 }
