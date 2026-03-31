@@ -173,7 +173,7 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
             </Transition>
 
             {state !== 'stepCompleted' ? (
-              <span>
+              <span style={{ display: 'flex' }}>
                 {loading ? (
                   <Loader
                     {...ctx.getStyles('stepLoader', stylesApi)}
