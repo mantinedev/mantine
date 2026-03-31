@@ -10,10 +10,10 @@ Schedule Mantine component
 
 ```bash
 # With yarn
-yarn add @mantine/schedule
+yarn add @mantine/schedule @mantine/core @mantine/hooks @mantine/dates
 
 # With npm
-npm install @mantine/schedule
+npm install @mantine/schedule @mantine/core @mantine/hooks @mantine/dates
 ```
 
 ## License

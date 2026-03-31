@@ -40,6 +40,7 @@ export type StepperStylesNames =
   | 'stepWrapper'
   | 'stepIcon'
   | 'stepCompletedIcon'
+  | 'stepIconContent'
   | 'stepBody'
   | 'stepLabel'
   | 'stepDescription';
