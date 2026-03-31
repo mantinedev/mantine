@@ -1,4 +1,4 @@
-import { FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
+import { DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,6 +10,15 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Native level select in date pickers
+
+[DatePicker](/dates/date-picker) and all other date picker components ([DatePickerInput](/dates/date-picker-input),
+[MonthPicker](/dates/month-picker), [YearPicker](/dates/year-picker), [DateTimePicker](/dates/date-time-picker), etc.)
+now support the `withNativeLevelSelect` prop. When enabled, it replaces the calendar header level button
+with native `<select>` elements, making it easy to quickly navigate to a specific month and year.
+
+<Demo data={DatePickerDemos.nativeLevelSelect} />
 
 ## Timeline opposite and alternate content
 

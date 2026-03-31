@@ -28,6 +28,8 @@ describe('@mantine/dates/DatePicker', () => {
     providerStylesApi: false,
   });
 
+  datesTests.itSupportsNativeLevelSelect({ component: DatePicker, props: defaultProps });
+
   datesTests.itSupportsYearsListProps({
     component: DatePicker,
     props: { ...defaultProps, defaultLevel: 'decade' },
