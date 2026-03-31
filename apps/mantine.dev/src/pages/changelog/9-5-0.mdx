@@ -11,13 +11,18 @@ All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
 
-## Timeline opposite content
+## Timeline opposite and alternate content
 
 [Timeline](/core/timeline) `Timeline.Item` component now supports the `opposite` prop that allows
 rendering content on the opposite side of the timeline. When any item has the `opposite` prop,
 the timeline switches to a centered layout with content on both sides of the line.
 
 <Demo data={TimelineDemos.opposite} />
+
+Set the `alternate` prop on individual `Timeline.Item` components to switch
+the position of content and opposite:
+
+<Demo data={TimelineDemos.alternate} />
 
 ## FloatingWindow resize handle
 

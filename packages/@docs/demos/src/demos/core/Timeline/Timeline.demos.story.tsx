@@ -22,3 +22,8 @@ export const Demo_opposite = {
   name: '⭐ Demo: opposite',
   render: renderDemo(demos.opposite),
 };
+
+export const Demo_alternate = {
+  name: '⭐ Demo: alternate',
+  render: renderDemo(demos.alternate),
+};

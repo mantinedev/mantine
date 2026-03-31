@@ -13,7 +13,7 @@ import { GitBranchIcon, GitCommitIcon, GitPullRequestIcon, ChatCircleDotsIcon } 
 
 function Demo() {
   return (
-    <Timeline active={1} bulletSize={24} lineWidth={2}>
+    <Timeline active={2} bulletSize={24} lineWidth={2}>
       <Timeline.Item
         bullet={<GitBranchIcon size={12} />}
         title="New branch"
@@ -34,6 +34,7 @@ function Demo() {
             52 minutes ago
           </Text>
         }
+        alternate
       >
         <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to <Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
       </Timeline.Item>
@@ -51,7 +52,16 @@ function Demo() {
         <Text c="dimmed" size="sm">You&apos;ve submitted a pull request <Text variant="link" component="span" inherit>Fix incorrect notification message (#187)</Text></Text>
       </Timeline.Item>
 
-      <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
+      <Timeline.Item
+        title="Code review"
+        bullet={<ChatCircleDotsIcon size={12} />}
+        opposite={
+          <Text size="sm" c="dimmed">
+            12 minutes ago
+          </Text>
+        }
+        alternate
+      >
         <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
       </Timeline.Item>
     </Timeline>
@@ -61,7 +71,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Timeline active={1} bulletSize={24} lineWidth={2}>
+    <Timeline active={2} bulletSize={24} lineWidth={2}>
       <Timeline.Item
         bullet={<GitBranchIcon size={12} />}
         title="New branch"
@@ -88,6 +98,7 @@ function Demo() {
             52 minutes ago
           </Text>
         }
+        alternate
       >
         <Text c="dimmed" size="sm">
           You&apos;ve pushed 23 commits to{' '}
@@ -115,7 +126,16 @@ function Demo() {
         </Text>
       </Timeline.Item>
 
-      <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
+      <Timeline.Item
+        title="Code review"
+        bullet={<ChatCircleDotsIcon size={12} />}
+        opposite={
+          <Text size="sm" c="dimmed">
+            12 minutes ago
+          </Text>
+        }
+        alternate
+      >
         <Text c="dimmed" size="sm">
           <Text variant="link" component="span" inherit>
             Robert Gluesticker
@@ -127,10 +147,8 @@ function Demo() {
   );
 }
 
-export const opposite: MantineDemo = {
+export const alternate: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
-  centered: true,
-  maxWidth: 480,
 };

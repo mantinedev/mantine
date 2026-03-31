@@ -180,6 +180,20 @@
     padding-inline-end: var(--offset);
     text-align: end;
   }
+
+  .root:where([data-opposite]):where([data-align='left']) .item:where([data-alternate]) & {
+    grid-column: 1;
+    padding-inline-start: 0;
+    padding-inline-end: var(--offset);
+    text-align: end;
+  }
+
+  .root:where([data-opposite]):where([data-align='right']) .item:where([data-alternate]) & {
+    grid-column: 3;
+    padding-inline-end: 0;
+    padding-inline-start: var(--offset);
+    text-align: start;
+  }
 }
 
 .itemOpposite {
@@ -195,5 +209,19 @@
     grid-row: 1;
     padding-inline-start: var(--offset);
     text-align: start;
+  }
+
+  .root:where([data-align='left']) .item:where([data-alternate]) & {
+    grid-column: 3;
+    padding-inline-end: 0;
+    padding-inline-start: var(--offset);
+    text-align: start;
+  }
+
+  .root:where([data-align='right']) .item:where([data-alternate]) & {
+    grid-column: 1;
+    padding-inline-start: 0;
+    padding-inline-end: var(--offset);
+    text-align: end;
   }
 }

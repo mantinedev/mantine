@@ -41,6 +41,9 @@ export interface TimelineItemProps
   /** Content displayed on the opposite side of the timeline item */
   opposite?: React.ReactNode;
 
+  /** If set, switches the position of content and opposite @default false */
+  alternate?: boolean;
+
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
   radius?: MantineRadius;
 
@@ -72,6 +75,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
     __vars,
     bullet,
     opposite,
+    alternate,
     radius,
     color,
     lineVariant,
@@ -85,11 +89,24 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
   const theme = useMantineTheme();
 
   const stylesApiProps = { classNames, styles };
+  const bodyFirst =
+    (__align === 'left' && !!alternate) || (__align === 'right' && !alternate);
+
+  const oppositeNode = opposite != null && (
+    <div {...ctx.getStyles('itemOpposite', stylesApiProps)}>{opposite}</div>
+  );
+
+  const bodyNode = (
+    <div {...ctx.getStyles('itemBody', stylesApiProps)}>
+      {title && <div {...ctx.getStyles('itemTitle', stylesApiProps)}>{title}</div>}
+      <div {...ctx.getStyles('itemContent', stylesApiProps)}>{children}</div>
+    </div>
+  );
 
   return (
     <Box
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
-      mod={[{ 'line-active': __lineActive, active: __active }, mod]}
+      mod={[{ 'line-active': __lineActive, active: __active, alternate }, mod]}
       __vars={{
         '--tli-radius': radius !== undefined ? getRadius(radius) : undefined,
         '--tli-color': color ? getThemeColor(color, theme) : undefined,
@@ -97,9 +114,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
       }}
       {...others}
     >
-      {opposite != null && (
-        <div {...ctx.getStyles('itemOpposite', stylesApiProps)}>{opposite}</div>
-      )}
+      {bodyFirst ? bodyNode : oppositeNode}
 
       <Box
         {...ctx.getStyles('itemBullet', stylesApiProps)}
@@ -108,10 +123,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
         {bullet}
       </Box>
 
-      <div {...ctx.getStyles('itemBody', stylesApiProps)}>
-        {title && <div {...ctx.getStyles('itemTitle', stylesApiProps)}>{title}</div>}
-        <div {...ctx.getStyles('itemContent', stylesApiProps)}>{children}</div>
-      </div>
+      {bodyFirst ? oppositeNode : bodyNode}
     </Box>
   );
 });

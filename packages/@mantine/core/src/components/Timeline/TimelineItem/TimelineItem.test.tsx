@@ -54,4 +54,14 @@ describe('@mantine/core/TimelineItem', () => {
     const { container } = render(<TestContainer opposite="opposite content" />);
     expect(container.querySelector('.mantine-Timeline-itemOpposite')).toBeInTheDocument();
   });
+
+  it('sets data-alternate attribute when alternate prop is set', () => {
+    const { container } = render(<TestContainer alternate />);
+    expect(container.querySelector('.mantine-Timeline-item')).toHaveAttribute('data-alternate');
+  });
+
+  it('does not set data-alternate attribute when alternate prop is not set', () => {
+    const { container } = render(<TestContainer />);
+    expect(container.querySelector('.mantine-Timeline-item')).not.toHaveAttribute('data-alternate');
+  });
 });
