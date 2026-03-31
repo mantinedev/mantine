@@ -35,6 +35,7 @@ export type StepperStepStylesNames =
   | 'stepWrapper'
   | 'stepIcon'
   | 'stepCompletedIcon'
+  | 'stepIconContent'
   | 'stepBody'
   | 'stepLabel'
   | 'stepDescription';
@@ -173,7 +174,7 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
             </Transition>
 
             {state !== 'stepCompleted' ? (
-              <span style={{ display: 'flex' }}>
+              <span {...ctx.getStyles('stepIconContent', stylesApi)}>
                 {loading ? (
                   <Loader
                     {...ctx.getStyles('stepLoader', stylesApi)}
