@@ -21,6 +21,7 @@ describe('@mantine/core/StepperStep', () => {
       'stepBody',
       'stepDescription',
       'stepIcon',
+      'stepIconContent',
       'stepLabel',
       'stepWrapper',
     ],

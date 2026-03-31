@@ -162,6 +162,10 @@
   }
 }
 
+.stepIconContent {
+  display: flex;
+}
+
 .stepCompletedIcon {
   position: absolute;
   inset: 0;
