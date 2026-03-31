@@ -13,7 +13,7 @@ Automated review loop: run Codex review on unstaged changes, apply fixes, re-rev
 2. Run the Codex review:
 
 ```bash
-codex review --uncommitted "Review unstaged git changes. Provide specific, actionable feedback. For each issue, mention the file and approximate line. Focus on: correctness, edge cases, code style, and potential bugs. Do not suggest running tests or adding tests. If everything looks good, respond with LGTM."
+codex review --uncommitted
 ```
 
 3. Read the review output carefully.
