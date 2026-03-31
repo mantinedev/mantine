@@ -25,6 +25,8 @@ npm run stylelint
 npm run syncpack
 ```
 
+After running the commands above, check if `codex` CLI is available (`command -v codex`). If it is, run `/codex-code-review` to get an automated code review of unstaged changes and apply fixes.
+
 ## Code Style
 
 **Comments Guidelines:**
