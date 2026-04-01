@@ -1,3 +1,4 @@
+import readline from 'readline';
 import { MantineMcpDataClient } from './data-client';
 import { GetItemArgs, ListItemsArgs, SearchDocsArgs } from './types';
 
@@ -118,7 +119,7 @@ function parseSearchDocsArgs(args: Record<string, unknown>): SearchDocsArgs | nu
 }
 
 function writeMessage(payload: unknown) {
-  process.stdout.write(JSON.stringify(payload) + '\n');
+  process.stdout.write(`${JSON.stringify(payload)}\n`);
 }
 
 function writeResponse(id: string | number | null, result: unknown) {
@@ -138,7 +139,6 @@ export function startServer() {
   const dataUrl = process.env.MANTINE_MCP_DATA_URL || 'https://mantine.dev/mcp';
   const client = new MantineMcpDataClient(dataUrl, timeoutMs);
 
-  const readline = require('readline');
   const rl = readline.createInterface({ input: process.stdin, terminal: false });
 
   rl.on('line', (line: string) => {
