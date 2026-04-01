@@ -118,9 +118,7 @@ function parseSearchDocsArgs(args: Record<string, unknown>): SearchDocsArgs | nu
 }
 
 function writeMessage(payload: unknown) {
-  const body = JSON.stringify(payload);
-  const header = `Content-Length: ${Buffer.byteLength(body, 'utf8')}\r\n\r\n`;
-  process.stdout.write(header + body);
+  process.stdout.write(JSON.stringify(payload) + '\n');
 }
 
 function writeResponse(id: string | number | null, result: unknown) {
@@ -135,70 +133,30 @@ function writeError(id: string | number | null, code: number, message: string) {
   });
 }
 
-function readContentLength(rawHeaders: string) {
-  const lines = rawHeaders.split('\r\n');
-  const contentLengthHeader = lines.find((line) =>
-    line.toLowerCase().startsWith('content-length:')
-  );
-
-  if (!contentLengthHeader) {
-    return null;
-  }
-
-  const value = Number(contentLengthHeader.split(':')[1]?.trim());
-  return Number.isFinite(value) ? value : null;
-}
-
 export function startServer() {
   const timeoutMs = Number(process.env.MANTINE_MCP_TIMEOUT_MS || 10000);
   const dataUrl = process.env.MANTINE_MCP_DATA_URL || 'https://mantine.dev/mcp';
   const client = new MantineMcpDataClient(dataUrl, timeoutMs);
 
-  let buffer = Buffer.alloc(0);
+  const readline = require('readline');
+  const rl = readline.createInterface({ input: process.stdin, terminal: false });
 
-  process.stdin.on('data', (chunk: Buffer) => {
-    buffer = Buffer.concat([buffer, chunk]);
-
-    while (true) {
-      const separatorIndex = buffer.indexOf('\r\n\r\n');
-
-      if (separatorIndex === -1) {
-        return;
-      }
-
-      const headersBuffer = buffer.subarray(0, separatorIndex);
-      const headers = headersBuffer.toString('utf8');
-      const contentLength = readContentLength(headers);
-
-      if (contentLength == null) {
-        writeError(null, -32600, 'Invalid request: missing Content-Length header');
-        buffer = Buffer.alloc(0);
-        return;
-      }
-
-      const bodyStart = separatorIndex + 4;
-      const bodyEnd = bodyStart + contentLength;
-
-      if (buffer.length < bodyEnd) {
-        return;
-      }
-
-      const bodyBuffer = buffer.subarray(bodyStart, bodyEnd);
-      buffer = buffer.subarray(bodyEnd);
-
-      let request: JsonRpcRequest;
-      try {
-        request = JSON.parse(bodyBuffer.toString('utf8'));
-      } catch {
-        writeError(null, -32700, 'Parse error');
-        continue;
-      }
-
-      void handleRequest(client, request);
+  rl.on('line', (line: string) => {
+    const trimmed = line.trim();
+    if (trimmed.length === 0) {
+      return;
     }
-  });
 
-  process.stdin.resume();
+    let request: JsonRpcRequest;
+    try {
+      request = JSON.parse(trimmed);
+    } catch {
+      writeError(null, -32700, 'Parse error');
+      return;
+    }
+
+    void handleRequest(client, request);
+  });
 }
 
 async function handleRequest(client: MantineMcpDataClient, request: JsonRpcRequest) {
