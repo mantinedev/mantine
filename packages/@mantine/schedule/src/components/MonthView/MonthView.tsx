@@ -559,7 +559,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         return renderEvent(event, bgEventProps as any);
       }
 
-      return <Box {...bgEventProps} />;
+      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+      return <Box key={bgEventKey} {...restBgEventProps} />;
     });
 
     const rowHeightPercent = 100 / maxEventsPerDay;

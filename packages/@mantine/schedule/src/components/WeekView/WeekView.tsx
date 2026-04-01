@@ -764,7 +764,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           return renderEvent(event, bgEventProps as any);
         }
 
-        return <Box {...bgEventProps} />;
+        const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+        return <Box key={bgEventKey} {...restBgEventProps} />;
       });
 
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
@@ -961,7 +962,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         return renderEvent(event, bgEventProps as any);
       }
 
-      return <Box {...bgEventProps} />;
+      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+      return <Box key={bgEventKey} {...restBgEventProps} />;
     });
   });
 
