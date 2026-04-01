@@ -697,7 +697,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
       return renderEvent(event, bgEventProps as any);
     }
 
-    return <Box {...bgEventProps} />;
+    const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+    return <Box key={bgEventKey} {...restBgEventProps} />;
   });
 
   const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => {
@@ -731,7 +732,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
       return renderEvent(event, bgEventProps as any);
     }
 
-    return <Box {...bgEventProps} />;
+    const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+    return <Box key={bgEventKey} {...restBgEventProps} />;
   });
 
   const content = (

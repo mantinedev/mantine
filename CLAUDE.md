@@ -11,7 +11,7 @@ Choose these commands to run after finalizing your work:
 ```bash
 # Always run these commands before finalizing your work
 npm run typecheck
-npx eslint path/to/changed/files
+npx oxlint path/to/changed/files
 npm run format:write:files path/to/changed/files
 
 # Run tests for specific path related to your changes

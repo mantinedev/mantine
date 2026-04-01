@@ -24,7 +24,7 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
-      /* eslint-disable-next-line no-console */
+      /* oxlint-disable-next-line no-console */
       console.error('Failed to copy LLM documentation content:', error);
       notifications.show({
         title: 'Failed to copy',

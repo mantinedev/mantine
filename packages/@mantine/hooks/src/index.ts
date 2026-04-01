@@ -92,16 +92,16 @@ export type {
 } from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
 export type {
-  UseCounterOptions as UseCounterOptions,
+  UseCounterOptions,
   UseCounterHandlers,
   UseCounterReturnValue,
 } from './use-counter/use-counter';
 export type {
-  UseDebouncedCallbackOptions as UseDebouncedCallbackOptions,
+  UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
 } from './use-debounced-callback/use-debounced-callback';
 export type {
-  UseDebouncedStateOptions as UseDebouncedStateOptions,
+  UseDebouncedStateOptions,
   UseDebouncedStateReturnValue,
 } from './use-debounced-state/use-debounced-state';
 export type {
