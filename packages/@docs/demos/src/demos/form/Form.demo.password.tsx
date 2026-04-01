@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 
 import { Box, Button, Group, PasswordInput } from '@mantine/core';
 import { useForm } from '@mantine/form';

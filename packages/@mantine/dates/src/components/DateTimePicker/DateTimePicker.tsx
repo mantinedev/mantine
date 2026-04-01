@@ -300,7 +300,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
             })}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            // eslint-disable-next-line react/no-children-prop
+            // oxlint-disable-next-line react/no-children-prop
             children={<CheckIcon size="30%" />}
             {...submitButtonProps}
             onClick={(event) => {

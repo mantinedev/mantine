@@ -260,7 +260,7 @@ async function compile() {
 }
 
 compile().catch((error) => {
-  // eslint-disable-next-line no-console
+  // oxlint-disable-next-line no-console
   console.error('Failed to compile MCP data', error);
   process.exit(1);
 });

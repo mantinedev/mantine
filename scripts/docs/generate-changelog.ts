@@ -7,9 +7,9 @@ const DEMOS_PATH = getPath('packages/@docs/demos/src/demos');
 function getVersion(): string {
   const version = process.argv[2];
   if (!version) {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line no-console
     console.error('Usage: tsx scripts/docs/generate-changelog.ts <version>');
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line no-console
     console.error('Example: tsx scripts/docs/generate-changelog.ts 9-0-0');
     process.exit(1);
   }
@@ -101,7 +101,7 @@ async function main() {
 
   const mdxPath = getPath(`apps/mantine.dev/src/pages/changelog/${version}.mdx`);
   if (!(await fs.pathExists(mdxPath))) {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line no-console
     console.error(`MDX file not found: ${mdxPath}`);
     process.exit(1);
   }
@@ -124,12 +124,12 @@ async function main() {
   const outputPath = getPath(`.changelog/${dottedVersion}.md`);
   await fs.writeFile(outputPath, output, 'utf-8');
 
-  // eslint-disable-next-line no-console
+  // oxlint-disable-next-line no-console
   console.log(`Generated changelog: ${outputPath}`);
 }
 
 main().catch((error) => {
-  // eslint-disable-next-line no-console
+  // oxlint-disable-next-line no-console
   console.error('Failed to generate changelog.', error);
   process.exit(1);
 });

@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import { useEffect } from 'react';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 
