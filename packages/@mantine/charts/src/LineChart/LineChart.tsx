@@ -303,10 +303,10 @@ export const LineChart = factory<LineChartFactory>((_props) => {
         yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />

@@ -203,10 +203,10 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
         strokeWidth={1}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
