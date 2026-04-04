@@ -37,6 +37,7 @@
     opacity: 0.4;
     cursor: not-allowed;
   }
+
 }
 
 .control--default,
@@ -96,7 +97,6 @@
 }
 
 .item {
-  overflow: hidden;
 
   @mixin where-light {
     --item-border-color: var(--mantine-color-gray-3);
