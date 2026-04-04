@@ -225,6 +225,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     openOnFocus,
     attributes,
     ref,
+    loading,
+    loadingPosition,
     ...others
   } = props;
 
@@ -490,6 +492,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             leftSectionWidth={leftSectionWidth}
             leftSectionPointerEvents={leftSectionPointerEvents}
             leftSectionProps={leftSectionProps}
+            loading={loading}
+            loadingPosition={loadingPosition}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}
