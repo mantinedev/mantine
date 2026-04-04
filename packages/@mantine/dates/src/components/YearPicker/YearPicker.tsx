@@ -112,3 +112,10 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
 
 YearPicker.classes = Calendar.classes;
 YearPicker.displayName = '@mantine/dates/YearPicker';
+
+export namespace YearPicker {
+  export type Props<Type extends DatePickerType = 'default'> = YearPickerProps<Type>;
+  export type BaseProps = YearPickerBaseProps;
+  export type StylesNames = YearPickerStylesNames;
+  export type Factory = YearPickerFactory;
+}

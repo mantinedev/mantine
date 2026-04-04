@@ -15,11 +15,3 @@ export type {
   CalendarHeaderSettings,
   CalendarHeaderFactory,
 };
-
-export namespace CalendarHeader {
-  export type Props = CalendarHeaderProps;
-  export type StylesNames = CalendarHeaderStylesNames;
-  export type CssVariables = CalendarHeaderCssVariables;
-  export type Settings = CalendarHeaderSettings;
-  export type Factory = CalendarHeaderFactory;
-}

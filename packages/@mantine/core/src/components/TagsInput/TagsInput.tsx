@@ -572,3 +572,9 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
 TagsInput.classes = { ...InputBase.classes, ...Combobox.classes };
 TagsInput.displayName = '@mantine/core/TagsInput';
+
+export namespace TagsInput {
+  export type Props = TagsInputProps;
+  export type StylesNames = TagsInputStylesNames;
+  export type Factory = TagsInputFactory;
+}

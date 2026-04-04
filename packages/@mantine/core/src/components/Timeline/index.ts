@@ -22,16 +22,3 @@ export type {
   TimelineItemStylesNames,
   TimelineItemFactory,
 };
-
-export namespace Timeline {
-  export type Props = TimelineProps;
-  export type StylesNames = TimelineStylesNames;
-  export type CssVariables = TimelineCssVariables;
-  export type Factory = TimelineFactory;
-
-  export namespace Item {
-    export type Props = TimelineItemProps;
-    export type StylesNames = TimelineItemStylesNames;
-    export type Factory = TimelineItemFactory;
-  }
-}

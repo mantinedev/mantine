@@ -137,3 +137,8 @@ export const TimeInput = factory<TimeInputFactory>((_props) => {
 
 TimeInput.classes = InputBase.classes;
 TimeInput.displayName = '@mantine/dates/TimeInput';
+
+export namespace TimeInput {
+  export type Props = TimeInputProps;
+  export type Factory = TimeInputFactory;
+}

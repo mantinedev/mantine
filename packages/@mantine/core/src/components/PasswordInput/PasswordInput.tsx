@@ -257,3 +257,10 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
 PasswordInput.classes = { ...InputBase.classes, ...classes };
 PasswordInput.varsResolver = varsResolver;
 PasswordInput.displayName = '@mantine/core/PasswordInput';
+
+export namespace PasswordInput {
+  export type Props = PasswordInputProps;
+  export type StylesNames = PasswordInputStylesNames;
+  export type CssVariables = PasswordInputCssVariables;
+  export type Factory = PasswordInputFactory;
+}

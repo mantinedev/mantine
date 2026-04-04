@@ -229,3 +229,10 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
 OverflowList.displayName = '@mantine/core/OverflowList';
 OverflowList.classes = classes;
 OverflowList.varsResolver = varsResolver;
+
+export namespace OverflowList {
+  export type Props = OverflowListProps;
+  export type Factory = OverflowListFactory;
+  export type StylesNames = OverflowListStylesNames;
+  export type CssVariables = OverflowListCssVariables;
+}

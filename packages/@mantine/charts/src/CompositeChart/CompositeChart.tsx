@@ -537,3 +537,12 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
 CompositeChart.displayName = '@mantine/charts/CompositeChart';
 CompositeChart.classes = classes;
 CompositeChart.varsResolver = varsResolver;
+
+export namespace CompositeChart {
+  export type Props = CompositeChartProps;
+  export type StylesNames = CompositeChartStylesNames;
+  export type CssVariables = CompositeChartCssVariables;
+  export type Factory = CompositeChartFactory;
+  export type Series = CompositeChartSeries;
+  export type CurveType = CompositeChartCurveType;
+}

@@ -318,3 +318,11 @@ export const PieChart = factory<PieChartFactory>((_props) => {
 PieChart.displayName = '@mantine/charts/PieChart';
 PieChart.classes = classes;
 PieChart.varsResolver = varsResolver;
+
+export namespace PieChart {
+  export type Props = PieChartProps;
+  export type StylesNames = PieChartStylesNames;
+  export type CssVariables = PieChartCssVariables;
+  export type Factory = PieChartFactory;
+  export type Cell = PieChartCell;
+}

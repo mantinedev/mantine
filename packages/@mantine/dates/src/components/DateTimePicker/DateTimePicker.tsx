@@ -317,3 +317,9 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
 
 DateTimePicker.classes = { ...classes, ...PickerInputBase.classes, ...DatePicker.classes };
 DateTimePicker.displayName = '@mantine/dates/DateTimePicker';
+
+export namespace DateTimePicker {
+  export type Props = DateTimePickerProps;
+  export type StylesNames = DateTimePickerStylesNames;
+  export type Factory = DateTimePickerFactory;
+}

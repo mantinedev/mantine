@@ -91,7 +91,11 @@ export type AutocompleteFactory = Factory<{
 }>;
 
 export const Autocomplete = factory<AutocompleteFactory>((_props) => {
-  const props = useProps('Autocomplete', { size: 'sm' } satisfies Partial<AutocompleteProps>, _props);
+  const props = useProps(
+    'Autocomplete',
+    { size: 'sm' } satisfies Partial<AutocompleteProps>,
+    _props
+  );
   const {
     classNames,
     styles,
@@ -269,3 +273,10 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
 
 Autocomplete.classes = { ...InputBase.classes, ...Combobox.classes };
 Autocomplete.displayName = '@mantine/core/Autocomplete';
+
+export namespace Autocomplete {
+  export type Props = AutocompleteProps;
+  export type StylesNames = AutocompleteStylesNames;
+  export type RenderOption = RenderAutocompleteOption;
+  export type Factory = AutocompleteFactory;
+}

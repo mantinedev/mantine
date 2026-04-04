@@ -42,3 +42,7 @@ export const VisuallyHidden = factory<VisuallyHiddenFactory>((_props) => {
 
 VisuallyHidden.classes = classes;
 VisuallyHidden.displayName = '@mantine/core/VisuallyHidden';
+
+export namespace VisuallyHidden {
+  export type Props = VisuallyHiddenProps;
+}

@@ -155,3 +155,9 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
 
 YearPickerInput.classes = { ...PickerInputBase.classes, ...YearPicker.classes };
 YearPickerInput.displayName = '@mantine/dates/YearPickerInput';
+
+export namespace YearPickerInput {
+  export type Props<Type extends DatePickerType = 'default'> = YearPickerInputProps<Type>;
+  export type StylesNames = YearPickerInputStylesNames;
+  export type Factory = YearPickerInputFactory;
+}

@@ -36,30 +36,3 @@ export type {
   PaginationItemsProps,
   PaginationContextValue,
 };
-
-export namespace Pagination {
-  export type Props = PaginationProps;
-  export type StylesNames = PaginationStylesNames;
-  export type CssVariables = PaginationCssVariables;
-  export type Factory = PaginationFactory;
-
-  export namespace Root {
-    export type Props = PaginationRootProps;
-  }
-
-  export namespace Control {
-    export type Props = PaginationControlProps;
-  }
-
-  export namespace Dots {
-    export type Props = PaginationDotsProps;
-  }
-
-  export namespace Edge {
-    export type Props = PaginationEdgeProps;
-  }
-
-  export namespace Items {
-    export type Props = PaginationItemsProps;
-  }
-}

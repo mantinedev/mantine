@@ -421,3 +421,9 @@ export const Select = genericFactory<SelectFactory>((_props) => {
 
 Select.classes = { ...InputBase.classes, ...Combobox.classes };
 Select.displayName = '@mantine/core/Select';
+
+export namespace Select {
+  export type Props<Value extends Primitive = string> = SelectProps<Value>;
+  export type StylesNames = SelectStylesNames;
+  export type Factory = SelectFactory;
+}

@@ -372,3 +372,11 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
 ScatterChart.displayName = '@mantine/charts/ScatterChart';
 ScatterChart.classes = classes;
 ScatterChart.varsResolver = varsResolver;
+
+export namespace ScatterChart {
+  export type Props = ScatterChartProps;
+  export type StylesNames = ScatterChartStylesNames;
+  export type CssVariables = ScatterChartCssVariables;
+  export type Factory = ScatterChartFactory;
+  export type Series = ScatterChartSeries;
+}

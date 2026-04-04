@@ -37,24 +37,3 @@ export type {
   ActionIconGroupSectionStylesNames,
   ActionIconGroupSectionFactory,
 };
-
-export namespace ActionIcon {
-  export type Props = ActionIconProps;
-  export type StylesNames = ActionIconStylesNames;
-  export type CssVariables = ActionIconCssVariables;
-  export type Factory = ActionIconFactory;
-
-  export namespace Group {
-    export type Props = ActionIconGroupProps;
-    export type StylesNames = ActionIconGroupStylesNames;
-    export type CssVariables = ActionIconGroupCssVariables;
-    export type Factory = ActionIconGroupFactory;
-  }
-
-  export namespace GroupSection {
-    export type Props = ActionIconGroupSectionProps;
-    export type StylesNames = ActionIconGroupSectionStylesNames;
-    export type CssVariables = ActionIconGroupSectionCssVariables;
-    export type Factory = ActionIconGroupSectionFactory;
-  }
-}

@@ -162,3 +162,11 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
 RingProgress.classes = classes;
 RingProgress.varsResolver = varsResolver;
 RingProgress.displayName = '@mantine/core/RingProgress';
+
+export namespace RingProgress {
+  export type Props = RingProgressProps;
+  export type StylesNames = RingProgressStylesNames;
+  export type Factory = RingProgressFactory;
+  export type CssVariables = RingProgressCssVariables;
+  export type Section = RingProgressSection;
+}

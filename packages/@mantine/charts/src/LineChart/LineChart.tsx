@@ -478,3 +478,12 @@ export const LineChart = factory<LineChartFactory>((_props) => {
 LineChart.displayName = '@mantine/charts/LineChart';
 LineChart.classes = classes;
 LineChart.varsResolver = varsResolver;
+
+export namespace LineChart {
+  export type Props = LineChartProps;
+  export type CssVariables = LineChartCssVariables;
+  export type Factory = LineChartFactory;
+  export type Series = LineChartSeries;
+  export type StylesNames = LineChartStylesNames;
+  export type CurveType = LineChartCurveType;
+}

@@ -15,12 +15,19 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { AvatarGroup, AvatarGroupContext } from './AvatarGroup/AvatarGroup';
+import {
+  AvatarGroup,
+  AvatarGroupContext,
+  type AvatarGroupProps,
+  type AvatarGroupStylesNames,
+  type AvatarGroupCssVariables,
+  type AvatarGroupFactory,
+  type AvatarGroupContextValue,
+} from './AvatarGroup/AvatarGroup';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { getInitialsColor } from './get-initials-color/get-initials-color';
 import { getInitials } from './get-initials/get-initials';
 import classes from './Avatar.module.css';
-
 export type AvatarStylesNames = 'root' | 'placeholder' | 'image';
 export type AvatarVariant =
   | 'filled'
@@ -180,3 +187,19 @@ Avatar.classes = classes;
 Avatar.varsResolver = varsResolver;
 Avatar.displayName = '@mantine/core/Avatar';
 Avatar.Group = AvatarGroup;
+
+export namespace Avatar {
+  export type Props = AvatarProps;
+  export type StylesNames = AvatarStylesNames;
+  export type CssVariables = AvatarCssVariables;
+  export type Variant = AvatarVariant;
+  export type Factory = AvatarFactory;
+
+  export namespace Group {
+    export type Props = AvatarGroupProps;
+    export type StylesNames = AvatarGroupStylesNames;
+    export type CssVariables = AvatarGroupCssVariables;
+    export type Factory = AvatarGroupFactory;
+    export type ContextValue = AvatarGroupContextValue;
+  }
+}
