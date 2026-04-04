@@ -18,6 +18,7 @@ export * from './data/BarChart.styles-api';
 export * from './data/BarsList.styles-api';
 export * from './data/Blockquote.styles-api';
 export * from './data/Breadcrumbs.styles-api';
+export * from './data/BulletChart.styles-api';
 export * from './data/BubbleChart.styles-api';
 export * from './data/Burger.styles-api';
 export * from './data/Button.styles-api';

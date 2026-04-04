@@ -165,6 +165,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/bars-list.mdx',
   },
 
+  BulletChart: {
+    title: 'BulletChart',
+    props: ['BulletChart'],
+    styles: ['BulletChart'],
+    package: '@mantine/charts',
+    slug: '/charts/bullet-chart',
+    description: 'Compact KPI chart with value, target, and qualitative ranges',
+    source: '@mantine/charts/src/BulletChart/BulletChart.tsx',
+    docs: 'charts/bullet-chart.mdx',
+  },
+
   Treemap: {
     title: 'Treemap',
     props: ['Treemap'],
