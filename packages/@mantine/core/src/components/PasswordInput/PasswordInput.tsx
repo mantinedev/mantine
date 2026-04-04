@@ -60,6 +60,7 @@ export type PasswordInputFactory = Factory<{
 
 const defaultProps = {
   visibilityToggleIcon: PasswordToggleIcon,
+  size: 'sm',
 } satisfies Partial<PasswordInputProps>;
 
 const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => ({

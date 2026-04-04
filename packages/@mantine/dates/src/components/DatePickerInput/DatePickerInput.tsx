@@ -37,6 +37,7 @@ export type DatePickerInputFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
+  size: 'sm',
   valueFormat: 'MMMM D, YYYY',
   closeOnChange: true,
   sortDates: true,

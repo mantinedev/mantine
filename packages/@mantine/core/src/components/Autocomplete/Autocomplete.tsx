@@ -91,7 +91,7 @@ export type AutocompleteFactory = Factory<{
 }>;
 
 export const Autocomplete = factory<AutocompleteFactory>((_props) => {
-  const props = useProps('Autocomplete', null, _props);
+  const props = useProps('Autocomplete', { size: 'sm' } satisfies Partial<AutocompleteProps>, _props);
   const {
     classNames,
     styles,

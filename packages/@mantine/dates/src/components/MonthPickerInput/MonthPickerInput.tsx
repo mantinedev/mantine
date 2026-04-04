@@ -40,6 +40,7 @@ export type MonthPickerInputFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
+  size: 'sm',
   valueFormat: 'MMMM YYYY',
   closeOnChange: true,
   sortDates: true,

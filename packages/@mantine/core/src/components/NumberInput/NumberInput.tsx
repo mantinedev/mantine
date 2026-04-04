@@ -276,6 +276,7 @@ export type NumberInputFactory = Factory<{
 }>;
 
 const defaultProps = {
+  size: 'sm',
   step: 1,
   clampBehavior: 'blur',
   allowDecimal: true,

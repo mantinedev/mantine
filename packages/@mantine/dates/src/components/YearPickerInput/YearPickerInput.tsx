@@ -37,6 +37,7 @@ export type YearPickerInputFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
+  size: 'sm',
   valueFormat: 'YYYY',
   closeOnChange: true,
   sortDates: true,

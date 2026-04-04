@@ -118,6 +118,7 @@ export type SelectFactory = Factory<{
 }>;
 
 const defaultProps = {
+  size: 'sm',
   withCheckIcon: true,
   allowDeselect: true,
   checkIconPosition: 'left',

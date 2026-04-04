@@ -24,6 +24,7 @@ export type NativeSelectFactory = Factory<{
 }>;
 
 const defaultProps = {
+  size: 'sm',
   rightSectionPointerEvents: 'none',
 } satisfies Partial<NativeSelectProps>;
 
