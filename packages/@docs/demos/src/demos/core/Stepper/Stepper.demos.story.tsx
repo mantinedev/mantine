@@ -72,3 +72,8 @@ export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),
 };
+
+export const Demo_labelPosition = {
+  name: '⭐ Demo: labelPosition',
+  render: renderDemo(demos.labelPosition),
+};

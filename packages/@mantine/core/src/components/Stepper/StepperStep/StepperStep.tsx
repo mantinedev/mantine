@@ -144,7 +144,11 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
     <UnstyledButton
       {...ctx.getStyles('step', { className, style, variant: ctx.orientation, ...stylesApi })}
       mod={[
-        { 'icon-position': iconPosition || ctx.iconPosition, 'allow-click': allowStepClick },
+        {
+          'icon-position': iconPosition || ctx.iconPosition,
+          'allow-click': allowStepClick,
+          'label-position': ctx.labelPosition,
+        },
         mod,
       ]}
       {...dataAttributes}

@@ -1,3 +1,4 @@
+import { StepperDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,10 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Stepper labelPosition
+
+[Stepper](/core/stepper) component now supports the `labelPosition` prop. Set `labelPosition="bottom"`
+to display the step label and description below the step icon:
+
+<Demo data={StepperDemos.labelPosition} />
