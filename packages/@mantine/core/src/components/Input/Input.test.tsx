@@ -106,7 +106,7 @@ describe('@mantine/core/Input', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'true');
 
     rerender(<Input error={false} />);
-    expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'false');
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-invalid');
   });
 
   it('sets data-variant attribute based on variant prop', () => {

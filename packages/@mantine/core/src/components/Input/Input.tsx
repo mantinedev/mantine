@@ -264,7 +264,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     ? {
         required,
         disabled,
-        'aria-invalid': !!error,
+        'aria-invalid': error ? true : undefined,
         'aria-describedby': ctx?.describedBy,
         id: ctx?.inputId || id,
       }
