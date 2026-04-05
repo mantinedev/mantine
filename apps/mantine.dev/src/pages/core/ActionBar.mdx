@@ -1,0 +1,37 @@
+import { ActionBarDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ActionBar);
+
+## Usage
+
+`ActionBar` is a fixed-position bottom bar that appears when items are selected,
+providing contextual bulk actions. It is built using [Affix](/core/affix), [Transition](/core/transition)
+and [Paper](/core/paper) components.
+
+Content inside `ActionBar` is composed freely using existing Mantine components
+(`Button`, `ActionIcon`, `Group`, `Text`, etc.). Use `ActionBar.Divider` to
+add a vertical divider and `ActionBar.CloseButton` to add a close button that
+triggers the `onClose` callback.
+
+<Demo data={ActionBarDemos.usage} />
+
+## With ActionIcon buttons
+
+<Demo data={ActionBarDemos.withActions} />
+
+## Placement
+
+By default, `ActionBar` is centered at the bottom of the screen. You can change
+the position with the `position` prop. When using non-centered positions, set
+`styles={{ root: { marginInline: 0 } }}` to remove the auto centering.
+
+<Demo data={ActionBarDemos.placement} />
+
+## Close on Escape
+
+By default, `ActionBar` does not close when `Escape` key is pressed. Set `closeOnEscape`
+to enable this behavior:
+
+<Demo data={ActionBarDemos.closeOnEscape} />

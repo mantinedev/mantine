@@ -1,4 +1,4 @@
-import { NotificationsDemos, StepperDemos } from '@docs/demos';
+import { ActionBarDemos, NotificationsDemos, StepperDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -25,6 +25,14 @@ are preserved for custom notifications:
 layout where only the latest notification is fully visible, and older notifications peek out behind it:
 
 <Demo data={NotificationsDemos.stacked} />
+
+## ActionBar component
+
+New [ActionBar](/core/action-bar) component – a fixed-position bottom bar
+for bulk selection actions. Designed to be controlled by table or checkbox
+selections, it provides a set of actions that can be performed on selected items.
+
+<Demo data={ActionBarDemos.usage} />
 
 ## Stepper labelPosition
 

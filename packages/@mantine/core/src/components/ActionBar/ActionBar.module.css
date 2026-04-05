@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.divider {
+  width: 1px;
+  align-self: stretch;
+  background-color: var(--mantine-color-default-border);
+}

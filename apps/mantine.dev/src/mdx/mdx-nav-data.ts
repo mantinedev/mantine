@@ -367,6 +367,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Menu,
       MDX_DATA.LoadingOverlay,
       MDX_DATA.Dialog,
+      MDX_DATA.ActionBar,
       MDX_DATA.FloatingIndicator,
       MDX_DATA.FloatingWindow,
     ],

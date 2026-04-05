@@ -13,6 +13,7 @@ export * as EmotionDemos from './demos/emotion';
 
 // Core demos
 export * as AccordionDemos from './demos/core/Accordion';
+export * as ActionBarDemos from './demos/core/ActionBar';
 export * as ActionIconDemos from './demos/core/ActionIcon';
 export * as AffixDemos from './demos/core/Affix';
 export * as AlertDemos from './demos/core/Alert';
