@@ -137,6 +137,8 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     emblaOptions,
     zoomMaxScale,
     withSlideTransition,
+    withNavigation,
+    toolbarItems,
     attributes,
     mod,
     ...others
