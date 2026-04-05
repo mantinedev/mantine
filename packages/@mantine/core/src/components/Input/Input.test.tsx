@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Input, InputProps, InputStylesNames } from './Input';
 import { InputClearButton } from './InputClearButton/InputClearButton';
@@ -206,6 +207,12 @@ describe('@mantine/core/Input', () => {
     expect(screen.queryByText('default-right-section')).not.toBeInTheDocument();
     expect(screen.queryByText('clear')).toBeInTheDocument();
     expect(screen.getByText('right-section')).toBeInTheDocument();
+  });
+
+  it('sets rootRef on the wrapper element', () => {
+    const ref = createRef<HTMLDivElement>();
+    const { container } = render(<Input rootRef={ref} />);
+    expect(ref.current).toBe(getInputWrapper(container));
   });
 
   it('exposes compound components', () => {

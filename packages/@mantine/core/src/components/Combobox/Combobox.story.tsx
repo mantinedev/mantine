@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { IconFilter, IconSearch, IconShoppingCart } from '@tabler/icons-react';
 import { Anchor } from '../Anchor';
 import { Button } from '../Button';
-import { Group } from '../Group';
 import { Input } from '../Input';
 import { InputBase } from '../InputBase';
 import { Popover } from '../Popover';
@@ -579,19 +577,6 @@ export function BottomLeftAbsolute() {
   );
 }
 
-const groceries = [
-  '🍎 Apples',
-  '🍌 Bananas',
-  '🥦 Broccoli',
-  '🥕 Carrots',
-  '🍫 Chocolate',
-  '🍇 Grapes',
-  '🍋 Lemons',
-  '🥬 Lettuce',
-  '🍊 Oranges',
-  '🍑 Peaches',
-];
-
 export function InputWithSections() {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -599,7 +584,7 @@ export function InputWithSections() {
 
   const [value, setValue] = useState<string | null>(null);
 
-  const options = groceries.map((item) => (
+  const options = groceries.slice(0, 5).map((item) => (
     <Combobox.Option value={item} key={item}>
       {item}
     </Combobox.Option>
@@ -621,13 +606,7 @@ export function InputWithSections() {
             type="button"
             pointer
             style={{ width: 350 }}
-            leftSection={
-              <Group gap={4}>
-                <IconSearch size={16} />
-                <IconFilter size={16} />
-                <IconShoppingCart size={16} />
-              </Group>
-            }
+            leftSection={<span>L</span>}
             rightSection={<Combobox.Chevron />}
             rightSectionPointerEvents="none"
             onClick={() => combobox.toggleDropdown()}

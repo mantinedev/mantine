@@ -181,6 +181,9 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
 
   /** Props passed down to the root element of the `Input` component */
   wrapperProps?: WrapperProps;
+
+  /** Root element ref */
+  rootRef?: React.Ref<HTMLDivElement>;
 }
 
 export type InputFactory = PolymorphicFactory<{
@@ -269,6 +272,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     __defaultRightSection,
     loading,
     loadingPosition,
+    rootRef,
     ...others
   } = props;
 
@@ -325,6 +329,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
   return (
     <InputContext value={{ size: size || 'sm' }}>
       <Box
+        ref={rootRef}
         {...getStyles('wrapper')}
         {...styleProps}
         {...wrapperProps}
