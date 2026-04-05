@@ -28,11 +28,15 @@ function ChevronLeft() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width="24"
-      height="24"
-      fill="currentColor"
+      width="36"
+      height="36"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      <polyline points="15 18 9 12 15 6" />
     </svg>
   );
 }
@@ -42,11 +46,15 @@ function ChevronRight() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width="24"
-      height="24"
-      fill="currentColor"
+      width="36"
+      height="36"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+      <polyline points="9 18 15 12 9 6" />
     </svg>
   );
 }

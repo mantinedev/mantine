@@ -75,6 +75,7 @@ export interface LightboxRootProps
   transitionDuration?: number;
   emblaOptions?: EmblaOptionsType;
   zoomMaxScale?: number;
+  withSlideTransition?: boolean;
 }
 
 export type LightboxRootFactory = Factory<{
@@ -96,6 +97,7 @@ const defaultProps = {
   closeOnSwipeDown: true,
   transitionDuration: 200,
   zoomMaxScale: 3,
+  withSlideTransition: false,
 } satisfies Partial<LightboxRootProps>;
 
 const varsResolver = createVarsResolver<LightboxRootFactory>((_, { transitionDuration }) => ({
@@ -133,6 +135,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     transitionDuration,
     emblaOptions,
     zoomMaxScale,
+    withSlideTransition,
     attributes,
     mod,
     ...others
@@ -182,6 +185,38 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     maxScale: zoomMaxScale!,
     currentIndex: _currentIndex,
   });
+
+  const [slidePhase, setSlidePhase] = useState<'idle' | 'dragging' | 'snapping'>('idle');
+
+  useEffect(() => {
+    if (!embla) {
+      return undefined;
+    }
+
+    const onPointerDown = () => {
+      setSlidePhase('dragging');
+    };
+
+    const onPointerUp = () => {
+      setSlidePhase('snapping');
+    };
+
+    const onSettle = () => {
+      setSlidePhase('idle');
+    };
+
+    embla.on('pointerDown', onPointerDown);
+    embla.on('pointerUp', onPointerUp);
+    embla.on('settle', onSettle);
+    return () => {
+      embla.off('pointerDown', onPointerDown);
+      embla.off('pointerUp', onPointerUp);
+      embla.off('settle', onSettle);
+    };
+  }, [embla]);
+
+  const slideTransitionActive =
+    slidePhase === 'snapping' || (slidePhase === 'idle' && !!withSlideTransition);
 
   const handleNext = useCallback(() => {
     embla?.scrollNext();
@@ -265,6 +300,8 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
             toggleZoom: zoom.toggleZoom,
             onClose,
             loop: !!loop,
+            withSlideTransition: !!withSlideTransition,
+            slideTransitionActive,
           }}
         >
           <Box

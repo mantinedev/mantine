@@ -79,6 +79,14 @@
 .slidesContainer {
   display: flex;
   height: 100%;
+
+  &[data-slide-transition] {
+    transition: transform var(--lightbox-transition-duration) ease;
+
+    @media (prefers-reduced-motion) {
+      transition: none;
+    }
+  }
 }
 
 .slide {
@@ -111,12 +119,18 @@
     }
   }
 
-  &:not([data-zoomed]) {
+  &[data-dragging] {
+    transition: none;
+  }
+
+  &[data-zoom-enabled]:not([data-zoomed]) {
     cursor: zoom-in;
   }
 }
 
 .slideVideo {
+  width: 100%;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
@@ -192,16 +206,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--mantine-radius-xl);
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 48px;
+  height: 48px;
   color: var(--mantine-color-white);
   pointer-events: all;
-  opacity: 0.8;
-  transition:
-    opacity var(--lightbox-transition-duration) ease,
-    background-color var(--lightbox-transition-duration) ease;
+  opacity: 0.7;
+  transition: opacity var(--lightbox-transition-duration) ease;
 
   @media (prefers-reduced-motion) {
     transition: none;
@@ -209,7 +219,6 @@
 
   @mixin hover {
     opacity: 1;
-    background-color: rgba(0, 0, 0, 0.7);
   }
 
   &[data-inactive] {

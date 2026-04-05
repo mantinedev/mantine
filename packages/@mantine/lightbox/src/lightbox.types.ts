@@ -22,6 +22,7 @@ export interface LightboxVideoSlide {
 export interface LightboxCustomSlide {
   type: 'custom';
   render: (props: { active: boolean }) => ReactNode;
+  renderThumb?: () => ReactNode;
   thumbSrc?: string;
   caption?: ReactNode;
 }

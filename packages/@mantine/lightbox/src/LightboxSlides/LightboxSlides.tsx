@@ -49,7 +49,12 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
       onTouchEnd={handleTouchEnd}
     >
       <div {...ctx.getStyles('slidesViewport')} ref={emblaRef ?? ctx.emblaRef}>
-        <div {...ctx.getStyles('slidesContainer')}>{children}</div>
+        <div
+          {...ctx.getStyles('slidesContainer')}
+          data-slide-transition={ctx.slideTransitionActive || undefined}
+        >
+          {children}
+        </div>
       </div>
     </Box>
   );

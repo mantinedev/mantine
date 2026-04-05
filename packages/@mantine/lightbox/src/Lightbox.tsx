@@ -20,8 +20,9 @@ import classes from './Lightbox.module.css';
 
 export type LightboxStylesNames = LightboxRootStylesNames;
 
-export interface LightboxProps extends LightboxRootProps {
+export interface LightboxProps extends Omit<LightboxRootProps, 'children'> {
   toolbarItems?: ToolbarItem[];
+  children?: React.ReactNode;
 }
 
 export type LightboxFactory = Factory<{

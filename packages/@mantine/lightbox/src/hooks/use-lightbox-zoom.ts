@@ -24,6 +24,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   const [zoomState, setZoomState] = useState<ZoomState>(INITIAL_ZOOM_STATE);
   const imageRef = useRef<HTMLImageElement>(null);
   const isDragging = useRef(false);
+  const didDrag = useRef(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const translateStart = useRef({ x: 0, y: 0 });
   const lastPinchDistance = useRef<number | null>(null);
@@ -71,6 +72,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
         return;
       }
       isDragging.current = true;
+      didDrag.current = false;
       dragStart.current = { x: event.clientX, y: event.clientY };
       translateStart.current = { x: zoomState.translateX, y: zoomState.translateY };
       (event.target as HTMLElement)?.setPointerCapture(event.pointerId);
@@ -85,6 +87,9 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       }
       const dx = event.clientX - dragStart.current.x;
       const dy = event.clientY - dragStart.current.y;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        didDrag.current = true;
+      }
       setZoomState((prev) => ({
         ...prev,
         translateX: translateStart.current.x + dx,
@@ -128,17 +133,38 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     lastPinchDistance.current = null;
   }, []);
 
+  const handleClick = useCallback(
+    (_event: React.MouseEvent) => {
+      if (!enabled) {
+        return;
+      }
+      if (didDrag.current) {
+        didDrag.current = false;
+        return;
+      }
+      if ('ontouchstart' in window) {
+        return;
+      }
+      toggleZoom();
+    },
+    [enabled, toggleZoom]
+  );
+
   const getImageProps = useCallback(
     () => ({
       ref: imageRef,
       style: {
         transform: `scale(${zoomState.scale}) translate(${zoomState.translateX / zoomState.scale}px, ${zoomState.translateY / zoomState.scale}px)`,
+        transition: isDragging.current ? 'none' : undefined,
       },
+      'data-zoom-enabled': enabled || undefined,
       'data-zoomed': zoomState.isZoomed || undefined,
+      'data-dragging': isDragging.current || undefined,
       onWheel: handleWheel,
       onPointerDown: handlePointerDown,
       onPointerMove: handlePointerMove,
       onPointerUp: handlePointerUp,
+      onClick: handleClick,
       onDoubleClick: toggleZoom,
       onTouchMove: handleTouchMove,
       onTouchEnd: handleTouchEnd,
@@ -149,6 +175,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       handlePointerDown,
       handlePointerMove,
       handlePointerUp,
+      handleClick,
       toggleZoom,
       handleTouchMove,
       handleTouchEnd,

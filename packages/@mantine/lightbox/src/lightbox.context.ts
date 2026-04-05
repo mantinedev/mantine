@@ -24,6 +24,8 @@ export interface LightboxContextValue {
   toggleZoom: () => void;
   onClose: () => void;
   loop: boolean;
+  withSlideTransition: boolean;
+  slideTransitionActive: boolean;
 }
 
 export const [LightboxContextProvider, useLightboxContext] =

@@ -70,6 +70,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
   }
 
   const thumbnails = ctx.slides.map((slide, index) => {
+    const hasCustomThumb = slide.type === 'custom' && slide.renderThumb;
     const thumbSrc =
       slide.thumbSrc ??
       (slide.type === 'video' ? slide.poster : undefined) ??
@@ -84,7 +85,9 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
         aria-selected={index === ctx.currentIndex}
         onClick={() => ctx.setIndex(index)}
       >
-        {thumbSrc ? (
+        {hasCustomThumb ? (
+          slide.renderThumb!()
+        ) : thumbSrc ? (
           <img {...ctx.getStyles('thumbnailImage')} src={thumbSrc} alt="" draggable={false} />
         ) : null}
       </UnstyledButton>
