@@ -22,6 +22,9 @@ interface NotificationContainerProps extends NotificationProps {
   stackIndex?: number;
   stackSize?: number;
   stackPosition?: string;
+  stackExpanded?: boolean;
+  stackExpandedOffset?: number;
+  transitionState?: string;
 }
 
 export function NotificationContainer({
@@ -41,6 +44,9 @@ export function NotificationContainer({
   stackIndex,
   stackSize,
   stackPosition,
+  stackExpanded,
+  stackExpandedOffset,
+  transitionState,
   ...others
 }: NotificationContainerProps) {
   const [offset, setOffset] = useState(0);
@@ -187,31 +193,52 @@ export function NotificationContainer({
 
   const isStackedLayout = layout === 'stacked';
   const isStacked = isStackedLayout && stackIndex !== undefined && stackIndex > 0;
+  const isCollapsed = isStacked && !stackExpanded;
+  const isExiting = transitionState === 'exiting' || transitionState === 'exited';
   const stackDirection = stackPosition?.startsWith('top') ? 1 : -1;
-  const stackedOffset = isStacked ? stackIndex * 10 * stackDirection : 0;
+  const collapsedOffset = isCollapsed ? stackIndex * 10 * stackDirection : 0;
+  const staggerDelay = isStackedLayout ? (stackIndex || 0) * 30 : 0;
+  const isDragging = active || scrollDismissActive;
+
+  const getStackedTransform = () => {
+    if (!isStackedLayout || isExiting) {
+      return 'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)';
+    }
+
+    if (stackExpanded) {
+      return `translateY(${stackExpandedOffset || 0}px) translate3d(var(--notifications-swipe-offset), 0, 0)`;
+    }
+
+    if (isStacked) {
+      return `scale(${1 - stackIndex * 0.03}) translateY(${collapsedOffset}px)`;
+    }
+
+    return 'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)';
+  };
 
   const notificationStyle = {
     ...baseStyle,
+    ...(isStackedLayout && !isExiting ? { maxHeight: undefined } : {}),
     ['--notifications-state-transform' as string]:
       typeof baseStyle.transform === 'string' ? baseStyle.transform : 'translateX(0)',
     ['--notifications-state-opacity' as string]: String(baseOpacity),
     ['--notifications-swipe-offset' as string]: `${offset}px`,
     ['--notifications-swipe-opacity' as string]: String(swipeOpacity),
-    transform: isStacked
-      ? `scale(${1 - stackIndex * 0.03}) translateY(${stackedOffset}px)`
-      : 'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)',
+    transform: getStackedTransform(),
     opacity: 'calc(var(--notifications-state-opacity) * var(--notifications-swipe-opacity))',
-    transitionDuration:
-      active || scrollDismissActive ? '0ms, 0ms, 0ms' : resolvedTransitionDuration,
+    transitionDuration: isDragging ? '0ms, 0ms, 0ms' : resolvedTransitionDuration,
     cursor: 'default',
     touchAction: 'pan-y',
-    ...(isStackedLayout
+    ...(isStackedLayout && !isExiting
       ? {
           gridArea: '1 / 1' as const,
-          zIndex: isStacked ? (stackSize || 5) - stackIndex : (stackSize || 5) + 1,
-          pointerEvents: isStacked ? ('none' as const) : undefined,
+          zIndex: isCollapsed ? (stackSize || 5) - stackIndex : (stackSize || 5) + 1,
+          pointerEvents: isCollapsed ? ('none' as const) : undefined,
           alignSelf: stackDirection === 1 ? ('start' as const) : ('end' as const),
-          transition: `transform ${transitionDuration}ms cubic-bezier(.51,.3,0,1.21)`,
+          transition: isDragging
+            ? 'none'
+            : `transform ${transitionDuration}ms cubic-bezier(.51,.3,0,1.21), opacity ${transitionDuration}ms ease`,
+          transitionDelay: isDragging ? '0ms' : `${staggerDelay}ms`,
         }
       : {}),
   } as React.CSSProperties;

@@ -167,9 +167,28 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const refs = useRef<Record<string, HTMLDivElement>>({});
   const previousLength = useRef<number>(0);
   const [hoveredCount, setHoveredCount] = useState(0);
+  const [stackExpanded, setStackExpanded] = useState(false);
+  const collapseTimeout = useRef<number>(-1);
 
   const handleHoverStart = useCallback(() => setHoveredCount((c) => c + 1), []);
   const handleHoverEnd = useCallback(() => setHoveredCount((c) => Math.max(0, c - 1)), []);
+
+  useEffect(() => {
+    if (layout !== 'stacked') {
+      return undefined;
+    }
+
+    if (hoveredCount > 0) {
+      window.clearTimeout(collapseTimeout.current);
+      setStackExpanded(true);
+    } else if (stackExpanded) {
+      collapseTimeout.current = window.setTimeout(() => {
+        setStackExpanded(false);
+      }, 200);
+    }
+
+    return () => window.clearTimeout(collapseTimeout.current);
+  }, [hoveredCount, layout]);
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -207,6 +226,20 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const groupedComponents = positions.reduce(
     (acc, pos) => {
       const groupLength = grouped[pos].length;
+      const expandedOffsets: number[] = new Array(groupLength).fill(0);
+
+      if (layout === 'stacked' && stackExpanded && groupLength > 0) {
+        const direction = pos.startsWith('top') ? 1 : -1;
+        const gap = 16;
+        let cumOffset = 0;
+
+        for (let i = groupLength - 1; i >= 0; i--) {
+          expandedOffsets[i] = cumOffset * direction;
+          const el = refs.current[grouped[pos][i].id!];
+          cumOffset += (el?.offsetHeight || 80) + gap;
+        }
+      }
+
       acc[pos] = grouped[pos].map(({ style: notificationStyle, ...notification }, index) => (
         <Transition
           key={notification.id}
@@ -229,7 +262,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
               allowScrollDismiss={allowScrollDismiss}
               paused={
                 (pauseResetOnHover === 'all' ? hoveredCount > 0 : false) ||
-                (layout === 'stacked' && groupLength - 1 - index > 0)
+                (layout === 'stacked' && !stackExpanded && groupLength - 1 - index > 0)
               }
               onHoverStart={handleHoverStart}
               onHoverEnd={handleHoverEnd}
@@ -242,6 +275,9 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
               stackIndex={layout === 'stacked' ? groupLength - 1 - index : index}
               stackSize={groupLength}
               stackPosition={pos}
+              stackExpanded={stackExpanded}
+              stackExpandedOffset={expandedOffsets[index]}
+              transitionState={state}
               {...getStyles('notification', {
                 style: {
                   ...getNotificationStateStyles({
