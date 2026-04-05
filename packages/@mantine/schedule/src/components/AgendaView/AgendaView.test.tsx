@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
@@ -102,9 +101,7 @@ describe('@mantine/schedule/AgendaView', () => {
         payload: {},
       },
     ];
-    render(
-      <AgendaView rangeStart="2025-11-10" rangeEnd="2025-11-10" events={allDayEvents} />
-    );
+    render(<AgendaView rangeStart="2025-11-10" rangeEnd="2025-11-10" events={allDayEvents} />);
     expect(screen.getByText('All day')).toBeInTheDocument();
     expect(screen.queryByText('00:00 – 00:00')).not.toBeInTheDocument();
   });
@@ -193,8 +190,8 @@ describe('@mantine/schedule/AgendaView', () => {
   });
 
   it('supports renderEvent callback', () => {
-    const renderEvent = jest.fn((event, props) => (
-      <button key={event.id} data-testid="custom-event">
+    const renderEvent = jest.fn((event, _props) => (
+      <button type="button" key={event.id} data-testid="custom-event">
         {event.title}
       </button>
     ));

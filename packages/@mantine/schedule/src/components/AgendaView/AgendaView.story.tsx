@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Box, Stack, Text } from '@mantine/core';
+import { Box } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { AgendaView } from './AgendaView';
 
@@ -91,11 +90,7 @@ const november2025Events: ScheduleEventData[] = [
 export function Usage() {
   return (
     <Box style={{ width: 500, border: '1px solid #ccc' }}>
-      <AgendaView
-        rangeStart="2025-11-01"
-        rangeEnd="2025-11-30"
-        events={november2025Events}
-      />
+      <AgendaView rangeStart="2025-11-01" rangeEnd="2025-11-30" events={november2025Events} />
     </Box>
   );
 }
@@ -103,11 +98,7 @@ export function Usage() {
 export function SingleDay() {
   return (
     <Box style={{ width: 500, border: '1px solid #ccc' }}>
-      <AgendaView
-        rangeStart="2025-11-10"
-        rangeEnd="2025-11-10"
-        events={november2025Events}
-      />
+      <AgendaView rangeStart="2025-11-10" rangeEnd="2025-11-10" events={november2025Events} />
     </Box>
   );
 }
@@ -115,11 +106,7 @@ export function SingleDay() {
 export function NoEvents() {
   return (
     <Box style={{ width: 500, border: '1px solid #ccc' }}>
-      <AgendaView
-        rangeStart="2025-12-01"
-        rangeEnd="2025-12-31"
-        events={november2025Events}
-      />
+      <AgendaView rangeStart="2025-12-01" rangeEnd="2025-12-31" events={november2025Events} />
     </Box>
   );
 }
@@ -153,11 +140,7 @@ export function CustomNoEventsText() {
 export function WeekRange() {
   return (
     <Box style={{ width: 500, border: '1px solid #ccc' }}>
-      <AgendaView
-        rangeStart="2025-11-03"
-        rangeEnd="2025-11-09"
-        events={november2025Events}
-      />
+      <AgendaView rangeStart="2025-11-03" rangeEnd="2025-11-09" events={november2025Events} />
     </Box>
   );
 }

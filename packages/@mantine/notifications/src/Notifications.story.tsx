@@ -39,7 +39,6 @@ export function Usage() {
   );
 }
 
-
 const renderStore = createNotificationsStore();
 
 export function RenderNotification() {

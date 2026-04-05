@@ -12,9 +12,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return (
-    <MonthPickerInput label="Pick month" placeholder="Pick month" withNativeLevelSelect />
-  );
+  return <MonthPickerInput label="Pick month" placeholder="Pick month" withNativeLevelSelect />;
 }
 
 export const nativeLevelSelect: MantineDemo = {
