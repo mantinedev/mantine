@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { IconFilter, IconSearch, IconShoppingCart } from '@tabler/icons-react';
 import { Anchor } from '../Anchor';
 import { Button } from '../Button';
+import { Group } from '../Group';
 import { Input } from '../Input';
 import { InputBase } from '../InputBase';
 import { Popover } from '../Popover';
@@ -574,5 +576,70 @@ export function BottomLeftAbsolute() {
         </div>
       </div>
     </>
+  );
+}
+
+const groceries = [
+  '🍎 Apples',
+  '🍌 Bananas',
+  '🥦 Broccoli',
+  '🥕 Carrots',
+  '🍫 Chocolate',
+  '🍇 Grapes',
+  '🍋 Lemons',
+  '🥬 Lettuce',
+  '🍊 Oranges',
+  '🍑 Peaches',
+];
+
+export function InputWithSections() {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [value, setValue] = useState<string | null>(null);
+
+  const options = groceries.map((item) => (
+    <Combobox.Option value={item} key={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Combobox
+        store={combobox}
+        onOptionSubmit={(val) => {
+          setValue(val);
+          combobox.closeDropdown();
+        }}
+        width="target"
+      >
+        <Combobox.Target>
+          <Input
+            component="button"
+            type="button"
+            pointer
+            style={{ width: 350 }}
+            leftSection={
+              <Group gap={4}>
+                <IconSearch size={16} />
+                <IconFilter size={16} />
+                <IconShoppingCart size={16} />
+              </Group>
+            }
+            rightSection={<Combobox.Chevron />}
+            rightSectionPointerEvents="none"
+            onClick={() => combobox.toggleDropdown()}
+          >
+            {value || <Input.Placeholder>Pick a grocery</Input.Placeholder>}
+          </Input>
+        </Combobox.Target>
+
+        <Combobox.Dropdown>
+          <Combobox.Options>{options}</Combobox.Options>
+        </Combobox.Dropdown>
+      </Combobox>
+    </div>
   );
 }
