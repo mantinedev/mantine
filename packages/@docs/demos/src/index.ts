@@ -158,6 +158,7 @@ export * as BarsListDemos from './demos/charts/BarsList';
 export * as BulletChartDemos from './demos/charts/BulletChart';
 export * as GaugeChartDemos from './demos/charts/GaugeChart';
 export * as WaffleChartDemos from './demos/charts/WaffleChart';
+export * as MatrixChartDemos from './demos/charts/MatrixChart';
 export * as TreemapDemos from './demos/charts/Treemap';
 export * as SankeyChartDemos from './demos/charts/SankeyChart';
 export * as SunburstChartDemos from './demos/charts/SunburstChart';

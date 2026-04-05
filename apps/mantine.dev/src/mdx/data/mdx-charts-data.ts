@@ -220,6 +220,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/sunburst-chart.mdx',
   },
 
+  MatrixChart: {
+    title: 'MatrixChart',
+    props: ['MatrixChart'],
+    styles: ['MatrixChart'],
+    package: '@mantine/charts',
+    slug: '/charts/matrix-chart',
+    description: 'Generic x/y heatmap with categorical axes',
+    source: '@mantine/charts/src/MatrixChart/MatrixChart.tsx',
+    docs: 'charts/matrix-chart.mdx',
+  },
+
   SankeyChart: {
     title: 'SankeyChart',
     props: ['SankeyChart'],

@@ -69,6 +69,7 @@ export * from './data/LoadingOverlay.styles-api';
 export * from './data/Mark.styles-api';
 export * from './data/Marquee.styles-api';
 export * from './data/MaskInput.styles-api';
+export * from './data/MatrixChart.styles-api';
 export * from './data/Menu.styles-api';
 export * from './data/MiniCalendar.styles-api';
 export * from './data/MobileMonthView.styles-api';
