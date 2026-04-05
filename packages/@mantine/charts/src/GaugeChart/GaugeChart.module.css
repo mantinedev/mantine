@@ -3,15 +3,6 @@
   height: var(--gauge-size);
 }
 
-.track {
-}
-
-.section {
-}
-
-.needle {
-}
-
 .label {
   display: flex;
   align-items: center;

@@ -187,6 +187,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/gauge-chart.mdx',
   },
 
+  WaffleChart: {
+    title: 'WaffleChart',
+    props: ['WaffleChart'],
+    styles: ['WaffleChart'],
+    package: '@mantine/charts',
+    slug: '/charts/waffle-chart',
+    description: 'Part-to-whole grid chart with colored cells',
+    source: '@mantine/charts/src/WaffleChart/WaffleChart.tsx',
+    docs: 'charts/waffle-chart.mdx',
+  },
+
   Treemap: {
     title: 'Treemap',
     props: ['Treemap'],

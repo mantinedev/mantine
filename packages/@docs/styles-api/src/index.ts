@@ -134,5 +134,6 @@ export * from './data/Tree.styles-api';
 export * from './data/TreeSelect.styles-api';
 export * from './data/Typography.styles-api';
 export * from './data/UnstyledButton.styles-api';
+export * from './data/WaffleChart.styles-api';
 export * from './data/WeekView.styles-api';
 export * from './data/YearView.styles-api';

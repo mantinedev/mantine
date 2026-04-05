@@ -472,6 +472,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.BarsList,
       MDX_DATA.BulletChart,
       MDX_DATA.GaugeChart,
+      MDX_DATA.WaffleChart,
       MDX_DATA.Treemap,
       MDX_DATA.SunburstChart,
       MDX_DATA.SankeyChart,

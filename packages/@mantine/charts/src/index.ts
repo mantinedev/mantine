@@ -19,4 +19,5 @@ export * from './SankeyChart/index.js';
 export * from './SunburstChart/index.js';
 export * from './BulletChart/index.js';
 export * from './GaugeChart/index.js';
+export * from './WaffleChart/index.js';
 export * from './types';
