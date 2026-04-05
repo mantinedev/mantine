@@ -300,6 +300,10 @@ function Demo() {
     <MatrixChart
       data={data}
       yLabels={['James', 'Mary', 'Robert', 'Linda', 'Michael', 'Sarah', 'David', 'Emma']}
+      withTooltip
+      getTooltipLabel={({ x, y, value }) =>
+        \`\${y}, Mar \${x}: \${value === null ? 'No contributions' : \`\${value} contribution\${value > 1 ? 's' : ''}\`}\`
+      }
     />
   );
 }
@@ -310,6 +314,10 @@ function Demo() {
     <MatrixChart
       data={data}
       yLabels={['James', 'Mary', 'Robert', 'Linda', 'Michael', 'Sarah', 'David', 'Emma']}
+      withTooltip
+      getTooltipLabel={({ x, y, value }) =>
+        `${y}, Mar ${x}: ${value === null ? 'No contributions' : `${value} contribution${value > 1 ? 's' : ''}`}`
+      }
     />
   );
 }

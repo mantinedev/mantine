@@ -13,6 +13,10 @@ import {
   useStyles,
 } from '@mantine/core';
 import { getHeatColor } from '../Heatmap/get-heat-color/get-heat-color';
+import { buildCellMap, getCellKey } from './build-cell-map/build-cell-map';
+import { getDomain } from './get-domain/get-domain';
+import { getLegendWidth } from './get-legend-width/get-legend-width';
+import { getUniqueValues } from './get-unique-values/get-unique-values';
 import classes from './MatrixChart.module.css';
 
 export interface MatrixChartCell {
@@ -125,6 +129,9 @@ const defaultProps = {
   legendLabels: ['Less', 'More'] as [string, string],
 } satisfies Partial<MatrixChartProps>;
 
+const LEGEND_PADDING = 10;
+const TEXT_GAP = 6;
+
 export const MatrixChart = factory<MatrixChartFactory>((_props) => {
   const props = useProps('MatrixChart', defaultProps, _props);
   const {
@@ -174,57 +181,13 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
 
   const [hoveredCell, setHoveredCell] = useState<MatrixChartCell | null>(null);
 
-  const xValues = useMemo(() => {
-    if (xLabelsProp) {
-      return xLabelsProp;
-    }
-    const seen = new Set<string>();
-    const result: string[] = [];
-    data.forEach((cell) => {
-      if (!seen.has(cell.x)) {
-        seen.add(cell.x);
-        result.push(cell.x);
-      }
-    });
-    return result;
-  }, [data, xLabelsProp]);
+  const xValues = useMemo(() => getUniqueValues(data, 'x', xLabelsProp), [data, xLabelsProp]);
 
-  const yValues = useMemo(() => {
-    if (yLabelsProp) {
-      return yLabelsProp;
-    }
-    const seen = new Set<string>();
-    const result: string[] = [];
-    data.forEach((cell) => {
-      if (!seen.has(cell.y)) {
-        seen.add(cell.y);
-        result.push(cell.y);
-      }
-    });
-    return result;
-  }, [data, yLabelsProp]);
+  const yValues = useMemo(() => getUniqueValues(data, 'y', yLabelsProp), [data, yLabelsProp]);
 
-  const cellMap = useMemo(() => {
-    const map = new Map<string, MatrixChartCell>();
-    data.forEach((cell) => {
-      map.set(`${cell.x.length}:${cell.x}\0${cell.y}`, cell);
-    });
-    return map;
-  }, [data]);
+  const cellMap = useMemo(() => buildCellMap(data), [data]);
+  const [min, max] = useMemo(() => getDomain(data, domain), [data, domain]);
 
-  const [min, max] = useMemo(() => {
-    if (Array.isArray(domain)) {
-      return domain;
-    }
-    const values = data.map((cell) => cell.value).filter((v): v is number => v !== null);
-    if (values.length === 0) {
-      return [0, 0];
-    }
-    return [Math.min(...values), Math.max(...values)];
-  }, [data, domain]);
-
-  const xCount = xValues.length;
-  const yCount = yValues.length;
   const cellSizeWithGap = cellSize + gap;
 
   const hasXLabels = withXLabels === true && xValues.length > 0;
@@ -237,32 +200,27 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
   const xTopOffset = xLabelAtTop ? xLabelsHeight! : 0;
   const xBottomHeight = xLabelAtBottom ? xLabelsHeight! : 0;
 
-  const legendPadding = 10;
-  const legendHeight = withLegend ? legendPadding + cellSize : 0;
+  const legendHeight = withLegend ? LEGEND_PADDING + cellSize : 0;
 
-  const gridWidth = Math.max(0, xCount * cellSizeWithGap - gap);
-  const gridHeight = Math.max(0, yCount * cellSizeWithGap - gap);
+  const gridWidth = Math.max(0, xValues.length * cellSizeWithGap - gap);
+  const gridHeight = Math.max(0, yValues.length * cellSizeWithGap - gap);
 
-  const legendContentWidth = withLegend
-    ? (() => {
-        const lessLabel = legendLabels![0];
-        const moreLabel = legendLabels![1];
-        const textGap = 6;
-        const charWidth = fontSize! * 0.6;
-        const lessWidth = lessLabel.length * charWidth;
-        const allColorsCount = 1 + (colors || []).length;
-        const rectsWidth = allColorsCount * cellSize + (allColorsCount - 1) * gap;
-        const moreWidth = moreLabel.length * charWidth;
-        return lessWidth + textGap + rectsWidth + textGap + moreWidth;
-      })()
+  const legendWidth = withLegend
+    ? getLegendWidth({
+        legendLabels: legendLabels!,
+        fontSize: fontSize!,
+        colorsCount: (colors || []).length,
+        cellSize,
+        gap,
+      })
     : 0;
 
-  const svgWidth = Math.max(yOffset + gridWidth, legendContentWidth);
+  const svgWidth = Math.max(yOffset + gridWidth, legendWidth);
   const svgHeight = xTopOffset + gridHeight + xBottomHeight + legendHeight;
 
   const cellNodes = yValues.map((yVal, rowIndex) =>
     xValues.map((xVal, colIndex) => {
-      const cell = cellMap.get(`${xVal.length}:${xVal}\0${yVal}`);
+      const cell = cellMap.get(getCellKey(xVal, yVal));
       const value = cell?.value ?? null;
       const isEmpty = value === null;
 
@@ -334,62 +292,50 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
 
   const label = getTooltipLabel && hoveredCell && withTooltip ? getTooltipLabel(hoveredCell) : null;
 
-  const legendNode = withLegend
-    ? (() => {
-        const lessLabel = legendLabels![0];
-        const moreLabel = legendLabels![1];
-        const textGap = 6;
-        const charWidth = fontSize! * 0.6;
-        const lessWidth = lessLabel.length * charWidth;
-        const allColors = [emptyColor || undefined, ...(colors || [])];
-        const rectsWidth = allColors.length * cellSize + (allColors.length - 1) * gap;
-        const moreWidth = moreLabel.length * charWidth;
-        const totalLegendWidth = lessWidth + textGap + rectsWidth + textGap + moreWidth;
+  const charWidth = fontSize! * 0.6;
+  const lessLabel = legendLabels![0];
+  const moreLabel = legendLabels![1];
+  const lessWidth = lessLabel.length * charWidth;
+  const allColors = [emptyColor || undefined, ...(colors || [])];
+  const rectsWidth = allColors.length * cellSize + (allColors.length - 1) * gap;
+  const legendX = svgWidth - legendWidth;
+  const legendY = xTopOffset + gridHeight + xBottomHeight + LEGEND_PADDING;
 
-        const legendX = svgWidth - totalLegendWidth;
-        const legendY = xTopOffset + gridHeight + xBottomHeight + legendPadding;
-
-        return (
-          <g
-            transform={`translate(${legendX}, ${legendY})`}
-            data-id="legend"
-            {...getStyles('legend')}
-          >
-            <text
-              x={0}
-              y={cellSize / 2}
-              fontSize={fontSize}
-              dominantBaseline="central"
-              {...getStyles('legendLabel')}
-            >
-              {lessLabel}
-            </text>
-            {allColors.map((color, i) => (
-              <rect
-                key={i}
-                x={lessWidth + textGap + i * (cellSize + gap)}
-                y={0}
-                width={cellSize}
-                height={cellSize}
-                rx={cellRadius}
-                fill={color}
-                data-empty={color === undefined || undefined}
-                {...getStyles('legendRect')}
-              />
-            ))}
-            <text
-              x={lessWidth + textGap + rectsWidth + textGap}
-              y={cellSize / 2}
-              fontSize={fontSize}
-              dominantBaseline="central"
-              {...getStyles('legendLabel')}
-            >
-              {moreLabel}
-            </text>
-          </g>
-        );
-      })()
-    : null;
+  const legendNode = withLegend ? (
+    <g transform={`translate(${legendX}, ${legendY})`} data-id="legend" {...getStyles('legend')}>
+      <text
+        x={0}
+        y={cellSize / 2}
+        fontSize={fontSize}
+        dominantBaseline="central"
+        {...getStyles('legendLabel')}
+      >
+        {lessLabel}
+      </text>
+      {allColors.map((color, i) => (
+        <rect
+          key={i}
+          x={lessWidth + TEXT_GAP + i * (cellSize + gap)}
+          y={0}
+          width={cellSize}
+          height={cellSize}
+          rx={cellRadius}
+          fill={color}
+          data-empty={color === undefined || undefined}
+          {...getStyles('legendRect')}
+        />
+      ))}
+      <text
+        x={lessWidth + TEXT_GAP + rectsWidth + TEXT_GAP}
+        y={cellSize / 2}
+        fontSize={fontSize}
+        dominantBaseline="central"
+        {...getStyles('legendLabel')}
+      >
+        {moreLabel}
+      </text>
+    </g>
+  ) : null;
 
   return (
     <Box component="svg" width={svgWidth} height={svgHeight} {...getStyles('root')} {...others}>
