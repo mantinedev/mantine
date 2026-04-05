@@ -53,6 +53,7 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
             <TextInput
               placeholder="Search groceries"
               classNames={{ input: classes.input }}
+              aria-label="Search groceries"
               value={search}
               onChange={(event) => {
                 setSearch(event.currentTarget.value);
@@ -64,6 +65,11 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
               variant="default"
               size={36}
               className={classes.control}
+              aria-label={
+                type === 'forward'
+                  ? 'Transfer selected items right'
+                  : 'Transfer selected items left'
+              }
               onClick={() => {
                 onTransfer(value);
                 setValue([]);
