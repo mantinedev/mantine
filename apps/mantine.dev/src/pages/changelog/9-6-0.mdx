@@ -1,4 +1,4 @@
-import { StepperDemos } from '@docs/demos';
+import { NotificationsDemos, StepperDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,6 +10,21 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Notifications custom rendering
+
+[Notifications](/x/notifications) now support `renderNotification` prop that allows you to completely
+replace the default notification with custom content. All animations (enter, exit, drag dismiss)
+are preserved for custom notifications:
+
+<Demo data={NotificationsDemos.renderNotification} />
+
+## Notifications stacked layout
+
+[Notifications](/x/notifications) now support `layout="stacked"` prop that displays notifications in a stacked
+layout where only the latest notification is fully visible, and older notifications peek out behind it:
+
+<Demo data={NotificationsDemos.stacked} />
 
 ## Stepper labelPosition
 

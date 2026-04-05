@@ -362,4 +362,142 @@ describe('@mantine/core/Notifications', () => {
     expect(store.getState().notifications).toHaveLength(1);
     expect(screen.getByText('Scroll stays disabled')).toBeInTheDocument();
   });
+
+  it('renders custom notification with renderNotification prop', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        renderNotification={(notification) => (
+          <div data-testid="custom-notification">{notification.message}</div>
+        )}
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'custom-render', message: 'Custom content' }, store);
+    });
+
+    expect(screen.getByTestId('custom-notification')).toBeInTheDocument();
+    expect(screen.getByText('Custom content')).toBeInTheDocument();
+  });
+
+  it('allows per-notification renderNotification override', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications store={store} withinPortal={false} autoClose={false} transitionDuration={10} />
+    );
+
+    act(() => {
+      notifications.show(
+        {
+          id: 'per-notification-render',
+          message: 'Custom per notification',
+          renderNotification: (notification) => (
+            <div data-testid="per-notification-custom">{notification.message}</div>
+          ),
+        },
+        store
+      );
+    });
+
+    expect(screen.getByTestId('per-notification-custom')).toBeInTheDocument();
+    expect(screen.getByText('Custom per notification')).toBeInTheDocument();
+  });
+
+  it('preserves dismiss interaction with renderNotification', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        renderNotification={(notification) => (
+          <div data-testid="custom-dismiss">{notification.message}</div>
+        )}
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'dismiss-custom', message: 'Dismiss me custom' }, store);
+    });
+
+    const wrapper = screen.getByTestId('custom-dismiss').parentElement!;
+
+    act(() => {
+      pointerDown(wrapper, { clientX: 0, clientY: 0 });
+      pointerMove({ clientX: 160, clientY: 0 });
+      pointerUp({ clientX: 160, clientY: 0 });
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(25);
+    });
+
+    expect(store.getState().notifications).toHaveLength(0);
+  });
+
+  it('renders stacked layout with data-layout attribute', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'stacked-1', message: 'First' }, store);
+      notifications.show({ id: 'stacked-2', message: 'Second' }, store);
+    });
+
+    const roots = container.querySelectorAll('[data-layout="stacked"]');
+    expect(roots.length).toBeGreaterThan(0);
+  });
+
+  it('applies stacked styles to non-first notifications', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'stacked-a', message: 'First stacked' }, store);
+      notifications.show({ id: 'stacked-b', message: 'Second stacked' }, store);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(50);
+    });
+
+    const alerts = screen.getAllByRole('alert');
+    expect(alerts).toHaveLength(2);
+
+    const style0 = alerts[0].style;
+    const style1 = alerts[1].style;
+    expect(Number(style0.zIndex)).toBeLessThan(Number(style1.zIndex));
+  });
 });

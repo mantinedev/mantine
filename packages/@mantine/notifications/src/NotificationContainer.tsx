@@ -17,6 +17,11 @@ interface NotificationContainerProps extends NotificationProps {
   onHoverStart?: () => void;
   onHoverEnd?: () => void;
   ref?: React.Ref<HTMLDivElement>;
+  renderNotification?: ((notification: NotificationData) => React.ReactNode) | null;
+  layout?: 'default' | 'stacked';
+  stackIndex?: number;
+  stackSize?: number;
+  stackPosition?: string;
 }
 
 export function NotificationContainer({
@@ -31,6 +36,11 @@ export function NotificationContainer({
   onHoverEnd,
   ref,
   style,
+  renderNotification,
+  layout,
+  stackIndex,
+  stackSize,
+  stackPosition,
   ...others
 }: NotificationContainerProps) {
   const [offset, setOffset] = useState(0);
@@ -45,6 +55,7 @@ export function NotificationContainer({
     position: _position,
     style: dataStyle,
     withCloseButton,
+    renderNotification: _renderNotification,
     ...notificationProps
   } = data;
   const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
@@ -72,11 +83,21 @@ export function NotificationContainer({
     cancelScrollDismissReset();
   };
 
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
+
   const handleAutoClose = () => {
-    if (dismissed || active || hoveredRef.current || typeof autoCloseDuration !== 'number') {
+    if (
+      dismissed ||
+      active ||
+      hoveredRef.current ||
+      pausedRef.current ||
+      typeof autoCloseDuration !== 'number'
+    ) {
       return;
     }
 
+    cancelAutoClose();
     autoCloseTimeout.current = window.setTimeout(handleHide, autoCloseDuration);
   };
 
@@ -163,6 +184,12 @@ export function NotificationContainer({
   const resolvedTransitionDuration =
     baseStyle.transitionDuration ??
     `${transitionDuration}ms, ${transitionDuration}ms, ${transitionDuration}ms`;
+
+  const isStackedLayout = layout === 'stacked';
+  const isStacked = isStackedLayout && stackIndex !== undefined && stackIndex > 0;
+  const stackDirection = stackPosition?.startsWith('top') ? 1 : -1;
+  const stackedOffset = isStacked ? stackIndex * 10 * stackDirection : 0;
+
   const notificationStyle = {
     ...baseStyle,
     ['--notifications-state-transform' as string]:
@@ -170,13 +197,23 @@ export function NotificationContainer({
     ['--notifications-state-opacity' as string]: String(baseOpacity),
     ['--notifications-swipe-offset' as string]: `${offset}px`,
     ['--notifications-swipe-opacity' as string]: String(swipeOpacity),
-    transform:
-      'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)',
+    transform: isStacked
+      ? `scale(${1 - stackIndex * 0.03}) translateY(${stackedOffset}px)`
+      : 'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)',
     opacity: 'calc(var(--notifications-state-opacity) * var(--notifications-swipe-opacity))',
     transitionDuration:
       active || scrollDismissActive ? '0ms, 0ms, 0ms' : resolvedTransitionDuration,
     cursor: 'default',
     touchAction: 'pan-y',
+    ...(isStackedLayout
+      ? {
+          gridArea: '1 / 1' as const,
+          zIndex: isStacked ? (stackSize || 5) - stackIndex : (stackSize || 5) + 1,
+          pointerEvents: isStacked ? ('none' as const) : undefined,
+          alignSelf: stackDirection === 1 ? ('start' as const) : ('end' as const),
+          transition: `transform ${transitionDuration}ms cubic-bezier(.51,.3,0,1.21)`,
+        }
+      : {}),
   } as React.CSSProperties;
 
   const handleMouseEnter = () => {
@@ -270,6 +307,21 @@ export function NotificationContainer({
 
     return cancelAutoClose;
   }, [paused]);
+
+  if (renderNotification) {
+    return (
+      <div
+        ref={mergedRef}
+        role="alert"
+        className={others.className as string}
+        style={notificationStyle}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {renderNotification(data)}
+      </div>
+    );
+  }
 
   return (
     <Notification

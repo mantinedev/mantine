@@ -34,6 +34,9 @@ export interface NotificationData
 
   /** Called when notification opens */
   onOpen?: (props: NotificationData) => void;
+
+  /** Custom render function that replaces the default notification, overrides `renderNotification` from `Notifications`. Set to `null` to use default rendering when a global `renderNotification` is set. */
+  renderNotification?: ((notification: NotificationData) => React.ReactNode) | null;
 }
 
 export interface NotificationsState {

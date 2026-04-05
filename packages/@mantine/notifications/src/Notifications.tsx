@@ -30,6 +30,7 @@ import { getNotificationStateStyles } from './get-notification-state-styles';
 import { NotificationContainer } from './NotificationContainer';
 import {
   hideNotification,
+  NotificationData,
   NotificationPosition,
   notifications,
   NotificationsStore,
@@ -85,6 +86,12 @@ export interface NotificationsProps
 
   /** Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification @default 'all' */
   pauseResetOnHover?: 'all' | 'notification';
+
+  /** Custom render function that replaces the default notification, can be overridden per notification */
+  renderNotification?: (notification: NotificationData) => React.ReactNode;
+
+  /** Controls how notifications are positioned in the stack, `'default'` – standard vertical list, `'stacked'` – only first notification is fully visible, rest are stacked behind @default 'default' */
+  layout?: 'default' | 'stacked';
 }
 
 export type NotificationsFactory = Factory<{
@@ -115,6 +122,7 @@ const defaultProps = {
   store: notificationsStore,
   withinPortal: true,
   pauseResetOnHover: 'all',
+  layout: 'default',
 } satisfies Partial<NotificationsProps>;
 
 const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
@@ -147,6 +155,8 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     portalProps,
     withinPortal,
     pauseResetOnHover,
+    renderNotification,
+    layout,
     ...others
   } = props;
 
@@ -196,7 +206,8 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const grouped = getGroupedNotifications(data.notifications, position);
   const groupedComponents = positions.reduce(
     (acc, pos) => {
-      acc[pos] = grouped[pos].map(({ style: notificationStyle, ...notification }) => (
+      const groupLength = grouped[pos].length;
+      acc[pos] = grouped[pos].map(({ style: notificationStyle, ...notification }, index) => (
         <Transition
           key={notification.id}
           timeout={duration}
@@ -216,9 +227,21 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
               transitionDuration={duration}
               allowDragDismiss={allowDragDismiss}
               allowScrollDismiss={allowScrollDismiss}
-              paused={pauseResetOnHover === 'all' ? hoveredCount > 0 : false}
+              paused={
+                (pauseResetOnHover === 'all' ? hoveredCount > 0 : false) ||
+                (layout === 'stacked' && groupLength - 1 - index > 0)
+              }
               onHoverStart={handleHoverStart}
               onHoverEnd={handleHoverEnd}
+              renderNotification={
+                'renderNotification' in notification
+                  ? notification.renderNotification
+                  : renderNotification
+              }
+              layout={layout}
+              stackIndex={layout === 'stacked' ? groupLength - 1 - index : index}
+              stackSize={groupLength}
+              stackPosition={pos}
               {...getStyles('notification', {
                 style: {
                   ...getNotificationStateStyles({
@@ -242,17 +265,18 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
 
   return (
     <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Box {...getStyles('root')} data-position="top-center" {...others}>
+      <Box {...getStyles('root')} data-position="top-center" data-layout={layout} {...others}>
         <TransitionGroup>{groupedComponents['top-center']}</TransitionGroup>
       </Box>
 
-      <Box {...getStyles('root')} data-position="top-left" {...others}>
+      <Box {...getStyles('root')} data-position="top-left" data-layout={layout} {...others}>
         <TransitionGroup>{groupedComponents['top-left']}</TransitionGroup>
       </Box>
 
       <Box
         {...getStyles('root', { className: RemoveScroll.classNames.fullWidth })}
         data-position="top-right"
+        data-layout={layout}
         {...others}
       >
         <TransitionGroup>{groupedComponents['top-right']}</TransitionGroup>
@@ -261,16 +285,17 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
       <Box
         {...getStyles('root', { className: RemoveScroll.classNames.fullWidth })}
         data-position="bottom-right"
+        data-layout={layout}
         {...others}
       >
         <TransitionGroup>{groupedComponents['bottom-right']}</TransitionGroup>
       </Box>
 
-      <Box {...getStyles('root')} data-position="bottom-left" {...others}>
+      <Box {...getStyles('root')} data-position="bottom-left" data-layout={layout} {...others}>
         <TransitionGroup>{groupedComponents['bottom-left']}</TransitionGroup>
       </Box>
 
-      <Box {...getStyles('root')} data-position="bottom-center" {...others}>
+      <Box {...getStyles('root')} data-position="bottom-center" data-layout={layout} {...others}>
         <TransitionGroup>{groupedComponents['bottom-center']}</TransitionGroup>
       </Box>
     </OptionalPortal>
