@@ -19,7 +19,6 @@ export interface LightboxSlideProps
   extends BoxProps, CompoundStylesApiProps<LightboxSlideFactory>, ElementProps<'div'> {
   slide: LightboxSlideData;
   index: number;
-  getImageProps?: () => Record<string, any>;
 }
 
 export type LightboxSlideFactory = Factory<{
@@ -30,8 +29,11 @@ export type LightboxSlideFactory = Factory<{
 }>;
 
 export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
-  const { classNames, className, style, styles, vars, slide, index, getImageProps, ...others } =
-    useProps('LightboxSlide', null, props);
+  const { classNames, className, style, styles, vars, slide, index, ...others } = useProps(
+    'LightboxSlide',
+    null,
+    props
+  );
 
   const ctx = useLightboxContext();
   const active = ctx.currentIndex === index;
@@ -45,7 +47,7 @@ export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
       return slide.render({ active });
     }
 
-    return <ImageSlide slide={slide} active={active} getImageProps={getImageProps} />;
+    return <ImageSlide slide={slide} active={active} />;
   };
 
   return (

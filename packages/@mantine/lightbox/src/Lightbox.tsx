@@ -1,5 +1,4 @@
 import { factory, Factory, useProps } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
 import { LightboxCaption } from './LightboxCaption/LightboxCaption';
 import { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton';
 import { LightboxNavigation } from './LightboxNavigation/LightboxNavigation';
@@ -13,7 +12,6 @@ import { LightboxSlide } from './LightboxSlide/LightboxSlide';
 import { LightboxSlides } from './LightboxSlides/LightboxSlides';
 import { LightboxThumbnails } from './LightboxThumbnails/LightboxThumbnails';
 import { LightboxToolbar } from './LightboxToolbar/LightboxToolbar';
-import { useLightboxZoom } from './hooks/use-lightbox-zoom';
 import { lightbox, lightboxStore } from './lightbox.store';
 import type { ToolbarItem } from './lightbox.types';
 import classes from './Lightbox.module.css';
@@ -63,49 +61,15 @@ const defaultProps = {
 
 export const Lightbox = factory<LightboxFactory>((_props) => {
   const props = useProps('Lightbox', defaultProps, _props);
-  const {
-    slides,
-    toolbarItems,
-    withNavigation,
-    withZoom,
-    zoomMaxScale,
-    currentIndex,
-    onIndexChange,
-    ...others
-  } = props;
-
-  const [_currentIndex] = useUncontrolled({
-    value: currentIndex,
-    defaultValue: 0,
-    finalValue: 0,
-    onChange: onIndexChange,
-  });
-
-  const zoom = useLightboxZoom({
-    enabled: !!withZoom,
-    maxScale: zoomMaxScale ?? 3,
-    currentIndex: _currentIndex,
-  });
+  const { slides, toolbarItems, withNavigation, ...others } = props;
 
   return (
-    <LightboxRoot
-      {...others}
-      slides={slides}
-      withZoom={withZoom}
-      zoomMaxScale={zoomMaxScale}
-      currentIndex={currentIndex}
-      onIndexChange={onIndexChange}
-    >
+    <LightboxRoot {...others} slides={slides}>
       <LightboxToolbar toolbarItems={toolbarItems} />
 
       <LightboxSlides>
         {slides.map((slide, index) => (
-          <LightboxSlide
-            key={index}
-            slide={slide}
-            index={index}
-            getImageProps={zoom.getImageProps}
-          />
+          <LightboxSlide key={index} slide={slide} index={index} />
         ))}
       </LightboxSlides>
 

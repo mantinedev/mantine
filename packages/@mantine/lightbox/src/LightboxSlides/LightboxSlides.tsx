@@ -36,7 +36,7 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
   const ctx = useLightboxContext();
 
   const { handleTouchStart, handleTouchEnd } = useLightboxSwipeClose({
-    enabled: true,
+    enabled: ctx.closeOnSwipeDown,
     onClose: ctx.onClose,
     isZoomed: ctx.zoomState.isZoomed,
   });

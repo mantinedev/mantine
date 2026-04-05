@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { EmblaOptionsType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 import {
@@ -132,6 +132,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     withDownload,
     loop,
     closeOnClickOutside,
+    closeOnSwipeDown,
     transitionDuration,
     emblaOptions,
     zoomMaxScale,
@@ -162,10 +163,12 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     onChange: onIndexChange,
   });
 
+  const zoomIsActive = useRef(false);
+
   const [emblaRef, embla] = useEmblaCarousel({
     loop,
     startIndex: _currentIndex,
-    watchDrag: !withZoom,
+    watchDrag: withZoom ? () => !zoomIsActive.current : true,
     ...emblaOptions,
   });
 
@@ -185,6 +188,8 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     maxScale: zoomMaxScale!,
     currentIndex: _currentIndex,
   });
+
+  zoomIsActive.current = zoom.zoomState.isZoomed;
 
   const [slidePhase, setSlidePhase] = useState<'idle' | 'dragging' | 'snapping'>('idle');
 
@@ -258,6 +263,12 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   }, [opened]);
 
   useEffect(() => {
+    if (embla && opened && embla.selectedScrollSnap() !== _currentIndex) {
+      embla.scrollTo(_currentIndex);
+    }
+  }, [_currentIndex, embla, opened]);
+
+  useEffect(() => {
     if (!opened) {
       return undefined;
     }
@@ -298,10 +309,12 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
             toggleFullscreen,
             zoomState: zoom.zoomState,
             toggleZoom: zoom.toggleZoom,
+            getImageZoomProps: zoom.getImageProps,
             onClose,
             loop: !!loop,
             withSlideTransition: !!withSlideTransition,
             slideTransitionActive,
+            closeOnSwipeDown: !!closeOnSwipeDown,
           }}
         >
           <Box

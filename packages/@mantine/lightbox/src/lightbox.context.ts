@@ -22,10 +22,12 @@ export interface LightboxContextValue {
   toggleFullscreen: () => void;
   zoomState: { scale: number; isZoomed: boolean };
   toggleZoom: () => void;
+  getImageZoomProps: () => Record<string, any>;
   onClose: () => void;
   loop: boolean;
   withSlideTransition: boolean;
   slideTransitionActive: boolean;
+  closeOnSwipeDown: boolean;
 }
 
 export const [LightboxContextProvider, useLightboxContext] =

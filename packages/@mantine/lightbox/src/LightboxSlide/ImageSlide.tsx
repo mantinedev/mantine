@@ -4,12 +4,11 @@ import type { LightboxImageSlide } from '../lightbox.types';
 interface ImageSlideProps {
   slide: LightboxImageSlide;
   active: boolean;
-  getImageProps?: () => Record<string, any>;
 }
 
-export function ImageSlide({ slide, active, getImageProps }: ImageSlideProps) {
+export function ImageSlide({ slide, active }: ImageSlideProps) {
   const ctx = useLightboxContext();
-  const zoomProps = active && ctx.withZoom && getImageProps ? getImageProps() : {};
+  const zoomProps = active && ctx.withZoom ? ctx.getImageZoomProps() : {};
 
   return (
     <img
