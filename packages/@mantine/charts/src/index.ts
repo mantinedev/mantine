@@ -18,4 +18,5 @@ export * from './Treemap/index.js';
 export * from './SankeyChart/index.js';
 export * from './SunburstChart/index.js';
 export * from './BulletChart/index.js';
+export * from './GaugeChart/index.js';
 export * from './types';

@@ -50,6 +50,7 @@ export * from './data/Flex.styles-api';
 export * from './data/FloatingIndicator.styles-api';
 export * from './data/FloatingWindow.styles-api';
 export * from './data/FunnelChart.styles-api';
+export * from './data/GaugeChart.styles-api';
 export * from './data/Grid.styles-api';
 export * from './data/Group.styles-api';
 export * from './data/Heatmap.styles-api';

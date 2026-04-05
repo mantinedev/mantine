@@ -156,6 +156,7 @@ export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
 export * as BarsListDemos from './demos/charts/BarsList';
 export * as BulletChartDemos from './demos/charts/BulletChart';
+export * as GaugeChartDemos from './demos/charts/GaugeChart';
 export * as TreemapDemos from './demos/charts/Treemap';
 export * as SankeyChartDemos from './demos/charts/SankeyChart';
 export * as SunburstChartDemos from './demos/charts/SunburstChart';

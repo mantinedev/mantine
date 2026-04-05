@@ -176,6 +176,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/bullet-chart.mdx',
   },
 
+  GaugeChart: {
+    title: 'GaugeChart',
+    props: ['GaugeChart'],
+    styles: ['GaugeChart'],
+    package: '@mantine/charts',
+    slug: '/charts/gauge-chart',
+    description: 'Radial gauge chart for KPI and status display',
+    source: '@mantine/charts/src/GaugeChart/GaugeChart.tsx',
+    docs: 'charts/gauge-chart.mdx',
+  },
+
   Treemap: {
     title: 'Treemap',
     props: ['Treemap'],
