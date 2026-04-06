@@ -18,9 +18,13 @@ import {
   useStyles,
 } from '../../core';
 import { TimelineProvider } from './Timeline.context';
-import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
+import {
+  TimelineItem,
+  TimelineItemStylesNames,
+  type TimelineItemProps,
+  type TimelineItemFactory,
+} from './TimelineItem/TimelineItem';
 import classes from './Timeline.module.css';
-
 export type TimelineStylesNames = 'root' | TimelineItemStylesNames;
 export type TimelineCssVariables = {
   root: '--tl-line-width' | '--tl-bullet-size' | '--tl-color' | '--tl-icon-color' | '--tl-radius';
@@ -149,3 +153,16 @@ Timeline.classes = classes;
 Timeline.varsResolver = varsResolver;
 Timeline.displayName = '@mantine/core/Timeline';
 Timeline.Item = TimelineItem;
+
+export namespace Timeline {
+  export type Props = TimelineProps;
+  export type StylesNames = TimelineStylesNames;
+  export type CssVariables = TimelineCssVariables;
+  export type Factory = TimelineFactory;
+
+  export namespace Item {
+    export type Props = TimelineItemProps;
+    export type StylesNames = TimelineItemStylesNames;
+    export type Factory = TimelineItemFactory;
+  }
+}

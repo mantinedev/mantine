@@ -225,6 +225,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     openOnFocus,
     attributes,
     ref,
+    loading,
+    loadingPosition,
     ...others
   } = props;
 
@@ -490,6 +492,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             leftSectionWidth={leftSectionWidth}
             leftSectionPointerEvents={leftSectionPointerEvents}
             leftSectionProps={leftSectionProps}
+            loading={loading}
+            loadingPosition={loadingPosition}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}
@@ -568,3 +572,9 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
 TagsInput.classes = { ...InputBase.classes, ...Combobox.classes };
 TagsInput.displayName = '@mantine/core/TagsInput';
+
+export namespace TagsInput {
+  export type Props = TagsInputProps;
+  export type StylesNames = TagsInputStylesNames;
+  export type Factory = TagsInputFactory;
+}

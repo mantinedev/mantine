@@ -18,15 +18,3 @@ export type {
   PillsInputFieldStylesNames,
   PillsInputContextValue,
 };
-
-export namespace PillsInput {
-  export type Props = PillsInputProps;
-  export type Factory = PillsInputFactory;
-  export type ContextValue = PillsInputContextValue;
-
-  export namespace Field {
-    export type Props = PillsInputFieldProps;
-    export type Factory = PillsInputFieldFactory;
-    export type StylesNames = PillsInputFieldStylesNames;
-  }
-}

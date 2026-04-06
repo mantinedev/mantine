@@ -10,7 +10,7 @@ function Demo() {
   return (
     <CopyButton value="https://mantine.dev" timeout={2000}>
       {({ copied, copy }) => (
-        <Tooltip label={copied ? 'Copied' : 'CopyIcon'} withArrow position="right">
+        <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
           <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
             {copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
           </ActionIcon>
@@ -26,7 +26,7 @@ function Demo() {
   return (
     <CopyButton value="https://mantine.dev" timeout={2000}>
       {({ copied, copy }) => (
-        <Tooltip label={copied ? 'Copied' : 'CopyIcon'} withArrow position="right">
+        <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
           <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
             {copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
           </ActionIcon>

@@ -162,3 +162,10 @@ export const Notification = factory<NotificationFactory>((_props) => {
 Notification.classes = classes;
 Notification.varsResolver = varsResolver;
 Notification.displayName = '@mantine/core/Notification';
+
+export namespace Notification {
+  export type Props = NotificationProps;
+  export type StylesNames = NotificationStylesNames;
+  export type Factory = NotificationFactory;
+  export type CssVariables = NotificationCssVariables;
+}

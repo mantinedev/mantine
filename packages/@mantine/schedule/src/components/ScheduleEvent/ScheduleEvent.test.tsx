@@ -72,6 +72,11 @@ describe('@mantine/schedule/ScheduleEvent', () => {
     expect(screen.getByRole('button')).toHaveAttribute('title', 'Test event');
   });
 
+  it('sets data-event-id attribute', () => {
+    render(<ScheduleEvent {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-event-id', '1');
+  });
+
   it('sets data-hanging attribute to hanging prop value', () => {
     const { container } = render(<ScheduleEvent {...defaultProps} hanging="start" />);
     expect(container.querySelector('.mantine-ScheduleEvent-event')).toHaveAttribute(

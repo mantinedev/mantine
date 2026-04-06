@@ -87,3 +87,10 @@ export const Fieldset = factory<FieldsetFactory>((_props) => {
 Fieldset.classes = classes;
 Fieldset.varsResolver = varsResolver;
 Fieldset.displayName = '@mantine/core/Fieldset';
+
+export namespace Fieldset {
+  export type Props = FieldsetProps;
+  export type StylesNames = FieldsetStylesNames;
+  export type Factory = FieldsetFactory;
+  export type Variant = FieldsetVariant;
+}

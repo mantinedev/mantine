@@ -113,3 +113,9 @@ export const Flex = polymorphicFactory<FlexFactory>((_props) => {
 
 Flex.classes = classes;
 Flex.displayName = '@mantine/core/Flex';
+
+export namespace Flex {
+  export type Props = FlexProps;
+  export type StylesNames = FlexStylesNames;
+  export type Factory = FlexFactory;
+}

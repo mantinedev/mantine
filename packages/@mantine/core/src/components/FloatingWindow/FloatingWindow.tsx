@@ -124,3 +124,9 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
 
 FloatingWindow.displayName = '@mantine/core/FloatingWindow';
 FloatingWindow.classes = classes;
+
+export namespace FloatingWindow {
+  export type Props = FloatingWindowProps;
+  export type StylesNames = FloatingWindowStylesNames;
+  export type Factory = FloatingWindowFactory;
+}

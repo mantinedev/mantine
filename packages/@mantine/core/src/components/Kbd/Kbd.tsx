@@ -58,3 +58,10 @@ export const Kbd = factory<KbdFactory>((_props) => {
 Kbd.classes = classes;
 Kbd.varsResolver = varsResolver;
 Kbd.displayName = '@mantine/core/Kbd';
+
+export namespace Kbd {
+  export type Props = KbdProps;
+  export type StylesNames = KbdStylesNames;
+  export type CssVariables = KbdCssVariables;
+  export type Factory = KbdFactory;
+}

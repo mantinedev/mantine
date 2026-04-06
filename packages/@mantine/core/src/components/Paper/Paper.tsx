@@ -92,3 +92,11 @@ export const Paper = polymorphicFactory<PaperFactory>((_props) => {
 Paper.classes = classes;
 Paper.varsResolver = varsResolver;
 Paper.displayName = '@mantine/core/Paper';
+
+export namespace Paper {
+  export type Props = PaperProps;
+  export type StylesNames = PaperStylesNames;
+  export type CssVariables = PaperCssVariables;
+  export type Factory = PaperFactory;
+  export type BaseProps = PaperBaseProps;
+}

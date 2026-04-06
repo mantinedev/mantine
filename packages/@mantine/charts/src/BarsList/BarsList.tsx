@@ -221,3 +221,10 @@ export const BarsList = factory<BarsListFactory>((_props) => {
 BarsList.displayName = '@mantine/charts/BarsList';
 BarsList.classes = classes;
 BarsList.varsResolver = varsResolver;
+
+export namespace BarsList {
+  export type Props = BarsListProps;
+  export type StylesNames = BarsListStylesNames;
+  export type Factory = BarsListFactory;
+  export type BarData = BarsListBarData;
+}

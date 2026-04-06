@@ -559,7 +559,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         return renderEvent(event, bgEventProps as any);
       }
 
-      return <Box {...bgEventProps} />;
+      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+      return <Box key={bgEventKey} {...restBgEventProps} />;
     });
 
     const rowHeightPercent = 100 / maxEventsPerDay;
@@ -740,3 +741,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 MonthView.displayName = '@mantine/schedule/MonthView';
 MonthView.classes = classes;
 MonthView.varsResolver = varsResolver;
+
+export namespace MonthView {
+  export type Props = MonthViewProps;
+  export type Factory = MonthViewFactory;
+  export type StylesNames = MonthViewStylesNames;
+  export type CssVariables = MonthViewCssVariables;
+}

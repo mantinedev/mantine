@@ -142,3 +142,10 @@ export const Marquee = factory<MarqueeFactory>((_props) => {
 Marquee.classes = classes;
 Marquee.varsResolver = varsResolver;
 Marquee.displayName = '@mantine/core/Marquee';
+
+export namespace Marquee {
+  export type Props = MarqueeProps;
+  export type StylesNames = MarqueeStylesNames;
+  export type CssVariables = MarqueeCssVariables;
+  export type Factory = MarqueeFactory;
+}

@@ -83,3 +83,10 @@ export const Container = factory<ContainerFactory>((_props) => {
 Container.classes = classes;
 Container.varsResolver = varsResolver;
 Container.displayName = '@mantine/core/Container';
+
+export namespace Container {
+  export type Props = ContainerProps;
+  export type StylesNames = ContainerStylesNames;
+  export type CssVariables = ContainerCssVariables;
+  export type Factory = ContainerFactory;
+}

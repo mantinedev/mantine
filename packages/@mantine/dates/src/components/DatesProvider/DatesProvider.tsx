@@ -33,3 +33,8 @@ export function DatesProvider({ settings, children }: DatesProviderProps) {
     </DatesProviderContext>
   );
 }
+
+export namespace DatesProvider {
+  export type Props = DatesProviderProps;
+  export type Settings = DatesProviderSettings;
+}

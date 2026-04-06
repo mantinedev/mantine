@@ -764,7 +764,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           return renderEvent(event, bgEventProps as any);
         }
 
-        return <Box {...bgEventProps} />;
+        const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+        return <Box key={bgEventKey} {...restBgEventProps} />;
       });
 
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
@@ -961,7 +962,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         return renderEvent(event, bgEventProps as any);
       }
 
-      return <Box {...bgEventProps} />;
+      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+      return <Box key={bgEventKey} {...restBgEventProps} />;
     });
   });
 
@@ -1115,3 +1117,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 WeekView.displayName = '@mantine/schedule/WeekView';
 WeekView.classes = classes;
 WeekView.varsResolver = varsResolver;
+
+export namespace WeekView {
+  export type Props = WeekViewProps;
+  export type Factory = WeekViewFactory;
+  export type StylesNames = WeekViewStylesNames;
+  export type CssVariables = WeekViewCssVariables;
+}

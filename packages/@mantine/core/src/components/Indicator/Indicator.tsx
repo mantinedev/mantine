@@ -178,3 +178,10 @@ export const Indicator = factory<IndicatorFactory>((_props) => {
 Indicator.classes = classes;
 Indicator.varsResolver = varsResolver;
 Indicator.displayName = '@mantine/core/Indicator';
+
+export namespace Indicator {
+  export type Props = IndicatorProps;
+  export type StylesNames = IndicatorStylesNames;
+  export type CssVariables = IndicatorCssVariables;
+  export type Factory = IndicatorFactory;
+}

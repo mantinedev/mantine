@@ -118,3 +118,10 @@ export const Image = polymorphicFactory<ImageFactory>((_props) => {
 Image.classes = classes;
 Image.varsResolver = varsResolver;
 Image.displayName = '@mantine/core/Image';
+
+export namespace Image {
+  export type Props = ImageProps;
+  export type StylesNames = ImageStylesNames;
+  export type CssVariables = ImageCssVariables;
+  export type Factory = ImageFactory;
+}

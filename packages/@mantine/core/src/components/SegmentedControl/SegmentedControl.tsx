@@ -297,3 +297,11 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
 SegmentedControl.classes = classes;
 SegmentedControl.varsResolver = varsResolver;
 SegmentedControl.displayName = '@mantine/core/SegmentedControl';
+
+export namespace SegmentedControl {
+  export type CssVariables = SegmentedControlCssVariables;
+  export type Factory = SegmentedControlFactory;
+  export type Item<Value extends Primitive = string> = SegmentedControlItem<Value>;
+  export type Props<Value extends Primitive = string> = SegmentedControlProps<Value>;
+  export type StylesNames = SegmentedControlStylesNames;
+}

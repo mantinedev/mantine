@@ -105,3 +105,8 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
 
 JsonInput.classes = InputBase.classes;
 JsonInput.displayName = '@mantine/core/JsonInput';
+
+export namespace JsonInput {
+  export type Props = JsonInputProps;
+  export type Factory = JsonInputFactory;
+}

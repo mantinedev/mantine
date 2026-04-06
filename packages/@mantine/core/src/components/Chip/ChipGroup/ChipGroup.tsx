@@ -1,8 +1,11 @@
 import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { Factory, genericFactory, useProps } from '../../../core';
+import { Factory, genericFactory, Primitive, useProps } from '../../../core';
 
-export interface ChipGroupProps<Multiple extends boolean = false, Value extends string = string> {
+export interface ChipGroupProps<
+  Multiple extends boolean = false,
+  Value extends Primitive = string,
+> {
   /** If set, multiple values can be selected */
   multiple?: Multiple;
 
@@ -21,7 +24,7 @@ export interface ChipGroupProps<Multiple extends boolean = false, Value extends 
 
 export type ChipGroupFactory = Factory<{
   props: ChipGroupProps;
-  signature: <Multiple extends boolean = false, Value extends string = string>(
+  signature: <Multiple extends boolean = false, Value extends Primitive = string>(
     props: ChipGroupProps<Multiple, Value>
   ) => React.JSX.Element;
 }>;
@@ -29,10 +32,10 @@ export type ChipGroupFactory = Factory<{
 export const ChipGroup = genericFactory<ChipGroupFactory>((props) => {
   const { value, defaultValue, onChange, multiple, children } = useProps('ChipGroup', null, props);
 
-  const [_value, setValue] = useUncontrolled<string | null | string[]>({
+  const [_value, setValue] = useUncontrolled<Primitive | null | Primitive[]>({
     value,
     defaultValue,
-    finalValue: multiple ? ([] as string[]) : null,
+    finalValue: multiple ? ([] as Primitive[]) : null,
     onChange: onChange as any,
   });
 
@@ -57,7 +60,7 @@ export const ChipGroup = genericFactory<ChipGroupFactory>((props) => {
 
 ChipGroup.displayName = '@mantine/core/ChipGroup';
 
-export interface ChipGroupContextValue<Value extends string = string> {
+export interface ChipGroupContextValue<Value extends Primitive = string> {
   isChipSelected: (value: Value) => boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   multiple: boolean | undefined;

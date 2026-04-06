@@ -276,6 +276,7 @@ export type NumberInputFactory = Factory<{
 }>;
 
 const defaultProps = {
+  size: 'sm',
   step: 1,
   clampBehavior: 'blur',
   allowDecimal: true,
@@ -910,3 +911,11 @@ export const NumberInput = genericFactory<NumberInputFactory>(
 NumberInput.classes = { ...InputBase.classes, ...classes };
 NumberInput.varsResolver = varsResolver;
 NumberInput.displayName = '@mantine/core/NumberInput';
+
+export namespace NumberInput {
+  export type Props<T extends NumberInputNumericType = number> = NumberInputProps<T>;
+  export type StylesNames = NumberInputStylesNames;
+  export type Factory = NumberInputFactory;
+  export type CssVariables = NumberInputCssVariables;
+  export type Handlers = NumberInputHandlers;
+}

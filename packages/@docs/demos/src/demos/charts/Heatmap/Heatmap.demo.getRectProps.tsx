@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import { Heatmap } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './_data';

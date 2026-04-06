@@ -20,9 +20,15 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
-import { SwitchGroup, SwitchGroupContext } from './SwitchGroup/SwitchGroup';
+import {
+  SwitchGroup,
+  SwitchGroupContext,
+  type SwitchGroupProps,
+  type SwitchGroupStylesNames,
+  type SwitchGroupFactory,
+  type SwitchGroupContextValue,
+} from './SwitchGroup/SwitchGroup';
 import classes from './Switch.module.css';
-
 export type SwitchStylesNames =
   | 'root'
   | 'track'
@@ -249,3 +255,17 @@ Switch.classes = { ...classes, ...InlineInputClasses };
 Switch.varsResolver = varsResolver;
 Switch.displayName = '@mantine/core/Switch';
 Switch.Group = SwitchGroup;
+
+export namespace Switch {
+  export type Props = SwitchProps;
+  export type StylesNames = SwitchStylesNames;
+  export type CssVariables = SwitchCssVariables;
+  export type Factory = SwitchFactory;
+
+  export namespace Group {
+    export type Props = SwitchGroupProps;
+    export type StylesNames = SwitchGroupStylesNames;
+    export type Factory = SwitchGroupFactory;
+    export type Context = SwitchGroupContextValue;
+  }
+}

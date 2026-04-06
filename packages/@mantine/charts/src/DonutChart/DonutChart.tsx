@@ -306,3 +306,11 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
 DonutChart.displayName = '@mantine/charts/DonutChart';
 DonutChart.classes = classes;
 DonutChart.varsResolver = varsResolver;
+
+export namespace DonutChart {
+  export type Props = DonutChartProps;
+  export type StylesNames = DonutChartStylesNames;
+  export type Factory = DonutChartFactory;
+  export type CssVariables = DonutChartCssVariables;
+  export type Cell = DonutChartCell;
+}

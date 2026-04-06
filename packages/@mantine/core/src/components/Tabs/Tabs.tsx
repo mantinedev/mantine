@@ -17,12 +17,11 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { TabsProvider } from './Tabs.context';
-import { TabsList, TabsListStylesNames } from './TabsList/TabsList';
-import { TabsPanel, TabsPanelStylesNames } from './TabsPanel/TabsPanel';
-import { TabsTab, TabsTabStylesNames } from './TabsTab/TabsTab';
+import { TabsProvider, type TabsContextValue } from './Tabs.context';
+import { TabsList, TabsListStylesNames, type TabsListProps } from './TabsList/TabsList';
+import { TabsPanel, TabsPanelStylesNames, type TabsPanelProps } from './TabsPanel/TabsPanel';
+import { TabsTab, TabsTabStylesNames, type TabsTabProps } from './TabsTab/TabsTab';
 import classes from './Tabs.module.css';
-
 export type TabsStylesNames =
   | 'root'
   | TabsListStylesNames
@@ -221,3 +220,27 @@ Tabs.displayName = '@mantine/core/Tabs';
 Tabs.Tab = TabsTab;
 Tabs.Panel = TabsPanel;
 Tabs.List = TabsList;
+
+export namespace Tabs {
+  export type Props = TabsProps;
+  export type StylesNames = TabsStylesNames;
+  export type CssVariables = TabsCssVariables;
+  export type Factory = TabsFactory;
+  export type Variant = TabsVariant;
+  export type ContextValue = TabsContextValue;
+
+  export namespace Tab {
+    export type Props = TabsTabProps;
+    export type StylesNames = TabsTabStylesNames;
+  }
+
+  export namespace Panel {
+    export type Props = TabsPanelProps;
+    export type StylesNames = TabsPanelStylesNames;
+  }
+
+  export namespace List {
+    export type Props = TabsListProps;
+    export type StylesNames = TabsListStylesNames;
+  }
+}
