@@ -172,6 +172,11 @@ export const Switch = factory<SwitchFactory>((_props) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
+  const hasError = !!error && typeof error !== 'boolean';
+  const hasDescription = !!description;
+  const describedBy =
+    `${hasError ? `${uuid}-error` : ''} ${hasDescription ? `${uuid}-description` : ''}`.trim() ||
+    undefined;
 
   const withContextProps = {
     checked: ctx?.value.includes(rest.value as string) ?? checked,
@@ -229,6 +234,8 @@ export const Switch = factory<SwitchFactory>((_props) => {
         type="checkbox"
         role="switch"
         inert={rest.inert}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy}
         {...getStyles('input')}
       />
 

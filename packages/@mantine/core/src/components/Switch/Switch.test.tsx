@@ -86,4 +86,20 @@ describe('@mantine/core/Switch', () => {
     act(() => input.click());
     expect(input).toBeChecked();
   });
+
+  it('connects description and error message to input with aria-describedby', () => {
+    render(<Switch {...defaultProps} id="switch-test" />);
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-describedby',
+      'switch-test-error switch-test-description'
+    );
+  });
+
+  it('sets aria-invalid attribute based on error prop', () => {
+    const { rerender } = render(<Switch error="test-error" />);
+    expect(screen.getByRole('switch')).toHaveAttribute('aria-invalid', 'true');
+
+    rerender(<Switch error={false} />);
+    expect(screen.getByRole('switch')).not.toHaveAttribute('aria-invalid');
+  });
 });
