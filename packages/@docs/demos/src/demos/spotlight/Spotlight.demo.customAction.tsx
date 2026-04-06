@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import { useMemo, useState } from 'react';
 import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import { Badge, Button, Center, Group, Text } from '@mantine/core';

@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import { useCallback, useEffect, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 

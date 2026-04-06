@@ -17,11 +17,3 @@ export type {
   CarouselStylesNames,
   CarouselContextValue,
 };
-
-export namespace Carousel {
-  export type Props = CarouselProps;
-  export type CssVariables = CarouselCssVariables;
-  export type Factory = CarouselFactory;
-  export type StylesNames = CarouselStylesNames;
-  export type ContextValue = CarouselContextValue;
-}

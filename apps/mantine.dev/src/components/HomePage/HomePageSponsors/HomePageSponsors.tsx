@@ -13,7 +13,7 @@ export function HomePageSponsors() {
       className={classes.sponsor}
       key={item.name}
     >
-      <Image src={item.image} className={classes.image} />
+      <Image src={item.image} className={classes.image} alt={item.name} loading="lazy" />
       <span className={classes.name}>{item.name}</span>
     </a>
   ));
@@ -27,7 +27,7 @@ export function HomePageSponsors() {
           href="https://opencollective.com/mantinedev"
           target="_blank"
           rel="noreferrer"
-          aria-label="Sponsor Mantine 💋"
+          aria-label="You? Sponsor Mantine"
           className={classes.sponsor}
         >
           <span className={classes.name}>You? ❤️</span>

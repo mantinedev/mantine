@@ -328,3 +328,10 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
 ColorPicker.classes = classes;
 ColorPicker.varsResolver = varsResolver;
 ColorPicker.displayName = '@mantine/core/ColorPicker';
+
+export namespace ColorPicker {
+  export type Props = ColorPickerProps;
+  export type CssVariables = ColorPickerCssVariables;
+  export type Factory = ColorPickerFactory;
+  export type StylesNames = ColorPickerStylesNames;
+}

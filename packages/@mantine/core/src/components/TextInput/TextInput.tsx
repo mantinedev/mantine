@@ -23,3 +23,8 @@ export const TextInput = factory<TextInputFactory>((props) => {
 
 TextInput.classes = InputBase.classes;
 TextInput.displayName = '@mantine/core/TextInput';
+
+export namespace TextInput {
+  export type Props = TextInputProps;
+  export type Factory = TextInputFactory;
+}

@@ -118,3 +118,9 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props) => {
 
 SimpleGrid.classes = classes;
 SimpleGrid.displayName = '@mantine/core/SimpleGrid';
+
+export namespace SimpleGrid {
+  export type Props = SimpleGridProps;
+  export type StylesNames = SimpleGridStylesNames;
+  export type Factory = SimpleGridFactory;
+}

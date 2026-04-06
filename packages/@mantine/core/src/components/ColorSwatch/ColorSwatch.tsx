@@ -104,3 +104,10 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props) => {
 ColorSwatch.classes = classes;
 ColorSwatch.varsResolver = varsResolver;
 ColorSwatch.displayName = '@mantine/core/ColorSwatch';
+
+export namespace ColorSwatch {
+  export type Props = ColorSwatchProps;
+  export type CssVariables = ColorSwatchCssVariables;
+  export type Factory = ColorSwatchFactory;
+  export type StylesNames = ColorSwatchStylesNames;
+}

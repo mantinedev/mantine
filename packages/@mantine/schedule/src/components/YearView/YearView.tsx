@@ -326,3 +326,10 @@ export const YearView = factory<YearViewFactory>((_props) => {
 YearView.displayName = '@mantine/schedule/YearView';
 YearView.classes = classes;
 YearView.varsResolver = varsResolver;
+
+export namespace YearView {
+  export type Props = YearViewProps;
+  export type Factory = YearViewFactory;
+  export type StylesNames = YearViewStylesNames;
+  export type CssVariables = YearViewCssVariables;
+}

@@ -17,10 +17,21 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
-import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';
-import { ActionIconGroupSection } from './ActionIconGroupSection/ActionIconGroupSection';
+import {
+  ActionIconGroup,
+  type ActionIconGroupProps,
+  type ActionIconGroupStylesNames,
+  type ActionIconGroupCssVariables,
+  type ActionIconGroupFactory,
+} from './ActionIconGroup/ActionIconGroup';
+import {
+  ActionIconGroupSection,
+  type ActionIconGroupSectionProps,
+  type ActionIconGroupSectionStylesNames,
+  type ActionIconGroupSectionCssVariables,
+  type ActionIconGroupSectionFactory,
+} from './ActionIconGroupSection/ActionIconGroupSection';
 import classes from './ActionIcon.module.css';
-
 export type ActionIconVariant =
   | 'filled'
   | 'light'
@@ -184,3 +195,24 @@ ActionIcon.varsResolver = varsResolver;
 ActionIcon.displayName = '@mantine/core/ActionIcon';
 ActionIcon.Group = ActionIconGroup;
 ActionIcon.GroupSection = ActionIconGroupSection;
+
+export namespace ActionIcon {
+  export type Props = ActionIconProps;
+  export type StylesNames = ActionIconStylesNames;
+  export type CssVariables = ActionIconCssVariables;
+  export type Factory = ActionIconFactory;
+
+  export namespace Group {
+    export type Props = ActionIconGroupProps;
+    export type StylesNames = ActionIconGroupStylesNames;
+    export type CssVariables = ActionIconGroupCssVariables;
+    export type Factory = ActionIconGroupFactory;
+  }
+
+  export namespace GroupSection {
+    export type Props = ActionIconGroupSectionProps;
+    export type StylesNames = ActionIconGroupSectionStylesNames;
+    export type CssVariables = ActionIconGroupSectionCssVariables;
+    export type Factory = ActionIconGroupSectionFactory;
+  }
+}

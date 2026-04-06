@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import { Button, Checkbox } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';

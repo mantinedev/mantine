@@ -70,38 +70,3 @@ export type {
   JsonViewerFactory,
   JsonViewerHighlightType,
 };
-
-export namespace CodeHighlight {
-  export type Props = CodeHighlightProps;
-  export type StylesNames = CodeHighlightStylesNames;
-  export type CssVariables = CodeHighlightCssVariables;
-  export type Factory = CodeHighlightFactory;
-  export type ContextValue = CodeHighlightContextValue;
-  export type Adapter = CodeHighlightAdapter;
-
-  export namespace Tabs {
-    export type Props = CodeHighlightTabsProps;
-    export type StylesNames = CodeHighlightTabsStylesNames;
-    export type Code = CodeHighlightTabsCode;
-    export type Factory = CodeHighlightTabsFactory;
-    export type DefaultLanguage = CodeHighlightDefaultLanguage;
-  }
-
-  export namespace Inline {
-    export type Props = InlineCodeHighlightProps;
-    export type StylesNames = InlineCodeHighlightStylesNames;
-    export type CssVariables = InlineCodeHighlightCssVariables;
-    export type Factory = InlineCodeHighlightFactory;
-  }
-
-  export namespace Control {
-    export type Props = CodeHighlightControlProps;
-  }
-}
-
-export namespace JsonViewer {
-  export type Props = JsonViewerProps;
-  export type StylesNames = JsonViewerStylesNames;
-  export type CssVariables = JsonViewerCssVariables;
-  export type Factory = JsonViewerFactory;
-}

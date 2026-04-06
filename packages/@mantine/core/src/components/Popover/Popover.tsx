@@ -421,6 +421,12 @@ Popover.Dropdown = PopoverDropdown;
 Popover.varsResolver = varsResolver;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
+Popover.withProps = (fixedProps: Partial<PopoverProps>) => {
+  const Extended = (props: PopoverProps) => <Popover {...fixedProps} {...props} />;
+  Extended.extend = Popover.extend;
+  Extended.displayName = `WithProps(${Popover.displayName})`;
+  return Extended;
+};
 
 export namespace Popover {
   export type Props = PopoverProps;

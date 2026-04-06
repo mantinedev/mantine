@@ -21,3 +21,8 @@ export const Space = factory<SpaceFactory>((props) => {
 });
 
 Space.displayName = '@mantine/core/Space';
+
+export namespace Space {
+  export type Props = SpaceProps;
+  export type Factory = SpaceFactory;
+}

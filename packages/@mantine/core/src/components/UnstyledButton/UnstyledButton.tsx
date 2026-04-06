@@ -67,3 +67,9 @@ export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
 
 UnstyledButton.classes = classes;
 UnstyledButton.displayName = '@mantine/core/UnstyledButton';
+
+export namespace UnstyledButton {
+  export type Props = UnstyledButtonProps;
+  export type StylesNames = UnstyledButtonStylesNames;
+  export type Factory = UnstyledButtonFactory;
+}

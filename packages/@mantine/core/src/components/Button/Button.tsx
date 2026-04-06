@@ -19,10 +19,21 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { MantineTransition, Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
-import { ButtonGroup } from './ButtonGroup/ButtonGroup';
-import { ButtonGroupSection } from './ButtonGroupSection/ButtonGroupSection';
+import {
+  ButtonGroup,
+  type ButtonGroupProps,
+  type ButtonGroupStylesNames,
+  type ButtonGroupCssVariables,
+  type ButtonGroupFactory,
+} from './ButtonGroup/ButtonGroup';
+import {
+  ButtonGroupSection,
+  type ButtonGroupSectionProps,
+  type ButtonGroupSectionStylesNames,
+  type ButtonGroupSectionCssVariables,
+  type ButtonGroupSectionFactory,
+} from './ButtonGroupSection/ButtonGroupSection';
 import classes from './Button.module.css';
-
 export type ButtonSize = MantineSize | `compact-${MantineSize}` | (string & {});
 
 export type ButtonStylesNames = 'root' | 'inner' | 'loader' | 'section' | 'label';
@@ -244,3 +255,26 @@ Button.varsResolver = varsResolver;
 Button.displayName = '@mantine/core/Button';
 Button.Group = ButtonGroup;
 Button.GroupSection = ButtonGroupSection;
+
+export namespace Button {
+  export type Props = ButtonProps;
+  export type StylesNames = ButtonStylesNames;
+  export type CssVariables = ButtonCssVariables;
+  export type Factory = ButtonFactory;
+  export type Variant = ButtonVariant;
+  export type Size = ButtonSize;
+
+  export namespace Group {
+    export type Props = ButtonGroupProps;
+    export type StylesNames = ButtonGroupStylesNames;
+    export type CssVariables = ButtonGroupCssVariables;
+    export type Factory = ButtonGroupFactory;
+  }
+
+  export namespace GroupSection {
+    export type Props = ButtonGroupSectionProps;
+    export type StylesNames = ButtonGroupSectionStylesNames;
+    export type CssVariables = ButtonGroupSectionCssVariables;
+    export type Factory = ButtonGroupSectionFactory;
+  }
+}

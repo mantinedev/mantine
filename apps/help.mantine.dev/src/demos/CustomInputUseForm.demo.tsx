@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import { Button, Text } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { useUncontrolled } from '@mantine/hooks';

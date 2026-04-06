@@ -174,3 +174,10 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
 Scroller.classes = classes;
 Scroller.varsResolver = varsResolver;
 Scroller.displayName = '@mantine/core/Scroller';
+
+export namespace Scroller {
+  export type Props = ScrollerProps;
+  export type StylesNames = ScrollerStylesNames;
+  export type CssVariables = ScrollerCssVariables;
+  export type Factory = ScrollerFactory;
+}

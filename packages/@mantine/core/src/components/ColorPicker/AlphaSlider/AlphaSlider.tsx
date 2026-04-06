@@ -58,3 +58,8 @@ export const AlphaSlider = factory<AlphaSliderFactory>((props: AlphaSliderProps)
 
 AlphaSlider.displayName = '@mantine/core/AlphaSlider';
 AlphaSlider.classes = ColorSlider.classes;
+
+export namespace AlphaSlider {
+  export type Props = AlphaSliderProps;
+  export type Factory = AlphaSliderFactory;
+}

@@ -14,9 +14,8 @@ import {
 } from '../../core';
 import { Paper } from '../Paper';
 import { CardProvider } from './Card.context';
-import { CardSection } from './CardSection/CardSection';
+import { CardSection, type CardSectionProps } from './CardSection/CardSection';
 import classes from './Card.module.css';
-
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {
   root: '--card-padding';
@@ -119,3 +118,15 @@ Card.classes = classes;
 Card.varsResolver = varsResolver;
 Card.displayName = '@mantine/core/Card';
 Card.Section = CardSection;
+
+export namespace Card {
+  export type Props = CardProps;
+  export type StylesNames = CardStylesNames;
+  export type CssVariables = CardCssVariables;
+  export type Factory = CardFactory;
+  export type SectionProps = CardSectionProps;
+
+  export namespace Section {
+    export type Props = CardSectionProps;
+  }
+}

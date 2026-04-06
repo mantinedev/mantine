@@ -17,12 +17,3 @@ export type {
   BarChartStylesNames,
   BarChartType,
 };
-
-export namespace BarChart {
-  export type Props = BarChartProps;
-  export type CssVariables = BarChartCssVariables;
-  export type Factory = BarChartFactory;
-  export type Series = BarChartSeries;
-  export type StylesNames = BarChartStylesNames;
-  export type Type = BarChartType;
-}

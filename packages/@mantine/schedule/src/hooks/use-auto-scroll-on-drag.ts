@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useRef } from 'react';
 
 const EDGE_THRESHOLD = 50;
 const MAX_SCROLL_SPEED = 8;
@@ -12,15 +12,15 @@ export function useAutoScrollOnDrag({ viewportRef, enabled }: UseAutoScrollOnDra
   const rafId = useRef<number | null>(null);
   const scrollDirection = useRef<number>(0);
 
-  const stopScroll = useCallback(() => {
+  const stopScroll = useEffectEvent(() => {
     if (rafId.current !== null) {
       cancelAnimationFrame(rafId.current);
       rafId.current = null;
     }
     scrollDirection.current = 0;
-  }, []);
+  });
 
-  const startScroll = useCallback(() => {
+  const startScroll = useEffectEvent(() => {
     if (rafId.current !== null) {
       return;
     }
@@ -37,7 +37,7 @@ export function useAutoScrollOnDrag({ viewportRef, enabled }: UseAutoScrollOnDra
     };
 
     rafId.current = requestAnimationFrame(tick);
-  }, [viewportRef]);
+  });
 
   useEffect(() => {
     if (!enabled) {
@@ -83,5 +83,5 @@ export function useAutoScrollOnDrag({ viewportRef, enabled }: UseAutoScrollOnDra
       viewport.removeEventListener('dragend', handleDragEnd);
       viewport.removeEventListener('drop', handleDragEnd);
     };
-  }, [enabled, viewportRef, startScroll, stopScroll]);
+  }, [enabled, viewportRef]);
 }

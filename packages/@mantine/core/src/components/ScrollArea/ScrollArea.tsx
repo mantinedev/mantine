@@ -432,3 +432,15 @@ ScrollArea.varsResolver = varsResolver;
 ScrollAreaAutosize.displayName = '@mantine/core/ScrollAreaAutosize';
 ScrollAreaAutosize.classes = classes;
 ScrollArea.Autosize = ScrollAreaAutosize;
+
+export namespace ScrollArea {
+  export type Props = ScrollAreaProps;
+  export type AutosizeProps = ScrollAreaAutosizeProps;
+  export type StylesNames = ScrollAreaStylesNames;
+  export type CssVariables = ScrollAreaCssVariables;
+  export type Factory = ScrollAreaFactory;
+
+  export namespace Autosize {
+    export type Props = ScrollAreaAutosizeProps;
+  }
+}

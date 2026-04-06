@@ -37,16 +37,3 @@ export type {
   FileWithPath,
   FileRejection,
 };
-
-export namespace Dropzone {
-  export type Props = DropzoneProps;
-  export type StylesNames = DropzoneStylesNames;
-  export type CssVariables = DropzoneCssVariables;
-  export type Factory = DropzoneFactory;
-
-  export namespace FullScreen {
-    export type Props = DropzoneFullScreenProps;
-    export type StylesNames = DropzoneFullScreenStylesNames;
-    export type Factory = DropzoneFullScreenFactory;
-  }
-}

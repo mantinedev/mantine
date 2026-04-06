@@ -17,10 +17,3 @@ export type {
   AffixBaseProps,
   AffixPosition,
 };
-
-export namespace Affix {
-  export type Props = AffixProps;
-  export type StylesNames = AffixStylesNames;
-  export type CssVariables = AffixCssVariables;
-  export type Factory = AffixFactory;
-}

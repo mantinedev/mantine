@@ -55,33 +55,3 @@ export type {
   RadioIndicatorCssVariables,
   RadioIndicatorVariant,
 };
-
-export namespace Radio {
-  export type Props = RadioProps;
-  export type StylesNames = RadioStylesNames;
-  export type Factory = RadioFactory;
-  export type Variant = RadioVariant;
-
-  export namespace Group {
-    export type Props = RadioGroupProps;
-    export type StylesNames = RadioGroupStylesNames;
-    export type Factory = RadioGroupFactory;
-    export type ContextValue = RadioGroupContextValue;
-  }
-
-  export namespace Card {
-    export type Props = RadioCardProps;
-    export type StylesNames = RadioCardStylesNames;
-    export type Factory = RadioCardFactory;
-    export type CssVariables = RadioCardCssVariables;
-    export type ContextValue = RadioCardContextValue;
-  }
-
-  export namespace Indicator {
-    export type Props = RadioIndicatorProps;
-    export type StylesNames = RadioIndicatorStylesNames;
-    export type Factory = RadioIndicatorFactory;
-    export type CssVariables = RadioIndicatorCssVariables;
-    export type Variant = RadioIndicatorVariant;
-  }
-}

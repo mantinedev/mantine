@@ -101,3 +101,10 @@ export const Skeleton = factory<SkeletonFactory>((_props) => {
 Skeleton.classes = classes;
 Skeleton.varsResolver = varsResolver;
 Skeleton.displayName = '@mantine/core/Skeleton';
+
+export namespace Skeleton {
+  export type Props = SkeletonProps;
+  export type StylesNames = SkeletonStylesNames;
+  export type CssVariables = SkeletonCssVariables;
+  export type Factory = SkeletonFactory;
+}

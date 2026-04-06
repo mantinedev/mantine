@@ -44,7 +44,7 @@ export function TableOfContents({ withTabs, editPageLink }: TableOfContentsProps
     <Box component="nav" mod={{ 'with-tabs': withTabs }} className={classes.wrapper}>
       <div className={classes.inner}>
         <div>
-          <Text className={classes.title}>TableIcon of contents</Text>
+          <Text className={classes.title}>Table of contents</Text>
           <ScrollArea.Autosize mah="calc(100vh - 172px)" type="never">
             <div className={classes.items}>{items}</div>
 

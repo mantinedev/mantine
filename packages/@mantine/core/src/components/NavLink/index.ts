@@ -15,11 +15,3 @@ export type {
   NavLinkFactory,
   NavLinkVariant,
 };
-
-export namespace NavLink {
-  export type Props = NavLinkProps;
-  export type StylesNames = NavLinkStylesNames;
-  export type CssVariables = NavLinkCssVariables;
-  export type Factory = NavLinkFactory;
-  export type Variant = NavLinkVariant;
-}

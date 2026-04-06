@@ -148,3 +148,10 @@ export const Day = factory<DayFactory>((_props) => {
 Day.classes = classes;
 Day.varsResolver = varsResolver;
 Day.displayName = '@mantine/dates/Day';
+
+export namespace Day {
+  export type Props = DayProps;
+  export type StylesNames = DayStylesNames;
+  export type Factory = DayFactory;
+  export type CssVariables = DayCssVariables;
+}

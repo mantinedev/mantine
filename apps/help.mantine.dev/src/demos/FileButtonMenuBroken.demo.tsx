@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import React from 'react';
 import { Button, FileButton, Menu } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -156,3 +156,10 @@ export const Spoiler = factory<SpoilerFactory>((_props) => {
 Spoiler.classes = classes;
 Spoiler.varsResolver = varsResolver;
 Spoiler.displayName = '@mantine/core/Spoiler';
+
+export namespace Spoiler {
+  export type Props = SpoilerProps;
+  export type StylesNames = SpoilerStylesNames;
+  export type CssVariables = SpoilerCssVariables;
+  export type Factory = SpoilerFactory;
+}

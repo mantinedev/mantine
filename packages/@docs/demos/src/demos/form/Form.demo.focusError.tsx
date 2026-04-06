@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 
 import { Button, Group, TextInput } from '@mantine/core';
 import { isEmail, isNotEmpty, useForm } from '@mantine/form';

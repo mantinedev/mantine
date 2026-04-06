@@ -576,3 +576,49 @@ export function BottomLeftAbsolute() {
     </>
   );
 }
+
+export function InputWithSections() {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [value, setValue] = useState<string | null>(null);
+
+  const options = groceries.slice(0, 5).map((item) => (
+    <Combobox.Option value={item} key={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Combobox
+        store={combobox}
+        onOptionSubmit={(val) => {
+          setValue(val);
+          combobox.closeDropdown();
+        }}
+        width="target"
+      >
+        <Combobox.Target>
+          <Input
+            component="button"
+            type="button"
+            pointer
+            style={{ width: 350 }}
+            leftSection={<span>L</span>}
+            rightSection={<Combobox.Chevron />}
+            rightSectionPointerEvents="none"
+            onClick={() => combobox.toggleDropdown()}
+          >
+            {value || <Input.Placeholder>Pick a grocery</Input.Placeholder>}
+          </Input>
+        </Combobox.Target>
+
+        <Combobox.Dropdown>
+          <Combobox.Options>{options}</Combobox.Options>
+        </Combobox.Dropdown>
+      </Combobox>
+    </div>
+  );
+}

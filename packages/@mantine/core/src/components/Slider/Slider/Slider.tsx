@@ -465,3 +465,11 @@ export const Slider = factory<SliderFactory>((_props) => {
 Slider.classes = classes;
 Slider.varsResolver = varsResolver;
 Slider.displayName = '@mantine/core/Slider';
+
+export namespace Slider {
+  export type Props = SliderProps;
+  export type StylesNames = SliderStylesNames;
+  export type CssVariables = SliderCssVariables;
+  export type Factory = SliderFactory;
+  export type Mark = SliderMark;
+}

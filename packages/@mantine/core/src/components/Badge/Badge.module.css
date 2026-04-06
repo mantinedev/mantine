@@ -107,8 +107,6 @@
   text-overflow: ellipsis;
   text-align: center;
   cursor: inherit;
-  text-box-trim: trim-both;
-  text-box-edge: cap alphabetic;
 }
 
 .section {

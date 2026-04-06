@@ -115,3 +115,9 @@ export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
 
 Highlight.classes = Text.classes;
 Highlight.displayName = '@mantine/core/Highlight';
+
+export namespace Highlight {
+  export type Props = HighlightProps;
+  export type Factory = HighlightFactory;
+  export type Term = HighlightTerm;
+}

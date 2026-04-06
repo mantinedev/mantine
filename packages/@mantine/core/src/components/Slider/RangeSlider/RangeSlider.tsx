@@ -642,3 +642,12 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
 RangeSlider.classes = classes;
 RangeSlider.varsResolver = varsResolver;
 RangeSlider.displayName = '@mantine/core/RangeSlider';
+
+export namespace RangeSlider {
+  export type Props = RangeSliderProps;
+  export type Value = RangeSliderValue;
+  export type Factory = RangeSliderFactory;
+  export type StylesNames = SliderStylesNames;
+  export type CssVariables = SliderCssVariables;
+  export type Mark = SliderMark;
+}

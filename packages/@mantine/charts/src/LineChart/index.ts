@@ -17,12 +17,3 @@ export type {
   LineChartStylesNames,
   LineChartCurveType,
 };
-
-export namespace LineChart {
-  export type Props = LineChartProps;
-  export type CssVariables = LineChartCssVariables;
-  export type Factory = LineChartFactory;
-  export type Series = LineChartSeries;
-  export type StylesNames = LineChartStylesNames;
-  export type CurveType = LineChartCurveType;
-}

@@ -110,3 +110,11 @@ export const Divider = factory<DividerFactory>((_props) => {
 Divider.classes = classes;
 Divider.varsResolver = varsResolver;
 Divider.displayName = '@mantine/core/Divider';
+
+export namespace Divider {
+  export type Props = DividerProps;
+  export type StylesNames = DividerStylesNames;
+  export type CssVariables = DividerCssVariables;
+  export type Factory = DividerFactory;
+  export type Variant = DividerVariant;
+}

@@ -177,3 +177,11 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props) => {
 Badge.classes = classes;
 Badge.varsResolver = varsResolver;
 Badge.displayName = '@mantine/core/Badge';
+
+export namespace Badge {
+  export type Props = BadgeProps;
+  export type StylesNames = BadgeStylesNames;
+  export type CssVariables = BadgeCssVariables;
+  export type Variant = BadgeVariant;
+  export type Factory = BadgeFactory;
+}

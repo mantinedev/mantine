@@ -112,8 +112,12 @@ export type SetFieldValue<out Values> = <TValues extends Values, Field extends L
   options?: { forceUpdate: boolean }
 ) => void;
 
-export type ClearFieldError = (path: unknown) => void;
-export type ClearFieldDirty = (path: unknown) => void;
+export type ClearFieldError<Values = unknown> = <Field extends LooseKeys<Values>>(
+  path: Field
+) => void;
+export type ClearFieldDirty<Values = unknown> = <Field extends LooseKeys<Values>>(
+  path: Field
+) => void;
 export type ClearErrors = () => void;
 export type Reset = () => void;
 
@@ -289,7 +293,7 @@ interface _UseFormReturnType<out Values, out TransformedValues = Values, Rules =
   setErrors: SetErrors;
   setFieldValue: SetFieldValue<Values>;
   setFieldError: SetFieldError<Values>;
-  clearFieldError: ClearFieldError;
+  clearFieldError: ClearFieldError<Values>;
   clearErrors: ClearErrors;
   reset: Reset;
   validate: Validate<Rules>;
@@ -318,7 +322,7 @@ interface _UseFormReturnType<out Values, out TransformedValues = Values, Rules =
   watch: Watch<Values>;
   key: Key<Values>;
   getInputNode: GetInputNode<Values>;
-  resetField: (path: PropertyKey) => void;
+  resetField: <Field extends LooseKeys<Values>>(path: Field) => void;
 }
 
 export type UseFormReturnType<Values, TransformedValues = Values, Rules = any> = _UseFormReturnType<

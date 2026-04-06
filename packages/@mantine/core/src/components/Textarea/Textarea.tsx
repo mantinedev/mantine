@@ -80,3 +80,8 @@ export const Textarea = factory<TextareaFactory>((props) => {
 
 Textarea.classes = InputBase.classes;
 Textarea.displayName = '@mantine/core/Textarea';
+
+export namespace Textarea {
+  export type Props = TextareaProps;
+  export type Factory = TextareaFactory;
+}

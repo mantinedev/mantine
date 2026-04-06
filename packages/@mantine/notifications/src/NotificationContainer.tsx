@@ -62,6 +62,7 @@ export function NotificationContainer({
     style: dataStyle,
     withCloseButton,
     renderNotification: _renderNotification,
+    onOpen: _onOpen,
     ...notificationProps
   } = data;
   const autoCloseDuration = getAutoClose(autoClose, data.autoClose);

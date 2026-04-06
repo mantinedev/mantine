@@ -15,11 +15,3 @@ export type {
   DividerFactory,
   DividerVariant,
 };
-
-export namespace Divider {
-  export type Props = DividerProps;
-  export type StylesNames = DividerStylesNames;
-  export type CssVariables = DividerCssVariables;
-  export type Factory = DividerFactory;
-  export type Variant = DividerVariant;
-}

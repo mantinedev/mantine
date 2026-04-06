@@ -334,3 +334,10 @@ export const Month = factory<MonthFactory>((_props) => {
 Month.classes = classes;
 Month.varsResolver = varsResolver;
 Month.displayName = '@mantine/dates/Month';
+
+export namespace Month {
+  export type Props = MonthProps;
+  export type Settings = MonthSettings;
+  export type StylesNames = MonthStylesNames;
+  export type Factory = MonthFactory;
+}
