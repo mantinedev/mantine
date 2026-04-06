@@ -306,3 +306,11 @@ export const RadarChart = factory<RadarChartFactory>((_props) => {
 RadarChart.displayName = '@mantine/charts/RadarChart';
 RadarChart.classes = classes;
 RadarChart.varsResolver = varsResolver;
+
+export namespace RadarChart {
+  export type Props = RadarChartProps;
+  export type StylesNames = RadarChartStylesNames;
+  export type CssVariables = RadarChartCssVariables;
+  export type Factory = RadarChartFactory;
+  export type Series = RadarChartSeries;
+}

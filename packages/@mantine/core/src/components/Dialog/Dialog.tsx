@@ -140,3 +140,10 @@ export const Dialog = factory<DialogFactory>((_props) => {
 Dialog.classes = classes;
 Dialog.varsResolver = varsResolver;
 Dialog.displayName = '@mantine/core/Dialog';
+
+export namespace Dialog {
+  export type Props = DialogProps;
+  export type StylesNames = DialogStylesNames;
+  export type CssVariables = DialogCssVariables;
+  export type Factory = DialogFactory;
+}

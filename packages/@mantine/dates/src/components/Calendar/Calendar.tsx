@@ -529,3 +529,12 @@ Calendar.classes = {
   ...MonthLevelGroup.classes,
 };
 Calendar.displayName = '@mantine/dates/Calendar';
+
+export namespace Calendar {
+  export type Props = CalendarProps;
+  export type StylesNames = CalendarStylesNames;
+  export type AriaLabels = CalendarAriaLabels;
+  export type Settings = CalendarSettings;
+  export type BaseProps = CalendarBaseProps;
+  export type Factory = CalendarFactory;
+}

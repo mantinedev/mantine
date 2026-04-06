@@ -1,10 +1,17 @@
 import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DataAttributes, Factory, genericFactory, MantineSize, useProps } from '../../../core';
+import {
+  DataAttributes,
+  Factory,
+  genericFactory,
+  MantineSize,
+  Primitive,
+  useProps,
+} from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 
-export interface SwitchGroupContextValue<Value extends string = string> {
+export interface SwitchGroupContextValue<Value extends Primitive = string> {
   value: Value[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   size: MantineSize | (string & {}) | undefined;
@@ -15,9 +22,9 @@ export const SwitchGroupContext = createContext<SwitchGroupContextValue | null>(
 
 export type SwitchGroupStylesNames = InputWrapperStylesNames;
 
-export interface SwitchGroupProps<Value extends string = string> extends Omit<
+export interface SwitchGroupProps<Value extends Primitive = string> extends Omit<
   InputWrapperProps,
-  'onChange'
+  'onChange' | 'value' | 'defaultValue'
 > {
   /** `Switch` components */
   children: React.ReactNode;
@@ -60,7 +67,9 @@ export type SwitchGroupFactory = Factory<{
   props: SwitchGroupProps;
   ref: HTMLDivElement;
   stylesNames: SwitchGroupStylesNames;
-  signature: <Value extends string = string>(props: SwitchGroupProps<Value>) => React.JSX.Element;
+  signature: <Value extends Primitive = string>(
+    props: SwitchGroupProps<Value>
+  ) => React.JSX.Element;
 }>;
 
 const defaultProps = {

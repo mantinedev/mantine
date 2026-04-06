@@ -376,10 +376,10 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
         yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
@@ -537,3 +537,12 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
 CompositeChart.displayName = '@mantine/charts/CompositeChart';
 CompositeChart.classes = classes;
 CompositeChart.varsResolver = varsResolver;
+
+export namespace CompositeChart {
+  export type Props = CompositeChartProps;
+  export type StylesNames = CompositeChartStylesNames;
+  export type CssVariables = CompositeChartCssVariables;
+  export type Factory = CompositeChartFactory;
+  export type Series = CompositeChartSeries;
+  export type CurveType = CompositeChartCurveType;
+}

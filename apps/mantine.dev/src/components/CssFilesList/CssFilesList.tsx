@@ -34,7 +34,7 @@ function CssFilePath({ filePath }: CssFilePathProps) {
 export function CssFilesList() {
   const files = allCssFilesPaths.map((filePath) => [
     filePath.replace('.css', ''),
-    <CssFilePath filePath={filePath} />,
+    <CssFilePath key={filePath} filePath={filePath} />,
   ]);
 
   return <MdxDataTable data={files} head={['Component', 'Import']} />;

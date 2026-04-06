@@ -26,20 +26,3 @@ export type {
   AlphaSliderFactory,
   AlphaSliderProps,
 };
-
-export namespace ColorPicker {
-  export type Props = ColorPickerProps;
-  export type CssVariables = ColorPickerCssVariables;
-  export type Factory = ColorPickerFactory;
-  export type StylesNames = ColorPickerStylesNames;
-}
-
-export namespace HueSlider {
-  export type Props = HueSliderProps;
-  export type Factory = HueSliderFactory;
-}
-
-export namespace AlphaSlider {
-  export type Props = AlphaSliderProps;
-  export type Factory = AlphaSliderFactory;
-}

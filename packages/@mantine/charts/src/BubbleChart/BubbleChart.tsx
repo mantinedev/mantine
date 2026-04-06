@@ -254,3 +254,11 @@ export const BubbleChart = factory<BubbleChartFactory>((_props) => {
 BubbleChart.displayName = '@mantine/charts/BubbleChart';
 BubbleChart.classes = classes;
 BubbleChart.varsResolver = varsResolver;
+
+export namespace BubbleChart {
+  export type Props = BubbleChartProps;
+  export type StylesNames = BubbleChartStylesNames;
+  export type CssVariables = BubbleChartCssVariables;
+  export type Factory = BubbleChartFactory;
+  export type DataKey = BubbleChartDataKey;
+}

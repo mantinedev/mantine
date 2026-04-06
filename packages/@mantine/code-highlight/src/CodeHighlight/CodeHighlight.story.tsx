@@ -240,6 +240,7 @@ export function ExtraControls() {
         withBorder
         controls={[
           <CodeHighlight.Control
+            key="codesandbox"
             tooltipLabel="Open in codesandbox"
             component="a"
             href="https://codesandbox.io"

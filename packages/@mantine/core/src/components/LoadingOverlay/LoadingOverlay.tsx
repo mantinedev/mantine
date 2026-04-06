@@ -137,6 +137,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
               className: _overlayProps?.className,
               style: _overlayProps?.style,
             })}
+            darkHidden
             unstyled={unstyled}
             color={overlayProps?.color || theme.white}
           />
@@ -160,3 +161,10 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
 LoadingOverlay.classes = classes;
 LoadingOverlay.varsResolver = varsResolver;
 LoadingOverlay.displayName = '@mantine/core/LoadingOverlay';
+
+export namespace LoadingOverlay {
+  export type Props = LoadingOverlayProps;
+  export type StylesNames = LoadingOverlayStylesNames;
+  export type CssVariables = LoadingOverlayCssVariables;
+  export type Factory = LoadingOverlayFactory;
+}

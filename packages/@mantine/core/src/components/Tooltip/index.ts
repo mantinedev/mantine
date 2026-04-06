@@ -16,19 +16,3 @@ export type {
   TooltipGroupContextValue,
   TooltipFloatingProps,
 };
-
-export namespace Tooltip {
-  export type Props = TooltipProps;
-  export type Factory = TooltipFactory;
-  export type CssVariables = TooltipCssVariables;
-  export type StylesNames = TooltipStylesNames;
-
-  export namespace Group {
-    export type Props = TooltipGroupProps;
-    export type ContextValue = TooltipGroupContextValue;
-  }
-
-  export namespace Floating {
-    export type Props = TooltipFloatingProps;
-  }
-}

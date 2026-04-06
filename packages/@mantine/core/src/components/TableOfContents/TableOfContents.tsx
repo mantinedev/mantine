@@ -198,3 +198,11 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
 TableOfContents.displayName = '@mantine/core/TableOfContents';
 TableOfContents.classes = classes;
 TableOfContents.varsResolver = varsResolver;
+
+export namespace TableOfContents {
+  export type Props = TableOfContentsProps;
+  export type StylesNames = TableOfContentsStylesNames;
+  export type CssVariables = TableOfContentsCssVariables;
+  export type Factory = TableOfContentsFactory;
+  export type Variant = TableOfContentsVariant;
+}

@@ -16,9 +16,15 @@ import {
 } from '../../core';
 import { CloseButton, CloseButtonProps } from '../CloseButton';
 import { PillsInputContext } from '../PillsInput/PillsInput.context';
-import { PillGroup, PillGroupContext } from './PillGroup/PillGroup';
+import {
+  PillGroup,
+  PillGroupContext,
+  type PillGroupProps,
+  type PillGroupStylesNames,
+  type PillGroupCssVariables,
+  type PillGroupFactory,
+} from './PillGroup/PillGroup';
 import classes from './Pill.module.css';
-
 export type PillStylesNames = 'root' | 'label' | 'remove';
 export type PillVariant = 'default' | 'contrast';
 export type PillCssVariables = {
@@ -156,3 +162,18 @@ Pill.classes = classes;
 Pill.varsResolver = varsResolver;
 Pill.displayName = '@mantine/core/Pill';
 Pill.Group = PillGroup;
+
+export namespace Pill {
+  export type Props = PillProps;
+  export type StylesNames = PillStylesNames;
+  export type CssVariables = PillCssVariables;
+  export type Factory = PillFactory;
+  export type Variant = PillVariant;
+
+  export namespace Group {
+    export type Props = PillGroupProps;
+    export type StylesNames = PillGroupStylesNames;
+    export type CssVariables = PillGroupCssVariables;
+    export type Factory = PillGroupFactory;
+  }
+}

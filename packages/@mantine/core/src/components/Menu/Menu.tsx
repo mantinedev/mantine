@@ -11,14 +11,17 @@ import {
 } from '../../core';
 import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
-import { MenuContextProvider } from './Menu.context';
-import { MenuDivider } from './MenuDivider/MenuDivider';
-import { MenuDropdown } from './MenuDropdown/MenuDropdown';
-import { MenuItem } from './MenuItem/MenuItem';
-import { MenuLabel } from './MenuLabel/MenuLabel';
-import { MenuSub } from './MenuSub/MenuSub';
-import { MenuTarget } from './MenuTarget/MenuTarget';
+import { MenuContextProvider, type MenuContextValue } from './Menu.context';
+import { MenuDivider, type MenuDividerProps } from './MenuDivider/MenuDivider';
+import { MenuDropdown, type MenuDropdownProps } from './MenuDropdown/MenuDropdown';
+import { MenuItem, type MenuItemProps } from './MenuItem/MenuItem';
+import { MenuLabel, type MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuSub, type MenuSubProps } from './MenuSub/MenuSub';
+import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
 import classes from './Menu.module.css';
+import type { MenuSubDropdownProps } from './MenuSubDropdown/MenuSubDropdown';
+import type { MenuSubItemProps } from './MenuSubItem/MenuSubItem';
+import type { MenuSubTargetProps } from './MenuSubTarget/MenuSubTarget';
 
 export type MenuStylesNames =
   | 'item'
@@ -236,3 +239,46 @@ Menu.Dropdown = MenuDropdown;
 Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;
 Menu.Sub = MenuSub;
+
+export namespace Menu {
+  export type Props = MenuProps;
+  export type StylesNames = MenuStylesNames;
+  export type Factory = MenuFactory;
+  export type ContextValue = MenuContextValue;
+
+  export namespace Item {
+    export type Props = MenuItemProps;
+  }
+
+  export namespace Label {
+    export type Props = MenuLabelProps;
+  }
+
+  export namespace Divider {
+    export type Props = MenuDividerProps;
+  }
+
+  export namespace Dropdown {
+    export type Props = MenuDropdownProps;
+  }
+
+  export namespace Target {
+    export type Props = MenuTargetProps;
+  }
+
+  export namespace Sub {
+    export type Props = MenuSubProps;
+  }
+
+  export namespace SubDropdown {
+    export type Props = MenuSubDropdownProps;
+  }
+
+  export namespace SubItem {
+    export type Props = MenuSubItemProps;
+  }
+
+  export namespace SubTarget {
+    export type Props = MenuSubTargetProps;
+  }
+}

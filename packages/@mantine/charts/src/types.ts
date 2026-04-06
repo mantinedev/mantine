@@ -12,7 +12,7 @@ import type { MantineColor } from '@mantine/core';
 
 export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' | 'label'> {
   color?: MantineColor;
-  label?: string;
+  label?: string | Omit<LabelProps, 'ref'>;
   labelPosition?: LabelProps['position'];
 }
 

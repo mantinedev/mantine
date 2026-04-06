@@ -48,34 +48,3 @@ export type {
   AppShellNavbarProps,
   AppShellSectionProps,
 };
-
-export namespace AppShell {
-  export type Props = AppShellProps;
-  export type StylesNames = AppShellStylesNames;
-  export type CssVariables = AppShellCssVariables;
-  export type Factory = AppShellFactory;
-
-  export namespace Section {
-    export type Props = AppShellSectionProps;
-  }
-
-  export namespace Header {
-    export type Props = AppShellHeaderProps;
-  }
-
-  export namespace Footer {
-    export type Props = AppShellFooterProps;
-  }
-
-  export namespace Navbar {
-    export type Props = AppShellNavbarProps;
-  }
-
-  export namespace Aside {
-    export type Props = AppShellAsideProps;
-  }
-
-  export namespace Main {
-    export type Props = AppShellMainProps;
-  }
-}

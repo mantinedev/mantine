@@ -19,22 +19,3 @@ export type {
   ProgressSectionProps,
   ProgressContextValue,
 };
-
-export namespace Progress {
-  export type Props = ProgressProps;
-  export type Factory = ProgressFactory;
-  export type StylesNames = ProgressStylesNames;
-  export type ContextValue = ProgressContextValue;
-
-  export namespace Label {
-    export type Props = ProgressLabelProps;
-  }
-
-  export namespace Root {
-    export type Props = ProgressRootProps;
-  }
-
-  export namespace Section {
-    export type Props = ProgressSectionProps;
-  }
-}

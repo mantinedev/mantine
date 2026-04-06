@@ -17,11 +17,11 @@ import {
 import { AccordionProvider } from './Accordion.context';
 import { AccordionChevronPosition, AccordionHeadingOrder, AccordionValue } from './Accordion.types';
 import { AccordionChevron } from './AccordionChevron';
-import { AccordionControl } from './AccordionControl/AccordionControl';
-import { AccordionItem } from './AccordionItem/AccordionItem';
-import { AccordionPanel } from './AccordionPanel/AccordionPanel';
+import { AccordionControl, type AccordionControlProps } from './AccordionControl/AccordionControl';
+import { AccordionItem, type AccordionItemProps } from './AccordionItem/AccordionItem';
+import { AccordionPanel, type AccordionPanelProps } from './AccordionPanel/AccordionPanel';
 import classes from './Accordion.module.css';
-
+import type { AccordionItemContextValue } from './AccordionItem.context';
 export type AccordionStylesNames =
   | 'root'
   | 'content'
@@ -229,3 +229,24 @@ Accordion.Item = AccordionItem;
 Accordion.Panel = AccordionPanel;
 Accordion.Control = AccordionControl;
 Accordion.Chevron = AccordionChevron;
+
+export namespace Accordion {
+  export type Props = AccordionProps;
+  export type StylesNames = AccordionStylesNames;
+  export type CssVariables = AccordionCssVariables;
+  export type Factory = AccordionFactory;
+  export type Variant = AccordionVariant;
+
+  export namespace Control {
+    export type Props = AccordionControlProps;
+  }
+
+  export namespace Item {
+    export type Props = AccordionItemProps;
+    export type Context = AccordionItemContextValue;
+  }
+
+  export namespace Panel {
+    export type Props = AccordionPanelProps;
+  }
+}

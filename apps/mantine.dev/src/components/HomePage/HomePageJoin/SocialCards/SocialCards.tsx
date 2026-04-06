@@ -94,7 +94,7 @@ export function TwitterCard() {
       icon="twitter"
       className={classes.twitter}
       href={meta.twitterLink}
-      title="Follow on XIcon"
+      title="Follow on X"
       description="Get notified about new minor and major releases"
     />
   );

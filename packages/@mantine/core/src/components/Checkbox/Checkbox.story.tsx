@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Checkbox } from './Checkbox';
 
 export default { title: 'Checkbox' };
@@ -28,6 +29,40 @@ export function CheckboxGroup() {
         <Checkbox label="React" value="react" />
         <Checkbox label="Angular" value="ng" />
       </Checkbox.Group>
+    </div>
+  );
+}
+
+export function CheckboxGroupPrimitiveGeneric() {
+  const [stringValue, setStringValue] = useState<('react' | 'ng')[]>(['react']);
+  const [numberValue, setNumberValue] = useState<(1 | 2 | 3)[]>([1]);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Checkbox.Group<'react' | 'ng'>
+        value={stringValue}
+        onChange={setStringValue}
+        label="String generic"
+      >
+        <Checkbox label="React" value="react" />
+        <Checkbox label="Angular" value="ng" />
+      </Checkbox.Group>
+
+      <Checkbox.Group<1 | 2 | 3>
+        value={numberValue}
+        onChange={setNumberValue}
+        label="Number generic"
+        mt="md"
+      >
+        <Checkbox label="One" value="1" />
+        <Checkbox label="Two" value="2" />
+        <Checkbox label="Three" value="3" />
+      </Checkbox.Group>
+
+      <div style={{ marginTop: 20 }}>
+        <div>String value: {JSON.stringify(stringValue)}</div>
+        <div>Number value: {JSON.stringify(numberValue)}</div>
+      </div>
     </div>
   );
 }

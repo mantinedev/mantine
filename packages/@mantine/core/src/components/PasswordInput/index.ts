@@ -13,10 +13,3 @@ export type {
   PasswordInputCssVariables,
   PasswordInputFactory,
 };
-
-export namespace PasswordInput {
-  export type Props = PasswordInputProps;
-  export type StylesNames = PasswordInputStylesNames;
-  export type CssVariables = PasswordInputCssVariables;
-  export type Factory = PasswordInputFactory;
-}

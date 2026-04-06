@@ -12,10 +12,3 @@ export type {
   AngleSliderProps,
   AngleSliderStylesNames,
 };
-
-export namespace AngleSlider {
-  export type Props = AngleSliderProps;
-  export type StylesNames = AngleSliderStylesNames;
-  export type CssVariables = AngleSliderCssVariables;
-  export type Factory = AngleSliderFactory;
-}

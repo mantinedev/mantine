@@ -47,3 +47,8 @@ export const InputBase = polymorphicFactory<InputBaseFactory>((props) => {
 
 InputBase.classes = { ...Input.classes, ...Input.Wrapper.classes };
 InputBase.displayName = '@mantine/core/InputBase';
+
+export namespace InputBase {
+  export type Props = InputBaseProps;
+  export type Factory = InputBaseFactory;
+}

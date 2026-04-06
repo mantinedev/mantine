@@ -172,7 +172,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
         </div>
       )}
 
-      <svg width={size} height={size / 2} {...getStyles('svg')}>
+      <svg viewBox={`0 0 ${size} ${size / 2}`} {...getStyles('svg')}>
         <circle
           cx={coordinateForCircle}
           cy={coordinateForCircle}
@@ -202,3 +202,10 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
 SemiCircleProgress.displayName = '@mantine/core/SemiCircleProgress';
 SemiCircleProgress.classes = classes;
 SemiCircleProgress.varsResolver = varsResolver;
+
+export namespace SemiCircleProgress {
+  export type Props = SemiCircleProgressProps;
+  export type StylesNames = SemiCircleProgressStylesNames;
+  export type CssVariables = SemiCircleProgressCssVariables;
+  export type Factory = SemiCircleProgressFactory;
+}

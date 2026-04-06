@@ -31,9 +31,10 @@ import {
   __InputWrapperProps,
   InputWrapper,
   InputWrapperStylesNames,
+  type InputWrapperProps,
+  type InputWrapperFactory,
 } from './InputWrapper/InputWrapper';
 import classes from './Input.module.css';
-
 // Required to be a separate type for docgen script
 type WrapperProps = React.ComponentProps<'div'> & DataAttributes;
 
@@ -162,6 +163,9 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
 
   /** Props passed down to the root element of the `Input` component */
   wrapperProps?: WrapperProps;
+
+  /** Root element ref */
+  rootRef?: React.Ref<HTMLDivElement>;
 }
 
 export type InputFactory = PolymorphicFactory<{
@@ -256,6 +260,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     loadingPosition,
     __bottomSection,
     __bottomSectionProps,
+    rootRef,
     ...others
   } = props;
 
@@ -283,7 +288,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     ? {
         required,
         disabled,
-        'aria-invalid': !!error,
+        'aria-invalid': error ? true : undefined,
         'aria-describedby': ctx?.describedBy,
         id: ctx?.inputId || id,
       }
@@ -312,6 +317,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
   return (
     <InputContext value={{ size: size || 'sm' }}>
       <Box
+        ref={rootRef}
         {...getStyles('wrapper')}
         {...styleProps}
         {...wrapperProps}
@@ -398,3 +404,53 @@ Input.Description = InputDescription;
 Input.Placeholder = InputPlaceholder;
 Input.ClearButton = InputClearButton;
 Input.displayName = '@mantine/core/Input';
+
+export namespace Input {
+  export type Props = InputProps;
+  export type StylesNames = InputStylesNames;
+  export type CssVariables = InputCssVariables;
+  export type Factory = InputFactory;
+
+  export namespace Wrapper {
+    export type Props = InputWrapperProps;
+    export type StylesNames = InputWrapperStylesNames;
+    export type Factory = InputWrapperFactory;
+  }
+
+  export namespace Description {
+    export type Props = InputDescriptionProps;
+    export type StylesNames = InputDescriptionStylesNames;
+    export type CssVariables = InputDescriptionCssVariables;
+    export type Factory = InputDescriptionFactory;
+  }
+
+  export namespace Error {
+    export type Props = InputErrorProps;
+    export type StylesNames = InputErrorStylesNames;
+    export type CssVariables = InputErrorCssVariables;
+    export type Factory = InputErrorFactory;
+  }
+
+  export namespace Label {
+    export type Props = InputLabelProps;
+    export type StylesNames = InputLabelStylesNames;
+    export type CssVariables = InputLabelCssVariables;
+    export type Factory = InputLabelFactory;
+  }
+
+  export namespace Placeholder {
+    export type Props = InputPlaceholderProps;
+    export type StylesNames = InputPlaceholderStylesNames;
+    export type Factory = InputPlaceholderFactory;
+  }
+
+  export namespace ClearButton {
+    export type Props = InputClearButtonProps;
+    export type Factory = InputClearButtonFactory;
+  }
+
+  export namespace ClearSection {
+    export type Props = InputClearSectionProps;
+    export type Mode = ClearSectionMode;
+  }
+}

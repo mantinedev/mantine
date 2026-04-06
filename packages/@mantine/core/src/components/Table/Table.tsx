@@ -22,12 +22,18 @@ import {
   TableTh,
   TableThead,
   TableTr,
+  type TableCaptionProps,
+  type TableTbodyProps,
+  type TableTdProps,
+  type TableThProps,
+  type TableTrProps,
+  type TableTheadProps,
+  type TableTfootProps,
 } from './Table.components';
-import { TableProvider } from './Table.context';
+import { TableProvider, type TableContextValue } from './Table.context';
 import { TableDataRenderer } from './TableDataRenderer';
-import { TableScrollContainer } from './TableScrollContainer';
+import { TableScrollContainer, type TableScrollContainerProps } from './TableScrollContainer';
 import classes from './Table.module.css';
-
 export type TableVariant = 'default' | 'vertical';
 
 export type TableStylesNames =
@@ -249,3 +255,44 @@ Table.Tfoot = TableTfoot;
 Table.Caption = TableCaption;
 Table.ScrollContainer = TableScrollContainer;
 Table.DataRenderer = TableDataRenderer;
+
+export namespace Table {
+  export type Props = TableProps;
+  export type StylesNames = TableStylesNames;
+  export type CssVariables = TableCssVariables;
+  export type Factory = TableFactory;
+  export type Data = TableData;
+  export type ContextValue = TableContextValue;
+
+  export namespace Caption {
+    export type Props = TableCaptionProps;
+  }
+
+  export namespace Tbody {
+    export type Props = TableTbodyProps;
+  }
+
+  export namespace Td {
+    export type Props = TableTdProps;
+  }
+
+  export namespace Th {
+    export type Props = TableThProps;
+  }
+
+  export namespace Tr {
+    export type Props = TableTrProps;
+  }
+
+  export namespace Thead {
+    export type Props = TableTheadProps;
+  }
+
+  export namespace Tfoot {
+    export type Props = TableTfootProps;
+  }
+
+  export namespace ScrollContainer {
+    export type Props = TableScrollContainerProps;
+  }
+}

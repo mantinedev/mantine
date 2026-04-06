@@ -203,7 +203,7 @@ async function runSmokeTest() {
       throw new Error('get_item_doc returned invalid payload');
     }
 
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line no-console
     console.log('mcp-local-smoke:ok');
   } finally {
     mcpServer.kill('SIGTERM');
@@ -213,7 +213,7 @@ async function runSmokeTest() {
 }
 
 runSmokeTest().catch((error) => {
-  // eslint-disable-next-line no-console
+  // oxlint-disable-next-line no-console
   console.error('mcp-local-smoke:failed', error);
   process.exit(1);
 });

@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 
 import { Button, NumberInput, TextInput } from '@mantine/core';
 import { FORM_INDEX, useForm } from '@mantine/form';

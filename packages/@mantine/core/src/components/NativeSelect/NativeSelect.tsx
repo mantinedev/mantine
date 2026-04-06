@@ -24,6 +24,7 @@ export type NativeSelectFactory = Factory<{
 }>;
 
 const defaultProps = {
+  size: 'sm',
   rightSectionPointerEvents: 'none',
 } satisfies Partial<NativeSelectProps>;
 
@@ -58,3 +59,9 @@ export const NativeSelect = factory<NativeSelectFactory>((props) => {
 
 NativeSelect.classes = InputBase.classes;
 NativeSelect.displayName = '@mantine/core/NativeSelect';
+
+export namespace NativeSelect {
+  export type Props = NativeSelectProps;
+  export type Factory = NativeSelectFactory;
+  export type StylesNames = __InputStylesNames;
+}

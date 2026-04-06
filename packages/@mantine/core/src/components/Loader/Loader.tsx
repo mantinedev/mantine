@@ -126,3 +126,10 @@ Loader.defaultLoaders = defaultLoaders;
 Loader.classes = classes;
 Loader.varsResolver = varsResolver;
 Loader.displayName = '@mantine/core/Loader';
+
+export namespace Loader {
+  export type Props = LoaderProps;
+  export type StylesNames = LoaderStylesNames;
+  export type CssVariables = LoaderCssVariables;
+  export type Factory = LoaderFactory;
+}

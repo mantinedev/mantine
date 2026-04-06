@@ -13,10 +13,3 @@ export type {
   AspectRatioCssVariables,
   AspectRatioFactory,
 };
-
-export namespace AspectRatio {
-  export type Props = AspectRatioProps;
-  export type StylesNames = AspectRatioStylesNames;
-  export type CssVariables = AspectRatioCssVariables;
-  export type Factory = AspectRatioFactory;
-}
