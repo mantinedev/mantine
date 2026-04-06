@@ -363,7 +363,6 @@ describe('@mantine/core/Notifications', () => {
     expect(screen.getByText('Scroll stays disabled')).toBeInTheDocument();
   });
 
-<<<<<<< HEAD
   it('renders custom notification with renderNotification prop', () => {
     jest.useFakeTimers();
     const store = createNotificationsStore();
