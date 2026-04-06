@@ -12,10 +12,10 @@ export function GaScript() {
   return (
     <>
       <Script
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         src="https://www.googletagmanager.com/gtag/js?id=G-4Z4NNVLRH5"
       />
-      <Script id="ga" strategy="afterInteractive">
+      <Script id="ga" strategy="lazyOnload">
         {gaScript}
       </Script>
     </>

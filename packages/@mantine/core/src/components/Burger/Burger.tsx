@@ -111,3 +111,10 @@ export const Burger = factory<BurgerFactory>((_props) => {
 Burger.classes = classes;
 Burger.varsResolver = varsResolver;
 Burger.displayName = '@mantine/core/Burger';
+
+export namespace Burger {
+  export type Props = BurgerProps;
+  export type StylesNames = BurgerStylesNames;
+  export type CssVariables = BurgerCssVariables;
+  export type Factory = BurgerFactory;
+}

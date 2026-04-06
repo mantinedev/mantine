@@ -59,3 +59,9 @@ export const Center = polymorphicFactory<CenterFactory>((_props) => {
 
 Center.classes = classes;
 Center.displayName = '@mantine/core/Center';
+
+export namespace Center {
+  export type Props = CenterProps;
+  export type Factory = CenterFactory;
+  export type StylesNames = CenterStylesNames;
+}

@@ -1,15 +1,19 @@
 import { factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { PaginationIcon } from './Pagination.icons';
-import { PaginationControl } from './PaginationControl/PaginationControl';
-import { PaginationDots } from './PaginationDots/PaginationDots';
+import {
+  PaginationControl,
+  type PaginationControlProps,
+} from './PaginationControl/PaginationControl';
+import { PaginationDots, type PaginationDotsProps } from './PaginationDots/PaginationDots';
 import {
   PaginationFirst,
   PaginationLast,
   PaginationNext,
   PaginationPrevious,
+  type PaginationEdgeProps,
 } from './PaginationEdges/PaginationEdges';
-import { PaginationItems } from './PaginationItems/PaginationItems';
+import { PaginationItems, type PaginationItemsProps } from './PaginationItems/PaginationItems';
 import {
   PaginationRoot,
   PaginationRootCssVariables,
@@ -17,7 +21,6 @@ import {
   PaginationRootStylesNames,
 } from './PaginationRoot/PaginationRoot';
 import classes from './Pagination.module.css';
-
 export type PaginationStylesNames = PaginationRootStylesNames;
 export type PaginationCssVariables = PaginationRootCssVariables;
 
@@ -128,3 +131,30 @@ Pagination.Last = PaginationLast;
 Pagination.Next = PaginationNext;
 Pagination.Previous = PaginationPrevious;
 Pagination.Items = PaginationItems;
+
+export namespace Pagination {
+  export type Props = PaginationProps;
+  export type StylesNames = PaginationStylesNames;
+  export type CssVariables = PaginationCssVariables;
+  export type Factory = PaginationFactory;
+
+  export namespace Root {
+    export type Props = PaginationRootProps;
+  }
+
+  export namespace Control {
+    export type Props = PaginationControlProps;
+  }
+
+  export namespace Dots {
+    export type Props = PaginationDotsProps;
+  }
+
+  export namespace Edge {
+    export type Props = PaginationEdgeProps;
+  }
+
+  export namespace Items {
+    export type Props = PaginationItemsProps;
+  }
+}

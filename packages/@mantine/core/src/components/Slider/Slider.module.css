@@ -56,7 +56,7 @@
     background-color: var(--mantine-color-dark-4);
   }
 
-  :where([data-orientation='vertical']) & {
+  :where(.root[data-orientation='vertical']) & {
     top: auto;
     inset-inline-start: calc(100% + 8px);
   }
@@ -110,7 +110,7 @@
     background-color: var(--slider-color);
   }
 
-  :where([data-orientation='vertical']) & {
+  :where(.root[data-orientation='vertical']) & {
     left: 50%;
     top: auto;
     right: auto;
@@ -140,7 +140,7 @@
     cursor: not-allowed;
   }
 
-  :where([data-orientation='vertical']) & {
+  :where(.root[data-orientation='vertical']) & {
     flex-direction: column;
     width: calc(var(--slider-size) * 2);
     height: 100%;
@@ -172,7 +172,7 @@
     z-index: 0;
   }
 
-  :where([data-orientation='vertical']) & {
+  :where(.root[data-orientation='vertical']) & {
     width: var(--slider-size);
     height: 100%;
 
@@ -203,7 +203,7 @@
     background-color: var(--mantine-color-disabled-color);
   }
 
-  :where([data-orientation='vertical']) & {
+  :where(.root[data-orientation='vertical']) & {
     top: auto;
     bottom: var(--slider-bar-offset);
     inset-inline-start: 0;
@@ -220,7 +220,7 @@
   height: 0;
   pointer-events: none;
 
-  :where([data-orientation='vertical']) & {
+  :where(.root[data-orientation='vertical']) & {
     inset-inline-start: 0;
     top: auto;
     bottom: calc(var(--mark-offset) + var(--slider-size) / 2);
@@ -269,7 +269,7 @@
     color: var(--mantine-color-dark-2);
   }
 
-  :where([data-orientation='vertical']) & {
+  :where(.root[data-orientation='vertical']) & {
     transform: translate(
       calc(var(--slider-size) + var(--mantine-spacing-xs) / 2),
       calc(-50% - var(--slider-size) / 2)

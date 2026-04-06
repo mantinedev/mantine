@@ -697,7 +697,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
       return renderEvent(event, bgEventProps as any);
     }
 
-    return <Box {...bgEventProps} />;
+    const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+    return <Box key={bgEventKey} {...restBgEventProps} />;
   });
 
   const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => {
@@ -731,7 +732,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
       return renderEvent(event, bgEventProps as any);
     }
 
-    return <Box {...bgEventProps} />;
+    const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+    return <Box key={bgEventKey} {...restBgEventProps} />;
   });
 
   const content = (
@@ -876,3 +878,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
 DayView.displayName = '@mantine/schedule/DayView';
 DayView.classes = classes;
 DayView.varsResolver = varsResolver;
+
+export namespace DayView {
+  export type Props = DayViewProps;
+  export type Factory = DayViewFactory;
+  export type StylesNames = DayViewStylesNames;
+  export type CssVariables = DayViewCssVariables;
+}

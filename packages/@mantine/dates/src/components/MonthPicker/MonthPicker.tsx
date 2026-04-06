@@ -246,3 +246,9 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
 MonthPicker.classes = { ...Calendar.classes, ...classes };
 MonthPicker.varsResolver = varsResolver;
 MonthPicker.displayName = '@mantine/dates/MonthPicker';
+
+export namespace MonthPicker {
+  export type Props<Type extends DatePickerType = 'default'> = MonthPickerProps<Type>;
+  export type StylesNames = MonthPickerStylesNames;
+  export type Factory = MonthPickerFactory;
+}

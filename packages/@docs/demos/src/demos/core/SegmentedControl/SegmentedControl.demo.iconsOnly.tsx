@@ -30,7 +30,7 @@ function Demo() {
           label: (
             <>
               <CodeIcon {...iconProps} />
-              <VisuallyHidden>CodeIcon</VisuallyHidden>
+              <VisuallyHidden>Code</VisuallyHidden>
             </>
           ),
         },
@@ -72,7 +72,7 @@ function Demo() {
           label: (
             <>
               <CodeIcon {...iconProps} />
-              <VisuallyHidden>CodeIcon</VisuallyHidden>
+              <VisuallyHidden>Code</VisuallyHidden>
             </>
           ),
         },

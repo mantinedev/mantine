@@ -15,10 +15,3 @@ export type {
   IndicatorFactory,
   IndicatorPositionVariables,
 };
-
-export namespace Indicator {
-  export type Props = IndicatorProps;
-  export type StylesNames = IndicatorStylesNames;
-  export type CssVariables = IndicatorCssVariables;
-  export type Factory = IndicatorFactory;
-}

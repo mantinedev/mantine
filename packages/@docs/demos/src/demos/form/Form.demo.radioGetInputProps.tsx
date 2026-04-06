@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 
 import { Button, Group, Radio, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';

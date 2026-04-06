@@ -225,6 +225,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
 
   const rootProps = {
     ...getStyles('event'),
+    'data-event-id': event.id,
     size,
     title: event.title,
     mod: [

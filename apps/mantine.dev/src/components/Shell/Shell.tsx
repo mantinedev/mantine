@@ -52,7 +52,7 @@ export function Shell({
             </div>
           </Container>
         ) : (
-          children
+          <main>{children}</main>
         )}
       </div>
     </ShellProvider>

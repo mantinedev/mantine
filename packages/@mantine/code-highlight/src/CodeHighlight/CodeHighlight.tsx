@@ -19,9 +19,31 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { useHighlight } from '../CodeHighlightProvider/CodeHighlightProvider';
-import { CodeHighlightContextProvider } from './CodeHighlight.context';
-import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
+import {
+  useHighlight,
+  type CodeHighlightAdapter,
+} from '../CodeHighlightProvider/CodeHighlightProvider';
+import type {
+  CodeHighlightDefaultLanguage,
+  CodeHighlightTabsCode,
+  CodeHighlightTabsFactory,
+  CodeHighlightTabsProps,
+  CodeHighlightTabsStylesNames,
+} from '../CodeHighlightTabs/CodeHighlightTabs';
+import type {
+  InlineCodeHighlightCssVariables,
+  InlineCodeHighlightFactory,
+  InlineCodeHighlightProps,
+  InlineCodeHighlightStylesNames,
+} from './InlineCodeHighlight';
+import {
+  CodeHighlightContextProvider,
+  type CodeHighlightContextValue,
+} from './CodeHighlight.context';
+import {
+  CodeHighlightControl,
+  type CodeHighlightControlProps,
+} from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
 import classes from '../CodeHighlight.module.css';
@@ -283,3 +305,31 @@ CodeHighlight.displayName = '@mantine/code-highlight/CodeHighlight';
 CodeHighlight.classes = classes;
 CodeHighlight.varsResolver = varsResolver;
 CodeHighlight.Control = CodeHighlightControl;
+
+export namespace CodeHighlight {
+  export type Props = CodeHighlightProps;
+  export type StylesNames = CodeHighlightStylesNames;
+  export type CssVariables = CodeHighlightCssVariables;
+  export type Factory = CodeHighlightFactory;
+  export type ContextValue = CodeHighlightContextValue;
+  export type Adapter = CodeHighlightAdapter;
+
+  export namespace Tabs {
+    export type Props = CodeHighlightTabsProps;
+    export type StylesNames = CodeHighlightTabsStylesNames;
+    export type Code = CodeHighlightTabsCode;
+    export type Factory = CodeHighlightTabsFactory;
+    export type DefaultLanguage = CodeHighlightDefaultLanguage;
+  }
+
+  export namespace Inline {
+    export type Props = InlineCodeHighlightProps;
+    export type StylesNames = InlineCodeHighlightStylesNames;
+    export type CssVariables = InlineCodeHighlightCssVariables;
+    export type Factory = InlineCodeHighlightFactory;
+  }
+
+  export namespace Control {
+    export type Props = CodeHighlightControlProps;
+  }
+}

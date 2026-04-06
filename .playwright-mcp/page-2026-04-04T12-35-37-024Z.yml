@@ -1,0 +1,775 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - paragraph [ref=e4]: Build faster with Premium Chakra UI Components 💎
+    - link "Learn more" [ref=e5] [cursor=pointer]:
+      - /url: https://pro.chakra-ui.com?utm_source=chakra-ui.com
+  - link "Skip to Content" [ref=e6] [cursor=pointer]:
+    - /url: "#chakra-skip-nav"
+  - banner [ref=e7]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic "primary navigation" [ref=e11]:
+          - link "Chakra UI, Back to homepage" [ref=e12] [cursor=pointer]:
+            - /url: /
+            - img [ref=e13]
+          - link "Docs" [ref=e22] [cursor=pointer]:
+            - /url: /docs/get-started/installation
+          - link "Showcase" [ref=e23] [cursor=pointer]:
+            - /url: /showcase
+          - link "Blog" [ref=e24] [cursor=pointer]:
+            - /url: /blog
+          - link "Guides" [ref=e25] [cursor=pointer]:
+            - /url: /guides
+        - generic [ref=e27]:
+          - link "Sponsor Chakra UI on Open Collective" [ref=e28] [cursor=pointer]:
+            - /url: https://opencollective.com/chakra-ui
+            - img [ref=e29]
+            - text: Sponsor
+          - button "3.34.0" [ref=e31] [cursor=pointer]:
+            - text: 3.34.0
+            - img [ref=e32]
+          - button "Search... ⌘K" [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+            - generic [ref=e38]: Search...
+            - generic [ref=e39]: ⌘K
+          - link "github link" [ref=e41] [cursor=pointer]:
+            - /url: https://github.com/chakra-ui/chakra-ui
+            - img [ref=e42]
+      - navigation "secondary navigation" [ref=e44]:
+        - link "Get Started" [ref=e45] [cursor=pointer]:
+          - /url: /docs/get-started/installation
+        - link "Components" [ref=e46] [cursor=pointer]:
+          - /url: /docs/components/concepts/overview
+        - link "Charts" [ref=e47] [cursor=pointer]:
+          - /url: /docs/charts/installation
+        - link "Styling" [ref=e48] [cursor=pointer]:
+          - /url: /docs/styling/overview
+        - link "Theming" [ref=e49] [cursor=pointer]:
+          - /url: /docs/theming/overview
+  - main [ref=e50]:
+    - generic [ref=e51]:
+      - complementary [ref=e52]:
+        - generic [ref=e53]:
+          - generic [ref=e54]:
+            - generic [ref=e55]: Concepts
+            - generic [ref=e56]:
+              - link "Overview" [ref=e57] [cursor=pointer]:
+                - /url: /docs/components/concepts/overview
+              - link "Composition" [ref=e58] [cursor=pointer]:
+                - /url: /docs/components/concepts/composition
+              - link "Animation" [ref=e59] [cursor=pointer]:
+                - /url: /docs/components/concepts/animation
+              - link "Color Mode" [ref=e60] [cursor=pointer]:
+                - /url: /docs/components/concepts/color-mode
+              - link "Server Component" [ref=e61] [cursor=pointer]:
+                - /url: /docs/components/concepts/server-components
+              - link "Testing" [ref=e62] [cursor=pointer]:
+                - /url: /docs/components/concepts/testing
+          - generic [ref=e63]:
+            - generic [ref=e64]: Layout
+            - generic [ref=e65]:
+              - link "Aspect Ratio" [ref=e66] [cursor=pointer]:
+                - /url: /docs/components/aspect-ratio
+              - link "Bleed" [ref=e67] [cursor=pointer]:
+                - /url: /docs/components/bleed
+              - link "Box" [ref=e68] [cursor=pointer]:
+                - /url: /docs/components/box
+              - link "Center (Absolute)" [ref=e69] [cursor=pointer]:
+                - /url: /docs/components/absolute-center
+              - link "Center" [ref=e70] [cursor=pointer]:
+                - /url: /docs/components/center
+              - link "Container" [ref=e71] [cursor=pointer]:
+                - /url: /docs/components/container
+              - link "Flex" [ref=e72] [cursor=pointer]:
+                - /url: /docs/components/flex
+              - link "Float" [ref=e73] [cursor=pointer]:
+                - /url: /docs/components/float
+              - link "Grid" [ref=e74] [cursor=pointer]:
+                - /url: /docs/components/grid
+              - link "Group" [ref=e75] [cursor=pointer]:
+                - /url: /docs/components/group
+              - link "Scroll Area" [ref=e76] [cursor=pointer]:
+                - /url: /docs/components/scroll-area
+              - link "Separator" [ref=e77] [cursor=pointer]:
+                - /url: /docs/components/separator
+              - link "SimpleGrid" [ref=e78] [cursor=pointer]:
+                - /url: /docs/components/simple-grid
+              - link "Splitter" [ref=e79] [cursor=pointer]:
+                - /url: /docs/components/splitter
+              - link "Stack" [ref=e80] [cursor=pointer]:
+                - /url: /docs/components/stack
+              - link "Wrap" [ref=e81] [cursor=pointer]:
+                - /url: /docs/components/wrap
+          - generic [ref=e82]:
+            - generic [ref=e83]: Typography
+            - generic [ref=e84]:
+              - link "Blockquote" [ref=e85] [cursor=pointer]:
+                - /url: /docs/components/blockquote
+              - link "Code" [ref=e86] [cursor=pointer]:
+                - /url: /docs/components/code
+              - link "Code Block" [ref=e87] [cursor=pointer]:
+                - /url: /docs/components/code-block
+              - link "Em" [ref=e88] [cursor=pointer]:
+                - /url: /docs/components/em
+              - link "Heading" [ref=e89] [cursor=pointer]:
+                - /url: /docs/components/heading
+              - link "Highlight" [ref=e90] [cursor=pointer]:
+                - /url: /docs/components/highlight
+              - link "Kbd" [ref=e91] [cursor=pointer]:
+                - /url: /docs/components/kbd
+              - link "Link" [ref=e92] [cursor=pointer]:
+                - /url: /docs/components/link
+              - link "Link Overlay" [ref=e93] [cursor=pointer]:
+                - /url: /docs/components/link-overlay
+              - link "List" [ref=e94] [cursor=pointer]:
+                - /url: /docs/components/list
+              - link "Mark" [ref=e95] [cursor=pointer]:
+                - /url: /docs/components/mark
+              - link "Prose" [ref=e96] [cursor=pointer]:
+                - /url: /docs/components/prose
+              - link "Rich Text Editor" [ref=e97] [cursor=pointer]:
+                - /url: /docs/components/rich-text-editor
+              - link "Text" [ref=e98] [cursor=pointer]:
+                - /url: /docs/components/text
+          - generic [ref=e99]:
+            - generic [ref=e100]: Buttons
+            - generic [ref=e101]:
+              - link "Button" [ref=e102] [cursor=pointer]:
+                - /url: /docs/components/button
+              - link "Close Button" [ref=e103] [cursor=pointer]:
+                - /url: /docs/components/close-button
+              - link "Icon Button" [ref=e104] [cursor=pointer]:
+                - /url: /docs/components/icon-button
+              - link "Download Trigger" [ref=e105] [cursor=pointer]:
+                - /url: /docs/components/download-trigger
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - text: Date and Time
+              - generic [ref=e108]: new
+            - generic [ref=e109]:
+              - link "Date Picker" [ref=e110] [cursor=pointer]:
+                - /url: /docs/components/date-picker
+              - link "Calendar" [ref=e111] [cursor=pointer]:
+                - /url: /docs/components/calendar
+          - generic [ref=e112]:
+            - generic [ref=e113]: Forms
+            - generic [ref=e114]:
+              - link "Checkbox" [ref=e115] [cursor=pointer]:
+                - /url: /docs/components/checkbox
+              - link "Checkbox Card" [ref=e116] [cursor=pointer]:
+                - /url: /docs/components/checkbox-card
+              - link "Color Picker" [ref=e117] [cursor=pointer]:
+                - /url: /docs/components/color-picker
+              - link "Color Swatch" [ref=e118] [cursor=pointer]:
+                - /url: /docs/components/color-swatch
+              - link "Editable" [ref=e119] [cursor=pointer]:
+                - /url: /docs/components/editable
+              - link "Field" [ref=e120] [cursor=pointer]:
+                - /url: /docs/components/field
+              - link "Fieldset" [ref=e121] [cursor=pointer]:
+                - /url: /docs/components/fieldset
+              - link "File Upload" [ref=e122] [cursor=pointer]:
+                - /url: /docs/components/file-upload
+              - link "Input" [ref=e123] [cursor=pointer]:
+                - /url: /docs/components/input
+              - link "Number Input" [ref=e124] [cursor=pointer]:
+                - /url: /docs/components/number-input
+              - link "Password Input" [ref=e125] [cursor=pointer]:
+                - /url: /docs/components/password-input
+              - link "Pin Input" [ref=e126] [cursor=pointer]:
+                - /url: /docs/components/pin-input
+              - link "Radio Card" [ref=e127] [cursor=pointer]:
+                - /url: /docs/components/radio-card
+              - link "Radio" [ref=e128] [cursor=pointer]:
+                - /url: /docs/components/radio
+              - link "Rating" [ref=e129] [cursor=pointer]:
+                - /url: /docs/components/rating
+              - link "Segmented Control" [ref=e130] [cursor=pointer]:
+                - /url: /docs/components/segmented-control
+              - link "Select (Native)" [ref=e131] [cursor=pointer]:
+                - /url: /docs/components/native-select
+              - link "Switch" [ref=e132] [cursor=pointer]:
+                - /url: /docs/components/switch
+              - link "Slider" [ref=e133] [cursor=pointer]:
+                - /url: /docs/components/slider
+              - link "Textarea" [ref=e134] [cursor=pointer]:
+                - /url: /docs/components/textarea
+              - link "Tags Input" [ref=e135] [cursor=pointer]:
+                - /url: /docs/components/tags-input
+          - generic [ref=e136]:
+            - generic [ref=e137]: Collections
+            - generic [ref=e138]:
+              - link "Combobox" [ref=e139] [cursor=pointer]:
+                - /url: /docs/components/combobox
+              - link "Listbox" [ref=e140] [cursor=pointer]:
+                - /url: /docs/components/listbox
+              - link "Select" [ref=e141] [cursor=pointer]:
+                - /url: /docs/components/select
+              - link "Tree View" [ref=e142] [cursor=pointer]:
+                - /url: /docs/components/tree-view
+          - generic [ref=e143]:
+            - generic [ref=e144]: Overlays
+            - generic [ref=e145]:
+              - link "Action Bar" [ref=e146] [cursor=pointer]:
+                - /url: /docs/components/action-bar
+              - link "Dialog" [ref=e147] [cursor=pointer]:
+                - /url: /docs/components/dialog
+              - link "Drawer" [ref=e148] [cursor=pointer]:
+                - /url: /docs/components/drawer
+              - link "Hover Card" [ref=e149] [cursor=pointer]:
+                - /url: /docs/components/hover-card
+              - link "Menu" [ref=e150] [cursor=pointer]:
+                - /url: /docs/components/menu
+              - link "Overlay Manager" [ref=e151] [cursor=pointer]:
+                - /url: /docs/components/overlay-manager
+              - link "Popover" [ref=e152] [cursor=pointer]:
+                - /url: /docs/components/popover
+              - link "Toggle Tip" [ref=e153] [cursor=pointer]:
+                - /url: /docs/components/toggle-tip
+              - link "Tooltip" [ref=e154] [cursor=pointer]:
+                - /url: /docs/components/tooltip
+          - generic [ref=e155]:
+            - generic [ref=e156]: Disclosure
+            - generic [ref=e157]:
+              - link "Accordion" [ref=e158] [cursor=pointer]:
+                - /url: /docs/components/accordion
+              - link "Breadcrumb" [ref=e159] [cursor=pointer]:
+                - /url: /docs/components/breadcrumb
+              - link "Carousel" [ref=e160] [cursor=pointer]:
+                - /url: /docs/components/carousel
+              - link "Collapsible" [ref=e161] [cursor=pointer]:
+                - /url: /docs/components/collapsible
+              - link "Pagination" [ref=e162] [cursor=pointer]:
+                - /url: /docs/components/pagination
+              - link "Steps" [ref=e163] [cursor=pointer]:
+                - /url: /docs/components/steps
+              - link "Tabs" [ref=e164] [cursor=pointer]:
+                - /url: /docs/components/tabs
+          - generic [ref=e165]:
+            - generic [ref=e166]: Feedback
+            - generic [ref=e167]:
+              - link "Alert" [ref=e168] [cursor=pointer]:
+                - /url: /docs/components/alert
+              - link "Empty State" [ref=e169] [cursor=pointer]:
+                - /url: /docs/components/empty-state
+              - link "Progress Circle" [ref=e170] [cursor=pointer]:
+                - /url: /docs/components/progress-circle
+              - link "Progress" [ref=e171] [cursor=pointer]:
+                - /url: /docs/components/progress
+              - link "Skeleton" [ref=e172] [cursor=pointer]:
+                - /url: /docs/components/skeleton
+              - link "Spinner" [ref=e173] [cursor=pointer]:
+                - /url: /docs/components/spinner
+              - link "Status" [ref=e174] [cursor=pointer]:
+                - /url: /docs/components/status
+              - link "Toast" [ref=e175] [cursor=pointer]:
+                - /url: /docs/components/toast
+          - generic [ref=e176]:
+            - generic [ref=e177]: Data Display
+            - generic [ref=e178]:
+              - link "Avatar" [ref=e179] [cursor=pointer]:
+                - /url: /docs/components/avatar
+              - link "Badge" [ref=e180] [cursor=pointer]:
+                - /url: /docs/components/badge
+              - link "Card" [ref=e181] [cursor=pointer]:
+                - /url: /docs/components/card
+              - link "Clipboard" [ref=e182] [cursor=pointer]:
+                - /url: /docs/components/clipboard
+              - link "Image" [ref=e183] [cursor=pointer]:
+                - /url: /docs/components/image
+              - link "Data List" [ref=e184] [cursor=pointer]:
+                - /url: /docs/components/data-list
+              - link "Icon" [ref=e185] [cursor=pointer]:
+                - /url: /docs/components/icon
+              - link "Marquee" [ref=e186] [cursor=pointer]:
+                - /url: /docs/components/marquee
+              - link "QR Code" [ref=e187] [cursor=pointer]:
+                - /url: /docs/components/qr-code
+              - link "Stat" [ref=e188] [cursor=pointer]:
+                - /url: /docs/components/stat
+              - link "Table" [ref=e189] [cursor=pointer]:
+                - /url: /docs/components/table
+              - link "Tag" [ref=e190] [cursor=pointer]:
+                - /url: /docs/components/tag
+              - link "Timeline" [ref=e191] [cursor=pointer]:
+                - /url: /docs/components/timeline
+          - generic [ref=e192]:
+            - generic [ref=e193]: Internationalization
+            - generic [ref=e194]:
+              - link "LocaleProvider" [ref=e195] [cursor=pointer]:
+                - /url: /docs/components/locale-provider
+              - link "FormatNumber" [ref=e196] [cursor=pointer]:
+                - /url: /docs/components/format-number
+              - link "FormatByte" [ref=e197] [cursor=pointer]:
+                - /url: /docs/components/format-byte
+          - generic [ref=e198]:
+            - generic [ref=e199]: Utilities
+            - generic [ref=e200]:
+              - link "Checkmark" [ref=e201] [cursor=pointer]:
+                - /url: /docs/components/checkmark
+              - link "ClientOnly" [ref=e202] [cursor=pointer]:
+                - /url: /docs/components/client-only
+              - link "EnvironmentProvider" [ref=e203] [cursor=pointer]:
+                - /url: /docs/components/environment-provider
+              - link "For" [ref=e204] [cursor=pointer]:
+                - /url: /docs/components/for
+              - link "Presence" [ref=e205] [cursor=pointer]:
+                - /url: /docs/components/presence
+              - link "Portal" [ref=e206] [cursor=pointer]:
+                - /url: /docs/components/portal
+              - link "Radiomark" [ref=e207] [cursor=pointer]:
+                - /url: /docs/components/radiomark
+              - link "Show" [ref=e208] [cursor=pointer]:
+                - /url: /docs/components/show
+              - link "Skip Nav" [ref=e209] [cursor=pointer]:
+                - /url: /docs/components/skip-nav
+              - link "Visually Hidden" [ref=e210] [cursor=pointer]:
+                - /url: /docs/components/visually-hidden
+              - link "Theme" [ref=e211] [cursor=pointer]:
+                - /url: /docs/components/theme
+      - generic [ref=e212]:
+        - generic [ref=e213]:
+          - heading "Action Bar" [level=1] [ref=e214]
+          - paragraph [ref=e215]: Used to display a bottom action bar with a set of actions
+          - generic [ref=e216]:
+            - link "Source" [ref=e217] [cursor=pointer]:
+              - /url: https://github.com/chakra-ui/chakra-ui/tree/main/packages/react/src/components/action-bar
+              - img [ref=e218]
+              - text: Source
+              - img [ref=e221]
+            - link "Storybook" [ref=e224] [cursor=pointer]:
+              - /url: https://storybook.chakra-ui.com/?path=/story/components-action-bar--basic
+              - img [ref=e225]
+              - text: Storybook
+              - img [ref=e228]
+            - link "Recipe" [ref=e231] [cursor=pointer]:
+              - /url: https://github.com/chakra-ui/chakra-ui/tree/main/packages/react/src/theme/recipes/action-bar.ts
+              - img [ref=e232]
+              - text: Recipe
+              - img [ref=e235]
+          - generic [ref=e238]:
+            - generic [ref=e239]: AI Tip
+            - generic [ref=e240]:
+              - text: Want to skip the docs? Use the
+              - link "MCP Server" [ref=e241] [cursor=pointer]:
+                - /url: /docs/get-started/ai/mcp-server
+          - generic [ref=e243]:
+            - button "Copy Page" [ref=e244] [cursor=pointer]:
+              - img [ref=e245]
+              - text: Copy Page
+            - separator [ref=e250]
+            - button "More Markdown options" [ref=e251] [cursor=pointer]:
+              - img [ref=e252]
+        - generic [ref=e254]:
+          - generic [ref=e255]:
+            - tablist [ref=e256]:
+              - tab "Preview" [selected] [ref=e257] [cursor=pointer]
+              - tab "Code" [ref=e258] [cursor=pointer]
+              - button "Open in Stackblitz" [ref=e260] [cursor=pointer]:
+                - img [ref=e261]
+                - text: Stackblitz
+            - tabpanel "Preview" [ref=e264]:
+              - generic [ref=e265]:
+                - checkbox "Show Action bar" [ref=e266]
+                - img [ref=e268]
+                - generic [ref=e269]: Show Action bar
+          - heading "Usage" [level=2] [ref=e270]:
+            - link "Usage" [ref=e271] [cursor=pointer]:
+              - /url: "#usage"
+          - paragraph [ref=e272]: The action bar is designed to be controlled by table or checkbox selections. It provides a set of actions that can be performed on the selected items.
+          - generic [ref=e273]:
+            - code [ref=e275]:
+              - generic [ref=e276]: "import { ActionBar } from \"@chakra-ui/react\""
+            - button [ref=e278] [cursor=pointer]:
+              - img [ref=e279]
+          - generic [ref=e282]:
+            - code [ref=e284]:
+              - generic [ref=e285]: <ActionBar.Root>
+              - generic [ref=e286]: <ActionBar.Positioner>
+              - generic [ref=e287]: <ActionBar.Content>
+              - generic [ref=e288]: <ActionBar.CloseTrigger />
+              - generic [ref=e289]: <ActionBar.SelectionTrigger />
+              - generic [ref=e290]: <ActionBar.Separator />
+              - generic [ref=e291]: </ActionBar.Content>
+              - generic [ref=e292]: </ActionBar.Positioner>
+              - generic [ref=e293]: </ActionBar.Root>
+            - button [ref=e295] [cursor=pointer]:
+              - img [ref=e296]
+          - heading "Examples" [level=2] [ref=e299]:
+            - link "Examples" [ref=e300] [cursor=pointer]:
+              - /url: "#examples"
+          - heading "Close Trigger" [level=3] [ref=e301]:
+            - link "Close Trigger" [ref=e302] [cursor=pointer]:
+              - /url: "#close-trigger"
+          - paragraph [ref=e303]:
+            - text: Render the
+            - code [ref=e304]: ActionBar.CloseTrigger
+            - text: to close the action bar, and pass the
+            - code [ref=e305]: onOpenChange
+            - text: handler to control the visibility of the action bar.
+          - figure [ref=e306]:
+            - paragraph [ref=e307]:
+              - text: The
+              - code [ref=e308]: open
+              - text: and
+              - code [ref=e309]: onOpenChange
+              - text: props control the visibility of the action bar.
+          - generic [ref=e310]:
+            - tablist [ref=e311]:
+              - tab "Preview" [selected] [ref=e312] [cursor=pointer]
+              - tab "Code" [ref=e313] [cursor=pointer]
+              - button "Open in Stackblitz" [ref=e315] [cursor=pointer]:
+                - img [ref=e316]
+                - text: Stackblitz
+            - tabpanel "Preview" [ref=e319]:
+              - generic [ref=e320]:
+                - checkbox "Show Action bar" [ref=e321]
+                - img [ref=e323]
+                - generic [ref=e324]: Show Action bar
+          - heading "Within Dialog" [level=3] [ref=e325]:
+            - link "Within Dialog" [ref=e326] [cursor=pointer]:
+              - /url: "#within-dialog"
+          - paragraph [ref=e327]:
+            - text: Here's an example of composing the
+            - code [ref=e328]: ActionBar
+            - text: and the
+            - code [ref=e329]: Dialog
+            - text: to perform a delete action on a set of selected items.
+          - figure [ref=e330]:
+            - paragraph [ref=e331]:
+              - text: Press the
+              - code [ref=e332]: Delete projects
+              - text: button to open the dialog.
+          - generic [ref=e333]:
+            - tablist [ref=e334]:
+              - tab "Preview" [selected] [ref=e335] [cursor=pointer]
+              - tab "Code" [ref=e336] [cursor=pointer]
+              - button "Open in Stackblitz" [ref=e338] [cursor=pointer]:
+                - img [ref=e339]
+                - text: Stackblitz
+            - tabpanel "Preview" [ref=e342]:
+              - generic [ref=e343]:
+                - checkbox "Check to select projects" [ref=e344]
+                - img [ref=e346]
+                - generic [ref=e347]: Check to select projects
+          - heading "Placement" [level=3] [ref=e348]:
+            - link "Placement" [ref=e349] [cursor=pointer]:
+              - /url: "#placement"
+          - paragraph [ref=e350]:
+            - text: Use the
+            - code [ref=e351]: placement
+            - text: "prop to control the position of the action bar. The action bar supports three placement options:"
+            - code [ref=e352]: bottom
+            - text: (default),
+            - code [ref=e353]: bottom-start
+            - text: ", and"
+            - code [ref=e354]: bottom-end
+            - text: .
+          - generic [ref=e355]:
+            - tablist [ref=e356]:
+              - tab "Preview" [selected] [ref=e357] [cursor=pointer]
+              - tab "Code" [ref=e358] [cursor=pointer]
+              - button "Open in Stackblitz" [ref=e360] [cursor=pointer]:
+                - img [ref=e361]
+                - text: Stackblitz
+            - tabpanel "Preview" [ref=e364]:
+              - generic [ref=e365]:
+                - generic [ref=e366]:
+                  - paragraph [ref=e367]: "Placement:"
+                  - radiogroup [ref=e368]:
+                    - generic [ref=e369]:
+                      - generic [ref=e370]: Bottom Start
+                      - radio "Bottom Start" [ref=e371]
+                    - generic [ref=e372]:
+                      - generic [ref=e373]: Bottom
+                      - radio "Bottom" [checked] [ref=e374]
+                    - generic [ref=e375]:
+                      - generic [ref=e376]: Bottom End
+                      - radio "Bottom End" [ref=e377]
+                - button "Show Action Bar" [ref=e378] [cursor=pointer]
+          - heading "Props" [level=2] [ref=e379]:
+            - link "Props" [ref=e380] [cursor=pointer]:
+              - /url: "#props"
+          - heading "Root" [level=3] [ref=e381]:
+            - link "Root" [ref=e382] [cursor=pointer]:
+              - /url: "#root"
+          - table [ref=e384]:
+            - rowgroup [ref=e385]:
+              - row "Prop Default Type" [ref=e386]:
+                - columnheader "Prop" [ref=e387]
+                - columnheader "Default" [ref=e388]
+                - columnheader "Type" [ref=e389]
+            - rowgroup [ref=e390]:
+              - row "autoFocus true boolean Whether to automatically set focus on the first focusable content within the popover when opened." [ref=e391]:
+                - cell "autoFocus" [ref=e392]:
+                  - code [ref=e393]: autoFocus
+                - cell "true" [ref=e394]:
+                  - code [ref=e395]: "true"
+                - cell "boolean Whether to automatically set focus on the first focusable content within the popover when opened." [ref=e396]:
+                  - generic [ref=e397]:
+                    - code [ref=e398]: boolean
+                    - paragraph [ref=e399]: Whether to automatically set focus on the first focusable content within the popover when opened.
+              - row "closeOnEscape true boolean Whether to close the popover when the escape key is pressed." [ref=e400]:
+                - cell "closeOnEscape" [ref=e401]:
+                  - code [ref=e402]: closeOnEscape
+                - cell "true" [ref=e403]:
+                  - code [ref=e404]: "true"
+                - cell "boolean Whether to close the popover when the escape key is pressed." [ref=e405]:
+                  - generic [ref=e406]:
+                    - code [ref=e407]: boolean
+                    - paragraph [ref=e408]: Whether to close the popover when the escape key is pressed.
+              - row "closeOnInteractOutside true boolean Whether to close the popover when the user clicks outside of the popover." [ref=e409]:
+                - cell "closeOnInteractOutside" [ref=e410]:
+                  - code [ref=e411]: closeOnInteractOutside
+                - cell "true" [ref=e412]:
+                  - code [ref=e413]: "true"
+                - cell "boolean Whether to close the popover when the user clicks outside of the popover." [ref=e414]:
+                  - generic [ref=e415]:
+                    - code [ref=e416]: boolean
+                    - paragraph [ref=e417]: Whether to close the popover when the user clicks outside of the popover.
+              - row "lazyMount false boolean Whether to enable lazy mounting" [ref=e418]:
+                - cell "lazyMount" [ref=e419]:
+                  - code [ref=e420]: lazyMount
+                - cell "false" [ref=e421]:
+                  - code [ref=e422]: "false"
+                - cell "boolean Whether to enable lazy mounting" [ref=e423]:
+                  - generic [ref=e424]:
+                    - code [ref=e425]: boolean
+                    - paragraph [ref=e426]: Whether to enable lazy mounting
+              - 'row "modal false boolean Whether the popover should be modal. When set to `true`: - interaction with outside elements will be disabled - only popover content will be visible to screen readers - scrolling is blocked - focus is trapped within the popover" [ref=e427]':
+                - cell "modal" [ref=e428]:
+                  - code [ref=e429]: modal
+                - cell "false" [ref=e430]:
+                  - code [ref=e431]: "false"
+                - 'cell "boolean Whether the popover should be modal. When set to `true`: - interaction with outside elements will be disabled - only popover content will be visible to screen readers - scrolling is blocked - focus is trapped within the popover" [ref=e432]':
+                  - generic [ref=e433]:
+                    - code [ref=e434]: boolean
+                    - paragraph [ref=e435]: "Whether the popover should be modal. When set to `true`: - interaction with outside elements will be disabled - only popover content will be visible to screen readers - scrolling is blocked - focus is trapped within the popover"
+              - row "portalled true boolean Whether the popover is portalled. This will proxy the tabbing behavior regardless of the DOM position of the popover content." [ref=e436]:
+                - cell "portalled" [ref=e437]:
+                  - code [ref=e438]: portalled
+                - cell "true" [ref=e439]:
+                  - code [ref=e440]: "true"
+                - cell "boolean Whether the popover is portalled. This will proxy the tabbing behavior regardless of the DOM position of the popover content." [ref=e441]:
+                  - generic [ref=e442]:
+                    - code [ref=e443]: boolean
+                    - paragraph [ref=e444]: Whether the popover is portalled. This will proxy the tabbing behavior regardless of the DOM position of the popover content.
+              - row "skipAnimationOnMount false boolean Whether to allow the initial presence animation." [ref=e445]:
+                - cell "skipAnimationOnMount" [ref=e446]:
+                  - code [ref=e447]: skipAnimationOnMount
+                - cell "false" [ref=e448]:
+                  - code [ref=e449]: "false"
+                - cell "boolean Whether to allow the initial presence animation." [ref=e450]:
+                  - generic [ref=e451]:
+                    - code [ref=e452]: boolean
+                    - paragraph [ref=e453]: Whether to allow the initial presence animation.
+              - row "unmountOnExit false boolean Whether to unmount on exit." [ref=e454]:
+                - cell "unmountOnExit" [ref=e455]:
+                  - code [ref=e456]: unmountOnExit
+                - cell "false" [ref=e457]:
+                  - code [ref=e458]: "false"
+                - cell "boolean Whether to unmount on exit." [ref=e459]:
+                  - generic [ref=e460]:
+                    - code [ref=e461]: boolean
+                    - paragraph [ref=e462]: Whether to unmount on exit.
+              - row "size md 'xs' | 'sm' | 'md' | 'lg' The size of the component" [ref=e463]:
+                - cell "size" [ref=e464]:
+                  - code [ref=e465]: size
+                - cell "md" [ref=e466]:
+                  - code [ref=e467]: md
+                - cell "'xs' | 'sm' | 'md' | 'lg' The size of the component" [ref=e468]:
+                  - generic [ref=e469]:
+                    - code [ref=e470]: "'xs' | 'sm' | 'md' | 'lg'"
+                    - paragraph [ref=e471]: The size of the component
+              - row "as React.ElementType The underlying element to render." [ref=e472]:
+                - cell "as" [ref=e473]:
+                  - code [ref=e474]: as
+                - cell [ref=e475]:
+                  - img [ref=e476]
+                - cell "React.ElementType The underlying element to render." [ref=e477]:
+                  - generic [ref=e478]:
+                    - code [ref=e479]: React.ElementType
+                    - paragraph [ref=e480]: The underlying element to render.
+              - row "asChild boolean Use the provided child element as the default rendered element, combining their props and behavior. For more details, read our Composition guide." [ref=e481]:
+                - cell "asChild" [ref=e482]:
+                  - code [ref=e483]: asChild
+                - cell [ref=e484]:
+                  - img [ref=e485]
+                - cell "boolean Use the provided child element as the default rendered element, combining their props and behavior. For more details, read our Composition guide." [ref=e486]:
+                  - generic [ref=e487]:
+                    - code [ref=e488]: boolean
+                    - paragraph [ref=e489]: Use the provided child element as the default rendered element, combining their props and behavior.
+                    - generic [ref=e490]:
+                      - text: For more details, read our
+                      - link "Composition" [ref=e491] [cursor=pointer]:
+                        - /url: /docs/components/concepts/composition
+                      - text: guide.
+              - row "unstyled boolean Whether to remove the component's style." [ref=e492]:
+                - cell "unstyled" [ref=e493]:
+                  - code [ref=e494]: unstyled
+                - cell [ref=e495]:
+                  - img [ref=e496]
+                - cell "boolean Whether to remove the component's style." [ref=e497]:
+                  - generic [ref=e498]:
+                    - code [ref=e499]: boolean
+                    - paragraph [ref=e500]: Whether to remove the component's style.
+              - row "defaultOpen boolean The initial open state of the popover when rendered. Use when you don't need to control the open state of the popover." [ref=e501]:
+                - cell "defaultOpen" [ref=e502]:
+                  - code [ref=e503]: defaultOpen
+                - cell [ref=e504]:
+                  - img [ref=e505]
+                - cell "boolean The initial open state of the popover when rendered. Use when you don't need to control the open state of the popover." [ref=e506]:
+                  - generic [ref=e507]:
+                    - code [ref=e508]: boolean
+                    - paragraph [ref=e509]: The initial open state of the popover when rendered. Use when you don't need to control the open state of the popover.
+              - row "id string The unique identifier of the machine." [ref=e510]:
+                - cell "id" [ref=e511]:
+                  - code [ref=e512]: id
+                - cell [ref=e513]:
+                  - img [ref=e514]
+                - cell "string The unique identifier of the machine." [ref=e515]:
+                  - generic [ref=e516]:
+                    - code [ref=e517]: string
+                    - paragraph [ref=e518]: The unique identifier of the machine.
+              - 'row "ids Partial<{ anchor: string trigger: string content: string title: string description: string closeTrigger: string positioner: string arrow: string }> The ids of the elements in the popover. Useful for composition." [ref=e519]':
+                - cell "ids" [ref=e520]:
+                  - code [ref=e521]: ids
+                - cell [ref=e522]:
+                  - img [ref=e523]
+                - 'cell "Partial<{ anchor: string trigger: string content: string title: string description: string closeTrigger: string positioner: string arrow: string }> The ids of the elements in the popover. Useful for composition." [ref=e524]':
+                  - generic [ref=e525]:
+                    - code [ref=e526]: "Partial<{ anchor: string trigger: string content: string title: string description: string closeTrigger: string positioner: string arrow: string }>"
+                    - paragraph [ref=e527]: The ids of the elements in the popover. Useful for composition.
+              - row "immediate boolean Whether to synchronize the present change immediately or defer it to the next frame" [ref=e528]:
+                - cell "immediate" [ref=e529]:
+                  - code [ref=e530]: immediate
+                - cell [ref=e531]:
+                  - img [ref=e532]
+                - cell "boolean Whether to synchronize the present change immediately or defer it to the next frame" [ref=e533]:
+                  - generic [ref=e534]:
+                    - code [ref=e535]: boolean
+                    - paragraph [ref=e536]: Whether to synchronize the present change immediately or defer it to the next frame
+              - row "initialFocusEl () => HTMLElement | null The element to focus on when the popover is opened." [ref=e537]:
+                - cell "initialFocusEl" [ref=e538]:
+                  - code [ref=e539]: initialFocusEl
+                - cell [ref=e540]:
+                  - img [ref=e541]
+                - cell "() => HTMLElement | null The element to focus on when the popover is opened." [ref=e542]:
+                  - generic [ref=e543]:
+                    - code [ref=e544]: () => HTMLElement | null
+                    - paragraph [ref=e545]: The element to focus on when the popover is opened.
+              - 'row "onEscapeKeyDown (event: KeyboardEvent) => void Function called when the escape key is pressed" [ref=e546]':
+                - cell "onEscapeKeyDown" [ref=e547]:
+                  - code [ref=e548]: onEscapeKeyDown
+                - cell [ref=e549]:
+                  - img [ref=e550]
+                - 'cell "(event: KeyboardEvent) => void Function called when the escape key is pressed" [ref=e551]':
+                  - generic [ref=e552]:
+                    - code [ref=e553]: "(event: KeyboardEvent) => void"
+                    - paragraph [ref=e554]: Function called when the escape key is pressed
+              - row "onExitComplete VoidFunction Function called when the animation ends in the closed state" [ref=e555]:
+                - cell "onExitComplete" [ref=e556]:
+                  - code [ref=e557]: onExitComplete
+                - cell [ref=e558]:
+                  - img [ref=e559]
+                - cell "VoidFunction Function called when the animation ends in the closed state" [ref=e560]:
+                  - generic [ref=e561]:
+                    - code [ref=e562]: VoidFunction
+                    - paragraph [ref=e563]: Function called when the animation ends in the closed state
+              - 'row "onFocusOutside (event: FocusOutsideEvent) => void Function called when the focus is moved outside the component" [ref=e564]':
+                - cell "onFocusOutside" [ref=e565]:
+                  - code [ref=e566]: onFocusOutside
+                - cell [ref=e567]:
+                  - img [ref=e568]
+                - 'cell "(event: FocusOutsideEvent) => void Function called when the focus is moved outside the component" [ref=e569]':
+                  - generic [ref=e570]:
+                    - code [ref=e571]: "(event: FocusOutsideEvent) => void"
+                    - paragraph [ref=e572]: Function called when the focus is moved outside the component
+              - 'row "onInteractOutside (event: InteractOutsideEvent) => void Function called when an interaction happens outside the component" [ref=e573]':
+                - cell "onInteractOutside" [ref=e574]:
+                  - code [ref=e575]: onInteractOutside
+                - cell [ref=e576]:
+                  - img [ref=e577]
+                - 'cell "(event: InteractOutsideEvent) => void Function called when an interaction happens outside the component" [ref=e578]':
+                  - generic [ref=e579]:
+                    - code [ref=e580]: "(event: InteractOutsideEvent) => void"
+                    - paragraph [ref=e581]: Function called when an interaction happens outside the component
+              - 'row "onOpenChange (details: OpenChangeDetails) => void Function invoked when the popover opens or closes" [ref=e582]':
+                - cell "onOpenChange" [ref=e583]:
+                  - code [ref=e584]: onOpenChange
+                - cell [ref=e585]:
+                  - img [ref=e586]
+                - 'cell "(details: OpenChangeDetails) => void Function invoked when the popover opens or closes" [ref=e587]':
+                  - generic [ref=e588]:
+                    - code [ref=e589]: "(details: OpenChangeDetails) => void"
+                    - paragraph [ref=e590]: Function invoked when the popover opens or closes
+              - 'row "onPointerDownOutside (event: PointerDownOutsideEvent) => void Function called when the pointer is pressed down outside the component" [ref=e591]':
+                - cell "onPointerDownOutside" [ref=e592]:
+                  - code [ref=e593]: onPointerDownOutside
+                - cell [ref=e594]:
+                  - img [ref=e595]
+                - 'cell "(event: PointerDownOutsideEvent) => void Function called when the pointer is pressed down outside the component" [ref=e596]':
+                  - generic [ref=e597]:
+                    - code [ref=e598]: "(event: PointerDownOutsideEvent) => void"
+                    - paragraph [ref=e599]: Function called when the pointer is pressed down outside the component
+              - 'row "onRequestDismiss (event: LayerDismissEvent) => void Function called when this layer is closed due to a parent layer being closed" [ref=e600]':
+                - cell "onRequestDismiss" [ref=e601]:
+                  - code [ref=e602]: onRequestDismiss
+                - cell [ref=e603]:
+                  - img [ref=e604]
+                - 'cell "(event: LayerDismissEvent) => void Function called when this layer is closed due to a parent layer being closed" [ref=e605]':
+                  - generic [ref=e606]:
+                    - code [ref=e607]: "(event: LayerDismissEvent) => void"
+                    - paragraph [ref=e608]: Function called when this layer is closed due to a parent layer being closed
+              - row "open boolean The controlled open state of the popover" [ref=e609]:
+                - cell "open" [ref=e610]:
+                  - code [ref=e611]: open
+                - cell [ref=e612]:
+                  - img [ref=e613]
+                - cell "boolean The controlled open state of the popover" [ref=e614]:
+                  - generic [ref=e615]:
+                    - code [ref=e616]: boolean
+                    - paragraph [ref=e617]: The controlled open state of the popover
+              - 'row "persistentElements (() => Element | null)[] Returns the persistent elements that: - should not have pointer-events disabled - should not trigger the dismiss event" [ref=e618]':
+                - cell "persistentElements" [ref=e619]:
+                  - code [ref=e620]: persistentElements
+                - cell [ref=e621]:
+                  - img [ref=e622]
+                - 'cell "(() => Element | null)[] Returns the persistent elements that: - should not have pointer-events disabled - should not trigger the dismiss event" [ref=e623]':
+                  - generic [ref=e624]:
+                    - code [ref=e625]: (() => Element | null)[]
+                    - paragraph [ref=e626]: "Returns the persistent elements that: - should not have pointer-events disabled - should not trigger the dismiss event"
+              - row "positioning PositioningOptions The user provided options used to position the popover content" [ref=e627]:
+                - cell "positioning" [ref=e628]:
+                  - code [ref=e629]: positioning
+                - cell [ref=e630]:
+                  - img [ref=e631]
+                - cell "PositioningOptions The user provided options used to position the popover content" [ref=e632]:
+                  - generic [ref=e633]:
+                    - code [ref=e634]: PositioningOptions
+                    - paragraph [ref=e635]: The user provided options used to position the popover content
+              - row "present boolean Whether the node is present (controlled by the user)" [ref=e636]:
+                - cell "present" [ref=e637]:
+                  - code [ref=e638]: present
+                - cell [ref=e639]:
+                  - img [ref=e640]
+                - cell "boolean Whether the node is present (controlled by the user)" [ref=e641]:
+                  - generic [ref=e642]:
+                    - code [ref=e643]: boolean
+                    - paragraph [ref=e644]: Whether the node is present (controlled by the user)
+          - generic [ref=e645]:
+            - link "Previous Tree View" [ref=e646] [cursor=pointer]:
+              - /url: /docs/components/tree-view
+              - generic [ref=e647]:
+                - paragraph [ref=e648]: Previous
+                - generic [ref=e649]:
+                  - img [ref=e650]
+                  - text: Tree View
+            - link "Next Dialog" [ref=e652] [cursor=pointer]:
+              - /url: /docs/components/dialog
+              - generic [ref=e653]:
+                - paragraph [ref=e654]: Next
+                - generic [ref=e655]:
+                  - text: Dialog
+                  - img [ref=e656]
+  - region "bottom-end Notifications alt+T"

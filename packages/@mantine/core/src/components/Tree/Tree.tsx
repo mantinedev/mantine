@@ -247,3 +247,11 @@ export const Tree = factory<TreeFactory>((_props) => {
 Tree.displayName = '@mantine/core/Tree';
 Tree.classes = classes;
 Tree.varsResolver = varsResolver;
+
+export namespace Tree {
+  export type Props = TreeProps;
+  export type StylesNames = TreeStylesNames;
+  export type Factory = TreeFactory;
+  export type NodeData = TreeNodeData;
+  export type RenderNodePayload = RenderTreeNodePayload;
+}

@@ -389,3 +389,9 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
 
 Heatmap.displayName = '@mantine/charts/Heatmap';
 Heatmap.classes = classes;
+
+export namespace Heatmap {
+  export type Props = HeatmapProps;
+  export type StylesNames = HeatmapStylesNames;
+  export type Factory = HeatmapFactory;
+}

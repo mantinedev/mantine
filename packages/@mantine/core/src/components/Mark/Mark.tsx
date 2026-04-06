@@ -76,3 +76,10 @@ export const Mark = factory<MarkFactory>((_props) => {
 Mark.classes = classes;
 Mark.varsResolver = varsResolver;
 Mark.displayName = '@mantine/core/Mark';
+
+export namespace Mark {
+  export type Props = MarkProps;
+  export type StylesNames = MarkStylesNames;
+  export type CssVariables = MarkCssVariables;
+  export type Factory = MarkFactory;
+}

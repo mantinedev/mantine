@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 
 interface DragState {
   group: string;
@@ -20,8 +20,7 @@ interface UseSlotDragSelectInput {
 export function useSlotDragSelect({ enabled = true, onDragEnd }: UseSlotDragSelectInput) {
   const [selectedRange, setSelectedRange] = useState<SelectedRange | null>(null);
   const dragRef = useRef<DragState | null>(null);
-  const onDragEndRef = useRef(onDragEnd);
-  onDragEndRef.current = onDragEnd;
+  const stableOnDragEnd = useEffectEvent(onDragEnd || (() => {}));
 
   const handleSlotPointerDown = useCallback(
     (_event: React.PointerEvent<HTMLButtonElement>, index: number, group: string) => {
@@ -74,7 +73,7 @@ export function useSlotDragSelect({ enabled = true, onDragEnd }: UseSlotDragSele
       if (dragRef.current) {
         const { startIndex, currentIndex, group } = dragRef.current;
         if (startIndex !== currentIndex) {
-          onDragEndRef.current?.(
+          stableOnDragEnd(
             Math.min(startIndex, currentIndex),
             Math.max(startIndex, currentIndex),
             group

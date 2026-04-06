@@ -121,3 +121,8 @@ export const Collapse = factory<CollapseFactory>((props) => {
 });
 
 Collapse.displayName = '@mantine/core/Collapse';
+
+export namespace Collapse {
+  export type Props = CollapseProps;
+  export type Factory = CollapseFactory;
+}
