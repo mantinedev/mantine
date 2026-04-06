@@ -19,12 +19,43 @@ import {
 } from '../../core';
 import { Loader } from '../Loader/Loader';
 import { InputContext } from './Input.context';
-import { InputClearButton } from './InputClearButton/InputClearButton';
-import { ClearSectionMode, InputClearSection } from './InputClearSection/InputClearSection';
-import { InputDescription } from './InputDescription/InputDescription';
-import { InputError } from './InputError/InputError';
-import { InputLabel } from './InputLabel/InputLabel';
-import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+import {
+  InputClearButton,
+  type InputClearButtonProps,
+  type InputClearButtonFactory,
+} from './InputClearButton/InputClearButton';
+import {
+  ClearSectionMode,
+  InputClearSection,
+  type InputClearSectionProps,
+} from './InputClearSection/InputClearSection';
+import {
+  InputDescription,
+  type InputDescriptionProps,
+  type InputDescriptionStylesNames,
+  type InputDescriptionCssVariables,
+  type InputDescriptionFactory,
+} from './InputDescription/InputDescription';
+import {
+  InputError,
+  type InputErrorProps,
+  type InputErrorStylesNames,
+  type InputErrorCssVariables,
+  type InputErrorFactory,
+} from './InputError/InputError';
+import {
+  InputLabel,
+  type InputLabelProps,
+  type InputLabelStylesNames,
+  type InputLabelCssVariables,
+  type InputLabelFactory,
+} from './InputLabel/InputLabel';
+import {
+  InputPlaceholder,
+  type InputPlaceholderProps,
+  type InputPlaceholderStylesNames,
+  type InputPlaceholderFactory,
+} from './InputPlaceholder/InputPlaceholder';
 import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputWrapperContext } from './InputWrapper.context';
 import {

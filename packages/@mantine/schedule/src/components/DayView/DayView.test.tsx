@@ -685,9 +685,7 @@ describe('@mantine/schedule/DayView', () => {
     it('shows AgendaView when agenda button is clicked', async () => {
       const { container } = render(<DayView {...defaultProps} withAgenda />);
 
-      expect(
-        container.querySelector('.mantine-DayView-agendaView')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.mantine-DayView-agendaView')).not.toBeInTheDocument();
 
       await userEvent.click(screen.getAllByText('Agenda')[0]);
 
@@ -700,9 +698,7 @@ describe('@mantine/schedule/DayView', () => {
       expect(container.querySelector('.mantine-DayView-agendaView')).toBeInTheDocument();
 
       await userEvent.click(screen.getAllByText('Agenda')[0]);
-      expect(
-        container.querySelector('.mantine-DayView-agendaView')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.mantine-DayView-agendaView')).not.toBeInTheDocument();
     });
 
     it('passes the current day as the agenda range', async () => {

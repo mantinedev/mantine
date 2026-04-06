@@ -233,18 +233,14 @@ export const AgendaView = factory<AgendaViewFactory>((_props) => {
   return (
     <Box {...getStyles('agendaView')} {...others}>
       <div {...getStyles('agendaViewHeader')}>
-        <Text {...getStyles('agendaViewHeaderLabel')}>
-          {headerLabel}
-        </Text>
+        <Text {...getStyles('agendaViewHeaderLabel')}>{headerLabel}</Text>
       </div>
 
       <Box {...getStyles('agendaViewBody')}>
         {dateGroups.length > 0 ? (
           dateGroups
         ) : (
-          <Text {...getStyles('agendaViewNoEvents')}>
-            {getLabel('noEvents', labels)}
-          </Text>
+          <Text {...getStyles('agendaViewNoEvents')}>{getLabel('noEvents', labels)}</Text>
         )}
       </Box>
     </Box>

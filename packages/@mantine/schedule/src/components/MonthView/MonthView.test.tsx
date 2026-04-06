@@ -635,15 +635,11 @@ describe('@mantine/schedule/MonthView', () => {
         <MonthView {...defaultProps} withAgenda events={agendaEvents} />
       );
 
-      expect(
-        container.querySelector('.mantine-MonthView-agendaView')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.mantine-MonthView-agendaView')).not.toBeInTheDocument();
 
       await userEvent.click(screen.getAllByText('Agenda')[0]);
 
-      expect(
-        container.querySelector('.mantine-MonthView-agendaView')
-      ).toBeInTheDocument();
+      expect(container.querySelector('.mantine-MonthView-agendaView')).toBeInTheDocument();
     });
 
     it('toggles AgendaView off when agenda button is clicked again', async () => {
@@ -651,14 +647,10 @@ describe('@mantine/schedule/MonthView', () => {
         <MonthView {...defaultProps} withAgenda events={agendaEvents} />
       );
       await userEvent.click(screen.getAllByText('Agenda')[0]);
-      expect(
-        container.querySelector('.mantine-MonthView-agendaView')
-      ).toBeInTheDocument();
+      expect(container.querySelector('.mantine-MonthView-agendaView')).toBeInTheDocument();
 
       await userEvent.click(screen.getAllByText('Agenda')[0]);
-      expect(
-        container.querySelector('.mantine-MonthView-agendaView')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.mantine-MonthView-agendaView')).not.toBeInTheDocument();
     });
 
     it('passes the visible month as the agenda range', async () => {

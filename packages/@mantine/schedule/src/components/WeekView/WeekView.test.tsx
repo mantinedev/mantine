@@ -802,9 +802,7 @@ describe('@mantine/schedule/WeekView', () => {
     it('shows AgendaView when agenda button is clicked', async () => {
       const { container } = render(<WeekView {...defaultProps} withAgenda />);
 
-      expect(
-        container.querySelector('.mantine-WeekView-agendaView')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.mantine-WeekView-agendaView')).not.toBeInTheDocument();
 
       await userEvent.click(screen.getAllByText('Agenda')[0]);
 
@@ -817,9 +815,7 @@ describe('@mantine/schedule/WeekView', () => {
       expect(container.querySelector('.mantine-WeekView-agendaView')).toBeInTheDocument();
 
       await userEvent.click(screen.getAllByText('Agenda')[0]);
-      expect(
-        container.querySelector('.mantine-WeekView-agendaView')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.mantine-WeekView-agendaView')).not.toBeInTheDocument();
     });
 
     it('passes the visible week as the agenda range', async () => {
