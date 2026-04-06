@@ -179,6 +179,7 @@ export * as AgendaViewDemos from './demos/schedule/AgendaView';
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';
 export * as CarouselDemos from './demos/carousel';
+export * as LightboxDemos from './demos/lightbox';
 export * as SpotlightDemos from './demos/spotlight';
 export * as UseClickOutsideDemos from './demos/hooks/use-click-outside';
 export * as UseClipboardDemos from './demos/hooks/use-clipboard';

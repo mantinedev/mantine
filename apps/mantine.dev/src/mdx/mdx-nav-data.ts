@@ -506,6 +506,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Notifications,
       MDX_DATA.Spotlight,
       MDX_DATA.Carousel,
+      MDX_DATA.Lightbox,
       MDX_DATA.Dropzone,
       MDX_DATA.Nprogress,
       MDX_DATA.Modals,

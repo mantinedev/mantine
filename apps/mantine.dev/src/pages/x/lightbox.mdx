@@ -1,0 +1,163 @@
+import { LightboxDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Lightbox);
+
+## Installation
+
+<InstallScript packages="embla-carousel@^8.5.2 embla-carousel-react@^8.5.2 @mantine/lightbox" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+import '@mantine/lightbox/styles.css';
+```
+
+## Usage
+
+`@mantine/lightbox` is a full-screen media lightbox built on [embla carousel](https://www.embla-carousel.com/).
+Click any image to open the lightbox:
+
+<Demo data={LightboxDemos.usage} />
+
+## Zoom
+
+Enable image zoom with the `withZoom` prop. On desktop, click an image to zoom in, scroll wheel to
+adjust zoom level, and drag to pan when zoomed. On mobile, double-tap to zoom and pinch to adjust:
+
+<Demo data={LightboxDemos.zoom} />
+
+## Thumbnails
+
+Enable the bottom thumbnail strip with `withThumbnails`. Click a thumbnail to navigate to that slide.
+Toggle visibility at runtime with the `T` keyboard shortcut or the toolbar button:
+
+<Demo data={LightboxDemos.thumbnails} />
+
+## All features
+
+Combine `withZoom`, `withThumbnails`, `withFullscreen`, and `withDownload` for the full experience:
+
+<Demo data={LightboxDemos.allFeatures} />
+
+## Loop navigation
+
+Set `loop` to enable infinite wrapping at the ends of the slide list:
+
+<Demo data={LightboxDemos.loop} />
+
+## Slide transition
+
+By default, programmatic navigation (arrow buttons, keyboard) snaps instantly.
+Set `withSlideTransition` to animate slide changes:
+
+<Demo data={LightboxDemos.transition} />
+
+## Swipe to close
+
+On mobile, swiping down closes the lightbox. This is enabled by default.
+Set `closeOnSwipeDown={false}` to disable:
+
+<Demo data={LightboxDemos.swipeClose} />
+
+## Store API
+
+Mount `Lightbox.Provider` once in your app and open the lightbox from anywhere
+using the `lightbox` store actions:
+
+```tsx
+import { lightbox } from '@mantine/lightbox';
+
+// Open with slides and optional start index
+lightbox.open({ slides, startIndex: 2 });
+
+// Close
+lightbox.close();
+
+// Navigate
+lightbox.next();
+lightbox.prev();
+lightbox.setIndex(5);
+```
+
+<Demo data={LightboxDemos.store} />
+
+## Video slides
+
+Set `type: 'video'` on a slide to render a `<video>` element. Videos are automatically
+paused when navigating away from the slide:
+
+<Demo data={LightboxDemos.video} />
+
+## Custom slides
+
+Set `type: 'custom'` with a `render` function for fully custom slide content.
+Use `renderThumb` to customize the thumbnail as well:
+
+<Demo data={LightboxDemos.custom} />
+
+## Custom toolbar
+
+Override the default toolbar items with the `toolbarItems` prop. Each item has
+a `key`, `icon`, `label`, `onClick`, and optional `position` (`'left'` or `'right'`).
+Use the built-in toolbar item factories for common actions:
+
+<Demo data={LightboxDemos.toolbar} />
+
+## Compound components
+
+For full layout control, compose sub-components directly:
+
+```tsx
+import { Lightbox } from '@mantine/lightbox';
+
+function CustomLightbox({ opened, onClose, slides }) {
+  return (
+    <Lightbox.Root opened={opened} onClose={onClose} slides={slides} withZoom>
+      <Lightbox.Toolbar />
+      <Lightbox.Slides>
+        {slides.map((slide, index) => (
+          <Lightbox.Slide key={index} slide={slide} index={index} />
+        ))}
+      </Lightbox.Slides>
+      <Lightbox.Navigation />
+      <Lightbox.Caption />
+      <Lightbox.Thumbnails />
+    </Lightbox.Root>
+  );
+}
+```
+
+Available sub-components:
+- `Lightbox.Root` — overlay, portal, focus trap, scroll lock, keyboard handling
+- `Lightbox.Toolbar` — top bar with actions and slide counter
+- `Lightbox.Slides` — Embla carousel wrapper
+- `Lightbox.Slide` — individual slide (image, video, or custom)
+- `Lightbox.Thumbnails` — bottom thumbnail strip
+- `Lightbox.Navigation` — prev/next arrow buttons
+- `Lightbox.Caption` — text below the active slide
+- `Lightbox.CloseButton` — standalone close button
+- `Lightbox.Provider` — store-mode mount point
+
+## Accessibility
+
+- Focus is trapped within the lightbox when opened
+- `role="dialog"` with `aria-modal="true"` on the root element
+- All interactive elements have `aria-label` attributes
+- `aria-live="polite"` region announces slide changes to screen readers
+- Body scroll is locked when the lightbox is open
+
+## Keyboard shortcuts
+
+<KeyboardEventsTable
+  data={[
+    { key: 'Escape', description: 'Close lightbox' },
+    { key: 'ArrowLeft', description: 'Previous slide' },
+    { key: 'ArrowRight', description: 'Next slide' },
+    { key: 'F', description: 'Toggle fullscreen' },
+    { key: 'T', description: 'Toggle thumbnails' },
+    { key: 'Z', description: 'Toggle zoom' },
+  ]}
+/>

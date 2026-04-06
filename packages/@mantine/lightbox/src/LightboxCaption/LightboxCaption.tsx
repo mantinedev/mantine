@@ -14,6 +14,7 @@ export type LightboxCaptionStylesNames = 'caption';
 
 export interface LightboxCaptionProps
   extends BoxProps, CompoundStylesApiProps<LightboxCaptionFactory>, ElementProps<'div'> {
+  /** Custom caption content, overrides slide caption */
   children?: React.ReactNode;
 }
 

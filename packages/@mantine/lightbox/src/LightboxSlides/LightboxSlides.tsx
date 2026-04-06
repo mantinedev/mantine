@@ -15,7 +15,10 @@ export type LightboxSlidesStylesNames = 'slides' | 'slidesViewport' | 'slidesCon
 
 export interface LightboxSlidesProps
   extends BoxProps, CompoundStylesApiProps<LightboxSlidesFactory>, ElementProps<'div'> {
+  /** Embla carousel ref callback */
   emblaRef?: React.RefCallback<HTMLDivElement>;
+
+  /** Slide components */
   children: React.ReactNode;
 }
 

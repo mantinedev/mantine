@@ -56,25 +56,64 @@ export type LightboxCssVariables = {
 
 export interface LightboxRootProps
   extends BoxProps, StylesApiProps<LightboxRootFactory>, ElementProps<'div', 'children'> {
+  /** Controls whether the lightbox is opened */
   opened: boolean;
+
+  /** Called when the lightbox is closed */
   onClose: () => void;
+
+  /** Lightbox content (compound components) */
   children: React.ReactNode;
+
+  /** Array of slide data objects */
   slides: LightboxSlideData[];
+
+  /** Controlled current slide index */
   currentIndex?: number;
+
+  /** Called when the current slide index changes */
   onIndexChange?: (index: number) => void;
+
+  /** Lightbox store, can be used to create multiple instances @default lightboxStore */
   store?: LightboxStore;
+
+  /** Enables image zoom on click/pinch @default false */
   withZoom?: boolean;
+
+  /** Shows bottom thumbnail strip @default false */
   withThumbnails?: boolean;
+
+  /** Adds fullscreen toggle to toolbar @default false */
   withFullscreen?: boolean;
+
+  /** Adds download button to toolbar @default false */
   withDownload?: boolean;
+
+  /** Custom toolbar items, overrides default toolbar */
   toolbarItems?: ToolbarItem[];
+
+  /** Enables infinite loop navigation @default false */
   loop?: boolean;
+
+  /** Shows previous/next navigation arrows @default true */
   withNavigation?: boolean;
+
+  /** Closes lightbox when clicking outside slide content @default true */
   closeOnClickOutside?: boolean;
+
+  /** Closes lightbox when swiping down on mobile @default true */
   closeOnSwipeDown?: boolean;
+
+  /** Transition duration in milliseconds @default 200 */
   transitionDuration?: number;
+
+  /** Additional Embla carousel options */
   emblaOptions?: EmblaOptionsType;
+
+  /** Maximum zoom scale @default 3 */
   zoomMaxScale?: number;
+
+  /** Enables animated slide transitions for programmatic navigation @default false */
   withSlideTransition?: boolean;
 }
 
@@ -166,6 +205,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   });
 
   const zoomIsActive = useRef(false);
+  const prevOpenedRef = useRef(false);
 
   const [emblaRef, embla] = useEmblaCarousel({
     loop,
@@ -266,8 +306,10 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
   useEffect(() => {
     if (embla && opened && embla.selectedScrollSnap() !== _currentIndex) {
-      embla.scrollTo(_currentIndex);
+      const isJustOpened = !prevOpenedRef.current;
+      embla.scrollTo(_currentIndex, isJustOpened);
     }
+    prevOpenedRef.current = opened;
   }, [_currentIndex, embla, opened]);
 
   useEffect(() => {

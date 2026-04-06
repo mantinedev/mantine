@@ -17,7 +17,10 @@ export type LightboxSlideStylesNames = 'slide' | 'slideImage' | 'slideVideo';
 
 export interface LightboxSlideProps
   extends BoxProps, CompoundStylesApiProps<LightboxSlideFactory>, ElementProps<'div'> {
+  /** Slide data object */
   slide: LightboxSlideData;
+
+  /** Index of the slide in the slides array */
   index: number;
 }
 

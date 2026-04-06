@@ -52,6 +52,7 @@
     "@mantine/dropzone": "workspace:*",
     "@mantine/form": "workspace:*",
     "@mantine/hooks": "workspace:*",
+    "@mantine/lightbox": "workspace:*",
     "@mantine/notifications": "workspace:*",
     "@mantine/nprogress": "workspace:*",
     "@mantine/schedule": "workspace:*",

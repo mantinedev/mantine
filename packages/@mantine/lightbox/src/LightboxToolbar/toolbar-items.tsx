@@ -100,10 +100,19 @@ export function createDownloadToolbarItem(src: string): ToolbarItem {
     icon: <IconDownload />,
     label: 'Download',
     onClick: () => {
-      const link = document.createElement('a');
-      link.href = src;
-      link.download = '';
-      link.click();
+      fetch(src)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = src.split('/').pop() || 'download';
+          link.click();
+          URL.revokeObjectURL(url);
+        })
+        .catch(() => {
+          window.open(src, '_blank');
+        });
     },
     position: 'right',
   };

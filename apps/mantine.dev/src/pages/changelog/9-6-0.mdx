@@ -1,4 +1,4 @@
-import { ActionBarDemos, GaugeChartDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
+import { ActionBarDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -25,6 +25,21 @@ are preserved for custom notifications:
 layout where only the latest notification is fully visible, and older notifications peek out behind it:
 
 <Demo data={NotificationsDemos.stacked} />
+
+## Lightbox component
+
+New [@mantine/lightbox](/x/lightbox) package – a full-screen media lightbox with carousel navigation,
+zoom, thumbnails, toolbar customization, and store-based API. Supports image, video, and custom slides:
+
+<Demo data={LightboxDemos.usage} />
+
+Key features:
+- **Zoom** – click to zoom on desktop, double-tap on mobile, scroll wheel and pinch gestures
+- **Thumbnails** – bottom thumbnail strip with active indicator
+- **Store API** – mount once, open from anywhere (same pattern as Spotlight and Notifications)
+- **Video slides** – native video player with auto-pause on navigation
+- **Custom slides** – render anything with custom thumbnails
+- **Keyboard shortcuts** – Escape, arrows, F/T/Z for fullscreen/thumbnails/zoom
 
 ## ActionBar component
 

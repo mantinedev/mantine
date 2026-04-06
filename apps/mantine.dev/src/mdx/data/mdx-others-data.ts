@@ -96,6 +96,29 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     docs: 'x/modals.mdx',
   },
 
+  Lightbox: {
+    title: 'Lightbox',
+    package: '@mantine/lightbox',
+    slug: '/x/lightbox',
+    props: [
+      'Lightbox',
+      'LightboxRoot',
+      'LightboxToolbar',
+      'LightboxSlides',
+      'LightboxSlide',
+      'LightboxThumbnails',
+      'LightboxNavigation',
+      'LightboxCaption',
+      'LightboxCloseButton',
+      'LightboxProviderComponent',
+    ],
+    styles: ['Lightbox'],
+    description: 'Full-screen media lightbox with carousel navigation',
+    source: '@mantine/lightbox/src',
+    license: 'MIT',
+    docs: 'x/lightbox.mdx',
+  },
+
   TipTap: {
     title: 'Rich text editor',
     package: '@mantine/tiptap',

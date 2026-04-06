@@ -19,7 +19,10 @@ import classes from './Lightbox.module.css';
 export type LightboxStylesNames = LightboxRootStylesNames;
 
 export interface LightboxProps extends Omit<LightboxRootProps, 'children'> {
+  /** Custom toolbar items, overrides default toolbar */
   toolbarItems?: ToolbarItem[];
+
+  /** Custom children to override default lightbox layout */
   children?: React.ReactNode;
 }
 

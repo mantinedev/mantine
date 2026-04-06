@@ -2263,6 +2263,7 @@ __metadata:
     "@mantine/dropzone": "workspace:*"
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    "@mantine/lightbox": "workspace:*"
     "@mantine/notifications": "workspace:*"
     "@mantine/nprogress": "workspace:*"
     "@mantine/schedule": "workspace:*"
@@ -2297,6 +2298,7 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/dropzone": "workspace:*"
+    "@mantine/lightbox": "workspace:*"
     "@mantine/notifications": "workspace:*"
     "@mantine/nprogress": "workspace:*"
     "@mantine/spotlight": "workspace:*"
@@ -4096,7 +4098,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/lightbox@workspace:packages/@mantine/lightbox":
+"@mantine/lightbox@workspace:*, @mantine/lightbox@workspace:packages/@mantine/lightbox":
   version: 0.0.0-use.local
   resolution: "@mantine/lightbox@workspace:packages/@mantine/lightbox"
   dependencies:

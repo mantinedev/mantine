@@ -23,6 +23,7 @@ export type LightboxToolbarStylesNames = 'toolbar' | 'toolbarGroup' | 'toolbarBu
 
 export interface LightboxToolbarProps
   extends BoxProps, CompoundStylesApiProps<LightboxToolbarFactory>, ElementProps<'div'> {
+  /** Custom toolbar items, overrides default toolbar actions */
   toolbarItems?: ToolbarItem[];
 }
 
