@@ -257,3 +257,4 @@ export * as TipTapDemos from './demos/tiptap';
 
 // Changelog demos
 export * as Changelog730Demos from './demos/changelog/7-3-0';
+export * as Changelog970Demos from './demos/changelog/9-7-0';

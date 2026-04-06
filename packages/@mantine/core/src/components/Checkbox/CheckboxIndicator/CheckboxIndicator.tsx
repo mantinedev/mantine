@@ -25,9 +25,14 @@ import { CheckboxIcon } from '../CheckIcon';
 import classes from './CheckboxIndicator.module.css';
 
 export type CheckboxIndicatorStylesNames = 'indicator' | 'icon';
-export type CheckboxIndicatorVariant = 'filled' | 'outline';
+export type CheckboxIndicatorVariant = 'filled' | 'outline' | 'light';
 export type CheckboxIndicatorCssVariables = {
-  indicator: '--checkbox-size' | '--checkbox-radius' | '--checkbox-color' | '--checkbox-icon-color';
+  indicator:
+    | '--checkbox-size'
+    | '--checkbox-radius'
+    | '--checkbox-color'
+    | '--checkbox-icon-color'
+    | '--checkbox-bg';
 };
 
 export interface CheckboxIndicatorProps
@@ -82,16 +87,36 @@ const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(
         ? `var(--mantine-color-${parsedColor.color}-outline)`
         : parsedColor.color;
 
+    const lightColor =
+      parsedColor.isThemeColor && parsedColor.shade === undefined
+        ? `var(--mantine-color-${parsedColor.color}-light-color)`
+        : parsedColor.color;
+
+    const lightBg =
+      parsedColor.isThemeColor && parsedColor.shade === undefined
+        ? `var(--mantine-color-${parsedColor.color}-light)`
+        : parsedColor.color;
+
+    const resolvedColor =
+      variant === 'outline'
+        ? outlineColor
+        : variant === 'light'
+          ? lightColor
+          : getThemeColor(color, theme);
+
     return {
       indicator: {
         '--checkbox-size': getSize(size, 'checkbox-size'),
         '--checkbox-radius': radius === undefined ? undefined : getRadius(radius),
-        '--checkbox-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
+        '--checkbox-color': resolvedColor,
+        '--checkbox-bg': variant === 'light' ? lightBg : undefined,
         '--checkbox-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
-          : getAutoContrastValue(autoContrast, theme)
-            ? getContrastColor({ color, theme, autoContrast })
-            : undefined,
+          : variant === 'light'
+            ? lightColor
+            : getAutoContrastValue(autoContrast, theme)
+              ? getContrastColor({ color, theme, autoContrast })
+              : undefined,
       },
     };
   }

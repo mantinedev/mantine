@@ -29,7 +29,7 @@ import { RadioIcon, RadioIconProps } from './RadioIcon';
 import { RadioIndicator } from './RadioIndicator/RadioIndicator';
 import classes from './Radio.module.css';
 
-export type RadioVariant = 'filled' | 'outline';
+export type RadioVariant = 'filled' | 'outline' | 'light';
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';
 export type RadioCssVariables = {
   root:
@@ -37,7 +37,8 @@ export type RadioCssVariables = {
     | '--radio-radius'
     | '--radio-color'
     | '--radio-icon-color'
-    | '--radio-icon-size';
+    | '--radio-icon-size'
+    | '--radio-bg';
 };
 
 export interface RadioProps
@@ -108,16 +109,36 @@ const varsResolver = createVarsResolver<RadioFactory>(
         ? `var(--mantine-color-${parsedColor.color}-outline)`
         : parsedColor.color;
 
+    const lightColor =
+      parsedColor.isThemeColor && parsedColor.shade === undefined
+        ? `var(--mantine-color-${parsedColor.color}-light-color)`
+        : parsedColor.color;
+
+    const lightBg =
+      parsedColor.isThemeColor && parsedColor.shade === undefined
+        ? `var(--mantine-color-${parsedColor.color}-light)`
+        : parsedColor.color;
+
+    const resolvedColor =
+      variant === 'outline'
+        ? outlineColor
+        : variant === 'light'
+          ? lightColor
+          : getThemeColor(color, theme);
+
     return {
       root: {
         '--radio-size': getSize(size, 'radio-size'),
         '--radio-radius': radius === undefined ? undefined : getRadius(radius),
-        '--radio-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
+        '--radio-color': resolvedColor,
+        '--radio-bg': variant === 'light' ? lightBg : undefined,
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
-          : getAutoContrastValue(autoContrast, theme)
-            ? getContrastColor({ color, theme, autoContrast })
-            : undefined,
+          : variant === 'light'
+            ? lightColor
+            : getAutoContrastValue(autoContrast, theme)
+              ? getContrastColor({ color, theme, autoContrast })
+              : undefined,
         '--radio-icon-size': getSize(size, 'radio-icon-size'),
       },
     };
