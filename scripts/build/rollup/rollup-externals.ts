@@ -1,7 +1,10 @@
+import { builtinModules } from 'node:module';
 import packageJson from '../../../package.json';
 import { getPackagesList } from '../../packages/get-packages-list';
 
 export const ROLLUP_EXTERNALS = [
+  ...builtinModules,
+  ...builtinModules.map((m) => `node:${m}`),
   'dayjs/locale/ru',
   'dayjs/locale/es',
   'dayjs/plugin/customParseFormat.js',

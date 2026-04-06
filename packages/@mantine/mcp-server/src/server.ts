@@ -1,4 +1,4 @@
-import readline from 'readline';
+import readline from 'node:readline';
 import { MantineMcpDataClient } from './data-client';
 import { GetItemArgs, ListItemsArgs, SearchDocsArgs } from './types';
 
