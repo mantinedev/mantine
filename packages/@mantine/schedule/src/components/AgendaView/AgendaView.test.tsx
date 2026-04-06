@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
@@ -193,8 +192,8 @@ describe('@mantine/schedule/AgendaView', () => {
   });
 
   it('supports renderEvent callback', () => {
-    const renderEvent = jest.fn((event, props) => (
-      <button key={event.id} data-testid="custom-event">
+    const renderEvent = jest.fn((event, _props) => (
+      <button type="button" key={event.id} data-testid="custom-event">
         {event.title}
       </button>
     ));

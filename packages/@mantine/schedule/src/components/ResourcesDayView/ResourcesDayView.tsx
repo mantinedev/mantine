@@ -643,6 +643,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const rows = resources.map((resource, resourceIndex) => {
     const allBgEvents = resourceEvents.backgroundTimedEvents[resource.id] || [];
 
+    // oxlint-disable-next-line react/jsx-key
     const backgroundEventNodes = allBgEvents.map((event) => {
       const colors = theme.variantColorResolver({
         color: event.color || theme.primaryColor,

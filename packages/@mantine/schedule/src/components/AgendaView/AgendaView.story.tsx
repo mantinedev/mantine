@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Box, Stack, Text } from '@mantine/core';
+import { Box } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { AgendaView } from './AgendaView';
 
