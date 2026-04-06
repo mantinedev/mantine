@@ -203,3 +203,10 @@ export const TimeGrid = factory<TimeGridFactory>((_props) => {
 TimeGrid.displayName = '@mantine/dates/TimeGrid';
 TimeGrid.classes = classes;
 TimeGrid.varsResolver = varsResolver;
+
+export namespace TimeGrid {
+  export type Props = TimeGridProps;
+  export type StylesNames = TimeGridStylesNames;
+  export type Factory = TimeGridFactory;
+  export type CssVariables = TimeGridCssVariables;
+}

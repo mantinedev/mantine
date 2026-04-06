@@ -51,3 +51,8 @@ export const HueSlider = factory<HueSliderFactory>((props: HueSliderProps) => {
 
 HueSlider.displayName = '@mantine/core/HueSlider';
 HueSlider.classes = ColorSlider.classes;
+
+export namespace HueSlider {
+  export type Props = HueSliderProps;
+  export type Factory = HueSliderFactory;
+}

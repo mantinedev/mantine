@@ -23,12 +23,30 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
-import { CheckboxCard } from './CheckboxCard/CheckboxCard';
-import { CheckboxGroup, CheckboxGroupContext } from './CheckboxGroup/CheckboxGroup';
-import { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
+import {
+  CheckboxCard,
+  type CheckboxCardProps,
+  type CheckboxCardStylesNames,
+  type CheckboxCardCssVariables,
+  type CheckboxCardFactory,
+} from './CheckboxCard/CheckboxCard';
+import {
+  CheckboxGroup,
+  CheckboxGroupContext,
+  type CheckboxGroupProps,
+  type CheckboxGroupStylesNames,
+  type CheckboxGroupFactory,
+} from './CheckboxGroup/CheckboxGroup';
+import {
+  CheckboxIndicator,
+  type CheckboxIndicatorProps,
+  type CheckboxIndicatorStylesNames,
+  type CheckboxIndicatorCssVariables,
+  type CheckboxIndicatorFactory,
+  type CheckboxIndicatorVariant,
+} from './CheckboxIndicator/CheckboxIndicator';
 import { CheckboxIcon } from './CheckIcon';
 import classes from './Checkbox.module.css';
-
 export type CheckboxVariant = 'filled' | 'outline';
 export type CheckboxStylesNames = 'icon' | 'inner' | 'input' | InlineInputStylesNames;
 export type CheckboxCssVariables = {
@@ -269,3 +287,33 @@ Checkbox.displayName = '@mantine/core/Checkbox';
 Checkbox.Group = CheckboxGroup;
 Checkbox.Indicator = CheckboxIndicator;
 Checkbox.Card = CheckboxCard;
+
+export namespace Checkbox {
+  export type Props = CheckboxProps;
+  export type StylesNames = CheckboxStylesNames;
+  export type CssVariables = CheckboxCssVariables;
+  export type Factory = CheckboxFactory;
+  export type Variant = CheckboxVariant;
+  export type IconComponent = CheckboxIconComponent;
+
+  export namespace Group {
+    export type Props = CheckboxGroupProps;
+    export type StylesNames = CheckboxGroupStylesNames;
+    export type Factory = CheckboxGroupFactory;
+  }
+
+  export namespace Indicator {
+    export type Props = CheckboxIndicatorProps;
+    export type StylesNames = CheckboxIndicatorStylesNames;
+    export type CssVariables = CheckboxIndicatorCssVariables;
+    export type Factory = CheckboxIndicatorFactory;
+    export type Variant = CheckboxIndicatorVariant;
+  }
+
+  export namespace Card {
+    export type Props = CheckboxCardProps;
+    export type StylesNames = CheckboxCardStylesNames;
+    export type CssVariables = CheckboxCardCssVariables;
+    export type Factory = CheckboxCardFactory;
+  }
+}

@@ -147,3 +147,11 @@ export const Text = polymorphicFactory<TextFactory>((_props) => {
 Text.classes = classes;
 Text.varsResolver = varsResolver;
 Text.displayName = '@mantine/core/Text';
+
+export namespace Text {
+  export type Props = TextProps;
+  export type StylesNames = TextStylesNames;
+  export type CssVariables = TextCssVariables;
+  export type Factory = TextFactory;
+  export type Variant = TextVariant;
+}

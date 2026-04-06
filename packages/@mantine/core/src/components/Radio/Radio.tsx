@@ -23,12 +23,32 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputStylesNames } from '../../utils/InlineInput';
-import { RadioCard } from './RadioCard/RadioCard';
-import { RadioGroup, RadioGroupContext } from './RadioGroup/RadioGroup';
+import {
+  RadioCard,
+  type RadioCardProps,
+  type RadioCardStylesNames,
+  type RadioCardFactory,
+  type RadioCardCssVariables,
+  type RadioCardContextValue,
+} from './RadioCard/RadioCard';
+import {
+  RadioGroup,
+  RadioGroupContext,
+  type RadioGroupProps,
+  type RadioGroupStylesNames,
+  type RadioGroupFactory,
+  type RadioGroupContextValue,
+} from './RadioGroup/RadioGroup';
 import { RadioIcon, RadioIconProps } from './RadioIcon';
-import { RadioIndicator } from './RadioIndicator/RadioIndicator';
+import {
+  RadioIndicator,
+  type RadioIndicatorProps,
+  type RadioIndicatorStylesNames,
+  type RadioIndicatorFactory,
+  type RadioIndicatorCssVariables,
+  type RadioIndicatorVariant,
+} from './RadioIndicator/RadioIndicator';
 import classes from './Radio.module.css';
-
 export type RadioVariant = 'filled' | 'outline';
 export type RadioStylesNames = InlineInputStylesNames | 'inner' | 'radio' | 'icon';
 export type RadioCssVariables = {
@@ -234,3 +254,33 @@ Radio.displayName = '@mantine/core/Radio';
 Radio.Group = RadioGroup;
 Radio.Card = RadioCard;
 Radio.Indicator = RadioIndicator;
+
+export namespace Radio {
+  export type Props = RadioProps;
+  export type StylesNames = RadioStylesNames;
+  export type Factory = RadioFactory;
+  export type Variant = RadioVariant;
+
+  export namespace Group {
+    export type Props = RadioGroupProps;
+    export type StylesNames = RadioGroupStylesNames;
+    export type Factory = RadioGroupFactory;
+    export type ContextValue = RadioGroupContextValue;
+  }
+
+  export namespace Card {
+    export type Props = RadioCardProps;
+    export type StylesNames = RadioCardStylesNames;
+    export type Factory = RadioCardFactory;
+    export type CssVariables = RadioCardCssVariables;
+    export type ContextValue = RadioCardContextValue;
+  }
+
+  export namespace Indicator {
+    export type Props = RadioIndicatorProps;
+    export type StylesNames = RadioIndicatorStylesNames;
+    export type Factory = RadioIndicatorFactory;
+    export type CssVariables = RadioIndicatorCssVariables;
+    export type Variant = RadioIndicatorVariant;
+  }
+}

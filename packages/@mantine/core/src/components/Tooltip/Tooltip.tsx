@@ -25,11 +25,14 @@ import {
 import { OptionalPortal } from '../Portal';
 import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
-import { TooltipFloating } from './TooltipFloating/TooltipFloating';
-import { TooltipGroup } from './TooltipGroup/TooltipGroup';
+import { TooltipFloating, type TooltipFloatingProps } from './TooltipFloating/TooltipFloating';
+import {
+  TooltipGroup,
+  type TooltipGroupProps,
+  type TooltipGroupContextValue,
+} from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
 import classes from './Tooltip.module.css';
-
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
   onPositionChange?: (position: FloatingPosition) => void;
@@ -360,3 +363,19 @@ Tooltip.varsResolver = varsResolver;
 Tooltip.displayName = '@mantine/core/Tooltip';
 Tooltip.Floating = TooltipFloating;
 Tooltip.Group = TooltipGroup;
+
+export namespace Tooltip {
+  export type Props = TooltipProps;
+  export type Factory = TooltipFactory;
+  export type CssVariables = TooltipCssVariables;
+  export type StylesNames = TooltipStylesNames;
+
+  export namespace Group {
+    export type Props = TooltipGroupProps;
+    export type ContextValue = TooltipGroupContextValue;
+  }
+
+  export namespace Floating {
+    export type Props = TooltipFloatingProps;
+  }
+}

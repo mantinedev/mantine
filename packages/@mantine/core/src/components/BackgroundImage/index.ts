@@ -13,10 +13,3 @@ export type {
   BackgroundImageFactory,
   BackgroundImageStylesNames,
 };
-
-export namespace BackgroundImage {
-  export type Props = BackgroundImageProps;
-  export type CssVariables = BackgroundImageCssVariables;
-  export type Factory = BackgroundImageFactory;
-  export type StylesNames = BackgroundImageStylesNames;
-}

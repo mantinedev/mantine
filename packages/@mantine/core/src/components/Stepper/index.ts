@@ -24,20 +24,3 @@ export type {
   StepperCompletedProps,
   StepperContextValue,
 };
-
-export namespace Stepper {
-  export type Props = StepperProps;
-  export type StylesNames = StepperStylesNames;
-  export type CssVariables = StepperCssVariables;
-  export type Factory = StepperFactory;
-  export type Step = StepFragmentComponent;
-  export type ContextValue = StepperContextValue;
-
-  export namespace Step {
-    export type Props = StepperStepProps;
-  }
-
-  export namespace Completed {
-    export type Props = StepperCompletedProps;
-  }
-}

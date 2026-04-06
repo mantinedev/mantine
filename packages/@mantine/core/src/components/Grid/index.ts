@@ -14,16 +14,3 @@ export type {
   GridColProps,
   GridContextValue,
 };
-
-export namespace Grid {
-  export type Props = GridProps;
-  export type Factory = GridFactory;
-  export type StylesNames = GridStylesNames;
-  export type CssVariables = GridCssVariables;
-  export type ColProps = GridColProps;
-  export type ContextValue = GridContextValue;
-
-  export namespace Col {
-    export type Props = GridColProps;
-  }
-}

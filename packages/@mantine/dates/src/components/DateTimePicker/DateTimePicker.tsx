@@ -300,7 +300,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
             })}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            // eslint-disable-next-line react/no-children-prop
+            // oxlint-disable-next-line react/no-children-prop
             children={<CheckIcon size="30%" />}
             {...submitButtonProps}
             onClick={(event) => {
@@ -317,3 +317,9 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
 
 DateTimePicker.classes = { ...classes, ...PickerInputBase.classes, ...DatePicker.classes };
 DateTimePicker.displayName = '@mantine/dates/DateTimePicker';
+
+export namespace DateTimePicker {
+  export type Props = DateTimePickerProps;
+  export type StylesNames = DateTimePickerStylesNames;
+  export type Factory = DateTimePickerFactory;
+}

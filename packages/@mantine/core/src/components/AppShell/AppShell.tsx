@@ -20,16 +20,15 @@ import {
   AppShellNavbarConfiguration,
   AppShellResponsiveSize,
 } from './AppShell.types';
-import { AppShellAside } from './AppShellAside/AppShellAside';
-import { AppShellFooter } from './AppShellFooter/AppShellFooter';
-import { AppShellHeader } from './AppShellHeader/AppShellHeader';
-import { AppShellMain } from './AppShellMain/AppShellMain';
+import { AppShellAside, type AppShellAsideProps } from './AppShellAside/AppShellAside';
+import { AppShellFooter, type AppShellFooterProps } from './AppShellFooter/AppShellFooter';
+import { AppShellHeader, type AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
+import { AppShellMain, type AppShellMainProps } from './AppShellMain/AppShellMain';
 import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
-import { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
-import { AppShellSection } from './AppShellSection/AppShellSection';
+import { AppShellNavbar, type AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
+import { AppShellSection, type AppShellSectionProps } from './AppShellSection/AppShellSection';
 import { useResizing } from './use-resizing/use-resizing';
 import classes from './AppShell.module.css';
-
 export type AppShellStylesNames =
   | 'root'
   | 'navbar'
@@ -193,3 +192,34 @@ AppShell.Main = AppShellMain;
 AppShell.Aside = AppShellAside;
 AppShell.Footer = AppShellFooter;
 AppShell.Section = AppShellSection;
+
+export namespace AppShell {
+  export type Props = AppShellProps;
+  export type StylesNames = AppShellStylesNames;
+  export type CssVariables = AppShellCssVariables;
+  export type Factory = AppShellFactory;
+
+  export namespace Section {
+    export type Props = AppShellSectionProps;
+  }
+
+  export namespace Header {
+    export type Props = AppShellHeaderProps;
+  }
+
+  export namespace Footer {
+    export type Props = AppShellFooterProps;
+  }
+
+  export namespace Navbar {
+    export type Props = AppShellNavbarProps;
+  }
+
+  export namespace Aside {
+    export type Props = AppShellAsideProps;
+  }
+
+  export namespace Main {
+    export type Props = AppShellMainProps;
+  }
+}

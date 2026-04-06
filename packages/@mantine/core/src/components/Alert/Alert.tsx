@@ -176,3 +176,10 @@ export const Alert = factory<AlertFactory>((_props) => {
 Alert.classes = classes;
 Alert.varsResolver = varsResolver;
 Alert.displayName = '@mantine/core/Alert';
+
+export namespace Alert {
+  export type Props = AlertProps;
+  export type StylesNames = AlertStylesNames;
+  export type CssVariables = AlertCssVariables;
+  export type Factory = AlertFactory;
+}

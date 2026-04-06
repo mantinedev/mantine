@@ -13,10 +13,3 @@ export type {
   LoadingOverlayCssVariables,
   LoadingOverlayFactory,
 };
-
-export namespace LoadingOverlay {
-  export type Props = LoadingOverlayProps;
-  export type StylesNames = LoadingOverlayStylesNames;
-  export type CssVariables = LoadingOverlayCssVariables;
-  export type Factory = LoadingOverlayFactory;
-}

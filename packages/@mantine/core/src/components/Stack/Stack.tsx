@@ -87,3 +87,10 @@ export const Stack = factory<StackFactory>((_props) => {
 Stack.classes = classes;
 Stack.varsResolver = varsResolver;
 Stack.displayName = '@mantine/core/Stack';
+
+export namespace Stack {
+  export type Props = StackProps;
+  export type StylesNames = StackStylesNames;
+  export type CssVariables = StackCssVariables;
+  export type Factory = StackFactory;
+}

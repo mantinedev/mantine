@@ -15,11 +15,3 @@ export type {
   BubbleChartFactory,
   BubbleChartDataKey,
 };
-
-export namespace BubbleChart {
-  export type Props = BubbleChartProps;
-  export type StylesNames = BubbleChartStylesNames;
-  export type CssVariables = BubbleChartCssVariables;
-  export type Factory = BubbleChartFactory;
-  export type DataKey = BubbleChartDataKey;
-}

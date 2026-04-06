@@ -1,10 +1,17 @@
 import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DataAttributes, Factory, genericFactory, MantineSize, useProps } from '../../../core';
+import {
+  DataAttributes,
+  Factory,
+  genericFactory,
+  MantineSize,
+  Primitive,
+  useProps,
+} from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 
-export interface CheckboxGroupContextValue<Value extends string = string> {
+export interface CheckboxGroupContextValue<Value extends Primitive = string> {
   value: Value[];
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
   size: MantineSize | (string & {}) | undefined;
@@ -15,9 +22,9 @@ export const CheckboxGroupContext = createContext<CheckboxGroupContextValue | nu
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
-export interface CheckboxGroupProps<Value extends string = string> extends Omit<
+export interface CheckboxGroupProps<Value extends Primitive = string> extends Omit<
   InputWrapperProps,
-  'onChange'
+  'onChange' | 'value' | 'defaultValue'
 > {
   /** `Checkbox` components and any other elements */
   children: React.ReactNode;
@@ -61,7 +68,9 @@ export type CheckboxGroupFactory = Factory<{
   props: CheckboxGroupProps;
   ref: HTMLDivElement;
   stylesNames: CheckboxGroupStylesNames;
-  signature: <Value extends string = string>(props: CheckboxGroupProps<Value>) => React.JSX.Element;
+  signature: <Value extends Primitive = string>(
+    props: CheckboxGroupProps<Value>
+  ) => React.JSX.Element;
 }>;
 
 const defaultProps = {

@@ -135,3 +135,10 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
 FloatingIndicator.displayName = '@mantine/core/FloatingIndicator';
 FloatingIndicator.classes = classes;
 FloatingIndicator.varsResolver = varsResolver;
+
+export namespace FloatingIndicator {
+  export type Props = FloatingIndicatorProps;
+  export type StylesNames = FloatingIndicatorStylesNames;
+  export type CssVariables = FloatingIndicatorCssVariables;
+  export type Factory = FloatingIndicatorFactory;
+}

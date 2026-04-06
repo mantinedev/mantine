@@ -108,3 +108,10 @@ export const Affix = factory<AffixFactory>((_props) => {
 Affix.classes = classes;
 Affix.varsResolver = varsResolver;
 Affix.displayName = '@mantine/core/Affix';
+
+export namespace Affix {
+  export type Props = AffixProps;
+  export type StylesNames = AffixStylesNames;
+  export type CssVariables = AffixCssVariables;
+  export type Factory = AffixFactory;
+}

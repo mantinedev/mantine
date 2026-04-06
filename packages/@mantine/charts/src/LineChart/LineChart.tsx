@@ -303,10 +303,10 @@ export const LineChart = factory<LineChartFactory>((_props) => {
         yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
@@ -478,3 +478,12 @@ export const LineChart = factory<LineChartFactory>((_props) => {
 LineChart.displayName = '@mantine/charts/LineChart';
 LineChart.classes = classes;
 LineChart.varsResolver = varsResolver;
+
+export namespace LineChart {
+  export type Props = LineChartProps;
+  export type CssVariables = LineChartCssVariables;
+  export type Factory = LineChartFactory;
+  export type Series = LineChartSeries;
+  export type StylesNames = LineChartStylesNames;
+  export type CurveType = LineChartCurveType;
+}

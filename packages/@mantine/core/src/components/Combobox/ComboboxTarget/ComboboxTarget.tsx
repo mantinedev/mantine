@@ -83,7 +83,9 @@ export const ComboboxTarget = factory<ComboboxTargetFactory>((props) => {
   });
 
   return (
-    <Popover.Target ref={useMergedRef(ref, ctx.store.targetRef)}>{clonedElement}</Popover.Target>
+    <Popover.Target refProp={refProp} ref={useMergedRef(ref, ctx.store.targetRef)}>
+      {clonedElement}
+    </Popover.Target>
   );
 });
 
