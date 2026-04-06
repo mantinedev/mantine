@@ -21,7 +21,7 @@ export function NotificationContainer({
   onHoverEnd,
   ...others
 }: NotificationContainerProps) {
-  const { autoClose: _autoClose, message, ...notificationProps } = data;
+  const { autoClose: _autoClose, message, onOpen: _onOpen, ...notificationProps } = data;
   const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
   const autoCloseTimeout = useRef<number>(-1);
   const [hovered, setHovered] = useState(false);
