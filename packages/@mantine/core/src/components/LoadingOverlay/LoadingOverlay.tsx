@@ -137,6 +137,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
               className: _overlayProps?.className,
               style: _overlayProps?.style,
             })}
+            darkHidden
             unstyled={unstyled}
             color={overlayProps?.color || theme.white}
           />
