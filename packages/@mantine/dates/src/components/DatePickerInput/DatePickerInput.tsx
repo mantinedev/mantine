@@ -37,6 +37,7 @@ export type DatePickerInputFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
+  size: 'sm',
   valueFormat: 'MMMM D, YYYY',
   closeOnChange: true,
   sortDates: true,
@@ -154,3 +155,9 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
 
 DatePickerInput.classes = { ...PickerInputBase.classes, ...DatePicker.classes };
 DatePickerInput.displayName = '@mantine/dates/DatePickerInput';
+
+export namespace DatePickerInput {
+  export type Props = DatePickerInputProps;
+  export type StylesNames = DatePickerInputStylesNames;
+  export type Factory = DatePickerInputFactory;
+}

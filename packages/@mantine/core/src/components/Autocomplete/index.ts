@@ -13,10 +13,3 @@ export type {
   RenderAutocompleteOption,
   AutocompleteFactory,
 };
-
-export namespace Autocomplete {
-  export type Props = AutocompleteProps;
-  export type StylesNames = AutocompleteStylesNames;
-  export type RenderOption = RenderAutocompleteOption;
-  export type Factory = AutocompleteFactory;
-}

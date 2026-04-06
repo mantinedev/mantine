@@ -13,10 +13,3 @@ export type {
   FloatingIndicatorCssVariables,
   FloatingIndicatorFactory,
 };
-
-export namespace FloatingIndicator {
-  export type Props = FloatingIndicatorProps;
-  export type StylesNames = FloatingIndicatorStylesNames;
-  export type CssVariables = FloatingIndicatorCssVariables;
-  export type Factory = FloatingIndicatorFactory;
-}

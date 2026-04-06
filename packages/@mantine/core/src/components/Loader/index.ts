@@ -18,10 +18,3 @@ export type {
   MantineLoadersRecord,
   MantineLoaderComponent,
 };
-
-export namespace Loader {
-  export type Props = LoaderProps;
-  export type StylesNames = LoaderStylesNames;
-  export type CssVariables = LoaderCssVariables;
-  export type Factory = LoaderFactory;
-}

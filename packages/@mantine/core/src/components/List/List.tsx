@@ -15,9 +15,13 @@ import {
   useStyles,
 } from '../../core';
 import { ListProvider } from './List.context';
-import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
+import {
+  ListItem,
+  ListItemStylesNames,
+  type ListItemProps,
+  type ListItemFactory,
+} from './ListItem/ListItem';
 import classes from './List.module.css';
-
 export type ListStylesNames = 'root' | ListItemStylesNames;
 export type ListCssVariables = {
   root: '--list-fz' | '--list-lh' | '--list-spacing';
@@ -131,3 +135,16 @@ List.classes = classes;
 List.varsResolver = varsResolver;
 List.displayName = '@mantine/core/List';
 List.Item = ListItem;
+
+export namespace List {
+  export type Props = ListProps;
+  export type StylesNames = ListStylesNames;
+  export type CssVariables = ListCssVariables;
+  export type Factory = ListFactory;
+
+  export namespace Item {
+    export type Props = ListItemProps;
+    export type StylesNames = ListItemStylesNames;
+    export type Factory = ListItemFactory;
+  }
+}

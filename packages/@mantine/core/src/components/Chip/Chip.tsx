@@ -20,7 +20,12 @@ import {
   useStyles,
 } from '../../core';
 import { CheckIcon } from '../Checkbox';
-import { ChipGroup, ChipGroupContext } from './ChipGroup/ChipGroup';
+import {
+  ChipGroup,
+  ChipGroupContext,
+  type ChipGroupProps,
+  type ChipGroupContextValue,
+} from './ChipGroup/ChipGroup';
 import classes from './Chip.module.css';
 
 export type ChipStylesNames = 'root' | 'input' | 'iconWrapper' | 'checkIcon' | 'label';
@@ -233,3 +238,20 @@ Chip.classes = classes;
 Chip.varsResolver = varsResolver;
 Chip.displayName = '@mantine/core/Chip';
 Chip.Group = ChipGroup;
+
+export namespace Chip {
+  export type Props = ChipProps;
+  export type StylesNames = ChipStylesNames;
+  export type CssVariables = ChipCssVariables;
+  export type Factory = ChipFactory;
+  export type Variant = ChipVariant;
+
+  export namespace Group {
+    export type Props<
+      Multiple extends boolean = false,
+      Value extends string = string,
+    > = ChipGroupProps<Multiple, Value>;
+
+    export type ContextValue<Value extends string = string> = ChipGroupContextValue<Value>;
+  }
+}

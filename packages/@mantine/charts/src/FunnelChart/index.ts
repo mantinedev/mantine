@@ -15,11 +15,3 @@ export type {
   FunnelChartCssVariables,
   FunnelChartCell,
 };
-
-export namespace FunnelChart {
-  export type Props = FunnelChartProps;
-  export type StylesNames = FunnelChartStylesNames;
-  export type Factory = FunnelChartFactory;
-  export type CssVariables = FunnelChartCssVariables;
-  export type Cell = FunnelChartCell;
-}

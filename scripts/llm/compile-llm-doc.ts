@@ -2118,7 +2118,7 @@ Additional information about ${component} component.`;
 // Run the compiler
 const compiler = new MantineLLMCompiler(config);
 compiler.compile().catch((error) => {
-  // eslint-disable-next-line no-console
+  // oxlint-disable-next-line no-console
   console.error('Failed to compile LLM documentation.', error);
   // Handle compilation error
   process.exit(1);

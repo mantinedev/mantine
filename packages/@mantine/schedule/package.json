@@ -1,6 +1,6 @@
 {
   "name": "@mantine/schedule",
-  "version": "9.0.0-alpha.6",
+  "version": "9.0.1",
   "description": "Schedule Mantine component",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
@@ -35,9 +35,9 @@
     "directory": "packages/@mantine/schedule"
   },
   "peerDependencies": {
-    "@mantine/core": "9.0.0-alpha.6",
-    "@mantine/dates": "9.0.0-alpha.6",
-    "@mantine/hooks": "9.0.0-alpha.6",
+    "@mantine/core": "9.0.1",
+    "@mantine/dates": "9.0.1",
+    "@mantine/hooks": "9.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

@@ -109,3 +109,7 @@ export const Portal = factory<PortalFactory>((props) => {
 });
 
 Portal.displayName = '@mantine/core/Portal';
+
+export namespace Portal {
+  export type Props = PortalProps;
+}

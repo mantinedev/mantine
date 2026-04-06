@@ -26,18 +26,3 @@ export type {
   PillGroupCssVariables,
   PillGroupFactory,
 };
-
-export namespace Pill {
-  export type Props = PillProps;
-  export type StylesNames = PillStylesNames;
-  export type CssVariables = PillCssVariables;
-  export type Factory = PillFactory;
-  export type Variant = PillVariant;
-
-  export namespace Group {
-    export type Props = PillGroupProps;
-    export type StylesNames = PillGroupStylesNames;
-    export type CssVariables = PillGroupCssVariables;
-    export type Factory = PillGroupFactory;
-  }
-}

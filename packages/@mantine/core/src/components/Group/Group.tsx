@@ -135,3 +135,11 @@ export const Group = factory<GroupFactory>((_props) => {
 Group.classes = classes;
 Group.varsResolver = varsResolver;
 Group.displayName = '@mantine/core/Group';
+
+export namespace Group {
+  export type Props = GroupProps;
+  export type StylesNames = GroupStylesNames;
+  export type CssVariables = GroupCssVariables;
+  export type StylesCtx = GroupStylesCtx;
+  export type Factory = GroupFactory;
+}

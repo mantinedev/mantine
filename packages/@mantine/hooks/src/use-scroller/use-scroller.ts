@@ -1,6 +1,4 @@
 import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
-import { mergeRefs } from '../use-merged-ref/use-merged-ref';
-import { useResizeObserver } from '../use-resize-observer/use-resize-observer';
 
 export interface UseScrollerOptions {
   /** Amount of pixels to scroll when calling scroll functions, `200` by default */
@@ -55,7 +53,6 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
   const { scrollAmount = 200, draggable = true, onScrollStateChange } = options;
 
   const containerRef = useRef<T | null>(null);
-  const [resizeRef] = useResizeObserver();
 
   const [canScrollStart, setCanScrollStart] = useState(false);
   const [canScrollEnd, setCanScrollEnd] = useState(false);
@@ -101,7 +98,12 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
     const container = containerRef.current;
     if (container) {
       container.addEventListener('scroll', updateScrollState);
-      return () => container.removeEventListener('scroll', updateScrollState);
+      const resizeObserver = new ResizeObserver(updateScrollState);
+      resizeObserver.observe(container);
+      return () => {
+        container.removeEventListener('scroll', updateScrollState);
+        resizeObserver.disconnect();
+      };
     }
     return undefined;
   }, [updateScrollState]);
@@ -192,12 +194,11 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
   const assignRef: RefCallback<T | null> = useCallback(
     (node) => {
       containerRef.current = node;
-      mergeRefs(resizeRef)(node);
       if (node) {
         updateScrollState();
       }
     },
-    [resizeRef, updateScrollState]
+    [updateScrollState]
   );
 
   return {

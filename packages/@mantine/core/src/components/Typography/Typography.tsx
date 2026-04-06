@@ -42,3 +42,9 @@ export const Typography = factory<TypographyFactory>((_props) => {
 
 Typography.classes = classes;
 Typography.displayName = '@mantine/core/Typography';
+
+export namespace Typography {
+  export type Props = TypographyProps;
+  export type StylesNames = TypographyStylesNames;
+  export type Factory = TypographyFactory;
+}

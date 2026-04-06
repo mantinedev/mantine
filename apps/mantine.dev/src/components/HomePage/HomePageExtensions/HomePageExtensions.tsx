@@ -46,7 +46,7 @@ export function HomePageExtensions() {
 
   const slides = images.map((image) => (
     <Carousel.Slide key={image}>
-      <Image src={image} height={220} radius="md" />
+      <Image src={image} height={220} radius="md" alt="" />
     </Carousel.Slide>
   ));
 

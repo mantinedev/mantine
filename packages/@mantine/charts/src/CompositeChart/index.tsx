@@ -17,12 +17,3 @@ export type {
   CompositeChartSeries,
   CompositeChartCurveType,
 };
-
-export namespace CompositeChart {
-  export type Props = CompositeChartProps;
-  export type StylesNames = CompositeChartStylesNames;
-  export type CssVariables = CompositeChartCssVariables;
-  export type Factory = CompositeChartFactory;
-  export type Series = CompositeChartSeries;
-  export type CurveType = CompositeChartCurveType;
-}

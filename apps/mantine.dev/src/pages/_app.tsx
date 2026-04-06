@@ -59,6 +59,10 @@ export default function App({ Component, pageProps, router }: AppProps) {
     <>
       <Head>
         <title>Mantine</title>
+        <meta
+          name="description"
+          content="A fully featured React components library with 120+ customizable components, hooks, and utilities. Build accessible web applications faster."
+        />
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"

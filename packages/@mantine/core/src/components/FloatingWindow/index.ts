@@ -14,9 +14,3 @@ export type {
   FloatingWindowResizeHandleProps,
   FloatingWindowResizeHandleFactory,
 } from './FloatingWindowResizeHandle';
-
-export namespace FloatingWindow {
-  export type Props = FloatingWindowProps;
-  export type StylesNames = FloatingWindowStylesNames;
-  export type Factory = FloatingWindowFactory;
-}

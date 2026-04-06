@@ -15,11 +15,3 @@ export type {
   RingProgressCssVariables,
   RingProgressSection,
 };
-
-export namespace RingProgress {
-  export type Props = RingProgressProps;
-  export type StylesNames = RingProgressStylesNames;
-  export type Factory = RingProgressFactory;
-  export type CssVariables = RingProgressCssVariables;
-  export type Section = RingProgressSection;
-}

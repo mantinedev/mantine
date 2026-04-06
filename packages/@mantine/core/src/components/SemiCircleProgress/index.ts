@@ -13,10 +13,3 @@ export type {
   SemiCircleProgressCssVariables,
   SemiCircleProgressFactory,
 };
-
-export namespace SemiCircleProgress {
-  export type Props = SemiCircleProgressProps;
-  export type StylesNames = SemiCircleProgressStylesNames;
-  export type CssVariables = SemiCircleProgressCssVariables;
-  export type Factory = SemiCircleProgressFactory;
-}

@@ -153,7 +153,9 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
 
   return (
     <Box {...getStyles('root')} size={size} {...others}>
-      <svg {...getStyles('svg')}>{curves}</svg>
+      <svg {...getStyles('svg')} viewBox={`0 0 ${size} ${size}`}>
+        {curves}
+      </svg>
       {label && <div {...getStyles('label')}>{label}</div>}
     </Box>
   );
@@ -162,3 +164,11 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
 RingProgress.classes = classes;
 RingProgress.varsResolver = varsResolver;
 RingProgress.displayName = '@mantine/core/RingProgress';
+
+export namespace RingProgress {
+  export type Props = RingProgressProps;
+  export type StylesNames = RingProgressStylesNames;
+  export type Factory = RingProgressFactory;
+  export type CssVariables = RingProgressCssVariables;
+  export type Section = RingProgressSection;
+}

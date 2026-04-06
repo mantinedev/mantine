@@ -6,16 +6,17 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '../../core';
-import { ProgressLabel } from './ProgressLabel/ProgressLabel';
+import { ProgressLabel, type ProgressLabelProps } from './ProgressLabel/ProgressLabel';
 import {
   __ProgressRootProps,
   ProgressRoot,
   ProgressRootCssVariables,
   ProgressRootStylesNames,
+  type ProgressRootProps,
 } from './ProgressRoot/ProgressRoot';
-import { ProgressSection } from './ProgressSection/ProgressSection';
+import { ProgressSection, type ProgressSectionProps } from './ProgressSection/ProgressSection';
 import classes from './Progress.module.css';
-
+import type { ProgressContextValue } from './Progress.context';
 export type ProgressStylesNames = ProgressRootStylesNames;
 
 export interface ProgressProps extends __ProgressRootProps, StylesApiProps<ProgressFactory> {
@@ -87,3 +88,22 @@ Progress.displayName = '@mantine/core/Progress';
 Progress.Section = ProgressSection;
 Progress.Root = ProgressRoot;
 Progress.Label = ProgressLabel;
+
+export namespace Progress {
+  export type Props = ProgressProps;
+  export type Factory = ProgressFactory;
+  export type StylesNames = ProgressStylesNames;
+  export type ContextValue = ProgressContextValue;
+
+  export namespace Label {
+    export type Props = ProgressLabelProps;
+  }
+
+  export namespace Root {
+    export type Props = ProgressRootProps;
+  }
+
+  export namespace Section {
+    export type Props = ProgressSectionProps;
+  }
+}

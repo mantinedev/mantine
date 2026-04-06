@@ -20,11 +20,3 @@ export type {
   __CloseButtonProps,
   CloseIconProps,
 };
-
-export namespace CloseButton {
-  export type Props = CloseButtonProps;
-  export type StylesNames = CloseButtonStylesNames;
-  export type Factory = CloseButtonFactory;
-  export type Variant = CloseButtonVariant;
-  export type CssVariables = CloseButtonCssVariables;
-}

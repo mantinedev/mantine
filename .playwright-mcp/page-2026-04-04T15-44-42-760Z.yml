@@ -1,0 +1,17 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - button "Toggle text direction" [ref=e3] [cursor=pointer]:
+      - img [ref=e5]
+    - generic [ref=e8]:
+      - button "Show with progress" [active] [ref=e9] [cursor=pointer]:
+        - generic [ref=e11]: Show with progress
+      - button "Show with 2s progress" [ref=e12] [cursor=pointer]:
+        - generic [ref=e14]: Show with 2s progress
+      - button "Show without progress (override)" [ref=e15] [cursor=pointer]:
+        - generic [ref=e17]: Show without progress (override)
+  - alert [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e23]: Auto close progress
+      - generic [ref=e24]: Watch the progress bar!
+    - button [ref=e25] [cursor=pointer]:
+      - img [ref=e26]
