@@ -20,20 +20,3 @@ export type {
   RangeSliderFactory,
   SliderMark,
 };
-
-export namespace Slider {
-  export type Props = SliderProps;
-  export type StylesNames = SliderStylesNames;
-  export type CssVariables = SliderCssVariables;
-  export type Factory = SliderFactory;
-  export type Mark = SliderMark;
-}
-
-export namespace RangeSlider {
-  export type Props = RangeSliderProps;
-  export type Value = RangeSliderValue;
-  export type Factory = RangeSliderFactory;
-  export type StylesNames = SliderStylesNames;
-  export type CssVariables = SliderCssVariables;
-  export type Mark = SliderMark;
-}

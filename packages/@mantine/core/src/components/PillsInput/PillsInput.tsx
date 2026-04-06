@@ -2,9 +2,13 @@ import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { PillsInputContext } from './PillsInput.context';
-import { PillsInputField } from './PillsInputField/PillsInputField';
-
+import { PillsInputContext, type PillsInputContextValue } from './PillsInput.context';
+import {
+  PillsInputField,
+  type PillsInputFieldProps,
+  type PillsInputFieldFactory,
+  type PillsInputFieldStylesNames,
+} from './PillsInputField/PillsInputField';
 export interface PillsInputProps
   extends
     BoxProps,
@@ -80,3 +84,15 @@ export const PillsInput = factory<PillsInputFactory>((_props) => {
 PillsInput.displayName = '@mantine/core/PillsInput';
 PillsInput.classes = InputBase.classes;
 PillsInput.Field = PillsInputField;
+
+export namespace PillsInput {
+  export type Props = PillsInputProps;
+  export type Factory = PillsInputFactory;
+  export type ContextValue = PillsInputContextValue;
+
+  export namespace Field {
+    export type Props = PillsInputFieldProps;
+    export type Factory = PillsInputFieldFactory;
+    export type StylesNames = PillsInputFieldStylesNames;
+  }
+}

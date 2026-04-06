@@ -116,3 +116,11 @@ export const ThemeIcon = factory<ThemeIconFactory>((_props) => {
 ThemeIcon.classes = classes;
 ThemeIcon.varsResolver = varsResolver;
 ThemeIcon.displayName = '@mantine/core/ThemeIcon';
+
+export namespace ThemeIcon {
+  export type Props = ThemeIconProps;
+  export type StylesNames = ThemeIconStylesNames;
+  export type Factory = ThemeIconFactory;
+  export type Variant = ThemeIconVariant;
+  export type CssVariables = ThemeIconCssVariables;
+}

@@ -19,7 +19,6 @@ import {
   PaginationRootStylesNames,
 } from './PaginationRoot/PaginationRoot';
 import classes from './Pagination.module.css';
-
 export type PaginationStylesNames = PaginationRootStylesNames;
 export type PaginationCssVariables = PaginationRootCssVariables;
 

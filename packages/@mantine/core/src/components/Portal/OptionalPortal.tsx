@@ -31,3 +31,7 @@ export const OptionalPortal = factory<OptionalPortalFactory>(
 );
 
 OptionalPortal.displayName = '@mantine/core/OptionalPortal';
+
+export namespace OptionalPortal {
+  export type Props = OptionalPortalProps;
+}

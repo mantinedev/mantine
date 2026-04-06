@@ -13,10 +13,3 @@ export type {
   NotificationFactory,
   NotificationCssVariables,
 };
-
-export namespace Notification {
-  export type Props = NotificationProps;
-  export type StylesNames = NotificationStylesNames;
-  export type Factory = NotificationFactory;
-  export type CssVariables = NotificationCssVariables;
-}

@@ -20,7 +20,7 @@ export function RichTextEditorColorControl(props: RichTextEditorColorControlProp
       active={currentColor === color}
       aria-label={label}
       title={label}
-      onClick={() => (editor?.chain() as any).focus().setColor(color).run()}
+      onClick={() => (editor?.chain() as any)?.focus().setColor(color).run()}
     >
       <ColorSwatch color={color} size={14} />
     </RichTextEditorControl>

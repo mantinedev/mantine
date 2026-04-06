@@ -35,28 +35,3 @@ export type {
   RichTextEditorControlsGroupProps,
   RichTextEditorLabels,
 };
-
-export namespace RichTextEditor {
-  export type Props = RichTextEditorProps;
-  export type StylesNames = RichTextEditorStylesNames;
-  export type Factory = RichTextEditorFactory;
-
-  export namespace Toolbar {
-    export type Props = RichTextEditorToolbarProps;
-  }
-
-  export namespace Control {
-    export type Props = RichTextEditorControlProps;
-    export type ColorProps = RichTextEditorColorControlProps;
-    export type LinkProps = RichTextEditorLinkControlProps;
-    export type SourceCodeProps = RichTextEditorSourceCodeControlProps;
-  }
-
-  export namespace Content {
-    export type Props = RichTextEditorContentProps;
-  }
-
-  export namespace ControlsGroup {
-    export type Props = RichTextEditorControlsGroupProps;
-  }
-}

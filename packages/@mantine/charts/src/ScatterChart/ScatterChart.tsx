@@ -203,10 +203,10 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
         strokeWidth={1}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
@@ -372,3 +372,11 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
 ScatterChart.displayName = '@mantine/charts/ScatterChart';
 ScatterChart.classes = classes;
 ScatterChart.varsResolver = varsResolver;
+
+export namespace ScatterChart {
+  export type Props = ScatterChartProps;
+  export type StylesNames = ScatterChartStylesNames;
+  export type CssVariables = ScatterChartCssVariables;
+  export type Factory = ScatterChartFactory;
+  export type Series = ScatterChartSeries;
+}

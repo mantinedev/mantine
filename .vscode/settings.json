@@ -1,6 +1,8 @@
 {
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
+  "oxc.lint.enable": true,
+  "eslint.enable": false,
   "[typescript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },

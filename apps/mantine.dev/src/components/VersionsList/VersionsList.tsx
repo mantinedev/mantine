@@ -5,7 +5,7 @@ import { allVersions } from '@mantinex/mantine-meta';
 import classes from './VersionsList.module.css';
 
 function getMinorXVersion(version: string) {
-  return `${version.split('.').slice(0, 2).join('.')}.XIcon`;
+  return `${version.split('.').slice(0, 2).join('.')}.X`;
 }
 
 export function VersionsList() {

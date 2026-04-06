@@ -53,7 +53,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
       </Timeline.Item>
 
       <Timeline.Item
-        title="CodeIcon review"
+        title="Code review"
         bullet={displayIcon ? <ChatCircleDotsIcon size={13} /> : null}
       >
         <Text c="dimmed" size="sm">

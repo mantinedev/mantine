@@ -19,20 +19,3 @@ export type {
   ChipGroupProps,
   ChipGroupContextValue,
 };
-
-export namespace Chip {
-  export type Props = ChipProps;
-  export type StylesNames = ChipStylesNames;
-  export type CssVariables = ChipCssVariables;
-  export type Factory = ChipFactory;
-  export type Variant = ChipVariant;
-
-  export namespace Group {
-    export type Props<
-      Multiple extends boolean = false,
-      Value extends string = string,
-    > = ChipGroupProps<Multiple, Value>;
-
-    export type ContextValue<Value extends string = string> = ChipGroupContextValue<Value>;
-  }
-}

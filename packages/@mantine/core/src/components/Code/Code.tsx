@@ -83,3 +83,10 @@ export const Code = factory<CodeFactory>((_props) => {
 Code.classes = classes;
 Code.varsResolver = varsResolver;
 Code.displayName = '@mantine/core/Code';
+
+export namespace Code {
+  export type Props = CodeProps;
+  export type CssVariables = CodeCssVariables;
+  export type Factory = CodeFactory;
+  export type StylesNames = CodeStylesNames;
+}

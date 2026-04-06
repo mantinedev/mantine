@@ -46,3 +46,11 @@ export const Anchor = polymorphicFactory<AnchorFactory>((props) => {
 
 Anchor.classes = classes;
 Anchor.displayName = '@mantine/core/Anchor';
+
+export namespace Anchor {
+  export type Props = AnchorProps;
+  export type StylesNames = AnchorStylesNames;
+  export type CssVariables = AnchorCssVariables;
+  export type Factory = AnchorFactory;
+  export type Variant = AnchorVariant;
+}

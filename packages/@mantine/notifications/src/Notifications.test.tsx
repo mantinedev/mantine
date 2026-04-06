@@ -363,6 +363,7 @@ describe('@mantine/core/Notifications', () => {
     expect(screen.getByText('Scroll stays disabled')).toBeInTheDocument();
   });
 
+<<<<<<< HEAD
   it('renders custom notification with renderNotification prop', () => {
     jest.useFakeTimers();
     const store = createNotificationsStore();
@@ -499,5 +500,44 @@ describe('@mantine/core/Notifications', () => {
     const style0 = alerts[0].style;
     const style1 = alerts[1].style;
     expect(Number(style0.zIndex)).toBeLessThan(Number(style1.zIndex));
+  });
+
+  it('calls onOpen when notification is mounted', async () => {
+    const onOpen = jest.fn();
+    const consoleError = jest.spyOn(console, 'error');
+
+    render(<Notifications />);
+    act(() => {
+      notifications.show({
+        message: 'open test',
+        onOpen,
+      });
+    });
+
+    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(consoleError).not.toHaveBeenCalledWith(
+      expect.stringContaining('Unknown event handler property `onOpen`'),
+      expect.anything()
+    );
+    consoleError.mockRestore();
+  });
+
+  it('calls onClose when notification is hidden', async () => {
+    const onClose = jest.fn();
+    render(<Notifications />);
+
+    let id: string;
+    act(() => {
+      id = notifications.show({
+        message: 'close test',
+        onClose,
+      });
+    });
+
+    expect(screen.getByText('close test')).toBeInTheDocument();
+    act(() => {
+      notifications.hide(id);
+    });
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

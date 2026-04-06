@@ -13,10 +13,3 @@ export type {
   OverflowListStylesNames,
   OverflowListCssVariables,
 };
-
-export namespace OverflowList {
-  export type Props = OverflowListProps;
-  export type Factory = OverflowListFactory;
-  export type StylesNames = OverflowListStylesNames;
-  export type CssVariables = OverflowListCssVariables;
-}

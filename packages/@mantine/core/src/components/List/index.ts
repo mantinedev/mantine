@@ -16,16 +16,3 @@ export type {
   ListItemFactory,
   ListContextValue,
 };
-
-export namespace List {
-  export type Props = ListProps;
-  export type StylesNames = ListStylesNames;
-  export type CssVariables = ListCssVariables;
-  export type Factory = ListFactory;
-
-  export namespace Item {
-    export type Props = ListItemProps;
-    export type StylesNames = ListItemStylesNames;
-    export type Factory = ListItemFactory;
-  }
-}

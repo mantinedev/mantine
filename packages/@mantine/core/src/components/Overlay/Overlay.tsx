@@ -123,3 +123,10 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props) => {
 Overlay.classes = classes;
 Overlay.varsResolver = varsResolver;
 Overlay.displayName = '@mantine/core/Overlay';
+
+export namespace Overlay {
+  export type Props = OverlayProps;
+  export type StylesNames = OverlayStylesNames;
+  export type Factory = OverlayFactory;
+  export type CssVariables = OverlayCssVariables;
+}

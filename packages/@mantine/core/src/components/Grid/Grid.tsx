@@ -12,11 +12,10 @@ import {
   useRandomClassName,
   useStyles,
 } from '../../core';
-import { GridBreakpoints, GridProvider } from './Grid.context';
-import { GridCol } from './GridCol/GridCol';
+import { GridBreakpoints, GridProvider, type GridContextValue } from './Grid.context';
+import { GridCol, type GridColProps } from './GridCol/GridCol';
 import { GridVariables } from './GridVariables';
 import classes from './Grid.module.css';
-
 export type GridStylesNames = 'root' | 'col' | 'inner' | 'container';
 export type GridCssVariables = {
   root: '--grid-justify' | '--grid-align' | '--grid-overflow';
@@ -143,3 +142,16 @@ Grid.classes = classes;
 Grid.varsResolver = varsResolver;
 Grid.displayName = '@mantine/core/Grid';
 Grid.Col = GridCol;
+
+export namespace Grid {
+  export type Props = GridProps;
+  export type Factory = GridFactory;
+  export type StylesNames = GridStylesNames;
+  export type CssVariables = GridCssVariables;
+  export type ColProps = GridColProps;
+  export type ContextValue = GridContextValue;
+
+  export namespace Col {
+    export type Props = GridColProps;
+  }
+}

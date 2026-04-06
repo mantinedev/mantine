@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 
 import { ImageIcon, UploadSimpleIcon, XIcon } from '@phosphor-icons/react';
 import { Group, Text } from '@mantine/core';

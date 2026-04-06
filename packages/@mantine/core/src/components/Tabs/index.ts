@@ -30,27 +30,3 @@ export type {
   TabsListStylesNames,
   TabsContextValue,
 };
-
-export namespace Tabs {
-  export type Props = TabsProps;
-  export type StylesNames = TabsStylesNames;
-  export type CssVariables = TabsCssVariables;
-  export type Factory = TabsFactory;
-  export type Variant = TabsVariant;
-  export type ContextValue = TabsContextValue;
-
-  export namespace Tab {
-    export type Props = TabsTabProps;
-    export type StylesNames = TabsTabStylesNames;
-  }
-
-  export namespace Panel {
-    export type Props = TabsPanelProps;
-    export type StylesNames = TabsPanelStylesNames;
-  }
-
-  export namespace List {
-    export type Props = TabsListProps;
-    export type StylesNames = TabsListStylesNames;
-  }
-}

@@ -23,7 +23,7 @@ import {
   VisuallyHidden,
 } from '@mantine/core';
 import { clamp, useId } from '@mantine/hooks';
-import { CarouselProvider } from './Carousel.context';
+import { CarouselProvider, type CarouselContextValue } from './Carousel.context';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
 import {
   CarouselContainerVariables,
@@ -491,3 +491,11 @@ Carousel.classes = classes;
 Carousel.varsResolver = varsResolver;
 Carousel.displayName = '@mantine/carousel/Carousel';
 Carousel.Slide = CarouselSlide;
+
+export namespace Carousel {
+  export type Props = CarouselProps;
+  export type CssVariables = CarouselCssVariables;
+  export type Factory = CarouselFactory;
+  export type StylesNames = CarouselStylesNames;
+  export type ContextValue = CarouselContextValue;
+}
