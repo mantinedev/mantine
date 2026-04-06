@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffectEvent, useState } from 'react';
 import { DragContextValue } from '../components/DragContext/DragContext';
 import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { useDragState } from './use-drag-state';
@@ -87,14 +87,19 @@ export function useDragDropHandlers<T = any>(
     onExternalDrop,
   } = options;
 
+  const stableOnEventDrop = useEffectEvent(onEventDrop || (() => {}));
+  const stableOnEventDragStart = useEffectEvent(onEventDragStart || (() => {}));
+  const stableOnEventDragEnd = useEffectEvent(onEventDragEnd || (() => {}));
+  const stableOnExternalDrop = useEffectEvent(onExternalDrop || (() => {}));
+
   const dragState = useDragState();
   const [dropTarget, setDropTarget] = useState<T | null>(null);
 
   const handleDragEnd = useCallback(() => {
     dragState.endDrag();
     setDropTarget(null);
-    onEventDragEnd?.();
-  }, [dragState, onEventDragEnd]);
+    stableOnEventDragEnd();
+  }, [dragState]);
 
   const handleDragStart = useCallback(
     (event: ScheduleEventData) => {
@@ -102,9 +107,9 @@ export function useDragDropHandlers<T = any>(
         return;
       }
       dragState.startDrag(event);
-      onEventDragStart?.(event);
+      stableOnEventDragStart(event);
     },
-    [enabled, mode, dragState, onEventDragStart]
+    [enabled, mode, dragState]
   );
 
   const handleDragOver = useCallback(
@@ -148,7 +153,7 @@ export function useDragDropHandlers<T = any>(
 
       if (isInternalDrag && enabled && dragState.state.draggedEvent && onEventDrop) {
         const { start, end } = calculateDropTarget(target, dragState.state.draggedEvent);
-        onEventDrop({
+        stableOnEventDrop({
           eventId: dragState.state.draggedEventId!,
           newStart: dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
           newEnd: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
@@ -162,14 +167,23 @@ export function useDragDropHandlers<T = any>(
         if (dragState.state.isDragging) {
           handleDragEnd();
         }
-        onExternalDrop(event, target);
+        stableOnExternalDrop(event, target);
         setDropTarget(null);
         return;
       }
 
       setDropTarget(null);
     },
-    [enabled, dragState.state, onEventDrop, onExternalDrop, calculateDropTarget, handleDragEnd]
+    [
+      enabled,
+      dragState.state,
+      onEventDrop,
+      onExternalDrop,
+      calculateDropTarget,
+      handleDragEnd,
+      stableOnEventDrop,
+      stableOnExternalDrop,
+    ]
   );
 
   const isDraggableEvent = useCallback(
