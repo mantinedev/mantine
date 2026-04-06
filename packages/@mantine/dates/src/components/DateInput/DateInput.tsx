@@ -337,3 +337,9 @@ export const DateInput = factory<DateInputFactory>((_props) => {
 
 DateInput.classes = { ...Input.classes, ...Calendar.classes };
 DateInput.displayName = '@mantine/dates/DateInput';
+
+export namespace DateInput {
+  export type Props = DateInputProps;
+  export type StylesNames = DateInputStylesNames;
+  export type Factory = DateInputFactory;
+}

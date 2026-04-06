@@ -112,3 +112,12 @@ export const Title = factory<TitleFactory>((_props) => {
 Title.classes = classes;
 Title.varsResolver = varsResolver;
 Title.displayName = '@mantine/core/Title';
+
+export namespace Title {
+  export type Props = TitleProps;
+  export type Order = TitleOrder;
+  export type Size = TitleSize;
+  export type StylesNames = TitleStylesNames;
+  export type CssVariables = TitleCssVariables;
+  export type Factory = TitleFactory;
+}

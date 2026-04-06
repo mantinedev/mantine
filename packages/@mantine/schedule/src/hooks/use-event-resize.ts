@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { parseTimeString } from '../utils/parse-time-string/parse-time-string';
 
@@ -45,8 +45,7 @@ export function useEventResize({
 }: UseEventResizeInput) {
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
   const resizeRef = useRef<ResizeState | null>(null);
-  const onEventResizeRef = useRef(onEventResize);
-  onEventResizeRef.current = onEventResize;
+  const stableOnEventResize = useEffectEvent(onEventResize || (() => {}));
 
   const parsedStartTime = parseTimeString(startTime);
   const parsedEndTime = parseTimeString(endTime);
@@ -167,7 +166,7 @@ export function useEventResize({
 
     const handlePointerUp = () => {
       const state = resizeRef.current;
-      if (state && onEventResizeRef.current) {
+      if (state) {
         if (
           state.currentTop !== state.originalTop ||
           state.currentHeight !== state.originalHeight
@@ -183,7 +182,7 @@ export function useEventResize({
             newEnd = percentToDateTime(state.currentTop + state.currentHeight, state.eventDate);
           }
 
-          onEventResizeRef.current({
+          stableOnEventResize({
             eventId: state.eventId,
             newStart,
             newEnd,

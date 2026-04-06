@@ -322,10 +322,10 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
         yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
@@ -501,3 +501,12 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
 AreaChart.classes = classes;
 AreaChart.varsResolver = varsResolver;
 AreaChart.displayName = '@mantine/charts/AreaChart';
+
+export namespace AreaChart {
+  export type Props = AreaChartProps;
+  export type StylesNames = AreaChartStylesNames;
+  export type Factory = AreaChartFactory;
+  export type Type = AreaChartType;
+  export type Series = AreaChartSeries;
+  export type CurveType = AreaChartCurveType;
+}

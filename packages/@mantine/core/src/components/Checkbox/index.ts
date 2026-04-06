@@ -54,33 +54,3 @@ export type {
   CheckboxIconProps,
   CheckIconProps,
 };
-
-export namespace Checkbox {
-  export type Props = CheckboxProps;
-  export type StylesNames = CheckboxStylesNames;
-  export type CssVariables = CheckboxCssVariables;
-  export type Factory = CheckboxFactory;
-  export type Variant = CheckboxVariant;
-  export type IconComponent = CheckboxIconComponent;
-
-  export namespace Group {
-    export type Props = CheckboxGroupProps;
-    export type StylesNames = CheckboxGroupStylesNames;
-    export type Factory = CheckboxGroupFactory;
-  }
-
-  export namespace Indicator {
-    export type Props = CheckboxIndicatorProps;
-    export type StylesNames = CheckboxIndicatorStylesNames;
-    export type CssVariables = CheckboxIndicatorCssVariables;
-    export type Factory = CheckboxIndicatorFactory;
-    export type Variant = CheckboxIndicatorVariant;
-  }
-
-  export namespace Card {
-    export type Props = CheckboxCardProps;
-    export type StylesNames = CheckboxCardStylesNames;
-    export type CssVariables = CheckboxCardCssVariables;
-    export type Factory = CheckboxCardFactory;
-  }
-}

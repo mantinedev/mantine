@@ -15,11 +15,3 @@ export type {
   TableOfContentsFactory,
   TableOfContentsVariant,
 };
-
-export namespace TableOfContents {
-  export type Props = TableOfContentsProps;
-  export type StylesNames = TableOfContentsStylesNames;
-  export type CssVariables = TableOfContentsCssVariables;
-  export type Factory = TableOfContentsFactory;
-  export type Variant = TableOfContentsVariant;
-}

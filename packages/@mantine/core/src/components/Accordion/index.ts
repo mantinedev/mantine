@@ -36,24 +36,3 @@ export type {
   AccordionContextValue,
   AccordionItemContextValue,
 };
-
-export namespace Accordion {
-  export type Props = AccordionProps;
-  export type StylesNames = AccordionStylesNames;
-  export type CssVariables = AccordionCssVariables;
-  export type Factory = AccordionFactory;
-  export type Variant = AccordionVariant;
-
-  export namespace Control {
-    export type Props = AccordionControlProps;
-  }
-
-  export namespace Item {
-    export type Props = AccordionItemProps;
-    export type Context = AccordionItemContextValue;
-  }
-
-  export namespace Panel {
-    export type Props = AccordionPanelProps;
-  }
-}

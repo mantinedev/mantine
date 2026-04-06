@@ -22,11 +22,10 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { StepperProvider } from './Stepper.context';
+import { StepperProvider, type StepperContextValue } from './Stepper.context';
 import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
 import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
 import classes from './Stepper.module.css';
-
 export type StepFragmentComponent = React.FC<{ step: number }>;
 
 export type StepperStylesNames =
@@ -40,6 +39,7 @@ export type StepperStylesNames =
   | 'stepWrapper'
   | 'stepIcon'
   | 'stepCompletedIcon'
+  | 'stepIconContent'
   | 'stepBody'
   | 'stepLabel'
   | 'stepDescription';
@@ -293,3 +293,20 @@ Stepper.varsResolver = varsResolver;
 Stepper.displayName = '@mantine/core/Stepper';
 Stepper.Completed = StepperCompleted;
 Stepper.Step = StepperStep;
+
+export namespace Stepper {
+  export type Props = StepperProps;
+  export type StylesNames = StepperStylesNames;
+  export type CssVariables = StepperCssVariables;
+  export type Factory = StepperFactory;
+  export type Step = StepFragmentComponent;
+  export type ContextValue = StepperContextValue;
+
+  export namespace Step {
+    export type Props = StepperStepProps;
+  }
+
+  export namespace Completed {
+    export type Props = StepperCompletedProps;
+  }
+}

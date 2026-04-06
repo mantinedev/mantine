@@ -119,3 +119,10 @@ export const Blockquote = factory<BlockquoteFactory>((_props) => {
 Blockquote.classes = classes;
 Blockquote.varsResolver = varsResolver;
 Blockquote.displayName = '@mantine/core/Blockquote';
+
+export namespace Blockquote {
+  export type Props = BlockquoteProps;
+  export type StylesNames = BlockquoteStylesNames;
+  export type CssVariables = BlockquoteCssVariables;
+  export type Factory = BlockquoteFactory;
+}

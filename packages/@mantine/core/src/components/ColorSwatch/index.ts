@@ -13,10 +13,3 @@ export type {
   ColorSwatchFactory,
   ColorSwatchStylesNames,
 };
-
-export namespace ColorSwatch {
-  export type Props = ColorSwatchProps;
-  export type CssVariables = ColorSwatchCssVariables;
-  export type Factory = ColorSwatchFactory;
-  export type StylesNames = ColorSwatchStylesNames;
-}

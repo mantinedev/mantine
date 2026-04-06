@@ -114,7 +114,7 @@ export function ColorsInput({
           radius="md"
           onClick={() => clipboard.copy(window.location.href)}
         >
-          {clipboard.copied ? 'Copied' : 'CopyIcon URL'}
+          {clipboard.copied ? 'Copied' : 'Copy URL'}
         </Button>
       </div>
       <div className={classes.presets}>

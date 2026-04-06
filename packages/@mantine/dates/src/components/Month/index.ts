@@ -8,10 +8,3 @@ export { isSameMonth } from './is-same-month/is-same-month';
 export { Month } from './Month';
 
 export type { MonthProps, MonthSettings, MonthStylesNames, MonthFactory };
-
-export namespace Month {
-  export type Props = MonthProps;
-  export type Settings = MonthSettings;
-  export type StylesNames = MonthStylesNames;
-  export type Factory = MonthFactory;
-}

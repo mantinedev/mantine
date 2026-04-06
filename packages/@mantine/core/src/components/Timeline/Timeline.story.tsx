@@ -54,7 +54,7 @@ export function Usage() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
+        <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -115,7 +115,7 @@ export function AutoContrast() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
+        <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -176,7 +176,7 @@ export function Unstyled() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="CodeIcon review" bullet={<ChatCircleDotsIcon size={12} />}>
+        <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -233,7 +233,7 @@ export function WithoutIcons() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="CodeIcon review">
+        <Timeline.Item title="Code review">
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker
@@ -290,7 +290,7 @@ export function AlignRight() {
           </Text>
         </Timeline.Item>
 
-        <Timeline.Item title="CodeIcon review">
+        <Timeline.Item title="Code review">
           <Text c="dimmed" size="sm">
             <Text variant="link" component="span" inherit>
               Robert Gluesticker

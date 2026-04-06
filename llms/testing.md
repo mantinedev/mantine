@@ -15,7 +15,7 @@ npx jest --testNamePattern="Button"
 npm test -- Button.test.tsx
 ```
 
-The `npm test` command runs multiple checks (prettier, syncpack, typecheck, lint) before running tests, which is slow and unnecessary when you just want to run tests.
+The `npm test` command runs multiple checks (format, syncpack, typecheck, lint) before running tests, which is slow and unnecessary when you just want to run tests.
 
 ## General Principles
 

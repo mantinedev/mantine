@@ -1,4 +1,3 @@
-import { Primitive } from '../../core';
 import type {
   SegmentedControlCssVariables,
   SegmentedControlFactory,
@@ -16,11 +15,3 @@ export type {
   SegmentedControlProps,
   SegmentedControlStylesNames,
 };
-
-export namespace SegmentedControl {
-  export type CssVariables = SegmentedControlCssVariables;
-  export type Factory = SegmentedControlFactory;
-  export type Item<Value extends Primitive = string> = SegmentedControlItem<Value>;
-  export type Props<Value extends Primitive = string> = SegmentedControlProps<Value>;
-  export type StylesNames = SegmentedControlStylesNames;
-}

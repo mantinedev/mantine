@@ -12,6 +12,7 @@ export const StepperStylesApi: StylesApiData<StepperFactory> = {
     step: 'Step control button',
     stepIcon: 'Step icon wrapper',
     stepCompletedIcon: 'Completed step icon, rendered within stepIcon',
+    stepIconContent: 'Step icon content wrapper for non-completed steps, rendered within stepIcon',
     stepBody: 'Contains stepLabel and stepDescription',
     stepLabel: 'Step label',
     stepDescription: 'Step description',

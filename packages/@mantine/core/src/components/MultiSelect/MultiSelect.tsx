@@ -244,6 +244,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     attributes,
     clearSearchOnChange,
     openOnFocus,
+    loading,
+    loadingPosition,
     ...others
   } = props;
 
@@ -449,6 +451,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
             leftSectionWidth={leftSectionWidth}
             leftSectionPointerEvents={leftSectionPointerEvents}
             leftSectionProps={leftSectionProps}
+            loading={loading}
+            loadingPosition={loadingPosition}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}
@@ -549,3 +553,9 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
 MultiSelect.classes = { ...InputBase.classes, ...Combobox.classes };
 MultiSelect.displayName = '@mantine/core/MultiSelect';
+
+export namespace MultiSelect {
+  export type Props<Value extends Primitive = string> = MultiSelectProps<Value>;
+  export type StylesNames = MultiSelectStylesNames;
+  export type Factory = MultiSelectFactory;
+}

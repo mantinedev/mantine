@@ -214,3 +214,8 @@ export const FileInput = genericFactory<FileInputFactory>((_props) => {
 
 FileInput.classes = InputBase.classes;
 FileInput.displayName = '@mantine/core/FileInput';
+
+export namespace FileInput {
+  export type Props<Multiple extends boolean = false> = FileInputProps<Multiple>;
+  export type Factory = FileInputFactory;
+}

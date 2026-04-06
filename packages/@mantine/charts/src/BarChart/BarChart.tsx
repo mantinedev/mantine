@@ -321,10 +321,10 @@ export const BarChart = factory<BarChartFactory>((_props) => {
         yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
@@ -496,3 +496,12 @@ export const BarChart = factory<BarChartFactory>((_props) => {
 BarChart.displayName = '@mantine/charts/BarChart';
 BarChart.classes = classes;
 BarChart.varsResolver = varsResolver;
+
+export namespace BarChart {
+  export type Props = BarChartProps;
+  export type CssVariables = BarChartCssVariables;
+  export type Factory = BarChartFactory;
+  export type Series = BarChartSeries;
+  export type StylesNames = BarChartStylesNames;
+  export type Type = BarChartType;
+}

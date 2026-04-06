@@ -260,3 +260,12 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
 DatePicker.classes = Calendar.classes;
 DatePicker.varsResolver = varsResolver;
 DatePicker.displayName = '@mantine/dates/DatePicker';
+
+export namespace DatePicker {
+  export type Props<Type extends DatePickerType> = DatePickerProps<Type>;
+  export type BaseProps = DatePickerBaseProps;
+  export type StylesNames = DatePickerStylesNames;
+  export type Factory = DatePickerFactory;
+  export type Preset<Type extends DatePickerType> = DatePickerPreset<Type>;
+  export type CssVariables = DatePickerCssVariables;
+}

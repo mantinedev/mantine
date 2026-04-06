@@ -253,3 +253,11 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
 CalendarHeader.classes = classes;
 CalendarHeader.varsResolver = varsResolver;
 CalendarHeader.displayName = '@mantine/dates/CalendarHeader';
+
+export namespace CalendarHeader {
+  export type Props = CalendarHeaderProps;
+  export type StylesNames = CalendarHeaderStylesNames;
+  export type CssVariables = CalendarHeaderCssVariables;
+  export type Settings = CalendarHeaderSettings;
+  export type Factory = CalendarHeaderFactory;
+}

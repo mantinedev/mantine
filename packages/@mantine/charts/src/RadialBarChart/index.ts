@@ -13,10 +13,3 @@ export type {
   RadialBarChartCssVariables,
   RadialBarChartFactory,
 };
-
-export namespace RadialBarChart {
-  export type Props = RadialBarChartProps;
-  export type StylesNames = RadialBarChartStylesNames;
-  export type CssVariables = RadialBarChartCssVariables;
-  export type Factory = RadialBarChartFactory;
-}

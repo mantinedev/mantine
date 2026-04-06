@@ -43,12 +43,12 @@ export function RichTextEditorColorPickerControl(props: RichTextEditorColorPicke
   const currentColor = editor?.getAttributes('textStyle').color || 'var(--mantine-color-text)';
 
   const handleChange = (value: string, shouldClose = true) => {
-    (editor?.chain() as any).focus().setColor(value).run();
+    (editor?.chain() as any)?.focus().setColor(value).run();
     shouldClose && close();
   };
 
   const handleClear = () => {
-    (editor?.chain() as any).focus().unsetColor().run();
+    (editor?.chain() as any)?.focus().unsetColor().run();
     close();
   };
 

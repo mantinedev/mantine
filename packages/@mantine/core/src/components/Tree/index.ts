@@ -23,11 +23,3 @@ export type {
   UseTreeReturnType,
   CheckedNodeStatus,
 };
-
-export namespace Tree {
-  export type Props = TreeProps;
-  export type StylesNames = TreeStylesNames;
-  export type Factory = TreeFactory;
-  export type NodeData = TreeNodeData;
-  export type RenderNodePayload = RenderTreeNodePayload;
-}
