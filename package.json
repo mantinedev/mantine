@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.13.0",
   "license": "MIT",
@@ -210,6 +210,11 @@
     "wrangler": "^4.78.0",
     "yargs": "^18.0.0",
     "zx": "^8.8.5"
+  },
+  "dependenciesMeta": {
+    "sharp": {
+      "built": false
+    }
   },
   "resolutions": {
     "@babel/core": "7.26.0",
