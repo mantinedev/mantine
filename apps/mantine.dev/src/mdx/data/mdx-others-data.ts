@@ -73,18 +73,6 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     docs: 'x/nprogress.mdx',
   },
 
-  CodeHighlight: {
-    title: 'CodeHighlight',
-    package: '@mantine/code-highlight',
-    slug: '/x/code-highlight',
-    props: ['CodeHighlight', 'CodeHighlightTabs', 'InlineCodeHighlight'],
-    styles: ['CodeHighlight', 'CodeHighlightTabs', 'InlineCodeHighlight'],
-    description: 'Highlight code with shiki or highlight.js',
-    source: '@mantine/code-highlight/src',
-    license: 'MIT',
-    docs: 'x/code-highlight.mdx',
-  },
-
   Modals: {
     title: 'Modals manager',
     package: '@mantine/modals',

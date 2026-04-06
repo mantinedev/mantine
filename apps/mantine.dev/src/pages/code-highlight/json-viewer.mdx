@@ -1,0 +1,95 @@
+import { JsonViewerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.JsonViewer);
+
+## Usage
+
+`JsonViewer` is an interactive component for viewing complex JSON structures.
+It supports expand/collapse, type indicators, copy to clipboard, and many other features.
+
+<Demo data={JsonViewerDemos.usage} />
+
+## Default expand depth
+
+Use `defaultExpandDepth` prop to control how many levels are expanded by default.
+Set it to `0` to collapse all nodes, or to a higher number to expand more levels:
+
+<Demo data={JsonViewerDemos.expandDepth} />
+
+## Root name
+
+Use `rootName` prop to display a label for the root node. Set it to `false` (default) to hide it:
+
+<Demo data={JsonViewerDemos.rootName} />
+
+## Expand all / collapse all controls
+
+Set `withControls` prop to display expand all and collapse all buttons:
+
+<Demo data={JsonViewerDemos.controls} />
+
+## Type badges and size
+
+Set `withTypes` prop to display type badges next to values and `withSize` prop
+to display the number of items in arrays and objects:
+
+<Demo data={JsonViewerDemos.withTypes} />
+
+## Copy button
+
+Set `withCopy` prop to display a copy to clipboard button:
+
+<Demo data={JsonViewerDemos.withCopy} />
+
+## Collapse long strings
+
+Use `collapseStringsAfterLength` prop to truncate long strings. Truncated strings
+display a "show more" button that reveals the full value:
+
+<Demo data={JsonViewerDemos.collapseStrings} />
+
+## Sort keys
+
+Set `sortKeys` prop to sort object keys alphabetically. You can also pass a custom
+comparator function:
+
+<Demo data={JsonViewerDemos.sortKeys} />
+
+## Highlight items
+
+Use `highlightItems` prop to highlight specific properties with diff-style colors.
+Pass a `Record<string, 'added' | 'removed'>` where keys are serialized property
+paths (use `serializeJsonViewerPath` helper to build them) and values indicate the highlight type:
+
+<Demo data={JsonViewerDemos.highlight} />
+
+## All expanded
+
+Set `allExpanded` prop to expand all nodes and disable collapse interactions.
+This is useful when you want to display the full JSON structure without allowing
+the user to collapse any nodes:
+
+<Demo data={JsonViewerDemos.allExpanded} />
+
+## Line numbers
+
+Set `withLineNumbers` prop to display line numbers alongside the JSON content:
+
+<Demo data={JsonViewerDemos.lineNumbers} />
+
+## Chevrons
+
+Set `withChevrons` prop to display expand/collapse chevrons next to collapsible nodes:
+
+<Demo data={JsonViewerDemos.withChevrons} />
+
+## Keyboard navigation
+
+`JsonViewer` supports keyboard navigation similar to the [Tree](/core/tree) component:
+
+- `↑` / `↓` – move focus between visible nodes
+- `→` – expand a collapsed node, or move focus to the first child if already expanded
+- `←` – collapse an expanded node, or move focus to the parent node if already collapsed
+- `Enter` / `Space` – toggle expand/collapse on collapsible nodes, trigger `onValueSelect` on primitive nodes

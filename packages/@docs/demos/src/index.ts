@@ -251,6 +251,7 @@ export * as FormDemos from './demos/form';
 export * as FieldDemos from './demos/form-field';
 export * as NprogressDemos from './demos/nprogress';
 export * as CodeHighlightDemos from './demos/code-highlight';
+export * as JsonViewerDemos from './demos/json-viewer';
 export * as DropzoneDemos from './demos/dropzone';
 export * as ModalsDemos from './demos/modals';
 export * as TipTapDemos from './demos/tiptap';

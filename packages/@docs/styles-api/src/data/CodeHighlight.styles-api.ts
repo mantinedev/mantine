@@ -2,6 +2,7 @@ import type {
   CodeHighlightFactory,
   CodeHighlightTabsFactory,
   InlineCodeHighlightFactory,
+  JsonViewerFactory,
 } from '@mantine/code-highlight';
 import type { StylesApiData } from '../types';
 
@@ -51,6 +52,35 @@ export const InlineCodeHighlightStylesApi: StylesApiData<InlineCodeHighlightFact
     inlineCodeHighlight: {
       '--ch-background': 'Background color',
       '--ch-radius': 'Border radius',
+    },
+  },
+};
+
+export const JsonViewerStylesApi: StylesApiData<JsonViewerFactory> = {
+  selectors: {
+    root: 'Root element',
+    node: 'Container for a single tree node',
+    toggle: 'Expand/collapse chevron icon',
+    key: 'Object key label',
+    value: 'Primitive value display',
+    bracket: 'Opening/closing brackets',
+    type: 'Type badge',
+    size: 'Item/key count label',
+    ellipsis: 'Collapsed content indicator or show more/less button',
+    copyButton: 'Copy to clipboard button',
+    content: 'Content wrapper with padding',
+    row: 'Single row wrapper for a node',
+    scrollarea: 'Scroll area wrapper',
+    lineNumbers: 'Line numbers column',
+    wrapper: 'Flex wrapper around line numbers and content',
+    copyAllButton: 'Copy all JSON button positioned at top-right corner',
+  },
+
+  vars: {
+    root: {
+      '--jv-radius': 'Border radius',
+      '--jv-fz': 'Font size',
+      '--jv-indent': 'Indent width per nesting level',
     },
   },
 };
