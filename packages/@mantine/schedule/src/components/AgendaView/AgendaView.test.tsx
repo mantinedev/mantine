@@ -101,9 +101,7 @@ describe('@mantine/schedule/AgendaView', () => {
         payload: {},
       },
     ];
-    render(
-      <AgendaView rangeStart="2025-11-10" rangeEnd="2025-11-10" events={allDayEvents} />
-    );
+    render(<AgendaView rangeStart="2025-11-10" rangeEnd="2025-11-10" events={allDayEvents} />);
     expect(screen.getByText('All day')).toBeInTheDocument();
     expect(screen.queryByText('00:00 – 00:00')).not.toBeInTheDocument();
   });

@@ -89,8 +89,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
   const theme = useMantineTheme();
 
   const stylesApiProps = { classNames, styles };
-  const bodyFirst =
-    (__align === 'left' && !!alternate) || (__align === 'right' && !alternate);
+  const bodyFirst = (__align === 'left' && !!alternate) || (__align === 'right' && !alternate);
 
   const oppositeNode = opposite != null && (
     <div {...ctx.getStyles('itemOpposite', stylesApiProps)}>{opposite}</div>
