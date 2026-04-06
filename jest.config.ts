@@ -1,4 +1,5 @@
 export default {
+  testTimeout: 30_000,
   testEnvironment: 'jest-environment-jsdom',
   transform: {
     '^.+\\.tsx?$': 'esbuild-jest',
