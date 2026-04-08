@@ -7,6 +7,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
+import { FloatingWindow } from '../FloatingWindow';
 import { Input } from '../Input';
 import { Select, SelectProps, SelectStylesNames } from './Select';
 
@@ -209,6 +210,16 @@ describe('@mantine/core/Select', () => {
   it('renders loading indicator when loading prop is set', () => {
     const { container } = render(<Select {...defaultProps} loading />);
     expect(container.querySelector('.mantine-Loader-root')).toBeInTheDocument();
+  });
+
+  it('renders dropdown above FloatingWindow by default', () => {
+    render(
+      <FloatingWindow withinPortal={false}>
+        <Select {...defaultProps} dropdownOpened />
+      </FloatingWindow>
+    );
+
+    expect(document.querySelector('.mantine-Select-dropdown')).toHaveStyle({ zIndex: 401 });
   });
 
   it('supports uncontrolled state with numeric values', async () => {
