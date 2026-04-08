@@ -86,7 +86,7 @@ export function useCollapse({
   };
 
   const getTransitionStyles = (height: number | string) => {
-    const duration = transitionDuration || getAutoHeightDuration(height);
+    const duration = transitionDuration ?? getAutoHeightDuration(height);
     return {
       transition: `height ${duration}ms ${transitionTimingFunction}, opacity ${duration}ms ${transitionTimingFunction}`,
     };
