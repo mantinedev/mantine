@@ -113,6 +113,7 @@ export type {
   UseDebouncedStateReturnValue,
 } from './use-debounced-state/use-debounced-state';
 export type {
+  UseDebouncedValueHandlers,
   UseDebouncedValueOptions,
   UseDebouncedValueReturnValue,
 } from './use-debounced-value/use-debounced-value';

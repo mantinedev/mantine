@@ -121,3 +121,4 @@ fully independent:
 - [useClickOutside](/hooks/use-click-outside) hook now supports `enabled` parameter to dynamically enable/disable the listener. The hook also uses `event.composedPath()` in both `ref` and `nodes` branches for consistent Shadow DOM support and correctly ignores clicks on detached DOM nodes in the single-ref mode.
 - [useCounter](/hooks/use-counter) hook now supports `step` option to configure increment/decrement step size (default `1`).
 - [useDebouncedCallback](/hooks/use-debounced-callback) hook now supports `maxWait` option to guarantee execution within a maximum time window during continuous calls, and `isPending()` method to check if a debounced call is waiting.
+- [useDebouncedValue](/hooks/use-debounced-value) hook now returns a `flush` method to immediately apply the pending debounced value.
