@@ -807,7 +807,15 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           renderEvent={renderEvent}
           radius={radius}
           mode={mode}
-          onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+          onClick={
+            onEventClick
+              ? (e) => {
+                  if (!eventResize.wasResizing()) {
+                    onEventClick(event, e);
+                  }
+                }
+              : undefined
+          }
           style={{
             position: 'absolute',
             top: `calc(${eventTop}% + 1px)`,

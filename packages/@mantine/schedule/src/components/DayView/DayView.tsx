@@ -550,7 +550,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
             : undefined
         }
         mode={mode}
-        onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+        onClick={
+          onEventClick
+            ? (e) => {
+                if (!eventResize.wasResizing()) {
+                  onEventClick(event, e);
+                }
+              }
+            : undefined
+        }
         {...stylesApiProps}
         style={{
           ...stylesApiProps.styles?.event,

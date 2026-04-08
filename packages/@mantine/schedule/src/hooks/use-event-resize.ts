@@ -45,6 +45,7 @@ export function useEventResize({
 }: UseEventResizeInput) {
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
   const resizeRef = useRef<ResizeState | null>(null);
+  const justResizedRef = useRef(false);
   const stableOnEventResize = useEffectEvent(onEventResize || (() => {}));
 
   const parsedStartTime = parseTimeString(startTime);
@@ -192,6 +193,10 @@ export function useEventResize({
       }
       resizeRef.current = null;
       setResizeState(null);
+      justResizedRef.current = true;
+      requestAnimationFrame(() => {
+        justResizedRef.current = false;
+      });
     };
 
     document.addEventListener('pointermove', handlePointerMove);
@@ -224,11 +229,14 @@ export function useEventResize({
     [enabled, mode, canResizeEvent]
   );
 
+  const wasResizing = useCallback(() => justResizedRef.current, []);
+
   return {
     handleResizeStart,
     isResizing,
     resizingEventId: resizeState?.eventId ?? null,
     getResizePosition,
     isResizableEvent,
+    wasResizing,
   };
 }
