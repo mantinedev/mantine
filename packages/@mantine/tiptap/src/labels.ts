@@ -136,6 +136,9 @@ export interface RichTextEditorLabels {
 
   /** Aria-label for task list lift task */
   tasksLiftLabel: string;
+
+  /** RichTextEditor.ImageUpload control aria-label */
+  imageUploadControlLabel: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -177,6 +180,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   tasksControlLabel: 'Task list',
   tasksSinkLabel: 'Decrease task level',
   tasksLiftLabel: 'Increase task level',
+  imageUploadControlLabel: 'Upload image',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

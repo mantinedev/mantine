@@ -16,6 +16,10 @@ export const ROLLUP_EXTERNALS = [
   'react-is',
   'react/jsx-runtime',
   '@tiptap/react/menus',
+  '@tiptap/pm/state',
+  '@tiptap/pm/model',
+  '@tiptap/pm/view',
+  '@tiptap/pm/transform',
   ...getPackagesList().map((pkg) => pkg.packageJson.name!),
   ...Object.keys({
     ...packageJson.devDependencies,

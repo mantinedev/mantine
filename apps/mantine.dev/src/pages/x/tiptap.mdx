@@ -203,6 +203,36 @@ To use tasks, you will need to install additional packages:
 
 <Demo data={TipTapDemos.tasks} />
 
+## Image upload
+
+To use image upload, you will need to install an additional package:
+
+<InstallScript packages="@tiptap/extension-image" />
+
+Use `getUploadImageExtension` from `@mantine/tiptap` to create a tiptap extension that supports
+image uploads with loading states. The first argument is the `@tiptap/extension-image` default export,
+and the second is an options object. Pass an `onImageUpload` function that receives a `File` and returns
+a `Promise<string>` with the uploaded image URL. You can also handle errors with `onImageUploadError`.
+Pass the same `onImageUpload` and `onImageUploadError` to the `RichTextEditor` component to enable
+the toolbar button.
+
+Images can be added via:
+- `RichTextEditor.ImageUpload` toolbar control (opens file picker)
+- Drag and drop into the editor
+- Paste from clipboard
+
+During upload, the image is shown with a local preview and a loading spinner.
+On failure, the image is highlighted briefly and then removed.
+
+<Demo data={TipTapDemos.imageUpload} />
+
+### Upload error handling
+
+You can use `onImageUploadError` to show a notification or take other action when an upload fails.
+The image will be automatically removed from the editor after a brief error indication.
+
+<Demo data={TipTapDemos.imageUploadError} />
+
 ## Typography styles
 
 By default, `RichTextEditor` renders content with [Typography](/core/typography/) and some additional styles.

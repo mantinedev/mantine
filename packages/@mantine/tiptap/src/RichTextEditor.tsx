@@ -22,6 +22,10 @@ import {
   type RichTextEditorControlProps,
 } from './RichTextEditorControl/RichTextEditorControl';
 import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
+import {
+  RichTextEditorImageUploadControl,
+  type RichTextEditorImageUploadControlProps,
+} from './RichTextEditorControl/RichTextEditorImageUploadControl';
 import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
 import {
   RichTextEditorSourceCodeControl,
@@ -66,6 +70,12 @@ export interface RichTextEditorProps
 
   /** Called if `RichTextEditor.SourceCode` clicked.  */
   onSourceCodeTextSwitch?: (isSourceCodeModeActive: boolean) => void;
+
+  /** Called when an image file is selected for upload, must return a promise that resolves to image URL */
+  onImageUpload?: (file: File) => Promise<string>;
+
+  /** Called when image upload fails */
+  onImageUploadError?: (file: File, error: unknown) => void;
 
   /** Labels that are used in controls */
   labels?: Partial<RichTextEditorLabels>;
@@ -119,6 +129,7 @@ export type RichTextEditorFactory = Factory<{
     TaskListSink: typeof controls.TaskListSinkControl;
     TaskListLift: typeof controls.TaskListLiftControl;
     SourceCode: typeof RichTextEditorSourceCodeControl;
+    ImageUpload: typeof RichTextEditorImageUploadControl;
   };
 }>;
 
@@ -141,6 +152,8 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
     withCodeHighlightStyles,
     withTypographyStyles,
     onSourceCodeTextSwitch,
+    onImageUpload,
+    onImageUploadError,
     labels,
     children,
     variant,
@@ -172,6 +185,8 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
         withCodeHighlightStyles,
         withTypographyStyles,
         onSourceCodeTextSwitch,
+        onImageUpload,
+        onImageUploadError,
         unstyled,
         variant,
       }}
@@ -228,6 +243,7 @@ RichTextEditor.TaskList = controls.TaskListControl;
 RichTextEditor.TaskListSink = controls.TaskListSinkControl;
 RichTextEditor.TaskListLift = controls.TaskListLiftControl;
 RichTextEditor.SourceCode = RichTextEditorSourceCodeControl;
+RichTextEditor.ImageUpload = RichTextEditorImageUploadControl;
 
 export namespace RichTextEditor {
   export type Props = RichTextEditorProps;
@@ -243,6 +259,7 @@ export namespace RichTextEditor {
     export type ColorProps = RichTextEditorColorControlProps;
     export type LinkProps = RichTextEditorLinkControlProps;
     export type SourceCodeProps = RichTextEditorSourceCodeControlProps;
+    export type ImageUploadProps = RichTextEditorImageUploadControlProps;
   }
 
   export namespace Content {

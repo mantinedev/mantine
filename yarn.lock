@@ -4235,6 +4235,7 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.0.1
     "@mantine/hooks": 9.0.1
+    "@tiptap/extension-image": ">=3.3.0"
     "@tiptap/extension-link": ">=3.3.0"
     "@tiptap/react": ">=3.3.0"
     react: ^19.2.0
@@ -5561,6 +5562,15 @@ __metadata:
     "@tiptap/core": ^3.21.0
     "@tiptap/pm": ^3.21.0
   checksum: 10c0/f75deada90794bfbfc470b5567dbc96f3c215679913de5e8a517608bdb2f1dfea5a6cdfaab17f6f5b8918d18c3c43af0d83f7759c68e1a58ea8c070e1f916e67
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-image@npm:^3.21.0":
+  version: 3.22.2
+  resolution: "@tiptap/extension-image@npm:3.22.2"
+  peerDependencies:
+    "@tiptap/core": ^3.22.2
+  checksum: 10c0/5faecd9ad7cc39017e41003e2dd4009e410ad6316025d4df1957b2cdbf9dd4379520331018f6548480909a29fffd976e0d8f0ed5950e0d8d6e74fbda7b851e5d
   languageName: node
   linkType: hard
 
@@ -14673,6 +14683,7 @@ __metadata:
     "@tiptap/extension-color": "npm:^3.21.0"
     "@tiptap/extension-highlight": "npm:^3.21.0"
     "@tiptap/extension-history": "npm:^3.20.1"
+    "@tiptap/extension-image": "npm:^3.21.0"
     "@tiptap/extension-link": "npm:^3.21.0"
     "@tiptap/extension-list": "npm:^3.20.1"
     "@tiptap/extension-placeholder": "npm:^3.21.0"

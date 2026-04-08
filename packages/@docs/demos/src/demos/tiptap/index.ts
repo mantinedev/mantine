@@ -10,3 +10,5 @@ export { tasks } from './TipTap.demo.tasks';
 export { typographyStyles } from './TipTap.demo.typographyStyles';
 export { subtleVariant } from './TipTap.demo.subtleVariant';
 export { sourceCodeSwitcher } from './TipTap.demo.sourceCodeSwitcher';
+export { imageUpload } from './TipTap.demo.imageUpload';
+export { imageUploadError } from './TipTap.demo.imageUploadError';

@@ -7,6 +7,7 @@ import type {
 import type { RichTextEditorContentProps } from './RichTextEditorContent/RichTextEditorContent';
 import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
 import type { RichTextEditorControlProps } from './RichTextEditorControl/RichTextEditorControl';
+import type { RichTextEditorImageUploadControlProps } from './RichTextEditorControl/RichTextEditorImageUploadControl';
 import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
 import type { RichTextEditorSourceCodeControlProps } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
 import type { RichTextEditorControlsGroupProps } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
@@ -29,6 +30,7 @@ export type {
   RichTextEditorToolbarProps,
   RichTextEditorControlProps,
   RichTextEditorColorControlProps,
+  RichTextEditorImageUploadControlProps,
   RichTextEditorLinkControlProps,
   RichTextEditorSourceCodeControlProps,
   RichTextEditorContentProps,

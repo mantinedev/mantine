@@ -12,6 +12,8 @@ interface RichTextEditorContext {
   unstyled: boolean | undefined;
   variant: string | undefined;
   onSourceCodeTextSwitch?: (isSourceCodeModeActive: boolean) => void;
+  onImageUpload?: (file: File) => Promise<string>;
+  onImageUploadError?: (file: File, error: unknown) => void;
 }
 
 export const [RichTextEditorProvider, useRichTextEditorContext] =

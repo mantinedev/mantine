@@ -1,4 +1,4 @@
-import { Changelog970Demos } from '@docs/demos';
+import { Changelog970Demos, TipTapDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -25,3 +25,11 @@ the indicator uses a light background color with a colored icon, similar to the 
 available in other components like [Button](/core/button):
 
 <Demo data={Changelog970Demos.checkboxRadioLightVariant} />
+
+## RichTextEditor image upload
+
+[RichTextEditor](/x/tiptap) now supports image upload with loading states.
+Images can be uploaded via toolbar button, drag and drop, or paste.
+During upload, a local preview is shown with a loading indicator.
+
+<Demo data={TipTapDemos.imageUpload} />
