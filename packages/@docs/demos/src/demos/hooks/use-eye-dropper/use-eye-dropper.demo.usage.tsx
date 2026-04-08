@@ -7,7 +7,7 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { useState } from 'react';
 import { ActionIcon, Group, ColorSwatch, Text } from '@mantine/core';
-import { EyedropperIcon } from '@phosphor-icons/react';
+import { CrosshairIcon } from '@phosphor-icons/react';
 import { useEyeDropper } from '@mantine/hooks';
 
 function Demo() {
