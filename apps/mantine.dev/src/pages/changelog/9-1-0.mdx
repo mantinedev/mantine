@@ -1,4 +1,4 @@
-import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos } from '@docs/demos';
+import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, SliderDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -115,6 +115,14 @@ a parent node does not affect children and vice versa – each node's checked st
 fully independent:
 
 <Demo data={TreeDemos.checkStrictly} />
+
+## Slider startPointValue
+
+[Slider](/core/slider) component now supports `startPointValue` prop that changes
+the origin of the filled bar. When set, the bar extends from the given value toward the
+current value – to the left for values below the start point and to the right for values above it:
+
+<Demo data={SliderDemos.startPoint} />
 
 ## Other changes
 
