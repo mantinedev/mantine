@@ -115,3 +115,7 @@ a parent node does not affect children and vice versa – each node's checked st
 fully independent:
 
 <Demo data={TreeDemos.checkStrictly} />
+
+## Other changes
+
+- [useClickOutside](/hooks/use-click-outside) hook now supports `enabled` parameter to dynamically enable/disable the listener. The hook also uses `event.composedPath()` in both `ref` and `nodes` branches for consistent Shadow DOM support and correctly ignores clicks on detached DOM nodes in the single-ref mode.
