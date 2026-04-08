@@ -54,6 +54,9 @@ export interface MantineProviderProps {
   /** An object to transform `styles` and `sx` props into css classes, can be used with CSS-in-JS libraries */
   stylesTransform?: MantineStylesTransform;
 
+  /** Determines whether inline styles with identical content should be deduplicated using React 19 style hoisting. When enabled, components with the same responsive style props share a single `<style />` tag instead of each generating their own. @default false */
+  deduplicateInlineStyles?: boolean;
+
   /** Your application */
   children?: React.ReactNode;
 
@@ -78,6 +81,7 @@ export function MantineProvider({
   forceColorScheme,
   stylesTransform,
   env,
+  deduplicateInlineStyles = false,
 }: MantineProviderProps) {
   const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
     defaultColorScheme,
@@ -105,6 +109,7 @@ export function MantineProvider({
         withStaticClasses,
         stylesTransform,
         env,
+        deduplicateInlineStyles,
       }}
     >
       <MantineThemeProvider theme={theme}>

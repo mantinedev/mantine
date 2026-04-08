@@ -1,7 +1,12 @@
 import cx from 'clsx';
 import { polymorphic } from '../factory';
-import { InlineStyles } from '../InlineStyles';
-import { MantineBreakpoint, useMantineSxTransform, useMantineTheme } from '../MantineProvider';
+import { hashStyleProps, InlineStyles } from '../InlineStyles';
+import {
+  MantineBreakpoint,
+  useMantineDeduplicateInlineStyles,
+  useMantineSxTransform,
+  useMantineTheme,
+} from '../MantineProvider';
 import { isNumberLike } from '../utils';
 import type { CssVarsProp, MantineStyleProp } from './Box.types';
 import { getBoxMod } from './get-box-mod/get-box-mod';
@@ -81,12 +86,18 @@ function _Box({
   const { styleProps, rest } = extractStyleProps(others);
   const useSxTransform = useMantineSxTransform();
   const transformedSx = useSxTransform?.()?.(styleProps.sx);
-  const responsiveClassName = useRandomClassName();
+  const randomClassName = useRandomClassName();
   const parsedStyleProps = parseStyleProps({
     styleProps,
     theme,
     data: STYlE_PROPS_DATA,
   });
+
+  const deduplicateInlineStyles = useMantineDeduplicateInlineStyles();
+  const responsiveClassName =
+    deduplicateInlineStyles && parsedStyleProps.hasResponsiveStyles
+      ? hashStyleProps(parsedStyleProps.styles, parsedStyleProps.media)
+      : randomClassName;
 
   const props = {
     ref,
@@ -117,6 +128,7 @@ function _Box({
           selector={`.${responsiveClassName}`}
           styles={parsedStyleProps.styles}
           media={parsedStyleProps.media}
+          deduplicate={deduplicateInlineStyles}
         />
       )}
 

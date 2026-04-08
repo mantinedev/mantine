@@ -3,6 +3,7 @@ import {
   BoxProps,
   ElementProps,
   filterProps,
+  hashStyleProps,
   InlineStyles,
   MantineSpacing,
   parseStyleProps,
@@ -10,6 +11,7 @@ import {
   PolymorphicFactory,
   StyleProp,
   StylesApiProps,
+  useMantineDeduplicateInlineStyles,
   useMantineTheme,
   useProps,
   useRandomClassName,
@@ -84,12 +86,18 @@ export const Flex = polymorphicFactory<FlexFactory>((_props) => {
   });
 
   const theme = useMantineTheme();
-  const responsiveClassName = useRandomClassName();
+  const randomClassName = useRandomClassName();
   const parsedStyleProps = parseStyleProps({
     styleProps: { gap, rowGap, columnGap, align, justify, wrap, direction },
     theme,
     data: FLEX_STYLE_PROPS_DATA,
   });
+
+  const deduplicateInlineStyles = useMantineDeduplicateInlineStyles();
+  const responsiveClassName =
+    deduplicateInlineStyles && parsedStyleProps.hasResponsiveStyles
+      ? hashStyleProps(parsedStyleProps.styles, parsedStyleProps.media)
+      : randomClassName;
 
   return (
     <>
@@ -98,6 +106,7 @@ export const Flex = polymorphicFactory<FlexFactory>((_props) => {
           selector={`.${responsiveClassName}`}
           styles={parsedStyleProps.styles}
           media={parsedStyleProps.media}
+          deduplicate={deduplicateInlineStyles}
         />
       )}
       <Box

@@ -11,6 +11,29 @@ All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
 
+## deduplicateInlineStyles
+
+New `deduplicateInlineStyles` prop on [MantineProvider](/theming/mantine-provider) enables
+React 19 style tag deduplication for responsive [style props](/styles/style-props).
+When many components share the same responsive style prop values, only a single `<style />`
+tag is generated and hoisted to `<head />` instead of each component injecting its own:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+This can significantly improve performance when rendering large lists of components
+with identical responsive style props. See the
+[styles performance guide](/styles/styles-performance) for more details.
+
 ## use-mask hook
 
 New [use-mask](/hooks/use-mask) hook attaches real-time input masking to any `<input>` element via

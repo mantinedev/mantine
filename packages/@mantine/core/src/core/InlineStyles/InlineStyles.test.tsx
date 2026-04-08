@@ -34,4 +34,19 @@ describe('@mantine/core/InlineStyles', () => {
       'body{color:red;}@container aside (min-width:500px){body{color:blue;}}'
     );
   });
+
+  it('renders with href and precedence when deduplicate is true', () => {
+    render(<InlineStyles selector=".test" styles={{ color: 'red' }} deduplicate />);
+    const headStyle = document.head.querySelector('style[data-href]');
+    expect(headStyle).not.toBeNull();
+    expect(headStyle!.textContent).toContain('.test{color:red;}');
+  });
+
+  it('does not render data-mantine-styles attribute when deduplicate is true', () => {
+    const { container } = render(
+      <InlineStyles selector=".test" styles={{ color: 'red' }} deduplicate />
+    );
+    const inlineStyle = container.querySelector('[data-mantine-styles="inline"]');
+    expect(inlineStyle).toBeNull();
+  });
 });
