@@ -11,6 +11,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { useFloatingWindowContext } from '../FloatingWindow/FloatingWindow.context';
 import { __PopoverProps, Popover } from '../Popover';
 import { ComboboxProvider } from './Combobox.context';
 import { ComboboxChevron, ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
@@ -128,6 +129,14 @@ const varsResolver = createVarsResolver<ComboboxFactory>((_, { size, dropdownPad
   },
 }));
 
+function getFloatingWindowDropdownZIndex(zIndex: React.CSSProperties['zIndex'] | undefined) {
+  if (zIndex === undefined) {
+    return undefined;
+  }
+
+  return typeof zIndex === 'number' ? zIndex + 1 : `calc(${zIndex} + 1)`;
+}
+
 export const Combobox = (_props: ComboboxProps) => {
   const props = useProps('Combobox', defaultProps, _props);
   const {
@@ -144,12 +153,14 @@ export const Combobox = (_props: ComboboxProps) => {
     resetSelectionOnOptionHover,
     __staticSelector,
     readOnly,
+    zIndex,
     attributes,
     ...others
   } = props;
 
   const uncontrolledStore = useCombobox();
   const store = controlledStore || uncontrolledStore;
+  const floatingWindow = useFloatingWindowContext();
 
   const getStyles = useStyles<ComboboxFactory>({
     name: __staticSelector || 'Combobox',
@@ -182,6 +193,7 @@ export const Combobox = (_props: ComboboxProps) => {
       <Popover
         opened={store.dropdownOpened}
         preventPositionChangeWhenVisible={false}
+        zIndex={zIndex ?? getFloatingWindowDropdownZIndex(floatingWindow?.zIndex)}
         {...others}
         onChange={(_opened) => !_opened && onDropdownClose()}
         withRoles={false}
