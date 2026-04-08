@@ -4,6 +4,7 @@ import type {
   TimePickerAmPmLabels,
   TimePickerFormat,
   TimePickerPasteSplit,
+  TimePickerType,
 } from './TimePicker.types';
 import { clampTime } from './utils/clamp-time/clamp-time';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
@@ -22,6 +23,7 @@ interface UseTimePickerInput {
   disabled: boolean | undefined;
   clearable: boolean | undefined;
   pasteSplit: TimePickerPasteSplit | undefined;
+  type: TimePickerType;
 }
 
 export function useTimePicker({
@@ -37,6 +39,7 @@ export function useTimePicker({
   readOnly,
   disabled,
   pasteSplit,
+  type,
 }: UseTimePickerInput) {
   const parsedTime = getParsedTime({
     time: value || defaultValue || '',
@@ -183,7 +186,8 @@ export function useTimePicker({
     const timeString = getTimeString({ ...parsedTime, format, withSeconds, amPmLabels });
     if (timeString.valid) {
       acceptChange.current = false;
-      const clamped = clampTime(timeString.value, min || '00:00:00', max || '23:59:59');
+      const defaultMax = type === 'duration' ? '9999:59:59' : '23:59:59';
+      const clamped = clampTime(timeString.value, min || '00:00:00', max || defaultMax);
       onChange?.(clamped.timeString);
       setHours(parsedTime.hours);
       setMinutes(parsedTime.minutes);

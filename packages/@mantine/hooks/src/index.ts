@@ -84,6 +84,14 @@ export { useSelection } from './use-selection/use-selection.js';
 export { useFloatingWindow } from './use-floating-window/use-floating-window.js';
 export { useCollapse } from './use-collapse/use-collapse.js';
 export { useHorizontalCollapse } from './use-collapse/use-horizontal-collapse.js';
+export {
+  useMask,
+  formatMask,
+  unformatMask,
+  isMaskComplete,
+  generatePattern,
+} from './use-mask/use-mask.js';
+export { useRovingIndex } from './use-roving-index/use-roving-index.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type {
@@ -225,3 +233,9 @@ export type {
   UseHorizontalCollapseReturnValue,
   UseHorizontalCollapseState,
 } from './use-collapse/use-horizontal-collapse';
+export type { UseMaskOptions, UseMaskReturnValue, MaskState } from './use-mask/use-mask';
+export type {
+  UseRovingIndexInput,
+  UseRovingIndexGetItemPropsInput,
+  UseRovingIndexReturnValue,
+} from './use-roving-index/use-roving-index';

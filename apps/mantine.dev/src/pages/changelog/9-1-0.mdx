@@ -1,0 +1,117 @@
+import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog910);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## use-mask hook
+
+New [use-mask](/hooks/use-mask) hook attaches real-time input masking to any `<input>` element via
+a ref callback. It formats user input against a defined pattern and exposes both the masked display
+value and the raw unmasked value. The hook supports built-in and custom tokens, dynamic masks,
+character transforms, optional segments, and regex array format:
+
+<Demo data={UseMaskDemos.usage} />
+
+## MaskInput component
+
+New [MaskInput](/core/mask-input) component is a wrapper around [use-mask](/hooks/use-mask) hook
+that provides all standard input props (label, description, error, etc.) and supports all mask options:
+
+<Demo data={MaskInputDemos.usage} />
+
+## Treemap component
+
+New [Treemap](/charts/treemap) component displays hierarchical data as a set of nested
+rectangles. It is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap):
+
+<Demo data={TreemapDemos.nestedDataDemo} />
+
+## TimePicker duration type
+
+[TimePicker](/dates/time-picker) component now supports `type="duration"` prop that allows
+entering durations that exceed 24 hours. In this mode, the hours field has no upper limit
+and the input width adjusts dynamically based on the entered value:
+
+<Demo data={TimePickerDemos.duration} />
+
+## Heatmap legend
+
+[Heatmap](/charts/heatmap) component now supports `withLegend` prop that displays
+a color legend below the chart. Use `legendLabels` prop to customize labels
+(default: `['Less', 'More']`):
+
+<Demo data={HeatmapDemos.legend} />
+
+## MonthPicker and YearPicker presets
+
+[MonthPicker](/dates/month-picker) and [YearPicker](/dates/year-picker) components now support
+`presets` prop that allows adding predefined values to pick from. Presets are also available
+in [MonthPickerInput](/dates/month-picker-input) and [YearPickerInput](/dates/year-picker-input)
+components:
+
+<Demo data={MonthPickerDemos.presets} />
+
+## use-roving-index hook
+
+New [use-roving-index](/hooks/use-roving-index) hook implements the
+[roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
+keyboard navigation pattern. It manages `tabIndex` state for a group of focusable elements,
+handles arrow key navigation with disabled item skipping, and supports both 1D lists and 2D grids:
+
+<Demo data={UseRovingIndexDemos.usage} />
+
+## Tree drag and drop
+
+[Tree](/core/tree) component now supports drag-and-drop reordering of nodes.
+Provide `onDragDrop` callback to enable it, and use the `moveTreeNode` utility
+to update data based on the result:
+
+<Demo data={TreeDemos.dragDrop} />
+
+## Tree async loading
+
+[Tree](/core/tree) now supports lazy loading of children. Set `hasChildren: true`
+on a node without providing `children` – when the node is expanded for the first time,
+`onLoadChildren` callback passed to `useTree` is called. Use `mergeAsyncChildren`
+utility to splice loaded children into your data:
+
+<Demo data={TreeDemos.asyncLoading} />
+
+## Tree search and filtering
+
+[Tree](/core/tree) now includes `filterTreeData` utility to filter tree data based on
+a search query. Matching nodes and their ancestors are preserved in the result. You can
+provide a custom filter function for advanced matching (for example, fuzzy search with fuse.js):
+
+<Demo data={TreeDemos.searchFilter} />
+
+## Tree connecting lines
+
+[Tree](/core/tree) now supports `withLines` prop to display connecting lines
+showing parent-child relationships. Lines adapt to `levelOffset` spacing automatically:
+
+<Demo data={TreeDemos.lines} />
+
+## Tree virtualization
+
+[Tree](/core/tree) now provides `flattenTreeData` utility and `FlatTreeNode` component
+for virtualized rendering of large trees. The component does not depend on any
+virtualization library – you supply one yourself (e.g., `@tanstack/react-virtual`):
+
+<Demo data={TreeDemos.virtualized} />
+
+## Tree checkStrictly mode
+
+[useTree](/core/tree) hook now supports `checkStrictly` option. When enabled, checking
+a parent node does not affect children and vice versa – each node's checked state is
+fully independent:
+
+<Demo data={TreeDemos.checkStrictly} />

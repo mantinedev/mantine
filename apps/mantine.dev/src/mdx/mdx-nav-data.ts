@@ -48,6 +48,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog910,
       MDX_DATA.Changelog900,
       MDX_DATA.Changelog830,
       MDX_DATA.Changelog820,
@@ -174,6 +175,8 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useOrientation,
       MDX_DATA.useFileDialog,
       MDX_DATA.useLongPress,
+      MDX_DATA.useMask,
+      MDX_DATA.useRovingIndex,
     ],
   },
 
@@ -276,6 +279,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.RangeSlider,
       MDX_DATA.Switch,
       MDX_DATA.TextInput,
+      MDX_DATA.MaskInput,
       MDX_DATA.Checkbox,
       MDX_DATA.Radio,
       MDX_DATA.Fieldset,
@@ -452,6 +456,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Sparkline,
       MDX_DATA.Heatmap,
       MDX_DATA.BarsList,
+      MDX_DATA.Treemap,
     ],
   },
 

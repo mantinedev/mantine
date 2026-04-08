@@ -164,4 +164,15 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/BarsList/BarsList.tsx',
     docs: 'charts/bars-list.mdx',
   },
+
+  Treemap: {
+    title: 'Treemap',
+    props: ['Treemap'],
+    styles: ['Treemap'],
+    package: '@mantine/charts',
+    slug: '/charts/treemap',
+    description: 'Treemap chart component',
+    source: '@mantine/charts/src/Treemap/Treemap.tsx',
+    docs: 'charts/treemap.mdx',
+  },
 };

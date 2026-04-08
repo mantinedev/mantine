@@ -204,4 +204,6 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useLongPress: hDocs('useLongPress', 'Call function on long press'),
   useSelection: hDocs('useSelection', 'Manages selection state of given dataset'),
   useCollapse: hDocs('useCollapse', 'Animate height from 0 to auto and vice versa'),
+  useMask: hDocs('useMask', 'Attach real-time input masking to any input element'),
+  useRovingIndex: hDocs('useRovingIndex', 'Implement roving tabindex keyboard navigation pattern'),
 };

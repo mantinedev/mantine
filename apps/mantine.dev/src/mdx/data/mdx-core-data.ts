@@ -282,6 +282,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Marquee/Marquee.tsx',
     docs: 'core/marquee.mdx',
   },
+  MaskInput: {
+    title: 'MaskInput',
+    package: '@mantine/core',
+    slug: '/core/mask-input',
+    props: ['MaskInput'],
+    styles: ['MaskInput'],
+    description: 'Input with mask pattern for formatted text entry',
+    source: '@mantine/core/src/components/MaskInput/MaskInput.tsx',
+    docs: 'core/mask-input.mdx',
+  },
   NativeSelect: {
     title: 'NativeSelect',
     package: '@mantine/core',

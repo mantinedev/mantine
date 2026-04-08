@@ -12,6 +12,7 @@ interface SpinInputProps extends Omit<React.ComponentProps<'input'>, 'onChange' 
   onPreviousInput?: () => void;
   allowTemporaryZero?: boolean;
   placeholder?: string;
+  disableAutoAdvance?: boolean;
 }
 
 const getMaxDigit = (max: number) => Number(max.toFixed(0)[0]);
@@ -29,6 +30,7 @@ export function SpinInput({
   readOnly,
   allowTemporaryZero = false,
   placeholder = '--',
+  disableAutoAdvance = false,
   ...others
 }: SpinInputProps) {
   const maxDigit = getMaxDigit(max);
@@ -47,7 +49,7 @@ export function SpinInput({
 
       onChange(clampedValue);
 
-      if (clampedValue > maxDigit || value.startsWith('00')) {
+      if (!disableAutoAdvance && (clampedValue > maxDigit || value.startsWith('00'))) {
         onNextInput?.();
       }
     }

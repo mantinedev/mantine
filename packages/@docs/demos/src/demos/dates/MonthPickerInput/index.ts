@@ -12,3 +12,5 @@ export { controlProps } from './MonthPickerInput.demo.controlProps';
 export { labelFormat } from './MonthPickerInput.demo.labelFormat';
 export { listFormat } from './MonthPickerInput.demo.listFormat';
 export { maxLevel } from './MonthPickerInput.demo.maxLevel';
+export { presets } from './MonthPickerInput.demo.presets';
+export { presetsRange } from './MonthPickerInput.demo.presetsRange';
