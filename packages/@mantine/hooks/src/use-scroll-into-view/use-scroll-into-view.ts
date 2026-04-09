@@ -109,7 +109,9 @@ export function useScrollIntoView<
         if (!shouldStop.current && t < 1) {
           frameID.current = requestAnimationFrame(animateScroll);
         } else {
-          typeof onScrollFinish === 'function' && onScrollFinish();
+          if (!shouldStop.current && typeof onScrollFinish === 'function') {
+            onScrollFinish();
+          }
           startTime.current = 0;
           frameID.current = 0;
           cancel();
