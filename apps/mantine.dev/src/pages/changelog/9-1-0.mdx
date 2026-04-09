@@ -1,4 +1,4 @@
-import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, SliderDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos } from '@docs/demos';
+import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, SliderDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -146,6 +146,14 @@ the origin of the filled bar. When set, the bar extends from the given value tow
 current value – to the left for values below the start point and to the right for values above it:
 
 <Demo data={SliderDemos.startPoint} />
+
+## WeekView forceCurrentTimeIndicator
+
+[WeekView](/schedule/week-view) component now supports `forceCurrentTimeIndicator` prop.
+When set, the current time indicator is displayed on the same day of week even when viewing
+a different week:
+
+<Demo data={WeekViewDemos.forceCurrentTimeIndicator} />
 
 ## Other changes
 

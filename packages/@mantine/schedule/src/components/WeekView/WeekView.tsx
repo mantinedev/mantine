@@ -149,6 +149,9 @@ export interface WeekViewProps
   /** If set, the time indicator displays the current time in the bubble @default true */
   withCurrentTimeBubble?: boolean;
 
+  /** If set, displays the current time indicator on the same day of week even when viewing a different week @default false */
+  forceCurrentTimeIndicator?: boolean;
+
   /** If set, displays all-day slots at the top of the view @default true */
   withAllDaySlots?: boolean;
 
@@ -337,6 +340,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     radius,
     highlightToday,
     withCurrentTimeIndicator,
+    forceCurrentTimeIndicator,
     scrollAreaProps,
     locale,
     withWeekNumber,
@@ -692,7 +696,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   };
 
   const currentWeekdayIndex = withCurrentTimeIndicator
-    ? weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
+    ? forceCurrentTimeIndicator
+      ? weekdays.findIndex((day) => dayjs(day).day() === dayjs().day())
+      : weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
     : -1;
 
   const weekdaysLabels = weekdays.map((day, dayIndex) => (
