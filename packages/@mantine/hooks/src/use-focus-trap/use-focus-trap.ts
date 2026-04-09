@@ -34,6 +34,7 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
       }
 
       if (node === null) {
+        ref.current = null;
         return;
       }
 
@@ -41,21 +42,17 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
         return;
       }
 
-      if (node) {
-        // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
-        setTimeout(() => {
-          if (node.getRootNode()) {
-            focusNode(node);
-          } else if (process.env.NODE_ENV === 'development') {
-            // oxlint-disable-next-line no-console
-            console.warn('[@mantine/hooks/use-focus-trap] Ref node is not part of the dom', node);
-          }
-        });
+      // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
+      setTimeout(() => {
+        if (node.getRootNode()) {
+          focusNode(node);
+        } else if (process.env.NODE_ENV === 'development') {
+          // oxlint-disable-next-line no-console
+          console.warn('[@mantine/hooks/use-focus-trap] Ref node is not part of the dom', node);
+        }
+      });
 
-        ref.current = node;
-      } else {
-        ref.current = null;
-      }
+      ref.current = node;
     },
     [active]
   );
