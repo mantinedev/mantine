@@ -18,7 +18,12 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
 ) {
   const { delay, flushOnUnmount, leading, maxWait } =
     typeof options === 'number'
-      ? { delay: options, flushOnUnmount: false, leading: false, maxWait: undefined as number | undefined }
+      ? {
+          delay: options,
+          flushOnUnmount: false,
+          leading: false,
+          maxWait: undefined as number | undefined,
+        }
       : options;
 
   const handleCallback = useCallbackRef(callback);
