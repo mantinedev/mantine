@@ -8,7 +8,7 @@ import { useDisclosure, useHeadroom } from '@mantine/hooks';
 
 function Demo() {
   const [showHeader, handlers] = useDisclosure(false);
-  const { pinned } = useHeadroom({ fixedAt: 120 });
+  const { scrollProgress } = useHeadroom({ fixedAt: 120, scrollDistance: 60 });
 
   return (
     <>
@@ -20,16 +20,16 @@ function Demo() {
               top: 0,
               left: 0,
               right: 0,
-              padding: 'var(--mantine-spacing-xs)',
               height: 60,
               zIndex: 1000000,
-              transform: \`translate3d(0, \${pinned ? 0 : '-110px'}, 0)\`,
-              transition: 'transform 400ms ease',
-              backgroundColor: 'var(--mantine-color-body)',
+              transform: \`translateY(\${(scrollProgress - 1) * 100}%)\`,
+              backgroundColor: 'var(--mantine-color-violet-6)',
             }}
           >
             <Group justify="center" h="100%">
-              <Text>Pinned header – {pinned ? 'visible' : 'hidden'}</Text>
+              <Text c="white" fw={500}>
+                Scroll-linked — {Math.round(scrollProgress * 100)}% visible
+              </Text>
             </Group>
           </Box>
         </Portal>
@@ -45,7 +45,7 @@ function Demo() {
 
 function Demo() {
   const [showHeader, handlers] = useDisclosure(false);
-  const { pinned } = useHeadroom({ fixedAt: 120 });
+  const { scrollProgress } = useHeadroom({ fixedAt: 120, scrollDistance: 60 });
 
   return (
     <>
@@ -57,16 +57,16 @@ function Demo() {
               top: 0,
               left: 0,
               right: 0,
-              padding: 'var(--mantine-spacing-xs)',
               height: 60,
               zIndex: 1000000,
-              transform: `translate3d(0, ${pinned ? 0 : '-110px'}, 0)`,
-              transition: 'transform 400ms ease',
-              backgroundColor: 'var(--mantine-color-body)',
+              transform: `translateY(${(scrollProgress - 1) * 100}%)`,
+              backgroundColor: 'var(--mantine-color-violet-6)',
             }}
           >
             <Group justify="center" h="100%">
-              <Text>Pinned header – {pinned ? 'visible' : 'hidden'}</Text>
+              <Text c="white" fw={500}>
+                Scroll-linked — {Math.round(scrollProgress * 100)}% visible
+              </Text>
             </Group>
           </Box>
         </Portal>
@@ -79,7 +79,7 @@ function Demo() {
   );
 }
 
-export const usage: MantineDemo = {
+export const scrollProgress: MantineDemo = {
   type: 'code',
   code,
   component: Demo,
