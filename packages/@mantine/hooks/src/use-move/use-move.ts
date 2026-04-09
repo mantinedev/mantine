@@ -125,6 +125,8 @@ export function useMove<T extends HTMLElement = any>(
           node.removeEventListener('mousedown', onMouseDown);
           node.removeEventListener('touchstart', onTouchStart);
         }
+        unbindEvents();
+        cancelAnimationFrame(frame.current);
       };
     },
     [dir, onChange]
