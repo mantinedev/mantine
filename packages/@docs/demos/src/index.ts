@@ -108,6 +108,8 @@ export * as TextInputDemos from './demos/core/TextInput';
 export * as ThemeIconDemos from './demos/core/ThemeIcon';
 export * as TimelineDemos from './demos/core/Timeline';
 export * as TitleDemos from './demos/core/Title';
+export * as ToggleDemos from './demos/core/Toggle';
+export * as ToolbarDemos from './demos/core/Toolbar';
 export * as TooltipDemos from './demos/core/Tooltip';
 export * as TransitionDemos from './demos/core/Transition';
 export * as TypographyDemos from './demos/core/Typography';

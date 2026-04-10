@@ -110,6 +110,8 @@ export * from './TextInput';
 export * from './ThemeIcon';
 export * from './Timeline';
 export * from './Title';
+export * from './Toggle';
+export * from './Toolbar';
 export * from './Tooltip';
 export * from './Transition';
 export * from './Tree';

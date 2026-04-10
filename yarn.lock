@@ -4235,7 +4235,6 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.0.1
     "@mantine/hooks": 9.0.1
-    "@tiptap/extension-image": ">=3.3.0"
     "@tiptap/extension-link": ">=3.3.0"
     "@tiptap/react": ">=3.3.0"
     react: ^19.2.0

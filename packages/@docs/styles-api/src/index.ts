@@ -131,6 +131,8 @@ export * from './data/TimeGrid.styles-api';
 export * from './data/Timeline.styles-api';
 export * from './data/TimePicker.styles-api';
 export * from './data/Title.styles-api';
+export * from './data/Toggle.styles-api';
+export * from './data/Toolbar.styles-api';
 export * from './data/Tooltip.styles-api';
 export * from './data/Tree.styles-api';
 export * from './data/TreeSelect.styles-api';

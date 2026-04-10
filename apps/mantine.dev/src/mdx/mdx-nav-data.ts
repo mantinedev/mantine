@@ -326,6 +326,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.CloseButton,
       MDX_DATA.CopyButton,
       MDX_DATA.FileButton,
+      MDX_DATA.Toggle,
       MDX_DATA.UnstyledButton,
     ],
   },
@@ -411,6 +412,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'Miscellaneous',
     pages: [
+      MDX_DATA.Toolbar,
       MDX_DATA.Collapse,
       MDX_DATA.FocusTrap,
       MDX_DATA.Marquee,
