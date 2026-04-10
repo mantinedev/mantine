@@ -105,6 +105,9 @@ export function useFileDialog(input: UseFileDialogOptions = {}): UseFileDialogRe
 
     if (inputRef.current) {
       inputRef.current.addEventListener('change', handleChange, { once: true });
+      if (options.onCancel) {
+        inputRef.current.addEventListener('cancel', options.onCancel, { once: true });
+      }
       document.body.appendChild(inputRef.current);
     }
   }, [options, handleChange]);

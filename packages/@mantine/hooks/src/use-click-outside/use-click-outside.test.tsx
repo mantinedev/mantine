@@ -7,10 +7,16 @@ interface UseClickOutsideProps {
   handler: () => void;
   events?: string[] | null;
   nodes?: (HTMLElement | null)[];
+  enabled?: boolean;
 }
 
-const Target: React.FunctionComponent<UseClickOutsideProps> = ({ handler, events, nodes }) => {
-  const ref = useClickOutside(handler, events, nodes);
+const Target: React.FunctionComponent<UseClickOutsideProps> = ({
+  handler,
+  events,
+  nodes,
+  enabled,
+}) => {
+  const ref = useClickOutside(handler, events, nodes, enabled);
   return <div data-testid="target" ref={ref} />;
 };
 
@@ -149,6 +155,68 @@ describe('@mantine/hooks/use-click-outside', () => {
 
     addSpy.mockRestore();
     removeSpy.mockRestore();
+  });
+
+  it('does not call handler when enabled is false', async () => {
+    const handler = jest.fn();
+
+    render(
+      <>
+        <Target handler={handler} enabled={false} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(handler).not.toHaveBeenCalled();
+  });
+
+  it('starts calling handler when enabled changes from false to true', async () => {
+    const handler = jest.fn();
+
+    const { rerender } = render(
+      <>
+        <Target handler={handler} enabled={false} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(handler).not.toHaveBeenCalled();
+
+    rerender(
+      <>
+        <Target handler={handler} enabled />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+
+  it('stops calling handler when enabled changes from true to false', async () => {
+    const handler = jest.fn();
+
+    const { rerender } = render(
+      <>
+        <Target handler={handler} enabled />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(handler).toHaveBeenCalledTimes(1);
+
+    rerender(
+      <>
+        <Target handler={handler} enabled={false} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(handler).toHaveBeenCalledTimes(1);
   });
 
   it('propagates event to handler', async () => {

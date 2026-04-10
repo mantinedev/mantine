@@ -256,6 +256,50 @@ describe('@mantine/schedule/WeekView', () => {
     jest.useRealTimers();
   });
 
+  it('does not display current time indicator on a different week by default', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-05 10:30:00'));
+    const { container } = render(
+      <WeekView {...defaultProps} date="2025-11-10" withCurrentTimeIndicator />
+    );
+
+    expect(
+      container.querySelector('.mantine-WeekView-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('displays current time indicator on same day of week with forceCurrentTimeIndicator', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-05 10:30:00'));
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        date="2025-11-10"
+        withCurrentTimeIndicator
+        forceCurrentTimeIndicator
+      />
+    );
+
+    expect(container.querySelector('.mantine-WeekView-currentTimeIndicator')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('does not display indicator with forceCurrentTimeIndicator when withCurrentTimeIndicator is false', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-05 10:30:00'));
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        date="2025-11-10"
+        withCurrentTimeIndicator={false}
+        forceCurrentTimeIndicator
+      />
+    );
+
+    expect(
+      container.querySelector('.mantine-WeekView-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
   it('supports withAllDaySlots={false}', () => {
     const { container, rerender } = render(<WeekView {...defaultProps} withAllDaySlots={false} />);
     expect(

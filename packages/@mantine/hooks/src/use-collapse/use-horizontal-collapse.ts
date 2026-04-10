@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, useState } from 'react';
+import React, { CSSProperties, useEffectEvent, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 import { mergeRefs } from '../use-merged-ref/use-merged-ref';
@@ -74,6 +74,8 @@ export function useHorizontalCollapse({
     ...(keepMounted ? {} : { display: 'none' }),
   };
 
+  const onTransitionStartEvent = useEffectEvent(() => onTransitionStart?.());
+
   const elementRef = useRef<HTMLElement>(null);
   const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);
   const [state, setState] = useState<UseHorizontalCollapseState>(expanded ? 'entered' : 'exited');
@@ -86,7 +88,7 @@ export function useHorizontalCollapse({
   };
 
   const getTransitionStyles = (width: number | string) => {
-    const duration = transitionDuration || getAutoWidthDuration(width);
+    const duration = transitionDuration ?? getAutoWidthDuration(width);
     return {
       transition: `width ${duration}ms ${transitionTimingFunction}, opacity ${duration}ms ${transitionTimingFunction}`,
     };
@@ -96,7 +98,7 @@ export function useHorizontalCollapse({
     const shouldTransition = transitionDuration !== 0;
 
     if (shouldTransition) {
-      onTransitionStart?.();
+      onTransitionStartEvent();
     }
 
     if (expanded) {
@@ -116,7 +118,7 @@ export function useHorizontalCollapse({
         window.requestAnimationFrame(() => mergeStyles({ width: 0, overflow: 'hidden' }));
       });
     }
-  }, [expanded, onTransitionStart]);
+  }, [expanded]);
 
   const handleTransitionEnd = (event: React.TransitionEvent): void => {
     if (event.target !== elementRef.current || event.propertyName !== 'width') {
@@ -151,4 +153,10 @@ export function useHorizontalCollapse({
       style: { boxSizing: 'border-box', ...input?.style, ...styles },
     }),
   };
+}
+
+export namespace useHorizontalCollapse {
+  export type Input = UseHorizontalCollapseInput;
+  export type ReturnValue = UseHorizontalCollapseReturnValue;
+  export type State = UseHorizontalCollapseState;
 }

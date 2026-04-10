@@ -1,6 +1,5 @@
 // Required to disable for webkit-user-select, although deprecated, it is still required for Safari support
-/* oxlint-disable typescript/no-deprecated */
-import { RefCallback, RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
 
 function useRefValue<T>(value: T) {
   const ref = useRef(value);
@@ -246,9 +245,51 @@ export function useFloatingWindow<T extends HTMLElement>(
     };
   }, [options.constrainToViewport, options.constrainOffset]);
 
+  const setPosition = useCallback(
+    (position: FloatingWindowPositionConfig) => {
+      const el = ref.current;
+      if (!el) {
+        return;
+      }
+
+      const offset = options.constrainOffset ?? 0;
+      const rect = el.getBoundingClientRect();
+
+      let x: number | undefined;
+      let y: number | undefined;
+
+      if (position.left != null) {
+        x = position.left;
+      } else if (position.right != null) {
+        x = window.innerWidth - rect.width - position.right;
+      }
+
+      if (position.top != null) {
+        y = position.top;
+      } else if (position.bottom != null) {
+        y = window.innerHeight - rect.height - position.bottom;
+      }
+
+      x = x ?? pos.current.x;
+      y = y ?? pos.current.y;
+
+      if (options.constrainToViewport) {
+        const clamped = clampToViewport(x, y, el, offset);
+        x = clamped.x;
+        y = clamped.y;
+      }
+
+      pos.current = { x, y };
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      options.onPositionChange?.({ x, y });
+    },
+    [options.constrainToViewport, options.constrainOffset, options.onPositionChange]
+  );
+
   return {
     ref: assignRef,
-    setPosition: createSetPosition(ref, pos, options),
+    setPosition,
     isDragging,
   };
 }
@@ -365,54 +406,6 @@ function clampToViewport(
     x: Math.min(Math.max(offset, x), maxX),
     y: Math.min(Math.max(offset, y), maxY),
   };
-}
-
-function createSetPosition(
-  elRef: RefObject<HTMLElement | null>,
-  posRef: React.RefObject<{ x: number; y: number }>,
-  options: UseFloatingWindowOptions
-) {
-  return useCallback(
-    (position: FloatingWindowPositionConfig) => {
-      const el = elRef.current;
-      if (!el) {
-        return;
-      }
-
-      const offset = options.constrainOffset ?? 0;
-      const rect = el.getBoundingClientRect();
-
-      let x: number | undefined;
-      let y: number | undefined;
-
-      if (position.left != null) {
-        x = position.left;
-      } else if (position.right != null) {
-        x = window.innerWidth - rect.width - position.right;
-      }
-
-      if (position.top != null) {
-        y = position.top;
-      } else if (position.bottom != null) {
-        y = window.innerHeight - rect.height - position.bottom;
-      }
-
-      x = x ?? posRef.current.x;
-      y = y ?? posRef.current.y;
-
-      if (options.constrainToViewport) {
-        const clamped = clampToViewport(x, y, el, offset);
-        x = clamped.x;
-        y = clamped.y;
-      }
-
-      posRef.current = { x, y };
-      el.style.left = `${x}px`;
-      el.style.top = `${y}px`;
-      options.onPositionChange?.({ x, y });
-    },
-    [options.constrainToViewport, options.constrainOffset, options.onPositionChange]
-  );
 }
 
 export namespace useFloatingWindow {

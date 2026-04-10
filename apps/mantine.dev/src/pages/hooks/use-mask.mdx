@@ -108,14 +108,11 @@ interface UseMaskOptions {
   // Override or extend the default token map
   tokens?: Record<string, RegExp>;
 
-  // Called on each keystroke, can return overrides for mask, tokens, slotChar, or separate
-  modify?: (value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'tokens' | 'slotChar' | 'separate'>> | undefined;
+  // Called on each keystroke, can return overrides for mask, tokens, or slotChar
+  modify?: (value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'tokens' | 'slotChar'>> | undefined;
 
   // Transform each character before validation and insertion
   transform?: (char: string) => string;
-
-  // When true, raw and display values are decoupled
-  separate?: boolean;
 
   // Character displayed in unfilled slots, "_" by default
   slotChar?: string | null;
@@ -138,20 +135,6 @@ interface UseMaskOptions {
   // Called when all required mask slots are filled
   onComplete?: (maskedValue: string, rawValue: string) => void;
 
-  // Escape hatch for advanced cursor/value manipulation
-  beforeMaskedStateChange?: (states: {
-    previousState: MaskState;
-    currentState: MaskState;
-    nextState: MaskState;
-  }) => MaskState;
-}
-
-interface MaskState {
-  // Current masked display value
-  value: string;
-
-  // Current cursor selection range
-  selection: { start: number; end: number } | null;
 }
 
 interface UseMaskReturnValue {
@@ -176,9 +159,9 @@ function useMask(options: UseMaskOptions): UseMaskReturnValue;
 
 ## Exported types
 
-The `UseMaskOptions`, `UseMaskReturnValue`, and `MaskState` types are exported from the `@mantine/hooks` package;
+The `UseMaskOptions` and `UseMaskReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx
-import type { UseMaskOptions, UseMaskReturnValue, MaskState } from '@mantine/hooks';
+import type { UseMaskOptions, UseMaskReturnValue } from '@mantine/hooks';
 ```

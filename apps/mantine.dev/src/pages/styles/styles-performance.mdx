@@ -88,6 +88,34 @@ function StylePropsArray() {
 }
 ```
 
+### Deduplicating responsive style props
+
+If you have many components with the same responsive style props, you can enable
+`deduplicateInlineStyles` on [MantineProvider](/theming/mantine-provider) to
+automatically share `<style />` tags between components with identical responsive styles.
+This uses React 19 style hoisting to deduplicate and hoist styles to `<head />`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
+      {/* Components with the same responsive style props
+          will now share a single <style /> tag */}
+    </MantineProvider>
+  );
+}
+```
+
+Note that deduplication only helps when multiple components share the **same** responsive
+style prop values. If every component has unique responsive values, each still requires
+its own `<style />` tag.
+
+Currently, deduplication applies to [style props](/styles/style-props) on all components
+and to responsive props on the [Flex](/core/flex) component. Components like
+[Grid](/core/grid) and [SimpleGrid](/core/simple-grid) are not yet covered.
+
 ## Components responsive props
 
 Some components, like [SimpleGrid](/core/simple-grid) and [Grid](/core/grid),

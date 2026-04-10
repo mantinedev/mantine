@@ -11,19 +11,16 @@ export function useInViewport<T extends HTMLElement = any>(): UseInViewportRetur
 
   const ref: React.RefCallback<T | null> = useCallback((node) => {
     if (typeof IntersectionObserver !== 'undefined') {
-      if (node && !observer.current) {
+      observer.current?.disconnect();
+
+      if (node) {
         observer.current = new IntersectionObserver((entries) => {
-          // Entries might be batched (e.g. when scrolling very fast), so we need to use the last entry to get the most recent state
           const lastEntry = entries[entries.length - 1];
           setInViewport(lastEntry.isIntersecting);
         });
+        observer.current.observe(node);
       } else {
-        observer.current?.disconnect();
-      }
-
-      if (node) {
-        observer.current?.observe(node);
-      } else {
+        observer.current = null;
         setInViewport(false);
       }
     }
