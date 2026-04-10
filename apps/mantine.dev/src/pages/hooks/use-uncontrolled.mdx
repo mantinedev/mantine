@@ -69,7 +69,7 @@ interface UseUncontrolledOptions<T> {
   finalValue?: T;
 
   /** Controlled state onChange handler */
-  onChange?: (value: T) => void;
+  onChange?: (value: T, ...payload: any[]) => void;
 }
 
 type UseUncontrolledReturnValue<T> = [

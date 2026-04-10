@@ -17,6 +17,7 @@ export {
   useMantineSxTransform,
   useMantineStylesTransform,
   useMantineEnv,
+  useMantineDeduplicateInlineStyles,
 } from './Mantine.context';
 export {
   useMantineTheme,

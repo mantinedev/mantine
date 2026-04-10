@@ -1,15 +1,14 @@
-export type KeyboardModifiers = {
+export interface KeyboardModifiers {
   alt: boolean;
   ctrl: boolean;
   meta: boolean;
   mod: boolean;
   shift: boolean;
-  plus: boolean;
-};
+}
 
-export type Hotkey = KeyboardModifiers & {
+export interface Hotkey extends KeyboardModifiers {
   key?: string;
-};
+}
 
 type CheckHotkeyMatch = (event: KeyboardEvent) => boolean;
 
@@ -54,7 +53,6 @@ export function parseHotkey(hotkey: string): Hotkey {
     meta: keys.includes('meta'),
     mod: keys.includes('mod'),
     shift: keys.includes('shift'),
-    plus: keys.includes('[plus]'),
   };
 
   const reservedKeys = ['alt', 'ctrl', 'meta', 'shift', 'mod'];

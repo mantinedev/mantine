@@ -12,9 +12,19 @@ export interface MarksProps {
   offset: number | undefined;
   disabled: boolean | undefined;
   inverted: boolean | undefined;
+  startPointValue?: number;
 }
 
-export function Marks({ marks, min, max, disabled, value, offset, inverted }: MarksProps) {
+export function Marks({
+  marks,
+  min,
+  max,
+  disabled,
+  value,
+  offset,
+  inverted,
+  startPointValue,
+}: MarksProps) {
   const { getStyles } = useSliderContext();
 
   if (!marks) {
@@ -34,7 +44,10 @@ export function Marks({ marks, min, max, disabled, value, offset, inverted }: Ma
       >
         <Box
           {...getStyles('mark')}
-          mod={{ filled: isMarkFilled({ mark, value, offset, inverted }), disabled }}
+          mod={{
+            filled: isMarkFilled({ mark, value, offset, inverted, startPointValue }),
+            disabled,
+          }}
         />
         {mark.label && <div {...getStyles('markLabel')}>{mark.label}</div>}
       </Box>

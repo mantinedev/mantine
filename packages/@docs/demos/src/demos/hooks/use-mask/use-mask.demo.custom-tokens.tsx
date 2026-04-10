@@ -8,7 +8,7 @@ import { useMask } from '@mantine/hooks';
 
 function Demo() {
   const { ref, rawValue } = useMask({
-    mask: '#hhhhhh',
+    mask: '\\#hhhhhh',
     tokens: { h: /[0-9a-fA-F]/ },
   });
 
@@ -23,7 +23,7 @@ function Demo() {
 
 function Demo() {
   const { ref, rawValue } = useMask({
-    mask: '#hhhhhh',
+    mask: '\\#hhhhhh',
     tokens: { h: /[0-9a-fA-F]/ },
   });
 

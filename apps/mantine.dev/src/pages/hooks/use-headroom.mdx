@@ -12,6 +12,27 @@ visible and `scrollProgress` is a number between `0` (fully hidden) and `1` (ful
 
 <Demo data={UseHeadroomDemos.usage} />
 
+## scrollProgress
+
+Use `scrollProgress` to create a scroll-linked reveal animation instead of an instant
+show/hide toggle. The value transitions from `1` (fully visible) to `0` (fully hidden)
+as the user scrolls down past `fixedAt`, and back to `1` as the user scrolls up.
+Direction changes mid-scroll are handled correctly — the progress continues from
+wherever it was when the direction changed. Set `scrollDistance` to control how many
+pixels of scrolling are needed to fully reveal or hide the element.
+
+<Demo data={UseHeadroomDemos.scrollProgress} />
+
+## Callbacks
+
+The hook supports `onPin`, `onRelease`, and `onFix` callbacks:
+
+- `onPin` is called when the header becomes visible (user scrolls up)
+- `onRelease` is called when the header is hidden (user scrolls down)
+- `onFix` is called when the scroll position enters the fixed zone (scroll position &le; `fixedAt`)
+
+<Demo data={UseHeadroomDemos.callbacks} />
+
 ## Definition
 
 ```tsx
@@ -41,33 +62,6 @@ interface UseHeadroomReturnValue {
 }
 
 function useHeadroom(input?: UseHeadroomOptions): UseHeadroomReturnValue;
-```
-
-## scrollProgress
-
-Use `scrollProgress` to create a scroll-linked reveal animation. The value transitions
-from `1` (fully visible) to `0` (fully hidden) as the user scrolls down past `fixedAt`,
-and back to `1` as the user scrolls up. Direction changes mid-scroll are handled correctly —
-the progress continues from wherever it was when the direction changed.
-
-```tsx
-import { useHeadroom } from '@mantine/hooks';
-
-function Demo() {
-  const { scrollProgress } = useHeadroom({ fixedAt: 120, scrollDistance: 60 });
-
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        transform: `translateY(${(scrollProgress - 1) * 100}%)`,
-      }}
-    >
-      Header
-    </div>
-  );
-}
 ```
 
 ## Exported types

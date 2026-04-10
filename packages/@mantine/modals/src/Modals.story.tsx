@@ -176,6 +176,52 @@ export function closeAll() {
   );
 }
 
+const CloseAllContextModal = ({ context, id }: ContextModalProps<Record<string, never>>) => (
+  <div>
+    <Text>Context modal content</Text>
+    <Button onClick={() => context.closeModal(id)}>Close this modal</Button>
+  </div>
+);
+
+function CloseAllFromContextModalOnCloseApp() {
+  const ctx = useModals();
+
+  return (
+    <Group p={40}>
+      <Button
+        onClick={() =>
+          ctx.openContextModal('test', {
+            title: 'Context modal with closeAll onClose',
+            innerProps: {},
+            onClose: () => ctx.closeAll(),
+          })
+        }
+      >
+        Open context modal (closeAll on close)
+      </Button>
+      <Button
+        onClick={() =>
+          ctx.openModal({
+            title: 'Regular modal with closeAll onClose',
+            children: <Text>Regular modal content</Text>,
+            onClose: () => ctx.closeAll(),
+          })
+        }
+      >
+        Open regular modal (closeAll on close)
+      </Button>
+    </Group>
+  );
+}
+
+export function CloseAllFromContextModalOnClose() {
+  return (
+    <ModalsProvider modals={{ test: CloseAllContextModal }}>
+      <CloseAllFromContextModalOnCloseApp />
+    </ModalsProvider>
+  );
+}
+
 const AsyncProcessingModal = ({
   context,
   id,

@@ -353,6 +353,11 @@
     display: flex;
   }
 
+  & :where(li[data-checked] > div) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   & :where(ul) {
     margin-top: 5px;
   }

@@ -9,6 +9,7 @@ const DEFAULT_OPTIONS = {
 export interface UseCounterOptions {
   min?: number;
   max?: number;
+  step?: number;
 }
 
 export interface UseCounterHandlers {
@@ -21,17 +22,18 @@ export interface UseCounterHandlers {
 export type UseCounterReturnValue = [number, UseCounterHandlers];
 
 export function useCounter(initialValue = 0, options?: UseCounterOptions): UseCounterReturnValue {
-  const { min, max } = { ...DEFAULT_OPTIONS, ...options };
+  const { min, max, step: _step = 1 } = { ...DEFAULT_OPTIONS, ...options };
+  const step = Math.abs(_step);
   const [count, setCount] = useState<number>(clamp(initialValue, min, max));
 
   const increment = useCallback(
-    () => setCount((current) => clamp(current + 1, min, max)),
-    [min, max]
+    () => setCount((current) => clamp(current + step, min, max)),
+    [min, max, step]
   );
 
   const decrement = useCallback(
-    () => setCount((current) => clamp(current - 1, min, max)),
-    [min, max]
+    () => setCount((current) => clamp(current - step, min, max)),
+    [min, max, step]
   );
 
   const set = useCallback((value: number) => setCount(clamp(value, min, max)), [min, max]);

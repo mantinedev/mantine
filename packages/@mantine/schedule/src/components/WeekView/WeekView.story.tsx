@@ -508,6 +508,86 @@ export function EventResizeWithDragAndDrop() {
   );
 }
 
+export function EventResizeWithClick() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  const [eventsData, setEventsData] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Team Meeting',
+      start: new Date(`${dayjs(date).format('YYYY-MM-DD')}T10:00:00`),
+      end: new Date(`${dayjs(date).format('YYYY-MM-DD')}T11:00:00`),
+      color: 'blue',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Project Review',
+      start: new Date(`${dayjs(date).add(1, 'day').format('YYYY-MM-DD')}T14:00:00`),
+      end: new Date(`${dayjs(date).add(1, 'day').format('YYYY-MM-DD')}T16:00:00`),
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Client Call',
+      start: new Date(`${dayjs(date).add(2, 'day').format('YYYY-MM-DD')}T09:00:00`),
+      end: new Date(`${dayjs(date).add(2, 'day').format('YYYY-MM-DD')}T10:30:00`),
+      color: 'red',
+      payload: {},
+    },
+  ]);
+  const [lastAction, setLastAction] = useState<string>('');
+
+  return (
+    <div>
+      <Stack gap="md" p="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Event Resize + Click Demo
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Resize an event by dragging its edge – onEventClick should NOT fire after resizing.
+            Clicking an event without resizing should fire onEventClick.
+          </Text>
+        </div>
+
+        {lastAction && (
+          <Text size="sm" c="blue">
+            Last action: {lastAction}
+          </Text>
+        )}
+      </Stack>
+
+      <WeekView
+        date={date}
+        onDateChange={setDate}
+        events={eventsData}
+        withEventResize
+        onEventResize={({ eventId, newStart, newEnd }) => {
+          const resizedEvent = eventsData.find((e) => e.id === eventId);
+          setEventsData((prev) =>
+            prev.map((event) => {
+              if (event.id === eventId) {
+                return { ...event, start: newStart, end: newEnd };
+              }
+              return event;
+            })
+          );
+          setLastAction(
+            `Resized "${resizedEvent?.title}" to ${dayjs(newStart).format('dddd HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
+          );
+        }}
+        onEventClick={(event) => {
+          setLastAction(`Clicked "${event.title}"`);
+        }}
+        startTime="08:00:00"
+        endTime="20:00:00"
+        intervalMinutes={60}
+      />
+    </div>
+  );
+}
+
 export function StaticMode() {
   return (
     <div style={{ padding: 40 }}>
