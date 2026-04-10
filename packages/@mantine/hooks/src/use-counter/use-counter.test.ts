@@ -24,6 +24,34 @@ describe('@mantine/hooks/use-counter', () => {
     expect(hook.result.current[0]).toBe(0);
   });
 
+  it('correctly increments and decrements by custom step', () => {
+    const hook = renderHook(() => useCounter(0, { step: 5 }));
+    expect(hook.result.current[0]).toBe(0);
+
+    act(() => hook.result.current[1].increment());
+    expect(hook.result.current[0]).toBe(5);
+
+    act(() => hook.result.current[1].increment());
+    expect(hook.result.current[0]).toBe(10);
+
+    act(() => hook.result.current[1].decrement());
+    expect(hook.result.current[0]).toBe(5);
+  });
+
+  it('clamps step increment/decrement to min/max', () => {
+    const hook = renderHook(() => useCounter(0, { min: -3, max: 3, step: 5 }));
+    expect(hook.result.current[0]).toBe(0);
+
+    act(() => hook.result.current[1].increment());
+    expect(hook.result.current[0]).toBe(3);
+
+    act(() => hook.result.current[1].decrement());
+    expect(hook.result.current[0]).toBe(-2);
+
+    act(() => hook.result.current[1].decrement());
+    expect(hook.result.current[0]).toBe(-3);
+  });
+
   it('correctly performs operations with initialValue and options', () => {
     const hook = renderHook(() => useCounter(11, { min: -10, max: 10 }));
     expect(hook.result.current[0]).toBe(10);

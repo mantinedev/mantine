@@ -1,5 +1,9 @@
 import dayjs from 'dayjs';
-import { RRule } from 'rrule';
+import * as rruleAll from 'rrule';
+
+const RRule = (
+  'default' in rruleAll ? (rruleAll as any).default.RRule : rruleAll.RRule
+) as typeof rruleAll.RRule;
 import { DateTimeStringValue, ScheduleEventData, ScheduleRecurrenceData } from '../../types';
 import { validateEvent } from '../validate-event/validate-event';
 
