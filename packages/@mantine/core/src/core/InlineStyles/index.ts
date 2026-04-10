@@ -1,4 +1,5 @@
 export { InlineStyles } from './InlineStyles';
+export { hashStyleProps } from './hash-styles';
 export { stylesToString } from './styles-to-string/styles-to-string';
 export type {
   InlineStylesInput,

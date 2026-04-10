@@ -2,7 +2,6 @@ import { rem } from '../../../utils';
 import { MantineColor, MantineGradient, MantineTheme } from '../../theme.types';
 import { darken } from '../darken/darken';
 import { getGradient } from '../get-gradient/get-gradient';
-import { isLightColor } from '../luminance/luminance';
 import { parseThemeColor } from '../parse-theme-color/parse-theme-color';
 import { rgba } from '../rgba/rgba';
 
@@ -100,9 +99,9 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     }
 
     return {
-      background: color!,
-      hover: darken(color!, 0.1),
-      color: isLightColor(color!) ? 'var(--mantine-color-black)' : 'var(--mantine-color-white)',
+      background: rgba(color!, 0.1),
+      hover: rgba(color!, 0.12),
+      color: color!,
       border: `${rem(1)} solid transparent`,
     };
   }

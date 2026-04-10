@@ -74,7 +74,13 @@ export function NotificationContainer({
   };
 
   const handleAutoClose = () => {
-    if (dismissed || active || hoveredRef.current || typeof autoCloseDuration !== 'number') {
+    if (
+      dismissed ||
+      active ||
+      paused ||
+      hoveredRef.current ||
+      typeof autoCloseDuration !== 'number'
+    ) {
       return;
     }
 
@@ -113,6 +119,7 @@ export function NotificationContainer({
     scrollDismissTimeout.current = window.setTimeout(() => {
       setScrollDismissActive(false);
       setSwipeOffset(0);
+      handleAutoClose();
     }, SCROLL_DISMISS_RESET_TIMEOUT);
   };
 
@@ -188,13 +195,20 @@ export function NotificationContainer({
 
   const handleMouseLeave = () => {
     hoveredRef.current = false;
-    resetSwipe();
-    handleAutoClose();
+    if (!scrollDismissActive) {
+      resetSwipe();
+      handleAutoClose();
+    }
     onHoverEnd?.();
   };
 
   const handleWheel = useEffectEvent((event: WheelEvent) => {
-    if (dismissed || active || !hoveredRef.current) {
+    if (dismissed || active) {
+      return;
+    }
+
+    const isDocumentEvent = event.currentTarget === document;
+    if (!isDocumentEvent && !hoveredRef.current) {
       return;
     }
 
@@ -203,11 +217,13 @@ export function NotificationContainer({
       return;
     }
 
-    event.preventDefault();
-    event.stopPropagation();
-
     if (!allowScrollDismiss || isCloseDisabled) {
       return;
+    }
+
+    if (!isDocumentEvent) {
+      event.preventDefault();
+      event.stopPropagation();
     }
 
     cancelAutoClose();
@@ -224,6 +240,15 @@ export function NotificationContainer({
     setSwipeOffset(nextOffset);
     scheduleScrollDismissReset();
   });
+
+  useEffect(() => {
+    if (!scrollDismissActive) {
+      return undefined;
+    }
+
+    document.addEventListener('wheel', handleWheel, { passive: false });
+    return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
+  }, [scrollDismissActive]);
 
   useEffect(() => {
     const handleResize = () => {

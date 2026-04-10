@@ -1,4 +1,4 @@
-import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos } from '@docs/demos';
+import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, SliderDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,6 +10,29 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## deduplicateInlineStyles
+
+New `deduplicateInlineStyles` prop on [MantineProvider](/theming/mantine-provider) enables
+React 19 style tag deduplication for responsive [style props](/styles/style-props).
+When many components share the same responsive style prop values, only a single `<style />`
+tag is generated and hoisted to `<head />` instead of each component injecting its own:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+This can significantly improve performance when rendering large lists of components
+with identical responsive style props. See the
+[styles performance guide](/styles/styles-performance) for more details.
 
 ## use-mask hook
 
@@ -115,3 +138,27 @@ a parent node does not affect children and vice versa – each node's checked st
 fully independent:
 
 <Demo data={TreeDemos.checkStrictly} />
+
+## Slider startPointValue
+
+[Slider](/core/slider) component now supports `startPointValue` prop that changes
+the origin of the filled bar. When set, the bar extends from the given value toward the
+current value – to the left for values below the start point and to the right for values above it:
+
+<Demo data={SliderDemos.startPoint} />
+
+## WeekView forceCurrentTimeIndicator
+
+[WeekView](/schedule/week-view) component now supports `forceCurrentTimeIndicator` prop.
+When set, the current time indicator is displayed on the same day of week even when viewing
+a different week:
+
+<Demo data={WeekViewDemos.forceCurrentTimeIndicator} />
+
+## Other changes
+
+- [useClickOutside](/hooks/use-click-outside) hook now supports `enabled` parameter to dynamically enable/disable the listener. The hook also uses `event.composedPath()` in both `ref` and `nodes` branches for consistent Shadow DOM support and correctly ignores clicks on detached DOM nodes in the single-ref mode.
+- [useCounter](/hooks/use-counter) hook now supports `step` option to configure increment/decrement step size (default `1`).
+- [useDebouncedCallback](/hooks/use-debounced-callback) hook now supports `maxWait` option to guarantee execution within a maximum time window during continuous calls, and `isPending()` method to check if a debounced call is waiting.
+- [useDebouncedValue](/hooks/use-debounced-value) hook now returns a `flush` method to immediately apply the pending debounced value.
+- [useScrollIntoView](/hooks/use-scroll-into-view) hook now supports `onScrollCancel` callback that fires when the scroll animation is interrupted by the user, and returns a `scrolling` boolean to indicate whether a scroll animation is in progress.

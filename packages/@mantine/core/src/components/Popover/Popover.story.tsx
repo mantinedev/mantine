@@ -1,5 +1,4 @@
-/* oxlint-disable jsx-a11y/click-events-have-key-events */
-/* oxlint-disable jsx-a11y/no-static-element-interactions */
+/* oxlint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import { useState } from 'react';
 import { Box, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
