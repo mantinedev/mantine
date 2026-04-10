@@ -124,7 +124,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
             // Defer dispatching this event to avoid the handler being called during render.
             queueMicrotask(() => {
               window.dispatchEvent(
-                new CustomEvent(eventName, { detail: { key, value: val(current) } })
+                new CustomEvent(eventName, { detail: { key, value: result } })
               );
             });
             return result;

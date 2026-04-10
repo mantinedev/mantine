@@ -95,6 +95,7 @@ export * from './data/RichTextEditor.styles-api';
 export * from './data/RingProgress.styles-api';
 export * from './data/ScatterChart.styles-api';
 export * from './data/Schedule.styles-api';
+export * from './data/Scroller.styles-api';
 export * from './data/ScrollArea.styles-api';
 export * from './data/SegmentedControl.styles-api';
 export * from './data/Select.styles-api';

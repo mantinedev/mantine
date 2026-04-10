@@ -83,10 +83,14 @@ export function useHeadroom({
     );
   }, [scrollPosition, fixedAt, isScrollingUp]);
 
+  const wasFixedRef = useRef(isFixed(scrollPosition, fixedAt));
+
   useIsomorphicEffect(() => {
-    if (isFixed(scrollPosition, fixedAt)) {
+    const currentlyInFixedZone = isFixed(scrollPosition, fixedAt);
+    if (currentlyInFixedZone && !wasFixedRef.current) {
       onFixEvent();
     }
+    wasFixedRef.current = currentlyInFixedZone;
   }, [scrollPosition, fixedAt]);
 
   // Refs for scroll-progress tracking. Mutated during render (safe for refs).

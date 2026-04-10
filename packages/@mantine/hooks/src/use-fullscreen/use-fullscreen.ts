@@ -50,11 +50,14 @@ interface FullscreenEvents {
   onError: (event: Event) => void;
 }
 
-function addEvents(element: HTMLElement, { onFullScreen, onError }: FullscreenEvents) {
+function addEvents(element: HTMLElement, events: FullscreenEvents) {
+  const { onFullScreen, onError } = events;
   prefixes.forEach((prefix) => {
     element.addEventListener(`${prefix}fullscreenchange`, onFullScreen);
     element.addEventListener(`${prefix}fullscreenerror`, onError);
   });
+
+  return () => removeEvents(element, events);
 }
 
 function removeEvents(element: HTMLElement, { onFullScreen, onError }: FullscreenEvents) {

@@ -3,27 +3,27 @@ import { useEffect, useEffectEvent, useRef, useState } from 'react';
 export type ScrollDirection = 'up' | 'down' | 'unknown';
 
 export function useScrollDirection(): ScrollDirection {
-  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const lastScrollTopRef = useRef(0);
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>('unknown');
-  const [isResizing, setIsResizing] = useState(false);
+  const isResizingRef = useRef(false);
   const resizeTimerRef = useRef<number | undefined>(undefined);
 
   const handleScroll = useEffectEvent(() => {
-    if (isResizing) {
+    if (isResizingRef.current) {
       return;
     }
 
     const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
-    setScrollDirection(currentScrollTop < lastScrollTop ? 'up' : 'down');
-    setLastScrollTop(currentScrollTop);
+    setScrollDirection(currentScrollTop < lastScrollTopRef.current ? 'up' : 'down');
+    lastScrollTopRef.current = currentScrollTop;
   });
 
   useEffect(() => {
     const handleResize = () => {
-      setIsResizing(true);
+      isResizingRef.current = true;
       window.clearTimeout(resizeTimerRef.current);
       resizeTimerRef.current = window.setTimeout(() => {
-        setIsResizing(false);
+        isResizingRef.current = false;
       }, 300);
     };
 
