@@ -499,6 +499,20 @@ export const Tour = factory<TourFactory>((_props) => {
 
   const isCentered = !targetElement;
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [hasPositioned, setHasPositioned] = useState(false);
+
+  useEffect(() => {
+    if (!active) {
+      setHasPositioned(false);
+      return;
+    }
+
+    const timer = requestAnimationFrame(() => {
+      setHasPositioned(true);
+    });
+
+    return () => cancelAnimationFrame(timer);
+  }, [active]);
   const [centeredPos, setCenteredPos] = useState<{ top: number; left: number } | null>(null);
 
   useEffect(() => {
@@ -577,45 +591,54 @@ export const Tour = factory<TourFactory>((_props) => {
     >
       <OptionalPortal {...portalProps} withinPortal={withinPortal}>
         <Box {...getStyles('root')} {...others}>
-          {resolvedWithOverlay && showTooltip && (
-            <svg
-              {...getStyles('overlay')}
-              role="presentation"
-              width="100%"
-              height="100%"
-              data-with-overlay-interaction={withOverlayInteraction || undefined}
-              onClick={() => {
-                if (closeOnOverlayClick) {
-                  close();
-                }
-              }}
+          {resolvedWithOverlay && (
+            <Transition
+              mounted={showTooltip}
+              duration={transitionProps?.duration ?? 200}
+              transition="fade"
             >
-              <defs>
-                <mask id={maskId}>
-                  <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                  {targetRect && (
-                    <rect
-                      x={targetRect.left - resolvedSpotlightPadding}
-                      y={targetRect.top - resolvedSpotlightPadding}
-                      width={targetRect.width + resolvedSpotlightPadding * 2}
-                      height={targetRect.height + resolvedSpotlightPadding * 2}
-                      rx={resolvedSpotlightRadius}
-                      ry={resolvedSpotlightRadius}
-                      fill="black"
-                      {...getStyles('spotlight')}
-                    />
-                  )}
-                </mask>
-              </defs>
-              <rect
-                x="0"
-                y="0"
-                width="100%"
-                height="100%"
-                fill={overlayColor}
-                mask={`url(#${maskId})`}
-              />
-            </svg>
+              {(overlayStyles) => (
+                <svg
+                  {...getStyles('overlay')}
+                  role="presentation"
+                  width="100%"
+                  height="100%"
+                  style={overlayStyles}
+                  data-with-overlay-interaction={withOverlayInteraction || undefined}
+                  onClick={() => {
+                    if (closeOnOverlayClick) {
+                      close();
+                    }
+                  }}
+                >
+                  <defs>
+                    <mask id={maskId}>
+                      <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                      {targetRect && (
+                        <rect
+                          x={targetRect.left - resolvedSpotlightPadding}
+                          y={targetRect.top - resolvedSpotlightPadding}
+                          width={targetRect.width + resolvedSpotlightPadding * 2}
+                          height={targetRect.height + resolvedSpotlightPadding * 2}
+                          rx={resolvedSpotlightRadius}
+                          ry={resolvedSpotlightRadius}
+                          fill="black"
+                          {...getStyles('spotlight')}
+                        />
+                      )}
+                    </mask>
+                  </defs>
+                  <rect
+                    x="0"
+                    y="0"
+                    width="100%"
+                    height="100%"
+                    fill={overlayColor}
+                    mask={`url(#${maskId})`}
+                  />
+                </svg>
+              )}
+            </Transition>
           )}
 
           {mode === 'beacon' &&
@@ -642,7 +665,7 @@ export const Tour = factory<TourFactory>((_props) => {
           <Transition
             mounted={showTooltip && !!displayStep}
             duration={transitionProps?.duration ?? 200}
-            transition={transitionProps?.transition ?? 'fade'}
+            transition={transitionProps?.transition ?? 'pop'}
             timingFunction={transitionProps?.timingFunction}
           >
             {(transitionStyles) => (
@@ -664,8 +687,8 @@ export const Tour = factory<TourFactory>((_props) => {
                     transitionStyles.transitionProperty
                       ? `${transitionStyles.transitionProperty} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
                       : null,
-                    `top ${stepTransitionDuration}ms ease`,
-                    `left ${stepTransitionDuration}ms ease`,
+                    hasPositioned ? `top ${stepTransitionDuration}ms ease` : null,
+                    hasPositioned ? `left ${stepTransitionDuration}ms ease` : null,
                   ]
                     .filter(Boolean)
                     .join(', '),
