@@ -495,6 +495,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Toolbar/Toolbar.tsx',
     docs: 'core/toolbar.mdx',
   },
+  Tour: {
+    title: 'Tour',
+    package: '@mantine/core',
+    slug: '/core/tour',
+    props: ['Tour', 'TourStep'],
+    styles: ['Tour'],
+    componentPrefix: 'Tour',
+    description: 'Guide users through your application with interactive step-by-step tours',
+    source: '@mantine/core/src/components/Tour/Tour.tsx',
+    docs: 'core/tour.mdx',
+  },
   Tooltip: {
     title: 'Tooltip',
     package: '@mantine/core',

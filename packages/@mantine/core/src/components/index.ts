@@ -112,6 +112,7 @@ export * from './Timeline';
 export * from './Title';
 export * from './Toggle';
 export * from './Toolbar';
+export * from './Tour';
 export * from './Tooltip';
 export * from './Transition';
 export * from './Tree';

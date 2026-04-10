@@ -1,0 +1,90 @@
+import { TourDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Tour);
+
+## Usage
+
+`Tour` component provides an interactive step-by-step guide for application onboarding.
+It highlights target elements with a spotlight overlay and displays tooltips with navigation controls.
+
+<Demo data={TourDemos.usage} />
+
+## Beacon mode
+
+Set `mode="beacon"` to display pulsing indicators near target elements instead of a sequential walkthrough.
+Users can click beacons in any order to reveal tooltips.
+
+<Demo data={TourDemos.beacon} />
+
+## Controlled
+
+Control the active step externally with `step` and `onStepChange` props:
+
+<Demo data={TourDemos.controlled} />
+
+## Overlay configuration
+
+Configure the overlay behavior with `withOverlay`, `withOverlayInteraction`, and `closeOnOverlayClick` props:
+
+- `withOverlay` - show or hide the backdrop overlay (default: `true`)
+- `withOverlayInteraction` - allow clicking through the overlay (default: `false`)
+- `closeOnOverlayClick` - close the tour when clicking the overlay (default: `false`)
+
+<Demo data={TourDemos.overlay} />
+
+## Steps without target
+
+Steps without a `target` prop render as centered cards, useful for welcome or completion screens:
+
+<Demo data={TourDemos.centered} />
+
+## Custom content
+
+Use any React content inside `Tour.Step` children for rich tooltip content:
+
+<Demo data={TourDemos.compound} />
+
+## Tooltip position
+
+Set the `position` prop on individual `Tour.Step` components to control tooltip placement.
+Supported values: `top`, `right`, `bottom`, `left`, and their `-start`/`-end` variants.
+
+<Demo data={TourDemos.position} />
+
+## Custom labels
+
+Customize navigation button labels with the `labels` prop for i18n support:
+
+<Demo data={TourDemos.labels} />
+
+## Styles API
+
+<Demo data={TourDemos.stylesApi} />
+
+## Scroll behavior
+
+By default, the tour scrolls the target element into view. Set `withScrollIntoView={false}` to disable,
+or provide a `scrollToHandler` function for custom scroll behavior (e.g., scrolling within a specific container).
+
+## Keyboard navigation
+
+When `withKeyboardNavigation` is enabled (default), the following keys are available in guided mode:
+
+- Right arrow - Next step
+- Left arrow - Previous step
+- Escape - Close tour
+
+Keyboard navigation is disabled in beacon mode. Set `withKeyboardNavigation={false}` to disable entirely.
+
+## Accessibility
+
+Tour follows WAI-ARIA dialog pattern:
+
+- Tooltip has `role="dialog"` and `aria-modal="false"`
+- Navigation buttons have accessible labels via the `labels` prop
+- Step counter is announced via `aria-live="polite"`
+- Focus moves to the tooltip when a step opens
+- Focus returns to the previously focused element when the tour closes
+- Beacons have `role="button"` with descriptive `aria-label`
