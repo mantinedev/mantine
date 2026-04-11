@@ -123,7 +123,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Transition props for the tooltip */
   transitionProps?: TransitionOverride;
 
-  /** Duration of the tooltip position transition between steps in ms @default 500 */
+  /** Duration of the tooltip position transition between steps in ms @default 300 */
   stepTransitionDuration?: number;
 
   /** Max width of the tooltip, tooltip always takes this width if viewport allows @default 360 */
@@ -172,7 +172,7 @@ const defaultProps = {
   zIndex: 10000,
   transitionProps: { duration: 200, transition: 'pop' },
   maxWidth: 360,
-  stepTransitionDuration: 500,
+  stepTransitionDuration: 300,
   overlayColor: 'rgba(0, 0, 0, 0.5)',
 } satisfies Partial<TourProps>;
 
@@ -438,8 +438,12 @@ export const Tour = factory<TourFactory>((_props) => {
                                 `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
                             )
                         : []),
-                      hasPositioned ? `top ${stepTransitionDuration}ms ease` : null,
-                      hasPositioned ? `left ${stepTransitionDuration}ms ease` : null,
+                      hasPositioned
+                        ? `top ${stepTransitionDuration}ms cubic-bezier(0.16, 1, 0.3, 1)`
+                        : null,
+                      hasPositioned
+                        ? `left ${stepTransitionDuration}ms cubic-bezier(0.16, 1, 0.3, 1)`
+                        : null,
                     ]
                       .filter(Boolean)
                       .join(', '),
