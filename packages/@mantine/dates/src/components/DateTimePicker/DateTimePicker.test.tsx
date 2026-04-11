@@ -201,6 +201,18 @@ describe('@mantine/dates/DateTimePicker', () => {
     expectValue(container, '11/04/2022 14:45:54');
   });
 
+  it('displays correct value when withSeconds is set via timePickerProps', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        value="2022-04-11T14:45:54"
+        timePickerProps={{ ...defaultProps.timePickerProps, withSeconds: true }}
+      />
+    );
+
+    expectValue(container, '11/04/2022 14:45:54');
+  });
+
   it('supports custom valueFormat', () => {
     const { container } = render(
       <DateTimePicker
