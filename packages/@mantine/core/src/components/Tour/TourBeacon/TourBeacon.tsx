@@ -7,9 +7,10 @@ import {
   factory,
   Factory,
   useProps,
-} from '../../core';
-import { UnstyledButton } from '../UnstyledButton';
-import { useTourContext } from './Tour.context';
+} from '../../../core';
+import { UnstyledButton } from '../../UnstyledButton';
+import { useTourContext } from '../Tour.context';
+import classes from '../Tour.module.css';
 
 export type TourBeaconStylesNames = 'beacon' | 'beaconPulse';
 
@@ -92,6 +93,7 @@ export const TourBeacon = factory<TourBeaconFactory>((_props) => {
   );
 });
 
+TourBeacon.classes = classes;
 TourBeacon.displayName = '@mantine/core/TourBeacon';
 
 export namespace TourBeacon {

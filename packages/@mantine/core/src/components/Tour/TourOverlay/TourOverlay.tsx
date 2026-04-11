@@ -1,6 +1,6 @@
 import { useId } from 'react';
-import { useProps } from '../../core';
-import { useTourContext } from './Tour.context';
+import { useProps } from '../../../core';
+import { useTourContext } from '../Tour.context';
 
 export interface TourOverlayProps {
   /** Rectangle describing the target element position */

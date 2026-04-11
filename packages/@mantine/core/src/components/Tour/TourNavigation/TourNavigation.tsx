@@ -1,7 +1,7 @@
-import { Box, useProps } from '../../core';
-import { Button } from '../Button';
-import { Group } from '../Group';
-import { useTourContext } from './Tour.context';
+import { Box, useProps } from '../../../core';
+import { Button } from '../../Button';
+import { Group } from '../../Group';
+import { useTourContext } from '../Tour.context';
 
 export interface TourNavigationProps {
   /** Called when the close button is clicked */

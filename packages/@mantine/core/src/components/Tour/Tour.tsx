@@ -1,6 +1,4 @@
-import { Children, useCallback, useEffect, useId, useRef, useState } from 'react';
-import { flip, offset, shift, size, useFloating } from '@floating-ui/react';
-import { useFocusReturn, useHotkeys, useUncontrolled } from '@mantine/hooks';
+import { useId } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,21 +10,21 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import type { FloatingPosition } from '../../utils/Floating';
 import { FocusTrap } from '../FocusTrap';
 import { OptionalPortal, type PortalProps } from '../Portal';
 import { Transition, type TransitionOverride } from '../Transition';
-import { UnstyledButton } from '../UnstyledButton';
 import { defaultLabels, TourLabels, TourProvider } from './Tour.context';
-import { TourBeacon, type TourBeaconProps } from './TourBeacon';
-import { TourBody, type TourBodyProps } from './TourBody';
-import { TourCloseButton, type TourCloseButtonProps } from './TourCloseButton';
-import { TourNavigation, type TourNavigationProps } from './TourNavigation';
-import { TourOverlay, type TourOverlayProps } from './TourOverlay';
-import { TourRoot, type TourRootProps } from './TourRoot';
-import { TourStep, type TourStepProps } from './TourStep';
-import { TourTitle, type TourTitleProps } from './TourTitle';
-import { TourTooltip, type TourTooltipProps } from './TourTooltip';
+import { TourBeacon, type TourBeaconProps } from './TourBeacon/TourBeacon';
+import { TourBeaconPositioned } from './TourBeaconPositioned';
+import { TourBody, type TourBodyProps } from './TourBody/TourBody';
+import { TourCloseButton, type TourCloseButtonProps } from './TourCloseButton/TourCloseButton';
+import { TourNavigation, type TourNavigationProps } from './TourNavigation/TourNavigation';
+import { TourOverlay, type TourOverlayProps } from './TourOverlay/TourOverlay';
+import { TourRoot, type TourRootProps } from './TourRoot/TourRoot';
+import { TourStep, type TourStepProps } from './TourStep/TourStep';
+import { TourTitle, type TourTitleProps } from './TourTitle/TourTitle';
+import { TourTooltip, type TourTooltipProps } from './TourTooltip/TourTooltip';
+import { useTour } from './use-tour';
 import classes from './Tour.module.css';
 
 export type TourStylesNames =
@@ -194,118 +192,6 @@ const varsResolver = createVarsResolver<TourFactory>(
   })
 );
 
-interface TargetRect {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-}
-
-function useTargetRect(target: string | React.RefObject<HTMLElement | null> | undefined) {
-  const [rect, setRect] = useState<TargetRect | null>(null);
-  const [element, setElement] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    if (!target) {
-      setRect(null);
-      setElement(null);
-      return;
-    }
-
-    const resolve = () =>
-      typeof target === 'string'
-        ? document.querySelector<HTMLElement>(target)
-        : target?.current || null;
-
-    const el = resolve();
-    setElement(el);
-
-    if (!el && typeof target === 'string') {
-      const mutationObserver = new MutationObserver(() => {
-        const found = resolve();
-        if (found) {
-          mutationObserver.disconnect();
-          setElement(found);
-        }
-      });
-
-      mutationObserver.observe(document.body, { childList: true, subtree: true });
-
-      return () => {
-        mutationObserver.disconnect();
-      };
-    }
-
-    if (!el) {
-      setRect(null);
-      return;
-    }
-
-    const updateRect = () => {
-      const r = el.getBoundingClientRect();
-      setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
-    };
-
-    updateRect();
-
-    const observer = new ResizeObserver(updateRect);
-    observer.observe(el);
-    window.addEventListener('scroll', updateRect, true);
-    window.addEventListener('resize', updateRect);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', updateRect, true);
-      window.removeEventListener('resize', updateRect);
-    };
-  }, [target, element]);
-
-  return { rect, element };
-}
-
-interface TourBeaconPositionedProps {
-  target: string | React.RefObject<HTMLElement | null> | undefined;
-  onClick: () => void;
-  ariaLabel: string;
-  className?: string;
-  style?: React.CSSProperties;
-  pulseStyles?: Record<string, unknown>;
-}
-
-function TourBeaconPositioned({
-  target,
-  onClick,
-  ariaLabel,
-  className,
-  style,
-  pulseStyles,
-}: TourBeaconPositionedProps) {
-  const { element } = useTargetRect(target);
-
-  const { refs, floatingStyles } = useFloating({
-    elements: { reference: element },
-    placement: 'top-end',
-    middleware: [offset({ mainAxis: -4, crossAxis: -4 })],
-  });
-
-  if (!element) {
-    return null;
-  }
-
-  return (
-    <UnstyledButton
-      ref={refs.setFloating}
-      role="button"
-      aria-label={ariaLabel}
-      className={className}
-      style={{ ...style, ...floatingStyles }}
-      onClick={onClick}
-    >
-      <span {...pulseStyles} />
-    </UnstyledButton>
-  );
-}
-
 export const Tour = factory<TourFactory>((_props) => {
   const props = useProps('Tour', defaultProps, _props);
   const {
@@ -351,197 +237,42 @@ export const Tour = factory<TourFactory>((_props) => {
   const spotlightPaddingValue = spotlightPadding!;
   const maskId = useId();
 
-  const steps: TourStepProps[] = [];
-  Children.forEach(children, (child) => {
-    if (child && typeof child === 'object' && 'type' in child && child.type === TourStep) {
-      steps.push(child.props as TourStepProps);
-    }
+  const {
+    steps,
+    setCurrentStep,
+    beaconOpenStep,
+    setBeaconOpenStep,
+    close,
+    displayStep,
+    displayStepIndex,
+    targetRect,
+    floatingStyles,
+    floatingRefs,
+    isCentered,
+    constrainedWidth,
+    hasPositioned,
+    centeredPos,
+    tooltipRef,
+    showTooltip,
+    lastActiveTargetRef,
+  } = useTour({
+    active,
+    onClose,
+    step: stepProp,
+    defaultStep,
+    onStepChange,
+    onStepOpen,
+    onStepClose,
+    mode,
+    withKeyboardNavigation,
+    withScrollIntoView,
+    scrollToHandler,
+    closeOnEscape,
+    maxWidth,
+    stepTransitionDuration,
+    children,
+    stepComponent: TourStep,
   });
-
-  const [currentStep, setCurrentStep] = useUncontrolled({
-    value: stepProp,
-    defaultValue: defaultStep,
-    finalValue: 0,
-    onChange: onStepChange,
-  });
-
-  const [beaconOpenStep, setBeaconOpenStep] = useState<number | null>(null);
-
-  const previousStepRef = useRef(currentStep);
-  const previousBeaconOpenStepRef = useRef<number | null>(null);
-
-  const close = useCallback(() => {
-    onStepClose?.(currentStep);
-    steps[currentStep]?.onStepClose?.();
-    setBeaconOpenStep(null);
-    onClose?.();
-  }, [onClose, onStepClose, currentStep]);
-
-  useFocusReturn({ opened: !!active, shouldReturnFocus: true });
-
-  const activeStep = steps[currentStep] || null;
-  const activeTarget =
-    mode === 'beacon'
-      ? beaconOpenStep !== null
-        ? steps[beaconOpenStep]?.target
-        : undefined
-      : activeStep?.target;
-
-  const lastActiveTargetRef = useRef(activeTarget);
-  if (active) {
-    lastActiveTargetRef.current = activeTarget;
-  }
-
-  const resolvedTarget = active ? activeTarget : lastActiveTargetRef.current;
-  const { rect: targetRect, element: targetElement } = useTargetRect(resolvedTarget);
-
-  useEffect(() => {
-    if (!active) {
-      return;
-    }
-
-    const prevStep = previousStepRef.current;
-    previousStepRef.current = currentStep;
-
-    if (prevStep !== currentStep) {
-      onStepClose?.(prevStep);
-      steps[prevStep]?.onStepClose?.();
-      onStepOpen?.(currentStep);
-    }
-
-    activeStep?.onStepOpen?.();
-  }, [active, currentStep]);
-
-  useEffect(() => {
-    if (active) {
-      onStepOpen?.(currentStep);
-    }
-  }, [active]);
-
-  useEffect(() => {
-    if (!active) {
-      return;
-    }
-
-    const prevBeaconStep = previousBeaconOpenStepRef.current;
-    previousBeaconOpenStepRef.current = beaconOpenStep;
-
-    if (prevBeaconStep !== beaconOpenStep) {
-      if (prevBeaconStep !== null) {
-        onStepClose?.(prevBeaconStep);
-        steps[prevBeaconStep]?.onStepClose?.();
-      }
-      if (beaconOpenStep !== null) {
-        onStepOpen?.(beaconOpenStep);
-        steps[beaconOpenStep]?.onStepOpen?.();
-      }
-    }
-  }, [active, beaconOpenStep]);
-
-  useEffect(() => {
-    if (active && withScrollIntoView && targetElement) {
-      if (scrollToHandler) {
-        scrollToHandler(targetElement);
-      } else {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-  }, [active, targetElement, withScrollIntoView, scrollToHandler]);
-
-  const hotkeyHandlers: [string, () => void][] = [];
-
-  if (active && mode === 'guided' && withKeyboardNavigation) {
-    if (closeOnEscape) {
-      hotkeyHandlers.push(['Escape', close]);
-    }
-    hotkeyHandlers.push([
-      'ArrowRight',
-      () => {
-        if (currentStep < steps.length - 1) {
-          setCurrentStep(currentStep + 1);
-        }
-      },
-    ]);
-    hotkeyHandlers.push([
-      'ArrowLeft',
-      () => {
-        if (currentStep > 0) {
-          setCurrentStep(currentStep - 1);
-        }
-      },
-    ]);
-  } else if (active && closeOnEscape) {
-    hotkeyHandlers.push(['Escape', close]);
-  }
-
-  useHotkeys(hotkeyHandlers);
-
-  const displayStep =
-    mode === 'beacon' && beaconOpenStep !== null ? steps[beaconOpenStep] : activeStep;
-  const displayStepIndex =
-    mode === 'beacon' && beaconOpenStep !== null ? beaconOpenStep : currentStep;
-
-  const stepPosition: FloatingPosition = displayStep?.position || 'bottom';
-
-  const [constrainedWidth, setConstrainedWidth] = useState(maxWidth!);
-
-  const { refs, floatingStyles } = useFloating({
-    elements: { reference: targetElement },
-    placement: stepPosition,
-    transform: false,
-    middleware: [
-      offset(12),
-      flip(),
-      shift({ padding: 8 }),
-      size({
-        padding: 8,
-        apply({ availableWidth }) {
-          setConstrainedWidth(Math.min(maxWidth!, availableWidth));
-        },
-      }),
-    ],
-  });
-
-  const isCentered = !targetElement;
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const [hasPositioned, setHasPositioned] = useState(false);
-
-  useEffect(() => {
-    if (!active) {
-      setHasPositioned(false);
-      return;
-    }
-
-    const timer = requestAnimationFrame(() => {
-      setHasPositioned(true);
-    });
-
-    return () => cancelAnimationFrame(timer);
-  }, [active]);
-  const [centeredPos, setCenteredPos] = useState<{ top: number; left: number } | null>(null);
-
-  useEffect(() => {
-    if (!isCentered) {
-      return;
-    }
-
-    const el = tooltipRef.current;
-    if (!el) {
-      return;
-    }
-
-    const update = () => {
-      const height = el.getBoundingClientRect().height;
-      setCenteredPos({
-        top: (window.innerHeight - height) / 2,
-        left: (window.innerWidth - constrainedWidth) / 2,
-      });
-    };
-
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [isCentered, constrainedWidth, displayStepIndex]);
 
   const getStyles = useStyles<TourFactory>({
     name: 'Tour',
@@ -556,8 +287,6 @@ export const Tour = factory<TourFactory>((_props) => {
     vars,
     varsResolver,
   });
-
-  const showTooltip = active && (mode === 'guided' || (mode === 'beacon' && beaconOpenStep !== null));
 
   const resolvedSpotlightPadding = displayStep?.spotlightPadding ?? spotlightPaddingValue;
   const resolvedSpotlightRadius = displayStep?.spotlightRadius ?? spotlightRadius ?? 4;
@@ -675,9 +404,14 @@ export const Tour = factory<TourFactory>((_props) => {
           >
             {(transitionStyles) => (
               <FocusTrap
-                active={showTooltip && mode === 'guided' && !!resolvedWithOverlay && !withOverlayInteraction}
+                active={
+                  showTooltip &&
+                  mode === 'guided' &&
+                  !!resolvedWithOverlay &&
+                  !withOverlayInteraction
+                }
                 innerRef={(node: HTMLDivElement | null) => {
-                  refs.setFloating(node);
+                  floatingRefs.setFloating(node);
                   (tooltipRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
                 }}
               >
@@ -688,16 +422,21 @@ export const Tour = factory<TourFactory>((_props) => {
                   style={{
                     ...getStyles('tooltip').style,
                     ...(isCentered
-                      ? centeredPos ?? { top: window.innerHeight / 2, left: (window.innerWidth - constrainedWidth) / 2 }
+                      ? (centeredPos ?? {
+                          top: window.innerHeight / 2,
+                          left: (window.innerWidth - constrainedWidth) / 2,
+                        })
                       : floatingStyles),
                     ...transitionStyles,
                     width: constrainedWidth,
                     transition: [
                       ...(transitionStyles.transitionProperty
-                        ? transitionStyles.transitionProperty.split(',').map(
-                            (prop: string) =>
-                              `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
-                          )
+                        ? transitionStyles.transitionProperty
+                            .split(',')
+                            .map(
+                              (prop: string) =>
+                                `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
+                            )
                         : []),
                       hasPositioned ? `top ${stepTransitionDuration}ms ease` : null,
                       hasPositioned ? `left ${stepTransitionDuration}ms ease` : null,

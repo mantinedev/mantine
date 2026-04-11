@@ -1,6 +1,6 @@
-import { useProps } from '../../core';
-import { CloseButton, type __CloseButtonProps } from '../CloseButton';
-import { useTourContext } from './Tour.context';
+import { useProps } from '../../../core';
+import { CloseButton, type __CloseButtonProps } from '../../CloseButton';
+import { useTourContext } from '../Tour.context';
 
 export interface TourCloseButtonProps extends __CloseButtonProps {
   /** Called when the close button is clicked */

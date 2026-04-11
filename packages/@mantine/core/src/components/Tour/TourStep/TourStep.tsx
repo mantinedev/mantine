@@ -1,4 +1,4 @@
-import type { FloatingPosition } from '../../utils/Floating';
+import type { FloatingPosition } from '../../../utils/Floating';
 
 export interface TourStepProps {
   /** CSS selector or ref to the target element */

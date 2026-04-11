@@ -6,8 +6,9 @@ import {
   factory,
   Factory,
   useProps,
-} from '../../core';
-import { useTourContext } from './Tour.context';
+} from '../../../core';
+import { useTourContext } from '../Tour.context';
+import classes from '../Tour.module.css';
 
 export type TourBodyStylesNames = 'body';
 
@@ -35,6 +36,7 @@ export const TourBody = factory<TourBodyFactory>((_props) => {
   );
 });
 
+TourBody.classes = classes;
 TourBody.displayName = '@mantine/core/TourBody';
 
 export namespace TourBody {

@@ -3,7 +3,7 @@ import { Tour } from './Tour';
 
 function DefaultTour(props: Partial<Tour.Props>) {
   return (
-    <Tour active {...props}>
+    <Tour active withOverlay={false} {...props}>
       <Tour.Step target="#target-1" title="Step 1 Title">
         Step 1 Content
       </Tour.Step>
@@ -125,7 +125,7 @@ describe('@mantine/core/Tour', () => {
 
   it('renders centered tooltip when step has no target', () => {
     render(
-      <Tour active step={0}>
+      <Tour active withOverlay={false} step={0}>
         <Tour.Step title="No Target Step">No target content</Tour.Step>
       </Tour>
     );
@@ -147,5 +147,174 @@ describe('@mantine/core/Tour', () => {
 
   it('has correct displayName', () => {
     expect(Tour.displayName).toBe('@mantine/core/Tour');
+  });
+
+  describe('keyboard navigation', () => {
+    it('navigates to next step with ArrowRight', async () => {
+      const onStepChange = jest.fn();
+      render(<DefaultTour step={0} onStepChange={onStepChange} />);
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(onStepChange).toHaveBeenCalledWith(1);
+    });
+
+    it('navigates to previous step with ArrowLeft', async () => {
+      const onStepChange = jest.fn();
+      render(<DefaultTour step={1} onStepChange={onStepChange} />);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(onStepChange).toHaveBeenCalledWith(0);
+    });
+
+    it('does not go below step 0 with ArrowLeft', async () => {
+      const onStepChange = jest.fn();
+      render(<DefaultTour step={0} onStepChange={onStepChange} />);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(onStepChange).not.toHaveBeenCalled();
+    });
+
+    it('does not go beyond last step with ArrowRight', async () => {
+      const onStepChange = jest.fn();
+      render(<DefaultTour step={2} onStepChange={onStepChange} />);
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(onStepChange).not.toHaveBeenCalled();
+    });
+
+    it('closes tour with Escape', async () => {
+      const onClose = jest.fn();
+      render(<DefaultTour onClose={onClose} />);
+
+      await userEvent.keyboard('{Escape}');
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('does not respond to keyboard when withKeyboardNavigation is false', async () => {
+      const onStepChange = jest.fn();
+      const onClose = jest.fn();
+      render(
+        <DefaultTour
+          step={0}
+          onStepChange={onStepChange}
+          onClose={onClose}
+          withKeyboardNavigation={false}
+        />
+      );
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(onStepChange).not.toHaveBeenCalled();
+    });
+
+    it('does not close with Escape when closeOnEscape is false', async () => {
+      const onClose = jest.fn();
+      render(<DefaultTour onClose={onClose} closeOnEscape={false} />);
+
+      await userEvent.keyboard('{Escape}');
+      expect(onClose).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('lifecycle callbacks', () => {
+    it('calls onStepOpen on initial mount', () => {
+      const onStepOpen = jest.fn();
+      render(<DefaultTour onStepOpen={onStepOpen} />);
+      expect(onStepOpen).toHaveBeenCalledWith(0);
+    });
+
+    it('calls onStepOpen with new step index when step changes via rerender', () => {
+      const onStepOpen = jest.fn();
+      const { rerender } = render(<DefaultTour step={0} onStepOpen={onStepOpen} />);
+
+      onStepOpen.mockClear();
+
+      rerender(<DefaultTour step={1} onStepOpen={onStepOpen} />);
+      expect(onStepOpen).toHaveBeenCalledWith(1);
+    });
+
+    it('calls onStepClose for active step when tour closes', async () => {
+      const onStepClose = jest.fn();
+      render(<DefaultTour step={1} onStepClose={onStepClose} />);
+
+      onStepClose.mockClear();
+
+      await userEvent.click(screen.getByText('Skip'));
+      expect(onStepClose).toHaveBeenCalledWith(1);
+    });
+
+    it('calls per-step onStepOpen callback', () => {
+      const stepOpen = jest.fn();
+      render(
+        <Tour active withOverlay={false} step={0}>
+          <Tour.Step target="#target-1" title="S1" onStepOpen={stepOpen}>
+            Content
+          </Tour.Step>
+        </Tour>
+      );
+      expect(stepOpen).toHaveBeenCalled();
+    });
+  });
+
+  describe('overlay', () => {
+    it('renders overlay when withOverlay is true', () => {
+      const { container: renderContainer } = render(<DefaultTour withOverlay />);
+      expect(renderContainer.querySelector('svg[role="presentation"]')).toBeInTheDocument();
+    });
+
+    it('does not render overlay when withOverlay is false', () => {
+      const { container: renderContainer } = render(<DefaultTour withOverlay={false} />);
+      expect(renderContainer.querySelector('svg[role="presentation"]')).not.toBeInTheDocument();
+    });
+
+    it('sets data-with-overlay-interaction when withOverlayInteraction is true', () => {
+      const { container: renderContainer } = render(
+        <DefaultTour withOverlay withOverlayInteraction />
+      );
+      const overlay = renderContainer.querySelector('svg[role="presentation"]')!;
+      expect(overlay).toHaveAttribute('data-with-overlay-interaction');
+    });
+  });
+
+  describe('scrolling', () => {
+    it('calls scrollIntoView on target element by default', () => {
+      const scrollIntoView = jest.fn();
+      const targetEl = document.getElementById('target-1')!;
+      targetEl.scrollIntoView = scrollIntoView;
+
+      render(<DefaultTour />);
+      expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
+    });
+
+    it('uses custom scrollToHandler when provided', () => {
+      const scrollToHandler = jest.fn();
+      const targetEl = document.getElementById('target-1')!;
+      targetEl.scrollIntoView = jest.fn();
+
+      render(<DefaultTour scrollToHandler={scrollToHandler} />);
+      expect(scrollToHandler).toHaveBeenCalledWith(targetEl);
+      expect(targetEl.scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('does not scroll when withScrollIntoView is false', () => {
+      const scrollIntoView = jest.fn();
+      const targetEl = document.getElementById('target-1')!;
+      targetEl.scrollIntoView = scrollIntoView;
+
+      render(<DefaultTour withScrollIntoView={false} />);
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('per-step overrides', () => {
+    it('hides overlay for step with withOverlay={false}', () => {
+      const { container: renderContainer } = render(
+        <Tour active withOverlay step={0}>
+          <Tour.Step target="#target-1" title="S1" withOverlay={false}>
+            Content
+          </Tour.Step>
+        </Tour>
+      );
+      expect(renderContainer.querySelector('svg[role="presentation"]')).not.toBeInTheDocument();
+    });
   });
 });

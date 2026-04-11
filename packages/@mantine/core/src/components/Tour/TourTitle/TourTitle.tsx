@@ -6,8 +6,9 @@ import {
   factory,
   Factory,
   useProps,
-} from '../../core';
-import { useTourContext } from './Tour.context';
+} from '../../../core';
+import { useTourContext } from '../Tour.context';
+import classes from '../Tour.module.css';
 
 export type TourTitleStylesNames = 'title';
 
@@ -39,6 +40,7 @@ export const TourTitle = factory<TourTitleFactory>((_props) => {
   );
 });
 
+TourTitle.classes = classes;
 TourTitle.displayName = '@mantine/core/TourTitle';
 
 export namespace TourTitle {

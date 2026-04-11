@@ -7,10 +7,11 @@ import {
   factory,
   Factory,
   useProps,
-} from '../../core';
-import type { FloatingPosition } from '../../utils/Floating';
-import { Transition, type TransitionOverride } from '../Transition';
-import { useTourContext } from './Tour.context';
+} from '../../../core';
+import type { FloatingPosition } from '../../../utils/Floating';
+import { Transition, type TransitionOverride } from '../../Transition';
+import { useTourContext } from '../Tour.context';
+import classes from '../Tour.module.css';
 
 export type TourTooltipStylesNames = 'tooltip';
 
@@ -91,6 +92,7 @@ export const TourTooltip = factory<TourTooltipFactory>((_props) => {
   );
 });
 
+TourTooltip.classes = classes;
 TourTooltip.displayName = '@mantine/core/TourTooltip';
 
 export namespace TourTooltip {
