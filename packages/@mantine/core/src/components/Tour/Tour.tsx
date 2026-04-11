@@ -13,6 +13,7 @@ import {
   useStyles,
 } from '../../core';
 import type { FloatingPosition } from '../../utils/Floating';
+import { FocusTrap } from '../FocusTrap';
 import { OptionalPortal, type PortalProps } from '../Portal';
 import { Transition, type TransitionOverride } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
@@ -673,42 +674,47 @@ export const Tour = factory<TourFactory>((_props) => {
             timingFunction={transitionProps?.timingFunction}
           >
             {(transitionStyles) => (
-              <Box
-                ref={(node) => {
+              <FocusTrap
+                active={showTooltip && mode === 'guided' && !!resolvedWithOverlay && !withOverlayInteraction}
+                innerRef={(node: HTMLDivElement | null) => {
                   refs.setFloating(node);
                   (tooltipRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
                 }}
-                {...getStyles('tooltip')}
-                data-centered={isCentered || undefined}
-                style={{
-                  ...getStyles('tooltip').style,
-                  ...(isCentered
-                    ? centeredPos ?? { top: window.innerHeight / 2, left: (window.innerWidth - constrainedWidth) / 2 }
-                    : floatingStyles),
-                  ...transitionStyles,
-                  width: constrainedWidth,
-                  transition: [
-                    ...(transitionStyles.transitionProperty
-                      ? transitionStyles.transitionProperty.split(',').map(
-                          (prop: string) =>
-                            `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
-                        )
-                      : []),
-                    hasPositioned ? `top ${stepTransitionDuration}ms ease` : null,
-                    hasPositioned ? `left ${stepTransitionDuration}ms ease` : null,
-                  ]
-                    .filter(Boolean)
-                    .join(', '),
-                  transitionProperty: undefined,
-                  transitionDuration: undefined,
-                  transitionTimingFunction: undefined,
-                }}
               >
-                {withCloseButton && <TourCloseButton />}
-                {displayStep?.title && <TourTitle>{displayStep.title}</TourTitle>}
-                {displayStep?.children && <TourBody>{displayStep.children}</TourBody>}
-                <TourNavigation />
-              </Box>
+                <Box
+                  {...getStyles('tooltip')}
+                  tabIndex={-1}
+                  data-centered={isCentered || undefined}
+                  style={{
+                    ...getStyles('tooltip').style,
+                    ...(isCentered
+                      ? centeredPos ?? { top: window.innerHeight / 2, left: (window.innerWidth - constrainedWidth) / 2 }
+                      : floatingStyles),
+                    ...transitionStyles,
+                    width: constrainedWidth,
+                    transition: [
+                      ...(transitionStyles.transitionProperty
+                        ? transitionStyles.transitionProperty.split(',').map(
+                            (prop: string) =>
+                              `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
+                          )
+                        : []),
+                      hasPositioned ? `top ${stepTransitionDuration}ms ease` : null,
+                      hasPositioned ? `left ${stepTransitionDuration}ms ease` : null,
+                    ]
+                      .filter(Boolean)
+                      .join(', '),
+                    transitionProperty: undefined,
+                    transitionDuration: undefined,
+                    transitionTimingFunction: undefined,
+                  }}
+                >
+                  {withCloseButton && <TourCloseButton />}
+                  {displayStep?.title && <TourTitle>{displayStep.title}</TourTitle>}
+                  {displayStep?.children && <TourBody>{displayStep.children}</TourBody>}
+                  <TourNavigation />
+                </Box>
+              </FocusTrap>
             )}
           </Transition>
         </Box>
