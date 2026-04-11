@@ -38,7 +38,7 @@ export interface ScheduleEventProps
   /** Event to display */
   event: ScheduleEventData;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 'sm' */
   radius?: MantineRadius;
 
   /** If set, event has `white-space: nowrap` @default false */
@@ -95,6 +95,7 @@ export type ScheduleEventFactory = Factory<{
 const defaultProps = {
   __staticSelector: 'ScheduleEvent',
   mode: 'default',
+  radius: 'sm' as MantineRadius,
 } satisfies Partial<ScheduleEventProps>;
 
 const varsResolver = createVarsResolver<ScheduleEventFactory>(

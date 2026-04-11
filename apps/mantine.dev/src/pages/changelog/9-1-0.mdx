@@ -1,4 +1,4 @@
-import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, SliderDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos, WeekViewDemos } from '@docs/demos';
+import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, MonthViewDemos, SliderDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -154,6 +154,14 @@ When set, the current time indicator is displayed on the same day of week even w
 a different week:
 
 <Demo data={WeekViewDemos.forceCurrentTimeIndicator} />
+
+## New demo: MonthView events rendering
+
+New [MonthView](/schedule/month-view) demo shows how to use `renderEvent` to visually
+differentiate all-day and timed events. All-day events render as regular colored bars,
+while timed events display as a colored dot with the start time and title:
+
+<Demo data={MonthViewDemos.timedEvents} />
 
 ## Other changes
 
