@@ -142,7 +142,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
     props,
   });
 
-  const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
+  const _withSeconds = withSeconds || timePickerProps?.withSeconds;
+  const _valueFormat = valueFormat || (_withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
   const timePickerRef = useRef<HTMLInputElement>(null);
   const timePickerRefMerged = useMergedRef(timePickerRef, timePickerProps?.hoursRef);
@@ -164,7 +165,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
   const _defaultDate = defaultDate || _value;
 
   const formatTime = (dateValue: DateStringValue) =>
-    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
+    dateValue ? dayjs(dateValue).format(_withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
   const [timeValue, setTimeValue] = useState(defaultTimeValue || formatTime(_value));
   const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
