@@ -1,5 +1,5 @@
 import { Children, useCallback, useEffect, useRef, useState } from 'react';
-import { flip, offset, shift, size, useFloating } from '@floating-ui/react';
+import { autoUpdate, flip, offset, shift, size, useFloating } from '@floating-ui/react';
 import { useFocusReturn, useHotkeys, useUncontrolled } from '@mantine/hooks';
 import type { FloatingPosition } from '../../utils/Floating';
 import type { TourStepProps } from './TourStep/TourStep';
@@ -204,6 +204,7 @@ export function useTour({
     elements: { reference: targetElement },
     placement: stepPosition,
     transform: false,
+    whileElementsMounted: autoUpdate,
     middleware: [
       offset(12),
       flip(),
@@ -247,7 +248,7 @@ export function useTour({
     }
 
     const update = () => {
-      const height = el.getBoundingClientRect().height;
+      const height = el.offsetHeight;
       setCenteredPos({
         top: (window.innerHeight - height) / 2,
         left: (window.innerWidth - constrainedWidth) / 2,
