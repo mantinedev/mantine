@@ -163,7 +163,8 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     props: props as DateTimePickerProps,
   });
 
-  const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
+  const _withSeconds = withSeconds || timePickerProps?.withSeconds;
+  const _valueFormat = valueFormat || (_withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
   const {
     calendarProps: { allowSingleDateInRange: _asdir, ...calendarProps },

@@ -162,7 +162,12 @@ export function TextareaAutosize({
   const heightRef = useRef(0);
 
   const resizeTextarea = () => {
-    const node = libRef.current!;
+    const node = libRef.current;
+
+    if (!node) {
+      return;
+    }
+
     const nodeSizingData = getSizingData(node);
 
     if (!nodeSizingData) {
