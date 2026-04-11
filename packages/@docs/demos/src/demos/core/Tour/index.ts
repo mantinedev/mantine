@@ -7,3 +7,4 @@ export { compound } from './Tour.demo.compound';
 export { labels } from './Tour.demo.labels';
 export { position } from './Tour.demo.position';
 export { styles as stylesApi } from './Tour.demo.styles';
+export { complex } from './Tour.demo.complex';

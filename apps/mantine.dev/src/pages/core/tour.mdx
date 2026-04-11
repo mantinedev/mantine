@@ -11,6 +11,15 @@ It highlights target elements with a spotlight overlay and displays tooltips wit
 
 <Demo data={TourDemos.usage} />
 
+## Complex example
+
+A more realistic example that demonstrates a dashboard onboarding tour with 7 steps.
+The tour starts with a centered welcome screen, highlights various UI elements across the page,
+and scrolls to elements inside a `ScrollArea` automatically. It also uses per-step `position`
+and `spotlightPadding` overrides.
+
+<Demo data={TourDemos.complex} />
+
 ## Beacon mode
 
 Set `mode="beacon"` to display pulsing indicators near target elements instead of a sequential walkthrough.
