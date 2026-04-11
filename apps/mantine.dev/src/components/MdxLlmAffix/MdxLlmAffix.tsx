@@ -3,6 +3,7 @@ import { CheckIcon, CopyIcon, LightbulbFilamentIcon, RobotIcon } from '@phosphor
 import { ActionIcon, Affix, Card, Stack, Text, Tooltip } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { Frontmatter } from '@/types';
+import classes from './MdxLlmAffix.module.css';
 
 interface MdxLlmAffixProps {
   meta: Frontmatter;
@@ -24,8 +25,6 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
-      /* oxlint-disable-next-line no-console */
-      console.error('Failed to copy LLM documentation content:', error);
       notifications.show({
         title: 'Failed to copy',
         message: 'Unable to copy LLM documentation content, see console for details',
@@ -36,17 +35,14 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
 
   return (
     <Affix position={{ bottom: 20, right: 20 }} visibleFrom="sm">
-      <Card withBorder padding={6} radius="md" bg="body">
-        <Text ff="monospace" fw="600" ta="center" fz={12} mb={4}>
-          LLM
-        </Text>
+      <Card className={classes.root}>
+        <Text className={classes.title}>LLM</Text>
 
         <Stack gap={4}>
           <Tooltip
             label="Open LLM optimized docs ↗"
             position="left"
             transitionProps={{ duration: 0 }}
-            radius="md"
           >
             <ActionIcon
               component="a"
@@ -54,26 +50,33 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
               target="_blank"
               variant="default"
               size={44}
-              radius="md"
+              className={classes.control}
             >
-              <RobotIcon size={22} />
+              <RobotIcon size={22} className={classes.icon} data-color="red" />
             </ActionIcon>
           </Tooltip>
           <Tooltip
             label={copied ? 'Copied!' : 'Copy LLM optimized docs'}
             position="left"
             transitionProps={{ duration: 0 }}
-            radius="md"
           >
-            <ActionIcon variant="default" size={44} radius="md" onClick={handleCopy}>
-              {copied ? <CheckIcon size={22} /> : <CopyIcon size={22} />}
+            <ActionIcon
+              variant="default"
+              size={44}
+              className={classes.control}
+              onClick={handleCopy}
+            >
+              {copied ? (
+                <CheckIcon size={22} className={classes.icon} data-color="teal" />
+              ) : (
+                <CopyIcon size={22} className={classes.icon} data-color="cyan" />
+              )}
             </ActionIcon>
           </Tooltip>
           <Tooltip
             label="Submit LLM documentation feedback ↗"
             position="left"
             transitionProps={{ duration: 0 }}
-            radius="md"
           >
             <ActionIcon
               component="a"
@@ -82,9 +85,9 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
               rel="noopener noreferrer"
               variant="default"
               size={44}
-              radius="md"
+              className={classes.control}
             >
-              <LightbulbFilamentIcon size={22} />
+              <LightbulbFilamentIcon size={22} className={classes.icon} data-color="yellow" />
             </ActionIcon>
           </Tooltip>
         </Stack>
