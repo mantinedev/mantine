@@ -171,7 +171,7 @@ const defaultProps = {
   closeOnOverlayClick: false,
   withinPortal: true,
   zIndex: 10000,
-  transitionProps: { duration: 200, transition: 'fade' },
+  transitionProps: { duration: 200, transition: 'pop' },
   maxWidth: 360,
   stepTransitionDuration: 500,
   overlayColor: 'rgba(0, 0, 0, 0.5)',
@@ -386,9 +386,13 @@ export const Tour = factory<TourFactory>((_props) => {
         : undefined
       : activeStep?.target;
 
-  const { rect: targetRect, element: targetElement } = useTargetRect(
-    active ? activeTarget : undefined
-  );
+  const lastActiveTargetRef = useRef(activeTarget);
+  if (active) {
+    lastActiveTargetRef.current = activeTarget;
+  }
+
+  const resolvedTarget = active ? activeTarget : lastActiveTargetRef.current;
+  const { rect: targetRect, element: targetElement } = useTargetRect(resolvedTarget);
 
   useEffect(() => {
     if (!active) {
@@ -552,11 +556,7 @@ export const Tour = factory<TourFactory>((_props) => {
     varsResolver,
   });
 
-  if (!active) {
-    return null;
-  }
-
-  const showTooltip = mode === 'guided' || (mode === 'beacon' && beaconOpenStep !== null);
+  const showTooltip = active && (mode === 'guided' || (mode === 'beacon' && beaconOpenStep !== null));
 
   const resolvedSpotlightPadding = displayStep?.spotlightPadding ?? spotlightPaddingValue;
   const resolvedSpotlightRadius = displayStep?.spotlightRadius ?? spotlightRadius ?? 4;
@@ -641,7 +641,8 @@ export const Tour = factory<TourFactory>((_props) => {
             </Transition>
           )}
 
-          {mode === 'beacon' &&
+          {active &&
+            mode === 'beacon' &&
             beaconOpenStep === null &&
             steps.map((stepData, index) => {
               if (stepData.withBeacon === false) {
@@ -666,6 +667,9 @@ export const Tour = factory<TourFactory>((_props) => {
             mounted={showTooltip && !!displayStep}
             duration={transitionProps?.duration ?? 200}
             transition={transitionProps?.transition ?? 'pop'}
+            onExited={() => {
+              lastActiveTargetRef.current = undefined;
+            }}
             timingFunction={transitionProps?.timingFunction}
           >
             {(transitionStyles) => (
