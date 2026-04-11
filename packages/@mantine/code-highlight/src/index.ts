@@ -27,6 +27,12 @@ import type {
   JsonViewerProps,
   JsonViewerStylesNames,
 } from './JsonViewer/JsonViewer';
+import type {
+  DiffCssVariables,
+  DiffFactory,
+  DiffProps,
+  DiffStylesNames,
+} from './Diff/Diff';
 
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';
@@ -34,6 +40,7 @@ export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs.js';
 export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
 export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.js';
 export { JsonViewer, serializePath as serializeJsonViewerPath } from './JsonViewer/JsonViewer.js';
+export { Diff } from './Diff/Diff.js';
 
 export {
   CodeHighlightAdapterProvider,
@@ -69,4 +76,8 @@ export type {
   JsonViewerCssVariables,
   JsonViewerFactory,
   JsonViewerHighlightType,
+  DiffProps,
+  DiffStylesNames,
+  DiffCssVariables,
+  DiffFactory,
 };

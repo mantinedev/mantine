@@ -1,3 +1,4 @@
+import { DiffDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,11 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Diff component
+
+New [Diff](/code-highlight/diff) component highlights differences between two strings.
+It supports unified and split (side-by-side) display modes, configurable diff
+granularity (characters, words, or lines), and context line collapsing.
+
+<Demo data={DiffDemos.usage} />

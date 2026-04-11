@@ -1,0 +1,43 @@
+import { DiffDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Diff);
+
+## Usage
+
+`Diff` component highlights differences between two strings. By default, it uses
+word-level diff granularity and unified display mode:
+
+<Demo data={DiffDemos.usage} />
+
+## Split mode
+
+Set `mode="split"` to display the diff in a side-by-side layout:
+
+<Demo data={DiffDemos.split} />
+
+## Diff method
+
+The `diffMethod` prop controls the granularity of inline highlighting within changed lines.
+Supported values are `"chars"`, `"words"` (default), and `"lines"`:
+
+<Demo data={DiffDemos.diffMethod} />
+
+## Context lines
+
+Set `contextLines` prop to control how many unchanged lines are shown around changes.
+Lines beyond this range are collapsed and can be expanded by clicking the expand button:
+
+<Demo data={DiffDemos.contextLines} />
+
+## Custom colors
+
+Use `addColor` and `removeColor` props to customize the highlight colors.
+By default, `addColor` is `teal` and `removeColor` is `red`:
+
+<Demo data={DiffDemos.colors} />
+
+## Configurator
+
+<Demo data={DiffDemos.configurator} />

@@ -133,6 +133,7 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/code-highlight/src/CodeHighlightTabs/CodeHighlightTabs.tsx',
   'packages/@mantine/code-highlight/src/CodeHighlight/InlineCodeHighlight.tsx',
   'packages/@mantine/code-highlight/src/JsonViewer/JsonViewer.tsx',
+  'packages/@mantine/code-highlight/src/Diff/Diff.tsx',
 
   // Nprogress
   'packages/@mantine/nprogress/src/NavigationProgress.tsx',

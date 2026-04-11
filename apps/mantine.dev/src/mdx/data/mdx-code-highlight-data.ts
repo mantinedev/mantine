@@ -35,4 +35,15 @@ export const MDX_CODE_HIGHLIGHT_DATA: Record<string, Frontmatter> = {
     license: 'MIT',
     docs: 'code-highlight/json-viewer.mdx',
   },
+
+  Diff: {
+    title: 'Diff',
+    package: '@mantine/code-highlight',
+    slug: '/code-highlight/diff',
+    props: ['Diff'],
+    styles: ['Diff'],
+    description: 'Highlight differences between two strings',
+    source: '@mantine/code-highlight/src/Diff/Diff.tsx',
+    docs: 'code-highlight/diff.mdx',
+  },
 };

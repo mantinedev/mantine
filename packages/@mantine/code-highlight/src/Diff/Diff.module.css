@@ -1,0 +1,127 @@
+.root {
+  overflow-x: auto;
+  border: 1px solid;
+  border-radius: var(--mantine-radius-default);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 13px;
+
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.lineNumber {
+  width: 1%;
+  min-width: 40px;
+  padding: 0 8px;
+  text-align: right;
+  user-select: none;
+  white-space: nowrap;
+  vertical-align: top;
+
+  @mixin where-light {
+    color: var(--mantine-color-gray-5);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-3);
+  }
+}
+
+.content {
+  padding: 0 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.addedLine {
+  @mixin where-light {
+    background-color: var(--diff-add-color, var(--mantine-color-teal-0));
+  }
+
+  @mixin where-dark {
+    background-color: var(--diff-add-color, rgba(8, 127, 91, 0.15));
+  }
+}
+
+.removedLine {
+  @mixin where-light {
+    background-color: var(--diff-remove-color, var(--mantine-color-red-0));
+  }
+
+  @mixin where-dark {
+    background-color: var(--diff-remove-color, rgba(201, 42, 42, 0.15));
+  }
+}
+
+.addedHighlight {
+  color: var(--mantine-color-bright);
+
+  @mixin where-light {
+    background-color: var(--diff-add-highlight-color, var(--mantine-color-teal-2));
+  }
+
+  @mixin where-dark {
+    background-color: var(--diff-add-highlight-color, rgba(8, 127, 91, 0.35));
+  }
+}
+
+.removedHighlight {
+  color: var(--mantine-color-bright);
+
+  @mixin where-light {
+    background-color: var(--diff-remove-highlight-color, var(--mantine-color-red-2));
+  }
+
+  @mixin where-dark {
+    background-color: var(--diff-remove-highlight-color, rgba(201, 42, 42, 0.35));
+  }
+}
+
+.expandControl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  width: 100%;
+  font-family: var(--mantine-font-family);
+  font-size: var(--mantine-font-size-xs);
+  background: linear-gradient(
+    to bottom,
+    var(--mantine-color-body) 0%,
+    transparent 50%,
+    var(--mantine-color-body) 100%
+  );
+  color: var(--mantine-color-dimmed);
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--mantine-color-text);
+  }
+}
+
+.splitDivider {
+  width: 1px;
+  padding: 0;
+
+  @mixin where-light {
+    border-left: 1px solid var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    border-left: 1px solid var(--mantine-color-dark-4);
+  }
+}
