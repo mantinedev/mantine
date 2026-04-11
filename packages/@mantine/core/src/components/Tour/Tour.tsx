@@ -688,9 +688,12 @@ export const Tour = factory<TourFactory>((_props) => {
                   ...transitionStyles,
                   width: constrainedWidth,
                   transition: [
-                    transitionStyles.transitionProperty
-                      ? `${transitionStyles.transitionProperty} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
-                      : null,
+                    ...(transitionStyles.transitionProperty
+                      ? transitionStyles.transitionProperty.split(',').map(
+                          (prop: string) =>
+                            `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
+                        )
+                      : []),
                     hasPositioned ? `top ${stepTransitionDuration}ms ease` : null,
                     hasPositioned ? `left ${stepTransitionDuration}ms ease` : null,
                   ]
