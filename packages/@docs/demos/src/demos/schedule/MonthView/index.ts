@@ -20,3 +20,4 @@ export { customHeader } from './MonthView.demo.customHeader';
 export { maxEventsPerDay } from './MonthView.demo.maxEventsPerDay';
 export { localization } from './MonthView.demo.localization';
 export { radius } from './MonthView.demo.radius';
+export { timedEvents } from './MonthView.demo.timedEvents';
