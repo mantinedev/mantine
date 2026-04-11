@@ -49,9 +49,21 @@ Steps without a `target` prop render as centered cards, useful for welcome or co
 
 <Demo data={TourDemos.centered} />
 
+## Per-step overrides
+
+Individual `Tour.Step` components support per-step overrides for `withOverlay`, `spotlightPadding`,
+`spotlightRadius`, and `withBeacon` (in beacon mode). These override the parent `Tour` values for that step only.
+
+## Step lifecycle callbacks
+
+Use `onStepOpen` and `onStepClose` props on `Tour` for global step change notifications,
+or use `onStepOpen` and `onStepClose` on individual `Tour.Step` components for per-step callbacks.
+
 ## Custom content
 
-Use any React content inside `Tour.Step` children for rich tooltip content:
+Use any React content inside `Tour.Step` children for rich tooltip content.
+For full control over the tooltip layout, use compound components (`Tour.Root`, `Tour.Overlay`,
+`Tour.Tooltip`, `Tour.Title`, `Tour.Body`, `Tour.Navigation`, `Tour.CloseButton`, `Tour.Beacon`):
 
 <Demo data={TourDemos.compound} />
 
@@ -79,21 +91,22 @@ or provide a `scrollToHandler` function for custom scroll behavior (e.g., scroll
 
 ## Keyboard navigation
 
-When `withKeyboardNavigation` is enabled (default), the following keys are available in guided mode:
+When `withKeyboardNavigation` is enabled (default), arrow key navigation is available in guided mode.
+Arrow key navigation is not available in beacon mode. `Escape` closes the tour in both modes
+when `closeOnEscape` is `true` (default). Set `withKeyboardNavigation={false}` to disable arrow keys entirely.
 
-- Right arrow - Next step
-- Left arrow - Previous step
-- Escape - Close tour
-
-Keyboard navigation is disabled in beacon mode. Set `withKeyboardNavigation={false}` to disable entirely.
+<KeyboardEventsTable
+  data={[
+    { key: 'ArrowRight', description: 'Go to the next step', condition: 'guided mode only' },
+    { key: 'ArrowLeft', description: 'Go to the previous step', condition: 'guided mode only' },
+    { key: 'Escape', description: 'Close the tour', condition: 'closeOnEscape is true (default)' },
+  ]}
+/>
 
 ## Accessibility
 
-Tour follows WAI-ARIA dialog pattern:
-
-- Tooltip has `role="dialog"` and `aria-modal="false"`
 - Navigation buttons have accessible labels via the `labels` prop
 - Step counter is announced via `aria-live="polite"`
-- Focus moves to the tooltip when a step opens
+- When the overlay is active in guided mode, focus is trapped inside the tooltip
 - Focus returns to the previously focused element when the tour closes
 - Beacons have `role="button"` with descriptive `aria-label`
