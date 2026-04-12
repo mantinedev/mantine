@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import { findElementAncestor } from '../../core';
 import type { RenderNode, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
@@ -45,7 +45,7 @@ export interface FlatTreeNodeProps {
   tabIndex?: number;
 }
 
-export function FlatTreeNode({
+export const FlatTreeNode = memo(function FlatTreeNode({
   node,
   level,
   parent,
@@ -200,6 +200,6 @@ export function FlatTreeNode({
       )}
     </div>
   );
-}
+});
 
 FlatTreeNode.displayName = '@mantine/core/FlatTreeNode';

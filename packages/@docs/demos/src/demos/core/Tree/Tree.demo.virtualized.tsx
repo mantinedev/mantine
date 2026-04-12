@@ -57,10 +57,11 @@ function generateTreeData(count: number): TreeNodeData[] {
 }
 
 const largeData = generateTreeData(2000);
+const initialExpandedState = getTreeExpandedState(largeData, '*');
 
 function Demo() {
   const tree = useTree({
-    initialExpandedState: getTreeExpandedState(largeData, '*'),
+    initialExpandedState,
   });
 
   const flatList = useMemo(
@@ -143,10 +144,11 @@ function generateTreeData(count: number): TreeNodeData[] {
 }
 
 const largeData = generateTreeData(2000);
+const initialExpandedState = getTreeExpandedState(largeData, '*');
 
 function Demo() {
   const tree = useTree({
-    initialExpandedState: getTreeExpandedState(largeData, '*'),
+    initialExpandedState,
   });
 
   const flatList = useMemo(
