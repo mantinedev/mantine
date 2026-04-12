@@ -226,6 +226,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
 
   const rootProps = {
     ...getStyles('event'),
+    ...others,
     'data-event-id': event.id,
     size,
     title: event.title,
@@ -247,7 +248,6 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     onDragStart: mode === 'static' ? undefined : handleDragStart,
     onDragEnd: mode === 'static' ? undefined : handleDragEnd,
     onClick: mode === 'static' ? undefined : others.onClick,
-    ...others,
     children: eventChildren,
   };
 

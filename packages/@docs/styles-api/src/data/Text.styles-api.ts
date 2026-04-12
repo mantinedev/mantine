@@ -12,6 +12,7 @@ export const TextStylesApi: StylesApiData<TextFactory> = {
       '--text-lh': 'Controls `line-height` property',
       '--text-gradient': 'Text fill gradient',
       '--text-line-clamp': 'Number of lines that should be visible',
+      '--text-text-wrap': 'Controls `text-wrap` property',
     },
   },
 

@@ -67,3 +67,8 @@ export const Demo_presetsRange = {
   name: '⭐ Demo: presetsRange',
   render: renderDemo(demos.presetsRange),
 };
+
+export const Demo_nativeLevelSelect = {
+  name: '⭐ Demo: nativeLevelSelect',
+  render: renderDemo(demos.nativeLevelSelect),
+};

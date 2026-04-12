@@ -42,11 +42,7 @@
 }
 
 .th {
-  text-align: left;
-
-  @mixin where-rtl {
-    text-align: right;
-  }
+  text-align: start;
 }
 
 .tr {

@@ -82,6 +82,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/ActionIcon/ActionIcon.tsx',
     docs: 'core/action-icon.mdx',
   },
+  ActionBar: {
+    title: 'ActionBar',
+    package: '@mantine/core',
+    slug: '/core/action-bar',
+    description: 'A fixed-position bottom bar for bulk selection actions',
+    props: ['ActionBar'],
+    styles: ['ActionBar'],
+    source: '@mantine/core/src/components/ActionBar/ActionBar.tsx',
+    docs: 'core/ActionBar.mdx',
+  },
   CloseButton: {
     title: 'CloseButton',
     package: '@mantine/core',
@@ -499,6 +509,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/VisuallyHidden/VisuallyHidden.tsx',
     docs: 'core/visually-hidden.mdx',
   },
+  DataList: {
+    title: 'DataList',
+    package: '@mantine/core',
+    slug: '/core/data-list',
+    componentPrefix: 'DataList',
+    props: ['DataList', 'DataListItem', 'DataListItemLabel', 'DataListItemValue'],
+    styles: ['DataList'],
+    description: 'Display label-value pairs as a description list',
+    source: '@mantine/core/src/components/DataList/DataList.tsx',
+    docs: 'core/data-list.mdx',
+  },
   Divider: {
     title: 'Divider',
     package: '@mantine/core',
@@ -706,6 +727,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Custom searchable multi select',
     source: '@mantine/core/src/components/MultiSelect/MultiSelect.tsx',
     docs: 'core/multi-select.mdx',
+  },
+
+  ComboboxPopover: {
+    title: 'ComboboxPopover',
+    package: '@mantine/core',
+    slug: '/core/combobox-popover',
+    props: ['ComboboxPopover'],
+    styles: ['ComboboxPopover'],
+    description: 'Add combobox dropdown to any button element',
+    source: '@mantine/core/src/components/ComboboxPopover/ComboboxPopover.tsx',
+    docs: 'core/combobox-popover.mdx',
   },
 
   Pagination: {
@@ -945,6 +977,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/file-input.mdx',
   },
 
+  Splitter: {
+    title: 'Splitter',
+    package: '@mantine/core',
+    slug: '/core/splitter',
+    props: ['Splitter', 'SplitterPane'],
+    styles: ['Splitter'],
+    componentPrefix: 'Splitter',
+    description: 'Resizable split pane layout',
+    source: '@mantine/core/src/components/Splitter/Splitter.tsx',
+    docs: 'core/splitter.mdx',
+  },
+
   Stepper: {
     title: 'Stepper',
     package: '@mantine/core',
@@ -1092,6 +1136,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/number-formatter.mdx',
   },
 
+  RollingNumber: {
+    title: 'RollingNumber',
+    package: '@mantine/core',
+    slug: '/core/rolling-number',
+    props: ['RollingNumber'],
+    styles: ['RollingNumber'],
+    description: 'Animate value changes with rolling digits',
+    source: '@mantine/core/src/components/RollingNumber/RollingNumber.tsx',
+    docs: 'core/rolling-number.mdx',
+  },
+
   FloatingIndicator: {
     title: 'FloatingIndicator',
     package: '@mantine/core',
@@ -1112,6 +1167,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Display a Tree structure',
     source: '@mantine/core/src/components/Tree/Tree.tsx',
     docs: 'core/tree.mdx',
+  },
+
+  TreeSelect: {
+    title: 'TreeSelect',
+    package: '@mantine/core',
+    slug: '/core/tree-select',
+    props: ['TreeSelect'],
+    styles: ['TreeSelect'],
+    description: 'Select with hierarchical tree data',
+    source: '@mantine/core/src/components/TreeSelect/TreeSelect.tsx',
+    docs: 'core/tree-select.mdx',
   },
 
   SemiCircleProgress: {

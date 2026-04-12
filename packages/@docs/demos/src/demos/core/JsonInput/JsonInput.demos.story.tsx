@@ -27,3 +27,8 @@ export const Demo_loading = {
   name: '⭐ Demo: loading',
   render: renderDemo(demos.loading),
 };
+
+export const Demo_success = {
+  name: '⭐ Demo: success',
+  render: renderDemo(demos.success),
+};

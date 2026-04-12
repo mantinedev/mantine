@@ -33,19 +33,27 @@ import {
   InputLabelProps,
   InputLabelStylesNames,
 } from '../InputLabel/InputLabel';
+import {
+  InputSuccess,
+  InputSuccessCssVariables,
+  InputSuccessProps,
+  InputSuccessStylesNames,
+} from '../InputSuccess/InputSuccess';
 import { InputWrapperContext } from '../InputWrapper.context';
 import { getInputOffsets } from './get-input-offsets/get-input-offsets';
 import classes from '../Input.module.css';
 
 export type InputWrapperCssVariables = InputLabelCssVariables &
   InputErrorCssVariables &
+  InputSuccessCssVariables &
   InputDescriptionCssVariables;
 
 export type InputWrapperStylesNames =
   | 'root'
   | InputLabelStylesNames
   | InputDescriptionStylesNames
-  | InputErrorStylesNames;
+  | InputErrorStylesNames
+  | InputSuccessStylesNames;
 
 export interface __InputWrapperProps {
   /** Contents of `Input.Label` component. If not set, label is not displayed. */
@@ -56,6 +64,9 @@ export interface __InputWrapperProps {
 
   /** Contents of `Input.Error` component. If not set, error is not displayed. */
   error?: React.ReactNode;
+
+  /** Contents of `Input.Success` component. If not set, success is not displayed. */
+  success?: React.ReactNode;
 
   /** Adds required attribute to the input and a red asterisk on the right side of label @default false */
   required?: boolean;
@@ -71,6 +82,9 @@ export interface __InputWrapperProps {
 
   /** Props passed down to the `Input.Error` component */
   errorProps?: InputErrorProps & DataAttributes;
+
+  /** Props passed down to the `Input.Success` component */
+  successProps?: InputSuccessProps & DataAttributes;
 
   /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default React.Fragment */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;
@@ -119,6 +133,11 @@ const varsResolver = createVarsResolver<InputWrapperFactory>((_, { size }) => ({
     '--input-error-size': size === undefined ? undefined : `calc(${getFontSize(size)} - ${rem(2)})`,
   },
 
+  success: {
+    '--input-success-size':
+      size === undefined ? undefined : `calc(${getFontSize(size)} - ${rem(2)})`,
+  },
+
   description: {
     '--input-description-size':
       size === undefined ? undefined : `calc(${getFontSize(size)} - ${rem(2)})`,
@@ -141,10 +160,12 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
     inputWrapperOrder,
     label,
     error,
+    success,
     description,
     labelProps,
     descriptionProps,
     errorProps,
+    successProps,
     labelElement,
     children,
     withAsterisk,
@@ -179,11 +200,13 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
   const idBase = useId(id);
   const isRequired = typeof withAsterisk === 'boolean' ? withAsterisk : required;
   const errorId = errorProps?.id || `${idBase}-error`;
+  const successId = successProps?.id || `${idBase}-success`;
   const descriptionId = descriptionProps?.id || `${idBase}-description`;
   const inputId = idBase;
   const hasError = !!error && typeof error !== 'boolean';
+  const hasSuccess = !!success && typeof success !== 'boolean' && !hasError;
   const hasDescription = !!description;
-  const _describedBy = `${hasError ? errorId : ''} ${hasDescription ? descriptionId : ''}`;
+  const _describedBy = `${hasError ? errorId : ''} ${hasSuccess ? successId : ''} ${hasDescription ? descriptionId : ''}`;
   const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
   const labelId = labelProps?.id || `${idBase}-label`;
 
@@ -227,6 +250,18 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
     </InputError>
   );
 
+  const _success = hasSuccess && (
+    <InputSuccess
+      {...successProps}
+      {...sharedProps}
+      size={successProps?.size || sharedProps.size}
+      key="success"
+      id={successProps?.id || successId}
+    >
+      {success}
+    </InputSuccess>
+  );
+
   const content = inputWrapperOrder.map((part) => {
     switch (part) {
       case 'label':
@@ -236,7 +271,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
       case 'description':
         return _description;
       case 'error':
-        return _error;
+        return _error || _success;
       default:
         return null;
     }
@@ -249,13 +284,13 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
         describedBy,
         inputId,
         labelId,
-        ...getInputOffsets(inputWrapperOrder, { hasDescription, hasError }),
+        ...getInputOffsets(inputWrapperOrder, { hasDescription, hasError: hasError || hasSuccess }),
       }}
     >
       <Box
         variant={variant}
         size={size}
-        mod={[{ error: !!error }, mod]}
+        mod={[{ error: !!error, success: !!success && !error }, mod]}
         id={labelElement === 'label' ? undefined : id}
         {...getStyles('root')}
         {...others}

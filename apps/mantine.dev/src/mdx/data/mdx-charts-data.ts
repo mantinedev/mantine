@@ -165,6 +165,39 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/bars-list.mdx',
   },
 
+  BulletChart: {
+    title: 'BulletChart',
+    props: ['BulletChart'],
+    styles: ['BulletChart'],
+    package: '@mantine/charts',
+    slug: '/charts/bullet-chart',
+    description: 'Compact KPI chart with value, target, and qualitative ranges',
+    source: '@mantine/charts/src/BulletChart/BulletChart.tsx',
+    docs: 'charts/bullet-chart.mdx',
+  },
+
+  GaugeChart: {
+    title: 'GaugeChart',
+    props: ['GaugeChart'],
+    styles: ['GaugeChart'],
+    package: '@mantine/charts',
+    slug: '/charts/gauge-chart',
+    description: 'Radial gauge chart for KPI and status display',
+    source: '@mantine/charts/src/GaugeChart/GaugeChart.tsx',
+    docs: 'charts/gauge-chart.mdx',
+  },
+
+  WaffleChart: {
+    title: 'WaffleChart',
+    props: ['WaffleChart'],
+    styles: ['WaffleChart'],
+    package: '@mantine/charts',
+    slug: '/charts/waffle-chart',
+    description: 'Part-to-whole grid chart with colored cells',
+    source: '@mantine/charts/src/WaffleChart/WaffleChart.tsx',
+    docs: 'charts/waffle-chart.mdx',
+  },
+
   Treemap: {
     title: 'Treemap',
     props: ['Treemap'],
@@ -174,5 +207,38 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Treemap chart component',
     source: '@mantine/charts/src/Treemap/Treemap.tsx',
     docs: 'charts/treemap.mdx',
+  },
+
+  SunburstChart: {
+    title: 'SunburstChart',
+    props: ['SunburstChart'],
+    styles: ['SunburstChart'],
+    package: '@mantine/charts',
+    slug: '/charts/sunburst-chart',
+    description: 'Sunburst chart component for hierarchical data',
+    source: '@mantine/charts/src/SunburstChart/SunburstChart.tsx',
+    docs: 'charts/sunburst-chart.mdx',
+  },
+
+  MatrixChart: {
+    title: 'MatrixChart',
+    props: ['MatrixChart'],
+    styles: ['MatrixChart'],
+    package: '@mantine/charts',
+    slug: '/charts/matrix-chart',
+    description: 'Generic x/y heatmap with categorical axes',
+    source: '@mantine/charts/src/MatrixChart/MatrixChart.tsx',
+    docs: 'charts/matrix-chart.mdx',
+  },
+
+  SankeyChart: {
+    title: 'SankeyChart',
+    props: ['SankeyChart'],
+    styles: ['SankeyChart'],
+    package: '@mantine/charts',
+    slug: '/charts/sankey-chart',
+    description: 'Sankey diagram component',
+    source: '@mantine/charts/src/SankeyChart/SankeyChart.tsx',
+    docs: 'charts/sankey-chart.mdx',
   },
 };

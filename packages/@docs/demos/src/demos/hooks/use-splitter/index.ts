@@ -1,0 +1,11 @@
+export { usage } from './use-splitter.demo.usage';
+export { vertical } from './use-splitter.demo.vertical';
+export { collapsible } from './use-splitter.demo.collapsible';
+export { multiple } from './use-splitter.demo.multiple';
+export { controlled } from './use-splitter.demo.controlled';
+export { redistributeNearest } from './use-splitter.demo.redistributeNearest';
+export { redistributeEqual } from './use-splitter.demo.redistributeEqual';
+export { redistributeCustom } from './use-splitter.demo.redistributeCustom';
+export { gripOnly } from './use-splitter.demo.gripOnly';
+export { nested } from './use-splitter.demo.nested';
+export { codeEditor } from './use-splitter.demo.codeEditor';

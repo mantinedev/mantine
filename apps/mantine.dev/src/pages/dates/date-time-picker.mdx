@@ -13,6 +13,13 @@ Read through the [DatePicker](/dates/date-picker/) documentation to learn about 
 
 <Demo data={DateTimePickerDemos.usage} />
 
+## Range
+
+Set `type="range"` to allow selecting a date and time range. In range mode,
+two time inputs are rendered for start and end times, and a range summary is displayed below:
+
+<Demo data={DateTimePickerDemos.range} />
+
 ## With seconds
 
 <Demo data={DateTimePickerDemos.withSeconds} />
@@ -64,6 +71,10 @@ By default, the picker is rendered inside [Popover](/core/popover/).
 You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
 
 <Demo data={DateTimePickerDemos.modal} />
+
+## Native level select
+
+<Demo data={DateTimePickerDemos.nativeLevelSelect} />
 
 <GetElementRef
   component="DateTimePicker"

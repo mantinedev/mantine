@@ -43,6 +43,11 @@ export const Demo_error = {
   render: renderDemo(demos.error),
 };
 
+export const Demo_success = {
+  name: '⭐ Demo: success',
+  render: renderDemo(demos.success),
+};
+
 export const Demo_groups = {
   name: '⭐ Demo: groups',
   render: renderDemo(demos.groups),

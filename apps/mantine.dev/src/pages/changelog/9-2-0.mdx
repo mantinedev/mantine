@@ -1,0 +1,79 @@
+import { DateTimePickerDemos, InlineDateTimePickerDemos, NotificationsDemos, RollingNumberDemos, SankeyChartDemos, TreeSelectDemos, UseDragDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog920);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## TreeSelect component
+
+New [TreeSelect](/core/tree-select) component allows picking one or more values from hierarchical tree data.
+It supports three selection modes: single, multiple, and checkbox (with parent-child cascade):
+
+<Demo data={TreeSelectDemos.usage} />
+
+## Tree select Combobox examples
+
+New [Combobox examples](/combobox?e=TreeSelectCombobox) showing how to build tree select components
+from Combobox primitives with connecting lines, expand/collapse chevrons, and proper indentation:
+
+- [Tree select](/combobox?e=TreeSelectCombobox) – basic single-value tree select
+- [Tree multi select](/combobox?e=TreeMultiSelectCombobox) – multi select with checkbox cascade
+- [Searchable tree select](/combobox?e=TreeSelectSearchable) – tree select with search filtering
+- [Tree select with checkboxes](/combobox?e=TreeSelectCheckbox) – single select with expand-on-click
+- [Virtualized tree select](/combobox?e=TreeSelectVirtualized) – large tree (~500 nodes) with @tanstack/react-virtual
+
+## Notifications swipe dismissal
+
+[@mantine/notifications](/x/notifications) now supports dismissing notifications by dragging them
+left or right, and with horizontal scroll swipe while hovered. Both interactions can be disabled
+on `Notifications`, and individual items can opt out with `allowClose: false`.
+
+<Demo data={NotificationsDemos.base} />
+
+## use-drag hook
+
+New [use-drag](/hooks/use-drag) hook handles pointer drag gestures with movement tracking,
+velocity, direction and axis constraints. It uses the Pointer Events API and works with
+both mouse and touch input:
+
+<Demo data={UseDragDemos.swipe} />
+
+## InlineDateTimePicker component
+
+New [InlineDateTimePicker](/dates/inline-date-time-picker) component renders a calendar
+with a time picker inline, without a dropdown. It supports both default and range modes:
+
+<Demo data={InlineDateTimePickerDemos.usage} />
+
+Set `type="range"` to select a date and time range with two time inputs:
+
+<Demo data={InlineDateTimePickerDemos.range} />
+
+## DateTimePicker range support
+
+[DateTimePicker](/dates/date-time-picker) now supports `type="range"` to select
+a date and time range. In range mode, two time inputs are displayed in the dropdown
+for start and end times:
+
+<Demo data={DateTimePickerDemos.range} />
+
+## RollingNumber component
+
+New [RollingNumber](/core/rolling-number) component animates value changes with rolling digit
+transitions. Each digit independently rolls to its new position when the value changes:
+
+<Demo data={RollingNumberDemos.usage} />
+
+## SankeyChart component
+
+New [SankeyChart](/charts/sankey-chart) component visualizes flow between nodes as a Sankey diagram
+where the width of each link is proportional to the flow value:
+
+<Demo data={SankeyChartDemos.usage} />

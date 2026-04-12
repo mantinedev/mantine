@@ -1,0 +1,16 @@
+.dropdown {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+  border-top: 0;
+}
+
+.input {
+  transition: none;
+
+  &[data-expanded] {
+    border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}

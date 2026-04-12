@@ -26,11 +26,20 @@ export interface NotificationData
    * */
   autoClose?: boolean | number;
 
+  /** Determines whether notification can be closed with close button, drag or horizontal scroll swipe, `true` by default */
+  allowClose?: boolean;
+
   /** Called when notification closes */
   onClose?: (props: NotificationData) => void;
 
   /** Called when notification opens */
   onOpen?: (props: NotificationData) => void;
+
+  /** Determines whether auto close progress bar is displayed, @default false */
+  withAutoCloseProgress?: boolean;
+
+  /** Custom render function that replaces the default notification, overrides `renderNotification` from `Notifications`. Set to `null` to use default rendering when a global `renderNotification` is set. */
+  renderNotification?: ((notification: NotificationData) => React.ReactNode) | null;
 }
 
 export interface NotificationsState {

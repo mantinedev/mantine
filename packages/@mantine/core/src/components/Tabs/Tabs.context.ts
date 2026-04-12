@@ -19,6 +19,7 @@ export interface TabsContextValue {
   placement: 'right' | 'left' | undefined;
   unstyled: boolean | undefined;
   getStyles: GetStylesApi<TabsFactory>;
+  mountedPanels: React.RefObject<Set<string>>;
 }
 
 export const [TabsProvider, useTabsContext] = createSafeContext<TabsContextValue>(

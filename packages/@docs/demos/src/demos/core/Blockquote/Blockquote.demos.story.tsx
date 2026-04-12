@@ -7,3 +7,8 @@ export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
+
+export const Demo_textWrap = {
+  name: '⭐ Demo: textWrap',
+  render: renderDemo(demos.textWrap),
+};

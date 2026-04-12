@@ -4,6 +4,7 @@
   font-size: var(--text-fz, var(--mantine-font-size-md));
   line-height: var(--text-lh, var(--mantine-line-height-md));
   font-weight: var(--mantine-font-weight-regular);
+  text-wrap: var(--text-text-wrap, var(--mantine-text-wrap, wrap));
   margin: 0;
   padding: 0;
 
@@ -15,11 +16,11 @@
 
   &:where([data-truncate='start']) {
     direction: rtl;
-    text-align: right;
+    text-align: end;
 
     @mixin where-rtl {
       direction: ltr;
-      text-align: left;
+      text-align: start;
     }
   }
 

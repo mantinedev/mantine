@@ -56,6 +56,7 @@ import {
   type InputPlaceholderStylesNames,
   type InputPlaceholderFactory,
 } from './InputPlaceholder/InputPlaceholder';
+import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputWrapperContext } from './InputWrapper.context';
 import {
   __InputWrapperProps,
@@ -75,7 +76,7 @@ export interface __BaseInputProps extends __InputWrapperProps, __InputProps {
 
 export type __InputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
-export type InputStylesNames = 'input' | 'wrapper' | 'section';
+export type InputStylesNames = 'input' | 'wrapper' | 'section' | 'bottomSection';
 export type InputVariant = 'default' | 'filled' | 'unstyled';
 export type InputCssVariables = {
   wrapper:
@@ -139,6 +140,9 @@ export interface __InputProps {
   /** Determines whether the input should have red border and red text color when the `error` prop is set @default true */
   withErrorStyles?: boolean;
 
+  /** Determines whether the input should have green border when the `success` prop is set @default true */
+  withSuccessStyles?: boolean;
+
   /** HTML `size` attribute for the input element (number of visible characters) */
   inputSize?: string;
 
@@ -159,6 +163,12 @@ export interface __InputProps {
 
   /** Position of the loading indicator @default 'right' */
   loadingPosition?: 'left' | 'right';
+
+  /** Content section displayed at the bottom of the input, inside the border */
+  __bottomSection?: React.ReactNode;
+
+  /** Props passed down to the `__bottomSection` element */
+  __bottomSectionProps?: React.ComponentProps<'div'>;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -169,6 +179,9 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
 
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
+
+  /** Determines whether the input should have success styles */
+  success?: React.ReactNode;
 
   /** Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. @default false */
   multiline?: boolean;
@@ -197,6 +210,7 @@ export type InputFactory = PolymorphicFactory<{
   staticComponents: {
     Label: typeof InputLabel;
     Error: typeof InputError;
+    Success: typeof InputSuccess;
     Description: typeof InputDescription;
     Placeholder: typeof InputPlaceholder;
     Wrapper: typeof InputWrapper;
@@ -210,6 +224,7 @@ const defaultProps = {
   rightSectionPointerEvents: 'none',
   withAria: true,
   withErrorStyles: true,
+  withSuccessStyles: true,
   size: 'sm',
   loading: false,
   loadingPosition: 'right',
@@ -246,6 +261,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     size,
     wrapperProps,
     error,
+    success,
     disabled,
     leftSection,
     leftSectionProps,
@@ -263,6 +279,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     id,
     withAria,
     withErrorStyles,
+    withSuccessStyles,
     mod,
     inputSize,
     attributes,
@@ -272,6 +289,8 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     __defaultRightSection,
     loading,
     loadingPosition,
+    __bottomSection,
+    __bottomSectionProps,
     rootRef,
     ...others
   } = props;
@@ -336,11 +355,13 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
         mod={[
           {
             error: !!error && withErrorStyles,
+            success: !!success && !error && withSuccessStyles,
             pointer,
             disabled,
             multiline,
             'data-with-right-section': !!_rightSection,
             'data-with-left-section': !!_leftSection,
+            'data-with-bottom-section': !!__bottomSection,
           },
           mod,
         ]}
@@ -365,11 +386,27 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
           {...rest}
           {...ariaAttributes}
           required={required}
-          mod={{ disabled, error: !!error && withErrorStyles }}
+          mod={{
+            disabled,
+            error: !!error && withErrorStyles,
+            success: !!success && !error && withSuccessStyles,
+          }}
           variant={variant}
           __size={inputSize}
           {...getStyles('input')}
         />
+
+        {__bottomSection && (
+          <div
+            {...__bottomSectionProps}
+            {...getStyles('bottomSection', {
+              className: __bottomSectionProps?.className,
+              style: __bottomSectionProps?.style,
+            })}
+          >
+            {__bottomSection}
+          </div>
+        )}
 
         {_rightSection && (
           <div
@@ -393,6 +430,7 @@ Input.varsResolver = varsResolver;
 Input.Wrapper = InputWrapper;
 Input.Label = InputLabel;
 Input.Error = InputError;
+Input.Success = InputSuccess;
 Input.Description = InputDescription;
 Input.Placeholder = InputPlaceholder;
 Input.ClearButton = InputClearButton;

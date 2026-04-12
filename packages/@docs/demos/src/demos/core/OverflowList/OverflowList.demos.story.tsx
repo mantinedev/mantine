@@ -18,6 +18,11 @@ export const Demo_maxVisibleItems = {
   render: renderDemo(demos.maxVisibleItems),
 };
 
+export const Demo_collapseFrom = {
+  name: '⭐ Demo: collapseFrom',
+  render: renderDemo(demos.collapseFrom),
+};
+
 export const Demo_hoverCard = {
   name: '⭐ Demo: hoverCard',
   render: renderDemo(demos.hoverCard),

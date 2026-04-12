@@ -15,6 +15,8 @@ export const CodeHighlightStylesApi: StylesApiData<CodeHighlightFactory> = {
     controlTooltip: 'Root element of control tooltip',
     controls: 'A wrapper around controls',
     scrollarea: 'Scroll area, contains code',
+    lineNumbers: 'Line numbers column',
+    codeWrapper: 'Wrapper element around line numbers and scroll area',
   },
 
   vars: {

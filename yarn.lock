@@ -2263,6 +2263,7 @@ __metadata:
     "@mantine/dropzone": "workspace:*"
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    "@mantine/lightbox": "workspace:*"
     "@mantine/notifications": "workspace:*"
     "@mantine/nprogress": "workspace:*"
     "@mantine/schedule": "workspace:*"
@@ -2297,6 +2298,7 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/dropzone": "workspace:*"
+    "@mantine/lightbox": "workspace:*"
     "@mantine/notifications": "workspace:*"
     "@mantine/nprogress": "workspace:*"
     "@mantine/spotlight": "workspace:*"
@@ -4093,6 +4095,26 @@ __metadata:
   resolution: "@mantine/hooks@workspace:packages/@mantine/hooks"
   peerDependencies:
     react: ^19.2.0
+  languageName: unknown
+  linkType: soft
+
+"@mantine/lightbox@workspace:*, @mantine/lightbox@workspace:packages/@mantine/lightbox":
+  version: 0.0.0-use.local
+  resolution: "@mantine/lightbox@workspace:packages/@mantine/lightbox"
+  dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@mantine/store": "npm:9.0.1"
+    react: "npm:19.2.4"
+    react-dom: "npm:19.2.4"
+  peerDependencies:
+    "@mantine/core": 9.0.1
+    "@mantine/hooks": 9.0.1
+    embla-carousel: ">=8.0.0"
+    embla-carousel-react: ">=8.0.0"
+    react: ^19.2.0
+    react-dom: ^19.2.0
   languageName: unknown
   linkType: soft
 

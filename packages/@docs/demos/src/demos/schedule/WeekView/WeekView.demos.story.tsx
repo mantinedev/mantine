@@ -183,6 +183,11 @@ export const Demo_viewChange = {
   render: renderDemo(demos.viewChange),
 };
 
+export const Demo_withAgenda = {
+  name: '⭐ Demo: withAgenda',
+  render: renderDemo(demos.withAgenda),
+};
+
 export const Demo_forceCurrentTimeIndicator = {
   name: '⭐ Demo: forceCurrentTimeIndicator',
   render: renderDemo(demos.forceCurrentTimeIndicator),

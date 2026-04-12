@@ -14,6 +14,7 @@ export function getGroupedData(data: ComboboxExample[]): ComboboxExamplesGroup[]
     button: [],
     animations: [],
     virtualization: [],
+    treeselect: [],
     other: [],
   };
 
@@ -29,6 +30,7 @@ export function getGroupedData(data: ComboboxExample[]): ComboboxExamplesGroup[]
     { group: 'Dropdown', items: items.dropdown },
     { group: 'Animations', items: items.animations },
     { group: 'Virtualization', items: items.virtualization },
+    { group: 'Tree select', items: items.treeselect },
     { group: 'Other', items: items.other },
   ];
 }

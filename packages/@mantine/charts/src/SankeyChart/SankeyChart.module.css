@@ -1,0 +1,15 @@
+.root {
+  min-height: var(--chart-height, auto);
+
+  & :where(*) {
+    outline: 0;
+  }
+
+  @mixin where-light {
+    --chart-link-color: var(--mantine-color-gray-1);
+  }
+
+  @mixin where-dark {
+    --chart-link-color: var(--mantine-color-dark-5);
+  }
+}

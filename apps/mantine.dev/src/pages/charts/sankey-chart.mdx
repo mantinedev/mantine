@@ -1,0 +1,47 @@
+import { SankeyChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.SankeyChart);
+
+## Usage
+
+`SankeyChart` is based on the [Sankey recharts component](https://recharts.org/en-US/api/Sankey).
+It visualizes flow between nodes where the width of each link is proportional to the flow value:
+
+<Demo data={SankeyChartDemos.usage} />
+
+## Node color
+
+You can set `color` on each node in the data to control individual node colors.
+Colors can reference [theme](/theming/theme-object) values like `blue`, `red.5`, `orange.7`, etc.
+Any valid CSS color value is also accepted.
+
+<Demo data={SankeyChartDemos.color} />
+
+## Custom colors
+
+Use `colors` prop to provide an array of colors that are used for nodes when no
+`color` is set on individual nodes. Colors can reference [theme](/theming/theme-object) values.
+The colors cycle when there are more nodes than colors:
+
+<Demo data={SankeyChartDemos.colors} />
+
+## Node width and padding
+
+Use `nodeWidth` to control the width of each node and `nodePadding` to control
+the spacing between nodes:
+
+<Demo data={SankeyChartDemos.nodeWidth} />
+
+## Link opacity
+
+Use `linkOpacity` prop to control the opacity of links between nodes:
+
+<Demo data={SankeyChartDemos.linkOpacity} />
+
+## Disable tooltip
+
+To disable the tooltip, set `withTooltip={false}`:
+
+<Demo data={SankeyChartDemos.noTooltip} />

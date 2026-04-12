@@ -145,6 +145,18 @@ const FILES_PATHS = getPaths([
   // Notifications
   'packages/@mantine/notifications/src/Notifications.tsx',
 
+  // Lightbox
+  'packages/@mantine/lightbox/src/Lightbox.tsx',
+  'packages/@mantine/lightbox/src/LightboxRoot/LightboxRoot.tsx',
+  'packages/@mantine/lightbox/src/LightboxToolbar/LightboxToolbar.tsx',
+  'packages/@mantine/lightbox/src/LightboxSlides/LightboxSlides.tsx',
+  'packages/@mantine/lightbox/src/LightboxSlide/LightboxSlide.tsx',
+  'packages/@mantine/lightbox/src/LightboxThumbnails/LightboxThumbnails.tsx',
+  'packages/@mantine/lightbox/src/LightboxNavigation/LightboxNavigation.tsx',
+  'packages/@mantine/lightbox/src/LightboxCaption/LightboxCaption.tsx',
+  'packages/@mantine/lightbox/src/LightboxCloseButton/LightboxCloseButton.tsx',
+  'packages/@mantine/lightbox/src/LightboxProvider/LightboxProvider.tsx',
+
   // Schedule
   'packages/@mantine/schedule/src/components/DayView/DayView.tsx',
   'packages/@mantine/schedule/src/components/MonthView/MonthView.tsx',
@@ -152,6 +164,10 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/schedule/src/components/YearView/YearView.tsx',
   'packages/@mantine/schedule/src/components/Schedule/Schedule.tsx',
   'packages/@mantine/schedule/src/components/MobileMonthView/MobileMonthView.tsx',
+  'packages/@mantine/schedule/src/components/ResourcesDayView/ResourcesDayView.tsx',
+  'packages/@mantine/schedule/src/components/ResourcesWeekView/ResourcesWeekView.tsx',
+  'packages/@mantine/schedule/src/components/ResourcesMonthView/ResourcesMonthView.tsx',
+  'packages/@mantine/schedule/src/components/ResourcesSchedule/ResourcesSchedule.tsx',
 ]);
 
 export const DOCGEN_PATHS = getDeclarationsPaths([

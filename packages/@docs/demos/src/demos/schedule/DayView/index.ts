@@ -30,3 +30,4 @@ export { backgroundEventsCustomStyle } from './DayView.demo.backgroundEventsCust
 export { customHeader } from './DayView.demo.customHeader';
 export { localization } from './DayView.demo.localization';
 export { getTimeSlotProps } from './DayView.demo.getTimeSlotProps';
+export { withAgenda } from './DayView.demo.withAgenda';

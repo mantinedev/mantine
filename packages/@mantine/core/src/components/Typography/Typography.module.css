@@ -200,7 +200,7 @@
     }
 
     & :where(th) {
-      text-align: left;
+      text-align: start;
       font-weight: bold;
       font-size: var(--mantine-font-size-sm);
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);

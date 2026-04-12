@@ -115,6 +115,14 @@ to a React node and `withErrorStyles={false}`:
 
 <Demo data={InputDemos.error} />
 
+## success prop
+
+All inputs that use `Input.Wrapper` under the hood support the `success` prop.
+When set to `true`, it will add a green border to the input. You can also pass a React node to display
+a success message below the input. If both `error` and `success` props are set, `error` takes precedence:
+
+<Demo data={InputDemos.success} />
+
 ## Input.Label, Input.Description and Input.Error components
 
 `Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom

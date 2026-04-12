@@ -11,3 +11,4 @@ export { eventResize } from './Schedule.demo.eventResize';
 export { recurringEvents } from './Schedule.demo.recurringEvents';
 export { backgroundEvents } from './Schedule.demo.backgroundEvents';
 export { customHeader } from './Schedule.demo.customHeader';
+export { withAgenda } from './Schedule.demo.withAgenda';

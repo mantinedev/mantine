@@ -67,3 +67,8 @@ export const Demo_startValue = {
   name: '⭐ Demo: startValue',
   render: renderDemo(demos.startValue),
 };
+
+export const Demo_responsive = {
+  name: '⭐ Demo: responsive',
+  render: renderDemo(demos.responsive),
+};

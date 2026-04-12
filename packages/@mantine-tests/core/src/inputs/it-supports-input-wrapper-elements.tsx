@@ -29,6 +29,13 @@ export function itSupportsInputWrapperElements<Props>(
     expect(inputWrapperQueries.getError(container).textContent).toBe('test-error');
   });
 
+  it(`${name}: success`, () => {
+    const { container } = render(
+      <options.component {...options.props} error={undefined} success="test-success" />
+    );
+    expect(inputWrapperQueries.getSuccess(container).textContent).toBe('test-success');
+  });
+
   it(`${name}: labelProps`, () => {
     const { container } = render(
       <options.component {...options.props} labelProps={{ 'data-test-label': true }} />
@@ -48,5 +55,17 @@ export function itSupportsInputWrapperElements<Props>(
       <options.component {...options.props} errorProps={{ 'data-test-error': true }} />
     );
     expect(inputWrapperQueries.getError(container)).toHaveAttribute('data-test-error');
+  });
+
+  it(`${name}: successProps`, () => {
+    const { container } = render(
+      <options.component
+        {...options.props}
+        error={undefined}
+        success="test-success"
+        successProps={{ 'data-test-success': true }}
+      />
+    );
+    expect(inputWrapperQueries.getSuccess(container)).toHaveAttribute('data-test-success');
   });
 }

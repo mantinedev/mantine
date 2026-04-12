@@ -8,9 +8,10 @@ import {
   factory,
   Factory,
   rem,
+  useDirection,
   useProps,
 } from '../../../core';
-import { FloatingArrow } from '../../../utils/Floating';
+import { FloatingArrow, getArrowMergeDropdownStyles } from '../../../utils/Floating';
 import { FocusTrap } from '../../FocusTrap';
 import { OptionalPortal } from '../../Portal';
 import { Transition } from '../../Transition';
@@ -44,6 +45,12 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
   } = props;
 
   const ctx = usePopoverContext();
+  const { dir } = useDirection();
+
+  const mergeStyles =
+    ctx.arrowPosition === 'merge' && ctx.withArrow
+      ? getArrowMergeDropdownStyles({ position: ctx.placement, dir })
+      : undefined;
 
   const returnFocus = useFocusReturn({
     opened: ctx.opened,
@@ -106,6 +113,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
                 style: [
                   {
                     ...transitionStyles,
+                    ...mergeStyles,
                     zIndex: ctx.zIndex as React.CSSProperties['zIndex'],
                     top: ctx.y ?? 0,
                     left: ctx.x ?? 0,

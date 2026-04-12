@@ -36,6 +36,7 @@ export function ScrollAreaViewport({
       {...others}
       ref={rootRef}
       onWheel={handleWheel}
+      data-scrollarea-viewport
       style={{
         overflowX: ctx.scrollbarXEnabled ? 'scroll' : 'hidden',
         overflowY: ctx.scrollbarYEnabled ? 'scroll' : 'hidden',

@@ -32,6 +32,9 @@ export interface MonthLevelGroupProps
 
   /** Determines whether the calendar should take the full width of its container @default false */
   fullWidth?: boolean;
+
+  /** Called when date is changed via native level select */
+  __onDateChange?: (date: DateStringValue) => void;
 }
 
 export type MonthLevelGroupFactory = Factory<{
@@ -80,6 +83,8 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     previousDisabled,
     hasNextLevel,
     headerControlsOrder,
+    withNativeLevelSelect,
+    yearsSelectRange,
 
     // Other settings
     classNames,
@@ -90,6 +95,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     monthLabelFormat,
     __staticSelector,
     __stopPropagation,
+    __onDateChange,
     size,
     static: isStatic,
     fullWidth,
@@ -163,6 +169,9 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
           nextDisabled={nextDisabled}
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}
+          withNativeLevelSelect={withNativeLevelSelect}
+          yearsSelectRange={yearsSelectRange}
+          __onDateChange={__onDateChange}
           classNames={classNames}
           styles={styles}
           unstyled={unstyled}

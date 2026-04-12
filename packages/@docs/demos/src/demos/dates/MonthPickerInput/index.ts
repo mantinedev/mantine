@@ -14,3 +14,4 @@ export { listFormat } from './MonthPickerInput.demo.listFormat';
 export { maxLevel } from './MonthPickerInput.demo.maxLevel';
 export { presets } from './MonthPickerInput.demo.presets';
 export { presetsRange } from './MonthPickerInput.demo.presetsRange';
+export { nativeLevelSelect } from './MonthPickerInput.demo.nativeLevelSelect';

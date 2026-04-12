@@ -49,11 +49,7 @@
   border-radius: var(--mantine-radius-default);
   background-color: transparent;
   color: inherit;
-  text-align: left;
-
-  @mixin where-rtl {
-    text-align: right;
-  }
+  text-align: start;
 
   &:where(:not([data-selected])) {
     @mixin hover {

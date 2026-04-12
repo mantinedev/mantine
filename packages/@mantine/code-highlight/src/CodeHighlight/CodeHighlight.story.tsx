@@ -305,6 +305,50 @@ export function TabsWithColorScheme() {
   );
 }
 
+export function WithLineNumbers() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlight code={tsxCode} language="tsx" withLineNumbers radius="md" withBorder />
+    </div>
+  );
+}
+
+export function WithLineNumbersAndExpandButton() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlight
+        code={tsxCode}
+        language="tsx"
+        withLineNumbers
+        withExpandButton
+        defaultExpanded={false}
+        radius="md"
+        withBorder
+      />
+    </div>
+  );
+}
+
+export function TabsWithLineNumbers() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+        <CodeHighlightTabs
+          withLineNumbers
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          getFileIcon={getCodeFileIcon}
+          code={[
+            { fileName: 'Component.tsx', code: tsxCode, language: 'tsx' },
+            { fileName: 'Component.module.css', code: cssCode, language: 'scss' },
+          ]}
+        />
+      </CodeHighlightAdapterProvider>
+    </div>
+  );
+}
+
 export function Inline() {
   return (
     <div style={{ padding: 40 }}>

@@ -3,6 +3,7 @@ export { readOnly } from './Autocomplete.demo.readOnly';
 export { disabled } from './Autocomplete.demo.disabled';
 export { configurator } from './Autocomplete.demo.configurator';
 export { error } from './Autocomplete.demo.error';
+export { success } from './Autocomplete.demo.success';
 export { sort } from './Autocomplete.demo.sort';
 export { search } from './Autocomplete.demo.search';
 export { limit } from './Autocomplete.demo.limit';

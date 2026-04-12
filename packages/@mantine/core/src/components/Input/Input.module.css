@@ -19,7 +19,6 @@
   --input-radius: var(--mantine-radius-default);
 
   --input-cursor: text;
-  --input-text-align: left;
   --input-line-height: calc(var(--input-height) - rem(2px));
   --input-padding: calc(var(--input-height) / 3);
   --input-padding-inline-start: var(--input-padding);
@@ -54,6 +53,10 @@
 
   &[data-pointer] {
     --input-cursor: pointer;
+  }
+
+  &[data-with-bottom-section] {
+    --input-bottom-section-height: 28px;
   }
 
   &[data-multiline] {
@@ -147,8 +150,15 @@
     --input-section-color: var(--mantine-color-error);
   }
 
+  [data-mantine-color-scheme] &[data-success] {
+    &:not([data-variant='unstyled']) {
+      --input-bd: var(--mantine-color-success);
+    }
+
+    --input-section-color: var(--mantine-color-success);
+  }
+
   @mixin where-rtl {
-    --input-text-align: right;
     --left-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
     --right-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
   }
@@ -162,7 +172,7 @@
   width: 100%;
   transition: border-color 100ms ease;
 
-  text-align: var(--input-text-align);
+  text-align: start;
   color: var(--input-color);
   border: rem(1px) solid var(--input-bd);
   background-color: var(--input-bg);
@@ -195,8 +205,12 @@
     outline: none;
     --input-bd: var(--input-bd-focus);
 
-    [data-error] & {
+    .wrapper[data-error] & {
       --input-bd: var(--mantine-color-error);
+    }
+
+    .wrapper[data-success] & {
+      --input-bd: var(--mantine-color-success);
     }
   }
 
@@ -237,6 +251,26 @@
   &[readonly] {
     caret-color: transparent;
   }
+
+  [data-with-bottom-section] & {
+    padding-bottom: calc(var(--input-padding-y, 0rem) + var(--input-bottom-section-height));
+  }
+}
+
+.bottomSection {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  height: var(--input-bottom-section-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-inline: var(--input-padding);
+  border-radius: 0 0 var(--input-radius) var(--input-radius);
+  pointer-events: all;
+  color: var(--mantine-color-dimmed);
+  font-size: var(--input-fz, var(--mantine-font-size-sm));
 }
 
 .section {
@@ -295,7 +329,7 @@
 .placeholder {
   color: var(--input-placeholder-color, var(--mantine-color-placeholder));
 
-  [data-error] & {
+  .wrapper[data-error] & {
     --input-placeholder-color: var(--input-color, var(--mantine-color-placeholder));
   }
 }
@@ -319,6 +353,7 @@
 }
 
 .error,
+.success,
 .description {
   word-wrap: break-word;
   line-height: 1.2;
@@ -330,6 +365,11 @@
 .error {
   color: var(--mantine-color-error);
   font-size: var(--input-error-size, calc(var(--mantine-font-size-sm) - rem(2px)));
+}
+
+.success {
+  color: var(--mantine-color-success);
+  font-size: var(--input-success-size, calc(var(--mantine-font-size-sm) - rem(2px)));
 }
 
 .description {

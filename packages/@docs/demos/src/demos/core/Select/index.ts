@@ -6,6 +6,7 @@ export { configurator } from './Select.demo.configurator';
 export { disabled } from './Select.demo.disabled';
 export { disabledOptions } from './Select.demo.disabledOptions';
 export { error } from './Select.demo.error';
+export { success } from './Select.demo.success';
 export { groups } from './Select.demo.groups';
 export { limit } from './Select.demo.limit';
 export { readOnly } from './Select.demo.readOnly';

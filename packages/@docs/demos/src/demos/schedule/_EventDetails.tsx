@@ -1,16 +1,30 @@
+import dayjs from 'dayjs';
 import { Badge, Group, Stack, Text } from '@mantine/core';
-import { ScheduleEventData } from '@mantine/schedule';
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
 
 interface EventDetailsProps {
   event: ScheduleEventData;
+  resources?: ScheduleResourceData[];
 }
 
-export function EventDetails({ event }: EventDetailsProps) {
+export function EventDetails({ event, resources }: EventDetailsProps) {
+  const resource = resources?.find((r) => r.id === event.resourceId);
+
   return (
     <Stack gap="xs">
       <Text fw={600} size="sm">
         {event.title}
       </Text>
+
+      <Text size="xs" c="dimmed">
+        {dayjs(event.start).format('MMM D, YYYY HH:mm')} – {dayjs(event.end).format('HH:mm')}
+      </Text>
+
+      {resource && (
+        <Text size="xs" c="dimmed">
+          {resource.label}
+        </Text>
+      )}
 
       {event.payload?.description && (
         <Text size="xs" c="dimmed">
@@ -40,19 +54,33 @@ export function EventDetails({ event }: EventDetailsProps) {
   );
 }
 
-export const _eventDetailsCode = `import { Badge, Group, Stack, Text } from '@mantine/core';
-import { ScheduleEventData } from '@mantine/schedule';
+export const _eventDetailsCode = `import dayjs from 'dayjs';
+import { Badge, Group, Stack, Text } from '@mantine/core';
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
 
 interface EventDetailsProps {
   event: ScheduleEventData;
+  resources?: ScheduleResourceData[];
 }
 
-export function EventDetails({ event }: EventDetailsProps) {
+export function EventDetails({ event, resources }: EventDetailsProps) {
+  const resource = resources?.find((r) => r.id === event.resourceId);
+
   return (
     <Stack gap="xs">
       <Text fw={600} size="sm">
         {event.title}
       </Text>
+
+      <Text size="xs" c="dimmed">
+        {dayjs(event.start).format('MMM D, YYYY HH:mm')} – {dayjs(event.end).format('HH:mm')}
+      </Text>
+
+      {resource && (
+        <Text size="xs" c="dimmed">
+          {resource.label}
+        </Text>
+      )}
 
       {event.payload?.description && (
         <Text size="xs" c="dimmed">

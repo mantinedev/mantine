@@ -20,6 +20,21 @@ Control the timeline appearance with the following props:
 
 <Demo data={TimelineDemos.configurator} />
 
+## Opposite content
+
+Use the `opposite` prop on `Timeline.Item` to render content on the opposite side of the timeline.
+When any `Timeline.Item` has the `opposite` prop, the timeline switches to a centered layout with
+content on both sides of the line.
+
+<Demo data={TimelineDemos.opposite} />
+
+## Alternate items
+
+Set the `alternate` prop on individual `Timeline.Item` components to switch
+the position of content and opposite:
+
+<Demo data={TimelineDemos.alternate} />
+
 ## Bullet as React node
 
 <Demo data={TimelineDemos.bullet} />

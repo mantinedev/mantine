@@ -60,6 +60,14 @@ The following props are shared across all views:
 These props are automatically passed to all views. For view-specific customization, use the
 `dayViewProps`, `weekViewProps`, `monthViewProps`, and `yearViewProps` props.
 
+## Agenda view
+
+Set `withAgenda` prop to display an "Agenda" button in the header of DayView, WeekView
+and MonthView. When clicked, it opens an `AgendaView` showing events for the currently
+visible date range.
+
+<Demo data={ScheduleDemos.withAgenda} />
+
 ## Drag and drop
 
 Enable event drag and drop by setting `withEventsDragAndDrop` prop. Events can be dragged

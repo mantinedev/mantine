@@ -85,6 +85,9 @@ export interface PinInputProps
   /** Sets `aria-invalid` attribute and applies error styles to all inputs */
   error?: boolean;
 
+  /** Applies success styles to all inputs */
+  success?: boolean;
+
   /** Determines which values can be entered @default 'alphanumeric' */
   type?: 'alphanumeric' | 'number' | RegExp;
 
@@ -169,6 +172,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
     manageFocus,
     autoFocus,
     error,
+    success,
     radius,
     disabled,
     oneTimeCode,
@@ -437,6 +441,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
             type={inputType || (mask ? 'password' : type === 'number' ? 'tel' : 'text')}
             radius={radius}
             error={error}
+            success={success}
             variant={variant}
             disabled={disabled}
             ref={(node) => {

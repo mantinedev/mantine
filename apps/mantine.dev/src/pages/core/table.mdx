@@ -86,6 +86,14 @@ This is useful when you have columns with numbers and you want them to be aligne
 
 <Demo data={TableDemos.tabularNums} />
 
+## Example: Table virtualization
+
+This example demonstrates how to use `Table.ScrollContainer` with `@tanstack/react-virtual`
+to efficiently render large datasets. Only the visible rows are rendered in the DOM,
+which significantly improves performance for tables with thousands of rows.
+
+<Demo data={TableDemos.virtualized} />
+
 ## Example: Table with row selection
 
 <Demo data={TableDemos.rowSelection} />

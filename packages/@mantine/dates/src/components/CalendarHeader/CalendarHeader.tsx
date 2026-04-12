@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   AccordionChevron,
   Box,
@@ -14,13 +15,15 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { DateStringValue } from '../../types';
 import classes from './CalendarHeader.module.css';
 
 export type CalendarHeaderStylesNames =
   | 'calendarHeader'
   | 'calendarHeaderControl'
   | 'calendarHeaderLevel'
-  | 'calendarHeaderControlIcon';
+  | 'calendarHeaderControlIcon'
+  | 'calendarHeaderSelect';
 export type CalendarHeaderCssVariables = {
   calendarHeader: '--dch-control-size' | '--dch-fz';
 };
@@ -75,6 +78,12 @@ export interface CalendarHeaderSettings {
 
   /** Determines whether the header should take the full width of its container @default false */
   fullWidth?: boolean;
+
+  /** Determines whether level select controls should be rendered as native `<select>` elements @default false */
+  withNativeLevelSelect?: boolean;
+
+  /** Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. */
+  yearsSelectRange?: [number, number];
 }
 
 export interface CalendarHeaderProps
@@ -90,6 +99,24 @@ export interface CalendarHeaderProps
 
   /** Level control `aria-label` */
   levelControlAriaLabel?: string;
+
+  /** Current calendar level, used for native level select rendering */
+  __calendarLevel?: 'month' | 'year' | 'decade';
+
+  /** Current date displayed by the calendar, used for native level select */
+  __date?: DateStringValue;
+
+  /** Locale for native level select labels */
+  __locale?: string;
+
+  /** Called when date is changed via native level select */
+  __onDateChange?: (date: DateStringValue) => void;
+
+  /** Min date constraint for native level select */
+  __minDate?: DateStringValue | Date;
+
+  /** Max date constraint for native level select */
+  __maxDate?: DateStringValue | Date;
 }
 
 export type CalendarHeaderFactory = Factory<{
@@ -138,9 +165,17 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     withPrevious,
     headerControlsOrder,
     fullWidth,
+    withNativeLevelSelect,
+    yearsSelectRange,
     __staticSelector,
     __preventFocus,
     __stopPropagation,
+    __calendarLevel,
+    __date,
+    __locale,
+    __onDateChange,
+    __minDate,
+    __maxDate,
     attributes,
     ...others
   } = props;
@@ -188,7 +223,64 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     </UnstyledButton>
   );
 
-  const levelControl = (
+  const currentYear = new Date().getFullYear();
+  const minYear =
+    yearsSelectRange?.[0] ?? (__minDate ? dayjs(__minDate).year() : currentYear - 100);
+  const maxYear = yearsSelectRange?.[1] ?? (__maxDate ? dayjs(__maxDate).year() : currentYear + 50);
+
+  const nativeLevelControl =
+    withNativeLevelSelect && __date && __onDateChange && __calendarLevel !== 'decade' ? (
+      <div {...getStyles('calendarHeaderLevel')} key="level" data-static data-native-level-select>
+        {__calendarLevel === 'month' && (
+          <select
+            {...getStyles('calendarHeaderSelect')}
+            data-select="month"
+            value={dayjs(__date).month()}
+            onChange={(event) => {
+              const newDate = dayjs(__date)
+                .month(parseInt(event.currentTarget.value, 10))
+                .format('YYYY-MM-DD');
+              __onDateChange(newDate as DateStringValue);
+            }}
+            onMouseDown={preventFocus}
+            aria-label={levelControlAriaLabel}
+          >
+            {Array.from({ length: 12 }, (_, i) => (
+              <option key={i} value={i}>
+                {dayjs()
+                  .locale(__locale || 'en')
+                  .month(i)
+                  .format('MMMM')}
+              </option>
+            ))}
+          </select>
+        )}
+        <select
+          {...getStyles('calendarHeaderSelect')}
+          data-select="year"
+          value={dayjs(__date).year()}
+          onChange={(event) => {
+            const newDate = dayjs(__date)
+              .year(parseInt(event.currentTarget.value, 10))
+              .format('YYYY-MM-DD');
+            __onDateChange(newDate as DateStringValue);
+          }}
+          onMouseDown={preventFocus}
+          aria-label={levelControlAriaLabel}
+        >
+          {Array.from({ length: maxYear - minYear + 1 }, (_, i) => {
+            const year = minYear + i;
+            return (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    ) : null;
+
+  const levelControl = nativeLevelControl || (
     <UnstyledButton
       component={hasNextLevel ? 'button' : 'div'}
       {...getStyles('calendarHeaderLevel')}
@@ -253,11 +345,3 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
 CalendarHeader.classes = classes;
 CalendarHeader.varsResolver = varsResolver;
 CalendarHeader.displayName = '@mantine/dates/CalendarHeader';
-
-export namespace CalendarHeader {
-  export type Props = CalendarHeaderProps;
-  export type StylesNames = CalendarHeaderStylesNames;
-  export type CssVariables = CalendarHeaderCssVariables;
-  export type Settings = CalendarHeaderSettings;
-  export type Factory = CalendarHeaderFactory;
-}

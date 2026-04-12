@@ -1,0 +1,103 @@
+.optionsWrapper {
+  --ts-level-offset: 20px;
+  --ts-line-width: rem(1px);
+  --ts-line-color: var(--mantine-color-default-border);
+  --ts-option-padding-y: 4px;
+  --ts-option-padding-x: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  padding: var(--ts-option-padding-y) var(--ts-option-padding-x);
+  padding-inline-start: var(--ts-option-padding-x);
+}
+
+.expandIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --_ts-expand-icon-size: calc(1.45 * var(--combobox-option-fz, var(--mantine-font-size-sm)));
+  width: var(--_ts-expand-icon-size);
+  min-width: var(--_ts-expand-icon-size);
+  height: var(--_ts-expand-icon-size);
+  border-radius: var(--mantine-radius-sm);
+  cursor: pointer;
+  color: var(--mantine-color-dimmed);
+  transform: rotate(-90deg);
+
+  :where([data-combobox-selected]) & {
+    color: var(--mantine-color-white);
+  }
+
+  @mixin where-rtl {
+    transform: rotate(90deg);
+  }
+
+  &:where([data-expanded]) {
+    transform: rotate(0deg);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}
+
+.checkIcon {
+  opacity: 0.4;
+  width: 0.8em;
+  min-width: 0.8em;
+  height: 0.8em;
+  margin-inline-start: auto;
+
+  :where([data-combobox-selected]) & {
+    opacity: 1;
+  }
+}
+
+.label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Tree lines */
+.guideLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-inline-start: var(--ts-line-width) solid var(--ts-line-color);
+  pointer-events: none;
+}
+
+.branchVertical {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-inline-start: var(--ts-line-width) solid var(--ts-line-color);
+  pointer-events: none;
+
+  &:where([data-last]) {
+    bottom: auto;
+    height: 50%;
+  }
+}
+
+.branchHorizontal {
+  position: absolute;
+  top: 50%;
+  height: 0;
+  border-top: var(--ts-line-width) solid var(--ts-line-color);
+  pointer-events: none;
+}

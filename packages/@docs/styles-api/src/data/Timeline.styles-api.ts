@@ -9,6 +9,7 @@ export const TimelineStylesApi: StylesApiData<TimelineFactory> = {
     itemTitle: 'Item title, controlled by title prop',
     itemContent: 'Item content, controlled by children prop',
     itemBullet: 'Item bullet',
+    itemOpposite: 'Item opposite content, controlled by opposite prop on Timeline.Item',
   },
 
   vars: {

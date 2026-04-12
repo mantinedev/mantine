@@ -85,6 +85,16 @@ import SelectOptionOnHoverCode from './SelectOptionOnHover/code.json';
 import { SelectOptionOnHover } from './SelectOptionOnHover/SelectOptionOnHover';
 import TransferListCode from './TransferList/code.json';
 import { TransferList } from './TransferList/TransferList';
+import TreeMultiSelectComboboxCode from './TreeMultiSelectCombobox/code.json';
+import { TreeMultiSelectCombobox } from './TreeMultiSelectCombobox/TreeMultiSelectCombobox';
+import TreeSelectCheckboxCode from './TreeSelectCheckbox/code.json';
+import { TreeSelectCheckbox } from './TreeSelectCheckbox/TreeSelectCheckbox';
+import TreeSelectComboboxCode from './TreeSelectCombobox/code.json';
+import { TreeSelectCombobox } from './TreeSelectCombobox/TreeSelectCombobox';
+import TreeSelectSearchableCode from './TreeSelectSearchable/code.json';
+import { TreeSelectSearchable } from './TreeSelectSearchable/TreeSelectSearchable';
+import TreeSelectVirtualizedCode from './TreeSelectVirtualized/code.json';
+import { TreeSelectVirtualized } from './TreeSelectVirtualized/TreeSelectVirtualized';
 import VirtualizedOptionsCode from './VirtualizedOptions/code.json';
 import { VirtualizedOptions } from './VirtualizedOptions/VirtualizedOptions';
 import VirtualizedSearchableTanstackCode from './VirtualizedSearchableTanstack/code.json';
@@ -330,6 +340,31 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   VirtualizedSearchableTanstack: {
     component: VirtualizedSearchableTanstack,
     code: VirtualizedSearchableTanstackCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectCombobox: {
+    component: TreeSelectCombobox,
+    code: TreeSelectComboboxCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeMultiSelectCombobox: {
+    component: TreeMultiSelectCombobox,
+    code: TreeMultiSelectComboboxCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectSearchable: {
+    component: TreeSelectSearchable,
+    code: TreeSelectSearchableCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectCheckbox: {
+    component: TreeSelectCheckbox,
+    code: TreeSelectCheckboxCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectVirtualized: {
+    component: TreeSelectVirtualized,
+    code: TreeSelectVirtualizedCode as ComboboxExampleComponent['code'],
   },
 };
 

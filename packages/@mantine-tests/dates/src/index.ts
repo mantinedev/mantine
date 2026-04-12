@@ -7,6 +7,7 @@ import { itSupportsGetControlRef } from './it-supports-get-control-ref';
 import { itSupportsGetDayRef } from './it-supports-get-day-ref';
 import { itSupportsMonthProps } from './it-supports-month-props';
 import { itSupportsMonthsListProps } from './it-supports-months-list-props';
+import { itSupportsNativeLevelSelect } from './it-supports-native-level-select';
 import { itSupportsOnControlClick } from './it-supports-on-control-click';
 import { itSupportsOnControlKeydown } from './it-supports-on-control-key-down';
 import { itSupportsOnControlMouseEnter } from './it-supports-on-control-mouse-enter';
@@ -34,6 +35,7 @@ export const datesTests = {
   itSupportsOnControlMouseEnter,
   itSupportsClearableProps,
   itSupportsDateInputProps,
+  itSupportsNativeLevelSelect,
 };
 
 export * from './date-input-test-helpers';

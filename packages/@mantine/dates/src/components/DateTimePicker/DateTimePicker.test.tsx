@@ -341,4 +341,120 @@ describe('@mantine/dates/DateTimePicker', () => {
 
     expect(container.querySelector('table button')).toHaveClass('mantine-DateTimePicker-day');
   });
+
+  describe('range type', () => {
+    const rangeProps: any = {
+      ...defaultProps,
+      type: 'range',
+      endTimePickerProps: {
+        'aria-label': 'test-end-time-picker',
+        hoursInputLabel: 'test-end-time-picker-hours',
+      },
+    };
+
+    it('renders two TimePickers in range mode', async () => {
+      const { container } = render(
+        <DateTimePicker {...rangeProps} defaultValue={['2022-04-11', '2022-04-15']} />
+      );
+
+      await clickInput(container);
+      expect(screen.getByLabelText('test-time-picker-hours')).toBeInTheDocument();
+      expect(screen.getByLabelText('test-end-time-picker-hours')).toBeInTheDocument();
+    });
+
+    it('displays formatted range value', () => {
+      const { container } = render(
+        <DateTimePicker
+          {...rangeProps}
+          defaultValue={['2022-04-11 14:30:00', '2022-04-15 16:00:00']}
+        />
+      );
+
+      expectValue(container, '11/04/2022 14:30 – 15/04/2022 16:00');
+    });
+
+    it('supports range uncontrolled state', async () => {
+      const spy = jest.fn();
+      const { container } = render(<DateTimePicker {...rangeProps} onChange={spy} />);
+
+      await clickInput(container);
+      await userEvent.click(container.querySelectorAll('table button')[0]);
+
+      expect(spy).toHaveBeenCalled();
+      const lastCall = spy.mock.calls[spy.mock.calls.length - 1][0];
+      expect(Array.isArray(lastCall)).toBe(true);
+      expect(lastCall[0]).toBeTruthy();
+    });
+
+    it('supports range controlled state', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <DateTimePicker {...rangeProps} value={['2022-04-11', '2022-04-15']} onChange={spy} />
+      );
+
+      await clickInput(container);
+      await userEvent.click(container.querySelectorAll('table button')[0]);
+
+      expect(spy).toHaveBeenCalled();
+      const lastCall = spy.mock.calls[spy.mock.calls.length - 1][0];
+      expect(Array.isArray(lastCall)).toBe(true);
+    });
+
+    it('clears range value when clear button is clicked', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <DateTimePicker
+          {...rangeProps}
+          defaultValue={['2022-04-11', '2022-04-15']}
+          clearable
+          onChange={spy}
+        />
+      );
+
+      expectValue(container, '11/04/2022 00:00 – 15/04/2022 00:00');
+      await userEvent.click(getClearButton());
+      expectValue(container, '');
+    });
+
+    it('displays range info text in dropdown', async () => {
+      const { container } = render(
+        <DateTimePicker
+          {...rangeProps}
+          defaultValue={['2022-04-11 14:30:00', '2022-04-15 16:00:00']}
+        />
+      );
+
+      await clickInput(container);
+      const rangeInfo = container.querySelector('.mantine-DateTimePicker-rangeInfo');
+      expect(rangeInfo).toBeInTheDocument();
+      expect(rangeInfo!.textContent).toContain('11/04/2022');
+      expect(rangeInfo!.textContent).toContain('15/04/2022');
+    });
+
+    it('closes dropdown when submit button is clicked in range mode', async () => {
+      const { container } = render(
+        <DateTimePicker {...rangeProps} defaultValue={['2022-04-11', '2022-04-15']} />
+      );
+      await clickInput(container);
+      expectOpenedPopover(container);
+
+      await userEvent.click(getSubmitButton());
+      expectNoPopover(container);
+    });
+
+    it('render hidden input with range value', () => {
+      const { container } = render(
+        <DateTimePicker
+          {...rangeProps}
+          value={['2022-04-11 14:56:45', '2022-04-15 16:00:00']}
+          name="hidden-name"
+          form="hidden-form"
+        />
+      );
+      const input = container.querySelector('input[type="hidden"]');
+      expect(input).toHaveValue('2022-04-11 14:56:45 – 2022-04-15 16:00:00');
+      expect(input).toHaveAttribute('name', 'hidden-name');
+      expect(input).toHaveAttribute('form', 'hidden-form');
+    });
+  });
 });

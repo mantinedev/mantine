@@ -44,6 +44,9 @@ export interface YearLevelProps
 
   /** Determines whether the calendar should take the full width of its container @default false */
   fullWidth?: boolean;
+
+  /** Called when date is changed via native level select */
+  __onDateChange?: (date: DateStringValue) => void;
 }
 
 export type YearLevelFactory = Factory<{
@@ -88,11 +91,14 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
     withNext,
     withPrevious,
     headerControlsOrder,
+    withNativeLevelSelect,
+    yearsSelectRange,
 
     // Other props
     yearLabelFormat,
     __staticSelector,
     __stopPropagation,
+    __onDateChange,
     size,
     classNames,
     styles,
@@ -139,6 +145,12 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
         }
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
+        __calendarLevel="year"
+        __date={year}
+        __locale={locale || ctx.locale}
+        __onDateChange={__onDateChange}
+        __minDate={minDate}
+        __maxDate={maxDate}
         nextIcon={nextIcon}
         previousIcon={previousIcon}
         nextLabel={nextLabel}
@@ -153,6 +165,8 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        withNativeLevelSelect={withNativeLevelSelect}
+        yearsSelectRange={yearsSelectRange}
         fullWidth={fullWidth}
         {...stylesApiProps}
       />

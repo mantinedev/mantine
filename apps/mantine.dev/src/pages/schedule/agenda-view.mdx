@@ -1,0 +1,54 @@
+import { AgendaViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.AgendaView);
+
+## Usage
+
+`AgendaView` renders a vertical list of events for a specified time period. Events are grouped by
+date in chronological order with date headers for each group.
+
+<Demo data={AgendaViewDemos.usage} />
+
+## All-day and multi-day events
+
+Timed events show their time range, all-day events display an "All day" label, and multi-day
+events appear on each date they span.
+
+<Demo data={AgendaViewDemos.allDayAndMultiday} />
+
+## Date formats
+
+Use `headerFormat` to control the range label in the header and `dateHeaderFormat` to control
+individual date group headers. Both accept a [dayjs format string](https://day.js.org/docs/en/display/format)
+or a callback function.
+
+<Demo data={AgendaViewDemos.dateFormats} />
+
+## Custom event rendering
+
+Use `renderEvent` to fully customize how each event row is rendered. The callback receives the
+event data and default root props that you should spread onto your wrapper element.
+
+<Demo data={AgendaViewDemos.renderEvent} />
+
+## Event click
+
+Use `onEventClick` to handle event interactions. The example below opens a modal with event
+details when an event is clicked.
+
+<Demo data={AgendaViewDemos.eventClick} />
+
+## Localization
+
+Set `locale` to translate date headers and pass `labels` to override built-in strings like
+"All day" and "No events".
+
+<Demo data={AgendaViewDemos.localization} />
+
+## Static mode
+
+Set `mode="static"` to disable all event interactions. In static mode, events are not clickable.
+
+<Demo data={AgendaViewDemos.staticMode} />

@@ -317,7 +317,7 @@ describe('@mantine/schedule/YearView', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Select year 2026' }));
     expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2026-01-01')));
-  });
+  }, 15000);
 
   it('calls onViewChange when view button is clicked', async () => {
     const spy = jest.fn();

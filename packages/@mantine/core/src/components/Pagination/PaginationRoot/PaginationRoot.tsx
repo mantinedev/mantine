@@ -23,7 +23,7 @@ import {
 import { PaginationProvider } from '../Pagination.context';
 import classes from '../Pagination.module.css';
 
-export type PaginationRootStylesNames = 'root' | 'control' | 'dots';
+export type PaginationRootStylesNames = 'root' | 'control' | 'dots' | 'items' | 'label';
 export type PaginationRootCssVariables = {
   root:
     | '--pagination-control-size'
@@ -88,6 +88,9 @@ export interface PaginationRootProps
 
   /** Starting page number, defaults to 1 */
   startValue?: number;
+
+  /** Determines how the pagination is displayed, `'responsive'` uses CSS container queries to switch between pages and a compact label @default 'default' */
+  layout?: 'default' | 'responsive';
 }
 
 export type PaginationRootFactory = Factory<{
@@ -141,6 +144,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     getItemProps,
     autoContrast,
     startValue,
+    layout,
     attributes,
     ...others
   } = props;
@@ -176,6 +180,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
         range,
         active,
         disabled,
+        layout,
         getItemProps,
         onChange: setPage,
         onNext: createEventHandler(onNextPage, next),
@@ -185,7 +190,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
         getStyles,
       }}
     >
-      <Box {...getStyles('root')} {...others} />
+      <Box {...getStyles('root')} mod={{ layout }} {...others} />
     </PaginationProvider>
   );
 });

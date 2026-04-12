@@ -1,0 +1,78 @@
+import { ActionBarDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog960);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## @mantine/lightbox package
+
+New [@mantine/lightbox](/x/lightbox) package – a full-screen media lightbox with carousel navigation,
+zoom, thumbnails, toolbar customization, and store-based API. Supports image, video, and custom slides:
+
+<Demo data={LightboxDemos.usage} />
+
+Key features:
+- **Zoom** – click to zoom on desktop, double-tap on mobile, scroll wheel and pinch gestures
+- **Thumbnails** – bottom thumbnail strip with active indicator
+- **Store API** – mount once, open from anywhere (same pattern as Spotlight and Notifications)
+- **Video slides** – native video player with auto-pause on navigation
+- **Custom slides** – render anything with custom thumbnails
+- **Keyboard shortcuts** – Escape, arrows, F/T/Z for fullscreen/thumbnails/zoom
+
+## Notifications custom rendering
+
+[Notifications](/x/notifications) now support `renderNotification` prop that allows you to completely
+replace the default notification with custom content. All animations (enter, exit, drag dismiss)
+are preserved for custom notifications:
+
+<Demo data={NotificationsDemos.renderNotification} />
+
+## Notifications stacked layout
+
+[Notifications](/x/notifications) now support `layout="stacked"` prop that displays notifications in a stacked
+layout where only the latest notification is fully visible, and older notifications peek out behind it:
+
+<Demo data={NotificationsDemos.stacked} />
+
+## ActionBar component
+
+New [ActionBar](/core/action-bar) component – a fixed-position bottom bar
+for bulk selection actions. Designed to be controlled by table or checkbox
+selections, it provides a set of actions that can be performed on selected items.
+
+<Demo data={ActionBarDemos.usage} />
+
+## GaugeChart component
+
+New [GaugeChart](/charts/gauge-chart) component – a radial gauge chart for KPI and status display.
+Supports threshold sections, target marker, custom labels, and configurable arc angles.
+
+<Demo data={GaugeChartDemos.usage} />
+
+## WaffleChart component
+
+New [WaffleChart](/charts/waffle-chart) component – a part-to-whole grid chart with colored cells.
+Simpler and more compact alternative to pie/donut charts for displaying percentages and proportions.
+
+<Demo data={WaffleChartDemos.usage} />
+
+## MatrixChart component
+
+New [MatrixChart](/charts/matrix-chart) component – a generic x/y heatmap with categorical axes.
+Each cell is colored based on a value, useful for visualizing patterns in two-dimensional categorical data.
+
+<Demo data={MatrixChartDemos.usage} />
+
+## Stepper labelPosition
+
+[Stepper](/core/stepper) component now supports the `labelPosition` prop. Set `labelPosition="bottom"`
+to display the step label and description below the step icon:
+
+<Demo data={StepperDemos.labelPosition} />

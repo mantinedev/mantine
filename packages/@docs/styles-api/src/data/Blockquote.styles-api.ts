@@ -15,6 +15,7 @@ export const BlockquoteStylesApi: StylesApiData<BlockquoteFactory> = {
       '--bq-bg-light': 'Controls `background-color` in light color scheme',
       '--bq-icon-size': 'Controls `width` and `height` of the icon',
       '--bq-radius': 'Controls `border-radius`',
+      '--bq-text-wrap': 'Controls `text-wrap` property',
     },
   },
 };

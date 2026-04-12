@@ -17,7 +17,7 @@ function Demo() {
           title: 'Loading your data',
           message: 'Data will be loaded in 3 seconds, you cannot close this yet',
           autoClose: false,
-          withCloseButton: false,
+          allowClose: false,
         });
 
         setTimeout(() => {
@@ -29,6 +29,7 @@ function Demo() {
             icon: <CheckIcon size={18} />,
             loading: false,
             autoClose: 2000,
+            allowClose: true,
           });
         }, 3000);
       }}
@@ -48,7 +49,7 @@ function Demo() {
           title: 'Loading your data',
           message: 'Data will be loaded in 3 seconds, you cannot close this yet',
           autoClose: false,
-          withCloseButton: false,
+          allowClose: false,
         });
 
         setTimeout(() => {
@@ -60,6 +61,7 @@ function Demo() {
             icon: <CheckIcon size={18} />,
             loading: false,
             autoClose: 2000,
+            allowClose: true,
           });
         }, 3000);
       }}

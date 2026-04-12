@@ -261,4 +261,44 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     date: 'April 21st, 2026',
     searchTags: '9-1-0, 910',
   },
+
+  Changelog920: {
+    title: 'Version v9.2.0',
+    slug: '/changelog/9-2-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.2.0',
+    date: 'May 12th, 2026',
+    searchTags: '9-2-0, 920',
+  },
+
+  Changelog930: {
+    title: 'Version v9.3.0',
+    slug: '/changelog/9-3-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.3.0',
+    date: 'June 2nd, 2026',
+    searchTags: '9-3-0, 930',
+  },
+
+  Changelog940: {
+    title: 'Version v9.4.0',
+    slug: '/changelog/9-4-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.4.0',
+    date: 'June 23rd, 2026',
+    searchTags: '9-4-0, 940',
+  },
+
+  Changelog950: {
+    title: 'Version v9.5.0',
+    slug: '/changelog/9-5-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.5.0',
+    date: 'July 14th, 2026',
+    searchTags: '9-5-0, 950',
+  },
+
+  Changelog960: {
+    title: 'Version v9.6.0',
+    slug: '/changelog/9-6-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.6.0',
+    date: 'August 4th, 2026',
+    searchTags: '9-6-0, 960',
+  },
 };

@@ -1,0 +1,102 @@
+.agendaView {
+  --agenda-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+
+  display: flex;
+  flex-direction: column;
+
+  @mixin where-light {
+    --agenda-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --agenda-view-border-color: var(--mantine-color-dark-4);
+  }
+}
+
+.agendaViewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--mantine-spacing-sm);
+  border-bottom: 1px solid var(--agenda-view-border-color);
+}
+
+.agendaViewHeaderLabel {
+  user-select: none;
+  font-weight: var(--mantine-font-weight-semibold);
+  font-size: var(--mantine-font-size-sm);
+  text-transform: capitalize;
+}
+
+.agendaViewBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.agendaViewDateGroup {
+  &:where(:not(:last-child)) {
+    border-bottom: 1px solid var(--agenda-view-border-color);
+  }
+}
+
+.agendaViewDateHeader {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  font-weight: var(--mantine-font-weight-semibold);
+  font-size: var(--mantine-font-size-sm);
+  text-transform: capitalize;
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-0);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+  }
+}
+
+.agendaViewEvent {
+  display: block;
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
+
+  &:where(:not(:last-child)) {
+    border-bottom: 1px solid var(--agenda-view-border-color);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+}
+
+.agendaViewEventBody {
+  display: flex;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+}
+
+.agendaViewEventColor {
+  width: 4px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.agendaViewEventTime {
+  margin-top: 2px;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+}
+
+.agendaViewNoEvents {
+  padding: var(--mantine-spacing-xl) var(--mantine-spacing-sm);
+  color: var(--mantine-color-dimmed);
+  text-align: center;
+}
