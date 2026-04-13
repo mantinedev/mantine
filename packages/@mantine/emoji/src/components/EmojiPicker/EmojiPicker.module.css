@@ -1,0 +1,153 @@
+.root {
+  --ep-columns: 9;
+  --ep-emoji-size: 32px;
+  --ep-emoji-fz: 18px;
+  --ep-preview-py: 5px;
+  --ep-skin-tone-size: 22px;
+  --ep-skin-tone-fz: 14px;
+
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--ep-columns) * var(--ep-emoji-size) + var(--mantine-spacing-xs) * 2);
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-default);
+  background-color: var(--mantine-color-body);
+}
+
+.search {
+  padding: var(--mantine-spacing-xs);
+  padding-bottom: 0;
+}
+
+.categoryNav {
+  display: grid;
+  grid-template-columns: repeat(var(--ep-columns), var(--ep-emoji-size));
+  padding: 4px var(--mantine-spacing-xs);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.categoryNavButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ep-emoji-size);
+  height: var(--ep-emoji-size);
+  font-size: var(--ep-emoji-fz);
+  border-radius: var(--mantine-radius-sm);
+  cursor: pointer;
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+}
+
+.content {
+  padding: 0 var(--mantine-spacing-xs);
+
+  &:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: -2px;
+  }
+}
+
+:global(.mantine-focus-never).content:focus-visible {
+  outline: none;
+}
+
+.categoryLabel {
+  display: flex;
+  align-items: center;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 600;
+  color: var(--mantine-color-dimmed);
+  padding: var(--mantine-spacing-xs) 0;
+  background-color: var(--mantine-color-body);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ep-columns), var(--ep-emoji-size));
+}
+
+.emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ep-emoji-size);
+  height: var(--ep-emoji-size);
+  font-size: var(--ep-emoji-fz);
+  border-radius: var(--mantine-radius-sm);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  border: none;
+  background: none;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    background: none;
+  }
+
+  &[data-focused] {
+    background-color: var(--mantine-color-default-hover);
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: -2px;
+  }
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+}
+
+:global(.mantine-focus-auto).emoji:focus-visible {
+  outline: none;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--ep-preview-py) var(--mantine-spacing-xs);
+  border-top: 1px solid var(--mantine-color-default-border);
+}
+
+.previewEmoji {
+  font-size: var(--ep-emoji-fz);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.previewName {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.skinToneSelector {
+  display: flex;
+  gap: 2px;
+}
+
+.skinToneButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ep-skin-tone-size);
+  height: var(--ep-skin-tone-size);
+  font-size: var(--ep-skin-tone-fz);
+  border-radius: var(--mantine-radius-sm);
+  cursor: pointer;
+  line-height: 1;
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+}
+
+.skinToneSelector .skinToneButton[data-active] {
+  background-color: var(--mantine-color-default-hover);
+}

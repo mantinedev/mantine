@@ -37,6 +37,7 @@
     "@mantine/code-highlight": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
+    "@mantine/emoji": "workspace:*",
     "@mantine/dropzone": "workspace:*",
     "@mantine/lightbox": "workspace:*",
     "@mantine/notifications": "workspace:*",

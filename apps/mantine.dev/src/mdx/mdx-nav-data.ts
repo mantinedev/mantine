@@ -509,6 +509,16 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
   },
 
   {
+    category: 'Emoji',
+    pages: [
+      MDX_DATA.GettingStartedEmoji,
+      MDX_DATA.EmojiPicker,
+      MDX_DATA.EmojiPickerPopover,
+      MDX_DATA.EmojiPickerInput,
+    ],
+  },
+
+  {
     category: 'Other extensions',
     pages: [
       MDX_DATA.Notifications,

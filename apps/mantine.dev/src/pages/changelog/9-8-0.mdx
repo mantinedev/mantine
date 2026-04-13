@@ -1,4 +1,4 @@
-import { DiffDemos } from '@docs/demos';
+import { DiffDemos, EmojiPickerDemos, EmojiPickerInputDemos, EmojiPickerPopoverDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,6 +10,34 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## @mantine/emoji package
+
+New `@mantine/emoji` package provides emoji picker components. The package works with
+any emoji data source through adapters — built-in adapters for
+[emoji-mart](https://www.npmjs.com/package/@emoji-mart/data) and
+[emojibase](https://www.npmjs.com/package/emojibase) are included.
+
+### EmojiPicker
+
+[EmojiPicker](/emoji/emoji-picker) displays a searchable emoji grid with category navigation,
+skin tone selector, and emoji preview.
+
+<Demo data={EmojiPickerDemos.usage} />
+
+### EmojiPickerInput
+
+[EmojiPickerInput](/emoji/emoji-picker-input) is an input with an emoji picker dropdown.
+It supports all standard input features like labels, descriptions, error messages, and sizes.
+
+<Demo data={EmojiPickerInputDemos.usage} />
+
+### EmojiPickerPopover
+
+[EmojiPickerPopover](/emoji/emoji-picker-popover) renders an emoji picker inside a popover dropdown.
+Use it to build custom emoji picker triggers.
+
+<Demo data={EmojiPickerPopoverDemos.usage} />
 
 ## Diff component
 

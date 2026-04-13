@@ -1,0 +1,137 @@
+import { EmojiPickerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.EmojiPicker);
+
+## Usage
+
+`EmojiPicker` displays a searchable emoji grid with category navigation, skin tone selector,
+and emoji preview. Emoji data is supplied via the `data` prop — see the
+[Getting started](/emoji/getting-started) page for setup instructions.
+
+<Demo data={EmojiPickerDemos.usage} />
+
+## Size
+
+Use the `size` prop to change the size of all inner elements:
+
+<Demo data={EmojiPickerDemos.size} />
+
+## Without search
+
+Set `withSearch={false}` to hide the search input:
+
+<Demo data={EmojiPickerDemos.noSearch} />
+
+## Without preview
+
+Set `withPreview={false}` and `withSkinToneSelector={false}` to hide the footer area:
+
+<Demo data={EmojiPickerDemos.noPreview} />
+
+## Custom columns
+
+Use the `columns` prop to change the number of emojis per row. The picker width
+adjusts automatically based on the number of columns and emoji size.
+
+<Demo data={EmojiPickerDemos.columns} />
+
+## Emoji size
+
+Use the `emojiSize` prop to change the size of emoji buttons. This value is also used
+for virtualizer row height calculations.
+
+<Demo data={EmojiPickerDemos.emojiSize} />
+
+## Skin tone
+
+The skin tone selector is displayed in the preview area. Click it to open a popover
+with all skin tone options. Use `skinTone` and `onSkinToneChange` props to control the value:
+
+<Demo data={EmojiPickerDemos.skinTone} />
+
+## Scroll area
+
+Customize the internal `ScrollArea` with the `scrollAreaProps` prop. You can change the height,
+scrollbar type, and any other `ScrollArea` prop. The default height is 300px.
+
+<Demo data={EmojiPickerDemos.scrollArea} />
+
+## Category labels and localization
+
+Override category labels with the `categoryLabels` prop (keyed by canonical category ID),
+and UI strings with the `labels` prop:
+
+<Demo data={EmojiPickerDemos.categoryLabels} />
+
+## Search icon
+
+Customize the search input with the `searchInputProps` prop. For example, you can add a
+search icon to the left section:
+
+<Demo data={EmojiPickerDemos.searchIcon} />
+
+## Empty search content
+
+Customize the content shown when search yields no results with the `emptySearchContent` prop:
+
+<Demo data={EmojiPickerDemos.emptySearch} />
+
+## Toggle sections
+
+Use these boolean props to toggle individual sections:
+
+<Demo data={EmojiPickerDemos.toggleSections} />
+
+## Controlled search
+
+Use `searchValue` and `onSearchChange` props to control the search input value:
+
+```tsx
+import { useState } from 'react';
+import { EmojiPicker } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  const [search, setSearch] = useState('');
+
+  return (
+    <EmojiPicker
+      data={emojiData}
+      searchValue={search}
+      onSearchChange={setSearch}
+    />
+  );
+}
+```
+
+## Unsupported emoji detection
+
+Set `withUnsupportedDetection` to filter out emojis not supported by the current browser/OS.
+Detection runs eagerly on data load using a canvas-based approach and results are cached.
+
+```tsx
+<EmojiPicker data={emojiData} withUnsupportedDetection />
+```
+
+This feature is disabled by default because canvas-based detection has edge cases across platforms.
+
+## Keyboard navigation
+
+The emoji grid supports full keyboard navigation. Arrow keys work both when the grid
+or the search input is focused. The keyboard focus indicator only appears during
+keyboard navigation and automatically hides when using the mouse.
+
+<KeyboardEventsTable
+  data={[
+    { key: 'ArrowRight', description: 'Moves focus to the next emoji' },
+    { key: 'ArrowLeft', description: 'Moves focus to the previous emoji' },
+    { key: 'ArrowDown', description: 'Moves focus one row down' },
+    { key: 'ArrowUp', description: 'Moves focus one row up' },
+    { key: 'Enter', description: 'Selects focused emoji' },
+    { key: 'Space', description: 'Selects focused emoji' },
+    { key: 'Escape', description: 'Moves focus back to search input' },
+    { key: 'Tab', description: 'Moves focus between sections (search, category nav, grid, skin tone)' },
+  ]}
+/>

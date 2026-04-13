@@ -2255,12 +2255,14 @@ __metadata:
     "@dnd-kit/sortable": "npm:^10.0.0"
     "@dnd-kit/utilities": "npm:^3.2.2"
     "@docs/styles-api": "workspace:*"
+    "@emoji-mart/data": "npm:^1.2.1"
     "@mantine/carousel": "workspace:*"
     "@mantine/charts": "workspace:*"
     "@mantine/code-highlight": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/dropzone": "workspace:*"
+    "@mantine/emoji": "workspace:*"
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/lightbox": "workspace:*"
@@ -2388,6 +2390,13 @@ __metadata:
   dependencies:
     tslib: "npm:^2.4.0"
   checksum: 10c0/1e3724b5814b06c14782fda87eee9b9aa68af01576c81ffeaefdf621ddb74386e419d5b3b1027b6a8172397729d95a92f814fc4b8d3c224376428faa07a6a01a
+  languageName: node
+  linkType: hard
+
+"@emoji-mart/data@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@emoji-mart/data@npm:1.2.1"
+  checksum: 10c0/6784b97bf49a0d3ff110d8447bbd3b0449fcbc497294be3d1c3a6cb1609308776895c7520200be604cbecaa5e172c76927e47f34419c72ba8a76fd4e5a53674b
   languageName: node
   linkType: hard
 
@@ -4054,6 +4063,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mantine/emoji@workspace:*, @mantine/emoji@workspace:packages/@mantine/emoji":
+  version: 0.0.0-use.local
+  resolution: "@mantine/emoji@workspace:packages/@mantine/emoji"
+  dependencies:
+    "@emoji-mart/data": "npm:^1.2.1"
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@tanstack/react-virtual": "npm:^3.13.0"
+  peerDependencies:
+    "@mantine/core": 9.0.1
+    "@mantine/hooks": 9.0.1
+    react: ^19.0.0
+    react-dom: ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@mantine/emotion@workspace:packages/@mantine/emotion":
   version: 0.0.0-use.local
   resolution: "@mantine/emotion@workspace:packages/@mantine/emotion"
@@ -5313,6 +5338,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-virtual@npm:^3.13.0":
+  version: 3.13.23
+  resolution: "@tanstack/react-virtual@npm:3.13.23"
+  dependencies:
+    "@tanstack/virtual-core": "npm:3.13.23"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/a3e33463eb471067f9539858655bbefb99778f930156165afb0218fe5ffa181bc2e3dacfe3b6f655f1716d9994064f58ef009370975f801b4c83826aa33a5791
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-virtual@npm:^3.13.21":
   version: 3.13.21
   resolution: "@tanstack/react-virtual@npm:3.13.21"
@@ -5329,6 +5366,13 @@ __metadata:
   version: 3.13.21
   resolution: "@tanstack/virtual-core@npm:3.13.21"
   checksum: 10c0/e420e3d3d7d494deab873fd1d4114a5a5aa65ca475f0a8149c84bdd52572c695a142449c6de033fbb369eac68e2d4b0c25c090c97f9cceaad3b51a7f22f3e2a7
+  languageName: node
+  linkType: hard
+
+"@tanstack/virtual-core@npm:3.13.23":
+  version: 3.13.23
+  resolution: "@tanstack/virtual-core@npm:3.13.23"
+  checksum: 10c0/3487089ea4e1dcbb01836f51a1b35b709f9ba03312fe600ddb97c893c16be213e1690af735717b1d6b2e22dfec691c338bc96b5965228c195840249699d5273a
   languageName: node
   linkType: hard
 

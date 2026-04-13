@@ -138,6 +138,11 @@ const FILES_PATHS = getPaths([
   // Nprogress
   'packages/@mantine/nprogress/src/NavigationProgress.tsx',
 
+  // Emoji
+  'packages/@mantine/emoji/src/components/EmojiPicker/EmojiPicker.tsx',
+  'packages/@mantine/emoji/src/components/EmojiPickerInput/EmojiPickerInput.tsx',
+  'packages/@mantine/emoji/src/components/EmojiPickerPopover/EmojiPickerPopover.tsx',
+
   // Modals
   'packages/@mantine/modals/src/ModalsProvider.tsx',
 

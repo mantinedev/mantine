@@ -20,6 +20,8 @@ export const ROLLUP_EXTERNALS = [
   '@tiptap/pm/model',
   '@tiptap/pm/view',
   '@tiptap/pm/transform',
+  '@emoji-mart/data',
+  '@emoji-mart/data/sets/15/native',
   ...getPackagesList().map((pkg) => pkg.packageJson.name!),
   ...Object.keys({
     ...packageJson.devDependencies,

@@ -179,6 +179,11 @@ export * as ResourcesScheduleDemos from './demos/schedule/ResourcesSchedule';
 export * as ResourcesWeekViewDemos from './demos/schedule/ResourcesWeekView';
 export * as AgendaViewDemos from './demos/schedule/AgendaView';
 
+// Emoji demos
+export * as EmojiPickerDemos from './demos/emoji/EmojiPicker';
+export * as EmojiPickerPopoverDemos from './demos/emoji/EmojiPickerPopover';
+export * as EmojiPickerInputDemos from './demos/emoji/EmojiPickerInput';
+
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';
 export * as CarouselDemos from './demos/carousel';

@@ -1,0 +1,108 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.GettingStartedEmoji);
+
+## Installation
+
+<InstallScript packages="@mantine/emoji" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+// ‼️ import emoji styles after core package styles
+import '@mantine/emoji/styles.css';
+```
+
+## Emoji data
+
+`@mantine/emoji` does not bundle emoji data — you need to supply it via the `data` prop.
+The package provides adapter functions for the two most popular emoji data sources:
+
+### Using @emoji-mart/data
+
+Install the data package:
+
+<InstallScript packages="@emoji-mart/data" />
+
+Then use the adapter to convert the data:
+
+```tsx
+import data from '@emoji-mart/data';
+import { emojiMartAdapter, EmojiPicker } from '@mantine/emoji';
+
+const emojiData = emojiMartAdapter(data);
+
+function Demo() {
+  return <EmojiPicker data={emojiData} />;
+}
+```
+
+### Using emojibase-data
+
+Install the data packages:
+
+<InstallScript packages="emojibase-data" />
+
+Then use the adapter to convert the data:
+
+```tsx
+import data from 'emojibase-data/en/data.json';
+import messages from 'emojibase-data/en/messages.json';
+import { emojibaseAdapter, EmojiPicker } from '@mantine/emoji';
+
+const emojiData = emojibaseAdapter(data, messages);
+
+function Demo() {
+  return <EmojiPicker data={emojiData} />;
+}
+```
+
+### Custom data
+
+You can also provide data directly using the `EmojiPickerData` interface:
+
+```tsx
+import { EmojiPicker, EmojiPickerData } from '@mantine/emoji';
+
+const data: EmojiPickerData = {
+  categories: [
+    { id: 'people', label: 'Smileys & People', emojis: ['grinning', 'wave'] },
+  ],
+  emojis: {
+    grinning: {
+      id: 'grinning',
+      name: 'Grinning Face',
+      keywords: ['happy', 'smile'],
+      emoji: '😀',
+    },
+    wave: {
+      id: 'wave',
+      name: 'Waving Hand',
+      keywords: ['hello', 'hi'],
+      emoji: '👋',
+      skins: ['👋🏻', '👋🏼', '👋🏽', '👋🏾', '👋🏿'],
+    },
+  },
+};
+
+function Demo() {
+  return <EmojiPicker data={data} />;
+}
+```
+
+## Canonical category IDs
+
+The adapters output categories using canonical IDs so that `categoryLabels` overrides work
+consistently across data sources:
+
+- `frequent` – Frequently Used
+- `people` – Smileys & People
+- `nature` – Animals & Nature
+- `foods` – Food & Drink
+- `activity` – Activity
+- `places` – Travel & Places
+- `objects` – Objects
+- `symbols` – Symbols
+- `flags` – Flags
