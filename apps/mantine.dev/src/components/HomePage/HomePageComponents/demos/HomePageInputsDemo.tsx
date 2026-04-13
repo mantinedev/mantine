@@ -15,6 +15,7 @@ import { DatePickerInput } from '@mantine/dates';
 const inputProps = {
   size: 'lg' as const,
   radius: 'md',
+  autoComplete: 'off',
 };
 
 export function HomePageInputsDemo() {
