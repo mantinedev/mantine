@@ -66,6 +66,11 @@ export function InlineInput({
   attributes,
   ...others
 }: InlineInputProps) {
+  const hasError = !!error && typeof error !== 'boolean';
+  const hasDescription = !!description;
+  const errorId = hasError ? `${id}-error` : undefined;
+  const descriptionId = hasDescription ? `${id}-description` : undefined;
+
   const getStyles = useStyles<InlineInputFactory>({
     name: __staticSelector,
     props: __stylesApiProps,
@@ -110,13 +115,18 @@ export function InlineInput({
           )}
 
           {description && (
-            <Input.Description size={size} __inheritStyles={false} {...getStyles('description')}>
+            <Input.Description
+              id={descriptionId}
+              size={size}
+              __inheritStyles={false}
+              {...getStyles('description')}
+            >
               {description}
             </Input.Description>
           )}
 
-          {error && typeof error !== 'boolean' && (
-            <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
+          {hasError && (
+            <Input.Error id={errorId} size={size} __inheritStyles={false} {...getStyles('error')}>
               {error}
             </Input.Error>
           )}
