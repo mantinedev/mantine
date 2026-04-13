@@ -7,6 +7,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
+import { FloatingWindow } from '../FloatingWindow';
 import { Select, SelectProps, SelectStylesNames } from './Select';
 
 const defaultProps: SelectProps = {
@@ -210,6 +211,16 @@ describe('@mantine/core/Select', () => {
     expect(container.querySelector('.mantine-Loader-root')).toBeInTheDocument();
   });
 
+  it('renders dropdown above FloatingWindow by default', () => {
+    render(
+      <FloatingWindow withinPortal={false}>
+        <Select {...defaultProps} dropdownOpened />
+      </FloatingWindow>
+    );
+
+    expect(document.querySelector('.mantine-Select-dropdown')).toHaveStyle({ zIndex: 401 });
+  });
+
   it('supports uncontrolled state with numeric values', async () => {
     render(
       <Select
@@ -283,4 +294,4 @@ describe('@mantine/core/Select', () => {
     await userEvent.type(screen.getByRole('combobox'), '{backspace}');
     expect(screen.getByRole('combobox')).toHaveValue('Angula');
   });
-});
+}
