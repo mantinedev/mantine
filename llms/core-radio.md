@@ -339,7 +339,7 @@ function GoodLabel() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | children | React.ReactNode | required | `Radio` components and any other elements |
-| defaultValue | string \| null | - | Uncontrolled component default value |
+| defaultValue | Primitive \| null | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
 | disabled | boolean | - | Sets `disabled` attribute, prevents interactions |
@@ -356,7 +356,7 @@ function GoodLabel() {
 | readOnly | boolean | - | If set, value cannot be changed |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | size | MantineSize | - | Controls size of the `Input.Wrapper` |
-| value | string \| null | - | Controlled component value |
+| value | Primitive \| null | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the `Input.Wrapper` |
 

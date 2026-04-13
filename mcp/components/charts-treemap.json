@@ -1,0 +1,157 @@
+{
+  "id": "charts-treemap",
+  "name": "Treemap",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/treemap",
+  "description": "Treemap chart component",
+  "propsCount": 14,
+  "llmUrl": "https://mantine.dev/llms/charts-treemap.md",
+  "componentDataUrl": "/mcp/components/charts-treemap.json",
+  "searchText": "treemap treemap chart component @mantine/charts /charts/treemap aspectratio autocontrast children data datakey height strokecolor strokewidth textcolor tooltipanimationduration tooltipprops treemapprops valueformatter withtooltip",
+  "source": "@mantine/charts/src/Treemap/Treemap.tsx",
+  "docs": "charts/treemap.mdx",
+  "markdown": "# Treemap\nPackage: @mantine/charts\nImport: import { Treemap } from '@mantine/charts';\nDescription: Treemap chart component\n\n## Usage\n\n`Treemap` is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap).\nIt displays hierarchical data as a set of nested rectangles:\n\n```tsx\n// Demo.tsx\nimport { Treemap } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <Treemap data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.8' },\n  { name: 'India', value: 300, color: 'red.8' },\n  { name: 'Japan', value: 100, color: 'teal.8' },\n  { name: 'Other', value: 200, color: 'gray.8' },\n];\n```\n\n\n## Nested data\n\n`Treemap` supports nested data – each data item can have a `children` array.\nThe `color` property on a parent node is used for all its children:\n\n```tsx\n// Demo.tsx\nimport { Treemap } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <Treemap data={data} />;\n}\n\n// data.ts\nexport const data = [\n  {\n    name: 'Frontend',\n    color: 'blue.8',\n    children: [\n      { name: 'React', value: 400 },\n      { name: 'Vue', value: 200 },\n      { name: 'Angular', value: 150 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.8',\n    children: [\n      { name: 'Node', value: 300 },\n      { name: 'Python', value: 250 },\n      { name: 'Go', value: 100 },\n    ],\n  },\n  {\n    name: 'Mobile',\n    color: 'red.8',\n    children: [\n      { name: 'React Native', value: 200 },\n      { name: 'Flutter', value: 180 },\n    ],\n  },\n];\n```\n\n\n## Node color\n\nYou can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted.\n\n```tsx\n// Demo.tsx\nimport { Treemap } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <Treemap data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.8' },\n  { name: 'India', value: 300, color: 'red.8' },\n  { name: 'Japan', value: 100, color: 'teal.8' },\n  { name: 'Other', value: 200, color: 'gray.8' },\n];\n```\n\n\n## autoContrast\n\n`Treemap` supports `autoContrast` prop that automatically adjusts text color\nbased on the background color of each node to ensure readable labels:\n\n```tsx\nimport { Treemap } from '@mantine/charts';\n\nconst data = [\n  { name: 'USA', value: 400, color: 'indigo.0' },\n  { name: 'India', value: 300, color: 'yellow.1' },\n  { name: 'Japan', value: 100, color: 'teal.1' },\n  { name: 'Other', value: 200, color: 'gray.2' },\n];\n\nfunction Demo() {\n  return <Treemap data={data} autoContrast />;\n}\n```\n\n\n## Node stroke\n\nUse the `strokeWidth` prop to control the width of the stroke around each node.\nTo change the color of the stroke, use the `strokeColor` prop:\n\n```tsx\n// Demo.tsx\nimport { Treemap } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <Treemap data={data} strokeColor=\"gray.3\" strokeWidth={2} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.8' },\n  { name: 'India', value: 300, color: 'red.8' },\n  { name: 'Japan', value: 100, color: 'teal.8' },\n  { name: 'Other', value: 200, color: 'gray.8' },\n];\n```\n\n\n## Disable tooltip\n\nTo disable the tooltip, set `withTooltip={false}`:\n\n```tsx\n// Demo.tsx\nimport { Treemap } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <Treemap data={data} withTooltip={false} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'USA', value: 400, color: 'indigo.8' },\n  { name: 'India', value: 300, color: 'red.8' },\n  { name: 'Japan', value: 100, color: 'teal.8' },\n  { name: 'Other', value: 200, color: 'gray.8' },\n];\n```\n\n\n\n#### Props\n\n**Treemap props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| aspectRatio | number | - | The treemap will try to keep every single rectangle's aspect ratio near the aspectRatio given |\n| autoContrast | boolean | - | Determines whether text color should be adjusted based on background color to improve contrast |\n| children | React.ReactNode | - | Additional elements rendered inside `Treemap` component |\n| data | TreemapData[] | required | Data used to render chart |\n| dataKey | string | - | Key in data object for the value |\n| height | number | - | Controls chart height |\n| strokeColor | MantineColor | - | Controls color of the node stroke, by default depends on color scheme |\n| strokeWidth | number | - | Controls width of node stroke |\n| textColor | MantineColor | - | Controls text color of labels |\n| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |\n| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |\n| treemapProps | Partial<Omit<Props<TreemapDataType, any>, \"data\" \\| \"ref\" \\| \"dataKey\">> | - | Props passed down to recharts `Treemap` component |\n| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |\n| withTooltip | boolean | - | Determines whether the tooltip should be displayed when a node is hovered |",
+  "props": [
+    {
+      "name": "aspectRatio",
+      "description": "The treemap will try to keep every single rectangle's aspect ratio near the aspectRatio given",
+      "required": false,
+      "defaultValue": "1.618033988749895",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "autoContrast",
+      "description": "Determines whether text color should be adjusted based on background color to improve contrast",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "children",
+      "description": "Additional elements rendered inside <code>Treemap</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "data",
+      "description": "Data used to render chart",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "TreemapData[]"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "dataKey",
+      "description": "Key in data object for the value",
+      "required": false,
+      "defaultValue": "'value'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "height",
+      "description": "Controls chart height",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "strokeColor",
+      "description": "Controls color of the node stroke, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "strokeWidth",
+      "description": "Controls width of node stroke",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "textColor",
+      "description": "Controls text color of labels",
+      "required": false,
+      "defaultValue": "dimmed",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "tooltipAnimationDuration",
+      "description": "Tooltip animation duration in ms",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "tooltipProps",
+      "description": "Props passed down to <code>Tooltip</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "treemapProps",
+      "description": "Props passed down to recharts <code>Treemap</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<Props<TreemapDataType, any>, \"data\" | \"ref\" | \"dataKey\">>"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format values inside the tooltip",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "Treemap"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Determines whether the tooltip should be displayed when a node is hovered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Treemap"
+    }
+  ]
+}

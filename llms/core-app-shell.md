@@ -254,7 +254,7 @@ import { AppShell, rem } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 
 function Demo() {
-  const pinned = useHeadroom({ fixedAt: 120 });
+  const { pinned } = useHeadroom({ fixedAt: 120 });
 
   return (
     <AppShell

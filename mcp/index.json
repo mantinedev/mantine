@@ -774,10 +774,10 @@
     "package": "@mantine/core",
     "route": "/core/input",
     "description": "Base component to create custom inputs",
-    "propsCount": 40,
+    "propsCount": 41,
     "llmUrl": "https://mantine.dev/llms/core-input.md",
     "componentDataUrl": "/mcp/components/core-input.json",
-    "searchText": "input base component to create custom inputs @mantine/core /core/input disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size witharia witherrorstyles wrapperprops description descriptionprops error errorprops id inputcontainer inputwrapperorder label labelelement labelprops required size withasterisk labelelement required size size size"
+    "searchText": "input base component to create custom inputs @mantine/core /core/input disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size witharia witherrorstyles wrapperprops description descriptionprops error errorprops id inputcontainer inputwrapperorder label labelelement labelprops required size withasterisk labelelement required size size size"
   },
   {
     "id": "core-json-input",
@@ -1446,10 +1446,10 @@
     "package": "@mantine/spotlight",
     "route": "/x/spotlight",
     "description": "Command center for your application",
-    "propsCount": 125,
+    "propsCount": 126,
     "llmUrl": "https://mantine.dev/llms/x-spotlight.md",
     "componentDataUrl": "/mcp/components/x-spotlight.json",
-    "searchText": "spotlight command center for your application @mantine/spotlight /x/spotlight actions centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled filter forceopened fullscreen highlightquery id keepmounted limit lockscroll maxheight nothingfound onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollareaprops scrollable searchprops shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled forceopened fullscreen id keepmounted lockscroll maxheight onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollable shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex children closespotlightontrigger description dimmedsections highlightcolor highlightquery keywords label leftsection rightsection children label disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size witharia witherrorstyles wrapperprops"
+    "searchText": "spotlight command center for your application @mantine/spotlight /x/spotlight actions centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled filter forceopened fullscreen highlightquery id keepmounted limit lockscroll maxheight nothingfound onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollareaprops scrollable searchprops shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled forceopened fullscreen id keepmounted lockscroll maxheight onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollable shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex children closespotlightontrigger description dimmedsections highlightcolor highlightquery keywords label leftsection rightsection children label disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size witharia witherrorstyles wrapperprops"
   },
   {
     "id": "core-stack",

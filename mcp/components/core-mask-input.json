@@ -1,0 +1,527 @@
+{
+  "id": "core-mask-input",
+  "name": "MaskInput",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/mask-input",
+  "description": "Input with mask pattern for formatted text entry",
+  "propsCount": 39,
+  "llmUrl": "https://mantine.dev/llms/core-mask-input.md",
+  "componentDataUrl": "/mcp/components/core-mask-input.json",
+  "searchText": "maskinput input with mask pattern for formatted text entry @mantine/core /core/mask-input alwaysshowmask autoclear beforemaskedstatechange description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition mask modify onchangeraw oncomplete pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth separate showmaskonfocus size slotchar tokens transform withasterisk witherrorstyles wrapperprops",
+  "source": "@mantine/core/src/components/MaskInput/MaskInput.tsx",
+  "docs": "core/mask-input.mdx",
+  "markdown": "# MaskInput\nPackage: @mantine/core\nImport: import { MaskInput } from '@mantine/core';\nDescription: Input with mask pattern for formatted text entry\n\n## Usage\n\n`MaskInput` is a wrapper around [useMask](https://mantine.dev/llms/hooks-use-mask.md) hook that provides all standard input\nprops (label, description, error, etc.) and supports all mask options. The mask string defines\nthe expected format using token characters (`9` for digits, `a` for letters, etc.).\n\n```tsx\nimport { MaskInput } from '@mantine/core';\n\n\nfunction Demo() {\n  return (\n    <MaskInput\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      mask=\"(999) 999-9999\"\n      placeholder=\"(___) ___-____\"\n    />\n  );\n}\n```\n\n\n## Dynamic mask\n\nUse the `modify` option to change the mask based on the current input value.\nThis example switches between standard and American Express credit card formats:\n\n```tsx\nimport { MaskInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MaskInput\n      label=\"Credit card\"\n      placeholder=\"____ ____ ____ ____\"\n      mask=\"9999 9999 9999 9999\"\n      modify={(value) => {\n        if (/^3[47]/.test(value)) {\n          return { mask: '9999 999999 99999' };\n        }\n        return undefined;\n      }}\n    />\n  );\n}\n```\n\n\n## Custom tokens\n\nOverride or extend the built-in token map with the `tokens` option:\n\n```tsx\nimport { MaskInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MaskInput\n      label=\"Hex color\"\n      placeholder=\"#______\"\n      mask=\"#hhhhhh\"\n      tokens={{ h: /[0-9a-fA-F]/ }}\n    />\n  );\n}\n```\n\n\n## Regex array format\n\nFor complex masks where built-in tokens are not enough, pass an array of\nstring literals and `RegExp` objects:\n\n```tsx\nimport { MaskInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MaskInput\n      label=\"Time (HH:MM)\"\n      placeholder=\"__:__\"\n      mask={[/[0-2]/, /\\\\\\\\d/, ':', /[0-5]/, /\\\\\\\\d/]}\n    />\n  );\n}\n```\n\n\n## Transform\n\nUse the `transform` option to convert each character before validation.\nThis example auto-uppercases input so the `A` token accepts lowercase letters:\n\n```tsx\nimport { MaskInput, Text } from '@mantine/core';\nimport { formatMask, isMaskComplete } from '@mantine/hooks';\n\nfunction Demo() {\n  return (\n    <>\n      <MaskInput\n        label=\"Promo code\"\n        placeholder=\"AAA-9999\"\n        mask=\"AAA-9999\"\n        transform={(char) => char.toUpperCase()}\n        slotChar=\"XXX-0000\"\n      />\n      <Text size=\"sm\" mt=\"sm\" c=\"dimmed\">\n        Type lowercase letters – they will be auto-uppercased\n      </Text>\n    </>\n  );\n}\n```\n\n\n## Disabled state\n\n```tsx\nimport { MaskInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MaskInput\n      label=\"Phone number\"\n      placeholder=\"(___) ___-____\"\n      mask=\"(999) 999-9999\"\n      disabled\n    />\n  );\n}\n```\n\n\n## Error state\n\n```tsx\nimport { MaskInput } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <MaskInput\n      label=\"Phone number\"\n      placeholder=\"(___) ___-____\"\n      mask=\"(999) 999-9999\"\n      error=\"Invalid phone number\"\n    />\n  );\n}\n```\n\n\n## Mask pattern syntax\n\nThe mask string defines the expected format. Each character is either a **token** (editable slot)\nor a **literal** (fixed character inserted automatically).\n\n### Built-in tokens\n\n* `9` – any single digit (`[0-9]`)\n* `a` – any single letter (`[A-Za-z]`)\n* `A` – any uppercase letter (`[A-Z]`)\n* `*` – any alphanumeric character (`[A-Za-z0-9]`)\n* `#` – digit or sign (`[-+0-9]`)\n\n### Optional segments\n\nAppend `?` after the last required character to mark remaining slots as optional:\n\n```tsx\n<MaskInput mask=\"(999) 999-9999? x9999\" /> // Extension is optional\n```\n\n### Escaping\n\nPrefix a token character with `\\` to treat it as a literal:\n\n```tsx\n<MaskInput mask=\"\\A999\" /> // \"A\" is literal, not a token\n```\n\n\n#### Props\n\n**MaskInput props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| alwaysShowMask | boolean | - | Show mask pattern even when field is empty and unfocused |\n| autoClear | boolean | - | Clear value on blur when mask is incomplete, `false` by default |\n| beforeMaskedStateChange | (states: { previousState: { value: string; selection: { start: number; end: number; } \\| null; }; currentState: { value: string; selection: { start: number; end: number; } \\| null; }; nextState: { value: string; selection: { ...; } \\| null; }; }) => { ...; } | - | Escape hatch for advanced cursor/value manipulation |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| mask | string \\| (string \\| RegExp)[] | required | Mask pattern string or array of string literals and RegExp objects |\n| modify | ((value: string) => Partial<Pick<MaskInputProps, \"mask\" \\| \"tokens\" \\| \"separate\" \\| \"slotChar\">>) \\| undefined | - | Called before masking on each keystroke, can return overrides for mask options |\n| onChangeRaw | (rawValue: string, maskedValue: string) => void | - | Called on every change with raw and masked values |\n| onComplete | (maskedValue: string, rawValue: string) => void | - | Called when all required mask slots are filled |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| separate | boolean | - | When true, raw and display values are decoupled |\n| showMaskOnFocus | boolean | - | Show mask placeholder on focus, `true` by default |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| slotChar | string \\| null | - | Character displayed in unfilled slots, `\"_\"` by default |\n| tokens | Record<string, RegExp> | - | Override or extend the default token map |\n| transform | (char: string) => string | - | Transform each character before validation and insertion |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nMaskInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**MaskInput selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-MaskInput-wrapper | Root element of the Input |\n| input | .mantine-MaskInput-input | Input element |\n| section | .mantine-MaskInput-section | Left and right sections |\n| root | .mantine-MaskInput-root | Root element |\n| label | .mantine-MaskInput-label | Label element |\n| required | .mantine-MaskInput-required | Required asterisk element, rendered inside label |\n| description | .mantine-MaskInput-description | Description element |\n| error | .mantine-MaskInput-error | Error element |\n",
+  "props": [
+    {
+      "name": "alwaysShowMask",
+      "description": "Show mask pattern even when field is empty and unfocused",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "autoClear",
+      "description": "Clear value on blur when mask is incomplete, <code>false</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "beforeMaskedStateChange",
+      "description": "Escape hatch for advanced cursor/value manipulation",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(states: { previousState: { value: string; selection: { start: number; end: number; } | null; }; currentState: { value: string; selection: { start: number; end: number; } | null; }; nextState: { value: string; selection: { ...; } | null; }; }) => { ...; }"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "mask",
+      "description": "Mask pattern string or array of string literals and RegExp objects",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string | (string | RegExp)[]"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "modify",
+      "description": "Called before masking on each keystroke, can return overrides for mask options",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((value: string) => Partial<Pick<MaskInputProps, \"mask\" | \"tokens\" | \"separate\" | \"slotChar\">>) | undefined"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "onChangeRaw",
+      "description": "Called on every change with raw and masked values",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(rawValue: string, maskedValue: string) => void"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "onComplete",
+      "description": "Called when all required mask slots are filled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(maskedValue: string, rawValue: string) => void"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "separate",
+      "description": "When true, raw and display values are decoupled",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "showMaskOnFocus",
+      "description": "Show mask placeholder on focus, <code>true</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "slotChar",
+      "description": "Character displayed in unfilled slots, <code>\"_\"</code> by default",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | null"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "tokens",
+      "description": "Override or extend the default token map",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Record<string, RegExp>"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "transform",
+      "description": "Transform each character before validation and insertion",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(char: string) => string"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "MaskInput"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "MaskInput"
+    }
+  ]
+}

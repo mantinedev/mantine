@@ -175,3 +175,33 @@ function Demo() {
 | showStartControl | boolean | - | Determines whether start control should always be visible regardless of scroll position, `false` by default |
 | startControlIcon | React.ReactNode | - | Icon component for the start control, AccordionChevron by default |
 | startControlProps | React.ComponentProps<"button"> | - | Props passed to the start control button |
+
+
+#### Styles API
+
+Scroller component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**Scroller selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Scroller-root | Root element |
+| container | .mantine-Scroller-container | Scrollable container |
+| content | .mantine-Scroller-content | Wraps component children |
+| control | .mantine-Scroller-control | Start and end scroll control buttons |
+| chevron | .mantine-Scroller-chevron | Chevron icon inside controls |
+
+**Scroller CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --scroller-control-size | Controls width and chevron size |
+| root | --scroller-background-color | Background color for the control edge gradients |
+
+**Scroller data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| container | data-draggable | `draggable` prop is set | - |
+| control | data-position | - | "start" or "end" depending on control position |
+| control | data-hidden | Control is hidden because scrolling is not available in that direction | - |

@@ -258,10 +258,10 @@ all keyboard events work the same as with native controls.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | children | React.ReactNode | - | `Chip` components and any other elements |
-| defaultValue | string \| Value[] \| null | - | Uncontrolled component initial value |
+| defaultValue | Primitive \| Value[] \| null | - | Uncontrolled component initial value |
 | multiple | boolean | - | If set, multiple values can be selected |
 | onChange | (value: Multiple extends true ? Value[] : Value) => void | - | Called when value changes. If `multiple` prop is set, called with an array of selected values. If not, called with a string value of selected chip. |
-| value | string \| Value[] \| null | - | Controlled component value |
+| value | Primitive \| Value[] \| null | - | Controlled component value |
 
 **Chip.GroupContext props**
 
