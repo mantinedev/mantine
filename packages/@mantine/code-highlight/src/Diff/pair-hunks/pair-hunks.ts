@@ -8,6 +8,36 @@ export interface HunkPair {
   inlineDiff: DiffResult[];
 }
 
+const SIMILARITY_THRESHOLD = 0.4;
+
+export function computeSimilarity(a: string, b: string): number {
+  if (a.length === 0 && b.length === 0) {
+    return 1;
+  }
+
+  if (a.length === 0 || b.length === 0) {
+    return 0;
+  }
+
+  const freqA = new Map<string, number>();
+  const freqB = new Map<string, number>();
+
+  for (const c of a) {
+    freqA.set(c, (freqA.get(c) || 0) + 1);
+  }
+
+  for (const c of b) {
+    freqB.set(c, (freqB.get(c) || 0) + 1);
+  }
+
+  let intersection = 0;
+  for (const [c, count] of freqA) {
+    intersection += Math.min(count, freqB.get(c) || 0);
+  }
+
+  return (2 * intersection) / (a.length + b.length);
+}
+
 export function pairHunks(
   entries: LineEntry[],
   diffMethod: 'chars' | 'words' | 'lines'
@@ -43,16 +73,23 @@ export function pairHunks(
         result.push({ ...removedLines[j], kind: 'line' });
         result.push({ ...addedLines[j], kind: 'line' });
       } else {
-        const inlineDiff = inlineDiffFn(
-          removedLines[j].value.replace(/\n$/, ''),
-          addedLines[j].value.replace(/\n$/, '')
-        );
-        result.push({
-          kind: 'hunkPair',
-          removedLine: removedLines[j],
-          addedLine: addedLines[j],
-          inlineDiff,
-        });
+        const sim = computeSimilarity(removedLines[j].value.trim(), addedLines[j].value.trim());
+
+        if (sim >= SIMILARITY_THRESHOLD) {
+          const inlineDiff = inlineDiffFn(
+            removedLines[j].value.replace(/\n$/, ''),
+            addedLines[j].value.replace(/\n$/, '')
+          );
+          result.push({
+            kind: 'hunkPair',
+            removedLine: removedLines[j],
+            addedLine: addedLines[j],
+            inlineDiff,
+          });
+        } else {
+          result.push({ ...removedLines[j], kind: 'line' });
+          result.push({ ...addedLines[j], kind: 'line' });
+        }
       }
     }
 

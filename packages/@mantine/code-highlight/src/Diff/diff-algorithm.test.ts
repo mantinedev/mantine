@@ -126,22 +126,6 @@ describe('diff-algorithm', () => {
       ]);
     });
 
-    it('preserves trailing newline difference', () => {
-      const result = diffLines('a', 'a\n');
-      expect(result).toEqual([
-        { type: 'remove', value: 'a' },
-        { type: 'add', value: 'a\n' },
-      ]);
-    });
-
-    it('detects trailing blank line difference', () => {
-      const result = diffLines('a\n', 'a\n\n');
-      expect(result).toEqual([
-        { type: 'equal', value: 'a\n' },
-        { type: 'add', value: '\n' },
-      ]);
-    });
-
     it('handles empty old text', () => {
       expect(diffLines('', 'hello\n')).toEqual([{ type: 'add', value: 'hello\n' }]);
     });

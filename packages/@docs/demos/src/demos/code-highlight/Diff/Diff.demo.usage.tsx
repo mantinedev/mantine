@@ -1,38 +1,50 @@
 import { Diff } from '@mantine/code-highlight';
 import { MantineDemo } from '@mantinex/demo';
 
-const previousCode = `import { Button } from '@mantine/core';
+const previousCode = `import { useState } from 'react';
 
-function Demo() {
-  return <Button color="blue">Click me</Button>;
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
 }`;
 
-const currentCode = `import { Button, Group } from '@mantine/core';
+const currentCode = `import { useReducer } from 'react';
 
-function Demo() {
+function Counter() {
+  const [count, dispatch] = useReducer(reducer, 0);
   return (
-    <Group>
-      <Button color="teal">Click me</Button>
-    </Group>
+    <button onClick={() => dispatch({ type: 'increment' })}>
+      Count: {count}
+    </button>
   );
 }`;
 
 const code = `
 import { Diff } from '@mantine/code-highlight';
 
-const previousCode = \`import { Button } from '@mantine/core';
+const previousCode = \`import { useState } from 'react';
 
-function Demo() {
-  return <Button color="blue">Click me</Button>;
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
 }\`;
 
-const currentCode = \`import { Button, Group } from '@mantine/core';
+const currentCode = \`import { useReducer } from 'react';
 
-function Demo() {
+function Counter() {
+  const [count, dispatch] = useReducer(reducer, 0);
   return (
-    <Group>
-      <Button color="teal">Click me</Button>
-    </Group>
+    <button onClick={() => dispatch({ type: 'increment' })}>
+      Count: {count}
+    </button>
   );
 }\`;
 

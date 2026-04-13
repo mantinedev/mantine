@@ -1,5 +1,33 @@
 import type { LineEntry } from '../split-into-lines/split-into-lines';
-import { pairHunks } from './pair-hunks';
+import { computeSimilarity, pairHunks } from './pair-hunks';
+
+describe('computeSimilarity', () => {
+  it('returns 1 for identical strings', () => {
+    expect(computeSimilarity('hello', 'hello')).toBe(1);
+  });
+
+  it('returns 0 when one string is empty', () => {
+    expect(computeSimilarity('', 'hello')).toBe(0);
+    expect(computeSimilarity('hello', '')).toBe(0);
+  });
+
+  it('returns 1 for two empty strings', () => {
+    expect(computeSimilarity('', '')).toBe(1);
+  });
+
+  it('returns high similarity for similar strings', () => {
+    const sim = computeSimilarity(
+      '<Button color="blue">Click me</Button>',
+      '<Button color="teal">Click me</Button>'
+    );
+    expect(sim).toBeGreaterThan(0.8);
+  });
+
+  it('returns low similarity for dissimilar strings', () => {
+    const sim = computeSimilarity('return <Button color="blue">Click me</Button>;', 'return (');
+    expect(sim).toBeLessThan(0.4);
+  });
+});
 
 describe('pairHunks', () => {
   it('passes all equal lines through unchanged', () => {
@@ -14,10 +42,10 @@ describe('pairHunks', () => {
     ]);
   });
 
-  it('creates hunkPair with inlineDiff for a single remove/add pair', () => {
+  it('creates hunkPair for similar remove/add lines', () => {
     const entries: LineEntry[] = [
-      { type: 'remove', value: 'old text\n', oldLineNumber: 1 },
-      { type: 'add', value: 'new text\n', newLineNumber: 1 },
+      { type: 'remove', value: '<Button color="blue">Click</Button>\n', oldLineNumber: 1 },
+      { type: 'add', value: '<Button color="teal">Click</Button>\n', newLineNumber: 1 },
     ];
     const result = pairHunks(entries, 'words');
     expect(result).toHaveLength(1);
@@ -29,41 +57,51 @@ describe('pairHunks', () => {
     }
   });
 
-  it('pairs multi-line hunks correctly (N:M replacement)', () => {
+  it('does not pair dissimilar lines', () => {
     const entries: LineEntry[] = [
-      { type: 'remove', value: 'old1\n', oldLineNumber: 1 },
-      { type: 'remove', value: 'old2\n', oldLineNumber: 2 },
-      { type: 'add', value: 'new1\n', newLineNumber: 1 },
-      { type: 'add', value: 'new2\n', newLineNumber: 2 },
-      { type: 'add', value: 'new3\n', newLineNumber: 3 },
+      {
+        type: 'remove',
+        value: 'return <Button color="blue">Click me</Button>;\n',
+        oldLineNumber: 1,
+      },
+      { type: 'add', value: 'return (\n', newLineNumber: 1 },
+    ];
+    const result = pairHunks(entries, 'words');
+    expect(result).toHaveLength(2);
+    expect(result.every((r) => r.kind === 'line')).toBe(true);
+  });
+
+  it('skips pairing for dissimilar positional matches while pairing similar ones', () => {
+    const entries: LineEntry[] = [
+      { type: 'remove', value: 'const foo = "hello";\n', oldLineNumber: 1 },
+      { type: 'remove', value: 'return (\n', oldLineNumber: 2 },
+      { type: 'add', value: 'const foo = "hi";\n', newLineNumber: 1 },
+      { type: 'add', value: '<MyComponent xyz={true} />\n', newLineNumber: 2 },
     ];
     const result = pairHunks(entries, 'words');
     expect(result[0].kind).toBe('hunkPair');
-    expect(result[1].kind).toBe('hunkPair');
+    expect(result[1].kind).toBe('line');
     expect(result[2].kind).toBe('line');
-    if (result[2].kind === 'line') {
-      expect(result[2].type).toBe('add');
-    }
   });
 
-  it('leaves unpaired lines as plain entries', () => {
+  it('leaves unpaired surplus lines as plain entries', () => {
     const entries: LineEntry[] = [
-      { type: 'remove', value: 'old1\n', oldLineNumber: 1 },
-      { type: 'remove', value: 'old2\n', oldLineNumber: 2 },
-      { type: 'add', value: 'new1\n', newLineNumber: 1 },
+      { type: 'remove', value: 'const foo = "hello";\n', oldLineNumber: 1 },
+      { type: 'add', value: 'const foo = "hi";\n', newLineNumber: 1 },
+      { type: 'add', value: 'const bar = "world";\n', newLineNumber: 2 },
     ];
     const result = pairHunks(entries, 'words');
     expect(result[0].kind).toBe('hunkPair');
     expect(result[1].kind).toBe('line');
     if (result[1].kind === 'line') {
-      expect(result[1].type).toBe('remove');
+      expect(result[1].type).toBe('add');
     }
   });
 
   it('produces no hunkPairs with diffMethod="lines"', () => {
     const entries: LineEntry[] = [
-      { type: 'remove', value: 'old\n', oldLineNumber: 1 },
-      { type: 'add', value: 'new\n', newLineNumber: 1 },
+      { type: 'remove', value: '<Button color="blue"/>\n', oldLineNumber: 1 },
+      { type: 'add', value: '<Button color="teal"/>\n', newLineNumber: 1 },
     ];
     const result = pairHunks(entries, 'lines');
     expect(result.every((r) => r.kind === 'line')).toBe(true);
