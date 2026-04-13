@@ -46,6 +46,9 @@ export function modalsReducer(
 ): ModalsState {
   switch (action.type) {
     case 'OPEN': {
+      if (state.modals.find((modal) => modal.id === action.modal.id)) {
+        return state;
+      }
       return {
         current: action.modal,
         modals: [...state.modals, action.modal],
