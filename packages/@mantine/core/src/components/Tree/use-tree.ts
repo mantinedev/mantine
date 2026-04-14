@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   CheckedNodeStatus,
@@ -39,7 +39,12 @@ export function getTreeExpandedState(
   const state = getInitialTreeExpandedState({}, data, []);
 
   if (expandedNodesValues === '*') {
-    return Object.keys(state).reduce((acc, key) => ({ ...acc, [key]: true }), {});
+    const result: Record<string, boolean> = {};
+    const keys = Object.keys(state);
+    for (let i = 0; i < keys.length; i++) {
+      result[keys[i]] = true;
+    }
+    return result;
   }
 
   expandedNodesValues.forEach((node) => {
@@ -464,7 +469,7 @@ export function useTree({
     setCheckedState([]);
   }, []);
 
-  const getCheckedNodes = (): CheckedNodeStatus[] => {
+  const getCheckedNodes = useCallback((): CheckedNodeStatus[] => {
     if (checkStrictly) {
       return _checkedState.map((value) => {
         const node = findTreeNode(value, data);
@@ -479,24 +484,34 @@ export function useTree({
       });
     }
     return getAllCheckedNodes(data, _checkedState).result;
-  };
+  }, [checkStrictly, _checkedState, data]);
 
-  const isNodeChecked = (value: string) => {
-    if (checkStrictly) {
-      return _checkedState.includes(value);
-    }
-    return memoizedIsNodeChecked(value, data, _checkedState);
-  };
+  const isNodeChecked = useCallback(
+    (value: string) => {
+      if (checkStrictly) {
+        return _checkedState.includes(value);
+      }
+      return memoizedIsNodeChecked(value, data, _checkedState);
+    },
+    [checkStrictly, _checkedState, data]
+  );
 
-  const isNodeIndeterminate = (value: string) => {
-    if (checkStrictly) {
-      return false;
-    }
-    return memoizedIsNodeIndeterminate(value, data, _checkedState);
-  };
+  const isNodeIndeterminate = useCallback(
+    (value: string) => {
+      if (checkStrictly) {
+        return false;
+      }
+      return memoizedIsNodeIndeterminate(value, data, _checkedState);
+    },
+    [checkStrictly, _checkedState, data]
+  );
 
-  const isNodeLoading = (value: string) => loadingNodes.includes(value);
-  const getNodeLoadError = (value: string) => loadErrors[value] || null;
+  const isNodeLoading = useCallback(
+    (value: string) => loadingNodes.includes(value),
+    [loadingNodes]
+  );
+
+  const getNodeLoadError = useCallback((value: string) => loadErrors[value] || null, [loadErrors]);
 
   const invalidateNode = useCallback((value: string) => {
     loadedNodesRef.current.delete(value);
@@ -511,43 +526,77 @@ export function useTree({
     });
   }, []);
 
-  return {
-    checkStrictly,
-    multiple,
-    expandedState: _expandedState,
-    selectedState: _selectedState,
-    checkedState: _checkedState,
-    anchorNode,
-    initialize,
+  return useMemo(
+    () => ({
+      checkStrictly,
+      multiple,
+      expandedState: _expandedState,
+      selectedState: _selectedState,
+      checkedState: _checkedState,
+      anchorNode,
+      initialize,
 
-    toggleExpanded,
-    collapse,
-    expand,
-    expandAllNodes,
-    collapseAllNodes,
-    setExpandedState,
+      toggleExpanded,
+      collapse,
+      expand,
+      expandAllNodes,
+      collapseAllNodes,
+      setExpandedState,
 
-    checkNode,
-    uncheckNode,
-    checkAllNodes,
-    uncheckAllNodes,
-    setCheckedState,
+      checkNode,
+      uncheckNode,
+      checkAllNodes,
+      uncheckAllNodes,
+      setCheckedState,
 
-    toggleSelected,
-    select,
-    deselect,
-    clearSelected,
-    setSelectedState,
+      toggleSelected,
+      select,
+      deselect,
+      clearSelected,
+      setSelectedState,
 
-    getCheckedNodes,
-    isNodeChecked,
-    isNodeIndeterminate,
+      getCheckedNodes,
+      isNodeChecked,
+      isNodeIndeterminate,
 
-    isNodeLoading,
-    getNodeLoadError,
-    loadNode: loadNodeImpl,
-    invalidateNode,
-  };
+      isNodeLoading,
+      getNodeLoadError,
+      loadNode: loadNodeImpl,
+      invalidateNode,
+    }),
+    [
+      checkStrictly,
+      multiple,
+      _expandedState,
+      _selectedState,
+      _checkedState,
+      anchorNode,
+      initialize,
+      toggleExpanded,
+      collapse,
+      expand,
+      expandAllNodes,
+      collapseAllNodes,
+      setExpandedState,
+      checkNode,
+      uncheckNode,
+      checkAllNodes,
+      uncheckAllNodes,
+      setCheckedState,
+      toggleSelected,
+      select,
+      deselect,
+      clearSelected,
+      setSelectedState,
+      getCheckedNodes,
+      isNodeChecked,
+      isNodeIndeterminate,
+      isNodeLoading,
+      getNodeLoadError,
+      loadNodeImpl,
+      invalidateNode,
+    ]
+  );
 }
 
 export type TreeController = ReturnType<typeof useTree>;
