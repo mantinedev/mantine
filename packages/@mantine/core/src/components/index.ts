@@ -78,6 +78,7 @@ export * from './NumberInput';
 export * from './OverflowList';
 export * from './Pagination';
 export * from './PasswordInput';
+export * from './PhoneInput';
 export * from './Pill';
 export * from './PillsInput';
 export * from './PinInput';

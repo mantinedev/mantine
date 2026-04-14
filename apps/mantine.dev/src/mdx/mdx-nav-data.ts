@@ -302,6 +302,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.FileInput,
       MDX_DATA.ColorInput,
       MDX_DATA.NumberInput,
+      MDX_DATA.PhoneInput,
       MDX_DATA.AngleSlider,
     ],
   },
@@ -505,7 +506,12 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
 
   {
     category: 'Code highlight',
-    pages: [MDX_DATA.GettingStartedCodeHighlight, MDX_DATA.CodeHighlight, MDX_DATA.JsonViewer, MDX_DATA.Diff],
+    pages: [
+      MDX_DATA.GettingStartedCodeHighlight,
+      MDX_DATA.CodeHighlight,
+      MDX_DATA.JsonViewer,
+      MDX_DATA.Diff,
+    ],
   },
 
   {

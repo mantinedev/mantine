@@ -998,6 +998,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/password-input.mdx',
   },
 
+  PhoneInput: {
+    title: 'PhoneInput',
+    package: '@mantine/core',
+    slug: '/core/phone-input',
+    props: ['PhoneInput'],
+    styles: ['PhoneInput'],
+    description: 'International phone number input with country selector',
+    source: '@mantine/core/src/components/PhoneInput/PhoneInput.tsx',
+    docs: 'core/phone-input.mdx',
+  },
+
   FileInput: {
     title: 'FileInput',
     package: '@mantine/core',
