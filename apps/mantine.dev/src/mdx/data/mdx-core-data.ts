@@ -90,7 +90,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     props: ['ActionBar'],
     styles: ['ActionBar'],
     source: '@mantine/core/src/components/ActionBar/ActionBar.tsx',
-    docs: 'core/ActionBar.mdx',
+    docs: 'core/action-bar.mdx',
   },
   CloseButton: {
     title: 'CloseButton',
