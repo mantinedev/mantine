@@ -112,9 +112,6 @@
   animation: tour-beacon-pulse 1.5s ease-in-out infinite;
 }
 
-.navigationButton {
-}
-
 @keyframes tour-beacon-pulse {
   0%,
   100% {

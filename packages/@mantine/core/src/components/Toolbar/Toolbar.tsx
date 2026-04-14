@@ -142,7 +142,9 @@ export const Toolbar = factory<ToolbarFactory>((_props) => {
   });
 
   return (
-    <ToolbarProvider value={{ getStyles, orientation: orientation!, size, radius, variant, color, autoContrast }}>
+    <ToolbarProvider
+      value={{ getStyles, orientation: orientation!, size, radius, variant, color, autoContrast }}
+    >
       <Box
         ref={toolbarRef}
         role="toolbar"
