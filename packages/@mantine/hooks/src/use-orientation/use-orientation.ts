@@ -71,7 +71,8 @@ export function useOrientation({
         type: window.screen.orientation.type,
       });
       window.screen.orientation.addEventListener('change', handleOrientationChange);
-      return () => window.screen.orientation?.removeEventListener('change', handleOrientationChange);
+      return () =>
+        window.screen.orientation?.removeEventListener('change', handleOrientationChange);
     }
 
     return undefined;
