@@ -89,7 +89,7 @@ function MenuDemo() {
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item leftSection={<PauseIcon size={18} />}>PauseIcon subscription</Menu.Item>
+        <Menu.Item leftSection={<PauseIcon size={18} />}>Pause subscription</Menu.Item>
         <Menu.Item color="red" leftSection={<TrashIcon size={18} />}>
           Delete account
         </Menu.Item>
