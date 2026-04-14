@@ -31,10 +31,14 @@ export function useMove<T extends HTMLElement = any>(
   const mounted = useRef<boolean>(false);
   const isSliding = useRef(false);
   const frame = useRef(0);
+  const cleanupRef = useRef<(() => void) | null>(null);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
     mounted.current = true;
+    return () => {
+      cleanupRef.current?.();
+    };
   }, []);
 
   const refCallback: React.RefCallback<T | null> = useCallback(
@@ -120,13 +124,16 @@ export function useMove<T extends HTMLElement = any>(
       node?.addEventListener('mousedown', onMouseDown);
       node?.addEventListener('touchstart', onTouchStart, { passive: false });
 
+      cleanupRef.current = () => {
+        unbindEvents();
+        cancelAnimationFrame(frame.current);
+      };
+
       return () => {
         if (node) {
           node.removeEventListener('mousedown', onMouseDown);
           node.removeEventListener('touchstart', onTouchStart);
         }
-        unbindEvents();
-        cancelAnimationFrame(frame.current);
       };
     },
     [dir, onChange]
