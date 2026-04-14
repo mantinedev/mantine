@@ -81,7 +81,8 @@ export function emojibaseAdapter(
     const canonicalId = GROUP_TO_CANONICAL[emojibaseEmoji.group] || 'objects';
 
     if (!categoryMap.has(canonicalId)) {
-      const label = CANONICAL_LABELS[canonicalId] || groupLabels.get(emojibaseEmoji.group) || canonicalId;
+      const label =
+        CANONICAL_LABELS[canonicalId] || groupLabels.get(emojibaseEmoji.group) || canonicalId;
       categoryMap.set(canonicalId, { label, emojis: [] });
     }
     categoryMap.get(canonicalId)!.emojis.push(id);

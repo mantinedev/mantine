@@ -353,11 +353,7 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
 
   const handleSearchKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (
-        event.key === 'ArrowDown' ||
-        event.key === 'ArrowUp' ||
-        event.key === 'Enter'
-      ) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
         handleKeyDown(event as unknown as React.KeyboardEvent);
       }
     },

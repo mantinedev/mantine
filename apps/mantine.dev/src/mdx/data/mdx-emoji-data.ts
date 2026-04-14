@@ -45,5 +45,4 @@ export const MDX_EMOJI_DATA: Record<string, Frontmatter> = {
     license: 'MIT',
     docs: 'emoji/emoji-picker-input.mdx',
   },
-
 };

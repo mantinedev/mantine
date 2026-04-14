@@ -27,12 +27,7 @@ import type {
   JsonViewerProps,
   JsonViewerStylesNames,
 } from './JsonViewer/JsonViewer';
-import type {
-  DiffCssVariables,
-  DiffFactory,
-  DiffProps,
-  DiffStylesNames,
-} from './Diff/Diff';
+import type { DiffCssVariables, DiffFactory, DiffProps, DiffStylesNames } from './Diff/Diff';
 
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';
