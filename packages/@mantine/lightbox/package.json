@@ -51,7 +51,7 @@
     "react-dom": "^19.2.0"
   },
   "dependencies": {
-    "@mantine/store": "9.0.1"
+    "@mantine/store": "9.0.2"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
