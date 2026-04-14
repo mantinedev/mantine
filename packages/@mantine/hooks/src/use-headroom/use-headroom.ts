@@ -83,7 +83,7 @@ export function useHeadroom({
     );
   }, [scrollPosition, fixedAt, isScrollingUp]);
 
-  const wasFixedRef = useRef(isFixed(scrollPosition, fixedAt));
+  const wasFixedRef = useRef(false);
 
   useIsomorphicEffect(() => {
     const currentlyInFixedZone = isFixed(scrollPosition, fixedAt);

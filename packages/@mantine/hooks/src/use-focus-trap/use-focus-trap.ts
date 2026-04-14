@@ -62,7 +62,13 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
       return undefined;
     }
 
-    ref.current && setTimeout(() => focusNode(ref.current!));
+    if (ref.current) {
+      setTimeout(() => {
+        if (ref.current) {
+          focusNode(ref.current);
+        }
+      });
+    }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Tab' && ref.current) {
