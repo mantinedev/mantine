@@ -140,7 +140,11 @@ function Demo() {
               : null
           }
         />
-        <Tour.Tooltip targetElement={targetElement} position={currentStep?.position} mounted={active}>
+        <Tour.Tooltip
+          targetElement={targetElement}
+          position={currentStep?.position}
+          mounted={active}
+        >
           <Tour.CloseButton />
           <Tour.Title>{currentStep?.title}</Tour.Title>
           <Tour.Body>{currentStep?.body}</Tour.Body>
