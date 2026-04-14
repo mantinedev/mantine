@@ -108,6 +108,9 @@ export interface PhoneInputProps
 
   /** Display chevron in the country button @default false */
   withChevron?: boolean;
+
+  /** Message displayed when no countries match the search query */
+  nothingFoundMessage?: React.ReactNode;
 }
 
 export type PhoneInputFactory = Factory<{
@@ -163,6 +166,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     onDropdownOpen,
     onDropdownClose,
     withChevron,
+    nothingFoundMessage,
     ref,
     ...others
   } = props;
@@ -509,6 +513,10 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
                 />
               </Combobox.Option>
             ))}
+
+            {searchedCountries.length === 0 &&
+              searchedPreferred.length === 0 &&
+              nothingFoundMessage && <Combobox.Empty>{nothingFoundMessage}</Combobox.Empty>}
           </ScrollArea.Autosize>
         </Combobox.Options>
       </Combobox.Dropdown>

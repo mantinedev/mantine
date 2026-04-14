@@ -68,6 +68,11 @@ export const Demo_countryAutoDetect = {
   render: renderDemo(demos.countryAutoDetect),
 };
 
+export const Demo_localization = {
+  name: '⭐ Demo: localization',
+  render: renderDemo(demos.localization),
+};
+
 export const Demo_dropdownPosition = {
   name: '⭐ Demo: dropdownPosition',
   render: renderDemo(demos.dropdownPosition),

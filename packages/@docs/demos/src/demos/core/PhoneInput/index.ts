@@ -11,5 +11,6 @@ export { disabled } from './PhoneInput.demo.disabled';
 export { readOnly } from './PhoneInput.demo.readOnly';
 export { searchable } from './PhoneInput.demo.searchable';
 export { countryAutoDetect } from './PhoneInput.demo.countryAutoDetect';
+export { localization } from './PhoneInput.demo.localization';
 export { dropdownPosition } from './PhoneInput.demo.dropdownPosition';
 export { withinPopover } from './PhoneInput.demo.withinPopover';

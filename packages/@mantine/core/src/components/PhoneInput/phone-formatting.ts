@@ -151,14 +151,14 @@ export function filterCountries(
     return countries;
   }
 
-  const term = search.toLowerCase().trim();
+  const term = search.toLowerCase().trim().replace(/^\+/, '');
 
   return countries.filter((c) => {
     if (c.name.toLowerCase().includes(term)) {
       return true;
     }
 
-    if (c.dialCode.startsWith(term)) {
+    if (c.dialCode.includes(term)) {
       return true;
     }
 
