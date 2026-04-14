@@ -251,9 +251,23 @@ describe('@mantine/core/PhoneInput', () => {
     expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
   });
 
-  it('calls onChange with empty string when input is cleared', async () => {
+  it('restores dial code when input is cleared without withCountryAutoDetect', async () => {
     const onChange = jest.fn();
     render(<PhoneInput {...testProps} onChange={onChange} />);
+
+    const input = screen.getByRole('textbox');
+    await userEvent.type(input, '2025551234');
+    await userEvent.clear(input);
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+1',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'us' }) })
+    );
+  });
+
+  it('calls onChange with empty string when input is cleared with withCountryAutoDetect', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput {...testProps} withCountryAutoDetect onChange={onChange} />);
 
     const input = screen.getByRole('textbox');
     await userEvent.type(input, '2025551234');

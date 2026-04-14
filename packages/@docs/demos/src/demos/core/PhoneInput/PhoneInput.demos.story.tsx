@@ -13,6 +13,11 @@ export const Demo_configurator = {
   render: renderDemo(demos.configurator),
 };
 
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};
+
 export const Demo_controlled = {
   name: '⭐ Demo: controlled',
   render: renderDemo(demos.controlled),
@@ -46,6 +51,11 @@ export const Demo_stylesApi = {
 export const Demo_error = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
+};
+
+export const Demo_success = {
+  name: '⭐ Demo: success',
+  render: renderDemo(demos.success),
 };
 
 export const Demo_disabled = {

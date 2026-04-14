@@ -1,5 +1,6 @@
 export { usage } from './PhoneInput.demo.usage';
 export { configurator } from './PhoneInput.demo.configurator';
+export { loading } from './PhoneInput.demo.loading';
 export { controlled } from './PhoneInput.demo.controlled';
 export { preferredCountries } from './PhoneInput.demo.preferredCountries';
 export { onlyCountries } from './PhoneInput.demo.onlyCountries';
@@ -7,6 +8,7 @@ export { excludeCountries } from './PhoneInput.demo.excludeCountries';
 export { emojiFlag } from './PhoneInput.demo.emojiFlag';
 export { stylesApi } from './PhoneInput.demo.stylesApi';
 export { error } from './PhoneInput.demo.error';
+export { success } from './PhoneInput.demo.success';
 export { disabled } from './PhoneInput.demo.disabled';
 export { readOnly } from './PhoneInput.demo.readOnly';
 export { searchable } from './PhoneInput.demo.searchable';

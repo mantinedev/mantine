@@ -11,7 +11,17 @@ and formatting masks.
 
 <Demo data={PhoneInputDemos.usage} />
 
+## Input features
+
+<InputFeatures component="PhoneInput" element="input" />
+
 <Demo data={PhoneInputDemos.configurator} />
+
+## Loading state
+
+Set `loading` prop to display a loading indicator in the input:
+
+<Demo data={PhoneInputDemos.loading} />
 
 ## Controlled
 
@@ -82,6 +92,14 @@ To use `PhoneInput` within `Popover` or other overlay, set `comboboxProps={{ wit
 
 <Demo data={PhoneInputDemos.error} />
 
-## Styles API
+## Success state
+
+<Demo data={PhoneInputDemos.success} />
+
+<StylesApiSelectors component="PhoneInput" />
 
 <Demo data={PhoneInputDemos.stylesApi} />
+
+<GetElementRef component="PhoneInput" refType="input" />
+
+<InputAccessibility component="PhoneInput" />

@@ -15,16 +15,14 @@ import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 import { ScrollArea } from '../ScrollArea';
 import { UnstyledButton } from '../UnstyledButton';
+import { buildRawValue } from './build-raw-value/build-raw-value';
+import { computeCursorPosition } from './compute-cursor-position/compute-cursor-position';
 import { CountryOptionContent } from './CountryOptionContent';
 import { ALL_COUNTRIES, PhoneInputCountryData } from './phone-data';
-import {
-  filterCountries,
-  formatPhoneNumber,
-  getCountries,
-  getDigits,
-  getMaskDigitCount,
-  guessCountry,
-} from './phone-formatting';
+import { clampToMask, formatPhoneNumber } from './format-phone-number/format-phone-number';
+import { filterCountries, getCountries } from './get-countries/get-countries';
+import { getDigits } from './get-digits/get-digits';
+import { guessCountry } from './guess-country/guess-country';
 import classes from './PhoneInput.module.css';
 
 export type PhoneInputStylesNames =
@@ -276,55 +274,40 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     onChange?.(rawValue, { formattedValue, country });
   };
 
-  const clampToMask = (rawValue: string, country: PhoneInputCountryData | null): string => {
-    const digits = rawValue.replace(/\D/g, '');
-    if (!digits) {
-      return '';
-    }
-    if (!country) {
-      return `+${digits}`;
-    }
-    const { dialCode, format } = country;
-    const maxNational = getMaskDigitCount(format);
-    if (digits.startsWith(dialCode)) {
-      const clamped = digits.slice(dialCode.length).slice(0, maxNational);
-      return `+${dialCode}${clamped}`;
-    }
-    return `+${digits}`;
-  };
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget;
     const inputValue = input.value;
     const cursorPos = input.selectionStart ?? inputValue.length;
-    const raw = getDigits(inputValue);
-    const digitsOnly = raw.replace(/^\+/, '');
+    const digitsOnly = getDigits(inputValue).replace(/^\+/, '');
     const hasPlus = inputValue.includes('+');
+    const canAutoDetect = (withCountryAutoDetect || !selectedCountry) && !countryLockedRef.current;
 
     if (!digitsOnly) {
-      if (hasPlus) {
-        setValue('+');
-        onChange?.('+', { formattedValue: '+', country: selectedCountry });
-        requestAnimationFrame(() => {
-          input.setSelectionRange(1, 1);
-        });
-      } else {
+      if (withCountryAutoDetect || !selectedCountry) {
+        countryLockedRef.current = false;
+        if (hasPlus) {
+          setValue('+');
+          onChange?.('+', { formattedValue: '+', country: selectedCountry });
+          requestAnimationFrame(() => {
+            input.setSelectionRange(1, 1);
+          });
+        } else {
+          handleValueChange('', selectedCountry);
+        }
+      } else if (!international) {
         handleValueChange('', selectedCountry);
+      } else {
+        const minRaw = `+${selectedCountry.dialCode}`;
+        handleValueChange(minRaw, selectedCountry);
+        const minFormatted = formatPhoneNumber(minRaw, selectedCountry);
+        requestAnimationFrame(() => {
+          input.setSelectionRange(minFormatted.length, minFormatted.length);
+        });
       }
-      countryLockedRef.current = false;
       return;
     }
 
-    let fullRaw: string;
-    if (international) {
-      fullRaw = raw.startsWith('+') ? raw : `+${raw}`;
-    } else if (selectedCountry) {
-      fullRaw = `+${selectedCountry.dialCode}${digitsOnly}`;
-    } else {
-      fullRaw = `+${digitsOnly}`;
-    }
-
-    const canAutoDetect = (withCountryAutoDetect || !selectedCountry) && !countryLockedRef.current;
+    const fullRaw = buildRawValue(inputValue, { canAutoDetect, international, selectedCountry });
     let country = selectedCountry;
 
     if (canAutoDetect) {
@@ -340,29 +323,9 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       }
     }
 
-    let newRaw: string;
-    if (canAutoDetect) {
-      newRaw = fullRaw;
-    } else {
-      newRaw = clampToMask(fullRaw, country);
-    }
-
+    const newRaw = canAutoDetect ? fullRaw : clampToMask(fullRaw, country);
     const newFormatted = country ? formatPhoneNumber(newRaw, country) : newRaw;
-    const digitsBeforeCursor = inputValue.slice(0, cursorPos).replace(/\D/g, '').length;
-    let newCursor = 0;
-    let digitsSeen = 0;
-    for (let i = 0; i < newFormatted.length; i++) {
-      if (/\d/.test(newFormatted[i])) {
-        digitsSeen++;
-        if (digitsSeen === digitsBeforeCursor) {
-          newCursor = i + 1;
-          break;
-        }
-      }
-    }
-    if (digitsSeen < digitsBeforeCursor) {
-      newCursor = newFormatted.length;
-    }
+    const newCursor = computeCursorPosition(inputValue, cursorPos, newRaw, newFormatted);
 
     setValue(newRaw);
     onChange?.(newRaw, { formattedValue: newFormatted, country });
