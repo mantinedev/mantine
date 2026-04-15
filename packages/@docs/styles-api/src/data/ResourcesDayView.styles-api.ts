@@ -21,6 +21,8 @@ export const ResourcesDayViewStylesApi: StylesApiData<ResourcesDayViewFactory> =
     resourcesDayViewCurrentTimeIndicatorTimeBubble: 'Current time indicator time bubble',
     resourcesDayViewEventWrapper: 'Event wrapper element',
     resourcesDayViewResizeHandle: 'Event resize handle element',
+    resourcesDayViewGroupColumn: 'Group label column element',
+    resourcesDayViewGroupColumnEmpty: 'Empty group column cell for ungrouped resources',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
     viewSelect: 'View select element, part of ScheduleHeader',
@@ -36,6 +38,7 @@ export const ResourcesDayViewStylesApi: StylesApiData<ResourcesDayViewFactory> =
       '--resources-day-view-radius': 'Controls `border-radius` of the view',
       '--resources-day-view-slot-width': 'Controls `width` of each time slot column',
       '--resources-day-view-row-height': 'Controls `height` of each resource row',
+      '--resources-day-view-group-label-width': 'Controls `width` of the group label column',
     },
   },
 

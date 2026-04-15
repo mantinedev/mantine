@@ -16,3 +16,4 @@ export { firstDayOfWeek } from './ResourcesWeekView.demo.firstDayOfWeek';
 export { renderWeekLabel } from './ResourcesWeekView.demo.renderWeekLabel';
 export { maxEventsPerTimeSlot } from './ResourcesWeekView.demo.maxEventsPerTimeSlot';
 export { recurringEvents } from './ResourcesWeekView.demo.recurringEvents';
+export { resourceGroups } from './ResourcesWeekView.demo.resourceGroups';

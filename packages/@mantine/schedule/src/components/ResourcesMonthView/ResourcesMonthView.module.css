@@ -3,6 +3,7 @@
   --resources-month-view-resource-label-width: 120px;
   --resources-month-view-day-width: 80px;
   --resources-month-view-row-height: 64px;
+  --resources-month-view-group-label-width: 80px;
 
   @mixin where-light {
     --resources-month-view-border-color: var(--mantine-color-gray-3);
@@ -123,6 +124,52 @@
   left: 0;
   z-index: 4;
   background-color: var(--mantine-color-body);
+
+  &:where([data-has-groups]) {
+    left: var(--resources-month-view-group-label-width);
+  }
+}
+
+.resourcesMonthViewGroupColumn {
+  flex: 0 0 var(--resources-month-view-group-label-width);
+  min-width: var(--resources-month-view-group-label-width);
+  min-height: var(--resources-month-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background-color: var(--mantine-color-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  border-inline-end: 1px solid var(--resources-month-view-border-color);
+  overflow: visible;
+
+  &:where([data-group-position='first']),
+  &:where([data-group-position='only']) {
+    z-index: 6;
+  }
+
+  &:where([data-group-position='middle']),
+  &:where([data-group-position='last']) {
+    margin-top: -1px;
+    min-height: calc(var(--resources-month-view-row-height) + 1px);
+  }
+}
+
+.resourcesMonthViewGroupColumnEmpty {
+  flex: 0 0 var(--resources-month-view-group-label-width);
+  min-width: var(--resources-month-view-group-label-width);
+  min-height: var(--resources-month-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background-color: var(--mantine-color-body);
+  border-inline-end: 1px solid var(--resources-month-view-border-color);
 }
 
 .resourcesMonthViewRowSlots {

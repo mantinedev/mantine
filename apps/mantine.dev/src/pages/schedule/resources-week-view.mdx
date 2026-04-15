@@ -76,6 +76,15 @@ Use `renderResourceLabel` prop to customize how resource labels are rendered.
 
 <Demo data={ResourcesWeekViewDemos.renderResourceLabel} />
 
+## Resource groups
+
+Use `groups` prop to group resources under labeled headers. The group labels are displayed
+as a column to the left of resource labels, spanning vertically across their resources.
+Use `renderGroupLabel` to customize group label rendering and `groupLabelWidth` to control
+the group column width.
+
+<Demo data={ResourcesWeekViewDemos.resourceGroups} />
+
 ## Custom event rendering
 
 Use `renderEvent` prop to customize how events are rendered. The example below

@@ -16,6 +16,15 @@ export interface ScheduleResourceData {
   payload?: Record<PropertyKey, any>;
 }
 
+/** Group definition for resource views, groups are displayed as a rowspan-style column */
+export interface ScheduleResourceGroup {
+  /** Group display label */
+  label: React.ReactNode;
+
+  /** Resource IDs that belong to this group */
+  resourceIds: (string | number)[];
+}
+
 /** Date value type used by internal package utils */
 export type AnyDateValue = DateStringValue | Date | dayjs.Dayjs;
 
