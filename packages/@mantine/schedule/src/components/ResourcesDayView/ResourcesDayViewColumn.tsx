@@ -143,35 +143,30 @@ export function ResourcesDayViewRow({
 
   const isGroupStart = groupInfo?.position === 'first' || groupInfo?.position === 'only';
   const groupCell =
-    groupInfo !== undefined
-      ? groupInfo !== null
-        ? (
-            <Box
-              {...getStyles('resourcesDayViewGroupColumn')}
-              mod={{ 'scrolled-x': scrolledX, 'group-position': groupInfo.position }}
+    groupInfo !== undefined ? (
+      groupInfo !== null ? (
+        <Box
+          {...getStyles('resourcesDayViewGroupColumn')}
+          mod={{ 'scrolled-x': scrolledX, 'group-position': groupInfo.position }}
+        >
+          {isGroupStart && (
+            <span
+              style={
+                groupInfo.count > 1
+                  ? {
+                      transform: `translateY(calc((${groupInfo.count - 1} * (var(--resources-day-view-row-height) + 1px)) / 2))`,
+                    }
+                  : undefined
+              }
             >
-              {isGroupStart && (
-                <span
-                  style={
-                    groupInfo.count > 1
-                      ? {
-                          transform: `translateY(calc((${groupInfo.count - 1} * (var(--resources-day-view-row-height) + 1px)) / 2))`,
-                        }
-                      : undefined
-                  }
-                >
-                  {renderGroupLabel ? renderGroupLabel(groupInfo.group) : groupInfo.group.label}
-                </span>
-              )}
-            </Box>
-          )
-        : (
-            <Box
-              {...getStyles('resourcesDayViewGroupColumnEmpty')}
-              mod={{ 'scrolled-x': scrolledX }}
-            />
-          )
-      : null;
+              {renderGroupLabel ? renderGroupLabel(groupInfo.group) : groupInfo.group.label}
+            </span>
+          )}
+        </Box>
+      ) : (
+        <Box {...getStyles('resourcesDayViewGroupColumnEmpty')} mod={{ 'scrolled-x': scrolledX }} />
+      )
+    ) : null;
 
   return (
     <Box {...getStyles('resourcesDayViewRow')}>

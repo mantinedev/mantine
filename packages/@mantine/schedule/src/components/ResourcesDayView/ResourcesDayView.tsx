@@ -897,7 +897,6 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     );
   });
 
-
   const headerLabel = formatDate({
     date: dayjs(date),
     locale: ctx.getLocale(locale),

@@ -333,7 +333,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
-  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(resources, groups);
+  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(
+    resources,
+    groups
+  );
   const hasGroups = groupRanges.length > 0;
 
   const weekdays = getWeekDays({

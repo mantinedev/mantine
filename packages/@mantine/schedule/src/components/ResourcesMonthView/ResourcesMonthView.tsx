@@ -714,38 +714,33 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     });
 
     const groupInfo = hasGroups ? resourceGroupMap[resourceIndex] : undefined;
-    const isGroupStart =
-      groupInfo?.position === 'first' || groupInfo?.position === 'only';
+    const isGroupStart = groupInfo?.position === 'first' || groupInfo?.position === 'only';
 
     const groupCell =
-      groupInfo !== undefined
-        ? groupInfo !== null
-          ? (
-              <Box
-                {...getStyles('resourcesMonthViewGroupColumn')}
-                mod={{ 'group-position': groupInfo.position }}
+      groupInfo !== undefined ? (
+        groupInfo !== null ? (
+          <Box
+            {...getStyles('resourcesMonthViewGroupColumn')}
+            mod={{ 'group-position': groupInfo.position }}
+          >
+            {isGroupStart && (
+              <span
+                style={
+                  groupInfo.count > 1
+                    ? {
+                        transform: `translateY(calc((${groupInfo.count - 1} * (var(--resources-month-view-row-height) + 1px)) / 2))`,
+                      }
+                    : undefined
+                }
               >
-                {isGroupStart && (
-                  <span
-                    style={
-                      groupInfo.count > 1
-                        ? {
-                            transform: `translateY(calc((${groupInfo.count - 1} * (var(--resources-month-view-row-height) + 1px)) / 2))`,
-                          }
-                        : undefined
-                    }
-                  >
-                    {renderGroupLabel
-                      ? renderGroupLabel(groupInfo.group)
-                      : groupInfo.group.label}
-                  </span>
-                )}
-              </Box>
-            )
-          : (
-              <Box {...getStyles('resourcesMonthViewGroupColumnEmpty')} />
-            )
-        : null;
+                {renderGroupLabel ? renderGroupLabel(groupInfo.group) : groupInfo.group.label}
+              </span>
+            )}
+          </Box>
+        ) : (
+          <Box {...getStyles('resourcesMonthViewGroupColumnEmpty')} />
+        )
+      ) : null;
 
     return (
       <div {...getStyles('resourcesMonthViewRow')} key={resource.id}>
@@ -793,7 +788,6 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       </div>
     );
   });
-
 
   const content = (
     <Box
