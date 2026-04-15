@@ -18,3 +18,4 @@ export { currentTimeIndicator } from './ResourcesDayView.demo.currentTimeIndicat
 export { permissions } from './ResourcesDayView.demo.permissions';
 export { maxEventsPerTimeSlot } from './ResourcesDayView.demo.maxEventsPerTimeSlot';
 export { recurringEvents } from './ResourcesDayView.demo.recurringEvents';
+export { resourceGroups } from './ResourcesDayView.demo.resourceGroups';
