@@ -43,8 +43,9 @@ export const TabsPanel = factory<TabsPanelFactory>((_props) => {
 
   const active = ctx.value === value;
   const shouldKeepMounted = ctx.keepMounted || keepMounted;
+  const useActivity = ctx.keepMountedMode !== 'display-none';
   const content =
-    shouldKeepMounted && env !== 'test' ? (
+    shouldKeepMounted && useActivity && env !== 'test' ? (
       <Activity mode={active ? 'visible' : 'hidden'}>{children}</Activity>
     ) : shouldKeepMounted ? (
       children
