@@ -1,7 +1,7 @@
 import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
-import { ScheduleMode, ScheduleResourceData } from '../../types';
-import { DayTimeInterval, getBusinessHoursMod } from '../../utils';
+import { ScheduleMode, ScheduleResourceData, ScheduleResourceGroup } from '../../types';
+import { DayTimeInterval, getBusinessHoursMod, ResourceGroupInfo } from '../../utils';
 import type { ResourcesDayViewControlsRef } from './handle-resources-day-view-key-down';
 import type { ResourcesDayViewFactory } from './ResourcesDayView';
 
@@ -50,7 +50,9 @@ export interface ResourcesDayViewRowProps {
   isSlotDragSelected?: (index: number, group: string) => boolean;
   rowSlotsContainerRef?: (node: HTMLDivElement | null) => void;
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
+  renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
   scrolledX?: boolean;
+  groupInfo?: ResourceGroupInfo | null;
 }
 
 export function ResourcesDayViewRow({
@@ -78,7 +80,9 @@ export function ResourcesDayViewRow({
   isSlotDragSelected,
   rowSlotsContainerRef,
   renderResourceLabel,
+  renderGroupLabel,
   scrolledX,
+  groupInfo,
 }: ResourcesDayViewRowProps) {
   const slotGroup = String(resource.id);
 
@@ -137,9 +141,45 @@ export function ResourcesDayViewRow({
     );
   });
 
+  const isGroupStart = groupInfo?.position === 'first' || groupInfo?.position === 'only';
+  const groupCell =
+    groupInfo !== undefined
+      ? groupInfo !== null
+        ? (
+            <Box
+              {...getStyles('resourcesDayViewGroupColumn')}
+              mod={{ 'scrolled-x': scrolledX, 'group-position': groupInfo.position }}
+            >
+              {isGroupStart && (
+                <span
+                  style={
+                    groupInfo.count > 1
+                      ? {
+                          transform: `translateY(calc((${groupInfo.count - 1} * (var(--resources-day-view-row-height) + 1px)) / 2))`,
+                        }
+                      : undefined
+                  }
+                >
+                  {renderGroupLabel ? renderGroupLabel(groupInfo.group) : groupInfo.group.label}
+                </span>
+              )}
+            </Box>
+          )
+        : (
+            <Box
+              {...getStyles('resourcesDayViewGroupColumnEmpty')}
+              mod={{ 'scrolled-x': scrolledX }}
+            />
+          )
+      : null;
+
   return (
     <Box {...getStyles('resourcesDayViewRow')}>
-      <Box {...getStyles('resourcesDayViewResourceLabel')} mod={{ 'scrolled-x': scrolledX }}>
+      {groupCell}
+      <Box
+        {...getStyles('resourcesDayViewResourceLabel')}
+        mod={{ 'scrolled-x': scrolledX, 'has-groups': groupInfo !== undefined }}
+      >
         {renderResourceLabel ? renderResourceLabel(resource) : resource.label}
       </Box>
       <Box

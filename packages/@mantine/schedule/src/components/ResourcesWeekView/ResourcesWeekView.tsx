@@ -32,6 +32,7 @@ import {
   ScheduleEventData,
   ScheduleMode,
   ScheduleResourceData,
+  ScheduleResourceGroup,
   ScheduleViewLevel,
 } from '../../types';
 import {
@@ -40,6 +41,7 @@ import {
   getBusinessHoursMod,
   getCurrentTimePosition,
   getDayTimeIntervals,
+  getOrderedResources,
   getWeekDays,
   isAllDayEvent,
   isInTimeRange,
@@ -86,13 +88,16 @@ export type ResourcesWeekViewStylesNames =
   | 'resourcesWeekViewCurrentTimeIndicatorTimeBubble'
   | 'resourcesWeekViewEventWrapper'
   | 'resourcesWeekViewResizeHandle'
+  | 'resourcesWeekViewGroupColumn'
+  | 'resourcesWeekViewGroupColumnEmpty'
   | CombinedScheduleHeaderStylesNames;
 
 export type ResourcesWeekViewCssVariables = {
   resourcesWeekView:
     | '--resources-week-view-radius'
     | '--resources-week-view-slot-width'
-    | '--resources-week-view-row-height';
+    | '--resources-week-view-row-height'
+    | '--resources-week-view-group-label-width';
 };
 
 export interface ResourcesWeekViewProps
@@ -132,6 +137,16 @@ export interface ResourcesWeekViewProps
   renderEventBody?: RenderEventBody;
   renderEvent?: RenderEvent;
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
+
+  /** List of resource groups to display as a column to the left of resource labels */
+  groups?: ScheduleResourceGroup[];
+
+  /** Function to customize group label rendering */
+  renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
+
+  /** Width of the group label column @default 80px */
+  groupLabelWidth?: React.CSSProperties['width'];
+
   withEventsDragAndDrop?: boolean;
   onEventDrop?: (data: {
     eventId: string | number;
@@ -205,11 +220,12 @@ const defaultProps = {
 } satisfies Partial<ResourcesWeekViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesWeekViewFactory>(
-  (_theme, { radius, slotWidth, rowHeight }) => ({
+  (_theme, { radius, slotWidth, rowHeight, groupLabelWidth }) => ({
     resourcesWeekView: {
       '--resources-week-view-radius': radius ? getRadius(radius) : undefined,
       '--resources-week-view-slot-width': rem(slotWidth),
       '--resources-week-view-row-height': rem(rowHeight),
+      '--resources-week-view-group-label-width': rem(groupLabelWidth),
     },
   })
 );
@@ -255,6 +271,9 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     renderEventBody,
     renderEvent,
     renderResourceLabel,
+    groups,
+    renderGroupLabel,
+    groupLabelWidth,
     withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
@@ -314,6 +333,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(resources, groups);
+  const hasGroups = groupRanges.length > 0;
 
   const weekdays = getWeekDays({
     week: date,
@@ -600,7 +621,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     });
   };
 
-  const rows = resources.map((resource, resourceIndex) => {
+  const rows = orderedResources.map((resource, resourceIndex) => {
     const eventNodes: React.ReactNode[] = [];
 
     weekdays.forEach((day, dayIndex) => {
@@ -783,7 +804,9 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           rowSlotsContainersRef.current[resourceIndex] = node;
         }}
         renderResourceLabel={renderResourceLabel}
+        renderGroupLabel={renderGroupLabel}
         scrolledX={scrolledX}
+        groupInfo={hasGroups ? resourceGroupMap[resourceIndex] : undefined}
       >
         {eventNodes}
       </ResourcesWeekViewRow>
@@ -849,7 +872,22 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         >
           <div {...getStyles('resourcesWeekViewInner')}>
             <div {...getStyles('resourcesWeekViewHeaderRows')}>
-              <div {...getStyles('resourcesWeekViewCorner')}>{getLabel('resources', labels)}</div>
+              <div
+                {...getStyles('resourcesWeekViewCorner')}
+                key="corner"
+                style={
+                  hasGroups
+                    ? {
+                        flexBasis:
+                          'calc(var(--resources-week-view-resource-label-width) + var(--resources-week-view-group-label-width))',
+                        minWidth:
+                          'calc(var(--resources-week-view-resource-label-width) + var(--resources-week-view-group-label-width))',
+                      }
+                    : undefined
+                }
+              >
+                {getLabel('resources', labels)}
+              </div>
               <div {...getStyles('resourcesWeekViewHeaderContent')}>
                 <div {...getStyles('resourcesWeekViewDayLabelsRow')}>{dayLabels}</div>
                 <Box {...getStyles('resourcesWeekViewTimeLabelsRow')} mod={{ scrolled }}>
@@ -864,7 +902,9 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
               <Box
                 {...getStyles('resourcesWeekViewCurrentTimeIndicator')}
                 __vars={{
-                  '--indicator-left-offset': `calc(var(--resources-week-view-resource-label-width) + (100% - var(--resources-week-view-resource-label-width)) * ${indicatorLeftPercent} / 100)`,
+                  '--indicator-left-offset': hasGroups
+                    ? `calc(var(--resources-week-view-resource-label-width) + var(--resources-week-view-group-label-width) + (100% - var(--resources-week-view-resource-label-width) - var(--resources-week-view-group-label-width)) * ${indicatorLeftPercent} / 100)`
+                    : `calc(var(--resources-week-view-resource-label-width) + (100% - var(--resources-week-view-resource-label-width)) * ${indicatorLeftPercent} / 100)`,
                   '--_time-bubble-width': formattedCurrentTime
                     ?.toString()
                     .toLowerCase()

@@ -16,6 +16,8 @@ export const ResourcesMonthViewStylesApi: StylesApiData<ResourcesMonthViewFactor
     resourcesMonthViewRowSlots: 'Container for all day cells in a row',
     resourcesMonthViewCell: 'Individual day cell element',
     resourcesMonthViewInner: 'Inner container wrapping day labels and rows',
+    resourcesMonthViewGroupColumn: 'Group label column element',
+    resourcesMonthViewGroupColumnEmpty: 'Empty group column cell for ungrouped resources',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
     viewSelect: 'View select element, part of ScheduleHeader',
@@ -31,6 +33,7 @@ export const ResourcesMonthViewStylesApi: StylesApiData<ResourcesMonthViewFactor
       '--resources-month-view-radius': 'Controls `border-radius` of the view',
       '--resources-month-view-day-width': 'Controls `width` of each day column',
       '--resources-month-view-row-height': 'Controls `height` of each resource row',
+      '--resources-month-view-group-label-width': 'Controls `width` of the group label column',
     },
   },
 

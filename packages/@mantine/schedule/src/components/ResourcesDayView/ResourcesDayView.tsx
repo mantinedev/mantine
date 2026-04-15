@@ -32,6 +32,7 @@ import {
   ScheduleEventData,
   ScheduleMode,
   ScheduleResourceData,
+  ScheduleResourceGroup,
   ScheduleViewLevel,
 } from '../../types';
 import {
@@ -41,6 +42,7 @@ import {
   getBusinessHoursMod,
   getCurrentTimePosition,
   getDayTimeIntervals,
+  getOrderedResources,
   isAllDayEvent,
   isInTimeRange,
   toDateString,
@@ -79,13 +81,16 @@ export type ResourcesDayViewStylesNames =
   | 'resourcesDayViewCurrentTimeIndicatorTimeBubble'
   | 'resourcesDayViewEventWrapper'
   | 'resourcesDayViewResizeHandle'
+  | 'resourcesDayViewGroupColumn'
+  | 'resourcesDayViewGroupColumnEmpty'
   | CombinedScheduleHeaderStylesNames;
 
 export type ResourcesDayViewCssVariables = {
   resourcesDayView:
     | '--resources-day-view-radius'
     | '--resources-day-view-slot-width'
-    | '--resources-day-view-row-height';
+    | '--resources-day-view-row-height'
+    | '--resources-day-view-group-label-width';
 };
 
 export interface ResourcesDayViewProps
@@ -178,6 +183,15 @@ export interface ResourcesDayViewProps
 
   /** Function to customize resource label rendering */
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
+
+  /** List of resource groups to display as a column to the left of resource labels */
+  groups?: ScheduleResourceGroup[];
+
+  /** Function to customize group label rendering */
+  renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
+
+  /** Width of the group label column @default 80px */
+  groupLabelWidth?: React.CSSProperties['width'];
 
   /** If true, events can be dragged and dropped @default false */
   withEventsDragAndDrop?: boolean;
@@ -280,11 +294,12 @@ const defaultProps = {
 } satisfies Partial<ResourcesDayViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesDayViewFactory>(
-  (_theme, { radius, slotWidth, rowHeight }) => ({
+  (_theme, { radius, slotWidth, rowHeight, groupLabelWidth }) => ({
     resourcesDayView: {
       '--resources-day-view-radius': radius ? getRadius(radius) : undefined,
       '--resources-day-view-slot-width': rem(slotWidth),
       '--resources-day-view-row-height': rem(rowHeight),
+      '--resources-day-view-group-label-width': rem(groupLabelWidth),
     },
   })
 );
@@ -329,6 +344,9 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     renderEventBody,
     renderEvent,
     renderResourceLabel,
+    groups,
+    renderGroupLabel,
+    groupLabelWidth,
     withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
@@ -386,6 +404,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(
+    resources,
+    groups
+  );
+  const hasGroups = groupRanges.length > 0;
 
   type DropTargetSlot = { resourceId: string | number; slotIndex: number };
 
@@ -640,7 +663,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     });
   };
 
-  const rows = resources.map((resource, resourceIndex) => {
+  const rows = orderedResources.map((resource, resourceIndex) => {
     const allBgEvents = resourceEvents.backgroundTimedEvents[resource.id] || [];
 
     // oxlint-disable-next-line react/jsx-key
@@ -863,7 +886,9 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           rowSlotsContainersRef.current[resourceIndex] = node;
         }}
         renderResourceLabel={renderResourceLabel}
+        renderGroupLabel={renderGroupLabel}
         scrolledX={scrolledX}
+        groupInfo={hasGroups ? resourceGroupMap[resourceIndex] : undefined}
       >
         {backgroundEventNodes}
         {regularEvents}
@@ -871,6 +896,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
       </ResourcesDayViewRow>
     );
   });
+
 
   const headerLabel = formatDate({
     date: dayjs(date),
@@ -928,7 +954,20 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         >
           <div {...getStyles('resourcesDayViewInner')}>
             <Box {...getStyles('resourcesDayViewTimeLabelsRow')} mod={{ scrolled }}>
-              <div {...getStyles('resourcesDayViewCorner')} key="corner">
+              <div
+                {...getStyles('resourcesDayViewCorner')}
+                key="corner"
+                style={
+                  hasGroups
+                    ? {
+                        flexBasis:
+                          'calc(var(--resources-day-view-resource-label-width) + var(--resources-day-view-group-label-width))',
+                        minWidth:
+                          'calc(var(--resources-day-view-resource-label-width) + var(--resources-day-view-group-label-width))',
+                      }
+                    : undefined
+                }
+              >
                 {getLabel('resources', labels)}
               </div>
               {timeLabels}
@@ -940,7 +979,9 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
               <Box
                 {...getStyles('resourcesDayViewCurrentTimeIndicator')}
                 __vars={{
-                  '--indicator-left-offset': `calc(var(--resources-day-view-resource-label-width) + (100% - var(--resources-day-view-resource-label-width)) * ${timeIndicatorOffset} / 100)`,
+                  '--indicator-left-offset': hasGroups
+                    ? `calc(var(--resources-day-view-resource-label-width) + var(--resources-day-view-group-label-width) + (100% - var(--resources-day-view-resource-label-width) - var(--resources-day-view-group-label-width)) * ${timeIndicatorOffset} / 100)`
+                    : `calc(var(--resources-day-view-resource-label-width) + (100% - var(--resources-day-view-resource-label-width)) * ${timeIndicatorOffset} / 100)`,
                   '--_time-bubble-width': formattedCurrentTime
                     ?.toString()
                     .toLowerCase()

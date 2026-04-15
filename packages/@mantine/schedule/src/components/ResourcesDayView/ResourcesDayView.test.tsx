@@ -759,4 +759,82 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       expect(screen.getByRole('heading', { name: 'Hidden events' })).toBeInTheDocument();
     });
   });
+
+  it('renders group labels when groups prop is provided', () => {
+    const groups = [
+      { label: 'Floor 1', resourceIds: ['room-a'] },
+      { label: 'Floor 2', resourceIds: ['room-b'] },
+    ];
+
+    const { container } = render(<ResourcesDayView {...defaultProps} groups={groups} />);
+
+    expect(screen.getByText('Floor 1')).toBeInTheDocument();
+    expect(screen.getByText('Floor 2')).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewGroupColumn')
+    ).toBeInTheDocument();
+  });
+
+  it('does not render group column when groups prop is not provided', () => {
+    const { container } = render(<ResourcesDayView {...defaultProps} />);
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewGroupColumn')
+    ).not.toBeInTheDocument();
+  });
+
+  it('reorders resources to match group definition order', () => {
+    const reorderedResources = [
+      { id: 'room-b', label: 'Room B' },
+      { id: 'room-a', label: 'Room A' },
+    ];
+    const groups = [
+      { label: 'Group B', resourceIds: ['room-b'] },
+      { label: 'Group A', resourceIds: ['room-a'] },
+    ];
+
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} resources={reorderedResources} groups={groups} />
+    );
+
+    const labels = container.querySelectorAll(
+      '.mantine-ResourcesDayView-resourcesDayViewResourceLabel'
+    );
+    expect(labels[0]).toHaveTextContent('Room B');
+    expect(labels[1]).toHaveTextContent('Room A');
+  });
+
+  it('supports renderGroupLabel callback', () => {
+    const groups = [{ label: 'Floor 1', resourceIds: ['room-a', 'room-b'] }];
+
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        groups={groups}
+        renderGroupLabel={(group) => <span data-testid="custom-group">{group.label} Custom</span>}
+      />
+    );
+
+    expect(screen.getByText('Floor 1 Custom')).toBeInTheDocument();
+    expect(screen.getByTestId('custom-group')).toBeInTheDocument();
+  });
+
+  it('renders ungrouped resources without group label', () => {
+    const threeResources = [
+      { id: 'room-a', label: 'Room A' },
+      { id: 'room-b', label: 'Room B' },
+      { id: 'room-c', label: 'Room C' },
+    ];
+    const groups = [{ label: 'Floor 1', resourceIds: ['room-a', 'room-b'] }];
+
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} resources={threeResources} groups={groups} />
+    );
+
+    expect(screen.getByText('Floor 1')).toBeInTheDocument();
+    expect(screen.getByText('Room C')).toBeInTheDocument();
+    const emptyGroupCells = container.querySelectorAll(
+      '.mantine-ResourcesDayView-resourcesDayViewGroupColumnEmpty'
+    );
+    expect(emptyGroupCells.length).toBe(1);
+  });
 });

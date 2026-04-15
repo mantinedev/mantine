@@ -3,6 +3,7 @@
   --resources-week-view-resource-label-width: 120px;
   --resources-week-view-slot-width: 60px;
   --resources-week-view-row-height: 64px;
+  --resources-week-view-group-label-width: 80px;
 
   @mixin where-light {
     --resources-week-view-border-color: var(--mantine-color-gray-3);
@@ -162,6 +163,52 @@
   &:where([data-scrolled-x]) {
     box-shadow: var(--mantine-shadow-sm);
   }
+
+  &:where([data-has-groups]) {
+    left: var(--resources-week-view-group-label-width);
+  }
+}
+
+.resourcesWeekViewGroupColumn {
+  flex: 0 0 var(--resources-week-view-group-label-width);
+  min-width: var(--resources-week-view-group-label-width);
+  min-height: var(--resources-week-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background-color: var(--mantine-color-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  border-inline-end: 1px solid var(--resources-week-view-border-color);
+  overflow: visible;
+
+  &:where([data-group-position='first']),
+  &:where([data-group-position='only']) {
+    z-index: 13;
+  }
+
+  &:where([data-group-position='middle']),
+  &:where([data-group-position='last']) {
+    margin-top: -1px;
+    min-height: calc(var(--resources-week-view-row-height) + 1px);
+  }
+}
+
+.resourcesWeekViewGroupColumnEmpty {
+  flex: 0 0 var(--resources-week-view-group-label-width);
+  min-width: var(--resources-week-view-group-label-width);
+  min-height: var(--resources-week-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background-color: var(--mantine-color-body);
+  border-inline-end: 1px solid var(--resources-week-view-border-color);
 }
 
 .resourcesWeekViewRowSlots {
@@ -355,7 +402,7 @@
   bottom: 0;
   left: var(--indicator-left-offset);
   width: 2px;
-  z-index: 10;
+  z-index: 3;
 
   &::before {
     content: '';
@@ -403,5 +450,5 @@
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
   left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
-  z-index: 10;
+  z-index: 3;
 }

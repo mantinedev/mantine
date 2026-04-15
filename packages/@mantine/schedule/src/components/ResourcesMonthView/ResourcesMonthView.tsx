@@ -32,12 +32,14 @@ import {
   ScheduleEventData,
   ScheduleMode,
   ScheduleResourceData,
+  ScheduleResourceGroup,
   ScheduleViewLevel,
 } from '../../types';
 import {
   calculateMonthDropDate,
   expandRecurringEvents,
   formatDate,
+  getOrderedResources,
   toDateString,
 } from '../../utils';
 import { DragContext } from '../DragContext/DragContext';
@@ -63,13 +65,16 @@ export type ResourcesMonthViewStylesNames =
   | 'resourcesMonthViewRowSlots'
   | 'resourcesMonthViewCell'
   | 'resourcesMonthViewInner'
+  | 'resourcesMonthViewGroupColumn'
+  | 'resourcesMonthViewGroupColumnEmpty'
   | CombinedScheduleHeaderStylesNames;
 
 export type ResourcesMonthViewCssVariables = {
   resourcesMonthView:
     | '--resources-month-view-radius'
     | '--resources-month-view-day-width'
-    | '--resources-month-view-row-height';
+    | '--resources-month-view-row-height'
+    | '--resources-month-view-group-label-width';
 };
 
 export interface ResourcesMonthViewProps
@@ -152,6 +157,15 @@ export interface ResourcesMonthViewProps
   /** Function to customize resource label rendering */
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
 
+  /** List of resource groups to display as a column to the left of resource labels */
+  groups?: ScheduleResourceGroup[];
+
+  /** Function to customize group label rendering */
+  renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
+
+  /** Width of the group label column @default 80px */
+  groupLabelWidth?: React.CSSProperties['width'];
+
   /** If true, events can be dragged and dropped @default false */
   withEventsDragAndDrop?: boolean;
 
@@ -220,11 +234,12 @@ export type ResourcesMonthViewFactory = Factory<{
 }>;
 
 const varsResolver = createVarsResolver<ResourcesMonthViewFactory>(
-  (_theme, { radius, dayWidth, rowHeight }) => ({
+  (_theme, { radius, dayWidth, rowHeight, groupLabelWidth }) => ({
     resourcesMonthView: {
       '--resources-month-view-radius': radius ? getRadius(radius) : undefined,
       '--resources-month-view-day-width': rem(dayWidth),
       '--resources-month-view-row-height': rem(rowHeight),
+      '--resources-month-view-group-label-width': rem(groupLabelWidth),
     },
   })
 );
@@ -274,6 +289,9 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     dayWidth,
     rowHeight,
     renderResourceLabel,
+    groups,
+    renderGroupLabel,
+    groupLabelWidth,
     renderEventBody,
     renderEvent,
     withEventsDragAndDrop,
@@ -327,6 +345,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const ctx = useDatesContext();
   const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
+  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(
+    resources,
+    groups
+  );
+  const hasGroups = groupRanges.length > 0;
 
   const monthStart = dayjs(date).startOf('month');
   const monthEnd = dayjs(date).endOf('month');
@@ -560,7 +583,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const rowHeightPercent = 100 / maxEventsPerTimeSlot;
 
-  const rows = resources.map((resource, resourceIndex) => {
+  const rows = orderedResources.map((resource, resourceIndex) => {
     if (!cellsRef.current[resourceIndex]) {
       cellsRef.current[resourceIndex] = [];
     }
@@ -690,9 +713,47 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       );
     });
 
+    const groupInfo = hasGroups ? resourceGroupMap[resourceIndex] : undefined;
+    const isGroupStart =
+      groupInfo?.position === 'first' || groupInfo?.position === 'only';
+
+    const groupCell =
+      groupInfo !== undefined
+        ? groupInfo !== null
+          ? (
+              <Box
+                {...getStyles('resourcesMonthViewGroupColumn')}
+                mod={{ 'group-position': groupInfo.position }}
+              >
+                {isGroupStart && (
+                  <span
+                    style={
+                      groupInfo.count > 1
+                        ? {
+                            transform: `translateY(calc((${groupInfo.count - 1} * (var(--resources-month-view-row-height) + 1px)) / 2))`,
+                          }
+                        : undefined
+                    }
+                  >
+                    {renderGroupLabel
+                      ? renderGroupLabel(groupInfo.group)
+                      : groupInfo.group.label}
+                  </span>
+                )}
+              </Box>
+            )
+          : (
+              <Box {...getStyles('resourcesMonthViewGroupColumnEmpty')} />
+            )
+        : null;
+
     return (
       <div {...getStyles('resourcesMonthViewRow')} key={resource.id}>
-        <div {...getStyles('resourcesMonthViewResourceLabel')}>
+        {groupCell}
+        <div
+          {...getStyles('resourcesMonthViewResourceLabel')}
+          data-has-groups={hasGroups || undefined}
+        >
           {renderResourceLabel ? renderResourceLabel(resource) : resource.label}
         </div>
         <div
@@ -732,6 +793,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       </div>
     );
   });
+
 
   const content = (
     <Box
@@ -793,7 +855,21 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         >
           <div {...getStyles('resourcesMonthViewInner')}>
             <div {...getStyles('resourcesMonthViewDayLabelsRow')}>
-              <div {...getStyles('resourcesMonthViewCorner')} key="corner" ref={resourceLabelRef}>
+              <div
+                {...getStyles('resourcesMonthViewCorner')}
+                key="corner"
+                ref={resourceLabelRef}
+                style={
+                  hasGroups
+                    ? {
+                        flexBasis:
+                          'calc(var(--resources-month-view-resource-label-width) + var(--resources-month-view-group-label-width))',
+                        minWidth:
+                          'calc(var(--resources-month-view-resource-label-width) + var(--resources-month-view-group-label-width))',
+                      }
+                    : undefined
+                }
+              >
                 {getLabel('resources', labels)}
               </div>
               {dayLabels}
