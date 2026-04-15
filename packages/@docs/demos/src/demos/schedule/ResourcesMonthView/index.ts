@@ -15,3 +15,4 @@ export { moreEvents } from './ResourcesMonthView.demo.moreEvents';
 export { moreEventsProps } from './ResourcesMonthView.demo.moreEventsProps';
 export { customHeader } from './ResourcesMonthView.demo.customHeader';
 export { recurringEvents } from './ResourcesMonthView.demo.recurringEvents';
+export { resourceGroups } from './ResourcesMonthView.demo.resourceGroups';

@@ -48,3 +48,9 @@ export type {
   GetBusinessHoursModInput,
   BusinessHoursMod,
 } from './get-business-hours-mod/get-business-hours-mod';
+export { getOrderedResources } from './get-ordered-resources/get-ordered-resources';
+export type {
+  GroupRange,
+  OrderedResourcesResult,
+  ResourceGroupInfo,
+} from './get-ordered-resources/get-ordered-resources';

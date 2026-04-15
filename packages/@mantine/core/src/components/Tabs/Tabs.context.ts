@@ -16,6 +16,7 @@ export interface TabsContextValue {
   radius: string | number | undefined;
   inverted: boolean | undefined;
   keepMounted: boolean | undefined;
+  keepMountedMode: 'activity' | 'display-none' | undefined;
   placement: 'right' | 'left' | undefined;
   unstyled: boolean | undefined;
   getStyles: GetStylesApi<TabsFactory>;
