@@ -71,3 +71,4 @@ apps/help.mantine.dev/next-env.d.ts
 /codex
 /.claude/worktrees
 /.playwright-mcp/
+.superpowers/

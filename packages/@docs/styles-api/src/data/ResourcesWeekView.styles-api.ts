@@ -25,6 +25,8 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
     resourcesWeekViewCurrentTimeIndicatorTimeBubble: 'Current time indicator time bubble',
     resourcesWeekViewEventWrapper: 'Event wrapper element',
     resourcesWeekViewResizeHandle: 'Event resize handle element',
+    resourcesWeekViewGroupColumn: 'Group label column element',
+    resourcesWeekViewGroupColumnEmpty: 'Empty group column cell for ungrouped resources',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
     viewSelect: 'View select element, part of ScheduleHeader',
@@ -40,6 +42,7 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
       '--resources-week-view-radius': 'Controls `border-radius` of the view',
       '--resources-week-view-slot-width': 'Controls `width` of each time slot column',
       '--resources-week-view-row-height': 'Controls `height` of each resource row',
+      '--resources-week-view-group-label-width': 'Controls `width` of the group label column',
     },
   },
 

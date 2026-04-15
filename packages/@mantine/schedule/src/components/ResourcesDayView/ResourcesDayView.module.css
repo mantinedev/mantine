@@ -3,6 +3,7 @@
   --resources-day-view-resource-label-width: 120px;
   --resources-day-view-slot-width: 80px;
   --resources-day-view-row-height: 64px;
+  --resources-day-view-group-label-width: 80px;
 
   @mixin where-light {
     --resources-day-view-border-color: var(--mantine-color-gray-3);
@@ -126,6 +127,52 @@
   &:where([data-scrolled-x]) {
     box-shadow: var(--mantine-shadow-sm);
   }
+
+  &:where([data-has-groups]) {
+    left: var(--resources-day-view-group-label-width);
+  }
+}
+
+.resourcesDayViewGroupColumn {
+  flex: 0 0 var(--resources-day-view-group-label-width);
+  min-width: var(--resources-day-view-group-label-width);
+  min-height: var(--resources-day-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background-color: var(--mantine-color-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
+  overflow: visible;
+
+  &:where([data-group-position='first']),
+  &:where([data-group-position='only']) {
+    z-index: 13;
+  }
+
+  &:where([data-group-position='middle']),
+  &:where([data-group-position='last']) {
+    margin-top: -1px;
+    min-height: calc(var(--resources-day-view-row-height) + 1px);
+  }
+}
+
+.resourcesDayViewGroupColumnEmpty {
+  flex: 0 0 var(--resources-day-view-group-label-width);
+  min-width: var(--resources-day-view-group-label-width);
+  min-height: var(--resources-day-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background-color: var(--mantine-color-body);
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
 }
 
 .resourcesDayViewRowSlots {
@@ -242,7 +289,7 @@
   bottom: 0;
   left: var(--indicator-left-offset);
   width: 2px;
-  z-index: 10;
+  z-index: 3;
 
   &::before {
     content: '';
@@ -290,7 +337,7 @@
   text-transform: uppercase;
   top: 0;
   left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
-  z-index: 10;
+  z-index: 3;
 }
 
 .resourcesDayViewBackgroundEvent {

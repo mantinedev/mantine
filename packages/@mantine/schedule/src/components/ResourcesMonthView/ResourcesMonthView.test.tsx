@@ -709,6 +709,62 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     expect(eventButton).toBeInTheDocument();
   });
 
+  it('renders group labels when groups prop is provided', () => {
+    const groups = [
+      { label: 'Floor 1', resourceIds: ['room-a'] },
+      { label: 'Floor 2', resourceIds: ['room-b'] },
+    ];
+
+    const { container } = render(<ResourcesMonthView {...defaultProps} groups={groups} />);
+
+    expect(screen.getByText('Floor 1')).toBeInTheDocument();
+    expect(screen.getByText('Floor 2')).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-ResourcesMonthView-resourcesMonthViewGroupColumn')
+    ).toBeInTheDocument();
+  });
+
+  it('does not render group column when groups prop is not provided', () => {
+    const { container } = render(<ResourcesMonthView {...defaultProps} />);
+    expect(
+      container.querySelector('.mantine-ResourcesMonthView-resourcesMonthViewGroupColumn')
+    ).not.toBeInTheDocument();
+  });
+
+  it('supports renderGroupLabel callback', () => {
+    const groups = [{ label: 'Floor 1', resourceIds: ['room-a', 'room-b'] }];
+
+    render(
+      <ResourcesMonthView
+        {...defaultProps}
+        groups={groups}
+        renderGroupLabel={(group) => <span data-testid="custom-group">{group.label} Custom</span>}
+      />
+    );
+
+    expect(screen.getByText('Floor 1 Custom')).toBeInTheDocument();
+  });
+
+  it('renders ungrouped resources without group label', () => {
+    const threeResources = [
+      { id: 'room-a', label: 'Room A' },
+      { id: 'room-b', label: 'Room B' },
+      { id: 'room-c', label: 'Room C' },
+    ];
+    const groups = [{ label: 'Floor 1', resourceIds: ['room-a', 'room-b'] }];
+
+    const { container } = render(
+      <ResourcesMonthView {...defaultProps} resources={threeResources} groups={groups} />
+    );
+
+    expect(screen.getByText('Floor 1')).toBeInTheDocument();
+    expect(screen.getByText('Room C')).toBeInTheDocument();
+    const emptyGroupCells = container.querySelectorAll(
+      '.mantine-ResourcesMonthView-resourcesMonthViewGroupColumnEmpty'
+    );
+    expect(emptyGroupCells.length).toBe(1);
+  });
+
   it('canDragEvent prevents specific events from dragging', () => {
     const events = [
       {
