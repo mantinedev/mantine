@@ -1,0 +1,97 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridEditing);
+
+## Cell editing
+
+Set `withEditing` and `editingMode="cell"` to enable inline cell editing. Double-click a cell to enter
+edit mode. Press `Enter` to save the value or `Escape` to cancel. The `onCellEdit` callback receives
+the row, column ID, and new value.
+
+<Demo data={DataGridDemos.cellEditing} />
+
+## Row editing
+
+Set `editingMode="row"` to edit all cells in a row simultaneously. When a row enters edit mode,
+Save and Cancel buttons appear. The `onRowEdit` callback receives the row and a `values` object
+containing all edited column values.
+
+```tsx
+<DataGrid
+  data={data}
+  withEditing
+  editingMode="row"
+  getRowId={(row) => row.id}
+  onRowEdit={({ row, values }) => {
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === row.original.id ? { ...item, ...values } : item
+      )
+    );
+  }}
+  columns={columns}
+/>
+```
+
+## Modal editing
+
+For complex edit forms, handle `onRowDoubleClick` to open a modal instead of using inline editing.
+This approach gives full control over the edit UI and validation flow.
+
+```tsx
+<DataGrid
+  data={data}
+  onRowDoubleClick={(row) => {
+    setEditingRow(row.original);
+    openModal();
+  }}
+  columns={columns}
+/>
+```
+
+## Custom edit components
+
+Define a custom `editCell` renderer on a column to replace the default text input with any component
+such as a select, date picker, or number input.
+
+```tsx
+const columns = [
+  {
+    accessorKey: 'department',
+    header: 'Department',
+    editCell: ({ value, onSave, onCancel }) => (
+      <Select
+        data={['Engineering', 'Marketing', 'Sales', 'HR', 'Finance']}
+        defaultValue={value}
+        onChange={(val) => onSave(val)}
+        onBlur={onCancel}
+        autoFocus
+      />
+    ),
+  },
+];
+```
+
+## Limitations
+
+Inline editing is not supported when `withVirtualization` is enabled. Virtualized mode uses a
+different rendering path for performance, and editing requires the standard table body renderer.
+If you need both editing and large datasets, consider using server-side pagination instead of
+virtualization.
+
+## Validation
+
+Validate edited values before saving by checking in the `onCellEdit` or `onRowEdit` callback.
+Return early or show a notification if validation fails.
+
+```tsx
+onCellEdit={({ row, columnId, value }) => {
+  if (columnId === 'salary' && Number(value) < 0) {
+    notifications.show({ message: 'Salary cannot be negative', color: 'red' });
+    return;
+  }
+  updateData(row.original.id, columnId, value);
+}}
+```

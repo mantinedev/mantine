@@ -181,5 +181,6 @@ export const DOCGEN_PATHS = getDeclarationsPaths([
   { type: 'package', path: getPath('packages/@mantine/core/src/components') },
   { type: 'package', path: getPath('packages/@mantine/dates/src/components') },
   { type: 'package', path: getPath('packages/@mantine/charts/src') },
+  { type: 'package', path: getPath('packages/@mantine/data-grid/src') },
   ...FILES_PATHS.map((filePath) => ({ type: 'file' as const, path: filePath })),
 ]);

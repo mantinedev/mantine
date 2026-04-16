@@ -1,0 +1,57 @@
+import type { DataGridFactory } from '@mantine/data-grid';
+import type { StylesApiData } from '../types';
+
+export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
+  selectors: {
+    root: 'Root element',
+    table: 'Table element',
+    thead: 'Table header section',
+    tbody: 'Table body section',
+    tfoot: 'Table footer section',
+    tr: 'Table row',
+    th: 'Table header cell',
+    td: 'Table data cell',
+    headerCell: 'Header cell content wrapper (label + sort icon)',
+    sortIcon: 'Sort direction indicator icon',
+    resizeHandle: 'Column resize handle element',
+    toolbar: 'Top toolbar container',
+    globalFilter: 'Global search input wrapper in toolbar',
+    columnVisibilityToggle: 'Column visibility toggle button',
+    densityToggle: 'Density toggle button',
+    pagination: 'Pagination controls container',
+    loadingOverlay: 'Loading overlay container',
+    selectionCheckbox: 'Row selection checkbox',
+    selectAllCheckbox: 'Header select-all checkbox',
+    expandIcon: 'Row expand/collapse icon button',
+    expandedRow: 'Expanded row content cell',
+    rowNumber: 'Row number cell',
+    emptyState: 'Empty state content cell',
+    editCell: 'Cell content wrapper when in editing mode',
+    groupHeader: 'Group row header cell content',
+    groupToggle: 'Group row expand/collapse toggle button',
+    aggregationCell: 'Aggregation cell in group row',
+    statusBar: 'Status bar container at the bottom of the grid',
+    statusBarInfo: 'Individual status bar info text element',
+    virtualScrollContainer: 'Scroll container for virtualized mode',
+    virtualGrid: 'Grid container with ARIA grid role in virtualized mode',
+    virtualGridHeader: 'Header row in virtualized mode',
+    virtualRow: 'Data row in virtualized mode',
+    virtualCell: 'Cell in virtualized mode',
+  },
+
+  vars: {
+    root: {
+      '--dg-row-height': 'Controls default row height',
+      '--dg-header-height': 'Controls header row height',
+      '--dg-border-color': 'Controls border color of cells and grid',
+      '--dg-stripe-color': 'Controls background color of striped rows',
+      '--dg-hover-color': 'Controls background color on row hover',
+      '--dg-selected-color': 'Controls background color of selected rows',
+      '--dg-pinned-shadow': 'Controls box-shadow on pinned columns',
+      '--dg-font-size': 'Controls font size of cell content',
+      '--dg-spacing': 'Controls cell padding',
+    },
+  },
+
+  modifiers: [],
+};

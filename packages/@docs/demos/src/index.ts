@@ -168,6 +168,9 @@ export * as TreemapDemos from './demos/charts/Treemap';
 export * as SankeyChartDemos from './demos/charts/SankeyChart';
 export * as SunburstChartDemos from './demos/charts/SunburstChart';
 
+// @mantine/data-grid
+export * as DataGridDemos from './demos/data-grid/DataGrid';
+
 // @mantine/schedule
 export * as ScheduleDemos from './demos/schedule/Schedule';
 export * as MonthViewDemos from './demos/schedule/MonthView';

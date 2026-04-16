@@ -1,0 +1,47 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridRowFeatures);
+
+## Row selection
+
+Set `withRowSelection` to add checkbox selection to each row. A select-all checkbox is rendered
+in the header. Use `rowSelection` and `onRowSelectionChange` for controlled state. The `getRowId`
+prop is required to provide stable row identifiers.
+
+<Demo data={DataGridDemos.rowSelection} />
+
+## Controlled selection
+
+Use the `rowSelection` and `onRowSelectionChange` props to control selection state externally.
+Selection state is keyed by row IDs (from `getRowId`), not positional indexes.
+
+## Row expansion
+
+Set `withRowExpansion` to allow rows to expand and show additional detail content. Use the
+`renderExpandedRow` prop to define the expanded content. Click the expand icon to toggle a row.
+
+<Demo data={DataGridDemos.rowExpansion} />
+
+## Expand on click
+
+Set `expandOnRowClick` to `true` to toggle row expansion when clicking anywhere on the row,
+instead of requiring the expand icon.
+
+## Striped and hover
+
+Set `withStriped` to add alternating row colors and `withHighlightOnHover` to highlight rows
+on mouse hover. These props can be used together or independently.
+
+<Demo data={DataGridDemos.stripedHover} />
+
+## Row numbers
+
+Set `withRowNumbers` to display an auto-incrementing row number column as the first column
+in the grid.
+
+## Row reorder
+
+Row reordering can be implemented using TanStack Table row model utilities via the `tableOptions`
+escape hatch. This feature requires custom drag handle rendering in a column definition.

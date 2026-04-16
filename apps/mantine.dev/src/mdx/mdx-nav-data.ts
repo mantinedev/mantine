@@ -527,6 +527,24 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
   },
 
   {
+    category: 'Data grid',
+    pages: [
+      MDX_DATA.GettingStartedDataGrid,
+      MDX_DATA.DataGrid,
+      MDX_DATA.DataGridSorting,
+      MDX_DATA.DataGridFiltering,
+      MDX_DATA.DataGridPagination,
+      MDX_DATA.DataGridColumnFeatures,
+      MDX_DATA.DataGridRowFeatures,
+      MDX_DATA.DataGridVirtualization,
+      MDX_DATA.DataGridEditing,
+      MDX_DATA.DataGridGrouping,
+      MDX_DATA.DataGridServerSide,
+      MDX_DATA.DataGridCustomization,
+    ],
+  },
+
+  {
     category: 'Other extensions',
     pages: [
       MDX_DATA.Notifications,

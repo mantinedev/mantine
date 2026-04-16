@@ -1,0 +1,87 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridServerSide);
+
+## Overview
+
+Use server-side mode when your dataset is too large to load entirely in the browser, or when
+sorting, filtering, and pagination must be handled by an API. Enable server-side mode by setting
+the `manual*` props and providing controlled state for each feature.
+
+## Server-side sorting
+
+Set `manualSorting` to prevent DataGrid from sorting data client-side. Use controlled `sorting`
+and `onSortingChange` to send the sort state to your API.
+
+```tsx
+<DataGrid
+  data={serverData}
+  withSorting
+  manualSorting
+  sorting={sorting}
+  onSortingChange={setSorting}
+  columns={columns}
+/>
+```
+
+## Server-side filtering
+
+Set `manualFiltering` to disable client-side filtering. Use controlled `columnFilters`
+and `onColumnFiltersChange` to pass filter state to your API.
+
+```tsx
+<DataGrid
+  data={serverData}
+  withFiltering
+  manualFiltering
+  columnFilters={columnFilters}
+  onColumnFiltersChange={setColumnFilters}
+  columns={columns}
+/>
+```
+
+## Server-side pagination
+
+Set `manualPagination` and provide `rowCount` so DataGrid knows the total number of pages
+without having all data in memory.
+
+```tsx
+<DataGrid
+  data={serverData}
+  withPagination
+  manualPagination
+  pagination={pagination}
+  onPaginationChange={setPagination}
+  rowCount={totalRowCount}
+  columns={columns}
+/>
+```
+
+## Full example
+
+The following example combines server-side sorting, filtering, and pagination with a simulated
+API delay. The `loading` prop shows an overlay while data is being fetched.
+
+<Demo data={DataGridDemos.fullServerSide} />
+
+## Faceted filter options
+
+When using server-side filtering, the API typically returns available filter values alongside the data.
+Pass these as column `filterSelectOptions` to display a select dropdown instead of a free-text input.
+
+```tsx
+const columns = [
+  {
+    accessorKey: 'department',
+    header: 'Department',
+    filterSelectOptions: facetedValues.department,
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    filterSelectOptions: ['active', 'inactive'],
+  },
+];
+```

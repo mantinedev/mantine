@@ -1,3 +1,4 @@
+import { DataGridDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,30 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## @mantine/data-grid package
+
+New `@mantine/data-grid` package provides a fully-featured data grid component built on top of
+[TanStack Table](https://tanstack.com/table) and [TanStack Virtual](https://tanstack.com/virtual).
+It fills the gap left by community libraries with first-party Mantine integration, compound component
+architecture, and full Styles API support.
+
+Key features:
+- Sorting (single and multi-column), column and global filtering, pagination
+- Column resizing, pinning, visibility toggling, and drag-and-drop reordering
+- Row selection with checkboxes and Shift+click range select
+- Row expansion with detail panels
+- Row virtualization for 100k+ rows via `@tanstack/react-virtual`
+- Inline editing (cell and row modes) with validation
+- Grouping and aggregation with built-in functions
+- Server-side mode for sorting, filtering, and pagination
+- State persistence to localStorage, sessionStorage, or custom storage
+- Compound components for custom layouts (Toolbar, Table, Pagination, StatusBar)
+- Full accessibility: semantic `<table>` or ARIA grid roles with keyboard navigation
+
+### DataGrid
+
+[DataGrid](/data-grid/data-grid) renders a customizable data grid with all features enabled through
+`with*` boolean props:
+
+<Demo data={DataGridDemos.usage} />

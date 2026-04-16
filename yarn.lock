@@ -4027,6 +4027,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mantine/data-grid@workspace:packages/@mantine/data-grid":
+  version: 0.0.0-use.local
+  resolution: "@mantine/data-grid@workspace:packages/@mantine/data-grid"
+  dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@tanstack/react-table": "npm:^8.21.3"
+    "@tanstack/react-virtual": "npm:^3.13.21"
+    react: "npm:19.2.4"
+    react-dom: "npm:19.2.4"
+  peerDependencies:
+    "@mantine/core": 9.0.2
+    "@mantine/hooks": 9.0.2
+    "@tanstack/react-table": ">=8.20.0"
+    "@tanstack/react-virtual": ">=3.13.0"
+    react: ^19.2.0
+    react-dom: ^19.2.0
+  languageName: unknown
+  linkType: soft
+
 "@mantine/dates@workspace:*, @mantine/dates@workspace:packages/@mantine/dates":
   version: 0.0.0-use.local
   resolution: "@mantine/dates@workspace:packages/@mantine/dates"
@@ -5340,6 +5361,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-table@npm:^8.21.3":
+  version: 8.21.3
+  resolution: "@tanstack/react-table@npm:8.21.3"
+  dependencies:
+    "@tanstack/table-core": "npm:8.21.3"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 10c0/85d1d0fcb690ecc011f68a5a61c96f82142e31a0270dcf9cbc699a6f36715b1653fe6ff1518302a6d08b7093351fc4cabefd055a7db3cd8ac01e068956b0f944
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-virtual@npm:^3.13.21":
   version: 3.13.21
   resolution: "@tanstack/react-virtual@npm:3.13.21"
@@ -5349,6 +5382,13 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   checksum: 10c0/4af1da35de730cba482c94529e51b52f7a33aa1855270c572d67c80965931090301299b55ca2803a2c58d5082ba36be4ae252d972ce4cb225088ef391da405f3
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.21.3":
+  version: 8.21.3
+  resolution: "@tanstack/table-core@npm:8.21.3"
+  checksum: 10c0/40e3560e6d55e07cc047024aa7f83bd47a9323d21920d4adabba8071fd2d21230c48460b26cedf392588f8265b9edc133abb1b0d6d0adf4dae0970032900a8c9
   languageName: node
   linkType: hard
 

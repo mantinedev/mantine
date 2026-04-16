@@ -1,0 +1,324 @@
+.root {
+  --dg-row-height: var(--dg-row-height, auto);
+  --dg-header-height: var(--dg-header-height, auto);
+  --dg-border-color: var(--dg-border-color);
+  --dg-stripe-color: var(--dg-stripe-color);
+  --dg-hover-color: var(--dg-hover-color);
+  --dg-selected-color: var(--dg-selected-color);
+  --dg-pinned-shadow: var(--dg-pinned-shadow);
+  --dg-font-size: var(--dg-font-size);
+  --dg-spacing: var(--dg-spacing);
+
+  position: relative;
+}
+
+.root[data-density='compact'] {
+  --dg-spacing: var(--mantine-spacing-xs);
+  --dg-row-height: rem(28px);
+}
+
+.root[data-density='comfortable'] {
+  --dg-spacing: var(--mantine-spacing-md);
+  --dg-row-height: rem(48px);
+}
+
+.densityToggle {
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: var(--dg-font-size, var(--mantine-font-size-sm));
+  line-height: var(--mantine-line-height);
+
+  @mixin where-light {
+    --dg-border-color: var(--mantine-color-gray-3);
+    --dg-stripe-color: var(--mantine-color-gray-0);
+    --dg-hover-color: var(--mantine-color-gray-1);
+  }
+
+  @mixin where-dark {
+    --dg-border-color: var(--mantine-color-dark-4);
+    --dg-stripe-color: var(--mantine-color-dark-6);
+    --dg-hover-color: var(--mantine-color-dark-5);
+  }
+}
+
+.tbody {
+  border-collapse: inherit;
+}
+
+.thead {
+}
+
+.root[data-sticky-header] .thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--mantine-color-body);
+}
+
+.tr {
+  border-bottom: rem(1px) solid var(--dg-border-color);
+  outline: none;
+}
+
+.tr:focus-visible {
+  outline: rem(2px) solid var(--mantine-primary-color-filled);
+  outline-offset: rem(-2px);
+}
+
+.th {
+  text-align: start;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  height: var(--dg-header-height, auto);
+  position: relative;
+}
+
+.th[data-pinned-left],
+.th[data-pinned-right],
+.td[data-pinned-left],
+.td[data-pinned-right] {
+  position: sticky;
+  z-index: 1;
+  background: var(--mantine-color-body);
+}
+
+.th[data-pinned-left],
+.td[data-pinned-left] {
+  box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+}
+
+.th[data-pinned-right],
+.td[data-pinned-right] {
+  box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+}
+
+.td {
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  height: var(--dg-row-height, auto);
+}
+
+.headerCell {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+}
+
+.sortIcon {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.5;
+  margin-inline-start: rem(2px);
+}
+
+.th[data-sort-asc] .sortIcon,
+.th[data-sort-desc] .sortIcon {
+  opacity: 1;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  gap: var(--mantine-spacing-sm);
+}
+
+.globalFilter {
+  max-width: rem(300px);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+}
+
+.resizeHandle {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  width: rem(4px);
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+  background: var(--dg-border-color);
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.th:hover .resizeHandle,
+.resizeHandle[data-resizing] {
+  opacity: 1;
+}
+
+.resizeHandle[data-resizing] {
+  background: var(--mantine-primary-color-filled);
+}
+
+.tfoot {
+  border-top: rem(2px) solid var(--dg-border-color);
+}
+
+.columnVisibilityToggle {
+  display: inline-flex;
+}
+
+.loadingOverlay {
+  border-radius: inherit;
+}
+
+.tr[data-striped] {
+  background-color: var(--dg-stripe-color);
+}
+
+.tr[data-hover]:hover {
+  background-color: var(--dg-hover-color);
+}
+
+.tr[data-selected] {
+  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+}
+
+.selectionCheckbox {
+  cursor: pointer;
+}
+
+.selectAllCheckbox {
+  cursor: pointer;
+}
+
+.expandIcon {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.expandedRow {
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+}
+
+.rowNumber {
+  color: var(--mantine-color-dimmed);
+  width: rem(1px);
+  white-space: nowrap;
+}
+
+.emptyState {
+  padding: var(--mantine-spacing-xl);
+  text-align: center;
+  color: var(--mantine-color-dimmed);
+}
+
+.editCell {
+  padding: 0;
+}
+
+.groupHeader {
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.groupToggle {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.aggregationCell {
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+}
+
+.statusBar {
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  border-top: rem(1px) solid var(--dg-border-color);
+}
+
+.statusBarInfo {
+  white-space: nowrap;
+}
+
+.densityToggle {
+  display: inline-flex;
+}
+
+.virtualScrollContainer {
+  overflow: auto;
+  position: relative;
+}
+
+.virtualGrid {
+  width: 100%;
+  font-size: var(--dg-font-size, var(--mantine-font-size-sm));
+  line-height: var(--mantine-line-height);
+
+  @mixin where-light {
+    --dg-border-color: var(--mantine-color-gray-3);
+    --dg-stripe-color: var(--mantine-color-gray-0);
+    --dg-hover-color: var(--mantine-color-gray-1);
+  }
+
+  @mixin where-dark {
+    --dg-border-color: var(--mantine-color-dark-4);
+    --dg-stripe-color: var(--mantine-color-dark-6);
+    --dg-hover-color: var(--mantine-color-dark-5);
+  }
+}
+
+.virtualGridHeader {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--mantine-color-body);
+  border-bottom: rem(1px) solid var(--dg-border-color);
+}
+
+.virtualRow {
+  display: flex;
+  border-bottom: rem(1px) solid var(--dg-border-color);
+}
+
+.virtualRow[data-striped] {
+  background-color: var(--dg-stripe-color);
+}
+
+.virtualRow[data-hover]:hover {
+  background-color: var(--dg-hover-color);
+}
+
+.virtualRow[data-selected] {
+  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+}
+
+.virtualCell {
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  height: var(--dg-row-height, auto);
+  display: flex;
+  align-items: center;
+}
+
+.virtualCell[data-pinned-left],
+.virtualCell[data-pinned-right] {
+  position: sticky;
+  z-index: 1;
+  background: var(--mantine-color-body);
+}
+
+.virtualCell[data-pinned-left] {
+  box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+}
+
+.virtualCell[data-pinned-right] {
+  box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+}

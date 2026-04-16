@@ -1,0 +1,36 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridFiltering);
+
+## Column filters
+
+Set `withFiltering` to display filter inputs below each column header. Each column gets a text input
+that filters rows using a case-insensitive string match by default.
+
+<Demo data={DataGridDemos.columnFilters} />
+
+## Global search
+
+Set `withGlobalFilter` to enable cross-column search. Use the `DataGrid.GlobalFilter` compound component
+inside `DataGrid.Toolbar` to render the search input.
+
+<Demo data={DataGridDemos.globalFilter} />
+
+## Controlled filters
+
+Use the `columnFilters` and `onColumnFiltersChange` props to control filter state externally.
+The state follows the TanStack Table `ColumnFiltersState` format -- an array of `{ id: string, value: unknown }` objects.
+
+<Demo data={DataGridDemos.controlledFilters} />
+
+## Server-side filtering
+
+For server-side filtering, set `manualFiltering` to `true` and handle filtering in your data fetching logic.
+See the [Server-side](/data-grid/server-side) page for a complete example.
+
+## Clear filters
+
+Column filters can be cleared individually by emptying the filter input. To clear all filters programmatically,
+set the controlled `columnFilters` state to an empty array.

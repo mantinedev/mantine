@@ -10,6 +10,7 @@ export * from './data/AngleSlider.styles-api';
 export * from './data/AppShell.styles-api';
 export * from './data/AreaChart.styles-api';
 export * from './data/AspectRatio.styles-api';
+export * from './data/DataGrid.styles-api';
 export * from './data/Autocomplete.styles-api';
 export * from './data/Avatar.styles-api';
 export * from './data/BackgroundImage.styles-api';

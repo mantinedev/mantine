@@ -1,0 +1,149 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridCustomization);
+
+## Styles API
+
+DataGrid supports the standard Mantine `classNames` and `styles` props to customize individual parts
+of the component. Target any selector from the Styles API table on the [DataGrid](/data-grid/data-grid)
+component page.
+
+<Demo data={DataGridDemos.stylesApi} />
+
+## CSS variables
+
+DataGrid exposes the following CSS variables on the root element:
+
+| Variable | Description | Default |
+|---|---|---|
+| `--dg-row-height` | Row height | `40px` |
+| `--dg-header-height` | Header row height | `40px` |
+| `--dg-border-color` | Border color | `var(--mantine-color-default-border)` |
+| `--dg-stripe-color` | Striped row background | `var(--mantine-color-gray-0)` |
+| `--dg-hover-color` | Row hover background | `var(--mantine-color-gray-1)` |
+| `--dg-selected-color` | Selected row background | `var(--mantine-primary-color-light)` |
+| `--dg-pinned-shadow` | Shadow for pinned columns | `4px 0 8px rgba(0,0,0,0.1)` |
+| `--dg-font-size` | Cell font size | `var(--mantine-font-size-sm)` |
+| `--dg-spacing` | Cell padding | `var(--mantine-spacing-xs)` |
+
+## Density toggle
+
+Add a density toggle to the toolbar to let users switch between compact, default, and comfortable
+spacing. The toggle cycles through the three density modes.
+
+<Demo data={DataGridDemos.density} />
+
+You can also control density programmatically with `density` and `onDensityChange` props.
+
+## Compound components
+
+DataGrid renders a default layout when no children are provided. For custom layouts, use the compound
+component API to compose the grid from individual parts. This gives full control over ordering,
+wrapping, and conditional rendering.
+
+<Demo data={DataGridDemos.compoundComponents} />
+
+Available compound components:
+
+- `DataGrid.Toolbar` -- container for toolbar items
+- `DataGrid.GlobalFilter` -- global search input
+- `DataGrid.ColumnVisibilityToggle` -- column visibility menu
+- `DataGrid.DensityToggle` -- density toggle button
+- `DataGrid.Header` -- table header with column headers
+- `DataGrid.Body` -- table body with data rows
+- `DataGrid.VirtualBody` -- virtualized table body
+- `DataGrid.Footer` -- table footer
+- `DataGrid.Pagination` -- pagination controls
+- `DataGrid.StatusBar` -- status bar showing row counts
+
+## Status bar
+
+`DataGrid.StatusBar` displays total row count, filtered row count, and selected row count.
+Add it as a child of `DataGrid` when using the compound component pattern.
+
+```tsx
+<DataGrid data={data} withRowSelection columns={columns}>
+  <DataGrid.Header />
+  <DataGrid.Body />
+  <DataGrid.StatusBar />
+</DataGrid>
+```
+
+## Localization
+
+Override any text label by passing a `localization` object. All keys are optional -- only
+override what you need.
+
+```tsx
+<DataGrid
+  data={data}
+  localization={{
+    paginationRowsPerPage: '{count} par page',
+    paginationOf: 'sur',
+    filterPlaceholder: 'Filtrer...',
+    globalFilterPlaceholder: 'Rechercher...',
+    emptyStateText: 'Aucune donnee disponible',
+    statusBarTotalRows: '{count} lignes au total',
+    statusBarFilteredRows: '{count} filtrees',
+    statusBarSelectedRows: '{count} selectionnees',
+    densityCompact: 'Compact',
+    densityDefault: 'Normal',
+    densityComfortable: 'Confortable',
+  }}
+  columns={columns}
+/>
+```
+
+## State persistence
+
+Save and restore grid state (sorting, filters, pagination, column visibility, column sizing, density)
+using `localStorage` or any storage backend.
+
+```tsx
+const STORAGE_KEY = 'my-grid-state';
+
+function Demo() {
+  const [sorting, setSorting] = useState<SortingState>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved).sorting : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ sorting }));
+  }, [sorting]);
+
+  return (
+    <DataGrid
+      data={data}
+      sorting={sorting}
+      onSortingChange={setSorting}
+      columns={columns}
+    />
+  );
+}
+```
+
+## Custom storage
+
+For session storage, URL search params, or server-side persistence, implement the same pattern
+with your preferred storage mechanism. The controlled state props accept any state source.
+
+## TanStack passthrough
+
+The `tableOptions` prop provides an escape hatch to the underlying TanStack Table instance.
+Any option not covered by DataGrid props can be passed directly.
+
+```tsx
+<DataGrid
+  data={data}
+  tableOptions={{
+    enableMultiSort: true,
+    maxMultiSortColCount: 3,
+    sortDescFirst: false,
+    debugTable: process.env.NODE_ENV === 'development',
+  }}
+  columns={columns}
+/>
+```

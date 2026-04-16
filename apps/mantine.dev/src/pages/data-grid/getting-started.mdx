@@ -1,0 +1,77 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.GettingStartedDataGrid);
+
+## Installation
+
+Install `@mantine/data-grid` and its peer dependencies:
+
+<InstallScript packages="@mantine/data-grid @tanstack/react-table @tanstack/react-virtual" />
+
+After installation, import the package styles. Add the import after `@mantine/core` styles:
+
+```tsx
+import '@mantine/core/styles.css';
+import '@mantine/data-grid/styles.css';
+```
+
+Note: `@tanstack/react-virtual` is only needed if you plan to use the `withVirtualization` feature for large datasets.
+
+## Quick start
+
+```tsx
+import { DataGrid } from '@mantine/data-grid';
+
+const data = [
+  { id: '1', name: 'Alice', age: 30 },
+  { id: '2', name: 'Bob', age: 25 },
+];
+
+function Demo() {
+  return (
+    <DataGrid
+      data={data}
+      columns={[
+        { accessorKey: 'name', header: 'Name' },
+        { accessorKey: 'age', header: 'Age' },
+      ]}
+    />
+  );
+}
+```
+
+## Features overview
+
+DataGrid features are enabled with `with*` boolean props:
+
+| Prop | Default | Description |
+|------|---------|-------------|
+| `withSorting` | `true` | Single and multi-column sorting |
+| `withFiltering` | `false` | Per-column text/select/date filters |
+| `withGlobalFilter` | `false` | Cross-column search |
+| `withPagination` | `false` | Client or server-side pagination |
+| `withColumnResizing` | `false` | Drag column borders to resize |
+| `withColumnPinning` | `false` | Sticky left/right columns |
+| `withColumnVisibility` | `false` | Show/hide columns |
+| `withColumnReorder` | `false` | Drag-and-drop column reorder |
+| `withRowSelection` | `false` | Checkbox row selection |
+| `withRowExpansion` | `false` | Expandable detail panels |
+| `withVirtualization` | `false` | Row virtualization for large data |
+| `withGrouping` | `false` | Group rows by column values |
+| `withEditing` | `false` | Inline cell/row editing |
+| `withStriped` | `false` | Alternating row colors |
+| `withHighlightOnHover` | `false` | Row highlight on hover |
+| `withStickyHeader` | `false` | Sticky table header |
+| `withRowNumbers` | `false` | Auto row number column |
+
+## Peer dependencies
+
+`@mantine/data-grid` uses TanStack Table and TanStack Virtual as peer dependencies. This means you share versions with your application -- no bundled duplicates or version conflicts.
+
+| Package | Min version | Purpose |
+|---------|-------------|---------|
+| `@tanstack/react-table` | `>=8.20.0` | Headless table logic |
+| `@tanstack/react-virtual` | `>=3.13.0` | Row virtualization |
+| `@mantine/core` | `9.0.2` | UI components |
+| `@mantine/hooks` | `9.0.2` | React hooks |

@@ -1,0 +1,55 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridVirtualization);
+
+## Basic virtualization
+
+Set `withVirtualization` to enable row virtualization for large datasets. When virtualization is enabled,
+only the rows visible in the viewport are rendered to the DOM. The `height` prop is required to define the
+scrollable container size.
+
+<Demo data={DataGridDemos.virtualization} />
+
+## Virtual scroll config
+
+Fine-tune virtual scroll behavior with the `virtualScrollConfig` prop:
+
+- `overscan` -- number of rows rendered above and below the visible area (default: `5`)
+- `estimateSize` -- function returning the estimated row height in pixels (default: uses `--dg-row-height`)
+
+```tsx
+<DataGrid
+  data={data}
+  withVirtualization
+  height={500}
+  virtualScrollConfig={{
+    overscan: 10,
+    estimateSize: () => 48,
+  }}
+  columns={columns}
+/>
+```
+
+## Infinite scroll
+
+Use the `onScrollToBottom` callback to load more data when the user scrolls near the bottom of the grid.
+This works with or without virtualization. Combine with `loading` to show a loading overlay during fetch.
+
+<Demo data={DataGridDemos.infiniteScroll} />
+
+## Performance tips
+
+- Always memoize your `data` and `columns` arrays with `useMemo` to prevent unnecessary re-renders.
+- Set explicit `size` on columns to avoid layout recalculation.
+- Use `getRowId` to provide stable row identifiers instead of relying on array index.
+- Adjust `overscan` based on row height -- fewer overscan rows for tall rows, more for short rows.
+- For extremely large datasets (1M+ rows), consider server-side pagination instead.
+
+## Accessibility
+
+Virtualized grids maintain full ARIA grid semantics. DataGrid sets `role="grid"` on the root table element,
+`role="row"` on each row, and `role="gridcell"` / `role="columnheader"` on cells. Keyboard navigation with
+arrow keys moves focus between cells. `Home` and `End` scroll to the first and last rows respectively.
+Screen readers announce row position (e.g., "row 500 of 100,000") using `aria-rowindex`.

@@ -1,0 +1,29 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridPagination);
+
+## Basic pagination
+
+Set `withPagination` to split data across pages. Use the `pageSize` prop to control how many rows
+are displayed per page (defaults to `10`).
+
+<Demo data={DataGridDemos.pagination} />
+
+## Page size selector
+
+The pagination component includes a page size selector by default. Use the `pageSizeOptions` prop
+to customize the available options (e.g., `pageSizeOptions={[5, 10, 25, 50]}`).
+
+## Controlled pagination
+
+Use the `pagination` and `onPaginationChange` props to control pagination state externally.
+The state follows the TanStack Table `PaginationState` format -- `{ pageIndex: number, pageSize: number }`.
+
+<Demo data={DataGridDemos.controlledPagination} />
+
+## Server-side pagination
+
+For server-side pagination, set `manualPagination` to `true` and provide `rowCount` with the total
+number of rows. See the [Server-side](/data-grid/server-side) page for a complete example.

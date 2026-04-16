@@ -1,0 +1,36 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridSorting);
+
+## Basic sorting
+
+Sorting is enabled by default with the `withSorting` prop (defaults to `true`). Click any column header
+to cycle through ascending, descending, and unsorted states.
+
+<Demo data={DataGridDemos.sorting} />
+
+## Multi-column sort
+
+Hold `Shift` and click additional column headers to sort by multiple columns simultaneously.
+Enable multi-sort by passing `enableMultiSort: true` via `tableOptions`.
+
+<Demo data={DataGridDemos.multiSort} />
+
+## Controlled sorting
+
+Use the `sorting` and `onSortingChange` props to control sorting state externally.
+The state follows the TanStack Table `SortingState` format -- an array of `{ id: string, desc: boolean }` objects.
+
+<Demo data={DataGridDemos.controlledSorting} />
+
+## Server-side sorting
+
+For server-side sorting, set `manualSorting` to `true` and handle sorting in your data fetching logic.
+See the [Server-side](/data-grid/server-side) page for a complete example.
+
+## Accessibility
+
+DataGrid adds `aria-sort` attributes to sortable column headers automatically. Headers are focusable
+and can be activated with `Enter` or `Space` keys.

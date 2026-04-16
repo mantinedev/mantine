@@ -1,0 +1,55 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridColumnFeatures);
+
+## Column resizing
+
+Set `withColumnResizing` to allow users to drag column borders to resize them. You can set initial
+column widths using the `size` property in column definitions.
+
+<Demo data={DataGridDemos.columnResizing} />
+
+## Column pinning
+
+Set `withColumnPinning` to pin columns to the left or right edge of the grid. Pinned columns remain
+visible while scrolling horizontally. Use the `columnPinning` prop to set the initial pinned state.
+
+<Demo data={DataGridDemos.columnPinning} />
+
+## Column visibility
+
+Set `withColumnVisibility` to allow users to show and hide columns. Use the `DataGrid.ColumnVisibilityToggle`
+compound component inside `DataGrid.Toolbar` to render a column toggle menu.
+
+<Demo data={DataGridDemos.columnVisibility} />
+
+## Column reorder
+
+Set `withColumnReorder` to enable drag-and-drop column reordering. Users can drag column headers
+to rearrange the column order. Use `columnOrder` and `onColumnOrderChange` for controlled state.
+
+## Header groups
+
+Group columns under shared headers by nesting column definitions. Use the `columns` property
+on a column definition to create header groups:
+
+```tsx
+const columns = [
+  {
+    header: 'Name',
+    columns: [
+      { accessorKey: 'firstName', header: 'First' },
+      { accessorKey: 'lastName', header: 'Last' },
+    ],
+  },
+  {
+    header: 'Details',
+    columns: [
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'department', header: 'Department' },
+    ],
+  },
+];
+```
