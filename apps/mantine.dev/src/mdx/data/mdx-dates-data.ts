@@ -33,6 +33,17 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     docs: 'dates/date-input.mdx',
   },
 
+  MaskedDateInput: {
+    title: 'MaskedDateInput',
+    package: '@mantine/dates',
+    slug: '/dates/masked-date-input',
+    description: 'Masked date input with individual fields for day, month and year',
+    props: ['MaskedDateInput'],
+    styles: ['MaskedDateInput'],
+    source: '@mantine/dates/src/components/MaskedDateInput/MaskedDateInput.tsx',
+    docs: 'dates/masked-date-input.mdx',
+  },
+
   DatePicker: {
     title: 'DatePicker',
     package: '@mantine/dates',

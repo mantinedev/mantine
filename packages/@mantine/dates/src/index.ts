@@ -26,6 +26,7 @@ export * from './components/YearPicker/index.js';
 export * from './components/MonthPicker/index.js';
 export * from './components/DatePicker/index.js';
 export * from './components/DateInput/index.js';
+export * from './components/MaskedDateInput/index.js';
 export * from './components/DateTimePicker/index.js';
 export * from './components/InlineDateTimePicker/index.js';
 export * from './components/YearPickerInput/index.js';

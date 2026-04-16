@@ -143,6 +143,7 @@ export * as TimePickerDemos from './demos/dates/TimePicker';
 export * as TimeValueDemos from './demos/dates/TimeValue';
 export * as TimeGridDemos from './demos/dates/TimeGrid';
 export * as MiniCalendarDemos from './demos/dates/MiniCalendar';
+export * as MaskedDateInputDemos from './demos/dates/MaskedDateInput';
 
 // @mantine/charts
 export * as AreaChartDemos from './demos/charts/AreaChart';

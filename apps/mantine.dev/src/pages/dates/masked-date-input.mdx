@@ -1,0 +1,228 @@
+import { MaskedDateInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MaskedDateInput);
+
+## Usage
+
+`MaskedDateInput` is similar to [TimePicker](/dates/time-picker) but for dates.
+It provides individual masked input fields for day, month, and year with an optional
+calendar dropdown for date selection.
+
+<Demo data={MaskedDateInputDemos.usage} />
+
+## Controlled
+
+The `MaskedDateInput` value is a string in `YYYY-MM-DD` format (for example `2000-06-15`).
+When `withTime` is set, the value uses `YYYY-MM-DD HH:mm:ss` format (for example `2000-06-15 14:30:00`).
+`null` is used to represent no value. The `onChange` function is called when all fields are filled
+or when all fields are cleared.
+
+<Demo data={MaskedDateInputDemos.controlled} />
+
+## With time
+
+Set the `withTime` prop to display hours and minutes fields in addition to date fields.
+
+<Demo data={MaskedDateInputDemos.withTime} />
+
+## With seconds
+
+Set the `withSeconds` prop to display the seconds field. The `withTime` prop must also be set.
+
+<Demo data={MaskedDateInputDemos.withSeconds} />
+
+## 12-hour format
+
+Set `format="12h"` to use 12-hour time format. The am/pm selector is displayed automatically.
+
+<Demo data={MaskedDateInputDemos.format12h} />
+
+## Change am/pm labels
+
+Use the `amPmLabels` prop to customize am/pm labels:
+
+<Demo data={MaskedDateInputDemos.amPmLabels} />
+
+## Date separator
+
+Use the `dateSeparator` prop to change the separator displayed between date fields. The default is `/`.
+
+<Demo data={MaskedDateInputDemos.dateSeparator} />
+
+## Time separator
+
+Use the `timeSeparator` prop to change the separator displayed between time fields. The default is `:`.
+
+<Demo data={MaskedDateInputDemos.timeSeparator} />
+
+## Fields order
+
+Use the `fieldsOrder` prop to control the display order of day, month, and year fields.
+The default order is `['day', 'month', 'year']`.
+
+<Demo data={MaskedDateInputDemos.fieldsOrder} />
+
+## Min and max dates
+
+Set the `minDate` and `maxDate` props to restrict the selectable date range. If a value outside
+the allowed range is entered, it will be clamped to the nearest valid date on blur.
+
+<Demo data={MaskedDateInputDemos.minMax} />
+
+## Allow deselect
+
+Set the `allowDeselect` prop to allow clearing the value by clicking the selected date in the
+calendar dropdown:
+
+<Demo data={MaskedDateInputDemos.allowDeselect} />
+
+## Without dropdown
+
+Set `withDropdown={false}` to disable the calendar dropdown:
+
+<Demo data={MaskedDateInputDemos.withDropdown} />
+
+## Dropdown position
+
+Use `popoverProps` to pass props down to the underlying [Popover](/core/popover) component.
+For example, to always display the dropdown above the input:
+
+<Demo data={MaskedDateInputDemos.dropdownPosition} />
+
+## Hours/minutes/seconds step
+
+Use `hoursStep`, `minutesStep` and `secondsStep` props to control the increment/decrement step
+for each time field when using arrow keys:
+
+<Demo data={MaskedDateInputDemos.steps} />
+
+## Paste events
+
+By default, `MaskedDateInput` does not handle paste events. With the `pasteSplit` prop you can
+provide a custom paste parser that extracts day, month, and year values from a pasted string:
+
+<Demo data={MaskedDateInputDemos.pasteSplit} />
+
+## Clearable
+
+Set the `clearable` prop to display a clear button in the right section of the input.
+
+<Demo data={MaskedDateInputDemos.clearable} />
+
+<ClearSectionMode />
+
+<Demo data={MaskedDateInputDemos.clearSectionMode} />
+
+## Disabled
+
+<Demo data={MaskedDateInputDemos.disabled} />
+
+## Read only
+
+<Demo data={MaskedDateInputDemos.readOnly} />
+
+## Input props
+
+<InputFeatures component="MaskedDateInput" element="div" />
+
+<Demo data={MaskedDateInputDemos.configurator} />
+
+## Get refs
+
+Use `dayRef`, `monthRef`, `yearRef`, `hoursRef`, `minutesRef`, `secondsRef` and `amPmRef` props
+to get refs of the inner inputs:
+
+```tsx
+import { useRef } from 'react';
+import { MaskedDateInput } from '@mantine/dates';
+
+function Demo() {
+  const dayRef = useRef<HTMLInputElement>(null);
+  const monthRef = useRef<HTMLInputElement>(null);
+  const yearRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <MaskedDateInput
+      dayRef={dayRef}
+      monthRef={monthRef}
+      yearRef={yearRef}
+    />
+  );
+}
+```
+
+## onFocus and onBlur
+
+`onFocus` is called when one of the inputs receives focus and `onBlur` is called when focus
+leaves all inputs:
+
+```tsx
+import { MaskedDateInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MaskedDateInput
+      onFocus={() => console.log('Focused')}
+      onBlur={() => console.log('Blurred')}
+    />
+  );
+}
+```
+
+## Accessibility
+
+Set `aria-label` for each field using the corresponding props. Also set an `aria-label` for the
+clear button if `clearable` is used:
+
+```tsx
+import { MaskedDateInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MaskedDateInput
+      dayInputLabel="Day"
+      monthInputLabel="Month"
+      yearInputLabel="Year"
+      hoursInputLabel="Hours"
+      minutesInputLabel="Minutes"
+      secondsInputLabel="Seconds"
+      amPmInputLabel="AM/PM"
+      clearButtonProps={{ 'aria-label': 'Clear date' }}
+    />
+  );
+}
+```
+
+Keyboard interactions:
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowDown',
+      description: 'Decrements current value by step',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Increments current value by step',
+    },
+    {
+      key: 'Home',
+      description: 'Sets current value to min possible value',
+    },
+    {
+      key: 'End',
+      description: 'Sets current value to max possible value',
+    },
+    { key: 'Backspace', description: 'Clears current value' },
+    {
+      key: 'ArrowRight',
+      description: 'Moves focus to the next input',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Moves focus to the previous input',
+    },
+  ]}
+/>

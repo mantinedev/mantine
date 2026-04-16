@@ -1,0 +1,104 @@
+import { renderDemo } from '../../../render-demo';
+import * as demos from './index';
+
+export default { title: 'MaskedDateInput' };
+
+export const Demo_usage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+
+export const Demo_controlled = {
+  name: '⭐ Demo: controlled',
+  render: renderDemo(demos.controlled),
+};
+
+export const Demo_withTime = {
+  name: '⭐ Demo: withTime',
+  render: renderDemo(demos.withTime),
+};
+
+export const Demo_withSeconds = {
+  name: '⭐ Demo: withSeconds',
+  render: renderDemo(demos.withSeconds),
+};
+
+export const Demo_format12h = {
+  name: '⭐ Demo: format12h',
+  render: renderDemo(demos.format12h),
+};
+
+export const Demo_amPmLabels = {
+  name: '⭐ Demo: amPmLabels',
+  render: renderDemo(demos.amPmLabels),
+};
+
+export const Demo_dateSeparator = {
+  name: '⭐ Demo: dateSeparator',
+  render: renderDemo(demos.dateSeparator),
+};
+
+export const Demo_timeSeparator = {
+  name: '⭐ Demo: timeSeparator',
+  render: renderDemo(demos.timeSeparator),
+};
+
+export const Demo_fieldsOrder = {
+  name: '⭐ Demo: fieldsOrder',
+  render: renderDemo(demos.fieldsOrder),
+};
+
+export const Demo_minMax = {
+  name: '⭐ Demo: minMax',
+  render: renderDemo(demos.minMax),
+};
+
+export const Demo_allowDeselect = {
+  name: '⭐ Demo: allowDeselect',
+  render: renderDemo(demos.allowDeselect),
+};
+
+export const Demo_withDropdown = {
+  name: '⭐ Demo: withDropdown',
+  render: renderDemo(demos.withDropdown),
+};
+
+export const Demo_dropdownPosition = {
+  name: '⭐ Demo: dropdownPosition',
+  render: renderDemo(demos.dropdownPosition),
+};
+
+export const Demo_steps = {
+  name: '⭐ Demo: steps',
+  render: renderDemo(demos.steps),
+};
+
+export const Demo_pasteSplit = {
+  name: '⭐ Demo: pasteSplit',
+  render: renderDemo(demos.pasteSplit),
+};
+
+export const Demo_clearable = {
+  name: '⭐ Demo: clearable',
+  render: renderDemo(demos.clearable),
+};
+
+export const Demo_clearSectionMode = {
+  name: '⭐ Demo: clearSectionMode',
+  render: renderDemo(demos.clearSectionMode),
+};
+
+export const Demo_disabled = {
+  name: '⭐ Demo: disabled',
+  render: renderDemo(demos.disabled),
+};
+
+export const Demo_readOnly = {
+  name: '⭐ Demo: readOnly',
+  render: renderDemo(demos.readOnly),
+};
+
+export const Demo_configurator = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};

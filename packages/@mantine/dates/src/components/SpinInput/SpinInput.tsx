@@ -13,6 +13,8 @@ interface SpinInputProps extends Omit<React.ComponentProps<'input'>, 'onChange' 
   allowTemporaryZero?: boolean;
   placeholder?: string;
   disableAutoAdvance?: boolean;
+  padValue?: (value: number) => string;
+  maxDigits?: number;
 }
 
 const getMaxDigit = (max: number) => Number(max.toFixed(0)[0]);
@@ -31,6 +33,8 @@ export function SpinInput({
   allowTemporaryZero = false,
   placeholder = '--',
   disableAutoAdvance = false,
+  padValue,
+  maxDigits,
   ...others
 }: SpinInputProps) {
   const maxDigit = getMaxDigit(max);
@@ -49,7 +53,9 @@ export function SpinInput({
 
       onChange(clampedValue);
 
-      if (!disableAutoAdvance && (clampedValue > maxDigit || value.startsWith('00'))) {
+      if (maxDigits && clearValue.length >= maxDigits) {
+        onNextInput?.();
+      } else if (!disableAutoAdvance && (clampedValue > maxDigit || value.startsWith('00'))) {
         onNextInput?.();
       }
     }
@@ -120,7 +126,7 @@ export function SpinInput({
       data-empty={value === null || undefined}
       inputMode="numeric"
       placeholder={placeholder}
-      value={value === null ? '' : padTime(value)}
+      value={value === null ? '' : (padValue || padTime)(value)}
       onChange={(event) => handleChange(event.currentTarget.value)}
       onKeyDown={handleKeyDown}
       onFocus={(event) => {
