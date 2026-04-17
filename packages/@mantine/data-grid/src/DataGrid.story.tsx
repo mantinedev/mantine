@@ -199,13 +199,14 @@ const employees: Employee[] = [
 ];
 
 const columns: ColumnDef<Employee>[] = [
-  { accessorKey: 'firstName', header: 'First Name' },
-  { accessorKey: 'lastName', header: 'Last Name' },
+  { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
+  { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
   { accessorKey: 'email', header: 'Email' },
-  { accessorKey: 'department', header: 'Department' },
+  { accessorKey: 'department', header: 'Department', enableSorting: true },
   {
     accessorKey: 'salary',
     header: 'Salary',
+    enableSorting: true,
     cell: (info) => `$${info.getValue<number>().toLocaleString()}`,
   },
   { accessorKey: 'status', header: 'Status' },
@@ -422,8 +423,8 @@ export function StripedHover() {
         data={employees}
         columns={columns}
         getRowId={(row) => row.id}
-        withStriped
-        withHighlightOnHover
+        striped
+        highlightOnHover
       />
     </Box>
   );
@@ -487,7 +488,7 @@ export function StickyHeader() {
         data={manyRows}
         columns={columns}
         getRowId={(row) => row.id}
-        withStickyHeader
+        stickyHeader
         height={400}
       />
     </Box>
@@ -619,9 +620,9 @@ export function AllFeatures() {
         withRowSelection
         withRowExpansion
         withRowNumbers
-        withStriped
-        withHighlightOnHover
-        withStickyHeader
+        striped
+        highlightOnHover
+        stickyHeader
         withGrouping
         withEditing
         editingMode="cell"

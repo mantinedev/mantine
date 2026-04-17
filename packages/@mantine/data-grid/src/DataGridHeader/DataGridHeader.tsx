@@ -35,10 +35,6 @@ export type DataGridHeaderFactory = Factory<{
 }>;
 
 function SortIcon({ direction }: { direction: 'asc' | 'desc' | false }) {
-  if (!direction) {
-    return null;
-  }
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

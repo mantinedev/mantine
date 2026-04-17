@@ -33,7 +33,7 @@ export interface UseDataGridOptions<TData> {
   /** Function to derive stable row ID */
   getRowId?: (row: TData, index: number, parent?: Row<TData>) => string;
 
-  /** Enable sorting, @default true */
+  /** Enable sorting, @default false */
   withSorting?: boolean;
 
   /** Controlled sorting state */
@@ -159,7 +159,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>) {
     data,
     columns,
     getRowId,
-    withSorting = true,
+    withSorting = false,
     sorting,
     onSortingChange,
     manualSorting,
@@ -201,9 +201,16 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>) {
     tableOptions,
   } = options;
 
+  const processedColumns = withSorting
+    ? columns.map((col) => ({
+        enableSorting: false,
+        ...col,
+      }))
+    : columns;
+
   const tableConfig: TableOptions<TData> = {
     data,
-    columns,
+    columns: processedColumns,
     getRowId,
     getCoreRowModel: getCoreRowModel(),
     ...tableOptions,

@@ -34,6 +34,7 @@ import { TableProvider, type TableContextValue } from './Table.context';
 import { TableDataRenderer } from './TableDataRenderer';
 import { TableScrollContainer, type TableScrollContainerProps } from './TableScrollContainer';
 import classes from './Table.module.css';
+
 export type TableVariant = 'default' | 'vertical';
 
 export type TableStylesNames =

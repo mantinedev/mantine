@@ -134,7 +134,7 @@ export interface DataGridProps<TData = any>
   /** Grid content */
   children?: React.ReactNode;
 
-  /** Enable sorting, @default true */
+  /** Enable sorting, @default false */
   withSorting?: boolean;
 
   /** Controlled sorting state */
@@ -255,10 +255,10 @@ export interface DataGridProps<TData = any>
   onExpandedChange?: OnChangeFn<ExpandedState>;
 
   /** Add striped rows styling, @default false */
-  withStriped?: boolean;
+  striped?: boolean;
 
   /** Add hover highlight on rows, @default false */
-  withHighlightOnHover?: boolean;
+  highlightOnHover?: boolean;
 
   /** Show row numbers column, @default false */
   withRowNumbers?: boolean;
@@ -312,7 +312,7 @@ export interface DataGridProps<TData = any>
   onRowEdit?: (props: { row: Row<any>; values: Record<string, unknown> }) => void;
 
   /** Make the header sticky when scrolling, @default false */
-  withStickyHeader?: boolean;
+  stickyHeader?: boolean;
 
   /** Grid density, @default 'default' */
   density?: DataGridDensity;
@@ -346,9 +346,7 @@ export type DataGridFactory = Factory<{
   };
 }>;
 
-const defaultProps = {
-  withSorting: true,
-} satisfies Partial<DataGridProps>;
+const defaultProps = {} satisfies Partial<DataGridProps>;
 
 const varsResolver = createVarsResolver<DataGridFactory>(
   (theme, { borderColor, spacing, rowHeight, headerHeight }) => ({
@@ -425,8 +423,8 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     expandOnRowClick,
     expanded,
     onExpandedChange,
-    withStriped,
-    withHighlightOnHover,
+    striped,
+    highlightOnHover,
     withRowNumbers,
     onRowClick,
     onRowDoubleClick,
@@ -443,7 +441,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     editingMode,
     onCellEdit,
     onRowEdit,
-    withStickyHeader,
+    stickyHeader,
     density: densityProp,
     onDensityChange: onDensityChangeProp,
     localization: localizationProp,
@@ -542,7 +540,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
       value={{
         getStyles,
         table,
-        withSorting: withSorting ?? true,
+        withSorting: withSorting ?? false,
         withFiltering: withFiltering ?? false,
         withGlobalFilter: withGlobalFilter ?? false,
         withPagination: withPagination ?? false,
@@ -552,13 +550,13 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         withColumnReorder: withColumnReorder ?? false,
         withRowSelection: withRowSelection ?? false,
         withRowExpansion: withRowExpansion ?? false,
-        withStriped: withStriped ?? false,
-        withHighlightOnHover: withHighlightOnHover ?? false,
+        striped: striped ?? false,
+        highlightOnHover: highlightOnHover ?? false,
         withRowNumbers: withRowNumbers ?? false,
         withVirtualization: withVirtualization ?? false,
         withGrouping: withGrouping ?? false,
         withEditing: withEditing ?? false,
-        withStickyHeader: withStickyHeader ?? false,
+        stickyHeader: stickyHeader ?? false,
         expandOnRowClick: expandOnRowClick ?? false,
         editingMode: editingMode ?? 'cell',
         density,
@@ -579,7 +577,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
           {
             loading,
             virtualized: withVirtualization || undefined,
-            'sticky-header': withStickyHeader || undefined,
+            'sticky-header': stickyHeader || undefined,
           },
           mod,
         ]}
@@ -589,6 +587,11 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
       >
         {children || (
           <>
+            {withGlobalFilter && (
+              <DataGridToolbar>
+                <DataGridGlobalFilter />
+              </DataGridToolbar>
+            )}
             {withVirtualization ? (
               <>
                 <DataGridVirtualBody
@@ -617,10 +620,12 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
                 </Box>
               </Box>
             ) : (
-              <Box component="table" {...getStyles('table')}>
-                <DataGridHeader />
-                <DataGridBody />
-                {hasFooter && <DataGridFooter />}
+              <Box style={{ overflowX: 'auto' }}>
+                <Box component="table" {...getStyles('table')}>
+                  <DataGridHeader />
+                  <DataGridBody />
+                  {hasFooter && <DataGridFooter />}
+                </Box>
               </Box>
             )}
             {withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}

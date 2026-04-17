@@ -22,13 +22,14 @@ function Demo() {
       </Text>
       <DataGrid
         data={employees}
+        withSorting
         sorting={sorting}
         onSortingChange={setSorting}
         columns={[
-          { accessorKey: 'firstName', header: 'First Name' },
-          { accessorKey: 'lastName', header: 'Last Name' },
-          { accessorKey: 'department', header: 'Department' },
-          { accessorKey: 'salary', header: 'Salary' },
+          { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
+          { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
+          { accessorKey: 'department', header: 'Department', enableSorting: true },
+          { accessorKey: 'salary', header: 'Salary', enableSorting: true },
           { accessorKey: 'status', header: 'Status' },
         ]}
       />
@@ -47,13 +48,14 @@ function Demo() {
       </Text>
       <DataGrid
         data={employees}
+        withSorting
         sorting={sorting}
         onSortingChange={setSorting}
         columns={[
-          { accessorKey: 'firstName', header: 'First Name' },
-          { accessorKey: 'lastName', header: 'Last Name' },
-          { accessorKey: 'department', header: 'Department' },
-          { accessorKey: 'salary', header: 'Salary' },
+          { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
+          { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
+          { accessorKey: 'department', header: 'Department', enableSorting: true },
+          { accessorKey: 'salary', header: 'Salary', enableSorting: true },
           { accessorKey: 'status', header: 'Status' },
         ]}
       />

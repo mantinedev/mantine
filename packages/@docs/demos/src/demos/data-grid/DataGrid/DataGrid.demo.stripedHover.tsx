@@ -10,8 +10,8 @@ function Demo() {
   return (
     <DataGrid
       data={employees}
-      withStriped
-      withHighlightOnHover
+      striped
+      highlightOnHover
       columns={[
         { accessorKey: 'firstName', header: 'First Name' },
         { accessorKey: 'lastName', header: 'Last Name' },
@@ -28,8 +28,8 @@ function Demo() {
   return (
     <DataGrid
       data={employees}
-      withStriped
-      withHighlightOnHover
+      striped
+      highlightOnHover
       columns={[
         { accessorKey: 'firstName', header: 'First Name' },
         { accessorKey: 'lastName', header: 'Last Name' },

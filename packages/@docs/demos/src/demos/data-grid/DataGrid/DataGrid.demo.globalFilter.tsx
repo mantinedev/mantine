@@ -18,13 +18,7 @@ function Demo() {
         { accessorKey: 'department', header: 'Department' },
         { accessorKey: 'salary', header: 'Salary' },
       ]}
-    >
-      <DataGrid.Toolbar>
-        <DataGrid.GlobalFilter />
-      </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
-    </DataGrid>
+    />
   );
 }
 `;
@@ -41,13 +35,7 @@ function Demo() {
         { accessorKey: 'department', header: 'Department' },
         { accessorKey: 'salary', header: 'Salary' },
       ]}
-    >
-      <DataGrid.Toolbar>
-        <DataGrid.GlobalFilter />
-      </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
-    </DataGrid>
+    />
   );
 }
 

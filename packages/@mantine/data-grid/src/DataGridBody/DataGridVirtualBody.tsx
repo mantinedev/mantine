@@ -141,7 +141,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         const row = rows[virtualItem.index];
         const rowIndex = virtualItem.index;
         const isSelected = ctx.withRowSelection && row.getIsSelected();
-        const isStriped = ctx.withStriped && rowIndex % 2 === 1;
+        const isStriped = ctx.striped && rowIndex % 2 === 1;
         const isExpanded = ctx.withRowExpansion && row.getIsExpanded() && ctx.renderExpandedRow;
 
         const handleRowClick = (event: React.MouseEvent) => {
@@ -189,7 +189,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
               tabIndex={hasRowClickHandler ? 0 : undefined}
               data-selected={isSelected || undefined}
               data-striped={isStriped || undefined}
-              data-hover={ctx.withHighlightOnHover || undefined}
+              data-hover={ctx.highlightOnHover || undefined}
               onClick={hasRowClickHandler ? handleRowClick : undefined}
               onKeyDown={handleRowKeyDown}
               onDoubleClick={handleRowDoubleClick}
@@ -478,10 +478,6 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
 });
 
 function SortIcon({ direction }: { direction: 'asc' | 'desc' | false }) {
-  if (!direction) {
-    return null;
-  }
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

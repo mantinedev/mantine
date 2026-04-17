@@ -49,9 +49,9 @@ export const usage: MantineDemo = {
     { code: dataCode, language: 'tsx', fileName: 'data.ts' },
   ],
   controls: [
-    { type: 'boolean', prop: 'withStriped', initialValue: false, libraryValue: false },
-    { type: 'boolean', prop: 'withHighlightOnHover', initialValue: false, libraryValue: false },
-    { type: 'boolean', prop: 'withStickyHeader', initialValue: false, libraryValue: false },
+    { type: 'boolean', prop: 'striped', initialValue: false, libraryValue: false },
+    { type: 'boolean', prop: 'highlightOnHover', initialValue: false, libraryValue: false },
+    { type: 'boolean', prop: 'stickyHeader', initialValue: false, libraryValue: false },
     { type: 'boolean', prop: 'withRowNumbers', initialValue: false, libraryValue: false },
   ],
 };

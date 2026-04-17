@@ -47,7 +47,7 @@ DataGrid features are enabled with `with*` boolean props:
 
 | Prop | Default | Description |
 |------|---------|-------------|
-| `withSorting` | `true` | Single and multi-column sorting |
+| `withSorting` | `false` | Single and multi-column sorting (requires `enableSorting: true` on columns) |
 | `withFiltering` | `false` | Per-column text/select/date filters |
 | `withGlobalFilter` | `false` | Cross-column search |
 | `withPagination` | `false` | Client or server-side pagination |
@@ -60,9 +60,9 @@ DataGrid features are enabled with `with*` boolean props:
 | `withVirtualization` | `false` | Row virtualization for large data |
 | `withGrouping` | `false` | Group rows by column values |
 | `withEditing` | `false` | Inline cell/row editing |
-| `withStriped` | `false` | Alternating row colors |
-| `withHighlightOnHover` | `false` | Row highlight on hover |
-| `withStickyHeader` | `false` | Sticky table header |
+| `striped` | `false` | Alternating row colors |
+| `highlightOnHover` | `false` | Row highlight on hover |
+| `stickyHeader` | `false` | Sticky table header |
 | `withRowNumbers` | `false` | Auto row number column |
 
 ## Peer dependencies

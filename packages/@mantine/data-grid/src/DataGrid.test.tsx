@@ -59,8 +59,13 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('sorting', () => {
+    const sortableColumns = [
+      { accessorKey: 'name', header: 'Name', enableSorting: true },
+      { accessorKey: 'age', header: 'Age', enableSorting: true },
+    ];
+
     it('sorts ascending on header click when withSorting is true', async () => {
-      render(<DataGrid {...defaultProps} withSorting />);
+      render(<DataGrid {...defaultProps} columns={sortableColumns} withSorting />);
       const nameHeader = screen.getByText('Name');
       await userEvent.click(nameHeader);
 
@@ -70,7 +75,7 @@ describe('@mantine/data-grid/DataGrid', () => {
     });
 
     it('sorts descending on second click', async () => {
-      render(<DataGrid {...defaultProps} withSorting />);
+      render(<DataGrid {...defaultProps} columns={sortableColumns} withSorting />);
       const nameHeader = screen.getByText('Name');
       await userEvent.click(nameHeader);
       await userEvent.click(nameHeader);
@@ -81,7 +86,9 @@ describe('@mantine/data-grid/DataGrid', () => {
     });
 
     it('sets aria-sort attribute on sorted header', async () => {
-      const { container } = render(<DataGrid {...defaultProps} withSorting />);
+      const { container } = render(
+        <DataGrid {...defaultProps} columns={sortableColumns} withSorting />
+      );
       const nameHeader = screen.getByText('Name');
       await userEvent.click(nameHeader);
 
@@ -99,6 +106,21 @@ describe('@mantine/data-grid/DataGrid', () => {
       await userEvent.click(nameHeader);
 
       const sortedTh = container.querySelector('th[aria-sort]');
+      expect(sortedTh).not.toBeInTheDocument();
+    });
+
+    it('does not sort columns without enableSorting', async () => {
+      const mixedColumns = [
+        { accessorKey: 'name', header: 'Name', enableSorting: true },
+        { accessorKey: 'age', header: 'Age' },
+      ];
+      const { container } = render(
+        <DataGrid {...defaultProps} columns={mixedColumns} withSorting />
+      );
+      const ageHeader = screen.getByText('Age');
+      await userEvent.click(ageHeader);
+
+      const sortedTh = container.querySelector('th[aria-sort="ascending"]');
       expect(sortedTh).not.toBeInTheDocument();
     });
   });
@@ -219,8 +241,8 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('striped and hover', () => {
-    it('adds data-striped attribute when withStriped is true', () => {
-      const { container } = render(<DataGrid {...defaultProps} withStriped />);
+    it('adds data-striped attribute when striped is true', () => {
+      const { container } = render(<DataGrid {...defaultProps} striped />);
       const stripedRows = container.querySelectorAll('tbody tr[data-striped]');
       expect(stripedRows.length).toBeGreaterThan(0);
     });

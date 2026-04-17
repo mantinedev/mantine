@@ -65,7 +65,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
 
   const ctx = useDataGridContext();
   const isSelected = ctx.withRowSelection && row.getIsSelected();
-  const isStriped = ctx.withStriped && rowIndex % 2 === 1;
+  const isStriped = ctx.striped && rowIndex % 2 === 1;
 
   const handleRowClick = (event: React.MouseEvent) => {
     if (ctx.onRowClick) {
@@ -89,7 +89,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       data-row-index={rowIndex}
       data-selected={isSelected || undefined}
       data-striped={isStriped || undefined}
-      data-hover={ctx.withHighlightOnHover || undefined}
+      data-hover={ctx.highlightOnHover || undefined}
       onClick={ctx.onRowClick || ctx.expandOnRowClick ? handleRowClick : undefined}
       onDoubleClick={handleRowDoubleClick}
       {...ctx.getStyles('tr', { className, classNames, style, styles })}

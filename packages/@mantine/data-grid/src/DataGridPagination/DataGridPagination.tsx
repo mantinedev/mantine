@@ -45,6 +45,10 @@ export const DataGridPagination = factory<DataGridPaginationFactory>((props) => 
   const currentPage = table.getState().pagination.pageIndex + 1;
   const currentPageSize = table.getState().pagination.pageSize;
 
+  const allOptions = pageSizeOptions!.includes(currentPageSize)
+    ? pageSizeOptions!
+    : [...pageSizeOptions!, currentPageSize].sort((a, b) => a - b);
+
   return (
     <Box {...ctx.getStyles('pagination', { className, classNames, style, styles })} {...others}>
       <Group justify="space-between">
@@ -56,7 +60,7 @@ export const DataGridPagination = factory<DataGridPaginationFactory>((props) => 
               table.setPageSize(Number(value));
             }
           }}
-          data={pageSizeOptions!.map((size) => ({
+          data={allOptions.map((size) => ({
             value: String(size),
             label: ctx.localization.paginationRowsPerPage.replace('{count}', String(size)),
           }))}
@@ -68,6 +72,7 @@ export const DataGridPagination = factory<DataGridPaginationFactory>((props) => 
           total={pageCount}
           value={currentPage}
           onChange={(page) => table.setPageIndex(page - 1)}
+          hideWithOnePage
         />
       </Group>
     </Box>

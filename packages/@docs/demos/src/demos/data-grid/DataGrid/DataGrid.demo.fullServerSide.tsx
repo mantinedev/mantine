@@ -94,10 +94,10 @@ function Demo() {
   const columns = useMemo(
     () => [
       { accessorKey: 'id' as const, header: 'ID', size: 80 },
-      { accessorKey: 'name' as const, header: 'Name' },
-      { accessorKey: 'email' as const, header: 'Email' },
-      { accessorKey: 'department' as const, header: 'Department' },
-      { accessorKey: 'salary' as const, header: 'Salary' },
+      { accessorKey: 'name' as const, header: 'Name', enableSorting: true },
+      { accessorKey: 'email' as const, header: 'Email', enableSorting: true },
+      { accessorKey: 'department' as const, header: 'Department', enableSorting: true },
+      { accessorKey: 'salary' as const, header: 'Salary', enableSorting: true },
     ],
     []
   );
@@ -213,10 +213,10 @@ function Demo() {
   const columns = useMemo(
     () => [
       { accessorKey: 'id' as const, header: 'ID', size: 80 },
-      { accessorKey: 'name' as const, header: 'Name' },
-      { accessorKey: 'email' as const, header: 'Email' },
-      { accessorKey: 'department' as const, header: 'Department' },
-      { accessorKey: 'salary' as const, header: 'Salary' },
+      { accessorKey: 'name' as const, header: 'Name', enableSorting: true },
+      { accessorKey: 'email' as const, header: 'Email', enableSorting: true },
+      { accessorKey: 'department' as const, header: 'Department', enableSorting: true },
+      { accessorKey: 'salary' as const, header: 'Salary', enableSorting: true },
     ],
     []
   );

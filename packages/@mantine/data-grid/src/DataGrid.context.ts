@@ -18,13 +18,13 @@ export interface DataGridContextValue {
   withColumnReorder: boolean;
   withRowSelection: boolean;
   withRowExpansion: boolean;
-  withStriped: boolean;
-  withHighlightOnHover: boolean;
+  striped: boolean;
+  highlightOnHover: boolean;
   withRowNumbers: boolean;
   withVirtualization: boolean;
   withGrouping: boolean;
   withEditing: boolean;
-  withStickyHeader: boolean;
+  stickyHeader: boolean;
   expandOnRowClick: boolean;
   editingMode: 'cell' | 'row';
   density: DataGridDensity;
