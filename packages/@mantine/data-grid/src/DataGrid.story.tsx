@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge, Box, Group, Stack, Text } from '@mantine/core';
 import { DataGrid } from './index';
 
-export default { title: 'data-grid/DataGrid' };
+export default { title: 'DataGrid' };
 
 interface Employee {
   id: string;
