@@ -31,6 +31,7 @@ export interface InlineInputProps
   id: string;
   disabled: boolean | undefined;
   error: React.ReactNode;
+  errorId?: string;
   size: MantineSize | (string & {}) | undefined;
   labelPosition?: 'left' | 'right';
   bodyElement?: any;
@@ -55,6 +56,7 @@ export function InlineInput({
   id,
   disabled,
   error,
+  errorId,
   size,
   labelPosition = 'left',
   bodyElement = 'div',
@@ -116,7 +118,7 @@ export function InlineInput({
           )}
 
           {error && typeof error !== 'boolean' && (
-            <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
+            <Input.Error size={size} __inheritStyles={false} id={errorId} {...getStyles('error')}>
               {error}
             </Input.Error>
           )}
