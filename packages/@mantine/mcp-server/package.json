@@ -37,7 +37,5 @@
   "engines": {
     "node": ">=20.9.0"
   },
-  "bin": {
-    "mantine-mcp-server": "./bin/mantine-mcp-server.cjs"
-  }
+  "bin": "./bin/mcp-server.cjs"
 }

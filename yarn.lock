@@ -4272,7 +4272,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/mcp-server@workspace:packages/@mantine/mcp-server"
   bin:
-    mantine-mcp-server: ./bin/mantine-mcp-server.cjs
+    mcp-server: ./bin/mcp-server.cjs
   languageName: unknown
   linkType: soft
 
