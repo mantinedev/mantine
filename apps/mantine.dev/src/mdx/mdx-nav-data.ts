@@ -94,7 +94,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.ThemeObject,
       MDX_DATA.Colors,
       MDX_DATA.ColorSchemes,
-      MDX_DATA.Typography,
+      MDX_DATA.TypographyTheming,
       MDX_DATA.DefaultProps,
     ],
   },
