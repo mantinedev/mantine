@@ -116,6 +116,33 @@ export function Usage() {
   return <WeekView date={date} onDateChange={setDate} />;
 }
 
+export function AllDayEvents() {
+  const mon = _weekStart.format('YYYY-MM-DD');
+  const tue = _weekStart.add(1, 'day').format('YYYY-MM-DD');
+  const wed = _weekStart.add(2, 'day').format('YYYY-MM-DD');
+  const events: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'All-day (end at next day 00:00:00)',
+      start: `${mon} 00:00:00`,
+      end: `${tue} 00:00:00`,
+      color: 'blue',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'All-day (end at same day 23:59:59)',
+      start: `${wed} 00:00:00`,
+      end: `${wed} 23:59:59`,
+      color: 'teal',
+      variant: 'filled',
+      payload: {},
+    },
+  ];
+  return <WeekView date={weekStart} events={events} />;
+}
+
 export function SlotHeight() {
   const [date, setDate] = useState(toDateString(new Date()));
   return (

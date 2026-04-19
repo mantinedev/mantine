@@ -153,6 +153,37 @@ export function Usage() {
   );
 }
 
+export function AllDayEvents() {
+  const day = dayjs(today).format('YYYY-MM-DD');
+  const nextDay = dayjs(today).add(1, 'day').format('YYYY-MM-DD');
+  const events: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'All-day (end at next day 00:00:00)',
+      start: `${day} 00:00:00`,
+      end: `${nextDay} 00:00:00`,
+      color: 'blue',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'All-day (end at same day 23:59:59)',
+      start: `${day} 00:00:00`,
+      end: `${day} 23:59:59`,
+      color: 'teal',
+      variant: 'filled',
+      payload: {},
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView date={today} events={events} />
+    </div>
+  );
+}
+
 export function RegularEvents() {
   return (
     <div style={{ padding: 40 }}>

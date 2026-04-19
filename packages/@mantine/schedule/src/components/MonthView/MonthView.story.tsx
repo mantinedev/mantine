@@ -153,6 +153,44 @@ export function Usage() {
   );
 }
 
+export function AllDayEvents() {
+  const allDayEvents: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'All-day (end at next day 00:00:00)',
+      start: '2025-11-04 00:00:00',
+      end: '2025-11-05 00:00:00',
+      color: 'blue',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'All-day (end at same day 23:59:59)',
+      start: '2025-11-11 00:00:00',
+      end: '2025-11-11 23:59:59',
+      color: 'teal',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Two-day all-day (end at next day 00:00:00)',
+      start: '2025-11-18 00:00:00',
+      end: '2025-11-20 00:00:00',
+      color: 'violet',
+      variant: 'filled',
+      payload: {},
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView date={month} events={allDayEvents} />
+    </div>
+  );
+}
+
 export function NoOutsideDays() {
   return (
     <div style={{ padding: 40 }}>
