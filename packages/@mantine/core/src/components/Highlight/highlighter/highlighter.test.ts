@@ -123,5 +123,22 @@ describe('@mantine/core/Highlight/highlighter', () => {
         { chunk: '-case testing', highlighted: false },
       ]);
     });
+
+    it('supports unicode letters in wholeWord matching', () => {
+      const text = 'ergō numerus syllabārum et vōcālium īdem est';
+      expect(highlighter(text, 'īdem', { wholeWord: true })).toStrictEqual([
+        { chunk: 'ergō numerus syllabārum et vōcālium ', highlighted: false },
+        { chunk: 'īdem', highlighted: true },
+        { chunk: ' est', highlighted: false },
+      ]);
+    });
+
+    it('does not match inside unicode words when wholeWord is true', () => {
+      const text = 'īdem īdemque';
+      expect(highlighter(text, 'īdem', { wholeWord: true })).toStrictEqual([
+        { chunk: 'īdem', highlighted: true },
+        { chunk: ' īdemque', highlighted: false },
+      ]);
+    });
   });
 });

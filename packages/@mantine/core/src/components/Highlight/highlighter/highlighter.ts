@@ -42,8 +42,9 @@ export function highlighter(
           .sort((a, b) => b.length - a.length)
           .join('|');
 
-  const pattern = options.wholeWord ? `\\b(${matcher})\\b` : `(${matcher})`;
-  const re = new RegExp(pattern, 'gi');
+  const pattern = options.wholeWord ? `(?<!\\p{L})(${matcher})(?!\\p{L})` : `(${matcher})`;
+
+  const re = new RegExp(pattern, options.wholeWord ? 'giu' : 'gi');
   const chunks = value
     .split(re)
     .map((part, index) => ({ chunk: part, highlighted: index % 2 === 1 }))

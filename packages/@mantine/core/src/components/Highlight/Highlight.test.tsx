@@ -132,6 +132,18 @@ describe('@mantine/core/Highlight', () => {
       expect(marks[0].textContent).toBe('test');
       expect(marks[1].textContent).toBe('testing');
     });
+
+    it('supports unicode letters in wholeWord matching', () => {
+      const { container } = render(
+        <Highlight highlight="īdem" wholeWord>
+          ergō numerus syllabārum et vōcālium īdem est
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(1);
+      expect(marks[0].textContent).toBe('īdem');
+    });
   });
 
   it('adds data-highlight attribute to mark elements', () => {
