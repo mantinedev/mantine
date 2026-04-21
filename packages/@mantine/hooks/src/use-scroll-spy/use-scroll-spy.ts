@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { randomId } from '../utils';
 
 function getHeadingsData(
@@ -108,14 +108,14 @@ export function useScrollSpy({
   const [data, setData] = useState<UseScrollSpyHeadingData[]>([]);
   const headingsRef = useRef<UseScrollSpyHeadingData[]>([]);
 
-  const handleScroll = () => {
+  const handleScroll = useEffectEvent(() => {
     setActive(
       getActiveElement(
         headingsRef.current.map((d) => d.getNode().getBoundingClientRect()),
         offset
       )
     );
-  };
+  });
 
   const initialize = () => {
     const headings = getHeadingsData(
@@ -139,7 +139,7 @@ export function useScrollSpy({
     const _scrollHost = scrollHost || window;
     _scrollHost.addEventListener('scroll', handleScroll);
     return () => _scrollHost.removeEventListener('scroll', handleScroll);
-  }, [scrollHost]);
+  }, [scrollHost, selector, offset]);
 
   return {
     reinitialize: initialize,

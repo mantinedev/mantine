@@ -73,6 +73,9 @@ interface MantineProviderProps {
   /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work; `true` by default. */
   withGlobalClasses?: boolean;
 
+  /** Determines whether inline styles with identical content should be deduplicated using React 19 style hoisting. When enabled, components with the same responsive style props share a single `<style />` tag instead of each generating their own. @default false */
+  deduplicateInlineStyles?: boolean;
+
   /** Environment in which the provider is used; `'test'` environment disables all transitions and portals */
   env?: 'default' | 'test';
 
@@ -199,6 +202,30 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider deduplicateCssVariables={false}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+### deduplicateInlineStyles
+
+`deduplicateInlineStyles` enables React 19 style tag deduplication for responsive
+[style props](/styles/style-props). When multiple components share the same responsive
+style prop values (for example, many list items with `mt={{ base: 10, md: 20 }}`),
+only a single `<style />` tag is generated and hoisted to `<head />` instead of
+each component injecting its own.
+
+This can significantly improve performance in scenarios where many components
+use the same responsive style props. See the [styles performance guide](/styles/styles-performance)
+for more details.
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
       {/* Your app here */}
     </MantineProvider>
   );

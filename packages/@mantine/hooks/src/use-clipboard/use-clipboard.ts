@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface UseClipboardInput {
   /** Time in ms after which the copied state will reset, `2000` by default */
@@ -19,16 +19,22 @@ export interface UseClipboardReturnValue {
   copied: boolean;
 }
 
-export function useClipboard(
-  options: UseClipboardInput = { timeout: 2000 }
-): UseClipboardReturnValue {
+export function useClipboard(options: UseClipboardInput = {}): UseClipboardReturnValue {
+  const timeout = options.timeout ?? 2000;
   const [error, setError] = useState<Error | null>(null);
   const [copied, setCopied] = useState(false);
-  const [copyTimeout, setCopyTimeout] = useState<number | null>(null);
+  const timeoutRef = useRef<number | null>(null);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(timeoutRef.current!);
+    },
+    []
+  );
 
   const handleCopyResult = (value: boolean) => {
-    window.clearTimeout(copyTimeout!);
-    setCopyTimeout(window.setTimeout(() => setCopied(false), options.timeout));
+    window.clearTimeout(timeoutRef.current!);
+    timeoutRef.current = window.setTimeout(() => setCopied(false), timeout);
     setCopied(value);
   };
 
@@ -36,7 +42,10 @@ export function useClipboard(
     if ('clipboard' in navigator) {
       navigator.clipboard
         .writeText(value)
-        .then(() => handleCopyResult(true))
+        .then(() => {
+          setError(null);
+          handleCopyResult(true);
+        })
         .catch((err) => setError(err));
     } else {
       setError(new Error('useClipboard: navigator.clipboard is not supported'));
@@ -46,7 +55,7 @@ export function useClipboard(
   const reset = () => {
     setCopied(false);
     setError(null);
-    window.clearTimeout(copyTimeout!);
+    window.clearTimeout(timeoutRef.current!);
   };
 
   return { copy, reset, error, copied };

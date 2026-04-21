@@ -6,8 +6,11 @@ export function readonlySetLikeToSet<T>(input: ReadonlySetLike<T>): Set<T> {
     return input;
   }
   const result = new Set<T>();
-  for (const item of input as any) {
-    result.add(item);
+  const iterator = input.keys();
+  let next = iterator.next();
+  while (!next.done) {
+    result.add(next.value);
+    next = iterator.next();
   }
   return result;
 }

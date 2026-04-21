@@ -1,4 +1,4 @@
-import { render, tests, userEvent } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { MonthPicker, MonthPickerProps, MonthPickerStylesNames } from './MonthPicker';
 
@@ -9,7 +9,11 @@ const defaultProps = {
 describe('@mantine/dates/MonthPicker', () => {
   tests.itSupportsSystemProps<MonthPickerProps, MonthPickerStylesNames>({
     component: MonthPicker,
-    props: defaultProps,
+    props: {
+      ...defaultProps,
+      presets: [{ label: 'This month', value: '2022-04-01' }],
+    },
+    varsResolver: true,
     displayName: '@mantine/dates/MonthPicker',
     stylesApiSelectors: [
       'calendarHeader',
@@ -20,6 +24,9 @@ describe('@mantine/dates/MonthPicker', () => {
       'monthsListCell',
       'monthsListControl',
       'monthsListRow',
+      'presetsList',
+      'presetButton',
+      'monthPickerRoot',
     ],
     providerStylesApi: false,
   });
@@ -154,5 +161,22 @@ describe('@mantine/dates/MonthPicker', () => {
   it('supports custom __staticSelector', () => {
     const { container } = render(<MonthPicker {...defaultProps} __staticSelector="Calendar" />);
     expect(container.querySelector('.mantine-Calendar-monthsList')).toBeInTheDocument();
+  });
+
+  it('correctly handles presets', () => {
+    const spy = jest.fn();
+    render(
+      <MonthPicker
+        {...defaultProps}
+        onChange={spy}
+        presets={[
+          { label: 'This month', value: '2022-04-01' },
+          { label: 'Next month', value: '2022-05-01' },
+        ]}
+      />
+    );
+
+    expect(screen.getByText('This month')).toBeInTheDocument();
+    expect(screen.getByText('Next month')).toBeInTheDocument();
   });
 });

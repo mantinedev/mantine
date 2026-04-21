@@ -61,6 +61,7 @@ export * as LoaderDemos from './demos/core/Loader';
 export * as LoadingOverlayDemos from './demos/core/LoadingOverlay';
 export * as MarkDemos from './demos/core/Mark';
 export * as MarqueeDemos from './demos/core/Marquee';
+export * as MaskInputDemos from './demos/core/MaskInput';
 export * as MenuDemos from './demos/core/Menu';
 export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
@@ -147,6 +148,7 @@ export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
 export * as BarsListDemos from './demos/charts/BarsList';
+export * as TreemapDemos from './demos/charts/Treemap';
 
 // @mantine/schedule
 export * as ScheduleDemos from './demos/schedule/Schedule';
@@ -222,6 +224,8 @@ export * as UseToggleDemos from './demos/hooks/use-toggle';
 export * as UseValidatedStateDemos from './demos/hooks/use-validated-state';
 export * as UseViewportSizeDemos from './demos/hooks/use-viewport-size';
 export * as UseWindowScrollDemos from './demos/hooks/use-window-scroll';
+export * as UseRovingIndexDemos from './demos/hooks/use-roving-index';
+export * as UseMaskDemos from './demos/hooks/use-mask';
 export * as FormDemos from './demos/form';
 export * as FieldDemos from './demos/form-field';
 export * as NprogressDemos from './demos/nprogress';

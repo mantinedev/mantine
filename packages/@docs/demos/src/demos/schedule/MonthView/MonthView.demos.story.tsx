@@ -97,3 +97,8 @@ export const Demo_radius = {
   name: '⭐ Demo: radius',
   render: renderDemo(demos.radius),
 };
+
+export const Demo_timedEvents = {
+  name: '⭐ Demo: timedEvents',
+  render: renderDemo(demos.timedEvents),
+};

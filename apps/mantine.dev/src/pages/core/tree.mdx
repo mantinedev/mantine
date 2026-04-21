@@ -86,11 +86,17 @@ export interface RenderTreeNodePayload {
   /** `true` if the node is expanded, applicable only for nodes with `children` */
   expanded: boolean;
 
-  /** `true` if the node has non-empty `children` array */
+  /** `true` if the node has non-empty `children` array or `hasChildren` is set to `true` */
   hasChildren: boolean;
 
   /** `true` if the node is selected */
   selected: boolean;
+
+  /** `true` if the node's children are currently being loaded */
+  isLoading: boolean;
+
+  /** Error from the last failed load attempt, or `null` */
+  loadError: Error | null;
 
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
@@ -154,6 +160,14 @@ export interface UseTreeInput {
 
   /** Called with the node value when it is collapsed */
   onNodeCollapse?: (value: string) => void;
+
+  /** Called when a node with `hasChildren: true` is expanded for the first time */
+  onLoadChildren?: (nodeValue: string) => Promise<void>;
+
+  /** When `true`, checking a parent does not affect children and vice versa.
+   * Each node's checked state is fully independent. @default false
+   */
+  checkStrictly?: boolean;
 }
 ```
 
@@ -161,6 +175,9 @@ And returns an object with the following properties:
 
 ```tsx
 export interface UseTreeReturnType {
+  /** When `true`, each node's checked state is independent (no parent-child cascading) */
+  checkStrictly: boolean;
+
   /** Determines whether multiple node can be selected at a time */
   multiple: boolean;
 
@@ -239,6 +256,18 @@ export interface UseTreeReturnType {
 
   /** Returns `true` if node with provided value is indeterminate */
   isNodeIndeterminate: (value: string) => boolean;
+
+  /** Returns `true` if the node's children are currently being loaded */
+  isNodeLoading: (value: string) => boolean;
+
+  /** Returns the error from the last failed load attempt, or `null` */
+  getNodeLoadError: (value: string) => Error | null;
+
+  /** Programmatically triggers loading of a node's children */
+  loadNode: (value: string) => Promise<void>;
+
+  /** Clears the loaded cache for a node, causing it to re-fetch on next expand */
+  invalidateNode: (value: string) => void;
 }
 ```
 
@@ -257,6 +286,15 @@ To implement checked state, you need to render `Checkbox.Indicator` in the `rend
 To check/uncheck nodes, use `checkAllNodes` and `uncheckAllNodes` functions:
 
 <Demo data={TreeDemos.checkAllNodes} />
+
+## Check strictly
+
+By default, checking a parent node also checks all of its children (and unchecking works
+the same way). Set `checkStrictly: true` on `useTree` to make each node's checked state
+fully independent – checking a parent does not affect children and vice versa.
+In this mode, `isNodeIndeterminate` always returns `false`.
+
+<Demo data={TreeDemos.checkStrictly} />
 
 ## Initial expanded state
 
@@ -278,6 +316,144 @@ getTreeExpandedState(data, '*');
 ```
 
 <Demo data={TreeDemos.expandedState} />
+
+## Async loading
+
+`Tree` supports lazy loading of children. Set `hasChildren: true` on a node without providing `children` –
+when the node is expanded for the first time, `onLoadChildren` callback passed to `useTree` is called.
+Use the `mergeAsyncChildren` utility to splice loaded children into your data:
+
+```tsx
+import { mergeAsyncChildren, Tree, TreeNodeData, useTree } from '@mantine/core';
+
+function Demo() {
+  const [data, setData] = useState<TreeNodeData[]>([
+    { label: 'Documents', value: 'documents', hasChildren: true },
+  ]);
+
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      const children = await fetchChildren(value);
+      setData((prev) => mergeAsyncChildren(prev, value, children));
+    },
+  });
+
+  return <Tree data={data} tree={tree} />;
+}
+```
+
+The `renderNode` payload includes `isLoading` and `loadError` fields that you can use
+to display a loading indicator or an error message. Use `tree.invalidateNode(value)` to clear
+the cache for a node and allow re-fetching on next expand.
+
+<Demo data={TreeDemos.asyncLoading} />
+
+## Search and filter
+
+`Tree` does not include built-in search controls – search input and filtering logic are always external.
+Use the `filterTreeData` utility to filter tree data based on a search query. The function
+accepts tree data, a query string, and an optional custom filter function:
+
+```tsx
+import { filterTreeData } from '@mantine/core';
+
+// Filter with default case-insensitive label matching
+const filtered = filterTreeData(data, 'button');
+
+// Filter with a custom function
+const filtered = filterTreeData(data, 'btn', (query, node) =>
+  node.value.includes(query)
+);
+```
+
+The default filter compares the query against `node.label` (when it is a string) or `node.value` as a fallback.
+Matching nodes and their ancestors are preserved in the result. You can provide a custom `TreeNodeFilter`
+function for more advanced matching (for example, fuzzy search with fuse.js).
+
+### Highlight matching nodes
+
+In this example, all nodes remain visible and matching text is highlighted using the `Highlight` component
+inside `renderNode`. Ancestor nodes of matching nodes are auto-expanded.
+
+<Demo data={TreeDemos.searchHighlight} />
+
+### Filter non-matching nodes
+
+In this example, non-matching branches are removed from the tree using `filterTreeData`.
+The filtered tree is auto-expanded with `getTreeExpandedState(filteredData, '*')`.
+
+<Demo data={TreeDemos.searchFilter} />
+
+### Fuzzy search with fuse.js
+
+You can pass a custom filter function to `filterTreeData` for fuzzy matching. This example
+uses [fuse.js](https://www.fusejs.io/):
+
+<Demo data={TreeDemos.searchFuzzy} />
+
+## Drag and drop
+
+`Tree` component supports drag-and-drop reordering of nodes. To enable it, provide `onDragDrop` callback.
+The callback receives an object with `draggedNode` (value of the dragged node), `targetNode` (value of the node it was dropped on),
+and `position` (`'before'`, `'after'`, or `'inside'`).
+
+Use `moveTreeNode` utility function to update the data based on the drag-and-drop result:
+
+```tsx
+import { moveTreeNode, Tree, TreeNodeData } from '@mantine/core';
+
+function Demo() {
+  const [data, setData] = useState<TreeNodeData[]>(initialData);
+
+  return (
+    <Tree
+      data={data}
+      onDragDrop={(payload) =>
+        setData((current) => moveTreeNode(current, payload))
+      }
+    />
+  );
+}
+```
+
+When dragging over a node, the drop position is determined by cursor position:
+- **Top zone** – drop before the target node (shown as a line above)
+- **Middle zone** – drop inside the target node as a child (shown as a background highlight, only for nodes with children)
+- **Bottom zone** – drop after the target node (shown as a line below)
+
+Nodes cannot be dropped onto their own descendants.
+
+<Demo data={TreeDemos.dragDrop} />
+
+## Connecting lines
+
+Set `withLines` prop to display connecting lines showing parent-child relationships.
+Lines adapt to `levelOffset` spacing automatically.
+
+<Demo data={TreeDemos.lines} />
+
+## Virtualization
+
+`Tree` does not depend on any virtualization library – you supply one yourself.
+Use the `flattenTreeData` utility to convert hierarchical data into a flat list of
+visible nodes based on the current expanded state, then render each node with
+`FlatTreeNode` which provides Tree's styles, aria attributes, click/keyboard
+handlers, and `renderNode` support.
+
+```tsx
+import { FlatTreeNode, flattenTreeData, useTree } from '@mantine/core';
+
+const tree = useTree();
+const flatList = flattenTreeData(data, tree.expandedState);
+// flatList is FlattenedTreeNodeData[] – spread each entry into FlatTreeNode
+```
+
+`FlatTreeNode` accepts the same behavioral props as `Tree` (`expandOnClick`,
+`selectOnClick`, `expandOnSpace`, `checkOnSpace`, `renderNode`) and a `style` prop
+for virtualizer positioning. The container element must have `data-tree-root`
+and `role="tree"` attributes for keyboard navigation to work.
+
+<Demo data={TreeDemos.virtualized} />
 
 ## Example: files tree
 

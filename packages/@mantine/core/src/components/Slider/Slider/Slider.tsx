@@ -111,6 +111,9 @@ export interface SliderProps
   /** Determines whether track value representation should be inverted @default false */
   inverted?: boolean;
 
+  /** Value at which the filled bar starts. When set, the bar extends from this point toward the current value. Ignored when `inverted` is set. */
+  startPointValue?: number;
+
   /** Slider orientation @default 'horizontal' */
   orientation?: 'horizontal' | 'vertical';
 
@@ -184,6 +187,7 @@ export const Slider = factory<SliderFactory>((_props) => {
     unstyled,
     scale,
     inverted,
+    startPointValue,
     orientation,
     className,
     style,
@@ -233,6 +237,13 @@ export const Slider = factory<SliderFactory>((_props) => {
   const scaledValue = scale!(_value);
   const _label = typeof label === 'function' ? label(scaledValue) : label;
   const precision = _precision ?? getPrecision(step);
+
+  const hasStartPoint = typeof startPointValue === 'number' && !inverted;
+  const startPosition = hasStartPoint
+    ? getPosition({ value: startPointValue!, min: domainMin, max: domainMax })
+    : 0;
+  const trackOffset = hasStartPoint ? Math.min(position, startPosition) : 0;
+  const trackFilled = hasStartPoint ? Math.abs(position - startPosition) : position;
 
   const handleChange = useCallback(
     ({ x }: { x: number }) => {
@@ -422,12 +433,13 @@ export const Slider = factory<SliderFactory>((_props) => {
       >
         <Track
           inverted={inverted}
-          offset={0}
-          filled={position}
+          offset={trackOffset}
+          filled={trackFilled}
           marks={marks}
           min={domainMin}
           max={domainMax}
           value={scaledValue}
+          startPointValue={hasStartPoint ? startPointValue : undefined}
           disabled={disabled}
           containerProps={{
             ref: container,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useClickOutside, useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -13,6 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { TreeNode } from './TreeNode';
 import { TreeController, useTree } from './use-tree';
 import classes from './Tree.module.css';
@@ -22,6 +23,7 @@ export interface TreeNodeData {
   value: string;
   nodeProps?: Record<string, any>;
   children?: TreeNodeData[];
+  hasChildren?: boolean;
 }
 
 export interface RenderTreeNodePayload {
@@ -31,11 +33,17 @@ export interface RenderTreeNodePayload {
   /** `true` if the node is expanded, applicable only for nodes with `children` */
   expanded: boolean;
 
-  /** `true` if the node has non-empty `children` array */
+  /** `true` if the node has non-empty `children` array or `hasChildren` is set to `true` in the data */
   hasChildren: boolean;
 
   /** `true` if the node is selected */
   selected: boolean;
+
+  /** `true` if the node's children are currently being loaded */
+  isLoading: boolean;
+
+  /** Error from the last failed load attempt, or `null` */
+  loadError: Error | null;
 
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
@@ -50,6 +58,12 @@ export interface RenderTreeNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
+    draggable?: boolean;
+    onDragStart?: (event: React.DragEvent) => void;
+    onDragOver?: (event: React.DragEvent) => void;
+    onDragLeave?: (event: React.DragEvent) => void;
+    onDrop?: (event: React.DragEvent) => void;
+    onDragEnd?: (event: React.DragEvent) => void;
   };
 }
 
@@ -59,6 +73,11 @@ export type TreeStylesNames = 'root' | 'node' | 'subtree' | 'label';
 export type TreeCssVariables = {
   root: '--level-offset';
 };
+
+export interface TreeDragState {
+  draggedValue: string | null;
+  currentDropTarget: HTMLElement | null;
+}
 
 export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, ElementProps<'ul'> {
   /** Data used to render nodes */
@@ -93,6 +112,12 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. @default false */
   keepMounted?: boolean;
+
+  /** Called when a node is dropped on another node, enables drag-and-drop when provided */
+  onDragDrop?: (payload: TreeDragDropPayload) => void;
+
+  /** If set, connecting lines are rendered showing parent-child relationships @default false */
+  withLines?: boolean;
 }
 
 function getFlatValues(data: TreeNodeData[]): string[] {
@@ -144,6 +169,8 @@ export const Tree = factory<TreeFactory>((_props) => {
     levelOffset,
     checkOnSpace,
     keepMounted,
+    onDragDrop,
+    withLines,
     attributes,
     ref,
     ...others
@@ -151,6 +178,8 @@ export const Tree = factory<TreeFactory>((_props) => {
 
   const defaultController = useTree();
   const controller = tree || defaultController;
+
+  const dragStateRef = useRef<TreeDragState>({ draggedValue: null, currentDropTarget: null });
 
   const getStyles = useStyles<TreeFactory>({
     name: 'Tree',
@@ -193,6 +222,9 @@ export const Tree = factory<TreeFactory>((_props) => {
       expandOnSpace={expandOnSpace}
       checkOnSpace={checkOnSpace}
       keepMounted={keepMounted}
+      onDragDrop={onDragDrop}
+      dragStateRef={dragStateRef}
+      data={data}
     />
   ));
 
@@ -205,6 +237,7 @@ export const Tree = factory<TreeFactory>((_props) => {
       role="tree"
       aria-multiselectable={controller.multiple}
       data-tree-root
+      data-with-lines={withLines || undefined}
     >
       {nodes}
     </Box>
