@@ -127,18 +127,6 @@ function Demo() {
 ```
 
 
-Example of using [react-imask](https://github.com/uNmAnNeR/imaskjs/tree/master/packages/react-imask) with `Input`:
-
-```tsx
-import { Input } from '@mantine/core';
-import { IMaskInput } from 'react-imask';
-
-function Demo() {
-  return <Input component={IMaskInput} mask="+7 (000) 000-00-00" placeholder="Your phone" />;
-}
-```
-
-
 ## Input.Wrapper component
 
 The `Input.Wrapper` component is used in all other inputs
@@ -490,17 +478,11 @@ function Demo() {
 
 ```tsx
 import { InputBase } from '@mantine/core';
-import { IMaskInput } from 'react-imask';
 
 function Demo() {
   return (
     <>
-      <InputBase
-        label="Your phone"
-        component={IMaskInput}
-        mask="+7 (000) 000-0000"
-        placeholder="Your phone"
-      />
+      <InputBase label="Your phone" component="input" placeholder="Your phone" />
 
       <InputBase label="Custom native select" component="select" mt="md">
         <option value="react">React</option>

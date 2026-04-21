@@ -52,6 +52,43 @@ function Demo() {
 ```
 
 
+## Duration type
+
+Set `type="duration"` to allow entering durations that exceed 24 hours.
+In this mode, the hours field has no upper limit and the input width adjusts
+dynamically based on the entered value. The `format` prop is ignored (always 24h)
+and the dropdown is disabled.
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <TimePicker label="Enter duration" type="duration" withSeconds />;
+}
+```
+
+
+## Min hours digits
+
+Use the `minHoursDigits` prop to set the minimum number of digits displayed in the hours input.
+This prop is only applicable when `type="duration"` is set. By default, the minimum is `2`.
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <TimePicker
+      label="Enter duration"
+      type="duration"
+      withSeconds
+      minHoursDigits={3}
+    />
+  );
+}
+```
+
+
 ## 12-hour format
 
 Set `format="12h"` to use 12-hour format. Note that `onChange` is called only when all inputs are filled,
@@ -536,6 +573,7 @@ Keyboard interactions:
 | max | string | - | Max possible time value in `hh:mm:ss` format |
 | maxDropdownContentHeight | number | - | Maximum height of the content displayed in the dropdown in px |
 | min | string | - | Min possible time value in `hh:mm:ss` format |
+| minHoursDigits | number | - | Minimum number of digits displayed in the hours input, applicable only when `type="duration"` is set |
 | minutesInputLabel | string | - | `aria-label` of minutes input |
 | minutesInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props passed down to minutes input |
 | minutesPlaceholder | string | - | Minutes input placeholder, |
@@ -564,6 +602,7 @@ Keyboard interactions:
 | secondsRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the seconds input |
 | secondsStep | number | - | Number by which seconds are incremented/decremented |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| type | TimePickerType | - | TimePicker type, `'time'` for regular time input, `'duration'` for duration input that allows values greater than 24 hours |
 | value | string | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withDropdown | boolean | - | Determines whether the dropdown with time controls list should be visible when the input has focus |

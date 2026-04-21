@@ -27,7 +27,7 @@ function Demo() {
 ```tsx
 function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
   type: K,
-  listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => any,
+  listener: (this: T, ev: HTMLElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions,
 ): React.RefCallback<T | null>
 ```

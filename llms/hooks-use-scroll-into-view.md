@@ -46,6 +46,7 @@ function Demo() {
 The hook is configured with a settings object:
 
 * `onScrollFinish` – function that will be called after the scroll animation
+* `onScrollCancel` – function that will be called when the scroll animation is canceled by user interaction
 * `easing` – custom math easing function
 * `duration` - duration of the scroll animation in milliseconds
 * `axis` - axis of the scroll
@@ -57,6 +58,7 @@ The hook returns an object with:
 
 * `scrollIntoView` – function that starts the scroll animation
 * `cancel` – function that stops the scroll animation
+* `scrolling` – boolean indicating whether a scroll animation is in progress
 * `targetRef` - ref of the target HTML node
 * `scrollableRef` - ref of the scrollable parent HTML element; if not used, the document element will be used
 
@@ -168,6 +170,9 @@ interface UseScrollIntoViewOptions {
   /** Callback fired after scroll */
   onScrollFinish?: () => void;
 
+  /** Callback fired when scroll animation is canceled by user interaction */
+  onScrollCancel?: () => void;
+
   /** Duration of scroll in milliseconds */
   duration?: number;
 
@@ -195,6 +200,7 @@ export interface UseScrollIntoViewReturnValue<
   targetRef: React.RefObject<Target | null>;
   scrollIntoView: (params?: UseScrollIntoViewAnimation) => void;
   cancel: () => void;
+  scrolling: boolean;
 }
 
 function useScrollIntoView<

@@ -69,10 +69,11 @@ function Demo() {
 ```
 
 
-## Cancel update
+## Cancel and flush
 
-The hook provides a `cancel` callback; you can use it to cancel the update.
-Update cancels automatically on component unmount.
+The hook returns a third element with `cancel` and `flush` handlers.
+`cancel` discards the pending update, `flush` applies it immediately.
+Updates cancel automatically on component unmount.
 
 In this example, type in some text and click the cancel button
 within a second to cancel debounced value change:
@@ -106,6 +107,12 @@ function Demo() {
 ```
 
 
+The second element of the returned tuple is a shorthand for `cancel` for backwards compatibility.
+
+```tsx
+const [debounced, cancel, { cancel, flush }] = useDebouncedValue(value, 200);
+```
+
 ## Definition
 
 ```tsx
@@ -113,7 +120,12 @@ interface UseDebouncedValueOptions {
   leading?: boolean;
 }
 
-type UseDebouncedValueReturnValue<T> = [T, () => void];
+interface UseDebouncedValueHandlers {
+  cancel: () => void;
+  flush: () => void;
+}
+
+type UseDebouncedValueReturnValue<T> = [T, () => void, UseDebouncedValueHandlers];
 
 function useDebouncedValue<T = any>(
   value: T,

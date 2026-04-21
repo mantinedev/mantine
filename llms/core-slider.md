@@ -393,6 +393,36 @@ function Demo() {
 ```
 
 
+## Start point
+
+Use the `startPointValue` prop to change the origin of the filled bar.
+When set, the bar extends from the given value toward the current value –
+to the left for values below the start point and to the right for values above it.
+This prop is ignored when `inverted` is set.
+
+```tsx
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Slider
+      startPointValue={0}
+      min={-100}
+      max={100}
+      defaultValue={40}
+      marks={[
+        { value: -100, label: '-100' },
+        { value: -50, label: '-50' },
+        { value: 0, label: '0' },
+        { value: 50, label: '50' },
+        { value: 100, label: '100' },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Vertical slider
 
 Set `orientation="vertical"` to render the slider vertically. In vertical orientation,
@@ -645,6 +675,7 @@ function Demo() {
 | scale | (value: number) => number | - | A transformation function to change the scale of the slider |
 | showLabelOnHover | boolean | - | Determines whether the label should be displayed when the slider is hovered |
 | size | MantineSize \| number | - | Controls size of the track |
+| startPointValue | number | - | Value at which the filled bar starts. When set, the bar extends from this point toward the current value. Ignored when `inverted` is set. |
 | step | number | - | Number by which value will be incremented/decremented with thumb drag and arrows |
 | thumbChildren | React.ReactNode | - | Content rendered inside thumb |
 | thumbLabel | string | - | Thumb `aria-label` |

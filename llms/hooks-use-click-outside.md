@@ -35,6 +35,7 @@ The `use-click-outside` hook accepts 3 arguments:
 * `handler` – function that is called when clicking outside
 * `events` – optional list of events that trigger outside click, `['mousedown', 'touchstart']` by default
 * `nodes` - optional list of nodes that should not trigger outside click event
+* `enabled` - optional boolean to dynamically enable/disable the listener, `true` by default
 
 The hook returns a `ref` object that must be passed to the element
 based on which outside clicks should be captured.
@@ -124,8 +125,9 @@ const ref = useClickOutside<HTMLDivElement>(() =>
 
 ```tsx
 function useClickOutside<T extends HTMLElement = any>(
-  handler: () => void,
+  handler: (event: MouseEvent | TouchEvent) => void,
   events?: string[] | null,
-  nodes?: HTMLElement[]
+  nodes?: (HTMLElement | null)[],
+  enabled?: boolean
 ): React.RefObject<T>;
 ```

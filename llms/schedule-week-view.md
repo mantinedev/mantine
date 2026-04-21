@@ -393,6 +393,29 @@ function Demo() {
 ```
 
 
+## Force current time indicator
+
+Set `forceCurrentTimeIndicator` to display the current time indicator on the same day of week
+even when viewing a different week. This is useful to give users a sense of the current time
+position relative to their schedule.
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return (
+    <WeekView
+      date="2030-06-10"
+      events={events}
+      withCurrentTimeIndicator
+      forceCurrentTimeIndicator
+    />
+  );
+}
+```
+
+
 ## Without all-day slots
 
 Set `withAllDaySlots={false}` to hide the all-day events section at the top.
@@ -2282,6 +2305,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | endTime | string | - | End time for the day view, in `HH:mm:ss` format |
 | events | ScheduleEventData[] | - | List of events to display in the week view |
 | firstDayOfWeek | 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
+| forceCurrentTimeIndicator | boolean | - | If set, displays the current time indicator on the same day of week even when viewing a different week |
 | getTimeSlotProps | ((data: { start: string; end: string; }) => Record<string, any>) \| undefined | - | Function to get additional props for each time slot. Receives slot start and end datetime strings. Returned props are spread onto the slot element. Event handlers returned by this function are composed with internal handlers (e.g. onClick) rather than overriding them. |
 | highlightBusinessHours | boolean | - | If set to true, highlights business hours with white background |
 | highlightToday | boolean | - | If set to true, highlights today in the weekday row |

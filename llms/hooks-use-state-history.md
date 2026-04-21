@@ -31,7 +31,7 @@ function Demo() {
 
 ## Definition
 
-The `UseStateHistoryHandlers` and `StateHistory` interfaces are exported from the `@mantine/hooks`
+The `UseStateHistoryHandlers` and `UseStateHistoryValue` interfaces are exported from the `@mantine/hooks`
 package.
 
 ```tsx

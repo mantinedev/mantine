@@ -65,20 +65,26 @@ Also note that entering fullscreen usually requires a direct user interaction (f
 ## Definition
 
 ```tsx
-interface UseFullscreenReturnValue<T extends HTMLElement = any> {
+interface UseFullscreenElementReturnValue<T extends HTMLElement = any> {
   ref: React.RefCallback<T | null>;
   toggle: () => Promise<void>;
   fullscreen: boolean;
 }
 
-function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<T>
+interface UseFullscreenDocumentReturnValue {
+  toggle: () => Promise<void>;
+  fullscreen: boolean;
+}
+
+function useFullscreenElement<T extends HTMLElement = any>(): UseFullscreenElementReturnValue<T>
+function useFullscreenDocument(): UseFullscreenDocumentReturnValue
 ```
 
 ## Exported types
 
-The `UseFullscreenReturnValue` type is exported from the `@mantine/hooks` package;
-you can import it in your application:
+The `UseFullscreenElementReturnValue` and `UseFullscreenDocumentReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
 
 ```tsx
-import type { UseFullscreenReturnValue } from '@mantine/hooks';
+import type { UseFullscreenElementReturnValue, UseFullscreenDocumentReturnValue } from '@mantine/hooks';
 ```

@@ -534,6 +534,7 @@ function Demo() {
 | id | string | - | Base id, used to generate ids to connect labels with controls, generated randomly by default |
 | inverted | boolean | - | Determines whether tabs should have inverted styles |
 | keepMounted | boolean | - | If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how inactive tabs content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | loop | boolean | - | If set, arrow key presses loop though items (first to last and last to first) |
 | onChange | (value: string \| null) => void | - | Called when value changes |
 | orientation | "horizontal" \| "vertical" | - | Tabs orientation |

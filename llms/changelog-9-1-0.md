@@ -529,10 +529,11 @@ function generateTreeData(count: number): TreeNodeData[] {
 }
 
 const largeData = generateTreeData(2000);
+const initialExpandedState = getTreeExpandedState(largeData, '*');
 
 function Demo() {
   const tree = useTree({
-    initialExpandedState: getTreeExpandedState(largeData, '*'),
+    initialExpandedState,
   });
 
   const flatList = useMemo(
@@ -770,6 +771,7 @@ function Demo() {
 
 ## Other changes
 
+* [Tabs](https://mantine.dev/llms/core-tabs.md) component now supports `keepMountedMode` prop that controls how inactive tab panels are hidden when `keepMounted` is `true`. Set `keepMountedMode="display-none"` to use `display: none` styles instead of the default `Activity` component.
 * [useClickOutside](https://mantine.dev/llms/hooks-use-click-outside.md) hook now supports `enabled` parameter to dynamically enable/disable the listener. The hook also uses `event.composedPath()` in both `ref` and `nodes` branches for consistent Shadow DOM support and correctly ignores clicks on detached DOM nodes in the single-ref mode.
 * [useCounter](https://mantine.dev/llms/hooks-use-counter.md) hook now supports `step` option to configure increment/decrement step size (default `1`).
 * [useDebouncedCallback](https://mantine.dev/llms/hooks-use-debounced-callback.md) hook now supports `maxWait` option to guarantee execution within a maximum time window during continuous calls, and `isPending()` method to check if a debounced call is waiting.

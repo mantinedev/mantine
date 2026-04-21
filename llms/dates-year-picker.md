@@ -35,6 +35,69 @@ To change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDate
 
 
 
+## Presets
+
+Use the `presets` prop to add custom year presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <YearPicker
+      presets={[
+        { value: dayjs().startOf('year').format('YYYY-MM-DD'), label: 'This year' },
+        { value: dayjs().add(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Last year' },
+        { value: dayjs().add(5, 'year').startOf('year').format('YYYY-MM-DD'), label: 'In 5 years' },
+        { value: dayjs().subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), label: '5 years ago' },
+      ]}
+    />
+  );
+}
+```
+
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPicker } from '@mantine/dates';
+
+function Demo() {
+  const today = dayjs();
+
+  return (
+    <YearPicker
+      type="range"
+      presets={[
+        {
+          value: [today.subtract(2, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 2 years',
+        },
+        {
+          value: [today.subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 5 years',
+        },
+        {
+          value: [today.startOf('year').format('YYYY-MM-DD'), today.add(5, 'year').startOf('year').format('YYYY-MM-DD')],
+          label: 'Next 5 years',
+        },
+        {
+          value: [
+            today.subtract(10, 'year').startOf('year').format('YYYY-MM-DD'),
+            today.startOf('year').format('YYYY-MM-DD'),
+          ],
+          label: 'Last decade',
+        },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Default date
 
 Use the `defaultDate` prop to set the date value that will be used to determine which decade should be displayed initially.
@@ -274,6 +337,7 @@ Note that the following events will only trigger if focus is on a year control.
 | onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
 | onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
 | onYearSelect | (date: string) => void | - | Called when year is selected |
+| presets | YearPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | size | MantineSize | - | Component size |
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
@@ -331,6 +395,7 @@ Note that the following events will only trigger if focus is on a year control.
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| presets | YearPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the component value cannot be changed by the user |
@@ -369,6 +434,15 @@ YearPicker component supports Styles API. With Styles API, you can customize sty
 | yearsListRow | .mantine-YearPicker-yearsListRow | Years list row element |
 | yearsListCell | .mantine-YearPicker-yearsListCell | Years list cell element |
 | yearsListControl | .mantine-YearPicker-yearsListControl | Button used to pick months and years |
+| yearPickerRoot | .mantine-YearPicker-yearPickerRoot | Year picker root element, contains calendar and presets |
+| presetsList | .mantine-YearPicker-presetsList | Presets wrapper element |
+| presetButton | .mantine-YearPicker-presetButton | Preset button |
+
+**YearPicker CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| yearPickerRoot | --preset-font-size | Controls font size of preset buttons |
 
 **YearPickerinput selectors**
 
@@ -383,4 +457,7 @@ YearPicker component supports Styles API. With Styles API, you can customize sty
 | yearsListRow | .mantine-YearPickerinput-yearsListRow | Years list row element |
 | yearsListCell | .mantine-YearPickerinput-yearsListCell | Years list cell element |
 | yearsListControl | .mantine-YearPickerinput-yearsListControl | Button used to pick months and years |
+| yearPickerRoot | .mantine-YearPickerinput-yearPickerRoot | Year picker root element, contains calendar and presets |
+| presetsList | .mantine-YearPickerinput-presetsList | Presets wrapper element |
+| presetButton | .mantine-YearPickerinput-presetButton | Preset button |
 | placeholder | .mantine-YearPickerinput-placeholder | Placeholder element |

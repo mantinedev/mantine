@@ -13,7 +13,7 @@ import { useCollapse, useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [expanded, handlers] = useDisclosure(false);
-  const getCollapseProps = useCollapse({ expanded });
+  const { getCollapseProps } = useCollapse({ expanded });
 
   return (
     <>
@@ -109,14 +109,6 @@ type UseCollapseState = 'entering' | 'entered' | 'exiting' | 'exited';
 
 interface UseCollapseReturnValue {
   state: UseCollapseState;
-  getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
-}
-
-interface UseCollapseReturnValue {
-  /** Whether the collapse transition is currently running */
-  isTransitioning: boolean;
-
-  /** Props to pass down to the collapsible element */
   getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
 }
 

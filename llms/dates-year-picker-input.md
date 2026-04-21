@@ -24,6 +24,73 @@ Set `type="range"` to allow users to pick a date range:
 
 
 
+## Presets
+
+Use the `presets` prop to add custom year presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPickerInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <YearPickerInput
+      label="With presets"
+      placeholder="Select year"
+      presets={[
+        { value: dayjs().startOf('year').format('YYYY-MM-DD'), label: 'This year' },
+        { value: dayjs().add(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Last year' },
+        { value: dayjs().add(5, 'year').startOf('year').format('YYYY-MM-DD'), label: 'In 5 years' },
+        { value: dayjs().subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), label: '5 years ago' },
+      ]}
+    />
+  );
+}
+```
+
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPickerInput } from '@mantine/dates';
+
+function Demo() {
+  const today = dayjs();
+
+  return (
+    <YearPickerInput
+      type="range"
+      label="With presets"
+      placeholder="Select years range"
+      presets={[
+        {
+          value: [today.subtract(2, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 2 years',
+        },
+        {
+          value: [today.subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 5 years',
+        },
+        {
+          value: [today.startOf('year').format('YYYY-MM-DD'), today.add(5, 'year').startOf('year').format('YYYY-MM-DD')],
+          label: 'Next 5 years',
+        },
+        {
+          value: [
+            today.subtract(10, 'year').startOf('year').format('YYYY-MM-DD'),
+            today.startOf('year').format('YYYY-MM-DD'),
+          ],
+          label: 'Last decade',
+        },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Open picker in modal
 
 By default, [YearPicker](https://mantine.dev/llms/dates-year-picker.md) is rendered inside [Popover](https://mantine.dev/llms/core-popover.md).
@@ -305,6 +372,7 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| presets | YearPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the component value cannot be changed by the user |
@@ -343,4 +411,7 @@ YearPickerInput component supports Styles API. With Styles API, you can customiz
 | yearsListRow | .mantine-YearPickerInput-yearsListRow | Years list row element |
 | yearsListCell | .mantine-YearPickerInput-yearsListCell | Years list cell element |
 | yearsListControl | .mantine-YearPickerInput-yearsListControl | Button used to pick months and years |
+| yearPickerRoot | .mantine-YearPickerInput-yearPickerRoot | Year picker root element, contains calendar and presets |
+| presetsList | .mantine-YearPickerInput-presetsList | Presets wrapper element |
+| presetButton | .mantine-YearPickerInput-presetButton | Preset button |
 | placeholder | .mantine-YearPickerInput-placeholder | Placeholder element |

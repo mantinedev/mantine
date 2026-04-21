@@ -163,8 +163,7 @@ All Mantine components have a `withProps` static function that can be used to
 add default props to the component:
 
 ```tsx
-import { IMaskInput } from 'react-imask';
-import { Button, InputBase } from '@mantine/core';
+import { Button, TextInput } from '@mantine/core';
 
 const LinkButton = Button.withProps({
   component: 'a',
@@ -173,9 +172,7 @@ const LinkButton = Button.withProps({
   variant: 'subtle',
 });
 
-const PhoneInput = InputBase.withProps({
-  mask: '+7 (000) 000-0000',
-  component: IMaskInput,
+const PhoneInput = TextInput.withProps({
   label: 'Your phone number',
   placeholder: 'Your phone number',
 });

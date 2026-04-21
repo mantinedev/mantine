@@ -35,6 +35,70 @@ To change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDate
 
 
 
+## Presets
+
+Use the `presets` prop to add custom month presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPicker
+      presets={[
+        { value: dayjs().startOf('month').format('YYYY-MM-DD'), label: 'This month' },
+        { value: dayjs().add(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Next month' },
+        { value: dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Last month' },
+        { value: dayjs().add(6, 'month').startOf('month').format('YYYY-MM-DD'), label: 'In 6 months' },
+        { value: dayjs().add(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Last year' },
+      ]}
+    />
+  );
+}
+```
+
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+```tsx
+import dayjs from 'dayjs';
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  const today = dayjs();
+
+  return (
+    <MonthPicker
+      type="range"
+      presets={[
+        {
+          value: [today.subtract(3, 'month').startOf('month').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'Last 3 months',
+        },
+        {
+          value: [today.subtract(6, 'month').startOf('month').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'Last 6 months',
+        },
+        {
+          value: [today.startOf('year').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'This year',
+        },
+        {
+          value: [
+            today.subtract(1, 'year').startOf('year').format('YYYY-MM-DD'),
+            today.subtract(1, 'year').endOf('year').startOf('month').format('YYYY-MM-DD'),
+          ],
+          label: 'Last year',
+        },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Default date
 
 Use the `defaultDate` prop to set the date value that will be used to determine which year should be displayed initially.
@@ -346,6 +410,7 @@ Note that the following events will only trigger if focus is on a month control.
 | onNextYear | (date: string) => void | - | Called when the next year button is clicked |
 | onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
 | onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
+| presets | MonthPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | size | MantineSize | - | Component size |
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
@@ -412,6 +477,7 @@ Note that the following events will only trigger if focus is on a month control.
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| presets | MonthPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the component value cannot be changed by the user |
@@ -455,6 +521,15 @@ MonthPicker component supports Styles API. With Styles API, you can customize st
 | monthsListRow | .mantine-MonthPicker-monthsListRow | Months list row element |
 | monthsListCell | .mantine-MonthPicker-monthsListCell | Months list cell element |
 | monthsListControl | .mantine-MonthPicker-monthsListControl | Button used to pick months and years |
+| monthPickerRoot | .mantine-MonthPicker-monthPickerRoot | Month picker root element, contains calendar and presets |
+| presetsList | .mantine-MonthPicker-presetsList | Presets wrapper element |
+| presetButton | .mantine-MonthPicker-presetButton | Preset button |
+
+**MonthPicker CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| monthPickerRoot | --preset-font-size | Controls font size of preset buttons |
 
 **MonthPickerinput selectors**
 
@@ -473,4 +548,7 @@ MonthPicker component supports Styles API. With Styles API, you can customize st
 | monthsListRow | .mantine-MonthPickerinput-monthsListRow | Months list row element |
 | monthsListCell | .mantine-MonthPickerinput-monthsListCell | Months list cell element |
 | monthsListControl | .mantine-MonthPickerinput-monthsListControl | Button used to pick months and years |
+| monthPickerRoot | .mantine-MonthPickerinput-monthPickerRoot | Month picker root element, contains calendar and presets |
+| presetsList | .mantine-MonthPickerinput-presetsList | Presets wrapper element |
+| presetButton | .mantine-MonthPickerinput-presetButton | Preset button |
 | placeholder | .mantine-MonthPickerinput-placeholder | Placeholder element |

@@ -1237,6 +1237,75 @@ export function EventDetails({ event }: EventDetailsProps) {
 ```
 
 
+## Timed events
+
+Use `renderEvent` to visually differentiate all-day and timed events. All-day events render as
+regular colored bars, while timed events display as a colored dot with the start time and title.
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { Box, UnstyledButton } from '@mantine/core';
+import { MonthView, ScheduleEventData } from '@mantine/schedule';
+
+function isAllDayEvent(event: ScheduleEventData) {
+  const start = dayjs(event.start);
+  const end = dayjs(event.end);
+  return start.isSame(start.startOf('day')) && end.isSame(end.startOf('day'));
+}
+
+const events: ScheduleEventData[] = [/* ...events */];
+
+function Demo() {
+  return (
+    <MonthView
+      date={new Date()}
+      events={events}
+      renderEvent={(event, props) => {
+        if (isAllDayEvent(event)) {
+          return <UnstyledButton {...props} />;
+        }
+
+        const { children, className, style, ...others } = props;
+        return (
+          <UnstyledButton
+            {...others}
+            style={{
+              ...style,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              fontSize: 10,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              pointerEvents: 'all',
+              cursor: 'pointer',
+              paddingInline: 2,
+            }}
+          >
+            <Box
+              component="span"
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: '50%',
+                backgroundColor: `var(--event-bg)`,
+                flexShrink: 0,
+              }}
+            />
+            <span style={{ width: 28, flexShrink: 0 }}>{dayjs(event.start).format('h:mm')}</span>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {event.title}
+            </span>
+          </UnstyledButton>
+        );
+      }}
+    />
+  );
+}
+```
+
+
 ## Recurring events
 
 MonthView automatically expands recurring events for the visible month.

@@ -4,10 +4,16 @@
 
 ## Releases
 
+### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
+
 ### [9.0.0](https://mantine.dev/llms/changelog-9-0-0.md) (March 31, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.0.0
+- Patches:
+  - [9.0.2](https://github.com/mantinedev/mantine/releases/tag/9.0.2) (April 13, 2026)
+  - [9.0.1](https://github.com/mantinedev/mantine/releases/tag/9.0.1) (April 6, 2026)
 
-### [8.3.0](https://mantine.dev/llms/changelog-8-3-0.md) (September 8, 2025)
+### [8.3.0](https://v8.mantine.dev/changelog/8-3-0) (September 8, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.3.0
 - Patches:
   - [8.3.16](https://github.com/mantinedev/mantine/releases/tag/8.3.16) (March 5, 2026)
@@ -26,8 +32,10 @@
   - [8.3.3](https://github.com/mantinedev/mantine/releases/tag/8.3.3) (October 2, 2025)
   - [8.3.2](https://github.com/mantinedev/mantine/releases/tag/8.3.2) (September 23, 2025)
   - [8.3.1](https://github.com/mantinedev/mantine/releases/tag/8.3.1) (September 10, 2025)
+  - [8.3.18](https://github.com/mantinedev/mantine/releases/tag/8.3.18) (March 17, 2026)
+  - [8.3.17](https://github.com/mantinedev/mantine/releases/tag/8.3.17) (March 14, 2026)
 
-### [8.2.0](https://mantine.dev/llms/changelog-8-2-0.md) (July 22, 2025)
+### [8.2.0](https://v8.mantine.dev/changelog/8-2-0) (July 22, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.2.0
 - Patches:
   - [8.2.2](https://github.com/mantinedev/mantine/releases/tag/8.2.2) (July 30, 2025)
@@ -38,14 +46,14 @@
   - [8.2.7](https://github.com/mantinedev/mantine/releases/tag/8.2.7) (August 31, 2025)
   - [8.2.8](https://github.com/mantinedev/mantine/releases/tag/8.2.8) (August 31, 2025)
 
-### [8.1.0](https://mantine.dev/llms/changelog-8-1-0.md) (June 10, 2025)
+### [8.1.0](https://v8.mantine.dev/changelog/8-1-0) (June 10, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.1.0
 - Patches:
   - [8.1.1](https://github.com/mantinedev/mantine/releases/tag/8.1.1) (June 16, 2025)
   - [8.1.2](https://github.com/mantinedev/mantine/releases/tag/8.1.2) (June 25, 2025)
   - [8.1.3](https://github.com/mantinedev/mantine/releases/tag/8.1.3) (July 7, 2025)
 
-### [8.0.0](https://mantine.dev/llms/changelog-8-0-0.md) (May 5, 2025)
+### [8.0.0](https://v8.mantine.dev/changelog/8-0-0) (May 5, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.0.0
 - Patches:
   - [8.0.1](https://github.com/mantinedev/mantine/releases/tag/8.0.1) (May 14, 2025)

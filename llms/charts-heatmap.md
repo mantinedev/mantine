@@ -394,6 +394,34 @@ export const data = ${JSON.stringify(data, null, 2)};
 ```
 
 
+## Legend
+
+Set `withLegend` to display a color legend below the heatmap. Use `legendLabels`
+prop to customize the labels (default: `['Less', 'More']`):
+
+```tsx
+// Demo.tsx
+import { Heatmap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Heatmap
+      data={data}
+      startDate="2024-02-16"
+      endDate="2025-02-16"
+      withMonthLabels
+      withWeekdayLabels
+      withLegend
+    />
+  );
+}
+
+// data.ts
+export const data = ${JSON.stringify(data, null, 2)};
+```
+
+
 ## Split months
 
 Use `splitMonths` to separate months visually with a spacer column and show only days that belong to the current month in each column. Month labels will be shifted by one column when `splitMonths` is enabled and months with fewer than 2 weeks are not labeled.
@@ -436,6 +464,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 | gap | number | - | Gap between rects in px |
 | getRectProps | (input: HeatmapRectData) => SVGProps<SVGRectElement> | - | Props passed down to each rect depending on its date and associated value |
 | getTooltipLabel | (input: HeatmapRectData) => ReactNode | - | A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible |
+| legendLabels | [string, string] | - | Legend labels, array of 2 elements: [min label, max label] |
 | monthLabels | string[] | - | Month labels, array of 12 elements, can be used for localization |
 | monthsLabelsHeight | number | - | Height of month labels row |
 | rectRadius | number | - | Rect radius in px |
@@ -445,6 +474,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 | tooltipProps | Partial<TooltipFloatingProps> | - | Props passed down to the `Tooltip.Floating` component |
 | weekdayLabels | string[] | - | Weekday labels, array of 7 elements, can be used for localization |
 | weekdaysLabelsWidth | number | - | Width of weekday labels column |
+| withLegend | boolean | - | If set, legend with color levels is displayed below the heatmap |
 | withMonthLabels | boolean | - | If set, month labels are displayed |
 | withOutsideDates | boolean | - | If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. |
 | withTooltip | boolean | - | If set, tooltip is displayed on rect hover |
@@ -463,3 +493,6 @@ Heatmap component supports Styles API. With Styles API, you can customize styles
 | weekdayLabel | .mantine-Heatmap-weekdayLabel | Weekday text element |
 | monthLabel | .mantine-Heatmap-monthLabel | Month text element |
 | rect | .mantine-Heatmap-rect | Rect that represents date |
+| legend | .mantine-Heatmap-legend | Legend group element |
+| legendLabel | .mantine-Heatmap-legendLabel | Legend text label (Less/More) |
+| legendRect | .mantine-Heatmap-legendRect | Legend color rect |

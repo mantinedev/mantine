@@ -76,9 +76,39 @@ const callback = useDebouncedCallback(
 );
 ```
 
-## Flush debounced callback
+## leading option
 
-You can call the `flush` method to execute the debounced callback immediately:
+Set `leading: true` to execute the callback immediately on the first call,
+then ignore subsequent calls within the delay window:
+
+```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
+
+const callback = useDebouncedCallback(
+  () => console.log('Hello'),
+  { delay: 1000, leading: true },
+);
+```
+
+## maxWait option
+
+Use `maxWait` to guarantee the callback is executed at least once within the given time
+window, even if calls keep arriving. This is useful for scenarios like search-as-you-type
+where you want intermediate results during continuous input:
+
+```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
+
+const callback = useDebouncedCallback(
+  (query: string) => fetchResults(query),
+  { delay: 300, maxWait: 1000 },
+);
+```
+
+## Flush and cancel
+
+You can call the `flush` method to execute the debounced callback immediately,
+or `cancel` to discard the pending call:
 
 ```tsx
 import { useDebouncedCallback } from '@mantine/hooks';
@@ -86,6 +116,8 @@ import { useDebouncedCallback } from '@mantine/hooks';
 const callback = useDebouncedCallback(() => console.log('Hello'), 1000);
 
 callback.flush(); // immediately executes the pending callback
+callback.cancel(); // discards the pending callback
+callback.isPending(); // returns true if a call is waiting to execute
 ```
 
 ## Definition
@@ -94,11 +126,13 @@ callback.flush(); // immediately executes the pending callback
 interface UseDebouncedCallbackOptions {
   delay: number;
   flushOnUnmount?: boolean;
+  leading?: boolean;
+  maxWait?: number;
 }
 
 type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> = ((
   ...args: Parameters<T>
-) => void) & { flush: () => void };
+) => void) & { flush: () => void; cancel: () => void; isPending: () => boolean };
 
 function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,

@@ -33,8 +33,8 @@ import { useToggle } from '@mantine/hooks';
 
 const [value, toggle] = useToggle(['light', 'dark'] as const);
 
-toggle(); // -> value == 'light'
 toggle(); // -> value == 'dark'
+toggle(); // -> value == 'light'
 
 // You can force a specific value; in this case, state will be set to the given value
 toggle('dark'); // -> value == 'dark'

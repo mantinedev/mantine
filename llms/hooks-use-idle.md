@@ -19,7 +19,7 @@ function Demo() {
 
 ## Custom events
 
-By default, the hook will listen to `keypress`, `mousemove`, `touchmove`, `wheel`, `click`, and `scroll` events to set the idle status.
+By default, the hook will listen to `keydown`, `mousemove`, `touchmove`, `click`, `scroll`, and `wheel` events to set the idle status.
 To change that, provide a list of events in the `options` argument:
 
 ```tsx

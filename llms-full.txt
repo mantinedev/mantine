@@ -6639,7 +6639,7 @@ import { useCollapse, useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [expanded, handlers] = useDisclosure(false);
-  const getCollapseProps = useCollapse({ expanded });
+  const { getCollapseProps } = useCollapse({ expanded });
 
   return (
     <>
@@ -13610,18 +13610,6 @@ function Demo() {
 ```
 
 
-Example of using [react-imask](https://github.com/uNmAnNeR/imaskjs/tree/master/packages/react-imask) with `Input`:
-
-```tsx
-import { Input } from '@mantine/core';
-import { IMaskInput } from 'react-imask';
-
-function Demo() {
-  return <Input component={IMaskInput} mask="+7 (000) 000-00-00" placeholder="Your phone" />;
-}
-```
-
-
 ## Input.Wrapper component
 
 The `Input.Wrapper` component is used in all other inputs
@@ -13973,17 +13961,11 @@ function Demo() {
 
 ```tsx
 import { InputBase } from '@mantine/core';
-import { IMaskInput } from 'react-imask';
 
 function Demo() {
   return (
     <>
-      <InputBase
-        label="Your phone"
-        component={IMaskInput}
-        mask="+7 (000) 000-0000"
-        placeholder="Your phone"
-      />
+      <InputBase label="Your phone" component="input" placeholder="Your phone" />
 
       <InputBase label="Custom native select" component="select" mt="md">
         <option value="react">React</option>
@@ -15328,6 +15310,260 @@ Marquee component supports Styles API. With Styles API, you can customize styles
 | root | data-reverse | `reverse` prop is set | - |
 | root | data-pause-on-hover | `pauseOnHover` prop is set | - |
 | root | data-fade-edges | `fadeEdges` prop is `true` (default) | - |
+
+
+--------------------------------------------------------------------------------
+
+### MaskInput
+Package: @mantine/core
+Import: import { MaskInput } from '@mantine/core';
+Description: Input with mask pattern for formatted text entry
+
+## Usage
+
+`MaskInput` is a wrapper around [useMask](https://mantine.dev/llms/hooks-use-mask.md) hook that provides all standard input
+props (label, description, error, etc.) and supports all mask options. The mask string defines
+the expected format using token characters (`9` for digits, `a` for letters, etc.).
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+
+function Demo() {
+  return (
+    <MaskInput
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
+      mask="(999) 999-9999"
+      placeholder="(___) ___-____"
+    />
+  );
+}
+```
+
+
+## Dynamic mask
+
+Use the `modify` option to change the mask based on the current input value.
+This example switches between standard and American Express credit card formats:
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MaskInput
+      label="Credit card"
+      placeholder="____ ____ ____ ____"
+      mask="9999 9999 9999 9999"
+      modify={(value) => {
+        if (/^3[47]/.test(value)) {
+          return { mask: '9999 999999 99999' };
+        }
+        return undefined;
+      }}
+    />
+  );
+}
+```
+
+
+## Custom tokens
+
+Override or extend the built-in token map with the `tokens` option:
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MaskInput
+      label="Hex color"
+      placeholder="#______"
+      mask="#hhhhhh"
+      tokens={{ h: /[0-9a-fA-F]/ }}
+    />
+  );
+}
+```
+
+
+## Regex array format
+
+For complex masks where built-in tokens are not enough, pass an array of
+string literals and `RegExp` objects:
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MaskInput
+      label="Time (HH:MM)"
+      placeholder="__:__"
+      mask={[/[0-2]/, /\\\\d/, ':', /[0-5]/, /\\\\d/]}
+    />
+  );
+}
+```
+
+
+## Transform
+
+Use the `transform` option to convert each character before validation.
+This example auto-uppercases input so the `A` token accepts lowercase letters:
+
+```tsx
+import { MaskInput, Text } from '@mantine/core';
+import { formatMask, isMaskComplete } from '@mantine/hooks';
+
+function Demo() {
+  return (
+    <>
+      <MaskInput
+        label="Promo code"
+        placeholder="AAA-9999"
+        mask="AAA-9999"
+        transform={(char) => char.toUpperCase()}
+        slotChar="XXX-0000"
+      />
+      <Text size="sm" mt="sm" c="dimmed">
+        Type lowercase letters – they will be auto-uppercased
+      </Text>
+    </>
+  );
+}
+```
+
+
+## Disabled state
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MaskInput
+      label="Phone number"
+      placeholder="(___) ___-____"
+      mask="(999) 999-9999"
+      disabled
+    />
+  );
+}
+```
+
+
+## Error state
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MaskInput
+      label="Phone number"
+      placeholder="(___) ___-____"
+      mask="(999) 999-9999"
+      error="Invalid phone number"
+    />
+  );
+}
+```
+
+
+## Mask pattern syntax
+
+The mask string defines the expected format. Each character is either a **token** (editable slot)
+or a **literal** (fixed character inserted automatically).
+
+### Built-in tokens
+
+* `9` – any single digit (`[0-9]`)
+* `a` – any single letter (`[A-Za-z]`)
+* `A` – any uppercase letter (`[A-Z]`)
+* `*` – any alphanumeric character (`[A-Za-z0-9]`)
+* `#` – digit or sign (`[-+0-9]`)
+
+### Optional segments
+
+Append `?` after the last required character to mark remaining slots as optional:
+
+```tsx
+<MaskInput mask="(999) 999-9999? x9999" /> // Extension is optional
+```
+
+### Escaping
+
+Prefix a token character with `\` to treat it as a literal:
+
+```tsx
+<MaskInput mask="\A999" /> // "A" is literal, not a token
+```
+
+
+#### Props
+
+**MaskInput props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| alwaysShowMask | boolean | - | Show mask pattern even when field is empty and unfocused |
+| autoClear | boolean | - | Clear value on blur when mask is incomplete, `false` by default |
+| beforeMaskedStateChange | (states: { previousState: { value: string; selection: { start: number; end: number; } \| null; }; currentState: { value: string; selection: { start: number; end: number; } \| null; }; nextState: { value: string; selection: { ...; } \| null; }; }) => { ...; } | - | Escape hatch for advanced cursor/value manipulation |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| mask | string \| (string \| RegExp)[] | required | Mask pattern string or array of string literals and RegExp objects |
+| modify | ((value: string) => Partial<Pick<MaskInputProps, "mask" \| "tokens" \| "separate" \| "slotChar">>) \| undefined | - | Called before masking on each keystroke, can return overrides for mask options |
+| onChangeRaw | (rawValue: string, maskedValue: string) => void | - | Called on every change with raw and masked values |
+| onComplete | (maskedValue: string, rawValue: string) => void | - | Called when all required mask slots are filled |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| separate | boolean | - | When true, raw and display values are decoupled |
+| showMaskOnFocus | boolean | - | Show mask placeholder on focus, `true` by default |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| slotChar | string \| null | - | Character displayed in unfilled slots, `"_"` by default |
+| tokens | Record<string, RegExp> | - | Override or extend the default token map |
+| transform | (char: string) => string | - | Transform each character before validation and insertion |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
+
+
+#### Styles API
+
+MaskInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**MaskInput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-MaskInput-wrapper | Root element of the Input |
+| input | .mantine-MaskInput-input | Input element |
+| section | .mantine-MaskInput-section | Left and right sections |
+| root | .mantine-MaskInput-root | Root element |
+| label | .mantine-MaskInput-label | Label element |
+| required | .mantine-MaskInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-MaskInput-description | Description element |
+| error | .mantine-MaskInput-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -26803,6 +27039,36 @@ function Demo() {
 ```
 
 
+## Start point
+
+Use the `startPointValue` prop to change the origin of the filled bar.
+When set, the bar extends from the given value toward the current value –
+to the left for values below the start point and to the right for values above it.
+This prop is ignored when `inverted` is set.
+
+```tsx
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Slider
+      startPointValue={0}
+      min={-100}
+      max={100}
+      defaultValue={40}
+      marks={[
+        { value: -100, label: '-100' },
+        { value: -50, label: '-50' },
+        { value: 0, label: '0' },
+        { value: 50, label: '50' },
+        { value: 100, label: '100' },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Vertical slider
 
 Set `orientation="vertical"` to render the slider vertically. In vertical orientation,
@@ -27055,6 +27321,7 @@ function Demo() {
 | scale | (value: number) => number | - | A transformation function to change the scale of the slider |
 | showLabelOnHover | boolean | - | Determines whether the label should be displayed when the slider is hovered |
 | size | MantineSize \| number | - | Controls size of the track |
+| startPointValue | number | - | Value at which the filled bar starts. When set, the bar extends from this point toward the current value. Ignored when `inverted` is set. |
 | step | number | - | Number by which value will be incremented/decremented with thumb drag and arrows |
 | thumbChildren | React.ReactNode | - | Content rendered inside thumb |
 | thumbLabel | string | - | Thumb `aria-label` |
@@ -29719,6 +29986,7 @@ function Demo() {
 | id | string | - | Base id, used to generate ids to connect labels with controls, generated randomly by default |
 | inverted | boolean | - | Determines whether tabs should have inverted styles |
 | keepMounted | boolean | - | If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how inactive tabs content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | loop | boolean | - | If set, arrow key presses loop though items (first to last and last to first) |
 | onChange | (value: string \| null) => void | - | Called when value changes |
 | orientation | "horizontal" \| "vertical" | - | Tabs orientation |
@@ -32807,11 +33075,17 @@ export interface RenderTreeNodePayload {
   /** `true` if the node is expanded, applicable only for nodes with `children` */
   expanded: boolean;
 
-  /** `true` if the node has non-empty `children` array */
+  /** `true` if the node has non-empty `children` array or `hasChildren` is set to `true` */
   hasChildren: boolean;
 
   /** `true` if the node is selected */
   selected: boolean;
+
+  /** `true` if the node's children are currently being loaded */
+  isLoading: boolean;
+
+  /** Error from the last failed load attempt, or `null` */
+  loadError: Error | null;
 
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
@@ -32901,6 +33175,14 @@ export interface UseTreeInput {
 
   /** Called with the node value when it is collapsed */
   onNodeCollapse?: (value: string) => void;
+
+  /** Called when a node with `hasChildren: true` is expanded for the first time */
+  onLoadChildren?: (nodeValue: string) => Promise<void>;
+
+  /** When `true`, checking a parent does not affect children and vice versa.
+   * Each node's checked state is fully independent. @default false
+   */
+  checkStrictly?: boolean;
 }
 ```
 
@@ -32908,6 +33190,9 @@ And returns an object with the following properties:
 
 ```tsx
 export interface UseTreeReturnType {
+  /** When `true`, each node's checked state is independent (no parent-child cascading) */
+  checkStrictly: boolean;
+
   /** Determines whether multiple node can be selected at a time */
   multiple: boolean;
 
@@ -32986,6 +33271,18 @@ export interface UseTreeReturnType {
 
   /** Returns `true` if node with provided value is indeterminate */
   isNodeIndeterminate: (value: string) => boolean;
+
+  /** Returns `true` if the node's children are currently being loaded */
+  isNodeLoading: (value: string) => boolean;
+
+  /** Returns the error from the last failed load attempt, or `null` */
+  getNodeLoadError: (value: string) => Error | null;
+
+  /** Programmatically triggers loading of a node's children */
+  loadNode: (value: string) => Promise<void>;
+
+  /** Clears the loaded cache for a node, causing it to re-fetch on next expand */
+  invalidateNode: (value: string) => void;
 }
 ```
 
@@ -33137,6 +33434,69 @@ function Demo() {
 ```
 
 
+## Check strictly
+
+By default, checking a parent node also checks all of its children (and unchecking works
+the same way). Set `checkStrictly: true` on `useTree` to make each node's checked state
+fully independent – checking a parent does not affect children and vice versa.
+In this mode, `isNodeIndeterminate` always returns `false`.
+
+```tsx
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Checkbox, Group, RenderTreeNodePayload, Tree, useTree } from '@mantine/core';
+import { data } from './data';
+
+const renderTreeNode = ({
+  node,
+  expanded,
+  hasChildren,
+  elementProps,
+  tree,
+}: RenderTreeNodePayload) => {
+  const checked = tree.isNodeChecked(node.value);
+
+  return (
+    <Group gap="xs" {...elementProps}>
+      <Checkbox.Indicator
+        checked={checked}
+        onClick={() =>
+          checked
+            ? tree.uncheckNode(node.value)
+            : tree.checkNode(node.value)
+        }
+      />
+
+      <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>
+        <span>{node.label}</span>
+
+        {hasChildren && (
+          <CaretDownIcon
+            size={14}
+            style={{
+              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+            }}
+          />
+        )}
+      </Group>
+    </Group>
+  );
+};
+
+function Demo() {
+  const tree = useTree({ checkStrictly: true });
+  return (
+    <Tree
+      data={data}
+      tree={tree}
+      levelOffset={23}
+      expandOnClick={false}
+      renderNode={renderTreeNode}
+    />
+  );
+}
+```
+
+
 ## Initial expanded state
 
 Expanded state is an object of `node.value` and boolean values that represent nodes expanded state.
@@ -33166,6 +33526,683 @@ function Demo() {
   });
 
   return <Tree data={data} tree={tree} />;
+}
+```
+
+
+## Async loading
+
+`Tree` supports lazy loading of children. Set `hasChildren: true` on a node without providing `children` –
+when the node is expanded for the first time, `onLoadChildren` callback passed to `useTree` is called.
+Use the `mergeAsyncChildren` utility to splice loaded children into your data:
+
+```tsx
+import { mergeAsyncChildren, Tree, TreeNodeData, useTree } from '@mantine/core';
+
+function Demo() {
+  const [data, setData] = useState<TreeNodeData[]>([
+    { label: 'Documents', value: 'documents', hasChildren: true },
+  ]);
+
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      const children = await fetchChildren(value);
+      setData((prev) => mergeAsyncChildren(prev, value, children));
+    },
+  });
+
+  return <Tree data={data} tree={tree} />;
+}
+```
+
+The `renderNode` payload includes `isLoading` and `loadError` fields that you can use
+to display a loading indicator or an error message. Use `tree.invalidateNode(value)` to clear
+the cache for a node and allow re-fetching on next expand.
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon, SpinnerIcon } from '@phosphor-icons/react';
+import {
+  Group,
+  mergeAsyncChildren,
+  RenderTreeNodePayload,
+  Tree,
+  TreeNodeData,
+  useTree,
+} from '@mantine/core';
+
+const initialData: TreeNodeData[] = [
+  { label: 'Documents', value: 'documents', hasChildren: true },
+  { label: 'Photos', value: 'photos', hasChildren: true },
+  { label: 'README.md', value: 'readme' },
+];
+
+// Simulates an API call to load children
+async function fetchChildren(parentValue: string): Promise<TreeNodeData[]> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return [
+    { label: `${parentValue}/file-1.txt`, value: `${parentValue}/file-1.txt` },
+    { label: `${parentValue}/file-2.txt`, value: `${parentValue}/file-2.txt` },
+    {
+      label: `${parentValue}/subfolder`,
+      value: `${parentValue}/subfolder`,
+      hasChildren: true,
+    },
+  ];
+}
+
+function Leaf({ node, expanded, hasChildren, elementProps, isLoading }: RenderTreeNodePayload) {
+  return (
+    <Group gap={5} wrap="nowrap" {...elementProps}>
+      {isLoading ? (
+        <SpinnerIcon size={18} style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }} />
+      ) : (
+        hasChildren && (
+          <CaretDownIcon
+            size={18}
+            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
+          />
+        )
+      )}
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        {node.label}
+      </span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [data, setData] = useState(initialData);
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      const children = await fetchChildren(value);
+      setData((prev) => mergeAsyncChildren(prev, value, children));
+    },
+  });
+
+  return (
+    <Tree
+      data={data}
+      tree={tree}
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
+## Search and filter
+
+`Tree` does not include built-in search controls – search input and filtering logic are always external.
+Use the `filterTreeData` utility to filter tree data based on a search query. The function
+accepts tree data, a query string, and an optional custom filter function:
+
+```tsx
+import { filterTreeData } from '@mantine/core';
+
+// Filter with default case-insensitive label matching
+const filtered = filterTreeData(data, 'button');
+
+// Filter with a custom function
+const filtered = filterTreeData(data, 'btn', (query, node) =>
+  node.value.includes(query)
+);
+```
+
+The default filter compares the query against `node.label` (when it is a string) or `node.value` as a fallback.
+Matching nodes and their ancestors are preserved in the result. You can provide a custom `TreeNodeFilter`
+function for more advanced matching (for example, fuzzy search with fuse.js).
+
+### Highlight matching nodes
+
+In this example, all nodes remain visible and matching text is highlighted using the `Highlight` component
+inside `renderNode`. Ancestor nodes of matching nodes are auto-expanded.
+
+```tsx
+import { useState } from 'react';
+import {
+  defaultTreeNodeFilter,
+  getTreeExpandedState,
+  Highlight,
+  TextInput,
+  Tree,
+  TreeNodeData,
+  useTree,
+} from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'src',
+    value: 'src',
+    children: [
+      {
+        label: 'components',
+        value: 'src/components',
+        children: [
+          { label: 'Accordion.tsx', value: 'src/components/Accordion.tsx' },
+          { label: 'Tree.tsx', value: 'src/components/Tree.tsx' },
+          { label: 'Button.tsx', value: 'src/components/Button.tsx' },
+          { label: 'Input.tsx', value: 'src/components/Input.tsx' },
+        ],
+      },
+      {
+        label: 'hooks',
+        value: 'src/hooks',
+        children: [
+          { label: 'use-debounce.ts', value: 'src/hooks/use-debounce.ts' },
+          { label: 'use-media-query.ts', value: 'src/hooks/use-media-query.ts' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'public',
+    value: 'public',
+    children: [
+      { label: 'favicon.ico', value: 'public/favicon.ico' },
+      { label: 'logo.svg', value: 'public/logo.svg' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+  { label: 'tsconfig.json', value: 'tsconfig.json' },
+];
+
+function getMatchingAncestors(
+  nodes: TreeNodeData[],
+  query: string
+): string[] {
+  const result: string[] = [];
+  for (const node of nodes) {
+    const childMatches = node.children
+      ? getMatchingAncestors(node.children, query)
+      : [];
+    if (
+      defaultTreeNodeFilter(query, node) ||
+      childMatches.length > 0
+    ) {
+      result.push(node.value, ...childMatches);
+    }
+  }
+  return result;
+}
+
+function Demo() {
+  const [search, setSearch] = useState('');
+  const tree = useTree({
+    initialExpandedState: getTreeExpandedState(data, []),
+  });
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    if (value.trim()) {
+      tree.setExpandedState(
+        getTreeExpandedState(data, getMatchingAncestors(data, value))
+      );
+    } else {
+      tree.collapseAllNodes();
+    }
+  };
+
+  return (
+    <div>
+      <TextInput
+        placeholder="Search..."
+        mb="sm"
+        value={search}
+        onChange={(event) => handleSearchChange(event.currentTarget.value)}
+      />
+      <Tree
+        data={data}
+        tree={tree}
+        renderNode={({ node, elementProps, hasChildren, expanded }) => {
+          const label =
+            typeof node.label === 'string' ? node.label : node.value;
+          return (
+            <div {...elementProps}>
+              <Highlight highlight={search} component="span">
+                {label}
+              </Highlight>
+            </div>
+          );
+        }}
+      />
+    </div>
+  );
+}
+```
+
+
+### Filter non-matching nodes
+
+In this example, non-matching branches are removed from the tree using `filterTreeData`.
+The filtered tree is auto-expanded with `getTreeExpandedState(filteredData, '*')`.
+
+```tsx
+import { useMemo, useState } from 'react';
+import {
+  filterTreeData,
+  getTreeExpandedState,
+  TextInput,
+  Tree,
+  TreeNodeData,
+  useTree,
+} from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'src',
+    value: 'src',
+    children: [
+      {
+        label: 'components',
+        value: 'src/components',
+        children: [
+          { label: 'Accordion.tsx', value: 'src/components/Accordion.tsx' },
+          { label: 'Tree.tsx', value: 'src/components/Tree.tsx' },
+          { label: 'Button.tsx', value: 'src/components/Button.tsx' },
+          { label: 'Input.tsx', value: 'src/components/Input.tsx' },
+        ],
+      },
+      {
+        label: 'hooks',
+        value: 'src/hooks',
+        children: [
+          { label: 'use-debounce.ts', value: 'src/hooks/use-debounce.ts' },
+          { label: 'use-media-query.ts', value: 'src/hooks/use-media-query.ts' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'public',
+    value: 'public',
+    children: [
+      { label: 'favicon.ico', value: 'public/favicon.ico' },
+      { label: 'logo.svg', value: 'public/logo.svg' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+  { label: 'tsconfig.json', value: 'tsconfig.json' },
+];
+
+function Demo() {
+  const [search, setSearch] = useState('');
+  const tree = useTree();
+
+  const filteredData = useMemo(
+    () => filterTreeData(data, search),
+    [search]
+  );
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    if (value.trim()) {
+      const next = filterTreeData(data, value);
+      tree.setExpandedState(getTreeExpandedState(next, '*'));
+    } else {
+      tree.collapseAllNodes();
+    }
+  };
+
+  return (
+    <div>
+      <TextInput
+        placeholder="Search..."
+        mb="sm"
+        value={search}
+        onChange={(event) => handleSearchChange(event.currentTarget.value)}
+      />
+      <Tree data={filteredData} tree={tree} />
+    </div>
+  );
+}
+```
+
+
+### Fuzzy search with fuse.js
+
+You can pass a custom filter function to `filterTreeData` for fuzzy matching. This example
+uses [fuse.js](https://www.fusejs.io/):
+
+```tsx
+import { useMemo, useState } from 'react';
+import Fuse from 'fuse.js';
+import {
+  filterTreeData,
+  getTreeExpandedState,
+  TextInput,
+  Tree,
+  TreeNodeData,
+  TreeNodeFilter,
+  useTree,
+} from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'src',
+    value: 'src',
+    children: [
+      {
+        label: 'components',
+        value: 'src/components',
+        children: [
+          { label: 'Accordion.tsx', value: 'src/components/Accordion.tsx' },
+          { label: 'Tree.tsx', value: 'src/components/Tree.tsx' },
+          { label: 'Button.tsx', value: 'src/components/Button.tsx' },
+          { label: 'Input.tsx', value: 'src/components/Input.tsx' },
+        ],
+      },
+      {
+        label: 'hooks',
+        value: 'src/hooks',
+        children: [
+          { label: 'use-debounce.ts', value: 'src/hooks/use-debounce.ts' },
+          { label: 'use-media-query.ts', value: 'src/hooks/use-media-query.ts' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'public',
+    value: 'public',
+    children: [
+      { label: 'favicon.ico', value: 'public/favicon.ico' },
+      { label: 'logo.svg', value: 'public/logo.svg' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+  { label: 'tsconfig.json', value: 'tsconfig.json' },
+];
+
+function flattenTreeData(nodes: TreeNodeData[]): TreeNodeData[] {
+  return nodes.reduce<TreeNodeData[]>((acc, node) => {
+    acc.push(node);
+    if (node.children) {
+      acc.push(...flattenTreeData(node.children));
+    }
+    return acc;
+  }, []);
+}
+
+function createFuzzyFilter(nodes: TreeNodeData[]): TreeNodeFilter {
+  const flatNodes = flattenTreeData(nodes);
+  const fuse = new Fuse(flatNodes, {
+    keys: ['label'],
+    threshold: 0.3,
+  });
+
+  return (query, node) => {
+    const results = fuse.search(query);
+    return results.some((result) => result.item.value === node.value);
+  };
+}
+
+function Demo() {
+  const [search, setSearch] = useState('');
+  const tree = useTree();
+  const fuzzyFilter = useMemo(() => createFuzzyFilter(data), []);
+
+  const filteredData = useMemo(
+    () => filterTreeData(data, search, fuzzyFilter),
+    [search, fuzzyFilter]
+  );
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    if (value.trim()) {
+      const next = filterTreeData(data, value, fuzzyFilter);
+      tree.setExpandedState(getTreeExpandedState(next, '*'));
+    } else {
+      tree.collapseAllNodes();
+    }
+  };
+
+  return (
+    <div>
+      <TextInput
+        placeholder="Fuzzy search..."
+        mb="sm"
+        value={search}
+        onChange={(event) => handleSearchChange(event.currentTarget.value)}
+      />
+      <Tree data={filteredData} tree={tree} />
+    </div>
+  );
+}
+```
+
+
+## Drag and drop
+
+`Tree` component supports drag-and-drop reordering of nodes. To enable it, provide `onDragDrop` callback.
+The callback receives an object with `draggedNode` (value of the dragged node), `targetNode` (value of the node it was dropped on),
+and `position` (`'before'`, `'after'`, or `'inside'`).
+
+Use `moveTreeNode` utility function to update the data based on the drag-and-drop result:
+
+```tsx
+import { moveTreeNode, Tree, TreeNodeData } from '@mantine/core';
+
+function Demo() {
+  const [data, setData] = useState<TreeNodeData[]>(initialData);
+
+  return (
+    <Tree
+      data={data}
+      onDragDrop={(payload) =>
+        setData((current) => moveTreeNode(current, payload))
+      }
+    />
+  );
+}
+```
+
+When dragging over a node, the drop position is determined by cursor position:
+
+* **Top zone** – drop before the target node (shown as a line above)
+* **Middle zone** – drop inside the target node as a child (shown as a background highlight, only for nodes with children)
+* **Bottom zone** – drop after the target node (shown as a line below)
+
+Nodes cannot be dropped onto their own descendants.
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'Pages',
+    value: 'pages',
+    children: [
+      { label: 'index.tsx', value: 'pages/index.tsx' },
+      { label: 'about.tsx', value: 'pages/about.tsx' },
+      { label: 'contact.tsx', value: 'pages/contact.tsx' },
+    ],
+  },
+  {
+    label: 'Components',
+    value: 'components',
+    children: [
+      { label: 'Header.tsx', value: 'components/Header.tsx' },
+      { label: 'Footer.tsx', value: 'components/Footer.tsx' },
+      { label: 'Sidebar.tsx', value: 'components/Sidebar.tsx' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+  { label: 'tsconfig.json', value: 'tsconfig.json' },
+];
+
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={5} {...elementProps}>
+      {hasChildren && (
+        <CaretDownIcon
+          size={18}
+          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [treeData, setTreeData] = useState(data);
+
+  return (
+    <Tree
+      data={treeData}
+      onDragDrop={(payload) =>
+        setTreeData((current) => moveTreeNode(current, payload))
+      }
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
+## Connecting lines
+
+Set `withLines` prop to display connecting lines showing parent-child relationships.
+Lines adapt to `levelOffset` spacing automatically.
+
+```tsx
+import { getTreeExpandedState, Tree, useTree } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const tree = useTree({
+    initialExpandedState: getTreeExpandedState(data, '*'),
+  });
+
+  return <Tree data={data} tree={tree} withLines />;
+}
+```
+
+
+## Virtualization
+
+`Tree` does not depend on any virtualization library – you supply one yourself.
+Use the `flattenTreeData` utility to convert hierarchical data into a flat list of
+visible nodes based on the current expanded state, then render each node with
+`FlatTreeNode` which provides Tree's styles, aria attributes, click/keyboard
+handlers, and `renderNode` support.
+
+```tsx
+import { FlatTreeNode, flattenTreeData, useTree } from '@mantine/core';
+
+const tree = useTree();
+const flatList = flattenTreeData(data, tree.expandedState);
+// flatList is FlattenedTreeNodeData[] – spread each entry into FlatTreeNode
+```
+
+`FlatTreeNode` accepts the same behavioral props as `Tree` (`expandOnClick`,
+`selectOnClick`, `expandOnSpace`, `checkOnSpace`, `renderNode`) and a `style` prop
+for virtualizer positioning. The container element must have `data-tree-root`
+and `role="tree"` attributes for keyboard navigation to work.
+
+```tsx
+import { useMemo, useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import {
+  FlatTreeNode,
+  flattenTreeData,
+  getTreeExpandedState,
+  TreeNodeData,
+  useTree,
+} from '@mantine/core';
+
+const ITEM_HEIGHT = 30;
+
+function generateTreeData(count: number): TreeNodeData[] {
+  const result: TreeNodeData[] = [];
+  let id = 0;
+
+  function addChildren(
+    parent: TreeNodeData[],
+    depth: number,
+    remaining: { count: number }
+  ) {
+    const childCount = depth === 0 ? 20 : Math.floor(Math.random() * 8) + 2;
+
+    for (let i = 0; i < childCount && remaining.count > 0; i++) {
+      id++;
+      remaining.count--;
+      const hasChild =
+        depth < 3 && remaining.count > 0 && Math.random() > 0.3;
+      const node: TreeNodeData = {
+        label: `${hasChild ? 'Folder' : 'File'} ${id}`,
+        value: `node-${id}`,
+        children: hasChild ? [] : undefined,
+      };
+
+      if (hasChild) {
+        addChildren(node.children!, depth + 1, remaining);
+      }
+
+      parent.push(node);
+    }
+  }
+
+  addChildren(result, 0, { count });
+  return result;
+}
+
+const largeData = generateTreeData(2000);
+const initialExpandedState = getTreeExpandedState(largeData, '*');
+
+function Demo() {
+  const tree = useTree({
+    initialExpandedState,
+  });
+
+  const flatList = useMemo(
+    () => flattenTreeData(largeData, tree.expandedState),
+    [tree.expandedState]
+  );
+
+  const scrollParentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: flatList.length,
+    getScrollElement: () => scrollParentRef.current,
+    estimateSize: () => ITEM_HEIGHT,
+    overscan: 20,
+  });
+
+  return (
+    <div ref={scrollParentRef} style={{ height: 400, overflow: 'auto' }}>
+      <div
+        data-tree-root
+        role="tree"
+        style={{
+          height: virtualizer.getTotalSize(),
+          position: 'relative',
+        }}
+      >
+        {virtualizer.getVirtualItems().map((virtualItem) => (
+          <FlatTreeNode
+            key={flatList[virtualItem.index].node.value}
+            {...flatList[virtualItem.index]}
+            tree={tree}
+            expandOnClick
+            selectOnClick
+            tabIndex={virtualItem.index === 0 ? 0 : -1}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: virtualItem.size,
+              transform: `translateY(${virtualItem.start}px)`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
 ```
 
@@ -33247,9 +34284,30 @@ function Demo() {
 | expandOnSpace | boolean | - | If set, tree node with children is expanded on space key press |
 | keepMounted | boolean | - | If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. |
 | levelOffset | MantineSpacing | - | Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value |
+| onDragDrop | (payload: TreeDragDropPayload) => void | - | Called when a node is dropped on another node, enables drag-and-drop when provided |
 | renderNode | RenderNode | - | A function to render tree node label |
 | selectOnClick | boolean | - | If set, tree node is selected on click |
 | tree | UseTreeReturnType | - | Use-tree hook instance that can be used to manipulate component state |
+| withLines | boolean | - | If set, connecting lines are rendered showing parent-child relationships |
+
+**Tree.map props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| aspectRatio | number | - | The treemap will try to keep every single rectangle's aspect ratio near the aspectRatio given |
+| autoContrast | boolean | - | Determines whether text color should be adjusted based on background color to improve contrast |
+| children | React.ReactNode | - | Additional elements rendered inside `Treemap` component |
+| data | TreemapData[] | required | Data used to render chart |
+| dataKey | string | - | Key in data object for the value |
+| height | number | - | Controls chart height |
+| strokeColor | MantineColor | - | Controls color of the node stroke, by default depends on color scheme |
+| strokeWidth | number | - | Controls width of node stroke |
+| textColor | MantineColor | - | Controls text color of labels |
+| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
+| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
+| treemapProps | Partial<Omit<Props<TreemapDataType, any>, "data" \| "ref" \| "dataKey">> | - | Props passed down to recharts `Treemap` component |
+| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |
+| withTooltip | boolean | - | Determines whether the tooltip should be displayed when a node is hovered |
 
 
 #### Styles API
@@ -33656,6 +34714,7 @@ The `use-click-outside` hook accepts 3 arguments:
 * `handler` – function that is called when clicking outside
 * `events` – optional list of events that trigger outside click, `['mousedown', 'touchstart']` by default
 * `nodes` - optional list of nodes that should not trigger outside click event
+* `enabled` - optional boolean to dynamically enable/disable the listener, `true` by default
 
 The hook returns a `ref` object that must be passed to the element
 based on which outside clicks should be captured.
@@ -33745,9 +34804,10 @@ const ref = useClickOutside<HTMLDivElement>(() =>
 
 ```tsx
 function useClickOutside<T extends HTMLElement = any>(
-  handler: () => void,
+  handler: (event: MouseEvent | TouchEvent) => void,
   events?: string[] | null,
-  nodes?: HTMLElement[]
+  nodes?: (HTMLElement | null)[],
+  enabled?: boolean
 ): React.RefObject<T>;
 ```
 
@@ -33840,7 +34900,7 @@ import { useCollapse, useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [expanded, handlers] = useDisclosure(false);
-  const getCollapseProps = useCollapse({ expanded });
+  const { getCollapseProps } = useCollapse({ expanded });
 
   return (
     <>
@@ -33939,14 +34999,6 @@ interface UseCollapseReturnValue {
   getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
 }
 
-interface UseCollapseReturnValue {
-  /** Whether the collapse transition is currently running */
-  isTransitioning: boolean;
-
-  /** Props to pass down to the collapsible element */
-  getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
-}
-
 function useCollapse(input: UseCollapseInput): UseCollapseReturnValue;
 ```
 
@@ -34011,7 +35063,7 @@ If your application does not have server-side rendering, you can enable
 immediate calculation of the initial value by changing the `getInitialValueInEffect` option:
 
 ```tsx
-const colorScheme = useColorScheme('light', { getInitialValueInEffect: true });
+const colorScheme = useColorScheme('light', { getInitialValueInEffect: false });
 ```
 
 ## Definition
@@ -34075,6 +35127,7 @@ function Demo() {
 interface UseCounterOptions {
   min?: number;
   max?: number;
+  step?: number;
 }
 
 interface UseCounterHandlers {
@@ -34182,9 +35235,39 @@ const callback = useDebouncedCallback(
 );
 ```
 
-## Flush debounced callback
+## leading option
 
-You can call the `flush` method to execute the debounced callback immediately:
+Set `leading: true` to execute the callback immediately on the first call,
+then ignore subsequent calls within the delay window:
+
+```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
+
+const callback = useDebouncedCallback(
+  () => console.log('Hello'),
+  { delay: 1000, leading: true },
+);
+```
+
+## maxWait option
+
+Use `maxWait` to guarantee the callback is executed at least once within the given time
+window, even if calls keep arriving. This is useful for scenarios like search-as-you-type
+where you want intermediate results during continuous input:
+
+```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
+
+const callback = useDebouncedCallback(
+  (query: string) => fetchResults(query),
+  { delay: 300, maxWait: 1000 },
+);
+```
+
+## Flush and cancel
+
+You can call the `flush` method to execute the debounced callback immediately,
+or `cancel` to discard the pending call:
 
 ```tsx
 import { useDebouncedCallback } from '@mantine/hooks';
@@ -34192,6 +35275,8 @@ import { useDebouncedCallback } from '@mantine/hooks';
 const callback = useDebouncedCallback(() => console.log('Hello'), 1000);
 
 callback.flush(); // immediately executes the pending callback
+callback.cancel(); // discards the pending callback
+callback.isPending(); // returns true if a call is waiting to execute
 ```
 
 ## Definition
@@ -34200,11 +35285,13 @@ callback.flush(); // immediately executes the pending callback
 interface UseDebouncedCallbackOptions {
   delay: number;
   flushOnUnmount?: boolean;
+  leading?: boolean;
+  maxWait?: number;
 }
 
 type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> = ((
   ...args: Parameters<T>
-) => void) & { flush: () => void };
+) => void) & { flush: () => void; cancel: () => void; isPending: () => boolean };
 
 function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
@@ -34388,10 +35475,11 @@ function Demo() {
 ```
 
 
-## Cancel update
+## Cancel and flush
 
-The hook provides a `cancel` callback; you can use it to cancel the update.
-Update cancels automatically on component unmount.
+The hook returns a third element with `cancel` and `flush` handlers.
+`cancel` discards the pending update, `flush` applies it immediately.
+Updates cancel automatically on component unmount.
 
 In this example, type in some text and click the cancel button
 within a second to cancel debounced value change:
@@ -34425,6 +35513,12 @@ function Demo() {
 ```
 
 
+The second element of the returned tuple is a shorthand for `cancel` for backwards compatibility.
+
+```tsx
+const [debounced, cancel, { cancel, flush }] = useDebouncedValue(value, 200);
+```
+
 ## Definition
 
 ```tsx
@@ -34432,7 +35526,12 @@ interface UseDebouncedValueOptions {
   leading?: boolean;
 }
 
-type UseDebouncedValueReturnValue<T> = [T, () => void];
+interface UseDebouncedValueHandlers {
+  cancel: () => void;
+  flush: () => void;
+}
+
+type UseDebouncedValueReturnValue<T> = [T, () => void, UseDebouncedValueHandlers];
 
 function useDebouncedValue<T = any>(
   value: T,
@@ -34586,7 +35685,7 @@ Use this hook with client-only applications; for isomorphic use, consider more a
 
 Call the hook with a string that should be set as the document title in any component.
 `use-document-title` triggers every time the value changes
-and the value is not an empty string (trailing whitespace is trimmed) or `null`.
+and the value is not an empty string (trailing whitespace is trimmed).
 
 ```tsx
 import { useState } from 'react';
@@ -34725,7 +35824,7 @@ function Demo() {
 ```tsx
 function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
   type: K,
-  listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => any,
+  listener: (this: T, ev: HTMLElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions,
 ): React.RefCallback<T | null>
 ```
@@ -34745,7 +35844,7 @@ Check [browser support](https://caniuse.com/mdn-api_eyedropper) to learn which b
 ```tsx
 import { useState } from 'react';
 import { ActionIcon, Group, ColorSwatch, Text } from '@mantine/core';
-import { EyedropperIcon } from '@phosphor-icons/react';
+import { CrosshairIcon } from '@phosphor-icons/react';
 import { useEyeDropper } from '@mantine/hooks';
 
 function Demo() {
@@ -35906,22 +37005,28 @@ Also note that entering fullscreen usually requires a direct user interaction (f
 ## Definition
 
 ```tsx
-interface UseFullscreenReturnValue<T extends HTMLElement = any> {
+interface UseFullscreenElementReturnValue<T extends HTMLElement = any> {
   ref: React.RefCallback<T | null>;
   toggle: () => Promise<void>;
   fullscreen: boolean;
 }
 
-function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<T>
+interface UseFullscreenDocumentReturnValue {
+  toggle: () => Promise<void>;
+  fullscreen: boolean;
+}
+
+function useFullscreenElement<T extends HTMLElement = any>(): UseFullscreenElementReturnValue<T>
+function useFullscreenDocument(): UseFullscreenDocumentReturnValue
 ```
 
 ## Exported types
 
-The `UseFullscreenReturnValue` type is exported from the `@mantine/hooks` package;
-you can import it in your application:
+The `UseFullscreenElementReturnValue` and `UseFullscreenDocumentReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
 
 ```tsx
-import type { UseFullscreenReturnValue } from '@mantine/hooks';
+import type { UseFullscreenElementReturnValue, UseFullscreenDocumentReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -36005,33 +37110,161 @@ It returns `{ pinned, scrollProgress }` where `pinned` is `true` when the elemen
 visible and `scrollProgress` is a number between `0` (fully hidden) and `1` (fully visible).
 
 ```tsx
-import { Box, Portal, Text } from '@mantine/core';
-import { useHeadroom } from '@mantine/hooks';
+import { Box, Button, Group, Portal, Text } from '@mantine/core';
+import { useDisclosure, useHeadroom } from '@mantine/hooks';
 
 function Demo() {
+  const [showHeader, handlers] = useDisclosure(false);
   const { pinned } = useHeadroom({ fixedAt: 120 });
 
   return (
     <>
-      <Portal>
-        <Box
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            padding: 'var(--mantine-spacing-xs)',
-            height: 60,
-            zIndex: 1000000,
-            transform: `translate3d(0, ${pinned ? 0 : '-110px'}, 0)`,
-            transition: 'transform 400ms ease',
-            backgroundColor: 'var(--mantine-color-body)',
-          }}
-        >
-          Pinned header
-        </Box>
-      </Portal>
-      <Text ta="center">Header is {pinned ? 'pinned' : 'not pinned'}</Text>
+      {showHeader && (
+        <Portal>
+          <Box
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              padding: 'var(--mantine-spacing-xs)',
+              height: 60,
+              zIndex: 1000000,
+              transform: `translate3d(0, ${pinned ? 0 : '-110px'}, 0)`,
+              transition: 'transform 400ms ease',
+              backgroundColor: 'var(--mantine-color-body)',
+            }}
+          >
+            <Group justify="center" h="100%">
+              <Text>Pinned header – {pinned ? 'visible' : 'hidden'}</Text>
+            </Group>
+          </Box>
+        </Portal>
+      )}
+
+      <Button onClick={handlers.toggle} variant="default">
+        {showHeader ? 'Hide' : 'Show'} header
+      </Button>
+    </>
+  );
+}
+```
+
+
+## scrollProgress
+
+Use `scrollProgress` to create a scroll-linked reveal animation instead of an instant
+show/hide toggle. The value transitions from `1` (fully visible) to `0` (fully hidden)
+as the user scrolls down past `fixedAt`, and back to `1` as the user scrolls up.
+Direction changes mid-scroll are handled correctly — the progress continues from
+wherever it was when the direction changed. Set `scrollDistance` to control how many
+pixels of scrolling are needed to fully reveal or hide the element.
+
+```tsx
+import { Box, Button, Group, Portal, Text } from '@mantine/core';
+import { useDisclosure, useHeadroom } from '@mantine/hooks';
+
+function Demo() {
+  const [showHeader, handlers] = useDisclosure(false);
+  const { scrollProgress } = useHeadroom({ fixedAt: 120, scrollDistance: 60 });
+
+  return (
+    <>
+      {showHeader && (
+        <Portal>
+          <Box
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 60,
+              zIndex: 1000000,
+              transform: `translateY(${(scrollProgress - 1) * 100}%)`,
+              backgroundColor: 'var(--mantine-color-violet-6)',
+            }}
+          >
+            <Group justify="center" h="100%">
+              <Text c="white" fw={500}>
+                Scroll-linked — {Math.round(scrollProgress * 100)}% visible
+              </Text>
+            </Group>
+          </Box>
+        </Portal>
+      )}
+
+      <Button onClick={handlers.toggle} variant="default">
+        {showHeader ? 'Hide' : 'Show'} header
+      </Button>
+    </>
+  );
+}
+```
+
+
+## Callbacks
+
+The hook supports `onPin`, `onRelease`, and `onFix` callbacks:
+
+* `onPin` is called when the header becomes visible (user scrolls up)
+* `onRelease` is called when the header is hidden (user scrolls down)
+* `onFix` is called when the scroll position enters the fixed zone (scroll position ≤ `fixedAt`)
+
+```tsx
+import { useState } from 'react';
+import { Box, Button, Code, Group, Portal, Stack, Text } from '@mantine/core';
+import { useDisclosure, useHeadroom } from '@mantine/hooks';
+
+function Demo() {
+  const [showHeader, handlers] = useDisclosure(false);
+  const [log, setLog] = useState<string[]>([]);
+
+  const addLog = (msg: string) =>
+    setLog((prev) => [`${new Date().toLocaleTimeString()} — ${msg}`, ...prev].slice(0, 10));
+
+  const { pinned } = useHeadroom({
+    fixedAt: 80,
+    onPin: () => addLog('onPin'),
+    onRelease: () => addLog('onRelease'),
+    onFix: () => addLog('onFix'),
+  });
+
+  return (
+    <>
+      {showHeader && (
+        <Portal>
+          <Box
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 60,
+              zIndex: 1000000,
+              transform: `translate3d(0, ${pinned ? 0 : '-110px'}, 0)`,
+              transition: 'transform 400ms ease',
+              backgroundColor: pinned
+                ? 'var(--mantine-color-teal-6)'
+                : 'var(--mantine-color-red-6)',
+            }}
+          >
+            <Group justify="center" h="100%">
+              <Text c="white" fw={500}>
+                {pinned ? 'Pinned' : 'Released'}
+              </Text>
+            </Group>
+          </Box>
+        </Portal>
+      )}
+
+      <Stack>
+        <Button onClick={handlers.toggle} variant="default">
+          {showHeader ? 'Hide' : 'Show'} header
+        </Button>
+        <Code block>
+          {log.length === 0 ? 'Scroll to see callback events' : log.join('\\n')}
+        </Code>
+      </Stack>
     </>
   );
 }
@@ -36067,33 +37300,6 @@ interface UseHeadroomReturnValue {
 }
 
 function useHeadroom(input?: UseHeadroomOptions): UseHeadroomReturnValue;
-```
-
-## scrollProgress
-
-Use `scrollProgress` to create a scroll-linked reveal animation. The value transitions
-from `1` (fully visible) to `0` (fully hidden) as the user scrolls down past `fixedAt`,
-and back to `1` as the user scrolls up. Direction changes mid-scroll are handled correctly —
-the progress continues from wherever it was when the direction changed.
-
-```tsx
-import { useHeadroom } from '@mantine/hooks';
-
-function Demo() {
-  const { scrollProgress } = useHeadroom({ fixedAt: 120, scrollDistance: 60 });
-
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        transform: `translateY(${(scrollProgress - 1) * 100}%)`,
-      }}
-    >
-      Header
-    </div>
-  );
-}
 ```
 
 ## Exported types
@@ -36413,7 +37619,7 @@ function Demo() {
 
 ## Custom events
 
-By default, the hook will listen to `keypress`, `mousemove`, `touchmove`, `wheel`, `click`, and `scroll` events to set the idle status.
+By default, the hook will listen to `keydown`, `mousemove`, `touchmove`, `click`, `scroll`, and `wheel` events to set the idle status.
 To change that, provide a list of events in the `options` argument:
 
 ```tsx
@@ -37465,6 +38671,310 @@ function useMap<T, V>(initialState?: [T, V][]): Map<T, V>;
 
 --------------------------------------------------------------------------------
 
+### useMask
+Package: @mantine/hooks
+Import: import { UseMask } from '@mantine/hooks';
+
+## Usage
+
+`useMask` attaches real-time input masking to any `<input>` element via a ref callback.
+It formats user input against a defined pattern and exposes both the masked display value
+and the raw unmasked value. If you need a ready-made input component, use [MaskInput](https://mantine.dev/llms/core-mask-input.md)
+which wraps this hook with all standard input props.
+
+```tsx
+import { TextInput, Text } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, value, rawValue } = useMask({ mask: '(999) 999-9999' });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Phone number" placeholder="(___) ___-____" />
+      <Text size="sm" mt="sm">Masked value: {value}</Text>
+      <Text size="sm">Raw value: {rawValue}</Text>
+    </>
+  );
+}
+```
+
+
+## isComplete, slotChar, and transform
+
+Use `isComplete` to check whether all required mask slots are filled — for example, to control
+a submit button. The `slotChar` option accepts a multi-character string to show positional
+hints for each slot. The `transform` option converts each character before validation —
+this example uses it to auto-uppercase input so the `A` token (`[A-Z]`) accepts lowercase letters:
+
+```tsx
+import { Button, Group, Text, TextInput } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, isComplete, rawValue } = useMask({
+    mask: 'AAA-9999',
+    slotChar: 'XXX-0000',
+    transform: (char) => char.toUpperCase(),
+  });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Promo code" placeholder="Enter promo code" />
+      <Text size="sm" mt="sm">Raw value: {rawValue}</Text>
+      <Group mt="xs">
+        <Button disabled={!isComplete} size="xs">Apply code</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## Dynamic mask
+
+Use the `modify` option to change the mask based on the current input value.
+This example switches between standard and American Express credit card formats:
+
+```tsx
+import { TextInput, Text } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, rawValue } = useMask({
+    mask: '9999 9999 9999 9999',
+    modify: (value) => {
+      const digits = value.replace(/\\D/g, '');
+      if (digits.startsWith('34') || digits.startsWith('37')) {
+        return { mask: '9999 999999 99999' };
+      }
+    },
+  });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Credit card number" placeholder="Enter card number" />
+      <Text size="sm" mt="sm">Raw value: {rawValue}</Text>
+      <Text size="xs" c="dimmed">Try starting with 34 or 37 for Amex format</Text>
+    </>
+  );
+}
+```
+
+
+## Custom tokens
+
+Override or extend the built-in token map with the `tokens` option:
+
+```tsx
+import { TextInput, Text } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, rawValue } = useMask({
+    mask: '\\#hhhhhh',
+    tokens: { h: /[0-9a-fA-F]/ },
+  });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Hex color" placeholder="#______" />
+      <Text size="sm" mt="sm">Raw value: {rawValue}</Text>
+    </>
+  );
+}
+```
+
+
+## Escaping
+
+Prefix a token character with `\` to treat it as a literal.
+In this example, `A` would normally be an uppercase letter token,
+but `\A` makes it a literal character:
+
+```tsx
+import { TextInput, Text } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, rawValue } = useMask({
+    mask: '\\A-9999',
+  });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Product code" placeholder="A-____" />
+      <Text size="sm" mt="sm">Raw value: {rawValue}</Text>
+    </>
+  );
+}
+```
+
+
+## Regex array format
+
+For complex masks where built-in tokens are not enough, pass an array of
+string literals and `RegExp` objects. This example creates a time input where
+the first digit is restricted to `0-2` and the minute tens digit to `0-5`:
+
+```tsx
+import { TextInput, Text } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, rawValue } = useMask({
+    mask: [/[0-2]/, /\\d/, ':', /[0-5]/, /\\d/],
+  });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Time (HH:MM)" placeholder="__:__" />
+      <Text size="sm" mt="sm">Raw value: {rawValue}</Text>
+    </>
+  );
+}
+```
+
+
+## Reset
+
+Use the `reset` function returned by the hook to programmatically clear
+the input value:
+
+```tsx
+import { Button, Group, Text, TextInput } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, value, rawValue, reset } = useMask({
+    mask: '(999) 999-9999',
+  });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Phone number" placeholder="(___) ___-____" />
+      <Text size="sm" mt="sm">Masked: {value}</Text>
+      <Text size="sm">Raw: {rawValue}</Text>
+      <Group mt="xs">
+        <Button size="xs" variant="default" onClick={reset}>Reset</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## Mask pattern syntax
+
+The mask string defines the expected format. Each character is either a **token** (editable slot)
+or a **literal** (fixed character inserted automatically).
+
+### Built-in tokens
+
+* `9` – any single digit (`[0-9]`)
+* `a` – any single letter (`[A-Za-z]`)
+* `A` – any uppercase letter (`[A-Z]`)
+* `*` – any alphanumeric character (`[A-Za-z0-9]`)
+* `#` – digit or sign (`[-+0-9]`)
+
+### Optional segments
+
+Append `?` after the last required character to mark remaining slots as optional:
+
+```tsx
+useMask({ mask: '(999) 999-9999? x9999' }) // Extension is optional
+```
+
+## Utility functions
+
+The following pure functions are exported alongside the hook:
+
+* `formatMask(raw, options)` – apply a mask to a raw value string
+* `unformatMask(masked, options)` – strip all mask literals from a masked value
+* `isMaskComplete(masked, options)` – check if all required slots are filled
+* `generatePattern(mode, options)` – generate a regex string for HTML `pattern` attribute
+
+```tsx
+import { formatMask, unformatMask, isMaskComplete } from '@mantine/hooks';
+
+const options = { mask: '(999) 999-9999' };
+
+formatMask('1234567890', options);      // "(123) 456-7890"
+unformatMask('(123) 456-7890', options); // "1234567890"
+isMaskComplete('(123) 456-7890', options); // true
+```
+
+## Definition
+
+```tsx
+interface UseMaskOptions {
+  // Mask pattern string or array of string literals and RegExp objects
+  mask: string | Array<string | RegExp>;
+
+  // Override or extend the default token map
+  tokens?: Record<string, RegExp>;
+
+  // Called on each keystroke, can return overrides for mask, tokens, or slotChar
+  modify?: (value: string) => Partial<Pick<UseMaskOptions, 'mask' | 'tokens' | 'slotChar'>> | undefined;
+
+  // Transform each character before validation and insertion
+  transform?: (char: string) => string;
+
+  // Character displayed in unfilled slots, "_" by default
+  slotChar?: string | null;
+
+  // Show mask pattern even when the field is empty and unfocused
+  alwaysShowMask?: boolean;
+
+  // Show mask placeholder on focus, true by default
+  showMaskOnFocus?: boolean;
+
+  // Clear value on blur when mask is incomplete, false by default
+  autoClear?: boolean;
+
+  // Sets aria-invalid on the input
+  invalid?: boolean;
+
+  // Called on every change with raw and masked values
+  onChangeRaw?: (rawValue: string, maskedValue: string) => void;
+
+  // Called when all required mask slots are filled
+  onComplete?: (maskedValue: string, rawValue: string) => void;
+
+}
+
+interface UseMaskReturnValue {
+  // Ref callback to attach to the input element
+  ref: React.RefCallback<HTMLInputElement>;
+
+  // Current masked display value
+  value: string;
+
+  // Current raw unmasked value
+  rawValue: string;
+
+  // Whether all required mask slots are filled
+  isComplete: boolean;
+
+  // Clear the input value and reset state
+  reset: () => void;
+}
+
+function useMask(options: UseMaskOptions): UseMaskReturnValue;
+```
+
+## Exported types
+
+The `UseMaskOptions` and `UseMaskReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
+
+```tsx
+import type { UseMaskOptions, UseMaskReturnValue } from '@mantine/hooks';
+```
+
+
+--------------------------------------------------------------------------------
+
 ### useMediaQuery
 Package: @mantine/hooks
 Import: import { UseMediaQuery } from '@mantine/hooks';
@@ -38302,11 +39812,16 @@ function Demo() {
 ## Definition
 
 ```tsx
-function useMutationObserver<Element extends HTMLElement>(
+function useMutationObserver<T extends HTMLElement>(
+  callback: MutationCallback,
+  options: MutationObserverInit
+): React.RefCallback<T | null>;
+
+function useMutationObserverTarget(
   callback: MutationCallback,
   options: MutationObserverInit,
   target?: HTMLElement | (() => HTMLElement) | null
-): RefObject<Element>;
+): void;
 ```
 
 
@@ -39230,7 +40745,350 @@ type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
 
 function useResizeObserver<T extends HTMLElement = any>(
   options?: ResizeObserverOptions
-): readonly [React.RefObject<T>, ObserverRect];
+): readonly [React.RefCallback<T | null>, ObserverRect];
+```
+
+
+--------------------------------------------------------------------------------
+
+### useRovingIndex
+Package: @mantine/hooks
+Import: import { UseRovingIndex } from '@mantine/hooks';
+
+## Usage
+
+`use-roving-index` implements the [roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) keyboard navigation pattern.
+In a group of focusable elements, only one element has `tabIndex={0}` (can be reached with Tab key),
+while all others have `tabIndex={-1}`. Arrow keys move focus between items in the group.
+
+```tsx
+import { Button, Group } from '@mantine/core';
+import { useRovingIndex } from '@mantine/hooks';
+
+const items = ['Bold', 'Italic', 'Underline', 'Strikethrough', 'Code'];
+
+function Demo() {
+  const { getItemProps } = useRovingIndex({
+    total: items.length,
+    orientation: 'horizontal',
+    loop: true,
+  });
+
+  return (
+    <Group gap="xs">
+      {items.map((item, index) => (
+        <Button key={item} variant="default" {...getItemProps({ index })}>
+          {item}
+        </Button>
+      ))}
+    </Group>
+  );
+}
+```
+
+
+## Orientation
+
+Set `orientation` to control which arrow keys are used for navigation:
+
+* `'horizontal'` (default) – ArrowLeft/ArrowRight
+* `'vertical'` – ArrowUp/ArrowDown
+* `'both'` – all four arrow keys
+
+```tsx
+import { Stack, UnstyledButton } from '@mantine/core';
+import { useRovingIndex } from '@mantine/hooks';
+
+const items = ['General', 'Account', 'Security', 'Notifications', 'Privacy'];
+
+function Demo() {
+  const { getItemProps, focusedIndex } = useRovingIndex({
+    total: items.length,
+    orientation: 'vertical',
+    loop: true,
+  });
+
+  return (
+    <Stack gap={4} w={200}>
+      {items.map((item, index) => (
+        <UnstyledButton
+          key={item}
+          {...getItemProps({ index })}
+          p="xs"
+          style={{
+            borderRadius: 'var(--mantine-radius-sm)',
+            backgroundColor:
+              focusedIndex === index
+                ? 'var(--mantine-color-blue-light)'
+                : undefined,
+          }}
+        >
+          {item}
+        </UnstyledButton>
+      ))}
+    </Stack>
+  );
+}
+```
+
+
+## Grid navigation
+
+Set `columns` to enable 2D grid navigation. ArrowLeft/ArrowRight navigate within a row,
+ArrowUp/ArrowDown navigate across rows preserving the column position.
+Navigation stops at grid boundaries. Use Ctrl+Home/Ctrl+End to jump to the first/last item in the grid,
+and Home/End to jump to the first/last item in the current row.
+
+```tsx
+import { SimpleGrid, UnstyledButton } from '@mantine/core';
+import { useRovingIndex } from '@mantine/hooks';
+
+function Demo() {
+  const total = 9;
+  const columns = 3;
+
+  const { getItemProps, focusedIndex } = useRovingIndex({
+    total,
+    columns,
+  });
+
+  return (
+    <SimpleGrid cols={columns} w={300} spacing="xs">
+      {Array.from({ length: total }, (_, index) => (
+        <UnstyledButton
+          key={index}
+          {...getItemProps({ index })}
+          p="md"
+          ta="center"
+          style={{
+            borderRadius: 'var(--mantine-radius-sm)',
+            border: '1px solid var(--mantine-color-default-border)',
+            backgroundColor:
+              focusedIndex === index
+                ? 'var(--mantine-color-blue-light)'
+                : undefined,
+          }}
+        >
+          Cell {index + 1}
+        </UnstyledButton>
+      ))}
+    </SimpleGrid>
+  );
+}
+```
+
+
+## Disabled items
+
+Use `isItemDisabled` callback to mark items as disabled. Disabled items are skipped during
+keyboard navigation. If the initially focused item is disabled, the first non-disabled item
+receives focus instead.
+
+```tsx
+import { Button, Group } from '@mantine/core';
+import { useRovingIndex } from '@mantine/hooks';
+
+const items = ['Cut', 'Copy', 'Paste', 'Delete', 'Select All'];
+const disabledIndices = new Set([1, 3]);
+
+function Demo() {
+  const { getItemProps } = useRovingIndex({
+    total: items.length,
+    orientation: 'horizontal',
+    loop: true,
+    isItemDisabled: (index) => disabledIndices.has(index),
+  });
+
+  return (
+    <Group gap="xs">
+      {items.map((item, index) => (
+        <Button
+          key={item}
+          variant="default"
+          disabled={disabledIndices.has(index)}
+          {...getItemProps({ index })}
+        >
+          {item}
+        </Button>
+      ))}
+    </Group>
+  );
+}
+```
+
+
+## Loop
+
+By default, navigation wraps around at boundaries (`loop` is `true`).
+Set `loop={false}` to stop at the first and last items.
+
+```tsx
+import { useState } from 'react';
+import { Button, Checkbox, Group, Stack } from '@mantine/core';
+import { useRovingIndex } from '@mantine/hooks';
+
+const items = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
+
+function Demo() {
+  const [loop, setLoop] = useState(true);
+  const { getItemProps } = useRovingIndex({
+    total: items.length,
+    orientation: 'horizontal',
+    loop,
+  });
+
+  return (
+    <Stack>
+      <Checkbox
+        label="Loop navigation"
+        checked={loop}
+        onChange={(event) => setLoop(event.currentTarget.checked)}
+      />
+      <Group gap="xs">
+        {items.map((item, index) => (
+          <Button key={item} variant="default" {...getItemProps({ index })}>
+            {item}
+          </Button>
+        ))}
+      </Group>
+    </Stack>
+  );
+}
+```
+
+
+## Controlled mode
+
+Use `focusedIndex` and `onFocusChange` to control the focused index externally:
+
+```tsx
+import { useState } from 'react';
+import { useRovingIndex } from '@mantine/hooks';
+
+function Demo() {
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const { getItemProps } = useRovingIndex({
+    total: 5,
+    focusedIndex,
+    onFocusChange: setFocusedIndex,
+  });
+
+  // ...
+}
+```
+
+## activateOnFocus
+
+Set `activateOnFocus` to `true` to automatically click items when they receive focus
+via keyboard navigation. This is useful for tab-like interfaces where focus and selection
+should be synchronized:
+
+```tsx
+import { useRovingIndex } from '@mantine/hooks';
+
+function Demo() {
+  const { getItemProps } = useRovingIndex({
+    total: 5,
+    activateOnFocus: true,
+  });
+
+  // ...
+}
+```
+
+## RTL support
+
+Set `dir="rtl"` to swap ArrowLeft/ArrowRight behavior for right-to-left layouts:
+
+```tsx
+import { useRovingIndex } from '@mantine/hooks';
+
+function Demo() {
+  const { getItemProps } = useRovingIndex({
+    total: 5,
+    dir: 'rtl',
+  });
+
+  // ...
+}
+```
+
+## Definition
+
+```tsx
+export interface UseRovingIndexInput {
+  /** Total number of items in the group */
+  total: number;
+
+  /** Which arrow keys navigate, `'horizontal'` by default */
+  orientation?: 'horizontal' | 'vertical' | 'both';
+
+  /** Whether navigation wraps at boundaries, `true` by default */
+  loop?: boolean;
+
+  /** Text direction, `'ltr'` by default */
+  dir?: 'rtl' | 'ltr';
+
+  /** Whether to click element when it receives focus via keyboard, `false` by default */
+  activateOnFocus?: boolean;
+
+  /** Number of columns for grid (2D) navigation. When set, enables grid mode */
+  columns?: number;
+
+  /** Controlled focused index */
+  focusedIndex?: number;
+
+  /** Initial focused index for uncontrolled mode, first non-disabled item by default */
+  initialIndex?: number;
+
+  /** Called when focused index changes */
+  onFocusChange?: (index: number) => void;
+
+  /** Function to check if item at given index is disabled, `() => false` by default */
+  isItemDisabled?: (index: number) => boolean;
+}
+
+export interface UseRovingIndexGetItemPropsInput {
+  /** Index of the item in the group */
+  index: number;
+
+  /** Called when item is clicked */
+  onClick?: React.MouseEventHandler;
+
+  /** Called when keydown event fires on item */
+  onKeyDown?: React.KeyboardEventHandler;
+}
+
+export interface UseRovingIndexReturnValue {
+  /** Get props to spread on each navigable item */
+  getItemProps: (options: UseRovingIndexGetItemPropsInput) => {
+    tabIndex: 0 | -1;
+    onKeyDown: React.KeyboardEventHandler;
+    onClick: React.MouseEventHandler;
+    ref: React.RefCallback<HTMLElement>;
+  };
+
+  /** Currently focused index */
+  focusedIndex: number;
+
+  /** Programmatically set focused index */
+  setFocusedIndex: (index: number) => void;
+}
+
+function useRovingIndex(input: UseRovingIndexInput): UseRovingIndexReturnValue;
+```
+
+## Exported types
+
+`UseRovingIndexInput`, `UseRovingIndexGetItemPropsInput` and `UseRovingIndexReturnValue` types are exported
+from the `@mantine/hooks` package; you can import them in your application:
+
+```tsx
+import type {
+  UseRovingIndexInput,
+  UseRovingIndexGetItemPropsInput,
+  UseRovingIndexReturnValue,
+} from '@mantine/hooks';
 ```
 
 
@@ -39324,6 +41182,7 @@ function Demo() {
 The hook is configured with a settings object:
 
 * `onScrollFinish` – function that will be called after the scroll animation
+* `onScrollCancel` – function that will be called when the scroll animation is canceled by user interaction
 * `easing` – custom math easing function
 * `duration` - duration of the scroll animation in milliseconds
 * `axis` - axis of the scroll
@@ -39335,6 +41194,7 @@ The hook returns an object with:
 
 * `scrollIntoView` – function that starts the scroll animation
 * `cancel` – function that stops the scroll animation
+* `scrolling` – boolean indicating whether a scroll animation is in progress
 * `targetRef` - ref of the target HTML node
 * `scrollableRef` - ref of the scrollable parent HTML element; if not used, the document element will be used
 
@@ -39446,6 +41306,9 @@ interface UseScrollIntoViewOptions {
   /** Callback fired after scroll */
   onScrollFinish?: () => void;
 
+  /** Callback fired when scroll animation is canceled by user interaction */
+  onScrollCancel?: () => void;
+
   /** Duration of scroll in milliseconds */
   duration?: number;
 
@@ -39473,6 +41336,7 @@ export interface UseScrollIntoViewReturnValue<
   targetRef: React.RefObject<Target | null>;
   scrollIntoView: (params?: UseScrollIntoViewAnimation) => void;
   cancel: () => void;
+  scrolling: boolean;
 }
 
 function useScrollIntoView<
@@ -40316,7 +42180,7 @@ function Demo() {
 
 ## Definition
 
-The `UseStateHistoryHandlers` and `StateHistory` interfaces are exported from the `@mantine/hooks`
+The `UseStateHistoryHandlers` and `UseStateHistoryValue` interfaces are exported from the `@mantine/hooks`
 package.
 
 ```tsx
@@ -40617,8 +42481,8 @@ import { useToggle } from '@mantine/hooks';
 
 const [value, toggle] = useToggle(['light', 'dark'] as const);
 
-toggle(); // -> value == 'light'
 toggle(); // -> value == 'dark'
+toggle(); // -> value == 'light'
 
 // You can force a specific value; in this case, state will be set to the given value
 toggle('dark'); // -> value == 'dark'
@@ -40736,7 +42600,7 @@ interface UseUncontrolledOptions<T> {
   finalValue?: T;
 
   /** Controlled state onChange handler */
-  onChange?: (value: T) => void;
+  onChange?: (value: T, ...payload: any[]) => void;
 }
 
 type UseUncontrolledReturnValue<T> = [
@@ -40954,9 +42818,11 @@ function Demo() {
 The hook has the same definition as `window.addEventListener` function:
 
 ```tsx
-function useWindowEvent<K extends keyof WindowEventMap>(
+function useWindowEvent<K extends string>(
   type: K,
-  listener: (this: Window, ev: WindowEventMap[K]) => any,
+  listener: K extends keyof WindowEventMap
+    ? (this: Window, ev: WindowEventMap[K]) => void
+    : (this: Window, ev: CustomEvent) => void,
   options?: boolean | AddEventListenerOptions
 ): void;
 ```
@@ -43991,6 +45857,74 @@ Set `type="range"` to allow users to pick a date range:
 
 
 
+## Presets
+
+Use the `presets` prop to add custom month presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { MonthPickerInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPickerInput
+      label="With presets"
+      placeholder="Select month"
+      presets={[
+        { value: dayjs().startOf('month').format('YYYY-MM-DD'), label: 'This month' },
+        { value: dayjs().add(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Next month' },
+        { value: dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Last month' },
+        { value: dayjs().add(6, 'month').startOf('month').format('YYYY-MM-DD'), label: 'In 6 months' },
+        { value: dayjs().add(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Last year' },
+      ]}
+    />
+  );
+}
+```
+
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+```tsx
+import dayjs from 'dayjs';
+import { MonthPickerInput } from '@mantine/dates';
+
+function Demo() {
+  const today = dayjs();
+
+  return (
+    <MonthPickerInput
+      type="range"
+      label="With presets"
+      placeholder="Select months range"
+      presets={[
+        {
+          value: [today.subtract(3, 'month').startOf('month').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'Last 3 months',
+        },
+        {
+          value: [today.subtract(6, 'month').startOf('month').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'Last 6 months',
+        },
+        {
+          value: [today.startOf('year').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'This year',
+        },
+        {
+          value: [
+            today.subtract(1, 'year').startOf('year').format('YYYY-MM-DD'),
+            today.subtract(1, 'year').endOf('year').startOf('month').format('YYYY-MM-DD'),
+          ],
+          label: 'Last year',
+        },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Open picker in modal
 
 By default, [MonthPicker](https://mantine.dev/llms/dates-month-picker.md) is rendered inside [Popover](https://mantine.dev/llms/core-popover.md).
@@ -44328,6 +46262,7 @@ MonthPickerInput provides better accessibility support when used in forms. Make 
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| presets | MonthPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the component value cannot be changed by the user |
@@ -44371,6 +46306,9 @@ MonthPickerInput component supports Styles API. With Styles API, you can customi
 | monthsListRow | .mantine-MonthPickerInput-monthsListRow | Months list row element |
 | monthsListCell | .mantine-MonthPickerInput-monthsListCell | Months list cell element |
 | monthsListControl | .mantine-MonthPickerInput-monthsListControl | Button used to pick months and years |
+| monthPickerRoot | .mantine-MonthPickerInput-monthPickerRoot | Month picker root element, contains calendar and presets |
+| presetsList | .mantine-MonthPickerInput-presetsList | Presets wrapper element |
+| presetButton | .mantine-MonthPickerInput-presetButton | Preset button |
 | placeholder | .mantine-MonthPickerInput-placeholder | Placeholder element |
 
 
@@ -44411,6 +46349,70 @@ By default, it is not allowed to select a single date as a range – when the us
 To change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when the
 `type` prop is not `range`.
 
+
+
+## Presets
+
+Use the `presets` prop to add custom month presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPicker
+      presets={[
+        { value: dayjs().startOf('month').format('YYYY-MM-DD'), label: 'This month' },
+        { value: dayjs().add(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Next month' },
+        { value: dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Last month' },
+        { value: dayjs().add(6, 'month').startOf('month').format('YYYY-MM-DD'), label: 'In 6 months' },
+        { value: dayjs().add(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Last year' },
+      ]}
+    />
+  );
+}
+```
+
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+```tsx
+import dayjs from 'dayjs';
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  const today = dayjs();
+
+  return (
+    <MonthPicker
+      type="range"
+      presets={[
+        {
+          value: [today.subtract(3, 'month').startOf('month').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'Last 3 months',
+        },
+        {
+          value: [today.subtract(6, 'month').startOf('month').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'Last 6 months',
+        },
+        {
+          value: [today.startOf('year').format('YYYY-MM-DD'), today.startOf('month').format('YYYY-MM-DD')],
+          label: 'This year',
+        },
+        {
+          value: [
+            today.subtract(1, 'year').startOf('year').format('YYYY-MM-DD'),
+            today.subtract(1, 'year').endOf('year').startOf('month').format('YYYY-MM-DD'),
+          ],
+          label: 'Last year',
+        },
+      ]}
+    />
+  );
+}
+```
 
 
 ## Default date
@@ -44724,6 +46726,7 @@ Note that the following events will only trigger if focus is on a month control.
 | onNextYear | (date: string) => void | - | Called when the next year button is clicked |
 | onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
 | onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
+| presets | MonthPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | size | MantineSize | - | Component size |
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
@@ -44790,6 +46793,7 @@ Note that the following events will only trigger if focus is on a month control.
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| presets | MonthPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the component value cannot be changed by the user |
@@ -44833,6 +46837,15 @@ MonthPicker component supports Styles API. With Styles API, you can customize st
 | monthsListRow | .mantine-MonthPicker-monthsListRow | Months list row element |
 | monthsListCell | .mantine-MonthPicker-monthsListCell | Months list cell element |
 | monthsListControl | .mantine-MonthPicker-monthsListControl | Button used to pick months and years |
+| monthPickerRoot | .mantine-MonthPicker-monthPickerRoot | Month picker root element, contains calendar and presets |
+| presetsList | .mantine-MonthPicker-presetsList | Presets wrapper element |
+| presetButton | .mantine-MonthPicker-presetButton | Preset button |
+
+**MonthPicker CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| monthPickerRoot | --preset-font-size | Controls font size of preset buttons |
 
 **MonthPickerinput selectors**
 
@@ -44851,6 +46864,9 @@ MonthPicker component supports Styles API. With Styles API, you can customize st
 | monthsListRow | .mantine-MonthPickerinput-monthsListRow | Months list row element |
 | monthsListCell | .mantine-MonthPickerinput-monthsListCell | Months list cell element |
 | monthsListControl | .mantine-MonthPickerinput-monthsListControl | Button used to pick months and years |
+| monthPickerRoot | .mantine-MonthPickerinput-monthPickerRoot | Month picker root element, contains calendar and presets |
+| presetsList | .mantine-MonthPickerinput-presetsList | Presets wrapper element |
+| presetButton | .mantine-MonthPickerinput-presetButton | Preset button |
 | placeholder | .mantine-MonthPickerinput-placeholder | Placeholder element |
 
 
@@ -45277,6 +47293,43 @@ import { TimePicker } from '@mantine/dates';
 
 function Demo() {
   return <TimePicker label="Enter time" withSeconds />;
+}
+```
+
+
+## Duration type
+
+Set `type="duration"` to allow entering durations that exceed 24 hours.
+In this mode, the hours field has no upper limit and the input width adjusts
+dynamically based on the entered value. The `format` prop is ignored (always 24h)
+and the dropdown is disabled.
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <TimePicker label="Enter duration" type="duration" withSeconds />;
+}
+```
+
+
+## Min hours digits
+
+Use the `minHoursDigits` prop to set the minimum number of digits displayed in the hours input.
+This prop is only applicable when `type="duration"` is set. By default, the minimum is `2`.
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <TimePicker
+      label="Enter duration"
+      type="duration"
+      withSeconds
+      minHoursDigits={3}
+    />
+  );
 }
 ```
 
@@ -45765,6 +47818,7 @@ Keyboard interactions:
 | max | string | - | Max possible time value in `hh:mm:ss` format |
 | maxDropdownContentHeight | number | - | Maximum height of the content displayed in the dropdown in px |
 | min | string | - | Min possible time value in `hh:mm:ss` format |
+| minHoursDigits | number | - | Minimum number of digits displayed in the hours input, applicable only when `type="duration"` is set |
 | minutesInputLabel | string | - | `aria-label` of minutes input |
 | minutesInputProps | ClassAttributes<HTMLInputElement> & InputHTMLAttributes<HTMLInputElement> & DataAttributes | - | Props passed down to minutes input |
 | minutesPlaceholder | string | - | Minutes input placeholder, |
@@ -45793,6 +47847,7 @@ Keyboard interactions:
 | secondsRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the seconds input |
 | secondsStep | number | - | Number by which seconds are incremented/decremented |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| type | TimePickerType | - | TimePicker type, `'time'` for regular time input, `'duration'` for duration input that allows values greater than 24 hours |
 | value | string | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withDropdown | boolean | - | Determines whether the dropdown with time controls list should be visible when the input has focus |
@@ -45973,6 +48028,73 @@ Set `type="multiple"` to allow users to pick multiple dates:
 
 Set `type="range"` to allow users to pick a date range:
 
+
+
+## Presets
+
+Use the `presets` prop to add custom year presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPickerInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <YearPickerInput
+      label="With presets"
+      placeholder="Select year"
+      presets={[
+        { value: dayjs().startOf('year').format('YYYY-MM-DD'), label: 'This year' },
+        { value: dayjs().add(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Last year' },
+        { value: dayjs().add(5, 'year').startOf('year').format('YYYY-MM-DD'), label: 'In 5 years' },
+        { value: dayjs().subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), label: '5 years ago' },
+      ]}
+    />
+  );
+}
+```
+
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPickerInput } from '@mantine/dates';
+
+function Demo() {
+  const today = dayjs();
+
+  return (
+    <YearPickerInput
+      type="range"
+      label="With presets"
+      placeholder="Select years range"
+      presets={[
+        {
+          value: [today.subtract(2, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 2 years',
+        },
+        {
+          value: [today.subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 5 years',
+        },
+        {
+          value: [today.startOf('year').format('YYYY-MM-DD'), today.add(5, 'year').startOf('year').format('YYYY-MM-DD')],
+          label: 'Next 5 years',
+        },
+        {
+          value: [
+            today.subtract(10, 'year').startOf('year').format('YYYY-MM-DD'),
+            today.startOf('year').format('YYYY-MM-DD'),
+          ],
+          label: 'Last decade',
+        },
+      ]}
+    />
+  );
+}
+```
 
 
 ## Open picker in modal
@@ -46256,6 +48378,7 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| presets | YearPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the component value cannot be changed by the user |
@@ -46294,6 +48417,9 @@ YearPickerInput component supports Styles API. With Styles API, you can customiz
 | yearsListRow | .mantine-YearPickerInput-yearsListRow | Years list row element |
 | yearsListCell | .mantine-YearPickerInput-yearsListCell | Years list cell element |
 | yearsListControl | .mantine-YearPickerInput-yearsListControl | Button used to pick months and years |
+| yearPickerRoot | .mantine-YearPickerInput-yearPickerRoot | Year picker root element, contains calendar and presets |
+| presetsList | .mantine-YearPickerInput-presetsList | Presets wrapper element |
+| presetButton | .mantine-YearPickerInput-presetButton | Preset button |
 | placeholder | .mantine-YearPickerInput-placeholder | Placeholder element |
 
 
@@ -46334,6 +48460,69 @@ By default, it is not allowed to select a single date as a range – when the us
 To change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when the
 `type` prop is not `range`.
 
+
+
+## Presets
+
+Use the `presets` prop to add custom year presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <YearPicker
+      presets={[
+        { value: dayjs().startOf('year').format('YYYY-MM-DD'), label: 'This year' },
+        { value: dayjs().add(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('year').format('YYYY-MM-DD'), label: 'Last year' },
+        { value: dayjs().add(5, 'year').startOf('year').format('YYYY-MM-DD'), label: 'In 5 years' },
+        { value: dayjs().subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), label: '5 years ago' },
+      ]}
+    />
+  );
+}
+```
+
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+```tsx
+import dayjs from 'dayjs';
+import { YearPicker } from '@mantine/dates';
+
+function Demo() {
+  const today = dayjs();
+
+  return (
+    <YearPicker
+      type="range"
+      presets={[
+        {
+          value: [today.subtract(2, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 2 years',
+        },
+        {
+          value: [today.subtract(5, 'year').startOf('year').format('YYYY-MM-DD'), today.startOf('year').format('YYYY-MM-DD')],
+          label: 'Last 5 years',
+        },
+        {
+          value: [today.startOf('year').format('YYYY-MM-DD'), today.add(5, 'year').startOf('year').format('YYYY-MM-DD')],
+          label: 'Next 5 years',
+        },
+        {
+          value: [
+            today.subtract(10, 'year').startOf('year').format('YYYY-MM-DD'),
+            today.startOf('year').format('YYYY-MM-DD'),
+          ],
+          label: 'Last decade',
+        },
+      ]}
+    />
+  );
+}
+```
 
 
 ## Default date
@@ -46575,6 +48764,7 @@ Note that the following events will only trigger if focus is on a year control.
 | onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
 | onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
 | onYearSelect | (date: string) => void | - | Called when year is selected |
+| presets | YearPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | size | MantineSize | - | Component size |
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
@@ -46632,6 +48822,7 @@ Note that the following events will only trigger if focus is on a year control.
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
+| presets | YearPickerPreset<Type>[] | - | Predefined values to pick from |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | readOnly | boolean | - | If set, the component value cannot be changed by the user |
@@ -46670,6 +48861,15 @@ YearPicker component supports Styles API. With Styles API, you can customize sty
 | yearsListRow | .mantine-YearPicker-yearsListRow | Years list row element |
 | yearsListCell | .mantine-YearPicker-yearsListCell | Years list cell element |
 | yearsListControl | .mantine-YearPicker-yearsListControl | Button used to pick months and years |
+| yearPickerRoot | .mantine-YearPicker-yearPickerRoot | Year picker root element, contains calendar and presets |
+| presetsList | .mantine-YearPicker-presetsList | Presets wrapper element |
+| presetButton | .mantine-YearPicker-presetButton | Preset button |
+
+**YearPicker CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| yearPickerRoot | --preset-font-size | Controls font size of preset buttons |
 
 **YearPickerinput selectors**
 
@@ -46684,6 +48884,9 @@ YearPicker component supports Styles API. With Styles API, you can customize sty
 | yearsListRow | .mantine-YearPickerinput-yearsListRow | Years list row element |
 | yearsListCell | .mantine-YearPickerinput-yearsListCell | Years list cell element |
 | yearsListControl | .mantine-YearPickerinput-yearsListControl | Button used to pick months and years |
+| yearPickerRoot | .mantine-YearPickerinput-yearPickerRoot | Year picker root element, contains calendar and presets |
+| presetsList | .mantine-YearPickerinput-presetsList | Presets wrapper element |
+| presetButton | .mantine-YearPickerinput-presetButton | Preset button |
 | placeholder | .mantine-YearPickerinput-placeholder | Placeholder element |
 
 
@@ -53968,6 +56171,34 @@ export const data = ${JSON.stringify(data, null, 2)};
 ```
 
 
+## Legend
+
+Set `withLegend` to display a color legend below the heatmap. Use `legendLabels`
+prop to customize the labels (default: `['Less', 'More']`):
+
+```tsx
+// Demo.tsx
+import { Heatmap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Heatmap
+      data={data}
+      startDate="2024-02-16"
+      endDate="2025-02-16"
+      withMonthLabels
+      withWeekdayLabels
+      withLegend
+    />
+  );
+}
+
+// data.ts
+export const data = ${JSON.stringify(data, null, 2)};
+```
+
+
 ## Split months
 
 Use `splitMonths` to separate months visually with a spacer column and show only days that belong to the current month in each column. Month labels will be shifted by one column when `splitMonths` is enabled and months with fewer than 2 weeks are not labeled.
@@ -54010,6 +56241,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 | gap | number | - | Gap between rects in px |
 | getRectProps | (input: HeatmapRectData) => SVGProps<SVGRectElement> | - | Props passed down to each rect depending on its date and associated value |
 | getTooltipLabel | (input: HeatmapRectData) => ReactNode | - | A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible |
+| legendLabels | [string, string] | - | Legend labels, array of 2 elements: [min label, max label] |
 | monthLabels | string[] | - | Month labels, array of 12 elements, can be used for localization |
 | monthsLabelsHeight | number | - | Height of month labels row |
 | rectRadius | number | - | Rect radius in px |
@@ -54019,6 +56251,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 | tooltipProps | Partial<TooltipFloatingProps> | - | Props passed down to the `Tooltip.Floating` component |
 | weekdayLabels | string[] | - | Weekday labels, array of 7 elements, can be used for localization |
 | weekdaysLabelsWidth | number | - | Width of weekday labels column |
+| withLegend | boolean | - | If set, legend with color levels is displayed below the heatmap |
 | withMonthLabels | boolean | - | If set, month labels are displayed |
 | withOutsideDates | boolean | - | If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. |
 | withTooltip | boolean | - | If set, tooltip is displayed on rect hover |
@@ -54037,6 +56270,9 @@ Heatmap component supports Styles API. With Styles API, you can customize styles
 | weekdayLabel | .mantine-Heatmap-weekdayLabel | Weekday text element |
 | monthLabel | .mantine-Heatmap-monthLabel | Month text element |
 | rect | .mantine-Heatmap-rect | Rect that represents date |
+| legend | .mantine-Heatmap-legend | Legend group element |
+| legendLabel | .mantine-Heatmap-legendLabel | Legend text label (Less/More) |
+| legendRect | .mantine-Heatmap-legendRect | Legend color rect |
 
 
 --------------------------------------------------------------------------------
@@ -58397,6 +60633,199 @@ Sparkline component supports Styles API. With Styles API, you can customize styl
 
 --------------------------------------------------------------------------------
 
+### Treemap
+Package: @mantine/charts
+Import: import { Treemap } from '@mantine/charts';
+Description: Treemap chart component
+
+## Usage
+
+`Treemap` is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap).
+It displays hierarchical data as a set of nested rectangles:
+
+```tsx
+// Demo.tsx
+import { Treemap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <Treemap data={data} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'USA', value: 400, color: 'indigo.8' },
+  { name: 'India', value: 300, color: 'red.8' },
+  { name: 'Japan', value: 100, color: 'teal.8' },
+  { name: 'Other', value: 200, color: 'gray.8' },
+];
+```
+
+
+## Nested data
+
+`Treemap` supports nested data – each data item can have a `children` array.
+The `color` property on a parent node is used for all its children:
+
+```tsx
+// Demo.tsx
+import { Treemap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <Treemap data={data} />;
+}
+
+// data.ts
+export const data = [
+  {
+    name: 'Frontend',
+    color: 'blue.8',
+    children: [
+      { name: 'React', value: 400 },
+      { name: 'Vue', value: 200 },
+      { name: 'Angular', value: 150 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.8',
+    children: [
+      { name: 'Node', value: 300 },
+      { name: 'Python', value: 250 },
+      { name: 'Go', value: 100 },
+    ],
+  },
+  {
+    name: 'Mobile',
+    color: 'red.8',
+    children: [
+      { name: 'React Native', value: 200 },
+      { name: 'Flutter', value: 180 },
+    ],
+  },
+];
+```
+
+
+## Node color
+
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+```tsx
+// Demo.tsx
+import { Treemap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <Treemap data={data} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'USA', value: 400, color: 'indigo.8' },
+  { name: 'India', value: 300, color: 'red.8' },
+  { name: 'Japan', value: 100, color: 'teal.8' },
+  { name: 'Other', value: 200, color: 'gray.8' },
+];
+```
+
+
+## autoContrast
+
+`Treemap` supports `autoContrast` prop that automatically adjusts text color
+based on the background color of each node to ensure readable labels:
+
+```tsx
+import { Treemap } from '@mantine/charts';
+
+const data = [
+  { name: 'USA', value: 400, color: 'indigo.0' },
+  { name: 'India', value: 300, color: 'yellow.1' },
+  { name: 'Japan', value: 100, color: 'teal.1' },
+  { name: 'Other', value: 200, color: 'gray.2' },
+];
+
+function Demo() {
+  return <Treemap data={data} autoContrast />;
+}
+```
+
+
+## Node stroke
+
+Use the `strokeWidth` prop to control the width of the stroke around each node.
+To change the color of the stroke, use the `strokeColor` prop:
+
+```tsx
+// Demo.tsx
+import { Treemap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <Treemap data={data} strokeColor="gray.3" strokeWidth={2} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'USA', value: 400, color: 'indigo.8' },
+  { name: 'India', value: 300, color: 'red.8' },
+  { name: 'Japan', value: 100, color: 'teal.8' },
+  { name: 'Other', value: 200, color: 'gray.8' },
+];
+```
+
+
+## Disable tooltip
+
+To disable the tooltip, set `withTooltip={false}`:
+
+```tsx
+// Demo.tsx
+import { Treemap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <Treemap data={data} withTooltip={false} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'USA', value: 400, color: 'indigo.8' },
+  { name: 'India', value: 300, color: 'red.8' },
+  { name: 'Japan', value: 100, color: 'teal.8' },
+  { name: 'Other', value: 200, color: 'gray.8' },
+];
+```
+
+
+
+#### Props
+
+**Treemap props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| aspectRatio | number | - | The treemap will try to keep every single rectangle's aspect ratio near the aspectRatio given |
+| autoContrast | boolean | - | Determines whether text color should be adjusted based on background color to improve contrast |
+| children | React.ReactNode | - | Additional elements rendered inside `Treemap` component |
+| data | TreemapData[] | required | Data used to render chart |
+| dataKey | string | - | Key in data object for the value |
+| height | number | - | Controls chart height |
+| strokeColor | MantineColor | - | Controls color of the node stroke, by default depends on color scheme |
+| strokeWidth | number | - | Controls width of node stroke |
+| textColor | MantineColor | - | Controls text color of labels |
+| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
+| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
+| treemapProps | Partial<Omit<Props<TreemapDataType, any>, "data" \| "ref" \| "dataKey">> | - | Props passed down to recharts `Treemap` component |
+| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |
+| withTooltip | boolean | - | Determines whether the tooltip should be displayed when a node is hovered |
+
+
+--------------------------------------------------------------------------------
+
 ## GUIDES COMPONENTS AND FEATURES
 
 ### SixToSeven
@@ -59242,7 +61671,7 @@ yet, you can continue using Mantine 8.x until you are ready to update React and 
 
 ## Update dependencies
 
-* Update all `@mantine/*` packages to version 9.0.2
+* Update all `@mantine/*` packages to version 9.1.0
 * If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
 * If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
@@ -63964,8 +66393,7 @@ All Mantine components have a `withProps` static function that can be used to
 add default props to the component:
 
 ```tsx
-import { IMaskInput } from 'react-imask';
-import { Button, InputBase } from '@mantine/core';
+import { Button, TextInput } from '@mantine/core';
 
 const LinkButton = Button.withProps({
   component: 'a',
@@ -63974,9 +66402,7 @@ const LinkButton = Button.withProps({
   variant: 'subtle',
 });
 
-const PhoneInput = InputBase.withProps({
-  mask: '+7 (000) 000-0000',
-  component: IMaskInput,
+const PhoneInput = TextInput.withProps({
   label: 'Your phone number',
   placeholder: 'Your phone number',
 });
@@ -64069,6 +66495,9 @@ interface MantineProviderProps {
 
   /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work; `true` by default. */
   withGlobalClasses?: boolean;
+
+  /** Determines whether inline styles with identical content should be deduplicated using React 19 style hoisting. When enabled, components with the same responsive style props share a single `<style />` tag instead of each generating their own. @default false */
+  deduplicateInlineStyles?: boolean;
 
   /** Environment in which the provider is used; `'test'` environment disables all transitions and portals */
   env?: 'default' | 'test';
@@ -64196,6 +66625,30 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider deduplicateCssVariables={false}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+### deduplicateInlineStyles
+
+`deduplicateInlineStyles` enables React 19 style tag deduplication for responsive
+[style props](https://mantine.dev/llms/styles-style-props.md). When multiple components share the same responsive
+style prop values (for example, many list items with `mt={{ base: 10, md: 20 }}`),
+only a single `<style />` tag is generated and hoisted to `<head />` instead of
+each component injecting its own.
+
+This can significantly improve performance in scenarios where many components
+use the same responsive style props. See the [styles performance guide](https://mantine.dev/llms/styles-styles-performance.md)
+for more details.
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
       {/* Your app here */}
     </MantineProvider>
   );
@@ -70198,6 +72651,34 @@ function StylePropsArray() {
   return <>{inputs}</>;
 }
 ```
+
+### Deduplicating responsive style props
+
+If you have many components with the same responsive style props, you can enable
+`deduplicateInlineStyles` on [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) to
+automatically share `<style />` tags between components with identical responsive styles.
+This uses React 19 style hoisting to deduplicate and hoist styles to `<head />`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
+      {/* Components with the same responsive style props
+          will now share a single <style /> tag */}
+    </MantineProvider>
+  );
+}
+```
+
+Note that deduplication only helps when multiple components share the **same** responsive
+style prop values. If every component has unique responsive values, each still requires
+its own `<style />` tag.
+
+Currently, deduplication applies to [style props](https://mantine.dev/llms/styles-style-props.md) on all components
+and to responsive props on the [Flex](https://mantine.dev/llms/core-flex.md) component. Components like
+[Grid](https://mantine.dev/llms/core-grid.md) and [SimpleGrid](https://mantine.dev/llms/core-simple-grid.md) are not yet covered.
 
 ## Components responsive props
 
@@ -86160,6 +88641,75 @@ export function EventDetails({ event }: EventDetailsProps) {
 ```
 
 
+## Timed events
+
+Use `renderEvent` to visually differentiate all-day and timed events. All-day events render as
+regular colored bars, while timed events display as a colored dot with the start time and title.
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { Box, UnstyledButton } from '@mantine/core';
+import { MonthView, ScheduleEventData } from '@mantine/schedule';
+
+function isAllDayEvent(event: ScheduleEventData) {
+  const start = dayjs(event.start);
+  const end = dayjs(event.end);
+  return start.isSame(start.startOf('day')) && end.isSame(end.startOf('day'));
+}
+
+const events: ScheduleEventData[] = [/* ...events */];
+
+function Demo() {
+  return (
+    <MonthView
+      date={new Date()}
+      events={events}
+      renderEvent={(event, props) => {
+        if (isAllDayEvent(event)) {
+          return <UnstyledButton {...props} />;
+        }
+
+        const { children, className, style, ...others } = props;
+        return (
+          <UnstyledButton
+            {...others}
+            style={{
+              ...style,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              fontSize: 10,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              pointerEvents: 'all',
+              cursor: 'pointer',
+              paddingInline: 2,
+            }}
+          >
+            <Box
+              component="span"
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: '50%',
+                backgroundColor: `var(--event-bg)`,
+                flexShrink: 0,
+              }}
+            />
+            <span style={{ width: 28, flexShrink: 0 }}>{dayjs(event.start).format('h:mm')}</span>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {event.title}
+            </span>
+          </UnstyledButton>
+        );
+      }}
+    />
+  );
+}
+```
+
+
 ## Recurring events
 
 MonthView automatically expands recurring events for the visible month.
@@ -88890,6 +91440,29 @@ function Demo() {
 ```
 
 
+## Force current time indicator
+
+Set `forceCurrentTimeIndicator` to display the current time indicator on the same day of week
+even when viewing a different week. This is useful to give users a sense of the current time
+position relative to their schedule.
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return (
+    <WeekView
+      date="2030-06-10"
+      events={events}
+      withCurrentTimeIndicator
+      forceCurrentTimeIndicator
+    />
+  );
+}
+```
+
+
 ## Without all-day slots
 
 Set `withAllDaySlots={false}` to hide the all-day events section at the top.
@@ -90779,6 +93352,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | endTime | string | - | End time for the day view, in `HH:mm:ss` format |
 | events | ScheduleEventData[] | - | List of events to display in the week view |
 | firstDayOfWeek | 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
+| forceCurrentTimeIndicator | boolean | - | If set, displays the current time indicator on the same day of week even when viewing a different week |
 | getTimeSlotProps | ((data: { start: string; end: string; }) => Record<string, any>) \| undefined | - | Function to get additional props for each time slot. Receives slot start and end datetime strings. Returned props are spread onto the slot element. Event handlers returned by this function are composed with internal handlers (e.g. onClick) rather than overriding them. |
 | highlightBusinessHours | boolean | - | If set to true, highlights business hours with white background |
 | highlightToday | boolean | - | If set to true, highlights today in the weekday row |
@@ -101625,7 +104199,7 @@ import { useCollapse, useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [expanded, handlers] = useDisclosure(false);
-  const getCollapseProps = useCollapse({ expanded });
+  const { getCollapseProps } = useCollapse({ expanded });
 
   return (
     <>
@@ -102951,16 +105525,805 @@ function Demo() {
 
 --------------------------------------------------------------------------------
 
+### Changelog910
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+## deduplicateInlineStyles
+
+New `deduplicateInlineStyles` prop on [MantineProvider](https://mantine.dev/llms/theming-mantine-provider.md) enables
+React 19 style tag deduplication for responsive [style props](https://mantine.dev/llms/styles-style-props.md).
+When many components share the same responsive style prop values, only a single `<style />`
+tag is generated and hoisted to `<head />` instead of each component injecting its own:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+This can significantly improve performance when rendering large lists of components
+with identical responsive style props. See the
+[styles performance guide](https://mantine.dev/llms/styles-styles-performance.md) for more details.
+
+## use-mask hook
+
+New [use-mask](https://mantine.dev/llms/hooks-use-mask.md) hook attaches real-time input masking to any `<input>` element via
+a ref callback. It formats user input against a defined pattern and exposes both the masked display
+value and the raw unmasked value. The hook supports built-in and custom tokens, dynamic masks,
+character transforms, optional segments, and regex array format:
+
+```tsx
+import { TextInput, Text } from '@mantine/core';
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, value, rawValue } = useMask({ mask: '(999) 999-9999' });
+
+  return (
+    <>
+      <TextInput ref={ref} label="Phone number" placeholder="(___) ___-____" />
+      <Text size="sm" mt="sm">Masked value: {value}</Text>
+      <Text size="sm">Raw value: {rawValue}</Text>
+    </>
+  );
+}
+```
+
+
+## MaskInput component
+
+New [MaskInput](https://mantine.dev/llms/core-mask-input.md) component is a wrapper around [use-mask](https://mantine.dev/llms/hooks-use-mask.md) hook
+that provides all standard input props (label, description, error, etc.) and supports all mask options:
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+
+function Demo() {
+  return (
+    <MaskInput
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
+      mask="(999) 999-9999"
+      placeholder="(___) ___-____"
+    />
+  );
+}
+```
+
+
+## Treemap component
+
+New [Treemap](https://mantine.dev/llms/charts-treemap.md) component displays hierarchical data as a set of nested
+rectangles. It is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap):
+
+```tsx
+// Demo.tsx
+import { Treemap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <Treemap data={data} />;
+}
+
+// data.ts
+export const data = [
+  {
+    name: 'Frontend',
+    color: 'blue.8',
+    children: [
+      { name: 'React', value: 400 },
+      { name: 'Vue', value: 200 },
+      { name: 'Angular', value: 150 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.8',
+    children: [
+      { name: 'Node', value: 300 },
+      { name: 'Python', value: 250 },
+      { name: 'Go', value: 100 },
+    ],
+  },
+  {
+    name: 'Mobile',
+    color: 'red.8',
+    children: [
+      { name: 'React Native', value: 200 },
+      { name: 'Flutter', value: 180 },
+    ],
+  },
+];
+```
+
+
+## TimePicker duration type
+
+[TimePicker](https://mantine.dev/llms/dates-time-picker.md) component now supports `type="duration"` prop that allows
+entering durations that exceed 24 hours. In this mode, the hours field has no upper limit
+and the input width adjusts dynamically based on the entered value:
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <TimePicker label="Enter duration" type="duration" withSeconds />;
+}
+```
+
+
+## Heatmap legend
+
+[Heatmap](https://mantine.dev/llms/charts-heatmap.md) component now supports `withLegend` prop that displays
+a color legend below the chart. Use `legendLabels` prop to customize labels
+(default: `['Less', 'More']`):
+
+```tsx
+// Demo.tsx
+import { Heatmap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Heatmap
+      data={data}
+      startDate="2024-02-16"
+      endDate="2025-02-16"
+      withMonthLabels
+      withWeekdayLabels
+      withLegend
+    />
+  );
+}
+
+// data.ts
+export const data = ${JSON.stringify(data, null, 2)};
+```
+
+
+## MonthPicker and YearPicker presets
+
+[MonthPicker](https://mantine.dev/llms/dates-month-picker.md) and [YearPicker](https://mantine.dev/llms/dates-year-picker.md) components now support
+`presets` prop that allows adding predefined values to pick from. Presets are also available
+in [MonthPickerInput](https://mantine.dev/llms/dates-month-picker-input.md) and [YearPickerInput](https://mantine.dev/llms/dates-year-picker-input.md)
+components:
+
+```tsx
+import dayjs from 'dayjs';
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPicker
+      presets={[
+        { value: dayjs().startOf('month').format('YYYY-MM-DD'), label: 'This month' },
+        { value: dayjs().add(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Next month' },
+        { value: dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), label: 'Last month' },
+        { value: dayjs().add(6, 'month').startOf('month').format('YYYY-MM-DD'), label: 'In 6 months' },
+        { value: dayjs().add(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'year').startOf('month').format('YYYY-MM-DD'), label: 'Last year' },
+      ]}
+    />
+  );
+}
+```
+
+
+## use-roving-index hook
+
+New [use-roving-index](https://mantine.dev/llms/hooks-use-roving-index.md) hook implements the
+[roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
+keyboard navigation pattern. It manages `tabIndex` state for a group of focusable elements,
+handles arrow key navigation with disabled item skipping, and supports both 1D lists and 2D grids:
+
+```tsx
+import { Button, Group } from '@mantine/core';
+import { useRovingIndex } from '@mantine/hooks';
+
+const items = ['Bold', 'Italic', 'Underline', 'Strikethrough', 'Code'];
+
+function Demo() {
+  const { getItemProps } = useRovingIndex({
+    total: items.length,
+    orientation: 'horizontal',
+    loop: true,
+  });
+
+  return (
+    <Group gap="xs">
+      {items.map((item, index) => (
+        <Button key={item} variant="default" {...getItemProps({ index })}>
+          {item}
+        </Button>
+      ))}
+    </Group>
+  );
+}
+```
+
+
+## Tree drag and drop
+
+[Tree](https://mantine.dev/llms/core-tree.md) component now supports drag-and-drop reordering of nodes.
+Provide `onDragDrop` callback to enable it, and use the `moveTreeNode` utility
+to update data based on the result:
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'Pages',
+    value: 'pages',
+    children: [
+      { label: 'index.tsx', value: 'pages/index.tsx' },
+      { label: 'about.tsx', value: 'pages/about.tsx' },
+      { label: 'contact.tsx', value: 'pages/contact.tsx' },
+    ],
+  },
+  {
+    label: 'Components',
+    value: 'components',
+    children: [
+      { label: 'Header.tsx', value: 'components/Header.tsx' },
+      { label: 'Footer.tsx', value: 'components/Footer.tsx' },
+      { label: 'Sidebar.tsx', value: 'components/Sidebar.tsx' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+  { label: 'tsconfig.json', value: 'tsconfig.json' },
+];
+
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={5} {...elementProps}>
+      {hasChildren && (
+        <CaretDownIcon
+          size={18}
+          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [treeData, setTreeData] = useState(data);
+
+  return (
+    <Tree
+      data={treeData}
+      onDragDrop={(payload) =>
+        setTreeData((current) => moveTreeNode(current, payload))
+      }
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
+## Tree async loading
+
+[Tree](https://mantine.dev/llms/core-tree.md) now supports lazy loading of children. Set `hasChildren: true`
+on a node without providing `children` – when the node is expanded for the first time,
+`onLoadChildren` callback passed to `useTree` is called. Use `mergeAsyncChildren`
+utility to splice loaded children into your data:
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon, SpinnerIcon } from '@phosphor-icons/react';
+import {
+  Group,
+  mergeAsyncChildren,
+  RenderTreeNodePayload,
+  Tree,
+  TreeNodeData,
+  useTree,
+} from '@mantine/core';
+
+const initialData: TreeNodeData[] = [
+  { label: 'Documents', value: 'documents', hasChildren: true },
+  { label: 'Photos', value: 'photos', hasChildren: true },
+  { label: 'README.md', value: 'readme' },
+];
+
+// Simulates an API call to load children
+async function fetchChildren(parentValue: string): Promise<TreeNodeData[]> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return [
+    { label: `${parentValue}/file-1.txt`, value: `${parentValue}/file-1.txt` },
+    { label: `${parentValue}/file-2.txt`, value: `${parentValue}/file-2.txt` },
+    {
+      label: `${parentValue}/subfolder`,
+      value: `${parentValue}/subfolder`,
+      hasChildren: true,
+    },
+  ];
+}
+
+function Leaf({ node, expanded, hasChildren, elementProps, isLoading }: RenderTreeNodePayload) {
+  return (
+    <Group gap={5} wrap="nowrap" {...elementProps}>
+      {isLoading ? (
+        <SpinnerIcon size={18} style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }} />
+      ) : (
+        hasChildren && (
+          <CaretDownIcon
+            size={18}
+            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
+          />
+        )
+      )}
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        {node.label}
+      </span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [data, setData] = useState(initialData);
+  const tree = useTree({
+    onLoadChildren: async (value) => {
+      const children = await fetchChildren(value);
+      setData((prev) => mergeAsyncChildren(prev, value, children));
+    },
+  });
+
+  return (
+    <Tree
+      data={data}
+      tree={tree}
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
+## Tree search and filtering
+
+[Tree](https://mantine.dev/llms/core-tree.md) now includes `filterTreeData` utility to filter tree data based on
+a search query. Matching nodes and their ancestors are preserved in the result. You can
+provide a custom filter function for advanced matching (for example, fuzzy search with fuse.js):
+
+```tsx
+import { useMemo, useState } from 'react';
+import {
+  filterTreeData,
+  getTreeExpandedState,
+  TextInput,
+  Tree,
+  TreeNodeData,
+  useTree,
+} from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'src',
+    value: 'src',
+    children: [
+      {
+        label: 'components',
+        value: 'src/components',
+        children: [
+          { label: 'Accordion.tsx', value: 'src/components/Accordion.tsx' },
+          { label: 'Tree.tsx', value: 'src/components/Tree.tsx' },
+          { label: 'Button.tsx', value: 'src/components/Button.tsx' },
+          { label: 'Input.tsx', value: 'src/components/Input.tsx' },
+        ],
+      },
+      {
+        label: 'hooks',
+        value: 'src/hooks',
+        children: [
+          { label: 'use-debounce.ts', value: 'src/hooks/use-debounce.ts' },
+          { label: 'use-media-query.ts', value: 'src/hooks/use-media-query.ts' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'public',
+    value: 'public',
+    children: [
+      { label: 'favicon.ico', value: 'public/favicon.ico' },
+      { label: 'logo.svg', value: 'public/logo.svg' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+  { label: 'tsconfig.json', value: 'tsconfig.json' },
+];
+
+function Demo() {
+  const [search, setSearch] = useState('');
+  const tree = useTree();
+
+  const filteredData = useMemo(
+    () => filterTreeData(data, search),
+    [search]
+  );
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    if (value.trim()) {
+      const next = filterTreeData(data, value);
+      tree.setExpandedState(getTreeExpandedState(next, '*'));
+    } else {
+      tree.collapseAllNodes();
+    }
+  };
+
+  return (
+    <div>
+      <TextInput
+        placeholder="Search..."
+        mb="sm"
+        value={search}
+        onChange={(event) => handleSearchChange(event.currentTarget.value)}
+      />
+      <Tree data={filteredData} tree={tree} />
+    </div>
+  );
+}
+```
+
+
+## Tree connecting lines
+
+[Tree](https://mantine.dev/llms/core-tree.md) now supports `withLines` prop to display connecting lines
+showing parent-child relationships. Lines adapt to `levelOffset` spacing automatically:
+
+```tsx
+import { getTreeExpandedState, Tree, useTree } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const tree = useTree({
+    initialExpandedState: getTreeExpandedState(data, '*'),
+  });
+
+  return <Tree data={data} tree={tree} withLines />;
+}
+```
+
+
+## Tree virtualization
+
+[Tree](https://mantine.dev/llms/core-tree.md) now provides `flattenTreeData` utility and `FlatTreeNode` component
+for virtualized rendering of large trees. The component does not depend on any
+virtualization library – you supply one yourself (e.g., `@tanstack/react-virtual`):
+
+```tsx
+import { useMemo, useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import {
+  FlatTreeNode,
+  flattenTreeData,
+  getTreeExpandedState,
+  TreeNodeData,
+  useTree,
+} from '@mantine/core';
+
+const ITEM_HEIGHT = 30;
+
+function generateTreeData(count: number): TreeNodeData[] {
+  const result: TreeNodeData[] = [];
+  let id = 0;
+
+  function addChildren(
+    parent: TreeNodeData[],
+    depth: number,
+    remaining: { count: number }
+  ) {
+    const childCount = depth === 0 ? 20 : Math.floor(Math.random() * 8) + 2;
+
+    for (let i = 0; i < childCount && remaining.count > 0; i++) {
+      id++;
+      remaining.count--;
+      const hasChild =
+        depth < 3 && remaining.count > 0 && Math.random() > 0.3;
+      const node: TreeNodeData = {
+        label: `${hasChild ? 'Folder' : 'File'} ${id}`,
+        value: `node-${id}`,
+        children: hasChild ? [] : undefined,
+      };
+
+      if (hasChild) {
+        addChildren(node.children!, depth + 1, remaining);
+      }
+
+      parent.push(node);
+    }
+  }
+
+  addChildren(result, 0, { count });
+  return result;
+}
+
+const largeData = generateTreeData(2000);
+const initialExpandedState = getTreeExpandedState(largeData, '*');
+
+function Demo() {
+  const tree = useTree({
+    initialExpandedState,
+  });
+
+  const flatList = useMemo(
+    () => flattenTreeData(largeData, tree.expandedState),
+    [tree.expandedState]
+  );
+
+  const scrollParentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: flatList.length,
+    getScrollElement: () => scrollParentRef.current,
+    estimateSize: () => ITEM_HEIGHT,
+    overscan: 20,
+  });
+
+  return (
+    <div ref={scrollParentRef} style={{ height: 400, overflow: 'auto' }}>
+      <div
+        data-tree-root
+        role="tree"
+        style={{
+          height: virtualizer.getTotalSize(),
+          position: 'relative',
+        }}
+      >
+        {virtualizer.getVirtualItems().map((virtualItem) => (
+          <FlatTreeNode
+            key={flatList[virtualItem.index].node.value}
+            {...flatList[virtualItem.index]}
+            tree={tree}
+            expandOnClick
+            selectOnClick
+            tabIndex={virtualItem.index === 0 ? 0 : -1}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: virtualItem.size,
+              transform: `translateY(${virtualItem.start}px)`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+
+## Tree checkStrictly mode
+
+[useTree](https://mantine.dev/llms/core-tree.md) hook now supports `checkStrictly` option. When enabled, checking
+a parent node does not affect children and vice versa – each node's checked state is
+fully independent:
+
+```tsx
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Checkbox, Group, RenderTreeNodePayload, Tree, useTree } from '@mantine/core';
+import { data } from './data';
+
+const renderTreeNode = ({
+  node,
+  expanded,
+  hasChildren,
+  elementProps,
+  tree,
+}: RenderTreeNodePayload) => {
+  const checked = tree.isNodeChecked(node.value);
+
+  return (
+    <Group gap="xs" {...elementProps}>
+      <Checkbox.Indicator
+        checked={checked}
+        onClick={() =>
+          checked
+            ? tree.uncheckNode(node.value)
+            : tree.checkNode(node.value)
+        }
+      />
+
+      <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>
+        <span>{node.label}</span>
+
+        {hasChildren && (
+          <CaretDownIcon
+            size={14}
+            style={{
+              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+            }}
+          />
+        )}
+      </Group>
+    </Group>
+  );
+};
+
+function Demo() {
+  const tree = useTree({ checkStrictly: true });
+  return (
+    <Tree
+      data={data}
+      tree={tree}
+      levelOffset={23}
+      expandOnClick={false}
+      renderNode={renderTreeNode}
+    />
+  );
+}
+```
+
+
+## Slider startPointValue
+
+[Slider](https://mantine.dev/llms/core-slider.md) component now supports `startPointValue` prop that changes
+the origin of the filled bar. When set, the bar extends from the given value toward the
+current value – to the left for values below the start point and to the right for values above it:
+
+```tsx
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Slider
+      startPointValue={0}
+      min={-100}
+      max={100}
+      defaultValue={40}
+      marks={[
+        { value: -100, label: '-100' },
+        { value: -50, label: '-50' },
+        { value: 0, label: '0' },
+        { value: 50, label: '50' },
+        { value: 100, label: '100' },
+      ]}
+    />
+  );
+}
+```
+
+
+## WeekView forceCurrentTimeIndicator
+
+[WeekView](https://mantine.dev/llms/schedule-week-view.md) component now supports `forceCurrentTimeIndicator` prop.
+When set, the current time indicator is displayed on the same day of week even when viewing
+a different week:
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return (
+    <WeekView
+      date="2030-06-10"
+      events={events}
+      withCurrentTimeIndicator
+      forceCurrentTimeIndicator
+    />
+  );
+}
+```
+
+
+## New demo: MonthView events rendering
+
+New [MonthView](https://mantine.dev/llms/schedule-month-view.md) demo shows how to use `renderEvent` to visually
+differentiate all-day and timed events. All-day events render as regular colored bars,
+while timed events display as a colored dot with the start time and title:
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { Box, UnstyledButton } from '@mantine/core';
+import { MonthView, ScheduleEventData } from '@mantine/schedule';
+
+function isAllDayEvent(event: ScheduleEventData) {
+  const start = dayjs(event.start);
+  const end = dayjs(event.end);
+  return start.isSame(start.startOf('day')) && end.isSame(end.startOf('day'));
+}
+
+const events: ScheduleEventData[] = [/* ...events */];
+
+function Demo() {
+  return (
+    <MonthView
+      date={new Date()}
+      events={events}
+      renderEvent={(event, props) => {
+        if (isAllDayEvent(event)) {
+          return <UnstyledButton {...props} />;
+        }
+
+        const { children, className, style, ...others } = props;
+        return (
+          <UnstyledButton
+            {...others}
+            style={{
+              ...style,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              fontSize: 10,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              pointerEvents: 'all',
+              cursor: 'pointer',
+              paddingInline: 2,
+            }}
+          >
+            <Box
+              component="span"
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: '50%',
+                backgroundColor: `var(--event-bg)`,
+                flexShrink: 0,
+              }}
+            />
+            <span style={{ width: 28, flexShrink: 0 }}>{dayjs(event.start).format('h:mm')}</span>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {event.title}
+            </span>
+          </UnstyledButton>
+        );
+      }}
+    />
+  );
+}
+```
+
+
+## Other changes
+
+* [Tabs](https://mantine.dev/llms/core-tabs.md) component now supports `keepMountedMode` prop that controls how inactive tab panels are hidden when `keepMounted` is `true`. Set `keepMountedMode="display-none"` to use `display: none` styles instead of the default `Activity` component.
+* [useClickOutside](https://mantine.dev/llms/hooks-use-click-outside.md) hook now supports `enabled` parameter to dynamically enable/disable the listener. The hook also uses `event.composedPath()` in both `ref` and `nodes` branches for consistent Shadow DOM support and correctly ignores clicks on detached DOM nodes in the single-ref mode.
+* [useCounter](https://mantine.dev/llms/hooks-use-counter.md) hook now supports `step` option to configure increment/decrement step size (default `1`).
+* [useDebouncedCallback](https://mantine.dev/llms/hooks-use-debounced-callback.md) hook now supports `maxWait` option to guarantee execution within a maximum time window during continuous calls, and `isPending()` method to check if a debounced call is waiting.
+* [useDebouncedValue](https://mantine.dev/llms/hooks-use-debounced-value.md) hook now returns a `flush` method to immediately apply the pending debounced value.
+* [useScrollIntoView](https://mantine.dev/llms/hooks-use-scroll-into-view.md) hook now supports `onScrollCancel` callback that fires when the scroll animation is interrupted by the user, and returns a `scrolling` boolean to indicate whether a scroll animation is in progress.
+
+
+--------------------------------------------------------------------------------
+
 ### AllReleases
 
 # All releases
 
 ## Releases
 
+### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
+
 ### [9.0.0](https://mantine.dev/llms/changelog-9-0-0.md) (March 31, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.0.0
+- Patches:
+  - [9.0.2](https://github.com/mantinedev/mantine/releases/tag/9.0.2) (April 13, 2026)
+  - [9.0.1](https://github.com/mantinedev/mantine/releases/tag/9.0.1) (April 6, 2026)
 
-### [8.3.0](https://mantine.dev/llms/changelog-8-3-0.md) (September 8, 2025)
+### [8.3.0](https://v8.mantine.dev/changelog/8-3-0) (September 8, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.3.0
 - Patches:
   - [8.3.16](https://github.com/mantinedev/mantine/releases/tag/8.3.16) (March 5, 2026)
@@ -102979,8 +106342,10 @@ function Demo() {
   - [8.3.3](https://github.com/mantinedev/mantine/releases/tag/8.3.3) (October 2, 2025)
   - [8.3.2](https://github.com/mantinedev/mantine/releases/tag/8.3.2) (September 23, 2025)
   - [8.3.1](https://github.com/mantinedev/mantine/releases/tag/8.3.1) (September 10, 2025)
+  - [8.3.18](https://github.com/mantinedev/mantine/releases/tag/8.3.18) (March 17, 2026)
+  - [8.3.17](https://github.com/mantinedev/mantine/releases/tag/8.3.17) (March 14, 2026)
 
-### [8.2.0](https://mantine.dev/llms/changelog-8-2-0.md) (July 22, 2025)
+### [8.2.0](https://v8.mantine.dev/changelog/8-2-0) (July 22, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.2.0
 - Patches:
   - [8.2.2](https://github.com/mantinedev/mantine/releases/tag/8.2.2) (July 30, 2025)
@@ -102991,14 +106356,14 @@ function Demo() {
   - [8.2.7](https://github.com/mantinedev/mantine/releases/tag/8.2.7) (August 31, 2025)
   - [8.2.8](https://github.com/mantinedev/mantine/releases/tag/8.2.8) (August 31, 2025)
 
-### [8.1.0](https://mantine.dev/llms/changelog-8-1-0.md) (June 10, 2025)
+### [8.1.0](https://v8.mantine.dev/changelog/8-1-0) (June 10, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.1.0
 - Patches:
   - [8.1.1](https://github.com/mantinedev/mantine/releases/tag/8.1.1) (June 16, 2025)
   - [8.1.2](https://github.com/mantinedev/mantine/releases/tag/8.1.2) (June 25, 2025)
   - [8.1.3](https://github.com/mantinedev/mantine/releases/tag/8.1.3) (July 7, 2025)
 
-### [8.0.0](https://mantine.dev/llms/changelog-8-0-0.md) (May 5, 2025)
+### [8.0.0](https://v8.mantine.dev/changelog/8-0-0) (May 5, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.0.0
 - Patches:
   - [8.0.1](https://github.com/mantinedev/mantine/releases/tag/8.0.1) (May 14, 2025)
@@ -103458,10 +106823,16 @@ See all releases: https://mantine.dev/changelog/all-releases
 
 ## Releases
 
+### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
+
 ### [9.0.0](https://mantine.dev/llms/changelog-9-0-0.md) (March 31, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.0.0
+- Patches:
+  - [9.0.2](https://github.com/mantinedev/mantine/releases/tag/9.0.2) (April 13, 2026)
+  - [9.0.1](https://github.com/mantinedev/mantine/releases/tag/9.0.1) (April 6, 2026)
 
-### [8.3.0](https://mantine.dev/llms/changelog-8-3-0.md) (September 8, 2025)
+### [8.3.0](https://v8.mantine.dev/changelog/8-3-0) (September 8, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.3.0
 - Patches:
   - [8.3.16](https://github.com/mantinedev/mantine/releases/tag/8.3.16) (March 5, 2026)
@@ -103480,8 +106851,10 @@ See all releases: https://mantine.dev/changelog/all-releases
   - [8.3.3](https://github.com/mantinedev/mantine/releases/tag/8.3.3) (October 2, 2025)
   - [8.3.2](https://github.com/mantinedev/mantine/releases/tag/8.3.2) (September 23, 2025)
   - [8.3.1](https://github.com/mantinedev/mantine/releases/tag/8.3.1) (September 10, 2025)
+  - [8.3.18](https://github.com/mantinedev/mantine/releases/tag/8.3.18) (March 17, 2026)
+  - [8.3.17](https://github.com/mantinedev/mantine/releases/tag/8.3.17) (March 14, 2026)
 
-### [8.2.0](https://mantine.dev/llms/changelog-8-2-0.md) (July 22, 2025)
+### [8.2.0](https://v8.mantine.dev/changelog/8-2-0) (July 22, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.2.0
 - Patches:
   - [8.2.2](https://github.com/mantinedev/mantine/releases/tag/8.2.2) (July 30, 2025)
@@ -103492,14 +106865,14 @@ See all releases: https://mantine.dev/changelog/all-releases
   - [8.2.7](https://github.com/mantinedev/mantine/releases/tag/8.2.7) (August 31, 2025)
   - [8.2.8](https://github.com/mantinedev/mantine/releases/tag/8.2.8) (August 31, 2025)
 
-### [8.1.0](https://mantine.dev/llms/changelog-8-1-0.md) (June 10, 2025)
+### [8.1.0](https://v8.mantine.dev/changelog/8-1-0) (June 10, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.1.0
 - Patches:
   - [8.1.1](https://github.com/mantinedev/mantine/releases/tag/8.1.1) (June 16, 2025)
   - [8.1.2](https://github.com/mantinedev/mantine/releases/tag/8.1.2) (June 25, 2025)
   - [8.1.3](https://github.com/mantinedev/mantine/releases/tag/8.1.3) (July 7, 2025)
 
-### [8.0.0](https://mantine.dev/llms/changelog-8-0-0.md) (May 5, 2025)
+### [8.0.0](https://v8.mantine.dev/changelog/8-0-0) (May 5, 2025)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/8.0.0
 - Patches:
   - [8.0.1](https://github.com/mantinedev/mantine/releases/tag/8.0.1) (May 14, 2025)
@@ -106151,39 +109524,6 @@ function Demo() {
       <TextInput label="Text input" placeholder="Text input" />
       <NativeSelect mt="md" label="Native select" data={['React', 'Angular', 'Vue', 'Svelte']} />
     </MantineProvider>
-  );
-}
-```
-
-
-
-----------------------------------------
-
-# Is there a way to add mask to Mantine input?
-Learn how to integrate mask libraries with Mantine inputs
-
-Mantine does not provide built-in mask functionality, but you can easily integrate any mask library with Mantine inputs.
-The recommended library is [react-imask](https://www.npmjs.com/package/react-imask):
-
-<InstallScript packages="react-imask" />
-
-You can use it with the [InputBase](https://mantine.dev/core/input/#inputbase-component) component
-to create a custom input with a mask:
-
-#### Example: InputMask
-
-```tsx
-import { IMaskInput } from 'react-imask';
-import { InputBase } from '@mantine/core';
-
-function Demo() {
-  return (
-    <InputBase
-      label="Your phone"
-      component={IMaskInput}
-      mask="+7 (000) 000-0000"
-      placeholder="Your phone"
-    />
   );
 }
 ```

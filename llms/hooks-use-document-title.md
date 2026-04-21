@@ -11,7 +11,7 @@ Use this hook with client-only applications; for isomorphic use, consider more a
 
 Call the hook with a string that should be set as the document title in any component.
 `use-document-title` triggers every time the value changes
-and the value is not an empty string (trailing whitespace is trimmed) or `null`.
+and the value is not an empty string (trailing whitespace is trimmed).
 
 ```tsx
 import { useState } from 'react';

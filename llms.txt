@@ -59,7 +59,6 @@ For a single consolidated file with all content, use:
 - [I get hydration warning about data-mantine-color-scheme attribute, what does it mean?](https://mantine.dev/llms/q-color-scheme-hydration-warning.md): Learn how hydration works and how to fix warnings
 - [Is there a comparison with other libraries?](https://mantine.dev/llms/q-other-libs.md): Comparison with other libraries is not provided, you are trusted to make your own decision based on documentation examples
 - [Is there a floating action button component?](https://mantine.dev/llms/q-floating-action-button.md): No, but you can build it with Affix and ActionIcon components
-- [Is there a way to add mask to Mantine input?](https://mantine.dev/llms/q-input-mask.md): Learn how to integrate mask libraries with Mantine inputs
 - [Is there DataGrid component that I can use with Mantine?](https://mantine.dev/llms/q-data-grid-i-need.md): A list of community packages that provide DataGrid component that can be used with Mantine.
 - [It is not possible to pinch to zoom when a Modal is opened. What should I do?](https://mantine.dev/llms/q-pinch-to-zoom-modal.md): Use removeScrollProps to configure react-remove-scroll options
 - [MantineProvider was not found in component tree. What should I do?](https://mantine.dev/llms/q-mantine-provider-missing.md): Learn how to resolve MantineProvider issues
@@ -141,6 +140,7 @@ For a single consolidated file with all content, use:
 - [LoadingOverlay](https://mantine.dev/llms/core-loading-overlay.md): An overlay with centered loader
 - [Mark](https://mantine.dev/llms/core-mark.md): Highlight part of the text
 - [Marquee](https://mantine.dev/llms/core-marquee.md): Create continuous scrolling animation for content
+- [MaskInput](https://mantine.dev/llms/core-mask-input.md): Input with mask pattern for formatted text entry
 - [Menu](https://mantine.dev/llms/core-menu.md): Combine a list of secondary actions into single interactive area
 - [Modal](https://mantine.dev/llms/core-modal.md): An accessible overlay dialog
 - [MultiSelect](https://mantine.dev/llms/core-multi-select.md): Custom searchable multi select
@@ -238,6 +238,7 @@ For a single consolidated file with all content, use:
 - [useLogger](https://mantine.dev/llms/hooks-use-logger.md)
 - [useLongPress](https://mantine.dev/llms/hooks-use-long-press.md)
 - [useMap](https://mantine.dev/llms/hooks-use-map.md)
+- [useMask](https://mantine.dev/llms/hooks-use-mask.md)
 - [useMediaQuery](https://mantine.dev/llms/hooks-use-media-query.md)
 - [useMergedRef](https://mantine.dev/llms/hooks-use-merged-ref.md)
 - [useMounted](https://mantine.dev/llms/hooks-use-mounted.md)
@@ -254,6 +255,7 @@ For a single consolidated file with all content, use:
 - [useRadialMove](https://mantine.dev/llms/hooks-use-radial-move.md)
 - [useReducedMotion](https://mantine.dev/llms/hooks-use-reduced-motion.md)
 - [useResizeObserver](https://mantine.dev/llms/hooks-use-resize-observer.md)
+- [useRovingIndex](https://mantine.dev/llms/hooks-use-roving-index.md)
 - [useScrollDirection](https://mantine.dev/llms/hooks-use-scroll-direction.md)
 - [useScroller](https://mantine.dev/llms/hooks-use-scroller.md)
 - [useScrollIntoView](https://mantine.dev/llms/hooks-use-scroll-into-view.md)
@@ -329,6 +331,7 @@ For a single consolidated file with all content, use:
 - [RadialBarChart](https://mantine.dev/llms/charts-radial-bar-chart.md): Radial bar chart component
 - [ScatterChart](https://mantine.dev/llms/charts-scatter-chart.md): Scatter chart component
 - [Sparkline](https://mantine.dev/llms/charts-sparkline.md): Simplified area chart to show trends
+- [Treemap](https://mantine.dev/llms/charts-treemap.md): Treemap chart component
 
 ## Schedule
 
@@ -438,6 +441,7 @@ For a single consolidated file with all content, use:
 - [Changelog820](https://mantine.dev/llms/changelog-8-2-0.md)
 - [Changelog830](https://mantine.dev/llms/changelog-8-3-0.md)
 - [Changelog900](https://mantine.dev/llms/changelog-9-0-0.md)
+- [Changelog910](https://mantine.dev/llms/changelog-9-1-0.md)
 - [Contribute](https://mantine.dev/llms/contribute.md)
 - [EslintConfig](https://mantine.dev/llms/eslint-config-mantine.md)
 - [GettingStarted](https://mantine.dev/llms/getting-started.md)

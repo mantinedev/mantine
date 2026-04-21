@@ -94,9 +94,14 @@ function Demo() {
 ## Definition
 
 ```tsx
-function useMutationObserver<Element extends HTMLElement>(
+function useMutationObserver<T extends HTMLElement>(
+  callback: MutationCallback,
+  options: MutationObserverInit
+): React.RefCallback<T | null>;
+
+function useMutationObserverTarget(
   callback: MutationCallback,
   options: MutationObserverInit,
   target?: HTMLElement | (() => HTMLElement) | null
-): RefObject<Element>;
+): void;
 ```

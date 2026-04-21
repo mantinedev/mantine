@@ -32,6 +32,7 @@ function Demo() {
 interface UseCounterOptions {
   min?: number;
   max?: number;
+  step?: number;
 }
 
 interface UseCounterHandlers {

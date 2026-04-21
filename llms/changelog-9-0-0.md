@@ -433,7 +433,7 @@ import { useCollapse, useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [expanded, handlers] = useDisclosure(false);
-  const getCollapseProps = useCollapse({ expanded });
+  const { getCollapseProps } = useCollapse({ expanded });
 
   return (
     <>
