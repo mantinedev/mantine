@@ -95,7 +95,9 @@ export const Card = polymorphicFactory<CardFactory>((_props) => {
 
   const _children = Children.toArray(children);
   const content = _children.map((child, index) => {
-    if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
+    if (typeof child === 'object' && child && 'type' in child && (child.type === CardSection || 
+(child.type as any)?.displayName === "@mantine/core/CardSection" ||
+(child.type as any)?._payload?.value?.[2] === "CardSection")) {
       return cloneElement(child, {
         'data-orientation': orientation,
         'data-first-section': index === 0 || undefined,
