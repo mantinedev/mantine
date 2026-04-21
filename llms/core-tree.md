@@ -1346,3 +1346,24 @@ Tree component supports Styles API. With Styles API, you can customize styles of
 | Selector | Variable | Description |
 |----------|----------|-------------|
 | root | --level-offset | Controls offset of nested tree levels |
+
+**Treemap selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Treemap-root | Root element |
+| tooltip | .mantine-Treemap-tooltip | Tooltip root element |
+| tooltipBody | .mantine-Treemap-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-Treemap-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-Treemap-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-Treemap-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-Treemap-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-Treemap-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-Treemap-tooltipLabel | Label of the tooltip |
+
+**Treemap CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-stroke-color | Controls color of the chart stroke |
+| root | --chart-height | Controls height of the chart |
