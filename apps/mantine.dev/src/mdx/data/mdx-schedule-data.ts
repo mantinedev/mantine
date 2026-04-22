@@ -20,6 +20,7 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['DayView'],
     source: '@mantine/schedule/src/components/DayView/DayView.tsx',
     docs: 'schedule/day-view.mdx',
+    searchTags: 'calendar, agenda, appointments, events, planner, timetable',
   },
 
   MonthView: {
@@ -31,6 +32,7 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['MonthView'],
     source: '@mantine/schedule/src/components/MonthView/MonthView.tsx',
     docs: 'schedule/month-view.mdx',
+    searchTags: 'calendar, agenda, appointments, events, planner, timetable',
   },
 
   WeekView: {
@@ -42,6 +44,7 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['WeekView'],
     source: '@mantine/schedule/src/components/WeekView/WeekView.tsx',
     docs: 'schedule/week-view.mdx',
+    searchTags: 'calendar, agenda, appointments, events, planner, timetable',
   },
 
   YearView: {
@@ -53,6 +56,7 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['YearView'],
     source: '@mantine/schedule/src/components/YearView/YearView.tsx',
     docs: 'schedule/year-view.mdx',
+    searchTags: 'calendar, agenda, appointments, events, planner, timetable',
   },
 
   MobileMonthView: {
@@ -64,6 +68,7 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['MobileMonthView'],
     source: '@mantine/schedule/src/components/MobileMonthView/MobileMonthView.tsx',
     docs: 'schedule/mobile-month-view.mdx',
+    searchTags: 'calendar, agenda, appointments, events, planner, timetable',
   },
 
   Schedule: {
@@ -75,6 +80,8 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     styles: ['Schedule'],
     source: '@mantine/schedule/src/components/Schedule/Schedule.tsx',
     docs: 'schedule/schedule.mdx',
+    searchTags:
+      'calendar, agenda, appointments, events, planner, timetable, booking, meetings, big calendar, scheduler',
   },
   RecurringEventsSchedule: {
     title: 'Recurring events',
@@ -82,5 +89,6 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     slug: '/schedule/recurring-events',
     description: 'Recurring events guide for @mantine/schedule',
     docs: 'schedule/recurring-events.mdx',
+    searchTags: 'calendar, recurring, rrule, repeat, recurrence, repeating events',
   },
 };
