@@ -420,17 +420,23 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
   );
 
   const clampCursorToProcessed = useCallback((input: HTMLInputElement) => {
+    const start = input.selectionStart ?? 0;
+    const end = input.selectionEnd ?? 0;
+    if (start !== end) {
+      return;
+    }
+
     const opts = optionsRef.current;
     const { slots } = getResolvedOptions(opts, '');
     const processed = processedRef.current;
-    const cursorPos = input.selectionStart ?? 0;
-    const maxPos =
+    const endPos =
       processed.length > 0
         ? findNextEditablePosition(processed.length, slots, processed)
         : findNextTokenIndex(slots, 0);
+    const startPos = findNextTokenIndex(slots, 0);
 
-    if (cursorPos > maxPos) {
-      input.setSelectionRange(maxPos, maxPos);
+    if (start > endPos || start < startPos) {
+      input.setSelectionRange(endPos, endPos);
     }
   }, []);
 
@@ -468,6 +474,37 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
     clampCursorToProcessed(input);
   }, [clampCursorToProcessed]);
+
+  const handleMouseDown = useCallback(() => {
+    const input = inputRef.current;
+    if (!input) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      if (input !== document.activeElement) {
+        return;
+      }
+
+      const start = input.selectionStart ?? 0;
+      const end = input.selectionEnd ?? 0;
+      if (start !== end) {
+        return;
+      }
+
+      const opts = optionsRef.current;
+      const { slots } = getResolvedOptions(opts, '');
+      const processed = processedRef.current;
+      const endPos =
+        processed.length > 0
+          ? findNextEditablePosition(processed.length, slots, processed)
+          : findNextTokenIndex(slots, 0);
+
+      if (start > endPos) {
+        input.setSelectionRange(endPos, endPos);
+      }
+    });
+  }, []);
 
   const handleBlur = useCallback(() => {
     isFocusedRef.current = false;
@@ -700,6 +737,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         prevInput.removeEventListener('input', handleInput);
         prevInput.removeEventListener('focus', handleFocus);
         prevInput.removeEventListener('blur', handleBlur);
+        prevInput.removeEventListener('mousedown', handleMouseDown);
         prevInput.removeEventListener('mouseup', handleMouseUp);
         prevInput.removeEventListener('keydown', handleKeyDown as EventListener);
         prevInput.removeEventListener('paste', handlePaste as EventListener);
@@ -711,6 +749,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         node.addEventListener('input', handleInput);
         node.addEventListener('focus', handleFocus);
         node.addEventListener('blur', handleBlur);
+        node.addEventListener('mousedown', handleMouseDown);
         node.addEventListener('mouseup', handleMouseUp);
         node.addEventListener('keydown', handleKeyDown as EventListener);
         node.addEventListener('paste', handlePaste as EventListener);
@@ -729,6 +768,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       handleInput,
       handleFocus,
       handleBlur,
+      handleMouseDown,
       handleMouseUp,
       handleKeyDown,
       handlePaste,
