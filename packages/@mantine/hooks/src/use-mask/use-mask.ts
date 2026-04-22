@@ -479,7 +479,11 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     }
 
     const { slots, slotChar } = getResolvedOptions(opts, rawValue);
-    const processed = processInput(input.value, slots, slotChar);
+    const expectedFocusDisplay = buildDisplayValue(processedRef.current, slots, slotChar, true);
+    const processed =
+      input.value === expectedFocusDisplay
+        ? processedRef.current
+        : processInput(input.value, slots, slotChar);
     const complete = checkComplete(processed, slots);
 
     if (opts.autoClear && !complete && processed.length > 0) {

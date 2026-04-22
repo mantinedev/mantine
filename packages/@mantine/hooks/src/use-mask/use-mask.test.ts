@@ -78,6 +78,32 @@ describe('@mantine/hooks/use-mask', () => {
       expect(input.getAttribute('aria-invalid')).toBe('true');
     });
 
+    it('clears display on blur when input was focused but nothing was typed', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      expect(input.value).toBe('(___) ___-____');
+
+      act(() => {
+        input.blur();
+      });
+
+      expect(input.value).toBe('');
+      expect(result.current.value).toBe('');
+      expect(result.current.rawValue).toBe('');
+
+      document.body.removeChild(input);
+    });
+
     it('removes event listeners on cleanup', () => {
       const input = document.createElement('input');
       const removeSpy = jest.spyOn(input, 'removeEventListener');
