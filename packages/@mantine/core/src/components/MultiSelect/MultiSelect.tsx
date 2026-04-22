@@ -124,7 +124,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
 
   /** A function to render content of the pill */
   renderPill?: (props: ComboboxRenderPillInput<Value>) => React.ReactNode;
