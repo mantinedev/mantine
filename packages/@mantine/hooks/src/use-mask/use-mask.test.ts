@@ -104,6 +104,38 @@ describe('@mantine/hooks/use-mask', () => {
       document.body.removeChild(input);
     });
 
+    it('clears display on blur when typed value was fully deleted', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1' }));
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace' }));
+      });
+
+      act(() => {
+        input.blur();
+      });
+
+      expect(input.value).toBe('');
+      expect(result.current.value).toBe('');
+      expect(result.current.rawValue).toBe('');
+
+      document.body.removeChild(input);
+    });
+
     it('moves cursor to end of typed value when cursor lands before the first editable slot', () => {
       const input = document.createElement('input');
       document.body.appendChild(input);

@@ -543,6 +543,19 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     }
 
     if (!opts.alwaysShowMask && !complete) {
+      if (extractRaw(processed, slots).length === 0) {
+        input.value = '';
+        processedRef.current = '';
+        setMaskedValue('');
+        setRawValue('');
+        wasCompleteRef.current = false;
+
+        if (opts.onChangeRaw) {
+          opts.onChangeRaw('', '');
+        }
+        return;
+      }
+
       const display = buildDisplayValue(processed, slots, slotChar, false);
       input.value = display;
       setMaskedValue(display);
