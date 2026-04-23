@@ -15,6 +15,7 @@ import {
 } from '../../core';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { TreeNode } from './TreeNode';
+import type { TreeAllowDrop, TreeDragHandleProps } from './use-tree-node-drag-drop';
 import { TreeController, useTree } from './use-tree';
 import classes from './Tree.module.css';
 
@@ -65,6 +66,10 @@ export interface RenderTreeNodePayload {
     onDrop?: (event: React.DragEvent) => void;
     onDragEnd?: (event: React.DragEvent) => void;
   };
+
+  /** Props to spread into the drag handle element when `withDragHandle` is set on `Tree`.
+   * `undefined` when `withDragHandle` is not enabled or drag-and-drop is disabled. */
+  dragHandleProps: TreeDragHandleProps | undefined;
 }
 
 export type RenderNode = (payload: RenderTreeNodePayload) => React.ReactNode;
@@ -115,6 +120,14 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** Called when a node is dropped on another node, enables drag-and-drop when provided */
   onDragDrop?: (payload: TreeDragDropPayload) => void;
+
+  /** Called for each potential drop target to determine whether a drop is allowed.
+   * When it returns `false`, the drop indicator is hidden and the drop is rejected. */
+  allowDrop?: TreeAllowDrop;
+
+  /** If set, drag-and-drop must be initiated from an element that spreads `dragHandleProps`
+   * from the `renderNode` payload, rather than anywhere on the node. @default false */
+  withDragHandle?: boolean;
 
   /** If set, connecting lines are rendered showing parent-child relationships @default false */
   withLines?: boolean;
@@ -170,6 +183,8 @@ export const Tree = factory<TreeFactory>((_props) => {
     checkOnSpace,
     keepMounted,
     onDragDrop,
+    allowDrop,
+    withDragHandle,
     withLines,
     attributes,
     ref,
@@ -223,6 +238,8 @@ export const Tree = factory<TreeFactory>((_props) => {
       checkOnSpace={checkOnSpace}
       keepMounted={keepMounted}
       onDragDrop={onDragDrop}
+      allowDrop={allowDrop}
+      withDragHandle={withDragHandle}
       dragStateRef={dragStateRef}
       data={data}
     />
