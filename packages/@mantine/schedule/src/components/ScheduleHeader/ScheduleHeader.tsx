@@ -9,6 +9,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { ScheduleLabelsOverride } from '../../labels';
 import {
   HeaderControl,
   HeaderControlStylesNames,
@@ -17,6 +18,7 @@ import {
   ScheduleHeaderToday,
 } from './HeaderControl/HeaderControl';
 import { MonthYearSelect, MonthYearSelectStylesNames } from './MonthYearSelect/MonthYearSelect';
+import { ScheduleHeaderLabelsContext } from './ScheduleHeaderContext';
 import { ViewSelect, ViewSelectStylesNames } from './ViewSelect/ViewSelect';
 import classes from './ScheduleHeader.module.css';
 
@@ -34,6 +36,9 @@ export type ScheduleHeaderCssVariables = {
 export interface ScheduleHeaderProps
   extends BoxProps, StylesApiProps<ScheduleHeaderFactory>, ElementProps<'div'> {
   __staticSelector?: string;
+
+  /** Labels override shared with compound components rendered inside */
+  labels?: ScheduleLabelsOverride;
 }
 
 export type ScheduleHeaderFactory = Factory<{
@@ -72,6 +77,7 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     vars,
     attributes,
     __staticSelector,
+    labels,
     ...others
   } = props;
 
@@ -90,7 +96,11 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     rootSelector: 'header',
   });
 
-  return <Box {...getStyles('header')} {...others} />;
+  return (
+    <ScheduleHeaderLabelsContext.Provider value={labels}>
+      <Box {...getStyles('header')} {...others} />
+    </ScheduleHeaderLabelsContext.Provider>
+  );
 });
 
 ScheduleHeader.displayName = '@mantine/schedule/ScheduleHeader';

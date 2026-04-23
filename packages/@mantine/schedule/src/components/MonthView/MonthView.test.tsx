@@ -428,6 +428,19 @@ describe('@mantine/schedule/MonthView', () => {
       expect(customized.tagName).toBe('A');
       expect(customized).toHaveAttribute('href', '#event-5');
     });
+
+    it('forwards labels.moreLabel to MoreEvents', () => {
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          labels={{ moreLabel: (count) => `Show ${count} additional` }}
+        />
+      );
+
+      expect(screen.getByRole('button', { name: 'Show 3 additional' })).toBeInTheDocument();
+    });
   });
 
   describe('keyboard navigation', () => {

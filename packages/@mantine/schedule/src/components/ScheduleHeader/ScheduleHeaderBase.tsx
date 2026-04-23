@@ -101,7 +101,7 @@ export function ScheduleHeaderBase({
   }));
 
   return (
-    <ScheduleHeader {...stylesApiProps}>
+    <ScheduleHeader {...stylesApiProps} labels={labels}>
       <div className={classes.navigationGroup}>
         <ScheduleHeader.Previous
           {...stylesApiProps}
