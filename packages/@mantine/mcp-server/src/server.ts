@@ -177,7 +177,7 @@ async function handleRequest(client: MantineMcpDataClient, request: JsonRpcReque
           },
           serverInfo: {
             name: '@mantine/mcp-server',
-            version: '9.0.0-alpha.1',
+            version: '9',
           },
         });
         return;
