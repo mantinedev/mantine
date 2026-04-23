@@ -2,7 +2,7 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Stack, Text } from '@mantine/core';
+import { Popover, Stack, Text, UnstyledButton } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { MonthView } from './MonthView';
 
@@ -367,6 +367,37 @@ export function MaxEventsPerDay() {
           </Text>
           <MonthView date={month} events={events} maxEventsPerDay={5} />
         </div>
+      </Stack>
+    </div>
+  );
+}
+
+export function RenderEventInMoreList() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            renderEvent propagates to MoreEvents list
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Click the "+X more" button on Nov 15 — events in the dropdown should be wrapped in a
+            Popover and show "★" prefix.
+          </Text>
+        </div>
+
+        <MonthView
+          date={month}
+          events={events}
+          renderEvent={(event, props) => (
+            <Popover position="right" withArrow>
+              <Popover.Target>
+                <UnstyledButton {...props}>★ {event.title}</UnstyledButton>
+              </Popover.Target>
+              <Popover.Dropdown>Details for {event.title}</Popover.Dropdown>
+            </Popover>
+          )}
+        />
       </Stack>
     </div>
   );

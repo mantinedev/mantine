@@ -16,7 +16,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { ScheduleEventData, ScheduleMode } from '../../types';
-import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import classes from './MoreEvents.module.css';
 
 export type MoreEventsDropdownType = 'popover' | 'modal';
@@ -51,6 +51,9 @@ export interface MoreEventsProps
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
+
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
 
   /** Labels override */
   labels?: ScheduleLabelsOverride;
@@ -89,6 +92,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     children,
     modalTitle,
     renderEventBody,
+    renderEvent,
     id,
     labels,
     mode,
@@ -124,6 +128,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
           event={event}
           size="md"
           renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
           mode={mode}
         >
           {event.title}

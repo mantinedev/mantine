@@ -384,6 +384,52 @@ describe('@mantine/schedule/MonthView', () => {
     expect(scrollArea).toHaveStyle({ outline: '1px solid red' });
   });
 
+  describe('MoreEvents customization', () => {
+    const manyEventsOnOneDay = Array.from({ length: 5 }, (_, i) => ({
+      id: i + 1,
+      title: `Event ${i + 1}`,
+      start: '2025-11-05 10:00:00',
+      end: '2025-11-05 11:00:00',
+      color: 'blue',
+      payload: {},
+    }));
+
+    it('forwards renderEventBody to MoreEvents', async () => {
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          renderEventBody={(event) => <span>Body[{event.title}]</span>}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+      expect(screen.getByText('Body[Event 5]')).toBeInTheDocument();
+    });
+
+    it('forwards renderEvent to MoreEvents', async () => {
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          renderEvent={(event, props) => (
+            <a href={`#event-${event.id}`} data-testid={`custom-event-${event.id}`}>
+              {props.children}
+            </a>
+          )}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+
+      const customized = screen.getByTestId('custom-event-5');
+      expect(customized.tagName).toBe('A');
+      expect(customized).toHaveAttribute('href', '#event-5');
+    });
+  });
+
   describe('keyboard navigation', () => {
     it('only first day should be in tab order', async () => {
       render(<MonthView {...defaultProps} />);

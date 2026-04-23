@@ -803,6 +803,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                       events={eventsData.allDayEvents}
                       moreEventsCount={allDayEventsCount.hiddenEventsCount}
                       renderEventBody={renderEventBody}
+                      renderEvent={renderEvent}
                       mode={mode}
                       {...stylesApiProps}
                       {...moreEventsProps}

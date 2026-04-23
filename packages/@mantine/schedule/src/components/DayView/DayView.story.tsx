@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Button, Stack, Text } from '@mantine/core';
+import { Button, Popover, Stack, Text, UnstyledButton } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { DayView } from './DayView';
 
@@ -208,6 +208,31 @@ export function MultipleAllDayEvents() {
   return (
     <div style={{ padding: 40 }}>
       <DayView date={new Date()} events={allDayEvents} />
+    </div>
+  );
+}
+
+export function RenderEventInMoreList() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <Text size="xs" c="dimmed">
+          Click "+X more" on the all-day slot — events in the dropdown should be wrapped with a
+          Popover and show "★" prefix.
+        </Text>
+        <DayView
+          date={new Date()}
+          events={allDayEvents}
+          renderEvent={(event, props) => (
+            <Popover position="right" withArrow>
+              <Popover.Target>
+                <UnstyledButton {...props}>★ {event.title}</UnstyledButton>
+              </Popover.Target>
+              <Popover.Dropdown>Details for {event.title}</Popover.Dropdown>
+            </Popover>
+          )}
+        />
+      </Stack>
     </div>
   );
 }
