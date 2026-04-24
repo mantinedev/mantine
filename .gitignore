@@ -70,3 +70,5 @@ apps/help.mantine.dev/next-env.d.ts
 .agents/
 /codex
 /.claude/worktrees
+/.claude/scheduled_tasks.lock
+/.claude/settings.local.json

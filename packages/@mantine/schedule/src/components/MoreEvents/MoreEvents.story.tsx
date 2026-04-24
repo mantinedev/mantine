@@ -1,3 +1,4 @@
+import { Popover, UnstyledButton } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { MoreEvents } from './MoreEvents';
 
@@ -94,6 +95,39 @@ export function WithRadius() {
   return (
     <div style={{ padding: 40 }}>
       <MoreEvents events={sampleEvents} moreEventsCount={4} radius="lg" />
+    </div>
+  );
+}
+
+export function WithRenderEventBody() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MoreEvents
+        events={sampleEvents}
+        moreEventsCount={4}
+        popoverProps={{ opened: true }}
+        renderEventBody={(event) => <span data-testid="custom-body">★ {event.title}</span>}
+      />
+    </div>
+  );
+}
+
+export function WithRenderEvent() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MoreEvents
+        events={sampleEvents}
+        moreEventsCount={4}
+        popoverProps={{ opened: true }}
+        renderEvent={(event, props) => (
+          <Popover position="right" withArrow>
+            <Popover.Target>
+              <UnstyledButton {...props} data-testid="custom-event" />
+            </Popover.Target>
+            <Popover.Dropdown>Details for {event.title}</Popover.Dropdown>
+          </Popover>
+        )}
+      />
     </div>
   );
 }

@@ -612,6 +612,9 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           events={dayEvents}
           moreEventsCount={hiddenEventsCount}
           mode={mode}
+          labels={labels}
+          renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
           style={{
             position: 'absolute',
             top: `calc(100% - 2px)`,

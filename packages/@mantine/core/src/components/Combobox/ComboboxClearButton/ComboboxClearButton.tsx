@@ -6,7 +6,6 @@ export interface ComboboxClearButtonProps extends InputClearButtonProps, Element
 }
 
 export function ComboboxClearButton({
-  size,
   onMouseDown,
   onClick,
   onClear,

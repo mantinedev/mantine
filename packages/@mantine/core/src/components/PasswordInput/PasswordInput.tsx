@@ -218,7 +218,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         error={error}
         leftSection={leftSection}
         size={size}
-        classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames.input) }}
+        classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
         styles={resolvedStyles}
         radius={radius}
         disabled={disabled}

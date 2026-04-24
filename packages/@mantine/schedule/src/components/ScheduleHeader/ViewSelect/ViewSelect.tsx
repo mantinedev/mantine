@@ -15,6 +15,7 @@ import {
 import { getLabel, ScheduleLabels, ScheduleLabelsOverride } from '../../../labels';
 import { ScheduleViewLevel } from '../../../types';
 import { HeaderControl } from '../HeaderControl/HeaderControl';
+import { useScheduleHeaderLabels } from '../ScheduleHeaderContext';
 import classes from './ViewSelect.module.css';
 
 export type ViewSelectStylesNames = 'viewSelect';
@@ -82,6 +83,8 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     vars,
     rootSelector: 'viewSelect',
   });
+
+  const resolvedLabels = useScheduleHeaderLabels(labels);
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<ViewSelectFactory>({
     classNames,
@@ -154,11 +157,11 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
         __staticSelector={__staticSelector}
         radius={radius}
         role="tab"
-        aria-label={getLabel(switchToLabelKeys[view], labels) as string}
+        aria-label={getLabel(switchToLabelKeys[view], resolvedLabels) as string}
         aria-selected={isSelected}
         tabIndex={isSelected ? 0 : -1}
       >
-        {getLabel(view, labels)}
+        {getLabel(view, resolvedLabels)}
       </HeaderControl>
     );
   });
@@ -167,7 +170,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     <Box
       {...getStyles('viewSelect')}
       role="tablist"
-      aria-label={getLabel('viewSelectLabel', labels)}
+      aria-label={getLabel('viewSelectLabel', resolvedLabels)}
       {...others}
     >
       {items}

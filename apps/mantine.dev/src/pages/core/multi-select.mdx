@@ -158,6 +158,35 @@ The `renderPill` callback allows you to customize pill rendering. The function r
 
 <Demo data={MultiSelectDemos.renderPill} />
 
+## Reorder pills
+
+Set the `withPillsReorder` prop to allow reordering pills with drag-and-drop.
+Dropping a pill before or after another pill updates the component value accordingly.
+Reordering is automatically disabled when `disabled` or `readOnly` is set.
+
+<Demo data={MultiSelectDemos.dragReorder} />
+
+If you use a custom pill renderer with the `renderPill` prop, spread the `reorderProps` from
+the render callback payload onto your pill element to keep reordering working:
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={['React', 'Angular', 'Vue']}
+      withPillsReorder
+      renderPill={({ value, onRemove, reorderProps }) => (
+        <div {...reorderProps}>
+          {value} <button onClick={onRemove}>×</button>
+        </div>
+      )}
+    />
+  );
+}
+```
+
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).

@@ -21,6 +21,7 @@ import { getLabel, ScheduleLabelsOverride } from '../../../labels';
 import { DateLabelFormat } from '../../../types';
 import { formatDate, getMonthsList, getYearsList } from '../../../utils';
 import { HeaderControl } from '../HeaderControl/HeaderControl';
+import { useScheduleHeaderLabels } from '../ScheduleHeaderContext';
 import classes from './MonthYearSelect.module.css';
 
 export type MonthYearSelectStylesNames =
@@ -148,6 +149,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
   });
 
   const [opened, handlers] = useDisclosure(false);
+  const resolvedLabels = useScheduleHeaderLabels(labels);
 
   const today = new Date();
   const ctx = useDatesContext();
@@ -167,7 +169,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
           }
         }}
         mod={{ type: 'year', active: year === yearValue }}
-        aria-label={`${getLabel('selectYear', labels)} ${year}`}
+        aria-label={`${getLabel('selectYear', resolvedLabels)} ${year}`}
         tabIndex={hasActiveYear ? (year === yearValue ? 0 : -1) : index === 0 ? 0 : -1}
         {...controlProps}
         onKeyDown={createScopedKeydownHandler({
@@ -213,7 +215,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
               className: controlProps?.className,
               style: controlProps?.style,
             })}
-            aria-label={`${getLabel('selectMonth', labels)} ${month.name}`}
+            aria-label={`${getLabel('selectMonth', resolvedLabels)} ${month.name}`}
           >
             {month.name}
           </UnstyledButton>
@@ -259,13 +261,13 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       >
         {withMonths && (
           <div data-list {...getStyles('monthYearSelectList')}>
-            <div {...getStyles('monthYearSelectLabel')}>{getLabel('month', labels)}</div>
+            <div {...getStyles('monthYearSelectLabel')}>{getLabel('month', resolvedLabels)}</div>
             {months}
           </div>
         )}
         <div data-list {...getStyles('monthYearSelectList')}>
           {withMonths && (
-            <div {...getStyles('monthYearSelectLabel')}>{getLabel('year', labels)}</div>
+            <div {...getStyles('monthYearSelectLabel')}>{getLabel('year', resolvedLabels)}</div>
           )}
           {years}
         </div>

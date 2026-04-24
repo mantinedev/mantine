@@ -78,6 +78,165 @@ describe('@mantine/hooks/use-mask', () => {
       expect(input.getAttribute('aria-invalid')).toBe('true');
     });
 
+    it('clears display on blur when input was focused but nothing was typed', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      expect(input.value).toBe('(___) ___-____');
+
+      act(() => {
+        input.blur();
+      });
+
+      expect(input.value).toBe('');
+      expect(result.current.value).toBe('');
+      expect(result.current.rawValue).toBe('');
+
+      document.body.removeChild(input);
+    });
+
+    it('clears display on blur when typed value was fully deleted', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1' }));
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace' }));
+      });
+
+      act(() => {
+        input.blur();
+      });
+
+      expect(input.value).toBe('');
+      expect(result.current.value).toBe('');
+      expect(result.current.rawValue).toBe('');
+
+      document.body.removeChild(input);
+    });
+
+    it('moves cursor to end of typed value when cursor lands before the first editable slot', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1' }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '2' }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '3' }));
+      });
+
+      const endOfTyped = input.selectionStart;
+      expect(endOfTyped).toBeGreaterThan(0);
+
+      input.setSelectionRange(0, 0);
+      act(() => {
+        input.dispatchEvent(new MouseEvent('mouseup'));
+      });
+
+      expect(input.selectionStart).toBe(endOfTyped);
+      expect(input.selectionEnd).toBe(endOfTyped);
+
+      document.body.removeChild(input);
+    });
+
+    it('preserves active selection on mouseup (does not collapse drag selection)', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1' }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '2' }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '3' }));
+      });
+
+      const fullDisplayLength = input.value.length;
+      input.setSelectionRange(0, fullDisplayLength);
+      act(() => {
+        input.dispatchEvent(new MouseEvent('mouseup'));
+      });
+
+      expect(input.selectionStart).toBe(0);
+      expect(input.selectionEnd).toBe(fullDisplayLength);
+
+      document.body.removeChild(input);
+    });
+
+    it('clamps cursor to end of typed value on mousedown when click lands past typed content', async () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1' }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '2' }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '3' }));
+      });
+
+      const endOfTyped = input.selectionStart;
+      expect(endOfTyped).toBeGreaterThan(0);
+
+      input.setSelectionRange(input.value.length, input.value.length);
+      act(() => {
+        input.dispatchEvent(new MouseEvent('mousedown'));
+      });
+
+      await act(async () => {
+        await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+      });
+
+      expect(input.selectionStart).toBe(endOfTyped);
+      expect(input.selectionEnd).toBe(endOfTyped);
+
+      document.body.removeChild(input);
+    });
+
     it('removes event listeners on cleanup', () => {
       const input = document.createElement('input');
       const removeSpy = jest.spyOn(input, 'removeEventListener');
