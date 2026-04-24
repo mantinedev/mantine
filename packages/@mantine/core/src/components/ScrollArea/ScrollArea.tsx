@@ -1,4 +1,4 @@
-import { useEffectEvent, useRef, useState } from 'react';
+import { useCallback, useEffectEvent, useRef, useState } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import {
@@ -204,7 +204,19 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
   });
 
   const localViewportRef = useRef<HTMLDivElement>(null);
-  const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef]);
+  const [viewportElement, setViewportElement] = useState<HTMLDivElement | null>(null);
+  const viewportCallbackRef = useCallback((node: HTMLDivElement | null) => {
+    setViewportElement((current) => (current === node ? current : node));
+  }, []);
+  const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef, viewportCallbackRef]);
+
+  useResizeObserver(offsetScrollbars === 'present' ? viewportElement : null, () => {
+    const element = localViewportRef.current;
+    if (element) {
+      setVerticalThumbVisible(element.scrollHeight > element.clientHeight);
+      setHorizontalThumbVisible(element.scrollWidth > element.clientWidth);
+    }
+  });
 
   useIsomorphicEffect(() => {
     if (startScrollPosition && localViewportRef.current) {
@@ -214,14 +226,6 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
       });
     }
   }, []);
-
-  useResizeObserver(offsetScrollbars === 'present' ? localViewportRef.current : null, () => {
-    const element = localViewportRef.current;
-    if (element) {
-      setVerticalThumbVisible(element.scrollHeight > element.clientHeight);
-      setHorizontalThumbVisible(element.scrollWidth > element.clientWidth);
-    }
-  });
 
   return (
     <ScrollAreaRoot
@@ -356,7 +360,17 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
 
   // Overflow detection (Autosize-only)
   const viewportObserverRef = useRef<HTMLDivElement>(null);
-  const combinedViewportRef = useMergeRefs([viewportRef, viewportObserverRef]);
+  const [viewportObserverElement, setViewportObserverElement] = useState<HTMLDivElement | null>(
+    null
+  );
+  const viewportObserverCallbackRef = useCallback((node: HTMLDivElement | null) => {
+    setViewportObserverElement((current) => (current === node ? current : node));
+  }, []);
+  const combinedViewportRef = useMergeRefs([
+    viewportRef,
+    viewportObserverRef,
+    viewportObserverCallbackRef,
+  ]);
 
   const overflowingRef = useRef(false);
   const didMountRef = useRef(false);
@@ -383,7 +397,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
     }
   });
 
-  useResizeObserver(onOverflowChange ? viewportObserverRef.current : null, handleOverflowCheck);
+  useResizeObserver(onOverflowChange ? viewportObserverElement : null, handleOverflowCheck);
 
   return (
     <Box {...others} variant={variant} style={[{ display: 'flex', overflow: 'hidden' }, style]}>

@@ -21,6 +21,27 @@ function getViewport(container: HTMLElement) {
   return viewport;
 }
 
+function mockResizeObserver(observe: jest.Mock, unobserve: jest.Mock) {
+  const originalDescriptor = Object.getOwnPropertyDescriptor(window, 'ResizeObserver');
+
+  Object.defineProperty(window, 'ResizeObserver', {
+    configurable: true,
+    writable: true,
+    value: jest.fn().mockImplementation(() => ({
+      observe,
+      unobserve,
+    })),
+  });
+
+  return () => {
+    if (originalDescriptor) {
+      Object.defineProperty(window, 'ResizeObserver', originalDescriptor);
+    } else {
+      Reflect.deleteProperty(window, 'ResizeObserver');
+    }
+  };
+}
+
 describe('@mantine/core/ScrollArea', () => {
   tests.itSupportsSystemProps<ScrollAreaProps, ScrollAreaStylesNames>({
     component: ScrollArea,
@@ -187,6 +208,24 @@ describe('@mantine/core/ScrollArea', () => {
 
     expect(bottomSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('observes viewport when offsetScrollbars is present', () => {
+    const observe = jest.fn();
+    const unobserve = jest.fn();
+    const restoreResizeObserver = mockResizeObserver(observe, unobserve);
+
+    try {
+      render(
+        <ScrollArea h={100} offsetScrollbars="present">
+          <div style={{ height: 500 }}>Content</div>
+        </ScrollArea>
+      );
+
+      expect(observe).toHaveBeenCalled();
+    } finally {
+      restoreResizeObserver();
+    }
+  });
 });
 
 describe('@mantine/core/ScrollAreaAutosize', () => {
@@ -195,5 +234,23 @@ describe('@mantine/core/ScrollAreaAutosize', () => {
     props: defaultProps,
     children: true,
     displayName: '@mantine/core/ScrollAreaAutosize',
+  });
+
+  it('observes viewport when onOverflowChange is provided', () => {
+    const observe = jest.fn();
+    const unobserve = jest.fn();
+    const restoreResizeObserver = mockResizeObserver(observe, unobserve);
+
+    try {
+      render(
+        <ScrollArea.Autosize h={100} onOverflowChange={jest.fn()}>
+          <div style={{ height: 500 }}>Content</div>
+        </ScrollArea.Autosize>
+      );
+
+      expect(observe).toHaveBeenCalled();
+    } finally {
+      restoreResizeObserver();
+    }
   });
 });

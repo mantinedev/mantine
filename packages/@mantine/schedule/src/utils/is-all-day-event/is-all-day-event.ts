@@ -8,9 +8,10 @@ interface IsAllDayEventInput {
 
 export function isAllDayEvent({ event, date }: IsAllDayEventInput) {
   const dayStart = dayjs(date).startOf('day');
-  const dayEnd = dayStart.add(1, 'day');
+  const nextDayStart = dayStart.add(1, 'day');
+  const sameDayEnd = nextDayStart.subtract(1, 'second');
   const startTime = dayjs(event.start);
   const endTime = dayjs(event.end);
 
-  return startTime.isSame(dayStart) && endTime.isSame(dayEnd);
+  return startTime.isSame(dayStart) && (endTime.isSame(nextDayStart) || endTime.isSame(sameDayEnd));
 }

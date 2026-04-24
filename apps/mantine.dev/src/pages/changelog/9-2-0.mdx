@@ -1,4 +1,4 @@
-import { DateTimePickerDemos, InlineDateTimePickerDemos, NotificationsDemos, RollingNumberDemos, SankeyChartDemos, TreeSelectDemos, UseDragDemos } from '@docs/demos';
+import { DateTimePickerDemos, InlineDateTimePickerDemos, MultiSelectDemos, NotificationsDemos, RollingNumberDemos, SankeyChartDemos, TreeDemos, TreeSelectDemos, UseDragDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -77,3 +77,30 @@ New [SankeyChart](/charts/sankey-chart) component visualizes flow between nodes 
 where the width of each link is proportional to the flow value:
 
 <Demo data={SankeyChartDemos.usage} />
+
+## Reorder pills in MultiSelect and TagsInput
+
+[MultiSelect](/core/multi-select) and [TagsInput](/core/tags-input) now support reordering
+selected pills with drag-and-drop. Set the new `withPillsReorder` prop to make pills draggable;
+dropping a pill before or after another pill updates the component value. Reordering is
+automatically disabled when `disabled` or `readOnly` is set. Custom pill renderers receive a
+`reorderProps` payload that can be spread onto the pill element to keep reordering working:
+
+<Demo data={MultiSelectDemos.dragReorder} />
+
+## Restrict Tree drop targets
+
+[Tree](/core/tree) component now supports restricting drop targets with the new `allowDrop` prop.
+The callback receives `{ draggedNode, targetNode, position }` and returning `false` hides the drop
+indicator and rejects the drop, so users get proper visual feedback before releasing:
+
+<Demo data={TreeDemos.dragDropAllow} />
+
+## Tree drag handle
+
+[Tree](/core/tree) component now supports restricting drag initiation to a dedicated handle with
+the new `withDragHandle` prop. The handle spreads `dragHandleProps` from the `renderNode` payload.
+This is useful when a node contains interactive controls (inputs, buttons) that would otherwise
+interfere with dragging:
+
+<Demo data={TreeDemos.dragDropHandle} />

@@ -6,6 +6,8 @@ export { checked } from './Tree.demo.checked';
 export { expandedState } from './Tree.demo.expandedState';
 export { checkAllNodes } from './Tree.demo.checkAllNodes';
 export { dragDrop } from './Tree.demo.dragDrop';
+export { dragDropAllow } from './Tree.demo.dragDropAllow';
+export { dragDropHandle } from './Tree.demo.dragDropHandle';
 export { asyncLoading } from './Tree.demo.asyncLoading';
 export { searchHighlight } from './Tree.demo.searchHighlight';
 export { searchFilter } from './Tree.demo.searchFilter';
