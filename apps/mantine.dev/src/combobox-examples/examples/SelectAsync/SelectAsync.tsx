@@ -50,7 +50,7 @@ export function SelectAsync() {
         combobox.closeDropdown();
       }}
     >
-      <Combobox.Target>
+      <Combobox.Target targetType="button">
         <InputBase
           component="button"
           type="button"

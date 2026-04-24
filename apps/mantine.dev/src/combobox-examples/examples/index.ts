@@ -51,6 +51,8 @@ import MultiSelectCreatableCode from './MultiSelectCreatable/code.json';
 import { MultiSelectCreatable } from './MultiSelectCreatable/MultiSelectCreatable';
 import MultiSelectValueRendererCode from './MultiSelectValueRenderer/code.json';
 import { MultiSelectValueRenderer } from './MultiSelectValueRenderer/MultiSelectValueRenderer';
+import ReorderablePillsMultiSelectCode from './ReorderablePillsMultiSelect/code.json';
+import { ReorderablePillsMultiSelect } from './ReorderablePillsMultiSelect/ReorderablePillsMultiSelect';
 import SearchableMultiSelectCode from './SearchableMultiSelect/code.json';
 import { SearchableMultiSelect } from './SearchableMultiSelect/SearchableMultiSelect';
 import SearchableSelectCode from './SearchableSelect/code.json';
@@ -290,6 +292,11 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   MultiSelectValueRenderer: {
     component: MultiSelectValueRenderer,
     code: MultiSelectValueRendererCode as ComboboxExampleComponent['code'],
+  },
+
+  ReorderablePillsMultiSelect: {
+    component: ReorderablePillsMultiSelect,
+    code: ReorderablePillsMultiSelectCode as ComboboxExampleComponent['code'],
   },
 
   SelectGroups: {
