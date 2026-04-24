@@ -27,4 +27,16 @@ describe('@mantine/schedule/is-all-day-event', () => {
       })
     ).toBe(false);
   });
+
+  it('detects events ending at the same day 23:59:59 as all-day', () => {
+    expect(
+      isAllDayEvent({
+        date: testUtils.testDate,
+        event: testUtils.createEvent({
+          start: `${testUtils.testDate} 00:00:00`,
+          end: `${testUtils.testDate} 23:59:59`,
+        }),
+      })
+    ).toBe(true);
+  });
 });

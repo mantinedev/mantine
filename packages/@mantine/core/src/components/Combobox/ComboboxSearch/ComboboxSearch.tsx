@@ -35,6 +35,7 @@ export const ComboboxSearch = factory<ComboboxSearchFactory>((_props) => {
     vars,
     withAriaAttributes,
     onKeyDown,
+    onClick,
     withKeyboardNavigation,
     size,
     ref,
@@ -50,6 +51,7 @@ export const ComboboxSearch = factory<ComboboxSearchFactory>((_props) => {
     withKeyboardNavigation,
     withExpandedAttribute: false,
     onKeyDown,
+    onClick,
     autoComplete: 'off',
   });
 

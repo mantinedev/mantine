@@ -172,7 +172,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
         </div>
       )}
 
-      <svg viewBox={`0 0 ${size} ${size / 2}`} {...getStyles('svg')}>
+      <svg width={size} height={size / 2} viewBox={`0 0 ${size} ${size / 2}`} {...getStyles('svg')}>
         <circle
           cx={coordinateForCircle}
           cy={coordinateForCircle}

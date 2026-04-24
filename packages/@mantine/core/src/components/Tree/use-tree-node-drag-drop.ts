@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
 import { findTreeNode } from './get-children-nodes-values/get-children-nodes-values';
 import type { TreeDragDropPayload, TreeDragDropPosition } from './move-tree-node/move-tree-node';
 import type { TreeDragState, TreeNodeData } from './Tree';
+
+export type TreeAllowDrop = (payload: TreeDragDropPayload) => boolean;
 
 interface UseTreeNodeDragDropInput {
   nodeValue: string;
@@ -8,6 +11,12 @@ interface UseTreeNodeDragDropInput {
   data: TreeNodeData[];
   onDragDrop: ((payload: TreeDragDropPayload) => void) | undefined;
   dragStateRef: React.RefObject<TreeDragState>;
+  allowDrop: TreeAllowDrop | undefined;
+  withDragHandle: boolean | undefined;
+}
+
+export interface TreeDragHandleProps {
+  onMouseDown: (event: React.MouseEvent) => void;
 }
 
 function isDescendantOf(
@@ -65,7 +74,7 @@ function getDragDropPosition(
   return 'after';
 }
 
-const EMPTY_DRAG_PROPS: Record<string, never> = {};
+const EMPTY_DRAG_PROPS = { elementProps: {}, dragHandleProps: undefined } as const;
 
 export function useTreeNodeDragDrop({
   nodeValue,
@@ -73,12 +82,30 @@ export function useTreeNodeDragDrop({
   data,
   onDragDrop,
   dragStateRef,
+  allowDrop,
+  withDragHandle,
 }: UseTreeNodeDragDropInput) {
+  const [isDragHandleActive, setIsDragHandleActive] = useState(false);
+
+  useEffect(() => {
+    if (!withDragHandle || !isDragHandleActive) {
+      return undefined;
+    }
+
+    const handleWindowMouseUp = () => setIsDragHandleActive(false);
+    window.addEventListener('mouseup', handleWindowMouseUp);
+    return () => window.removeEventListener('mouseup', handleWindowMouseUp);
+  }, [withDragHandle, isDragHandleActive]);
+
   if (!onDragDrop) {
     return EMPTY_DRAG_PROPS;
   }
 
   const handleDragStart = (event: React.DragEvent) => {
+    if (withDragHandle && !isDragHandleActive) {
+      return;
+    }
+
     event.stopPropagation();
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/plain', nodeValue);
@@ -100,12 +127,22 @@ export function useTreeNodeDragDrop({
       return;
     }
 
+    const target = event.currentTarget as HTMLElement;
+    const position = getDragDropPosition(event, target, hasChildren);
+
+    if (allowDrop && !allowDrop({ draggedNode: draggedValue, targetNode: nodeValue, position })) {
+      const prevTarget = dragStateRef.current.currentDropTarget;
+      if (prevTarget && prevTarget !== target) {
+        prevTarget.removeAttribute('data-drag-over');
+      }
+      target.removeAttribute('data-drag-over');
+      dragStateRef.current.currentDropTarget = null;
+      return;
+    }
+
     event.preventDefault();
     event.stopPropagation();
     event.dataTransfer.dropEffect = 'move';
-
-    const target = event.currentTarget as HTMLElement;
-    const position = getDragDropPosition(event, target, hasChildren);
 
     const prevTarget = dragStateRef.current.currentDropTarget;
     if (prevTarget && prevTarget !== target) {
@@ -141,7 +178,10 @@ export function useTreeNodeDragDrop({
 
     const draggedValue = dragStateRef.current.draggedValue;
     if (draggedValue && position && draggedValue !== nodeValue) {
-      onDragDrop({ draggedNode: draggedValue, targetNode: nodeValue, position });
+      const payload = { draggedNode: draggedValue, targetNode: nodeValue, position };
+      if (!allowDrop || allowDrop(payload)) {
+        onDragDrop(payload);
+      }
     }
 
     dragStateRef.current.draggedValue = null;
@@ -159,14 +199,24 @@ export function useTreeNodeDragDrop({
 
     dragStateRef.current.draggedValue = null;
     dragStateRef.current.currentDropTarget = null;
+
+    if (withDragHandle) {
+      setIsDragHandleActive(false);
+    }
   };
 
-  return {
-    draggable: true as const,
+  const elementProps = {
+    draggable: withDragHandle ? isDragHandleActive : true,
     onDragStart: handleDragStart,
     onDragOver: handleDragOver,
     onDragLeave: handleDragLeave,
     onDrop: handleDrop,
     onDragEnd: handleDragEnd,
   };
+
+  const dragHandleProps: TreeDragHandleProps | undefined = withDragHandle
+    ? { onMouseDown: () => setIsDragHandleActive(true) }
+    : undefined;
+
+  return { elementProps, dragHandleProps };
 }

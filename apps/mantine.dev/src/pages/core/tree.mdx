@@ -112,6 +112,10 @@ export interface RenderTreeNodePayload {
     'data-selected': boolean | undefined;
     'data-value': string;
   };
+
+  /** Props to spread into the drag handle element when `withDragHandle` is set on `Tree`,
+   * `undefined` otherwise */
+  dragHandleProps: { onMouseDown: (event: React.MouseEvent) => void } | undefined;
 }
 ```
 
@@ -424,6 +428,24 @@ When dragging over a node, the drop position is determined by cursor position:
 Nodes cannot be dropped onto their own descendants.
 
 <Demo data={TreeDemos.dragDrop} />
+
+### Restricting drop targets
+
+Use the `allowDrop` prop to forbid certain drops. The callback receives the same payload as
+`onDragDrop` (`draggedNode`, `targetNode`, `position`) and should return `false` to reject the drop.
+When it returns `false`, the drop indicator is hidden and the browser displays the
+"not-allowed" cursor, so the user gets visual feedback before releasing the mouse.
+
+<Demo data={TreeDemos.dragDropAllow} />
+
+### Drag handle
+
+By default, drag can be initiated from anywhere on a node. Set `withDragHandle` on `Tree` to
+restrict drag initiation to an element that spreads `dragHandleProps` from the `renderNode`
+payload. This is useful when a node contains interactive controls (inputs, buttons) that
+would otherwise interfere with dragging.
+
+<Demo data={TreeDemos.dragDropHandle} />
 
 ## Connecting lines
 

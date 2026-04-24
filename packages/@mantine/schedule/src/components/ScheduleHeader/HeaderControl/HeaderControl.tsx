@@ -14,6 +14,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { getLabel, ScheduleLabelsOverride } from '../../../labels';
+import { useScheduleHeaderLabels } from '../ScheduleHeaderContext';
 import classes from './HeaderControl.module.css';
 
 export type HeaderControlStylesNames = 'headerControl';
@@ -75,6 +76,7 @@ export const HeaderControl = factory<HeaderControlFactory>((_props) => {
     square,
     radius,
     interactive,
+    labels,
     ...others
   } = props;
 
@@ -109,9 +111,10 @@ HeaderControl.varsResolver = varsResolver;
 
 export function ScheduleHeaderNext(props: HeaderControlProps) {
   const { dir } = useDirection();
+  const resolvedLabels = useScheduleHeaderLabels(props.labels);
 
   return (
-    <HeaderControl data-type="next" aria-label={getLabel('next', props.labels)} square {...props}>
+    <HeaderControl data-type="next" aria-label={getLabel('next', resolvedLabels)} square {...props}>
       <AccordionChevron style={{ transform: `rotate(${dir === 'rtl' ? 90 : -90}deg)` }} />
     </HeaderControl>
   );
@@ -119,11 +122,12 @@ export function ScheduleHeaderNext(props: HeaderControlProps) {
 
 export function ScheduleHeaderPrevious(props: HeaderControlProps) {
   const { dir } = useDirection();
+  const resolvedLabels = useScheduleHeaderLabels(props.labels);
 
   return (
     <HeaderControl
       data-type="previous"
-      aria-label={getLabel('previous', props.labels)}
+      aria-label={getLabel('previous', resolvedLabels)}
       square
       {...props}
     >
@@ -133,9 +137,11 @@ export function ScheduleHeaderPrevious(props: HeaderControlProps) {
 }
 
 export function ScheduleHeaderToday(props: HeaderControlProps) {
+  const resolvedLabels = useScheduleHeaderLabels(props.labels);
+
   return (
-    <HeaderControl data-type="today" aria-label={getLabel('today', props.labels)} {...props}>
-      {getLabel('today', props.labels)}
+    <HeaderControl data-type="today" aria-label={getLabel('today', resolvedLabels)} {...props}>
+      {getLabel('today', resolvedLabels)}
     </HeaderControl>
   );
 }

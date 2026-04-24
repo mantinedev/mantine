@@ -25,6 +25,7 @@ import {
   OptionsDropdown,
   OptionsFilter,
   useCombobox,
+  usePillsReorder,
 } from '../Combobox';
 import {
   __BaseInputProps,
@@ -127,6 +128,9 @@ export interface TagsInputProps
 
   /** If set, the dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
+
+  /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
+  withPillsReorder?: boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -230,6 +234,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     ref,
     loading,
     loadingPosition,
+    withPillsReorder,
     ...others
   } = props;
 
@@ -264,6 +269,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     defaultValue,
     finalValue: [],
     onChange,
+  });
+
+  const { getPillProps } = usePillsReorder({
+    value: _value,
+    onChange: setValue,
+    enabled: withPillsReorder && !disabled && !readOnly,
   });
 
   const [_searchValue, setSearchValue] = useUncontrolled({
@@ -399,6 +410,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       onRemove?.(item);
     };
 
+    const reorderProps = getPillProps(index);
+
     if (renderPill) {
       return (
         <Fragment key={`${item}-${index}`}>
@@ -407,6 +420,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             value: item,
             onRemove: onRemoveItem,
             disabled: disabled || readOnly,
+            reorderProps,
           })}
         </Fragment>
       );
@@ -421,6 +435,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         disabled={disabled}
         attributes={attributes}
         {...getStyles('pill')}
+        {...reorderProps}
       >
         {item}
       </Pill>

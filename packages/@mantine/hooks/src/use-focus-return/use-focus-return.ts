@@ -37,7 +37,17 @@ export function useFocusReturn({
     if (opened) {
       lastActiveElement.current = document.activeElement as HTMLElement;
     } else if (shouldReturnFocus) {
-      timeout = window.setTimeout(returnFocus, 10);
+      const activeElementAtClose = document.activeElement;
+      timeout = window.setTimeout(() => {
+        const currentActiveElement = document.activeElement;
+        if (
+          currentActiveElement === null ||
+          currentActiveElement === document.body ||
+          currentActiveElement === activeElementAtClose
+        ) {
+          returnFocus();
+        }
+      }, 10);
     }
 
     return () => {

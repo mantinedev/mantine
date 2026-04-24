@@ -114,4 +114,29 @@ describe('@mantine/schedule/MoreEvents', () => {
       expect(screen.getAllByText('Custom body')).toHaveLength(events.length);
     });
   });
+
+  it('supports renderEvent prop', async () => {
+    render(
+      <MoreEvents
+        {...defaultProps}
+        moreEventsCount={4}
+        dropdownType="modal"
+        modalTitle="March 13, 2025 events"
+        renderEvent={(event, props) => (
+          <a href={`#event-${event.id}`} data-testid={`custom-event-${event.id}`}>
+            {props.children}
+          </a>
+        )}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: '+4 more' }));
+
+    events.forEach((event) => {
+      const custom = screen.getByTestId(`custom-event-${event.id}`);
+      expect(custom).toBeInTheDocument();
+      expect(custom.tagName).toBe('A');
+      expect(custom).toHaveAttribute('href', `#event-${event.id}`);
+    });
+  });
 });

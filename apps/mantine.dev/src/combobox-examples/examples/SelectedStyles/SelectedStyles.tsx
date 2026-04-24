@@ -38,7 +38,7 @@ export function SelectedStyles() {
         combobox.closeDropdown();
       }}
     >
-      <Combobox.Target>
+      <Combobox.Target targetType="button">
         <InputBase
           component="button"
           type="button"

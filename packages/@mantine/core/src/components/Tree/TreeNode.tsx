@@ -4,7 +4,7 @@ import { Loader } from '../Loader';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import type { RenderNode, TreeDragState, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
-import { useTreeNodeDragDrop } from './use-tree-node-drag-drop';
+import { TreeAllowDrop, useTreeNodeDragDrop } from './use-tree-node-drag-drop';
 
 function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
   if (!anchor || !value) {
@@ -35,6 +35,8 @@ interface TreeNodeProps {
   checkOnSpace: boolean | undefined;
   keepMounted: boolean | undefined;
   onDragDrop: ((payload: TreeDragDropPayload) => void) | undefined;
+  allowDrop: TreeAllowDrop | undefined;
+  withDragHandle: boolean | undefined;
   dragStateRef: React.RefObject<TreeDragState>;
   data: TreeNodeData[];
 }
@@ -55,6 +57,8 @@ export function TreeNode({
   checkOnSpace,
   keepMounted,
   onDragDrop,
+  allowDrop,
+  withDragHandle,
   dragStateRef,
   data,
 }: TreeNodeProps) {
@@ -84,17 +88,21 @@ export function TreeNode({
       checkOnSpace={checkOnSpace}
       keepMounted={keepMounted}
       onDragDrop={onDragDrop}
+      allowDrop={allowDrop}
+      withDragHandle={withDragHandle}
       dragStateRef={dragStateRef}
       data={data}
     />
   ));
 
-  const dragProps = useTreeNodeDragDrop({
+  const { elementProps: dragElementProps, dragHandleProps } = useTreeNodeDragDrop({
     nodeValue: node.value,
     hasChildren,
     data,
     onDragDrop,
     dragStateRef,
+    allowDrop,
+    withDragHandle,
   });
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -190,7 +198,7 @@ export function TreeNode({
     onClick: handleNodeClick,
     'data-selected': selected || undefined,
     'data-value': node.value,
-    ...dragProps,
+    ...dragElementProps,
   };
 
   const withLoadingIndicator = isExpanded && isLoading && nested.length === 0;
@@ -220,6 +228,7 @@ export function TreeNode({
           isLoading,
           loadError,
           elementProps,
+          dragHandleProps,
         })
       ) : (
         <div {...elementProps}>{node.label}</div>

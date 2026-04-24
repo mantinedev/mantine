@@ -22,6 +22,7 @@ export { useComboboxTargetProps } from './use-combobox-target-props/use-combobox
 export { isOptionsGroup } from './OptionsDropdown/is-options-group';
 export { defaultOptionsFilter } from './OptionsDropdown/default-options-filter';
 export { useComboboxContext } from './Combobox.context';
+export { usePillsReorder } from './use-pills-reorder/use-pills-reorder';
 
 export type { ComboboxFactory, ComboboxProps, ComboboxStylesNames } from './Combobox';
 export type { ComboboxContextValue } from './Combobox.context';
@@ -63,3 +64,4 @@ export type {
   UseComboboxOptions,
 } from './use-combobox/use-combobox';
 export type { UseVirtualizedComboboxOptions } from './use-combobox/use-virtualized-combobox';
+export type { PillReorderProps, UsePillsReorderInput } from './use-pills-reorder/use-pills-reorder';

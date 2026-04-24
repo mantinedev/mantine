@@ -1,6 +1,5 @@
 /** @type {import("syncpack").RcFile} */
 const config = {
-  dependencyTypes: ['dev', 'prod'],
   source: ['package.json', 'packages/**/package.json', 'apps/*/package.json'],
   sortFirst: [
     'name',
@@ -42,4 +41,4 @@ const config = {
   ],
 };
 
-module.exports = config;
+export default config;

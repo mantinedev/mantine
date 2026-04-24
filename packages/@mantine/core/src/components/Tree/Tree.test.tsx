@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Tree, TreeProps, TreeStylesNames } from './Tree';
@@ -195,6 +196,133 @@ describe('@mantine/core/Tree', () => {
           selected: expect.any(Boolean),
           tree: expect.any(Object),
           elementProps: expect.any(Object),
+        })
+      );
+    });
+  });
+
+  describe('Drag and drop', () => {
+    it('makes node draggable by default when onDragDrop is provided', () => {
+      render(
+        <Tree
+          data={complexTreeData}
+          onDragDrop={() => {}}
+          renderNode={({ node, elementProps }) => <div {...elementProps}>{node.label}</div>}
+        />
+      );
+
+      const label = screen.getByText('Node 1');
+      expect(label).toHaveAttribute('draggable', 'true');
+    });
+
+    it('keeps node non-draggable by default when withDragHandle is set', () => {
+      render(
+        <Tree
+          data={complexTreeData}
+          withDragHandle
+          onDragDrop={() => {}}
+          renderNode={({ node, elementProps, dragHandleProps }) => (
+            <div {...elementProps}>
+              <span data-testid={`handle-${node.value}`} {...dragHandleProps}>
+                ::
+              </span>
+              <span>{node.label}</span>
+            </div>
+          )}
+        />
+      );
+
+      const label = screen.getByText('Node 1').parentElement!;
+      expect(label).toHaveAttribute('draggable', 'false');
+    });
+
+    it('exposes dragHandleProps in renderNode payload when withDragHandle is true', () => {
+      const renderNode = jest.fn(({ node, elementProps }) => (
+        <div {...elementProps}>{node.label}</div>
+      ));
+
+      render(
+        <Tree data={complexTreeData} withDragHandle onDragDrop={() => {}} renderNode={renderNode} />
+      );
+
+      expect(renderNode).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dragHandleProps: expect.objectContaining({
+            onMouseDown: expect.any(Function),
+          }),
+        })
+      );
+    });
+
+    it('passes undefined dragHandleProps when withDragHandle is not set', () => {
+      const renderNode = jest.fn(({ node, elementProps }) => (
+        <div {...elementProps}>{node.label}</div>
+      ));
+
+      render(<Tree data={complexTreeData} onDragDrop={() => {}} renderNode={renderNode} />);
+
+      expect(renderNode).toHaveBeenCalledWith(
+        expect.objectContaining({ dragHandleProps: undefined })
+      );
+    });
+
+    it('calls allowDrop to gate drop behavior', () => {
+      const allowDrop = jest.fn(() => false);
+      const onDragDrop = jest.fn();
+      const dataTransfer = { setData: jest.fn(), effectAllowed: '', dropEffect: '' };
+
+      render(
+        <Tree
+          data={complexTreeData}
+          allowDrop={allowDrop}
+          onDragDrop={onDragDrop}
+          renderNode={({ node, elementProps }) => <div {...elementProps}>{node.label}</div>}
+        />
+      );
+
+      const source = screen.getByText('Node 1');
+      const target = screen.getByText('Node 3');
+
+      fireEvent.dragStart(source, { dataTransfer });
+      fireEvent.dragOver(target, { dataTransfer, clientY: 0 });
+
+      expect(allowDrop).toHaveBeenCalledWith(
+        expect.objectContaining({
+          draggedNode: 'node-1',
+          targetNode: 'node-3',
+        })
+      );
+      expect(target).not.toHaveAttribute('data-drag-over');
+
+      fireEvent.drop(target, { dataTransfer });
+      expect(onDragDrop).not.toHaveBeenCalled();
+    });
+
+    it('permits drop when allowDrop returns true', () => {
+      const allowDrop = jest.fn(() => true);
+      const onDragDrop = jest.fn();
+      const dataTransfer = { setData: jest.fn(), effectAllowed: '', dropEffect: '' };
+
+      render(
+        <Tree
+          data={complexTreeData}
+          allowDrop={allowDrop}
+          onDragDrop={onDragDrop}
+          renderNode={({ node, elementProps }) => <div {...elementProps}>{node.label}</div>}
+        />
+      );
+
+      const source = screen.getByText('Node 1');
+      const target = screen.getByText('Node 3');
+
+      fireEvent.dragStart(source, { dataTransfer });
+      fireEvent.dragOver(target, { dataTransfer, clientY: 0 });
+      fireEvent.drop(target, { dataTransfer });
+
+      expect(onDragDrop).toHaveBeenCalledWith(
+        expect.objectContaining({
+          draggedNode: 'node-1',
+          targetNode: 'node-3',
         })
       );
     });

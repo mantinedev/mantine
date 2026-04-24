@@ -89,7 +89,24 @@ If there are conflicts, analyze them:
 
 If auto-resolution is not possible for any file, **stop the cascade**, show the user the conflicted files and diff, and ask how to proceed.
 
-#### 5d. Push target branch
+#### 5d. Run yarn install and fold yarn.lock into the merge commit
+
+After the merge commit is created (either by 5b auto-merge or 5c manual resolution), run `yarn install` to reconcile dependencies against the merged `package.json` files:
+
+```bash
+yarn install
+```
+
+If `yarn install` modifies `yarn.lock` (check with `git status --porcelain yarn.lock`), amend the merge commit to include the updated lockfile:
+
+```bash
+git add yarn.lock
+git commit --amend --no-edit
+```
+
+If `yarn install` fails, **stop the cascade** and ask the user how to proceed.
+
+#### 5e. Push target branch
 ```bash
 git push <target-remote> <target>
 ```
