@@ -120,6 +120,22 @@ describe('@mantine/core/Checkbox', () => {
     expect(screen.getByRole('checkbox')).not.toBeDisabled();
   });
 
+  it('connects description and error message to input with aria-describedby', () => {
+    render(<Checkbox {...defaultProps} id="checkbox-test" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute(
+      'aria-describedby',
+      'checkbox-test-error checkbox-test-description'
+    );
+  });
+
+  it('sets aria-invalid attribute based on error prop', () => {
+    const { rerender } = render(<Checkbox error="test-error" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('aria-invalid', 'true');
+
+    rerender(<Checkbox error={false} />);
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-invalid');
+  });
+
   it('supports rootRef', () => {
     const ref = createRef<HTMLDivElement>();
     render(<Checkbox {...defaultProps} rootRef={ref} />);
