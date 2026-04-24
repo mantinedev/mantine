@@ -36,7 +36,7 @@ export const MDX_THEMING_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  Typography: {
+  TypographyTheming: {
     title: 'Typography',
     slug: '/theming/typography',
     search: 'Change fonts, @font-face',

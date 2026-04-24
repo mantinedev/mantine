@@ -1,6 +1,7 @@
 import { Primitive } from '../../core';
 import type { ComboboxProps, ComboboxStylesNames } from './Combobox';
 import type { OptionsFilter } from './OptionsDropdown/OptionsDropdown';
+import type { PillReorderProps } from './use-pills-reorder/use-pills-reorder';
 
 export interface ComboboxGenericItem<Value extends Primitive = string> {
   value: Value;
@@ -98,4 +99,7 @@ export interface ComboboxRenderPillInput<Value extends Primitive = string> {
   value?: Value;
   onRemove?: () => void;
   disabled?: boolean;
+
+  /** Props to spread into the pill element to enable drag-and-drop reordering. Defined only when `withPillsReorder` is set. */
+  reorderProps?: PillReorderProps;
 }

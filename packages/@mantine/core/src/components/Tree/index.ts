@@ -33,3 +33,4 @@ export type { TreeNodeFilter } from './filter-tree-data/filter-tree-data';
 export type { TreeDragDropPosition, TreeDragDropPayload } from './move-tree-node/move-tree-node';
 export type { FlattenedTreeNodeData } from './flatten-tree-data/flatten-tree-data';
 export type { FlatTreeNodeProps } from './FlatTreeNode';
+export type { TreeAllowDrop, TreeDragHandleProps } from './use-tree-node-drag-drop';

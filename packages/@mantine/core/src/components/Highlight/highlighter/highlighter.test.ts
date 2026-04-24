@@ -123,5 +123,46 @@ describe('@mantine/core/Highlight/highlighter', () => {
         { chunk: '-case testing', highlighted: false },
       ]);
     });
+
+    it('matches whole word containing non-ASCII letters', () => {
+      const text = 'ergō numerus syllabārum et vōcālium īdem est';
+      expect(highlighter(text, 'īdem', { wholeWord: true })).toStrictEqual([
+        { chunk: 'ergō numerus syllabārum et vōcālium ', highlighted: false },
+        { chunk: 'īdem', highlighted: true },
+        { chunk: ' est', highlighted: false },
+      ]);
+    });
+
+    it('matches whole word containing accented characters', () => {
+      const text = 'I love café and croissant';
+      expect(highlighter(text, 'café', { wholeWord: true })).toStrictEqual([
+        { chunk: 'I love ', highlighted: false },
+        { chunk: 'café', highlighted: true },
+        { chunk: ' and croissant', highlighted: false },
+      ]);
+    });
+
+    it('does not match partial word across Unicode letter boundary', () => {
+      const text = 'cafés are nice';
+      expect(highlighter(text, 'café', { wholeWord: true })).toStrictEqual([
+        { chunk: 'cafés are nice', highlighted: false },
+      ]);
+    });
+
+    it('does not match word adjacent to digit', () => {
+      const text = 'test test1 final';
+      expect(highlighter(text, 'test', { wholeWord: true })).toStrictEqual([
+        { chunk: 'test', highlighted: true },
+        { chunk: ' test1 final', highlighted: false },
+      ]);
+    });
+
+    it('does not match word adjacent to underscore', () => {
+      const text = 'hello hello_world end';
+      expect(highlighter(text, 'hello', { wholeWord: true })).toStrictEqual([
+        { chunk: 'hello', highlighted: true },
+        { chunk: ' hello_world end', highlighted: false },
+      ]);
+    });
   });
 });

@@ -53,7 +53,7 @@ export interface PopoverContextValue {
   variant: string | undefined;
   keepMounted: boolean | undefined;
   getStyles: GetStylesApi<PopoverFactory>;
-  resolvedStyles: Record<string, any>;
+  resolvedStyles: Record<string, any> | undefined;
   floatingStrategy: FloatingStrategy | undefined;
   referenceHidden: boolean | undefined;
 }

@@ -1,5 +1,5 @@
 function escapeRegex(value: string) {
-  return value.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
+  return value.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&');
 }
 
 export interface HighlightChunk {
@@ -42,8 +42,10 @@ export function highlighter(
           .sort((a, b) => b.length - a.length)
           .join('|');
 
-  const pattern = options.wholeWord ? `\\b(${matcher})\\b` : `(${matcher})`;
-  const re = new RegExp(pattern, 'gi');
+  const pattern = options.wholeWord
+    ? `(?<![\\p{L}\\p{N}_])(${matcher})(?![\\p{L}\\p{N}_])`
+    : `(${matcher})`;
+  const re = new RegExp(pattern, options.wholeWord ? 'giu' : 'gi');
   const chunks = value
     .split(re)
     .map((part, index) => ({ chunk: part, highlighted: index % 2 === 1 }))

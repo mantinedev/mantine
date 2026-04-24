@@ -124,7 +124,7 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       expect(event.position?.width).toBeLessThanOrEqual(100);
     });
 
-    it('handles multi-day events ending at midnight correctly', () => {
+    it('treats an end time at midnight as exclusive (does not extend into the next day)', () => {
       const events = [
         testUtils.createEvent({
           id: 1,
@@ -140,7 +140,61 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
 
       expect(result.groupedByDay['2025-01-15 00:00:00']).toHaveLength(1);
       expect(result.groupedByDay['2025-01-16 00:00:00']).toHaveLength(1);
-      expect(result.groupedByDay['2025-01-17 00:00:00']).toHaveLength(1);
+      expect(result.groupedByDay['2025-01-17 00:00:00'] ?? []).toHaveLength(0);
+    });
+
+    it('treats a single all-day event (end at next day midnight) as spanning one day', () => {
+      const events = [
+        testUtils.createEvent({
+          id: 1,
+          start: '2025-01-15 00:00:00',
+          end: '2025-01-16 00:00:00',
+        }),
+      ];
+
+      const result = getMonthPositionedEvents({
+        date: testMonth,
+        events,
+        firstDayOfWeek: 1,
+      });
+
+      expect(result.groupedByDay['2025-01-15 00:00:00']).toHaveLength(1);
+      expect(result.groupedByDay['2025-01-16 00:00:00'] ?? []).toHaveLength(0);
+
+      const event = result.groupedByDay['2025-01-15 00:00:00'][0];
+      expect(event.position?.width).toBeCloseTo((1 / 7) * 100, 2);
+    });
+
+    it('treats end-of-day and next-midnight single-day events identically', () => {
+      const [a, b] = [
+        getMonthPositionedEvents({
+          date: testMonth,
+          events: [
+            testUtils.createEvent({
+              id: 1,
+              start: '2025-01-15 00:00:00',
+              end: '2025-01-15 23:59:59',
+            }),
+          ],
+          firstDayOfWeek: 1,
+        }),
+        getMonthPositionedEvents({
+          date: testMonth,
+          events: [
+            testUtils.createEvent({
+              id: 1,
+              start: '2025-01-15 00:00:00',
+              end: '2025-01-16 00:00:00',
+            }),
+          ],
+          firstDayOfWeek: 1,
+        }),
+      ];
+
+      const aEvent = a.groupedByDay['2025-01-15 00:00:00'][0];
+      const bEvent = b.groupedByDay['2025-01-15 00:00:00'][0];
+      expect(bEvent.position?.width).toBeCloseTo(aEvent.position!.width, 4);
+      expect(bEvent.position?.startOffset).toBeCloseTo(aEvent.position!.startOffset, 4);
     });
 
     it('calculates offset for multi-day events correctly', () => {

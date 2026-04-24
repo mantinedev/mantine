@@ -54,4 +54,13 @@ describe('@mantine/core/SemiCircleProgress', () => {
     render(<SemiCircleProgress {...defaultProps} label="test-label" orientation="down" />);
     expect(screen.getByText('test-label')).toHaveAttribute('data-orientation', 'down');
   });
+
+  it('sets svg dimensions based on size prop', () => {
+    const { container } = render(<SemiCircleProgress {...defaultProps} size={240} />);
+    const svg = container.querySelector('svg');
+
+    expect(svg).toHaveAttribute('width', '240');
+    expect(svg).toHaveAttribute('height', '120');
+    expect(svg).toHaveAttribute('viewBox', '0 0 240 120');
+  });
 });

@@ -94,7 +94,7 @@ export interface SelectProps<Value extends Primitive = string>
   hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;

@@ -194,6 +194,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
           isLoading,
           loadError,
           elementProps,
+          dragHandleProps: undefined,
         })
       ) : (
         <div {...elementProps}>{node.label}</div>

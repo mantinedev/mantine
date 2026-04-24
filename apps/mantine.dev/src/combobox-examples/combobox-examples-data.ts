@@ -280,6 +280,14 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     type: 'multiselect',
   },
   {
+    id: 'ReorderablePillsMultiSelect',
+    name: 'Reorderable pills multiselect',
+    description: 'Multiselect with drag-and-drop pill reordering',
+    fullDescription:
+      'Built from Combobox primitives with the usePillsReorder hook. Each pill becomes draggable and dropping one before or after another reorders the value array automatically.',
+    type: 'multiselect',
+  },
+  {
     id: 'SelectList',
     name: 'Inline options list',
     description: 'Inline list with checkboxes',

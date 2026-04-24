@@ -351,6 +351,39 @@ describe('@mantine/schedule/DayView', () => {
     expect(screen.getByRole('heading', { name: 'All-day events test' })).toBeInTheDocument();
   });
 
+  it('forwards renderEventBody to MoreEvents', async () => {
+    render(
+      <DayView
+        {...defaultProps}
+        events={allDayEvents}
+        renderEventBody={(event) => <span>Body[{event.title}]</span>}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: /more/ }));
+    expect(screen.getByText('Body[All-day event 3]')).toBeInTheDocument();
+  });
+
+  it('forwards renderEvent to MoreEvents', async () => {
+    render(
+      <DayView
+        {...defaultProps}
+        events={allDayEvents}
+        renderEvent={(event, props) => (
+          <a href={`#event-${event.id}`} data-testid={`custom-event-${event.id}`}>
+            {props.children}
+          </a>
+        )}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: /more/ }));
+
+    const customized = screen.getByTestId('custom-event-3');
+    expect(customized.tagName).toBe('A');
+    expect(customized).toHaveAttribute('href', '#event-3');
+  });
+
   it('supports renderEventBody prop', () => {
     render(
       <DayView
