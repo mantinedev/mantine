@@ -25,6 +25,7 @@ import {
   OptionsDropdown,
   OptionsFilter,
   useCombobox,
+  usePillsReorder,
 } from '../Combobox';
 import {
   __BaseInputProps,
@@ -124,7 +125,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
 
   /** A function to render content of the pill */
   renderPill?: (props: ComboboxRenderPillInput<Value>) => React.ReactNode;
@@ -140,6 +141,9 @@ export interface MultiSelectProps<Value extends Primitive = string>
 
   /** Controls whether dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
+
+  /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
+  withPillsReorder?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -249,6 +253,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     openOnFocus,
     loading,
     loadingPosition,
+    withPillsReorder,
     ...others
   } = props;
 
@@ -282,6 +287,12 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     defaultValue,
     finalValue: [],
     onChange,
+  });
+
+  const { getPillProps } = usePillsReorder({
+    value: _value,
+    onChange: setValue,
+    enabled: withPillsReorder && !disabled && !readOnly,
   });
 
   const [_searchValue, setSearchValue] = useUncontrolled({
@@ -328,6 +339,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
   const values = _value.map((item, index) => {
     const optionData = optionsLockup[`${item}`] || retainedSelectedOptions.current[`${item}`];
+    const reorderProps = getPillProps(index);
 
     if (renderPill) {
       return (
@@ -340,6 +352,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
               onRemove?.(item);
             },
             disabled,
+            reorderProps,
           })}
         </Fragment>
       );
@@ -356,6 +369,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
         unstyled={unstyled}
         disabled={disabled}
         {...getStyles('pill')}
+        {...reorderProps}
       >
         {optionData?.label || item}
       </Pill>

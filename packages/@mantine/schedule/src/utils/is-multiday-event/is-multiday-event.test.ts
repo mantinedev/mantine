@@ -18,6 +18,14 @@ describe('@mantine/schedule/is-multiday-event', () => {
     ).toBe(false);
   });
 
+  it('treats end at next day midnight as single-day (exclusive end)', () => {
+    expect(
+      isMultidayEvent(
+        testUtils.createEvent({ start: '2025-11-03 00:00:00', end: '2025-11-04 00:00:00' })
+      )
+    ).toBe(false);
+  });
+
   it('returns true for multi-day events', () => {
     expect(
       isMultidayEvent(

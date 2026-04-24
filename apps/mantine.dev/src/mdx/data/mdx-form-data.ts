@@ -16,6 +16,7 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     source: '@mantine/form/src',
     license: 'MIT',
     docs: 'form/use-form.mdx',
+    searchTags: 'form state, form hook, form management, mantine form, form library',
   },
 
   createFormContext: {

@@ -32,7 +32,7 @@ export function BasicSelect() {
         combobox.closeDropdown();
       }}
     >
-      <Combobox.Target>
+      <Combobox.Target targetType="button">
         <InputBase
           component="button"
           type="button"

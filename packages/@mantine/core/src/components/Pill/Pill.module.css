@@ -26,6 +26,7 @@
   user-select: none;
   -webkit-user-select: none;
   max-width: 100%;
+  position: relative;
 
   @mixin where-dark {
     background-color: var(--mantine-color-dark-7);
@@ -42,6 +43,35 @@
 
   &:where([data-disabled], :has(button:disabled)) {
     cursor: not-allowed;
+  }
+
+  &:where([draggable='true']) {
+    cursor: grab;
+  }
+
+  &:where([data-dragging]) {
+    opacity: 0.4;
+    cursor: grabbing;
+  }
+
+  &:where([data-drag-over='before'])::before,
+  &:where([data-drag-over='after'])::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: rem(2px);
+    background-color: var(--mantine-primary-color-filled);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &:where([data-drag-over='before'])::before {
+    inset-inline-start: rem(-4px);
+  }
+
+  &:where([data-drag-over='after'])::after {
+    inset-inline-end: rem(-4px);
   }
 }
 

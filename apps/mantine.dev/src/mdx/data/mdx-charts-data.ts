@@ -20,6 +20,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Area chart component with stacked, percent and split variants',
     source: '@mantine/charts/src/AreaChart/AreaChart.tsx',
     docs: 'charts/area-chart.mdx',
+    searchTags: 'graph, plot, data visualization, stacked chart, trend chart, recharts',
   },
 
   BarChart: {
@@ -31,6 +32,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Bar chart component with stacked and percent variants',
     source: '@mantine/charts/src/BarChart/BarChart.tsx',
     docs: 'charts/bar-chart.mdx',
+    searchTags: 'graph, plot, data visualization, column chart, histogram, recharts',
   },
 
   LineChart: {
@@ -42,6 +44,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Line chart component',
     source: '@mantine/charts/src/LineChart/LineChart.tsx',
     docs: 'charts/line-chart.mdx',
+    searchTags: 'graph, plot, data visualization, trend, time series, recharts',
   },
 
   Sparkline: {
@@ -53,6 +56,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Simplified area chart to show trends',
     source: '@mantine/charts/src/Sparkline/Sparkline.tsx',
     docs: 'charts/sparkline.mdx',
+    searchTags: 'mini chart, tiny chart, trend chart, inline chart, micro chart',
   },
 
   DonutChart: {
@@ -64,6 +68,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Donut chart component',
     source: '@mantine/charts/src/DonutChart/DonutChart.tsx',
     docs: 'charts/donut-chart.mdx',
+    searchTags: 'doughnut, ring chart, pie chart with hole, circular chart, recharts',
   },
 
   PieChart: {
@@ -75,6 +80,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Pie chart component',
     source: '@mantine/charts/src/PieChart/PieChart.tsx',
     docs: 'charts/pie-chart.mdx',
+    searchTags: 'circular chart, wheel chart, proportion chart, slices, recharts',
   },
 
   RadarChart: {
@@ -86,6 +92,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Radar chart component',
     source: '@mantine/charts/src/RadarChart/RadarChart.tsx',
     docs: 'charts/radar-chart.mdx',
+    searchTags: 'spider chart, web chart, polar chart, radial chart, recharts',
   },
 
   ScatterChart: {
@@ -97,6 +104,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Scatter chart component',
     source: '@mantine/charts/src/ScatterChart/ScatterChart.tsx',
     docs: 'charts/scatter-chart.mdx',
+    searchTags: 'scatter plot, dot plot, xy plot, correlation chart, recharts',
   },
 
   BubbleChart: {
@@ -108,6 +116,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Bubble chart component',
     source: '@mantine/charts/src/BubbleChart/BubbleChart.tsx',
     docs: 'charts/bubble-chart.mdx',
+    searchTags: 'scatter bubble, circles chart, three dimensional chart, recharts',
   },
 
   FunnelChart: {
@@ -119,6 +128,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Funnel chart component',
     source: '@mantine/charts/src/FunnelChart/FunnelChart.tsx',
     docs: 'charts/funnel-chart.mdx',
+    searchTags: 'conversion funnel, sales funnel, pipeline chart, recharts',
   },
 
   CompositeChart: {
@@ -130,6 +140,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Composed chart with support for Area, Bar and Line charts',
     source: '@mantine/charts/src/CompositeChart/CompositeChart.tsx',
     docs: 'charts/composite-chart.mdx',
+    searchTags: 'mixed chart, combined chart, composed chart, multi type chart, recharts',
   },
 
   RadialBarChart: {
@@ -141,6 +152,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Radial bar chart component',
     source: '@mantine/charts/src/RadialBarChart/RadialBarChart.tsx',
     docs: 'charts/radial-bar-chart.mdx',
+    searchTags: 'circular bar chart, polar bar chart, ring bar chart, recharts',
   },
 
   Heatmap: {
@@ -152,6 +164,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Heatmap chart component',
     source: '@mantine/charts/src/Heatmap/Heatmap.tsx',
     docs: 'charts/heatmap.mdx',
+    searchTags: 'heat map, grid chart, contribution graph, calendar heatmap, github chart',
   },
 
   BarsList: {
@@ -163,6 +176,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Display a list of bars with names and values',
     source: '@mantine/charts/src/BarsList/BarsList.tsx',
     docs: 'charts/bars-list.mdx',
+    searchTags: 'progress bars list, ranked bars, leaderboard chart, progress list',
   },
 
   Treemap: {
@@ -174,6 +188,7 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Treemap chart component',
     source: '@mantine/charts/src/Treemap/Treemap.tsx',
     docs: 'charts/treemap.mdx',
+    searchTags: 'hierarchical chart, nested rectangles, tree map, proportional blocks, recharts',
   },
 
   SankeyChart: {
