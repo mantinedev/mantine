@@ -17,8 +17,9 @@ All Mantine components and hooks were tested to work in the following browsers:
 - Safari 15.4+
 - IE (any version) is not supported
 
-Browser versions that support [:where selector](https://caniuse.com/mdn-css_selectors_where) and [@layer directive](https://caniuse.com/mdn-css_at-rules_layer)
-features that are required for Mantine styles (any versions below may have major issues with styles):
+Mantine styles require support for [:where selector](https://caniuse.com/mdn-css_selectors_where)
+and [@layer directive](https://caniuse.com/mdn-css_at-rules_layer). Browser versions below those
+listed here may have major styling issues:
 
 - Chromium browsers 99+ – Chrome, Edge, Chrome for Android, etc.
 - Firefox 97+
@@ -39,13 +40,13 @@ Mantine components use the following CSS features:
 
 All CSS features listed above are supported in all modern browsers (90% or more of global usage as of January 2024).
 
-If you need to support older browsers, you should:
+If you need to support older browsers:
 
-- check the component `Browser support` section before usage and decide whether this component will work for your case
-- install corresponding polyfills that are required for hook/component to work in older browsers
-- check that the component works in those browsers on your side (we do not test Mantine in browsers that are older than those that are listed above)
+- check the component `Browser support` section before usage and decide whether the component works for your case
+- install the polyfills required for the hook or component to work in older browsers
+- test the component in your target browsers, because Mantine does not test browsers older than those listed above
 
 ## Polyfills
 
-Mantine does not include any polyfills by default, you should install them manually if you need to support older browsers.
-Usually, polyfills are automatically added to the project by your framework bundler (webpack, vite, etc.) based on the browserslist configuration.
+Mantine does not include any polyfills by default. You should install them manually if you need to support older browsers.
+Usually, polyfills are automatically added to the project by your framework bundler (Webpack, Vite, etc.) based on the browserslist configuration.
