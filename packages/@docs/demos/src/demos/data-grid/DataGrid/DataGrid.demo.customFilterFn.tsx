@@ -28,16 +28,15 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
       {
         accessorKey: 'department',
         header: 'Department (exact match)',
         filterFn: exactMatchFilter,
       },
-      { accessorKey: 'salary', header: 'Salary' },
+      { accessorKey: 'salary', header: 'Salary', enableColumnFilter: true },
     ],
-    withFiltering: true,
   });
 
   return <DataGrid store={store} />;
@@ -48,16 +47,15 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
       {
         accessorKey: 'department',
         header: 'Department (exact match)',
         filterFn: exactMatchFilter,
       },
-      { accessorKey: 'salary', header: 'Salary' },
+      { accessorKey: 'salary', header: 'Salary', enableColumnFilter: true },
     ],
-    withFiltering: true,
   });
 
   return <DataGrid store={store} />;

@@ -10,13 +10,12 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
-      { accessorKey: 'email', header: 'Email' },
-      { accessorKey: 'department', header: 'Department' },
-      { accessorKey: 'status', header: 'Status' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
+      { accessorKey: 'email', header: 'Email', enableColumnFilter: true },
+      { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
+      { accessorKey: 'status', header: 'Status', enableColumnFilter: true },
     ],
-    withFiltering: true,
   });
 
   return <DataGrid store={store} />;
@@ -27,13 +26,12 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
-      { accessorKey: 'email', header: 'Email' },
-      { accessorKey: 'department', header: 'Department' },
-      { accessorKey: 'status', header: 'Status' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
+      { accessorKey: 'email', header: 'Email', enableColumnFilter: true },
+      { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
+      { accessorKey: 'status', header: 'Status', enableColumnFilter: true },
     ],
-    withFiltering: true,
   });
 
   return <DataGrid store={store} />;

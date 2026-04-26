@@ -24,7 +24,6 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary', enableSorting: true },
       { accessorKey: 'status', header: 'Status' },
     ],
-    withSorting: true,
     sorting,
     onSortingChange: setSorting,
   });
@@ -52,7 +51,6 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary', enableSorting: true },
       { accessorKey: 'status', header: 'Status' },
     ],
-    withSorting: true,
     sorting,
     onSortingChange: setSorting,
   });

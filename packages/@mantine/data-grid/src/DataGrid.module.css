@@ -89,7 +89,8 @@
 .th {
   text-align: start;
   font-weight: var(--mantine-font-weight-medium);
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  padding: calc(var(--dg-spacing, var(--mantine-spacing-xs)) / 2)
+    var(--dg-spacing, var(--mantine-spacing-xs));
   height: var(--dg-header-height, auto);
   position: relative;
 }
@@ -114,7 +115,8 @@
 }
 
 .td {
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  padding: calc(var(--dg-spacing, var(--mantine-spacing-xs)) / 2)
+    var(--dg-spacing, var(--mantine-spacing-xs));
   height: var(--dg-row-height, auto);
 }
 
@@ -337,7 +339,8 @@
 }
 
 .virtualCell {
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  padding: calc(var(--dg-spacing, var(--mantine-spacing-xs)) / 2)
+    var(--dg-spacing, var(--mantine-spacing-xs));
   height: var(--dg-row-height, auto);
   display: flex;
   align-items: center;

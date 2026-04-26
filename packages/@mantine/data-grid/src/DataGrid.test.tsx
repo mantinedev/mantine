@@ -140,19 +140,24 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('filtering', () => {
-    it('renders filter inputs when withFiltering is true', () => {
-      render(<DataGridWithStore storeOptions={{ data, columns, withFiltering: true }} />);
+    const filterColumns = [
+      { accessorKey: 'name', header: 'Name', enableColumnFilter: true },
+      { accessorKey: 'age', header: 'Age', enableColumnFilter: true },
+    ];
+
+    it('renders filter inputs when columns have enableColumnFilter', () => {
+      render(<DataGridWithStore storeOptions={{ data, columns: filterColumns }} />);
       expect(screen.getByPlaceholderText('Filter name...')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Filter age...')).toBeInTheDocument();
     });
 
-    it('does not render filter inputs when withFiltering is false', () => {
+    it('does not render filter inputs when columns lack enableColumnFilter', () => {
       render(<DataGrid {...defaultProps} />);
       expect(screen.queryByPlaceholderText('Filter name...')).not.toBeInTheDocument();
     });
 
     it('filters rows based on text input', async () => {
-      render(<DataGridWithStore storeOptions={{ data, columns, withFiltering: true }} />);
+      render(<DataGridWithStore storeOptions={{ data, columns: filterColumns }} />);
       const filterInput = screen.getByPlaceholderText('Filter name...');
       await userEvent.type(filterInput, 'Alice');
 

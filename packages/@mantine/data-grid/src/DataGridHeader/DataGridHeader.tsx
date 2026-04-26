@@ -182,6 +182,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 data-pinned-left={isPinned === 'left' || undefined}
                 data-pinned-right={isPinned === 'right' || undefined}
                 data-resizing={isResizing || undefined}
+                onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
                   ...pinnedStyles,
@@ -191,11 +192,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
               >
                 {header.isPlaceholder ? null : (
                   <>
-                    <Box
-                      component="div"
-                      {...ctx.getStyles('headerCell', { classNames, styles })}
-                      onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
-                    >
+                    <Box component="div" {...ctx.getStyles('headerCell', { classNames, styles })}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {canSort && (
                         <Box
@@ -209,7 +206,9 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                       )}
                     </Box>
                     {ctx.withFiltering && header.column.getCanFilter() && (
-                      <FilterDispatcher column={header.column} />
+                      <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+                        <FilterDispatcher column={header.column} />
+                      </Box>
                     )}
                   </>
                 )}
@@ -219,6 +218,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                     {...ctx.getStyles('resizeHandle', { classNames, styles })}
                     onPointerDown={header.getResizeHandler()}
                     onTouchStart={header.getResizeHandler()}
+                    onClick={(e: React.MouseEvent) => e.stopPropagation()}
                     data-resizing={isResizing || undefined}
                   />
                 )}

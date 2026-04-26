@@ -89,9 +89,9 @@ function Demo() {
   const store = useDataGrid({
     data,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
-      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
+      { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
       {
         accessorKey: 'skills',
         header: 'Skills',
@@ -99,7 +99,6 @@ function Demo() {
         meta: { filterVariant: 'multiSelect' },
       },
     ],
-    withFiltering: true,
     withFaceting: true,
   });
 
@@ -111,9 +110,9 @@ function Demo() {
   const store = useDataGrid({
     data,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
-      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
+      { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
       {
         accessorKey: 'skills',
         header: 'Skills',
@@ -121,7 +120,6 @@ function Demo() {
         meta: { filterVariant: 'multiSelect' },
       },
     ],
-    withFiltering: true,
     withFaceting: true,
   });
 

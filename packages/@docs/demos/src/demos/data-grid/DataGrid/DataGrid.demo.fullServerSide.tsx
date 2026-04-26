@@ -93,11 +93,11 @@ function Demo() {
 
   const columns = useMemo(
     () => [
-      { accessorKey: 'id' as const, header: 'ID', size: 80 },
-      { accessorKey: 'name' as const, header: 'Name', enableSorting: true },
-      { accessorKey: 'email' as const, header: 'Email', enableSorting: true },
-      { accessorKey: 'department' as const, header: 'Department', enableSorting: true },
-      { accessorKey: 'salary' as const, header: 'Salary', enableSorting: true },
+      { accessorKey: 'id' as const, header: 'ID', size: 80, enableColumnFilter: true },
+      { accessorKey: 'name' as const, header: 'Name', enableSorting: true, enableColumnFilter: true },
+      { accessorKey: 'email' as const, header: 'Email', enableSorting: true, enableColumnFilter: true },
+      { accessorKey: 'department' as const, header: 'Department', enableSorting: true, enableColumnFilter: true },
+      { accessorKey: 'salary' as const, header: 'Salary', enableSorting: true, enableColumnFilter: true },
     ],
     []
   );
@@ -105,11 +105,9 @@ function Demo() {
   const store = useDataGrid({
     data,
     columns,
-    withSorting: true,
     manualSorting: true,
     sorting,
     onSortingChange: setSorting,
-    withFiltering: true,
     manualFiltering: true,
     columnFilters,
     onColumnFiltersChange: setColumnFilters,
@@ -211,11 +209,31 @@ function Demo() {
 
   const columns = useMemo(
     () => [
-      { accessorKey: 'id' as const, header: 'ID', size: 80 },
-      { accessorKey: 'name' as const, header: 'Name', enableSorting: true },
-      { accessorKey: 'email' as const, header: 'Email', enableSorting: true },
-      { accessorKey: 'department' as const, header: 'Department', enableSorting: true },
-      { accessorKey: 'salary' as const, header: 'Salary', enableSorting: true },
+      { accessorKey: 'id' as const, header: 'ID', size: 80, enableColumnFilter: true },
+      {
+        accessorKey: 'name' as const,
+        header: 'Name',
+        enableSorting: true,
+        enableColumnFilter: true,
+      },
+      {
+        accessorKey: 'email' as const,
+        header: 'Email',
+        enableSorting: true,
+        enableColumnFilter: true,
+      },
+      {
+        accessorKey: 'department' as const,
+        header: 'Department',
+        enableSorting: true,
+        enableColumnFilter: true,
+      },
+      {
+        accessorKey: 'salary' as const,
+        header: 'Salary',
+        enableSorting: true,
+        enableColumnFilter: true,
+      },
     ],
     []
   );
@@ -223,11 +241,9 @@ function Demo() {
   const store = useDataGrid({
     data,
     columns,
-    withSorting: true,
     manualSorting: true,
     sorting,
     onSortingChange: setSorting,
-    withFiltering: true,
     manualFiltering: true,
     columnFilters,
     onColumnFiltersChange: setColumnFilters,

@@ -42,6 +42,19 @@ function defaultSortingDisabled<TData>(columns: ColumnDef<TData, any>[]): Column
   }));
 }
 
+function defaultFilteringDisabled<TData>(
+  columns: ColumnDef<TData, any>[]
+): ColumnDef<TData, any>[] {
+  return columns.map((col) => ({
+    enableColumnFilter:
+      (col as any).meta?.filterVariant !== undefined || col.filterFn !== undefined ? true : false,
+    ...col,
+    ...((col as any).columns && {
+      columns: defaultFilteringDisabled((col as any).columns),
+    }),
+  }));
+}
+
 const FILTER_VARIANT_TO_FN: Record<string, string> = {
   range: 'inNumberRange',
   multiSelect: 'arrIncludesSome',
@@ -410,7 +423,8 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
   const setDensity = options.onDensityChange ?? setDensityState;
 
   const sortProcessed = withSorting ? defaultSortingDisabled(columns) : columns;
-  const processedColumns = withFiltering ? processFilterColumns(sortProcessed) : sortProcessed;
+  const filterProcessed = withFiltering ? defaultFilteringDisabled(sortProcessed) : sortProcessed;
+  const processedColumns = withFiltering ? processFilterColumns(filterProcessed) : filterProcessed;
 
   // Build controlled state object from provided values
   const controlledState = {

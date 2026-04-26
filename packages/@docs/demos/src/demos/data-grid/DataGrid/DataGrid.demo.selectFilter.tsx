@@ -10,17 +10,20 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
       {
         accessorKey: 'department',
         header: 'Department',
         meta: { filterVariant: 'select' },
       },
-      { accessorKey: 'salary', header: 'Salary' },
-      { accessorKey: 'status', header: 'Status' },
+      { accessorKey: 'salary', header: 'Salary', enableColumnFilter: true },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: { filterVariant: 'select' },
+      },
     ],
-    withFiltering: true,
     withFaceting: true,
   });
 
@@ -32,17 +35,20 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
       {
         accessorKey: 'department',
         header: 'Department',
         meta: { filterVariant: 'select' },
       },
-      { accessorKey: 'salary', header: 'Salary' },
-      { accessorKey: 'status', header: 'Status' },
+      { accessorKey: 'salary', header: 'Salary', enableColumnFilter: true },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        meta: { filterVariant: 'select' },
+      },
     ],
-    withFiltering: true,
     withFaceting: true,
   });
 

@@ -13,6 +13,16 @@ function hasEnableSorting(columns: ColumnDef<any, any>[]): boolean {
   );
 }
 
+function hasEnableColumnFilter(columns: ColumnDef<any, any>[]): boolean {
+  return columns.some(
+    (col) =>
+      (col as any).enableColumnFilter === true ||
+      (col as any).meta?.filterVariant !== undefined ||
+      (col as any).filterFn !== undefined ||
+      ((col as any).columns && hasEnableColumnFilter((col as any).columns))
+  );
+}
+
 export interface DataGridFeatureFlags {
   withSorting: boolean;
   withFiltering: boolean;
@@ -45,8 +55,7 @@ export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): Da
     withSorting: withRowReorder
       ? false
       : (options.withSorting ?? hasEnableSorting(options.columns)),
-    withFiltering:
-      options.withFiltering ?? isDefined(options.columnFilters, options.onColumnFiltersChange),
+    withFiltering: options.withFiltering ?? hasEnableColumnFilter(options.columns),
     withGlobalFilter:
       options.withGlobalFilter ?? isDefined(options.globalFilter, options.onGlobalFilterChange),
     withPagination:

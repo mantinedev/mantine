@@ -74,25 +74,57 @@ describe('inferFeatureFlags', () => {
   });
 
   describe('withFiltering', () => {
-    it('infers from columnFilters', () => {
+    it('infers from column enableColumnFilter', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'name', enableColumnFilter: true }],
+      });
+      expect(flags.withFiltering).toBe(true);
+    });
+
+    it('infers from column meta.filterVariant', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'dept', meta: { filterVariant: 'select' } }],
+      });
+      expect(flags.withFiltering).toBe(true);
+    });
+
+    it('infers from column filterFn', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'name', filterFn: 'includesString' }],
+      });
+      expect(flags.withFiltering).toBe(true);
+    });
+
+    it('infers from nested columns', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [
+          { header: 'Group', columns: [{ accessorKey: 'name', enableColumnFilter: true }] },
+        ],
+      });
+      expect(flags.withFiltering).toBe(true);
+    });
+
+    it('does not infer from columns without filter markers', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'name' }],
+      });
+      expect(flags.withFiltering).toBe(false);
+    });
+
+    it('does not infer from controlled state alone', () => {
       const flags = inferFeatureFlags({ ...baseOptions, columnFilters: [] });
-      expect(flags.withFiltering).toBe(true);
-    });
-
-    it('infers from onColumnFiltersChange', () => {
-      const flags = inferFeatureFlags({ ...baseOptions, onColumnFiltersChange: () => {} });
-      expect(flags.withFiltering).toBe(true);
-    });
-
-    it('does not infer from manualFiltering alone', () => {
-      const flags = inferFeatureFlags({ ...baseOptions, manualFiltering: false });
       expect(flags.withFiltering).toBe(false);
     });
 
     it('explicit flag overrides inference', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,
-        columnFilters: [],
+        columns: [{ accessorKey: 'name', enableColumnFilter: true }],
         withFiltering: false,
       });
       expect(flags.withFiltering).toBe(false);

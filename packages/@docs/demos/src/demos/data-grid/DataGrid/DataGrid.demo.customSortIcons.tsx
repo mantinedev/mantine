@@ -1,34 +1,12 @@
+import { ArrowsDownUpIcon, SortAscendingIcon } from '@phosphor-icons/react';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
+import { ArrowsDownUpIcon, SortAscendingIcon } from '@phosphor-icons/react';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
-
-function SortAscIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-      style={{ display: 'block' }}
-    >
-      <path d="M12 5v14" />
-      <path d="m19 12-7 7-7-7" />
-    </svg>
-  );
-}
-
-function UnsortedIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-      style={{ display: 'block' }}
-    >
-      <path d="m7 15 5 5 5-5" />
-      <path d="m7 9 5-5 5 5" />
-    </svg>
-  );
-}
 
 function Demo() {
   const store = useDataGrid({
@@ -39,58 +17,17 @@ function Demo() {
       { accessorKey: 'department', header: 'Department', enableSorting: true },
       { accessorKey: 'salary', header: 'Salary', enableSorting: true },
     ],
-    withSorting: true,
   });
 
   return (
     <DataGrid
       store={store}
-      sortedIcon={<SortAscIcon />}
-      unsortedIcon={<UnsortedIcon />}
+      sortedIcon={<SortAscendingIcon size={14} />}
+      unsortedIcon={<ArrowsDownUpIcon size={14} />}
     />
   );
 }
 `;
-
-function SortAscIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{ display: 'block' }}
-    >
-      <path d="M12 5v14" />
-      <path d="m19 12-7 7-7-7" />
-    </svg>
-  );
-}
-
-function UnsortedIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{ display: 'block' }}
-    >
-      <path d="m7 15 5 5 5-5" />
-      <path d="m7 9 5-5 5 5" />
-    </svg>
-  );
-}
 
 function Demo() {
   const store = useDataGrid({
@@ -101,10 +38,15 @@ function Demo() {
       { accessorKey: 'department', header: 'Department', enableSorting: true },
       { accessorKey: 'salary', header: 'Salary', enableSorting: true },
     ],
-    withSorting: true,
   });
 
-  return <DataGrid store={store} sortedIcon={<SortAscIcon />} unsortedIcon={<UnsortedIcon />} />;
+  return (
+    <DataGrid
+      store={store}
+      sortedIcon={<SortAscendingIcon size={14} />}
+      unsortedIcon={<ArrowsDownUpIcon size={14} />}
+    />
+  );
 }
 
 export const customSortIcons: MantineDemo = {

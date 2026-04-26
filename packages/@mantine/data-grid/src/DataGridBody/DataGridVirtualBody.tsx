@@ -495,6 +495,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         data-pinned-left={isPinned === 'left' || undefined}
         data-pinned-right={isPinned === 'right' || undefined}
         data-resizing={isResizing || undefined}
+        onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
         {...ctx.getStyles('virtualCell', { classNames, styles })}
         style={{
           ...pinnedStyles,
@@ -503,17 +504,14 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
               ? header.getLeafHeaders().reduce((sum, leaf) => sum + leaf.getSize(), 0)
               : `var(--dg-col-${headerIndex})`,
           fontWeight: 'var(--mantine-font-weight-medium)' as any,
+          cursor: canSort ? 'pointer' : undefined,
+          userSelect: canSort ? 'none' : undefined,
           position: isPinned ? 'sticky' : 'relative',
         }}
       >
         {header.isPlaceholder ? null : (
           <>
-            <Box
-              component="div"
-              {...ctx.getStyles('headerCell', { classNames, styles })}
-              onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
-              style={canSort ? { cursor: 'pointer', userSelect: 'none' } : undefined}
-            >
+            <Box component="div" {...ctx.getStyles('headerCell', { classNames, styles })}>
               {flexRender(header.column.columnDef.header, header.getContext())}
               {canSort && (
                 <Box component="span" {...ctx.getStyles('sortIcon', { classNames, styles })}>
@@ -524,7 +522,9 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
               )}
             </Box>
             {ctx.withFiltering && header.column.getCanFilter() && (
-              <FilterDispatcher column={header.column} />
+              <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+                <FilterDispatcher column={header.column} />
+              </Box>
             )}
           </>
         )}
@@ -534,6 +534,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
             {...ctx.getStyles('resizeHandle', { classNames, styles })}
             onPointerDown={header.getResizeHandler()}
             onTouchStart={header.getResizeHandler()}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
             data-resizing={isResizing || undefined}
           />
         )}

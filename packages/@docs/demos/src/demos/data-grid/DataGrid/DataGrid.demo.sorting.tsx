@@ -16,7 +16,6 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary', enableSorting: true },
       { accessorKey: 'startDate', header: 'Start Date' },
     ],
-    withSorting: true,
   });
 
   return <DataGrid store={store} />;
@@ -33,7 +32,6 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary', enableSorting: true },
       { accessorKey: 'startDate', header: 'Start Date' },
     ],
-    withSorting: true,
   });
 
   return <DataGrid store={store} />;
