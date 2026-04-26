@@ -9,6 +9,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { getExtraColumnsCount } from '../get-extra-columns-count';
 import { DataGridGroupRow } from './DataGridGroupRow';
 import { DataGridRow } from './DataGridRow';
 import classes from '../DataGrid.module.css';
@@ -41,19 +42,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
   const bottomRows = ctx.withRowPinning ? ctx.table.getBottomRows() : [];
   const rows = ctx.withRowPinning ? ctx.table.getCenterRows() : ctx.table.getRowModel().rows;
   const allEmpty = topRows.length === 0 && rows.length === 0 && bottomRows.length === 0;
-  let totalColumns = ctx.table.getVisibleLeafColumns().length;
-  if (ctx.withRowReorder) {
-    totalColumns += 1;
-  }
-  if (ctx.withRowSelection) {
-    totalColumns += 1;
-  }
-  if (ctx.withRowExpansion && !ctx.withTreeData) {
-    totalColumns += 1;
-  }
-  if (ctx.withRowNumbers) {
-    totalColumns += 1;
-  }
+  const totalColumns = ctx.table.getVisibleLeafColumns().length + getExtraColumnsCount(ctx);
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLTableSectionElement>) => {

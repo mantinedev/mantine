@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { FilterDispatcher } from '../DataGridFilters';
+import { getExtraColumnsCount } from '../get-extra-columns-count';
 import { DefaultUnsortedIcon, ExpandChevron, GripIcon, SortIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
@@ -88,19 +89,8 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
   const withColumnVirt = ctx.withColumnVirtualization;
   const withRowVirt = ctx.withVirtualization;
 
-  let totalColumns = visibleColumns.length;
-  if (ctx.withRowReorder) {
-    totalColumns += 1;
-  }
-  if (ctx.withRowSelection) {
-    totalColumns += 1;
-  }
-  if (ctx.withRowExpansion && !ctx.withTreeData) {
-    totalColumns += 1;
-  }
-  if (ctx.withRowNumbers) {
-    totalColumns += 1;
-  }
+  const extraColCount = getExtraColumnsCount(ctx);
+  const totalColumns = visibleColumns.length + extraColCount;
 
   const defaultEstimateSize = () => 36;
   const estimateSize = virtualScrollConfig?.estimateSize ?? defaultEstimateSize;
@@ -183,11 +173,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     return vars;
   }, [visibleColumns]);
 
-  const extraColOffset =
-    (ctx.withRowReorder ? 1 : 0) +
-    (ctx.withRowSelection ? 1 : 0) +
-    (ctx.withRowExpansion && !ctx.withTreeData ? 1 : 0) +
-    (ctx.withRowNumbers ? 1 : 0);
+  const extraColOffset = extraColCount;
 
   function renderCellContent(
     row: ReturnType<(typeof rows)[number]['getVisibleCells']> extends (infer C)[] ? C : never,

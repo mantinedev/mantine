@@ -138,9 +138,6 @@
   align-items: center;
   opacity: 0.5;
   margin-inline-start: rem(2px);
-  transition:
-    transform 200ms ease,
-    opacity 200ms ease;
 }
 
 .th[data-sort-asc] .sortIcon,
