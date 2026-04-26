@@ -10,6 +10,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { ExpandChevron } from '../icons';
 import classes from '../DataGrid.module.css';
 
 export type DataGridGroupRowStylesNames = 'tr' | 'groupHeader' | 'groupToggle' | 'aggregationCell';
@@ -29,30 +30,6 @@ export type DataGridGroupRowFactory = Factory<{
   stylesNames: DataGridGroupRowStylesNames;
   compound: true;
 }>;
-
-function GroupChevron({ expanded }: { expanded: boolean }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{
-        transform: expanded ? 'rotate(90deg)' : undefined,
-        transition: 'transform 150ms ease',
-        display: 'inline-block',
-        verticalAlign: 'middle',
-      }}
-    >
-      <path d="M9 18l6-6-6-6" />
-    </svg>
-  );
-}
 
 export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
   const { className, style, classNames, styles, row, totalColumns, ...others } = useProps(
@@ -85,7 +62,7 @@ export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
           aria-label={isExpanded ? ctx.localization.groupCollapse : ctx.localization.groupExpand}
           {...ctx.getStyles('groupToggle', { classNames, styles })}
         >
-          <GroupChevron expanded={isExpanded} />
+          <ExpandChevron expanded={isExpanded} />
         </Box>
         <span>
           {groupingColumnId}: {String(groupingValue)} ({row.subRows.length})

@@ -27,11 +27,24 @@ export interface DataGridFeatureFlags {
   withGrouping: boolean;
   withRowPinning: boolean;
   withEditing: boolean;
+  withFaceting: boolean;
+  withTreeData: boolean;
+  withRowReorder: boolean;
 }
 
 export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): DataGridFeatureFlags {
+  const withTreeData = options.getSubRows !== undefined;
+  const withGrouping =
+    options.withGrouping ?? isDefined(options.grouping, options.onGroupingChange);
+  const withRowReorder =
+    withTreeData || withGrouping
+      ? false
+      : (options.withRowReorder ?? isDefined(options.onRowOrderChange));
+
   return {
-    withSorting: options.withSorting ?? hasEnableSorting(options.columns),
+    withSorting: withRowReorder
+      ? false
+      : (options.withSorting ?? hasEnableSorting(options.columns)),
     withFiltering:
       options.withFiltering ?? isDefined(options.columnFilters, options.onColumnFiltersChange),
     withGlobalFilter:
@@ -51,11 +64,15 @@ export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): Da
     withRowSelection:
       options.withRowSelection ?? isDefined(options.rowSelection, options.onRowSelectionChange),
     withRowExpansion:
-      options.withRowExpansion ?? isDefined(options.expanded, options.onExpandedChange),
-    withGrouping: options.withGrouping ?? isDefined(options.grouping, options.onGroupingChange),
+      options.withRowExpansion ??
+      (isDefined(options.expanded, options.onExpandedChange) || withTreeData),
+    withGrouping,
     withRowPinning:
       options.withRowPinning ??
       isDefined(options.rowPinning, options.onRowPinningChange, options.enableRowPinning),
     withEditing: options.editingMode !== undefined,
+    withFaceting: options.withFaceting ?? false,
+    withTreeData,
+    withRowReorder,
   };
 }

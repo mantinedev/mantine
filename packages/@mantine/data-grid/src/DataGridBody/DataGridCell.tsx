@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Cell, flexRender } from '@tanstack/react-table';
+import { Cell, flexRender, Row } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
@@ -11,14 +11,18 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { ExpandChevron } from '../icons';
 import classes from '../DataGrid.module.css';
 
-export type DataGridCellStylesNames = 'td' | 'editCell';
+export type DataGridCellStylesNames = 'td' | 'editCell' | 'treeIndent' | 'treeToggle';
 
 export interface DataGridCellProps
   extends BoxProps, CompoundStylesApiProps<DataGridCellFactory>, ElementProps<'td'> {
   /** TanStack cell instance */
   cell: Cell<any, unknown>;
+
+  /** Tree data info, present only on the first data cell when tree data is active */
+  treeData?: { row: Row<any> };
 }
 
 export type DataGridCellFactory = Factory<{
@@ -29,7 +33,7 @@ export type DataGridCellFactory = Factory<{
 }>;
 
 export const DataGridCell = factory<DataGridCellFactory>((props) => {
-  const { className, style, classNames, styles, cell, ...others } = useProps(
+  const { className, style, classNames, styles, cell, treeData, ...others } = useProps(
     'DataGridCell',
     null,
     props
@@ -38,7 +42,7 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
   const ctx = useDataGridContext();
   const isPinned = ctx.withColumnPinning ? cell.column.getIsPinned() : false;
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState('');
+  const [editValue, setEditValue] = useState<unknown>('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const pinnedStyles = isPinned
@@ -57,16 +61,17 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
     : undefined;
 
   const canEdit = ctx.withEditing && !(cell.column.columnDef.meta as any)?.disableEditing;
+  const editComponent = cell.column.columnDef.meta?.editComponent;
 
   const handleDoubleClick = useCallback(
     (event: React.MouseEvent) => {
       if (canEdit) {
         event.stopPropagation();
-        setEditValue(String(cell.getValue() ?? ''));
+        setEditValue(editComponent ? cell.getValue() : String(cell.getValue() ?? ''));
         setIsEditing(true);
       }
     },
-    [canEdit, cell]
+    [canEdit, cell, editComponent]
   );
 
   useEffect(() => {
@@ -104,10 +109,6 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
     [handleSave, handleCancel]
   );
 
-  const editComponent =
-    (cell.column.columnDef as any).editComponent ??
-    (cell.column.columnDef.meta as any)?.editComponent;
-
   return (
     <Box
       component="td"
@@ -125,7 +126,7 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
           {editComponent ? (
             editComponent({
               value: editValue,
-              onChange: setEditValue,
+              onChange: (v) => setEditValue(v),
               onSave: handleSave,
               onCancel: handleCancel,
               cell,
@@ -134,12 +135,34 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
             <TextInput
               ref={inputRef}
               size="xs"
-              value={editValue}
+              value={String(editValue ?? '')}
               onChange={(e) => setEditValue(e.currentTarget.value)}
               onKeyDown={handleKeyDown}
               onBlur={handleSave}
             />
           )}
+        </Box>
+      ) : treeData ? (
+        <Box
+          {...ctx.getStyles('treeIndent', { classNames, styles })}
+          style={{ paddingLeft: treeData.row.depth * 20 }}
+        >
+          {ctx.withRowExpansion && treeData.row.getCanExpand() ? (
+            <Box
+              component="button"
+              type="button"
+              aria-expanded={treeData.row.getIsExpanded()}
+              aria-label={treeData.row.getIsExpanded() ? 'Collapse row' : 'Expand row'}
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                treeData.row.toggleExpanded();
+              }}
+              {...ctx.getStyles('treeToggle', { classNames, styles })}
+            >
+              <ExpandChevron expanded={treeData.row.getIsExpanded()} />
+            </Box>
+          ) : null}
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </Box>
       ) : (
         flexRender(cell.column.columnDef.cell, cell.getContext())

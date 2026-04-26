@@ -4041,10 +4041,14 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.0.2
     "@mantine/hooks": 9.0.2
+    "@tanstack/match-sorter-utils": ">=8.0.0"
     "@tanstack/react-table": ">=8.20.0"
     "@tanstack/react-virtual": ">=3.13.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@tanstack/match-sorter-utils":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -5358,6 +5362,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.8.0"
   checksum: 10c0/33002f74f6f885f04c132960835fdfc474186983ea567606db62e86acd0680ca82f34647e8e610f4e1e422d1c16fce729dde22cd3b797ab1fd9061a825dabca4
+  languageName: node
+  linkType: hard
+
+"@tanstack/match-sorter-utils@npm:^8.19.4":
+  version: 8.19.4
+  resolution: "@tanstack/match-sorter-utils@npm:8.19.4"
+  dependencies:
+    remove-accents: "npm:0.5.0"
+  checksum: 10c0/935022e3d639f19472131d289f3e1202253ff34301717c337e9bac0eeae6a0bd56450ed8ae2f7eb7ac9dfefa7ceaa7d126d8c5441021968b4a9eabc3ac4f8ba1
   languageName: node
   linkType: hard
 
@@ -14745,6 +14758,7 @@ __metadata:
     "@phosphor-icons/react": "npm:^2.1.10"
     "@shikijs/transformers": "npm:^3.23.0"
     "@storybook/nextjs": "npm:^10.2.16"
+    "@tanstack/match-sorter-utils": "npm:^8.19.4"
     "@tanstack/react-virtual": "npm:^3.13.21"
     "@testing-library/dom": "npm:10.4.1"
     "@testing-library/jest-dom": "npm:6.9.1"
@@ -18676,6 +18690,13 @@ __metadata:
     mdast-util-to-markdown: "npm:^2.0.0"
     unified: "npm:^11.0.0"
   checksum: 10c0/0cdb37ce1217578f6f847c7ec9f50cbab35df5b9e3903d543e74b405404e67c07defcb23cd260a567b41b769400f6de03c2c3d9cd6ae7a6707d5c8d89ead489f
+  languageName: node
+  linkType: hard
+
+"remove-accents@npm:0.5.0":
+  version: 0.5.0
+  resolution: "remove-accents@npm:0.5.0"
+  checksum: 10c0/a75321aa1b53d9abe82637115a492770bfe42bb38ed258be748bf6795871202bc8b4badff22013494a7029f5a241057ad8d3f72adf67884dbe15a9e37e87adc4
   languageName: node
   linkType: hard
 

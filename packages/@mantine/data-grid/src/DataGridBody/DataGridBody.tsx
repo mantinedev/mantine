@@ -42,10 +42,13 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
   const rows = ctx.withRowPinning ? ctx.table.getCenterRows() : ctx.table.getRowModel().rows;
   const allEmpty = topRows.length === 0 && rows.length === 0 && bottomRows.length === 0;
   let totalColumns = ctx.table.getVisibleLeafColumns().length;
+  if (ctx.withRowReorder) {
+    totalColumns += 1;
+  }
   if (ctx.withRowSelection) {
     totalColumns += 1;
   }
-  if (ctx.withRowExpansion) {
+  if (ctx.withRowExpansion && !ctx.withTreeData) {
     totalColumns += 1;
   }
   if (ctx.withRowNumbers) {
@@ -125,6 +128,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
             <DataGridRow row={row} rowIndex={globalIndex} classNames={classNames} styles={styles} />
           )}
           {ctx.withRowExpansion &&
+            !ctx.withTreeData &&
             row.getIsExpanded() &&
             !row.getIsGrouped() &&
             ctx.renderExpandedRow && (

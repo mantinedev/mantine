@@ -95,8 +95,17 @@ store.columnPinning // { left: ['firstName'], right: [] }
 store.rowPinning    // { top: ['1'], bottom: [] }
 ```
 
+## Sticky positioning design
+
+DataGrid implements column pinning with CSS `position: sticky` on individual `<th>` and `<td>`
+elements. This keeps the DOM in a single flat table structure, which preserves native accessibility
+semantics and avoids the synchronization overhead of TanStack's split-table rendering approach
+(where pinned and non-pinned columns are rendered in separate `<table>` elements). The tradeoff
+is that row heights must remain consistent across all columns, which is the standard case for
+data grids.
+
 ## Limitations
 
-Row pinning is not supported when `withVirtualization` is enabled. Virtualized mode uses a
+Row pinning is not supported when `virtualize` includes rows. Virtualized mode uses a
 different rendering path for performance, and row pinning requires the standard table body renderer.
 Column pinning works with both standard and virtualized grids.

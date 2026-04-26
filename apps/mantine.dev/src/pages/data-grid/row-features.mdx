@@ -17,6 +17,29 @@ state. The `getRowId` option is required to provide stable row identifiers.
 Pass `rowSelection` and `onRowSelectionChange` to `useDataGrid` to control selection state externally.
 Selection state is keyed by row IDs (from `getRowId`), not positional indexes.
 
+<Demo data={DataGridDemos.rowSelectionControlled} />
+
+## Single selection
+
+Set `enableMultiRowSelection` to `false` to restrict selection to one row at a time. The header
+checkbox is hidden in single-select mode and each row renders a radio-style indicator.
+
+<Demo data={DataGridDemos.rowSelectionSingle} />
+
+## Conditional selection
+
+Pass a function to `enableRowSelection` to control selectability per row. Rows for which the
+function returns `false` render a disabled checkbox and cannot be selected.
+
+<Demo data={DataGridDemos.rowSelectionPerRow} />
+
+## Bulk actions
+
+Use `store.table.getSelectedRowModel().rows` to access the currently selected rows and build a
+bulk-actions toolbar that appears only when a selection exists.
+
+<Demo data={DataGridDemos.rowSelectionBulkActions} />
+
 ## Row expansion
 
 Pass `withRowExpansion` to `useDataGrid` to allow rows to expand and show additional detail content.
@@ -24,6 +47,36 @@ Use the `renderExpandedRow` prop on `DataGrid` to define the expanded content. C
 to toggle a row.
 
 <Demo data={DataGridDemos.rowExpansion} />
+
+## Controlled expansion
+
+Pass `expanded` and `onExpandedChange` to `useDataGrid` to control expansion state externally.
+Use `store.table.toggleAllRowsExpanded()` to programmatically expand or collapse all rows at once.
+
+<Demo data={DataGridDemos.rowExpansionControlled} />
+
+## Expand all rows
+
+Call `store.table.toggleAllRowsExpanded()` with `true` to expand all rows, or `false` to collapse
+all rows:
+
+```tsx
+store.table.toggleAllRowsExpanded(true);
+store.table.toggleAllRowsExpanded(false);
+```
+
+## Conditional expansion
+
+Use `getRowCanExpand` in `tableOptions` to control which rows display the expand toggle. Rows for
+which the function returns `false` will not show an expand icon:
+
+```tsx
+const store = useDataGrid({
+  tableOptions: {
+    getRowCanExpand: (row) => row.original.hasDetails,
+  },
+});
+```
 
 ## Expand on click
 
@@ -42,7 +95,42 @@ on mouse hover. These props can be used together or independently.
 Set `withRowNumbers` to display an auto-incrementing row number column as the first column
 in the grid.
 
+## Row click and double-click
+
+Use `onRowClick` and `onRowDoubleClick` props on `DataGrid` to respond to row interactions.
+Both callbacks receive the `row` object and the `event`:
+
+```tsx
+<DataGrid
+  store={store}
+  onRowClick={(row, event) => {
+    console.log('Clicked row:', row.original);
+  }}
+  onRowDoubleClick={(row, event) => {
+    console.log('Double-clicked row:', row.original);
+  }}
+/>
+```
+
 ## Row reorder
 
-Row reordering can be implemented using TanStack Table row model utilities via the `tableOptions`
-escape hatch. This feature requires custom drag handle rendering in a column definition.
+Pass `withRowReorder` to `useDataGrid` and provide `onRowOrderChange` to handle the updated data
+array after a drag-and-drop reorder. The callback receives a new copy of the data array with rows
+in their new order:
+
+```tsx
+const [data, setData] = useState(initialData);
+
+const store = useDataGrid({
+  data,
+  columns,
+  withRowReorder: true,
+  onRowOrderChange: setData,
+});
+```
+
+A drag handle column is added automatically as the first column. Users drag rows by the handle to
+reorder them.
+
+Sorting is automatically disabled when `withRowReorder` is active, because a manual row order and
+a sort-derived order cannot coexist.

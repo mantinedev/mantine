@@ -26,9 +26,14 @@ export interface DataGridContextValue {
   highlightOnHover: boolean;
   withRowNumbers: boolean;
   withVirtualization: boolean;
+  withColumnVirtualization: boolean;
   withGrouping: boolean;
   withRowPinning: boolean;
   withEditing: boolean;
+  withFaceting: boolean;
+  withTreeData: boolean;
+  withRowReorder: boolean;
+  onRowOrderChange?: (reorderedData: any[]) => void;
   stickyHeader: boolean;
   expandOnRowClick: boolean;
   editingMode: 'cell' | 'row' | undefined;

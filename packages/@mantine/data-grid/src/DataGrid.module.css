@@ -360,3 +360,36 @@
 .virtualCell[data-pinned-right] {
   box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
 }
+
+.treeIndent {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+}
+
+.treeToggle {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: rem(20px);
+  flex-shrink: 0;
+}
+
+.columnMenu {
+  display: inline-flex;
+}
+
+.dragHandle {
+  cursor: grab;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mantine-color-dimmed);
+  white-space: nowrap;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}

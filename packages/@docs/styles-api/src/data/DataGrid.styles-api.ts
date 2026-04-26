@@ -38,6 +38,10 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
     virtualGridHeader: 'Header row in virtualized mode',
     virtualRow: 'Data row in virtualized mode',
     virtualCell: 'Cell in virtualized mode',
+    treeIndent: 'Tree data indentation wrapper in the first data cell',
+    treeToggle: 'Tree data expand/collapse toggle button',
+    columnMenu: 'Column header menu wrapper',
+    dragHandle: 'Row drag handle cell for reordering',
   },
 
   vars: {

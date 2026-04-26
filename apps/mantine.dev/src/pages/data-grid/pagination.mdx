@@ -23,7 +23,52 @@ The state follows the TanStack Table `PaginationState` format -- `{ pageIndex: n
 
 <Demo data={DataGridDemos.controlledPagination} />
 
+## Page navigation methods
+
+The underlying TanStack Table instance exposes programmatic navigation methods accessible via `store.table`:
+
+```tsx
+store.table.firstPage();
+store.table.previousPage();
+store.table.nextPage();
+store.table.lastPage();
+store.table.getCanPreviousPage();
+store.table.getCanNextPage();
+store.table.getPageCount();
+```
+
+Use these to build a custom pagination UI or to navigate programmatically in response to events.
+
+## Auto-reset page index
+
+By default, the page index resets to `0` when sorting or filtering changes. Pass `autoResetPageIndex: false`
+via `tableOptions` to disable this behavior:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  tableOptions: {
+    autoResetPageIndex: false,
+  },
+});
+```
+
 ## Server-side pagination
 
 For server-side pagination, set `manualPagination` to `true` and provide `rowCount` with the total
-number of rows. See the [Server-side](/data-grid/server-side) page for a complete example.
+number of rows. Alternatively, use `pageCount` directly when you know the total number of pages
+rather than the total number of rows:
+
+```tsx
+const store = useDataGrid({
+  data: serverData,
+  columns,
+  manualPagination: true,
+  pagination,
+  onPaginationChange,
+  pageCount: Math.ceil(totalRows / pageSize),
+});
+```
+
+See the [Server-side](/data-grid/server-side) page for a complete example.

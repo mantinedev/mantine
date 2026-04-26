@@ -56,7 +56,7 @@ function Demo() {
   return (
     <DataGrid
       data={data}
-      withVirtualization
+      virtualize="rows"
       height={400}
       loading={loading}
       onScrollToBottom={handleScrollToBottom}
@@ -116,7 +116,7 @@ function Demo() {
   return (
     <DataGrid
       data={data}
-      withVirtualization
+      virtualize="rows"
       height={400}
       loading={loading}
       onScrollToBottom={handleScrollToBottom}

@@ -32,7 +32,7 @@ function Demo() {
   return (
     <DataGrid
       data={data}
-      withVirtualization
+      virtualize="rows"
       height={500}
       columns={[
         { accessorKey: 'id', header: 'ID', size: 80 },
@@ -72,7 +72,7 @@ function Demo() {
   return (
     <DataGrid
       data={data}
-      withVirtualization
+      virtualize="rows"
       height={500}
       columns={[
         { accessorKey: 'id', header: 'ID', size: 80 },

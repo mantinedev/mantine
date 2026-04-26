@@ -18,31 +18,7 @@ Set `editingMode="row"` to edit all cells in a row simultaneously. When a row en
 Save and Cancel buttons appear. The `onRowEdit` callback receives the row and a `values` object
 containing all edited column values.
 
-```tsx
-import { DataGrid, useDataGrid } from '@mantine/data-grid';
-
-function Demo() {
-  const store = useDataGrid({
-    data,
-    columns,
-    editingMode: 'row',
-    getRowId: (row) => row.id,
-  });
-
-  return (
-    <DataGrid
-      store={store}
-      onRowEdit={({ row, values }) => {
-        setData((prev) =>
-          prev.map((item) =>
-            item.id === row.original.id ? { ...item, ...values } : item
-          )
-        );
-      }}
-    />
-  );
-}
-```
+<Demo data={DataGridDemos.rowEditing} />
 
 ## Modal editing
 
@@ -62,30 +38,30 @@ This approach gives full control over the edit UI and validation flow.
 
 ## Custom edit components
 
-Define a custom `editCell` renderer on a column to replace the default text input with any component
-such as a select, date picker, or number input.
+Define a custom `editComponent` in the column `meta` to replace the default text input with any
+Mantine component. The callback receives `{ value, onChange, onSave, onCancel, cell }`.
+
+<Demo data={DataGridDemos.customEditComponent} />
+
+## Disabling editing per column
+
+Set `meta.disableEditing: true` on any column definition to prevent that column from entering edit
+mode when the grid is in `cell` or `row` editing mode:
 
 ```tsx
 const columns = [
-  {
-    accessorKey: 'department',
-    header: 'Department',
-    editCell: ({ value, onSave, onCancel }) => (
-      <Select
-        data={['Engineering', 'Marketing', 'Sales', 'HR', 'Finance']}
-        defaultValue={value}
-        onChange={(val) => onSave(val)}
-        onBlur={onCancel}
-        autoFocus
-      />
-    ),
-  },
+  { accessorKey: 'id', header: 'ID', meta: { disableEditing: true } },
+  { accessorKey: 'firstName', header: 'First Name' },
+  { accessorKey: 'department', header: 'Department' },
 ];
 ```
 
+Read-only columns like IDs or computed fields should use this flag so users cannot accidentally
+modify them.
+
 ## Limitations
 
-Inline editing is not supported when `withVirtualization` is enabled. Virtualized mode uses a
+Inline editing is not supported when `virtualize` includes rows. Virtualized mode uses a
 different rendering path for performance, and editing requires the standard table body renderer.
 If you need both editing and large datasets, consider using server-side pagination instead of
 virtualization.

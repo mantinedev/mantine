@@ -35,6 +35,74 @@ columns that are not currently sorted.
 
 <Demo data={DataGridDemos.customSortIcons} />
 
+## Custom sort functions
+
+Set a custom `sortingFn` on a column definition to override the default sort behavior. The value can
+be one of the built-in sort function names (a string) or a custom comparator function:
+
+```tsx
+const columns = [
+  {
+    accessorKey: 'date',
+    header: 'Date',
+    enableSorting: true,
+    sortingFn: 'datetime',
+  },
+  {
+    accessorKey: 'name',
+    header: 'Name',
+    enableSorting: true,
+    sortingFn: (rowA, rowB, columnId) => {
+      return rowA.getValue(columnId).localeCompare(rowB.getValue(columnId));
+    },
+  },
+];
+```
+
+## Built-in sort functions
+
+TanStack Table provides the following built-in sort function names that can be used as `sortingFn`:
+
+| Name | Description |
+|---|---|
+| `alphanumeric` | Case-insensitive alphanumeric sort |
+| `alphanumericCaseSensitive` | Case-sensitive alphanumeric sort |
+| `text` | Case-insensitive string sort |
+| `textCaseSensitive` | Case-sensitive string sort |
+| `datetime` | Date/time sort |
+| `basic` | Basic sort using JavaScript comparison |
+
+## Sort removal behavior
+
+By default, clicking a sorted column header cycles through ascending → descending → unsorted.
+Pass `enableSortingRemoval: false` via `tableOptions` to skip the unsorted state and cycle only
+between ascending and descending:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  tableOptions: {
+    enableSortingRemoval: false,
+  },
+});
+```
+
+## Sort direction
+
+By default, the first click on a sortable column header sorts ascending. Pass `sortDescFirst: true`
+via `tableOptions` to sort descending on the first click:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  tableOptions: {
+    sortDescFirst: true,
+  },
+});
+```
+
 ## Server-side sorting
 
 For server-side sorting, set `manualSorting` to `true` and handle sorting in your data fetching logic.

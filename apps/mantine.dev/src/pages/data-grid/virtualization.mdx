@@ -4,9 +4,21 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.DataGridVirtualization);
 
+## virtualize prop
+
+The `virtualize` prop controls which axis is virtualized. Pass one of the following values:
+
+```tsx
+<DataGrid store={store} virtualize="rows" height={500} />
+<DataGrid store={store} virtualize="columns" height={500} />
+<DataGrid store={store} virtualize="rows,columns" height={500} />
+```
+
+The `height` prop is required for all virtualization modes so the grid has a bounded scroll container.
+
 ## Basic virtualization
 
-Set `withVirtualization` to enable row virtualization for large datasets. When virtualization is enabled,
+Set `virtualize="rows"` to enable row virtualization for large datasets. When virtualization is enabled,
 only the rows visible in the viewport are rendered to the DOM. The `height` prop is required to define the
 scrollable container size.
 
@@ -22,7 +34,7 @@ Fine-tune virtual scroll behavior with the `virtualScrollConfig` prop:
 ```tsx
 <DataGrid
   data={data}
-  withVirtualization
+  virtualize="rows"
   height={500}
   virtualScrollConfig={{
     overscan: 10,
@@ -38,6 +50,38 @@ Use the `onScrollToBottom` callback to load more data when the user scrolls near
 This works with or without virtualization. Combine with `loading` to show a loading overlay during fetch.
 
 <Demo data={DataGridDemos.infiniteScroll} />
+
+## Column virtualization
+
+Set `virtualize="columns"` to enable column virtualization when working with 50 or more columns.
+Only the columns visible in the horizontal scroll area are rendered to the DOM. Fine-tune behavior
+with the `virtualColumnConfig` option:
+
+```tsx
+<DataGrid
+  store={store}
+  virtualize="columns"
+  height={500}
+  virtualColumnConfig={{
+    overscan: 5,
+    estimateSize: (index) => columns[index]?.size ?? 150,
+  }}
+/>
+```
+
+Combine row and column virtualization with `virtualize="rows,columns"` for grids with many rows
+and many columns simultaneously.
+
+## Feature compatibility
+
+| Feature | Row virtualization | Column virtualization |
+|---|---|---|
+| Column pinning | Works | Works (pinned columns are always rendered) |
+| Row pinning | Not supported | Works |
+| Editing | Not supported | Works |
+| Row selection | Works | Works |
+| Grouping | Works | Works |
+| Column reorder | Works | Works |
 
 ## Performance tips
 

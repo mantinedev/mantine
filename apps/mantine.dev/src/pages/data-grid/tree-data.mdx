@@ -1,0 +1,49 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridTreeData);
+
+## Basic tree data
+
+Use `getSubRows` in `useDataGrid` to define how child rows are accessed from your data.
+DataGrid automatically renders indentation and expand/collapse controls based on row depth.
+
+<Demo data={DataGridDemos.treeData} />
+
+## Filtering through tree hierarchy
+
+Set `filterFromLeafRows` to `true` to filter from leaf rows upward. When a leaf row matches
+the filter, its parent rows are automatically included to maintain the tree structure.
+
+<Demo data={DataGridDemos.treeDataFiltering} />
+
+## Pagination with expanded rows
+
+By default, expanded sub-rows count toward the page size. Set `paginateExpandedRows` to `false`
+to only count top-level rows when paginating.
+
+<Demo data={DataGridDemos.treeDataPagination} />
+
+## Manual tree column
+
+By default, the first data column shows the expand/collapse toggle. You can control which
+column renders the tree toggle by placing it as the first column in your column definitions.
+
+## Server-side expansion
+
+Set `manualExpanding` to `true` for server-side tree data. Handle expansion in your data
+fetching logic using controlled `expanded` and `onExpandedChange`.
+
+## Per-row expand control
+
+Use `getRowCanExpand` to control which rows can be expanded:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  getSubRows: (row) => row.children,
+  getRowCanExpand: (row) => (row.original.children?.length ?? 0) > 0,
+});
+```

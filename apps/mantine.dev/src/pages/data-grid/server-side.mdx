@@ -64,6 +64,56 @@ API delay. The `loading` prop shows an overlay while data is being fetched.
 
 <Demo data={DataGridDemos.fullServerSide} />
 
+## Server-side grouping
+
+Set `manualGrouping` via `tableOptions` to prevent DataGrid from grouping data client-side.
+Provide controlled `grouping` and `onGroupingChange` to pass the grouping state to your API:
+
+```tsx
+const store = useDataGrid({
+  data: serverData,
+  columns,
+  withGrouping: true,
+  grouping,
+  onGroupingChange,
+  tableOptions: { manualGrouping: true },
+});
+```
+
+## Debounced filtering
+
+When triggering API calls from column filter inputs, debounce the filter value to avoid
+sending a request on every keystroke:
+
+```tsx
+import { useState } from 'react';
+import { useDebouncedValue } from '@mantine/hooks';
+
+const [filter, setFilter] = useState('');
+const [debouncedFilter] = useDebouncedValue(filter, 300);
+
+// Use debouncedFilter in your API call
+useEffect(() => {
+  fetchData({ filter: debouncedFilter });
+}, [debouncedFilter]);
+```
+
+## Stable row IDs
+
+Always provide `getRowId` when using server-side pagination together with row selection. Without
+stable IDs, selection state is keyed by row index, which breaks when the page changes:
+
+```tsx
+const store = useDataGrid({
+  data: serverData,
+  columns,
+  manualPagination: true,
+  withRowSelection: true,
+  getRowId: (row) => row.id,
+  rowCount: totalRowCount,
+});
+```
+
 ## Faceted filter options
 
 When using server-side filtering, the API typically returns available filter values alongside the data.

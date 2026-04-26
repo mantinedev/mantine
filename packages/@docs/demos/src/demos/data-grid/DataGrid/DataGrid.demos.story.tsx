@@ -43,6 +43,41 @@ export const Demo_controlledFilters = {
   render: renderDemo(demos.controlledFilters),
 };
 
+export const Demo_selectFilter = {
+  name: '⭐ Demo: selectFilter',
+  render: renderDemo(demos.selectFilter),
+};
+
+export const Demo_multiSelectFilter = {
+  name: '⭐ Demo: multiSelectFilter',
+  render: renderDemo(demos.multiSelectFilter),
+};
+
+export const Demo_rangeFilter = {
+  name: '⭐ Demo: rangeFilter',
+  render: renderDemo(demos.rangeFilter),
+};
+
+export const Demo_customFilterFn = {
+  name: '⭐ Demo: customFilterFn',
+  render: renderDemo(demos.customFilterFn),
+};
+
+export const Demo_disableFilterPerColumn = {
+  name: '⭐ Demo: disableFilterPerColumn',
+  render: renderDemo(demos.disableFilterPerColumn),
+};
+
+export const Demo_globalFilterExclude = {
+  name: '⭐ Demo: globalFilterExclude',
+  render: renderDemo(demos.globalFilterExclude),
+};
+
+export const Demo_fuzzySearch = {
+  name: '⭐ Demo: fuzzySearch',
+  render: renderDemo(demos.fuzzySearch),
+};
+
 export const Demo_pagination = {
   name: '⭐ Demo: pagination',
   render: renderDemo(demos.pagination),
@@ -138,9 +173,34 @@ export const Demo_rowSelection = {
   render: renderDemo(demos.rowSelection),
 };
 
+export const Demo_rowSelectionControlled = {
+  name: '⭐ Demo: rowSelectionControlled',
+  render: renderDemo(demos.rowSelectionControlled),
+};
+
+export const Demo_rowSelectionSingle = {
+  name: '⭐ Demo: rowSelectionSingle',
+  render: renderDemo(demos.rowSelectionSingle),
+};
+
+export const Demo_rowSelectionPerRow = {
+  name: '⭐ Demo: rowSelectionPerRow',
+  render: renderDemo(demos.rowSelectionPerRow),
+};
+
+export const Demo_rowSelectionBulkActions = {
+  name: '⭐ Demo: rowSelectionBulkActions',
+  render: renderDemo(demos.rowSelectionBulkActions),
+};
+
 export const Demo_rowExpansion = {
   name: '⭐ Demo: rowExpansion',
   render: renderDemo(demos.rowExpansion),
+};
+
+export const Demo_rowExpansionControlled = {
+  name: '⭐ Demo: rowExpansionControlled',
+  render: renderDemo(demos.rowExpansionControlled),
 };
 
 export const Demo_stripedHover = {
@@ -163,9 +223,39 @@ export const Demo_cellEditing = {
   render: renderDemo(demos.cellEditing),
 };
 
+export const Demo_customEditComponent = {
+  name: '⭐ Demo: customEditComponent',
+  render: renderDemo(demos.customEditComponent),
+};
+
+export const Demo_rowEditing = {
+  name: '⭐ Demo: rowEditing',
+  render: renderDemo(demos.rowEditing),
+};
+
 export const Demo_grouping = {
   name: '⭐ Demo: grouping',
   render: renderDemo(demos.grouping),
+};
+
+export const Demo_groupingInteractive = {
+  name: '⭐ Demo: groupingInteractive',
+  render: renderDemo(demos.groupingInteractive),
+};
+
+export const Demo_groupingMultiLevel = {
+  name: '⭐ Demo: groupingMultiLevel',
+  render: renderDemo(demos.groupingMultiLevel),
+};
+
+export const Demo_groupingAggregation = {
+  name: '⭐ Demo: groupingAggregation',
+  render: renderDemo(demos.groupingAggregation),
+};
+
+export const Demo_groupedColumnMode = {
+  name: '⭐ Demo: groupedColumnMode',
+  render: renderDemo(demos.groupedColumnMode),
 };
 
 export const Demo_fullServerSide = {
@@ -186,4 +276,19 @@ export const Demo_compoundComponents = {
 export const Demo_density = {
   name: '⭐ Demo: density',
   render: renderDemo(demos.density),
+};
+
+export const Demo_treeData = {
+  name: '⭐ Demo: treeData',
+  render: renderDemo(demos.treeData),
+};
+
+export const Demo_treeDataFiltering = {
+  name: '⭐ Demo: treeDataFiltering',
+  render: renderDemo(demos.treeDataFiltering),
+};
+
+export const Demo_treeDataPagination = {
+  name: '⭐ Demo: treeDataPagination',
+  render: renderDemo(demos.treeDataPagination),
 };

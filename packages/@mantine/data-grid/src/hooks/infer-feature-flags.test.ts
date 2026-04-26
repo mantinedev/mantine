@@ -20,6 +20,9 @@ const allFalse: DataGridFeatureFlags = {
   withGrouping: false,
   withRowPinning: false,
   withEditing: false,
+  withFaceting: false,
+  withTreeData: false,
+  withRowReorder: false,
 };
 
 describe('inferFeatureFlags', () => {
@@ -241,6 +244,135 @@ describe('inferFeatureFlags', () => {
     it('is false when editingMode is not set', () => {
       const flags = inferFeatureFlags(baseOptions);
       expect(flags.withEditing).toBe(false);
+    });
+  });
+
+  describe('withFaceting', () => {
+    it('is false by default', () => {
+      const flags = inferFeatureFlags(baseOptions);
+      expect(flags.withFaceting).toBe(false);
+    });
+
+    it('is true when withFaceting is explicitly true', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, withFaceting: true });
+      expect(flags.withFaceting).toBe(true);
+    });
+
+    it('is false when withFaceting is explicitly false', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, withFaceting: false });
+      expect(flags.withFaceting).toBe(false);
+    });
+  });
+
+  describe('withTreeData', () => {
+    it('is false by default', () => {
+      const flags = inferFeatureFlags(baseOptions);
+      expect(flags.withTreeData).toBe(false);
+    });
+
+    it('is true when getSubRows is provided', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        getSubRows: (row: any) => row.children,
+      });
+      expect(flags.withTreeData).toBe(true);
+    });
+
+    it('auto-enables withRowExpansion when getSubRows is provided', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        getSubRows: (row: any) => row.children,
+      });
+      expect(flags.withRowExpansion).toBe(true);
+    });
+
+    it('does not enable withRowExpansion when getSubRows is not provided', () => {
+      const flags = inferFeatureFlags(baseOptions);
+      expect(flags.withRowExpansion).toBe(false);
+    });
+
+    it('respects explicit withRowExpansion: false even with getSubRows', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        getSubRows: (row: any) => row.children,
+        withRowExpansion: false,
+      });
+      expect(flags.withTreeData).toBe(true);
+      expect(flags.withRowExpansion).toBe(false);
+    });
+  });
+
+  describe('withRowReorder', () => {
+    it('is false by default', () => {
+      const flags = inferFeatureFlags(baseOptions);
+      expect(flags.withRowReorder).toBe(false);
+    });
+
+    it('is true when withRowReorder is explicitly true', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, withRowReorder: true });
+      expect(flags.withRowReorder).toBe(true);
+    });
+
+    it('infers from onRowOrderChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onRowOrderChange: () => {} });
+      expect(flags.withRowReorder).toBe(true);
+    });
+
+    it('suppresses sorting when withRowReorder is true', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        withRowReorder: true,
+        columns: [{ accessorKey: 'name', enableSorting: true }],
+      });
+      expect(flags.withRowReorder).toBe(true);
+      expect(flags.withSorting).toBe(false);
+    });
+
+    it('suppresses sorting when inferred from onRowOrderChange', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        onRowOrderChange: () => {},
+        columns: [{ accessorKey: 'name', enableSorting: true }],
+      });
+      expect(flags.withRowReorder).toBe(true);
+      expect(flags.withSorting).toBe(false);
+    });
+
+    it('suppresses sorting even when withSorting is explicitly true', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        withRowReorder: true,
+        withSorting: true,
+      });
+      expect(flags.withRowReorder).toBe(true);
+      expect(flags.withSorting).toBe(false);
+    });
+
+    it('is suppressed when tree data is active', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        withRowReorder: true,
+        getSubRows: (row: any) => row.children,
+      });
+      expect(flags.withRowReorder).toBe(false);
+    });
+
+    it('is suppressed when grouping is active', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        withRowReorder: true,
+        grouping: ['department'],
+      });
+      expect(flags.withRowReorder).toBe(false);
+    });
+
+    it('does not suppress sorting when withRowReorder is false', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'name', enableSorting: true }],
+      });
+      expect(flags.withRowReorder).toBe(false);
+      expect(flags.withSorting).toBe(true);
     });
   });
 

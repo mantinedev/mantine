@@ -30,6 +30,7 @@ import { DataGridFooter, DataGridFooterFactory } from './DataGridFooter';
 import { DataGridHeader, DataGridHeaderFactory } from './DataGridHeader';
 import { DataGridPagination, DataGridPaginationFactory } from './DataGridPagination';
 import { DataGridStatusBar, DataGridStatusBarFactory } from './DataGridStatusBar';
+import { DataGridColumnMenu, DataGridColumnMenuFactory } from './DataGridColumnMenu';
 import {
   DataGridColumnVisibilityToggle,
   DataGridColumnVisibilityToggleFactory,
@@ -80,7 +81,11 @@ export type DataGridStylesNames =
   | 'virtualGrid'
   | 'virtualGridHeader'
   | 'virtualRow'
-  | 'virtualCell';
+  | 'virtualCell'
+  | 'treeIndent'
+  | 'treeToggle'
+  | 'columnMenu'
+  | 'dragHandle';
 
 export type DataGridCssVariables = {
   root:
@@ -151,14 +156,20 @@ export interface DataGridProps<TData = any>
   /** Content to display when data is empty */
   emptyState?: React.ReactNode;
 
-  /** Enable row virtualization for large datasets, @default false */
-  withVirtualization?: boolean;
+  /** Enable virtualization for large datasets */
+  virtualize?: 'rows' | 'columns' | 'rows,columns';
 
-  /** Fixed height for the scrollable container, required when `withVirtualization` is true */
+  /** Fixed height for the scrollable container, required when `virtualize` includes rows */
   height?: number | string;
 
   /** Configuration for virtual scroll behavior */
   virtualScrollConfig?: {
+    overscan?: number;
+    estimateSize?: (index: number) => number;
+  };
+
+  /** Configuration for virtual column scroll behavior */
+  virtualColumnConfig?: {
     overscan?: number;
     estimateSize?: (index: number) => number;
   };
@@ -210,6 +221,7 @@ export type DataGridFactory = Factory<{
     DensityToggle: typeof DataGridDensityToggle;
     Pagination: typeof DataGridPagination;
     StatusBar: typeof DataGridStatusBar;
+    ColumnMenu: typeof DataGridColumnMenu;
   };
 }>;
 
@@ -260,9 +272,10 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     onRowDoubleClick,
     onCellClick,
     emptyState,
-    withVirtualization,
+    virtualize,
     height,
     virtualScrollConfig,
+    virtualColumnConfig,
     onScrollToBottom,
     renderExpandedRow,
     expandOnRowClick,
@@ -302,6 +315,8 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     .getFooterGroups()
     .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const withRowVirtualization = virtualize === 'rows' || virtualize === 'rows,columns';
+  const withColumnVirtualization = virtualize === 'columns' || virtualize === 'rows,columns';
 
   const handleScroll = useCallback(() => {
     if (!onScrollToBottom) {
@@ -341,10 +356,17 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         striped: striped ?? false,
         highlightOnHover: highlightOnHover ?? false,
         withRowNumbers: withRowNumbers ?? false,
-        withVirtualization: withVirtualization ?? false,
+        withVirtualization: withRowVirtualization,
+        withColumnVirtualization,
         withGrouping: store.withGrouping,
-        withRowPinning: withVirtualization ? false : store.withRowPinning,
+        withRowPinning: withRowVirtualization ? false : store.withRowPinning,
         withEditing: store.withEditing,
+        withFaceting: store.withFaceting,
+        withTreeData: store.withTreeData,
+        withRowReorder:
+          withRowVirtualization || withColumnVirtualization ? false : store.withRowReorder,
+        onRowOrderChange:
+          withRowVirtualization || withColumnVirtualization ? undefined : store.onRowOrderChange,
         stickyHeader: stickyHeader ?? false,
         expandOnRowClick: expandOnRowClick ?? false,
         editingMode: store.editingMode,
@@ -365,12 +387,12 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         mod={[
           {
             loading,
-            virtualized: withVirtualization || undefined,
+            virtualized: withRowVirtualization || withColumnVirtualization || undefined,
             'sticky-header': stickyHeader || undefined,
           },
           mod,
         ]}
-        data-virtualized={withVirtualization || undefined}
+        data-virtualized={withRowVirtualization || withColumnVirtualization || undefined}
         data-density={store.density}
         {...others}
       >
@@ -381,11 +403,12 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
                 <DataGridGlobalFilter />
               </DataGridToolbar>
             )}
-            {withVirtualization ? (
+            {withRowVirtualization || withColumnVirtualization ? (
               <>
                 <DataGridVirtualBody
                   height={height}
                   virtualScrollConfig={virtualScrollConfig}
+                  virtualColumnConfig={virtualColumnConfig}
                   scrollContainerRef={scrollContainerRef}
                   onScroll={onScrollToBottom ? handleScroll : undefined}
                 />
@@ -452,6 +475,7 @@ DataGrid.ColumnVisibilityToggle = DataGridColumnVisibilityToggle;
 DataGrid.DensityToggle = DataGridDensityToggle;
 DataGrid.Pagination = DataGridPagination;
 DataGrid.StatusBar = DataGridStatusBar;
+DataGrid.ColumnMenu = DataGridColumnMenu;
 
 export namespace DataGrid {
   export type Props = DataGridProps;
@@ -506,5 +530,10 @@ export namespace DataGrid {
   export namespace StatusBar {
     export type Props = import('./DataGridStatusBar').DataGridStatusBarProps;
     export type Factory = DataGridStatusBarFactory;
+  }
+
+  export namespace ColumnMenu {
+    export type Props = import('./DataGridColumnMenu').DataGridColumnMenuProps;
+    export type Factory = DataGridColumnMenuFactory;
   }
 }

@@ -480,7 +480,7 @@ export function Virtualization() {
   const store = useDataGrid({ data: largeData, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid store={store} withVirtualization height={500} />
+      <DataGrid store={store} virtualize="rows" height={500} />
     </Box>
   );
 }

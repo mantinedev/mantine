@@ -1,0 +1,51 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridTanStackCompat);
+
+## TanStack Table feature support
+
+The table below lists every TanStack Table v8 feature and its current status in DataGrid.
+
+| Feature | Status | How to use |
+|---|---|---|
+| Sorting | Built-in | `enableSorting: true` on columns |
+| Column Filtering | Built-in | `withFiltering` or controlled state |
+| Global Filtering | Built-in | `withGlobalFilter` or controlled state |
+| Pagination | Built-in | `withPagination` or controlled state |
+| Column Sizing | Built-in | `withColumnResizing` or controlled state |
+| Column Pinning | Built-in | `columnPinning` state |
+| Row Pinning | Built-in | `rowPinning` state |
+| Column Ordering | Built-in | `withColumnReorder` or controlled state |
+| Column Visibility | Built-in | `withColumnVisibility` or controlled state |
+| Row Selection | Built-in | `withRowSelection` or controlled state |
+| Row Expansion | Built-in | `withRowExpansion` or controlled state |
+| Grouping | Built-in | `grouping` state |
+| Faceting | Built-in | `withFaceting: true` |
+| Tree Data | Built-in | `getSubRows` |
+| Row Virtualization | Built-in | `virtualize="rows"` |
+| Column Virtualization | Built-in | `virtualize="columns"` |
+| Row Reordering | Built-in | `withRowReorder: true` |
+| Custom Sort Functions | Via `tableOptions` | `tableOptions: { sortingFns: {...} }` |
+| Custom Filter Functions | Per column | `filterFn` on column def |
+| Debug Mode | Via `tableOptions` | `tableOptions: { debugTable: true }` |
+
+## Using tableOptions
+
+Any TanStack Table option not directly exposed by `useDataGrid` can be passed through `tableOptions`:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  tableOptions: {
+    enableMultiSort: true,
+    maxMultiSortColCount: 3,
+    sortDescFirst: false,
+    debugTable: process.env.NODE_ENV === 'development',
+  },
+});
+```
+
+This provides a full escape hatch to the underlying TanStack Table instance without losing
+the DataGrid features built on top.

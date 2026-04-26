@@ -11,23 +11,26 @@ Group headers show the grouped value with an expand/collapse toggle to show or h
 
 <Demo data={DataGridDemos.grouping} />
 
+## Interactive grouping
+
+Use controlled `grouping` state with `onGroupingChange` to toggle grouping per column dynamically.
+Buttons or other controls can add or remove column IDs from the grouping array.
+
+<Demo data={DataGridDemos.groupingInteractive} />
+
+## Multi-level grouping
+
+Pass multiple column IDs in the `grouping` array to create nested group hierarchies.
+The order of IDs determines the grouping depth — the first ID is the outermost group.
+
+<Demo data={DataGridDemos.groupingMultiLevel} />
+
 ## Aggregation
 
-Add an `aggregationFn` to column definitions to display aggregated values in group rows.
+Add `aggregationFn` and `aggregatedCell` to column definitions to display computed values in group header rows.
 TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `mean`, `count`, `unique`, and `extent`.
 
-```tsx
-const columns = [
-  { accessorKey: 'department', header: 'Department' },
-  {
-    accessorKey: 'salary',
-    header: 'Salary',
-    aggregationFn: 'mean',
-    aggregatedCell: ({ getValue }) =>
-      `Avg: $${Math.round(getValue() as number).toLocaleString()}`,
-  },
-];
-```
+<Demo data={DataGridDemos.groupingAggregation} />
 
 ## Custom aggregation
 
@@ -51,9 +54,41 @@ const columns = [
 ];
 ```
 
+## groupedColumnMode
+
+The `groupedColumnMode` option controls what happens to a column after it is used for grouping.
+
+| Value | Behavior |
+| --- | --- |
+| `'reorder'` (default) | Grouped columns are moved to the front of the column list |
+| `'remove'` | Grouped columns are hidden from the table |
+| `false` | Grouped columns stay in their original position |
+
+<Demo data={DataGridDemos.groupedColumnMode} />
+
+## Expand and collapse all groups
+
+Use `store.table.toggleAllRowsExpanded()` to expand or collapse every group at once.
+`store.table.getIsAllRowsExpanded()` returns the current state.
+
+```tsx
+function Demo() {
+  const store = useDataGrid({ data, columns, withGrouping: true, grouping: ['department'] });
+
+  return (
+    <div>
+      <Button onClick={() => store.table.toggleAllRowsExpanded()}>
+        {store.table.getIsAllRowsExpanded() ? 'Collapse all' : 'Expand all'}
+      </Button>
+      <DataGrid store={store} />
+    </div>
+  );
+}
+```
+
 ## Controlled grouping
 
-Pass `grouping` and `onGroupingChange` to `useDataGrid` for controlled grouping state.
+Pass `grouping` and `onGroupingChange` to `useDataGrid` for fully controlled grouping state.
 The state is an array of column IDs representing the current grouping hierarchy.
 
 ```tsx

@@ -16,7 +16,7 @@ import '@mantine/core/styles.css';
 import '@mantine/data-grid/styles.css';
 ```
 
-Note: `@tanstack/react-virtual` is only needed if you plan to use the `withVirtualization` feature for large datasets.
+Note: `@tanstack/react-virtual` is only needed if you plan to use the `virtualize` feature for large datasets.
 
 ## Quick start
 
@@ -62,6 +62,50 @@ function Demo() {
 }
 ```
 
+## createColumnHelper
+
+`createColumnHelper` provides a type-safe API for building column definitions. Pass your row data
+type as a generic to get full autocompletion on accessor keys and cell values:
+
+```tsx
+import { createColumnHelper, DataGrid, useDataGrid } from '@mantine/data-grid';
+
+const columnHelper = createColumnHelper<Person>();
+
+const columns = [
+  columnHelper.accessor('name', { header: 'Name', enableSorting: true }),
+  columnHelper.accessor('age', { header: 'Age' }),
+  columnHelper.display({
+    id: 'actions',
+    header: 'Actions',
+    cell: () => <Button size="xs">Edit</Button>,
+  }),
+];
+```
+
+## Column definition types
+
+TanStack Table supports three kinds of column definitions:
+
+- **Accessor columns** — defined with `accessorKey` or `accessorFn`. Read data from the row and support sorting, filtering, and grouping.
+- **Display columns** — defined with an `id` and no accessor. Used for action buttons, checkboxes, or any content not tied to row data.
+- **Group columns** — defined with a `columns` array. Create a multi-level header by nesting accessor or display columns inside a group.
+
+## defaultColumn
+
+Pass `defaultColumn` via `tableOptions` to set fallback values for any column property that is not
+explicitly defined on individual columns:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  tableOptions: {
+    defaultColumn: { size: 200, minSize: 50, maxSize: 500 },
+  },
+});
+```
+
 ## Features overview
 
 Features are configured via `useDataGrid` options. Most are inferred automatically when you provide
@@ -83,7 +127,7 @@ controlled state or column-level flags:
 | Editing | `editingMode` is set |
 
 Presentation props like `striped`, `highlightOnHover`, `stickyHeader`, `withRowNumbers`,
-and `withVirtualization` are set directly on the `DataGrid` component.
+and `virtualize` are set directly on the `DataGrid` component.
 
 ## Peer dependencies
 

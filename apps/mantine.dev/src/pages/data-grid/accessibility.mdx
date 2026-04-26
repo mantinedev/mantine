@@ -1,0 +1,29 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridAccessibility);
+
+## Keyboard navigation
+
+DataGrid supports keyboard navigation for rows:
+
+- **Arrow Up/Down** — Move focus between rows
+- **Enter** — Toggle row expansion (when row expansion is enabled)
+- **Escape** — Remove focus from the current row
+- **Space/Enter** on sortable header — Toggle sort direction
+
+## ARIA attributes
+
+- Sortable column headers include `aria-sort` (`ascending`, `descending`, or `none`)
+- Selection checkboxes have appropriate labels
+- Expand/collapse buttons have `aria-expanded` state
+
+## Focus management
+
+Rows with `tabindex="0"` are focusable. In virtualized mode, focus is maintained when rows
+scroll in and out of view.
+
+## Screen readers
+
+DataGrid renders semantic HTML table elements (`<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, `<td>`)
+which screen readers interpret natively. Row position information is conveyed through the HTML structure.

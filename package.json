@@ -141,6 +141,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@eslint/js": "^9.39.4",
     "@storybook/nextjs": "^10.2.16",
+    "@tanstack/match-sorter-utils": "^8.19.4",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",

@@ -69,3 +69,17 @@ const store = useDataGrid({
   },
 });
 ```
+
+## RTL support
+
+Set `columnResizeDirection` to `'rtl'` when rendering the grid in a right-to-left layout so that
+drag handles appear and behave correctly:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  withColumnResizing: true,
+  columnResizeDirection: 'rtl',
+});
+```

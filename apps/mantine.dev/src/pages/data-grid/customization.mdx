@@ -135,6 +135,65 @@ function Demo() {
 For session storage, URL search params, or server-side persistence, implement the same pattern
 with your preferred storage mechanism. The controlled state options in `useDataGrid` accept any state source.
 
+## Column menu
+
+`DataGrid.ColumnMenu` renders the per-column action menu (sort, filter, pin, hide) for a given column.
+It is included automatically inside `DataGrid.Header`, but you can render it manually when building
+a fully custom header:
+
+```tsx
+<DataGrid store={store}>
+  <DataGrid.Header />
+  <DataGrid.Body />
+</DataGrid>
+```
+
+To render the column menu inside your own header cell, pass the `column` instance from the header context:
+
+```tsx
+<DataGrid store={store}>
+  {header.column && <DataGrid.ColumnMenu column={header.column} />}
+  <DataGrid.Body />
+</DataGrid>
+```
+
+## Theme integration
+
+Use `createTheme` with `DataGrid.extend` to apply default props and class names globally. This
+removes the need to repeat props on every `<DataGrid>` usage in your app:
+
+```tsx
+import { createTheme } from '@mantine/core';
+import { DataGrid } from '@mantine/data-grid';
+
+const theme = createTheme({
+  components: {
+    DataGrid: DataGrid.extend({
+      defaultProps: { striped: true, highlightOnHover: true },
+      classNames: { root: 'my-grid-root' },
+    }),
+  },
+});
+```
+
+## Dark mode
+
+DataGrid automatically adapts to the active Mantine color scheme. Border, stripe, hover, and
+selected-row colors all derive from Mantine CSS variables, so switching between light and dark
+mode requires no additional configuration.
+
+## ScrollArea configuration
+
+DataGrid wraps the table in a `ScrollArea` by default. Pass `scrollAreaProps` to configure it,
+or set `withScrollArea={false}` to handle overflow yourself:
+
+```tsx
+<DataGrid
+  store={store}
+  scrollAreaProps={{ type: 'always', offsetScrollbars: true }}
+/>
+```
+
 ## TanStack passthrough
 
 The `tableOptions` option in `useDataGrid` provides an escape hatch to the underlying TanStack Table

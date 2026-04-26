@@ -7,8 +7,12 @@ import {
   ColumnResizeMode,
   ColumnSizingState,
   ExpandedState,
+  FilterFn,
   getCoreRowModel,
   getExpandedRowModel,
+  getFacetedMinMaxValues,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getGroupedRowModel,
   getPaginationRowModel,
@@ -36,6 +40,27 @@ function defaultSortingDisabled<TData>(columns: ColumnDef<TData, any>[]): Column
       columns: defaultSortingDisabled((col as any).columns),
     }),
   }));
+}
+
+const FILTER_VARIANT_TO_FN: Record<string, string> = {
+  range: 'inNumberRange',
+  multiSelect: 'arrIncludesSome',
+  select: 'equals',
+  boolean: 'equals',
+};
+
+function processFilterColumns<TData>(columns: ColumnDef<TData, any>[]): ColumnDef<TData, any>[] {
+  return columns.map((col) => {
+    const variant = (col as any).meta?.filterVariant as string | undefined;
+    const defaultFilterFn = variant ? FILTER_VARIANT_TO_FN[variant] : undefined;
+    return {
+      ...(defaultFilterFn && !col.filterFn ? { filterFn: defaultFilterFn as any } : {}),
+      ...col,
+      ...((col as any).columns && {
+        columns: processFilterColumns((col as any).columns),
+      }),
+    };
+  });
 }
 
 export interface DataGridStore<TData = any> {
@@ -80,6 +105,18 @@ export interface DataGridStore<TData = any> {
 
   /** Whether inline cell/row editing is enabled */
   withEditing: boolean;
+
+  /** Whether faceted row models are enabled */
+  withFaceting: boolean;
+
+  /** Whether tree data (sub-rows) is enabled */
+  withTreeData: boolean;
+
+  /** Whether row drag-and-drop reordering is enabled */
+  withRowReorder: boolean;
+
+  /** Callback when rows are reordered via drag and drop */
+  onRowOrderChange?: (reorderedData: any[]) => void;
 
   /** Editing mode, `undefined` when editing is disabled */
   editingMode: 'cell' | 'row' | undefined;
@@ -149,6 +186,18 @@ export interface UseDataGridOptions<TData> {
   /** When true, sorting is handled externally (server-side) */
   manualSorting?: boolean;
 
+  /** When false, removes the third "unsorted" click state from the sort cycle */
+  enableSortingRemoval?: boolean;
+
+  /** When true, first click on a column header sorts descending instead of ascending */
+  sortDescFirst?: boolean;
+
+  /** When true, allows sorting by multiple columns simultaneously */
+  enableMultiSort?: boolean;
+
+  /** Maximum number of columns that can be sorted simultaneously */
+  maxMultiSortColCount?: number;
+
   /** Enable column filtering, inferred from controlled state */
   withFiltering?: boolean;
 
@@ -170,6 +219,9 @@ export interface UseDataGridOptions<TData> {
   /** Callback when global filter changes */
   onGlobalFilterChange?: OnChangeFn<any>;
 
+  /** Custom filter function for global filter */
+  globalFilterFn?: FilterFn<TData>;
+
   /** Enable pagination, inferred from controlled state */
   withPagination?: boolean;
 
@@ -185,6 +237,12 @@ export interface UseDataGridOptions<TData> {
   /** Total row count for server-side pagination */
   rowCount?: number;
 
+  /** Total page count for server-side pagination, alternative to `rowCount` */
+  pageCount?: number;
+
+  /** When false, prevents automatic page index reset when filters or sorting change */
+  autoResetPageIndex?: boolean;
+
   /** Default page size, @default 10 */
   pageSize?: number;
 
@@ -193,6 +251,9 @@ export interface UseDataGridOptions<TData> {
 
   /** Column resize mode, @default 'onEnd' */
   columnResizeMode?: ColumnResizeMode;
+
+  /** Direction for column resizing, useful for RTL layouts */
+  columnResizeDirection?: 'ltr' | 'rtl';
 
   /** Controlled column sizing state */
   columnSizing?: ColumnSizingState;
@@ -236,6 +297,15 @@ export interface UseDataGridOptions<TData> {
   /** Callback when row selection changes */
   onRowSelectionChange?: OnChangeFn<RowSelectionState>;
 
+  /** Enable row selection per row, or a function to control per-row */
+  enableRowSelection?: boolean | ((row: Row<TData>) => boolean);
+
+  /** Enable multi-row selection, set to `false` for single-select mode */
+  enableMultiRowSelection?: boolean | ((row: Row<TData>) => boolean);
+
+  /** Enable sub-row selection in tree data mode */
+  enableSubRowSelection?: boolean | ((row: Row<TData>) => boolean);
+
   /** Enable row expansion, inferred from controlled state */
   withRowExpansion?: boolean;
 
@@ -254,6 +324,9 @@ export interface UseDataGridOptions<TData> {
   /** Callback when grouping changes */
   onGroupingChange?: OnChangeFn<GroupingState>;
 
+  /** Controls how grouped columns are displayed: 'reorder' moves them to the front, 'remove' hides them, false leaves them in place */
+  groupedColumnMode?: 'reorder' | 'remove' | false;
+
   /** Enable row pinning, inferred from controlled state */
   withRowPinning?: boolean;
 
@@ -269,6 +342,9 @@ export interface UseDataGridOptions<TData> {
   /** Keep pinned rows visible through filtering/pagination */
   keepPinnedRows?: boolean;
 
+  /** Enable faceted row models for filter option population */
+  withFaceting?: boolean;
+
   /** Editing mode, enables inline editing when set */
   editingMode?: 'cell' | 'row';
 
@@ -277,6 +353,30 @@ export interface UseDataGridOptions<TData> {
 
   /** Callback when density changes */
   onDensityChange?: (density: DataGridDensity) => void;
+
+  /** Function to extract sub-rows from a row for tree data */
+  getSubRows?: (originalRow: TData, index: number) => TData[] | undefined;
+
+  /** Function to determine if a row can be expanded in tree data mode */
+  getRowCanExpand?: (row: Row<TData>) => boolean;
+
+  /** Whether expanded rows should be paginated, @default true */
+  paginateExpandedRows?: boolean;
+
+  /** Whether to filter from leaf rows upward in tree data mode */
+  filterFromLeafRows?: boolean;
+
+  /** Maximum depth to filter leaf rows in tree data mode */
+  maxLeafRowFilterDepth?: number;
+
+  /** When true, expanding is handled externally (server-side) */
+  manualExpanding?: boolean;
+
+  /** Enable row drag-and-drop reordering, inferred from `onRowOrderChange` */
+  withRowReorder?: boolean;
+
+  /** Callback when rows are reordered via drag and drop */
+  onRowOrderChange?: (reorderedData: TData[]) => void;
 
   /** Additional TanStack Table options */
   tableOptions?: Partial<TableOptions<TData>>;
@@ -299,6 +399,9 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     withGrouping,
     withRowPinning,
     withEditing,
+    withFaceting,
+    withTreeData,
+    withRowReorder,
   } = inferFeatureFlags(options);
 
   // Density state (Mantine-specific, not part of TanStack)
@@ -306,8 +409,8 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
   const density = options.density ?? densityState;
   const setDensity = options.onDensityChange ?? setDensityState;
 
-  // When sorting is enabled, default columns to non-sortable (opt-in per column)
-  const processedColumns = withSorting ? defaultSortingDisabled(columns) : columns;
+  const sortProcessed = withSorting ? defaultSortingDisabled(columns) : columns;
+  const processedColumns = withFiltering ? processFilterColumns(sortProcessed) : sortProcessed;
 
   // Build controlled state object from provided values
   const controlledState = {
@@ -354,30 +457,76 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     ...(withSorting && {
       getSortedRowModel: getSortedRowModel(),
       manualSorting: options.manualSorting,
+      ...(options.enableSortingRemoval !== undefined && {
+        enableSortingRemoval: options.enableSortingRemoval,
+      }),
+      ...(options.sortDescFirst !== undefined && { sortDescFirst: options.sortDescFirst }),
+      ...(options.enableMultiSort !== undefined && { enableMultiSort: options.enableMultiSort }),
+      ...(options.maxMultiSortColCount !== undefined && {
+        maxMultiSortColCount: options.maxMultiSortColCount,
+      }),
     }),
     ...((withFiltering || withGlobalFilter) && {
       getFilteredRowModel: getFilteredRowModel(),
     }),
+    ...(options.globalFilterFn && { globalFilterFn: options.globalFilterFn }),
     ...(withFiltering && { manualFiltering: options.manualFiltering }),
     ...(withPagination && {
       getPaginationRowModel: getPaginationRowModel(),
       manualPagination: options.manualPagination,
       ...(options.rowCount !== undefined && { rowCount: options.rowCount }),
+      ...(options.pageCount !== undefined && { pageCount: options.pageCount }),
+      ...(options.autoResetPageIndex !== undefined && {
+        autoResetPageIndex: options.autoResetPageIndex,
+      }),
     }),
     ...(withColumnResizing && {
       enableColumnResizing: true,
       columnResizeMode: options.columnResizeMode ?? 'onEnd',
+      ...(options.columnResizeDirection !== undefined && {
+        columnResizeDirection: options.columnResizeDirection,
+      }),
     }),
     ...(withColumnPinning && { enableColumnPinning: true }),
     ...(withRowPinning && {
       enableRowPinning: options.enableRowPinning ?? true,
       keepPinnedRows: options.keepPinnedRows,
     }),
-    ...(withRowSelection && { enableRowSelection: true }),
-    ...((withRowExpansion || withGrouping) && {
+    ...(withRowSelection && {
+      enableRowSelection: options.enableRowSelection ?? true,
+      ...(options.enableMultiRowSelection !== undefined && {
+        enableMultiRowSelection: options.enableMultiRowSelection,
+      }),
+      ...(options.enableSubRowSelection !== undefined && {
+        enableSubRowSelection: options.enableSubRowSelection,
+      }),
+    }),
+    ...((withRowExpansion || withGrouping || withTreeData) && {
       getExpandedRowModel: getExpandedRowModel(),
     }),
-    ...(withGrouping && { getGroupedRowModel: getGroupedRowModel() }),
+    ...(withGrouping && {
+      getGroupedRowModel: getGroupedRowModel(),
+      ...(options.groupedColumnMode !== undefined && {
+        groupedColumnMode: options.groupedColumnMode,
+      }),
+    }),
+    ...(options.getSubRows && { getSubRows: options.getSubRows }),
+    ...(options.getRowCanExpand && { getRowCanExpand: options.getRowCanExpand }),
+    ...(options.paginateExpandedRows !== undefined && {
+      paginateExpandedRows: options.paginateExpandedRows,
+    }),
+    ...(options.filterFromLeafRows !== undefined && {
+      filterFromLeafRows: options.filterFromLeafRows,
+    }),
+    ...(options.maxLeafRowFilterDepth !== undefined && {
+      maxLeafRowFilterDepth: options.maxLeafRowFilterDepth,
+    }),
+    ...(options.manualExpanding !== undefined && { manualExpanding: options.manualExpanding }),
+    ...(withFaceting && {
+      getFacetedRowModel: getFacetedRowModel(),
+      getFacetedUniqueValues: getFacetedUniqueValues(),
+      getFacetedMinMaxValues: getFacetedMinMaxValues(),
+    }),
 
     // Controlled state and handlers
     ...(Object.keys(controlledState).length > 0 && { state: controlledState }),
@@ -387,7 +536,11 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     ...(withPagination && {
       initialState: {
         ...tableOptions?.initialState,
-        pagination: { pageIndex: 0, pageSize: options.pageSize ?? 10 },
+        pagination: {
+          pageIndex: 0,
+          pageSize: options.pageSize ?? 10,
+          ...tableOptions?.initialState?.pagination,
+        },
       },
     }),
   };
@@ -410,6 +563,10 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     withGrouping,
     withRowPinning,
     withEditing,
+    withFaceting,
+    withTreeData,
+    withRowReorder,
+    onRowOrderChange: options.onRowOrderChange,
     editingMode: options.editingMode,
     density,
     setDensity,

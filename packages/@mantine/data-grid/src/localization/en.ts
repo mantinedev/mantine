@@ -16,6 +16,19 @@ export interface DataGridLocalization {
   groupExpand: string;
   editSave: string;
   editCancel: string;
+  booleanFilterTrue: string;
+  booleanFilterFalse: string;
+  columnMenuSortAsc: string;
+  columnMenuSortDesc: string;
+  columnMenuClearSort: string;
+  columnMenuPinLeft: string;
+  columnMenuPinRight: string;
+  columnMenuUnpin: string;
+  columnMenuHide: string;
+  columnMenuGroupBy: string;
+  columnMenuUngroup: string;
+  columnMenuResetSize: string;
+  dragToReorder: string;
 }
 
 export const DEFAULT_LOCALIZATION: DataGridLocalization = {
@@ -36,4 +49,17 @@ export const DEFAULT_LOCALIZATION: DataGridLocalization = {
   groupExpand: 'Expand group',
   editSave: 'Save',
   editCancel: 'Cancel',
+  booleanFilterTrue: 'Yes',
+  booleanFilterFalse: 'No',
+  columnMenuSortAsc: 'Sort ascending',
+  columnMenuSortDesc: 'Sort descending',
+  columnMenuClearSort: 'Clear sort',
+  columnMenuPinLeft: 'Pin to left',
+  columnMenuPinRight: 'Pin to right',
+  columnMenuUnpin: 'Unpin',
+  columnMenuHide: 'Hide column',
+  columnMenuGroupBy: 'Group by this column',
+  columnMenuUngroup: 'Ungroup',
+  columnMenuResetSize: 'Reset column size',
+  dragToReorder: 'Drag to reorder',
 };

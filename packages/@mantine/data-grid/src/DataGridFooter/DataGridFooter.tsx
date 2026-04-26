@@ -40,10 +40,13 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
     >
       {ctx.table.getFooterGroups().map((footerGroup) => (
         <Box component="tr" key={footerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
+          {ctx.withRowReorder && (
+            <Box component="td" {...ctx.getStyles('td', { classNames, styles })} />
+          )}
           {ctx.withRowSelection && (
             <Box component="td" {...ctx.getStyles('td', { classNames, styles })} />
           )}
-          {ctx.withRowExpansion && (
+          {ctx.withRowExpansion && !ctx.withTreeData && (
             <Box component="td" {...ctx.getStyles('td', { classNames, styles })} />
           )}
           {ctx.withRowNumbers && (

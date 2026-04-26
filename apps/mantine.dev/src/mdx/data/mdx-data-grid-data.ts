@@ -125,4 +125,29 @@ export const MDX_DATA_GRID_DATA: Record<string, Frontmatter> = {
     description: 'DataGrid Styles API, CSS variables, compound components',
     docs: 'data-grid/customization.mdx',
   },
+
+  DataGridTreeData: {
+    title: 'Tree data',
+    package: '@mantine/data-grid',
+    slug: '/data-grid/tree-data',
+    description: 'DataGrid hierarchical tree data with sub-rows',
+    search: 'tree data, sub-rows, hierarchical, nested, getSubRows, expand, collapse',
+    docs: 'data-grid/tree-data.mdx',
+  },
+
+  DataGridAccessibility: {
+    title: 'Accessibility',
+    package: '@mantine/data-grid',
+    slug: '/data-grid/accessibility',
+    description: 'DataGrid keyboard navigation, ARIA attributes, and screen reader support',
+    docs: 'data-grid/accessibility.mdx',
+  },
+
+  DataGridTanStackCompat: {
+    title: 'TanStack compatibility',
+    package: '@mantine/data-grid',
+    slug: '/data-grid/tanstack-compat',
+    description: 'DataGrid TanStack Table v8 feature support matrix',
+    docs: 'data-grid/tanstack-compat.mdx',
+  },
 };
