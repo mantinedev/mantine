@@ -37,6 +37,7 @@ export interface DataGridContextValue {
   withTreeData: boolean;
   withRowReorder: boolean;
   onRowOrderChange?: (reorderedData: any[]) => void;
+  tableLayout: 'fixed' | 'auto';
   stickyHeader: boolean;
   expandOnRowClick: boolean;
   editingMode: 'cell' | 'row' | undefined;

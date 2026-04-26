@@ -26,6 +26,7 @@
 }
 
 .table {
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
@@ -43,6 +44,10 @@
     --dg-stripe-color: var(--mantine-color-dark-6);
     --dg-hover-color: var(--mantine-color-dark-5);
   }
+}
+
+.root[data-table-layout='auto'] .table {
+  table-layout: auto;
 }
 
 .tbody {

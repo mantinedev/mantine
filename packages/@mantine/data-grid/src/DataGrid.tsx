@@ -233,6 +233,9 @@ export interface DataGridProps<TData = any>
 
   /** Custom render function for list view items. Receives the row and should return a card/item element */
   renderListItem?: (props: { row: Row<any> }) => React.ReactNode;
+
+  /** Table layout algorithm, @default 'fixed' */
+  tableLayout?: 'fixed' | 'auto';
 }
 
 export type DataGridFactory = Factory<{
@@ -325,6 +328,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     scrollAreaProps,
     listView,
     renderListItem,
+    tableLayout = 'fixed',
     ...others
   } = props;
 
@@ -410,6 +414,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
           withRowVirtualization || withColumnVirtualization ? false : store.withRowReorder,
         onRowOrderChange:
           withRowVirtualization || withColumnVirtualization ? undefined : store.onRowOrderChange,
+        tableLayout,
         stickyHeader: stickyHeader ?? false,
         expandOnRowClick: expandOnRowClick ?? false,
         editingMode: store.editingMode,
@@ -441,6 +446,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
             loading,
             virtualized: withRowVirtualization || withColumnVirtualization || undefined,
             'sticky-header': stickyHeader || undefined,
+            'table-layout': tableLayout === 'auto' ? 'auto' : undefined,
           },
           mod,
         ]}

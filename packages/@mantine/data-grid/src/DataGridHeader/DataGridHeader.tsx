@@ -8,6 +8,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  rem,
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
@@ -93,10 +94,18 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
       {ctx.table.getHeaderGroups().map((headerGroup) => (
         <Box component="tr" key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
           {ctx.withRowReorder && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+            <Box
+              component="th"
+              {...ctx.getStyles('th', { classNames, styles })}
+              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
+            />
           )}
           {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection !== false && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })}>
+            <Box
+              component="th"
+              {...ctx.getStyles('th', { classNames, styles })}
+              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
+            >
               <Checkbox
                 checked={
                   ctx.withPagination
@@ -118,16 +127,25 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
             </Box>
           )}
           {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection === false && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+            <Box
+              component="th"
+              {...ctx.getStyles('th', { classNames, styles })}
+              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
+            />
           )}
           {ctx.withRowExpansion && !ctx.withTreeData && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+            <Box
+              component="th"
+              {...ctx.getStyles('th', { classNames, styles })}
+              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
+            />
           )}
           {ctx.withRowNumbers && (
             <Box
               component="th"
               {...ctx.getStyles('th', { classNames, styles })}
               {...ctx.getStyles('rowNumber', { classNames, styles })}
+              style={ctx.tableLayout === 'fixed' ? { width: rem(48) } : undefined}
             >
               #
             </Box>
@@ -173,7 +191,10 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
                   ...pinnedStyles,
-                  width: ctx.withColumnResizing ? header.getSize() : undefined,
+                  width:
+                    ctx.withColumnResizing || ctx.tableLayout === 'fixed'
+                      ? header.getSize()
+                      : undefined,
                 }}
                 {...reorderProps}
               >
@@ -241,7 +262,10 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
                   ...pinnedStyle,
-                  width: ctx.withColumnResizing ? column.getSize() : undefined,
+                  width:
+                    ctx.withColumnResizing || ctx.tableLayout === 'fixed'
+                      ? column.getSize()
+                      : undefined,
                 }}
               >
                 {column.getCanFilter() ? <FilterDispatcher column={column} /> : null}
