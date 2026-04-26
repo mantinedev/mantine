@@ -30,6 +30,7 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
     groupHeader: 'Group row header cell content',
     groupToggle: 'Group row expand/collapse toggle button',
     aggregationCell: 'Aggregation cell in group row',
+    scrollContainer: 'ScrollArea wrapper around the table for horizontal scrolling',
     statusBar: 'Status bar container at the bottom of the grid',
     statusBarInfo: 'Individual status bar info text element',
     virtualScrollContainer: 'Scroll container for virtualized mode',

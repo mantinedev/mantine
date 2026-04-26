@@ -239,6 +239,9 @@
   padding: var(--dg-spacing, var(--mantine-spacing-xs));
 }
 
+.scrollContainer {
+}
+
 .statusBar {
   padding: var(--dg-spacing, var(--mantine-spacing-xs));
   border-top: rem(1px) solid var(--dg-border-color);

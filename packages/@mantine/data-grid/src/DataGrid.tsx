@@ -29,6 +29,8 @@ import {
   MantineColor,
   MantineSpacing,
   rem,
+  ScrollArea,
+  ScrollAreaProps,
   StylesApiProps,
   useProps,
   useStyles,
@@ -89,6 +91,7 @@ export type DataGridStylesNames =
   | 'aggregationCell'
   | 'statusBar'
   | 'statusBarInfo'
+  | 'scrollContainer'
   | 'virtualScrollContainer'
   | 'virtualGrid'
   | 'virtualGridHeader'
@@ -323,6 +326,12 @@ export interface DataGridProps<TData = any>
   /** Localization overrides */
   localization?: Partial<DataGridLocalization>;
 
+  /** Use ScrollArea component for horizontal scrolling, @default true */
+  withScrollArea?: boolean;
+
+  /** Props passed to the ScrollArea component, applicable only when `withScrollArea` is true */
+  scrollAreaProps?: ScrollAreaProps;
+
   /** Additional TanStack Table options, escape hatch for advanced features */
   tableOptions?: Partial<TableOptions<TData>>;
 }
@@ -445,6 +454,8 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     density: densityProp,
     onDensityChange: onDensityChangeProp,
     localization: localizationProp,
+    withScrollArea = true,
+    scrollAreaProps,
     tableOptions,
     ...others
   } = props;
@@ -619,6 +630,19 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
                   {hasFooter && <DataGridFooter />}
                 </Box>
               </Box>
+            ) : withScrollArea ? (
+              <ScrollArea
+                offsetScrollbars="x"
+                scrollbars="x"
+                {...getStyles('scrollContainer')}
+                {...scrollAreaProps}
+              >
+                <Box component="table" {...getStyles('table')}>
+                  <DataGridHeader />
+                  <DataGridBody />
+                  {hasFooter && <DataGridFooter />}
+                </Box>
+              </ScrollArea>
             ) : (
               <Box style={{ overflowX: 'auto' }}>
                 <Box component="table" {...getStyles('table')}>
