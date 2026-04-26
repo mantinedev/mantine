@@ -19,8 +19,7 @@ export * from './DataGridPagination/index';
 export * from './DataGridStatusBar/index';
 export * from './DataGridColumnMenu/index';
 export * from './DataGridFilters/index';
-export * from './localization/index';
+export * from './labels';
 export * from './hooks/index';
-export * from './utils/index';
 
 export { createColumnHelper, flexRender } from '@tanstack/react-table';

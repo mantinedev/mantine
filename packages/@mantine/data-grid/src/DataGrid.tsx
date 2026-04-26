@@ -43,7 +43,7 @@ import {
 } from './DataGridToolbar';
 import { DataGridColumnDef } from './DataGrid.types';
 import { DataGridStore, useDataGrid } from './hooks';
-import { DEFAULT_LOCALIZATION, DataGridLocalization } from './localization';
+import { DEFAULT_LABELS, DataGridLabels } from './labels';
 import classes from './DataGrid.module.css';
 
 export type DataGridStylesNames =
@@ -195,8 +195,8 @@ export interface DataGridProps<TData = any>
   /** Options for the page size selector */
   pageSizeOptions?: number[];
 
-  /** Localization overrides */
-  localization?: Partial<DataGridLocalization>;
+  /** Labels overrides */
+  labels?: Partial<DataGridLabels>;
 
   /** Use ScrollArea component for horizontal scrolling, @default true */
   withScrollArea?: boolean;
@@ -283,7 +283,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     onRowEdit,
     stickyHeader,
     pageSizeOptions,
-    localization: localizationProp,
+    labels: labelsProp,
     withScrollArea = true,
     scrollAreaProps,
     ...others
@@ -310,7 +310,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
   });
 
   const store = storeProp ?? internalStore;
-  const localization = { ...DEFAULT_LOCALIZATION, ...localizationProp };
+  const labels = { ...DEFAULT_LABELS, ...labelsProp };
   const hasFooter = store.table
     .getFooterGroups()
     .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
@@ -372,7 +372,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         editingMode: store.editingMode,
         density: store.density,
         onDensityChange: store.setDensity,
-        localization,
+        labels,
         renderExpandedRow,
         emptyState,
         onRowClick,

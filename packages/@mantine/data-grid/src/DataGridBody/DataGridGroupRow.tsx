@@ -59,7 +59,7 @@ export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
           component="button"
           type="button"
           onClick={() => row.toggleExpanded()}
-          aria-label={isExpanded ? ctx.localization.groupCollapse : ctx.localization.groupExpand}
+          aria-label={isExpanded ? ctx.labels.groupCollapse : ctx.labels.groupExpand}
           {...ctx.getStyles('groupToggle', { classNames, styles })}
         >
           <ExpandChevron expanded={isExpanded} />

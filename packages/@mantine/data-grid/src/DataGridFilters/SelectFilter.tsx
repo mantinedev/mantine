@@ -12,7 +12,7 @@ export function SelectFilter({ column }: SelectFilterProps) {
   const options = getFilterOptions(column, ctx.withFaceting);
   const placeholder =
     column.columnDef.meta?.filterPlaceholder ??
-    `${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}...`;
+    `${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}...`;
 
   return (
     <Select
@@ -21,7 +21,7 @@ export function SelectFilter({ column }: SelectFilterProps) {
       value={(column.getFilterValue() as string) ?? null}
       onChange={(value) => column.setFilterValue(value ?? undefined)}
       placeholder={placeholder}
-      aria-label={`${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}`}
+      aria-label={`${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}`}
       clearable
     />
   );

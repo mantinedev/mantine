@@ -1,4 +1,4 @@
-export interface DataGridLocalization {
+export interface DataGridLabels {
   paginationRowsPerPage: string;
   paginationOf: string;
   filterPlaceholder: string;
@@ -31,7 +31,7 @@ export interface DataGridLocalization {
   dragToReorder: string;
 }
 
-export const DEFAULT_LOCALIZATION: DataGridLocalization = {
+export const DEFAULT_LABELS: DataGridLabels = {
   paginationRowsPerPage: '{count} / page',
   paginationOf: 'of',
   filterPlaceholder: 'Filter...',

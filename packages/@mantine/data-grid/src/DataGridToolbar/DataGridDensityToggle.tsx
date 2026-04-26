@@ -7,15 +7,20 @@ import {
   factory,
   Factory,
   Menu,
+  MenuProps,
   useProps,
 } from '@mantine/core';
 import { DataGridDensity, useDataGridContext } from '../DataGrid.context';
+import { DensityIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
 export type DataGridDensityToggleStylesNames = 'densityToggle';
 
 export interface DataGridDensityToggleProps
-  extends BoxProps, CompoundStylesApiProps<DataGridDensityToggleFactory>, ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<DataGridDensityToggleFactory>, ElementProps<'div'> {
+  /** Props passed to the internal Menu component */
+  menuProps?: Partial<MenuProps>;
+}
 
 export type DataGridDensityToggleFactory = Factory<{
   props: DataGridDensityToggleProps;
@@ -26,47 +31,27 @@ export type DataGridDensityToggleFactory = Factory<{
 
 const DENSITY_ORDER: DataGridDensity[] = ['compact', 'default', 'comfortable'];
 
-function DensityIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 6h18" />
-      <path d="M3 12h18" />
-      <path d="M3 18h18" />
-    </svg>
-  );
-}
-
 export const DataGridDensityToggle = factory<DataGridDensityToggleFactory>((props) => {
-  const { className, style, classNames, styles, ...others } = useProps(
+  const { className, style, classNames, styles, menuProps, ...others } = useProps(
     'DataGridDensityToggle',
     null,
     props
   );
 
   const ctx = useDataGridContext();
-  const { localization } = ctx;
+  const { labels } = ctx;
 
   const densityLabels: Record<DataGridDensity, string> = {
-    compact: localization.densityCompact,
-    default: localization.densityDefault,
-    comfortable: localization.densityComfortable,
+    compact: labels.densityCompact,
+    default: labels.densityDefault,
+    comfortable: labels.densityComfortable,
   };
 
   return (
     <Box {...ctx.getStyles('densityToggle', { className, classNames, style, styles })} {...others}>
-      <Menu withinPortal position="bottom-end">
+      <Menu withinPortal position="bottom-end" {...menuProps}>
         <Menu.Target>
-          <ActionIcon variant="default" aria-label={localization.densityToggleLabel}>
+          <ActionIcon variant="default" aria-label={labels.densityToggleLabel}>
             <DensityIcon />
           </ActionIcon>
         </Menu.Target>

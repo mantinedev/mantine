@@ -10,7 +10,7 @@ export function TextFilter({ column }: TextFilterProps) {
   const ctx = useDataGridContext();
   const placeholder =
     column.columnDef.meta?.filterPlaceholder ??
-    `${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}...`;
+    `${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}...`;
 
   return (
     <TextInput
@@ -18,7 +18,7 @@ export function TextFilter({ column }: TextFilterProps) {
       value={(column.getFilterValue() as string) ?? ''}
       onChange={(event) => column.setFilterValue(event.currentTarget.value)}
       placeholder={placeholder}
-      aria-label={`${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}`}
+      aria-label={`${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}`}
     />
   );
 }

@@ -36,7 +36,7 @@ export const DataGridStatusBar = factory<DataGridStatusBarFactory>((props) => {
   );
 
   const ctx = useDataGridContext();
-  const { table, localization } = ctx;
+  const { table, labels } = ctx;
 
   const totalRows = table.getCoreRowModel().rows.length;
   const filteredRows = table.getFilteredRowModel().rows.length;
@@ -51,16 +51,16 @@ export const DataGridStatusBar = factory<DataGridStatusBarFactory>((props) => {
     <Box {...ctx.getStyles('statusBar', { className, classNames, style, styles })} {...others}>
       <Group gap="md">
         <Text size="sm" c="dimmed" {...ctx.getStyles('statusBarInfo', { classNames, styles })}>
-          {formatLocalized(localization.statusBarTotalRows, totalRows)}
+          {formatLocalized(labels.statusBarTotalRows, totalRows)}
         </Text>
         {hasFiltersApplied && (
           <Text size="sm" c="dimmed" {...ctx.getStyles('statusBarInfo', { classNames, styles })}>
-            {formatLocalized(localization.statusBarFilteredRows, filteredRows)}
+            {formatLocalized(labels.statusBarFilteredRows, filteredRows)}
           </Text>
         )}
         {ctx.withRowSelection && selectedCount > 0 && (
           <Text size="sm" c="dimmed" {...ctx.getStyles('statusBarInfo', { classNames, styles })}>
-            {formatLocalized(localization.statusBarSelectedRows, selectedCount)}
+            {formatLocalized(labels.statusBarSelectedRows, selectedCount)}
           </Text>
         )}
       </Group>

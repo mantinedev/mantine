@@ -8,9 +8,11 @@ import {
   factory,
   Factory,
   Menu,
+  MenuProps,
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { ColumnsIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
 export type DataGridColumnVisibilityToggleStylesNames = 'columnVisibilityToggle';
@@ -19,7 +21,10 @@ export interface DataGridColumnVisibilityToggleProps
   extends
     BoxProps,
     CompoundStylesApiProps<DataGridColumnVisibilityToggleFactory>,
-    ElementProps<'div'> {}
+    ElementProps<'div'> {
+  /** Props passed to the internal Menu component */
+  menuProps?: Partial<MenuProps>;
+}
 
 export type DataGridColumnVisibilityToggleFactory = Factory<{
   props: DataGridColumnVisibilityToggleProps;
@@ -28,29 +33,9 @@ export type DataGridColumnVisibilityToggleFactory = Factory<{
   compound: true;
 }>;
 
-function ColumnsIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="3" y="3" width="18" height="18" rx="2" />
-      <path d="M9 3v18" />
-      <path d="M15 3v18" />
-    </svg>
-  );
-}
-
 export const DataGridColumnVisibilityToggle = factory<DataGridColumnVisibilityToggleFactory>(
   (props) => {
-    const { className, style, classNames, styles, ...others } = useProps(
+    const { className, style, classNames, styles, menuProps, ...others } = useProps(
       'DataGridColumnVisibilityToggle',
       null,
       props
@@ -64,9 +49,9 @@ export const DataGridColumnVisibilityToggle = factory<DataGridColumnVisibilityTo
         {...ctx.getStyles('columnVisibilityToggle', { className, classNames, style, styles })}
         {...others}
       >
-        <Menu withinPortal position="bottom-end">
+        <Menu withinPortal position="bottom-end" {...menuProps}>
           <Menu.Target>
-            <ActionIcon variant="default" aria-label={ctx.localization.columnVisibilityLabel}>
+            <ActionIcon variant="default" aria-label={ctx.labels.columnVisibilityLabel}>
               <ColumnsIcon />
             </ActionIcon>
           </Menu.Target>

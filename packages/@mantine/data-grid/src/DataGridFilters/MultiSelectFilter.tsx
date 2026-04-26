@@ -12,7 +12,7 @@ export function MultiSelectFilter({ column }: MultiSelectFilterProps) {
   const options = getFilterOptions(column, ctx.withFaceting);
   const placeholder =
     column.columnDef.meta?.filterPlaceholder ??
-    `${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}...`;
+    `${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}...`;
 
   return (
     <MultiSelect
@@ -21,7 +21,7 @@ export function MultiSelectFilter({ column }: MultiSelectFilterProps) {
       value={(column.getFilterValue() as string[]) ?? []}
       onChange={(value) => column.setFilterValue(value.length > 0 ? value : undefined)}
       placeholder={placeholder}
-      aria-label={`${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}`}
+      aria-label={`${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}`}
       clearable
     />
   );

@@ -73,15 +73,15 @@ const store = useDataGrid({ data, columns, withRowSelection: true });
 </DataGrid>
 ```
 
-## Localization
+## Labels
 
-Override any text label by passing a `localization` prop to `DataGrid`. All keys are optional --
+Override any text label by passing a `labels` prop to `DataGrid`. All keys are optional --
 only override what you need.
 
 ```tsx
 <DataGrid
   store={store}
-  localization={{
+  labels={{
     paginationRowsPerPage: '{count} par page',
     paginationOf: 'sur',
     filterPlaceholder: 'Filtrer...',

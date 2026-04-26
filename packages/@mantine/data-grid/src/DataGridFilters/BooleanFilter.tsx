@@ -11,8 +11,8 @@ export function BooleanFilter({ column }: BooleanFilterProps) {
   const filterValue = column.getFilterValue();
   const currentValue = filterValue === true ? 'true' : filterValue === false ? 'false' : null;
   const booleanOptions = [
-    { value: 'true', label: ctx.localization.booleanFilterTrue },
-    { value: 'false', label: ctx.localization.booleanFilterFalse },
+    { value: 'true', label: ctx.labels.booleanFilterTrue },
+    { value: 'false', label: ctx.labels.booleanFilterFalse },
   ];
 
   return (
@@ -31,9 +31,9 @@ export function BooleanFilter({ column }: BooleanFilterProps) {
       }}
       placeholder={
         column.columnDef.meta?.filterPlaceholder ??
-        `${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}...`
+        `${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}...`
       }
-      aria-label={`${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id}`}
+      aria-label={`${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id}`}
       clearable
     />
   );

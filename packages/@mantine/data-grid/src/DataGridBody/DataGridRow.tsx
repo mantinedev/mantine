@@ -139,7 +139,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
           {...ctx.getStyles('dragHandle', { classNames, styles })}
           draggable
           onDragStart={handleDragStart}
-          aria-label={ctx.localization.dragToReorder ?? 'Drag to reorder'}
+          aria-label={ctx.labels.dragToReorder ?? 'Drag to reorder'}
         >
           <GripIcon />
         </Box>

@@ -1,3 +1,19 @@
+import { AccordionChevron } from '@mantine/core';
+
+export { AccordionChevron as SortIcon } from '@mantine/core';
+
+export function ExpandChevron({ expanded }: { expanded: boolean }) {
+  return (
+    <AccordionChevron
+      size={16}
+      style={{
+        transform: expanded ? 'rotate(0deg)' : 'rotate(-90deg)',
+        transition: 'transform 150ms ease',
+      }}
+    />
+  );
+}
+
 export function GripIcon() {
   return (
     <svg
@@ -20,50 +36,6 @@ export function GripIcon() {
   );
 }
 
-export function ExpandChevron({ expanded }: { expanded: boolean }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{
-        transform: expanded ? 'rotate(90deg)' : undefined,
-        transition: 'transform 150ms ease',
-        display: 'inline-block',
-        verticalAlign: 'middle',
-      }}
-    >
-      <path d="M9 18l6-6-6-6" />
-    </svg>
-  );
-}
-
-export function DefaultSortedIcon() {
-  return (
-    <svg
-      viewBox="0 0 15 15"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      style={{ display: 'block' }}
-    >
-      <path
-        d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z"
-        fill="currentColor"
-        fillRule="evenodd"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-}
-
 export function DefaultUnsortedIcon() {
   return (
     <svg
@@ -80,6 +52,63 @@ export function DefaultUnsortedIcon() {
         fillRule="evenodd"
         clipRule="evenodd"
       />
+    </svg>
+  );
+}
+
+export function DensityIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 6h18" />
+      <path d="M3 12h18" />
+      <path d="M3 18h18" />
+    </svg>
+  );
+}
+
+export function ColumnsIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M9 3v18" />
+      <path d="M15 3v18" />
+    </svg>
+  );
+}
+
+export function KebabIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      style={{ display: 'block' }}
+    >
+      <circle cx="8" cy="3" r="1.5" />
+      <circle cx="8" cy="8" r="1.5" />
+      <circle cx="8" cy="13" r="1.5" />
     </svg>
   );
 }

@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { FilterDispatcher } from '../DataGridFilters';
-import { DefaultSortedIcon, DefaultUnsortedIcon } from '../icons';
+import { DefaultUnsortedIcon, SortIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
 export type DataGridHeaderStylesNames =
@@ -203,7 +203,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                           {...ctx.getStyles('sortIcon', { classNames, styles })}
                         >
                           {sortDirection
-                            ? (ctx.sortedIcon ?? <DefaultSortedIcon />)
+                            ? (ctx.sortedIcon ?? <SortIcon size={14} />)
                             : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
                         </Box>
                       )}

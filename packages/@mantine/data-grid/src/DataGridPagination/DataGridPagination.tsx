@@ -7,7 +7,9 @@ import {
   Factory,
   Group,
   Pagination,
+  PaginationProps,
   Select,
+  SelectProps,
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
@@ -19,6 +21,12 @@ export interface DataGridPaginationProps
   extends BoxProps, CompoundStylesApiProps<DataGridPaginationFactory>, ElementProps<'div'> {
   /** Options for the page size selector */
   pageSizeOptions?: number[];
+
+  /** Props passed to the internal Select component (page size selector) */
+  selectProps?: Partial<SelectProps>;
+
+  /** Props passed to the internal Pagination component */
+  paginationProps?: Partial<PaginationProps>;
 }
 
 export type DataGridPaginationFactory = Factory<{
@@ -33,11 +41,16 @@ const defaultProps = {
 };
 
 export const DataGridPagination = factory<DataGridPaginationFactory>((props) => {
-  const { className, style, classNames, styles, pageSizeOptions, ...others } = useProps(
-    'DataGridPagination',
-    defaultProps,
-    props
-  );
+  const {
+    className,
+    style,
+    classNames,
+    styles,
+    pageSizeOptions,
+    selectProps,
+    paginationProps,
+    ...others
+  } = useProps('DataGridPagination', defaultProps, props);
 
   const ctx = useDataGridContext();
   const { table } = ctx;
@@ -54,6 +67,7 @@ export const DataGridPagination = factory<DataGridPaginationFactory>((props) => 
       <Group justify="space-between">
         <Select
           size="xs"
+          {...selectProps}
           value={String(currentPageSize)}
           onChange={(value) => {
             if (value) {
@@ -62,13 +76,14 @@ export const DataGridPagination = factory<DataGridPaginationFactory>((props) => 
           }}
           data={allOptions.map((size) => ({
             value: String(size),
-            label: ctx.localization.paginationRowsPerPage.replace('{count}', String(size)),
+            label: ctx.labels.paginationRowsPerPage.replace('{count}', String(size)),
           }))}
-          aria-label={ctx.localization.paginationRowsPerPage.replace('{count}', '')}
-          w={120}
+          aria-label={ctx.labels.paginationRowsPerPage.replace('{count}', '')}
+          w={selectProps?.w ?? 120}
         />
         <Pagination
           size="sm"
+          {...paginationProps}
           total={pageCount}
           value={currentPage}
           onChange={(page) => table.setPageIndex(page - 1)}

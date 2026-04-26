@@ -2,7 +2,7 @@ import { Cell, Row, Table as ReactTable } from '@tanstack/react-table';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { DataGridFactory } from './DataGrid';
 import type { DataGridStore } from './hooks';
-import type { DataGridLocalization } from './localization';
+import type { DataGridLabels } from './labels';
 
 export type DataGridDensity = 'compact' | 'default' | 'comfortable';
 
@@ -39,7 +39,7 @@ export interface DataGridContextValue {
   editingMode: 'cell' | 'row' | undefined;
   density: DataGridDensity;
   onDensityChange: (density: DataGridDensity) => void;
-  localization: DataGridLocalization;
+  labels: DataGridLabels;
   renderExpandedRow?: (props: { row: Row<any> }) => React.ReactNode;
   emptyState?: React.ReactNode;
   onRowClick?: (row: Row<any>, event: React.MouseEvent) => void;

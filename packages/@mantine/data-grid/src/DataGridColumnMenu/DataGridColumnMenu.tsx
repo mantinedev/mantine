@@ -8,9 +8,11 @@ import {
   factory,
   Factory,
   Menu,
+  MenuProps,
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { KebabIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
 export type DataGridColumnMenuStylesNames = 'columnMenu';
@@ -19,6 +21,9 @@ export interface DataGridColumnMenuProps
   extends BoxProps, CompoundStylesApiProps<DataGridColumnMenuFactory>, ElementProps<'div'> {
   /** Column instance from @tanstack/react-table */
   column: Column<any, unknown>;
+
+  /** Props passed to the internal Menu component */
+  menuProps?: Partial<MenuProps>;
 }
 
 export type DataGridColumnMenuFactory = Factory<{
@@ -28,34 +33,17 @@ export type DataGridColumnMenuFactory = Factory<{
   compound: true;
 }>;
 
-function KebabIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="currentColor"
-      style={{ display: 'block' }}
-    >
-      <circle cx="8" cy="3" r="1.5" />
-      <circle cx="8" cy="8" r="1.5" />
-      <circle cx="8" cy="13" r="1.5" />
-    </svg>
-  );
-}
-
 const defaultProps = {} satisfies Partial<DataGridColumnMenuProps>;
 
 export const DataGridColumnMenu = factory<DataGridColumnMenuFactory>((props) => {
-  const { className, style, classNames, styles, column, ...others } = useProps(
+  const { className, style, classNames, styles, column, menuProps, ...others } = useProps(
     'DataGridColumnMenu',
     defaultProps,
     props
   );
 
   const ctx = useDataGridContext();
-  const { localization } = ctx;
+  const { labels } = ctx;
 
   const canSort = ctx.withSorting && column.getCanSort();
   const isSorted = column.getIsSorted();
@@ -81,16 +69,10 @@ export const DataGridColumnMenu = factory<DataGridColumnMenuFactory>((props) => 
 
   const sortItems = canSort ? (
     <>
-      <Menu.Item onClick={() => column.toggleSorting(false)}>
-        {localization.columnMenuSortAsc}
-      </Menu.Item>
-      <Menu.Item onClick={() => column.toggleSorting(true)}>
-        {localization.columnMenuSortDesc}
-      </Menu.Item>
+      <Menu.Item onClick={() => column.toggleSorting(false)}>{labels.columnMenuSortAsc}</Menu.Item>
+      <Menu.Item onClick={() => column.toggleSorting(true)}>{labels.columnMenuSortDesc}</Menu.Item>
       {isSorted && (
-        <Menu.Item onClick={() => column.clearSorting()}>
-          {localization.columnMenuClearSort}
-        </Menu.Item>
+        <Menu.Item onClick={() => column.clearSorting()}>{labels.columnMenuClearSort}</Menu.Item>
       )}
     </>
   ) : null;
@@ -98,40 +80,34 @@ export const DataGridColumnMenu = factory<DataGridColumnMenuFactory>((props) => 
   const pinItems = canPin ? (
     <>
       {isPinned !== 'left' && (
-        <Menu.Item onClick={() => column.pin('left')}>{localization.columnMenuPinLeft}</Menu.Item>
+        <Menu.Item onClick={() => column.pin('left')}>{labels.columnMenuPinLeft}</Menu.Item>
       )}
       {isPinned !== 'right' && (
-        <Menu.Item onClick={() => column.pin('right')}>{localization.columnMenuPinRight}</Menu.Item>
+        <Menu.Item onClick={() => column.pin('right')}>{labels.columnMenuPinRight}</Menu.Item>
       )}
       {isPinned && (
-        <Menu.Item onClick={() => column.pin(false)}>{localization.columnMenuUnpin}</Menu.Item>
+        <Menu.Item onClick={() => column.pin(false)}>{labels.columnMenuUnpin}</Menu.Item>
       )}
     </>
   ) : null;
 
   const visibilityItems = canHide ? (
-    <Menu.Item onClick={() => column.toggleVisibility(false)}>
-      {localization.columnMenuHide}
-    </Menu.Item>
+    <Menu.Item onClick={() => column.toggleVisibility(false)}>{labels.columnMenuHide}</Menu.Item>
   ) : null;
 
   const groupItems = (
     <>
       {canGroup && !isGrouped && (
-        <Menu.Item onClick={() => column.toggleGrouping()}>
-          {localization.columnMenuGroupBy}
-        </Menu.Item>
+        <Menu.Item onClick={() => column.toggleGrouping()}>{labels.columnMenuGroupBy}</Menu.Item>
       )}
       {isGrouped && (
-        <Menu.Item onClick={() => column.toggleGrouping()}>
-          {localization.columnMenuUngroup}
-        </Menu.Item>
+        <Menu.Item onClick={() => column.toggleGrouping()}>{labels.columnMenuUngroup}</Menu.Item>
       )}
     </>
   );
 
   const resizeItems = canResize ? (
-    <Menu.Item onClick={() => column.resetSize()}>{localization.columnMenuResetSize}</Menu.Item>
+    <Menu.Item onClick={() => column.resetSize()}>{labels.columnMenuResetSize}</Menu.Item>
   ) : null;
 
   const needsDividerAfterSort = hasSortItems && (hasVisibilityItems || hasPinItems);
@@ -140,7 +116,7 @@ export const DataGridColumnMenu = factory<DataGridColumnMenuFactory>((props) => 
 
   return (
     <Box {...ctx.getStyles('columnMenu', { className, classNames, style, styles })} {...others}>
-      <Menu withinPortal position="bottom-end">
+      <Menu withinPortal position="bottom-end" {...menuProps}>
         <Menu.Target>
           <ActionIcon variant="subtle" size="sm" aria-label="Column menu">
             <KebabIcon />

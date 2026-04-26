@@ -30,7 +30,7 @@ export function NumberRangeFilter({ column }: NumberRangeFilterProps) {
           );
         }}
         placeholder={minPlaceholder}
-        aria-label={`${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id} min`}
+        aria-label={`${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id} min`}
         style={{ flex: 1 }}
       />
       <NumberInput
@@ -43,7 +43,7 @@ export function NumberRangeFilter({ column }: NumberRangeFilterProps) {
           );
         }}
         placeholder={maxPlaceholder}
-        aria-label={`${ctx.localization.filterPlaceholder.replace('...', '')} ${column.id} max`}
+        aria-label={`${ctx.labels.filterPlaceholder.replace('...', '')} ${column.id} max`}
         style={{ flex: 1 }}
       />
     </Flex>
