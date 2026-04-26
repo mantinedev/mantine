@@ -13,6 +13,7 @@ export type DataGridPersistableState =
   | 'rowSelection'
   | 'expanded'
   | 'grouping'
+  | 'rowPinning'
   | 'density';
 
 export interface UseDataGridStateOptions {

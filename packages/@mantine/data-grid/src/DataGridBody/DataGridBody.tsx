@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -37,7 +37,10 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
   const { className, style, classNames, styles, ...others } = useProps('DataGridBody', null, props);
 
   const ctx = useDataGridContext();
-  const rows = ctx.table.getRowModel().rows;
+  const topRows = ctx.withRowPinning ? ctx.table.getTopRows() : [];
+  const bottomRows = ctx.withRowPinning ? ctx.table.getBottomRows() : [];
+  const rows = ctx.withRowPinning ? ctx.table.getCenterRows() : ctx.table.getRowModel().rows;
+  const allEmpty = topRows.length === 0 && rows.length === 0 && bottomRows.length === 0;
   let totalColumns = ctx.table.getVisibleLeafColumns().length;
   if (ctx.withRowSelection) {
     totalColumns += 1;
@@ -57,12 +60,12 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
         return;
       }
 
-      const tbody = row.parentElement;
-      if (!tbody) {
+      const table = row.closest('table');
+      if (!table) {
         return;
       }
 
-      const rowElements = Array.from(tbody.querySelectorAll<HTMLElement>(':scope > tr'));
+      const rowElements = Array.from(table.querySelectorAll<HTMLElement>('tbody > tr'));
       const currentIndex = rowElements.indexOf(row as HTMLElement);
 
       if (event.key === 'ArrowDown') {
@@ -78,14 +81,12 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
           prevRow.focus();
         }
       } else if (event.key === 'Enter') {
-        const rowIndex = Number(row.dataset.rowIndex);
-        if (!Number.isNaN(rowIndex)) {
-          const tableRow = ctx.table.getRowModel().rows[rowIndex];
-          if (tableRow) {
-            if (ctx.withRowExpansion) {
-              event.preventDefault();
-              tableRow.toggleExpanded();
-            }
+        const rowId = row.dataset.rowId;
+        if (rowId) {
+          const tableRow = ctx.table.getRow(rowId);
+          if (tableRow && ctx.withRowExpansion) {
+            event.preventDefault();
+            tableRow.toggleExpanded();
           }
         }
       } else if (event.key === 'Escape') {
@@ -95,67 +96,110 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
     [ctx.table, ctx.withRowExpansion]
   );
 
-  return (
-    <Box
-      component="tbody"
-      onKeyDown={handleKeyDown}
-      {...ctx.getStyles('tbody', { className, classNames, style, styles })}
-      {...others}
-    >
-      {rows.length === 0 && ctx.emptyState ? (
-        <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
-          <Box
-            component="td"
-            colSpan={totalColumns}
-            {...ctx.getStyles('emptyState', { classNames, styles })}
-          >
-            {ctx.emptyState}
-          </Box>
-        </Box>
-      ) : (
-        rows.map((row, rowIndex) => (
-          <React.Fragment key={row.id}>
-            {ctx.withGrouping && row.getIsGrouped() ? (
-              <DataGridGroupRow
-                row={row}
-                totalColumns={totalColumns}
-                classNames={classNames}
-                styles={styles}
-              />
-            ) : (
-              <DataGridRow row={row} rowIndex={rowIndex} classNames={classNames} styles={styles} />
-            )}
-            {ctx.withRowExpansion &&
-              row.getIsExpanded() &&
-              !row.getIsGrouped() &&
-              ctx.renderExpandedRow && (
-                <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
-                  <Box
-                    component="td"
-                    colSpan={totalColumns}
-                    {...ctx.getStyles('expandedRow', { classNames, styles })}
-                  >
-                    {ctx.renderExpandedRow({ row })}
-                  </Box>
+  const [pinnedTopOffset, setPinnedTopOffset] = useState(0);
+  const pinnedTopRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (node && ctx.stickyHeader) {
+        const thead = node.parentElement?.querySelector('thead');
+        if (thead) {
+          setPinnedTopOffset(thead.offsetHeight);
+        }
+      }
+    },
+    [ctx.stickyHeader]
+  );
+
+  const renderRows = (rowList: typeof rows, startIndex = 0) =>
+    rowList.map((row, i) => {
+      const globalIndex = startIndex + i;
+      return (
+        <React.Fragment key={row.id}>
+          {ctx.withGrouping && row.getIsGrouped() ? (
+            <DataGridGroupRow
+              row={row}
+              totalColumns={totalColumns}
+              classNames={classNames}
+              styles={styles}
+            />
+          ) : (
+            <DataGridRow row={row} rowIndex={globalIndex} classNames={classNames} styles={styles} />
+          )}
+          {ctx.withRowExpansion &&
+            row.getIsExpanded() &&
+            !row.getIsGrouped() &&
+            ctx.renderExpandedRow && (
+              <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
+                <Box
+                  component="td"
+                  colSpan={totalColumns}
+                  {...ctx.getStyles('expandedRow', { classNames, styles })}
+                >
+                  {ctx.renderExpandedRow({ row })}
                 </Box>
-              )}
-            {ctx.withGrouping && row.getIsGrouped() && row.getIsExpanded() && (
-              <>
-                {row.subRows.map((subRow, subIndex) => (
-                  <DataGridRow
-                    key={subRow.id}
-                    row={subRow}
-                    rowIndex={subIndex}
-                    classNames={classNames}
-                    styles={styles}
-                  />
-                ))}
-              </>
+              </Box>
             )}
-          </React.Fragment>
-        ))
+          {ctx.withGrouping && row.getIsGrouped() && row.getIsExpanded() && (
+            <>
+              {row.subRows.map((subRow, subIndex) => (
+                <DataGridRow
+                  key={subRow.id}
+                  row={subRow}
+                  rowIndex={subIndex}
+                  classNames={classNames}
+                  styles={styles}
+                />
+              ))}
+            </>
+          )}
+        </React.Fragment>
+      );
+    });
+
+  return (
+    <>
+      {ctx.withRowPinning && topRows.length > 0 && (
+        <Box
+          component="tbody"
+          ref={pinnedTopRef}
+          data-pinned-top
+          onKeyDown={handleKeyDown}
+          {...ctx.getStyles('tbody', { className, classNames, style, styles })}
+          style={{ top: pinnedTopOffset > 0 ? pinnedTopOffset : undefined }}
+        >
+          {renderRows(topRows, 0)}
+        </Box>
       )}
-    </Box>
+      <Box
+        component="tbody"
+        onKeyDown={handleKeyDown}
+        {...ctx.getStyles('tbody', { className, classNames, style, styles })}
+        {...others}
+      >
+        {allEmpty && ctx.emptyState ? (
+          <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
+            <Box
+              component="td"
+              colSpan={totalColumns}
+              {...ctx.getStyles('emptyState', { classNames, styles })}
+            >
+              {ctx.emptyState}
+            </Box>
+          </Box>
+        ) : (
+          renderRows(rows, topRows.length)
+        )}
+      </Box>
+      {ctx.withRowPinning && bottomRows.length > 0 && (
+        <Box
+          component="tbody"
+          data-pinned-bottom
+          onKeyDown={handleKeyDown}
+          {...ctx.getStyles('tbody', { className, classNames, style, styles })}
+        >
+          {renderRows(bottomRows, topRows.length + rows.length)}
+        </Box>
+      )}
+    </>
   );
 });
 

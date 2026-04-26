@@ -27,6 +27,7 @@ export interface DataGridContextValue {
   withRowNumbers: boolean;
   withVirtualization: boolean;
   withGrouping: boolean;
+  withRowPinning: boolean;
   withEditing: boolean;
   stickyHeader: boolean;
   expandOnRowClick: boolean;

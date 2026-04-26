@@ -343,6 +343,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         withRowNumbers: withRowNumbers ?? false,
         withVirtualization: withVirtualization ?? false,
         withGrouping: store.withGrouping,
+        withRowPinning: withVirtualization ? false : store.withRowPinning,
         withEditing: store.withEditing,
         stickyHeader: stickyHeader ?? false,
         expandOnRowClick: expandOnRowClick ?? false,

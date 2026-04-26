@@ -1,0 +1,65 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridColumnVisibility);
+
+## Basic column visibility
+
+Pass `withColumnVisibility` to `useDataGrid` to allow users to show and hide columns.
+Use `DataGrid.ColumnVisibilityToggle` inside `DataGrid.Toolbar` to render the toggle menu.
+
+<Demo data={DataGridDemos.columnVisibility} />
+
+## Controlled visibility state
+
+Pass `columnVisibility` and `onColumnVisibilityChange` to `useDataGrid` for controlled state.
+The state is an object mapping column IDs to boolean values. Access current state via
+`store.columnVisibility`.
+
+<Demo data={DataGridDemos.columnVisibilityControlled} />
+
+## Disable hiding per column
+
+Set `enableHiding: false` on column definitions to prevent specific columns from being hidden.
+These columns appear as disabled in the visibility toggle menu.
+
+<Demo data={DataGridDemos.columnVisibilityEnableHiding} />
+
+## Toggle all columns
+
+Toggle all columns visible or hidden programmatically using the table instance:
+
+```tsx
+const store = useDataGrid({ data, columns, withColumnVisibility: true });
+
+// Hide all columns
+store.table.toggleAllColumnsVisible(false);
+
+// Show all columns
+store.table.toggleAllColumnsVisible(true);
+```
+
+## Programmatic visibility
+
+Toggle individual column visibility using the column instance:
+
+```tsx
+// Toggle a specific column
+store.table.getColumn('email')?.toggleVisibility();
+
+// Set visibility explicitly
+store.table.getColumn('email')?.toggleVisibility(false);
+```
+
+## Initial hidden columns
+
+Set columns as hidden initially by passing `columnVisibility` to `useDataGrid`:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  columnVisibility: { email: false, startDate: false },
+});
+```

@@ -49,6 +49,23 @@
   border-collapse: inherit;
 }
 
+.tbody[data-pinned-top] {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tbody[data-pinned-bottom] {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+}
+
+.tr[data-pinned-top],
+.tr[data-pinned-bottom] {
+  background: var(--mantine-color-body);
+}
+
 .thead {
 }
 

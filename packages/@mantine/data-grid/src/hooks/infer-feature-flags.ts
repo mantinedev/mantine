@@ -25,6 +25,7 @@ export interface DataGridFeatureFlags {
   withRowSelection: boolean;
   withRowExpansion: boolean;
   withGrouping: boolean;
+  withRowPinning: boolean;
   withEditing: boolean;
 }
 
@@ -52,6 +53,9 @@ export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): Da
     withRowExpansion:
       options.withRowExpansion ?? isDefined(options.expanded, options.onExpandedChange),
     withGrouping: options.withGrouping ?? isDefined(options.grouping, options.onGroupingChange),
+    withRowPinning:
+      options.withRowPinning ??
+      isDefined(options.rowPinning, options.onRowPinningChange, options.enableRowPinning),
     withEditing: options.editingMode !== undefined,
   };
 }

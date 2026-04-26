@@ -18,6 +18,7 @@ const allFalse: DataGridFeatureFlags = {
   withRowSelection: false,
   withRowExpansion: false,
   withGrouping: false,
+  withRowPinning: false,
   withEditing: false,
 };
 
@@ -211,6 +212,23 @@ describe('inferFeatureFlags', () => {
     it('infers from onGroupingChange', () => {
       const flags = inferFeatureFlags({ ...baseOptions, onGroupingChange: () => {} });
       expect(flags.withGrouping).toBe(true);
+    });
+  });
+
+  describe('withRowPinning', () => {
+    it('infers from rowPinning', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, rowPinning: { top: ['1'], bottom: [] } });
+      expect(flags.withRowPinning).toBe(true);
+    });
+
+    it('infers from onRowPinningChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onRowPinningChange: () => {} });
+      expect(flags.withRowPinning).toBe(true);
+    });
+
+    it('is false by default', () => {
+      const flags = inferFeatureFlags(baseOptions);
+      expect(flags.withRowPinning).toBe(false);
     });
   });
 

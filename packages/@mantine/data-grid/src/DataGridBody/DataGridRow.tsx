@@ -66,6 +66,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
   const ctx = useDataGridContext();
   const isSelected = ctx.withRowSelection && row.getIsSelected();
   const isStriped = ctx.striped && rowIndex % 2 === 1;
+  const rowPinned = ctx.withRowPinning ? row.getIsPinned() : false;
 
   const handleRowClick = (event: React.MouseEvent) => {
     if (ctx.onRowClick) {
@@ -87,9 +88,12 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       component="tr"
       tabIndex={rowIndex === 0 ? 0 : -1}
       data-row-index={rowIndex}
+      data-row-id={row.id}
       data-selected={isSelected || undefined}
       data-striped={isStriped || undefined}
       data-hover={ctx.highlightOnHover || undefined}
+      data-pinned-top={rowPinned === 'top' || undefined}
+      data-pinned-bottom={rowPinned === 'bottom' || undefined}
       onClick={ctx.onRowClick || ctx.expandOnRowClick ? handleRowClick : undefined}
       onDoubleClick={handleRowDoubleClick}
       {...ctx.getStyles('tr', { className, classNames, style, styles })}

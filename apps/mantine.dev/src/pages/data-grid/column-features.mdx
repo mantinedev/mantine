@@ -4,52 +4,25 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.DataGridColumnFeatures);
 
-## Column resizing
-
-Pass `withColumnResizing` to `useDataGrid` to allow users to drag column borders to resize them.
-You can set initial column widths using the `size` property in column definitions.
-
-<Demo data={DataGridDemos.columnResizing} />
-
-## Column pinning
-
-Pass `columnPinning` to `useDataGrid` to pin columns to the left or right edge of the grid.
-Pinned columns remain visible while scrolling horizontally.
-
-<Demo data={DataGridDemos.columnPinning} />
-
-## Column visibility
-
-Pass `withColumnVisibility` to `useDataGrid` to allow users to show and hide columns. Use the
-`DataGrid.ColumnVisibilityToggle` compound component inside `DataGrid.Toolbar` to render a column toggle menu.
-
-<Demo data={DataGridDemos.columnVisibility} />
-
 ## Column reorder
 
-Pass `withColumnReorder` to `useDataGrid` to enable drag-and-drop column reordering. Users can drag
-column headers to rearrange the column order. Use `columnOrder` and `onColumnOrderChange` for controlled state.
+Pass `withColumnReorder` to `useDataGrid` to enable drag-and-drop column reordering.
+Users can drag column headers to rearrange the column order.
+
+<Demo data={DataGridDemos.columnReorder} />
+
+Use `columnOrder` and `onColumnOrderChange` for controlled state. Reset the column order
+with `store.table.setColumnOrder([])`.
 
 ## Header groups
 
 Group columns under shared headers by nesting column definitions. Use the `columns` property
-on a column definition to create header groups:
+on a column definition to create header groups.
 
-```tsx
-const columns = [
-  {
-    header: 'Name',
-    columns: [
-      { accessorKey: 'firstName', header: 'First' },
-      { accessorKey: 'lastName', header: 'Last' },
-    ],
-  },
-  {
-    header: 'Details',
-    columns: [
-      { accessorKey: 'email', header: 'Email' },
-      { accessorKey: 'department', header: 'Department' },
-    ],
-  },
-];
-```
+<Demo data={DataGridDemos.headerGroups} />
+
+## Related pages
+
+- [Column sizing](/data-grid/column-sizing) -- resize, min/max constraints
+- [Column visibility](/data-grid/column-visibility) -- show/hide columns
+- [Pinning](/data-grid/pinning) -- pin columns and rows

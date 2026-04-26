@@ -1,0 +1,71 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridColumnSizing);
+
+## Basic column resizing
+
+Pass `withColumnResizing` to `useDataGrid` to allow users to drag column borders to resize them.
+Set initial column widths using the `size` property in column definitions.
+
+<Demo data={DataGridDemos.columnResizing} />
+
+## Resize mode
+
+DataGrid supports two resize modes: `'onEnd'` (default) updates column widths when the user
+releases the drag handle, while `'onChange'` updates widths in real-time during dragging.
+
+<Demo data={DataGridDemos.columnResizeMode} />
+
+## Column size constraints
+
+Use `minSize` and `maxSize` in column definitions to constrain how small or large a column
+can be resized. The `size` property sets the initial width.
+
+<Demo data={DataGridDemos.columnSizingMinMax} />
+
+## Controlled column sizing
+
+Pass `columnSizing` and `onColumnSizingChange` to `useDataGrid` for controlled column sizing state.
+Access current sizes via `store.columnSizing`.
+
+<Demo data={DataGridDemos.columnSizingControlled} />
+
+## Disable resizing per column
+
+Set `enableResizing: false` on individual column definitions to prevent them from being resized
+while other columns remain resizable.
+
+```tsx
+const columns = [
+  { accessorKey: 'id', header: 'ID', size: 60, enableResizing: false },
+  { accessorKey: 'name', header: 'Name', size: 200 },
+  { accessorKey: 'email', header: 'Email', size: 250 },
+];
+
+const store = useDataGrid({ data, columns, withColumnResizing: true });
+```
+
+## Column size defaults
+
+TanStack Table uses these defaults when `size`, `minSize`, or `maxSize` are not specified:
+
+| Property | Default |
+|----------|---------|
+| `size` | `150` |
+| `minSize` | `20` |
+| `maxSize` | `Number.MAX_SAFE_INTEGER` |
+
+Override these globally via `tableOptions.defaultColumn`:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  withColumnResizing: true,
+  tableOptions: {
+    defaultColumn: { size: 200, minSize: 50, maxSize: 500 },
+  },
+});
+```

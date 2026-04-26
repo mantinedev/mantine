@@ -53,9 +53,34 @@ export const Demo_controlledPagination = {
   render: renderDemo(demos.controlledPagination),
 };
 
+export const Demo_columnReorder = {
+  name: '⭐ Demo: columnReorder',
+  render: renderDemo(demos.columnReorder),
+};
+
+export const Demo_headerGroups = {
+  name: '⭐ Demo: headerGroups',
+  render: renderDemo(demos.headerGroups),
+};
+
 export const Demo_columnResizing = {
   name: '⭐ Demo: columnResizing',
   render: renderDemo(demos.columnResizing),
+};
+
+export const Demo_columnResizeMode = {
+  name: '⭐ Demo: columnResizeMode',
+  render: renderDemo(demos.columnResizeMode),
+};
+
+export const Demo_columnSizingControlled = {
+  name: '⭐ Demo: columnSizingControlled',
+  render: renderDemo(demos.columnSizingControlled),
+};
+
+export const Demo_columnSizingMinMax = {
+  name: '⭐ Demo: columnSizingMinMax',
+  render: renderDemo(demos.columnSizingMinMax),
 };
 
 export const Demo_columnPinning = {
@@ -63,9 +88,49 @@ export const Demo_columnPinning = {
   render: renderDemo(demos.columnPinning),
 };
 
+export const Demo_columnPinningMultiple = {
+  name: '⭐ Demo: columnPinningMultiple',
+  render: renderDemo(demos.columnPinningMultiple),
+};
+
+export const Demo_columnPinningInteractive = {
+  name: '⭐ Demo: columnPinningInteractive',
+  render: renderDemo(demos.columnPinningInteractive),
+};
+
+export const Demo_rowPinning = {
+  name: '⭐ Demo: rowPinning',
+  render: renderDemo(demos.rowPinning),
+};
+
+export const Demo_rowPinningInteractive = {
+  name: '⭐ Demo: rowPinningInteractive',
+  render: renderDemo(demos.rowPinningInteractive),
+};
+
+export const Demo_rowColumnPinning = {
+  name: '⭐ Demo: rowColumnPinning',
+  render: renderDemo(demos.rowColumnPinning),
+};
+
+export const Demo_pinningWithGroups = {
+  name: '⭐ Demo: pinningWithGroups',
+  render: renderDemo(demos.pinningWithGroups),
+};
+
 export const Demo_columnVisibility = {
   name: '⭐ Demo: columnVisibility',
   render: renderDemo(demos.columnVisibility),
+};
+
+export const Demo_columnVisibilityControlled = {
+  name: '⭐ Demo: columnVisibilityControlled',
+  render: renderDemo(demos.columnVisibilityControlled),
+};
+
+export const Demo_columnVisibilityEnableHiding = {
+  name: '⭐ Demo: columnVisibilityEnableHiding',
+  render: renderDemo(demos.columnVisibilityEnableHiding),
 };
 
 export const Demo_rowSelection = {

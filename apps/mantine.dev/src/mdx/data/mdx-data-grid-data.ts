@@ -50,8 +50,32 @@ export const MDX_DATA_GRID_DATA: Record<string, Frontmatter> = {
     title: 'Column features',
     package: '@mantine/data-grid',
     slug: '/data-grid/column-features',
-    description: 'DataGrid column resize, pin, visibility, reorder',
+    description: 'DataGrid column reorder and header groups',
     docs: 'data-grid/column-features.mdx',
+  },
+
+  DataGridColumnSizing: {
+    title: 'Column sizing',
+    package: '@mantine/data-grid',
+    slug: '/data-grid/column-sizing',
+    description: 'DataGrid column resize, min/max sizes',
+    docs: 'data-grid/column-sizing.mdx',
+  },
+
+  DataGridColumnVisibility: {
+    title: 'Column visibility',
+    package: '@mantine/data-grid',
+    slug: '/data-grid/column-visibility',
+    description: 'DataGrid show and hide columns',
+    docs: 'data-grid/column-visibility.mdx',
+  },
+
+  DataGridPinning: {
+    title: 'Pinning',
+    package: '@mantine/data-grid',
+    slug: '/data-grid/pinning',
+    description: 'DataGrid column and row pinning',
+    docs: 'data-grid/pinning.mdx',
   },
 
   DataGridRowFeatures: {

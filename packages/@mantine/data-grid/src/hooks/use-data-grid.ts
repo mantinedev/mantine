@@ -17,6 +17,7 @@ import {
   OnChangeFn,
   PaginationState,
   Row,
+  RowPinningState,
   RowSelectionState,
   SortingState,
   Table as ReactTable,
@@ -74,6 +75,9 @@ export interface DataGridStore<TData = any> {
   /** Whether row grouping is enabled */
   withGrouping: boolean;
 
+  /** Whether row pinning is enabled */
+  withRowPinning: boolean;
+
   /** Whether inline cell/row editing is enabled */
   withEditing: boolean;
 
@@ -118,6 +122,9 @@ export interface DataGridStore<TData = any> {
 
   /** Current grouping state */
   grouping: GroupingState;
+
+  /** Current row pinning state */
+  rowPinning: RowPinningState;
 }
 
 export interface UseDataGridOptions<TData> {
@@ -247,6 +254,21 @@ export interface UseDataGridOptions<TData> {
   /** Callback when grouping changes */
   onGroupingChange?: OnChangeFn<GroupingState>;
 
+  /** Enable row pinning, inferred from controlled state */
+  withRowPinning?: boolean;
+
+  /** Controlled row pinning state */
+  rowPinning?: RowPinningState;
+
+  /** Callback when row pinning changes */
+  onRowPinningChange?: OnChangeFn<RowPinningState>;
+
+  /** Enable row pinning per row, or a function to control per-row */
+  enableRowPinning?: boolean | ((row: Row<TData>) => boolean);
+
+  /** Keep pinned rows visible through filtering/pagination */
+  keepPinnedRows?: boolean;
+
   /** Editing mode, enables inline editing when set */
   editingMode?: 'cell' | 'row';
 
@@ -275,6 +297,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     withRowSelection,
     withRowExpansion,
     withGrouping,
+    withRowPinning,
     withEditing,
   } = inferFeatureFlags(options);
 
@@ -299,6 +322,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     ...(options.rowSelection !== undefined && { rowSelection: options.rowSelection }),
     ...(options.expanded !== undefined && { expanded: options.expanded }),
     ...(options.grouping !== undefined && { grouping: options.grouping }),
+    ...(options.rowPinning !== undefined && { rowPinning: options.rowPinning }),
   };
 
   // Build change handlers
@@ -316,6 +340,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     ...(options.onRowSelectionChange && { onRowSelectionChange: options.onRowSelectionChange }),
     ...(options.onExpandedChange && { onExpandedChange: options.onExpandedChange }),
     ...(options.onGroupingChange && { onGroupingChange: options.onGroupingChange }),
+    ...(options.onRowPinningChange && { onRowPinningChange: options.onRowPinningChange }),
   };
 
   // Build TanStack Table config
@@ -343,7 +368,11 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
       enableColumnResizing: true,
       columnResizeMode: options.columnResizeMode ?? 'onEnd',
     }),
-    ...(withColumnPinning && { enablePinning: true }),
+    ...(withColumnPinning && { enableColumnPinning: true }),
+    ...(withRowPinning && {
+      enableRowPinning: options.enableRowPinning ?? true,
+      keepPinnedRows: options.keepPinnedRows,
+    }),
     ...(withRowSelection && { enableRowSelection: true }),
     ...((withRowExpansion || withGrouping) && {
       getExpandedRowModel: getExpandedRowModel(),
@@ -379,6 +408,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     withRowSelection,
     withRowExpansion,
     withGrouping,
+    withRowPinning,
     withEditing,
     editingMode: options.editingMode,
     density,
@@ -394,5 +424,6 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     rowSelection: state.rowSelection,
     expanded: state.expanded,
     grouping: state.grouping,
+    rowPinning: state.rowPinning,
   };
 }

@@ -1,0 +1,102 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridPinning);
+
+## Column pinning
+
+Pin columns to the left or right edge of the grid so they remain visible while scrolling
+horizontally. Pass `columnPinning` to `useDataGrid` with arrays of column IDs to pin.
+
+<Demo data={DataGridDemos.columnPinning} />
+
+## Pin multiple columns
+
+Pin multiple columns to the left and right edges simultaneously.
+
+<Demo data={DataGridDemos.columnPinningMultiple} />
+
+## Interactive column pinning
+
+Use controlled `columnPinning` and `onColumnPinningChange` to let users pin and unpin
+columns dynamically.
+
+<Demo data={DataGridDemos.columnPinningInteractive} />
+
+## Row pinning
+
+Pin rows to the top or bottom of the grid so they remain visible while scrolling vertically.
+Pass `rowPinning` to `useDataGrid` with arrays of row IDs (from `getRowId`) to pin.
+
+<Demo data={DataGridDemos.rowPinning} />
+
+## Interactive row pinning
+
+Add pin/unpin controls to each row using a custom cell renderer that calls `row.pin('top')`,
+`row.pin('bottom')`, or `row.pin(false)`.
+
+<Demo data={DataGridDemos.rowPinningInteractive} />
+
+## Combined row and column pinning
+
+Row pinning and column pinning can be used together. Pinned rows stay fixed vertically while
+pinned columns stay fixed horizontally.
+
+<Demo data={DataGridDemos.rowColumnPinning} />
+
+## Pinning with header groups
+
+Column pinning works with grouped headers. When columns within a group are pinned, the group
+header spans the pinned columns correctly.
+
+<Demo data={DataGridDemos.pinningWithGroups} />
+
+## keepPinnedRows
+
+By default, pinned rows remain visible even when they would normally be filtered out or
+paginated away. Set `keepPinnedRows: false` in `useDataGrid` to allow pinned rows to be
+hidden by filters and pagination.
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  rowPinning: { top: ['1'], bottom: [] },
+  keepPinnedRows: false,
+  getRowId: (row) => row.id,
+});
+```
+
+## Per-row pinning control
+
+Use `enableRowPinning` as a function to control which rows can be pinned:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  rowPinning: { top: [], bottom: [] },
+  enableRowPinning: (row) => row.original.status === 'active',
+  getRowId: (row) => row.id,
+});
+```
+
+## Controlled pinning state
+
+Both column and row pinning support controlled state via `columnPinning`/`onColumnPinningChange`
+and `rowPinning`/`onRowPinningChange`. Access current state directly from the store:
+
+```tsx
+const store = useDataGrid({ data, columns, columnPinning, onColumnPinningChange });
+
+// Read current state
+store.columnPinning // { left: ['firstName'], right: [] }
+store.rowPinning    // { top: ['1'], bottom: [] }
+```
+
+## Limitations
+
+Row pinning is not supported when `withVirtualization` is enabled. Virtualized mode uses a
+different rendering path for performance, and row pinning requires the standard table body renderer.
+Column pinning works with both standard and virtualized grids.

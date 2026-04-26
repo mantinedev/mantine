@@ -10,19 +10,22 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
-      { accessorKey: 'email', header: 'Email' },
-      { accessorKey: 'department', header: 'Department' },
-      { accessorKey: 'salary', header: 'Salary' },
-      { accessorKey: 'startDate', header: 'Start Date' },
-      { accessorKey: 'status', header: 'Status' },
+      { accessorKey: 'firstName', header: 'First Name', size: 150 },
+      { accessorKey: 'lastName', header: 'Last Name', size: 150 },
+      { accessorKey: 'email', header: 'Email', size: 250 },
+      { accessorKey: 'department', header: 'Department', size: 150 },
+      { accessorKey: 'salary', header: 'Salary', size: 120 },
+      { accessorKey: 'startDate', header: 'Start Date', size: 150 },
+      { accessorKey: 'status', header: 'Status', size: 120 },
     ],
-    withColumnPinning: true,
     columnPinning: { left: ['firstName'], right: [] },
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <div style={{ maxWidth: 600 }}>
+      <DataGrid store={store} />
+    </div>
+  );
 }
 `;
 
@@ -30,19 +33,22 @@ function Demo() {
   const store = useDataGrid({
     data: employees,
     columns: [
-      { accessorKey: 'firstName', header: 'First Name' },
-      { accessorKey: 'lastName', header: 'Last Name' },
-      { accessorKey: 'email', header: 'Email' },
-      { accessorKey: 'department', header: 'Department' },
-      { accessorKey: 'salary', header: 'Salary' },
-      { accessorKey: 'startDate', header: 'Start Date' },
-      { accessorKey: 'status', header: 'Status' },
+      { accessorKey: 'firstName', header: 'First Name', size: 150 },
+      { accessorKey: 'lastName', header: 'Last Name', size: 150 },
+      { accessorKey: 'email', header: 'Email', size: 250 },
+      { accessorKey: 'department', header: 'Department', size: 150 },
+      { accessorKey: 'salary', header: 'Salary', size: 120 },
+      { accessorKey: 'startDate', header: 'Start Date', size: 150 },
+      { accessorKey: 'status', header: 'Status', size: 120 },
     ],
-    withColumnPinning: true,
     columnPinning: { left: ['firstName'], right: [] },
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <div style={{ maxWidth: 600 }}>
+      <DataGrid store={store} />
+    </div>
+  );
 }
 
 export const columnPinning: MantineDemo = {
