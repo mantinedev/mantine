@@ -8,19 +8,19 @@ function isDefined(...values: unknown[]): boolean {
 function hasEnableSorting(columns: ColumnDef<any, any>[]): boolean {
   return columns.some(
     (col) =>
-      (col as any).enableSorting === true ||
-      ((col as any).columns && hasEnableSorting((col as any).columns))
+      col.enableSorting === true ||
+      ('columns' in col && col.columns && hasEnableSorting(col.columns))
   );
 }
 
 function hasEnableColumnFilter(columns: ColumnDef<any, any>[]): boolean {
   return columns.some(
     (col) =>
-      (col as any).enableColumnFilter === true ||
-      (col as any).meta?.filterVariant !== undefined ||
-      (col as any).meta?.filterOperators !== undefined ||
-      (col as any).filterFn !== undefined ||
-      ((col as any).columns && hasEnableColumnFilter((col as any).columns))
+      col.enableColumnFilter === true ||
+      col.meta?.filterVariant !== undefined ||
+      col.meta?.filterOperators !== undefined ||
+      col.filterFn !== undefined ||
+      ('columns' in col && col.columns && hasEnableColumnFilter(col.columns))
   );
 }
 

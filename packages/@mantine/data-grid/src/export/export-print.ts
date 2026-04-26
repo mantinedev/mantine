@@ -1,11 +1,12 @@
 import { Table } from '@tanstack/react-table';
-import { formatCsv, ExportCsvOptions } from './export-csv';
+import { formatCsv } from './export-csv';
+import type { ExportColumnScope, ExportRowScope } from './export-utils';
 
 export interface ExportPrintOptions {
   title?: string;
-  rows?: ExportCsvOptions['rows'];
-  columns?: ExportCsvOptions['columns'];
-  valueFormatter?: ExportCsvOptions['valueFormatter'];
+  rows?: ExportRowScope;
+  columns?: ExportColumnScope;
+  valueFormatter?: (value: unknown, columnId: string) => string;
 }
 
 function escapeHtml(str: string): string {

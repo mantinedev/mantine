@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { flexRender, Header } from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
@@ -12,6 +12,7 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { FilterDispatcher } from '../DataGridFilters';
+import { getPinnedStyles } from '../get-pinned-styles';
 import { DefaultUnsortedIcon, SortIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
@@ -34,20 +35,6 @@ export type DataGridHeaderFactory = Factory<{
   stylesNames: DataGridHeaderStylesNames;
   compound: true;
 }>;
-
-function getPinnedStyles(header: Header<any, unknown>) {
-  const isPinned = header.column.getIsPinned();
-  if (!isPinned) {
-    return undefined;
-  }
-
-  return {
-    position: 'sticky' as const,
-    left: isPinned === 'left' ? `${header.column.getStart('left')}px` : undefined,
-    right: isPinned === 'right' ? `${header.column.getAfter('right')}px` : undefined,
-    zIndex: 1,
-  };
-}
 
 export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
   const { className, style, classNames, styles, ...others } = useProps(
@@ -158,7 +145,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                     : undefined;
 
             const isPinned = ctx.withColumnPinning ? header.column.getIsPinned() : false;
-            const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header) : undefined;
+            const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
             const isResizing = header.column.getIsResizing();
 
             const reorderProps = ctx.withColumnReorder
@@ -243,14 +230,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
           )}
           {ctx.table.getVisibleLeafColumns().map((column) => {
             const isPinned = ctx.withColumnPinning ? column.getIsPinned() : false;
-            const pinnedStyle = isPinned
-              ? {
-                  position: 'sticky' as const,
-                  left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
-                  right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-                  zIndex: 1,
-                }
-              : undefined;
+            const pinnedStyle = ctx.withColumnPinning ? getPinnedStyles(column) : undefined;
 
             return (
               <Box

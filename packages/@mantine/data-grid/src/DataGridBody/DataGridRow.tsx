@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Row } from '@tanstack/react-table';
 import {
   Box,
@@ -145,6 +145,55 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
     }
   };
 
+  const dataCells = useMemo(() => {
+    const visibleCells = row.getVisibleCells();
+    const cells: React.ReactNode[] = [];
+    let skipCount = 0;
+    let visualColIndex = 0;
+
+    for (let i = 0; i < visibleCells.length; i++) {
+      if (skipCount > 0) {
+        skipCount--;
+        visualColIndex++;
+        continue;
+      }
+
+      const cell = visibleCells[i];
+      const meta = cell.column.columnDef.meta;
+      const colSpan =
+        typeof meta?.colSpan === 'function'
+          ? meta.colSpan({ row: cell.row, column: cell.column })
+          : (meta?.colSpan ?? 1);
+
+      if (colSpan > 1) {
+        skipCount = colSpan - 1;
+      }
+
+      const rSpan = rowSpanMap?.get(rowIndex, cell.column.id);
+      if (rSpan === 0) {
+        visualColIndex++;
+        continue;
+      }
+
+      cells.push(
+        <DataGridCell
+          key={cell.id}
+          cell={cell}
+          colIndex={visualColIndex}
+          colSpan={colSpan > 1 ? colSpan : undefined}
+          rowSpan={rSpan !== undefined && rSpan > 1 ? rSpan : undefined}
+          classNames={classNames}
+          styles={styles}
+          treeData={ctx.withTreeData && i === 0 ? { row } : undefined}
+        />
+      );
+
+      visualColIndex++;
+    }
+
+    return cells;
+  }, [row, rowIndex, rowSpanMap, classNames, styles, ctx.withTreeData]);
+
   return (
     <Box
       component="tr"
@@ -225,54 +274,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
           {rowIndex + 1}
         </Box>
       )}
-      {(() => {
-        const visibleCells = row.getVisibleCells();
-        const renderedCells: React.ReactNode[] = [];
-        let skipCount = 0;
-        let visualColIndex = 0;
-
-        for (let i = 0; i < visibleCells.length; i++) {
-          if (skipCount > 0) {
-            skipCount--;
-            visualColIndex++;
-            continue;
-          }
-
-          const cell = visibleCells[i];
-          const meta = cell.column.columnDef.meta;
-          const colSpan =
-            typeof meta?.colSpan === 'function'
-              ? meta.colSpan({ row: cell.row, column: cell.column })
-              : (meta?.colSpan ?? 1);
-
-          if (colSpan > 1) {
-            skipCount = colSpan - 1;
-          }
-
-          const rSpan = rowSpanMap?.get(rowIndex, cell.column.id);
-          if (rSpan === 0) {
-            visualColIndex++;
-            continue;
-          }
-
-          renderedCells.push(
-            <DataGridCell
-              key={cell.id}
-              cell={cell}
-              colIndex={visualColIndex}
-              colSpan={colSpan > 1 ? colSpan : undefined}
-              rowSpan={rSpan !== undefined && rSpan > 1 ? rSpan : undefined}
-              classNames={classNames}
-              styles={styles}
-              treeData={ctx.withTreeData && i === 0 ? { row } : undefined}
-            />
-          );
-
-          visualColIndex++;
-        }
-
-        return renderedCells;
-      })()}
+      {dataCells}
     </Box>
   );
 });

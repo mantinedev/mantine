@@ -1,0 +1,49 @@
+import { Column, Table } from '@tanstack/react-table';
+
+export type ExportRowScope = 'all' | 'filtered' | 'selected' | 'page';
+export type ExportColumnScope = 'visible' | 'all' | string[];
+
+export function getExportColumns<TData>(
+  table: Table<TData>,
+  columns: ExportColumnScope | undefined
+): Column<TData, unknown>[] {
+  const allColumns =
+    columns === 'all'
+      ? table.getAllColumns()
+      : Array.isArray(columns)
+        ? (columns.map((id) => table.getColumn(id)).filter(Boolean) as Column<TData, unknown>[])
+        : table.getVisibleLeafColumns();
+
+  return allColumns.filter((col) => !col.columnDef.meta?.disableExport);
+}
+
+export function getExportRows<TData>(table: Table<TData>, rows: ExportRowScope | undefined) {
+  switch (rows) {
+    case 'filtered':
+      return table.getFilteredRowModel().rows;
+    case 'selected':
+      return table.getSelectedRowModel().rows;
+    case 'page':
+      return table.getRowModel().rows;
+    default:
+      return table.getCoreRowModel().rows;
+  }
+}
+
+export function getExportHeaders<TData>(columns: Column<TData, unknown>[]): string[] {
+  return columns.map((col) => {
+    const header = col.columnDef.header;
+    return typeof header === 'string' ? header : col.id;
+  });
+}
+
+export function triggerDownload(blob: Blob, fileName: string): void {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}

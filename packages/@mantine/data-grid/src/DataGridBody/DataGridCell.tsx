@@ -11,6 +11,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { getPinnedStyles } from '../get-pinned-styles';
 import { ExpandChevron } from '../icons';
 import classes from '../DataGrid.module.css';
 
@@ -62,16 +63,9 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
   const [isSaving, setIsSaving] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const pinnedStyles = isPinned
-    ? {
-        position: 'sticky' as const,
-        left: isPinned === 'left' ? `${cell.column.getStart('left')}px` : undefined,
-        right: isPinned === 'right' ? `${cell.column.getAfter('right')}px` : undefined,
-        zIndex: 1,
-      }
-    : undefined;
+  const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(cell.column) : undefined;
 
-  const canEdit = ctx.withEditing && !(cell.column.columnDef.meta as any)?.disableEditing;
+  const canEdit = ctx.withEditing && !cell.column.columnDef.meta?.disableEditing;
   const editComponent = cell.column.columnDef.meta?.editComponent;
 
   const startEditing = useCallback(

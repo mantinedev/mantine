@@ -6,53 +6,48 @@ export interface FilterOperator {
   filterFn: FilterFn<any>;
 }
 
+function stringOp(
+  label: string,
+  value: string,
+  compare: (cellStr: string, filterStr: string) => boolean
+): FilterOperator {
+  return {
+    label,
+    value,
+    filterFn: (row, columnId, filterValue) => {
+      if (!filterValue) {
+        return true;
+      }
+      return compare(
+        String(row.getValue(columnId)).toLowerCase(),
+        String(filterValue).toLowerCase()
+      );
+    },
+  };
+}
+
+function numberOp(
+  label: string,
+  value: string,
+  compare: (a: number, b: number) => boolean
+): FilterOperator {
+  return {
+    label,
+    value,
+    filterFn: (row, columnId, filterValue) => {
+      if (filterValue === '' || filterValue == null) {
+        return true;
+      }
+      return compare(Number(row.getValue(columnId)), Number(filterValue));
+    },
+  };
+}
+
 export const stringOperators: FilterOperator[] = [
-  {
-    label: 'Contains',
-    value: 'contains',
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) {
-        return true;
-      }
-      return String(row.getValue(columnId))
-        .toLowerCase()
-        .includes(String(filterValue).toLowerCase());
-    },
-  },
-  {
-    label: 'Equals',
-    value: 'equals',
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) {
-        return true;
-      }
-      return String(row.getValue(columnId)).toLowerCase() === String(filterValue).toLowerCase();
-    },
-  },
-  {
-    label: 'Starts with',
-    value: 'startsWith',
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) {
-        return true;
-      }
-      return String(row.getValue(columnId))
-        .toLowerCase()
-        .startsWith(String(filterValue).toLowerCase());
-    },
-  },
-  {
-    label: 'Ends with',
-    value: 'endsWith',
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) {
-        return true;
-      }
-      return String(row.getValue(columnId))
-        .toLowerCase()
-        .endsWith(String(filterValue).toLowerCase());
-    },
-  },
+  stringOp('Contains', 'contains', (a, b) => a.includes(b)),
+  stringOp('Equals', 'equals', (a, b) => a === b),
+  stringOp('Starts with', 'startsWith', (a, b) => a.startsWith(b)),
+  stringOp('Ends with', 'endsWith', (a, b) => a.endsWith(b)),
   {
     label: 'Is empty',
     value: 'isEmpty',
@@ -72,66 +67,12 @@ export const stringOperators: FilterOperator[] = [
 ];
 
 export const numberOperators: FilterOperator[] = [
-  {
-    label: '=',
-    value: 'eq',
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue === '' || filterValue == null) {
-        return true;
-      }
-      return Number(row.getValue(columnId)) === Number(filterValue);
-    },
-  },
-  {
-    label: '\u2260',
-    value: 'neq',
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue === '' || filterValue == null) {
-        return true;
-      }
-      return Number(row.getValue(columnId)) !== Number(filterValue);
-    },
-  },
-  {
-    label: '>',
-    value: 'gt',
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue === '' || filterValue == null) {
-        return true;
-      }
-      return Number(row.getValue(columnId)) > Number(filterValue);
-    },
-  },
-  {
-    label: '<',
-    value: 'lt',
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue === '' || filterValue == null) {
-        return true;
-      }
-      return Number(row.getValue(columnId)) < Number(filterValue);
-    },
-  },
-  {
-    label: '\u2265',
-    value: 'gte',
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue === '' || filterValue == null) {
-        return true;
-      }
-      return Number(row.getValue(columnId)) >= Number(filterValue);
-    },
-  },
-  {
-    label: '\u2264',
-    value: 'lte',
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue === '' || filterValue == null) {
-        return true;
-      }
-      return Number(row.getValue(columnId)) <= Number(filterValue);
-    },
-  },
+  numberOp('=', 'eq', (a, b) => a === b),
+  numberOp('\u2260', 'neq', (a, b) => a !== b),
+  numberOp('>', 'gt', (a, b) => a > b),
+  numberOp('<', 'lt', (a, b) => a < b),
+  numberOp('\u2265', 'gte', (a, b) => a >= b),
+  numberOp('\u2264', 'lte', (a, b) => a <= b),
 ];
 
 export const booleanOperators: FilterOperator[] = [

@@ -16,6 +16,7 @@ import {
 import { useDataGridContext } from '../DataGrid.context';
 import { FilterDispatcher } from '../DataGridFilters';
 import { getExtraColumnsCount } from '../get-extra-columns-count';
+import { getPinnedStyles } from '../get-pinned-styles';
 import { DefaultUnsortedIcon, ExpandChevron, GripIcon, SortIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
@@ -201,15 +202,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
   ) {
     const isPinned = ctx.withColumnPinning ? row.column.getIsPinned() : false;
     const cellColIndex = cellIndex + 1 + extraColOffset;
-
-    const pinnedStyles = isPinned
-      ? {
-          position: 'sticky' as const,
-          left: isPinned === 'left' ? `${row.column.getStart('left')}px` : undefined,
-          right: isPinned === 'right' ? `${row.column.getAfter('right')}px` : undefined,
-          zIndex: 1,
-        }
-      : undefined;
+    const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(row.column) : undefined;
 
     const handleCellClick = ctx.onCellClick
       ? (event: React.MouseEvent) => {
@@ -450,31 +443,30 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     );
   }
 
-  const renderedRows = useMemo(() => {
-    if (withRowVirt && virtualRowItems) {
-      return virtualRowItems.map((virtualItem) => {
-        const row = rows[virtualItem.index];
-        return (
-          <div
-            key={row.id}
-            ref={ctx.withRowExpansion || hasAutoHeight ? rowVirtualizer.measureElement : undefined}
-            data-index={virtualItem.index}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              transform: `translateY(${virtualItem.start}px)`,
-            }}
-          >
-            {renderRowContent(row, virtualItem.index)}
-          </div>
-        );
-      });
-    }
-
-    return rows.map((row, rowIndex) => <div key={row.id}>{renderRowContent(row, rowIndex)}</div>);
-  }, [withRowVirt, virtualRowItems, virtualColumnItems, rows, ctx, classNames, styles]);
+  const renderedRows =
+    withRowVirt && virtualRowItems
+      ? virtualRowItems.map((virtualItem) => {
+          const row = rows[virtualItem.index];
+          return (
+            <div
+              key={row.id}
+              ref={
+                ctx.withRowExpansion || hasAutoHeight ? rowVirtualizer.measureElement : undefined
+              }
+              data-index={virtualItem.index}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                transform: `translateY(${virtualItem.start}px)`,
+              }}
+            >
+              {renderRowContent(row, virtualItem.index)}
+            </div>
+          );
+        })
+      : rows.map((row, rowIndex) => <div key={row.id}>{renderRowContent(row, rowIndex)}</div>);
 
   function renderHeaderCell(header: Header<any, unknown>, headerIndex: number) {
     const canSort = ctx.withSorting && header.column.getCanSort();
@@ -490,15 +482,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
 
     const isPinned = ctx.withColumnPinning ? header.column.getIsPinned() : false;
     const isResizing = header.column.getIsResizing();
-
-    const pinnedStyles = isPinned
-      ? {
-          position: 'sticky' as const,
-          left: isPinned === 'left' ? `${header.column.getStart('left')}px` : undefined,
-          right: isPinned === 'right' ? `${header.column.getAfter('right')}px` : undefined,
-          zIndex: 1,
-        }
-      : undefined;
+    const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
 
     const colIndex = headerIndex + 1 + extraColOffset;
 

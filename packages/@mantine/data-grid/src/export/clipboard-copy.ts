@@ -1,11 +1,12 @@
 import { Table } from '@tanstack/react-table';
-import { formatCsv, ExportCsvOptions } from './export-csv';
+import { formatCsv } from './export-csv';
+import type { ExportColumnScope, ExportRowScope } from './export-utils';
 
 export interface ClipboardCopyOptions {
-  rows?: ExportCsvOptions['rows'];
-  columns?: ExportCsvOptions['columns'];
+  rows?: ExportRowScope;
+  columns?: ExportColumnScope;
   includeHeaders?: boolean;
-  valueFormatter?: ExportCsvOptions['valueFormatter'];
+  valueFormatter?: (value: unknown, columnId: string) => string;
 }
 
 export function copyToClipboard<TData>(

@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
 import {
+  type BuiltInFilterFn,
   ColumnDef,
   ColumnFiltersState,
   ColumnOrderState,
@@ -37,9 +38,10 @@ function defaultSortingDisabled<TData>(columns: ColumnDef<TData, any>[]): Column
   return columns.map((col) => ({
     enableSorting: false,
     ...col,
-    ...((col as any).columns && {
-      columns: defaultSortingDisabled((col as any).columns),
-    }),
+    ...('columns' in col &&
+      col.columns && {
+        columns: defaultSortingDisabled(col.columns),
+      }),
   }));
 }
 
@@ -48,30 +50,32 @@ function defaultFilteringDisabled<TData>(
 ): ColumnDef<TData, any>[] {
   return columns.map((col) => ({
     enableColumnFilter:
-      (col as any).meta?.filterVariant !== undefined ||
-      (col as any).meta?.filterOperators !== undefined ||
+      col.meta?.filterVariant !== undefined ||
+      col.meta?.filterOperators !== undefined ||
       col.filterFn !== undefined,
     ...col,
-    ...((col as any).columns && {
-      columns: defaultFilteringDisabled((col as any).columns),
-    }),
+    ...('columns' in col &&
+      col.columns && {
+        columns: defaultFilteringDisabled(col.columns),
+      }),
   }));
 }
 
-const FILTER_VARIANT_TO_FN: Record<string, string> = {
+const FILTER_VARIANT_TO_FN = {
   range: 'inNumberRange',
   multiSelect: 'arrIncludesSome',
   select: 'equals',
   boolean: 'equals',
-};
+} as const satisfies Record<string, BuiltInFilterFn>;
 
 function processFilterColumns<TData>(columns: ColumnDef<TData, any>[]): ColumnDef<TData, any>[] {
   return columns.map((col) => {
-    const variant = (col as any).meta?.filterVariant as string | undefined;
-    const operators = (col as any).meta?.filterOperators as
-      | import('../DataGridFilters/filter-operators').FilterOperator[]
-      | undefined;
-    const defaultFilterFn = variant ? FILTER_VARIANT_TO_FN[variant] : undefined;
+    const variant = col.meta?.filterVariant;
+    const operators = col.meta?.filterOperators;
+    const defaultFilterFn =
+      variant && variant in FILTER_VARIANT_TO_FN
+        ? FILTER_VARIANT_TO_FN[variant as keyof typeof FILTER_VARIANT_TO_FN]
+        : undefined;
     let operatorFilterFn: FilterFn<TData> | undefined;
     if (operators && operators.length > 0 && !col.filterFn) {
       operatorFilterFn = createOperatorFilterFnLocal(operators);
@@ -79,12 +83,13 @@ function processFilterColumns<TData>(columns: ColumnDef<TData, any>[]): ColumnDe
     return {
       ...(operatorFilterFn ? { filterFn: operatorFilterFn } : {}),
       ...(defaultFilterFn && !col.filterFn && !operatorFilterFn
-        ? { filterFn: defaultFilterFn as any }
+        ? { filterFn: defaultFilterFn }
         : {}),
       ...col,
-      ...((col as any).columns && {
-        columns: processFilterColumns((col as any).columns),
-      }),
+      ...('columns' in col &&
+        col.columns && {
+          columns: processFilterColumns(col.columns),
+        }),
     };
   });
 }
