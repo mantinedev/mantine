@@ -18,6 +18,7 @@ function hasEnableColumnFilter(columns: ColumnDef<any, any>[]): boolean {
     (col) =>
       (col as any).enableColumnFilter === true ||
       (col as any).meta?.filterVariant !== undefined ||
+      (col as any).meta?.filterOperators !== undefined ||
       (col as any).filterFn !== undefined ||
       ((col as any).columns && hasEnableColumnFilter((col as any).columns))
   );

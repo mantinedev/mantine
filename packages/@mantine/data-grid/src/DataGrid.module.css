@@ -393,3 +393,19 @@
 .dragHandle:active {
   cursor: grabbing;
 }
+
+.listView {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dg-spacing, var(--mantine-spacing-xs));
+}
+
+.listItem {
+  border: 1px solid var(--dg-border-color, var(--mantine-color-default-border));
+  border-radius: var(--mantine-radius-sm);
+  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+}
+
+.listItem[data-selected] {
+  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+}

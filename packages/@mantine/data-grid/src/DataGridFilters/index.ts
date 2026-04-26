@@ -16,4 +16,16 @@ export type { BooleanFilterProps } from './BooleanFilter';
 export { FilterDispatcher } from './FilterDispatcher';
 export type { FilterDispatcherProps } from './FilterDispatcher';
 
+export { OperatorFilter } from './OperatorFilter';
+export type { OperatorFilterProps } from './OperatorFilter';
+
+export type { FilterOperator } from './filter-operators';
+export {
+  stringOperators,
+  numberOperators,
+  booleanOperators,
+  createOperatorFilterFn,
+} from './filter-operators';
+export type { OperatorFilterValue } from './OperatorFilter';
+
 export { fuzzyFilter, fuzzySort } from './fuzzy-filter';

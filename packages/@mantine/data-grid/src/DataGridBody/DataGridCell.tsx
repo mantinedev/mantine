@@ -23,6 +23,15 @@ export interface DataGridCellProps
 
   /** Tree data info, present only on the first data cell when tree data is active */
   treeData?: { row: Row<any> };
+
+  /** Number of columns this cell should span */
+  colSpan?: number;
+
+  /** Number of rows this cell should span */
+  rowSpan?: number;
+
+  /** Visual column index used for keyboard navigation */
+  colIndex?: number;
 }
 
 export type DataGridCellFactory = Factory<{
@@ -33,16 +42,24 @@ export type DataGridCellFactory = Factory<{
 }>;
 
 export const DataGridCell = factory<DataGridCellFactory>((props) => {
-  const { className, style, classNames, styles, cell, treeData, ...others } = useProps(
-    'DataGridCell',
-    null,
-    props
-  );
+  const {
+    className,
+    style,
+    classNames,
+    styles,
+    cell,
+    treeData,
+    colSpan,
+    rowSpan,
+    colIndex,
+    ...others
+  } = useProps('DataGridCell', null, props);
 
   const ctx = useDataGridContext();
   const isPinned = ctx.withColumnPinning ? cell.column.getIsPinned() : false;
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState<unknown>('');
+  const [isSaving, setIsSaving] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const pinnedStyles = isPinned
@@ -54,16 +71,10 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
       }
     : undefined;
 
-  const handleCellClick = ctx.onCellClick
-    ? (event: React.MouseEvent) => {
-        ctx.onCellClick!(cell, event);
-      }
-    : undefined;
-
   const canEdit = ctx.withEditing && !(cell.column.columnDef.meta as any)?.disableEditing;
   const editComponent = cell.column.columnDef.meta?.editComponent;
 
-  const handleDoubleClick = useCallback(
+  const startEditing = useCallback(
     (event: React.MouseEvent) => {
       if (canEdit) {
         event.stopPropagation();
@@ -82,17 +93,43 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
   }, [isEditing]);
 
   const handleSave = useCallback(() => {
-    if (ctx.editingMode === 'row' && ctx.onRowEdit) {
-      const values: Record<string, unknown> = {};
-      cell.row.getAllCells().forEach((c) => {
-        values[c.column.id] = c.column.id === cell.column.id ? editValue : c.getValue();
-      });
-      ctx.onRowEdit({ row: cell.row, values });
-    } else if (ctx.onCellEdit) {
-      ctx.onCellEdit({ row: cell.row, columnId: cell.column.id, value: editValue });
+    if (isSaving) {
+      return;
     }
-    setIsEditing(false);
-  }, [ctx, cell, editValue]);
+
+    const doSave = () => {
+      if (ctx.editingMode === 'row' && ctx.onRowEdit) {
+        const values: Record<string, unknown> = {};
+        cell.row.getAllCells().forEach((c) => {
+          values[c.column.id] = c.column.id === cell.column.id ? editValue : c.getValue();
+        });
+        ctx.onRowEdit({ row: cell.row, values });
+      } else if (ctx.onCellEdit) {
+        ctx.onCellEdit({ row: cell.row, columnId: cell.column.id, value: editValue });
+      }
+      setIsEditing(false);
+    };
+
+    if (ctx.processRowUpdate) {
+      const oldRow = cell.row.original;
+      const newRow = { ...oldRow, [cell.column.id]: editValue };
+      setIsSaving(true);
+      ctx
+        .processRowUpdate(newRow, oldRow)
+        .then(() => {
+          doSave();
+        })
+        .catch((error: unknown) => {
+          ctx.onProcessRowUpdateError?.(error);
+          setIsEditing(false);
+        })
+        .finally(() => {
+          setIsSaving(false);
+        });
+    } else {
+      doSave();
+    }
+  }, [ctx, cell, editValue, isSaving]);
 
   const handleCancel = useCallback(() => {
     setIsEditing(false);
@@ -109,14 +146,32 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
     [handleSave, handleCancel]
   );
 
+  const composedClick = useCallback(
+    (event: React.MouseEvent) => {
+      if (ctx.onCellClick) {
+        ctx.onCellClick(cell, event);
+      }
+      if (canEdit && ctx.editTrigger === 'click') {
+        startEditing(event);
+      }
+    },
+    [ctx.onCellClick, cell, canEdit, ctx.editTrigger, startEditing]
+  );
+
   return (
     <Box
       component="td"
+      colSpan={colSpan}
+      rowSpan={rowSpan}
+      data-col-index={colIndex}
       data-pinned-left={isPinned === 'left' || undefined}
       data-pinned-right={isPinned === 'right' || undefined}
       data-editing={isEditing || undefined}
-      onClick={handleCellClick}
-      onDoubleClick={canEdit ? handleDoubleClick : undefined}
+      data-saving={isSaving || undefined}
+      onClick={
+        ctx.onCellClick || (canEdit && ctx.editTrigger === 'click') ? composedClick : undefined
+      }
+      onDoubleClick={canEdit && ctx.editTrigger === 'doubleClick' ? startEditing : undefined}
       {...ctx.getStyles('td', { className, classNames, style, styles })}
       style={{ ...pinnedStyles }}
       {...others}
@@ -139,6 +194,7 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
               onChange={(e) => setEditValue(e.currentTarget.value)}
               onKeyDown={handleKeyDown}
               onBlur={handleSave}
+              disabled={isSaving}
             />
           )}
         </Box>

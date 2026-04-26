@@ -42,6 +42,8 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
     treeToggle: 'Tree data expand/collapse toggle button',
     columnMenu: 'Column header menu wrapper',
     dragHandle: 'Row drag handle cell for reordering',
+    listView: 'List view container when listView mode is enabled',
+    listItem: 'Individual card item in list view mode',
   },
 
   vars: {

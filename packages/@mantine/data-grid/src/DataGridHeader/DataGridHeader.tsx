@@ -205,7 +205,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                         </Box>
                       )}
                     </Box>
-                    {ctx.withFiltering && header.column.getCanFilter() && (
+                    {ctx.withFiltering && !ctx.headerFilters && header.column.getCanFilter() && (
                       <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                         <FilterDispatcher column={header.column} />
                       </Box>
@@ -227,6 +227,49 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
           })}
         </Box>
       ))}
+      {ctx.headerFilters && ctx.withFiltering && (
+        <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
+          {ctx.withRowReorder && (
+            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+          )}
+          {ctx.withRowSelection && (
+            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+          )}
+          {ctx.withRowExpansion && !ctx.withTreeData && (
+            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+          )}
+          {ctx.withRowNumbers && (
+            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+          )}
+          {ctx.table.getVisibleLeafColumns().map((column) => {
+            const isPinned = ctx.withColumnPinning ? column.getIsPinned() : false;
+            const pinnedStyle = isPinned
+              ? {
+                  position: 'sticky' as const,
+                  left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
+                  right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+                  zIndex: 1,
+                }
+              : undefined;
+
+            return (
+              <Box
+                component="th"
+                key={column.id}
+                data-pinned-left={isPinned === 'left' || undefined}
+                data-pinned-right={isPinned === 'right' || undefined}
+                {...ctx.getStyles('th', { classNames, styles })}
+                style={{
+                  ...pinnedStyle,
+                  width: ctx.withColumnResizing ? column.getSize() : undefined,
+                }}
+              >
+                {column.getCanFilter() ? <FilterDispatcher column={column} /> : null}
+              </Box>
+            );
+          })}
+        </Box>
+      )}
     </Box>
   );
 });

@@ -20,6 +20,10 @@ export * from './DataGridStatusBar/index';
 export * from './DataGridColumnMenu/index';
 export * from './DataGridFilters/index';
 export * from './labels';
+export * from './export/index';
+export * from './aggregation/index';
+export * from './column-autosize/index';
 export * from './hooks/index';
+export * from './row-span/index';
 
 export { createColumnHelper, flexRender } from '@tanstack/react-table';

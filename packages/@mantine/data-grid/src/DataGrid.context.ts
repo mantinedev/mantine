@@ -1,3 +1,4 @@
+import React from 'react';
 import { Cell, Row, Table as ReactTable } from '@tanstack/react-table';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { DataGridFactory } from './DataGrid';
@@ -10,6 +11,8 @@ export interface DataGridContextValue {
   getStyles: GetStylesApi<DataGridFactory>;
   store: DataGridStore;
   table: ReactTable<any>;
+  getRowHeight?: (row: Row<any>) => number | 'auto';
+  estimateRowHeight?: number;
   withSorting: boolean;
   sortedIcon: React.ReactNode | undefined;
   unsortedIcon: React.ReactNode | undefined;
@@ -47,6 +50,13 @@ export interface DataGridContextValue {
   onCellClick?: (cell: Cell<any, unknown>, event: React.MouseEvent) => void;
   onCellEdit?: (props: { row: Row<any>; columnId: string; value: unknown }) => void;
   onRowEdit?: (props: { row: Row<any>; values: Record<string, unknown> }) => void;
+  editTrigger: 'click' | 'doubleClick';
+  processRowUpdate?: (newRow: any, oldRow: any) => Promise<any>;
+  onProcessRowUpdateError?: (error: unknown) => void;
+  selectOnRowClick: boolean;
+  headerFilters: boolean;
+  listView: boolean;
+  renderListItem?: (props: { row: Row<any> }) => React.ReactNode;
 }
 
 export const [DataGridProvider, useDataGridContext] = createSafeContext<DataGridContextValue>(

@@ -28,3 +28,10 @@ export type {
   DataGridCellFactory,
   DataGridCellStylesNames,
 } from './DataGridCell';
+
+export { DataGridListView } from './DataGridListView';
+export type {
+  DataGridListViewProps,
+  DataGridListViewFactory,
+  DataGridListViewStylesNames,
+} from './DataGridListView';

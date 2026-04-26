@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { Cell, Row } from '@tanstack/react-table';
 import {
   Box,
@@ -23,6 +23,7 @@ import { DataGridProvider } from './DataGrid.context';
 import {
   DataGridBody,
   DataGridBodyFactory,
+  DataGridListView,
   DataGridVirtualBody,
   DataGridVirtualBodyFactory,
 } from './DataGridBody';
@@ -85,7 +86,9 @@ export type DataGridStylesNames =
   | 'treeIndent'
   | 'treeToggle'
   | 'columnMenu'
-  | 'dragHandle';
+  | 'dragHandle'
+  | 'listView'
+  | 'listItem';
 
 export type DataGridCssVariables = {
   root:
@@ -189,6 +192,21 @@ export interface DataGridProps<TData = any>
   /** Callback when a row is edited */
   onRowEdit?: (props: { row: Row<any>; values: Record<string, unknown> }) => void;
 
+  /** How editing is triggered: 'click' for single click, 'doubleClick' for double click, @default 'doubleClick' */
+  editTrigger?: 'click' | 'doubleClick';
+
+  /** Async row update handler. On edit save, called with (newRow, oldRow). If it rejects, the edit is reverted. */
+  processRowUpdate?: (newRow: any, oldRow: any) => Promise<any>;
+
+  /** Called when processRowUpdate rejects */
+  onProcessRowUpdateError?: (error: unknown) => void;
+
+  /** When true, clicking a row toggles its selection, @default false */
+  selectOnRowClick?: boolean;
+
+  /** When true, renders filter inputs in a dedicated row below column headers, @default false */
+  headerFilters?: boolean;
+
   /** Make the header sticky when scrolling, @default false */
   stickyHeader?: boolean;
 
@@ -198,11 +216,23 @@ export interface DataGridProps<TData = any>
   /** Labels overrides */
   labels?: Partial<DataGridLabels>;
 
+  /** Return height for a specific row, or 'auto' for content-measured height */
+  getRowHeight?: (row: Row<any>) => number | 'auto';
+
+  /** Estimated row height for initial render before measurement, used with getRowHeight */
+  estimateRowHeight?: number;
+
   /** Use ScrollArea component for horizontal scrolling, @default true */
   withScrollArea?: boolean;
 
   /** Props passed to the ScrollArea component, applicable only when `withScrollArea` is true */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** When true, renders rows as vertical cards instead of a table, @default false */
+  listView?: boolean;
+
+  /** Custom render function for list view items. Receives the row and should return a card/item element */
+  renderListItem?: (props: { row: Row<any> }) => React.ReactNode;
 }
 
 export type DataGridFactory = Factory<{
@@ -281,11 +311,20 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     expandOnRowClick,
     onCellEdit,
     onRowEdit,
+    editTrigger,
+    processRowUpdate,
+    onProcessRowUpdateError,
+    selectOnRowClick,
+    headerFilters,
     stickyHeader,
     pageSizeOptions,
     labels: labelsProp,
+    getRowHeight,
+    estimateRowHeight,
     withScrollArea = true,
     scrollAreaProps,
+    listView,
+    renderListItem,
     ...others
   } = props;
 
@@ -311,10 +350,14 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
 
   const store = storeProp ?? internalStore;
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
-  const hasFooter = store.table
+  const hasColumnFooter = store.table
     .getFooterGroups()
     .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const hasAggregation = store.table
+    .getVisibleLeafColumns()
+    .some((col) => col.columnDef.meta?.aggregationFn !== undefined);
+  const hasFooter = hasColumnFooter || hasAggregation;
+  const scrollContainerRef = store.scrollContainerRef;
   const withRowVirtualization = virtualize === 'rows' || virtualize === 'rows,columns';
   const withColumnVirtualization = virtualize === 'columns' || virtualize === 'rows,columns';
 
@@ -380,6 +423,15 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         onCellClick,
         onCellEdit,
         onRowEdit,
+        editTrigger: editTrigger ?? 'doubleClick',
+        processRowUpdate,
+        onProcessRowUpdateError,
+        selectOnRowClick: selectOnRowClick ?? false,
+        headerFilters: headerFilters ?? false,
+        listView: listView ?? false,
+        renderListItem,
+        getRowHeight,
+        estimateRowHeight,
       }}
     >
       <Box
@@ -396,66 +448,78 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         data-density={store.density}
         {...others}
       >
-        {children || (
-          <>
-            {store.withGlobalFilter && (
-              <DataGridToolbar>
-                <DataGridGlobalFilter />
-              </DataGridToolbar>
-            )}
-            {withRowVirtualization || withColumnVirtualization ? (
-              <>
-                <DataGridVirtualBody
-                  height={height}
-                  virtualScrollConfig={virtualScrollConfig}
-                  virtualColumnConfig={virtualColumnConfig}
-                  scrollContainerRef={scrollContainerRef}
-                  onScroll={onScrollToBottom ? handleScroll : undefined}
-                />
-                {hasFooter && (
+        {children ||
+          (listView ? (
+            <>
+              {store.withGlobalFilter && (
+                <DataGridToolbar>
+                  <DataGridGlobalFilter />
+                </DataGridToolbar>
+              )}
+              <DataGridListView />
+              {store.withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
+            </>
+          ) : (
+            <>
+              {store.withGlobalFilter && (
+                <DataGridToolbar>
+                  <DataGridGlobalFilter />
+                </DataGridToolbar>
+              )}
+              {withRowVirtualization || withColumnVirtualization ? (
+                <>
+                  <DataGridVirtualBody
+                    height={height}
+                    virtualScrollConfig={virtualScrollConfig}
+                    virtualColumnConfig={virtualColumnConfig}
+                    scrollContainerRef={scrollContainerRef}
+                    onScroll={onScrollToBottom ? handleScroll : undefined}
+                  />
+                  {hasFooter && (
+                    <Box component="table" {...getStyles('table')}>
+                      <DataGridFooter />
+                    </Box>
+                  )}
+                </>
+              ) : onScrollToBottom && height ? (
+                <Box
+                  ref={scrollContainerRef}
+                  onScroll={handleScroll}
+                  {...getStyles('virtualScrollContainer')}
+                  style={{ height: rem(height), overflow: 'auto' }}
+                >
                   <Box component="table" {...getStyles('table')}>
-                    <DataGridFooter />
+                    <DataGridHeader />
+                    <DataGridBody />
+                    {hasFooter && <DataGridFooter />}
                   </Box>
-                )}
-              </>
-            ) : onScrollToBottom && height ? (
-              <Box
-                ref={scrollContainerRef}
-                onScroll={handleScroll}
-                {...getStyles('virtualScrollContainer')}
-                style={{ height: rem(height), overflow: 'auto' }}
-              >
-                <Box component="table" {...getStyles('table')}>
-                  <DataGridHeader />
-                  <DataGridBody />
-                  {hasFooter && <DataGridFooter />}
                 </Box>
-              </Box>
-            ) : withScrollArea ? (
-              <ScrollArea
-                offsetScrollbars="x"
-                scrollbars="x"
-                {...getStyles('scrollContainer')}
-                {...scrollAreaProps}
-              >
-                <Box component="table" {...getStyles('table')}>
-                  <DataGridHeader />
-                  <DataGridBody />
-                  {hasFooter && <DataGridFooter />}
+              ) : withScrollArea ? (
+                <ScrollArea
+                  ref={scrollContainerRef}
+                  offsetScrollbars="x"
+                  scrollbars="x"
+                  {...getStyles('scrollContainer')}
+                  {...scrollAreaProps}
+                >
+                  <Box component="table" {...getStyles('table')}>
+                    <DataGridHeader />
+                    <DataGridBody />
+                    {hasFooter && <DataGridFooter />}
+                  </Box>
+                </ScrollArea>
+              ) : (
+                <Box style={{ overflowX: 'auto' }}>
+                  <Box component="table" {...getStyles('table')}>
+                    <DataGridHeader />
+                    <DataGridBody />
+                    {hasFooter && <DataGridFooter />}
+                  </Box>
                 </Box>
-              </ScrollArea>
-            ) : (
-              <Box style={{ overflowX: 'auto' }}>
-                <Box component="table" {...getStyles('table')}>
-                  <DataGridHeader />
-                  <DataGridBody />
-                  {hasFooter && <DataGridFooter />}
-                </Box>
-              </Box>
-            )}
-            {store.withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
-          </>
-        )}
+              )}
+              {store.withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
+            </>
+          ))}
         {loading && <LoadingOverlay visible {...getStyles('loadingOverlay')} />}
       </Box>
     </DataGridProvider>

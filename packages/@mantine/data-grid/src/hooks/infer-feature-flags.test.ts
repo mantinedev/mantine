@@ -98,6 +98,21 @@ describe('inferFeatureFlags', () => {
       expect(flags.withFiltering).toBe(true);
     });
 
+    it('infers from column meta.filterOperators', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [
+          {
+            accessorKey: 'name',
+            meta: {
+              filterOperators: [{ label: 'Contains', value: 'contains', filterFn: () => true }],
+            },
+          },
+        ],
+      });
+      expect(flags.withFiltering).toBe(true);
+    });
+
     it('infers from nested columns', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,

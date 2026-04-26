@@ -92,18 +92,37 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
   const extraColCount = getExtraColumnsCount(ctx);
   const totalColumns = visibleColumns.length + extraColCount;
 
-  const defaultEstimateSize = () => 36;
-  const estimateSize = virtualScrollConfig?.estimateSize ?? defaultEstimateSize;
   const overscan = virtualScrollConfig?.overscan ?? 10;
+
+  const hasAutoHeight = useMemo(
+    () => ctx.getRowHeight != null && rows.some((row) => ctx.getRowHeight!(row) === 'auto'),
+    [ctx.getRowHeight, rows]
+  );
+
+  const estimateSize =
+    virtualScrollConfig?.estimateSize ??
+    ((index: number) => {
+      if (ctx.getRowHeight) {
+        const row = rows[index];
+        if (row) {
+          const h = ctx.getRowHeight(row);
+          if (typeof h === 'number') {
+            return h;
+          }
+        }
+      }
+      return ctx.estimateRowHeight ?? 36;
+    });
 
   const rowVirtualizer = useVirtualizer({
     count: withRowVirt ? rows.length : 0,
     getScrollElement: () => scrollContainerRef?.current ?? null,
     estimateSize,
     overscan,
-    measureElement: ctx.withRowExpansion
-      ? (element) => element.getBoundingClientRect().height
-      : undefined,
+    measureElement:
+      ctx.withRowExpansion || hasAutoHeight
+        ? (element) => element.getBoundingClientRect().height
+        : undefined,
   });
 
   const columnVirtualizer = useVirtualizer({
@@ -438,7 +457,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         return (
           <div
             key={row.id}
-            ref={ctx.withRowExpansion ? rowVirtualizer.measureElement : undefined}
+            ref={ctx.withRowExpansion || hasAutoHeight ? rowVirtualizer.measureElement : undefined}
             data-index={virtualItem.index}
             style={{
               position: 'absolute',
@@ -521,7 +540,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                 </Box>
               )}
             </Box>
-            {ctx.withFiltering && header.column.getCanFilter() && (
+            {ctx.withFiltering && !ctx.headerFilters && header.column.getCanFilter() && (
               <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                 <FilterDispatcher column={header.column} />
               </Box>

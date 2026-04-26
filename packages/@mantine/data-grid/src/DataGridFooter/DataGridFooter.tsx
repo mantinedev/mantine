@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { flexRender } from '@tanstack/react-table';
 import {
   Box,
@@ -8,7 +9,9 @@ import {
   Factory,
   useProps,
 } from '@mantine/core';
+import { computeAggregation } from '../aggregation';
 import { useDataGridContext } from '../DataGrid.context';
+import { getExtraColumnsCount } from '../get-extra-columns-count/get-extra-columns-count';
 import classes from '../DataGrid.module.css';
 
 export type DataGridFooterStylesNames = 'tfoot' | 'tr' | 'td';
@@ -31,6 +34,20 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
   );
 
   const ctx = useDataGridContext();
+
+  const aggregation = useMemo(() => {
+    const visibleColumns = ctx.table.getVisibleLeafColumns();
+    const rows = ctx.table.getFilteredRowModel().rows;
+    return computeAggregation(rows, visibleColumns);
+  }, [ctx.table.getFilteredRowModel().rows, ctx.table.getVisibleLeafColumns()]);
+
+  const extraColCount = getExtraColumnsCount({
+    withRowReorder: ctx.withRowReorder,
+    withRowSelection: ctx.withRowSelection,
+    withRowExpansion: ctx.withRowExpansion,
+    withTreeData: ctx.withTreeData,
+    withRowNumbers: ctx.withRowNumbers,
+  });
 
   return (
     <Box
@@ -66,6 +83,34 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
           ))}
         </Box>
       ))}
+      {aggregation.hasAny() && (
+        <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
+          {Array.from({ length: extraColCount }).map((_, i) => (
+            <Box
+              component="td"
+              key={`extra-${i}`}
+              {...ctx.getStyles('td', { classNames, styles })}
+            />
+          ))}
+          {ctx.table.getVisibleLeafColumns().map((column) => {
+            const agg = aggregation.get(column.id);
+            return (
+              <Box
+                component="td"
+                key={column.id}
+                {...ctx.getStyles('td', { classNames, styles })}
+                {...ctx.getStyles('aggregationCell', { classNames, styles })}
+              >
+                {agg
+                  ? agg.label
+                    ? `${agg.label}: ${agg.value ?? ''}`
+                    : String(agg.value ?? '')
+                  : null}
+              </Box>
+            );
+          })}
+        </Box>
+      )}
     </Box>
   );
 });

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -47,7 +48,9 @@ function defaultFilteringDisabled<TData>(
 ): ColumnDef<TData, any>[] {
   return columns.map((col) => ({
     enableColumnFilter:
-      (col as any).meta?.filterVariant !== undefined || col.filterFn !== undefined ? true : false,
+      (col as any).meta?.filterVariant !== undefined ||
+      (col as any).meta?.filterOperators !== undefined ||
+      col.filterFn !== undefined,
     ...col,
     ...((col as any).columns && {
       columns: defaultFilteringDisabled((col as any).columns),
@@ -65,9 +68,19 @@ const FILTER_VARIANT_TO_FN: Record<string, string> = {
 function processFilterColumns<TData>(columns: ColumnDef<TData, any>[]): ColumnDef<TData, any>[] {
   return columns.map((col) => {
     const variant = (col as any).meta?.filterVariant as string | undefined;
+    const operators = (col as any).meta?.filterOperators as
+      | import('../DataGridFilters/filter-operators').FilterOperator[]
+      | undefined;
     const defaultFilterFn = variant ? FILTER_VARIANT_TO_FN[variant] : undefined;
+    let operatorFilterFn: FilterFn<TData> | undefined;
+    if (operators && operators.length > 0 && !col.filterFn) {
+      operatorFilterFn = createOperatorFilterFnLocal(operators);
+    }
     return {
-      ...(defaultFilterFn && !col.filterFn ? { filterFn: defaultFilterFn as any } : {}),
+      ...(operatorFilterFn ? { filterFn: operatorFilterFn } : {}),
+      ...(defaultFilterFn && !col.filterFn && !operatorFilterFn
+        ? { filterFn: defaultFilterFn as any }
+        : {}),
       ...col,
       ...((col as any).columns && {
         columns: processFilterColumns((col as any).columns),
@@ -175,6 +188,18 @@ export interface DataGridStore<TData = any> {
 
   /** Current row pinning state */
   rowPinning: RowPinningState;
+
+  /** Ref to the scroll container DOM element */
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+
+  /** Scroll the grid to bring the row at `index` into view */
+  scrollToRow: (index: number) => void;
+
+  /** Scroll the grid horizontally to bring the column at `index` into view */
+  scrollToColumn: (index: number) => void;
+
+  /** Return the current scroll position of the grid container */
+  getScrollPosition: () => { top: number; left: number };
 }
 
 export interface UseDataGridOptions<TData> {
@@ -562,6 +587,40 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
   const table = useReactTable(tableConfig);
   const state = table.getState();
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToRow = useCallback((index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) {
+      return;
+    }
+    const rowHeight = parseInt(
+      getComputedStyle(container).getPropertyValue('--dg-row-height') || '36',
+      10
+    );
+    container.scrollTo({ top: index * rowHeight, behavior: 'smooth' });
+  }, []);
+
+  const scrollToColumn = useCallback((index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) {
+      return;
+    }
+    const cells = container.querySelectorAll('thead th');
+    const cell = cells[index] as HTMLElement | undefined;
+    if (cell) {
+      container.scrollTo({ left: cell.offsetLeft, behavior: 'smooth' });
+    }
+  }, []);
+
+  const getScrollPosition = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) {
+      return { top: 0, left: 0 };
+    }
+    return { top: container.scrollTop, left: container.scrollLeft };
+  }, []);
+
   return {
     table,
     withSorting,
@@ -596,5 +655,9 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     expanded: state.expanded,
     grouping: state.grouping,
     rowPinning: state.rowPinning,
+    scrollContainerRef,
+    scrollToRow,
+    scrollToColumn,
+    getScrollPosition,
   };
 }

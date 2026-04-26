@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { ExpandChevron, GripIcon } from '../icons';
+import type { RowSpanMap } from '../row-span';
 import { DataGridCell } from './DataGridCell';
 import classes from '../DataGrid.module.css';
 
@@ -33,6 +34,9 @@ export interface DataGridRowProps
 
   /** Zero-based visual row index */
   rowIndex: number;
+
+  /** Row span lookup map */
+  rowSpanMap?: RowSpanMap;
 }
 
 export type DataGridRowFactory = Factory<{
@@ -43,7 +47,7 @@ export type DataGridRowFactory = Factory<{
 }>;
 
 export const DataGridRow = factory<DataGridRowFactory>((props) => {
-  const { className, style, classNames, styles, row, rowIndex, ...others } = useProps(
+  const { className, style, classNames, styles, row, rowIndex, rowSpanMap, ...others } = useProps(
     'DataGridRow',
     null,
     props
@@ -53,6 +57,8 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
   const isSelected = ctx.withRowSelection && row.getIsSelected();
   const isStriped = ctx.striped && rowIndex % 2 === 1;
   const rowPinned = ctx.withRowPinning ? row.getIsPinned() : false;
+  const rowHeight = ctx.getRowHeight?.(row);
+  const heightStyle = typeof rowHeight === 'number' ? { height: `${rowHeight}px` } : undefined;
 
   const handleRowClick = (event: React.MouseEvent) => {
     if (ctx.onRowClick) {
@@ -60,6 +66,31 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
     }
     if (ctx.expandOnRowClick && ctx.withRowExpansion) {
       row.toggleExpanded();
+    }
+    if (ctx.selectOnRowClick && ctx.withRowSelection && row.getCanSelect()) {
+      if (event.shiftKey) {
+        const rows = ctx.table.getRowModel().rows;
+        const selected = ctx.table.getSelectedRowModel().rows;
+        const lastSelected = selected.length > 0 ? selected[selected.length - 1] : null;
+        if (lastSelected) {
+          const startIdx = rows.findIndex((r) => r.id === lastSelected.id);
+          const endIdx = rows.findIndex((r) => r.id === row.id);
+          const [from, to] = startIdx < endIdx ? [startIdx, endIdx] : [endIdx, startIdx];
+          const updates: Record<string, boolean> = {};
+          for (let i = from; i <= to; i++) {
+            if (rows[i].getCanSelect()) {
+              updates[rows[i].id] = true;
+            }
+          }
+          ctx.table.setRowSelection((prev) => ({ ...prev, ...updates }));
+        } else {
+          row.toggleSelected(true);
+        }
+      } else if (event.metaKey || event.ctrlKey) {
+        row.toggleSelected();
+      } else {
+        ctx.table.setRowSelection({ [row.id]: true });
+      }
     }
   };
 
@@ -125,11 +156,13 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       data-hover={ctx.highlightOnHover || undefined}
       data-pinned-top={rowPinned === 'top' || undefined}
       data-pinned-bottom={rowPinned === 'bottom' || undefined}
-      onClick={ctx.onRowClick || ctx.expandOnRowClick ? handleRowClick : undefined}
+      onClick={
+        ctx.onRowClick || ctx.expandOnRowClick || ctx.selectOnRowClick ? handleRowClick : undefined
+      }
       onDoubleClick={handleRowDoubleClick}
       onDragOver={ctx.withRowReorder ? handleDragOver : undefined}
       onDrop={ctx.withRowReorder ? handleDrop : undefined}
-      {...ctx.getStyles('tr', { className, classNames, style, styles })}
+      {...ctx.getStyles('tr', { className, classNames, style: [heightStyle, style], styles })}
       {...others}
     >
       {ctx.withRowReorder && (
@@ -192,15 +225,54 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
           {rowIndex + 1}
         </Box>
       )}
-      {row.getVisibleCells().map((cell, cellIndex) => (
-        <DataGridCell
-          key={cell.id}
-          cell={cell}
-          classNames={classNames}
-          styles={styles}
-          treeData={ctx.withTreeData && cellIndex === 0 ? { row } : undefined}
-        />
-      ))}
+      {(() => {
+        const visibleCells = row.getVisibleCells();
+        const renderedCells: React.ReactNode[] = [];
+        let skipCount = 0;
+        let visualColIndex = 0;
+
+        for (let i = 0; i < visibleCells.length; i++) {
+          if (skipCount > 0) {
+            skipCount--;
+            visualColIndex++;
+            continue;
+          }
+
+          const cell = visibleCells[i];
+          const meta = cell.column.columnDef.meta;
+          const colSpan =
+            typeof meta?.colSpan === 'function'
+              ? meta.colSpan({ row: cell.row, column: cell.column })
+              : (meta?.colSpan ?? 1);
+
+          if (colSpan > 1) {
+            skipCount = colSpan - 1;
+          }
+
+          const rSpan = rowSpanMap?.get(rowIndex, cell.column.id);
+          if (rSpan === 0) {
+            visualColIndex++;
+            continue;
+          }
+
+          renderedCells.push(
+            <DataGridCell
+              key={cell.id}
+              cell={cell}
+              colIndex={visualColIndex}
+              colSpan={colSpan > 1 ? colSpan : undefined}
+              rowSpan={rSpan !== undefined && rSpan > 1 ? rSpan : undefined}
+              classNames={classNames}
+              styles={styles}
+              treeData={ctx.withTreeData && i === 0 ? { row } : undefined}
+            />
+          );
+
+          visualColIndex++;
+        }
+
+        return renderedCells;
+      })()}
     </Box>
   );
 });

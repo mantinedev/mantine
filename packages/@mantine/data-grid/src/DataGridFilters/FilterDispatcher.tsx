@@ -2,6 +2,7 @@ import { Column } from '@tanstack/react-table';
 import { BooleanFilter } from './BooleanFilter';
 import { MultiSelectFilter } from './MultiSelectFilter';
 import { NumberRangeFilter } from './NumberRangeFilter';
+import { OperatorFilter } from './OperatorFilter';
 import { SelectFilter } from './SelectFilter';
 import { TextFilter } from './TextFilter';
 
@@ -10,6 +11,11 @@ export interface FilterDispatcherProps {
 }
 
 export function FilterDispatcher({ column }: FilterDispatcherProps) {
+  const filterOperators = column.columnDef.meta?.filterOperators;
+  if (filterOperators && filterOperators.length > 0) {
+    return <OperatorFilter column={column} operators={filterOperators} />;
+  }
+
   const filterVariant = column.columnDef.meta?.filterVariant;
 
   switch (filterVariant) {
