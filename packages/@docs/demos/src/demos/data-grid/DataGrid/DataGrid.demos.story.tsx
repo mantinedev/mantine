@@ -23,6 +23,11 @@ export const Demo_controlledSorting = {
   render: renderDemo(demos.controlledSorting),
 };
 
+export const Demo_customSortIcons = {
+  name: '⭐ Demo: customSortIcons',
+  render: renderDemo(demos.customSortIcons),
+};
+
 export const Demo_columnFilters = {
   name: '⭐ Demo: columnFilters',
   render: renderDemo(demos.columnFilters),

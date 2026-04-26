@@ -9,6 +9,8 @@ export interface DataGridContextValue {
   getStyles: GetStylesApi<DataGridFactory>;
   table: ReactTable<any>;
   withSorting: boolean;
+  sortedIcon: React.ReactNode | undefined;
+  unsortedIcon: React.ReactNode | undefined;
   withFiltering: boolean;
   withGlobalFilter: boolean;
   withPagination: boolean;

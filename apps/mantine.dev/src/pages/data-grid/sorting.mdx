@@ -25,6 +25,15 @@ The state follows the TanStack Table `SortingState` format -- an array of `{ id:
 
 <Demo data={DataGridDemos.controlledSorting} />
 
+## Custom sort icons
+
+Use the `sortedIcon` and `unsortedIcon` props to replace the default sort indicator icons.
+The `sortedIcon` is displayed when a column is actively sorted -- it rotates automatically
+for ascending and descending directions via CSS. The `unsortedIcon` is displayed on sortable
+columns that are not currently sorted.
+
+<Demo data={DataGridDemos.customSortIcons} />
+
 ## Server-side sorting
 
 For server-side sorting, set `manualSorting` to `true` and handle sorting in your data fetching logic.

@@ -2,6 +2,7 @@ export { usage } from './DataGrid.demo.usage';
 export { sorting } from './DataGrid.demo.sorting';
 export { multiSort } from './DataGrid.demo.multiSort';
 export { controlledSorting } from './DataGrid.demo.controlledSorting';
+export { customSortIcons } from './DataGrid.demo.customSortIcons';
 export { columnFilters } from './DataGrid.demo.columnFilters';
 export { globalFilter } from './DataGrid.demo.globalFilter';
 export { controlledFilters } from './DataGrid.demo.controlledFilters';

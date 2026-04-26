@@ -107,15 +107,33 @@
   gap: rem(4px);
 }
 
+.th[data-sortable] {
+  cursor: pointer;
+  user-select: none;
+}
+
+.th[data-sortable]:hover {
+  background-color: var(--dg-hover-color);
+}
+
 .sortIcon {
   display: inline-flex;
   align-items: center;
   opacity: 0.5;
   margin-inline-start: rem(2px);
+  transition:
+    transform 200ms ease,
+    opacity 200ms ease;
 }
 
 .th[data-sort-asc] .sortIcon,
-.th[data-sort-desc] .sortIcon {
+.virtualCell[data-sort-asc] .sortIcon {
+  opacity: 1;
+  transform: rotate(180deg);
+}
+
+.th[data-sort-desc] .sortIcon,
+.virtualCell[data-sort-desc] .sortIcon {
   opacity: 1;
 }
 

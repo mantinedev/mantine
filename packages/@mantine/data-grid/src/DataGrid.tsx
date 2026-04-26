@@ -140,6 +140,12 @@ export interface DataGridProps<TData = any>
   /** Enable sorting, @default false */
   withSorting?: boolean;
 
+  /** Custom icon displayed in sortable column headers when the column is sorted */
+  sortedIcon?: React.ReactNode;
+
+  /** Custom icon displayed in sortable column headers when the column is not sorted */
+  unsortedIcon?: React.ReactNode;
+
   /** Controlled sorting state */
   sorting?: SortingState;
 
@@ -393,6 +399,8 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     mod,
     attributes,
     withSorting,
+    sortedIcon,
+    unsortedIcon,
     sorting,
     onSortingChange,
     manualSorting,
@@ -552,6 +560,8 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         getStyles,
         table,
         withSorting: withSorting ?? false,
+        sortedIcon,
+        unsortedIcon,
         withFiltering: withFiltering ?? false,
         withGlobalFilter: withGlobalFilter ?? false,
         withPagination: withPagination ?? false,
