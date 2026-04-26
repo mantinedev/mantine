@@ -6,28 +6,29 @@ export default Layout(MDX_DATA.DataGridRowFeatures);
 
 ## Row selection
 
-Set `withRowSelection` to add checkbox selection to each row. A select-all checkbox is rendered
-in the header. Use `rowSelection` and `onRowSelectionChange` for controlled state. The `getRowId`
-prop is required to provide stable row identifiers.
+Pass `withRowSelection` to `useDataGrid` to add checkbox selection to each row. A select-all
+checkbox is rendered in the header. Use `rowSelection` and `onRowSelectionChange` for controlled
+state. The `getRowId` option is required to provide stable row identifiers.
 
 <Demo data={DataGridDemos.rowSelection} />
 
 ## Controlled selection
 
-Use the `rowSelection` and `onRowSelectionChange` props to control selection state externally.
+Pass `rowSelection` and `onRowSelectionChange` to `useDataGrid` to control selection state externally.
 Selection state is keyed by row IDs (from `getRowId`), not positional indexes.
 
 ## Row expansion
 
-Set `withRowExpansion` to allow rows to expand and show additional detail content. Use the
-`renderExpandedRow` prop to define the expanded content. Click the expand icon to toggle a row.
+Pass `withRowExpansion` to `useDataGrid` to allow rows to expand and show additional detail content.
+Use the `renderExpandedRow` prop on `DataGrid` to define the expanded content. Click the expand icon
+to toggle a row.
 
 <Demo data={DataGridDemos.rowExpansion} />
 
 ## Expand on click
 
-Set `expandOnRowClick` to `true` to toggle row expansion when clicking anywhere on the row,
-instead of requiring the expand icon.
+Set `expandOnRowClick` to `true` on `DataGrid` to toggle row expansion when clicking anywhere on
+the row, instead of requiring the expand icon.
 
 ## Striped and hover
 

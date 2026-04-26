@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.DataGridEditing);
 
 ## Cell editing
 
-Set `withEditing` and `editingMode="cell"` to enable inline cell editing. Double-click a cell to enter
-edit mode. Press `Enter` to save the value or `Escape` to cancel. The `onCellEdit` callback receives
-the row, column ID, and new value.
+Set `editingMode="cell"` in `useDataGrid` to enable inline cell editing. Double-click a cell to enter
+edit mode. Press `Enter` to save the value or `Escape` to cancel. The `onCellEdit` callback on `DataGrid`
+receives the row, column ID, and new value.
 
 <Demo data={DataGridDemos.cellEditing} />
 
@@ -19,20 +19,29 @@ Save and Cancel buttons appear. The `onRowEdit` callback receives the row and a 
 containing all edited column values.
 
 ```tsx
-<DataGrid
-  data={data}
-  withEditing
-  editingMode="row"
-  getRowId={(row) => row.id}
-  onRowEdit={({ row, values }) => {
-    setData((prev) =>
-      prev.map((item) =>
-        item.id === row.original.id ? { ...item, ...values } : item
-      )
-    );
-  }}
-  columns={columns}
-/>
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
+
+function Demo() {
+  const store = useDataGrid({
+    data,
+    columns,
+    editingMode: 'row',
+    getRowId: (row) => row.id,
+  });
+
+  return (
+    <DataGrid
+      store={store}
+      onRowEdit={({ row, values }) => {
+        setData((prev) =>
+          prev.map((item) =>
+            item.id === row.original.id ? { ...item, ...values } : item
+          )
+        );
+      }}
+    />
+  );
+}
 ```
 
 ## Modal editing
@@ -43,11 +52,11 @@ This approach gives full control over the edit UI and validation flow.
 ```tsx
 <DataGrid
   data={data}
+  columns={columns}
   onRowDoubleClick={(row) => {
     setEditingRow(row.original);
     openModal();
   }}
-  columns={columns}
 />
 ```
 

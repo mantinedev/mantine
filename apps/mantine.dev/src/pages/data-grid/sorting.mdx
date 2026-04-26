@@ -6,8 +6,9 @@ export default Layout(MDX_DATA.DataGridSorting);
 
 ## Basic sorting
 
-Set `withSorting` on the DataGrid and `enableSorting: true` on columns that should be sortable.
-Click a sortable column header to cycle through ascending, descending, and unsorted states.
+Set `enableSorting: true` on columns that should be sortable. Sorting is enabled automatically
+when any column has this flag. Click a sortable column header to cycle through ascending,
+descending, and unsorted states.
 
 <Demo data={DataGridDemos.sorting} />
 
@@ -20,7 +21,7 @@ Enable multi-sort by passing `enableMultiSort: true` via `tableOptions`.
 
 ## Controlled sorting
 
-Use the `sorting` and `onSortingChange` props to control sorting state externally.
+Pass `sorting` and `onSortingChange` to `useDataGrid` to control sorting state externally.
 The state follows the TanStack Table `SortingState` format -- an array of `{ id: string, desc: boolean }` objects.
 
 <Demo data={DataGridDemos.controlledSorting} />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge, Box, Group, Stack, Text } from '@mantine/core';
-import { DataGrid } from './index';
+import { DataGrid, useDataGrid } from './index';
 
 export default { title: 'DataGrid' };
 
@@ -233,9 +233,10 @@ const manyRows: Employee[] = Array.from({ length: 50 }, (_, i) => ({
 }));
 
 export function Usage() {
+  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} />
+      <DataGrid store={store} />
     </Box>
   );
 }
@@ -273,33 +274,52 @@ export function CustomCells() {
     },
   ];
 
+  const store = useDataGrid({ data: employees, columns: customColumns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={customColumns} getRowId={(row) => row.id} />
+      <DataGrid store={store} />
     </Box>
   );
 }
 
 export function Sorting() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withSorting: true,
+  });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} withSorting />
+      <DataGrid store={store} />
     </Box>
   );
 }
 
 export function ColumnFilters() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withFiltering: true,
+  });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} withFiltering />
+      <DataGrid store={store} />
     </Box>
   );
 }
 
 export function GlobalFilter() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withGlobalFilter: true,
+  });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} withGlobalFilter>
+      <DataGrid store={store}>
         <DataGrid.Toolbar>
           <DataGrid.GlobalFilter placeholder="Search employees..." />
         </DataGrid.Toolbar>
@@ -313,46 +333,59 @@ export function GlobalFilter() {
 }
 
 export function Pagination() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withPagination: true,
+    pageSize: 5,
+  });
   return (
     <Box p="md">
-      <DataGrid
-        data={employees}
-        columns={columns}
-        getRowId={(row) => row.id}
-        withPagination
-        pageSize={5}
-        pageSizeOptions={[5, 10, 20]}
-      />
+      <DataGrid store={store} pageSizeOptions={[5, 10, 20]} />
     </Box>
   );
 }
 
 export function ColumnResizing() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withColumnResizing: true,
+  });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} withColumnResizing />
+      <DataGrid store={store} />
     </Box>
   );
 }
 
 export function ColumnPinning() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withColumnPinning: true,
+    columnPinning: { left: ['firstName'], right: ['status'] },
+  });
   return (
     <Box p="md">
-      <DataGrid
-        data={employees}
-        columns={columns}
-        getRowId={(row) => row.id}
-        withColumnPinning
-        columnPinning={{ left: ['firstName'], right: ['status'] }}
-      />
+      <DataGrid store={store} />
     </Box>
   );
 }
 
 export function ColumnVisibility() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withColumnVisibility: true,
+  });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} withColumnVisibility>
+      <DataGrid store={store}>
         <DataGrid.Toolbar>
           <Group justify="flex-end">
             <DataGrid.ColumnVisibilityToggle />
@@ -368,21 +401,30 @@ export function ColumnVisibility() {
 }
 
 export function RowSelection() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowSelection: true,
+  });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} withRowSelection />
+      <DataGrid store={store} />
     </Box>
   );
 }
 
 export function RowExpansion() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowExpansion: true,
+  });
   return (
     <Box p="md">
       <DataGrid
-        data={employees}
-        columns={columns}
-        getRowId={(row) => row.id}
-        withRowExpansion
+        store={store}
         renderExpandedRow={({ row }) => (
           <Stack gap="xs" p="sm">
             <Text size="sm">
@@ -417,45 +459,37 @@ export function RowExpansion() {
 }
 
 export function StripedHover() {
+  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid
-        data={employees}
-        columns={columns}
-        getRowId={(row) => row.id}
-        striped
-        highlightOnHover
-      />
+      <DataGrid store={store} striped highlightOnHover />
     </Box>
   );
 }
 
 export function RowNumbers() {
+  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} withRowNumbers />
+      <DataGrid store={store} withRowNumbers />
     </Box>
   );
 }
 
 export function Virtualization() {
+  const store = useDataGrid({ data: largeData, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid
-        data={largeData}
-        columns={columns}
-        getRowId={(row) => row.id}
-        withVirtualization
-        height={500}
-      />
+      <DataGrid store={store} withVirtualization height={500} />
     </Box>
   );
 }
 
 export function Loading() {
+  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id} loading />
+      <DataGrid store={store} loading />
     </Box>
   );
 }
@@ -482,44 +516,42 @@ export function EmptyState() {
 }
 
 export function StickyHeader() {
+  const store = useDataGrid({ data: manyRows, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid
-        data={manyRows}
-        columns={columns}
-        getRowId={(row) => row.id}
-        stickyHeader
-        height={400}
-      />
+      <DataGrid store={store} stickyHeader height={400} />
     </Box>
   );
 }
 
 export function Grouping() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withGrouping: true,
+    grouping: ['department'],
+  });
   return (
     <Box p="md">
-      <DataGrid
-        data={employees}
-        columns={columns}
-        getRowId={(row) => row.id}
-        withGrouping
-        grouping={['department']}
-      />
+      <DataGrid store={store} />
     </Box>
   );
 }
 
 export function Editing() {
   const [data, setData] = useState(employees);
+  const store = useDataGrid({
+    data,
+    columns,
+    getRowId: (row) => row.id,
+    editingMode: 'cell',
+  });
 
   return (
     <Box p="md">
       <DataGrid
-        data={data}
-        columns={columns}
-        getRowId={(row) => row.id}
-        withEditing
-        editingMode="cell"
+        store={store}
         onCellEdit={({ row, columnId, value }) => {
           setData((prev) =>
             prev.map((item) =>
@@ -533,9 +565,10 @@ export function Editing() {
 }
 
 export function Density() {
+  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
   return (
     <Box p="md">
-      <DataGrid data={employees} columns={columns} getRowId={(row) => row.id}>
+      <DataGrid store={store}>
         <DataGrid.Toolbar>
           <Group justify="flex-end">
             <DataGrid.DensityToggle />
@@ -570,17 +603,19 @@ export function CompoundComponents() {
     { accessorKey: 'status', header: 'Status' },
   ];
 
+  const store = useDataGrid({
+    data: employees,
+    columns: columnsWithFooter,
+    getRowId: (row) => row.id,
+    withGlobalFilter: true,
+    withPagination: true,
+    pageSize: 10,
+    withColumnVisibility: true,
+  });
+
   return (
     <Box p="md">
-      <DataGrid
-        data={employees}
-        columns={columnsWithFooter}
-        getRowId={(row) => row.id}
-        withGlobalFilter
-        withPagination
-        pageSize={10}
-        withColumnVisibility
-      >
+      <DataGrid store={store}>
         <DataGrid.Toolbar>
           <Group justify="space-between">
             <DataGrid.GlobalFilter placeholder="Search..." />
@@ -602,30 +637,33 @@ export function CompoundComponents() {
 export function AllFeatures() {
   const [data, setData] = useState(employees);
 
+  const store = useDataGrid({
+    data,
+    columns,
+    getRowId: (row) => row.id,
+    withSorting: true,
+    withFiltering: true,
+    withGlobalFilter: true,
+    withPagination: true,
+    pageSize: 10,
+    withColumnResizing: true,
+    withColumnPinning: true,
+    withColumnVisibility: true,
+    withRowSelection: true,
+    withRowExpansion: true,
+    withGrouping: true,
+    editingMode: 'cell',
+  });
+
   return (
     <Box p="md">
       <DataGrid
-        data={data}
-        columns={columns}
-        getRowId={(row) => row.id}
-        withSorting
-        withFiltering
-        withGlobalFilter
-        withPagination
-        pageSize={10}
+        store={store}
         pageSizeOptions={[5, 10, 20]}
-        withColumnResizing
-        withColumnPinning
-        withColumnVisibility
-        withRowSelection
-        withRowExpansion
         withRowNumbers
         striped
         highlightOnHover
         stickyHeader
-        withGrouping
-        withEditing
-        editingMode="cell"
         height={500}
         renderExpandedRow={({ row }) => (
           <Text size="sm" p="sm">

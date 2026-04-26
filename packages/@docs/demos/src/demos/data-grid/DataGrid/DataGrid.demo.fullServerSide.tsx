@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 
 interface ServerRow {
   id: string;
@@ -102,26 +102,25 @@ function Demo() {
     []
   );
 
-  return (
-    <DataGrid
-      data={data}
-      loading={loading}
-      columns={columns}
-      withSorting
-      manualSorting
-      sorting={sorting}
-      onSortingChange={setSorting}
-      withFiltering
-      manualFiltering
-      columnFilters={columnFilters}
-      onColumnFiltersChange={setColumnFilters}
-      withPagination
-      manualPagination
-      pagination={pagination}
-      onPaginationChange={setPagination}
-      rowCount={totalCount}
-    />
-  );
+  const store = useDataGrid({
+    data,
+    columns,
+    withSorting: true,
+    manualSorting: true,
+    sorting,
+    onSortingChange: setSorting,
+    withFiltering: true,
+    manualFiltering: true,
+    columnFilters,
+    onColumnFiltersChange: setColumnFilters,
+    withPagination: true,
+    manualPagination: true,
+    pagination,
+    onPaginationChange: setPagination,
+    rowCount: totalCount,
+  });
+
+  return <DataGrid store={store} loading={loading} />;
 }
 `;
 
@@ -221,26 +220,25 @@ function Demo() {
     []
   );
 
-  return (
-    <DataGrid
-      data={data}
-      loading={loading}
-      columns={columns}
-      withSorting
-      manualSorting
-      sorting={sorting}
-      onSortingChange={setSorting}
-      withFiltering
-      manualFiltering
-      columnFilters={columnFilters}
-      onColumnFiltersChange={setColumnFilters}
-      withPagination
-      manualPagination
-      pagination={pagination}
-      onPaginationChange={setPagination}
-      rowCount={totalCount}
-    />
-  );
+  const store = useDataGrid({
+    data,
+    columns,
+    withSorting: true,
+    manualSorting: true,
+    sorting,
+    onSortingChange: setSorting,
+    withFiltering: true,
+    manualFiltering: true,
+    columnFilters,
+    onColumnFiltersChange: setColumnFilters,
+    withPagination: true,
+    manualPagination: true,
+    pagination,
+    onPaginationChange: setPagination,
+    rowCount: totalCount,
+  });
+
+  return <DataGrid store={store} loading={loading} />;
 }
 
 export const fullServerSide: MantineDemo = {

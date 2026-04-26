@@ -6,29 +6,29 @@ export default Layout(MDX_DATA.DataGridColumnFeatures);
 
 ## Column resizing
 
-Set `withColumnResizing` to allow users to drag column borders to resize them. You can set initial
-column widths using the `size` property in column definitions.
+Pass `withColumnResizing` to `useDataGrid` to allow users to drag column borders to resize them.
+You can set initial column widths using the `size` property in column definitions.
 
 <Demo data={DataGridDemos.columnResizing} />
 
 ## Column pinning
 
-Set `withColumnPinning` to pin columns to the left or right edge of the grid. Pinned columns remain
-visible while scrolling horizontally. Use the `columnPinning` prop to set the initial pinned state.
+Pass `columnPinning` to `useDataGrid` to pin columns to the left or right edge of the grid.
+Pinned columns remain visible while scrolling horizontally.
 
 <Demo data={DataGridDemos.columnPinning} />
 
 ## Column visibility
 
-Set `withColumnVisibility` to allow users to show and hide columns. Use the `DataGrid.ColumnVisibilityToggle`
-compound component inside `DataGrid.Toolbar` to render a column toggle menu.
+Pass `withColumnVisibility` to `useDataGrid` to allow users to show and hide columns. Use the
+`DataGrid.ColumnVisibilityToggle` compound component inside `DataGrid.Toolbar` to render a column toggle menu.
 
 <Demo data={DataGridDemos.columnVisibility} />
 
 ## Column reorder
 
-Set `withColumnReorder` to enable drag-and-drop column reordering. Users can drag column headers
-to rearrange the column order. Use `columnOrder` and `onColumnOrderChange` for controlled state.
+Pass `withColumnReorder` to `useDataGrid` to enable drag-and-drop column reordering. Users can drag
+column headers to rearrange the column order. Use `columnOrder` and `onColumnOrderChange` for controlled state.
 
 ## Header groups
 

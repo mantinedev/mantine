@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.DataGridGrouping);
 
 ## Basic grouping
 
-Set `withGrouping` and pass a `grouping` array of column IDs to group rows by one or more columns.
+Pass `grouping` with an array of column IDs to `useDataGrid` to group rows by one or more columns.
 Group headers show the grouped value with an expand/collapse toggle to show or hide the rows within.
 
 <Demo data={DataGridDemos.grouping} />
@@ -53,24 +53,24 @@ const columns = [
 
 ## Controlled grouping
 
-Use the `grouping` and `onGroupingChange` props for controlled grouping state.
+Pass `grouping` and `onGroupingChange` to `useDataGrid` for controlled grouping state.
 The state is an array of column IDs representing the current grouping hierarchy.
 
 ```tsx
 import { useState } from 'react';
 import { GroupingState } from '@tanstack/react-table';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 
 function Demo() {
   const [grouping, setGrouping] = useState<GroupingState>(['department']);
 
-  return (
-    <DataGrid
-      data={data}
-      withGrouping
-      grouping={grouping}
-      onGroupingChange={setGrouping}
-      columns={columns}
-    />
-  );
+  const store = useDataGrid({
+    data,
+    columns,
+    grouping,
+    onGroupingChange: setGrouping,
+  });
+
+  return <DataGrid store={store} />;
 }
 ```

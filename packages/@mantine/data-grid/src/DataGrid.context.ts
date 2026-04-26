@@ -1,12 +1,14 @@
 import { Cell, Row, Table as ReactTable } from '@tanstack/react-table';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { DataGridFactory } from './DataGrid';
+import type { DataGridStore } from './hooks';
 import type { DataGridLocalization } from './localization';
 
 export type DataGridDensity = 'compact' | 'default' | 'comfortable';
 
 export interface DataGridContextValue {
   getStyles: GetStylesApi<DataGridFactory>;
+  store: DataGridStore;
   table: ReactTable<any>;
   withSorting: boolean;
   sortedIcon: React.ReactNode | undefined;
@@ -28,7 +30,7 @@ export interface DataGridContextValue {
   withEditing: boolean;
   stickyHeader: boolean;
   expandOnRowClick: boolean;
-  editingMode: 'cell' | 'row';
+  editingMode: 'cell' | 'row' | undefined;
   density: DataGridDensity;
   onDensityChange: (density: DataGridDensity) => void;
   localization: DataGridLocalization;

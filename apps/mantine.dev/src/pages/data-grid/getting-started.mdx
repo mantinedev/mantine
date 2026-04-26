@@ -41,29 +41,49 @@ function Demo() {
 }
 ```
 
+## Store hook
+
+Use `useDataGrid` to create a store that manages grid state. Pass it to DataGrid via the `store` prop.
+Most features are inferred automatically from columns and controlled state -- you rarely need explicit flags.
+
+```tsx
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
+
+function Demo() {
+  const store = useDataGrid({
+    data,
+    columns: [
+      { accessorKey: 'name', header: 'Name', enableSorting: true },
+      { accessorKey: 'age', header: 'Age' },
+    ],
+  });
+
+  return <DataGrid store={store} />;
+}
+```
+
 ## Features overview
 
-DataGrid features are enabled with `with*` boolean props:
+Features are configured via `useDataGrid` options. Most are inferred automatically when you provide
+controlled state or column-level flags:
 
-| Prop | Default | Description |
-|------|---------|-------------|
-| `withSorting` | `false` | Single and multi-column sorting (requires `enableSorting: true` on columns) |
-| `withFiltering` | `false` | Per-column text/select/date filters |
-| `withGlobalFilter` | `false` | Cross-column search |
-| `withPagination` | `false` | Client or server-side pagination |
-| `withColumnResizing` | `false` | Drag column borders to resize |
-| `withColumnPinning` | `false` | Sticky left/right columns |
-| `withColumnVisibility` | `false` | Show/hide columns |
-| `withColumnReorder` | `false` | Drag-and-drop column reorder |
-| `withRowSelection` | `false` | Checkbox row selection |
-| `withRowExpansion` | `false` | Expandable detail panels |
-| `withVirtualization` | `false` | Row virtualization for large data |
-| `withGrouping` | `false` | Group rows by column values |
-| `withEditing` | `false` | Inline cell/row editing |
-| `striped` | `false` | Alternating row colors |
-| `highlightOnHover` | `false` | Row highlight on hover |
-| `stickyHeader` | `false` | Sticky table header |
-| `withRowNumbers` | `false` | Auto row number column |
+| Feature | Inferred from |
+|---------|---------------|
+| Sorting | Columns with `enableSorting: true` |
+| Column filtering | `columnFilters` or `onColumnFiltersChange` |
+| Global filter | `globalFilter` or `onGlobalFilterChange` |
+| Pagination | `pagination` or `onPaginationChange` |
+| Column resizing | `columnSizing`, `onColumnSizingChange`, or `columnResizeMode` |
+| Column pinning | `columnPinning` or `onColumnPinningChange` |
+| Column visibility | `columnVisibility` or `onColumnVisibilityChange` |
+| Column reorder | `columnOrder` or `onColumnOrderChange` |
+| Row selection | `rowSelection` or `onRowSelectionChange` |
+| Row expansion | `expanded` or `onExpandedChange` |
+| Grouping | `grouping` or `onGroupingChange` |
+| Editing | `editingMode` is set |
+
+Presentation props like `striped`, `highlightOnHover`, `stickyHeader`, `withRowNumbers`,
+and `withVirtualization` are set directly on the `DataGrid` component.
 
 ## Peer dependencies
 

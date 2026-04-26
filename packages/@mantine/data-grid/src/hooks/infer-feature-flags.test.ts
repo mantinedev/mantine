@@ -1,0 +1,239 @@
+import { inferFeatureFlags, DataGridFeatureFlags } from './infer-feature-flags';
+import type { UseDataGridOptions } from './use-data-grid';
+
+const baseOptions: UseDataGridOptions<any> = {
+  data: [],
+  columns: [],
+};
+
+const allFalse: DataGridFeatureFlags = {
+  withSorting: false,
+  withFiltering: false,
+  withGlobalFilter: false,
+  withPagination: false,
+  withColumnResizing: false,
+  withColumnPinning: false,
+  withColumnVisibility: false,
+  withColumnReorder: false,
+  withRowSelection: false,
+  withRowExpansion: false,
+  withGrouping: false,
+  withEditing: false,
+};
+
+describe('inferFeatureFlags', () => {
+  it('returns all false for empty options', () => {
+    expect(inferFeatureFlags(baseOptions)).toEqual(allFalse);
+  });
+
+  describe('withSorting', () => {
+    it('infers from columns with enableSorting', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'name', enableSorting: true }],
+      });
+      expect(flags.withSorting).toBe(true);
+    });
+
+    it('is false when no columns have enableSorting', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'name' }],
+      });
+      expect(flags.withSorting).toBe(false);
+    });
+
+    it('infers from nested columns with enableSorting', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [
+          {
+            header: 'Person',
+            columns: [
+              { accessorKey: 'firstName', enableSorting: true },
+              { accessorKey: 'lastName' },
+            ],
+          },
+        ],
+      });
+      expect(flags.withSorting).toBe(true);
+    });
+
+    it('explicit flag overrides column inference', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columns: [{ accessorKey: 'name', enableSorting: true }],
+        withSorting: false,
+      });
+      expect(flags.withSorting).toBe(false);
+    });
+  });
+
+  describe('withFiltering', () => {
+    it('infers from columnFilters', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, columnFilters: [] });
+      expect(flags.withFiltering).toBe(true);
+    });
+
+    it('infers from onColumnFiltersChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onColumnFiltersChange: () => {} });
+      expect(flags.withFiltering).toBe(true);
+    });
+
+    it('does not infer from manualFiltering alone', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, manualFiltering: false });
+      expect(flags.withFiltering).toBe(false);
+    });
+
+    it('explicit flag overrides inference', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columnFilters: [],
+        withFiltering: false,
+      });
+      expect(flags.withFiltering).toBe(false);
+    });
+  });
+
+  describe('withGlobalFilter', () => {
+    it('infers from globalFilter', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, globalFilter: '' });
+      expect(flags.withGlobalFilter).toBe(true);
+    });
+
+    it('infers from onGlobalFilterChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onGlobalFilterChange: () => {} });
+      expect(flags.withGlobalFilter).toBe(true);
+    });
+  });
+
+  describe('withPagination', () => {
+    it('infers from pagination state', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        pagination: { pageIndex: 0, pageSize: 10 },
+      });
+      expect(flags.withPagination).toBe(true);
+    });
+
+    it('infers from onPaginationChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onPaginationChange: () => {} });
+      expect(flags.withPagination).toBe(true);
+    });
+
+    it('does not infer from manualPagination alone', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, manualPagination: false });
+      expect(flags.withPagination).toBe(false);
+    });
+  });
+
+  describe('withColumnResizing', () => {
+    it('infers from columnSizing', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, columnSizing: {} });
+      expect(flags.withColumnResizing).toBe(true);
+    });
+
+    it('infers from columnResizeMode', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, columnResizeMode: 'onChange' });
+      expect(flags.withColumnResizing).toBe(true);
+    });
+  });
+
+  describe('withColumnPinning', () => {
+    it('infers from columnPinning', () => {
+      const flags = inferFeatureFlags({
+        ...baseOptions,
+        columnPinning: { left: ['name'] },
+      });
+      expect(flags.withColumnPinning).toBe(true);
+    });
+
+    it('infers from onColumnPinningChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onColumnPinningChange: () => {} });
+      expect(flags.withColumnPinning).toBe(true);
+    });
+  });
+
+  describe('withColumnVisibility', () => {
+    it('infers from columnVisibility', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, columnVisibility: { age: false } });
+      expect(flags.withColumnVisibility).toBe(true);
+    });
+
+    it('infers from onColumnVisibilityChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onColumnVisibilityChange: () => {} });
+      expect(flags.withColumnVisibility).toBe(true);
+    });
+  });
+
+  describe('withColumnReorder', () => {
+    it('infers from columnOrder', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, columnOrder: ['name'] });
+      expect(flags.withColumnReorder).toBe(true);
+    });
+
+    it('infers from onColumnOrderChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onColumnOrderChange: () => {} });
+      expect(flags.withColumnReorder).toBe(true);
+    });
+  });
+
+  describe('withRowSelection', () => {
+    it('infers from rowSelection', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, rowSelection: {} });
+      expect(flags.withRowSelection).toBe(true);
+    });
+
+    it('infers from onRowSelectionChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onRowSelectionChange: () => {} });
+      expect(flags.withRowSelection).toBe(true);
+    });
+  });
+
+  describe('withRowExpansion', () => {
+    it('infers from expanded', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, expanded: {} });
+      expect(flags.withRowExpansion).toBe(true);
+    });
+
+    it('infers from onExpandedChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onExpandedChange: () => {} });
+      expect(flags.withRowExpansion).toBe(true);
+    });
+  });
+
+  describe('withGrouping', () => {
+    it('infers from grouping', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, grouping: ['department'] });
+      expect(flags.withGrouping).toBe(true);
+    });
+
+    it('infers from onGroupingChange', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, onGroupingChange: () => {} });
+      expect(flags.withGrouping).toBe(true);
+    });
+  });
+
+  describe('withEditing', () => {
+    it('infers from editingMode being set', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, editingMode: 'cell' });
+      expect(flags.withEditing).toBe(true);
+    });
+
+    it('is false when editingMode is not set', () => {
+      const flags = inferFeatureFlags(baseOptions);
+      expect(flags.withEditing).toBe(false);
+    });
+  });
+
+  it('does not affect unrelated flags when one feature is enabled', () => {
+    const flags = inferFeatureFlags({
+      ...baseOptions,
+      columns: [{ accessorKey: 'name', enableSorting: true }],
+    });
+    expect(flags.withSorting).toBe(true);
+    expect(flags.withFiltering).toBe(false);
+    expect(flags.withPagination).toBe(false);
+    expect(flags.withRowSelection).toBe(false);
+  });
+});

@@ -1,21 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
-import {
-  Cell,
-  ColumnFiltersState,
-  ColumnOrderState,
-  ColumnPinningState,
-  ColumnResizeMode,
-  ColumnSizingState,
-  ExpandedState,
-  GroupingState,
-  OnChangeFn,
-  PaginationState,
-  Row,
-  RowSelectionState,
-  SortingState,
-  TableOptions,
-  VisibilityState,
-} from '@tanstack/react-table';
+import React, { useCallback, useRef } from 'react';
+import { Cell, Row } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
@@ -35,7 +19,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { DataGridProvider, type DataGridDensity } from './DataGrid.context';
+import { DataGridProvider } from './DataGrid.context';
 import {
   DataGridBody,
   DataGridBodyFactory,
@@ -57,7 +41,7 @@ import {
   DataGridToolbarFactory,
 } from './DataGridToolbar';
 import { DataGridColumnDef } from './DataGrid.types';
-import { useDataGrid } from './hooks';
+import { DataGridStore, useDataGrid } from './hooks';
 import { DEFAULT_LOCALIZATION, DataGridLocalization } from './localization';
 import classes from './DataGrid.module.css';
 
@@ -113,14 +97,14 @@ export type DataGridCssVariables = {
 
 export interface DataGridProps<TData = any>
   extends BoxProps, StylesApiProps<DataGridFactory>, ElementProps<'div', 'children'> {
-  /** Data array to display in the grid */
-  data: TData[];
+  /** DataGrid store, can be used to control grid state. If not provided, an internal store is created from `data` and `columns` */
+  store?: DataGridStore<TData>;
 
-  /** Column definitions */
-  columns: DataGridColumnDef<TData>[];
+  /** Data array, required when `store` is not provided */
+  data?: TData[];
 
-  /** Function to derive stable row ID from data, required for selection/editing/expansion */
-  getRowId?: (row: TData, index: number, parent?: Row<TData>) => string;
+  /** Column definitions, required when `store` is not provided */
+  columns?: DataGridColumnDef<TData>[];
 
   /** Border color, key of `theme.colors` or any valid CSS color */
   borderColor?: MantineColor;
@@ -137,131 +121,14 @@ export interface DataGridProps<TData = any>
   /** Grid content */
   children?: React.ReactNode;
 
-  /** Enable sorting, @default false */
-  withSorting?: boolean;
-
   /** Custom icon displayed in sortable column headers when the column is sorted */
   sortedIcon?: React.ReactNode;
 
   /** Custom icon displayed in sortable column headers when the column is not sorted */
   unsortedIcon?: React.ReactNode;
 
-  /** Controlled sorting state */
-  sorting?: SortingState;
-
-  /** Callback when sorting changes */
-  onSortingChange?: OnChangeFn<SortingState>;
-
-  /** When true, sorting is handled externally (server-side) */
-  manualSorting?: boolean;
-
-  /** Enable column filtering, @default false */
-  withFiltering?: boolean;
-
-  /** Controlled column filters state */
-  columnFilters?: ColumnFiltersState;
-
-  /** Callback when column filters change */
-  onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
-
-  /** When true, filtering is handled externally (server-side) */
-  manualFiltering?: boolean;
-
-  /** Enable global filter, @default false */
-  withGlobalFilter?: boolean;
-
-  /** Controlled global filter value */
-  globalFilter?: any;
-
-  /** Callback when global filter changes */
-  onGlobalFilterChange?: OnChangeFn<any>;
-
-  /** Enable pagination, @default false */
-  withPagination?: boolean;
-
-  /** Controlled pagination state */
-  pagination?: PaginationState;
-
-  /** Callback when pagination changes */
-  onPaginationChange?: OnChangeFn<PaginationState>;
-
-  /** When true, pagination is handled externally (server-side) */
-  manualPagination?: boolean;
-
-  /** Total row count for server-side pagination */
-  rowCount?: number;
-
-  /** Default page size, @default 10 */
-  pageSize?: number;
-
-  /** Options for the page size selector */
-  pageSizeOptions?: number[];
-
   /** Show loading overlay, @default false */
   loading?: boolean;
-
-  /** Enable column resizing, @default false */
-  withColumnResizing?: boolean;
-
-  /** Column resize mode, @default 'onEnd' */
-  columnResizeMode?: ColumnResizeMode;
-
-  /** Controlled column sizing state */
-  columnSizing?: ColumnSizingState;
-
-  /** Callback when column sizing changes */
-  onColumnSizingChange?: OnChangeFn<ColumnSizingState>;
-
-  /** Enable column pinning, @default false */
-  withColumnPinning?: boolean;
-
-  /** Controlled column pinning state */
-  columnPinning?: ColumnPinningState;
-
-  /** Callback when column pinning changes */
-  onColumnPinningChange?: OnChangeFn<ColumnPinningState>;
-
-  /** Enable column visibility toggle, @default false */
-  withColumnVisibility?: boolean;
-
-  /** Controlled column visibility state */
-  columnVisibility?: VisibilityState;
-
-  /** Callback when column visibility changes */
-  onColumnVisibilityChange?: OnChangeFn<VisibilityState>;
-
-  /** Enable column reorder via drag and drop, @default false */
-  withColumnReorder?: boolean;
-
-  /** Controlled column order state */
-  columnOrder?: ColumnOrderState;
-
-  /** Callback when column order changes */
-  onColumnOrderChange?: OnChangeFn<ColumnOrderState>;
-
-  /** Enable row selection with checkboxes, @default false */
-  withRowSelection?: boolean;
-
-  /** Controlled row selection state */
-  rowSelection?: RowSelectionState;
-
-  /** Callback when row selection changes */
-  onRowSelectionChange?: OnChangeFn<RowSelectionState>;
-
-  /** Enable row expansion, @default false */
-  withRowExpansion?: boolean;
-
-  /** Render function for expanded row content */
-  renderExpandedRow?: (props: { row: Row<any> }) => React.ReactNode;
-
-  /** When true, clicking a row toggles its expansion, @default false */
-  expandOnRowClick?: boolean;
-
-  /** Controlled expanded state */
-  expanded?: ExpandedState;
-
-  /** Callback when expanded state changes */
-  onExpandedChange?: OnChangeFn<ExpandedState>;
 
   /** Add striped rows styling, @default false */
   striped?: boolean;
@@ -299,20 +166,11 @@ export interface DataGridProps<TData = any>
   /** Callback fired when scroll reaches the bottom of the grid */
   onScrollToBottom?: () => void;
 
-  /** Enable row grouping, @default false */
-  withGrouping?: boolean;
+  /** Render function for expanded row content */
+  renderExpandedRow?: (props: { row: Row<any> }) => React.ReactNode;
 
-  /** Controlled grouping state */
-  grouping?: GroupingState;
-
-  /** Callback when grouping changes */
-  onGroupingChange?: OnChangeFn<GroupingState>;
-
-  /** Enable inline cell/row editing, @default false */
-  withEditing?: boolean;
-
-  /** Editing mode, @default 'cell' */
-  editingMode?: 'cell' | 'row';
+  /** When true, clicking a row toggles its expansion, @default false */
+  expandOnRowClick?: boolean;
 
   /** Callback when a cell value is edited */
   onCellEdit?: (props: { row: Row<any>; columnId: string; value: unknown }) => void;
@@ -323,11 +181,8 @@ export interface DataGridProps<TData = any>
   /** Make the header sticky when scrolling, @default false */
   stickyHeader?: boolean;
 
-  /** Grid density, @default 'default' */
-  density?: DataGridDensity;
-
-  /** Callback when density changes */
-  onDensityChange?: (density: DataGridDensity) => void;
+  /** Options for the page size selector */
+  pageSizeOptions?: number[];
 
   /** Localization overrides */
   localization?: Partial<DataGridLocalization>;
@@ -337,9 +192,6 @@ export interface DataGridProps<TData = any>
 
   /** Props passed to the ScrollArea component, applicable only when `withScrollArea` is true */
   scrollAreaProps?: ScrollAreaProps;
-
-  /** Additional TanStack Table options, escape hatch for advanced features */
-  tableOptions?: Partial<TableOptions<TData>>;
 }
 
 export type DataGridFactory = Factory<{
@@ -388,9 +240,9 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    store: storeProp,
     data,
     columns,
-    getRowId,
     borderColor,
     spacing,
     rowHeight,
@@ -398,48 +250,9 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     children,
     mod,
     attributes,
-    withSorting,
     sortedIcon,
     unsortedIcon,
-    sorting,
-    onSortingChange,
-    manualSorting,
-    withFiltering,
-    columnFilters,
-    onColumnFiltersChange,
-    manualFiltering,
-    withGlobalFilter,
-    globalFilter,
-    onGlobalFilterChange,
-    withPagination,
-    pagination,
-    onPaginationChange,
-    manualPagination,
-    rowCount,
-    pageSize,
-    pageSizeOptions,
     loading,
-    withColumnResizing,
-    columnResizeMode,
-    columnSizing,
-    onColumnSizingChange,
-    withColumnPinning,
-    columnPinning,
-    onColumnPinningChange,
-    withColumnVisibility,
-    columnVisibility,
-    onColumnVisibilityChange,
-    withColumnReorder,
-    columnOrder,
-    onColumnOrderChange,
-    withRowSelection,
-    rowSelection,
-    onRowSelectionChange,
-    withRowExpansion,
-    renderExpandedRow,
-    expandOnRowClick,
-    expanded,
-    onExpandedChange,
     striped,
     highlightOnHover,
     withRowNumbers,
@@ -451,20 +264,15 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     height,
     virtualScrollConfig,
     onScrollToBottom,
-    withGrouping,
-    grouping,
-    onGroupingChange,
-    withEditing,
-    editingMode,
+    renderExpandedRow,
+    expandOnRowClick,
     onCellEdit,
     onRowEdit,
     stickyHeader,
-    density: densityProp,
-    onDensityChange: onDensityChangeProp,
+    pageSizeOptions,
     localization: localizationProp,
     withScrollArea = true,
     scrollAreaProps,
-    tableOptions,
     ...others
   } = props;
 
@@ -483,58 +291,16 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     varsResolver,
   });
 
-  const [densityState, setDensityState] = useState<DataGridDensity>(densityProp ?? 'default');
-  const density = densityProp ?? densityState;
-  const onDensityChange = onDensityChangeProp ?? setDensityState;
-  const localization = { ...DEFAULT_LOCALIZATION, ...localizationProp };
-
-  const table = useDataGrid({
-    data,
-    columns,
-    getRowId,
-    withSorting,
-    sorting,
-    onSortingChange,
-    manualSorting,
-    withFiltering,
-    columnFilters,
-    onColumnFiltersChange,
-    manualFiltering,
-    withGlobalFilter,
-    globalFilter,
-    onGlobalFilterChange,
-    withPagination,
-    pagination,
-    onPaginationChange,
-    manualPagination,
-    rowCount,
-    pageSize,
-    withColumnResizing,
-    columnResizeMode,
-    columnSizing,
-    onColumnSizingChange,
-    withColumnPinning,
-    columnPinning,
-    onColumnPinningChange,
-    withColumnVisibility,
-    columnVisibility,
-    onColumnVisibilityChange,
-    withColumnReorder,
-    columnOrder,
-    onColumnOrderChange,
-    withRowSelection,
-    rowSelection,
-    onRowSelectionChange,
-    withRowExpansion,
-    expanded,
-    onExpandedChange,
-    withGrouping,
-    grouping,
-    onGroupingChange,
-    tableOptions,
+  const internalStore = useDataGrid({
+    data: data ?? [],
+    columns: columns ?? [],
   });
 
-  const hasFooter = columns.some((col) => col.footer !== undefined);
+  const store = storeProp ?? internalStore;
+  const localization = { ...DEFAULT_LOCALIZATION, ...localizationProp };
+  const hasFooter = store.table
+    .getFooterGroups()
+    .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = useCallback(() => {
@@ -558,30 +324,31 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     <DataGridProvider
       value={{
         getStyles,
-        table,
-        withSorting: withSorting ?? false,
+        store,
+        table: store.table,
+        withSorting: store.withSorting,
         sortedIcon,
         unsortedIcon,
-        withFiltering: withFiltering ?? false,
-        withGlobalFilter: withGlobalFilter ?? false,
-        withPagination: withPagination ?? false,
-        withColumnResizing: withColumnResizing ?? false,
-        withColumnPinning: withColumnPinning ?? false,
-        withColumnVisibility: withColumnVisibility ?? false,
-        withColumnReorder: withColumnReorder ?? false,
-        withRowSelection: withRowSelection ?? false,
-        withRowExpansion: withRowExpansion ?? false,
+        withFiltering: store.withFiltering,
+        withGlobalFilter: store.withGlobalFilter,
+        withPagination: store.withPagination,
+        withColumnResizing: store.withColumnResizing,
+        withColumnPinning: store.withColumnPinning,
+        withColumnVisibility: store.withColumnVisibility,
+        withColumnReorder: store.withColumnReorder,
+        withRowSelection: store.withRowSelection,
+        withRowExpansion: store.withRowExpansion,
         striped: striped ?? false,
         highlightOnHover: highlightOnHover ?? false,
         withRowNumbers: withRowNumbers ?? false,
         withVirtualization: withVirtualization ?? false,
-        withGrouping: withGrouping ?? false,
-        withEditing: withEditing ?? false,
+        withGrouping: store.withGrouping,
+        withEditing: store.withEditing,
         stickyHeader: stickyHeader ?? false,
         expandOnRowClick: expandOnRowClick ?? false,
-        editingMode: editingMode ?? 'cell',
-        density,
-        onDensityChange,
+        editingMode: store.editingMode,
+        density: store.density,
+        onDensityChange: store.setDensity,
         localization,
         renderExpandedRow,
         emptyState,
@@ -603,12 +370,12 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
           mod,
         ]}
         data-virtualized={withVirtualization || undefined}
-        data-density={density}
+        data-density={store.density}
         {...others}
       >
         {children || (
           <>
-            {withGlobalFilter && (
+            {store.withGlobalFilter && (
               <DataGridToolbar>
                 <DataGridGlobalFilter />
               </DataGridToolbar>
@@ -662,7 +429,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
                 </Box>
               </Box>
             )}
-            {withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
+            {store.withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
           </>
         )}
         {loading && <LoadingOverlay visible {...getStyles('loadingOverlay')} />}

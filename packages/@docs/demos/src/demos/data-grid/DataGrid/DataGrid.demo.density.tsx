@@ -1,23 +1,25 @@
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
 function Demo() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+    ],
+  });
+
   return (
-    <DataGrid
-      data={employees}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'email', header: 'Email' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
-      ]}
-    >
+    <DataGrid store={store}>
       <DataGrid.Toolbar>
         <DataGrid.DensityToggle />
       </DataGrid.Toolbar>
@@ -29,17 +31,19 @@ function Demo() {
 `;
 
 function Demo() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+    ],
+  });
+
   return (
-    <DataGrid
-      data={employees}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'email', header: 'Email' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
-      ]}
-    >
+    <DataGrid store={store}>
       <DataGrid.Toolbar>
         <DataGrid.DensityToggle />
       </DataGrid.Toolbar>

@@ -1,5 +1,5 @@
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { DataGrid, DataGridProps, DataGridStylesNames } from './index';
+import { DataGrid, DataGridProps, DataGridStylesNames, useDataGrid } from './index';
 
 const columns = [
   { accessorKey: 'name', header: 'Name' },
@@ -16,6 +16,16 @@ const defaultProps: DataGridProps = {
   data,
   columns,
 };
+
+function DataGridWithStore({
+  storeOptions,
+  ...props
+}: Omit<DataGridProps, 'store'> & {
+  storeOptions: Parameters<typeof useDataGrid>[0];
+}) {
+  const store = useDataGrid(storeOptions);
+  return <DataGrid store={store} {...props} />;
+}
 
 describe('@mantine/data-grid/DataGrid', () => {
   tests.itSupportsSystemProps<DataGridProps, DataGridStylesNames>({
@@ -65,7 +75,9 @@ describe('@mantine/data-grid/DataGrid', () => {
     ];
 
     it('sorts ascending on header click when withSorting is true', async () => {
-      render(<DataGrid {...defaultProps} columns={sortableColumns} withSorting />);
+      render(
+        <DataGridWithStore storeOptions={{ data, columns: sortableColumns, withSorting: true }} />
+      );
       const nameHeader = screen.getByText('Name');
       await userEvent.click(nameHeader);
 
@@ -75,7 +87,9 @@ describe('@mantine/data-grid/DataGrid', () => {
     });
 
     it('sorts descending on second click', async () => {
-      render(<DataGrid {...defaultProps} columns={sortableColumns} withSorting />);
+      render(
+        <DataGridWithStore storeOptions={{ data, columns: sortableColumns, withSorting: true }} />
+      );
       const nameHeader = screen.getByText('Name');
       await userEvent.click(nameHeader);
       await userEvent.click(nameHeader);
@@ -87,7 +101,7 @@ describe('@mantine/data-grid/DataGrid', () => {
 
     it('sets aria-sort attribute on sorted header', async () => {
       const { container } = render(
-        <DataGrid {...defaultProps} columns={sortableColumns} withSorting />
+        <DataGridWithStore storeOptions={{ data, columns: sortableColumns, withSorting: true }} />
       );
       const nameHeader = screen.getByText('Name');
       await userEvent.click(nameHeader);
@@ -101,7 +115,7 @@ describe('@mantine/data-grid/DataGrid', () => {
     });
 
     it('does not sort when withSorting is false', async () => {
-      const { container } = render(<DataGrid {...defaultProps} withSorting={false} />);
+      const { container } = render(<DataGrid {...defaultProps} />);
       const nameHeader = screen.getByText('Name');
       await userEvent.click(nameHeader);
 
@@ -115,7 +129,7 @@ describe('@mantine/data-grid/DataGrid', () => {
         { accessorKey: 'age', header: 'Age' },
       ];
       const { container } = render(
-        <DataGrid {...defaultProps} columns={mixedColumns} withSorting />
+        <DataGridWithStore storeOptions={{ data, columns: mixedColumns, withSorting: true }} />
       );
       const ageHeader = screen.getByText('Age');
       await userEvent.click(ageHeader);
@@ -127,18 +141,18 @@ describe('@mantine/data-grid/DataGrid', () => {
 
   describe('filtering', () => {
     it('renders filter inputs when withFiltering is true', () => {
-      render(<DataGrid {...defaultProps} withFiltering />);
+      render(<DataGridWithStore storeOptions={{ data, columns, withFiltering: true }} />);
       expect(screen.getByPlaceholderText('Filter name...')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Filter age...')).toBeInTheDocument();
     });
 
     it('does not render filter inputs when withFiltering is false', () => {
-      render(<DataGrid {...defaultProps} withFiltering={false} />);
+      render(<DataGrid {...defaultProps} />);
       expect(screen.queryByPlaceholderText('Filter name...')).not.toBeInTheDocument();
     });
 
     it('filters rows based on text input', async () => {
-      render(<DataGrid {...defaultProps} withFiltering />);
+      render(<DataGridWithStore storeOptions={{ data, columns, withFiltering: true }} />);
       const filterInput = screen.getByPlaceholderText('Filter name...');
       await userEvent.type(filterInput, 'Alice');
 
@@ -156,36 +170,40 @@ describe('@mantine/data-grid/DataGrid', () => {
 
     it('renders pagination when withPagination is true', () => {
       const { container } = render(
-        <DataGrid data={paginationData} columns={columns} withPagination pageSize={5} />
+        <DataGridWithStore
+          storeOptions={{ data: paginationData, columns, withPagination: true, pageSize: 5 }}
+        />
       );
       expect(container.querySelector('.mantine-DataGrid-pagination')).toBeInTheDocument();
     });
 
     it('shows correct number of rows per page', () => {
       const { container } = render(
-        <DataGrid data={paginationData} columns={columns} withPagination pageSize={5} />
+        <DataGridWithStore
+          storeOptions={{ data: paginationData, columns, withPagination: true, pageSize: 5 }}
+        />
       );
       const rows = container.querySelectorAll('tbody tr');
       expect(rows).toHaveLength(5);
     });
 
     it('does not render pagination when withPagination is false', () => {
-      const { container } = render(
-        <DataGrid data={paginationData} columns={columns} withPagination={false} />
-      );
+      const { container } = render(<DataGrid data={paginationData} columns={columns} />);
       expect(container.querySelector('.mantine-DataGrid-pagination')).not.toBeInTheDocument();
     });
   });
 
   describe('row selection', () => {
     it('renders checkboxes when withRowSelection is true', () => {
-      render(<DataGrid {...defaultProps} withRowSelection />);
+      render(<DataGridWithStore storeOptions={{ data, columns, withRowSelection: true }} />);
       const checkboxes = screen.getAllByRole('checkbox');
       expect(checkboxes.length).toBeGreaterThanOrEqual(4);
     });
 
     it('selects row on checkbox click', async () => {
-      const { container } = render(<DataGrid {...defaultProps} withRowSelection />);
+      const { container } = render(
+        <DataGridWithStore storeOptions={{ data, columns, withRowSelection: true }} />
+      );
       const checkboxes = screen.getAllByRole('checkbox');
       await userEvent.click(checkboxes[1]);
 
@@ -194,7 +212,9 @@ describe('@mantine/data-grid/DataGrid', () => {
     });
 
     it('renders select-all checkbox in header', () => {
-      const { container } = render(<DataGrid {...defaultProps} withRowSelection />);
+      const { container } = render(
+        <DataGridWithStore storeOptions={{ data, columns, withRowSelection: true }} />
+      );
       const theadCheckbox = container.querySelector('thead input[type="checkbox"]');
       expect(theadCheckbox).toBeInTheDocument();
     });
@@ -203,9 +223,8 @@ describe('@mantine/data-grid/DataGrid', () => {
   describe('row expansion', () => {
     it('renders expand icon when withRowExpansion is true', () => {
       render(
-        <DataGrid
-          {...defaultProps}
-          withRowExpansion
+        <DataGridWithStore
+          storeOptions={{ data, columns, withRowExpansion: true }}
           renderExpandedRow={({ row }) => <div>Details for {row.original.name}</div>}
         />
       );
@@ -215,9 +234,8 @@ describe('@mantine/data-grid/DataGrid', () => {
 
     it('renders expanded content on expand click', async () => {
       render(
-        <DataGrid
-          {...defaultProps}
-          withRowExpansion
+        <DataGridWithStore
+          storeOptions={{ data, columns, withRowExpansion: true }}
           renderExpandedRow={({ row }) => <div>Details for {row.original.name}</div>}
         />
       );
@@ -260,7 +278,16 @@ describe('@mantine/data-grid/DataGrid', () => {
 
   describe('column visibility', () => {
     it('hides column when columnVisibility is set', () => {
-      render(<DataGrid {...defaultProps} withColumnVisibility columnVisibility={{ age: false }} />);
+      render(
+        <DataGridWithStore
+          storeOptions={{
+            data,
+            columns,
+            withColumnVisibility: true,
+            columnVisibility: { age: false },
+          }}
+        />
+      );
       expect(screen.getByText('Name')).toBeInTheDocument();
       expect(screen.queryByText('Age')).not.toBeInTheDocument();
     });

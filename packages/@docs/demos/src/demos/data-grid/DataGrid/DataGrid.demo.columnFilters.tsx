@@ -1,42 +1,42 @@
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
 function Demo() {
-  return (
-    <DataGrid
-      data={employees}
-      withFiltering
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'email', header: 'Email' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'status', header: 'Status' },
-      ]}
-    />
-  );
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'status', header: 'Status' },
+    ],
+    withFiltering: true,
+  });
+
+  return <DataGrid store={store} />;
 }
 `;
 
 function Demo() {
-  return (
-    <DataGrid
-      data={employees}
-      withFiltering
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'email', header: 'Email' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'status', header: 'Status' },
-      ]}
-    />
-  );
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'status', header: 'Status' },
+    ],
+    withFiltering: true,
+  });
+
+  return <DataGrid store={store} />;
 }
 
 export const columnFilters: MantineDemo = {

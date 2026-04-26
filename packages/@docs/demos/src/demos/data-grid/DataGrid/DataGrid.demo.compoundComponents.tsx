@@ -1,27 +1,29 @@
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
 function Demo() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+      { accessorKey: 'status', header: 'Status' },
+    ],
+    withGlobalFilter: true,
+    withColumnVisibility: true,
+    withPagination: true,
+  });
+
   return (
-    <DataGrid
-      data={employees}
-      withGlobalFilter
-      withColumnVisibility
-      withPagination
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'email', header: 'Email' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
-        { accessorKey: 'status', header: 'Status' },
-      ]}
-    >
+    <DataGrid store={store}>
       <DataGrid.Toolbar>
         <DataGrid.GlobalFilter />
         <DataGrid.ColumnVisibilityToggle />
@@ -36,21 +38,23 @@ function Demo() {
 `;
 
 function Demo() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+      { accessorKey: 'status', header: 'Status' },
+    ],
+    withGlobalFilter: true,
+    withColumnVisibility: true,
+    withPagination: true,
+  });
+
   return (
-    <DataGrid
-      data={employees}
-      withGlobalFilter
-      withColumnVisibility
-      withPagination
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'email', header: 'Email' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
-        { accessorKey: 'status', header: 'Status' },
-      ]}
-    >
+    <DataGrid store={store}>
       <DataGrid.Toolbar>
         <DataGrid.GlobalFilter />
         <DataGrid.ColumnVisibilityToggle />

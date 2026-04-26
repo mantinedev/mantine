@@ -1,19 +1,29 @@
 import { Group, Text } from '@mantine/core';
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
 import { Group, Text } from '@mantine/core';
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
 function Demo() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'status', header: 'Status' },
+    ],
+    withRowExpansion: true,
+    getRowId: (row) => row.id,
+  });
+
   return (
     <DataGrid
-      data={employees}
-      withRowExpansion
-      getRowId={(row) => row.id}
+      store={store}
       renderExpandedRow={({ row }) => (
         <Group p="md" gap="xl">
           <Text size="sm">Email: {row.original.email}</Text>
@@ -23,23 +33,27 @@ function Demo() {
           </Text>
         </Group>
       )}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'status', header: 'Status' },
-      ]}
     />
   );
 }
 `;
 
 function Demo() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'status', header: 'Status' },
+    ],
+    withRowExpansion: true,
+    getRowId: (row) => row.id,
+  });
+
   return (
     <DataGrid
-      data={employees}
-      withRowExpansion
-      getRowId={(row) => row.id}
+      store={store}
       renderExpandedRow={({ row }) => (
         <Group p="md" gap="xl">
           <Text size="sm">Email: {row.original.email}</Text>
@@ -52,12 +66,6 @@ function Demo() {
           </Text>
         </Group>
       )}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'status', header: 'Status' },
-      ]}
     />
   );
 }

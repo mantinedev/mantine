@@ -35,7 +35,7 @@ spacing. The toggle cycles through the three density modes.
 
 <Demo data={DataGridDemos.density} />
 
-You can also control density programmatically with `density` and `onDensityChange` props.
+You can also control density programmatically with `density` and `onDensityChange` options in `useDataGrid`.
 
 ## Compound components
 
@@ -64,7 +64,9 @@ Available compound components:
 Add it as a child of `DataGrid` when using the compound component pattern.
 
 ```tsx
-<DataGrid data={data} withRowSelection columns={columns}>
+const store = useDataGrid({ data, columns, withRowSelection: true });
+
+<DataGrid store={store}>
   <DataGrid.Header />
   <DataGrid.Body />
   <DataGrid.StatusBar />
@@ -73,12 +75,12 @@ Add it as a child of `DataGrid` when using the compound component pattern.
 
 ## Localization
 
-Override any text label by passing a `localization` object. All keys are optional -- only
-override what you need.
+Override any text label by passing a `localization` prop to `DataGrid`. All keys are optional --
+only override what you need.
 
 ```tsx
 <DataGrid
-  data={data}
+  store={store}
   localization={{
     paginationRowsPerPage: '{count} par page',
     paginationOf: 'sur',
@@ -92,16 +94,19 @@ override what you need.
     densityDefault: 'Normal',
     densityComfortable: 'Confortable',
   }}
-  columns={columns}
 />
 ```
 
 ## State persistence
 
-Save and restore grid state (sorting, filters, pagination, column visibility, column sizing, density)
-using `localStorage` or any storage backend.
+Save and restore grid state using the store. Access current state directly from `store.sorting`,
+`store.columnFilters`, `store.pagination`, etc.
 
 ```tsx
+import { useState, useEffect } from 'react';
+import { SortingState } from '@tanstack/react-table';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
+
 const STORAGE_KEY = 'my-grid-state';
 
 function Demo() {
@@ -114,36 +119,36 @@ function Demo() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ sorting }));
   }, [sorting]);
 
-  return (
-    <DataGrid
-      data={data}
-      sorting={sorting}
-      onSortingChange={setSorting}
-      columns={columns}
-    />
-  );
+  const store = useDataGrid({
+    data,
+    columns,
+    sorting,
+    onSortingChange: setSorting,
+  });
+
+  return <DataGrid store={store} />;
 }
 ```
 
 ## Custom storage
 
 For session storage, URL search params, or server-side persistence, implement the same pattern
-with your preferred storage mechanism. The controlled state props accept any state source.
+with your preferred storage mechanism. The controlled state options in `useDataGrid` accept any state source.
 
 ## TanStack passthrough
 
-The `tableOptions` prop provides an escape hatch to the underlying TanStack Table instance.
-Any option not covered by DataGrid props can be passed directly.
+The `tableOptions` option in `useDataGrid` provides an escape hatch to the underlying TanStack Table
+instance. Any option not covered by the store can be passed directly.
 
 ```tsx
-<DataGrid
-  data={data}
-  tableOptions={{
+const store = useDataGrid({
+  data,
+  columns,
+  tableOptions: {
     enableMultiSort: true,
     maxMultiSortColCount: 3,
     sortDescFirst: false,
     debugTable: process.env.NODE_ENV === 'development',
-  }}
-  columns={columns}
-/>
+  },
+});
 ```

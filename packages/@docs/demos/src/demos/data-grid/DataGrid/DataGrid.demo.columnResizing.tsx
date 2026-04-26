@@ -1,42 +1,42 @@
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
 function Demo() {
-  return (
-    <DataGrid
-      data={employees}
-      withColumnResizing
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name', size: 150 },
-        { accessorKey: 'lastName', header: 'Last Name', size: 150 },
-        { accessorKey: 'email', header: 'Email', size: 250 },
-        { accessorKey: 'department', header: 'Department', size: 150 },
-        { accessorKey: 'salary', header: 'Salary', size: 120 },
-      ]}
-    />
-  );
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name', size: 150 },
+      { accessorKey: 'lastName', header: 'Last Name', size: 150 },
+      { accessorKey: 'email', header: 'Email', size: 250 },
+      { accessorKey: 'department', header: 'Department', size: 150 },
+      { accessorKey: 'salary', header: 'Salary', size: 120 },
+    ],
+    withColumnResizing: true,
+  });
+
+  return <DataGrid store={store} />;
 }
 `;
 
 function Demo() {
-  return (
-    <DataGrid
-      data={employees}
-      withColumnResizing
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name', size: 150 },
-        { accessorKey: 'lastName', header: 'Last Name', size: 150 },
-        { accessorKey: 'email', header: 'Email', size: 250 },
-        { accessorKey: 'department', header: 'Department', size: 150 },
-        { accessorKey: 'salary', header: 'Salary', size: 120 },
-      ]}
-    />
-  );
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name', size: 150 },
+      { accessorKey: 'lastName', header: 'Last Name', size: 150 },
+      { accessorKey: 'email', header: 'Email', size: 250 },
+      { accessorKey: 'department', header: 'Department', size: 150 },
+      { accessorKey: 'salary', header: 'Salary', size: 120 },
+    ],
+    withColumnResizing: true,
+  });
+
+  return <DataGrid store={store} />;
 }
 
 export const columnResizing: MantineDemo = {

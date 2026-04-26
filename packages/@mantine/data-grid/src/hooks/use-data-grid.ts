@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -18,10 +19,106 @@ import {
   Row,
   RowSelectionState,
   SortingState,
+  Table as ReactTable,
   TableOptions,
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
+import type { DataGridDensity } from '../DataGrid.context';
+import { inferFeatureFlags } from './infer-feature-flags';
+
+function defaultSortingDisabled<TData>(columns: ColumnDef<TData, any>[]): ColumnDef<TData, any>[] {
+  return columns.map((col) => ({
+    enableSorting: false,
+    ...col,
+    ...((col as any).columns && {
+      columns: defaultSortingDisabled((col as any).columns),
+    }),
+  }));
+}
+
+export interface DataGridStore<TData = any> {
+  /** The underlying TanStack Table instance */
+  table: ReactTable<TData>;
+
+  /** Whether sorting is enabled */
+  withSorting: boolean;
+
+  /** Whether column filtering is enabled */
+  withFiltering: boolean;
+
+  /** Whether global filter is enabled */
+  withGlobalFilter: boolean;
+
+  /** Whether pagination is enabled */
+  withPagination: boolean;
+
+  /** Whether column resizing is enabled */
+  withColumnResizing: boolean;
+
+  /** Whether column pinning is enabled */
+  withColumnPinning: boolean;
+
+  /** Whether column visibility toggle is enabled */
+  withColumnVisibility: boolean;
+
+  /** Whether column reorder via drag and drop is enabled */
+  withColumnReorder: boolean;
+
+  /** Whether row selection with checkboxes is enabled */
+  withRowSelection: boolean;
+
+  /** Whether row expansion is enabled */
+  withRowExpansion: boolean;
+
+  /** Whether row grouping is enabled */
+  withGrouping: boolean;
+
+  /** Whether inline cell/row editing is enabled */
+  withEditing: boolean;
+
+  /** Editing mode, `undefined` when editing is disabled */
+  editingMode: 'cell' | 'row' | undefined;
+
+  /** Current grid density */
+  density: DataGridDensity;
+
+  /** Update grid density */
+  setDensity: (density: DataGridDensity) => void;
+
+  /** Current sorting state */
+  sorting: SortingState;
+
+  /** Current column filters state */
+  columnFilters: ColumnFiltersState;
+
+  /** Current global filter value */
+  globalFilter: any;
+
+  /** Current pagination state */
+  pagination: PaginationState;
+
+  /** Current column sizing state */
+  columnSizing: ColumnSizingState;
+
+  /** Current column pinning state */
+  columnPinning: ColumnPinningState;
+
+  /** Current column visibility state */
+  columnVisibility: VisibilityState;
+
+  /** Current column order state */
+  columnOrder: ColumnOrderState;
+
+  /** Current row selection state */
+  rowSelection: RowSelectionState;
+
+  /** Current expanded state */
+  expanded: ExpandedState;
+
+  /** Current grouping state */
+  grouping: GroupingState;
+}
 
 export interface UseDataGridOptions<TData> {
   /** Data array to display */
@@ -33,7 +130,7 @@ export interface UseDataGridOptions<TData> {
   /** Function to derive stable row ID */
   getRowId?: (row: TData, index: number, parent?: Row<TData>) => string;
 
-  /** Enable sorting, @default false */
+  /** Enable sorting, inferred from columns with `enableSorting: true` */
   withSorting?: boolean;
 
   /** Controlled sorting state */
@@ -45,7 +142,7 @@ export interface UseDataGridOptions<TData> {
   /** When true, sorting is handled externally (server-side) */
   manualSorting?: boolean;
 
-  /** Enable column filtering, @default false */
+  /** Enable column filtering, inferred from controlled state */
   withFiltering?: boolean;
 
   /** Controlled column filters state */
@@ -57,7 +154,7 @@ export interface UseDataGridOptions<TData> {
   /** When true, filtering is handled externally (server-side) */
   manualFiltering?: boolean;
 
-  /** Enable global filter, @default false */
+  /** Enable global filter, inferred from controlled state */
   withGlobalFilter?: boolean;
 
   /** Controlled global filter value */
@@ -66,7 +163,7 @@ export interface UseDataGridOptions<TData> {
   /** Callback when global filter changes */
   onGlobalFilterChange?: OnChangeFn<any>;
 
-  /** Enable pagination, @default false */
+  /** Enable pagination, inferred from controlled state */
   withPagination?: boolean;
 
   /** Controlled pagination state */
@@ -84,7 +181,7 @@ export interface UseDataGridOptions<TData> {
   /** Default page size, @default 10 */
   pageSize?: number;
 
-  /** Enable column resizing, @default false */
+  /** Enable column resizing, inferred from controlled state */
   withColumnResizing?: boolean;
 
   /** Column resize mode, @default 'onEnd' */
@@ -96,7 +193,7 @@ export interface UseDataGridOptions<TData> {
   /** Callback when column sizing changes */
   onColumnSizingChange?: OnChangeFn<ColumnSizingState>;
 
-  /** Enable column pinning, @default false */
+  /** Enable column pinning, inferred from controlled state */
   withColumnPinning?: boolean;
 
   /** Controlled column pinning state */
@@ -105,7 +202,7 @@ export interface UseDataGridOptions<TData> {
   /** Callback when column pinning changes */
   onColumnPinningChange?: OnChangeFn<ColumnPinningState>;
 
-  /** Enable column visibility toggle, @default false */
+  /** Enable column visibility toggle, inferred from controlled state */
   withColumnVisibility?: boolean;
 
   /** Controlled column visibility state */
@@ -114,7 +211,7 @@ export interface UseDataGridOptions<TData> {
   /** Callback when column visibility changes */
   onColumnVisibilityChange?: OnChangeFn<VisibilityState>;
 
-  /** Enable column reorder via drag and drop, @default false */
+  /** Enable column reorder via drag and drop, inferred from controlled state */
   withColumnReorder?: boolean;
 
   /** Controlled column order state */
@@ -123,7 +220,7 @@ export interface UseDataGridOptions<TData> {
   /** Callback when column order changes */
   onColumnOrderChange?: OnChangeFn<ColumnOrderState>;
 
-  /** Enable row selection, @default false */
+  /** Enable row selection, inferred from controlled state */
   withRowSelection?: boolean;
 
   /** Controlled row selection state */
@@ -132,7 +229,7 @@ export interface UseDataGridOptions<TData> {
   /** Callback when row selection changes */
   onRowSelectionChange?: OnChangeFn<RowSelectionState>;
 
-  /** Enable row expansion, @default false */
+  /** Enable row expansion, inferred from controlled state */
   withRowExpansion?: boolean;
 
   /** Controlled expanded state */
@@ -141,7 +238,7 @@ export interface UseDataGridOptions<TData> {
   /** Callback when expanded state changes */
   onExpandedChange?: OnChangeFn<ExpandedState>;
 
-  /** Enable row grouping, @default false */
+  /** Enable row grouping, inferred from controlled state */
   withGrouping?: boolean;
 
   /** Controlled grouping state */
@@ -150,197 +247,152 @@ export interface UseDataGridOptions<TData> {
   /** Callback when grouping changes */
   onGroupingChange?: OnChangeFn<GroupingState>;
 
+  /** Editing mode, enables inline editing when set */
+  editingMode?: 'cell' | 'row';
+
+  /** Grid density, @default 'default' */
+  density?: DataGridDensity;
+
+  /** Callback when density changes */
+  onDensityChange?: (density: DataGridDensity) => void;
+
   /** Additional TanStack Table options */
   tableOptions?: Partial<TableOptions<TData>>;
 }
 
-export function useDataGrid<TData>(options: UseDataGridOptions<TData>) {
+export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGridStore<TData> {
+  const { data, columns, getRowId, tableOptions } = options;
+
   const {
-    data,
-    columns,
-    getRowId,
-    withSorting = false,
-    sorting,
-    onSortingChange,
-    manualSorting,
-    withFiltering = false,
-    columnFilters,
-    onColumnFiltersChange,
-    manualFiltering,
-    withGlobalFilter = false,
-    globalFilter,
-    onGlobalFilterChange,
-    withPagination = false,
-    pagination,
-    onPaginationChange,
-    manualPagination,
-    rowCount,
-    pageSize = 10,
-    withColumnResizing = false,
-    columnResizeMode = 'onEnd',
-    columnSizing,
-    onColumnSizingChange,
-    withColumnPinning = false,
-    columnPinning,
-    onColumnPinningChange,
-    withColumnVisibility = false,
-    columnVisibility,
-    onColumnVisibilityChange,
-    withColumnReorder = false,
-    columnOrder,
-    onColumnOrderChange,
-    withRowSelection = false,
-    rowSelection,
-    onRowSelectionChange,
-    withRowExpansion = false,
-    expanded,
-    onExpandedChange,
-    withGrouping = false,
-    grouping,
-    onGroupingChange,
-    tableOptions,
-  } = options;
+    withSorting,
+    withFiltering,
+    withGlobalFilter,
+    withPagination,
+    withColumnResizing,
+    withColumnPinning,
+    withColumnVisibility,
+    withColumnReorder,
+    withRowSelection,
+    withRowExpansion,
+    withGrouping,
+    withEditing,
+  } = inferFeatureFlags(options);
 
-  const processedColumns = withSorting
-    ? columns.map((col) => ({
-        enableSorting: false,
-        ...col,
-      }))
-    : columns;
+  // Density state (Mantine-specific, not part of TanStack)
+  const [densityState, setDensityState] = useState<DataGridDensity>(options.density ?? 'default');
+  const density = options.density ?? densityState;
+  const setDensity = options.onDensityChange ?? setDensityState;
 
+  // When sorting is enabled, default columns to non-sortable (opt-in per column)
+  const processedColumns = withSorting ? defaultSortingDisabled(columns) : columns;
+
+  // Build controlled state object from provided values
+  const controlledState = {
+    ...(options.sorting !== undefined && { sorting: options.sorting }),
+    ...(options.columnFilters !== undefined && { columnFilters: options.columnFilters }),
+    ...(options.globalFilter !== undefined && { globalFilter: options.globalFilter }),
+    ...(options.pagination !== undefined && { pagination: options.pagination }),
+    ...(options.columnSizing !== undefined && { columnSizing: options.columnSizing }),
+    ...(options.columnPinning !== undefined && { columnPinning: options.columnPinning }),
+    ...(options.columnVisibility !== undefined && { columnVisibility: options.columnVisibility }),
+    ...(options.columnOrder !== undefined && { columnOrder: options.columnOrder }),
+    ...(options.rowSelection !== undefined && { rowSelection: options.rowSelection }),
+    ...(options.expanded !== undefined && { expanded: options.expanded }),
+    ...(options.grouping !== undefined && { grouping: options.grouping }),
+  };
+
+  // Build change handlers
+  const handlers = {
+    ...(options.onSortingChange && { onSortingChange: options.onSortingChange }),
+    ...(options.onColumnFiltersChange && { onColumnFiltersChange: options.onColumnFiltersChange }),
+    ...(options.onGlobalFilterChange && { onGlobalFilterChange: options.onGlobalFilterChange }),
+    ...(options.onPaginationChange && { onPaginationChange: options.onPaginationChange }),
+    ...(options.onColumnSizingChange && { onColumnSizingChange: options.onColumnSizingChange }),
+    ...(options.onColumnPinningChange && { onColumnPinningChange: options.onColumnPinningChange }),
+    ...(options.onColumnVisibilityChange && {
+      onColumnVisibilityChange: options.onColumnVisibilityChange,
+    }),
+    ...(options.onColumnOrderChange && { onColumnOrderChange: options.onColumnOrderChange }),
+    ...(options.onRowSelectionChange && { onRowSelectionChange: options.onRowSelectionChange }),
+    ...(options.onExpandedChange && { onExpandedChange: options.onExpandedChange }),
+    ...(options.onGroupingChange && { onGroupingChange: options.onGroupingChange }),
+  };
+
+  // Build TanStack Table config
   const tableConfig: TableOptions<TData> = {
     data,
     columns: processedColumns,
     getRowId,
     getCoreRowModel: getCoreRowModel(),
+
+    // Row models (enabled per feature)
+    ...(withSorting && {
+      getSortedRowModel: getSortedRowModel(),
+      manualSorting: options.manualSorting,
+    }),
+    ...((withFiltering || withGlobalFilter) && {
+      getFilteredRowModel: getFilteredRowModel(),
+    }),
+    ...(withFiltering && { manualFiltering: options.manualFiltering }),
+    ...(withPagination && {
+      getPaginationRowModel: getPaginationRowModel(),
+      manualPagination: options.manualPagination,
+      ...(options.rowCount !== undefined && { rowCount: options.rowCount }),
+    }),
+    ...(withColumnResizing && {
+      enableColumnResizing: true,
+      columnResizeMode: options.columnResizeMode ?? 'onEnd',
+    }),
+    ...(withColumnPinning && { enablePinning: true }),
+    ...(withRowSelection && { enableRowSelection: true }),
+    ...((withRowExpansion || withGrouping) && {
+      getExpandedRowModel: getExpandedRowModel(),
+    }),
+    ...(withGrouping && { getGroupedRowModel: getGroupedRowModel() }),
+
+    // Controlled state and handlers
+    ...(Object.keys(controlledState).length > 0 && { state: controlledState }),
+    ...handlers,
+
     ...tableOptions,
+    ...(withPagination && {
+      initialState: {
+        ...tableOptions?.initialState,
+        pagination: { pageIndex: 0, pageSize: options.pageSize ?? 10 },
+      },
+    }),
   };
 
-  if (withSorting) {
-    tableConfig.getSortedRowModel = getSortedRowModel();
-    tableConfig.manualSorting = manualSorting;
-    if (sorting !== undefined) {
-      tableConfig.state = { ...tableConfig.state, sorting };
-    }
-    if (onSortingChange) {
-      tableConfig.onSortingChange = onSortingChange;
-    }
-  }
-
-  if (withFiltering) {
-    tableConfig.getFilteredRowModel = getFilteredRowModel();
-    tableConfig.manualFiltering = manualFiltering;
-    if (columnFilters !== undefined) {
-      tableConfig.state = { ...tableConfig.state, columnFilters };
-    }
-    if (onColumnFiltersChange) {
-      tableConfig.onColumnFiltersChange = onColumnFiltersChange;
-    }
-  }
-
-  if (withGlobalFilter) {
-    if (!withFiltering) {
-      tableConfig.getFilteredRowModel = getFilteredRowModel();
-    }
-    if (globalFilter !== undefined) {
-      tableConfig.state = { ...tableConfig.state, globalFilter };
-    }
-    if (onGlobalFilterChange) {
-      tableConfig.onGlobalFilterChange = onGlobalFilterChange;
-    }
-  }
-
-  if (withPagination) {
-    tableConfig.getPaginationRowModel = getPaginationRowModel();
-    tableConfig.manualPagination = manualPagination;
-    tableConfig.initialState = {
-      ...tableConfig.initialState,
-      pagination: { pageIndex: 0, pageSize },
-    };
-    if (rowCount !== undefined) {
-      tableConfig.rowCount = rowCount;
-    }
-    if (pagination !== undefined) {
-      tableConfig.state = { ...tableConfig.state, pagination };
-    }
-    if (onPaginationChange) {
-      tableConfig.onPaginationChange = onPaginationChange;
-    }
-  }
-
-  if (withColumnResizing) {
-    tableConfig.enableColumnResizing = true;
-    tableConfig.columnResizeMode = columnResizeMode;
-    if (columnSizing !== undefined) {
-      tableConfig.state = { ...tableConfig.state, columnSizing };
-    }
-    if (onColumnSizingChange) {
-      tableConfig.onColumnSizingChange = onColumnSizingChange;
-    }
-  }
-
-  if (withColumnPinning) {
-    tableConfig.enablePinning = true;
-    if (columnPinning !== undefined) {
-      tableConfig.state = { ...tableConfig.state, columnPinning };
-    }
-    if (onColumnPinningChange) {
-      tableConfig.onColumnPinningChange = onColumnPinningChange;
-    }
-  }
-
-  if (withColumnVisibility) {
-    if (columnVisibility !== undefined) {
-      tableConfig.state = { ...tableConfig.state, columnVisibility };
-    }
-    if (onColumnVisibilityChange) {
-      tableConfig.onColumnVisibilityChange = onColumnVisibilityChange;
-    }
-  }
-
-  if (withColumnReorder) {
-    if (columnOrder !== undefined) {
-      tableConfig.state = { ...tableConfig.state, columnOrder };
-    }
-    if (onColumnOrderChange) {
-      tableConfig.onColumnOrderChange = onColumnOrderChange;
-    }
-  }
-
-  if (withRowSelection) {
-    tableConfig.enableRowSelection = true;
-    if (rowSelection !== undefined) {
-      tableConfig.state = { ...tableConfig.state, rowSelection };
-    }
-    if (onRowSelectionChange) {
-      tableConfig.onRowSelectionChange = onRowSelectionChange;
-    }
-  }
-
-  if (withRowExpansion) {
-    tableConfig.getExpandedRowModel = getExpandedRowModel();
-    if (expanded !== undefined) {
-      tableConfig.state = { ...tableConfig.state, expanded };
-    }
-    if (onExpandedChange) {
-      tableConfig.onExpandedChange = onExpandedChange;
-    }
-  }
-
-  if (withGrouping) {
-    tableConfig.getGroupedRowModel = getGroupedRowModel();
-    if (!withRowExpansion) {
-      tableConfig.getExpandedRowModel = getExpandedRowModel();
-    }
-    if (grouping !== undefined) {
-      tableConfig.state = { ...tableConfig.state, grouping };
-    }
-    if (onGroupingChange) {
-      tableConfig.onGroupingChange = onGroupingChange;
-    }
-  }
-
   const table = useReactTable(tableConfig);
+  const state = table.getState();
 
-  return table;
+  return {
+    table,
+    withSorting,
+    withFiltering,
+    withGlobalFilter,
+    withPagination,
+    withColumnResizing,
+    withColumnPinning,
+    withColumnVisibility,
+    withColumnReorder,
+    withRowSelection,
+    withRowExpansion,
+    withGrouping,
+    withEditing,
+    editingMode: options.editingMode,
+    density,
+    setDensity,
+    sorting: state.sorting,
+    columnFilters: state.columnFilters,
+    globalFilter: state.globalFilter,
+    pagination: state.pagination,
+    columnSizing: state.columnSizing,
+    columnPinning: state.columnPinning,
+    columnVisibility: state.columnVisibility,
+    columnOrder: state.columnOrder,
+    rowSelection: state.rowSelection,
+    expanded: state.expanded,
+    grouping: state.grouping,
+  };
 }

@@ -1,0 +1,57 @@
+import type { ColumnDef } from '@tanstack/react-table';
+import type { UseDataGridOptions } from './use-data-grid';
+
+function isDefined(...values: unknown[]): boolean {
+  return values.some((v) => v !== undefined);
+}
+
+function hasEnableSorting(columns: ColumnDef<any, any>[]): boolean {
+  return columns.some(
+    (col) =>
+      (col as any).enableSorting === true ||
+      ((col as any).columns && hasEnableSorting((col as any).columns))
+  );
+}
+
+export interface DataGridFeatureFlags {
+  withSorting: boolean;
+  withFiltering: boolean;
+  withGlobalFilter: boolean;
+  withPagination: boolean;
+  withColumnResizing: boolean;
+  withColumnPinning: boolean;
+  withColumnVisibility: boolean;
+  withColumnReorder: boolean;
+  withRowSelection: boolean;
+  withRowExpansion: boolean;
+  withGrouping: boolean;
+  withEditing: boolean;
+}
+
+export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): DataGridFeatureFlags {
+  return {
+    withSorting: options.withSorting ?? hasEnableSorting(options.columns),
+    withFiltering:
+      options.withFiltering ?? isDefined(options.columnFilters, options.onColumnFiltersChange),
+    withGlobalFilter:
+      options.withGlobalFilter ?? isDefined(options.globalFilter, options.onGlobalFilterChange),
+    withPagination:
+      options.withPagination ?? isDefined(options.pagination, options.onPaginationChange),
+    withColumnResizing:
+      options.withColumnResizing ??
+      isDefined(options.columnSizing, options.onColumnSizingChange, options.columnResizeMode),
+    withColumnPinning:
+      options.withColumnPinning ?? isDefined(options.columnPinning, options.onColumnPinningChange),
+    withColumnVisibility:
+      options.withColumnVisibility ??
+      isDefined(options.columnVisibility, options.onColumnVisibilityChange),
+    withColumnReorder:
+      options.withColumnReorder ?? isDefined(options.columnOrder, options.onColumnOrderChange),
+    withRowSelection:
+      options.withRowSelection ?? isDefined(options.rowSelection, options.onRowSelectionChange),
+    withRowExpansion:
+      options.withRowExpansion ?? isDefined(options.expanded, options.onExpandedChange),
+    withGrouping: options.withGrouping ?? isDefined(options.grouping, options.onGroupingChange),
+    withEditing: options.editingMode !== undefined,
+  };
+}

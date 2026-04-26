@@ -8,7 +8,7 @@ export default Layout(MDX_DATA.DataGridServerSide);
 
 Use server-side mode when your dataset is too large to load entirely in the browser, or when
 sorting, filtering, and pagination must be handled by an API. Enable server-side mode by setting
-the `manual*` props and providing controlled state for each feature.
+the `manual*` options and providing controlled state in `useDataGrid`.
 
 ## Server-side sorting
 
@@ -16,14 +16,13 @@ Set `manualSorting` to prevent DataGrid from sorting data client-side. Use contr
 and `onSortingChange` to send the sort state to your API.
 
 ```tsx
-<DataGrid
-  data={serverData}
-  withSorting
-  manualSorting
-  sorting={sorting}
-  onSortingChange={setSorting}
-  columns={columns}
-/>
+const store = useDataGrid({
+  data: serverData,
+  columns,
+  manualSorting: true,
+  sorting,
+  onSortingChange: setSorting,
+});
 ```
 
 ## Server-side filtering
@@ -32,14 +31,14 @@ Set `manualFiltering` to disable client-side filtering. Use controlled `columnFi
 and `onColumnFiltersChange` to pass filter state to your API.
 
 ```tsx
-<DataGrid
-  data={serverData}
-  withFiltering
-  manualFiltering
-  columnFilters={columnFilters}
-  onColumnFiltersChange={setColumnFilters}
-  columns={columns}
-/>
+const store = useDataGrid({
+  data: serverData,
+  columns,
+  withFiltering: true,
+  manualFiltering: true,
+  columnFilters,
+  onColumnFiltersChange: setColumnFilters,
+});
 ```
 
 ## Server-side pagination
@@ -48,15 +47,14 @@ Set `manualPagination` and provide `rowCount` so DataGrid knows the total number
 without having all data in memory.
 
 ```tsx
-<DataGrid
-  data={serverData}
-  withPagination
-  manualPagination
-  pagination={pagination}
-  onPaginationChange={setPagination}
-  rowCount={totalRowCount}
-  columns={columns}
-/>
+const store = useDataGrid({
+  data: serverData,
+  columns,
+  manualPagination: true,
+  pagination,
+  onPaginationChange: setPagination,
+  rowCount: totalRowCount,
+});
 ```
 
 ## Full example

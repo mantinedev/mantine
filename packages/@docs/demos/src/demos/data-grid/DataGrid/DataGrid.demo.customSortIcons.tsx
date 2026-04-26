@@ -1,9 +1,9 @@
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
 function SortAscIcon() {
@@ -31,18 +31,22 @@ function UnsortedIcon() {
 }
 
 function Demo() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
+      { accessorKey: 'department', header: 'Department', enableSorting: true },
+      { accessorKey: 'salary', header: 'Salary', enableSorting: true },
+    ],
+    withSorting: true,
+  });
+
   return (
     <DataGrid
-      data={employees}
-      withSorting
+      store={store}
       sortedIcon={<SortAscIcon />}
       unsortedIcon={<UnsortedIcon />}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
-        { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
-        { accessorKey: 'department', header: 'Department', enableSorting: true },
-        { accessorKey: 'salary', header: 'Salary', enableSorting: true },
-      ]}
     />
   );
 }
@@ -89,20 +93,18 @@ function UnsortedIcon() {
 }
 
 function Demo() {
-  return (
-    <DataGrid
-      data={employees}
-      withSorting
-      sortedIcon={<SortAscIcon />}
-      unsortedIcon={<UnsortedIcon />}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
-        { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
-        { accessorKey: 'department', header: 'Department', enableSorting: true },
-        { accessorKey: 'salary', header: 'Salary', enableSorting: true },
-      ]}
-    />
-  );
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
+      { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
+      { accessorKey: 'department', header: 'Department', enableSorting: true },
+      { accessorKey: 'salary', header: 'Salary', enableSorting: true },
+    ],
+    withSorting: true,
+  });
+
+  return <DataGrid store={store} sortedIcon={<SortAscIcon />} unsortedIcon={<UnsortedIcon />} />;
 }
 
 export const customSortIcons: MantineDemo = {

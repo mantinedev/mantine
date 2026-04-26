@@ -6,21 +6,21 @@ export default Layout(MDX_DATA.DataGridFiltering);
 
 ## Column filters
 
-Set `withFiltering` to display filter inputs below each column header. Each column gets a text input
-that filters rows using a case-insensitive string match by default.
+Pass `withFiltering` to `useDataGrid` to display filter inputs below each column header.
+Each column gets a text input that filters rows using a case-insensitive string match by default.
 
 <Demo data={DataGridDemos.columnFilters} />
 
 ## Global search
 
-Set `withGlobalFilter` to enable cross-column search. Use the `DataGrid.GlobalFilter` compound component
-inside `DataGrid.Toolbar` to render the search input.
+Pass `withGlobalFilter` to `useDataGrid` to enable cross-column search. Use the `DataGrid.GlobalFilter`
+compound component inside `DataGrid.Toolbar` to render the search input.
 
 <Demo data={DataGridDemos.globalFilter} />
 
 ## Controlled filters
 
-Use the `columnFilters` and `onColumnFiltersChange` props to control filter state externally.
+Pass `columnFilters` and `onColumnFiltersChange` to `useDataGrid` to control filter state externally.
 The state follows the TanStack Table `ColumnFiltersState` format -- an array of `{ id: string, value: unknown }` objects.
 
 <Demo data={DataGridDemos.controlledFilters} />

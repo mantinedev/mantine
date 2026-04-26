@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Row } from '@tanstack/react-table';
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
 import { Row } from '@tanstack/react-table';
-import { DataGrid } from '@mantine/data-grid';
+import { DataGrid, useDataGrid } from '@mantine/data-grid';
 
 interface Employee {
   id: string;
@@ -27,12 +27,21 @@ const initialData: Employee[] = [
 function Demo() {
   const [data, setData] = useState(initialData);
 
+  const store = useDataGrid({
+    data,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+    ],
+    editingMode: 'cell',
+    getRowId: (row) => row.id,
+  });
+
   return (
     <DataGrid
-      data={data}
-      withEditing
-      editingMode="cell"
-      getRowId={(row) => row.id}
+      store={store}
       onCellEdit={({ row, columnId, value }: { row: Row<Employee>; columnId: string; value: unknown }) => {
         setData((prev) =>
           prev.map((item) =>
@@ -40,12 +49,6 @@ function Demo() {
           )
         );
       }}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
-      ]}
     />
   );
 }
@@ -70,12 +73,21 @@ const initialData: Employee[] = [
 function Demo() {
   const [data, setData] = useState(initialData);
 
+  const store = useDataGrid({
+    data,
+    columns: [
+      { accessorKey: 'firstName', header: 'First Name' },
+      { accessorKey: 'lastName', header: 'Last Name' },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+    ],
+    editingMode: 'cell',
+    getRowId: (row) => row.id,
+  });
+
   return (
     <DataGrid
-      data={data}
-      withEditing
-      editingMode="cell"
-      getRowId={(row) => row.id}
+      store={store}
       onCellEdit={({
         row,
         columnId,
@@ -89,12 +101,6 @@ function Demo() {
           prev.map((item) => (item.id === row.original.id ? { ...item, [columnId]: value } : item))
         );
       }}
-      columns={[
-        { accessorKey: 'firstName', header: 'First Name' },
-        { accessorKey: 'lastName', header: 'Last Name' },
-        { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
-      ]}
     />
   );
 }
