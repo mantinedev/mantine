@@ -236,6 +236,9 @@ export interface DataGridProps<TData = any>
 
   /** Table layout algorithm, @default 'fixed' */
   tableLayout?: 'fixed' | 'auto';
+
+  /** Controls text overflow in body cells, @default 'ellipsis' */
+  textOverflow?: 'ellipsis' | 'wrap' | 'clip';
 }
 
 export type DataGridFactory = Factory<{
@@ -329,6 +332,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     listView,
     renderListItem,
     tableLayout = 'fixed',
+    textOverflow = 'ellipsis',
     ...others
   } = props;
 
@@ -447,6 +451,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
             virtualized: withRowVirtualization || withColumnVirtualization || undefined,
             'sticky-header': stickyHeader || undefined,
             'table-layout': tableLayout === 'auto' ? 'auto' : undefined,
+            'text-overflow': textOverflow !== 'ellipsis' ? textOverflow : undefined,
           },
           mod,
         ]}

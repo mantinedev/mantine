@@ -37,7 +37,7 @@ function Demo() {
       columns={[
         { accessorKey: 'id', header: 'ID', size: 80 },
         { accessorKey: 'name', header: 'Name' },
-        { accessorKey: 'email', header: 'Email' },
+        { accessorKey: 'email', header: 'Email', size: 220 },
         { accessorKey: 'department', header: 'Department' },
         { accessorKey: 'salary', header: 'Salary' },
       ]}
@@ -77,7 +77,7 @@ function Demo() {
       columns={[
         { accessorKey: 'id', header: 'ID', size: 80 },
         { accessorKey: 'name', header: 'Name' },
-        { accessorKey: 'email', header: 'Email' },
+        { accessorKey: 'email', header: 'Email', size: 220 },
         { accessorKey: 'department', header: 'Department' },
         { accessorKey: 'salary', header: 'Salary' },
       ]}

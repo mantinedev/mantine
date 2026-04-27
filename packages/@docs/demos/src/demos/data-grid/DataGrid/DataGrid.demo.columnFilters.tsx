@@ -12,7 +12,7 @@ function Demo() {
     columns: [
       { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
       { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
-      { accessorKey: 'email', header: 'Email', enableColumnFilter: true },
+      { accessorKey: 'email', header: 'Email', size: 220, enableColumnFilter: true },
       { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
       { accessorKey: 'status', header: 'Status', enableColumnFilter: true },
     ],
@@ -28,7 +28,7 @@ function Demo() {
     columns: [
       { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
       { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
-      { accessorKey: 'email', header: 'Email', enableColumnFilter: true },
+      { accessorKey: 'email', header: 'Email', size: 220, enableColumnFilter: true },
       { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
       { accessorKey: 'status', header: 'Status', enableColumnFilter: true },
     ],

@@ -47,7 +47,7 @@ function Demo() {
     () => [
       { accessorKey: 'id' as const, header: 'ID', size: 80 },
       { accessorKey: 'name' as const, header: 'Name' },
-      { accessorKey: 'email' as const, header: 'Email' },
+      { accessorKey: 'email' as const, header: 'Email', size: 220 },
       { accessorKey: 'department' as const, header: 'Department' },
     ],
     []
@@ -107,7 +107,7 @@ function Demo() {
     () => [
       { accessorKey: 'id' as const, header: 'ID', size: 80 },
       { accessorKey: 'name' as const, header: 'Name' },
-      { accessorKey: 'email' as const, header: 'Email' },
+      { accessorKey: 'email' as const, header: 'Email', size: 220 },
       { accessorKey: 'department' as const, header: 'Department' },
     ],
     []

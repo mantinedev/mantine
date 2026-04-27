@@ -123,6 +123,21 @@
   padding: calc(var(--dg-spacing, var(--mantine-spacing-xs)) / 2)
     var(--dg-spacing, var(--mantine-spacing-xs));
   height: var(--dg-row-height, auto);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.root[data-text-overflow='wrap'] .td,
+.root[data-text-overflow='wrap'] .virtualCell {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+}
+
+.root[data-text-overflow='clip'] .td,
+.root[data-text-overflow='clip'] .virtualCell {
+  text-overflow: clip;
 }
 
 .headerCell {
@@ -349,6 +364,10 @@
   height: var(--dg-row-height, auto);
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .virtualCell[data-pinned-left],

@@ -12,7 +12,7 @@ function Demo() {
     columns: [
       { accessorKey: 'firstName', header: 'First Name', enableHiding: false },
       { accessorKey: 'lastName', header: 'Last Name', enableHiding: false },
-      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'email', header: 'Email', size: 220 },
       { accessorKey: 'department', header: 'Department' },
       { accessorKey: 'salary', header: 'Salary' },
       { accessorKey: 'status', header: 'Status' },
@@ -38,7 +38,7 @@ function Demo() {
     columns: [
       { accessorKey: 'firstName', header: 'First Name', enableHiding: false },
       { accessorKey: 'lastName', header: 'Last Name', enableHiding: false },
-      { accessorKey: 'email', header: 'Email' },
+      { accessorKey: 'email', header: 'Email', size: 220 },
       { accessorKey: 'department', header: 'Department' },
       { accessorKey: 'salary', header: 'Salary' },
       { accessorKey: 'status', header: 'Status' },

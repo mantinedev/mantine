@@ -20,7 +20,7 @@ function Demo() {
       {
         header: 'Details',
         columns: [
-          { accessorKey: 'email', header: 'Email' },
+          { accessorKey: 'email', header: 'Email', size: 220 },
           { accessorKey: 'department', header: 'Department' },
         ],
       },
@@ -46,7 +46,7 @@ function Demo() {
       {
         header: 'Details',
         columns: [
-          { accessorKey: 'email', header: 'Email' },
+          { accessorKey: 'email', header: 'Email', size: 220 },
           { accessorKey: 'department', header: 'Department' },
         ],
       },

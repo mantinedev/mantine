@@ -15,6 +15,7 @@ function Demo() {
       {
         accessorKey: 'email',
         header: 'Email (excluded)',
+        size: 220,
         enableGlobalFilter: false,
       },
       { accessorKey: 'department', header: 'Department' },
@@ -40,6 +41,7 @@ function Demo() {
       {
         accessorKey: 'email',
         header: 'Email (excluded)',
+        size: 220,
         enableGlobalFilter: false,
       },
       { accessorKey: 'department', header: 'Department' },

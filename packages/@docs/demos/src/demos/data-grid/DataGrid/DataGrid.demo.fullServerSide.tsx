@@ -95,7 +95,7 @@ function Demo() {
     () => [
       { accessorKey: 'id' as const, header: 'ID', size: 80, enableColumnFilter: true },
       { accessorKey: 'name' as const, header: 'Name', enableSorting: true, enableColumnFilter: true },
-      { accessorKey: 'email' as const, header: 'Email', enableSorting: true, enableColumnFilter: true },
+      { accessorKey: 'email' as const, header: 'Email', size: 220, enableSorting: true, enableColumnFilter: true },
       { accessorKey: 'department' as const, header: 'Department', enableSorting: true, enableColumnFilter: true },
       { accessorKey: 'salary' as const, header: 'Salary', enableSorting: true, enableColumnFilter: true },
     ],
@@ -219,6 +219,7 @@ function Demo() {
       {
         accessorKey: 'email' as const,
         header: 'Email',
+        size: 220,
         enableSorting: true,
         enableColumnFilter: true,
       },
