@@ -1,9 +1,11 @@
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { TextInput } from '@mantine/core';
 import { employees } from './data';
 
 function Demo() {
@@ -23,16 +25,23 @@ function Demo() {
   });
 
   return (
-    <DataGrid store={store}>
-      <DataGrid.Toolbar>
-        <DataGrid.GlobalFilter />
-        <DataGrid.ColumnVisibilityToggle />
-      </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
-      <DataGrid.Pagination />
-      <DataGrid.StatusBar />
-    </DataGrid>
+    <>
+      <TextInput
+        placeholder="Search..."
+        value={store.globalFilter ?? ''}
+        onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
+        mb="md"
+      />
+      <DataGrid store={store}>
+        <DataGrid.Toolbar>
+          <DataGrid.ColumnVisibilityToggle />
+        </DataGrid.Toolbar>
+        <DataGrid.Header />
+        <DataGrid.Body />
+        <DataGrid.Pagination />
+        <DataGrid.StatusBar />
+      </DataGrid>
+    </>
   );
 }
 `;
@@ -54,16 +63,23 @@ function Demo() {
   });
 
   return (
-    <DataGrid store={store}>
-      <DataGrid.Toolbar>
-        <DataGrid.GlobalFilter />
-        <DataGrid.ColumnVisibilityToggle />
-      </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
-      <DataGrid.Pagination />
-      <DataGrid.StatusBar />
-    </DataGrid>
+    <>
+      <TextInput
+        placeholder="Search..."
+        value={store.globalFilter ?? ''}
+        onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
+        mb="md"
+      />
+      <DataGrid store={store}>
+        <DataGrid.Toolbar>
+          <DataGrid.ColumnVisibilityToggle />
+        </DataGrid.Toolbar>
+        <DataGrid.Header />
+        <DataGrid.Body />
+        <DataGrid.Pagination />
+        <DataGrid.StatusBar />
+      </DataGrid>
+    </>
   );
 }
 

@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
+import { useDeepCompareMemo } from './use-deep-compare-memo';
 import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
 import {
   type BuiltInFilterFn,
@@ -166,6 +167,9 @@ export interface DataGridStore<TData = any> {
 
   /** Current global filter value */
   globalFilter: any;
+
+  /** Update the global filter value */
+  setGlobalFilter: (value: any) => void;
 
   /** Current pagination state */
   pagination: PaginationState;
@@ -456,8 +460,10 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
   const filterProcessed = withFiltering ? defaultFilteringDisabled(sortProcessed) : sortProcessed;
   const processedColumns = withFiltering ? processFilterColumns(filterProcessed) : filterProcessed;
 
-  // Build controlled state object from provided values
-  const controlledState = {
+  // Build controlled state object from provided values.
+  // useDeepCompareMemo stabilizes the reference so TanStack memos don't
+  // recompute when the values are structurally identical (e.g. inline arrays).
+  const controlledState = useDeepCompareMemo({
     ...(options.sorting !== undefined && { sorting: options.sorting }),
     ...(options.columnFilters !== undefined && { columnFilters: options.columnFilters }),
     ...(options.globalFilter !== undefined && { globalFilter: options.globalFilter }),
@@ -470,7 +476,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     ...(options.expanded !== undefined && { expanded: options.expanded }),
     ...(options.grouping !== undefined && { grouping: options.grouping }),
     ...(options.rowPinning !== undefined && { rowPinning: options.rowPinning }),
-  };
+  });
 
   // Build change handlers
   const handlers = {
@@ -550,6 +556,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     }),
     ...(withGrouping && {
       getGroupedRowModel: getGroupedRowModel(),
+      autoResetExpanded: false,
       ...(options.groupedColumnMode !== undefined && {
         groupedColumnMode: options.groupedColumnMode,
       }),
@@ -651,6 +658,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     sorting: state.sorting,
     columnFilters: state.columnFilters,
     globalFilter: state.globalFilter,
+    setGlobalFilter: table.setGlobalFilter,
     pagination: state.pagination,
     columnSizing: state.columnSizing,
     columnPinning: state.columnPinning,

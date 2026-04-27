@@ -1,9 +1,11 @@
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { TextInput } from '@mantine/core';
 import { employees } from './data';
 
 function Demo() {
@@ -19,7 +21,17 @@ function Demo() {
     withGlobalFilter: true,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <>
+      <TextInput
+        placeholder="Search..."
+        value={store.globalFilter ?? ''}
+        onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
+        mb="md"
+      />
+      <DataGrid store={store} />
+    </>
+  );
 }
 `;
 
@@ -36,7 +48,17 @@ function Demo() {
     withGlobalFilter: true,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <>
+      <TextInput
+        placeholder="Search..."
+        value={store.globalFilter ?? ''}
+        onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
+        mb="md"
+      />
+      <DataGrid store={store} />
+    </>
+  );
 }
 
 export const globalFilter: MantineDemo = {

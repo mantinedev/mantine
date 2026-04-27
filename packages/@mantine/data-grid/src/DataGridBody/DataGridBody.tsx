@@ -147,19 +147,6 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
                 </Box>
               </Box>
             )}
-          {ctx.withGrouping && row.getIsGrouped() && row.getIsExpanded() && (
-            <>
-              {row.subRows.map((subRow, subIndex) => (
-                <DataGridRow
-                  key={subRow.id}
-                  row={subRow}
-                  rowIndex={subIndex}
-                  classNames={classNames}
-                  styles={styles}
-                />
-              ))}
-            </>
-          )}
         </React.Fragment>
       );
     });

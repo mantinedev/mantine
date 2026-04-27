@@ -462,21 +462,11 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         {children ||
           (listView ? (
             <>
-              {store.withGlobalFilter && (
-                <DataGridToolbar>
-                  <DataGridGlobalFilter />
-                </DataGridToolbar>
-              )}
               <DataGridListView />
               {store.withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
             </>
           ) : (
             <>
-              {store.withGlobalFilter && (
-                <DataGridToolbar>
-                  <DataGridGlobalFilter />
-                </DataGridToolbar>
-              )}
               {withRowVirtualization || withColumnVirtualization ? (
                 <>
                   <DataGridVirtualBody
@@ -507,6 +497,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
                 </Box>
               ) : withScrollArea ? (
                 <ScrollArea
+                  scrollbarSize={4}
                   ref={scrollContainerRef}
                   offsetScrollbars="x"
                   scrollbars="x"
