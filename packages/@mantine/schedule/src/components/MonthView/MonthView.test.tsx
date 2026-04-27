@@ -429,6 +429,27 @@ describe('@mantine/schedule/MonthView', () => {
       expect(customized).toHaveAttribute('href', '#event-5');
     });
 
+    it('forwards onEventClick to MoreEvents', async () => {
+      const spy = jest.fn();
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          onEventClick={spy}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+      await userEvent.click(screen.getByText('Event 5'));
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 5, title: 'Event 5' }),
+        expect.any(Object)
+      );
+    });
+
     it('forwards labels.moreLabel to MoreEvents', () => {
       render(
         <MonthView

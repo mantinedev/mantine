@@ -384,6 +384,20 @@ describe('@mantine/schedule/DayView', () => {
     expect(customized).toHaveAttribute('href', '#event-3');
   });
 
+  it('forwards onEventClick to MoreEvents', async () => {
+    const spy = jest.fn();
+    render(<DayView {...defaultProps} events={allDayEvents} onEventClick={spy} />);
+
+    await userEvent.click(screen.getByRole('button', { name: /more/ }));
+    await userEvent.click(screen.getByText('All-day event 3'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 3, title: 'All-day event 3' }),
+      expect.any(Object)
+    );
+  });
+
   it('supports renderEventBody prop', () => {
     render(
       <DayView

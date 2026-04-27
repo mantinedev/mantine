@@ -615,6 +615,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           labels={labels}
           renderEventBody={renderEventBody}
           renderEvent={renderEvent}
+          onEventClick={onEventClick}
           style={{
             position: 'absolute',
             top: `calc(100% - 2px)`,
