@@ -1698,10 +1698,10 @@
     "package": "@mantine/core",
     "route": "/core/tree",
     "description": "Display a Tree structure",
-    "propsCount": 13,
+    "propsCount": 15,
     "llmUrl": "https://mantine.dev/llms/core-tree.md",
     "componentDataUrl": "/mcp/components/core-tree.json",
-    "searchText": "tree display a tree structure @mantine/core /core/tree allowrangeselection checkonspace clearselectiononoutsideclick data expandonclick expandonspace keepmounted leveloffset ondragdrop rendernode selectonclick tree withlines"
+    "searchText": "tree display a tree structure @mantine/core /core/tree allowdrop allowrangeselection checkonspace clearselectiononoutsideclick data expandonclick expandonspace keepmounted leveloffset ondragdrop rendernode selectonclick tree withdraghandle withlines"
   },
   {
     "id": "charts-treemap",

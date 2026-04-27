@@ -1,0 +1,20 @@
+__turbopack_load_page_chunks__("/charts/funnel-chart", [
+  "static/chunks/04qlxbvnx~vmc.js",
+  "static/chunks/0nvbcnsoc479y.js",
+  "static/chunks/0gf~jlmf6tpru.js",
+  "static/chunks/0vaik.h1o7yy0.js",
+  "static/chunks/17ndf4d4t99e_.js",
+  "static/chunks/0f28m3uemco.l.js",
+  "static/chunks/0n4xb8r1.qp~y.js",
+  "static/chunks/0y602mak4oza5.js",
+  "static/chunks/0aror-n-7uewp.js",
+  "static/chunks/0bxbph60x7irr.js",
+  "static/chunks/0zzb69619antu.js",
+  "static/chunks/0art0m9z85qr7.js",
+  "static/chunks/0.efxcddv.f_1.js",
+  "static/chunks/163k64uz6.1gj.js",
+  "static/chunks/0~x3crfcns5r..css",
+  "static/chunks/0nwh6cog1rjyz.css",
+  "static/chunks/0bhh5m6n92r1r.css",
+  "static/chunks/turbopack-0q2cz-089xkdl.js"
+])

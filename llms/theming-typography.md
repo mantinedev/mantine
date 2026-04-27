@@ -191,22 +191,3 @@ function Demo() {
 }
 ```
 
-
-
-#### Props
-
-**Typography props**
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-
-
-#### Styles API
-
-Typography component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
-
-**Typography selectors**
-
-| Selector | Static selector | Description |
-|----------|----------------|-------------|
-| root | .mantine-Typography-root | Root element |

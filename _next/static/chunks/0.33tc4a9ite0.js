@@ -1,0 +1,22 @@
+__turbopack_load_page_chunks__("/schedule/schedule", [
+  "static/chunks/04qlxbvnx~vmc.js",
+  "static/chunks/0rrdkq.mybdiz.js",
+  "static/chunks/0xgid_qq-gdz4.js",
+  "static/chunks/0el90ayo6tpgz.js",
+  "static/chunks/0wk_v7s4xgvsu.js",
+  "static/chunks/12f818q_fnr52.js",
+  "static/chunks/16jjd5rx.fomo.js",
+  "static/chunks/12-geo9gsf7r..js",
+  "static/chunks/0bxbph60x7irr.js",
+  "static/chunks/0art0m9z85qr7.js",
+  "static/chunks/05fz~7-c6_r6l.js",
+  "static/chunks/0vaik.h1o7yy0.js",
+  "static/chunks/0c2ijcueidko0.js",
+  "static/chunks/0e.yuj6fnqy6z.js",
+  "static/chunks/097e~nmk5~~53.js",
+  "static/chunks/0y602mak4oza5.js",
+  "static/chunks/0~x3crfcns5r..css",
+  "static/chunks/0nwh6cog1rjyz.css",
+  "static/chunks/0bhh5m6n92r1r.css",
+  "static/chunks/turbopack-0u1-2n.hwk-o2.js"
+])

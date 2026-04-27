@@ -974,7 +974,7 @@ function Demo() {
 | openOnFocus | boolean | - | Opens dropdown when input receives focus (requires searchable={true}) |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
-| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem<string>>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
+| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
 | rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |

@@ -119,6 +119,10 @@ export interface RenderTreeNodePayload {
     'data-selected': boolean | undefined;
     'data-value': string;
   };
+
+  /** Props to spread into the drag handle element when `withDragHandle` is set on `Tree`,
+   * `undefined` otherwise */
+  dragHandleProps: { onMouseDown: (event: React.MouseEvent) => void } | undefined;
 }
 ```
 
@@ -1081,6 +1085,148 @@ function Demo() {
 ```
 
 
+### Restricting drop targets
+
+Use the `allowDrop` prop to forbid certain drops. The callback receives the same payload as
+`onDragDrop` (`draggedNode`, `targetNode`, `position`) and should return `false` to reject the drop.
+When it returns `false`, the drop indicator is hidden and the browser displays the
+"not-allowed" cursor, so the user gets visual feedback before releasing the mouse.
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'Pages',
+    value: 'pages',
+    children: [
+      { label: 'index.tsx', value: 'pages/index.tsx' },
+      { label: 'about.tsx', value: 'pages/about.tsx' },
+    ],
+  },
+  {
+    label: 'Components (locked)',
+    value: 'components',
+    children: [
+      { label: 'Header.tsx', value: 'components/Header.tsx' },
+      { label: 'Footer.tsx', value: 'components/Footer.tsx' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+];
+
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={5} {...elementProps}>
+      {hasChildren && (
+        <CaretDownIcon
+          size={18}
+          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [treeData, setTreeData] = useState(data);
+
+  return (
+    <Tree
+      data={treeData}
+      // Forbid dropping into or onto "components" branch
+      allowDrop={({ draggedNode, targetNode, position }) => {
+        if (draggedNode === 'components' || draggedNode.startsWith('components/')) {
+          return false;
+        }
+
+        if (targetNode === 'components' && position === 'inside') {
+          return false;
+        }
+
+        return !targetNode.startsWith('components/');
+      }}
+      onDragDrop={(payload) =>
+        setTreeData((current) => moveTreeNode(current, payload))
+      }
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
+### Drag handle
+
+By default, drag can be initiated from anywhere on a node. Set `withDragHandle` on `Tree` to
+restrict drag initiation to an element that spreads `dragHandleProps` from the `renderNode`
+payload. This is useful when a node contains interactive controls (inputs, buttons) that
+would otherwise interfere with dragging.
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon, DotsSixVerticalIcon } from '@phosphor-icons/react';
+import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'Pages',
+    value: 'pages',
+    children: [
+      { label: 'index.tsx', value: 'pages/index.tsx' },
+      { label: 'about.tsx', value: 'pages/about.tsx' },
+    ],
+  },
+  {
+    label: 'Components',
+    value: 'components',
+    children: [
+      { label: 'Header.tsx', value: 'components/Header.tsx' },
+      { label: 'Footer.tsx', value: 'components/Footer.tsx' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+];
+
+function Leaf({ node, expanded, hasChildren, elementProps, dragHandleProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={4} {...elementProps}>
+      <DotsSixVerticalIcon
+        {...dragHandleProps}
+        size={16}
+        style={{ cursor: 'grab' }}
+      />
+      {hasChildren && (
+        <CaretDownIcon
+          size={18}
+          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [treeData, setTreeData] = useState(data);
+
+  return (
+    <Tree
+      data={treeData}
+      withDragHandle
+      onDragDrop={(payload) =>
+        setTreeData((current) => moveTreeNode(current, payload))
+      }
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
 ## Connecting lines
 
 Set `withLines` prop to display connecting lines showing parent-child relationships.
@@ -1294,6 +1440,7 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| allowDrop | TreeAllowDrop | - | Called for each potential drop target to determine whether a drop is allowed. When it returns `false`, the drop indicator is hidden and the drop is rejected. |
 | allowRangeSelection | boolean | - | If set, tree nodes range can be selected with click when `Shift` key is pressed |
 | checkOnSpace | boolean | - | If set, tree node is checked on space key press |
 | clearSelectionOnOutsideClick | boolean | - | If set, selection is cleared when user clicks outside of the tree |
@@ -1306,6 +1453,7 @@ function Demo() {
 | renderNode | RenderNode | - | A function to render tree node label |
 | selectOnClick | boolean | - | If set, tree node is selected on click |
 | tree | UseTreeReturnType | - | Use-tree hook instance that can be used to manipulate component state |
+| withDragHandle | boolean | - | If set, drag-and-drop must be initiated from an element that spreads `dragHandleProps` from the `renderNode` payload, rather than anywhere on the node. |
 | withLines | boolean | - | If set, connecting lines are rendered showing parent-child relationships |
 
 **Tree.map props**
