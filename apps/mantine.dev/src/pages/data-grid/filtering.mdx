@@ -13,8 +13,8 @@ Each column gets a text input that filters rows using a case-insensitive string 
 
 ## Global search
 
-Pass `withGlobalFilter` to `useDataGrid` to enable cross-column search. Use the `DataGrid.GlobalFilter`
-compound component inside `DataGrid.Toolbar` to render the search input.
+Pass `withGlobalFilter` to `useDataGrid` to enable cross-column search. Use `store.globalFilter`
+and `store.setGlobalFilter` to connect your own search input.
 
 <Demo data={DataGridDemos.globalFilter} />
 
@@ -50,8 +50,9 @@ Rows that match any of the selected values are shown.
 
 ## Number range filter
 
-Set `meta: { filterVariant: 'range' }` to display two number inputs for filtering within a numeric range.
-When `withFaceting` is enabled, the inputs show the min and max values from the data as placeholder hints.
+Set `meta: { filterVariant: 'range' }` to display a popover with two number inputs and a range slider
+for filtering within a numeric range. When `withFaceting` is enabled, the slider bounds and input
+placeholders are automatically derived from the min and max values in the column data.
 
 <Demo data={DataGridDemos.rangeFilter} />
 
