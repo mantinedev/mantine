@@ -144,12 +144,15 @@ function Demo() {
     ],
     getSubRows: (row) => row.children,
     getRowId: (row) => row.id,
-    withPagination: true,
     pageSize: 4,
     paginateExpandedRows: false,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Pagination />
+    </DataGrid>
+  );
 }
 `;
 
@@ -170,12 +173,15 @@ function Demo() {
     ],
     getSubRows: (row) => row.children,
     getRowId: (row) => row.id,
-    withPagination: true,
     pageSize: 4,
     paginateExpandedRows: false,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Pagination />
+    </DataGrid>
+  );
 }
 
 export const treeDataPagination: MantineDemo = {

@@ -16,11 +16,14 @@ function Demo() {
       { accessorKey: 'department', header: 'Department' },
       { accessorKey: 'salary', header: 'Salary' },
     ],
-    withPagination: true,
     pageSize: 5,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Pagination />
+    </DataGrid>
+  );
 }
 `;
 
@@ -34,11 +37,14 @@ function Demo() {
       { accessorKey: 'department', header: 'Department' },
       { accessorKey: 'salary', header: 'Salary' },
     ],
-    withPagination: true,
     pageSize: 5,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Pagination />
+    </DataGrid>
+  );
 }
 
 export const pagination: MantineDemo = {

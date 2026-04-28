@@ -111,14 +111,17 @@ function Demo() {
     manualFiltering: true,
     columnFilters,
     onColumnFiltersChange: setColumnFilters,
-    withPagination: true,
     manualPagination: true,
     pagination,
     onPaginationChange: setPagination,
     rowCount: totalCount,
   });
 
-  return <DataGrid store={store} loading={loading} />;
+  return (
+    <DataGrid store={store} loading={loading}>
+      <DataGrid.Pagination />
+    </DataGrid>
+  );
 }
 `;
 
@@ -248,14 +251,17 @@ function Demo() {
     manualFiltering: true,
     columnFilters,
     onColumnFiltersChange: setColumnFilters,
-    withPagination: true,
     manualPagination: true,
     pagination,
     onPaginationChange: setPagination,
     rowCount: totalCount,
   });
 
-  return <DataGrid store={store} loading={loading} />;
+  return (
+    <DataGrid store={store} loading={loading}>
+      <DataGrid.Pagination />
+    </DataGrid>
+  );
 }
 
 export const fullServerSide: MantineDemo = {

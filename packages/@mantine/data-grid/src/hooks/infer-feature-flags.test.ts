@@ -172,9 +172,29 @@ describe('inferFeatureFlags', () => {
       expect(flags.withPagination).toBe(true);
     });
 
-    it('does not infer from manualPagination alone', () => {
+    it('infers from pageSize', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, pageSize: 20 });
+      expect(flags.withPagination).toBe(true);
+    });
+
+    it('infers from manualPagination true', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, manualPagination: true });
+      expect(flags.withPagination).toBe(true);
+    });
+
+    it('does not infer from manualPagination false', () => {
       const flags = inferFeatureFlags({ ...baseOptions, manualPagination: false });
       expect(flags.withPagination).toBe(false);
+    });
+
+    it('infers from pageCount', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, pageCount: 5 });
+      expect(flags.withPagination).toBe(true);
+    });
+
+    it('infers from rowCount', () => {
+      const flags = inferFeatureFlags({ ...baseOptions, rowCount: 100 });
+      expect(flags.withPagination).toBe(true);
     });
   });
 

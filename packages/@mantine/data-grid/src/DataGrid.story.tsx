@@ -323,10 +323,6 @@ export function GlobalFilter() {
         <DataGrid.Toolbar>
           <DataGrid.GlobalFilter placeholder="Search employees..." />
         </DataGrid.Toolbar>
-        <Box component="table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <DataGrid.Header />
-          <DataGrid.Body />
-        </Box>
       </DataGrid>
     </Box>
   );
@@ -337,12 +333,13 @@ export function Pagination() {
     data: employees,
     columns,
     getRowId: (row) => row.id,
-    withPagination: true,
     pageSize: 5,
   });
   return (
     <Box p="md">
-      <DataGrid store={store} pageSizeOptions={[5, 10, 20]} />
+      <DataGrid store={store}>
+        <DataGrid.Pagination pageSizeOptions={[5, 10, 20]} />
+      </DataGrid>
     </Box>
   );
 }
@@ -391,10 +388,6 @@ export function ColumnVisibility() {
             <DataGrid.ColumnVisibilityToggle />
           </Group>
         </DataGrid.Toolbar>
-        <Box component="table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <DataGrid.Header />
-          <DataGrid.Body />
-        </Box>
       </DataGrid>
     </Box>
   );
@@ -574,10 +567,6 @@ export function Density() {
             <DataGrid.DensityToggle />
           </Group>
         </DataGrid.Toolbar>
-        <Box component="table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <DataGrid.Header />
-          <DataGrid.Body />
-        </Box>
       </DataGrid>
     </Box>
   );
@@ -608,7 +597,6 @@ export function CompoundComponents() {
     columns: columnsWithFooter,
     getRowId: (row) => row.id,
     withGlobalFilter: true,
-    withPagination: true,
     pageSize: 10,
     withColumnVisibility: true,
   });
@@ -616,17 +604,6 @@ export function CompoundComponents() {
   return (
     <Box p="md">
       <DataGrid store={store}>
-        <DataGrid.Toolbar>
-          <Group justify="space-between">
-            <DataGrid.GlobalFilter placeholder="Search..." />
-            <DataGrid.ColumnVisibilityToggle />
-          </Group>
-        </DataGrid.Toolbar>
-        <Box component="table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <DataGrid.Header />
-          <DataGrid.Body />
-          <DataGrid.Footer />
-        </Box>
         <DataGrid.Pagination pageSizeOptions={[5, 10, 20]} />
         <DataGrid.StatusBar />
       </DataGrid>
@@ -644,7 +621,6 @@ export function AllFeatures() {
     withSorting: true,
     withFiltering: true,
     withGlobalFilter: true,
-    withPagination: true,
     pageSize: 10,
     withColumnResizing: true,
     withColumnPinning: true,
@@ -659,7 +635,6 @@ export function AllFeatures() {
     <Box p="md">
       <DataGrid
         store={store}
-        pageSizeOptions={[5, 10, 20]}
         withRowNumbers
         striped
         highlightOnHover
@@ -678,19 +653,6 @@ export function AllFeatures() {
           );
         }}
       >
-        <DataGrid.Toolbar>
-          <Group justify="space-between">
-            <DataGrid.GlobalFilter placeholder="Search all columns..." />
-            <Group gap="xs">
-              <DataGrid.DensityToggle />
-              <DataGrid.ColumnVisibilityToggle />
-            </Group>
-          </Group>
-        </DataGrid.Toolbar>
-        <Box component="table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <DataGrid.Header />
-          <DataGrid.Body />
-        </Box>
         <DataGrid.Pagination />
         <DataGrid.StatusBar />
       </DataGrid>

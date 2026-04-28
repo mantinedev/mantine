@@ -27,7 +27,6 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary' },
       { accessorKey: 'status', header: 'Status' },
     ],
-    withPagination: true,
     pagination,
     onPaginationChange: setPagination,
   });
@@ -37,7 +36,9 @@ function Demo() {
       <Text mb="md">
         Current page: <Code>{JSON.stringify(pagination)}</Code>
       </Text>
-      <DataGrid store={store} />
+      <DataGrid store={store}>
+        <DataGrid.Pagination />
+      </DataGrid>
     </>
   );
 }
@@ -58,7 +59,6 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary' },
       { accessorKey: 'status', header: 'Status' },
     ],
-    withPagination: true,
     pagination,
     onPaginationChange: setPagination,
   });
@@ -68,7 +68,9 @@ function Demo() {
       <Text mb="md">
         Current page: <Code>{JSON.stringify(pagination)}</Code>
       </Text>
-      <DataGrid store={store} />
+      <DataGrid store={store}>
+        <DataGrid.Pagination />
+      </DataGrid>
     </>
   );
 }

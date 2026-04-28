@@ -173,28 +173,21 @@ describe('@mantine/data-grid/DataGrid', () => {
       age: 20 + i,
     }));
 
-    it('renders pagination when withPagination is true', () => {
+    it('paginates rows when pageSize is set', () => {
       const { container } = render(
-        <DataGridWithStore
-          storeOptions={{ data: paginationData, columns, withPagination: true, pageSize: 5 }}
-        />
+        <DataGridWithStore storeOptions={{ data: paginationData, columns, pageSize: 5 }}>
+          <DataGrid.Pagination />
+        </DataGridWithStore>
       );
       expect(container.querySelector('.mantine-DataGrid-pagination')).toBeInTheDocument();
-    });
-
-    it('shows correct number of rows per page', () => {
-      const { container } = render(
-        <DataGridWithStore
-          storeOptions={{ data: paginationData, columns, withPagination: true, pageSize: 5 }}
-        />
-      );
       const rows = container.querySelectorAll('tbody tr');
       expect(rows).toHaveLength(5);
     });
 
-    it('does not render pagination when withPagination is false', () => {
+    it('does not paginate when pageSize is not set', () => {
       const { container } = render(<DataGrid data={paginationData} columns={columns} />);
-      expect(container.querySelector('.mantine-DataGrid-pagination')).not.toBeInTheDocument();
+      const rows = container.querySelectorAll('tbody tr');
+      expect(rows).toHaveLength(paginationData.length);
     });
   });
 

@@ -210,9 +210,6 @@ export interface DataGridProps<TData = any>
   /** Make the header sticky when scrolling, @default false */
   stickyHeader?: boolean;
 
-  /** Options for the page size selector */
-  pageSizeOptions?: number[];
-
   /** Labels overrides */
   labels?: Partial<DataGridLabels>;
 
@@ -323,7 +320,6 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
     selectOnRowClick,
     headerFilters,
     stickyHeader,
-    pageSizeOptions,
     labels: labelsProp,
     getRowHeight,
     estimateRowHeight,
@@ -459,69 +455,70 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         data-density={store.density}
         {...others}
       >
-        {children ||
-          (listView ? (
-            <>
-              <DataGridListView />
-              {store.withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
-            </>
-          ) : (
-            <>
-              {withRowVirtualization || withColumnVirtualization ? (
-                <>
-                  <DataGridVirtualBody
-                    height={height}
-                    virtualScrollConfig={virtualScrollConfig}
-                    virtualColumnConfig={virtualColumnConfig}
-                    scrollContainerRef={scrollContainerRef}
-                    onScroll={onScrollToBottom ? handleScroll : undefined}
-                  />
-                  {hasFooter && (
-                    <Box component="table" {...getStyles('table')}>
-                      <DataGridFooter />
-                    </Box>
-                  )}
-                </>
-              ) : onScrollToBottom && height ? (
-                <Box
-                  ref={scrollContainerRef}
-                  onScroll={handleScroll}
-                  {...getStyles('virtualScrollContainer')}
-                  style={{ height: rem(height), overflow: 'auto' }}
-                >
+        {React.Children.map(children, (child) =>
+          React.isValidElement(child) && child.type === DataGridToolbar ? child : null
+        )}
+        {listView ? (
+          <DataGridListView />
+        ) : (
+          <>
+            {withRowVirtualization || withColumnVirtualization ? (
+              <>
+                <DataGridVirtualBody
+                  height={height}
+                  virtualScrollConfig={virtualScrollConfig}
+                  virtualColumnConfig={virtualColumnConfig}
+                  scrollContainerRef={scrollContainerRef}
+                  onScroll={onScrollToBottom ? handleScroll : undefined}
+                />
+                {hasFooter && (
                   <Box component="table" {...getStyles('table')}>
-                    <DataGridHeader />
-                    <DataGridBody />
-                    {hasFooter && <DataGridFooter />}
+                    <DataGridFooter />
                   </Box>
+                )}
+              </>
+            ) : onScrollToBottom && height ? (
+              <Box
+                ref={scrollContainerRef}
+                onScroll={handleScroll}
+                {...getStyles('virtualScrollContainer')}
+                style={{ height: rem(height), overflow: 'auto' }}
+              >
+                <Box component="table" {...getStyles('table')}>
+                  <DataGridHeader />
+                  <DataGridBody />
+                  {hasFooter && <DataGridFooter />}
                 </Box>
-              ) : withScrollArea ? (
-                <ScrollArea
-                  scrollbarSize={4}
-                  ref={scrollContainerRef}
-                  offsetScrollbars="x"
-                  scrollbars="x"
-                  {...getStyles('scrollContainer')}
-                  {...scrollAreaProps}
-                >
-                  <Box component="table" {...getStyles('table')}>
-                    <DataGridHeader />
-                    <DataGridBody />
-                    {hasFooter && <DataGridFooter />}
-                  </Box>
-                </ScrollArea>
-              ) : (
-                <Box style={{ overflowX: 'auto' }}>
-                  <Box component="table" {...getStyles('table')}>
-                    <DataGridHeader />
-                    <DataGridBody />
-                    {hasFooter && <DataGridFooter />}
-                  </Box>
+              </Box>
+            ) : withScrollArea ? (
+              <ScrollArea
+                scrollbarSize={4}
+                ref={scrollContainerRef}
+                offsetScrollbars="x"
+                scrollbars="x"
+                {...getStyles('scrollContainer')}
+                {...scrollAreaProps}
+              >
+                <Box component="table" {...getStyles('table')}>
+                  <DataGridHeader />
+                  <DataGridBody />
+                  {hasFooter && <DataGridFooter />}
                 </Box>
-              )}
-              {store.withPagination && <DataGridPagination pageSizeOptions={pageSizeOptions} />}
-            </>
-          ))}
+              </ScrollArea>
+            ) : (
+              <Box style={{ overflowX: 'auto' }}>
+                <Box component="table" {...getStyles('table')}>
+                  <DataGridHeader />
+                  <DataGridBody />
+                  {hasFooter && <DataGridFooter />}
+                </Box>
+              </Box>
+            )}
+          </>
+        )}
+        {React.Children.map(children, (child) =>
+          React.isValidElement(child) && child.type === DataGridToolbar ? null : child
+        )}
         {loading && <LoadingOverlay visible {...getStyles('loadingOverlay')} />}
       </Box>
     </DataGridProvider>

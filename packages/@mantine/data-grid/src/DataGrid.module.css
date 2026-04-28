@@ -235,6 +235,11 @@
 
 .tr[data-selected] {
   background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+  border-color: var(--mantine-primary-color-light);
+}
+
+.tr[data-selected]:hover {
+  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
 }
 
 .selectionCheckbox {
@@ -355,6 +360,11 @@
 }
 
 .virtualRow[data-selected] {
+  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+  border-color: var(--mantine-primary-color-light);
+}
+
+.virtualRow[data-selected]:hover {
   background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
 }
 

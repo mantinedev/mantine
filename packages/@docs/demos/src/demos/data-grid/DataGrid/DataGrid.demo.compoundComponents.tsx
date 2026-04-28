@@ -21,7 +21,7 @@ function Demo() {
     ],
     withGlobalFilter: true,
     withColumnVisibility: true,
-    withPagination: true,
+    pageSize: 10,
   });
 
   return (
@@ -36,8 +36,6 @@ function Demo() {
         <DataGrid.Toolbar>
           <DataGrid.ColumnVisibilityToggle />
         </DataGrid.Toolbar>
-        <DataGrid.Header />
-        <DataGrid.Body />
         <DataGrid.Pagination />
         <DataGrid.StatusBar />
       </DataGrid>
@@ -59,7 +57,7 @@ function Demo() {
     ],
     withGlobalFilter: true,
     withColumnVisibility: true,
-    withPagination: true,
+    pageSize: 10,
   });
 
   return (
@@ -74,8 +72,6 @@ function Demo() {
         <DataGrid.Toolbar>
           <DataGrid.ColumnVisibilityToggle />
         </DataGrid.Toolbar>
-        <DataGrid.Header />
-        <DataGrid.Body />
         <DataGrid.Pagination />
         <DataGrid.StatusBar />
       </DataGrid>

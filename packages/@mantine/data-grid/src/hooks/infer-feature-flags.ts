@@ -60,7 +60,13 @@ export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): Da
     withGlobalFilter:
       options.withGlobalFilter ?? isDefined(options.globalFilter, options.onGlobalFilterChange),
     withPagination:
-      options.withPagination ?? isDefined(options.pagination, options.onPaginationChange),
+      isDefined(
+        options.pagination,
+        options.onPaginationChange,
+        options.pageSize,
+        options.pageCount,
+        options.rowCount
+      ) || options.manualPagination === true,
     withColumnResizing:
       options.withColumnResizing ??
       isDefined(options.columnSizing, options.onColumnSizingChange, options.columnResizeMode),

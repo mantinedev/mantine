@@ -269,9 +269,6 @@ export interface UseDataGridOptions<TData> {
   /** Custom filter function for global filter */
   globalFilterFn?: FilterFn<TData>;
 
-  /** Enable pagination, inferred from controlled state */
-  withPagination?: boolean;
-
   /** Controlled pagination state */
   pagination?: PaginationState;
 

@@ -25,8 +25,6 @@ function Demo() {
       <DataGrid.Toolbar>
         <DataGrid.ColumnVisibilityToggle />
       </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
     </DataGrid>
   );
 }
@@ -51,8 +49,6 @@ function Demo() {
       <DataGrid.Toolbar>
         <DataGrid.ColumnVisibilityToggle />
       </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
     </DataGrid>
   );
 }

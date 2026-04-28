@@ -23,8 +23,6 @@ function Demo() {
       <DataGrid.Toolbar>
         <DataGrid.DensityToggle />
       </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
     </DataGrid>
   );
 }
@@ -47,8 +45,6 @@ function Demo() {
       <DataGrid.Toolbar>
         <DataGrid.DensityToggle />
       </DataGrid.Toolbar>
-      <DataGrid.Header />
-      <DataGrid.Body />
     </DataGrid>
   );
 }
