@@ -13,7 +13,7 @@ const myColor: MantineColorsTuple = ${JSON.stringify(colors, null, 2).replace(/"
 const theme = createTheme({
   colors: {
     myColor,
-  }
+  }, // Comma added
   primaryColor: 'myColor',
 });
 
