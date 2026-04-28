@@ -148,7 +148,7 @@ export interface DataGridStore<TData = any> {
   withRowReorder: boolean;
 
   /** Callback when rows are reordered via drag and drop */
-  onRowOrderChange?: (reorderedData: any[]) => void;
+  onRowOrderChange?: (reorderedData: TData[]) => void;
 
   /** Editing mode, `undefined` when editing is disabled */
   editingMode: 'cell' | 'row' | undefined;

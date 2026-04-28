@@ -148,13 +148,13 @@ export interface DataGridProps<TData = any>
   withRowNumbers?: boolean;
 
   /** Callback when a row is clicked */
-  onRowClick?: (row: Row<any>, event: React.MouseEvent) => void;
+  onRowClick?: (row: Row<TData>, event: React.MouseEvent) => void;
 
   /** Callback when a row is double-clicked */
-  onRowDoubleClick?: (row: Row<any>, event: React.MouseEvent) => void;
+  onRowDoubleClick?: (row: Row<TData>, event: React.MouseEvent) => void;
 
   /** Callback when a cell is clicked */
-  onCellClick?: (cell: Cell<any, unknown>, event: React.MouseEvent) => void;
+  onCellClick?: (cell: Cell<TData, unknown>, event: React.MouseEvent) => void;
 
   /** Content to display when data is empty */
   emptyState?: React.ReactNode;
@@ -181,22 +181,22 @@ export interface DataGridProps<TData = any>
   onScrollToBottom?: () => void;
 
   /** Render function for expanded row content */
-  renderExpandedRow?: (props: { row: Row<any> }) => React.ReactNode;
+  renderExpandedRow?: (props: { row: Row<TData> }) => React.ReactNode;
 
   /** When true, clicking a row toggles its expansion, @default false */
   expandOnRowClick?: boolean;
 
   /** Callback when a cell value is edited */
-  onCellEdit?: (props: { row: Row<any>; columnId: string; value: unknown }) => void;
+  onCellEdit?: (props: { row: Row<TData>; columnId: string; value: unknown }) => void;
 
   /** Callback when a row is edited */
-  onRowEdit?: (props: { row: Row<any>; values: Record<string, unknown> }) => void;
+  onRowEdit?: (props: { row: Row<TData>; values: Record<string, unknown> }) => void;
 
   /** How editing is triggered: 'click' for single click, 'doubleClick' for double click, @default 'doubleClick' */
   editTrigger?: 'click' | 'doubleClick';
 
   /** Async row update handler. On edit save, called with (newRow, oldRow). If it rejects, the edit is reverted. */
-  processRowUpdate?: (newRow: any, oldRow: any) => Promise<any>;
+  processRowUpdate?: (newRow: TData, oldRow: TData) => Promise<TData>;
 
   /** Called when processRowUpdate rejects */
   onProcessRowUpdateError?: (error: unknown) => void;
@@ -214,7 +214,7 @@ export interface DataGridProps<TData = any>
   labels?: Partial<DataGridLabels>;
 
   /** Return height for a specific row, or 'auto' for content-measured height */
-  getRowHeight?: (row: Row<any>) => number | 'auto';
+  getRowHeight?: (row: Row<TData>) => number | 'auto';
 
   /** Estimated row height for initial render before measurement, used with getRowHeight */
   estimateRowHeight?: number;
@@ -229,7 +229,7 @@ export interface DataGridProps<TData = any>
   listView?: boolean;
 
   /** Custom render function for list view items. Receives the row and should return a card/item element */
-  renderListItem?: (props: { row: Row<any> }) => React.ReactNode;
+  renderListItem?: (props: { row: Row<TData> }) => React.ReactNode;
 
   /** Table layout algorithm, @default 'fixed' */
   tableLayout?: 'fixed' | 'auto';

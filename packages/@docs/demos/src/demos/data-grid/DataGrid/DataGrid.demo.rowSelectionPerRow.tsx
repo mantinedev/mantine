@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Row, RowSelectionState } from '@tanstack/react-table';
+import { RowSelectionState } from '@tanstack/react-table';
 import { Code, Text } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
-import { dataCode, Employee, employees } from './_data';
+import { dataCode, employees } from './_data';
 
 const code = `
 import { useState } from 'react';
-import { Row, RowSelectionState } from '@tanstack/react-table';
+import { RowSelectionState } from '@tanstack/react-table';
 import { Code, Text } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
@@ -25,7 +25,7 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary' },
     ],
     withRowSelection: true,
-    enableRowSelection: (row: Row<typeof employees[number]>) => row.original.status === 'active',
+    enableRowSelection: (row) => row.original.status === 'active',
     rowSelection,
     onRowSelectionChange: setRowSelection,
     getRowId: (row) => row.id,
@@ -55,7 +55,7 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary' },
     ],
     withRowSelection: true,
-    enableRowSelection: (row: Row<Employee>) => row.original.status === 'active',
+    enableRowSelection: (row) => row.original.status === 'active',
     rowSelection,
     onRowSelectionChange: setRowSelection,
     getRowId: (row) => row.id,
