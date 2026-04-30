@@ -1,10 +1,10 @@
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Checkbox, Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './data';
 
 const code = `
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Checkbox, Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { data } from './data';
 
@@ -30,7 +30,7 @@ const renderTreeNode = ({
         <span>{node.label}</span>
 
         {hasChildren && (
-          <IconChevronDown
+          <CaretDownIcon
             size={14}
             style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
@@ -67,7 +67,7 @@ const renderTreeNode = ({
         <span>{node.label}</span>
 
         {hasChildren && (
-          <IconChevronDown
+          <CaretDownIcon
             size={14}
             style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />

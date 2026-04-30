@@ -3,19 +3,26 @@ import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
-  factory,
   Factory,
+  genericFactory,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
 } from '../../core';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
-import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  ClearSectionMode,
+  Input,
+  InputVariant,
+} from '../Input';
 import { InputBase } from '../InputBase/InputBase';
 
 export interface FileInputProps<Multiple = false>
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<FileInputFactory>,
     ElementProps<'button', 'value' | 'defaultValue' | 'onChange' | 'placeholder'> {
@@ -30,7 +37,7 @@ export interface FileInputProps<Multiple = false>
   /** Uncontrolled component default value */
   defaultValue?: Multiple extends true ? File[] : File | null;
 
-  /** If set, user can pick more than one file @default `false` */
+  /** If set, user can pick more than one file @default false */
   multiple?: Multiple;
 
   /** File input accept attribute, for example, `"image/png,image/jpeg"` */
@@ -45,11 +52,14 @@ export interface FileInputProps<Multiple = false>
   /** Value renderer. By default, displays file name. */
   valueComponent?: React.FC<{ value: null | File | File[] }>;
 
-  /** If set, the clear button is displayed in the right section @default `false` */
+  /** If set, the clear button is displayed in the right section @default false */
   clearable?: boolean;
 
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
+
   /** Props passed down to the clear button */
-  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+  clearButtonProps?: React.ComponentProps<'button'>;
 
   /** If set, the input value cannot be changed  */
   readOnly?: boolean;
@@ -57,14 +67,14 @@ export interface FileInputProps<Multiple = false>
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
   capture?: boolean | 'user' | 'environment';
 
-  /** Props passed down to the hidden input element which is used to capture files */
-  fileInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  /** Props passed down to the hidden `input[type="file"]` */
+  fileInputProps?: React.ComponentProps<'input'>;
 
   /** Input placeholder */
   placeholder?: React.ReactNode;
 
   /** Reference of the function that should be called when value changes to null or empty array */
-  resetRef?: React.ForwardedRef<() => void>;
+  resetRef?: React.Ref<() => void>;
 }
 
 export type FileInputFactory = Factory<{
@@ -72,6 +82,9 @@ export type FileInputFactory = Factory<{
   ref: HTMLButtonElement;
   stylesNames: __InputStylesNames | 'placeholder';
   variant: InputVariant;
+  signature: <Multiple extends boolean = false>(
+    props: FileInputProps<Multiple>
+  ) => React.JSX.Element;
 }>;
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
@@ -85,7 +98,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<FileInputProps>;
 
-const _FileInput = factory<FileInputFactory>((_props, ref) => {
+export const FileInput = genericFactory<FileInputFactory>((_props) => {
   const props = useProps('FileInput', defaultProps, _props);
   const {
     unstyled,
@@ -99,6 +112,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     form,
     valueComponent: ValueComponent,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     readOnly,
     capture,
@@ -130,17 +144,17 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
 
   const hasValue = Array.isArray(_value) ? _value.length !== 0 : _value !== null;
 
-  const _rightSection =
-    rightSection ||
-    (clearable && hasValue && !readOnly ? (
-      <CloseButton
-        {...clearButtonProps}
-        variant="subtle"
-        onClick={() => setValue(multiple ? [] : null)}
-        size={size}
-        unstyled={unstyled}
-      />
-    ) : null);
+  const clearButton = (
+    <CloseButton
+      {...clearButtonProps}
+      variant="subtle"
+      onClick={() => setValue(multiple ? [] : null)}
+      size={size}
+      unstyled={unstyled}
+    />
+  );
+
+  const _clearable = clearable && hasValue && !readOnly;
 
   useEffect(() => {
     if ((Array.isArray(_value) && _value.length === 0) || _value === null) {
@@ -163,8 +177,10 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
       {(fileButtonProps) => (
         <InputBase
           component={component || 'button'}
-          ref={ref}
-          rightSection={_rightSection}
+          rightSection={rightSection}
+          __clearSection={clearButton}
+          __clearable={_clearable}
+          __clearSectionMode={clearSectionMode}
           {...fileButtonProps}
           {...others}
           __staticSelector="FileInput"
@@ -196,13 +212,10 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
   );
 });
 
-_FileInput.classes = InputBase.classes;
-_FileInput.displayName = '@mantine/core/FileInput';
+FileInput.classes = InputBase.classes;
+FileInput.displayName = '@mantine/core/FileInput';
 
-type FileInputComponent = (<Multiple extends boolean = false>(
-  props: FileInputProps<Multiple> & {
-    ref?: React.ForwardedRef<HTMLButtonElement>;
-  }
-) => React.JSX.Element) & { extend: typeof _FileInput.extend };
-
-export const FileInput: FileInputComponent = _FileInput as any;
+export namespace FileInput {
+  export type Props<Multiple extends boolean = false> = FileInputProps<Multiple>;
+  export type Factory = FileInputFactory;
+}

@@ -11,8 +11,7 @@ import {
 import { useCodeHighlightContext } from '../CodeHighlight.context';
 
 export interface CodeHighlightControlProps
-  extends BoxProps,
-    StylesApiProps<CodeHighlightControlFactory> {
+  extends BoxProps, StylesApiProps<CodeHighlightControlFactory> {
   /** Control icon */
   children?: React.ReactNode;
 
@@ -27,7 +26,7 @@ export type CodeHighlightControlFactory = PolymorphicFactory<{
 }>;
 
 export const CodeHighlightControl: MantinePolymorphicComponent<CodeHighlightControlFactory> =
-  polymorphicFactory<CodeHighlightControlFactory>((_props, ref) => {
+  polymorphicFactory<CodeHighlightControlFactory>((_props) => {
     const props = useProps('CodeHighlightControl', null, _props);
     const { children, vars, tooltipLabel, ...others } = props;
     const ctx = useCodeHighlightContext();
@@ -35,7 +34,6 @@ export const CodeHighlightControl: MantinePolymorphicComponent<CodeHighlightCont
 
     const control = (
       <ActionIcon
-        ref={ref}
         {...ctx.getStyles('control')}
         {...others}
         variant="none"

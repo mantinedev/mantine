@@ -19,16 +19,14 @@ export type ContainerCssVariables = {
 };
 
 export interface ContainerProps
-  extends BoxProps,
-    StylesApiProps<ContainerFactory>,
-    ElementProps<'div'> {
-  /** `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. @default `'md'` */
+  extends BoxProps, StylesApiProps<ContainerFactory>, ElementProps<'div'> {
+  /** `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** If set, the container takes 100% width of its parent and `size` prop is ignored. @default `false` */
+  /** If set, the container takes 100% width of its parent and `size` prop is ignored. @default false */
   fluid?: boolean;
 
-  /** Centering strategy @default `'block'` */
+  /** Centering strategy @default 'block' */
   strategy?: 'block' | 'grid';
 }
 
@@ -39,14 +37,18 @@ export type ContainerFactory = Factory<{
   vars: ContainerCssVariables;
 }>;
 
+const defaultProps = {
+  strategy: 'block',
+} satisfies Partial<ContainerProps>;
+
 const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) => ({
   root: {
     '--container-size': fluid ? undefined : getSize(size, 'container-size'),
   },
 }));
 
-export const Container = factory<ContainerFactory>((_props, ref) => {
-  const props = useProps('Container', null, _props);
+export const Container = factory<ContainerFactory>((_props) => {
+  const props = useProps('Container', defaultProps, _props);
   const {
     classNames,
     className,
@@ -75,15 +77,16 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return (
-    <Box
-      ref={ref}
-      mod={[{ fluid, strategy: strategy || 'block' }, mod]}
-      {...getStyles('root')}
-      {...others}
-    />
-  );
+  return <Box mod={[{ fluid, strategy }, mod]} {...getStyles('root')} {...others} />;
 });
 
 Container.classes = classes;
+Container.varsResolver = varsResolver;
 Container.displayName = '@mantine/core/Container';
+
+export namespace Container {
+  export type Props = ContainerProps;
+  export type StylesNames = ContainerStylesNames;
+  export type CssVariables = ContainerCssVariables;
+  export type Factory = ContainerFactory;
+}

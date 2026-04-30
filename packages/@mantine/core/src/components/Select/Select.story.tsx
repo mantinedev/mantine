@@ -1,5 +1,11 @@
 import { useState } from 'react';
+import { createTheme, MantineThemeProvider } from '../../core';
+import { Autocomplete } from '../Autocomplete';
 import { Button } from '../Button';
+import { Input } from '../Input';
+import { MultiSelect } from '../MultiSelect';
+import { TagsInput } from '../TagsInput';
+import { TextInput } from '../TextInput';
 import { Select } from './Select';
 
 export default { title: 'Select' };
@@ -7,23 +13,13 @@ export default { title: 'Select' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Select
-        data={[
-          'React',
-          'Angular',
-          'Svelte',
-          'Vue',
-          'Ember',
-          'Backbone',
-          'Preact',
-          'Inferno',
-          'Aurelia',
-          'Meteor',
-        ]}
+      <Select<'React' | 'Angular' | 'Svelte' | number>
+        data={['React', 'Angular', 'Svelte', 100]}
         placeholder="Select something"
         searchable
         autoSelectOnBlur
         rightSection="right"
+        onChange={console.log}
       />
     </div>
   );
@@ -382,6 +378,53 @@ export function HiddenDropdown() {
       <Select data={['React', 'Angular', 'Svelte']} placeholder="No message" searchable mt="xl" />
       <Select data={[]} placeholder="Empty data" searchable mt="xl" />
     </div>
+  );
+}
+
+export function InheritsInputThemeDefaults() {
+  const theme = createTheme({
+    components: {
+      Input: Input.extend({
+        defaultProps: {
+          classNames: { input: 'inherits-input-theme-defaults' },
+          styles: {
+            input: {
+              borderColor: 'var(--mantine-color-red-6)',
+              backgroundColor: 'var(--mantine-color-red-0)',
+            },
+          },
+        },
+      }),
+    },
+  });
+
+  return (
+    <MantineThemeProvider theme={theme}>
+      <div
+        style={{ padding: 40, maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 12 }}
+      >
+        <p style={{ margin: 0 }}>
+          All inputs below should share the red border and red background.
+        </p>
+        <TextInput label="TextInput" placeholder="TextInput" />
+        <Select label="Select" data={['React', 'Angular', 'Svelte']} placeholder="Select" />
+        <MultiSelect
+          label="MultiSelect"
+          data={['React', 'Angular', 'Svelte']}
+          placeholder="MultiSelect"
+        />
+        <Autocomplete
+          label="Autocomplete"
+          data={['React', 'Angular', 'Svelte']}
+          placeholder="Autocomplete"
+        />
+        <TagsInput
+          label="TagsInput"
+          data={['React', 'Angular', 'Svelte']}
+          placeholder="TagsInput"
+        />
+      </div>
+    </MantineThemeProvider>
   );
 }
 

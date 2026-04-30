@@ -1,2 +1,5 @@
+import type { DateInputFactory, DateInputProps, DateInputStylesNames } from './DateInput';
+
 export { DateInput } from './DateInput';
-export type { DateInputProps, DateInputStylesNames, DateInputFactory } from './DateInput';
+
+export type { DateInputProps, DateInputStylesNames, DateInputFactory };

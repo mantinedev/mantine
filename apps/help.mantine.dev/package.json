@@ -1,7 +1,7 @@
 {
   "name": "help.mantine.dev",
-  "description": "Mantine help center and FAQ",
   "version": "1.0.0",
+  "description": "Mantine help center and FAQ",
   "private": true,
   "scripts": {
     "dev": "next dev --port 4817",
@@ -21,24 +21,23 @@
     "@mantinex/mantine-header": "workspace:*",
     "@mantinex/mantine-logo": "workspace:*",
     "@mantinex/mantine-meta": "workspace:*",
-    "@mdx-js/react": "^3.0.0",
-    "@next/mdx": "^14.0.2",
-    "@tabler/icons-react": "^3.34.1",
-    "dayjs": "^1.11.18",
-    "fuse.js": "^7.1.0",
-    "next": "15.5.2",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
-    "react-imask": "^7.6.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "16.2.4",
+    "@phosphor-icons/react": "^2.1.10",
+    "dayjs": "^1.11.20",
+    "fuse.js": "^7.3.0",
+    "next": "16.2.4",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "rehype-slug": "^6.0.0",
-    "shiki": "^3.12.2"
+    "shiki": "^4.0.2"
   },
   "devDependencies": {
-    "@mdx-js/loader": "^3.0.0",
-    "@types/mdx": "2.0.10",
-    "@types/node": "^24.3.0",
-    "@types/react": "19.1.12",
-    "@types/react-dom": "19.1.9",
-    "typescript": "5.9.2"
+    "@mdx-js/loader": "^3.1.1",
+    "@types/mdx": "2.0.13",
+    "@types/node": "^25.6.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "typescript": "6.0.3"
   }
 }

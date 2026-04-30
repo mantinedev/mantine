@@ -18,6 +18,7 @@ export function ExpandCodeButton({
     <CodeHighlightControl
       onClick={() => onExpand(!expanded)}
       tooltipLabel={expanded ? collapseCodeLabel : expandCodeLabel}
+      aria-label={expanded ? collapseCodeLabel : expandCodeLabel}
     >
       <ExpandIcon expanded={expanded} />
     </CodeHighlightControl>

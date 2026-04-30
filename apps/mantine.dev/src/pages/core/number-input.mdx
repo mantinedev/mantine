@@ -13,6 +13,13 @@ It supports most of the props from the `NumericFormat` component in the original
 
 <Demo data={NumberInputDemos.usage} />
 
+## Loading state
+
+Set `loading` prop to display a loading indicator. By default, the loader is displayed on the right side of the input.
+You can change the position with the `loadingPosition` prop to `'left'` or `'right'`. This is useful for async operations like API calls, searches, or validations:
+
+<Demo data={NumberInputDemos.loading} />
+
 ## Controlled
 
 ```tsx
@@ -25,27 +32,104 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`NumberInput` can be used with uncontrolled forms the same way as a native `input[type="number"]`.
+Set the `name` attribute to include number input value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `NumberInput` with `FormData`:
+
+```tsx
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Number input value:', formData.get('quantity'));
+      }}
+    >
+      <NumberInput
+        label="Enter quantity"
+        name="quantity"
+        defaultValue="1"
+        min="1"
+        max="100"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Value type
 
-`value`, `defaultValue` and `onChange` props can be either string or number. In all cases
-when `NumberInput` value can be represented as a number, `onChange` function is called
+The `value`, `defaultValue`, and `onChange` props can be either string or number. In all cases
+when the `NumberInput` value can be represented as a number, the `onChange` function is called
 with a number (for example `55`, `1.28`, `-100`, etc.). But there are several cases when
-it is not possible to represent value as a number:
+it is not possible to represent the value as a number:
 
 - Empty state is represented as an empty string – `''`
 - Numbers that are larger than `Number.MAX_SAFE_INTEGER - 1` or smaller than `Number.MIN_SAFE_INTEGER + 1` are represented as strings – `'90071992547409910'`
-- Numbers that consist of only multiple zeros are represented as strings – `0.`, `0.0`, `-0.00`, etc.
+- Numbers with trailing decimal separators or trailing decimal zeros are represented as strings – `0.`, `0.0`, `-0.00`, etc.
+
+## BigInt values
+
+`NumberInput` also supports `bigint` values. BigInt mode is inferred from `value` or `defaultValue`:
+
+- `value`/`defaultValue` can be `bigint | string`
+- `onChange` receives `bigint | string`
+- `min`, `max`, `step`, and `startValue` support `bigint`
+- BigInt mode is integer-only (`allowDecimal`/decimal formatting props do not enable decimal parsing)
+
+`string` is still used as a fallback for intermediate states (for example `''` or `'-'`).
+
+<Demo data={NumberInputDemos.bigInt} />
+
+## onChange vs onValueChange
+
+`NumberInput` provides two callback props for handling value changes:
+
+- **`onChange`**: Receives a simplified value (`number | string` in default mode, `bigint | string` in BigInt mode). This is the recommended callback for most use cases. The value is a number/bigint when possible, and a string in edge cases (empty input, very large numbers, trailing decimals, intermediate BigInt input states).
+
+- **`onValueChange`**: Receives the full payload from `react-number-format`, which includes:
+  - `floatValue`: The numeric value (or `undefined`)
+  - `formattedValue`: The formatted string value (with prefix/suffix/separators)
+  - `value`: The raw unformatted string value
+  - Additional metadata about the change source
+
+Use `onValueChange` when you need access to the formatted value or metadata about the change (e.g., whether it came from user typing, increment/decrement buttons, or programmatic changes). For simple form handling, `onChange` is sufficient.
+
+```tsx
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NumberInput
+      prefix="$"
+      thousandSeparator=","
+      // onChange receives: 1234
+      onChange={(value) => console.log('Simple value:', value)}
+      // onValueChange receives: { floatValue: 1234, formattedValue: '$1,234', value: '1234' }
+      onValueChange={(payload) => console.log('Full payload:', payload)}
+    />
+  );
+}
+```
 
 ## min and max
 
-Set `min` and `max` props to limit the input value:
+Set the `min` and `max` props to limit the input value:
 
 <Demo data={NumberInputDemos.minMax} />
 
 ## Clamp behavior
 
 By default, the value is clamped when the input is blurred. If you set `clampBehavior="strict"`,
-it will not be possible to enter value outside of min/max range. Note that this option
+it will not be possible to enter a value outside of the min/max range. Note that this option
 may cause issues if you have tight `min` and `max`, for example `min={10}` and `max={20}`.
 If you need to disable value clamping entirely, set `clampBehavior="none"`.
 
@@ -53,7 +137,7 @@ If you need to disable value clamping entirely, set `clampBehavior="none"`.
 
 ## Prefix and suffix
 
-Set `prefix` and `suffix` props to add given string to the start or end of the input value:
+Set the `prefix` and `suffix` props to add a given string to the start or end of the input value:
 
 <Demo data={NumberInputDemos.prefixSuffix} />
 
@@ -71,28 +155,35 @@ By default, decimal numbers are allowed. Set `allowDecimal={false}` to allow onl
 
 ## Decimal scale
 
-`decimalScale` controls how many decimal places are allowed:
+The `decimalScale` controls how many decimal places are allowed:
 
 <Demo data={NumberInputDemos.decimalScale} />
 
 ## Fixed decimal scale
 
-Set `fixedDecimalScale` to always display fixed number of decimal places:
+Set `fixedDecimalScale` to always display a fixed number of decimal places:
 
 <Demo data={NumberInputDemos.fixedDecimalScale} />
 
 ## Decimal separator
 
-Set `decimalSeparator` to change decimal separator character:
+Set `decimalSeparator` to change the decimal separator character:
 
 <Demo data={NumberInputDemos.decimalSeparator} />
 
 ## Thousand separator
 
-Set `thousandSeparator` prop to separate thousands with a character. You can control
-grouping logic with `thousandsGroupStyle`, it accepts: `thousand`, `lakh`, `wan`, `none` values.
+Set the `thousandSeparator` prop to separate thousands with a character. You can control
+the grouping logic with `thousandsGroupStyle`, which accepts: `thousand`, `lakh`, `wan`, `none` values.
 
 <Demo data={NumberInputDemos.thousandsSeparator} />
+
+## Trim leading zeros on blur
+
+By default, leading zeros are removed when the input loses focus (e.g., `00100` becomes `100`).
+You can disable this behavior by setting `trimLeadingZeroesOnBlur={false}`:
+
+<Demo data={NumberInputDemos.trimLeadingZeroes} />
 
 <InputSections component="NumberInput" />
 
@@ -101,14 +192,14 @@ grouping logic with `thousandsGroupStyle`, it accepts: `thousand`, `lakh`, `wan`
 ## Increment/decrement controls
 
 By default, the right section is occupied by increment and decrement buttons.
-To hide them, set `hideControls` prop. You can also use `rightSection` prop to render anything
+To hide them, set the `hideControls` prop. You can also use the `rightSection` prop to render anything
 in the right section to replace the default controls.
 
 <Demo data={NumberInputDemos.rightSection} />
 
 ## Increment/decrement on hold
 
-Set `stepHoldDelay` and `stepHoldInterval` props to define behavior when increment/decrement controls are clicked and hold:
+Set the `stepHoldDelay` and `stepHoldInterval` props to define behavior when increment/decrement controls are clicked and held:
 
 <Demo data={NumberInputDemos.hold} />
 

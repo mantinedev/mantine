@@ -54,5 +54,7 @@ export function useThrottledCallbackWithClearTimeout<T extends (...args: any[]) 
 }
 
 export function useThrottledCallback<T extends (...args: any[]) => any>(callback: T, wait: number) {
-  return useThrottledCallbackWithClearTimeout(callback, wait)[0];
+  const [throttled, clearTimeout] = useThrottledCallbackWithClearTimeout(callback, wait);
+  useEffect(() => clearTimeout, []);
+  return throttled;
 }

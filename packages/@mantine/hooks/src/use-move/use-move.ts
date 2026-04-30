@@ -31,25 +31,18 @@ export function useMove<T extends HTMLElement = any>(
   const mounted = useRef<boolean>(false);
   const isSliding = useRef(false);
   const frame = useRef(0);
-  const [active, setActive] = useState(false);
   const cleanupRef = useRef<(() => void) | null>(null);
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     mounted.current = true;
+    return () => {
+      cleanupRef.current?.();
+    };
   }, []);
 
   const refCallback: React.RefCallback<T | null> = useCallback(
     (node) => {
-      // Clean up previous node if it exists
-      if (cleanupRef.current) {
-        cleanupRef.current();
-        cleanupRef.current = null;
-      }
-
-      if (!node) {
-        return;
-      }
-
       const onScrub = ({ x, y }: UseMovePosition) => {
         cancelAnimationFrame(frame.current);
 
@@ -128,17 +121,28 @@ export function useMove<T extends HTMLElement = any>(
         onScrub({ x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY });
       };
 
-      node.addEventListener('mousedown', onMouseDown);
-      node.addEventListener('touchstart', onTouchStart, { passive: false });
+      node?.addEventListener('mousedown', onMouseDown);
+      node?.addEventListener('touchstart', onTouchStart, { passive: false });
 
-      // Store cleanup function in ref instead of returning it
       cleanupRef.current = () => {
-        node.removeEventListener('mousedown', onMouseDown);
-        node.removeEventListener('touchstart', onTouchStart);
+        unbindEvents();
+        cancelAnimationFrame(frame.current);
+      };
+
+      return () => {
+        if (node) {
+          node.removeEventListener('mousedown', onMouseDown);
+          node.removeEventListener('touchstart', onTouchStart);
+        }
       };
     },
     [dir, onChange]
   );
 
   return { ref: refCallback, active };
+}
+
+export namespace useMove {
+  export type Handlers = UseMoveHandlers;
+  export type ReturnValue<T extends HTMLElement> = UseMoveReturnValue<T>;
 }

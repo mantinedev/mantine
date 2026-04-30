@@ -1,10 +1,10 @@
-import { IconCheck, IconCopy } from '@tabler/icons-react';
+import { CheckIcon, CopyIcon } from '@phosphor-icons/react';
 import { ActionIcon, CopyButton, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon, CopyButton, Tooltip } from '@mantine/core';
-import { IconCopy, IconCheck } from '@tabler/icons-react';
+import { CopyIcon, CheckIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -12,7 +12,7 @@ function Demo() {
       {({ copied, copy }) => (
         <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
           <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
-            {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+            {copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
           </ActionIcon>
         </Tooltip>
       )}
@@ -28,7 +28,7 @@ function Demo() {
       {({ copied, copy }) => (
         <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
           <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
-            {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+            {copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
           </ActionIcon>
         </Tooltip>
       )}

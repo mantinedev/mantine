@@ -1,0 +1,1140 @@
+import dayjs from 'dayjs';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  DataAttributes,
+  ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  MantineRadius,
+  rem,
+  ScrollArea,
+  ScrollAreaAutosizeProps,
+  StylesApiProps,
+  UnstyledButton,
+  useMantineTheme,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
+} from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useAutoScrollOnDrag } from '../../hooks/use-auto-scroll-on-drag';
+import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useEventResize } from '../../hooks/use-event-resize';
+import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  DateTimeStringValue,
+  DayOfWeek,
+  ScheduleEventData,
+  ScheduleMode,
+  ScheduleViewLevel,
+} from '../../types';
+import {
+  calculateDropTime,
+  expandRecurringEvents,
+  formatDate,
+  getBusinessHoursMod,
+  getDayTimeIntervals,
+  getWeekDays,
+  getWeekNumber,
+  isAllDayEvent,
+  nextWeek,
+  previousWeek,
+  toDateString,
+} from '../../utils';
+import {
+  CurrentTimeIndicator,
+  CurrentTimeIndicatorStylesNames,
+} from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { DragContext, DragContextValue } from '../DragContext/DragContext';
+import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
+import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
+import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { getWeekLabel } from './get-week-label/get-week-label';
+import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
+import { handleWeekViewKeyDown, WeekViewControlsRef } from './handle-week-view-key-down';
+import { WeekViewDay } from './WeekViewDay';
+import classes from './WeekView.module.css';
+
+export type WeekViewStylesNames =
+  | 'weekView'
+  | 'weekViewRoot'
+  | 'weekViewHeader'
+  | 'weekViewInner'
+  | 'weekViewAllDaySlotsEvents'
+  | 'weekViewAllDaySlots'
+  | 'weekViewAllDaySlotsList'
+  | 'weekViewAllDaySlot'
+  | 'weekViewAllDaySlotsLabel'
+  | 'weekViewScrollArea'
+  | 'weekViewCorner'
+  | 'weekViewSlotLabels'
+  | 'weekViewSlotLabel'
+  | 'weekViewDayLabel'
+  | 'weekViewDayWeekday'
+  | 'weekViewDay'
+  | 'weekViewDayNumber'
+  | 'weekViewDaySlot'
+  | 'weekViewDaySlots'
+  | 'weekViewWeekLabel'
+  | 'weekViewWeekNumber'
+  | 'weekViewBackgroundEvent'
+  | CurrentTimeIndicatorStylesNames
+  | CombinedScheduleHeaderStylesNames;
+
+export type WeekViewCssVariables = {
+  weekView: '--week-view-radius' | '--week-view-slot-height' | '--week-view-all-day-slots-height';
+};
+
+export interface WeekViewProps
+  extends BoxProps, StylesApiProps<WeekViewFactory>, ElementProps<'div'> {
+  __staticSelector?: string;
+
+  /** Week to display, Date object or date string in `YYYY-MM-DD` format */
+  date: Date | string;
+
+  /** Called with the new date value when a date is selected */
+  onDateChange?: (value: DateStringValue) => void;
+
+  /** Start time for the day view, in `HH:mm:ss` format @default 00:00:00 */
+  startTime?: string;
+
+  /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
+  endTime?: string;
+
+  /** Number of minutes for each interval in the day view @default 60 */
+  intervalMinutes?: number;
+
+  /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
+  slotLabelFormat?: DateLabelFormat;
+
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
+  firstDayOfWeek?: DayOfWeek;
+
+  /** `dayjs` format for weekdays names. @default 'ddd' */
+  weekdayFormat?: DateLabelFormat;
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  weekendDays?: DayOfWeek[];
+
+  /** If set to false, weekend days are hidden @default true */
+  withWeekendDays?: boolean;
+
+  /** If set to true, highlights today in the weekday row @default false */
+  highlightToday?: boolean;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  radius?: MantineRadius;
+
+  /** Props passed down to the `ScrollArea.Autosize` component */
+  scrollAreaProps?: ScrollAreaAutosizeProps & DataAttributes;
+
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  locale?: string;
+
+  /** If set, the week number is displayed at the top left corner @default true */
+  withWeekNumber?: boolean;
+
+  /** If set, displays a line indicating the current time @default true */
+  withCurrentTimeIndicator?: boolean;
+
+  /** If set, the time indicator displays the current time in the bubble @default true */
+  withCurrentTimeBubble?: boolean;
+
+  /** If set, displays the current time indicator on the same day of week even when viewing a different week @default false */
+  forceCurrentTimeIndicator?: boolean;
+
+  /** If set, displays all-day slots at the top of the view @default true */
+  withAllDaySlots?: boolean;
+
+  /** If set, the header is displayed @default true */
+  withHeader?: boolean;
+
+  /** Called when view level select button is clicked */
+  onViewChange?: (view: ScheduleViewLevel) => void;
+
+  /** Props passed to previous month control */
+  previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to next month control */
+  nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to today control */
+  todayControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to view level select */
+  viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
+
+  /** Format for week label @default 'MMM DD' */
+  weekLabelFormat?: DateLabelFormat;
+
+  /** List of events to display in the week view */
+  events?: ScheduleEventData[];
+
+  /** Height of 1hr slot @default 64px */
+  slotHeight?: React.CSSProperties['height'];
+
+  /** Height of all-day slot @default 48px */
+  allDaySlotHeight?: React.CSSProperties['height'];
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
+
+  /** If set to true, highlights business hours with white background @default false */
+  highlightBusinessHours?: boolean;
+
+  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] */
+  businessHours?: [string, string];
+
+  /** Function to customize event body, `event` object is passed as first argument */
+  renderEventBody?: RenderEventBody;
+
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
+
+  /** If true, events can be dragged and dropped @default false */
+  withEventsDragAndDrop?: boolean;
+
+  /** Called when event is dropped at new time */
+  onEventDrop?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
+
+  /** Function to determine if event can be dragged */
+  canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Called when any event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when any event drag ends */
+  onEventDragEnd?: () => void;
+
+  /** Called when time slot is clicked */
+  onTimeSlotClick?: (data: {
+    slotStart: DateTimeStringValue;
+    slotEnd: DateTimeStringValue;
+    nativeEvent: React.MouseEvent<HTMLButtonElement>;
+  }) => void;
+
+  /** Called when all-day slot is clicked */
+  onAllDaySlotClick?: (day: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called when event is clicked */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** If set, enables drag-to-select time slot ranges @default false */
+  withDragSlotSelect?: boolean;
+
+  /** Called when a time slot range is selected by dragging */
+  onSlotDragEnd?: (rangeStart: DateTimeStringValue, rangeEnd: DateTimeStringValue) => void;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
+  mode?: ScheduleMode;
+
+  /** Time to scroll to on initial render, in `HH:mm:ss` format */
+  startScrollTime?: string;
+
+  /** Function to customize week label in the header */
+  renderWeekLabel?: (params: {
+    weekStart: DateStringValue;
+    weekEnd: DateStringValue;
+  }) => React.ReactNode;
+
+  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
+  onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
+
+  /** If true, events can be resized by dragging their edges @default false */
+  withEventResize?: boolean;
+
+  /** Called when event is resized */
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
+
+  /** Function to determine if event can be resized */
+  canResizeEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Max number of generated recurring instances per recurring series @default 2000 */
+  recurrenceExpansionLimit?: number;
+
+  /** Function to get additional props for each time slot. Receives slot start and end datetime strings. Returned props are spread onto the slot element. Event handlers returned by this function are composed with internal handlers (e.g. onClick) rather than overriding them. */
+  getTimeSlotProps?: (data: {
+    start: DateTimeStringValue;
+    end: DateTimeStringValue;
+  }) => Record<string, any> | undefined;
+}
+
+export type WeekViewFactory = Factory<{
+  props: WeekViewProps;
+  ref: HTMLDivElement;
+  stylesNames: WeekViewStylesNames;
+  vars: WeekViewCssVariables;
+}>;
+
+const defaultProps = {
+  __staticSelector: 'WeekView',
+  withWeekendDays: true,
+  withCurrentTimeIndicator: true,
+  startTime: '00:00:00',
+  endTime: '23:59:59',
+  slotLabelFormat: 'HH:mm',
+  intervalMinutes: 60,
+  weekdayFormat: 'ddd',
+  withWeekNumber: true,
+  withCurrentTimeBubble: true,
+  withAllDaySlots: true,
+  withHeader: true,
+  weekLabelFormat: 'MMM DD',
+  highlightBusinessHours: false,
+  businessHours: ['09:00:00', '17:00:00'],
+  withEventsDragAndDrop: false,
+  withDragSlotSelect: false,
+  withEventResize: false,
+  mode: 'default',
+} satisfies Partial<WeekViewProps>;
+
+const varsResolver = createVarsResolver<WeekViewFactory>(
+  (_theme, { radius, allDaySlotHeight, slotHeight }) => ({
+    weekView: {
+      '--week-view-radius': radius !== undefined ? getRadius(radius) : undefined,
+      '--week-view-all-day-slots-height': rem(allDaySlotHeight),
+      '--week-view-slot-height': rem(slotHeight),
+    },
+  })
+);
+
+export const WeekView = factory<WeekViewFactory>((_props) => {
+  const props = useProps('WeekView', defaultProps, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    attributes,
+    vars,
+    startTime,
+    endTime,
+    date,
+    onDateChange,
+    intervalMinutes,
+    slotLabelFormat,
+    withWeekendDays,
+    weekendDays,
+    firstDayOfWeek,
+    weekdayFormat,
+    radius,
+    highlightToday,
+    withCurrentTimeIndicator,
+    forceCurrentTimeIndicator,
+    scrollAreaProps,
+    locale,
+    withWeekNumber,
+    withCurrentTimeBubble,
+    withAllDaySlots,
+    __staticSelector,
+    withHeader,
+    onViewChange,
+    previousControlProps,
+    nextControlProps,
+    todayControlProps,
+    viewSelectProps,
+    weekLabelFormat,
+    events,
+    allDaySlotHeight,
+    slotHeight,
+    labels,
+    highlightBusinessHours,
+    businessHours,
+    renderEventBody,
+    renderEvent,
+    withEventsDragAndDrop,
+    onEventDrop,
+    canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
+    onTimeSlotClick,
+    onAllDaySlotClick,
+    onEventClick,
+    withDragSlotSelect,
+    onSlotDragEnd,
+    mode,
+    startScrollTime,
+    renderWeekLabel,
+    onExternalEventDrop,
+    withEventResize,
+    onEventResize,
+    canResizeEvent,
+    recurrenceExpansionLimit,
+    getTimeSlotProps,
+    ...others
+  } = props;
+
+  const getStyles = useStyles<WeekViewFactory>({
+    name: __staticSelector,
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    vars,
+    varsResolver,
+    attributes,
+    rootSelector: 'weekView',
+  });
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<WeekViewFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const stylesApiProps = {
+    classNames: resolvedClassNames,
+    styles: resolvedStyles,
+    attributes,
+    __staticSelector,
+    radius,
+  };
+
+  const theme = useMantineTheme();
+  const [scrolled, setScrolled] = useState(false);
+  const ctx = useDatesContext();
+  const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  useAutoScrollOnDrag({
+    viewportRef,
+    enabled: (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static',
+  });
+
+  type DropTargetSlot = { day: string; slotIndex: number };
+
+  const handleExternalDrop = useCallback(
+    (e: React.DragEvent, target: DropTargetSlot) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      const slotDate = dayjs(target.day).format('YYYY-MM-DD');
+      onExternalEventDrop(e.dataTransfer, `${slotDate} ${slots[target.slotIndex].startTime}`);
+    },
+    [onExternalEventDrop, slots]
+  );
+
+  const handleExternalAllDayDrop = useCallback(
+    (e: React.DragEvent, day: string) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      onExternalEventDrop(e.dataTransfer, `${dayjs(day).format('YYYY-MM-DD')} 00:00:00`);
+    },
+    [onExternalEventDrop]
+  );
+
+  const dragDrop = useDragDropHandlers<DropTargetSlot>({
+    enabled: withEventsDragAndDrop,
+    mode,
+    onEventDrop,
+    canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
+    calculateDropTarget: (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
+      const slotTime = slots[target.slotIndex].startTime;
+      return calculateDropTime({
+        draggedEvent,
+        targetDate: target.day,
+        targetSlotTime: slotTime,
+        intervalMinutes,
+      });
+    },
+    onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
+  });
+
+  const allDayDragDrop = useDragDropHandlers<string>({
+    enabled: withEventsDragAndDrop,
+    mode,
+    onEventDrop,
+    canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
+    calculateDropTarget: (targetDay: string, draggedEvent: ScheduleEventData) => {
+      const eventDuration = dayjs(draggedEvent.end).diff(dayjs(draggedEvent.start), 'millisecond');
+      const newStart = dayjs(targetDay).startOf('day');
+      return { start: newStart.toDate(), end: newStart.add(eventDuration, 'millisecond').toDate() };
+    },
+    onExternalDrop: onExternalEventDrop ? handleExternalAllDayDrop : undefined,
+  });
+
+  const slotDragSelect = useSlotDragSelect({
+    enabled: withDragSlotSelect && mode !== 'static',
+    onDragEnd: (startIndex, endIndex, group) => {
+      if (!onSlotDragEnd) {
+        return;
+      }
+      const slotDate = dayjs(group).format('YYYY-MM-DD');
+      onSlotDragEnd(
+        `${slotDate} ${slots[startIndex].startTime}`,
+        `${slotDate} ${slots[endIndex].endTime}`
+      );
+    },
+  });
+
+  const eventResize = useEventResize({
+    enabled: withEventResize,
+    mode,
+    startTime,
+    endTime,
+    intervalMinutes,
+    onEventResize,
+    canResizeEvent,
+  });
+
+  const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
+
+  const handleTimeSlotClick = (
+    day: string,
+    slotTime: string,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (!onTimeSlotClick) {
+      return;
+    }
+
+    const slotDate = dayjs(day).format('YYYY-MM-DD');
+    const slotIndex = slots.findIndex((s) => s.startTime === slotTime);
+    if (slotIndex === -1) {
+      return;
+    }
+
+    const slot = slots[slotIndex];
+    onTimeSlotClick({
+      slotStart: `${slotDate} ${slot.startTime}`,
+      slotEnd: `${slotDate} ${slot.endTime}`,
+      nativeEvent: e,
+    });
+  };
+
+  const weekdays = getWeekDays({
+    week: date,
+    withWeekendDays,
+    weekendDays: ctx.getWeekendDays(weekendDays),
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  });
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(weekdays[0]).startOf('day').toDate(),
+    rangeEnd: dayjs(weekdays[weekdays.length - 1])
+      .endOf('day')
+      .toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
+  const weekEvents = getWeekViewEvents({
+    date,
+    events: expandedEvents,
+    startTime,
+    endTime,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    weekendDays: ctx.getWeekendDays(weekendDays),
+    withWeekendDays,
+  });
+
+  const timeValues = slots.map((interval) => {
+    const intervalTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${interval.startTime}`);
+    const label = formatDate({
+      date: intervalTime,
+      locale: ctx.getLocale(locale),
+      format: slotLabelFormat,
+    });
+
+    return (
+      <Box
+        {...getStyles('weekViewSlotLabel')}
+        key={interval.startTime}
+        mod={{
+          'hour-start': interval.isHourStart,
+          ...getBusinessHoursMod({
+            time: interval.startTime,
+            businessHours,
+            highlightBusinessHours,
+          }),
+        }}
+      >
+        {label}
+      </Box>
+    );
+  });
+
+  const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
+  const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
+  const weekdaysRef = useRef<HTMLButtonElement[]>([]);
+  const daySlotsContainersRef = useRef<(HTMLDivElement | null)[]>([]);
+  const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
+
+  const firstSlotIndex = { dayIndex: 0, slotIndex: 0 };
+
+  useIsomorphicEffect(() => {
+    if (!startScrollTime || !viewportRef.current) {
+      return;
+    }
+
+    const firstDaySlots = slotsRef.current[0];
+    if (!firstDaySlots || firstDaySlots.length === 0) {
+      return;
+    }
+
+    const targetIndex = slots.findIndex((s) => s.startTime >= startScrollTime);
+    if (targetIndex < 0) {
+      return;
+    }
+
+    const targetSlot = firstDaySlots[targetIndex];
+    if (!targetSlot) {
+      return;
+    }
+
+    const slotRect = targetSlot.getBoundingClientRect();
+    const viewportRect = viewportRef.current.getBoundingClientRect();
+    viewportRef.current.scrollTo({ left: 0, top: slotRect.top - viewportRect.top });
+  }, []);
+
+  const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, dayIndex: number) => {
+    const daySlots = slotsRef.current[dayIndex] ?? [];
+    const slotIndex = daySlots.findIndex((slotNode) => {
+      if (!slotNode) {
+        return false;
+      }
+
+      const rect = slotNode.getBoundingClientRect();
+      return event.clientY >= rect.top && event.clientY <= rect.bottom;
+    });
+
+    if (slotIndex >= 0) {
+      return slotIndex;
+    }
+
+    const firstSlot = daySlots[0];
+    const lastSlot = daySlots[daySlots.length - 1];
+
+    if (!firstSlot || !lastSlot) {
+      return null;
+    }
+
+    const firstRect = firstSlot.getBoundingClientRect();
+    const lastRect = lastSlot.getBoundingClientRect();
+
+    if (event.clientY < firstRect.top) {
+      return 0;
+    }
+
+    if (event.clientY > lastRect.bottom) {
+      return daySlots.length - 1;
+    }
+
+    return null;
+  }, []);
+
+  const handleSlotKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    dayIndex: number,
+    slotIndex: number
+  ) => {
+    handleWeekViewKeyDown({
+      controlsRef: slotsRef,
+      dayIndex,
+      slotIndex,
+      event,
+    });
+  };
+
+  const handleAllDaySlotKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    dayIndex: number
+  ) => {
+    const direction = event.key;
+    if (direction === 'ArrowRight' && dayIndex < weekdays.length - 1) {
+      event.preventDefault();
+      allDaySlotsRef.current[dayIndex + 1]?.focus();
+    } else if (direction === 'ArrowLeft' && dayIndex > 0) {
+      event.preventDefault();
+      allDaySlotsRef.current[dayIndex - 1]?.focus();
+    } else if (direction === 'ArrowDown') {
+      event.preventDefault();
+      slotsRef.current?.[dayIndex]?.[0]?.focus();
+    }
+  };
+
+  const handleWeekdayKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    dayIndex: number
+  ) => {
+    const direction = event.key;
+    if (direction === 'ArrowRight' && dayIndex < weekdays.length - 1) {
+      event.preventDefault();
+      weekdaysRef.current[dayIndex + 1]?.focus();
+    } else if (direction === 'ArrowLeft' && dayIndex > 0) {
+      event.preventDefault();
+      weekdaysRef.current[dayIndex - 1]?.focus();
+    }
+  };
+
+  const currentWeekdayIndex = withCurrentTimeIndicator
+    ? forceCurrentTimeIndicator
+      ? weekdays.findIndex((day) => dayjs(day).day() === dayjs().day())
+      : weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
+    : -1;
+
+  const weekdaysLabels = weekdays.map((day, dayIndex) => (
+    <UnstyledButton
+      {...getStyles('weekViewDayLabel')}
+      key={day}
+      ref={(node) => {
+        weekdaysRef.current[dayIndex] = node!;
+      }}
+      aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
+      mod={{
+        today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
+        weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
+        static: mode === 'static',
+      }}
+      tabIndex={mode === 'static' ? -1 : dayIndex === 0 ? 0 : -1}
+      onKeyDown={mode === 'static' ? undefined : (event) => handleWeekdayKeyDown(event, dayIndex)}
+      onClick={
+        mode === 'static'
+          ? undefined
+          : () => {
+              onViewChange?.('day');
+              onDateChange?.(toDateString(day));
+            }
+      }
+    >
+      <Box {...getStyles('weekViewDayWeekday')} key="weekday">
+        {formatDate({ locale: ctx.getLocale(locale), date: day, format: weekdayFormat })}
+      </Box>
+      <div {...getStyles('weekViewDayNumber')} key="date">
+        {dayjs(day).date()}
+      </div>
+    </UnstyledButton>
+  ));
+
+  const days = weekdays.map((day, dayIndex) => {
+    const allBgEvents = weekEvents.backgroundEvents[day] || [];
+
+    const backgroundEventNodes = allBgEvents
+      .filter((event) => !event.position.allDay)
+      .map((event) => {
+        const colors = theme.variantColorResolver({
+          color: event.color || theme.primaryColor,
+          theme,
+          variant: 'light',
+          autoContrast: true,
+        });
+
+        const bgEventBody =
+          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+        const bgEventProps = {
+          key: `bg-${event.id}`,
+          ...getStyles('weekViewBackgroundEvent', {
+            style: {
+              top: `${event.position.top}%`,
+              height: `${event.position.height}%`,
+              width: '100%',
+            },
+          }),
+          __vars: {
+            '--bg-event-bg': colors.background,
+            '--bg-event-color': colors.color,
+          },
+          children: bgEventBody,
+        };
+
+        if (typeof renderEvent === 'function') {
+          return renderEvent(event, bgEventProps as any);
+        }
+
+        const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+        return <Box key={bgEventKey} {...restBgEventProps} />;
+      });
+
+    const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
+      const eventIsAllDay = isAllDayEvent({ event, date: day });
+      const isDraggable = !eventIsAllDay && dragDrop.isDraggableEvent(event);
+      const isResizable = !eventIsAllDay && eventResize.isResizableEvent(event);
+      const resizePosition = eventResize.getResizePosition(event.id);
+      const eventTop = resizePosition ? resizePosition.top : event.position.top;
+      const eventHeight = resizePosition ? resizePosition.height : event.position.height;
+
+      return (
+        <ScheduleEvent
+          key={event.id}
+          event={event}
+          autoSize
+          hanging={event.position.hanging}
+          draggable={isDraggable}
+          withResize={isResizable}
+          isResizing={resizePosition !== null}
+          onResizeStart={
+            isResizable
+              ? (edge, e) => {
+                  const container = daySlotsContainersRef.current[dayIndex];
+                  if (container) {
+                    eventResize.handleResizeStart({
+                      event,
+                      edge,
+                      container,
+                      originalTop: event.position.top,
+                      originalHeight: event.position.height,
+                      eventDate: dayjs(day).format('YYYY-MM-DD'),
+                      pointerEvent: e,
+                    });
+                  }
+                }
+              : undefined
+          }
+          renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
+          radius={radius}
+          mode={mode}
+          onClick={
+            onEventClick
+              ? (e) => {
+                  if (!eventResize.wasResizing()) {
+                    onEventClick(event, e);
+                  }
+                }
+              : undefined
+          }
+          style={{
+            position: 'absolute',
+            top: `calc(${eventTop}% + 1px)`,
+            left: `${event.position.offset}%`,
+            width: `${event.position.width}%`,
+            height: `calc(${eventHeight}% - 1px)`,
+          }}
+        />
+      );
+    });
+
+    return (
+      <WeekViewDay
+        key={day}
+        day={day}
+        dayIndex={dayIndex}
+        slots={slots}
+        getStyles={getStyles}
+        weekendDays={weekendDays}
+        highlightBusinessHours={highlightBusinessHours}
+        businessHours={businessHours}
+        labels={labels}
+        withEventsDragAndDrop={withDragHandlers}
+        mode={mode}
+        slotsRef={slotsRef}
+        firstSlotIndex={firstSlotIndex}
+        onSlotKeyDown={handleSlotKeyDown}
+        onSlotClick={handleTimeSlotClick}
+        onFirstSlotArrowUp={
+          withAllDaySlots
+            ? (dayIdx) => {
+                allDaySlotsRef.current[dayIdx]?.focus();
+              }
+            : undefined
+        }
+        onDaySlotsDragOver={(event, dayStr, dayIdx) => {
+          const slotIndex = getSlotIndexFromDragPoint(event, dayIdx);
+          if (slotIndex !== null) {
+            dragDrop.handleDragOver(event, { day: dayStr, slotIndex });
+          }
+        }}
+        onDaySlotsDragLeave={dragDrop.handleDragLeave}
+        onDaySlotsDrop={(event, dayStr, dayIdx) => {
+          const slotIndex = getSlotIndexFromDragPoint(event, dayIdx);
+          if (slotIndex !== null) {
+            dragDrop.handleDrop(event, { day: dayStr, slotIndex });
+          }
+        }}
+        dropTargetSlotIndex={
+          dragDrop.dropTarget?.day === day ? dragDrop.dropTarget.slotIndex : undefined
+        }
+        withDragSlotSelect={withDragSlotSelect}
+        onSlotPointerDown={slotDragSelect.handleSlotPointerDown}
+        isSlotDragSelected={slotDragSelect.isSlotSelected}
+        daySlotsContainerRef={(node) => {
+          daySlotsContainersRef.current[dayIndex] = node;
+        }}
+        getTimeSlotProps={getTimeSlotProps}
+      >
+        {backgroundEventNodes}
+        {dayEvents}
+      </WeekViewDay>
+    );
+  });
+
+  const allDaySlots = weekdays.map((day, dayIndex) => (
+    <UnstyledButton
+      aria-label={`${getLabel('allDay', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
+      key={day}
+      ref={(node) => {
+        allDaySlotsRef.current[dayIndex] = node!;
+      }}
+      tabIndex={dayIndex === 0 ? 0 : -1}
+      onKeyDown={(event) => handleAllDaySlotKeyDown(event, dayIndex)}
+      onClick={
+        mode === 'static' || !onAllDaySlotClick
+          ? undefined
+          : (e) => onAllDaySlotClick(dayjs(day).format('YYYY-MM-DD'), e)
+      }
+      onDragOver={withDragHandlers ? (e) => allDayDragDrop.handleDragOver(e, day) : undefined}
+      onDragLeave={withDragHandlers ? allDayDragDrop.handleDragLeave : undefined}
+      onDrop={withDragHandlers ? (e) => allDayDragDrop.handleDrop(e, day) : undefined}
+      {...getStyles('weekViewDaySlot')}
+      mod={{ 'drop-target': allDayDragDrop.isDropTarget(day) }}
+    />
+  ));
+
+  const allDayEventIds = useMemo(
+    () => new Set(weekEvents.allDayEvents.map((e) => e.id)),
+    [weekEvents.allDayEvents]
+  );
+
+  const allDayEvents = weekEvents.allDayEvents.map((event) => (
+    <ScheduleEvent
+      key={event.id}
+      event={event}
+      autoSize
+      nowrap
+      hanging={event.position.hanging}
+      draggable={allDayDragDrop.isDraggableEvent(event)}
+      renderEvent={renderEvent}
+      mode={mode}
+      onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+      style={{
+        position: 'absolute',
+        zIndex: 2,
+        top: `calc(${event.position.row * 50}% + 1px)`,
+        left: `calc(${event.position.offset}% + 1px)`,
+        width: `calc(${event.position.width}% - 1px)`,
+        height: 'calc(50% - 2px)',
+        maxHeight: 'calc(50% - 2px)',
+      }}
+    />
+  ));
+
+  const allDayBackgroundEventNodes = weekdays.flatMap((day, dayIndex) => {
+    const allDayBgEvents = (weekEvents.backgroundEvents[day] || []).filter(
+      (event) => event.position.allDay
+    );
+    const dayWidth = 100 / weekdays.length;
+    const dayOffset = dayIndex * dayWidth;
+
+    return allDayBgEvents.map((event) => {
+      const colors = theme.variantColorResolver({
+        color: event.color || theme.primaryColor,
+        theme,
+        variant: 'light',
+        autoContrast: true,
+      });
+
+      const bgEventBody =
+        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+
+      const bgEventProps = {
+        key: `bg-allday-${event.id}-${day}`,
+        ...getStyles('weekViewBackgroundEvent', {
+          style: {
+            top: 0,
+            height: '100%',
+            left: `${dayOffset}%`,
+            width: `${dayWidth}%`,
+          },
+        }),
+        __vars: {
+          '--bg-event-bg': colors.background,
+          '--bg-event-color': colors.color,
+        },
+        children: bgEventBody,
+      };
+
+      if (typeof renderEvent === 'function') {
+        return renderEvent(event, bgEventProps as any);
+      }
+
+      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+      return <Box key={bgEventKey} {...restBgEventProps} />;
+    });
+  });
+
+  // Extra rows show on hover = total rows - 2 visible rows (starts from 0, so -1)
+  const extraRows = Math.max(...weekEvents.allDayEvents.map((event) => event.position.row), 1) - 1;
+
+  const content = (
+    <Box
+      {...getStyles('weekView')}
+      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging }}
+      {...others}
+    >
+      {withHeader && (
+        <ScheduleHeaderBase
+          view="week"
+          navigationHandlers={{
+            previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
+            next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
+            today: () => toDateString(dayjs()),
+          }}
+          control={{
+            miw: 140,
+            title: getWeekLabel({
+              weekdays,
+              locale: ctx.getLocale(locale),
+              weekLabelFormat,
+              renderWeekLabel,
+            }),
+          }}
+          labels={labels}
+          onDateChange={onDateChange}
+          onViewChange={onViewChange}
+          previousControlProps={previousControlProps}
+          nextControlProps={nextControlProps}
+          todayControlProps={todayControlProps}
+          viewSelectProps={viewSelectProps}
+          stylesApiProps={stylesApiProps}
+        />
+      )}
+
+      <Box
+        {...getStyles('weekViewRoot')}
+        __vars={{
+          '--indicator-offset-index':
+            currentWeekdayIndex === -1 ? undefined : `${currentWeekdayIndex + 1}`,
+          '--number-of-days': withWeekendDays
+            ? '7'
+            : `${7 - ctx.getWeekendDays(weekendDays).length}`,
+        }}
+        mod={{ 'with-weekends': withWeekendDays }}
+      >
+        <ScrollArea.Autosize
+          scrollbarSize={4}
+          {...scrollAreaProps}
+          {...getStyles('weekViewScrollArea', {
+            className: scrollAreaProps?.className,
+            style: scrollAreaProps?.style,
+          })}
+          onScrollPositionChange={(position) => {
+            scrollAreaProps?.onScrollPositionChange?.(position);
+            setScrolled(position.y !== 0);
+          }}
+          viewportRef={mergedViewportRef}
+        >
+          <Box {...getStyles('weekViewHeader')} mod={{ scrolled }}>
+            <div {...getStyles('weekViewCorner')} key="corner">
+              {withWeekNumber && (
+                <>
+                  <div {...getStyles('weekViewWeekLabel')}>{getLabel('week', labels)}</div>
+                  <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(date)}</div>
+                </>
+              )}
+            </div>
+
+            {weekdaysLabels}
+          </Box>
+
+          {withAllDaySlots && (
+            <div {...getStyles('weekViewAllDaySlots')}>
+              <div {...getStyles('weekViewAllDaySlotsLabel')}>{getLabel('allDay', labels)}</div>
+              <div {...getStyles('weekViewAllDaySlotsList')}>
+                {allDayBackgroundEventNodes}
+                <Box
+                  {...getStyles('weekViewAllDaySlotsEvents')}
+                  __vars={{ '--extra-rows': `${extraRows}` }}
+                >
+                  {allDayEvents}
+                </Box>
+                {allDaySlots}
+              </div>
+            </div>
+          )}
+
+          <div {...getStyles('weekViewInner')}>
+            <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
+
+            {withCurrentTimeIndicator && currentWeekdayIndex !== -1 && (
+              <CurrentTimeIndicator
+                startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
+                endOffset="calc((100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index)) - (var(--number-of-days) - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
+                timeBubbleStartOffset="calc(var(--week-view-slots-label-width) - var(--time-bubble-width))"
+                currentTimeFormat={slotLabelFormat}
+                withTimeBubble={withCurrentTimeBubble}
+                withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
+                locale={locale}
+                startTime={startTime}
+                endTime={endTime}
+                {...stylesApiProps}
+              />
+            )}
+            {days}
+          </div>
+        </ScrollArea.Autosize>
+      </Box>
+    </Box>
+  );
+
+  const mergedDragContextValue = useMemo<DragContextValue>(
+    () => ({
+      isDragging:
+        dragDrop.dragContextValue.isDragging || allDayDragDrop.dragContextValue.isDragging,
+      draggedEventId:
+        dragDrop.dragContextValue.draggedEventId ?? allDayDragDrop.dragContextValue.draggedEventId,
+      draggedEvent:
+        dragDrop.dragContextValue.draggedEvent ?? allDayDragDrop.dragContextValue.draggedEvent,
+      dropTarget:
+        dragDrop.dragContextValue.dropTarget ?? allDayDragDrop.dragContextValue.dropTarget,
+      onDragStart: (event: ScheduleEventData) => {
+        if (allDayEventIds.has(event.id)) {
+          allDayDragDrop.handleDragStart(event);
+        } else {
+          dragDrop.handleDragStart(event);
+        }
+      },
+      onDragEnd: () => {
+        dragDrop.handleDragEnd();
+        allDayDragDrop.handleDragEnd();
+      },
+      setDropTarget: dragDrop.dragContextValue.setDropTarget,
+    }),
+    [dragDrop.dragContextValue, allDayDragDrop.dragContextValue, allDayEventIds]
+  );
+
+  if (withEventsDragAndDrop) {
+    return <DragContext.Provider value={mergedDragContextValue}>{content}</DragContext.Provider>;
+  }
+
+  return content;
+});
+
+WeekView.displayName = '@mantine/schedule/WeekView';
+WeekView.classes = classes;
+WeekView.varsResolver = varsResolver;
+
+export namespace WeekView {
+  export type Props = WeekViewProps;
+  export type Factory = WeekViewFactory;
+  export type StylesNames = WeekViewStylesNames;
+  export type CssVariables = WeekViewCssVariables;
+}

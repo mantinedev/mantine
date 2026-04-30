@@ -32,7 +32,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
 
-  /** dayjs format for years list @default `'YYYY'` */
+  /** dayjs format for years list @default 'YYYY' */
   yearsListFormat?: string;
 
   /** Passes props down to year picker control based on date */
@@ -41,15 +41,15 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Component size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated @default `true` */
+  /** Determines whether controls should be separated @default true */
   withCellSpacing?: boolean;
+
+  /** Determines whether the list should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface YearsListProps
-  extends BoxProps,
-    YearsListSettings,
-    StylesApiProps<YearsListFactory>,
-    ElementProps<'table'> {
+  extends BoxProps, YearsListSettings, StylesApiProps<YearsListFactory>, ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Decade value to display */
@@ -67,7 +67,7 @@ const defaultProps = {
   withCellSpacing: true,
 } satisfies Partial<YearsListProps>;
 
-export const YearsList = factory<YearsListFactory>((_props, ref) => {
+export const YearsList = factory<YearsListFactory>((_props) => {
   const props = useProps('YearsList', defaultProps, _props);
   const {
     classNames,
@@ -90,6 +90,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
     __preventFocus,
     __stopPropagation,
     withCellSpacing,
+    fullWidth,
     size,
     attributes,
     ...others
@@ -134,6 +135,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
             {...getStyles('yearsListControl')}
             size={size}
             unstyled={unstyled}
+            fullWidth={fullWidth}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isYearDisabled({ year, minDate, maxDate })}
             ref={(node) => {
@@ -175,7 +177,13 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="table" ref={ref} size={size} {...getStyles('yearsList')} {...others}>
+    <Box
+      component="table"
+      size={size}
+      {...getStyles('yearsList')}
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       <tbody>{rows}</tbody>
     </Box>
   );

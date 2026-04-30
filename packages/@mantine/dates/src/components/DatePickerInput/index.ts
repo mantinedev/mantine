@@ -1,6 +1,9 @@
-export { DatePickerInput } from './DatePickerInput';
-export type {
+import type {
+  DatePickerInputFactory,
   DatePickerInputProps,
   DatePickerInputStylesNames,
-  DatePickerInputFactory,
 } from './DatePickerInput';
+
+export { DatePickerInput } from './DatePickerInput';
+
+export type { DatePickerInputProps, DatePickerInputStylesNames, DatePickerInputFactory };

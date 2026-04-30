@@ -31,22 +31,22 @@ export interface GroupStylesCtx {
 export interface GroupProps extends BoxProps, StylesApiProps<GroupFactory>, ElementProps<'div'> {
   __size?: any;
 
-  /** Controls `justify-content` CSS property @default `'flex-start'` */
+  /** Controls `justify-content` CSS property @default 'flex-start' */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Controls `align-items` CSS property @default `'center'` */
+  /** Controls `align-items` CSS property @default 'center' */
   align?: React.CSSProperties['alignItems'];
 
-  /** Controls `flex-wrap` CSS property @default `'wrap'` */
+  /** Controls `flex-wrap` CSS property @default 'wrap' */
   wrap?: React.CSSProperties['flexWrap'];
 
-  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default `'md'` */
+  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default 'md' */
   gap?: MantineSpacing;
 
-  /** Determines whether each child element should have `flex-grow: 1` style @default `false` */
+  /** Determines whether each child element should have `flex-grow: 1` style @default false */
   grow?: boolean;
 
-  /** Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) @default `true` */
+  /** Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) @default true */
   preventGrowOverflow?: boolean;
 }
 
@@ -78,7 +78,7 @@ const varsResolver = createVarsResolver<GroupFactory>(
   })
 );
 
-export const Group = factory<GroupFactory>((_props, ref) => {
+export const Group = factory<GroupFactory>((_props) => {
   const props = useProps('Group', defaultProps, _props);
   const {
     classNames,
@@ -126,18 +126,20 @@ export const Group = factory<GroupFactory>((_props, ref) => {
   });
 
   return (
-    <Box
-      {...getStyles('root')}
-      ref={ref}
-      variant={variant}
-      mod={[{ grow }, mod]}
-      size={__size}
-      {...others}
-    >
+    <Box {...getStyles('root')} variant={variant} mod={[{ grow }, mod]} size={__size} {...others}>
       {filteredChildren}
     </Box>
   );
 });
 
 Group.classes = classes;
+Group.varsResolver = varsResolver;
 Group.displayName = '@mantine/core/Group';
+
+export namespace Group {
+  export type Props = GroupProps;
+  export type StylesNames = GroupStylesNames;
+  export type CssVariables = GroupCssVariables;
+  export type StylesCtx = GroupStylesCtx;
+  export type Factory = GroupFactory;
+}

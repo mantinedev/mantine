@@ -4,7 +4,7 @@ import { Layout } from '@/layout';
 
 export const meta = {
   title:
-    "Why my screen is completely empty after I've added notifications package?",
+    "Why is my screen completely empty after I've added the notifications package?",
   description: 'You have used Notifications component incorrectly',
   slug: 'notifications-empty-screen',
   category: 'common',
@@ -17,8 +17,8 @@ export default Layout(meta);
 
 ## Notifications component
 
-A common error of using [@mantine/notifications](https://mantine.dev/x/notifications/) package
-is to wrap your application with `Notifications` component:
+A common error when using the [@mantine/notifications](https://mantine.dev/x/notifications/) package
+is to wrap your application with the `Notifications` component:
 
 ```tsx
 // ❌ This is incorrect
@@ -38,8 +38,8 @@ function Demo() {
 
 ## How to fix
 
-`Notifications` component does not support `children` prop, if you put your application
-inside it, it will not be rendered. Instead, you should render `Notifications` component
+The `Notifications` component does not support the `children` prop. If you put your application
+inside it, it will not be rendered. Instead, you should render the `Notifications` component
 as a sibling to your application:
 
 ```tsx

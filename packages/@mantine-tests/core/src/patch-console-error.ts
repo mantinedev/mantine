@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 /* Patches console.error during tests, used to test that component throws error during rendering */
 
 const initialError = console.error;
@@ -19,3 +19,13 @@ export function patchConsoleWarn() {
 patchConsoleWarn.release = () => {
   console.warn = initialWarn;
 };
+
+export function autoPatchWarn() {
+  beforeAll(() => {
+    patchConsoleWarn();
+  });
+
+  afterAll(() => {
+    patchConsoleWarn.release();
+  });
+}

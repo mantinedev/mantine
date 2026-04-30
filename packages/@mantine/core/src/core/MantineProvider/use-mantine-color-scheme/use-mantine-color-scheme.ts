@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import { use, useCallback, useEffect, useRef } from 'react';
 import { useColorScheme } from '@mantine/hooks';
 import { noop } from '../../utils';
 import { MantineContext, useMantineStyleNonce } from '../Mantine.context';
@@ -22,7 +22,7 @@ function disableTransition(nonce: string | undefined) {
 export function useMantineColorScheme({ keepTransitions }: { keepTransitions?: boolean } = {}) {
   const clearStylesRef = useRef<() => void>(noop);
   const timeoutRef = useRef<number>(-1);
-  const ctx = useContext(MantineContext);
+  const ctx = use(MantineContext);
   const nonce = useMantineStyleNonce();
   const nonceValue = useRef(nonce?.());
 

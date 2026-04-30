@@ -11,8 +11,8 @@ import {
   useProps,
 } from '@mantine/core';
 import { useSpotlightContext } from './Spotlight.context';
-import classes from './Spotlight.module.css';
 import { spotlightActions } from './spotlight.store';
+import classes from './Spotlight.module.css';
 
 export type SpotlightActionStylesNames =
   | 'action'
@@ -22,9 +22,7 @@ export type SpotlightActionStylesNames =
   | 'actionBody';
 
 export interface SpotlightActionProps
-  extends BoxProps,
-    CompoundStylesApiProps<SpotlightActionFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<SpotlightActionFactory>, ElementProps<'button'> {
   /** Action label, pass string to use in default filter */
   label?: string;
 
@@ -40,13 +38,13 @@ export interface SpotlightActionProps
   /** Children override default action elements, if passed, label, description and sections are hidden */
   children?: React.ReactNode;
 
-  /** Determines whether left and right sections should have dimmed styles @default `true` */
+  /** Determines whether left and right sections should have dimmed styles @default true */
   dimmedSections?: boolean;
 
-  /** Determines whether search query should be highlighted in action label @default `false` */
+  /** Determines whether search query should be highlighted in action label @default false */
   highlightQuery?: boolean;
 
-  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default `'yellow'` */
+  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default 'yellow' */
   highlightColor?: MantineColor;
 
   /** Determines whether the spotlight should be closed when action is triggered, overrides `closeOnActionTrigger` prop set on `Spotlight` */
@@ -68,7 +66,7 @@ const defaultProps = {
   highlightQuery: false,
 } satisfies Partial<SpotlightActionProps>;
 
-export const SpotlightAction = factory<SpotlightActionFactory>((_props, ref) => {
+export const SpotlightAction = factory<SpotlightActionFactory>((_props) => {
   const props = useProps('SpotlightAction', defaultProps, _props);
   const {
     className,
@@ -112,7 +110,6 @@ export const SpotlightAction = factory<SpotlightActionFactory>((_props, ref) => 
 
   return (
     <UnstyledButton
-      ref={ref}
       data-action
       {...ctx.getStyles('action', { className, style, ...stylesApi })}
       {...others}

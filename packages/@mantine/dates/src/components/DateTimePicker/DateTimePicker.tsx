@@ -31,8 +31,8 @@ import {
   PickerInputBaseStylesNames,
 } from '../PickerInputBase';
 import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
-import classes from './DateTimePicker.module.css';
 import { getMaxTime, getMinTime } from './get-min-max-time/get-min-max-time';
+import classes from './DateTimePicker.module.css';
 
 export type DateTimePickerStylesNames =
   | 'timeWrapper'
@@ -43,7 +43,8 @@ export type DateTimePickerStylesNames =
   | CalendarStylesNames;
 
 export interface DateTimePickerProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<
       DateInputSharedProps,
       'classNames' | 'styles' | 'closeOnChange' | 'size' | 'valueFormatter'
@@ -51,7 +52,7 @@ export interface DateTimePickerProps
     CalendarBaseProps,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
-  /** `dayjs` format for input value @default `"DD/MM/YYYY HH:mm"  */
+  /** `dayjs` format for input value @default "DD/MM/YYYY HH:mm"  */
   valueFormat?: string;
 
   /** Controlled component value */
@@ -63,19 +64,19 @@ export interface DateTimePickerProps
   /** Called when value changes */
   onChange?: (value: DateStringValue | null) => void;
 
-  /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
+  /** Default time value in HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
   defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
 
   /** Props passed down to the submit button */
-  submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
+  submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
 
-  /** Determines whether the seconds input should be displayed @default `false` */
+  /** Determines whether the seconds input should be displayed @default false */
   withSeconds?: boolean;
 
-  /** Max level that user can go up to @default `'decade'` */
+  /** Max level that user can go up to @default 'decade' */
   maxLevel?: CalendarLevel;
 
   /** Presets values */
@@ -94,7 +95,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<DateTimePickerProps>;
 
-export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
+export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
   const props = useProps('DateTimePicker', defaultProps, _props);
   const {
     value,
@@ -141,7 +142,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     props,
   });
 
-  const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
+  const _withSeconds = withSeconds || timePickerProps?.withSeconds;
+  const _valueFormat = valueFormat || (_withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
   const timePickerRef = useRef<HTMLInputElement>(null);
   const timePickerRefMerged = useMergedRef(timePickerRef, timePickerProps?.hoursRef);
@@ -163,7 +165,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   const _defaultDate = defaultDate || _value;
 
   const formatTime = (dateValue: DateStringValue) =>
-    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
+    dateValue ? dayjs(dateValue).format(_withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
   const [timeValue, setTimeValue] = useState(defaultTimeValue || formatTime(_value));
   const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
@@ -226,7 +228,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       unstyled={unstyled}
-      ref={ref}
       onClear={() => setValue(null)}
       shouldClear={!!_value}
       value={_value}
@@ -300,7 +301,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             })}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            // eslint-disable-next-line react/no-children-prop
+            // oxlint-disable-next-line react/no-children-prop
             children={<CheckIcon size="30%" />}
             {...submitButtonProps}
             onClick={(event) => {
@@ -317,3 +318,9 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
 DateTimePicker.classes = { ...classes, ...PickerInputBase.classes, ...DatePicker.classes };
 DateTimePicker.displayName = '@mantine/dates/DateTimePicker';
+
+export namespace DateTimePicker {
+  export type Props = DateTimePickerProps;
+  export type StylesNames = DateTimePickerStylesNames;
+  export type Factory = DateTimePickerFactory;
+}

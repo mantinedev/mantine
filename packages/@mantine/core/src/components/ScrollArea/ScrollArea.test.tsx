@@ -1,4 +1,5 @@
-import { tests } from '@mantine-tests/core';
+import { fireEvent } from '@testing-library/react';
+import { render, tests } from '@mantine-tests/core';
 import { ScrollArea, ScrollAreaProps, ScrollAreaStylesNames } from './ScrollArea';
 
 const defaultProps: ScrollAreaProps = {
@@ -6,22 +7,224 @@ const defaultProps: ScrollAreaProps = {
   children: 'test',
 };
 
+function getViewport(container: HTMLElement) {
+  const elements = container.querySelectorAll('div');
+  const viewport = Array.from(elements).find((el) => {
+    const style = window.getComputedStyle(el);
+    return style.overflowX === 'scroll' || style.overflowY === 'scroll';
+  });
+
+  if (!viewport) {
+    throw new Error('Viewport not found');
+  }
+
+  return viewport;
+}
+
+function mockResizeObserver(observe: jest.Mock, unobserve: jest.Mock) {
+  const originalDescriptor = Object.getOwnPropertyDescriptor(window, 'ResizeObserver');
+
+  Object.defineProperty(window, 'ResizeObserver', {
+    configurable: true,
+    writable: true,
+    value: jest.fn().mockImplementation(() => ({
+      observe,
+      unobserve,
+    })),
+  });
+
+  return () => {
+    if (originalDescriptor) {
+      Object.defineProperty(window, 'ResizeObserver', originalDescriptor);
+    } else {
+      Reflect.deleteProperty(window, 'ResizeObserver');
+    }
+  };
+}
+
 describe('@mantine/core/ScrollArea', () => {
   tests.itSupportsSystemProps<ScrollAreaProps, ScrollAreaStylesNames>({
     component: ScrollArea,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ScrollArea',
     stylesApiSelectors: ['root', 'viewport'],
+  });
+
+  it('calls onScrollPositionChange when scrolled', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea h={100} w={100} onScrollPositionChange={spy}>
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 50, configurable: true });
+    Object.defineProperty(viewport, 'scrollLeft', { value: 25, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(spy).toHaveBeenCalledWith({ x: 25, y: 50 });
+  });
+
+  it('calls onBottomReached when scrolled to bottom', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea h={100} onBottomReached={spy}>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 400, configurable: true });
+
+    fireEvent.scroll(viewport);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onTopReached when scrolled to top', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea h={100} onTopReached={spy}>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 50, configurable: true });
+    fireEvent.scroll(viewport);
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 0, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onLeftReached when scrolled to left', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea w={100} onLeftReached={spy}>
+        <div style={{ width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollLeft', { value: 50, configurable: true });
+    fireEvent.scroll(viewport);
+
+    Object.defineProperty(viewport, 'scrollLeft', { value: 0, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onRightReached when scrolled to right', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea w={100} onRightReached={spy}>
+        <div style={{ width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollWidth', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientWidth', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollLeft', { value: 400, configurable: true });
+
+    fireEvent.scroll(viewport);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls scrollTo with startScrollPosition on mount', () => {
+    const scrollToSpy = jest.fn();
+    const originalScrollTo = Element.prototype.scrollTo;
+    Element.prototype.scrollTo = scrollToSpy;
+
+    render(
+      <ScrollArea h={100} w={100} startScrollPosition={{ x: 50, y: 100 }}>
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    expect(scrollToSpy).toHaveBeenCalledWith({ left: 50, top: 100 });
+    Element.prototype.scrollTo = originalScrollTo;
+  });
+
+  it('does not call scrollTo when startScrollPosition is not provided', () => {
+    const scrollToSpy = jest.fn();
+    const originalScrollTo = Element.prototype.scrollTo;
+    Element.prototype.scrollTo = scrollToSpy;
+
+    render(
+      <ScrollArea h={100} w={100}>
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+    Element.prototype.scrollTo = originalScrollTo;
+  });
+
+  it('does not call boundary callbacks multiple times when at boundary', () => {
+    const topSpy = jest.fn();
+    const bottomSpy = jest.fn();
+    const { container } = render(
+      <ScrollArea h={100} onTopReached={topSpy} onBottomReached={bottomSpy}>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 200, configurable: true });
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    fireEvent.scroll(viewport);
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 0, configurable: true });
+    fireEvent.scroll(viewport);
+    fireEvent.scroll(viewport);
+    fireEvent.scroll(viewport);
+
+    expect(topSpy).toHaveBeenCalledTimes(1);
+    expect(bottomSpy).toHaveBeenCalledTimes(0);
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 200, configurable: true });
+    fireEvent.scroll(viewport);
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 400, configurable: true });
+    fireEvent.scroll(viewport);
+    fireEvent.scroll(viewport);
+
+    expect(bottomSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('observes viewport when offsetScrollbars is present', () => {
+    const observe = jest.fn();
+    const unobserve = jest.fn();
+    const restoreResizeObserver = mockResizeObserver(observe, unobserve);
+
+    try {
+      render(
+        <ScrollArea h={100} offsetScrollbars="present">
+          <div style={{ height: 500 }}>Content</div>
+        </ScrollArea>
+      );
+
+      expect(observe).toHaveBeenCalled();
+    } finally {
+      restoreResizeObserver();
+    }
   });
 });
 
@@ -29,13 +232,25 @@ describe('@mantine/core/ScrollAreaAutosize', () => {
   tests.itSupportsSystemProps<ScrollAreaProps, ScrollAreaStylesNames>({
     component: ScrollArea.Autosize,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ScrollAreaAutosize',
+  });
+
+  it('observes viewport when onOverflowChange is provided', () => {
+    const observe = jest.fn();
+    const unobserve = jest.fn();
+    const restoreResizeObserver = mockResizeObserver(observe, unobserve);
+
+    try {
+      render(
+        <ScrollArea.Autosize h={100} onOverflowChange={jest.fn()}>
+          <div style={{ height: 500 }}>Content</div>
+        </ScrollArea.Autosize>
+      );
+
+      expect(observe).toHaveBeenCalled();
+    } finally {
+      restoreResizeObserver();
+    }
   });
 });

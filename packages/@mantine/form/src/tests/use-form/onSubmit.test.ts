@@ -5,7 +5,7 @@ import { useForm } from '../../use-form';
 const getFormEvent = () => ({ preventDefault: jest.fn() }) as any;
 
 function tests(mode: FormMode) {
-  it('calls handleSubmit with values and event when all values are valid', () => {
+  it('calls handleSubmit with values and event when all values are valid', async () => {
     const hook = renderHook(() =>
       useForm({ mode, initialValues: { banana: 'test banana', apple: 'test apple' } })
     );
@@ -14,7 +14,9 @@ function tests(mode: FormMode) {
     const handleSubmit = jest.fn();
     const handleValidationFailure = jest.fn();
 
-    act(() => hook.result.current.onSubmit(handleSubmit, handleValidationFailure)(event));
+    await act(async () =>
+      hook.result.current.onSubmit(handleSubmit, handleValidationFailure)(event)
+    );
 
     expect(event.preventDefault).toHaveBeenCalled();
 
@@ -25,7 +27,7 @@ function tests(mode: FormMode) {
     );
   });
 
-  it('calls handleValidationFailure when values are not valid', () => {
+  it('calls handleValidationFailure when values are not valid', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -45,7 +47,10 @@ function tests(mode: FormMode) {
     const handleSubmit = jest.fn();
     const handleValidationFailure = jest.fn();
 
-    act(() => hook.result.current.onSubmit(handleSubmit, handleValidationFailure)(event));
+    await act(async () =>
+      hook.result.current.onSubmit(handleSubmit, handleValidationFailure)(event)
+    );
+
     expect(handleSubmit).not.toHaveBeenCalled();
     expect(handleValidationFailure).toHaveBeenCalledWith(
       {
@@ -64,17 +69,18 @@ function tests(mode: FormMode) {
     });
 
     act(() => hook.result.current.setValues({ banana: 'test-banana', orange: 'test-orange' }));
-    act(() => hook.result.current.onSubmit(handleSubmit)(event));
+    await act(async () => hook.result.current.onSubmit(handleSubmit)(event));
+
     expect(handleSubmit).toHaveBeenCalledWith(
       { banana: 'test-banana', orange: 'test-orange' },
       event
     );
   });
 
-  it('allows to call onSubmit without event', () => {
+  it('allows to call onSubmit without event', async () => {
     const hook = renderHook(() => useForm({ mode, initialValues: { a: 1 } }));
     const handleSubmit = jest.fn();
-    act(() => hook.result.current.onSubmit(handleSubmit)());
+    await act(async () => hook.result.current.onSubmit(handleSubmit)());
     expect(handleSubmit).toHaveBeenCalledWith({ a: 1 }, undefined);
   });
 }

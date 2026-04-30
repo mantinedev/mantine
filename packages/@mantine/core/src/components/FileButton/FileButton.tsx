@@ -1,8 +1,10 @@
-import { forwardRef, useRef } from 'react';
+import React, { useRef } from 'react';
 import { assignRef, useMergedRef } from '@mantine/hooks';
-import { useProps } from '../../core';
+import { Factory, genericFactory, useProps } from '../../core';
 
 export interface FileButtonProps<Multiple extends boolean = false> {
+  ref?: React.Ref<HTMLInputElement>;
+
   /** Called when files are picked */
   onChange: (payload: Multiple extends true ? File[] : File | null) => void;
 
@@ -22,7 +24,7 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   form?: string;
 
   /** Reference of the function that should be called when value changes to null or empty array */
-  resetRef?: React.ForwardedRef<() => void>;
+  resetRef?: React.Ref<() => void>;
 
   /** Disables file picker */
   disabled?: boolean;
@@ -31,78 +33,81 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   capture?: boolean | 'user' | 'environment';
 
   /** Passes down props to the input element used to capture files */
-  inputProps?: React.ComponentPropsWithoutRef<'input'>;
+  inputProps?: React.ComponentProps<'input'>;
 }
 
-const defaultProps = {
-  multiple: false,
-} satisfies Partial<FileButtonProps>;
+export type FileButtonFactory = Factory<{
+  props: FileButtonProps;
+  signature: <Multiple extends boolean = false>(
+    props: FileButtonProps<Multiple>
+  ) => React.JSX.Element;
+}>;
 
-type FileButtonComponent = (<Multiple extends boolean = false>(
-  props: FileButtonProps<Multiple>
-) => React.ReactElement) & { displayName?: string };
+export const FileButton = genericFactory<FileButtonFactory>((props) => {
+  const {
+    onChange,
+    children,
+    multiple,
+    accept,
+    name,
+    form,
+    resetRef,
+    disabled,
+    capture,
+    inputProps,
+    ref,
+    ...others
+  } = useProps('FileButton', null, props);
 
-export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps>(
-  (props, ref) => {
-    const {
-      onChange,
-      children,
-      multiple,
-      accept,
-      name,
-      form,
-      resetRef,
-      disabled,
-      capture,
-      inputProps,
-      ...others
-    } = useProps('FileButton', defaultProps, props);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    const inputRef = useRef<HTMLInputElement>(null);
+  const onClick = () => {
+    !disabled && inputRef.current?.click();
+  };
 
-    const onClick = () => {
-      !disabled && inputRef.current?.click();
-    };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.currentTarget.files === null) {
+      return onChange(multiple ? ([] as any) : null);
+    }
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.currentTarget.files === null) {
-        return onChange(multiple ? ([] as any) : null);
-      }
+    if (multiple) {
+      onChange(Array.from(event.currentTarget.files) as any);
+    } else {
+      onChange((event.currentTarget.files[0] as any) || null);
+    }
+  };
 
-      if (multiple) {
-        onChange(Array.from(event.currentTarget.files) as any);
-      } else {
-        onChange(event.currentTarget.files[0] || null);
-      }
-    };
+  const reset = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  };
 
-    const reset = () => {
-      if (inputRef.current) {
-        inputRef.current.value = '';
-      }
-    };
+  assignRef(resetRef, reset);
 
-    assignRef(resetRef, reset);
+  return (
+    <>
+      <input
+        style={{ display: 'none' }}
+        type="file"
+        accept={accept}
+        multiple={multiple}
+        onChange={handleChange}
+        ref={useMergedRef(ref, inputRef)}
+        name={name}
+        form={form}
+        capture={capture}
+        {...inputProps}
+      />
 
-    return (
-      <>
-        <input
-          style={{ display: 'none' }}
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          onChange={handleChange}
-          ref={useMergedRef(ref, inputRef)}
-          name={name}
-          form={form}
-          capture={capture}
-          {...inputProps}
-        />
-
-        {children({ onClick, ...others })}
-      </>
-    );
-  }
-) as any;
+      {children({ onClick, ...others })}
+    </>
+  );
+});
 
 FileButton.displayName = '@mantine/core/FileButton';
+
+export namespace FileButton {
+  export type Props<Multiple extends boolean = false> = FileButtonProps<Multiple>;
+  export type Factory = FileButtonFactory;
+}

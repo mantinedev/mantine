@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../Button';
 import { Group } from '../Group';
+import { TextInput } from '../TextInput';
 import { Pagination } from './Pagination';
 
 export default { title: 'Pagination' };
@@ -15,6 +16,16 @@ export function DynamicTotal() {
         <Button onClick={() => setTotal(10)}>Set 10</Button>
       </Group>
     </div>
+  );
+}
+
+export function Size() {
+  return (
+    <Group align="flex-start">
+      <Pagination total={45} size="input-md" />
+      <Button size="md">Button</Button>
+      <TextInput size="md" placeholder="TextInput" />
+    </Group>
   );
 }
 

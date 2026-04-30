@@ -21,13 +21,11 @@ export type BreadcrumbsCssVariables = {
 };
 
 export interface BreadcrumbsProps
-  extends BoxProps,
-    StylesApiProps<BreadcrumbsFactory>,
-    ElementProps<'div'> {
-  /** Separator between children @default `'/'` */
+  extends BoxProps, StylesApiProps<BreadcrumbsFactory>, ElementProps<'div'> {
+  /** Separator between children @default '/' */
   separator?: React.ReactNode;
 
-  /** Controls spacing between separator and breadcrumb @default `'xs'` */
+  /** Controls spacing between separator and breadcrumb @default 'xs' */
   separatorMargin?: MantineSpacing;
 
   /** React nodes that should be separated with `separator` */
@@ -51,7 +49,7 @@ const varsResolver = createVarsResolver<BreadcrumbsFactory>((_, { separatorMargi
   },
 }));
 
-export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
+export const Breadcrumbs = factory<BreadcrumbsFactory>((_props) => {
   const props = useProps('Breadcrumbs', defaultProps, _props);
   const {
     classNames,
@@ -107,11 +105,19 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
   }, []);
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       {items}
     </Box>
   );
 });
 
 Breadcrumbs.classes = classes;
+Breadcrumbs.varsResolver = varsResolver;
 Breadcrumbs.displayName = '@mantine/core/Breadcrumbs';
+
+export namespace Breadcrumbs {
+  export type Props = BreadcrumbsProps;
+  export type StylesNames = BreadcrumbsStylesNames;
+  export type CssVariables = BreadcrumbsCssVariables;
+  export type Factory = BreadcrumbsFactory;
+}

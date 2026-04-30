@@ -68,3 +68,34 @@ export function SplitMonths() {
     </div>
   );
 }
+
+export function WithLegend() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Heatmap
+        data={convertedRandomValues}
+        rectSize={10}
+        gap={1}
+        withWeekdayLabels
+        withMonthLabels
+        withLegend
+      />
+    </div>
+  );
+}
+
+export function WithLegendCustomLabels() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Heatmap
+        data={convertedRandomValues}
+        rectSize={10}
+        gap={1}
+        withWeekdayLabels
+        withMonthLabels
+        withLegend
+        legendLabels={['Weniger', 'Mehr']}
+      />
+    </div>
+  );
+}

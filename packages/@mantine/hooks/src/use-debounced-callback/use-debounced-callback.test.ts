@@ -334,6 +334,136 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).toHaveBeenCalledWith(2);
   });
 
+  it('isPending returns true when a call is pending', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    expect(result.current.isPending()).toBe(false);
+    result.current(1);
+    expect(result.current.isPending()).toBe(true);
+    jest.advanceTimersByTime(100);
+    expect(result.current.isPending()).toBe(false);
+  });
+
+  it('isPending returns false after cancel', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    expect(result.current.isPending()).toBe(true);
+    result.current.cancel();
+    expect(result.current.isPending()).toBe(false);
+  });
+
+  it('isPending returns false after leading-edge call', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true })
+    );
+    expect(result.current.isPending()).toBe(false);
+    result.current(1);
+    expect(result.current.isPending()).toBe(false);
+  });
+
+  it('isPending returns true for subsequent calls in leading mode', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true })
+    );
+    result.current(1);
+    result.current(2);
+    expect(result.current.isPending()).toBe(true);
+    jest.advanceTimersByTime(100);
+    expect(result.current.isPending()).toBe(false);
+  });
+
+  it('isPending returns false after flush', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    expect(result.current.isPending()).toBe(true);
+    result.current.flush();
+    expect(result.current.isPending()).toBe(false);
+  });
+
+  it('maxWait fires callback after max wait time during continuous calls', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, maxWait: 250 })
+    );
+
+    result.current(1);
+    jest.advanceTimersByTime(80);
+    result.current(2);
+    jest.advanceTimersByTime(80);
+    result.current(3);
+    jest.advanceTimersByTime(80);
+
+    expect(callback).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(10);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(3);
+  });
+
+  it('maxWait does not fire if delay fires first', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, maxWait: 500 })
+    );
+
+    result.current(1);
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(1);
+
+    callback.mockClear();
+    jest.advanceTimersByTime(500);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('maxWait is cleared by cancel', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, maxWait: 200 })
+    );
+
+    result.current(1);
+    jest.advanceTimersByTime(50);
+    result.current.cancel();
+    jest.advanceTimersByTime(200);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('maxWait with leading fires trailing after maxWait during continuous calls', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true, maxWait: 200 })
+    );
+
+    // t=0: fires immediately (leading), maxWait timer starts (200ms = t=200)
+    result.current(1);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(1);
+
+    // t=50: second call
+    jest.advanceTimersByTime(50);
+    result.current(2);
+
+    // t=120: keep calling to prevent debounce from resetting leading
+    jest.advanceTimersByTime(70);
+    result.current(3);
+
+    // t=190: keep calling
+    jest.advanceTimersByTime(70);
+    result.current(4);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // t=200: maxWait fires (0 + 200 = 200)
+    jest.advanceTimersByTime(10);
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledWith(4);
+  });
+
   it('leading=true should suppress trailing execution', () => {
     const callback = jest.fn();
     const { result } = renderHook(() =>

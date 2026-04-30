@@ -27,11 +27,13 @@ export function useInterval(
   const [active, setActive] = useState(false);
   const intervalRef = useRef<number | null>(null);
   const fnRef = useRef<() => void>(null);
+  const intervalValueRef = useRef(interval);
+  intervalValueRef.current = interval;
 
   const start = useCallback(() => {
     setActive((old) => {
-      if (!old && (!intervalRef.current || intervalRef.current === -1)) {
-        intervalRef.current = window.setInterval(fnRef.current!, interval);
+      if (!old && !intervalRef.current) {
+        intervalRef.current = window.setInterval(fnRef.current!, intervalValueRef.current);
       }
       return true;
     });
@@ -39,17 +41,27 @@ export function useInterval(
 
   const stop = useCallback(() => {
     setActive(false);
-    window.clearInterval(intervalRef.current || -1);
-    intervalRef.current = -1;
+    if (intervalRef.current) {
+      window.clearInterval(intervalRef.current);
+    }
+    intervalRef.current = null;
   }, []);
 
   const toggle = useCallback(() => {
-    if (active) {
-      stop();
-    } else {
-      start();
-    }
-  }, [active]);
+    setActive((current) => {
+      if (current) {
+        if (intervalRef.current) {
+          window.clearInterval(intervalRef.current);
+        }
+        intervalRef.current = null;
+        return false;
+      }
+      if (!intervalRef.current) {
+        intervalRef.current = window.setInterval(fnRef.current!, intervalValueRef.current);
+      }
+      return true;
+    });
+  }, []);
 
   useEffect(() => {
     fnRef.current = fn;
@@ -64,4 +76,9 @@ export function useInterval(
   }, []);
 
   return { start, stop, toggle, active };
+}
+
+export namespace useInterval {
+  export type Options = UseIntervalOptions;
+  export type ReturnValue = UseIntervalReturnValue;
 }

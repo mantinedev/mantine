@@ -14,31 +14,31 @@ It is a great alternative to [CSS Modules](/styles/css-modules) if you prefer to
 but with different syntax. Common features of [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](/styles/css-modules):
 
 - Styles are generated at build time – no runtime and performance overhead
-- Classes names are scoped to the styles file
+- Class names are scoped to the styles file
 
 Differences between [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](/styles/css-modules):
 
-- Vanilla extract styles are type safe
+- Vanilla extract styles are type-safe
 - You can use any JavaScript/TypeScript code in Vanilla extract styles, including [color functions](/styles/color-functions)
-- With Vanilla extract you do not have access to [postcss-preset-mantine](/styles/postcss-preset) features like `light-dark` function and `hover` mixin.
-  Because of this, you will not be able to copy-paste all demos from Mantine documentation and use them with Vanilla extract.
+- With Vanilla extract you do not have access to [postcss-preset-mantine](/styles/postcss-preset) features like the `light-dark` function and `hover` mixin.
+  Because of this, you will not be able to copy-paste all demos from the Mantine documentation and use them with Vanilla extract.
 - Vanilla extract requires additional configuration and setup that may not be available for your build tool/framework.
   Most popular tools like [Next.js](https://nextjs.org/) and [Vite](https://vitejs.dev/) have plugins for Vanilla extract,
   but if you are using something more niche, you might need to configure it yourself.
 
-Note that you can use both [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](/styles/css-modules) in the same project,
+Note that you can use both [Vanilla extract](https://vanilla-extract.style/) and [CSS Modules](/styles/css-modules) in the same project;
 it will not cause any issues: performance will be the same and the bundle size will not be impacted.
 
 ## Installation
 
-Follow the [installation instructions](https://vanilla-extract.style/documentation/getting-started) to install vanilla extract.
-Then install `@mantine/vanilla-extract` package, it exports `themeToVars` function to convert Mantine theme to CSS variables:
+Follow the [installation instructions](https://vanilla-extract.style/documentation/getting-started) to install Vanilla extract.
+Then install the `@mantine/vanilla-extract` package; it exports the `themeToVars` function to convert the Mantine theme to CSS variables:
 
 <InstallScript packages="@mantine/vanilla-extract" />
 
 ## Templates
 
-You can use one of the following templates to get started or a reference for your own setup.
+You can use one of the following templates to get started or as a reference for your own setup.
 Note that all templates include only minimal setup.
 
 <TemplatesList

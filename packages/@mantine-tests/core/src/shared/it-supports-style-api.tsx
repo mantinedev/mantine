@@ -23,12 +23,37 @@ interface Options<Props extends Record<string, any> = any, Selectors extends str
   providerName: string;
   providerStylesApi?: boolean;
   compound?: boolean;
+  attributes?: boolean;
 }
 
 export function itSupportsStylesApi<
   Props extends Record<string, any>,
   Selectors extends string = string,
 >(options: Options<Props, Selectors>, name = 'supports styles api') {
+  if (!options.compound && options.attributes !== false) {
+    it(`${name}: attributes`, () => {
+      const attributes = options.selectors.reduce<Record<string, Record<string, string>>>(
+        (acc, selector) => {
+          acc[selector] = { 'data-test-id': selector };
+          return acc;
+        },
+        {}
+      );
+
+      const { container } = render(
+        <options.component {...options.props} attributes={attributes} />
+      );
+
+      options.selectors.forEach((selector) => {
+        try {
+          expect(container.querySelector(`[data-test-id="${selector}"]`)).toBeInTheDocument();
+        } catch (e) {
+          throw new Error(`Missing data-attribute: [data-test-id="${selector}"]`);
+        }
+      });
+    });
+  }
+
   it(`${name}: classNames (inline object)`, () => {
     const classNames = getTestObjectClassNames(options.selectors);
     const { container } = render(<options.component {...options.props} classNames={classNames} />);

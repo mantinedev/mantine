@@ -20,6 +20,7 @@ export interface UseLongPressReturnValue {
   onMouseLeave: (event: React.MouseEvent) => void;
   onTouchStart: (event: React.TouchEvent) => void;
   onTouchEnd: (event: React.TouchEvent) => void;
+  onTouchCancel: (event: React.TouchEvent) => void;
 }
 
 export function useLongPress(
@@ -72,8 +73,9 @@ export function useLongPress(
       isLongPressActive.current = false;
       isPressed.current = false;
 
-      if (timeout.current) {
+      if (timeout.current !== -1) {
         window.clearTimeout(timeout.current);
+        timeout.current = -1;
       }
     };
 
@@ -83,6 +85,7 @@ export function useLongPress(
       onMouseLeave: cancel,
       onTouchStart: start,
       onTouchEnd: cancel,
+      onTouchCancel: cancel,
     };
   }, [onLongPress, threshold, onCancel, onFinish, onStart]);
 }
@@ -95,4 +98,9 @@ function isTouchEvent(event: React.MouseEvent | React.TouchEvent): event is Reac
 
 function isMouseEvent(event: React.MouseEvent | React.TouchEvent): event is React.MouseEvent {
   return event.nativeEvent instanceof MouseEvent;
+}
+
+export namespace useLongPress {
+  export type Options = UseLongPressOptions;
+  export type ReturnValue = UseLongPressReturnValue;
 }

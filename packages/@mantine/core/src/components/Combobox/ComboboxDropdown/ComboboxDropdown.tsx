@@ -17,7 +17,7 @@ export type ComboboxDropdownFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxDropdown = factory<ComboboxDropdownFactory>((props, ref) => {
+export const ComboboxDropdown = factory<ComboboxDropdownFactory>((props) => {
   const { classNames, styles, className, style, hidden, ...others } = useProps(
     'ComboboxDropdown',
     null,
@@ -29,7 +29,6 @@ export const ComboboxDropdown = factory<ComboboxDropdownFactory>((props, ref) =>
   return (
     <Popover.Dropdown
       {...others}
-      ref={ref}
       role="presentation"
       data-hidden={hidden || undefined}
       {...ctx.getStyles('dropdown', { className, style, classNames, styles })}

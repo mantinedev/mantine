@@ -1,4 +1,14 @@
+import type {
+  BarChartCssVariables,
+  BarChartFactory,
+  BarChartProps,
+  BarChartSeries,
+  BarChartStylesNames,
+  BarChartType,
+} from './BarChart';
+
 export { BarChart } from './BarChart';
+
 export type {
   BarChartProps,
   BarChartCssVariables,
@@ -6,4 +16,4 @@ export type {
   BarChartSeries,
   BarChartStylesNames,
   BarChartType,
-} from './BarChart';
+};

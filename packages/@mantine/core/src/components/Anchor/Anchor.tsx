@@ -8,7 +8,7 @@ export type AnchorVariant = TextVariant;
 export type AnchorCssVariables = TextCssVariables;
 
 export interface AnchorProps extends Omit<TextProps, 'span'> {
-  /** Defines when `text-decoration: underline` styles are applied. @default `hover` */
+  /** Defines when `text-decoration: underline` styles are applied. @default hover */
   underline?: 'always' | 'hover' | 'not-hover' | 'never';
 }
 
@@ -25,7 +25,7 @@ const defaultProps = {
   underline: 'hover',
 } satisfies Partial<AnchorProps>;
 
-export const Anchor = polymorphicFactory<AnchorFactory>((props, ref) => {
+export const Anchor = polymorphicFactory<AnchorFactory>((props) => {
   const { underline, className, unstyled, mod, ...others } = useProps(
     'Anchor',
     defaultProps,
@@ -35,7 +35,6 @@ export const Anchor = polymorphicFactory<AnchorFactory>((props, ref) => {
   return (
     <Text
       component="a"
-      ref={ref}
       className={cx({ [classes.root]: !unstyled }, className)}
       {...others}
       mod={[{ underline }, mod]}
@@ -47,3 +46,11 @@ export const Anchor = polymorphicFactory<AnchorFactory>((props, ref) => {
 
 Anchor.classes = classes;
 Anchor.displayName = '@mantine/core/Anchor';
+
+export namespace Anchor {
+  export type Props = AnchorProps;
+  export type StylesNames = AnchorStylesNames;
+  export type CssVariables = AnchorCssVariables;
+  export type Factory = AnchorFactory;
+  export type Variant = AnchorVariant;
+}

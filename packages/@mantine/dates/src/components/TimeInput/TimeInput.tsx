@@ -14,11 +14,12 @@ import {
 import classes from './TimeInput.module.css';
 
 export interface TimeInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TimeInputFactory>,
     ElementProps<'input', 'size'> {
-  /** Determines whether seconds input should be displayed @default `false` */
+  /** Determines whether seconds input should be displayed @default false */
   withSeconds?: boolean;
 
   /** Minimum possible string time, if `withSeconds` is true, time should be in format HH:mm:ss, otherwise HH:mm */
@@ -34,8 +35,8 @@ export type TimeInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
-  const props = useProps('TimeInput', null, _props);
+export const TimeInput = factory<TimeInputFactory>((_props) => {
+  const props = useProps('TimeInput', { size: 'sm' } satisfies Partial<TimeInputProps>, _props);
   const {
     classNames,
     styles,
@@ -123,7 +124,6 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
       styles={resolvedStyles}
       unstyled={unstyled}
-      ref={ref}
       value={value}
       step={step ?? (withSeconds ? 1 : 60)}
       {...others}
@@ -137,3 +137,8 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
 
 TimeInput.classes = InputBase.classes;
 TimeInput.displayName = '@mantine/dates/TimeInput';
+
+export namespace TimeInput {
+  export type Props = TimeInputProps;
+  export type Factory = TimeInputFactory;
+}

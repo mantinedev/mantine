@@ -22,10 +22,8 @@ export type TitleCssVariables = {
 };
 
 export interface TitleProps
-  extends BoxProps,
-    StylesApiProps<TitleFactory>,
-    ElementProps<'h1', 'color'> {
-  /** Heading order (1-6), controls `font-size` style if `size` prop is not set @default `1` */
+  extends BoxProps, StylesApiProps<TitleFactory>, ElementProps<'h1', 'color'> {
+  /** Heading order (1-6), controls `font-size` style if `size` prop is not set @default 1 */
   order?: TitleOrder;
 
   /** Changes title size, if not set, then size is controlled by `order` prop */
@@ -34,7 +32,7 @@ export interface TitleProps
   /** Number of lines after which heading will be truncated */
   lineClamp?: number;
 
-  /** Heading `text-wrap` CSS property @default `'wrap'` */
+  /** Heading `text-wrap` CSS property @default 'wrap' */
   textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
 }
 
@@ -62,7 +60,7 @@ const varsResolver = createVarsResolver<TitleFactory>((_, { order, size, lineCla
   };
 });
 
-export const Title = factory<TitleFactory>((_props, ref) => {
+export const Title = factory<TitleFactory>((_props) => {
   const props = useProps('Title', defaultProps, _props);
   const {
     classNames,
@@ -104,7 +102,6 @@ export const Title = factory<TitleFactory>((_props, ref) => {
       {...getStyles('root')}
       component={`h${order}`}
       variant={variant}
-      ref={ref}
       mod={[{ order, 'data-line-clamp': typeof lineClamp === 'number' }, mod]}
       size={size}
       {...others}
@@ -113,4 +110,14 @@ export const Title = factory<TitleFactory>((_props, ref) => {
 });
 
 Title.classes = classes;
+Title.varsResolver = varsResolver;
 Title.displayName = '@mantine/core/Title';
+
+export namespace Title {
+  export type Props = TitleProps;
+  export type Order = TitleOrder;
+  export type Size = TitleSize;
+  export type StylesNames = TitleStylesNames;
+  export type CssVariables = TitleCssVariables;
+  export type Factory = TitleFactory;
+}

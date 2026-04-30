@@ -1,23 +1,23 @@
-import { IconChevronDown, IconHash } from '@tabler/icons-react';
+import { CaretDownIcon, HashIcon } from '@phosphor-icons/react';
 import { NativeSelect } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { NativeSelect } from '@mantine/core';
-import { IconChevronDown, IconHash } from '@tabler/icons-react';
+import { CaretDownIcon, HashIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <>
       <NativeSelect
-        leftSection={<IconHash size={16} />}
+        leftSection={<HashIcon size={16} />}
         leftSectionPointerEvents="none"
         label="Left section"
         data={['React', 'Angular']}
       />
 
       <NativeSelect
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         label="Right section"
         data={['React', 'Angular']}
         mt="md"
@@ -31,14 +31,14 @@ function Demo() {
   return (
     <>
       <NativeSelect
-        leftSection={<IconHash size={16} />}
+        leftSection={<HashIcon size={16} />}
         leftSectionPointerEvents="none"
         label="Left section"
         data={['React', 'Angular']}
       />
 
       <NativeSelect
-        rightSection={<IconChevronDown size={16} />}
+        rightSection={<CaretDownIcon size={16} />}
         label="Right section"
         data={['React', 'Angular']}
         mt="md"

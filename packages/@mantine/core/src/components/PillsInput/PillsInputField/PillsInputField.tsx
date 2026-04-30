@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -9,17 +10,15 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useInputWrapperContext } from '../../Input';
-import { usePillsInputContext } from '../PillsInput.context';
+import { InputWrapperContext } from '../../Input';
+import { PillsInputContext } from '../PillsInput.context';
 import classes from '../PillsInput.module.css';
 
 export type PillsInputFieldStylesNames = 'field';
 
 export interface PillsInputFieldProps
-  extends BoxProps,
-    StylesApiProps<PillsInputFieldFactory>,
-    ElementProps<'input', 'type'> {
-  /** Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible. @default `'visible'` */
+  extends BoxProps, StylesApiProps<PillsInputFieldFactory>, ElementProps<'input', 'type'> {
+  /** Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible. @default 'visible' */
   type?: 'auto' | 'visible' | 'hidden';
 
   /** If set, cursor is changed to pointer */
@@ -36,7 +35,7 @@ const defaultProps = {
   type: 'visible',
 } satisfies Partial<PillsInputFieldProps>;
 
-export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => {
+export const PillsInputField = factory<PillsInputFieldFactory>((_props) => {
   const props = useProps('PillsInputField', defaultProps, _props);
   const {
     classNames,
@@ -51,10 +50,11 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
     pointer,
     mod,
     attributes,
+    ref,
     ...others
   } = props;
-  const ctx = usePillsInputContext();
-  const inputWrapperCtx = useInputWrapperContext();
+  const ctx = use(PillsInputContext);
+  const inputWrapperCtx = use(InputWrapperContext);
 
   const getStyles = useStyles<PillsInputFieldFactory>({
     name: 'PillsInputField',

@@ -1,34 +1,39 @@
-import { useReducedMotion } from '@mantine/hooks';
+import { Activity } from 'react';
+import { useCollapse, useHorizontalCollapse, useReducedMotion } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
   Factory,
   factory,
   getStyleObject,
+  useMantineEnv,
   useMantineTheme,
   useProps,
 } from '../../core';
-import { useCollapse } from './use-collapse';
 
-export interface CollapseProps
-  extends BoxProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, keyof BoxProps> {
-  /** Opened state */
-  in: boolean;
+export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
+  /** Collapse orientation @default 'vertical' */
+  orientation?: 'vertical' | 'horizontal';
 
-  /** Called each time transition ends */
+  /** Expanded state */
+  expanded: boolean;
+
+  /** Called when the transition ends */
   onTransitionEnd?: () => void;
 
-  /** Transition duration in ms @default `200` */
+  /** Called when transition starts */
+  onTransitionStart?: () => void;
+
+  /** Transition duration in ms @default 200 */
   transitionDuration?: number;
 
-  /** Transition timing function @default `ease` */
+  /** Transition timing function @default ease */
   transitionTimingFunction?: string;
 
-  /** Determines whether opacity should be animated @default `true` */
+  /** Determines whether the opacity is animated @default true */
   animateOpacity?: boolean;
 
-  /** Keep element in DOM when collapsed, useful for nested collapses */
+  /** If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. @default false */
   keepMounted?: boolean;
 }
 
@@ -41,53 +46,83 @@ const defaultProps = {
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
   animateOpacity: true,
+  orientation: 'vertical',
 } satisfies Partial<CollapseProps>;
 
-export const Collapse = factory<CollapseFactory>((props, ref) => {
+export const Collapse = factory<CollapseFactory>((props) => {
   const {
     children,
-    in: opened,
+    expanded,
     transitionDuration,
     transitionTimingFunction,
     style,
     onTransitionEnd,
+    onTransitionStart,
     animateOpacity,
     keepMounted,
+    ref,
+    orientation,
     ...others
   } = useProps('Collapse', defaultProps, props);
 
+  const env = useMantineEnv();
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 0 : transitionDuration;
+  const hook = orientation === 'horizontal' ? useHorizontalCollapse : useCollapse;
 
-  const getCollapseProps = useCollapse({
-    opened,
+  const collapse = hook({
+    expanded,
     transitionDuration: duration,
     transitionTimingFunction,
     onTransitionEnd,
-    keepMounted,
+    onTransitionStart,
+    keepMounted: false,
   });
 
   if (duration === 0) {
-    return opened ? <Box {...others}>{children}</Box> : null;
+    if (keepMounted === true && env !== 'test') {
+      return (
+        <Activity mode={expanded ? 'visible' : 'hidden'}>
+          <Box {...others}>{children}</Box>
+        </Activity>
+      );
+    }
+    return expanded ? <Box {...others}>{children}</Box> : null;
+  }
+
+  const isExited = collapse.state === 'exited';
+
+  let content: React.ReactNode;
+  if (keepMounted === false) {
+    content = isExited ? null : children;
+  } else if (keepMounted === true) {
+    content = <Activity mode={isExited ? 'hidden' : 'visible'}>{children}</Activity>;
+  } else {
+    content = children;
   }
 
   return (
     <Box
-      {...getCollapseProps({
+      {...others}
+      {...collapse.getCollapseProps({
         style: {
-          opacity: opened || !animateOpacity ? 1 : 0,
+          opacity: expanded || !animateOpacity ? 1 : 0,
           transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
           ...getStyleObject(style, theme),
         },
         ref,
-        ...others,
       })}
     >
-      {children}
+      {content}
     </Box>
   );
 });
 
 Collapse.displayName = '@mantine/core/Collapse';
+
+export namespace Collapse {
+  export type Props = CollapseProps;
+  export type Factory = CollapseFactory;
+}

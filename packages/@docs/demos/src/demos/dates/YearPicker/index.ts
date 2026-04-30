@@ -10,3 +10,6 @@ export { yearsListFormat } from './YearPicker.demo.yearsListFormat';
 export { decadeLabelFormat } from './YearPicker.demo.decadeLabelFormat';
 export { defaultDate } from './YearPicker.demo.defaultDate';
 export { controlledDate } from './YearPicker.demo.controlledDate';
+export { fullWidth } from './YearPicker.demo.fullWidth';
+export { presets } from './YearPicker.demo.presets';
+export { presetsRange } from './YearPicker.demo.presetsRange';

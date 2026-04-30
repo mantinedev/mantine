@@ -1,3 +1,25 @@
+import type {
+  AppShellCssVariables,
+  AppShellFactory,
+  AppShellProps,
+  AppShellStylesNames,
+} from './AppShell';
+import type { AppShellContextValue } from './AppShell.context';
+import type {
+  AppShellAsideConfiguration,
+  AppShellCompoundProps,
+  AppShellFooterConfiguration,
+  AppShellHeaderConfiguration,
+  AppShellNavbarConfiguration,
+  AppShellResponsiveSize,
+} from './AppShell.types';
+import type { AppShellAsideProps } from './AppShellAside/AppShellAside';
+import type { AppShellFooterProps } from './AppShellFooter/AppShellFooter';
+import type { AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
+import type { AppShellMainProps } from './AppShellMain/AppShellMain';
+import type { AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
+import type { AppShellSectionProps } from './AppShellSection/AppShellSection';
+
 export { AppShell } from './AppShell';
 export { AppShellAside } from './AppShellAside/AppShellAside';
 export { AppShellFooter } from './AppShellFooter/AppShellFooter';
@@ -5,26 +27,24 @@ export { AppShellHeader } from './AppShellHeader/AppShellHeader';
 export { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
 export { AppShellSection } from './AppShellSection/AppShellSection';
 export { AppShellMain } from './AppShellMain/AppShellMain';
-
-export type {
-  AppShellAsideConfiguration,
-  AppShellHeaderConfiguration,
-  AppShellNavbarConfiguration,
-  AppShellFooterConfiguration,
-  AppShellResponsiveSize,
-  AppShellCompoundProps,
-} from './AppShell.types';
+export { useAppShellContext } from './AppShell.context';
 
 export type {
   AppShellProps,
+  AppShellStylesNames,
   AppShellCssVariables,
   AppShellFactory,
-  AppShellStylesNames,
-} from './AppShell';
-
-export type { AppShellAsideProps } from './AppShellAside/AppShellAside';
-export type { AppShellFooterProps } from './AppShellFooter/AppShellFooter';
-export type { AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
-export type { AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
-export type { AppShellSectionProps } from './AppShellSection/AppShellSection';
-export type { AppShellMainProps } from './AppShellMain/AppShellMain';
+  AppShellContextValue,
+  AppShellCompoundProps,
+  AppShellAsideConfiguration,
+  AppShellFooterConfiguration,
+  AppShellHeaderConfiguration,
+  AppShellNavbarConfiguration,
+  AppShellResponsiveSize,
+  AppShellAsideProps,
+  AppShellFooterProps,
+  AppShellHeaderProps,
+  AppShellMainProps,
+  AppShellNavbarProps,
+  AppShellSectionProps,
+};

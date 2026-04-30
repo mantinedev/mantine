@@ -1,10 +1,8 @@
-import { forwardRef } from 'react';
 import { MantineLoaderComponent } from '@mantine/core';
 
-export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others }, ref) => (
+export const RingLoader: MantineLoaderComponent = ({ style, ...others }) => (
   <svg
     {...others}
-    ref={ref}
     style={{
       width: 'var(--loader-size)',
       height: 'var(--loader-size)',
@@ -80,16 +78,14 @@ export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others
       </circle>
     </g>
   </svg>
-));
+);
 
 export const ringLoaderCode = `
-import { forwardRef } from 'react';
 import { MantineLoaderComponent } from '@mantine/core';
 
-export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others }, ref) => (
+export const RingLoader: MantineLoaderComponent = ({ style, ...others }) => (
   <svg
     {...others}
-    ref={ref}
     style={{
       width: 'var(--loader-size)',
       height: 'var(--loader-size)',
@@ -165,4 +161,4 @@ export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others
       </circle>
     </g>
   </svg>
-));`;
+);`;

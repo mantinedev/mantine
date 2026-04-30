@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -15,13 +15,19 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import classes from './Avatar.module.css';
-import { AvatarGroup } from './AvatarGroup/AvatarGroup';
-import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
+import {
+  AvatarGroup,
+  AvatarGroupContext,
+  type AvatarGroupProps,
+  type AvatarGroupStylesNames,
+  type AvatarGroupCssVariables,
+  type AvatarGroupFactory,
+  type AvatarGroupContextValue,
+} from './AvatarGroup/AvatarGroup';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { getInitialsColor } from './get-initials-color/get-initials-color';
 import { getInitials } from './get-initials/get-initials';
-
+import classes from './Avatar.module.css';
 export type AvatarStylesNames = 'root' | 'placeholder' | 'image';
 export type AvatarVariant =
   | 'filled'
@@ -37,16 +43,16 @@ export type AvatarCssVariables = {
 };
 
 export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
-  /** Width and height of the avatar, numbers are converted to rem @default `'md'` */
+  /** Width and height of the avatar, numbers are converted to rem @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'1000px'` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default '1000px' */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color @default `'gray'` */
+  /** Key of `theme.colors` or any valid CSS color @default 'gray' */
   color?: MantineColor | 'initials';
 
-  /** Gradient configuration for `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient configuration for `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** Image url, if the image cannot be loaded or `src={null}`, then placeholder is displayed instead */
@@ -56,7 +62,7 @@ export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   alt?: string;
 
   /** Attributes passed down to `img` element */
-  imageProps?: React.ComponentPropsWithoutRef<'img'>;
+  imageProps?: React.ComponentProps<'img'>;
 
   /** Avatar placeholder, displayed when `src={null}` or when the image cannot be loaded */
   children?: React.ReactNode;
@@ -113,7 +119,7 @@ const varsResolver = createVarsResolver<AvatarFactory>(
   }
 );
 
-export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
+export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
   const props = useProps('Avatar', null, _props);
   const {
     classNames,
@@ -136,7 +142,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     attributes,
     ...others
   } = props;
-  const ctx = useAvatarGroupContext();
+  const groupCtx = use(AvatarGroupContext);
   const [error, setError] = useState(!src);
 
   const getStyles = useStyles<AvatarFactory>({
@@ -156,12 +162,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
   useEffect(() => setError(!src), [src]);
 
   return (
-    <Box
-      {...getStyles('root')}
-      mod={[{ 'within-group': ctx.withinGroup }, mod]}
-      ref={ref}
-      {...others}
-    >
+    <Box {...getStyles('root')} mod={[{ 'within-group': groupCtx.withinGroup }, mod]} {...others}>
       {error || !src ? (
         <span {...getStyles('placeholder')} title={alt}>
           {children || (typeof name === 'string' && getInitials(name)) || <AvatarPlaceholderIcon />}
@@ -183,5 +184,22 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
 });
 
 Avatar.classes = classes;
+Avatar.varsResolver = varsResolver;
 Avatar.displayName = '@mantine/core/Avatar';
 Avatar.Group = AvatarGroup;
+
+export namespace Avatar {
+  export type Props = AvatarProps;
+  export type StylesNames = AvatarStylesNames;
+  export type CssVariables = AvatarCssVariables;
+  export type Variant = AvatarVariant;
+  export type Factory = AvatarFactory;
+
+  export namespace Group {
+    export type Props = AvatarGroupProps;
+    export type StylesNames = AvatarGroupStylesNames;
+    export type CssVariables = AvatarGroupCssVariables;
+    export type Factory = AvatarGroupFactory;
+    export type ContextValue = AvatarGroupContextValue;
+  }
+}

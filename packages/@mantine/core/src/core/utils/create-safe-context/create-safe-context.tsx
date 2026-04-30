@@ -1,10 +1,10 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 export function createSafeContext<ContextValue>(errorMessage: string) {
   const Context = createContext<ContextValue | null>(null);
 
   const useSafeContext = () => {
-    const ctx = useContext(Context);
+    const ctx = use(Context);
 
     if (ctx === null) {
       throw new Error(errorMessage);
@@ -13,9 +13,5 @@ export function createSafeContext<ContextValue>(errorMessage: string) {
     return ctx;
   };
 
-  const Provider = ({ children, value }: { value: ContextValue; children: React.ReactNode }) => (
-    <Context.Provider value={value}>{children}</Context.Provider>
-  );
-
-  return [Provider, useSafeContext] as const;
+  return [Context, useSafeContext] as const;
 }

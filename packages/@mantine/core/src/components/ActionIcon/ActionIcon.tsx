@@ -17,10 +17,21 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
+import {
+  ActionIconGroup,
+  type ActionIconGroupProps,
+  type ActionIconGroupStylesNames,
+  type ActionIconGroupCssVariables,
+  type ActionIconGroupFactory,
+} from './ActionIconGroup/ActionIconGroup';
+import {
+  ActionIconGroupSection,
+  type ActionIconGroupSectionProps,
+  type ActionIconGroupSectionStylesNames,
+  type ActionIconGroupSectionCssVariables,
+  type ActionIconGroupSectionFactory,
+} from './ActionIconGroupSection/ActionIconGroupSection';
 import classes from './ActionIcon.module.css';
-import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';
-import { ActionIconGroupSection } from './ActionIconGroupSection/ActionIconGroupSection';
-
 export type ActionIconVariant =
   | 'filled'
   | 'light'
@@ -53,16 +64,16 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
   /** Props passed down to the `Loader` component. Ignored when `loading` prop is not set. */
   loaderProps?: LoaderProps;
 
-  /** Controls width and height of the button. Numbers are converted to rem. @default `'md'`. */
+  /** Controls width and height of the button. Numbers are converted to rem. @default 'md'. */
   size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
-  /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor`. */
+  /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor. */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient values used with `variant="gradient"`. @default `theme.defaultGradient`. */
+  /** Gradient values used with `variant="gradient"`. @default theme.defaultGradient. */
   gradient?: MantineGradient;
 
   /** Sets `disabled` attribute, prevents interactions */
@@ -112,7 +123,7 @@ const varsResolver = createVarsResolver<ActionIconFactory>(
   }
 );
 
-export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) => {
+export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props) => {
   const props = useProps('ActionIcon', null, _props);
   const {
     className,
@@ -160,7 +171,6 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
       variant={variant}
       size={size}
       disabled={disabled || loading}
-      ref={ref}
       mod={[{ loading, disabled: disabled || dataDisabled }, mod]}
     >
       {typeof loading === 'boolean' && (
@@ -181,6 +191,28 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
 });
 
 ActionIcon.classes = classes;
+ActionIcon.varsResolver = varsResolver;
 ActionIcon.displayName = '@mantine/core/ActionIcon';
 ActionIcon.Group = ActionIconGroup;
 ActionIcon.GroupSection = ActionIconGroupSection;
+
+export namespace ActionIcon {
+  export type Props = ActionIconProps;
+  export type StylesNames = ActionIconStylesNames;
+  export type CssVariables = ActionIconCssVariables;
+  export type Factory = ActionIconFactory;
+
+  export namespace Group {
+    export type Props = ActionIconGroupProps;
+    export type StylesNames = ActionIconGroupStylesNames;
+    export type CssVariables = ActionIconGroupCssVariables;
+    export type Factory = ActionIconGroupFactory;
+  }
+
+  export namespace GroupSection {
+    export type Props = ActionIconGroupSectionProps;
+    export type StylesNames = ActionIconGroupSectionStylesNames;
+    export type CssVariables = ActionIconGroupSectionCssVariables;
+    export type Factory = ActionIconGroupSectionFactory;
+  }
+}

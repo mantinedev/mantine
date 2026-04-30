@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { use, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
@@ -16,8 +16,8 @@ import {
 import { AccordionChevron } from '../../Accordion';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';
+import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
-import { useSubMenuContext } from '../MenuSub/MenuSub.context';
 
 export type MenuSubItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
 
@@ -51,7 +51,7 @@ export type MenuSubItemFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props, ref) => {
+export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
   const {
     classNames,
     className,
@@ -65,11 +65,12 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props, ref) =
     disabled,
     'data-disabled': dataDisabled,
     closeMenuOnClick,
+    ref,
     ...others
   } = useProps('MenuSubItem', null, props);
 
   const ctx = useMenuContext();
-  const subCtx = useSubMenuContext();
+  const subCtx = use(SubMenuContext);
   const theme = useMantineTheme();
   const { dir } = useDirection();
   const itemRef = useRef<HTMLButtonElement>(null);

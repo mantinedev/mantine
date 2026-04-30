@@ -1,7 +1,31 @@
+import type {
+  CodeHighlightCssVariables,
+  CodeHighlightFactory,
+  CodeHighlightProps,
+  CodeHighlightStylesNames,
+} from './CodeHighlight/CodeHighlight';
+import type { CodeHighlightContextValue } from './CodeHighlight/CodeHighlight.context';
+import type { CodeHighlightControlProps } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
+import type {
+  InlineCodeHighlightCssVariables,
+  InlineCodeHighlightFactory,
+  InlineCodeHighlightProps,
+  InlineCodeHighlightStylesNames,
+} from './CodeHighlight/InlineCodeHighlight';
+import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
+import type {
+  CodeHighlightDefaultLanguage,
+  CodeHighlightTabsCode,
+  CodeHighlightTabsFactory,
+  CodeHighlightTabsProps,
+  CodeHighlightTabsStylesNames,
+} from './CodeHighlightTabs/CodeHighlightTabs';
+
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';
 export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs.js';
 export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
+export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.js';
 
 export {
   CodeHighlightAdapterProvider,
@@ -16,27 +40,20 @@ export {
 export { plainTextAdapter } from './CodeHighlightProvider/adapters/plain-text-adapter.js';
 
 export type {
-  CodeHighlightFactory,
-  CodeHighlightCssVariables,
   CodeHighlightProps,
   CodeHighlightStylesNames,
-} from './CodeHighlight/CodeHighlight';
-
-export type {
-  CodeHighlightTabsCode,
+  CodeHighlightCssVariables,
+  CodeHighlightFactory,
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
+  CodeHighlightTabsCode,
   CodeHighlightTabsFactory,
   CodeHighlightDefaultLanguage,
-} from './CodeHighlightTabs/CodeHighlightTabs';
-
-export type {
   InlineCodeHighlightProps,
+  InlineCodeHighlightStylesNames,
   InlineCodeHighlightCssVariables,
   InlineCodeHighlightFactory,
-  InlineCodeHighlightStylesNames,
-} from './CodeHighlight/InlineCodeHighlight';
-
-export type { CodeHighlightControlProps } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
-
-export type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
+  CodeHighlightControlProps,
+  CodeHighlightContextValue,
+  CodeHighlightAdapter,
+};

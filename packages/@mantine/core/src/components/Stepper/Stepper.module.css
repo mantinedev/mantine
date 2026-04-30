@@ -162,6 +162,10 @@
   }
 }
 
+.stepIconContent {
+  display: flex;
+}
+
 .stepCompletedIcon {
   position: absolute;
   inset: 0;
@@ -190,7 +194,7 @@
 }
 
 .stepLabel {
-  font-weight: 500;
+  font-weight: var(--mantine-font-weight-medium);
   font-size: var(--stepper-fz);
   line-height: 1;
 }

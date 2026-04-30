@@ -1,8 +1,18 @@
+import type { TooltipFactory, TooltipProps } from './Tooltip';
+import type { TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
+import type { TooltipFloatingProps } from './TooltipFloating/TooltipFloating';
+import type { TooltipGroupContextValue, TooltipGroupProps } from './TooltipGroup/TooltipGroup';
+
 export { Tooltip } from './Tooltip';
-export { TooltipGroup } from './TooltipGroup/TooltipGroup';
+export { TooltipGroup, TooltipGroupContext } from './TooltipGroup/TooltipGroup';
 export { TooltipFloating } from './TooltipFloating/TooltipFloating';
 
-export type { TooltipProps, TooltipFactory } from './Tooltip';
-export type { TooltipGroupProps } from './TooltipGroup/TooltipGroup';
-export type { TooltipFloatingProps } from './TooltipFloating/TooltipFloating';
-export type { TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
+export type {
+  TooltipProps,
+  TooltipFactory,
+  TooltipCssVariables,
+  TooltipStylesNames,
+  TooltipGroupProps,
+  TooltipGroupContextValue,
+  TooltipFloatingProps,
+};

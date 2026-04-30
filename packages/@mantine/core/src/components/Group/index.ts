@@ -1,8 +1,11 @@
-export { Group } from './Group';
-export type {
+import type {
   GroupCssVariables,
   GroupFactory,
-  GroupStylesNames,
-  GroupStylesCtx,
   GroupProps,
+  GroupStylesCtx,
+  GroupStylesNames,
 } from './Group';
+
+export { Group } from './Group';
+
+export type { GroupCssVariables, GroupFactory, GroupProps, GroupStylesCtx, GroupStylesNames };

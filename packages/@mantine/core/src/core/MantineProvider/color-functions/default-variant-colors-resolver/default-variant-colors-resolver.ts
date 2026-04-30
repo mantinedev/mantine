@@ -91,9 +91,9 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
       const parsedColor = theme.colors[parsed.color][parsed.shade];
 
       return {
-        background: rgba(parsedColor, 0.1),
-        hover: rgba(parsedColor, 0.12),
-        color: `var(--mantine-color-${parsed.color}-${Math.min(parsed.shade, 6)})`,
+        background: parsedColor,
+        hover: darken(parsedColor, 0.1),
+        color: `var(--mantine-color-${parsed.color}-light-color)`,
         border: `${rem(1)} solid transparent`,
       };
     }

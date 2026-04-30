@@ -8,7 +8,7 @@ export default Layout(MDX_DATA.StyleProps);
 # Style props
 
 With style props, you can add inline styles to any Mantine component.
-Style props add styles to the **root** element, if you need to style nested elements,
+Style props add styles to the **root** element. If you need to style nested elements,
 use [Styles API](/styles/styles-api/) instead.
 
 ```tsx
@@ -25,13 +25,13 @@ function Demo() {
 
 ## Supported props
 
-All Mantine components that have root element support the following style props:
+All Mantine components that have a root element support the following style props:
 
 <StylePropsTable />
 
 ## Theme values
 
-Some style props can reference values from theme, for example `mt` will use `theme.spacing` value
+Some style props can reference values from the theme. For example, `mt` will use the `theme.spacing` value
 if you set `xs`, `sm`, `md`, `lg`, `xl`:
 
 ```tsx
@@ -59,7 +59,7 @@ function Demo() {
 }
 ```
 
-In `c`, `bd` and `bg` props you can reference colors from `theme.colors`:
+In the `c`, `bd` and `bg` props you can reference colors from `theme.colors`:
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -97,15 +97,15 @@ function Demo() {
 ## Responsive styles
 
 You can use object syntax to add responsive styles with style props.
-Note that responsive style props are [less performant](/styles/styles-performance) than regular style props,
-it is not recommended to use them in large lists of elements.
+Note that responsive style props are [less performant](/styles/styles-performance) than regular style props.
+It is not recommended to use them in large lists of elements.
 
 <Demo data={StylesDemos.responsiveStyleProps} />
 
 Responsive values are calculated the following way:
 
 - `base` value is used when none of breakpoint values are applied
-- `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger that the value of corresponding breakpoint specified in [theme.breakpoints](/styles/responsive/)
+- `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger than the value of the corresponding breakpoint specified in [theme.breakpoints](/styles/responsive/)
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -118,7 +118,7 @@ function Demo() {
 In this case the element will have the following styles:
 
 ```css
-/* Base styles added to element and then get overwritten with responsive values */
+/* Base styles added to the element and then get overwritten with responsive values */
 .element {
   width: 20rem;
 }

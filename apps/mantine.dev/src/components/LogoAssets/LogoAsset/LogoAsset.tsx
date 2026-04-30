@@ -2,7 +2,7 @@ import { Button, Group } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import classes from './LogoAsset.module.css';
 
-export interface LogoAssetProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface LogoAssetProps extends React.ComponentProps<'div'> {
   image: string;
   imageWidth: number;
   code: string;

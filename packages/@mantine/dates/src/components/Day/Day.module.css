@@ -66,7 +66,7 @@
   }
 
   &:where([data-in-range]) {
-    background-color: var(--mantine-primary-color-light-hover);
+    background-color: var(--mantine-primary-color-light);
     border-radius: 0;
 
     @mixin hover {
@@ -90,6 +90,13 @@
 
   &:where([data-last-in-range][data-first-in-range]) {
     border-radius: var(--mantine-radius-default);
+  }
+
+  &:where([data-full-width]) {
+    width: 100%;
+    height: auto;
+    min-height: var(--day-size);
+    aspect-ratio: 1;
   }
 
   &:where([data-selected]) {

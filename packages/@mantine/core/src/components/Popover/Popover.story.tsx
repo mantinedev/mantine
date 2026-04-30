@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* oxlint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import { useState } from 'react';
 import { Box, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
@@ -125,7 +124,6 @@ export function Controlled() {
         position="bottom"
         withArrow
         trapFocus
-        radius="md"
         returnFocus
         onClose={() => console.log('closed')}
         onOpen={() => console.log('opened')}
@@ -285,7 +283,6 @@ export function PopoverEvents() {
           position="bottom"
           withArrow
           trapFocus
-          radius="md"
           returnFocus
         >
           <Popover.Target>

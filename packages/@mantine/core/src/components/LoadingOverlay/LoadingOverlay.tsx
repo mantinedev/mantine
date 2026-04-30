@@ -22,23 +22,33 @@ export type LoadingOverlayCssVariables = {
 };
 
 export interface LoadingOverlayProps
-  extends BoxProps,
-    StylesApiProps<LoadingOverlayFactory>,
-    ElementProps<'div'> {
-  /** Props passed down to `Transition` component @default `{ transition: 'fade', duration: 0 }` */
+  extends BoxProps, StylesApiProps<LoadingOverlayFactory>, ElementProps<'div'> {
+  /** Props passed down to `Transition` component. Set `duration` to create custom transition or override default transition. */
   transitionProps?: TransitionOverride;
 
   /** Props passed down to `Loader` component */
   loaderProps?: LoaderProps;
 
-  /** Props passed down to `Overlay` component */
+  /** Props passed down to `Overlay` component. Use to customizing blur, opacity, color and other properties. */
   overlayProps?: OverlayProps;
 
-  /** Determines whether the overlay should be visible @default `false` */
+  /** Controls overlay visibility. Typically used with state (useState, useDisclosure). @default false */
   visible?: boolean;
 
-  /** Controls overlay `z-index` @default `400` */
+  /** Controls `z-index` of both the overlay and loader. The loader receives `z-index + 1`. @default 400 */
   zIndex?: string | number;
+
+  /** Called when transition starts */
+  onEnter?: () => void;
+
+  /** Called when transition ends */
+  onEntered?: () => void;
+
+  /** Called when exit transition starts */
+  onExit?: () => void;
+
+  /** Called when exit transition ends */
+  onExited?: () => void;
 }
 
 export type LoadingOverlayFactory = Factory<{
@@ -60,7 +70,7 @@ const varsResolver = createVarsResolver<LoadingOverlayFactory>((_, { zIndex }) =
   },
 }));
 
-export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
+export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
   const props = useProps('LoadingOverlay', defaultProps, _props);
   const {
     classNames,
@@ -75,6 +85,10 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
     visible,
     zIndex,
     attributes,
+    onEnter,
+    onEntered,
+    onExit,
+    onExited,
     ...others
   } = props;
 
@@ -97,14 +111,32 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
   const _overlayProps = { ...defaultProps.overlayProps, ...overlayProps };
 
   return (
-    <Transition transition="fade" {...transitionProps} mounted={!!visible}>
+    <Transition
+      transition="fade"
+      {...transitionProps}
+      mounted={!!visible}
+      onEnter={onEnter}
+      onEntered={onEntered}
+      onExit={onExit}
+      onExited={onExited}
+    >
       {(transitionStyles) => (
-        <Box {...getStyles('root', { style: transitionStyles })} ref={ref} {...others}>
-          <Loader {...getStyles('loader')} unstyled={unstyled} {...loaderProps} />
+        <Box {...getStyles('root', { style: transitionStyles })} {...others}>
+          <Loader
+            unstyled={unstyled}
+            {...loaderProps}
+            {...getStyles('loader', {
+              className: loaderProps?.className,
+              style: loaderProps?.style,
+            })}
+          />
 
           <Overlay
             {..._overlayProps}
-            {...getStyles('overlay')}
+            {...getStyles('overlay', {
+              className: _overlayProps?.className,
+              style: _overlayProps?.style,
+            })}
             darkHidden
             unstyled={unstyled}
             color={overlayProps?.color || theme.white}
@@ -112,7 +144,10 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
 
           <Overlay
             {..._overlayProps}
-            {...getStyles('overlay')}
+            {...getStyles('overlay', {
+              className: _overlayProps?.className,
+              style: _overlayProps?.style,
+            })}
             lightHidden
             unstyled={unstyled}
             color={overlayProps?.color || theme.colors.dark[5]}
@@ -124,4 +159,12 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
 });
 
 LoadingOverlay.classes = classes;
+LoadingOverlay.varsResolver = varsResolver;
 LoadingOverlay.displayName = '@mantine/core/LoadingOverlay';
+
+export namespace LoadingOverlay {
+  export type Props = LoadingOverlayProps;
+  export type StylesNames = LoadingOverlayStylesNames;
+  export type CssVariables = LoadingOverlayCssVariables;
+  export type Factory = LoadingOverlayFactory;
+}

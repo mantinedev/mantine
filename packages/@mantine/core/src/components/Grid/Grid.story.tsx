@@ -30,7 +30,7 @@ export function ContainerBreakpoints() {
     <div style={{ padding: 40, resize: 'horizontal', overflow: 'hidden' }}>
       <Grid
         type="container"
-        gutter={{ base: 10, xs: 30, lg: 50 }}
+        gap={{ base: 10, xs: 30, lg: 50 }}
         breakpoints={{ xs: '400px', sm: '600px', md: '800px', lg: '1000px', xl: '1200px' }}
       >
         <Grid.Col span={{ sm: 6, md: 3 }}>

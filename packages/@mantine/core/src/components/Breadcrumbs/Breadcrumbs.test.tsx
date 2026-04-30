@@ -9,16 +9,8 @@ describe('@mantine/core/Breadcrumbs', () => {
   tests.itSupportsSystemProps<BreadcrumbsProps, BreadcrumbsStylesNames>({
     component: Breadcrumbs,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Breadcrumbs',
     stylesApiSelectors: ['root', 'breadcrumb', 'separator'],
   });

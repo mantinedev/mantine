@@ -14,19 +14,12 @@ const defaultProps: CarouselProps = {
 };
 
 describe('@mantine/carousel/Carousel', () => {
+  tests.axe([<Carousel {...defaultProps} />]);
+
   tests.itSupportsSystemProps<CarouselProps, CarouselStylesNames>({
     component: Carousel,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/carousel/Carousel',
     stylesApiSelectors: [
       'root',

@@ -1,4 +1,5 @@
-import { createOptionalContext, GetStylesApi } from '../../core';
+import { createContext } from 'react';
+import { GetStylesApi } from '../../core';
 import type { InputWrapperFactory } from './InputWrapper/InputWrapper';
 
 interface InputWrapperContextValue {
@@ -10,12 +11,11 @@ interface InputWrapperContextValue {
   getStyles: GetStylesApi<InputWrapperFactory> | null;
 }
 
-export const [InputWrapperProvider, useInputWrapperContext] =
-  createOptionalContext<InputWrapperContextValue>({
-    offsetBottom: false,
-    offsetTop: false,
-    describedBy: undefined,
-    getStyles: null,
-    inputId: undefined,
-    labelId: undefined,
-  });
+export const InputWrapperContext = createContext<InputWrapperContextValue>({
+  offsetBottom: false,
+  offsetTop: false,
+  describedBy: undefined,
+  getStyles: null,
+  inputId: undefined,
+  labelId: undefined,
+});

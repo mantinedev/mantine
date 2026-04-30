@@ -7,7 +7,7 @@ export function MdxTitle({
   children,
   order = 2,
   ...others
-}: React.ComponentPropsWithoutRef<typeof Title>) {
+}: React.ComponentProps<typeof Title>) {
   if (order === 1) {
     return (
       <Title className={classes.title} data-h1>

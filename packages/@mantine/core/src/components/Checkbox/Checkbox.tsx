@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { useId } from '@mantine/hooks';
+import { use, useEffect, useRef } from 'react';
+import { useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -23,64 +23,87 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
-import classes from './Checkbox.module.css';
-import { CheckboxCard } from './CheckboxCard/CheckboxCard';
-import { useCheckboxGroupContext } from './CheckboxGroup.context';
-import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
-import { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
+import {
+  CheckboxCard,
+  type CheckboxCardProps,
+  type CheckboxCardStylesNames,
+  type CheckboxCardCssVariables,
+  type CheckboxCardFactory,
+} from './CheckboxCard/CheckboxCard';
+import {
+  CheckboxGroup,
+  CheckboxGroupContext,
+  type CheckboxGroupProps,
+  type CheckboxGroupStylesNames,
+  type CheckboxGroupFactory,
+} from './CheckboxGroup/CheckboxGroup';
+import {
+  CheckboxIndicator,
+  type CheckboxIndicatorProps,
+  type CheckboxIndicatorStylesNames,
+  type CheckboxIndicatorCssVariables,
+  type CheckboxIndicatorFactory,
+  type CheckboxIndicatorVariant,
+} from './CheckboxIndicator/CheckboxIndicator';
 import { CheckboxIcon } from './CheckIcon';
-
+import classes from './Checkbox.module.css';
 export type CheckboxVariant = 'filled' | 'outline';
 export type CheckboxStylesNames = 'icon' | 'inner' | 'input' | InlineInputStylesNames;
 export type CheckboxCssVariables = {
   root: '--checkbox-size' | '--checkbox-radius' | '--checkbox-color' | '--checkbox-icon-color';
 };
 
+export type CheckboxIconComponent = React.FC<{
+  indeterminate: boolean | undefined;
+  className: string;
+}>;
+
 export interface CheckboxProps
-  extends BoxProps,
-    StylesApiProps<CheckboxFactory>,
-    ElementProps<'input', 'size' | 'children'> {
+  extends BoxProps, StylesApiProps<CheckboxFactory>, ElementProps<'input', 'size' | 'children'> {
   /** Unique input id */
   id?: string;
 
   /** `label` associated with the checkbox */
   label?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls size of the component @default `'sm'` */
+  /** Controls size of the component @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input @default `'right'` */
+  /** Position of the label relative to the input @default 'right' */
   labelPosition?: 'left' | 'right';
 
-  /** Description displayed below the label */
+  /** Description below the label */
   description?: React.ReactNode;
 
-  /** Error message displayed below the label */
+  /** Error message below the label */
   error?: React.ReactNode;
 
-  /** Indeterminate state of the checkbox. If set, `checked` prop is ignored. */
+  /** Indeterminate state of the checkbox. If set, `checked` prop is dismissed. */
   indeterminate?: boolean;
 
-  /** Icon displayed when checkbox is in checked or indeterminate state */
-  icon?: React.FC<{ indeterminate: boolean | undefined; className: string }>;
+  /** Icon for checked or indeterminate state */
+  icon?: CheckboxIconComponent;
 
   /** Root element ref */
-  rootRef?: React.ForwardedRef<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement>;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. */
   iconColor?: MantineColor;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts icon color based on background color for `filled` variant */
   autoContrast?: boolean;
+
+  /** If set, applies error styles to the checkbox when `error` prop is set @default true */
+  withErrorStyles?: boolean;
 }
 
 export type CheckboxFactory = Factory<{
@@ -99,7 +122,9 @@ export type CheckboxFactory = Factory<{
 const defaultProps = {
   labelPosition: 'right',
   icon: CheckboxIcon,
+  withErrorStyles: true,
   variant: 'filled',
+  radius: 'sm',
 } satisfies Partial<CheckboxProps>;
 
 const varsResolver = createVarsResolver<CheckboxFactory>(
@@ -125,7 +150,7 @@ const varsResolver = createVarsResolver<CheckboxFactory>(
   }
 );
 
-export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
+export const Checkbox = factory<CheckboxFactory>((_props) => {
   const props = useProps('Checkbox', defaultProps, _props);
   const {
     classNames,
@@ -154,10 +179,15 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     autoContrast,
     mod,
     attributes,
+    readOnly,
+    onClick,
+    withErrorStyles,
+    ref,
     ...others
   } = props;
 
-  const ctx = useCheckboxGroupContext();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const ctx = use(CheckboxGroupContext);
   const _size = size || ctx?.size;
 
   const getStyles = useStyles<CheckboxFactory>({
@@ -183,23 +213,22 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       ctx?.onChange(event);
       onChange?.(event);
     },
-    disabled: ctx?.disabled ?? disabled,
   };
 
-  const fallbackRef = useRef<HTMLInputElement>(null);
-  const ref = forwardedRef || fallbackRef;
+  const isDisabledByGroup = ctx?.isDisabled?.(rest.value as string) ?? false;
+  const finalDisabled = disabled || isDisabledByGroup;
 
   useEffect(() => {
-    if (ref && 'current' in ref && ref.current) {
-      ref.current.indeterminate = indeterminate || false;
+    if (inputRef.current) {
+      inputRef.current.indeterminate = indeterminate || false;
 
       if (indeterminate) {
-        ref.current.setAttribute('data-indeterminate', 'true');
+        inputRef.current.setAttribute('data-indeterminate', 'true');
       } else {
-        ref.current.removeAttribute('data-indeterminate');
+        inputRef.current.removeAttribute('data-indeterminate');
       }
     }
-  }, [indeterminate, ref]);
+  }, [indeterminate]);
 
   return (
     <InlineInput
@@ -212,7 +241,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       label={label}
       description={description}
       error={error}
-      disabled={withContextProps.disabled}
+      disabled={finalDisabled}
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
@@ -220,6 +249,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       variant={variant}
       ref={rootRef}
       mod={mod}
+      attributes={attributes}
       inert={rest.inert}
       {...styleProps}
       {...wrapperProps}
@@ -228,13 +258,21 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
         <Box
           component="input"
           id={uuid}
-          ref={ref}
+          ref={useMergedRef(inputRef, ref)}
           mod={{ error: !!error }}
           {...getStyles('input', { focusable: true, variant })}
           {...rest}
           {...withContextProps}
+          disabled={finalDisabled}
           inert={rest.inert}
           type="checkbox"
+          onClick={(event) => {
+            if (readOnly) {
+              event.preventDefault();
+            }
+
+            onClick?.(event);
+          }}
         />
 
         <Icon indeterminate={indeterminate} {...getStyles('icon')} />
@@ -244,7 +282,38 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
 });
 
 Checkbox.classes = { ...classes, ...InlineInputClasses };
+Checkbox.varsResolver = varsResolver;
 Checkbox.displayName = '@mantine/core/Checkbox';
 Checkbox.Group = CheckboxGroup;
 Checkbox.Indicator = CheckboxIndicator;
 Checkbox.Card = CheckboxCard;
+
+export namespace Checkbox {
+  export type Props = CheckboxProps;
+  export type StylesNames = CheckboxStylesNames;
+  export type CssVariables = CheckboxCssVariables;
+  export type Factory = CheckboxFactory;
+  export type Variant = CheckboxVariant;
+  export type IconComponent = CheckboxIconComponent;
+
+  export namespace Group {
+    export type Props = CheckboxGroupProps;
+    export type StylesNames = CheckboxGroupStylesNames;
+    export type Factory = CheckboxGroupFactory;
+  }
+
+  export namespace Indicator {
+    export type Props = CheckboxIndicatorProps;
+    export type StylesNames = CheckboxIndicatorStylesNames;
+    export type CssVariables = CheckboxIndicatorCssVariables;
+    export type Factory = CheckboxIndicatorFactory;
+    export type Variant = CheckboxIndicatorVariant;
+  }
+
+  export namespace Card {
+    export type Props = CheckboxCardProps;
+    export type StylesNames = CheckboxCardStylesNames;
+    export type CssVariables = CheckboxCardCssVariables;
+    export type Factory = CheckboxCardFactory;
+  }
+}

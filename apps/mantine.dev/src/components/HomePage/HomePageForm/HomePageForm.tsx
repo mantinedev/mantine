@@ -1,4 +1,4 @@
-import { IconBalloon, IconGauge, IconPuzzle, IconRocket } from '@tabler/icons-react';
+import { BalloonIcon, GaugeIcon, PuzzlePieceIcon, RocketLaunchIcon } from '@phosphor-icons/react';
 import { SimpleGrid } from '@mantine/core';
 import { Demo } from '@mantinex/demo';
 import { FormDemos } from '@docs/demos';
@@ -14,23 +14,23 @@ import classes from './HomePageForm.module.css';
 
 const features: HomePageFeaturesData = [
   {
-    icon: IconPuzzle,
+    icon: PuzzlePieceIcon,
     title: 'Seamless integration',
     description: 'useForm hook works out of the box with all Mantine inputs',
   },
   {
-    icon: IconGauge,
+    icon: GaugeIcon,
     title: 'Excellent performance',
     description:
       'useForm rerenders only for validation and status changes, usually only 2-3 times per form lifecycle',
   },
   {
-    icon: IconBalloon,
+    icon: BalloonIcon,
     title: 'Lightweight',
     description: '6.3kb minified + gzipped, no dependencies except React',
   },
   {
-    icon: IconRocket,
+    icon: RocketLaunchIcon,
     title: 'Fully featured',
     description:
       'useForm supports lists and nested objects, multiple validation approaches (including schema based with zod) and an easy way to manage subscriptions to values updates',

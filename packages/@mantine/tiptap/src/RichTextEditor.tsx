@@ -12,13 +12,30 @@ import {
 } from '@mantine/core';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './labels';
 import { RichTextEditorProvider } from './RichTextEditor.context';
-import classes from './RichTextEditor.module.css';
-import { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent';
+import {
+  RichTextEditorContent,
+  type RichTextEditorContentProps,
+} from './RichTextEditorContent/RichTextEditorContent';
 import * as controls from './RichTextEditorControl';
-import { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
-import { RichTextEditorSourceCodeControl } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
-import { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
-import { RichTextEditorToolbar } from './RichTextEditorToolbar/RichTextEditorToolbar';
+import {
+  RichTextEditorControl,
+  type RichTextEditorControlProps,
+} from './RichTextEditorControl/RichTextEditorControl';
+import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
+import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
+import {
+  RichTextEditorSourceCodeControl,
+  type RichTextEditorSourceCodeControlProps,
+} from './RichTextEditorControl/RichTextEditorSourceCodeControl';
+import {
+  RichTextEditorControlsGroup,
+  type RichTextEditorControlsGroupProps,
+} from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
+import {
+  RichTextEditorToolbar,
+  type RichTextEditorToolbarProps,
+} from './RichTextEditorToolbar/RichTextEditorToolbar';
+import classes from './RichTextEditor.module.css';
 
 export type RichTextEditorVariant = 'default' | 'subtle';
 
@@ -37,16 +54,14 @@ export type RichTextEditorStylesNames =
   | 'linkEditorExternalControl';
 
 export interface RichTextEditorProps
-  extends BoxProps,
-    StylesApiProps<RichTextEditorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RichTextEditorFactory>, ElementProps<'div'> {
   /** Tiptap editor instance */
   editor: Editor | null;
 
-  /** Determines whether code highlight styles should be added @default `true` */
+  /** Determines whether code highlight styles should be added @default true */
   withCodeHighlightStyles?: boolean;
 
-  /** Determines whether typography styles should be added @default `true` */
+  /** Determines whether typography styles should be added @default true */
   withTypographyStyles?: boolean;
 
   /** Called if `RichTextEditor.SourceCode` clicked.  */
@@ -113,7 +128,7 @@ const defaultProps = {
   variant: 'default',
 } satisfies Partial<RichTextEditorProps>;
 
-export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
+export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
   const props = useProps('RichTextEditor', defaultProps, _props);
   const {
     classNames,
@@ -161,7 +176,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
         variant,
       }}
     >
-      <Box {...getStyles('root')} {...others} ref={ref}>
+      <Box {...getStyles('root')} {...others}>
         {children}
       </Box>
     </RichTextEditorProvider>
@@ -213,3 +228,28 @@ RichTextEditor.TaskList = controls.TaskListControl;
 RichTextEditor.TaskListSink = controls.TaskListSinkControl;
 RichTextEditor.TaskListLift = controls.TaskListLiftControl;
 RichTextEditor.SourceCode = RichTextEditorSourceCodeControl;
+
+export namespace RichTextEditor {
+  export type Props = RichTextEditorProps;
+  export type StylesNames = RichTextEditorStylesNames;
+  export type Factory = RichTextEditorFactory;
+
+  export namespace Toolbar {
+    export type Props = RichTextEditorToolbarProps;
+  }
+
+  export namespace Control {
+    export type Props = RichTextEditorControlProps;
+    export type ColorProps = RichTextEditorColorControlProps;
+    export type LinkProps = RichTextEditorLinkControlProps;
+    export type SourceCodeProps = RichTextEditorSourceCodeControlProps;
+  }
+
+  export namespace Content {
+    export type Props = RichTextEditorContentProps;
+  }
+
+  export namespace ControlsGroup {
+    export type Props = RichTextEditorControlsGroupProps;
+  }
+}

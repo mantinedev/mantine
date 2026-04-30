@@ -12,36 +12,41 @@ import {
   useRandomClassName,
   useStyles,
 } from '../../core';
-import { GridBreakpoints, GridProvider } from './Grid.context';
-import classes from './Grid.module.css';
-import { GridCol } from './GridCol/GridCol';
+import { GridBreakpoints, GridProvider, type GridContextValue } from './Grid.context';
+import { GridCol, type GridColProps } from './GridCol/GridCol';
 import { GridVariables } from './GridVariables';
-
+import classes from './Grid.module.css';
 export type GridStylesNames = 'root' | 'col' | 'inner' | 'container';
 export type GridCssVariables = {
   root: '--grid-justify' | '--grid-align' | '--grid-overflow';
 };
 
 export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, ElementProps<'div'> {
-  /** Gutter between columns, key of `theme.spacing` or any valid CSS value @default `'md'` */
-  gutter?: StyleProp<MantineSpacing>;
+  /** Gap between columns and rows, key of `theme.spacing` or any valid CSS value @default 'md' */
+  gap?: StyleProp<MantineSpacing>;
 
-  /** If set, columns in the last row expand to fill all available space @default `false` */
+  /** Row gap, overrides `gap` for vertical spacing */
+  rowGap?: StyleProp<MantineSpacing>;
+
+  /** Column gap, overrides `gap` for horizontal spacing */
+  columnGap?: StyleProp<MantineSpacing>;
+
+  /** If set, columns in the last row expand to fill all available space @default false */
   grow?: boolean;
 
-  /** Sets `justify-content` @default `flex-start` */
+  /** Sets `justify-content` @default flex-start */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Sets `align-items` @default `stretch` */
+  /** Sets `align-items` @default stretch */
   align?: React.CSSProperties['alignItems'];
 
-  /** Number of columns in each row @default `12` */
+  /** Number of columns in each row @default 12 */
   columns?: number;
 
-  /** Sets `overflow` CSS property on the root element @default `'visible'` */
+  /** Sets `overflow` CSS property on the root element @default 'visible' */
   overflow?: React.CSSProperties['overflow'];
 
-  /** Type of queries used for responsive styles @default `'media'` */
+  /** Type of queries used for responsive styles @default 'media' */
   type?: 'media' | 'container';
 
   /** Breakpoints values, only used with `type="container"` */
@@ -59,8 +64,7 @@ export type GridFactory = Factory<{
 }>;
 
 const defaultProps = {
-  gutter: 'md',
-  grow: false,
+  gap: 'md',
   columns: 12,
 } satisfies Partial<GridProps>;
 
@@ -72,7 +76,7 @@ const varsResolver = createVarsResolver<GridFactory>((_, { justify, align, overf
   },
 }));
 
-export const Grid = factory<GridFactory>((_props, ref) => {
+export const Grid = factory<GridFactory>((_props) => {
   const props = useProps('Grid', defaultProps, _props);
   const {
     classNames,
@@ -82,7 +86,9 @@ export const Grid = factory<GridFactory>((_props, ref) => {
     unstyled,
     vars,
     grow,
-    gutter,
+    gap,
+    rowGap,
+    columnGap,
     columns,
     align,
     justify,
@@ -114,7 +120,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
       <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
         <GridVariables selector={`.${responsiveClassName}`} {...props} />
         <div {...getStyles('container')}>
-          <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
+          <Box {...getStyles('root', { className: responsiveClassName })} {...others}>
             <div {...getStyles('inner')}>{children}</div>
           </Box>
         </div>
@@ -125,7 +131,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
   return (
     <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
       <GridVariables selector={`.${responsiveClassName}`} {...props} />
-      <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
+      <Box {...getStyles('root', { className: responsiveClassName })} {...others}>
         <div {...getStyles('inner')}>{children}</div>
       </Box>
     </GridProvider>
@@ -133,5 +139,19 @@ export const Grid = factory<GridFactory>((_props, ref) => {
 });
 
 Grid.classes = classes;
+Grid.varsResolver = varsResolver;
 Grid.displayName = '@mantine/core/Grid';
 Grid.Col = GridCol;
+
+export namespace Grid {
+  export type Props = GridProps;
+  export type Factory = GridFactory;
+  export type StylesNames = GridStylesNames;
+  export type CssVariables = GridCssVariables;
+  export type ColProps = GridColProps;
+  export type ContextValue = GridContextValue;
+
+  export namespace Col {
+    export type Props = GridColProps;
+  }
+}

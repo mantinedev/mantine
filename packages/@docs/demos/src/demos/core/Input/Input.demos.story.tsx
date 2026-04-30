@@ -13,11 +13,6 @@ export const Demo_component = {
   render: renderDemo(demos.component),
 };
 
-export const Demo_mask = {
-  name: '⭐ Demo: mask',
-  render: renderDemo(demos.mask),
-};
-
 export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
@@ -86,4 +81,9 @@ export const Demo_error = {
 export const Demo_clearButton = {
   name: '⭐ Demo: clearButton',
   render: renderDemo(demos.clearButton),
+};
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
 };

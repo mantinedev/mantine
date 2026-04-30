@@ -1,10 +1,10 @@
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon } from '@phosphor-icons/react';
 import { ActionIcon, Center, Group, RingProgress, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon, RingProgress, Text, Center } from '@mantine/core';
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -23,7 +23,7 @@ function Demo() {
         label={
           <Center>
             <ActionIcon color="teal" variant="light" radius="xl" size="xl">
-              <IconCheck size={22} />
+              <CheckIcon size={22} />
             </ActionIcon>
           </Center>
         }
@@ -50,7 +50,7 @@ function Demo() {
         label={
           <Center>
             <ActionIcon color="teal" variant="light" radius="xl" size="xl">
-              <IconCheck size={22} />
+              <CheckIcon size={22} />
             </ActionIcon>
           </Center>
         }

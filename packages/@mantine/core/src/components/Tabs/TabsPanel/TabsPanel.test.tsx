@@ -13,18 +13,13 @@ describe('@mantine/core/TabsPanel', () => {
   tests.itSupportsSystemProps<TabsPanelProps, TabsPanelStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/TabsPanel',
-    mod: true,
-    extend: true,
-    withProps: true,
-    styleProps: true,
     children: true,
-    classes: true,
     selector: '[role="tabpanel"]',
     stylesApiName: 'Tabs',
     stylesApiSelectors: ['panel'],
     providerStylesApi: false,
+    compound: true,
   });
 
   tests.itThrowsContextError({

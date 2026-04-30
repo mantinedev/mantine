@@ -26,7 +26,7 @@ export type CenterFactory = PolymorphicFactory<{
   stylesNames: CenterStylesNames;
 }>;
 
-export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
+export const Center = polymorphicFactory<CenterFactory>((_props) => {
   const props = useProps('Center', null, _props);
   const {
     classNames,
@@ -54,8 +54,14 @@ export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
     vars,
   });
 
-  return <Box ref={ref} mod={[{ inline }, mod]} {...getStyles('root')} {...others} />;
+  return <Box mod={[{ inline }, mod]} {...getStyles('root')} {...others} />;
 });
 
 Center.classes = classes;
 Center.displayName = '@mantine/core/Center';
+
+export namespace Center {
+  export type Props = CenterProps;
+  export type Factory = CenterFactory;
+  export type StylesNames = CenterStylesNames;
+}

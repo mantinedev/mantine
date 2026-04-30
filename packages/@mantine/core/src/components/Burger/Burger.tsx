@@ -28,10 +28,8 @@ export type BurgerCssVariables = {
 };
 
 export interface BurgerProps
-  extends BoxProps,
-    StylesApiProps<BurgerFactory>,
-    ElementProps<'button'> {
-  /** Controls burger `width` and `height`, numbers are converted to rem @default `'md'` */
+  extends BoxProps, StylesApiProps<BurgerFactory>, ElementProps<'button'> {
+  /** Controls burger `width` and `height`, numbers are converted to rem @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
   /** Controls height of lines, by default calculated based on `size` prop */
@@ -40,13 +38,13 @@ export interface BurgerProps
   /** Key of `theme.colors` of any valid CSS value, by default `theme.white` in dark color scheme and `theme.black` in light */
   color?: MantineColor;
 
-  /** State of the burger, when `true` burger is transformed into X @default `false` */
+  /** State of the burger, when `true` burger is transformed into X @default false */
   opened?: boolean;
 
-  /** `transition-duration` property value in ms @default `300` */
+  /** `transition-duration` property value in ms @default 300 */
   transitionDuration?: number;
 
-  /** `transition-timing-function` property value @default `'ease'` */
+  /** `transition-timing-function` property value @default 'ease' */
   transitionTimingFunction?: string;
 }
 
@@ -70,7 +68,7 @@ const varsResolver = createVarsResolver<BurgerFactory>(
   })
 );
 
-export const Burger = factory<BurgerFactory>((_props, ref) => {
+export const Burger = factory<BurgerFactory>((_props) => {
   const props = useProps('Burger', null, _props);
   const {
     classNames,
@@ -103,7 +101,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
   });
 
   return (
-    <UnstyledButton {...getStyles('root')} ref={ref} {...others}>
+    <UnstyledButton {...getStyles('root')} {...others}>
       <Box mod={['reduce-motion', { opened }]} {...getStyles('burger')} />
       {children}
     </UnstyledButton>
@@ -111,4 +109,12 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
 });
 
 Burger.classes = classes;
+Burger.varsResolver = varsResolver;
 Burger.displayName = '@mantine/core/Burger';
+
+export namespace Burger {
+  export type Props = BurgerProps;
+  export type StylesNames = BurgerStylesNames;
+  export type CssVariables = BurgerCssVariables;
+  export type Factory = BurgerFactory;
+}

@@ -1,21 +1,20 @@
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
-import classes from './Modal.module.css';
-import { ModalBody } from './ModalBody';
-import { ModalCloseButton } from './ModalCloseButton';
-import { ModalContent } from './ModalContent';
-import { ModalHeader } from './ModalHeader';
-import { ModalOverlay } from './ModalOverlay';
+import { ModalBody, type ModalBodyProps } from './ModalBody';
+import { ModalCloseButton, type ModalCloseButtonProps } from './ModalCloseButton';
+import { ModalContent, type ModalContentProps } from './ModalContent';
+import { ModalHeader, type ModalHeaderProps } from './ModalHeader';
+import { ModalOverlay, type ModalOverlayProps } from './ModalOverlay';
 import {
   ModalRoot,
   ModalRootCssVariables,
   ModalRootProps,
   ModalRootStylesNames,
 } from './ModalRoot';
-import { ModalStack, useModalStackContext } from './ModalStack';
-import { ModalTitle } from './ModalTitle';
-
+import { ModalStack, ModalStackContext, type ModalStackProps } from './ModalStack';
+import { ModalTitle, type ModalTitleProps } from './ModalTitle';
+import classes from './Modal.module.css';
 export type ModalStylesNames = ModalRootStylesNames;
 export type ModalCssVariables = ModalRootCssVariables;
 
@@ -25,7 +24,7 @@ export interface ModalProps extends ModalRootProps {
   /** Modal title */
   title?: React.ReactNode;
 
-  /** If set, the overlay is rendered @default `true` */
+  /** If set, the overlay is rendered @default true */
   withOverlay?: boolean;
 
   /** Props passed down to the `Overlay` component, use to configure opacity, `background-color`, styles and other properties */
@@ -34,7 +33,7 @@ export interface ModalProps extends ModalRootProps {
   /** Modal content */
   children?: React.ReactNode;
 
-  /** If set, the close button is rendered @default `true` */
+  /** If set, the close button is rendered @default true */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
@@ -75,7 +74,7 @@ const defaultProps = {
   withCloseButton: true,
 } satisfies Partial<ModalProps>;
 
-export const Modal = factory<ModalFactory>((_props, ref) => {
+export const Modal = factory<ModalFactory>((_props) => {
   const {
     title,
     withOverlay,
@@ -89,7 +88,7 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
     zIndex,
     ...others
   } = useProps('Modal', defaultProps, _props);
-  const ctx = useModalStackContext();
+  const ctx = use(ModalStackContext);
   const hasHeader = !!title || withCloseButton;
   const stackProps =
     ctx && stackId
@@ -113,7 +112,6 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
 
   return (
     <ModalRoot
-      ref={ref}
       radius={radius}
       opened={opened}
       zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
@@ -154,3 +152,42 @@ Modal.Header = ModalHeader;
 Modal.Title = ModalTitle;
 Modal.CloseButton = ModalCloseButton;
 Modal.Stack = ModalStack;
+
+export namespace Modal {
+  export type Props = ModalProps;
+  export type StylesNames = ModalStylesNames;
+  export type CssVariables = ModalCssVariables;
+  export type Factory = ModalFactory;
+
+  export namespace Root {
+    export type Props = ModalRootProps;
+  }
+
+  export namespace Body {
+    export type Props = ModalBodyProps;
+  }
+
+  export namespace CloseButton {
+    export type Props = ModalCloseButtonProps;
+  }
+
+  export namespace Content {
+    export type Props = ModalContentProps;
+  }
+
+  export namespace Header {
+    export type Props = ModalHeaderProps;
+  }
+
+  export namespace Overlay {
+    export type Props = ModalOverlayProps;
+  }
+
+  export namespace Title {
+    export type Props = ModalTitleProps;
+  }
+
+  export namespace Stack {
+    export type Props = ModalStackProps;
+  }
+}

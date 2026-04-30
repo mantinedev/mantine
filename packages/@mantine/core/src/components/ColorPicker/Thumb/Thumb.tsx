@@ -1,20 +1,20 @@
-import { forwardRef } from 'react';
 import { Box } from '../../../core';
 
-export interface ThumbProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface ThumbProps extends React.ComponentProps<'div'> {
   variant?: string;
   position: { x: number; y: number };
 }
 
-export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(({ position, ...others }, ref) => (
-  <Box
-    ref={ref}
-    __vars={{
-      '--thumb-y-offset': `${position.y * 100}%`,
-      '--thumb-x-offset': `${position.x * 100}%`,
-    }}
-    {...others}
-  />
-));
+export function Thumb({ position, ...others }: ThumbProps) {
+  return (
+    <Box
+      __vars={{
+        '--thumb-y-offset': `${position.y * 100}%`,
+        '--thumb-x-offset': `${position.x * 100}%`,
+      }}
+      {...others}
+    />
+  );
+}
 
 Thumb.displayName = '@mantine/core/ColorPickerThumb';

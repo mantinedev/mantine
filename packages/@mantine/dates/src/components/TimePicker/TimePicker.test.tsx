@@ -16,12 +16,7 @@ describe('@mantine/dates/TimePicker', () => {
   tests.itSupportsSystemProps<TimePickerProps, TimePickerStylesNames>({
     component: TimePicker,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/dates/TimePicker',
     stylesApiSelectors: ['root'],
   });
@@ -669,5 +664,69 @@ describe('@mantine/dates/TimePicker', () => {
 
     await userEvent.type(screen.getByLabelText('test-hours'), '0');
     expect(screen.getByLabelText('test-minutes')).toHaveFocus();
+  });
+
+  it('renders duration type with default value greater than 24 hours', () => {
+    render(<TimePicker {...defaultProps} type="duration" withSeconds defaultValue="155:22:45" />);
+    expect(screen.getByLabelText('test-hours')).toHaveValue('155');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('22');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('45');
+  });
+
+  it('calls onChange with values greater than 24 hours in duration mode', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} type="duration" withSeconds onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('155:22:45');
+    expect(spy).toHaveBeenCalledWith('155:22:45');
+  });
+
+  it('does not auto-advance from hours field in duration mode', async () => {
+    render(<TimePicker {...defaultProps} type="duration" />);
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '8');
+    expect(screen.getByLabelText('test-hours')).toHaveFocus();
+  });
+
+  it('does not render AM/PM input in duration mode even when format is 12h', () => {
+    render(<TimePicker {...defaultProps} type="duration" format="12h" />);
+    expect(screen.queryByLabelText('test-am-pm')).not.toBeInTheDocument();
+  });
+
+  it('handles controlled value greater than 24 hours in duration mode', () => {
+    render(<TimePicker {...defaultProps} type="duration" withSeconds value="1000:00:00" />);
+    expect(screen.getByLabelText('test-hours')).toHaveValue('1000');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('00');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('00');
+  });
+
+  it('allows incrementing hours beyond 23 in duration mode', async () => {
+    render(<TimePicker {...defaultProps} type="duration" defaultValue="23:00" />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.type(document.activeElement!, '{arrowup}');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('24');
+  });
+
+  it('clears duration value correctly', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        type="duration"
+        withSeconds
+        clearable
+        defaultValue="155:22:45"
+        onChange={spy}
+      />
+    );
+    expect(screen.getByLabelText('test-hours')).toHaveValue('155');
+
+    await userEvent.click(screen.getByLabelText('test-clear'));
+    expect(screen.getByLabelText('test-hours')).toHaveValue('');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('');
+    expect(spy).toHaveBeenLastCalledWith('');
   });
 });

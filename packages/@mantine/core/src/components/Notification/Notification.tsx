@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -30,16 +31,14 @@ export type NotificationCssVariables = {
 };
 
 export interface NotificationProps
-  extends BoxProps,
-    StylesApiProps<NotificationFactory>,
-    ElementProps<'div', 'title'> {
+  extends BoxProps, StylesApiProps<NotificationFactory>, ElementProps<'div', 'title'> {
   /** Called when the close button is clicked */
   onClose?: () => void;
 
-  /** Controls notification line or icon color, key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /** Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Notification icon, replaces color line */
@@ -48,20 +47,20 @@ export interface NotificationProps
   /** Notification title, displayed above the message body */
   title?: React.ReactNode;
 
-  /** Main notification message */
+  /** Notification description, displayed below the title. When no title is provided, this serves as the main message. */
   children?: React.ReactNode;
 
-  /** If set, the `Loader` component is displayed instead of the icon */
+  /** If set, displays a `Loader` component instead of the icon. Takes precedence over the `icon` prop if both are provided. */
   loading?: boolean;
 
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** If set, the close button is visible @default `true` */
+  /** If set, the close button is visible @default true */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
-  closeButtonProps?: Record<string, any>;
+  closeButtonProps?: ElementProps<'button'> & DataAttributes;
 
   /** Props passed down to the `Loader` component */
   loaderProps?: LoaderProps;
@@ -85,7 +84,7 @@ const varsResolver = createVarsResolver<NotificationFactory>((theme, { radius, c
   },
 }));
 
-export const Notification = factory<NotificationFactory>((_props, ref) => {
+export const Notification = factory<NotificationFactory>((_props) => {
   const props = useProps('Notification', defaultProps, _props);
   const {
     className,
@@ -129,12 +128,11 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     <Box
       {...getStyles('root')}
       mod={[{ 'data-with-icon': !!icon || loading, 'data-with-border': withBorder }, mod]}
-      ref={ref}
       role={role || 'alert'}
       {...others}
     >
       {icon && !loading && <div {...getStyles('icon')}>{icon}</div>}
-      {loading && <Loader size={28} color={color} {...loaderProps} {...getStyles('loader')} />}
+      {loading && <Loader size={28} color={color} {...getStyles('loader')} {...loaderProps} />}
 
       <div {...getStyles('body')}>
         {title && <div {...getStyles('title')}>{title}</div>}
@@ -150,7 +148,10 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
           color="gray"
           {...closeButtonProps}
           unstyled={unstyled}
-          onClick={onClose}
+          onClick={(event) => {
+            closeButtonProps?.onClick?.(event);
+            onClose?.();
+          }}
           {...getStyles('closeButton')}
         />
       )}
@@ -159,4 +160,12 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
 });
 
 Notification.classes = classes;
+Notification.varsResolver = varsResolver;
 Notification.displayName = '@mantine/core/Notification';
+
+export namespace Notification {
+  export type Props = NotificationProps;
+  export type StylesNames = NotificationStylesNames;
+  export type Factory = NotificationFactory;
+  export type CssVariables = NotificationCssVariables;
+}

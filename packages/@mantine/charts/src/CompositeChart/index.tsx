@@ -1,5 +1,4 @@
-export { CompositeChart } from './CompositeChart';
-export type {
+import type {
   CompositeChartCssVariables,
   CompositeChartCurveType,
   CompositeChartFactory,
@@ -7,3 +6,14 @@ export type {
   CompositeChartSeries,
   CompositeChartStylesNames,
 } from './CompositeChart';
+
+export { CompositeChart } from './CompositeChart';
+
+export type {
+  CompositeChartProps,
+  CompositeChartStylesNames,
+  CompositeChartCssVariables,
+  CompositeChartFactory,
+  CompositeChartSeries,
+  CompositeChartCurveType,
+};

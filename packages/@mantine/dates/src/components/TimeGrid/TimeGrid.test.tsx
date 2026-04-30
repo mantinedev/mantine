@@ -11,13 +11,8 @@ describe('@mantine/dates/TimeGrid', () => {
   tests.itSupportsSystemProps<TimeGridProps, TimeGridStylesNames>({
     component: TimeGrid,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/TimeGrid',
     stylesApiSelectors: ['root'],
   });

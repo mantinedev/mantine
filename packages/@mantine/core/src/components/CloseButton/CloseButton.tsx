@@ -13,8 +13,8 @@ import {
   useStyles,
 } from '../../core';
 import { UnstyledButton } from '../UnstyledButton';
-import classes from './CloseButton.module.css';
 import { CloseIcon } from './CloseIcon';
+import classes from './CloseButton.module.css';
 
 export type CloseButtonVariant = 'subtle' | 'transparent';
 export type CloseButtonStylesNames = 'root';
@@ -25,16 +25,16 @@ export type CloseButtonCssVariables = {
 export interface __CloseButtonProps {
   'data-disabled'?: boolean;
 
-  /** Controls width and height of the button. Numbers are converted to rem. @default `'md'` */
+  /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Sets `disabled` attribute, assigns disabled styles */
   disabled?: boolean;
 
-  /** `X` icon `width` and `height` @default `70%` */
+  /** `X` icon `width` and `height` @default 70% */
   iconSize?: number | string;
 
   /** Content rendered inside the button. For example `VisuallyHidden` with label for screen readers. */
@@ -45,9 +45,7 @@ export interface __CloseButtonProps {
 }
 
 export interface CloseButtonProps
-  extends __CloseButtonProps,
-    BoxProps,
-    StylesApiProps<CloseButtonFactory> {
+  extends __CloseButtonProps, BoxProps, StylesApiProps<CloseButtonFactory> {
   __staticSelector?: string;
 }
 
@@ -72,7 +70,7 @@ const varsResolver = createVarsResolver<CloseButtonFactory>((_, { size, radius, 
   },
 }));
 
-export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) => {
+export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props) => {
   const props = useProps('CloseButton', defaultProps, _props);
   const {
     iconSize,
@@ -110,7 +108,6 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
 
   return (
     <UnstyledButton
-      ref={ref}
       {...others}
       unstyled={unstyled}
       variant={variant}
@@ -125,4 +122,13 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
 });
 
 CloseButton.classes = classes;
+CloseButton.varsResolver = varsResolver;
 CloseButton.displayName = '@mantine/core/CloseButton';
+
+export namespace CloseButton {
+  export type Props = CloseButtonProps;
+  export type StylesNames = CloseButtonStylesNames;
+  export type Factory = CloseButtonFactory;
+  export type Variant = CloseButtonVariant;
+  export type CssVariables = CloseButtonCssVariables;
+}

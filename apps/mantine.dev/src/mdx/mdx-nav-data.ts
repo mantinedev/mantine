@@ -48,6 +48,8 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog910,
+      MDX_DATA.Changelog900,
       MDX_DATA.Changelog830,
       MDX_DATA.Changelog820,
       MDX_DATA.Changelog810,
@@ -76,7 +78,12 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
 
   {
     category: 'Migration guides',
-    pages: [MDX_DATA.SixToSeven, MDX_DATA.SevenToEight, MDX_DATA.Tiptap3Migration],
+    pages: [
+      MDX_DATA.SixToSeven,
+      MDX_DATA.SevenToEight,
+      MDX_DATA.EightToNine,
+      MDX_DATA.Tiptap3Migration,
+    ],
   },
 ];
 
@@ -88,7 +95,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.ThemeObject,
       MDX_DATA.Colors,
       MDX_DATA.ColorSchemes,
-      MDX_DATA.Typography,
+      MDX_DATA.TypographyTheming,
       MDX_DATA.DefaultProps,
     ],
   },
@@ -112,6 +119,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.StyleProps,
       MDX_DATA.ColorFunctions,
       MDX_DATA.Rtl,
+      MDX_DATA.UnstyledComponents,
     ],
   },
   {
@@ -120,7 +128,12 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
   },
   {
     category: 'Other',
-    pages: [MDX_DATA.Polymorphic, MDX_DATA.StylesPerformance, MDX_DATA.UnstyledComponents],
+    pages: [
+      MDX_DATA.StylesPerformance,
+      MDX_DATA.Polymorphic,
+      MDX_DATA.CustomComponents,
+      MDX_DATA.ControlledVsUncontrolled,
+    ],
   },
 ];
 
@@ -133,6 +146,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
     category: 'UI and Dom',
     pages: [
       MDX_DATA.useClickOutside,
+      MDX_DATA.useCollapse,
       MDX_DATA.useColorScheme,
       MDX_DATA.useElementSize,
       MDX_DATA.useEventListener,
@@ -147,6 +161,8 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useMouse,
       MDX_DATA.useMove,
       MDX_DATA.useRadialMove,
+      MDX_DATA.useFloatingWindow,
+      MDX_DATA.useScroller,
       MDX_DATA.useReducedMotion,
       MDX_DATA.useResizeObserver,
       MDX_DATA.useMutationObserver,
@@ -159,6 +175,8 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useOrientation,
       MDX_DATA.useFileDialog,
       MDX_DATA.useLongPress,
+      MDX_DATA.useMask,
+      MDX_DATA.useRovingIndex,
     ],
   },
 
@@ -201,6 +219,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useFavicon,
       MDX_DATA.useHash,
       MDX_DATA.useHeadroom,
+      MDX_DATA.useScrollDirection,
       MDX_DATA.useIdle,
       MDX_DATA.useInterval,
       MDX_DATA.useMergedRef,
@@ -252,12 +271,15 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
     pages: [
       MDX_DATA.Input,
       MDX_DATA.ColorPicker,
+      MDX_DATA.AlphaSlider,
+      MDX_DATA.HueSlider,
       MDX_DATA.NativeSelect,
       MDX_DATA.SegmentedControl,
       MDX_DATA.Slider,
       MDX_DATA.RangeSlider,
       MDX_DATA.Switch,
       MDX_DATA.TextInput,
+      MDX_DATA.MaskInput,
       MDX_DATA.Checkbox,
       MDX_DATA.Radio,
       MDX_DATA.Fieldset,
@@ -336,6 +358,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.LoadingOverlay,
       MDX_DATA.Dialog,
       MDX_DATA.FloatingIndicator,
+      MDX_DATA.FloatingWindow,
     ],
   },
   {
@@ -354,6 +377,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Timeline,
       MDX_DATA.Spoiler,
       MDX_DATA.NumberFormatter,
+      MDX_DATA.OverflowList,
     ],
   },
   {
@@ -375,9 +399,11 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
     pages: [
       MDX_DATA.Collapse,
       MDX_DATA.FocusTrap,
+      MDX_DATA.Marquee,
       MDX_DATA.Paper,
       MDX_DATA.Portal,
       MDX_DATA.ScrollArea,
+      MDX_DATA.Scroller,
       MDX_DATA.Transition,
       MDX_DATA.VisuallyHidden,
       MDX_DATA.Divider,
@@ -395,11 +421,9 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
     category: 'Dates',
     pages: [
       MDX_DATA.GettingStartedDates,
-      MDX_DATA.MiniCalendar,
-      MDX_DATA.Calendar,
-      MDX_DATA.DateTimePicker,
       MDX_DATA.DatePicker,
       MDX_DATA.DatePickerInput,
+      MDX_DATA.DateTimePicker,
       MDX_DATA.DateInput,
       MDX_DATA.MonthPicker,
       MDX_DATA.MonthPickerInput,
@@ -409,6 +433,8 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.TimePicker,
       MDX_DATA.TimeGrid,
       MDX_DATA.TimeValue,
+      MDX_DATA.MiniCalendar,
+      MDX_DATA.Calendar,
     ],
   },
 
@@ -429,6 +455,22 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.RadialBarChart,
       MDX_DATA.Sparkline,
       MDX_DATA.Heatmap,
+      MDX_DATA.BarsList,
+      MDX_DATA.Treemap,
+    ],
+  },
+
+  {
+    category: 'Schedule',
+    pages: [
+      MDX_DATA.GettingStartedSchedule,
+      MDX_DATA.Schedule,
+      MDX_DATA.DayView,
+      MDX_DATA.MonthView,
+      MDX_DATA.WeekView,
+      MDX_DATA.YearView,
+      MDX_DATA.MobileMonthView,
+      MDX_DATA.RecurringEventsSchedule,
     ],
   },
 
@@ -469,6 +511,7 @@ const FORM_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.createFormContext,
       MDX_DATA.formActions,
       MDX_DATA.formRecipes,
+      MDX_DATA.formAllInputs,
     ],
   },
 ];

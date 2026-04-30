@@ -13,9 +13,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxHeaderStylesNames = 'header';
 
 export interface ComboboxHeaderProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxHeaderFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<ComboboxHeaderFactory>, ElementProps<'div'> {}
 
 export type ComboboxHeaderFactory = Factory<{
   props: ComboboxHeaderProps;
@@ -24,7 +22,7 @@ export type ComboboxHeaderFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxHeader = factory<ComboboxHeaderFactory>((props, ref) => {
+export const ComboboxHeader = factory<ComboboxHeaderFactory>((props) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'ComboboxHeader',
     null,
@@ -35,7 +33,6 @@ export const ComboboxHeader = factory<ComboboxHeaderFactory>((props, ref) => {
 
   return (
     <Box
-      ref={ref}
       {...ctx.getStyles('header', { className, classNames, style, styles })}
       {...others}
       onMouseDown={(event) => {

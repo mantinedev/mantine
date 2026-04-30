@@ -1,6 +1,5 @@
 export { usage } from './Input.demo.usage';
 export { component } from './Input.demo.component';
-export { mask } from './Input.demo.mask';
 export { sections } from './Input.demo.sections';
 export { wrapper } from './Input.demo.wrapper';
 export { inputContainer } from './Input.demo.inputContainer';
@@ -15,3 +14,4 @@ export { stylesApi } from './Input.demo.stylesApi';
 export { wrapperStylesApi } from './Input.demo.wrapperStylesApi';
 export { error } from './Input.demo.error';
 export { clearButton } from './Input.demo.clearButton';
+export { loading } from './Input.demo.loading';

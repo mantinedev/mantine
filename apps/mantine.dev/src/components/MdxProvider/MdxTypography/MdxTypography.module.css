@@ -1,6 +1,14 @@
 .paragraph {
   line-height: 1.65;
   font-size: var(--docs-font-size);
+
+  & + .ul {
+    margin-top: 0;
+  }
+
+  &:has(+ .ul) {
+    margin-bottom: 0;
+  }
 }
 
 .ul {

@@ -13,4 +13,6 @@ export * from './CompositeChart/index.js';
 export * from './RadialBarChart/index.js';
 export * from './FunnelChart/index.js';
 export * from './Heatmap/index.js';
+export * from './BarsList/index.js';
+export * from './Treemap/index.js';
 export * from './types';

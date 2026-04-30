@@ -1,6 +1,6 @@
 {
   "name": "@mantine/hooks",
-  "version": "8.3.15",
+  "version": "9.1.1",
   "description": "A collection of 50+ hooks for state and UI management",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -37,6 +37,6 @@
     "directory": "packages/@mantine/hooks"
   },
   "peerDependencies": {
-    "react": "^18.x || ^19.x"
+    "react": "^19.2.0"
   }
 }

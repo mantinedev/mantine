@@ -1,8 +1,8 @@
-export function getClientPosition(event: any) {
+export function getClientPosition(event: any, orientation?: 'horizontal' | 'vertical') {
   if ('TouchEvent' in window && event instanceof window.TouchEvent) {
     const touch = event.touches[0];
-    return touch.clientX;
+    return orientation === 'vertical' ? touch.clientY : touch.clientX;
   }
 
-  return event.clientX;
+  return orientation === 'vertical' ? event.clientY : event.clientX;
 }

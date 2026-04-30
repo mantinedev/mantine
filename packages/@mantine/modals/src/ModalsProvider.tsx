@@ -12,7 +12,7 @@ import {
   OpenContextModal,
 } from './context';
 import { useModalsEvents } from './events';
-import { modalsReducer } from './reducer';
+import { handleCloseModal, modalsReducer } from './reducer';
 
 export interface ModalsProviderProps {
   /** Your app */
@@ -71,9 +71,20 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   const [state, dispatch] = useReducer(modalsReducer, { modals: [], current: null });
   const stateRef = useRef(state);
   stateRef.current = state;
+  const closingRef = useRef(false);
 
   const closeAll = useCallback(
     (canceled?: boolean) => {
+      if (!closingRef.current) {
+        closingRef.current = true;
+        stateRef.current.modals
+          .concat()
+          .reverse()
+          .forEach((modal) => {
+            handleCloseModal(modal, canceled);
+          });
+        closingRef.current = false;
+      }
       dispatch({ type: 'CLOSE_ALL', canceled });
     },
     [stateRef, dispatch]
@@ -131,6 +142,14 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const closeModal = useCallback(
     (id: string, canceled?: boolean) => {
+      if (!closingRef.current) {
+        const modal = stateRef.current.modals.find((m) => m.id === id);
+        if (modal) {
+          closingRef.current = true;
+          handleCloseModal(modal, canceled);
+          closingRef.current = false;
+        }
+      }
       dispatch({ type: 'CLOSE', modalId: id, canceled });
     },
     [stateRef, dispatch]
@@ -225,7 +244,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   const { modalProps: currentModalProps, content } = getCurrentModal();
 
   return (
-    <ModalsContext.Provider value={ctx}>
+    <ModalsContext value={ctx}>
       <Modal
         zIndex={getDefaultZIndex('modal') + 1}
         {...modalProps}
@@ -237,6 +256,6 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
       </Modal>
 
       {children}
-    </ModalsContext.Provider>
+    </ModalsContext>
   );
 }

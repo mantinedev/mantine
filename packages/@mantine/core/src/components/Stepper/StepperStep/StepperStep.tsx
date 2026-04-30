@@ -35,24 +35,23 @@ export type StepperStepStylesNames =
   | 'stepWrapper'
   | 'stepIcon'
   | 'stepCompletedIcon'
+  | 'stepIconContent'
   | 'stepBody'
   | 'stepLabel'
   | 'stepDescription';
 
 export interface StepperStepProps
-  extends BoxProps,
-    CompoundStylesApiProps<StepperStepFactory>,
-    ElementProps<'button'> {
-  /** Step index, controlled by Stepper component */
+  extends BoxProps, CompoundStylesApiProps<StepperStepFactory>, ElementProps<'button'> {
+  /** 0-based step index, automatically set by Stepper component */
   step?: number;
 
-  /** Step state, controlled by Stepper component */
+  /** Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed */
   state?: 'stepInactive' | 'stepProgress' | 'stepCompleted';
 
   /** Key of `theme.colors`, by default controlled by Stepper component */
   color?: MantineColor;
 
-  /** Determines whether the icon should be displayed */
+  /** When false, hides the step icon. Useful for creating compact steppers with only labels @default true */
   withIcon?: boolean;
 
   /** Step icon, defaults to `step index + 1` when rendered within Stepper */
@@ -105,7 +104,7 @@ const defaultProps = {
   iconPosition: 'left',
 } satisfies Partial<StepperStepProps>;
 
-export const StepperStep = factory<StepperStepFactory>((props, ref) => {
+export const StepperStep = factory<StepperStepFactory>((props) => {
   const {
     classNames,
     className,
@@ -148,7 +147,6 @@ export const StepperStep = factory<StepperStepFactory>((props, ref) => {
         { 'icon-position': iconPosition || ctx.iconPosition, 'allow-click': allowStepClick },
         mod,
       ]}
-      ref={ref}
       {...dataAttributes}
       {...others}
       __vars={{ '--step-color': color ? getThemeColor(color, theme) : undefined }}
@@ -176,15 +174,17 @@ export const StepperStep = factory<StepperStepFactory>((props, ref) => {
             </Transition>
 
             {state !== 'stepCompleted' ? (
-              loading ? (
-                <Loader
-                  {...ctx.getStyles('stepLoader', stylesApi)}
-                  size="calc(var(--stepper-icon-size) / 2)"
-                  color={color}
-                />
-              ) : (
-                getStepFragment(_icon || icon, step)
-              )
+              <span {...ctx.getStyles('stepIconContent', stylesApi)}>
+                {loading ? (
+                  <Loader
+                    {...ctx.getStyles('stepLoader', stylesApi)}
+                    size="calc(var(--stepper-icon-size) / 2)"
+                    color={color}
+                  />
+                ) : (
+                  getStepFragment(_icon || icon, step)
+                )}
+              </span>
             ) : null}
           </span>
           {orientation === 'vertical' && (

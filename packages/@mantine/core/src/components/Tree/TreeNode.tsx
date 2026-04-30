@@ -1,7 +1,10 @@
-import { useRef } from 'react';
+import { Activity, useRef } from 'react';
 import { Box, findElementAncestor, GetStylesApi } from '../../core';
-import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
+import { Loader } from '../Loader';
+import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
+import type { RenderNode, TreeDragState, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
+import { TreeAllowDrop, useTreeNodeDragDrop } from './use-tree-node-drag-drop';
 
 function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
   if (!anchor || !value) {
@@ -30,6 +33,12 @@ interface TreeNodeProps {
   allowRangeSelection: boolean | undefined;
   expandOnSpace: boolean | undefined;
   checkOnSpace: boolean | undefined;
+  keepMounted: boolean | undefined;
+  onDragDrop: ((payload: TreeDragDropPayload) => void) | undefined;
+  allowDrop: TreeAllowDrop | undefined;
+  withDragHandle: boolean | undefined;
+  dragStateRef: React.RefObject<TreeDragState>;
+  data: TreeNodeData[];
 }
 
 export function TreeNode({
@@ -46,8 +55,21 @@ export function TreeNode({
   allowRangeSelection,
   expandOnSpace,
   checkOnSpace,
+  keepMounted,
+  onDragDrop,
+  allowDrop,
+  withDragHandle,
+  dragStateRef,
+  data,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
+  const hasLoadedChildren = Array.isArray(node.children);
+  const hasAsyncChildren = !!node.hasChildren && !hasLoadedChildren;
+  const hasChildren = hasLoadedChildren || hasAsyncChildren;
+  const isLoading = controller.isNodeLoading(node.value);
+  const loadError = controller.getNodeLoadError(node.value);
+  const isExpanded = controller.expandedState[node.value] || false;
+
   const nested = (node.children || []).map((child) => (
     <TreeNode
       key={child.value}
@@ -64,15 +86,31 @@ export function TreeNode({
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
       checkOnSpace={checkOnSpace}
+      keepMounted={keepMounted}
+      onDragDrop={onDragDrop}
+      allowDrop={allowDrop}
+      withDragHandle={withDragHandle}
+      dragStateRef={dragStateRef}
+      data={data}
     />
   ));
+
+  const { elementProps: dragElementProps, dragHandleProps } = useTreeNodeDragDrop({
+    nodeValue: node.value,
+    hasChildren,
+    data,
+    onDragDrop,
+    dragStateRef,
+    allowDrop,
+    withDragHandle,
+  });
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.nativeEvent.code === 'ArrowRight') {
       event.stopPropagation();
       event.preventDefault();
 
-      if (controller.expandedState[node.value]) {
+      if (isExpanded) {
         event.currentTarget.querySelector<HTMLLIElement>('[role=treeitem]')?.focus();
       } else {
         controller.expand(node.value);
@@ -82,7 +120,7 @@ export function TreeNode({
     if (event.nativeEvent.code === 'ArrowLeft') {
       event.stopPropagation();
       event.preventDefault();
-      if (controller.expandedState[node.value] && (node.children || []).length > 0) {
+      if (isExpanded && hasChildren) {
         controller.collapse(node.value);
       } else if (isSubtree) {
         findElementAncestor(event.currentTarget as HTMLElement, '[role=treeitem]')?.focus();
@@ -98,7 +136,9 @@ export function TreeNode({
 
       event.stopPropagation();
       event.preventDefault();
-      const nodes = Array.from(root.querySelectorAll<HTMLLIElement>('[role=treeitem]'));
+      const nodes = Array.from(root.querySelectorAll<HTMLLIElement>('[role=treeitem]')).filter(
+        (treeNode) => treeNode.style.display !== 'none'
+      );
       const index = nodes.indexOf(event.currentTarget as HTMLLIElement);
 
       if (index === -1) {
@@ -143,7 +183,10 @@ export function TreeNode({
       controller.setSelectedState(getValuesRange(controller.anchorNode, node.value, flatValues));
       ref.current?.focus();
     } else {
-      expandOnClick && controller.toggleExpanded(node.value);
+      if (expandOnClick) {
+        controller.toggleExpanded(node.value);
+      }
+
       selectOnClick && controller.select(node.value);
       ref.current?.focus();
     }
@@ -155,8 +198,10 @@ export function TreeNode({
     onClick: handleNodeClick,
     'data-selected': selected || undefined,
     'data-value': node.value,
-    'data-hovered': controller.hoveredNode === node.value || undefined,
+    ...dragElementProps,
   };
+
+  const withLoadingIndicator = isExpanded && isLoading && nested.length === 0;
 
   return (
     <li
@@ -167,19 +212,10 @@ export function TreeNode({
       aria-selected={selected}
       data-value={node.value}
       data-selected={selected || undefined}
-      data-hovered={controller.hoveredNode === node.value || undefined}
       data-level={level}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       ref={ref}
-      onMouseOver={(event) => {
-        event.stopPropagation();
-        controller.setHoveredNode(node.value);
-      }}
-      onMouseLeave={(event) => {
-        event.stopPropagation();
-        controller.setHoveredNode(null);
-      }}
     >
       {typeof renderNode === 'function' ? (
         renderNode({
@@ -187,18 +223,44 @@ export function TreeNode({
           level,
           selected,
           tree: controller,
-          expanded: controller.expandedState[node.value] || false,
-          hasChildren: Array.isArray(node.children) && node.children.length > 0,
+          expanded: isExpanded,
+          hasChildren,
+          isLoading,
+          loadError,
           elementProps,
+          dragHandleProps,
         })
       ) : (
         <div {...elementProps}>{node.label}</div>
       )}
 
-      {controller.expandedState[node.value] && nested.length > 0 && (
+      {withLoadingIndicator && (
         <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
-          {nested}
+          <li
+            {...getStyles('node', {
+              style: { '--label-offset': `calc(var(--level-offset) * ${level})` },
+            })}
+          >
+            <div {...getStyles('label')}>
+              <Loader size={16} />
+            </div>
+          </li>
         </Box>
+      )}
+
+      {keepMounted && nested.length > 0 ? (
+        <Activity mode={isExpanded ? 'visible' : 'hidden'}>
+          <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
+            {nested}
+          </Box>
+        </Activity>
+      ) : (
+        isExpanded &&
+        nested.length > 0 && (
+          <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
+            {nested}
+          </Box>
+        )
       )}
     </li>
   );

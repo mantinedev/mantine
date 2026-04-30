@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -6,6 +6,7 @@ import {
   extractStyleProps,
   factory,
   Factory,
+  Primitive,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -13,17 +14,24 @@ import {
 } from '../../core';
 import {
   Combobox,
+  ComboboxGenericData,
+  ComboboxGenericItem,
   ComboboxLikeProps,
   ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
-  ComboboxStringData,
-  ComboboxStringItem,
+  ComboboxRenderPillInput,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
+  OptionsFilter,
   useCombobox,
 } from '../Combobox';
-import { __BaseInputProps, __InputStylesNames, InputClearButtonProps } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  ClearSectionMode,
+  InputClearButtonProps,
+} from '../Input';
 import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
@@ -39,13 +47,14 @@ export type TagsInputStylesNames =
   | 'inputField';
 
 export interface TagsInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Data displayed in the dropdown. Values must be unique. */
-  data?: ComboboxStringData;
+  data?: ComboboxGenericData;
 
   /** Controlled component value */
   value?: string[];
@@ -71,10 +80,13 @@ export interface TagsInputProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** Maximum number of tags @default `Infinity` */
+  /** Maximum number of tags @default Infinity */
   maxTags?: number;
 
-  /** If set, duplicate tags are allowed @default `false` */
+  /** Called when user tries to add more tags than maxTags */
+  onMaxTags?: (value: string) => void;
+
+  /** If set, duplicate tags are allowed @default false */
   allowDuplicates?: boolean;
 
   /** Called when user tries to submit a duplicated tag */
@@ -83,31 +95,37 @@ export interface TagsInputProps
   /** Characters that should trigger tags split, `[',']` by default */
   splitChars?: string[];
 
-  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
+  /** If set, the clear button is displayed in the right section when the component has value @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
-  /** Divider used to separate values in the hidden input `value` attribute @default `','` */
+  /** Divider used to separate values in the hidden input `value` attribute @default ',' */
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
+  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>) => React.ReactNode;
+
+  /** A function to render content of the pill, replaces the default content of the pill */
+  renderPill?: (props: ComboboxRenderPillInput) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** If set, the value typed in by the user but not submitted is accepted when the input is blurred @default `true` */
+  /** If set, the value typed in by the user but not submitted is accepted when the input is blurred @default true */
   acceptValueOnBlur?: boolean;
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
 
-  /** If set, the dropdown opens when the input receives focus @default `true` */
+  /** If set, the dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
 }
 
@@ -126,7 +144,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
-export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
+export const TagsInput = factory<TagsInputFactory>((_props) => {
   const props = useProps('TagsInput', defaultProps, _props);
   const {
     classNames,
@@ -191,18 +209,24 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     form,
     id,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     hiddenInputProps,
     hiddenInputValuesDivider,
     mod,
     renderOption,
+    renderPill,
     onRemove,
     onClear,
+    onMaxTags,
     scrollAreaProps,
     acceptValueOnBlur,
     isDuplicate,
     openOnFocus,
     attributes,
+    ref,
+    loading,
+    loadingPosition,
     ...others
   } = props;
 
@@ -254,7 +278,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const getStyles = useStyles<TagsInputFactory>({
     name: 'TagsInput',
     classes: {} as any,
-    props,
+    props: props as any,
     classNames,
     styles,
     unstyled,
@@ -279,12 +303,15 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       }
     }
 
-    if (_value.length < maxTags) {
-      onOptionSubmit?.(val);
-      handleSearchChange('');
-      if (val.length > 0) {
-        setValue([..._value, val]);
-      }
+    if (_value.length >= maxTags) {
+      onMaxTags?.(val);
+      return;
+    }
+
+    onOptionSubmit?.(val);
+    handleSearchChange('');
+    if (val.length > 0) {
+      setValue([..._value, val]);
     }
   };
 
@@ -361,24 +388,41 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     }
   };
 
-  const values = _value.map((item, index) => (
-    <Pill
-      key={`${item}-${index}`}
-      withRemoveButton={!readOnly}
-      onRemove={() => {
-        const next_value = _value.slice();
-        next_value.splice(index, 1);
-        setValue(next_value);
-        onRemove?.(item);
-      }}
-      unstyled={unstyled}
-      disabled={disabled}
-      attributes={attributes}
-      {...getStyles('pill')}
-    >
-      {item}
-    </Pill>
-  ));
+  const values = _value.map((item, index) => {
+    const onRemoveItem = () => {
+      const next_value = _value.slice();
+      next_value.splice(index, 1);
+      setValue(next_value);
+      onRemove?.(item);
+    };
+
+    if (renderPill) {
+      return (
+        <Fragment key={`${item}-${index}`}>
+          {renderPill({
+            option: optionsLockup[item] || { value: item, label: item, disabled: false },
+            value: item,
+            onRemove: onRemoveItem,
+            disabled: disabled || readOnly,
+          })}
+        </Fragment>
+      );
+    }
+
+    return (
+      <Pill
+        key={`${item}-${index}`}
+        withRemoveButton={!readOnly}
+        onRemove={onRemoveItem}
+        unstyled={unstyled}
+        disabled={disabled}
+        attributes={attributes}
+        {...getStyles('pill')}
+      >
+        {item}
+      </Pill>
+    );
+  });
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {
@@ -413,7 +457,12 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
-          _value.length < maxTags && setValue([..._value, optionsLockup[val].label]);
+
+          if (_value.length >= maxTags) {
+            onMaxTags?.(val);
+          } else {
+            setValue([..._value, optionsLockup[val].value]);
+          }
 
           combobox.resetSelectedOption();
         }}
@@ -435,6 +484,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             rightSection={rightSection}
             __clearSection={clearButton}
             __clearable={clearable && _value.length > 0 && !disabled && !readOnly}
+            __clearSectionMode={clearSectionMode}
             rightSectionWidth={rightSectionWidth}
             rightSectionPointerEvents={rightSectionPointerEvents}
             rightSectionProps={rightSectionProps}
@@ -442,6 +492,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             leftSectionWidth={leftSectionWidth}
             leftSectionPointerEvents={leftSectionPointerEvents}
             leftSectionProps={leftSectionProps}
+            loading={loading}
+            loadingPosition={loadingPosition}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}
@@ -461,7 +513,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}
-              <Combobox.EventsTarget autoComplete={autoComplete}>
+              <Combobox.EventsTarget autoComplete={autoComplete} withExpandedAttribute>
                 <PillsInput.Field
                   {...rest}
                   ref={_ref}
@@ -493,7 +545,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         <OptionsDropdown
           data={filterPickedTags({ data: parsedData, value: _value })}
           hidden={readOnly || disabled}
-          filter={filter}
+          filter={filter as OptionsFilter<Primitive> | undefined}
           search={_searchValue}
           limit={limit}
           hiddenWhenEmpty
@@ -520,3 +572,9 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
 
 TagsInput.classes = { ...InputBase.classes, ...Combobox.classes };
 TagsInput.displayName = '@mantine/core/TagsInput';
+
+export namespace TagsInput {
+  export type Props = TagsInputProps;
+  export type StylesNames = TagsInputStylesNames;
+  export type Factory = TagsInputFactory;
+}

@@ -57,7 +57,8 @@ export type DatePickerStylesNames =
   | 'datePickerRoot';
 
 export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type>,
+  extends
+    PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     MonthLevelBaseSettings,
@@ -87,7 +88,8 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
 }
 
 export interface DatePickerProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DatePickerBaseProps<Type>,
     StylesApiProps<DatePickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {}
@@ -96,6 +98,7 @@ export type DatePickerFactory = Factory<{
   props: DatePickerProps;
   ref: HTMLDivElement;
   stylesNames: DatePickerStylesNames;
+  vars: DatePickerCssVariables;
 }>;
 
 const varsResolver = createVarsResolver<DatePickerFactory>((_, { size }) => ({
@@ -112,12 +115,12 @@ const defaultProps = {
 } satisfies Partial<DatePickerProps>;
 
 type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: DatePickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }
+  props: DatePickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<DatePickerFactory>;
 
-export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_props, ref) => {
+export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_props) => {
   const props = useProps('DatePicker', defaultProps, _props);
   const {
     allowDeselect,
@@ -182,7 +185,6 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
 
   const calendar = (
     <Calendar
-      ref={ref}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector={__staticSelector || 'DatePicker'}
@@ -215,7 +217,8 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
         ...calendarProps.getYearControlProps?.(date),
       })}
       hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
-      {...(!presets ? { className, style, attributes } : {})}
+      attributes={attributes}
+      {...(!presets ? { className, style } : {})}
     />
   );
 
@@ -255,4 +258,14 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
 }) as any;
 
 DatePicker.classes = Calendar.classes;
+DatePicker.varsResolver = varsResolver;
 DatePicker.displayName = '@mantine/dates/DatePicker';
+
+export namespace DatePicker {
+  export type Props<Type extends DatePickerType> = DatePickerProps<Type>;
+  export type BaseProps = DatePickerBaseProps;
+  export type StylesNames = DatePickerStylesNames;
+  export type Factory = DatePickerFactory;
+  export type Preset<Type extends DatePickerType> = DatePickerPreset<Type>;
+  export type CssVariables = DatePickerCssVariables;
+}

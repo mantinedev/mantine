@@ -10,7 +10,7 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
 import { toDateString } from '../../utils';
@@ -52,7 +52,8 @@ type OmittedSettings =
   | 'hasNextLevel';
 
 export interface CalendarSettings
-  extends Omit<DecadeLevelSettings, OmittedSettings>,
+  extends
+    Omit<DecadeLevelSettings, OmittedSettings>,
     Omit<YearLevelSettings, OmittedSettings>,
     Omit<MonthLevelSettings, OmittedSettings> {
   /** Initial displayed level in uncontrolled mode */
@@ -104,7 +105,7 @@ export interface CalendarBaseProps {
   /** Called when date changes */
   onDateChange?: (date: DateStringValue) => void;
 
-  /** Number of columns displayed next to each other @default `1` */
+  /** Number of columns displayed next to each other @default 1 */
   numberOfColumns?: number;
 
   /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
@@ -118,6 +119,9 @@ export interface CalendarBaseProps {
 
   /** Previous button `aria-label` */
   previousLabel?: string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 
   /** Called when the next decade button is clicked */
   onNextDecade?: (date: DateStringValue) => void;
@@ -139,15 +143,16 @@ export interface CalendarBaseProps {
 }
 
 export interface CalendarProps
-  extends BoxProps,
+  extends
+    BoxProps,
     CalendarSettings,
     CalendarBaseProps,
     StylesApiProps<CalendarFactory>,
     ElementProps<'div'> {
-  /** Max level that user can go up to (decade, year, month) @default `'decade'` */
+  /** Max level that user can go up to (decade, year, month) @default 'decade' */
   maxLevel?: CalendarLevel;
 
-  /** Min level that user can go down to (decade, year, month) @default `'month'` */
+  /** Min level that user can go down to (decade, year, month) @default 'month' */
   minLevel?: CalendarLevel;
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
@@ -171,7 +176,7 @@ const defaultProps = {
   enableKeyboardNavigation: true,
 } satisfies Partial<CalendarProps>;
 
-export const Calendar = factory<CalendarFactory>((_props, ref) => {
+export const Calendar = factory<CalendarFactory>((_props) => {
   const props = useProps('Calendar', defaultProps, _props);
   const {
     // CalendarLevel props
@@ -247,7 +252,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onPreviousMonth,
     static: isStatic,
     enableKeyboardNavigation,
+    fullWidth,
     attributes,
+    ref,
     ...others
   } = props;
 
@@ -290,10 +297,14 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
 
-  const now = new Date();
-  const fallbackDate =
-    minDate && dayjs(now).isAfter(minDate) ? minDate : dayjs(now).format('YYYY-MM-DD');
-  const currentDate = _date || fallbackDate;
+  const fallbackDateRef = useRef<DateStringValue | null>(null);
+  if (fallbackDateRef.current === null) {
+    const now = new Date();
+    fallbackDateRef.current = (
+      minDate && dayjs(now).isAfter(minDate) ? minDate : dayjs(now).format('YYYY-MM-DD')
+    ) as DateStringValue;
+  }
+  const currentDate = _date || fallbackDateRef.current;
 
   const handleNextMonth = () => {
     const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').format('YYYY-MM-DD');
@@ -335,7 +346,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     setDate(nextDate);
   };
 
-  // Keyboard navigation
   const calendarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -344,7 +354,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Only handle keyboard events when focus is within the calendar
       if (!calendarRef.current?.contains(document.activeElement)) {
         return;
       }
@@ -356,11 +365,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
         case 'ArrowUp':
           if (isCtrlOrCmd && isShift) {
             event.preventDefault();
-            // Navigate by decade (10 years back)
             handlePreviousDecade();
           } else if (isCtrlOrCmd) {
             event.preventDefault();
-            // Navigate by year
             handlePreviousYear();
           }
           break;
@@ -368,11 +375,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
         case 'ArrowDown':
           if (isCtrlOrCmd && isShift) {
             event.preventDefault();
-            // Navigate by decade (10 years forward)
             handleNextDecade();
           } else if (isCtrlOrCmd) {
             event.preventDefault();
-            // Navigate by year
             handleNextYear();
           }
           break;
@@ -381,7 +386,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
         case 'Y':
           if (_level === 'month') {
             event.preventDefault();
-            // Open year selection view
             setLevel('year');
           }
           break;
@@ -403,18 +407,14 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     handlePreviousDecade,
   ]);
 
-  // Merge refs
-  const mergedRef = (node: HTMLDivElement) => {
-    calendarRef.current = node;
-    if (typeof ref === 'function') {
-      ref(node);
-    } else if (ref) {
-      ref.current = node;
-    }
-  };
-
   return (
-    <Box ref={mergedRef} size={size} data-calendar {...others}>
+    <Box
+      ref={useMergedRef(calendarRef, ref)}
+      size={size}
+      data-calendar
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       {_level === 'month' && (
         <MonthLevelGroup
           month={currentDate}
@@ -450,6 +450,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           {...stylesApiProps}
         />
       )}
@@ -483,6 +484,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           {...stylesApiProps}
         />
       )}
@@ -513,6 +515,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           {...stylesApiProps}
         />
       )}
@@ -526,3 +529,12 @@ Calendar.classes = {
   ...MonthLevelGroup.classes,
 };
 Calendar.displayName = '@mantine/dates/Calendar';
+
+export namespace Calendar {
+  export type Props = CalendarProps;
+  export type StylesNames = CalendarStylesNames;
+  export type AriaLabels = CalendarAriaLabels;
+  export type Settings = CalendarSettings;
+  export type BaseProps = CalendarBaseProps;
+  export type Factory = CalendarFactory;
+}

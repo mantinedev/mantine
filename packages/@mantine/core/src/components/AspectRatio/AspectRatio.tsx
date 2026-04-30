@@ -17,10 +17,8 @@ export type AspectRatioCssVariables = {
 };
 
 export interface AspectRatioProps
-  extends BoxProps,
-    StylesApiProps<AspectRatioFactory>,
-    ElementProps<'div'> {
-  /** Aspect ratio, for example, `16 / 9`, `4 / 3`, `1920 / 1080` @default `1` */
+  extends BoxProps, StylesApiProps<AspectRatioFactory>, ElementProps<'div'> {
+  /** Aspect ratio, for example, `16 / 9`, `4 / 3`, `1920 / 1080` @default 1 */
   ratio?: number;
 }
 
@@ -37,7 +35,7 @@ const varsResolver = createVarsResolver<AspectRatioFactory>((_, { ratio }) => ({
   },
 }));
 
-export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
+export const AspectRatio = factory<AspectRatioFactory>((_props) => {
   const props = useProps('AspectRatio', null, _props);
   const { classNames, className, style, styles, unstyled, vars, ratio, attributes, ...others } =
     props;
@@ -56,8 +54,16 @@ export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return <Box {...getStyles('root')} {...others} />;
 });
 
 AspectRatio.classes = classes;
+AspectRatio.varsResolver = varsResolver;
 AspectRatio.displayName = '@mantine/core/AspectRatio';
+
+export namespace AspectRatio {
+  export type Props = AspectRatioProps;
+  export type StylesNames = AspectRatioStylesNames;
+  export type CssVariables = AspectRatioCssVariables;
+  export type Factory = AspectRatioFactory;
+}

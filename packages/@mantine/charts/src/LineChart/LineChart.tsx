@@ -30,7 +30,6 @@ import {
 import { useId } from '@mantine/hooks';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import classes from '../grid-chart.module.css';
 import { PointLabel } from '../PointLabel/PointLabel';
 import type {
   BaseChartStylesNames,
@@ -38,6 +37,7 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import classes from '../grid-chart.module.css';
 
 export type LineChartType = 'default' | 'gradient';
 
@@ -71,29 +71,26 @@ export type LineChartCssVariables = {
 };
 
 export interface LineChartProps
-  extends BoxProps,
-    GridChartBaseProps,
-    StylesApiProps<LineChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, GridChartBaseProps, StylesApiProps<LineChartFactory>, ElementProps<'div'> {
   /** Data used to display chart */
   data: Record<string, any>[];
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: LineChartSeries[];
 
-  /** Controls styles of the line @default `'default'` */
+  /** Controls styles of the line @default 'default' */
   type?: LineChartType;
 
-  /** Data used to generate gradient stops @default `[{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }]` */
+  /** Data used to generate gradient stops @default [{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }] */
   gradientStops?: LineChartGradientStop[];
 
-  /** Type of the curve @default `'monotone'` */
+  /** Type of the curve @default 'monotone' */
   curveType?: LineChartCurveType;
 
-  /** Controls fill opacity of all lines @default `1` */
+  /** Controls fill opacity of all lines @default 1 */
   fillOpacity?: number;
 
-  /** Determines whether dots should be displayed @default `true` */
+  /** Determines whether dots should be displayed @default true */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -102,13 +99,13 @@ export interface LineChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart lines @default `2` */
+  /** Stroke width for the chart lines @default 2 */
   strokeWidth?: number;
 
   /** Props passed down to recharts `LineChart` component */
-  lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsLineChart>;
+  lineChartProps?: React.ComponentProps<typeof ReChartsLineChart>;
 
-  /** Determines whether points with `null` values should be connected @default `true` */
+  /** Determines whether points with `null` values should be connected @default true */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `LineChart` component */
@@ -119,7 +116,7 @@ export interface LineChartProps
     | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
     | Partial<Omit<LineProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default `false` */
+  /** Determines whether each point should have associated label @default false */
   withPointLabels?: boolean;
 }
 
@@ -156,7 +153,7 @@ const varsResolver = createVarsResolver<LineChartFactory>((theme, { textColor, g
   },
 }));
 
-export const LineChart = factory<LineChartFactory>((_props, ref) => {
+export const LineChart = factory<LineChartFactory>((_props) => {
   const props = useProps('LineChart', defaultProps, _props);
   const {
     classNames,
@@ -289,7 +286,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         connectNulls={connectNulls}
         type={item.curveType ?? curveType}
         strokeDasharray={item.strokeDasharray}
-        yAxisId={item.yAxisId || 'left'}
+        yAxisId={item.yAxisId || undefined}
         label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
         {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
@@ -303,13 +300,13 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
@@ -329,13 +326,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
   };
 
   return (
-    <Box
-      ref={ref}
-      {...getStyles('root')}
-      onMouseLeave={handleMouseLeave}
-      dir={dir || 'ltr'}
-      {...others}
-    >
+    <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsLineChart
           data={data}
@@ -395,8 +386,8 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
-            orientation="left"
+            // yAxisId="left"
+            // orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}
             {...sharedYAxisProps}
@@ -441,7 +432,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           </YAxis>
 
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}
@@ -486,3 +477,13 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
 
 LineChart.displayName = '@mantine/charts/LineChart';
 LineChart.classes = classes;
+LineChart.varsResolver = varsResolver;
+
+export namespace LineChart {
+  export type Props = LineChartProps;
+  export type CssVariables = LineChartCssVariables;
+  export type Factory = LineChartFactory;
+  export type Series = LineChartSeries;
+  export type StylesNames = LineChartStylesNames;
+  export type CurveType = LineChartCurveType;
+}

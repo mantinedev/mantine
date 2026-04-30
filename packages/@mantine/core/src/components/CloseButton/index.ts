@@ -1,5 +1,16 @@
+import type {
+  __CloseButtonProps,
+  CloseButtonCssVariables,
+  CloseButtonFactory,
+  CloseButtonProps,
+  CloseButtonStylesNames,
+  CloseButtonVariant,
+} from './CloseButton';
+import type { CloseIconProps } from './CloseIcon';
+
 export { CloseIcon } from './CloseIcon';
 export { CloseButton } from './CloseButton';
+
 export type {
   CloseButtonProps,
   CloseButtonStylesNames,
@@ -7,5 +18,5 @@ export type {
   CloseButtonVariant,
   CloseButtonCssVariables,
   __CloseButtonProps,
-} from './CloseButton';
-export type { CloseIconProps } from './CloseIcon';
+  CloseIconProps,
+};

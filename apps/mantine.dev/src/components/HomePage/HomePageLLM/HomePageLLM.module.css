@@ -1,0 +1,16 @@
+.root {
+  padding-block: var(--hp-block-spacing);
+}
+
+.main {
+  position: sticky;
+  top: 120px;
+}
+
+.column {
+  max-width: var(--hp-column-max-width);
+}
+
+.code {
+  max-width: calc(100vw - 42px);
+}

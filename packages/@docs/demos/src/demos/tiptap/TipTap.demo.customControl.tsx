@@ -1,4 +1,4 @@
-import { IconStar } from '@tabler/icons-react';
+import { StarIcon } from '@phosphor-icons/react';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor, useRichTextEditorContext } from '@mantine/tiptap';
@@ -8,7 +8,7 @@ const code = `
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor, useRichTextEditorContext } from '@mantine/tiptap';
-import { IconStar } from '@tabler/icons-react';
+import { StarIcon } from '@phosphor-icons/react';
 
 function InsertStarControl() {
   const { editor } = useRichTextEditorContext();
@@ -18,7 +18,7 @@ function InsertStarControl() {
       aria-label="Insert star emoji"
       title="Insert star emoji"
     >
-      <IconStar stroke={1.5} size={16} />
+      <StarIcon size={16} />
     </RichTextEditor.Control>
   );
 }
@@ -50,7 +50,7 @@ function InsertStarControl() {
       aria-label="Insert star emoji"
       title="Insert star emoji"
     >
-      <IconStar stroke={1.5} size={16} />
+      <StarIcon size={16} />
     </RichTextEditor.Control>
   );
 }

@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  ElementProps,
   factory,
   Factory,
   getSize,
@@ -12,11 +13,11 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import classes from './Loader.module.css';
 import type { MantineLoader, MantineLoadersRecord } from './Loader.types';
 import { Bars } from './loaders/Bars';
 import { Dots } from './loaders/Dots';
 import { Oval } from './loaders/Oval';
+import classes from './Loader.module.css';
 
 export type LoaderStylesNames = 'root';
 export type LoaderCssVariables = {
@@ -24,16 +25,14 @@ export type LoaderCssVariables = {
 };
 
 export interface LoaderProps
-  extends BoxProps,
-    StylesApiProps<LoaderFactory>,
-    Omit<React.ComponentPropsWithoutRef<'svg'>, keyof BoxProps> {
-  /** Controls `width` and `height` of the loader. `Loader` has predefined `xs`-`xl` values. Numbers are converted to rem. @default `'md'` */
+  extends BoxProps, StylesApiProps<LoaderFactory>, ElementProps<'svg', 'display' | 'opacity'> {
+  /** Controls `width` and `height` of the loader. `Loader` has predefined `xs`-`xl` values. Numbers are converted to rem. @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Loader type, key of `loaders` prop @default `'oval'` */
+  /** Loader type, key of `loaders` prop @default 'oval' */
   type?: MantineLoader;
 
   /** Object of loaders components, can be customized via default props or inline. */
@@ -45,7 +44,7 @@ export interface LoaderProps
 
 export type LoaderFactory = Factory<{
   props: LoaderProps;
-  ref: HTMLSpanElement;
+  ref: SVGSVGElement;
   stylesNames: LoaderStylesNames;
   vars: LoaderCssVariables;
   staticComponents: {
@@ -71,7 +70,7 @@ const varsResolver = createVarsResolver<LoaderFactory>((theme, { size, color }) 
   },
 }));
 
-export const Loader = factory<LoaderFactory>((_props, ref) => {
+export const Loader = factory<LoaderFactory>((_props) => {
   const props = useProps('Loader', defaultProps, _props);
   const {
     size,
@@ -106,7 +105,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
 
   if (children) {
     return (
-      <Box {...getStyles('root')} ref={ref as any} {...(others as any)}>
+      <Box {...getStyles('root')} {...(others as any)}>
         {children}
       </Box>
     );
@@ -115,7 +114,6 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
   return (
     <Box
       {...getStyles('root')}
-      ref={ref}
       component={loaders[type]}
       variant={variant}
       size={size}
@@ -126,4 +124,12 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
 
 Loader.defaultLoaders = defaultLoaders;
 Loader.classes = classes;
+Loader.varsResolver = varsResolver;
 Loader.displayName = '@mantine/core/Loader';
+
+export namespace Loader {
+  export type Props = LoaderProps;
+  export type StylesNames = LoaderStylesNames;
+  export type CssVariables = LoaderCssVariables;
+  export type Factory = LoaderFactory;
+}

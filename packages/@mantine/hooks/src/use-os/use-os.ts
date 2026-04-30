@@ -64,11 +64,11 @@ function getOS(): UseOSReturnValue {
   if (isAndroid(userAgent)) {
     return 'android';
   }
-  if (isLinux(userAgent)) {
-    return 'linux';
-  }
   if (isChromeOS(userAgent)) {
     return 'chromeos';
+  }
+  if (isLinux(userAgent)) {
+    return 'linux';
   }
 
   return 'undetermined';
@@ -90,4 +90,9 @@ export function useOs(options: UseOsOptions = { getValueInEffect: true }): UseOS
   }, []);
 
   return value;
+}
+
+export namespace useOs {
+  export type Options = UseOsOptions;
+  export type ReturnValue = UseOSReturnValue;
 }

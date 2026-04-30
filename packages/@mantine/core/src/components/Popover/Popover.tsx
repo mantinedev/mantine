@@ -27,12 +27,12 @@ import {
 import { Overlay, OverlayProps } from '../Overlay';
 import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
-import { PopoverContextProvider } from './Popover.context';
-import classes from './Popover.module.css';
+import { PopoverContextProvider, PopoverContextValue } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
-import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
-import { PopoverTarget } from './PopoverTarget/PopoverTarget';
+import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown/PopoverDropdown';
+import { PopoverTarget, PopoverTargetProps } from './PopoverTarget/PopoverTarget';
 import { usePopover } from './use-popover';
+import classes from './Popover.module.css';
 
 export type PopoverStylesNames = 'dropdown' | 'arrow' | 'overlay';
 export type PopoverCssVariables = {
@@ -40,17 +40,14 @@ export type PopoverCssVariables = {
 };
 
 export interface __PopoverProps {
-  /** Dropdown position relative to the target element @default `'bottom'` */
+  /** Dropdown position relative to the target element @default 'bottom' */
   position?: FloatingPosition;
 
-  /** Offset of the dropdown element @default `8` */
+  /** Offset of the dropdown element @default 8 */
   offset?: number | FloatingAxesOffsets;
 
   /** Called when dropdown position changes */
   onPositionChange?: (position: FloatingPosition) => void;
-
-  /** @deprecated: Do not use, will be removed in 9.0 */
-  positionDependencies?: any[];
 
   /** Called when dropdown closes */
   onClose?: () => void;
@@ -64,7 +61,7 @@ export interface __PopoverProps {
   /** If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. */
   keepMounted?: boolean;
 
-  /** Props passed down to the `Transition` component. Use to configure duration and animation type. @default `{ duration: 150, transition: 'fade' }` */
+  /** Props passed down to the `Transition` component. Use to configure duration and animation type. @default { duration: 150, transition: 'fade' } */
   transitionProps?: TransitionOverride;
 
   /** Called when exit transition ends */
@@ -73,43 +70,43 @@ export interface __PopoverProps {
   /** Called when enter transition ends */
   onEnterTransitionEnd?: () => void;
 
-  /** Dropdown width, or `'target'` to make dropdown width the same as target element @default `'max-content'` */
+  /** Dropdown width, or `'target'` to make dropdown width the same as target element @default 'max-content' */
   width?: PopoverWidth;
 
-  /** Floating ui middlewares to configure position handling @default `{ flip: true, shift: true, inline: false }` */
+  /** Floating ui middlewares to configure position handling @default { flip: true, shift: true, inline: false } */
   middlewares?: PopoverMiddlewares;
 
-  /** Determines whether component should have an arrow @default `false` */
+  /** Determines whether component should have an arrow @default false */
   withArrow?: boolean;
 
-  /** Determines whether the overlay should be displayed when the dropdown is opened @default `false` */
+  /** Determines whether the overlay should be displayed when the dropdown is opened @default false */
   withOverlay?: boolean;
 
   /** Props passed down to `Overlay` component */
   overlayProps?: OverlayProps & ElementProps<'div'>;
 
-  /** Arrow size in px @default `7` */
+  /** Arrow size in px @default 7 */
   arrowSize?: number;
 
-  /** Arrow offset in px @default `5` */
+  /** Arrow offset in px @default 5 */
   arrowOffset?: number;
 
-  /** Arrow `border-radius` in px @default `0` */
+  /** Arrow `border-radius` in px @default 0 */
   arrowRadius?: number;
 
   /** Arrow position */
   arrowPosition?: ArrowPosition;
 
-  /** Determines whether dropdown should be rendered within the `Portal` @default `true` */
+  /** Determines whether dropdown should be rendered within the `Portal` @default true */
   withinPortal?: boolean;
 
   /** Props to pass down to the `Portal` when `withinPortal` is true */
   portalProps?: BasePortalProps;
 
-  /** Dropdown `z-index` @default `300` */
+  /** Dropdown `z-index` @default 300 */
   zIndex?: string | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Key of `theme.shadows` or any other valid CSS `box-shadow` value */
@@ -118,13 +115,13 @@ export interface __PopoverProps {
   /** If set, popover dropdown will not be rendered */
   disabled?: boolean;
 
-  /** Determines whether focus should be automatically returned to control when dropdown closes @default `false` */
+  /** Determines whether focus should be automatically returned to control when dropdown closes @default false */
   returnFocus?: boolean;
 
-  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default `'absolute'` */
+  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default 'absolute' */
   floatingStrategy?: FloatingStrategy;
 
-  /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen @default `true` */
+  /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen @default true */
   hideDetached?: boolean;
 
   /** Prevents popover from flipping/shifting when it the dropdown is visible */
@@ -146,22 +143,22 @@ export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFact
   /** Called with current state when dropdown opens or closes */
   onChange?: (opened: boolean) => void;
 
-  /** Determines whether dropdown should be closed on outside clicks @default `true` */
+  /** Determines whether dropdown should be closed on outside clicks @default true */
   closeOnClickOutside?: boolean;
 
   /** Events that trigger outside clicks */
   clickOutsideEvents?: string[];
 
-  /** Determines whether focus should be trapped within dropdown @default `false` */
+  /** Determines whether focus should be trapped within dropdown @default false */
   trapFocus?: boolean;
 
-  /** Determines whether dropdown should be closed when `Escape` key is pressed @default `true` */
+  /** Determines whether dropdown should be closed when `Escape` key is pressed @default true */
   closeOnEscape?: boolean;
 
   /** Id base to create accessibility connections */
   id?: string;
 
-  /** Determines whether dropdown and target elements should have accessible roles @default `true` */
+  /** Determines whether dropdown and target elements should have accessible roles @default true */
   withRoles?: boolean;
 }
 
@@ -174,7 +171,6 @@ export type PopoverFactory = Factory<{
 const defaultProps = {
   position: 'bottom',
   offset: 8,
-  positionDependencies: [],
   transitionProps: { transition: 'fade', duration: 150 },
   middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
@@ -209,9 +205,6 @@ export function Popover(_props: PopoverProps) {
     position,
     offset,
     onPositionChange,
-    // Scheduled for removal in 9.0
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    positionDependencies,
     opened,
     transitionProps,
     onExitTransitionEnd,
@@ -289,7 +282,6 @@ export function Popover(_props: PopoverProps) {
     arrowRef,
     arrowOffset,
     onPositionChange,
-    positionDependencies,
     opened,
     defaultOpened,
     onChange,
@@ -380,7 +372,7 @@ export function Popover(_props: PopoverProps) {
         onDismiss,
         onClose: popover.onClose,
         onToggle: popover.onToggle,
-        getTargetId: () => `${uid}-target`,
+        getTargetId: () => uid,
         getDropdownId: () => `${uid}-dropdown`,
         withRoles,
         targetProps: others,
@@ -426,5 +418,31 @@ export function Popover(_props: PopoverProps) {
 
 Popover.Target = PopoverTarget;
 Popover.Dropdown = PopoverDropdown;
+Popover.varsResolver = varsResolver;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
+Popover.withProps = (fixedProps: Partial<PopoverProps>) => {
+  const Extended = (props: PopoverProps) => <Popover {...fixedProps} {...props} />;
+  Extended.extend = Popover.extend;
+  Extended.displayName = `WithProps(${Popover.displayName})`;
+  return Extended;
+};
+
+export namespace Popover {
+  export type Props = PopoverProps;
+  export type __Props = __PopoverProps;
+  export type Factory = PopoverFactory;
+  export type StylesNames = PopoverStylesNames;
+  export type TargetProps = PopoverTargetProps;
+  export type DropdownProps = PopoverDropdownProps;
+  export type Width = PopoverWidth;
+  export type ContextValue = PopoverContextValue;
+
+  export namespace Target {
+    export type Props = PopoverTargetProps;
+  }
+
+  export namespace Dropdown {
+    export type Props = PopoverDropdownProps;
+  }
+}

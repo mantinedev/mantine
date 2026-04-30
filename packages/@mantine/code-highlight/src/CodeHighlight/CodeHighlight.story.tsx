@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconBrandCodesandbox } from '@tabler/icons-react';
+import { CodesandboxLogoIcon } from '@phosphor-icons/react';
 import hljs from 'highlight.js';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { createHighlightJsAdapter } from '../CodeHighlightProvider/adapters/highlight-js-adapter';
@@ -12,7 +12,6 @@ import { InlineCodeHighlight } from './InlineCodeHighlight';
 export default { title: 'CodeHighlight' };
 
 const tsxCode = `
-import { forwardRef } from 'react';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
 // Data for select
@@ -46,27 +45,25 @@ const data = [
   },
 ];
 
-interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+interface ItemProps extends React.ComponentProps<'div'> {
   image: string;
   label: string;
   description: string;
 }
 
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ image, label, description, ...others }: ItemProps, ref) => (
-    <div ref={ref} {...others}>
-      <Group noWrap>
-        <Avatar src={image} />
+const SelectItem = ({ image, label, description, ...others }: ItemProps) => (
+  <div {...others}>
+    <Group noWrap>
+      <Avatar src={image} />
 
-        <div>
-          <Text size="sm">{label}</Text>
-          <Text size="xs" opacity={0.65}>
-            {description}
-          </Text>
-        </div>
-      </Group>
-    </div>
-  )
+      <div>
+        <Text size="sm">{label}</Text>
+        <Text size="xs" opacity={0.65}>
+          {description}
+        </Text>
+      </div>
+    </Group>
+  </div>
 );
 
 function Demo() {
@@ -243,12 +240,13 @@ export function ExtraControls() {
         withBorder
         controls={[
           <CodeHighlight.Control
+            key="codesandbox"
             tooltipLabel="Open in codesandbox"
             component="a"
             href="https://codesandbox.io"
             target="_blank"
           >
-            <IconBrandCodesandbox />
+            <CodesandboxLogoIcon />
           </CodeHighlight.Control>,
         ]}
       />

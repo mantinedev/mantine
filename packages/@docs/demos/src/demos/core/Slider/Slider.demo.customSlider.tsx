@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { clamp, useMove } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Slider.demo.customSlider.module.css';
@@ -91,7 +91,7 @@ const cssCode = `
 
 const code = `
 import { useState } from 'react';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { clamp, useMove } from '@mantine/hooks';
 import classes from './Demo.module.css';
 
@@ -129,7 +129,7 @@ function Demo() {
           className={classes.thumb}
           style={{ left: \`calc(\${value * 100}% - var(--thumb-width) / 2)\` }}
         >
-          <IconGripVertical stroke={1.5} />
+          <DotsSixVerticalIcon />
         </div>
       </div>
     </div>
@@ -171,7 +171,7 @@ function Demo() {
           className={classes.thumb}
           style={{ left: `calc(${value * 100}% - var(--thumb-width) / 2)` }}
         >
-          <IconGripVertical stroke={1.5} />
+          <DotsSixVerticalIcon />
         </div>
       </div>
     </div>

@@ -11,13 +11,14 @@ import {
   useProps,
 } from '@mantine/core';
 import { useSpotlightContext } from './Spotlight.context';
-import classes from './Spotlight.module.css';
 import { spotlightActions } from './spotlight.store';
+import classes from './Spotlight.module.css';
 
 export type SpotlightSearchStylesNames = InputStylesNames;
 
 export interface SpotlightSearchProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<InputProps, 'classNames' | 'styles' | 'vars' | 'variant'>,
     CompoundStylesApiProps<SpotlightSearchFactory>,
     ElementProps<'input', 'size'> {}
@@ -33,8 +34,8 @@ const defaultProps = {
   size: 'lg',
 } satisfies Partial<SpotlightSearchProps>;
 
-export const SpotlightSearch = factory<SpotlightSearchFactory>((props, ref) => {
-  const { classNames, styles, onKeyDown, onChange, vars, value, ...others } = useProps(
+export const SpotlightSearch = factory<SpotlightSearchFactory>((props) => {
+  const { classNames, styles, onKeyDown, onChange, vars, value, attributes, ...others } = useProps(
     'SpotlightSearch',
     defaultProps,
     props
@@ -67,7 +68,7 @@ export const SpotlightSearch = factory<SpotlightSearchFactory>((props, ref) => {
 
   return (
     <Input
-      ref={ref}
+      {...inputStyles}
       classNames={[{ input: inputStyles.className }, classNames] as any}
       styles={[{ input: inputStyles.style }, styles] as any}
       {...others}

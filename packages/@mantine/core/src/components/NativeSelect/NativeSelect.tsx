@@ -5,11 +5,15 @@ import { InputBase } from '../InputBase';
 import { NativeSelectOption } from './NativeSelectOption';
 
 export interface NativeSelectProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<NativeSelectFactory>,
     ElementProps<'select', 'size'> {
-  /** Data used to render options, can be replaced with `children` */
+  /**
+   * Data used to render options. Accepts strings, objects with label/value,
+   * or grouped options. If `children` prop is provided, `data` will be ignored.
+   */
   data?: ComboboxData;
 }
 
@@ -20,24 +24,24 @@ export type NativeSelectFactory = Factory<{
 }>;
 
 const defaultProps = {
+  size: 'sm',
   rightSectionPointerEvents: 'none',
 } satisfies Partial<NativeSelectProps>;
 
-export const NativeSelect = factory<NativeSelectFactory>((props, ref) => {
+export const NativeSelect = factory<NativeSelectFactory>((props) => {
   const { data, children, size, error, rightSection, unstyled, ...others } = useProps(
     'NativeSelect',
     defaultProps,
     props
   );
 
-  const options = getParsedComboboxData(data).map((item, index) => (
+  const options = getParsedComboboxData<string>(data).map((item, index) => (
     <NativeSelectOption key={index} data={item} />
   ));
 
   return (
     <InputBase
       component="select"
-      ref={ref}
       {...others}
       __staticSelector="NativeSelect"
       size={size}
@@ -55,3 +59,9 @@ export const NativeSelect = factory<NativeSelectFactory>((props, ref) => {
 
 NativeSelect.classes = InputBase.classes;
 NativeSelect.displayName = '@mantine/core/NativeSelect';
+
+export namespace NativeSelect {
+  export type Props = NativeSelectProps;
+  export type Factory = NativeSelectFactory;
+  export type StylesNames = __InputStylesNames;
+}

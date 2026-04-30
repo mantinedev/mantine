@@ -1,0 +1,104 @@
+import { renderDemo } from '../../../render-demo';
+import * as demos from './index';
+
+export default { title: 'schedule/MonthView' };
+
+export const Demo_usage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
+export const Demo_withWeekNumbers = {
+  name: '⭐ Demo: withWeekNumbers',
+  render: renderDemo(demos.withWeekNumbers),
+};
+export const Demo_withoutWeekDays = {
+  name: '⭐ Demo: withoutWeekDays',
+  render: renderDemo(demos.withoutWeekDays),
+};
+export const Demo_firstDayOfWeek = {
+  name: '⭐ Demo: firstDayOfWeek',
+  render: renderDemo(demos.firstDayOfWeek),
+};
+export const Demo_weekdayFormat = {
+  name: '⭐ Demo: weekdayFormat',
+  render: renderDemo(demos.weekdayFormat),
+};
+export const Demo_consistentWeeks = {
+  name: '⭐ Demo: consistentWeeks',
+  render: renderDemo(demos.consistentWeeks),
+};
+export const Demo_highlightToday = {
+  name: '⭐ Demo: highlightToday',
+  render: renderDemo(demos.highlightToday),
+};
+export const Demo_withoutOutsideDays = {
+  name: '⭐ Demo: withoutOutsideDays',
+  render: renderDemo(demos.withoutOutsideDays),
+};
+export const Demo_withoutHeader = {
+  name: '⭐ Demo: withoutHeader',
+  render: renderDemo(demos.withoutHeader),
+};
+export const Demo_manyEvents = {
+  name: '⭐ Demo: manyEvents',
+  render: renderDemo(demos.manyEvents),
+};
+export const Demo_dragDrop = { name: '⭐ Demo: dragDrop', render: renderDemo(demos.dragDrop) };
+export const Demo_renderEvent = {
+  name: '⭐ Demo: renderEvent',
+  render: renderDemo(demos.renderEvent),
+};
+export const Demo_staticMode = {
+  name: '⭐ Demo: staticMode',
+  render: renderDemo(demos.staticMode),
+};
+
+export const Demo_eventForm = {
+  name: '⭐ Demo: eventForm',
+  render: renderDemo(demos.eventForm),
+};
+
+export const Demo_externalDragDrop = {
+  name: '⭐ Demo: externalDragDrop',
+  render: renderDemo(demos.externalDragDrop),
+};
+
+export const Demo_bidirectionalDragDrop = {
+  name: '⭐ Demo: bidirectionalDragDrop',
+  render: renderDemo(demos.bidirectionalDragDrop),
+};
+
+export const Demo_recurringEvents = {
+  name: '⭐ Demo: recurringEvents',
+  render: renderDemo(demos.recurringEvents),
+};
+
+export const Demo_backgroundEvents = {
+  name: '⭐ Demo: backgroundEvents',
+  render: renderDemo(demos.backgroundEvents),
+};
+
+export const Demo_customHeader = {
+  name: '⭐ Demo: customHeader',
+  render: renderDemo(demos.customHeader),
+};
+
+export const Demo_maxEventsPerDay = {
+  name: '⭐ Demo: maxEventsPerDay',
+  render: renderDemo(demos.maxEventsPerDay),
+};
+
+export const Demo_localization = {
+  name: '⭐ Demo: localization',
+  render: renderDemo(demos.localization),
+};
+
+export const Demo_radius = {
+  name: '⭐ Demo: radius',
+  render: renderDemo(demos.radius),
+};
+
+export const Demo_timedEvents = {
+  name: '⭐ Demo: timedEvents',
+  render: renderDemo(demos.timedEvents),
+};

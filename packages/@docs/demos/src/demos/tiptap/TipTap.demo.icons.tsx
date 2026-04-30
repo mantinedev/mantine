@@ -1,4 +1,4 @@
-import { IconBold, IconItalic } from '@tabler/icons-react';
+import { TextBIcon, TextItalicIcon } from '@phosphor-icons/react';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
@@ -8,10 +8,10 @@ const code = `
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
-import { IconBold, IconItalic } from '@tabler/icons-react';
+import { TextBIcon, TextItalicIcon } from '@phosphor-icons/react';
 
-const BoldIcon = () => <IconBold size={16} stroke={3.5} />;
-const ItalicIcon = () => <IconItalic size={16} stroke={3.5} />;
+const BoldIcon = () => <TextBIcon size={16} />;
+const ItalicIcon = () => <TextItalicIcon size={16} />;
 
 function Demo() {
   const editor = useEditor({
@@ -35,8 +35,8 @@ function Demo() {
 }
 `;
 
-const BoldIcon = () => <IconBold size={16} stroke={3.5} />;
-const ItalicIcon = () => <IconItalic size={16} stroke={3.5} />;
+const BoldIcon = () => <TextBIcon size={16} />;
+const ItalicIcon = () => <TextItalicIcon size={16} />;
 
 function Demo() {
   const editor = useEditor({

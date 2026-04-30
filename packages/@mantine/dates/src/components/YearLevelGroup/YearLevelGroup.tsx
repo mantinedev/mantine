@@ -9,7 +9,8 @@ import { YearLevel, YearLevelSettings, YearLevelStylesNames } from '../YearLevel
 export type YearLevelGroupStylesNames = YearLevelStylesNames | LevelsGroupStylesNames;
 
 export interface YearLevelGroupProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<YearLevelSettings, 'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'>,
     Omit<StylesApiProps<YearLevelGroupFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {
@@ -25,6 +26,9 @@ export interface YearLevelGroupProps
 
   /** Function that returns level control `aria-label` */
   levelControlAriaLabel?: ((year: DateStringValue) => string) | string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type YearLevelGroupFactory = Factory<{
@@ -37,7 +41,7 @@ const defaultProps = {
   numberOfColumns: 1,
 } satisfies Partial<YearLevelGroupProps>;
 
-export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
+export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
   const props = useProps('YearLevelGroup', defaultProps, _props);
   const {
     // YearLevel settings
@@ -75,6 +79,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
     levelControlAriaLabel,
     yearLabelFormat,
     size,
+    fullWidth,
     vars,
     attributes,
     ...others
@@ -145,6 +150,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
           __staticSelector={__staticSelector || 'YearLevelGroup'}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           attributes={attributes}
         />
       );
@@ -155,9 +161,9 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'YearLevelGroup'}
-      ref={ref}
       size={size}
       unstyled={unstyled}
+      fullWidth={fullWidth}
       attributes={attributes}
       {...others}
     >

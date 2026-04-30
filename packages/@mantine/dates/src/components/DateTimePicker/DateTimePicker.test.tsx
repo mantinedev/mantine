@@ -58,14 +58,6 @@ describe('@mantine/dates/DateTimePicker', () => {
   tests.itSupportsSystemProps<DateTimePickerProps, __InputStylesNames>({
     component: DateTimePicker,
     props: defaultPropsWithInputProps,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/dates/DateTimePicker',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -164,6 +156,18 @@ describe('@mantine/dates/DateTimePicker', () => {
     expectNoPopover(container);
   });
 
+  it('supports placeholder styles selector in classNames', () => {
+    const classNames: DateTimePickerProps['classNames'] = {
+      placeholder: 'test-placeholder-class',
+    };
+
+    render(
+      <DateTimePicker {...defaultProps} classNames={classNames} placeholder="test-placeholder" />
+    );
+
+    expect(screen.getByText('test-placeholder')).toHaveClass('test-placeholder-class');
+  });
+
   it('supports uncontrolled state', async () => {
     const { container } = render(<DateTimePicker {...defaultProps} defaultValue="2022-04-11" />);
 
@@ -192,6 +196,18 @@ describe('@mantine/dates/DateTimePicker', () => {
   it('displays correct value when withSeconds is set', () => {
     const { container } = render(
       <DateTimePicker {...defaultProps} value="2022-04-11T14:45:54" withSeconds />
+    );
+
+    expectValue(container, '11/04/2022 14:45:54');
+  });
+
+  it('displays correct value when withSeconds is set via timePickerProps', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        value="2022-04-11T14:45:54"
+        timePickerProps={{ ...defaultProps.timePickerProps, withSeconds: true }}
+      />
     );
 
     expectValue(container, '11/04/2022 14:45:54');

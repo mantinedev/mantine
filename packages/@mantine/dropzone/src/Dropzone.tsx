@@ -24,9 +24,14 @@ import {
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import { DropzoneProvider } from './Dropzone.context';
-import classes from './Dropzone.module.css';
-import type { DropzoneFullScreenType } from './DropzoneFullScreen';
+import type {
+  DropzoneFullScreenFactory,
+  DropzoneFullScreenProps,
+  DropzoneFullScreenStylesNames,
+  DropzoneFullScreenType,
+} from './DropzoneFullScreen';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
+import classes from './Dropzone.module.css';
 
 export type DropzoneStylesNames = 'root' | 'inner';
 export type DropzoneVariant = 'filled' | 'light';
@@ -40,19 +45,17 @@ export type DropzoneCssVariables = {
 };
 
 export interface DropzoneProps
-  extends BoxProps,
-    StylesApiProps<DropzoneFactory>,
-    ElementProps<'div', 'onDrop'> {
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default `theme.primaryColor` */
+  extends BoxProps, StylesApiProps<DropzoneFactory>, ElementProps<'div', 'onDrop'> {
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default theme.primaryColor */
   acceptColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` @default `'red'` */
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` @default 'red' */
   rejectColor?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Determines whether files capturing should be disabled @default `false` */
+  /** Determines whether files capturing should be disabled @default false */
   disabled?: boolean;
 
   /** Called when any files are dropped to the dropzone */
@@ -64,16 +67,16 @@ export interface DropzoneProps
   /** Called when dropped files do not meet file restrictions */
   onReject?: (fileRejections: FileRejection[]) => void;
 
-  /** Determines whether a loading overlay should be displayed over the dropzone @default `false` */
+  /** Determines whether a loading overlay should be displayed over the dropzone @default false */
   loading?: boolean;
 
   /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. */
   accept?: Accept | string[];
 
   /** A ref function which when called opens the file system file picker */
-  openRef?: React.ForwardedRef<() => void | undefined>;
+  openRef?: React.Ref<() => void | undefined>;
 
-  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default `true` */
+  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default true */
   multiple?: boolean;
 
   /** Maximum file size in bytes */
@@ -118,7 +121,7 @@ export interface DropzoneProps
   /** If `false`, allow dropped items to take over the current browser window */
   preventDropOnDocument?: boolean;
 
-  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default `true` */
+  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default true */
   useFsAccessApi?: boolean;
 
   /** Use this to provide a custom file aggregator */
@@ -127,7 +130,7 @@ export interface DropzoneProps
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 
-  /** Determines whether pointer events should be enabled on the inner element @default `false` */
+  /** Determines whether pointer events should be enabled on the inner element @default false */
   enablePointerEvents?: boolean;
 
   /** Props passed down to the Loader component */
@@ -188,7 +191,7 @@ const varsResolver = createVarsResolver<DropzoneFactory>(
   }
 );
 
-export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
+export const Dropzone = factory<DropzoneFactory>((_props) => {
   const props = useProps('Dropzone', defaultProps, _props);
   const {
     classNames,
@@ -305,11 +308,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
           loaderProps={loaderProps}
         />
         <input {...getInputProps(inputProps)} name={name} />
-        <div
-          {...getStyles('inner')}
-          ref={ref}
-          data-enable-pointer-events={enablePointerEvents || undefined}
-        >
+        <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
           {children}
         </div>
       </Box>
@@ -318,7 +317,21 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
 });
 
 Dropzone.classes = classes;
+Dropzone.varsResolver = varsResolver;
 Dropzone.displayName = '@mantine/dropzone/Dropzone';
 Dropzone.Accept = DropzoneAccept;
 Dropzone.Idle = DropzoneIdle;
 Dropzone.Reject = DropzoneReject;
+
+export namespace Dropzone {
+  export type Props = DropzoneProps;
+  export type StylesNames = DropzoneStylesNames;
+  export type CssVariables = DropzoneCssVariables;
+  export type Factory = DropzoneFactory;
+
+  export namespace FullScreen {
+    export type Props = DropzoneFullScreenProps;
+    export type StylesNames = DropzoneFullScreenStylesNames;
+    export type Factory = DropzoneFullScreenFactory;
+  }
+}

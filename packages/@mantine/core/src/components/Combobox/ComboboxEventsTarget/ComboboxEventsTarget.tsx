@@ -11,18 +11,18 @@ export interface ComboboxEventsTargetProps {
   /** Key of the prop is used to access element ref */
   refProp?: string;
 
-  /** If set, the component responds to the keyboard events @default `true` */
+  /** If set, the component responds to the keyboard events @default true */
   withKeyboardNavigation?: boolean;
 
-  /** If set, the target has `aria-` attributes @default `true` */
+  /** If set, the target has `aria-` attributes @default true */
   withAriaAttributes?: boolean;
 
-  /** If set, the target has `aria-expanded` attribute @default `false` */
+  /** If set, the target has `aria-expanded` attribute @default false */
   withExpandedAttribute?: boolean;
 
   /** Determines which events should be handled by the target element.
    * `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state.
-   * @default `input`
+   * @default input
    * */
   targetType?: 'button' | 'input';
 
@@ -45,7 +45,7 @@ export type ComboboxEventsTargetFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props, ref) => {
+export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props) => {
   const {
     children,
     refProp,
@@ -54,6 +54,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
     withExpandedAttribute,
     targetType,
     autoComplete,
+    ref,
     ...others
   } = useProps('ComboboxEventsTarget', defaultProps, props);
 
@@ -71,6 +72,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
     withKeyboardNavigation,
     withExpandedAttribute,
     onKeyDown: (child.props as any).onKeyDown,
+    onClick: (child.props as any).onClick,
     autoComplete,
   });
 

@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { ElementProps } from '../../../core';
 import { Input, InputClearButtonProps } from '../../Input';
 
@@ -6,10 +5,14 @@ export interface ComboboxClearButtonProps extends InputClearButtonProps, Element
   onClear: () => void;
 }
 
-export const ComboboxClearButton = forwardRef<HTMLButtonElement, ComboboxClearButtonProps>(
-  ({ size, onMouseDown, onClick, onClear, ...others }, ref) => (
+export function ComboboxClearButton({
+  onMouseDown,
+  onClick,
+  onClear,
+  ...others
+}: ComboboxClearButtonProps) {
+  return (
     <Input.ClearButton
-      ref={ref}
       tabIndex={-1}
       aria-hidden
       {...others}
@@ -22,7 +25,7 @@ export const ComboboxClearButton = forwardRef<HTMLButtonElement, ComboboxClearBu
         onClick?.(event);
       }}
     />
-  )
-);
+  );
+}
 
 ComboboxClearButton.displayName = '@mantine/core/ComboboxClearButton';

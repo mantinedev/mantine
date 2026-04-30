@@ -6,29 +6,30 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '../../core';
-import classes from './Progress.module.css';
-import { ProgressLabel } from './ProgressLabel/ProgressLabel';
+import { ProgressLabel, type ProgressLabelProps } from './ProgressLabel/ProgressLabel';
 import {
   __ProgressRootProps,
   ProgressRoot,
   ProgressRootCssVariables,
   ProgressRootStylesNames,
+  type ProgressRootProps,
 } from './ProgressRoot/ProgressRoot';
-import { ProgressSection } from './ProgressSection/ProgressSection';
-
+import { ProgressSection, type ProgressSectionProps } from './ProgressSection/ProgressSection';
+import classes from './Progress.module.css';
+import type { ProgressContextValue } from './Progress.context';
 export type ProgressStylesNames = ProgressRootStylesNames;
 
 export interface ProgressProps extends __ProgressRootProps, StylesApiProps<ProgressFactory> {
   /** Value of the progress */
   value: number;
 
-  /** Key of `theme.colors` or any valid CSS value @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS value @default theme.primaryColor */
   color?: MantineColor;
 
-  /** If set, the section has stripes @default `false` */
+  /** If set, the section has stripes @default false */
   striped?: boolean;
 
-  /** If set, the sections stripes are animated, `striped` prop is ignored @default `false` */
+  /** If set, the sections stripes are animated (automatically enables striped) @default false */
   animated?: boolean;
 }
 
@@ -44,7 +45,7 @@ export type ProgressFactory = Factory<{
   };
 }>;
 
-export const Progress = factory<ProgressFactory>((_props, ref) => {
+export const Progress = factory<ProgressFactory>((_props) => {
   const props = useProps('Progress', null, _props);
   const {
     value,
@@ -66,7 +67,6 @@ export const Progress = factory<ProgressFactory>((_props, ref) => {
 
   return (
     <ProgressRoot
-      ref={ref}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       vars={vars as any}
@@ -88,3 +88,22 @@ Progress.displayName = '@mantine/core/Progress';
 Progress.Section = ProgressSection;
 Progress.Root = ProgressRoot;
 Progress.Label = ProgressLabel;
+
+export namespace Progress {
+  export type Props = ProgressProps;
+  export type Factory = ProgressFactory;
+  export type StylesNames = ProgressStylesNames;
+  export type ContextValue = ProgressContextValue;
+
+  export namespace Label {
+    export type Props = ProgressLabelProps;
+  }
+
+  export namespace Root {
+    export type Props = ProgressRootProps;
+  }
+
+  export namespace Section {
+    export type Props = ProgressSectionProps;
+  }
+}

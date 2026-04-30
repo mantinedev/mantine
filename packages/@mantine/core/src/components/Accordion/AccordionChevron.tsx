@@ -1,6 +1,6 @@
 import { rem } from '../../core';
 
-export interface AccordionChevronProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface AccordionChevronProps extends React.ComponentProps<'svg'> {
   /** Controls `width` and `height` of the icon, `16` by default */
   size?: number | string;
 }
@@ -25,3 +25,7 @@ export function AccordionChevron({ style, size = 16, ...others }: AccordionChevr
 }
 
 AccordionChevron.displayName = '@mantine/core/AccordionChevron';
+
+export namespace AccordionChevron {
+  export type Props = AccordionChevronProps;
+}

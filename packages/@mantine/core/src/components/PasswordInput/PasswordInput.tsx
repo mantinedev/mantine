@@ -16,8 +16,8 @@ import {
 import { ActionIcon } from '../ActionIcon';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
-import classes from './PasswordInput.module.css';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
+import classes from './PasswordInput.module.css';
 
 export type PasswordInputStylesNames =
   | 'root'
@@ -29,7 +29,8 @@ export type PasswordInputCssVariables = {
 };
 
 export interface PasswordInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {
@@ -39,7 +40,7 @@ export interface PasswordInputProps
   /** Props passed down to the visibility toggle button */
   visibilityToggleButtonProps?: Record<string, any>;
 
-  /** If set, the input value is visible visible */
+  /** If set, the input value is visible */
   visible?: boolean;
 
   /** If set, the input value is visible by default */
@@ -59,6 +60,7 @@ export type PasswordInputFactory = Factory<{
 
 const defaultProps = {
   visibilityToggleIcon: PasswordToggleIcon,
+  size: 'sm',
 } satisfies Partial<PasswordInputProps>;
 
 const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => ({
@@ -68,7 +70,7 @@ const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => (
   },
 }));
 
-export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
+export const PasswordInput = factory<PasswordInputFactory>((_props) => {
   const props = useProps('PasswordInput', defaultProps, _props);
   const {
     classNames,
@@ -156,9 +158,9 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       {...getStyles('visibilityToggle')}
       disabled={disabled}
       radius={radius}
-      aria-hidden={!visibilityToggleButtonProps}
       aria-pressed={_visible}
       tabIndex={-1}
+      aria-label="Toggle password visibility"
       {...visibilityToggleButtonProps}
       variant={visibilityToggleButtonProps?.variant ?? 'subtle'}
       color="gray"
@@ -196,6 +198,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector="PasswordInput"
+      __stylesApiProps={props}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
       inputWrapperOrder={inputWrapperOrder}
@@ -215,11 +218,12 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
         error={error}
         leftSection={leftSection}
         size={size}
-        classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames.input) }}
+        classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
         styles={resolvedStyles}
         radius={radius}
         disabled={disabled}
         __staticSelector="PasswordInput"
+        __stylesApiProps={props}
         rightSectionWidth={rightSectionWidth}
         rightSection={rightSection ?? visibilityToggleButton}
         variant={variant}
@@ -240,7 +244,6 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
           {...getStyles('innerInput')}
           disabled={disabled}
           id={uuid}
-          ref={ref}
           {...rest}
           aria-describedby={describedBy}
           autoComplete={rest.autoComplete || 'off'}
@@ -252,4 +255,12 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
 });
 
 PasswordInput.classes = { ...InputBase.classes, ...classes };
+PasswordInput.varsResolver = varsResolver;
 PasswordInput.displayName = '@mantine/core/PasswordInput';
+
+export namespace PasswordInput {
+  export type Props = PasswordInputProps;
+  export type StylesNames = PasswordInputStylesNames;
+  export type CssVariables = PasswordInputCssVariables;
+  export type Factory = PasswordInputFactory;
+}

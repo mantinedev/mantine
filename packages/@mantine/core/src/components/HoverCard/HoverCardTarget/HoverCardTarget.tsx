@@ -1,11 +1,16 @@
-import { cloneElement, forwardRef } from 'react';
+import { cloneElement, use } from 'react';
 import { createEventHandler, getSingleElementChild, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
-import { useHoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup.context';
+import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
 
 export interface HoverCardTargetProps extends PopoverTargetProps {
-  /** Key of the prop used to pass event listeners, by default event listeners are passed directly to component */
+  /**
+   * Name of the prop to wrap event listeners in.
+   * Use when the target component expects event listeners in a nested object.
+   * For example, some components expect `componentProps={{ onMouseEnter, onMouseLeave }}`.
+   * @default undefined (event listeners passed directly to component)
+   */
   eventPropsWrapperName?: string;
 }
 
@@ -13,7 +18,7 @@ const defaultProps = {
   refProp: 'ref',
 } satisfies Partial<HoverCardTargetProps>;
 
-export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((props, ref) => {
+export function HoverCardTarget(props: HoverCardTargetProps) {
   const { children, refProp, eventPropsWrapperName, ...others } = useProps(
     'HoverCardTarget',
     defaultProps,
@@ -28,13 +33,13 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
   }
 
   const ctx = useHoverCardContext();
-  const withinGroup = useHoverCardGroupContext();
+  const groupContext = use(HoverCardGroupContext);
 
-  if (withinGroup && ctx.getReferenceProps && ctx.reference) {
+  if (groupContext.withinGroup && ctx.getReferenceProps && ctx.reference) {
     const referenceProps = ctx.getReferenceProps();
 
     return (
-      <Popover.Target refProp={refProp} ref={ref} {...others}>
+      <Popover.Target refProp={refProp} {...others}>
         {cloneElement(
           child,
           eventPropsWrapperName
@@ -51,13 +56,13 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
   const eventListeners = { onMouseEnter, onMouseLeave };
 
   return (
-    <Popover.Target refProp={refProp} ref={ref} {...others}>
+    <Popover.Target refProp={refProp} {...others}>
       {cloneElement(
         child,
         eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners
       )}
     </Popover.Target>
   );
-});
+}
 
 HoverCardTarget.displayName = '@mantine/core/HoverCardTarget';

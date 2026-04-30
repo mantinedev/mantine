@@ -1,4 +1,3 @@
-import TextareaAutosize from 'react-textarea-autosize';
 import {
   BoxProps,
   ElementProps,
@@ -10,15 +9,17 @@ import {
 } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
+import { TextareaAutosize } from './Autosize';
 
 export interface TextareaProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TextareaFactory>,
     ElementProps<'textarea', 'size'> {
   __staticSelector?: string;
 
-  /** If set, enables textarea height growing with its content @default `false` */
+  /** If set, enables textarea height growing with its content @default false */
   autosize?: boolean;
 
   /** Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set */
@@ -27,7 +28,7 @@ export interface TextareaProps
   /** Minimum rows of autosize textarea, ignored if `autosize` prop is not set */
   minRows?: number;
 
-  /** Controls `resize` CSS property @default `'none'` */
+  /** Controls `resize` CSS property @default 'none' */
   resize?: React.CSSProperties['resize'];
 }
 
@@ -41,7 +42,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<TextareaProps>;
 
-export const Textarea = factory<TextareaFactory>((props, ref) => {
+export const Textarea = factory<TextareaFactory>((props) => {
   const { autosize, maxRows, minRows, __staticSelector, resize, ...others } = useProps(
     'Textarea',
     defaultProps,
@@ -54,7 +55,6 @@ export const Textarea = factory<TextareaFactory>((props, ref) => {
   return (
     <InputBase<any>
       component={shouldAutosize ? TextareaAutosize : 'textarea'}
-      ref={ref}
       {...others}
       __staticSelector={__staticSelector || 'Textarea'}
       multiline
@@ -67,3 +67,8 @@ export const Textarea = factory<TextareaFactory>((props, ref) => {
 
 Textarea.classes = InputBase.classes;
 Textarea.displayName = '@mantine/core/Textarea';
+
+export namespace Textarea {
+  export type Props = TextareaProps;
+  export type Factory = TextareaFactory;
+}

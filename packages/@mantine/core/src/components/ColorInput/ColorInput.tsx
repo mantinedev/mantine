@@ -25,8 +25,8 @@ import { ColorSwatch } from '../ColorSwatch';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
 import { InputBase } from '../InputBase';
 import { Popover, PopoverProps } from '../Popover';
-import classes from './ColorInput.module.css';
 import { EyeDropperIcon } from './EyeDropperIcon';
+import classes from './ColorInput.module.css';
 
 export type ColorInputStylesNames =
   | 'dropdown'
@@ -43,7 +43,8 @@ export type ColorInputCssVariables = {
 };
 
 export interface ColorInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     __ColorPickerProps,
     StylesApiProps<ColorInputFactory>,
@@ -51,22 +52,22 @@ export interface ColorInputProps
   /** If input is not allowed, the user can only pick value with color picker and swatches */
   disallowInput?: boolean;
 
-  /** If set, the input value resets to the last known valid value when the input loses focus @default `true` */
+  /** If set, the input value resets to the last known valid value when the input loses focus @default true */
   fixOnBlur?: boolean;
 
   /** Props passed down to the `Popover` component */
   popoverProps?: PopoverProps;
 
-  /** If set, the preview color swatch is displayed in the left section of the input @default `true` */
+  /** If set, the preview color swatch is displayed in the left section of the input @default true */
   withPreview?: boolean;
 
-  /** If set, the eye dropper button is displayed in the right section @default `true` */
+  /** If set, the eye dropper button is displayed in the right section @default true */
   withEyeDropper?: boolean;
 
   /** An icon to replace the default eye dropper icon */
   eyeDropperIcon?: React.ReactNode;
 
-  /** If set, the dropdown is closed when one of the color swatches is clicked @default `false` */
+  /** If set, the dropdown is closed when one of the color swatches is clicked @default false */
   closeOnColorSwatchClick?: boolean;
 
   /** Props passed down to the eye dropper button */
@@ -90,6 +91,7 @@ const defaultProps = {
   popoverProps: { transitionProps: { transition: 'fade', duration: 0 } },
   withEyeDropper: true,
   size: 'sm',
+  leftSectionPointerEvents: 'none',
 } satisfies Partial<ColorInputProps>;
 
 const varsResolver = createVarsResolver<ColorInputFactory>((_, { size }) => ({
@@ -106,7 +108,7 @@ const varsResolver = createVarsResolver<ColorInputFactory>((_, { size }) => ({
   },
 }));
 
-export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
+export const ColorInput = factory<ColorInputFactory>((_props) => {
   const props = useProps('ColorInput', defaultProps, _props);
   const {
     classNames,
@@ -252,7 +254,6 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             disabled={disabled}
-            ref={ref}
             __staticSelector="ColorInput"
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -314,4 +315,12 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
 });
 
 ColorInput.classes = InputBase.classes;
+ColorInput.varsResolver = varsResolver;
 ColorInput.displayName = '@mantine/core/ColorInput';
+
+export namespace ColorInput {
+  export type Props = ColorInputProps;
+  export type StylesNames = ColorInputStylesNames;
+  export type CssVariables = ColorInputCssVariables;
+  export type Factory = ColorInputFactory;
+}

@@ -18,7 +18,7 @@ export type BackgroundImageCssVariables = {
 };
 
 export interface BackgroundImageProps extends BoxProps, StylesApiProps<BackgroundImageFactory> {
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `0` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default 0 */
   radius?: MantineRadius;
 
   /** Image url */
@@ -37,7 +37,7 @@ const varsResolver = createVarsResolver<BackgroundImageFactory>((_, { radius }) 
   root: { '--bi-radius': radius === undefined ? undefined : getRadius(radius) },
 }));
 
-export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_props, ref) => {
+export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_props) => {
   const props = useProps('BackgroundImage', null, _props);
   const {
     classNames,
@@ -69,7 +69,6 @@ export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_prop
 
   return (
     <Box
-      ref={ref}
       variant={variant}
       {...getStyles('root', { style: { backgroundImage: `url(${src})` } })}
       {...others}
@@ -78,4 +77,12 @@ export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_prop
 });
 
 BackgroundImage.classes = classes;
+BackgroundImage.varsResolver = varsResolver;
 BackgroundImage.displayName = '@mantine/core/BackgroundImage';
+
+export namespace BackgroundImage {
+  export type Props = BackgroundImageProps;
+  export type CssVariables = BackgroundImageCssVariables;
+  export type Factory = BackgroundImageFactory;
+  export type StylesNames = BackgroundImageStylesNames;
+}

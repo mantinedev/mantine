@@ -1,31 +1,63 @@
+import { useRef } from 'react';
 import {
+  Box,
   BoxProps,
+  createVarsResolver,
   ElementProps,
   factory,
   Factory,
+  getFontSize,
   MantineComponentStaticProperties,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useResolvedStylesApi,
+  useStyles,
 } from '@mantine/core';
 import { useDatesState } from '../../hooks';
-import { CalendarLevel, DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
-import { Calendar, CalendarBaseProps } from '../Calendar';
+import {
+  CalendarLevel,
+  DatePickerType,
+  DateStringValue,
+  DateValue,
+  PickerBaseProps,
+} from '../../types';
+import { Calendar, CalendarBaseProps, pickCalendarProps } from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { YearLevelBaseSettings } from '../YearLevel';
 import { YearLevelGroupStylesNames } from '../YearLevelGroup';
+import classes from './MonthPicker.module.css';
 
-export type MonthPickerStylesNames = DecadeLevelGroupStylesNames | YearLevelGroupStylesNames;
+export interface MonthPickerPreset<Type extends DatePickerType> {
+  value: Type extends 'range'
+    ? [DateStringValue | null, DateStringValue | null]
+    : Type extends 'multiple'
+      ? DateStringValue[]
+      : DateStringValue | null;
+  label: React.ReactNode;
+}
+
+export type MonthPickerCssVariables = {
+  monthPickerRoot: '--preset-font-size';
+};
+
+export type MonthPickerStylesNames =
+  | DecadeLevelGroupStylesNames
+  | YearLevelGroupStylesNames
+  | 'presetsList'
+  | 'presetButton'
+  | 'monthPickerRoot';
 
 type MonthPickerLevel = Exclude<CalendarLevel, 'month'>;
 
 export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type>,
+  extends
+    PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     Omit<CalendarBaseProps, 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'> {
-  /** Max level that user can go up to @default `'decade'` */
+  /** Max level that user can go up to @default 'decade' */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */
@@ -36,10 +68,21 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
 
   /** Called when level changes */
   onLevelChange?: (level: MonthPickerLevel) => void;
+
+  /** Predefined values to pick from */
+  presets?: MonthPickerPreset<Type>[];
+
+  /** If defined, called with preset value, suppresses `onChange` call */
+  __onPresetSelect?: (
+    preset: Type extends 'range'
+      ? [DateStringValue | null, DateStringValue | null]
+      : DateStringValue | null
+  ) => void;
 }
 
 export interface MonthPickerProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
@@ -51,19 +94,26 @@ export type MonthPickerFactory = Factory<{
   props: MonthPickerProps;
   ref: HTMLDivElement;
   stylesNames: MonthPickerStylesNames;
+  vars: MonthPickerCssVariables;
 }>;
+
+const varsResolver = createVarsResolver<MonthPickerFactory>((_, { size }) => ({
+  monthPickerRoot: {
+    '--preset-font-size': getFontSize(size),
+  },
+}));
 
 const defaultProps = {
   type: 'default',
 } satisfies Partial<MonthPickerProps>;
 
 type MonthPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: MonthPickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }
+  props: MonthPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<MonthPickerFactory>;
 
-export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props, ref) => {
+export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props) => {
   const props = useProps('MonthPicker', defaultProps, _props);
   const {
     classNames,
@@ -80,20 +130,48 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     onMouseLeave,
     onMonthSelect,
     __updateDateOnMonthSelect,
+    __onPresetSelect,
+    __stopPropagation,
+    presets,
+    className,
+    style,
+    unstyled,
+    size,
+    attributes,
     onLevelChange,
-    ...others
+    ...rest
   } = props;
 
-  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } = useDatesState({
-    type: type as any,
-    level: 'month',
-    allowDeselect,
-    allowSingleDateInRange,
-    value,
-    defaultValue,
-    onChange: onChange as any,
-    onMouseLeave,
+  const { calendarProps, others } = pickCalendarProps(rest);
+  const setDateRef = useRef<((date: DateValue) => void) | null>(null);
+  const setLevelRef = useRef<((level: CalendarLevel) => void) | null>(null);
+
+  const getStyles = useStyles<MonthPickerFactory>({
+    name: __staticSelector || 'MonthPicker',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
+    rootSelector: presets ? 'monthPickerRoot' : undefined,
+    varsResolver,
+    vars,
   });
+
+  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps, setValue } =
+    useDatesState({
+      type: type as any,
+      level: 'month',
+      allowDeselect,
+      allowSingleDateInRange,
+      value,
+      defaultValue,
+      onChange: onChange as any,
+      onMouseLeave,
+    });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MonthPickerFactory>({
     classNames,
@@ -101,9 +179,13 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     props,
   });
 
-  return (
+  const calendar = (
     <Calendar
-      ref={ref}
+      classNames={resolvedClassNames}
+      styles={resolvedStyles}
+      size={size}
+      {...calendarProps}
+      {...(!presets ? others : {})}
       minLevel="year"
       __updateDateOnMonthSelect={__updateDateOnMonthSelect ?? false}
       __staticSelector={__staticSelector || 'MonthPicker'}
@@ -117,13 +199,56 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
         ...getControlProps(date),
         ...getMonthControlProps?.(date),
       })}
-      classNames={resolvedClassNames}
-      styles={resolvedStyles}
       onLevelChange={onLevelChange as any}
-      {...others}
+      __setDateRef={setDateRef}
+      __setLevelRef={setLevelRef}
+      __stopPropagation={__stopPropagation}
+      attributes={attributes}
+      {...(!presets ? { className, style } : {})}
     />
+  );
+
+  if (!presets) {
+    return calendar;
+  }
+
+  const handlePresetSelect = (
+    val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
+  ) => {
+    const _val = Array.isArray(val) ? val[0] : val;
+    if (_val !== undefined) {
+      setDateRef.current?.(_val);
+      setLevelRef.current?.('year');
+      __onPresetSelect ? __onPresetSelect(_val) : setValue(val);
+    }
+  };
+
+  const presetButtons = presets.map((preset, index) => (
+    <UnstyledButton
+      key={index}
+      {...getStyles('presetButton')}
+      onClick={() => handlePresetSelect(preset.value)}
+      onMouseDown={(event) => event.preventDefault()}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
+    >
+      {preset.label}
+    </UnstyledButton>
+  ));
+
+  return (
+    <Box {...getStyles('monthPickerRoot')} size={size} {...others}>
+      <div {...getStyles('presetsList')}>{presetButtons}</div>
+      {calendar}
+    </Box>
   );
 }) as any;
 
-MonthPicker.classes = Calendar.classes;
+MonthPicker.classes = { ...Calendar.classes, ...classes };
+MonthPicker.varsResolver = varsResolver;
 MonthPicker.displayName = '@mantine/dates/MonthPicker';
+
+export namespace MonthPicker {
+  export type Props<Type extends DatePickerType = 'default'> = MonthPickerProps<Type>;
+  export type StylesNames = MonthPickerStylesNames;
+  export type Factory = MonthPickerFactory;
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { IconCheck, IconCopy } from '@tabler/icons-react';
+import { CheckIcon, CopyIcon } from '@phosphor-icons/react';
 import chroma from 'chroma-js';
 import {
   Button,
@@ -102,9 +102,9 @@ export function ColorsInput({
           fullWidth
           leftSection={
             clipboard.copied ? (
-              <IconCheck style={{ width: rem(18) }} />
+              <CheckIcon style={{ width: rem(18) }} />
             ) : (
-              <IconCopy style={{ width: rem(18) }} />
+              <CopyIcon style={{ width: rem(18) }} />
             )
           }
           rightSection={<span />}

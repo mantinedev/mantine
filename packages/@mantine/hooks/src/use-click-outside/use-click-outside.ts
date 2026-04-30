@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useRef } from 'react';
 
 type EventType = MouseEvent | TouchEvent;
 
@@ -7,30 +7,45 @@ const DEFAULT_EVENTS = ['mousedown', 'touchstart'];
 export function useClickOutside<T extends HTMLElement = any>(
   callback: (event: EventType) => void,
   events?: string[] | null,
-  nodes?: (HTMLElement | null)[]
+  nodes?: (HTMLElement | null)[],
+  enabled: boolean = true
 ) {
   const ref = useRef<T>(null);
   const eventsList = events || DEFAULT_EVENTS;
 
-  useEffect(() => {
-    const listener = (event: Event) => {
-      const { target } = event ?? {};
-      if (Array.isArray(nodes)) {
-        const shouldIgnore =
-          !document.body.contains(target as Node) && (target as Element)?.tagName !== 'HTML';
-        const shouldTrigger = nodes.every((node) => !!node && !event.composedPath().includes(node));
-        shouldTrigger && !shouldIgnore && callback(event as EventType);
-      } else if (ref.current && !ref.current.contains(target as Node)) {
-        callback(event as EventType);
-      }
-    };
+  const listener = useEffectEvent((event: Event) => {
+    const { target } = event ?? {};
+    const shouldIgnore =
+      !document.body.contains(target as Node) && (target as Element)?.tagName !== 'HTML';
 
-    eventsList.forEach((fn) => document.addEventListener(fn, listener));
+    if (shouldIgnore) {
+      return;
+    }
+
+    const path = event.composedPath();
+
+    if (Array.isArray(nodes)) {
+      const shouldTrigger = nodes.every((node) => !!node && !path.includes(node));
+      shouldTrigger && callback(event as EventType);
+    } else if (ref.current && !path.includes(ref.current)) {
+      callback(event as EventType);
+    }
+  });
+
+  const eventsKey = eventsList.join(',');
+
+  useEffect(() => {
+    if (!enabled) {
+      return undefined;
+    }
+
+    const events = eventsKey.split(',');
+    events.forEach((fn) => document.addEventListener(fn, listener));
 
     return () => {
-      eventsList.forEach((fn) => document.removeEventListener(fn, listener));
+      events.forEach((fn) => document.removeEventListener(fn, listener));
     };
-  }, [ref, callback, nodes]);
+  }, [eventsKey, enabled]);
 
   return ref;
 }

@@ -1,16 +1,32 @@
-import { forwardRef } from 'react';
-import { rem, useProps } from '../../../core';
-import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
+import { Factory, factory, rem, useProps } from '../../../core';
+import {
+  ColorSlider,
+  ColorSliderOptions,
+  ColorSliderStylesNames,
+} from '../ColorSlider/ColorSlider';
 
-export interface HueSliderProps extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round'> {}
+export interface HueSliderProps extends ColorSliderOptions {}
 
-export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>((props, ref) => {
-  const { value, onChange, onChangeEnd, color, ...others } = useProps('HueSlider', {}, props);
+export type HueSliderFactory = Factory<{
+  props: HueSliderProps;
+  ref: HTMLDivElement;
+  stylesNames: ColorSliderStylesNames;
+}>;
+
+const defaultProps = {
+  __staticSelector: 'HueSlider',
+} satisfies Partial<HueSliderProps>;
+
+export const HueSlider = factory<HueSliderFactory>((props: HueSliderProps) => {
+  const { value, onChange, onChangeEnd, color, ...others } = useProps(
+    'HueSlider',
+    defaultProps,
+    props
+  );
 
   return (
     <ColorSlider
       {...others}
-      ref={ref}
       value={value}
       onChange={onChange}
       onChangeEnd={onChangeEnd}
@@ -34,3 +50,9 @@ export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>((props, ref)
 });
 
 HueSlider.displayName = '@mantine/core/HueSlider';
+HueSlider.classes = ColorSlider.classes;
+
+export namespace HueSlider {
+  export type Props = HueSliderProps;
+  export type Factory = HueSliderFactory;
+}

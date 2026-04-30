@@ -32,7 +32,7 @@
 
 ## Packages
 
-- [`@mantine/hooks`](https://mantine.dev/hooks/package/) – collection of 50+ hooks for state and UI management
+- [`@mantine/hooks`](https://mantine.dev/hooks/package/) – collection of 80+ hooks for state and UI management
 - [`@mantine/core`](https://mantine.dev/core/package/) – core components library – 100+ components
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
 - [`@mantine/charts`](https://mantine.dev/charts/getting-started/) – recharts based charts library
@@ -44,6 +44,7 @@
 - [`@mantine/carousel`](https://mantine.dev/x/carousel) – Carousel component
 - [`@mantine/nprogress`](https://mantine.dev/x/nprogress) – navigation progress
 - [`@mantine/modals`](https://mantine.dev/x/modals) – centralized modals manager
+- [`@mantine/schedule`](https://mantine.dev/x/schedule) – Schedule component for displaying events
 
 ## Getting help
 

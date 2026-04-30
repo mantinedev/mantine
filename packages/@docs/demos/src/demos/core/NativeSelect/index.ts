@@ -6,3 +6,4 @@ export { error } from './NativeSelect.demo.error';
 export { sections } from './NativeSelect.demo.sections';
 export { stylesApi } from './NativeSelect.demo.stylesApi';
 export { dividers } from './NativeSelect.demo.dividers';
+export { loading } from './NativeSelect.demo.loading';

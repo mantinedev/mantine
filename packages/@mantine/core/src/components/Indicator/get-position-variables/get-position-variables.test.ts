@@ -84,4 +84,24 @@ describe('@mantine/core/Indicator/get-position-variables', () => {
       '--indicator-translate-y': '50%',
     });
   });
+
+  it('supports separate x and y offsets', () => {
+    expect(getPositionVariables('top-start', { x: 8, y: 16 })).toStrictEqual({
+      '--indicator-top': rem(16),
+      '--indicator-bottom': undefined,
+      '--indicator-left': rem(8),
+      '--indicator-right': undefined,
+      '--indicator-translate-x': '-50%',
+      '--indicator-translate-y': '-50%',
+    });
+
+    expect(getPositionVariables('bottom-end', { x: 12, y: 20 })).toStrictEqual({
+      '--indicator-top': undefined,
+      '--indicator-bottom': rem(20),
+      '--indicator-left': undefined,
+      '--indicator-right': rem(12),
+      '--indicator-translate-x': '50%',
+      '--indicator-translate-y': '50%',
+    });
+  });
 });

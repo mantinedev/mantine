@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { clamp } from '../utils';
 
 function radiansToDegrees(radians: number) {
@@ -62,12 +62,7 @@ export function useRadialMove<T extends HTMLElement = any>(
   onChange: (value: number) => void,
   { step = 0.01, onChangeEnd, onScrubStart, onScrubEnd }: UseRadialMoveOptions = {}
 ): UseRadialMoveReturnValue<T> {
-  const mounted = useRef<boolean>(false);
   const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
 
   const refCallback: React.RefCallback<T | null> = useCallback(
     (node) => {
@@ -138,10 +133,19 @@ export function useRadialMove<T extends HTMLElement = any>(
           node.removeEventListener('mousedown', onMouseDown);
           node.removeEventListener('touchstart', handleTouchStart);
         }
+        document.removeEventListener('mousemove', handleMouseMove, false);
+        document.removeEventListener('mouseup', handleMouseUp, false);
+        document.removeEventListener('touchmove', handleTouchMove, false);
+        document.removeEventListener('touchend', handleTouchEnd, false);
       };
     },
     [onChange]
   );
 
   return { ref: refCallback, active };
+}
+
+export namespace useRadialMove {
+  export type Options = UseRadialMoveOptions;
+  export type ReturnValue<T extends HTMLElement> = UseRadialMoveReturnValue<T>;
 }

@@ -1,4 +1,4 @@
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon } from '@phosphor-icons/react';
 import { Button, Center, Loader, Stack, Text } from '@mantine/core';
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 
@@ -31,7 +31,7 @@ const asyncDemonstrationModal = ({
         {innerProps.loading ? (
           <Loader size={32} />
         ) : (
-          <IconCheck style={{ width: 32, height: 32, color: 'green' }} />
+          <CheckIcon style={{ width: 32, height: 32, color: 'green' }} />
         )}
       </Center>
     </Stack>

@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import {
   ActionIcon,
   BoxProps,
@@ -30,10 +30,7 @@ export interface RichTextEditorColorPickerControlProps extends BoxProps, Element
   colors: string[];
 }
 
-export const RichTextEditorColorPickerControl = forwardRef<
-  HTMLButtonElement,
-  RichTextEditorColorPickerControlProps
->((props, ref) => {
+export function RichTextEditorColorPickerControl(props: RichTextEditorColorPickerControlProps) {
   const { popoverProps, colors, colorPickerProps, ...others } = useProps(
     'RichTextEditorColorPickerControl',
     null,
@@ -46,12 +43,12 @@ export const RichTextEditorColorPickerControl = forwardRef<
   const currentColor = editor?.getAttributes('textStyle').color || 'var(--mantine-color-text)';
 
   const handleChange = (value: string, shouldClose = true) => {
-    (editor?.chain() as any).focus().setColor(value).run();
+    (editor?.chain() as any)?.focus().setColor(value).run();
     shouldClose && close();
   };
 
   const handleClear = () => {
-    (editor?.chain() as any).focus().unsetColor().run();
+    (editor?.chain() as any)?.focus().unsetColor().run();
     close();
   };
 
@@ -83,7 +80,6 @@ export const RichTextEditorColorPickerControl = forwardRef<
           variant={variant}
           aria-label={labels.colorPickerControlLabel}
           title={labels.colorPickerControlLabel}
-          ref={ref}
           onClick={toggle}
         >
           <ColorSwatch color={currentColor} size={14} />
@@ -162,6 +158,6 @@ export const RichTextEditorColorPickerControl = forwardRef<
       </Popover.Dropdown>
     </Popover>
   );
-});
+}
 
 RichTextEditorColorPickerControl.displayName = '@mantine/tiptap/ColorPickerControl';

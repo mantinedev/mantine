@@ -5,12 +5,12 @@ const code = `
 import { ActionIcon } from '@mantine/core';
 
 function Demo() {
-  return <ActionIcon size="xl" loading loaderProps={{ type: 'dots' }} />;
+  return <ActionIcon size="xl" loading loaderProps={{ type: 'dots' }} aria-label="Loading..." />;
 }
 `;
 
 function Demo() {
-  return <ActionIcon size="xl" loading loaderProps={{ type: 'dots' }} />;
+  return <ActionIcon size="xl" loading aria-label="Loading..." loaderProps={{ type: 'dots' }} />;
 }
 
 export const loaderProps: MantineDemo = {

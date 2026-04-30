@@ -1,6 +1,9 @@
-export { UnstyledButton } from './UnstyledButton';
-export type {
+import type {
+  UnstyledButtonFactory,
   UnstyledButtonProps,
   UnstyledButtonStylesNames,
-  UnstyledButtonFactory,
 } from './UnstyledButton';
+
+export { UnstyledButton } from './UnstyledButton';
+
+export type { UnstyledButtonProps, UnstyledButtonStylesNames, UnstyledButtonFactory };

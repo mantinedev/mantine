@@ -1,4 +1,4 @@
-import { IconCalendar, IconPhone } from '@tabler/icons-react';
+import { CalendarBlankIcon, PhoneIcon } from '@phosphor-icons/react';
 import { Checkbox } from '../Checkbox';
 import { ColorInput } from '../ColorInput';
 import { Group } from '../Group';
@@ -56,8 +56,8 @@ export function ErrorWithIcon() {
     <div style={{ padding: 40 }}>
       <TextInput
         label="Text input"
-        leftSection={<IconPhone />}
-        rightSection={<IconPhone />}
+        leftSection={<PhoneIcon />}
+        rightSection={<PhoneIcon />}
         error="Error"
         placeholder="This is text input"
         description="Description"
@@ -125,25 +125,16 @@ export function HomepageCollage() {
           label="Appointment date"
           value="September 30, 2021"
           withAsterisk
-          leftSection={<IconCalendar size={24} stroke={1.5} color="var(--mantine-color-gray-5)" />}
+          leftSection={<CalendarBlankIcon size={24} color="var(--mantine-color-gray-5)" />}
           rightSection={<Input.ClearButton />}
           leftSectionWidth={36}
           styles={{ input: { paddingLeft: 39.5 } }}
-          radius="md"
           size="md"
         />
-        <NumberInput
-          label="Age"
-          leftSectionWidth={48}
-          value={29}
-          radius="md"
-          size="md"
-          withAsterisk
-        />
+        <NumberInput label="Age" leftSectionWidth={48} value={29} size="md" withAsterisk />
 
         <ColorInput
           label="Favorite color"
-          radius="md"
           size="md"
           format="rgba"
           defaultValue="rgba(8, 156, 253, 0.76)"
@@ -152,7 +143,6 @@ export function HomepageCollage() {
         <MultiSelect
           label="Skills"
           value={['React', 'Next.js']}
-          radius="md"
           size="md"
           styles={{
             input: {

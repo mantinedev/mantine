@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react';
 import cx from 'clsx';
 import { FOCUS_CLASS_NAMES, Text } from '@mantine/core';
 import { Frontmatter } from '@/types';
@@ -21,7 +21,7 @@ export function MdxSiblings({ meta }: MdxSiblingsProps) {
     <div className={classes.root}>
       {prev && (
         <Link href={prev.slug} className={cx(classes.link, FOCUS_CLASS_NAMES.auto)}>
-          <IconArrowLeft stroke={1.5} className={classes.icon} />
+          <ArrowLeftIcon className={classes.icon} />
           <Text className={classes.title}>{prev.title}</Text>
         </Link>
       )}
@@ -29,7 +29,7 @@ export function MdxSiblings({ meta }: MdxSiblingsProps) {
       {next && (
         <Link href={next.slug} className={cx(classes.link, FOCUS_CLASS_NAMES.auto)}>
           <Text className={classes.title}>{next.title}</Text>
-          <IconArrowRight stroke={1.5} className={classes.icon} />
+          <ArrowRightIcon className={classes.icon} />
         </Link>
       )}
     </div>

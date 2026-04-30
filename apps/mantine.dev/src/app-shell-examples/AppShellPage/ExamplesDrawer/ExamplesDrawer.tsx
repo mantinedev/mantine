@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { IconArrowLeft, IconCode, IconLayoutBoard, IconMenu2 } from '@tabler/icons-react';
+import { ArrowLeftIcon, CodeIcon, LayoutIcon, ListIcon } from '@phosphor-icons/react';
 import {
   Affix,
   Button,
@@ -21,7 +21,7 @@ export function ExamplesDrawer() {
   const router = useRouter();
   const currentExample = router.query.e as string;
   const currentState = router.query.s === 'code' ? 'code' : 'demo';
-  const StateIcon = currentState === 'code' ? IconLayoutBoard : IconCode;
+  const StateIcon = currentState === 'code' ? LayoutIcon : CodeIcon;
 
   const examples = APP_SHELL_EXAMPLES_DATA.map((example) => (
     <UnstyledButton
@@ -50,7 +50,7 @@ export function ExamplesDrawer() {
             href="/core/app-shell"
             variant="default"
             size="md"
-            leftSection={<IconArrowLeft className="mantine-rotate-rtl" size={20} />}
+            leftSection={<ArrowLeftIcon className="mantine-rotate-rtl" size={20} />}
             style={{ boxShadow: 'var(--mantine-shadow-sm)' }}
             radius="xl"
           >
@@ -74,7 +74,7 @@ export function ExamplesDrawer() {
             onClick={open}
             size="md"
             radius="xl"
-            leftSection={<IconMenu2 size={20} />}
+            leftSection={<ListIcon size={20} />}
             w="var(--button-height)"
             style={{ boxShadow: 'var(--mantine-shadow-sm)' }}
             aria-label="Other examples"

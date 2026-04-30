@@ -1,6 +1,6 @@
 {
   "name": "@mantine/tiptap",
-  "version": "8.3.15",
+  "version": "9.1.1",
   "description": "Rich text editor based on tiptap",
   "homepage": "https://mantine.dev/x/tiptap",
   "license": "MIT",
@@ -44,18 +44,18 @@
     "directory": "packages/@mantine/tiptap"
   },
   "peerDependencies": {
-    "@mantine/core": "8.3.15",
-    "@mantine/hooks": "8.3.15",
-    "@tiptap/extension-link": ">=2.1.12",
-    "@tiptap/react": ">=2.1.12",
-    "react": "^18.x || ^19.x",
-    "react-dom": "^18.x || ^19.x"
+    "@mantine/core": "9.1.1",
+    "@mantine/hooks": "9.1.1",
+    "@tiptap/extension-link": ">=3.3.0",
+    "@tiptap/react": ">=3.3.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react": "19.2.5",
+    "react-dom": "19.2.5"
   }
 }

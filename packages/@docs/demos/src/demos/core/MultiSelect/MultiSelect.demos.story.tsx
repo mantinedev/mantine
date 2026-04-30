@@ -93,6 +93,11 @@ export const Demo_clearable = {
   render: renderDemo(demos.clearable),
 };
 
+export const Demo_clearSectionMode = {
+  name: '⭐ Demo: clearSectionMode',
+  render: renderDemo(demos.clearSectionMode),
+};
+
 export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
@@ -141,4 +146,14 @@ export const Demo_renderOption = {
 export const Demo_dropdownWidth = {
   name: '⭐ Demo: dropdownWidth',
   render: renderDemo(demos.dropdownWidth),
+};
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};
+
+export const Demo_renderPill = {
+  name: '⭐ Demo: renderPill',
+  render: renderDemo(demos.renderPill),
 };

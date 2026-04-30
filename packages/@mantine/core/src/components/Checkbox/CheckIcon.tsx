@@ -1,10 +1,10 @@
 import { rem } from '../../core';
 
-export interface CheckboxIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface CheckboxIconProps extends React.ComponentProps<'svg'> {
   indeterminate: boolean | undefined;
 }
 
-export interface CheckIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface CheckIconProps extends React.ComponentProps<'svg'> {
   size?: number | string;
 }
 

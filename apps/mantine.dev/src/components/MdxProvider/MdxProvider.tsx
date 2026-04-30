@@ -6,11 +6,13 @@ import { MdxInfo } from './MdxInfo/MdxInfo';
 import { MdxInstallScript } from './MdxInstallScript/MdxInstallScript';
 import { MdxKeyboardEventsTable } from './MdxKeyboardEventsTable/MdxKeyboardEventsTable';
 import { MdxLink } from './MdxLink/MdxLink';
+import { MdxLlmButton } from './MdxLlmButton/MdxLlmButton';
 import { MdxNpmScript } from './MdxNpmScript/MdxNpmScript';
 import { MdxPackagesInstallation } from './MdxPackagesInstallation/MdxPackagesInstallation';
 import { MdxPre } from './MdxPre/MdxPre';
 import {
   MdxAutoContrast,
+  MdxClearSectionMode,
   MdxComboboxData,
   MdxComboboxDisclaimer,
   MdxComboboxFiltering,
@@ -65,7 +67,9 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         WrapperProps: MdxWrapperProps,
         InputSections: MdxInputSections,
         AutoContrast: MdxAutoContrast,
+        ClearSectionMode: MdxClearSectionMode,
         SponsorButton: MdxSponsorButton,
+        LlmButton: MdxLlmButton,
         Video: MdxVideo,
         pre: MdxPre,
         h1: h(1),

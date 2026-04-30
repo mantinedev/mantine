@@ -19,11 +19,12 @@ import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | DatePickerStylesNames;
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     DatePickerBaseProps<Type>,
     StylesApiProps<DatePickerInputFactory> {
-  /** `dayjs` format for input value @default `"MMMM D, YYYY"` */
+  /** `dayjs` format for input value @default "MMMM D, YYYY" */
   valueFormat?: string;
 }
 
@@ -36,6 +37,7 @@ export type DatePickerInputFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
+  size: 'sm',
   valueFormat: 'MMMM D, YYYY',
   closeOnChange: true,
   sortDates: true,
@@ -43,13 +45,13 @@ const defaultProps = {
 } satisfies Partial<DatePickerInputProps>;
 
 type DatePickerInputComponent = (<Type extends DatePickerType = 'default'>(
-  props: DatePickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  props: DatePickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<DatePickerInputFactory>;
 
 export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('DatePickerInput', defaultProps, _props);
     const {
       type,
@@ -116,7 +118,6 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}
@@ -154,3 +155,9 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
 
 DatePickerInput.classes = { ...PickerInputBase.classes, ...DatePicker.classes };
 DatePickerInput.displayName = '@mantine/dates/DatePickerInput';
+
+export namespace DatePickerInput {
+  export type Props = DatePickerInputProps;
+  export type StylesNames = DatePickerInputStylesNames;
+  export type Factory = DatePickerInputFactory;
+}

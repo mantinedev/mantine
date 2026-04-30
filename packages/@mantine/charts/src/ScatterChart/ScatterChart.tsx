@@ -30,8 +30,8 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import classes from '../grid-chart.module.css';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import classes from '../grid-chart.module.css';
 
 export interface ScatterChartSeries {
   color: MantineColor;
@@ -50,7 +50,8 @@ export type ScatterChartCssVariables = {
 };
 
 export interface ScatterChartProps
-  extends Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
+  extends
+    Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {
@@ -72,7 +73,7 @@ export interface ScatterChartProps
     | { x?: GridChartBaseProps['valueFormatter']; y?: GridChartBaseProps['valueFormatter'] };
 
   /** Props passed down to recharts `ScatterChart` component */
-  scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
+  scatterChartProps?: React.ComponentProps<typeof ReChartsScatterChart>;
 
   /** Props passed down to recharts `Scatter` component */
   scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
@@ -109,7 +110,7 @@ const varsResolver = createVarsResolver<ScatterChartFactory>((theme, { textColor
   },
 }));
 
-export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
+export const ScatterChart = factory<ScatterChartFactory>((_props) => {
   const props = useProps('ScatterChart', defaultProps, _props);
   const {
     classNames,
@@ -202,10 +203,10 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
         strokeWidth={1}
         {...line}
         label={{
-          value: line.label,
           fill: line.color ? color : 'currentColor',
           fontSize: 12,
           position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
         }}
         {...getStyles('referenceLine')}
       />
@@ -230,13 +231,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box
-      ref={ref}
-      {...getStyles('root')}
-      onMouseLeave={handleMouseLeave}
-      dir={dir || 'ltr'}
-      {...others}
-    >
+    <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsScatterChart
           margin={{
@@ -247,7 +242,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
           {...scatterChartProps}
         >
           <CartesianGrid
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
             {...getStyles('grid')}
@@ -320,14 +315,18 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                     labels
                       ? payload?.map((item) => ({
                           ...item,
-                          name: labels[getAxis(item.name, dataKey)] || item.name,
+                          name: labels[getAxis(item.name as string, dataKey)] || item.name,
                           value:
-                            getFormatter(getAxis(item.name, dataKey))?.(item.value) ?? item.value,
+                            getFormatter(getAxis(item.name as string, dataKey))?.(
+                              item.value as number
+                            ) ?? item.value,
                         }))
                       : payload?.map((item) => ({
                           ...item,
                           value:
-                            getFormatter(getAxis(item.name, dataKey))?.(item.value) ?? item.value,
+                            getFormatter(getAxis(item.name as string, dataKey))?.(
+                              item.value as number
+                            ) ?? item.value,
                         }))
                   }
                   classNames={resolvedClassNames}
@@ -372,3 +371,12 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
 
 ScatterChart.displayName = '@mantine/charts/ScatterChart';
 ScatterChart.classes = classes;
+ScatterChart.varsResolver = varsResolver;
+
+export namespace ScatterChart {
+  export type Props = ScatterChartProps;
+  export type StylesNames = ScatterChartStylesNames;
+  export type CssVariables = ScatterChartCssVariables;
+  export type Factory = ScatterChartFactory;
+  export type Series = ScatterChartSeries;
+}

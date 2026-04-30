@@ -1,12 +1,12 @@
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
-import { PillsInputProvider } from '../PillsInput.context';
+import { PillsInputContext } from '../PillsInput.context';
 import {
   PillsInputField,
   PillsInputFieldProps,
   PillsInputFieldStylesNames,
 } from './PillsInputField';
 
-const TestContainer = createContextContainer(PillsInputField, PillsInputProvider, {
+const TestContainer = createContextContainer(PillsInputField, PillsInputContext, {
   value: { size: 'sm', fieldRef: { current: null } },
 });
 
@@ -16,15 +16,6 @@ describe('@mantine/core/PillsInputField', () => {
   tests.itSupportsSystemProps<PillsInputFieldProps, PillsInputFieldStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/PillsInputField',
     stylesApiSelectors: ['field'],
   });

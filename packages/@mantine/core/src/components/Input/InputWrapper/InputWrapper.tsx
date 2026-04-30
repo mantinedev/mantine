@@ -15,7 +15,6 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import classes from '../Input.module.css';
 import {
   InputDescription,
   InputDescriptionCssVariables,
@@ -34,8 +33,9 @@ import {
   InputLabelProps,
   InputLabelStylesNames,
 } from '../InputLabel/InputLabel';
-import { InputWrapperProvider } from '../InputWrapper.context';
+import { InputWrapperContext } from '../InputWrapper.context';
 import { getInputOffsets } from './get-input-offsets/get-input-offsets';
+import classes from '../Input.module.css';
 
 export type InputWrapperCssVariables = InputLabelCssVariables &
   InputErrorCssVariables &
@@ -57,10 +57,10 @@ export interface __InputWrapperProps {
   /** Contents of `Input.Error` component. If not set, error is not displayed. */
   error?: React.ReactNode;
 
-  /** Adds required attribute to the input and a red asterisk on the right side of label @default `false` */
+  /** Adds required attribute to the input and a red asterisk on the right side of label @default false */
   required?: boolean;
 
-  /** If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. @default `false` */
+  /** If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. @default false */
   withAsterisk?: boolean;
 
   /** Props passed down to the `Input.Label` component */
@@ -72,18 +72,15 @@ export interface __InputWrapperProps {
   /** Props passed down to the `Input.Error` component */
   errorProps?: InputErrorProps & DataAttributes;
 
-  /** Input container component @default `React.Fragment` */
+  /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default React.Fragment */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;
 
-  /** Controls order of the elements @default `['label', 'description', 'input', 'error']` */
+  /** Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. @default ['label', 'description', 'input', 'error'] */
   inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[];
 }
 
 export interface InputWrapperProps
-  extends __InputWrapperProps,
-    BoxProps,
-    StylesApiProps<InputWrapperFactory>,
-    ElementProps<'div'> {
+  extends __InputWrapperProps, BoxProps, StylesApiProps<InputWrapperFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Props passed to Styles API context, replaces Input.Wrapper props */
@@ -95,7 +92,7 @@ export interface InputWrapperProps
   /** Controls size of `Input.Label`, `Input.Description` and `Input.Error` components */
   size?: MantineFontSize;
 
-  /** `Input.Label` root element, `'label'` by default */
+  /** Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. @default 'label' */
   labelElement?: 'label' | 'div';
 }
 
@@ -128,7 +125,7 @@ const varsResolver = createVarsResolver<InputWrapperFactory>((_, { size }) => ({
   },
 }));
 
-export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
+export const InputWrapper = factory<InputWrapperFactory>((_props) => {
   const props = useProps('InputWrapper', defaultProps, _props);
   const {
     classNames,
@@ -246,7 +243,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
   });
 
   return (
-    <InputWrapperProvider
+    <InputWrapperContext
       value={{
         getStyles,
         describedBy,
@@ -256,18 +253,19 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
       }}
     >
       <Box
-        ref={ref}
         variant={variant}
         size={size}
         mod={[{ error: !!error }, mod]}
+        id={labelElement === 'label' ? undefined : id}
         {...getStyles('root')}
         {...others}
       >
         {content}
       </Box>
-    </InputWrapperProvider>
+    </InputWrapperContext>
   );
 });
 
 InputWrapper.classes = classes;
+InputWrapper.varsResolver = varsResolver;
 InputWrapper.displayName = '@mantine/core/InputWrapper';

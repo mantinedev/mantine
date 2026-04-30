@@ -1,6 +1,6 @@
 import { render, screen, tests } from '@mantine-tests/core';
 import { Spotlight, SpotlightProps, SpotlightStylesNames } from './Spotlight';
-import { spotlight } from './spotlight.store';
+import { createSpotlightStore, spotlight, triggerSelectedAction } from './spotlight.store';
 import { SpotlightAction } from './SpotlightAction';
 import { SpotlightActionsList } from './SpotlightActionsList';
 import { SpotlightEmpty } from './SpotlightEmpty';
@@ -25,14 +25,6 @@ describe('@mantine/core/Spotlight', () => {
   tests.itSupportsSystemProps<SpotlightProps, SpotlightStylesNames>({
     component: Spotlight,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/spotlight/Spotlight',
     stylesApiSelectors: [
       'root',
@@ -72,5 +64,10 @@ describe('@mantine/core/Spotlight', () => {
 
     expect(screen.getByText('Nothing found')).toBeInTheDocument();
     expect(container.querySelector('.mantine-Spotlight-actionsList')).toBe(null);
+  });
+
+  it('triggerSelectedAction does not throw when listId is empty', () => {
+    const store = createSpotlightStore();
+    expect(() => triggerSelectedAction(store)).not.toThrow();
   });
 });

@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
-  ExtendComponent,
+  factory,
   Factory,
   getContextItemIndex,
-  getWithProps,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -12,14 +11,17 @@ import {
 } from '../../core';
 import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
-import { MenuContextProvider } from './Menu.context';
+import { MenuContextProvider, type MenuContextValue } from './Menu.context';
+import { MenuDivider, type MenuDividerProps } from './MenuDivider/MenuDivider';
+import { MenuDropdown, type MenuDropdownProps } from './MenuDropdown/MenuDropdown';
+import { MenuItem, type MenuItemProps } from './MenuItem/MenuItem';
+import { MenuLabel, type MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuSub, type MenuSubProps } from './MenuSub/MenuSub';
+import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
 import classes from './Menu.module.css';
-import { MenuDivider } from './MenuDivider/MenuDivider';
-import { MenuDropdown } from './MenuDropdown/MenuDropdown';
-import { MenuItem } from './MenuItem/MenuItem';
-import { MenuLabel } from './MenuLabel/MenuLabel';
-import { MenuSub } from './MenuSub/MenuSub';
-import { MenuTarget } from './MenuTarget/MenuTarget';
+import type { MenuSubDropdownProps } from './MenuSubDropdown/MenuSubDropdown';
+import type { MenuSubItemProps } from './MenuSubItem/MenuSubItem';
+import type { MenuSubTargetProps } from './MenuSubTarget/MenuSubTarget';
 
 export type MenuStylesNames =
   | 'item'
@@ -33,6 +35,14 @@ export type MenuStylesNames =
 export type MenuFactory = Factory<{
   props: MenuProps;
   stylesNames: MenuStylesNames;
+  staticComponents: {
+    Item: typeof MenuItem;
+    Label: typeof MenuLabel;
+    Dropdown: typeof MenuDropdown;
+    Target: typeof MenuTarget;
+    Divider: typeof MenuDivider;
+    Sub: typeof MenuSub;
+  };
 }>;
 
 export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
@@ -59,16 +69,16 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** Called when Menu is closed */
   onClose?: () => void;
 
-  /** If set, the Menu is closed when one of the items is clicked */
+  /** If set, the Menu is closed when one of the items is clicked. Can be overridden per item with `closeMenuOnClick` prop */
   closeOnItemClick?: boolean;
 
-  /** If set, arrow key presses loop though items (first to last and last to first) */
+  /** If set, arrow key presses wrap around from last item to first and vice versa */
   loop?: boolean;
 
-  /** If set, the dropdown is closed when the `Escape` key is pressed @default `true` */
+  /** If set, the dropdown is closed when the `Escape` key is pressed @default true */
   closeOnEscape?: boolean;
 
-  /** Event trigger to open menu */
+  /** Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus */
   trigger?: 'click' | 'hover' | 'click-hover';
 
   /** Open delay in ms, applicable only to `trigger="hover"` variant */
@@ -80,17 +90,20 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** If set, the dropdown is closed on outside clicks */
   closeOnClickOutside?: boolean;
 
-  /** Events that trigger outside clicks @default `['mousedown', 'touchstart', 'keydown']` */
+  /** Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling @default ['mousedown', 'touchstart', 'keydown'] */
   clickOutsideEvents?: string[];
 
   /** Id base to create accessibility connections */
   id?: string;
 
-  /** Set the `tabindex` on all menu items @default `-1` */
+  /** Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). @default -1 */
   menuItemTabIndex?: -1 | 0;
 
-  /** If set, focus placeholder element is added before items @default `true` */
+  /** Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. @default true */
   withInitialFocusPlaceholder?: boolean;
+
+  /** Determines whether focus should be automatically returned to control when dropdown closes @default `true` */
+  returnFocus?: boolean;
 }
 
 const defaultProps = {
@@ -105,7 +118,7 @@ const defaultProps = {
   menuItemTabIndex: -1,
 } satisfies Partial<MenuProps>;
 
-export function Menu(_props: MenuProps) {
+export const Menu = factory<MenuFactory>((_props) => {
   const props = useProps('Menu', defaultProps, _props);
   const {
     children,
@@ -216,15 +229,56 @@ export function Menu(_props: MenuProps) {
       </Popover>
     </MenuContextProvider>
   );
-}
+});
 
-Menu.extend = (input: ExtendComponent<MenuFactory>) => input;
-Menu.withProps = getWithProps<MenuProps, MenuProps>(Menu as any);
-Menu.classes = classes as Record<string, string>;
 Menu.displayName = '@mantine/core/Menu';
+Menu.classes = classes;
 Menu.Item = MenuItem;
 Menu.Label = MenuLabel;
 Menu.Dropdown = MenuDropdown;
 Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;
 Menu.Sub = MenuSub;
+
+export namespace Menu {
+  export type Props = MenuProps;
+  export type StylesNames = MenuStylesNames;
+  export type Factory = MenuFactory;
+  export type ContextValue = MenuContextValue;
+
+  export namespace Item {
+    export type Props = MenuItemProps;
+  }
+
+  export namespace Label {
+    export type Props = MenuLabelProps;
+  }
+
+  export namespace Divider {
+    export type Props = MenuDividerProps;
+  }
+
+  export namespace Dropdown {
+    export type Props = MenuDropdownProps;
+  }
+
+  export namespace Target {
+    export type Props = MenuTargetProps;
+  }
+
+  export namespace Sub {
+    export type Props = MenuSubProps;
+  }
+
+  export namespace SubDropdown {
+    export type Props = MenuSubDropdownProps;
+  }
+
+  export namespace SubItem {
+    export type Props = MenuSubItemProps;
+  }
+
+  export namespace SubTarget {
+    export type Props = MenuSubTargetProps;
+  }
+}

@@ -112,6 +112,28 @@ export function WithMenu() {
   );
 }
 
+export function OpenedFromMenu() {
+  const [opened, { open, close }] = useDisclosure(false);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open} mr="md">
+        Open modal directly
+      </Button>
+      <Menu>
+        <Menu.Target>
+          <Button>Menu...</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item onClick={open}>Open modal from menu</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+      <Modal opened={opened} onClose={close} title="Just a Modal">
+        <input data-autofocus placeholder="should be focused" />
+      </Modal>
+    </div>
+  );
+}
+
 export function ConsistentHeaderHeight() {
   const [opened, { open, close }] = useDisclosure(true);
   const [withCloseButton, handlers] = useDisclosure(true);
@@ -166,15 +188,7 @@ export function Unstyled() {
       <Button onClick={open}>Open modal</Button>
       {content}
       <Button onClick={open}>Open modal</Button>
-      <Modal
-        opened={opened}
-        onClose={close}
-        title="Just a Modal"
-        size="md"
-        zIndex={73812}
-        radius="md"
-        unstyled
-      >
+      <Modal opened={opened} onClose={close} title="Just a Modal" size="md" zIndex={73812} unstyled>
         <input data-autofocus />
       </Modal>
     </div>

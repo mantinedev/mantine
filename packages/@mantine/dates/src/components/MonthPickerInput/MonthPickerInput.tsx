@@ -22,11 +22,12 @@ export type MonthPickerInputStylesNames =
   | MonthPickerStylesNames;
 
 export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerInputFactory> {
-  /** `dayjs` format for input value @default `"MMMM YYYY"` */
+  /** `dayjs` format for input value @default "MMMM YYYY" */
   valueFormat?: string;
 }
 
@@ -39,6 +40,7 @@ export type MonthPickerInputFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
+  size: 'sm',
   valueFormat: 'MMMM YYYY',
   closeOnChange: true,
   sortDates: true,
@@ -46,13 +48,13 @@ const defaultProps = {
 } satisfies Partial<MonthPickerInputProps>;
 
 type MonthPickerInputComponent = (<Type extends DatePickerType = 'default'>(
-  props: MonthPickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  props: MonthPickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<MonthPickerInputFactory>;
 
 export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('MonthPickerInput', defaultProps, _props);
     const {
       type,
@@ -74,6 +76,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
       maxDate,
       vars,
       valueFormatter,
+      presets,
       attributes,
       ...rest
     } = props;
@@ -115,7 +118,6 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}
@@ -148,6 +150,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          presets={presets}
           attributes={attributes}
         />
       </PickerInputBase>
@@ -157,3 +160,9 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
 
 MonthPickerInput.classes = { ...PickerInputBase.classes, ...MonthPicker.classes };
 MonthPickerInput.displayName = '@mantine/dates/MonthPickerInput';
+
+export namespace MonthPickerInput {
+  export type Props<Type extends DatePickerType = 'default'> = MonthPickerInputProps<Type>;
+  export type StylesNames = MonthPickerInputStylesNames;
+  export type Factory = MonthPickerInputFactory;
+}

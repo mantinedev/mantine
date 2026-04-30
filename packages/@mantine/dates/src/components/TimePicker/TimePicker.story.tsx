@@ -267,3 +267,33 @@ export function WithPlaceholders() {
     </div>
   );
 }
+
+export function Duration() {
+  const [value, setValue] = useState<string>('');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <TimePicker label="Duration" type="duration" withSeconds value={value} onChange={setValue} />
+      <div>Value: {value}</div>
+      <Group mt="md">
+        <Button onClick={() => setValue('155:22:45')}>Set 155:22:45</Button>
+        <Button onClick={() => setValue('1000:00:00')}>Set 1000:00:00</Button>
+        <Button onClick={() => setValue('')}>Clear</Button>
+      </Group>
+    </div>
+  );
+}
+
+export function DurationDefaultValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <TimePicker
+        label="Duration (default 100:30:15)"
+        type="duration"
+        withSeconds
+        defaultValue="100:30:15"
+        clearable
+      />
+    </div>
+  );
+}

@@ -19,11 +19,12 @@ import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearP
 export type YearPickerInputStylesNames = __InputStylesNames | 'placeholder' | YearPickerStylesNames;
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerInputFactory> {
-  /** `dayjs` format to display input value @default `"YYYY"` */
+  /** `dayjs` format to display input value @default "YYYY" */
   valueFormat?: string;
 }
 
@@ -36,6 +37,7 @@ export type YearPickerInputFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
+  size: 'sm',
   valueFormat: 'YYYY',
   closeOnChange: true,
   sortDates: true,
@@ -43,13 +45,13 @@ const defaultProps = {
 } satisfies Partial<YearPickerInputProps>;
 
 type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
-  props: YearPickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  props: YearPickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<YearPickerInputFactory>;
 
 export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('YearPickerInput', defaultProps, _props);
     const {
       type,
@@ -71,6 +73,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       maxDate,
       vars,
       valueFormatter,
+      presets,
       attributes,
       ...rest
     } = props;
@@ -112,7 +115,6 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}
@@ -145,6 +147,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          presets={presets}
           attributes={attributes}
         />
       </PickerInputBase>
@@ -154,3 +157,9 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
 
 YearPickerInput.classes = { ...PickerInputBase.classes, ...YearPicker.classes };
 YearPickerInput.displayName = '@mantine/dates/YearPickerInput';
+
+export namespace YearPickerInput {
+  export type Props<Type extends DatePickerType = 'default'> = YearPickerInputProps<Type>;
+  export type StylesNames = YearPickerInputStylesNames;
+  export type Factory = YearPickerInputFactory;
+}
