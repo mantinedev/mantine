@@ -14,7 +14,7 @@ export function DocsMobileNavbar() {
   const isMobile = useMediaQuery('(max-width: 67.5em)');
 
   return (
-    <ReactRemoveScroll enabled={isMobile}>
+    <ReactRemoveScroll enabled={isMobile} removeScrollBar={false}>
       <nav className={classes.mobileNavbar}>
         <ScrollArea h="calc(100vh - var(--docs-header-height))" type="never">
           <div className={classes.mobileNavbarInner}>{categories}</div>
