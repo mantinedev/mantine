@@ -196,6 +196,7 @@ export const Radio = factory<RadioFactory>((_props) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
+  const errorId = error ? `${uuid}-error` : undefined;
 
   const contextChecked = ctx ? ctx.value === rest.value : undefined;
 
@@ -220,6 +221,7 @@ export const Radio = factory<RadioFactory>((_props) => {
       label={label}
       description={description}
       error={error}
+      errorId={errorId}
       disabled={withContextProps.disabled}
       classNames={classNames}
       styles={styles}
@@ -241,6 +243,7 @@ export const Radio = factory<RadioFactory>((_props) => {
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           id={uuid}
           type="radio"
+          aria-describedby={errorId}
         />
         <Icon {...getStyles('icon')} aria-hidden />
       </Box>

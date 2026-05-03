@@ -206,6 +206,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
+  const errorId = error ? `${uuid}-error` : undefined;
 
   const withContextProps = {
     checked: ctx?.value.includes(rest.value as string) ?? checked,
@@ -241,6 +242,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
       label={label}
       description={description}
       error={error}
+      errorId={errorId}
       disabled={finalDisabled}
       classNames={classNames}
       styles={styles}
@@ -261,6 +263,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           ref={useMergedRef(inputRef, ref)}
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           {...getStyles('input', { focusable: true, variant })}
+          aria-describedby={errorId}
           {...rest}
           {...withContextProps}
           disabled={finalDisabled}

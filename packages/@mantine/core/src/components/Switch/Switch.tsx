@@ -172,6 +172,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
+  const errorId = error ? `${uuid}-error` : undefined;
 
   const withContextProps = {
     checked: ctx?.value.includes(rest.value as string) ?? checked,
@@ -200,6 +201,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
       label={label}
       description={description}
       error={error}
+      errorId={errorId}
       disabled={_disabled}
       bodyElement="label"
       labelElement="span"
@@ -228,6 +230,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
         id={uuid}
         type="checkbox"
         role="switch"
+        aria-describedby={errorId}
         inert={rest.inert}
         {...getStyles('input')}
       />
