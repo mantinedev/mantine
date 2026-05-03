@@ -37,7 +37,7 @@ export function useInterval(
       }
       return true;
     });
-  }, []);
+  }, [interval]);
 
   const stop = useCallback(() => {
     setActive(false);
