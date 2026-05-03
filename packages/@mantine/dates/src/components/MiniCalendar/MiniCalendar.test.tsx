@@ -4,6 +4,7 @@ import { MiniCalendar, MiniCalendarProps, MiniCalendarStylesNames } from './Mini
 const defaultProps: MiniCalendarProps = {
   nextControlProps: { 'aria-label': 'next' },
   previousControlProps: { 'aria-label': 'previous' },
+  withWeekday: true,
 };
 
 describe('@mantine/dates/MiniCalendar', () => {
@@ -14,7 +15,7 @@ describe('@mantine/dates/MiniCalendar', () => {
     varsResolver: true,
     polymorphic: true,
     displayName: '@mantine/dates/MiniCalendar',
-    stylesApiSelectors: ['root', 'control', 'days', 'day', 'dayMonth', 'dayNumber'],
+    stylesApiSelectors: ['root', 'control', 'days', 'day', 'dayWeekday', 'dayMonth', 'dayNumber'],
   });
 
   it('displays given date range', () => {
@@ -140,5 +141,30 @@ describe('@mantine/dates/MiniCalendar', () => {
 
     expect(container.querySelector('[data-test-previous]')).toBeInTheDocument();
     expect(container.querySelector('[data-test-next]')).toBeInTheDocument();
+  });
+
+  it('supports withWeekday', () => {
+    const { rerender } = render(
+      <MiniCalendar {...defaultProps} date="2025-01-01" numberOfDays={1} withWeekday={false} />
+    );
+
+    expect(screen.queryByText('Wed')).not.toBeInTheDocument();
+
+    rerender(<MiniCalendar {...defaultProps} date="2025-01-01" numberOfDays={1} withWeekday />);
+    expect(screen.getByText('Wed')).toBeInTheDocument();
+  });
+
+  it('supports weekdayFormat', () => {
+    render(
+      <MiniCalendar
+        {...defaultProps}
+        date="2025-01-01"
+        numberOfDays={1}
+        withWeekday
+        weekdayFormat="dddd"
+      />
+    );
+
+    expect(screen.getByText('Wednesday')).toBeInTheDocument();
   });
 });
