@@ -26,7 +26,12 @@ import {
   UseFormInput,
   UseFormReturnType,
 } from './types';
-import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
+import {
+  formRootRule,
+  shouldValidateOnChange,
+  validateFieldValue,
+  validateValues,
+} from './validate';
 
 export function useForm<
   Values extends Record<string, any>,
@@ -39,7 +44,9 @@ export function useForm<
 export function useForm<
   Values extends Record<string, any>,
   TransformedValues = Values,
-  Rules extends FormRulesRecord<Values> = FormRulesRecord<Values>,
+  Rules extends FormRulesRecord<Values> &
+    Record<Exclude<keyof Rules, keyof Values | typeof formRootRule>, never> =
+    FormRulesRecord<Values>,
 >(
   input: UseFormInput<Values, TransformedValues> & { validate: Rules }
 ): UseFormReturnType<Values, TransformedValues, Rules>;
