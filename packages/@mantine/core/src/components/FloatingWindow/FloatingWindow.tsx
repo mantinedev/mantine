@@ -17,6 +17,7 @@ import {
 } from '../../core';
 import { Paper, PaperBaseProps } from '../Paper';
 import { OptionalPortal, PortalProps } from '../Portal';
+import { FloatingWindowContext } from './FloatingWindow.context';
 import classes from './FloatingWindow.module.css';
 
 export type FloatingWindowStylesNames = 'root';
@@ -110,15 +111,17 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
   ]);
 
   return (
-    <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Paper
-        ref={useMergedRef(ref, floatingWindow.ref)}
-        mod={[{ dragging: floatingWindow.isDragging }, mod]}
-        {...getStyles('root')}
-        {...others}
-        __vars={{ '--floating-window-z-index': zIndex.toString() }}
-      />
-    </OptionalPortal>
+    <FloatingWindowContext.Provider value={{ zIndex }}>
+      <OptionalPortal withinPortal={withinPortal} {...portalProps}>
+        <Paper
+          ref={useMergedRef(ref, floatingWindow.ref)}
+          mod={[{ dragging: floatingWindow.isDragging }, mod]}
+          {...getStyles('root')}
+          {...others}
+          __vars={{ '--floating-window-z-index': zIndex.toString() }}
+        />
+      </OptionalPortal>
+    </FloatingWindowContext.Provider>
   );
 });
 
