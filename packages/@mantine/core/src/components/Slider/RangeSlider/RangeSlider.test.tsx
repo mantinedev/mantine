@@ -256,4 +256,18 @@ describe('@mantine/core/RangeSlider', () => {
     expect(screen.getByLabelText('From slider')).toBeInTheDocument();
     expect(screen.getByLabelText('To slider')).toBeInTheDocument();
   });
+
+  it('sets aria-valuetext for both thumbs from callback', () => {
+    render(
+      <RangeSlider
+        defaultValue={[20, 80]}
+        scale={(value) => value * 10}
+        ariaValueText={(value) => `${value}%`}
+      />
+    );
+
+    const sliders = getSliders();
+    expect(sliders[0]).toHaveAttribute('aria-valuetext', '200%');
+    expect(sliders[1]).toHaveAttribute('aria-valuetext', '800%');
+  });
 });
