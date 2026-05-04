@@ -93,6 +93,9 @@ export interface SliderProps
   /** Thumb `aria-label` */
   thumbLabel?: string;
 
+  /** Thumb `aria-valuetext` */
+  ariaValueText?: string | ((value: number) => string);
+
   /** Determines whether the label should be displayed when the slider is hovered @default true */
   showLabelOnHover?: boolean;
 
@@ -181,6 +184,7 @@ export const Slider = factory<SliderFactory>((_props) => {
     labelTransitionProps,
     labelAlwaysOn,
     thumbLabel,
+    ariaValueText,
     showLabelOnHover,
     thumbChildren,
     disabled,
@@ -458,6 +462,7 @@ export const Slider = factory<SliderFactory>((_props) => {
             labelTransitionProps={labelTransitionProps}
             labelAlwaysOn={labelAlwaysOn}
             thumbLabel={thumbLabel}
+            ariaValueText={ariaValueText}
             showLabelOnHover={showLabelOnHover}
             isHovered={hovered}
             disabled={disabled}
