@@ -196,6 +196,11 @@ export const Radio = factory<RadioFactory>((_props) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
+  const hasError = !!error && typeof error !== 'boolean';
+  const hasDescription = !!description;
+  const describedBy =
+    `${hasError ? `${uuid}-error` : ''} ${hasDescription ? `${uuid}-description` : ''}`.trim() ||
+    undefined;
 
   const contextChecked = ctx ? ctx.value === rest.value : undefined;
 
@@ -238,6 +243,8 @@ export const Radio = factory<RadioFactory>((_props) => {
           {...rest}
           {...withContextProps}
           component="input"
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           id={uuid}
           type="radio"

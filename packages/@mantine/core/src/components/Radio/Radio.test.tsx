@@ -61,4 +61,20 @@ describe('@mantine/core/Radio', () => {
       errorSpy.mockRestore();
     }
   });
+
+  it('connects description and error message to input with aria-describedby', () => {
+    render(<Radio {...defaultProps} id="radio-test" />);
+    expect(screen.getByRole('radio')).toHaveAttribute(
+      'aria-describedby',
+      'radio-test-error radio-test-description'
+    );
+  });
+
+  it('sets aria-invalid attribute based on error prop', () => {
+    const { rerender } = render(<Radio error="test-error" />);
+    expect(screen.getByRole('radio')).toHaveAttribute('aria-invalid', 'true');
+
+    rerender(<Radio error={false} />);
+    expect(screen.getByRole('radio')).not.toHaveAttribute('aria-invalid');
+  });
 });
