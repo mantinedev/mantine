@@ -49,6 +49,7 @@ import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYea
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { getRenderableMonthEventSegments } from './get-renderable-month-event-segments';
 import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
 import { handleMonthViewKeyDown, MonthViewControlsRef } from './handle-month-view-key-down';
 import classes from './MonthView.module.css';
@@ -565,34 +566,40 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
     const rowHeightPercent = 100 / maxEventsPerDay;
 
-    const events = (monthEvents.groupedByWeek[weekIndex] || [])
-      .filter((event) => event.position.row < maxEventsPerDay)
-      .map((event) => {
-        const isDraggable = dragDrop.isDraggableEvent(event);
+    const eventSegments = getRenderableMonthEventSegments({
+      events: monthEvents.groupedByWeek[weekIndex] || [],
+      groupedByDay: monthEvents.groupedByDay,
+      maxEventsPerDay,
+      week,
+    });
 
-        return (
-          <ScheduleEvent
-            key={event.id}
-            event={event}
-            nowrap
-            autoSize
-            hanging={event.position.hanging}
-            draggable={isDraggable}
-            renderEventBody={renderEventBody}
-            renderEvent={renderEvent}
-            radius={radius}
-            mode={mode}
-            onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
-            style={{
-              position: 'absolute',
-              top: `calc(${event.position.row * rowHeightPercent}% + 1px)`,
-              left: `calc(${event.position.startOffset}% + 1px)`,
-              width: `calc(${event.position.width}% - 2px)`,
-              height: `calc(${rowHeightPercent}% - 2px)`,
-            }}
-          />
-        );
-      });
+    const events = eventSegments.map((segment) => {
+      const isDraggable = dragDrop.isDraggableEvent(segment.event);
+
+      return (
+        <ScheduleEvent
+          key={segment.key}
+          event={segment.event}
+          nowrap
+          autoSize
+          hanging={segment.position.hanging}
+          draggable={isDraggable}
+          renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
+          radius={radius}
+          mode={mode}
+          mod={{ 'clip-start': segment.clipStart, 'clip-end': segment.clipEnd }}
+          onClick={onEventClick ? (e) => onEventClick(segment.event, e) : undefined}
+          style={{
+            position: 'absolute',
+            top: `calc(${segment.position.row * rowHeightPercent}% + 1px)`,
+            left: `calc(${segment.position.startOffset}% + 1px)`,
+            width: `calc(${segment.position.width}% - 2px)`,
+            height: `calc(${rowHeightPercent}% - 2px)`,
+          }}
+        />
+      );
+    });
 
     const moreEventsNodes = week.map((day, dayIndex) => {
       const dayEvents = monthEvents.groupedByDay[day] || [];
