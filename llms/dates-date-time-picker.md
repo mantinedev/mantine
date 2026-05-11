@@ -19,6 +19,26 @@ function Demo() {
 ```
 
 
+## Range
+
+Set `type="range"` to allow selecting a date and time range. In range mode,
+two time inputs are rendered for start and end times, and a range summary is displayed below:
+
+```tsx
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      type="range"
+      label="Pick dates and times range"
+      placeholder="Pick dates and times range"
+    />
+  );
+}
+```
+
+
 ## With seconds
 
 ```tsx
@@ -97,6 +117,27 @@ function Demo() {
   return (
     <DateTimePicker
       valueFormat="DD MMM YYYY hh:mm A"
+      label="Pick date and time"
+      placeholder="Pick date and time"
+    />
+  );
+}
+```
+
+
+`valueFormat` also accepts a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string
+and returns a custom formatted value. Use it when the formatting logic cannot be expressed with a
+dayjs format string:
+
+```tsx
+import dayjs from 'dayjs';
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      valueFormat={(date) => dayjs(date).format('dddd, MMMM D [at] h:mm A')}
+      defaultValue="2024-04-11 14:45:00"
       label="Pick date and time"
       placeholder="Pick date and time"
     />
@@ -228,6 +269,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type="range" |
 | ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |
 | clearButtonProps | React.ComponentProps<"button"> | - | Props passed down to the clear button |
 | clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
@@ -238,11 +280,12 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | defaultDate | string \| Date | - | Initial displayed date in uncontrolled mode |
 | defaultLevel | "month" \| "year" \| "decade" | - | Initial displayed level in uncontrolled mode |
 | defaultTimeValue | string | - | Default time value in HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. |
-| defaultValue | DateValue | - | Uncontrolled component default value |
+| defaultValue | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
 | disabled | boolean | - | Sets `disabled` attribute on the `input` element |
 | dropdownType | "popover" \| "modal" | - | Type of the dropdown |
+| endTimePickerProps | Omit<TimePickerProps, "value" \| "defaultValue"> | - | Props passed down to the end time `TimePicker` component in range mode |
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
@@ -261,7 +304,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
 | label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
 | labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
-| labelSeparator | string | - | Separator between range value |
+| labelSeparator | string | - | Separator between range values |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
 | leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
@@ -279,7 +322,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | nextIcon | React.ReactNode | - | Change next icon |
 | nextLabel | string | - | Next button `aria-label` |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | (value: string \| null) => void | - | Called when value changes |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
 | onDateChange | (date: string) => void | - | Called when date changes |
 | onDropdownClose | () => void | - | Called when the dropdown is closed |
 | onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
@@ -294,7 +337,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
-| presets | DatePickerPreset<"default">[] | - | Presets values |
+| presets | DatePickerPreset<Type>[] | - | Presets values |
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
@@ -309,8 +352,9 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | sortDates | boolean | - | Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" |
 | submitButtonProps | ActionIconProps & ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> | - | Props passed down to the submit button |
 | timePickerProps | Omit<TimePickerProps, "value" \| "defaultValue"> | - | Props passed down to `TimePicker` component |
-| value | DateValue | - | Controlled component value |
-| valueFormat | string | - | `dayjs` format for input value |
+| type | "range" \| "multiple" \| "default" | - | Picker type: range or default |
+| value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Controlled component value |
+| valueFormat | string \| ((date: string) => string) | - | `dayjs` format for input value, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value |
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
@@ -360,3 +404,6 @@ DateTimePicker component supports Styles API. With Styles API, you can customize
 | timeWrapper | .mantine-DateTimePicker-timeWrapper | Wrapper around time input and submit button |
 | timeInput | .mantine-DateTimePicker-timeInput | TimeInput |
 | submitButton | .mantine-DateTimePicker-submitButton | Submit button |
+| rangeTimeWrapper | .mantine-DateTimePicker-rangeTimeWrapper | Wrapper around two time inputs in range mode |
+| rangeTimeInput | .mantine-DateTimePicker-rangeTimeInput | Time input in range mode |
+| rangeInfo | .mantine-DateTimePicker-rangeInfo | Range dates preview in range mode |

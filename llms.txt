@@ -164,6 +164,7 @@ For a single consolidated file with all content, use:
 - [RangeSlider](https://mantine.dev/llms/core-range-slider.md): RangeSlider component
 - [Rating](https://mantine.dev/llms/core-rating.md): Pick and display rating
 - [RingProgress](https://mantine.dev/llms/core-ring-progress.md): Give user feedback for status of the task with circle diagram
+- [RollingNumber](https://mantine.dev/llms/core-rolling-number.md): Animate value changes with rolling digits
 - [ScrollArea](https://mantine.dev/llms/core-scroll-area.md): Area with custom scrollbars
 - [Scroller](https://mantine.dev/llms/core-scroller.md): Horizontal scroll container with navigation controls
 - [SegmentedControl](https://mantine.dev/llms/core-segmented-control.md): A linear set of two or more segments
@@ -190,6 +191,7 @@ For a single consolidated file with all content, use:
 - [Tooltip](https://mantine.dev/llms/core-tooltip.md): Renders tooltip at given element on mouse over or other event
 - [Transition](https://mantine.dev/llms/core-transition.md): Animate presence of component with pre-made animations
 - [Tree](https://mantine.dev/llms/core-tree.md): Display a Tree structure
+- [TreeSelect](https://mantine.dev/llms/core-tree-select.md): Select with hierarchical tree data
 - [Typography](https://mantine.dev/llms/core-typography.md): Styles provider for html content
 - [UnstyledButton](https://mantine.dev/llms/core-unstyled-button.md): Unstyled polymorphic button
 - [VisuallyHidden](https://mantine.dev/llms/core-visually-hidden.md): Hide element visually but keep it accessible for screen readers
@@ -210,6 +212,7 @@ For a single consolidated file with all content, use:
 - [useDisclosure](https://mantine.dev/llms/hooks-use-disclosure.md)
 - [useDocumentTitle](https://mantine.dev/llms/hooks-use-document-title.md)
 - [useDocumentVisibility](https://mantine.dev/llms/hooks-use-document-visibility.md)
+- [useDrag](https://mantine.dev/llms/hooks-use-drag.md)
 - [useEventListener](https://mantine.dev/llms/hooks-use-event-listener.md)
 - [useEyeDropper](https://mantine.dev/llms/hooks-use-eye-dropper.md)
 - [useFavicon](https://mantine.dev/llms/hooks-use-favicon.md)
@@ -304,6 +307,7 @@ For a single consolidated file with all content, use:
 - [DatePickerInput](https://mantine.dev/llms/dates-date-picker-input.md): Date, multiple dates and dates range picker input
 - [DateTimePicker](https://mantine.dev/llms/dates-date-time-picker.md): Capture datetime from the user
 - [GettingStartedDates](https://mantine.dev/llms/dates-getting-started.md)
+- [InlineDateTimePicker](https://mantine.dev/llms/dates-inline-date-time-picker.md): Inline date and time picker with range support
 - [MiniCalendar](https://mantine.dev/llms/dates-mini-calendar.md): Compact calendar to display a small number of days in a row
 - [MonthPicker](https://mantine.dev/llms/dates-month-picker.md): Inline month, multiple months and months range picker
 - [MonthPickerInput](https://mantine.dev/llms/dates-month-picker-input.md): Month, multiple months and months range picker input
@@ -329,6 +333,7 @@ For a single consolidated file with all content, use:
 - [PieChart](https://mantine.dev/llms/charts-pie-chart.md): Pie chart component
 - [RadarChart](https://mantine.dev/llms/charts-radar-chart.md): Radar chart component
 - [RadialBarChart](https://mantine.dev/llms/charts-radial-bar-chart.md): Radial bar chart component
+- [SankeyChart](https://mantine.dev/llms/charts-sankey-chart.md): Sankey diagram component
 - [ScatterChart](https://mantine.dev/llms/charts-scatter-chart.md): Scatter chart component
 - [Sparkline](https://mantine.dev/llms/charts-sparkline.md): Simplified area chart to show trends
 - [Treemap](https://mantine.dev/llms/charts-treemap.md): Treemap chart component
@@ -442,6 +447,7 @@ For a single consolidated file with all content, use:
 - [Changelog830](https://mantine.dev/llms/changelog-8-3-0.md)
 - [Changelog900](https://mantine.dev/llms/changelog-9-0-0.md)
 - [Changelog910](https://mantine.dev/llms/changelog-9-1-0.md)
+- [Changelog920](https://mantine.dev/llms/changelog-9-2-0.md)
 - [Contribute](https://mantine.dev/llms/contribute.md)
 - [EslintConfig](https://mantine.dev/llms/eslint-config-mantine.md)
 - [GettingStarted](https://mantine.dev/llms/getting-started.md)

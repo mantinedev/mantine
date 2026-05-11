@@ -114,6 +114,7 @@ import {
 * `position` – notification position; by default, the value from the `position` prop of the `Notifications` component is used
 * `withBorder` – determines whether the notification should have a border
 * `withCloseButton` – determines whether the close button should be visible
+* `allowClose` – determines whether notification can be closed with close button, drag or horizontal scroll swipe, `true` by default
 * `onClose` – called when the notification is unmounted
 * `onOpen` – called when the notification is mounted
 * `autoClose` – defines timeout in ms after which the notification will be automatically closed; use `false` to disable auto close
@@ -134,6 +135,7 @@ notifications.show({
   id: 'hello-there',
   position: 'bottom-center',
   withCloseButton: true,
+  allowClose: true,
   onClose: () => console.log('unmounted'),
   onOpen: () => console.log('mounted'),
   autoClose: 5000,
@@ -161,6 +163,25 @@ function Demo() {
 }
 ```
 
+
+## Dismiss interactions
+
+Notifications can be dismissed by dragging them left or right, or with a horizontal scroll swipe
+while hovered.
+
+Use `allowDragDismiss` and `allowScrollDismiss` on `Notifications` to disable either interaction:
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications allowDragDismiss={false} allowScrollDismiss={false} />;
+}
+```
+
+To make a specific notification non-dismissible, set `allowClose: false` in
+`notifications.show` or `notifications.update`. This hides the close button and disables
+drag/scroll dismissal for that notification.
 
 ## Customize notification styles
 
@@ -393,7 +414,7 @@ function Demo() {
           title: 'Loading your data',
           message: 'Data will be loaded in 3 seconds, you cannot close this yet',
           autoClose: false,
-          withCloseButton: false,
+          allowClose: false,
         });
 
         setTimeout(() => {
@@ -405,6 +426,7 @@ function Demo() {
             icon: <CheckIcon size={18} />,
             loading: false,
             autoClose: 2000,
+            allowClose: true,
           });
         }, 3000);
       }}
@@ -551,6 +573,8 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| allowDragDismiss | boolean | - | Determines whether notifications can be dismissed by dragging left or right |
+| allowScrollDismiss | boolean | - | Determines whether notifications can be dismissed with horizontal scroll gesture while hovered |
 | autoClose | number \| false | - | Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function |
 | containerWidth | string \| number | - | Notification width, cannot exceed 100% |
 | limit | number | - | Maximum number of notifications displayed at a time, other new notifications will be added to queue |

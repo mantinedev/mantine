@@ -496,6 +496,67 @@ function Demo() {
 ```
 
 
+## Reorder pills
+
+Set the `withPillsReorder` prop to allow reordering pills. Dropping a pill before or after
+another pill updates the component value accordingly. Reordering is automatically disabled
+when `disabled` or `readOnly` is set.
+
+You can reorder pills with a mouse (drag-and-drop) or keyboard:
+
+* Pills are not part of the `Tab` order. With focus on the input, press `ArrowLeft` (when the
+  caret is at the start of the input) to move focus to the last pill.
+* `ArrowLeft` and `ArrowRight` move focus between pills (RTL-aware). Pressing `ArrowRight` on
+  the last pill returns focus to the input.
+* `Alt + ArrowLeft` and `Alt + ArrowRight` reorder the focused pill (RTL-aware).
+
+Focus follows the moved pill so multiple moves can be chained without re-focusing.
+
+```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(['React', 'Angular', 'Vue']);
+
+  return (
+    <MultiSelect
+      label="Drag pills to reorder"
+      description="Selected values can be reordered by dragging pills"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte', 'Solid', 'Ember']}
+      value={value}
+      onChange={setValue}
+      withPillsReorder
+    />
+  );
+}
+```
+
+
+If you use a custom pill renderer with the `renderPill` prop, spread the `reorderProps` from
+the render callback payload onto the focusable pill root element to keep reordering working.
+`reorderProps` carries the `tabIndex`, `data-mantine-pill-index` attribute and the keyboard
+handler that drive keyboard reorder, so it must land on the element the user can focus:
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={['React', 'Angular', 'Vue']}
+      withPillsReorder
+      renderPill={({ value, onRemove, reorderProps }) => (
+        <div {...reorderProps}>
+          {value} <button onClick={onRemove}>×</button>
+        </div>
+      )}
+    />
+  );
+}
+```
+
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).
@@ -913,7 +974,7 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |
-| hiddenInputProps | Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value"> | - | Props passed down to the hidden input |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input `value` attribute |
 | hidePickedOptions | boolean | - | When enabled, selected options are hidden from the dropdown list |
 | inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
@@ -960,6 +1021,7 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCheckIcon | boolean | - | If set, the check icon is displayed near the selected option label |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withPillsReorder | boolean | - | If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. |
 | withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 

@@ -1456,6 +1456,80 @@ function Demo() {
 | withDragHandle | boolean | - | If set, drag-and-drop must be initiated from an element that spreads `dragHandleProps` from the `renderNode` payload, rather than anywhere on the node. |
 | withLines | boolean | - | If set, connecting lines are rendered showing parent-child relationships |
 
+**Tree.Select props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| allowDeselect | boolean | - | Allows deselecting in single mode |
+| checkStrictly | boolean | - | Disables parent-child cascade in checkbox mode |
+| checkedStrategy | CheckedStrategy | - | Controls which checked nodes appear in value/pills in checkbox mode |
+| chevronAriaLabels | TreeSelectChevronAriaLabels | - | aria-label values for the expand/collapse chevron button |
+| chevronColor | MantineColor | - | Controls the default chevron color |
+| clearButtonProps | InputClearButtonProps | - | Props for the clear button |
+| clearSearchOnChange | boolean | - | Clear search on selection change |
+| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
+| clearable | boolean | - | Shows clear button |
+| comboboxProps | Record<string, any> | - | Props passed to the underlying Combobox |
+| data | TreeNodeData[] | required | Tree data |
+| defaultDropdownOpened | boolean | - | Default dropdown state |
+| defaultExpandAll | boolean | - | Expand all nodes by default |
+| defaultExpandedValues | string[] | - | Default expanded node values |
+| defaultSearchValue | string | - | Default search value |
+| defaultValue | string \| string[] \| null | - | Default value |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| dropdownOpened | boolean | - | Controlled dropdown state |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| expandOnClick | boolean | - | Also toggle expand when clicking a parent node (not just the chevron). In `single` and `multiple` modes, parent clicks only expand; only leaves can be selected. In `checkbox` mode, parent clicks both check and expand. |
+| expandedValues | string[] | - | Controlled expanded state |
+| filter | (query: string, node: TreeNodeData) => boolean | - | Custom filter function |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props for the hidden input |
+| hiddenInputValuesDivider | string | - | Divider for hidden input values |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| maxDisplayedValues | number | - | Maximum displayed pills before "+N more" |
+| maxDisplayedValuesContent | ReactNode \| ((overflow: number) => ReactNode) | - | Content shown when values overflow maxDisplayedValues |
+| maxDropdownHeight | string \| number | - | Max dropdown height |
+| maxValues | number | - | Maximum selectable values (multiple/checkbox mode) |
+| mode | TreeSelectMode | - | Selection mode: 'single', 'multiple', or 'checkbox' (with cascade) |
+| nothingFoundMessage | React.ReactNode | - | Message when no nodes match search |
+| onChange | (value: TreeSelectValue<Mode>) => void | - | Called when value changes |
+| onClear | () => void | - | Called when clear button is clicked |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onExpandedChange | (values: string[]) => void | - | Called when expanded state changes |
+| onRemove | (value: string) => void | - | Called with removed value in multiple/checkbox mode |
+| onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | Opens dropdown on focus (searchable mode) |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| renderNode | (payload: TreeSelectRenderNodePayload) => ReactNode | - | Custom node rendering in the dropdown |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| scrollAreaProps | ScrollAreaProps | - | Props for the ScrollArea in the dropdown |
+| searchValue | string | - | Controlled search value |
+| searchable | boolean | - | Enables search filtering |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| value | string \| string[] \| null | - | Controlled value |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withLines | boolean | - | Show tree connection lines between parent and child nodes |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
+
 **Tree.map props**
 
 | Prop | Type | Default | Description |
@@ -1494,6 +1568,30 @@ Tree component supports Styles API. With Styles API, you can customize styles of
 | Selector | Variable | Description |
 |----------|----------|-------------|
 | root | --level-offset | Controls offset of nested tree levels |
+
+**Treeselect selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Treeselect-wrapper | Root element of the Input |
+| input | .mantine-Treeselect-input | Input element |
+| section | .mantine-Treeselect-section | Left and right sections |
+| root | .mantine-Treeselect-root | Root element |
+| label | .mantine-Treeselect-label | Label element |
+| required | .mantine-Treeselect-required | Required asterisk element, rendered inside label |
+| description | .mantine-Treeselect-description | Description element |
+| error | .mantine-Treeselect-error | Error element |
+| pill | .mantine-Treeselect-pill | Value pill |
+| inputField | .mantine-Treeselect-inputField | Input field |
+| pillsList | .mantine-Treeselect-pillsList | List of pills, also contains input field |
+
+**Treeselect data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-selected | Option is selected | - |
+| option | data-combobox-active | Options was activated by keyboard | - |
+| option | data-combobox-disabled | Option is disabled | - |
 
 **Treemap selectors**
 

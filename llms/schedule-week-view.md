@@ -874,6 +874,37 @@ function Demo() {
 ```
 
 
+## Business hours per day
+
+Pass an object to `businessHours` to configure the range for each day of the week individually.
+Keys are day numbers (`0` – Sunday, `6` – Saturday). Days missing from the object or set to `null`
+are marked as fully outside business hours:
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={events}
+      highlightBusinessHours
+      businessHours={{
+        1: ['09:00:00', '17:00:00'],
+        2: ['09:00:00', '17:00:00'],
+        3: ['09:00:00', '17:00:00'],
+        4: ['09:00:00', '17:00:00'],
+        5: ['09:00:00', '13:00:00'],
+      }}
+      startTime="07:00:00"
+      endTime="20:00:00"
+    />
+  );
+}
+```
+
+
 ## Custom time slot props
 
 Use `getTimeSlotProps` to add custom props to individual time slots based on their time range.
@@ -2298,7 +2329,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | allDaySlotHeight | Height<string \| number> | - | Height of all-day slot |
-| businessHours | [string, string] | - | Business hours range in `HH:mm:ss` format |
+| businessHours | BusinessHoursValue | - | Business hours range in `HH:mm:ss` format shared across all days, or a per-day record keyed by day of the week (`0` – Sunday, `6` – Saturday) for day-specific ranges. Set a day to `null` to mark it as fully outside business hours. |
 | canDragEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be dragged |
 | canResizeEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be resized |
 | date | string \| Date | required | Week to display, Date object or date string in `YYYY-MM-DD` format |

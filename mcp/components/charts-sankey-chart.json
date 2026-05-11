@@ -1,0 +1,187 @@
+{
+  "id": "charts-sankey-chart",
+  "name": "SankeyChart",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/sankey-chart",
+  "description": "Sankey diagram component",
+  "propsCount": 17,
+  "llmUrl": "https://mantine.dev/llms/charts-sankey-chart.md",
+  "componentDataUrl": "/mcp/components/charts-sankey-chart.json",
+  "searchText": "sankeychart sankey diagram component @mantine/charts /charts/sankey-chart children colors data height iterations linkcolor linkcurvature linkopacity nodecolor nodepadding nodewidth sankeyprops textcolor tooltipanimationduration tooltipprops valueformatter withtooltip",
+  "source": "@mantine/charts/src/SankeyChart/SankeyChart.tsx",
+  "docs": "charts/sankey-chart.mdx",
+  "markdown": "# SankeyChart\nPackage: @mantine/charts\nImport: import { SankeyChart } from '@mantine/charts';\nDescription: Sankey diagram component\n\n## Usage\n\n`SankeyChart` is based on the [Sankey recharts component](https://recharts.org/en-US/api/Sankey).\nIt visualizes flow between nodes where the width of each link is proportional to the flow value:\n\n```tsx\n// Demo.tsx\nimport { SankeyChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SankeyChart data={data} />;\n}\n\n// data.ts\nexport const data = {\n  nodes: [\n    { name: 'Visit' },\n    { name: 'Direct-Favourite' },\n    { name: 'Page-Click' },\n    { name: 'Detail-Favourite' },\n    { name: 'Lost' },\n  ],\n  links: [\n    { source: 0, target: 1, value: 3728.3 },\n    { source: 0, target: 2, value: 354170 },\n    { source: 2, target: 3, value: 62429 },\n    { source: 2, target: 4, value: 291741 },\n  ],\n};\n```\n\n\n## Node color\n\nYou can set `color` on each node in the data to control individual node colors.\nColors can reference [theme](https://mantine.dev/llms/theming-theme-object.md) values like `blue`, `red.5`, `orange.7`, etc.\nAny valid CSS color value is also accepted.\n\n```tsx\n// Demo.tsx\nimport { SankeyChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SankeyChart data={data} linkOpacity={0.2} />;\n}\n\n// data.ts\nexport const data = {\n  nodes: [\n    { name: 'Visit', color: 'indigo.6' },\n    { name: 'Direct-Favourite', color: 'teal.6' },\n    { name: 'Page-Click', color: 'blue.6' },\n    { name: 'Detail-Favourite', color: 'cyan.6' },\n    { name: 'Lost', color: 'red.6' },\n  ],\n  links: [\n    { source: 0, target: 1, value: 3728.3 },\n    { source: 0, target: 2, value: 354170 },\n    { source: 2, target: 3, value: 62429 },\n    { source: 2, target: 4, value: 291741 },\n  ],\n};\n```\n\n\n## Custom colors\n\nUse `colors` prop to provide an array of colors that are used for nodes when no\n`color` is set on individual nodes. Colors can reference [theme](https://mantine.dev/llms/theming-theme-object.md) values.\nThe colors cycle when there are more nodes than colors:\n\n```tsx\n// Demo.tsx\nimport { SankeyChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <SankeyChart\n      data={data}\n      colors={['indigo.6', 'cyan.6', 'teal.6', 'orange.6', 'red.6']}\n    />\n  );\n}\n\n// data.ts\nexport const data = {\n  nodes: [\n    { name: 'Visit' },\n    { name: 'Direct-Favourite' },\n    { name: 'Page-Click' },\n    { name: 'Detail-Favourite' },\n    { name: 'Lost' },\n  ],\n  links: [\n    { source: 0, target: 1, value: 3728.3 },\n    { source: 0, target: 2, value: 354170 },\n    { source: 2, target: 3, value: 62429 },\n    { source: 2, target: 4, value: 291741 },\n  ],\n};\n```\n\n\n## Node width and padding\n\nUse `nodeWidth` to control the width of each node and `nodePadding` to control\nthe spacing between nodes:\n\n```tsx\n// Demo.tsx\nimport { SankeyChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SankeyChart data={data} nodeWidth={20} nodePadding={20} />;\n}\n\n// data.ts\nexport const data = {\n  nodes: [\n    { name: 'Visit' },\n    { name: 'Direct-Favourite' },\n    { name: 'Page-Click' },\n    { name: 'Detail-Favourite' },\n    { name: 'Lost' },\n  ],\n  links: [\n    { source: 0, target: 1, value: 3728.3 },\n    { source: 0, target: 2, value: 354170 },\n    { source: 2, target: 3, value: 62429 },\n    { source: 2, target: 4, value: 291741 },\n  ],\n};\n```\n\n\n## Link opacity\n\nUse `linkOpacity` prop to control the opacity of links between nodes:\n\n```tsx\n// Demo.tsx\nimport { SankeyChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SankeyChart data={data} linkOpacity={0.2} />;\n}\n\n// data.ts\nexport const data = {\n  nodes: [\n    { name: 'Visit', color: 'indigo.6' },\n    { name: 'Direct-Favourite', color: 'teal.6' },\n    { name: 'Page-Click', color: 'blue.6' },\n    { name: 'Detail-Favourite', color: 'cyan.6' },\n    { name: 'Lost', color: 'red.6' },\n  ],\n  links: [\n    { source: 0, target: 1, value: 3728.3 },\n    { source: 0, target: 2, value: 354170 },\n    { source: 2, target: 3, value: 62429 },\n    { source: 2, target: 4, value: 291741 },\n  ],\n};\n```\n\n\n## Disable tooltip\n\nTo disable the tooltip, set `withTooltip={false}`:\n\n```tsx\n// Demo.tsx\nimport { SankeyChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SankeyChart data={data} withTooltip={false} />;\n}\n\n// data.ts\nexport const data = {\n  nodes: [\n    { name: 'Visit' },\n    { name: 'Direct-Favourite' },\n    { name: 'Page-Click' },\n    { name: 'Detail-Favourite' },\n    { name: 'Lost' },\n  ],\n  links: [\n    { source: 0, target: 1, value: 3728.3 },\n    { source: 0, target: 2, value: 354170 },\n    { source: 2, target: 3, value: 62429 },\n    { source: 2, target: 4, value: 291741 },\n  ],\n};\n```\n\n\n\n#### Props\n\n**SankeyChart props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Additional elements rendered inside `Sankey` component |\n| colors | DefaultMantineColor[] | - | An array of colors used for nodes when no `color` is set on individual nodes |\n| data | SankeyChartData | required | Data used to render chart, must include `nodes` and `links` arrays |\n| height | number | - | Controls chart height |\n| iterations | number | - | The number of relaxation iterations |\n| linkColor | MantineColor | - | Default color for links, by default depends on color scheme |\n| linkCurvature | number | - | The curvature of links between nodes |\n| linkOpacity | number | - | Opacity of the link fill |\n| nodeColor | MantineColor | - | Default color for nodes, by default depends on color scheme |\n| nodePadding | number | - | The padding between nodes |\n| nodeWidth | number | - | The width of each node |\n| sankeyProps | Partial<Omit<Props, \"data\" \\| \"ref\">> | - | Props passed down to recharts `Sankey` component |\n| textColor | MantineColor | - | Controls text color of labels |\n| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |\n| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |\n| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and node labels |\n| withTooltip | boolean | - | Determines whether the tooltip should be displayed when hovered |",
+  "props": [
+    {
+      "name": "children",
+      "description": "Additional elements rendered inside <code>Sankey</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "colors",
+      "description": "An array of colors used for nodes when no <code>color</code> is set on individual nodes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "DefaultMantineColor[]"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "data",
+      "description": "Data used to render chart, must include <code>nodes</code> and <code>links</code> arrays",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "SankeyChartData"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "height",
+      "description": "Controls chart height",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "iterations",
+      "description": "The number of relaxation iterations",
+      "required": false,
+      "defaultValue": "32",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "linkColor",
+      "description": "Default color for links, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "linkCurvature",
+      "description": "The curvature of links between nodes",
+      "required": false,
+      "defaultValue": "0.5",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "linkOpacity",
+      "description": "Opacity of the link fill",
+      "required": false,
+      "defaultValue": "0.4",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "nodeColor",
+      "description": "Default color for nodes, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "nodePadding",
+      "description": "The padding between nodes",
+      "required": false,
+      "defaultValue": "10",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "nodeWidth",
+      "description": "The width of each node",
+      "required": false,
+      "defaultValue": "10",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "sankeyProps",
+      "description": "Props passed down to recharts <code>Sankey</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<Props, \"data\" | \"ref\">>"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "textColor",
+      "description": "Controls text color of labels",
+      "required": false,
+      "defaultValue": "dimmed",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "tooltipAnimationDuration",
+      "description": "Tooltip animation duration in ms",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "tooltipProps",
+      "description": "Props passed down to <code>Tooltip</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format values inside the tooltip and node labels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "SankeyChart"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Determines whether the tooltip should be displayed when hovered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SankeyChart"
+    }
+  ]
+}

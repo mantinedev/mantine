@@ -155,6 +155,70 @@ function Demo() {
 ```
 
 
+## Reset value
+
+`MaskInput` is uncontrolled internally – setting `value` from a parent will not clear it.
+Use the `resetRef` prop to get a function that clears the input value imperatively:
+
+```tsx
+import { useRef } from 'react';
+import { MaskInput, Button, Group } from '@mantine/core';
+
+function Demo() {
+  const resetRef = useRef<() => void>(null);
+
+  return (
+    <>
+      <MaskInput
+        label="Phone number"
+        placeholder="(___) ___-____"
+        mask="(999) 999-9999"
+        resetRef={resetRef}
+      />
+
+      <Group mt="md">
+        <Button onClick={() => resetRef.current?.()}>Reset</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## With use-form
+
+`MaskInput` is uncontrolled by design – it manages its own DOM value internally.
+To integrate with [use-form](https://mantine.dev/llms/form-use-form.md), pass the initial value via `defaultValue`
+and use the `onChangeRaw` callback to write the raw (unmasked) value to form state:
+
+```tsx
+import { Button, MaskInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { phone: '' },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <MaskInput
+        mask="(999) 999-9999"
+        placeholder="(___) ___-____"
+        label="Phone"
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+      />
+
+      <Button type="submit" mt="md">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
+
+
 ## Mask pattern syntax
 
 The mask string defines the expected format. Each character is either a **token** (editable slot)
@@ -217,6 +281,7 @@ Prefix a token character with `\` to treat it as a literal:
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| resetRef | RefObject<(() => void) \| null> | - | Assigns a function that clears the input value to the given ref |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
 | rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |

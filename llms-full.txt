@@ -13867,6 +13867,59 @@ function Demo() {
 ```
 
 
+## Shared default props for all inputs
+
+Default props on `Input` and `Input.Wrapper` cascade to every component that is built on top of
+them ([TextInput](https://mantine.dev/llms/core-text-input.md), [Textarea](https://mantine.dev/llms/core-textarea.md), [NumberInput](https://mantine.dev/llms/core-number-input.md),
+[Select](https://mantine.dev/llms/core-select.md), [DateInput](https://mantine.dev/llms/dates-date-input.md), and others). This is the easiest way to apply
+the same `size`, `radius`, `variant`, `withAsterisk` or any other shared prop to all inputs at once.
+Per-component default props always win over the shared ones, so you can still override individual
+components when needed:
+
+```tsx
+import { TextInput, NumberInput, NativeSelect, MantineProvider, createTheme, Input } from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Input: Input.extend({
+      defaultProps: {
+        size: 'md',
+        radius: 'md',
+      },
+    }),
+
+    InputWrapper: Input.Wrapper.extend({
+      defaultProps: {
+        withAsterisk: true,
+      },
+    }),
+
+    NumberInput: NumberInput.extend({
+      defaultProps: {
+        size: 'lg',
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <TextInput label="Text input" placeholder="Inherits size and radius from Input" />
+
+      <NativeSelect
+        mt="md"
+        label="Native select"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+
+      <NumberInput mt="md" label="Number input" placeholder="Overrides shared size with lg" />
+    </MantineProvider>
+  );
+}
+```
+
+
 ## Styles on theme
 
 Same as with default props, you can use `Input` and `Input.Wrapper` [Styles API](https://mantine.dev/llms/styles-styles-api.md)
@@ -15471,6 +15524,70 @@ function Demo() {
 ```
 
 
+## Reset value
+
+`MaskInput` is uncontrolled internally – setting `value` from a parent will not clear it.
+Use the `resetRef` prop to get a function that clears the input value imperatively:
+
+```tsx
+import { useRef } from 'react';
+import { MaskInput, Button, Group } from '@mantine/core';
+
+function Demo() {
+  const resetRef = useRef<() => void>(null);
+
+  return (
+    <>
+      <MaskInput
+        label="Phone number"
+        placeholder="(___) ___-____"
+        mask="(999) 999-9999"
+        resetRef={resetRef}
+      />
+
+      <Group mt="md">
+        <Button onClick={() => resetRef.current?.()}>Reset</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## With use-form
+
+`MaskInput` is uncontrolled by design – it manages its own DOM value internally.
+To integrate with [use-form](https://mantine.dev/llms/form-use-form.md), pass the initial value via `defaultValue`
+and use the `onChangeRaw` callback to write the raw (unmasked) value to form state:
+
+```tsx
+import { Button, MaskInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { phone: '' },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <MaskInput
+        mask="(999) 999-9999"
+        placeholder="(___) ___-____"
+        label="Phone"
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+      />
+
+      <Button type="submit" mt="md">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
+
+
 ## Mask pattern syntax
 
 The mask string defines the expected format. Each character is either a **token** (editable slot)
@@ -15533,6 +15650,7 @@ Prefix a token character with `\` to treat it as a literal:
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| resetRef | RefObject<(() => void) \| null> | - | Assigns a function that clears the input value to the given ref |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
 | rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
@@ -17508,6 +17626,67 @@ function Demo() {
 ```
 
 
+## Reorder pills
+
+Set the `withPillsReorder` prop to allow reordering pills. Dropping a pill before or after
+another pill updates the component value accordingly. Reordering is automatically disabled
+when `disabled` or `readOnly` is set.
+
+You can reorder pills with a mouse (drag-and-drop) or keyboard:
+
+* Pills are not part of the `Tab` order. With focus on the input, press `ArrowLeft` (when the
+  caret is at the start of the input) to move focus to the last pill.
+* `ArrowLeft` and `ArrowRight` move focus between pills (RTL-aware). Pressing `ArrowRight` on
+  the last pill returns focus to the input.
+* `Alt + ArrowLeft` and `Alt + ArrowRight` reorder the focused pill (RTL-aware).
+
+Focus follows the moved pill so multiple moves can be chained without re-focusing.
+
+```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(['React', 'Angular', 'Vue']);
+
+  return (
+    <MultiSelect
+      label="Drag pills to reorder"
+      description="Selected values can be reordered by dragging pills"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte', 'Solid', 'Ember']}
+      value={value}
+      onChange={setValue}
+      withPillsReorder
+    />
+  );
+}
+```
+
+
+If you use a custom pill renderer with the `renderPill` prop, spread the `reorderProps` from
+the render callback payload onto the focusable pill root element to keep reordering working.
+`reorderProps` carries the `tabIndex`, `data-mantine-pill-index` attribute and the keyboard
+handler that drive keyboard reorder, so it must land on the element the user can focus:
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={['React', 'Angular', 'Vue']}
+      withPillsReorder
+      renderPill={({ value, onRemove, reorderProps }) => (
+        <div {...reorderProps}>
+          {value} <button onClick={onRemove}>×</button>
+        </div>
+      )}
+    />
+  );
+}
+```
+
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).
@@ -17925,7 +18104,7 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |
-| hiddenInputProps | Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value"> | - | Props passed down to the hidden input |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input `value` attribute |
 | hidePickedOptions | boolean | - | When enabled, selected options are hidden from the dropdown list |
 | inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
@@ -17972,6 +18151,7 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCheckIcon | boolean | - | If set, the check icon is displayed near the selected option label |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withPillsReorder | boolean | - | If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. |
 | withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
@@ -18652,6 +18832,18 @@ function Demo() {
 ```
 
 
+## Notifications system features
+
+When you use [@mantine/notifications](https://mantine.dev/llms/x-notifications.md), notifications can be dismissed by:
+
+* dragging them left or right
+* horizontal scroll swipe while hovered
+
+You can disable these interactions on the `Notifications` component with
+`allowDragDismiss={false}` and `allowScrollDismiss={false}`.
+
+See the [notifications package documentation](https://mantine.dev/llms/x-notifications.md) for configuration details.
+
 ## Accessibility
 
 To support screen readers, set the close button's aria-label or title with `closeButtonProps`:
@@ -18691,6 +18883,8 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| allowDragDismiss | boolean | - | Determines whether notifications can be dismissed by dragging left or right |
+| allowScrollDismiss | boolean | - | Determines whether notifications can be dismissed with horizontal scroll gesture while hovered |
 | autoClose | number \| false | - | Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function |
 | containerWidth | string \| number | - | Notification width, cannot exceed 100% |
 | limit | number | - | Maximum number of notifications displayed at a time, other new notifications will be added to queue |
@@ -23937,6 +24131,129 @@ RingProgress component supports Styles API. With Styles API, you can customize s
 
 --------------------------------------------------------------------------------
 
+### RollingNumber
+Package: @mantine/core
+Import: import { RollingNumber } from '@mantine/core';
+Description: Animate value changes with rolling digits
+
+## Usage
+
+`RollingNumber` animates value changes with rolling digit transitions. Each digit
+independently rolls to its new position when the value changes.
+
+```tsx
+import { useState } from 'react';
+import { Button, Group, RollingNumber } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(1234);
+
+  return (
+    <>
+      <RollingNumber value={value} fz="36px" />
+      <Group mt="md">
+        <Button onClick={() => setValue((v) => v + 1)}>Increment</Button>
+        <Button onClick={() => setValue((v) => v - 1)}>Decrement</Button>
+        <Button onClick={() => setValue(Math.floor(Math.random() * 10000))}>Random</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## Prefix and suffix
+
+Set `prefix` and `suffix` props to add static text before or after the animated number.
+Use `thousandSeparator` to separate thousands and `decimalScale` with `fixedDecimalScale`
+to control decimal formatting:
+
+```tsx
+import { useState } from 'react';
+import { Button, Group, RollingNumber } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(99.99);
+
+  return (
+    <>
+      <RollingNumber
+        value={value}
+        prefix="$ "
+        suffix=" USD"
+        decimalScale={2}
+        fixedDecimalScale
+        thousandSeparator
+        fz="32px"
+      />
+      <Group mt="md">
+        <Button onClick={() => setValue((v) => +(v + 10.5).toFixed(2))}>+10.50</Button>
+        <Button onClick={() => setValue((v) => +(v - 10.5).toFixed(2))}>-10.50</Button>
+        <Button onClick={() => setValue(+(Math.random() * 10000).toFixed(2))}>Random</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## Animation duration
+
+Control animation speed with `animationDuration` prop (in milliseconds, default is `600`).
+Use `timingFunction` prop to change the CSS timing function (default is `ease`):
+
+```tsx
+import { useState } from 'react';
+import { Button, Group, RollingNumber, Stack, Text } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(500);
+
+  return (
+    <Stack>
+      <div>
+        <Text size="sm" c="dimmed">200ms</Text>
+        <RollingNumber value={value} animationDuration={200} fz="28px" />
+      </div>
+      <div>
+        <Text size="sm" c="dimmed">600ms (default)</Text>
+        <RollingNumber value={value} animationDuration={600} fz="28px" />
+      </div>
+      <div>
+        <Text size="sm" c="dimmed">1200ms</Text>
+        <RollingNumber value={value} animationDuration={1200} fz="28px" />
+      </div>
+      <Group>
+        <Button onClick={() => setValue(Math.floor(Math.random() * 1000))}>Random</Button>
+      </Group>
+    </Stack>
+  );
+}
+```
+
+
+
+#### Props
+
+**RollingNumber props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| animationDuration | number | - | Animation duration in milliseconds |
+| decimalScale | number | - | Number of decimal places to display |
+| decimalSeparator | string | - | Character used as a decimal separator |
+| fixedDecimalScale | boolean | - | If set, trailing zeros are added to match `decimalScale` |
+| prefix | string | - | Prefix added before the value |
+| suffix | string | - | Suffix added after the value |
+| tabularNumbers | boolean | - | If set, use tabular (monospace) numbers |
+| thousandSeparator | string \| boolean | - | Character used to separate thousands, set to `true` for `,` |
+| timingFunction | string | - | CSS timing function for animation |
+| value | number | required | Number value to display |
+| withLiveRegion | boolean | - | If set, the root element acts as an `aria-live="polite"` region (`role="status"`) and screen readers announce every value change. When `false`, the root uses `role="img"` so the current value is still accessible but updates are not announced. |
+
+
+--------------------------------------------------------------------------------
+
 ### ScrollArea
 Package: @mantine/core
 Import: import { ScrollArea } from '@mantine/core';
@@ -26099,7 +26416,7 @@ function Demo() {
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |
-| hiddenInputProps | Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value"> | - | Props passed down to the hidden input |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
 | inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
 | inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
@@ -30530,6 +30847,65 @@ function Demo() {
 ```
 
 
+## Reorder pills
+
+Set the `withPillsReorder` prop to allow reordering pills. Dropping a pill before or after
+another pill updates the component value accordingly. Reordering is automatically disabled
+when `disabled` or `readOnly` is set.
+
+You can reorder pills with a mouse (drag-and-drop) or keyboard:
+
+* Pills are not part of the `Tab` order. With focus on the input, press `ArrowLeft` (when the
+  caret is at the start of the input) to move focus to the last pill.
+* `ArrowLeft` and `ArrowRight` move focus between pills (RTL-aware). Pressing `ArrowRight` on
+  the last pill returns focus to the input.
+* `Alt + ArrowLeft` and `Alt + ArrowRight` reorder the focused pill (RTL-aware).
+
+Focus follows the moved pill so multiple moves can be chained without re-focusing.
+
+```tsx
+import { useState } from 'react';
+import { TagsInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(['first', 'second', 'third']);
+
+  return (
+    <TagsInput
+      label="Drag pills to reorder"
+      description="Tags can be reordered by dragging pills"
+      placeholder="Enter tag"
+      value={value}
+      onChange={setValue}
+      withPillsReorder
+    />
+  );
+}
+```
+
+
+If you use a custom pill renderer with the `renderPill` prop, spread the `reorderProps` from
+the render callback payload onto the focusable pill root element to keep reordering working.
+`reorderProps` carries the `tabIndex`, `data-mantine-pill-index` attribute and the keyboard
+handler that drive keyboard reorder, so it must land on the element the user can focus:
+
+```tsx
+import { TagsInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TagsInput
+      withPillsReorder
+      renderPill={({ value, onRemove, reorderProps }) => (
+        <div {...reorderProps}>
+          {value} <button onClick={onRemove}>×</button>
+        </div>
+      )}
+    />
+  );
+}
+```
+
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).
@@ -30902,7 +31278,7 @@ function Demo() {
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<string> | - | Function based on which items are filtered and sorted |
-| hiddenInputProps | Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value"> | - | Props passed down to the hidden input |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input `value` attribute |
 | inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
 | inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
@@ -30947,6 +31323,7 @@ function Demo() {
 | value | string[] | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withPillsReorder | boolean | - | If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. |
 | withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
@@ -32980,6 +33357,888 @@ This is useful when you want to:
 
 --------------------------------------------------------------------------------
 
+### TreeSelect
+Package: @mantine/core
+Import: import { TreeSelect } from '@mantine/core';
+Description: Select with hierarchical tree data
+
+## Usage
+
+`TreeSelect` allows picking one or more values from hierarchical tree data.
+It supports three selection modes: single, multiple, and checkbox (with parent-child cascade).
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Data prop
+
+Data passed to the `data` prop must follow the same rules as the [Tree](https://mantine.dev/llms/core-tree.md) component:
+
+* Data must be an array of `TreeNodeData` objects
+* Each node must have unique `value` and `label` keys
+* Each node can have a `children` key with an array of child nodes
+
+```tsx
+import { TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    value: 'fruits',
+    label: 'Fruits',
+    children: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+    ],
+  },
+  { value: 'milk', label: 'Milk' },
+];
+```
+
+## Selection modes
+
+`TreeSelect` supports three selection modes controlled by the `mode` prop:
+
+* `single` (default) – single value selection, renders as an input
+* `multiple` – multiple value selection, renders as pills
+* `checkbox` – checkbox selection with parent-child cascade, renders as pills
+
+### Multiple mode
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite items"
+      placeholder="Pick values"
+      data={data}
+      mode="multiple"
+      defaultExpandAll
+    />
+  );
+}
+```
+
+
+### Checkbox mode
+
+In checkbox mode, checking a parent node automatically checks all its children.
+Unchecking a parent unchecks all children. If only some children are checked,
+the parent shows an indeterminate state.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Select categories"
+      placeholder="Pick values"
+      data={data}
+      mode="checkbox"
+      defaultExpandAll
+    />
+  );
+}
+```
+
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { TreeSelect } from '@mantine/core';
+
+// Single mode
+function SingleDemo() {
+  const [value, setValue] = useState<string | null>(null);
+  return <TreeSelect data={[]} value={value} onChange={setValue} />;
+}
+
+// Multiple or checkbox mode
+function MultipleDemo() {
+  const [value, setValue] = useState<string[]>([]);
+  return <TreeSelect data={[]} mode="multiple" value={value} onChange={setValue} />;
+}
+```
+
+## Searchable
+
+Set the `searchable` prop to allow filtering options by user input.
+When searching, matching nodes and their ancestors are shown:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      searchable
+    />
+  );
+}
+```
+
+
+## Nothing found
+
+Set the `nothingFoundMessage` prop to display a given message when no options match the search query
+or there is no data available:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      searchable
+      nothingFoundMessage="Nothing found..."
+    />
+  );
+}
+```
+
+
+## Clearable
+
+Set the `clearable` prop to display the clear button in the right section:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      defaultValue="iphone"
+      defaultExpandedValues={['electronics', 'phones']}
+      clearable
+    />
+  );
+}
+```
+
+
+## Expand on click
+
+Set the `expandOnClick` prop to also toggle expansion when clicking a parent node
+(in addition to the chevron). Behavior depends on the selection mode:
+
+* `single` and `multiple` – clicking a parent only expands/collapses it. Only leaf nodes can be selected.
+* `checkbox` – clicking a parent both toggles its checked state and expands it.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      expandOnClick
+    />
+  );
+}
+```
+
+
+## Connecting lines
+
+`TreeSelect` renders connecting lines between parent and child nodes by default.
+Set `withLines={false}` to disable them:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Without connecting lines"
+      placeholder="Pick value"
+      data={data}
+      defaultExpandAll
+      withLines={false}
+    />
+  );
+}
+```
+
+
+## Check strictly
+
+Set `checkStrictly` to disable parent-child cascade in checkbox mode.
+Each node's checked state becomes fully independent:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Select items"
+      placeholder="Pick values"
+      data={data}
+      mode="checkbox"
+      checkStrictly
+      defaultExpandAll
+    />
+  );
+}
+```
+
+
+## Checked strategy
+
+The `checkedStrategy` prop controls which checked nodes appear in the value and pills
+in checkbox mode:
+
+* `child` (default) – only leaf nodes appear in the value
+* `all` – all checked nodes (parents and children) appear in the value
+* `parent` – only the topmost fully-checked parents appear in the value
+
+```tsx
+import { useState } from 'react';
+import { Stack, TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const [childValue, setChildValue] = useState<string[]>([]);
+  const [allValue, setAllValue] = useState<string[]>([]);
+  const [parentValue, setParentValue] = useState<string[]>([]);
+
+  return (
+    <Stack>
+      <TreeSelect
+        label="checkedStrategy: child (default)"
+        placeholder="Pick values"
+        data={data}
+        mode="checkbox"
+        checkedStrategy="child"
+        defaultExpandAll
+        value={childValue}
+        onChange={setChildValue}
+      />
+      <TreeSelect
+        label="checkedStrategy: all"
+        placeholder="Pick values"
+        data={data}
+        mode="checkbox"
+        checkedStrategy="all"
+        defaultExpandAll
+        value={allValue}
+        onChange={setAllValue}
+      />
+      <TreeSelect
+        label="checkedStrategy: parent"
+        placeholder="Pick values"
+        data={data}
+        mode="checkbox"
+        checkedStrategy="parent"
+        defaultExpandAll
+        value={parentValue}
+        onChange={setParentValue}
+      />
+    </Stack>
+  );
+}
+```
+
+
+## Max values
+
+Set the `maxValues` prop to limit the number of selected values in multiple and checkbox modes:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Pick up to 3 items"
+      placeholder="Pick values"
+      data={data}
+      mode="multiple"
+      maxValues={3}
+      defaultExpandAll
+    />
+  );
+}
+```
+
+
+## renderNode
+
+The `renderNode` callback allows you to customize node rendering in the dropdown.
+It is called with an object containing `node`, `level`, `expanded`, `hasChildren`,
+`selected`, `checked`, and `indeterminate` properties:
+
+```tsx
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
+import { Group, Text, TreeSelect, TreeSelectProps } from '@mantine/core';
+import { data } from './data';
+
+const renderTreeNode: TreeSelectProps['renderNode'] = ({ node, hasChildren, expanded }) => (
+  <Group gap="xs">
+    {hasChildren ? (
+      expanded ? (
+        <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={16} />
+      ) : (
+        <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={16} />
+      )
+    ) : (
+      <FileTextIcon size={16} />
+    )}
+    <Text size="sm">{node.label}</Text>
+  </Group>
+);
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      renderNode={renderTreeNode}
+      defaultExpandAll
+    />
+  );
+}
+```
+
+
+## Scrollable dropdown
+
+By default, the options list is wrapped with [ScrollArea.Autosize](https://mantine.dev/llms/core-scroll-area.md).
+You can control the dropdown max-height with the `maxDropdownHeight` prop:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      defaultExpandAll
+      maxDropdownHeight={200}
+    />
+  );
+}
+```
+
+
+## Control dropdown opened state
+
+You can control the dropdown opened state with the `dropdownOpened` prop. Additionally,
+you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
+
+```tsx
+import { TreeSelect, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { data } from './data';
+
+function Demo() {
+  const [dropdownOpened, { toggle }] = useDisclosure();
+  return (
+    <>
+      <Button onClick={toggle} mb="md">
+        Toggle dropdown
+      </Button>
+
+      <TreeSelect
+        label="Your favorite item"
+        placeholder="Pick value"
+        data={data}
+        dropdownOpened={dropdownOpened}
+      />
+    </>
+  );
+}
+```
+
+
+## Dropdown position
+
+By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
+You can change this behavior by setting the `position` and `middlewares` props, which are passed down to the
+underlying [Popover](https://mantine.dev/llms/core-popover.md) component.
+
+Example of a dropdown that is always displayed above the input:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      comboboxProps={{ position: 'top', middlewares: { flip: false, shift: false } }}
+    />
+  );
+}
+```
+
+
+## Dropdown width
+
+To change the dropdown width, set the `width` prop in `comboboxProps`. By default,
+the dropdown width is equal to the input width.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      comboboxProps={{ width: 200, position: 'bottom-start' }}
+    />
+  );
+}
+```
+
+
+## Dropdown offset
+
+To change the dropdown offset, set the `offset` prop in `comboboxProps`:
+
+```tsx
+// Demo.tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      classNames={classes}
+      comboboxProps={{ position: 'bottom', middlewares: { flip: false, shift: false }, offset: 0 }}
+    />
+  );
+}
+
+// Demo.module.css
+.dropdown {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+  border-top: 0;
+}
+
+.input {
+  transition: none;
+
+  &[data-expanded] {
+    border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+```
+
+
+## Dropdown animation
+
+By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
+which will be passed down to the underlying [Transition](https://mantine.dev/llms/core-transition.md) component.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
+    />
+  );
+}
+```
+
+
+## Dropdown padding
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <>
+      <TreeSelect
+        label="Zero padding"
+        placeholder="Pick value"
+        data={data}
+        comboboxProps={{ dropdownPadding: 0 }}
+      />
+      <TreeSelect
+        mt="md"
+        label="10px padding"
+        placeholder="Pick value"
+        data={data}
+        comboboxProps={{ dropdownPadding: 10 }}
+      />
+    </>
+  );
+}
+```
+
+
+## Dropdown shadow
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      comboboxProps={{ shadow: 'md' }}
+    />
+  );
+}
+```
+
+
+## Keyboard navigation
+
+`TreeSelect` supports the following keyboard interactions when the dropdown is open:
+
+* `ArrowRight` – expand the highlighted parent node
+* `ArrowLeft` – collapse the highlighted parent node, or move to its parent
+* `ArrowUp` / `ArrowDown` – move between options
+* `Enter` – select the highlighted option
+
+## Expand state
+
+You can control the expanded state of nodes:
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+
+// Expand specific nodes by default
+<TreeSelect data={data} defaultExpandedValues={['fruits', 'vegetables']} />
+
+// Expand all nodes by default
+<TreeSelect data={data} defaultExpandAll />
+
+// Controlled expanded state
+<TreeSelect
+  data={data}
+  expandedValues={expandedValues}
+  onExpandedChange={setExpandedValues}
+/>
+```
+
+## Input sections
+
+TreeSelect supports left and right sections to display icons, buttons or other content alongside the input.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { SquaresFourIcon } from '@phosphor-icons/react';
+import { data } from './data';
+
+function Demo() {
+  const icon = <SquaresFourIcon size={16} />;
+  return (
+    <>
+      <TreeSelect
+        data={data}
+        leftSectionPointerEvents="none"
+        leftSection={icon}
+        label="Your favorite item"
+        placeholder="Your favorite item"
+      />
+      <TreeSelect
+        mt="md"
+        data={data}
+        rightSectionPointerEvents="none"
+        rightSection={icon}
+        label="Your favorite item"
+        placeholder="Your favorite item"
+      />
+    </>
+  );
+}
+```
+
+
+## Input props
+
+TreeSelect component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. TreeSelect documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+
+function Demo() {
+  return (
+    <TreeSelect
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
+      placeholder="Pick value"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Read only
+
+Set `readOnly` to make the input read only. When `readOnly` is set,
+`TreeSelect` will not show suggestions and will not call the `onChange` function.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      defaultValue="iphone"
+      readOnly
+    />
+  );
+}
+```
+
+
+## Disabled
+
+Set `disabled` to disable the input. When `disabled` is set,
+the user cannot interact with the input and `TreeSelect` will not show suggestions.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      disabled
+    />
+  );
+}
+```
+
+
+## Error state
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <>
+      <TreeSelect
+        label="Boolean error"
+        placeholder="Boolean error"
+        error
+        data={data}
+      />
+      <TreeSelect
+        mt="md"
+        label="With error message"
+        placeholder="With error message"
+        error="Invalid value"
+        data={data}
+      />
+    </>
+  );
+}
+```
+
+
+## Accessibility
+
+TreeSelect provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
+
+To set `aria-label` on the clear button, use `clearButtonProps`. Note that this is required
+only when `clearable` is set.
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TreeSelect
+      data={[]}
+      clearable
+      clearButtonProps={{
+        'aria-label': 'Clear input',
+      }}
+    />
+  );
+}
+```
+
+
+#### Props
+
+**TreeSelect props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| allowDeselect | boolean | - | Allows deselecting in single mode |
+| checkStrictly | boolean | - | Disables parent-child cascade in checkbox mode |
+| checkedStrategy | CheckedStrategy | - | Controls which checked nodes appear in value/pills in checkbox mode |
+| chevronAriaLabels | TreeSelectChevronAriaLabels | - | aria-label values for the expand/collapse chevron button |
+| chevronColor | MantineColor | - | Controls the default chevron color |
+| clearButtonProps | InputClearButtonProps | - | Props for the clear button |
+| clearSearchOnChange | boolean | - | Clear search on selection change |
+| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
+| clearable | boolean | - | Shows clear button |
+| comboboxProps | Record<string, any> | - | Props passed to the underlying Combobox |
+| data | TreeNodeData[] | required | Tree data |
+| defaultDropdownOpened | boolean | - | Default dropdown state |
+| defaultExpandAll | boolean | - | Expand all nodes by default |
+| defaultExpandedValues | string[] | - | Default expanded node values |
+| defaultSearchValue | string | - | Default search value |
+| defaultValue | string \| string[] \| null | - | Default value |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| dropdownOpened | boolean | - | Controlled dropdown state |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| expandOnClick | boolean | - | Also toggle expand when clicking a parent node (not just the chevron). In `single` and `multiple` modes, parent clicks only expand; only leaves can be selected. In `checkbox` mode, parent clicks both check and expand. |
+| expandedValues | string[] | - | Controlled expanded state |
+| filter | (query: string, node: TreeNodeData) => boolean | - | Custom filter function |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props for the hidden input |
+| hiddenInputValuesDivider | string | - | Divider for hidden input values |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| maxDisplayedValues | number | - | Maximum displayed pills before "+N more" |
+| maxDisplayedValuesContent | ReactNode \| ((overflow: number) => ReactNode) | - | Content shown when values overflow maxDisplayedValues |
+| maxDropdownHeight | string \| number | - | Max dropdown height |
+| maxValues | number | - | Maximum selectable values (multiple/checkbox mode) |
+| mode | TreeSelectMode | - | Selection mode: 'single', 'multiple', or 'checkbox' (with cascade) |
+| nothingFoundMessage | React.ReactNode | - | Message when no nodes match search |
+| onChange | (value: TreeSelectValue<Mode>) => void | - | Called when value changes |
+| onClear | () => void | - | Called when clear button is clicked |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onExpandedChange | (values: string[]) => void | - | Called when expanded state changes |
+| onRemove | (value: string) => void | - | Called with removed value in multiple/checkbox mode |
+| onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | Opens dropdown on focus (searchable mode) |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| renderNode | (payload: TreeSelectRenderNodePayload) => ReactNode | - | Custom node rendering in the dropdown |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| scrollAreaProps | ScrollAreaProps | - | Props for the ScrollArea in the dropdown |
+| searchValue | string | - | Controlled search value |
+| searchable | boolean | - | Enables search filtering |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| value | string \| string[] \| null | - | Controlled value |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withLines | boolean | - | Show tree connection lines between parent and child nodes |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
+
+
+#### Styles API
+
+TreeSelect component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**TreeSelect selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-TreeSelect-wrapper | Root element of the Input |
+| input | .mantine-TreeSelect-input | Input element |
+| section | .mantine-TreeSelect-section | Left and right sections |
+| root | .mantine-TreeSelect-root | Root element |
+| label | .mantine-TreeSelect-label | Label element |
+| required | .mantine-TreeSelect-required | Required asterisk element, rendered inside label |
+| description | .mantine-TreeSelect-description | Description element |
+| error | .mantine-TreeSelect-error | Error element |
+| pill | .mantine-TreeSelect-pill | Value pill |
+| inputField | .mantine-TreeSelect-inputField | Input field |
+| pillsList | .mantine-TreeSelect-pillsList | List of pills, also contains input field |
+
+**TreeSelect data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-selected | Option is selected | - |
+| option | data-combobox-active | Options was activated by keyboard | - |
+| option | data-combobox-disabled | Option is disabled | - |
+
+
+--------------------------------------------------------------------------------
+
 ### Tree
 Package: @mantine/core
 Import: import { Tree } from '@mantine/core';
@@ -34438,6 +35697,80 @@ function Demo() {
 | withDragHandle | boolean | - | If set, drag-and-drop must be initiated from an element that spreads `dragHandleProps` from the `renderNode` payload, rather than anywhere on the node. |
 | withLines | boolean | - | If set, connecting lines are rendered showing parent-child relationships |
 
+**Tree.Select props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| allowDeselect | boolean | - | Allows deselecting in single mode |
+| checkStrictly | boolean | - | Disables parent-child cascade in checkbox mode |
+| checkedStrategy | CheckedStrategy | - | Controls which checked nodes appear in value/pills in checkbox mode |
+| chevronAriaLabels | TreeSelectChevronAriaLabels | - | aria-label values for the expand/collapse chevron button |
+| chevronColor | MantineColor | - | Controls the default chevron color |
+| clearButtonProps | InputClearButtonProps | - | Props for the clear button |
+| clearSearchOnChange | boolean | - | Clear search on selection change |
+| clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
+| clearable | boolean | - | Shows clear button |
+| comboboxProps | Record<string, any> | - | Props passed to the underlying Combobox |
+| data | TreeNodeData[] | required | Tree data |
+| defaultDropdownOpened | boolean | - | Default dropdown state |
+| defaultExpandAll | boolean | - | Expand all nodes by default |
+| defaultExpandedValues | string[] | - | Default expanded node values |
+| defaultSearchValue | string | - | Default search value |
+| defaultValue | string \| string[] \| null | - | Default value |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| dropdownOpened | boolean | - | Controlled dropdown state |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| expandOnClick | boolean | - | Also toggle expand when clicking a parent node (not just the chevron). In `single` and `multiple` modes, parent clicks only expand; only leaves can be selected. In `checkbox` mode, parent clicks both check and expand. |
+| expandedValues | string[] | - | Controlled expanded state |
+| filter | (query: string, node: TreeNodeData) => boolean | - | Custom filter function |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props for the hidden input |
+| hiddenInputValuesDivider | string | - | Divider for hidden input values |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| maxDisplayedValues | number | - | Maximum displayed pills before "+N more" |
+| maxDisplayedValuesContent | ReactNode \| ((overflow: number) => ReactNode) | - | Content shown when values overflow maxDisplayedValues |
+| maxDropdownHeight | string \| number | - | Max dropdown height |
+| maxValues | number | - | Maximum selectable values (multiple/checkbox mode) |
+| mode | TreeSelectMode | - | Selection mode: 'single', 'multiple', or 'checkbox' (with cascade) |
+| nothingFoundMessage | React.ReactNode | - | Message when no nodes match search |
+| onChange | (value: TreeSelectValue<Mode>) => void | - | Called when value changes |
+| onClear | () => void | - | Called when clear button is clicked |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onExpandedChange | (values: string[]) => void | - | Called when expanded state changes |
+| onRemove | (value: string) => void | - | Called with removed value in multiple/checkbox mode |
+| onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | Opens dropdown on focus (searchable mode) |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| renderNode | (payload: TreeSelectRenderNodePayload) => ReactNode | - | Custom node rendering in the dropdown |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| scrollAreaProps | ScrollAreaProps | - | Props for the ScrollArea in the dropdown |
+| searchValue | string | - | Controlled search value |
+| searchable | boolean | - | Enables search filtering |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| value | string \| string[] \| null | - | Controlled value |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withLines | boolean | - | Show tree connection lines between parent and child nodes |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
+
 **Tree.map props**
 
 | Prop | Type | Default | Description |
@@ -34476,6 +35809,30 @@ Tree component supports Styles API. With Styles API, you can customize styles of
 | Selector | Variable | Description |
 |----------|----------|-------------|
 | root | --level-offset | Controls offset of nested tree levels |
+
+**Treeselect selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Treeselect-wrapper | Root element of the Input |
+| input | .mantine-Treeselect-input | Input element |
+| section | .mantine-Treeselect-section | Left and right sections |
+| root | .mantine-Treeselect-root | Root element |
+| label | .mantine-Treeselect-label | Label element |
+| required | .mantine-Treeselect-required | Required asterisk element, rendered inside label |
+| description | .mantine-Treeselect-description | Description element |
+| error | .mantine-Treeselect-error | Error element |
+| pill | .mantine-Treeselect-pill | Value pill |
+| inputField | .mantine-Treeselect-inputField | Input field |
+| pillsList | .mantine-Treeselect-pillsList | List of pills, also contains input field |
+
+**Treeselect data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-selected | Option is selected | - |
+| option | data-combobox-active | Options was activated by keyboard | - |
+| option | data-combobox-disabled | Option is disabled | - |
 
 **Treemap selectors**
 
@@ -35909,6 +37266,533 @@ function Demo() {
 ```tsx
 // DocumentVisibilityState is 'visible' | 'hidden'
 function useDocumentVisibility(): DocumentVisibilityState;
+```
+
+
+--------------------------------------------------------------------------------
+
+### useDrag
+Package: @mantine/hooks
+Import: import { UseDrag } from '@mantine/hooks';
+
+## Usage
+
+`use-drag` hook handles pointer drag gestures over an element. It tracks movement,
+velocity, direction and supports axis constraints, threshold activation and tap detection.
+The hook uses the Pointer Events API and works with both mouse and touch input.
+
+```tsx
+import { useRef, useState } from 'react';
+import { Code, Group, Text } from '@mantine/core';
+import { useDrag } from '@mantine/hooks';
+
+function Demo() {
+  const posRef = useRef({ x: 0, y: 0 });
+  const startPosRef = useRef({ x: 0, y: 0 });
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  const { ref, active } = useDrag((state) => {
+    if (state.first) {
+      startPosRef.current = { ...posRef.current };
+    }
+    const newPos = {
+      x: startPosRef.current.x + state.movement[0],
+      y: startPosRef.current.y + state.movement[1],
+    };
+    posRef.current = newPos;
+    setPos(newPos);
+  });
+
+  return (
+    <>
+      <Group justify="center">
+        <div
+          ref={ref}
+          style={{
+            width: 200,
+            height: 120,
+            backgroundColor: active
+              ? 'var(--mantine-color-teal-filled)'
+              : 'var(--mantine-color-blue-filled)',
+            borderRadius: 'var(--mantine-radius-md)',
+            transform: `translate(${pos.x}px, ${pos.y}px)`,
+            cursor: active ? 'grabbing' : 'grab',
+            touchAction: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--mantine-color-white)',
+            fontWeight: 600,
+            userSelect: 'none',
+          }}
+        >
+          Drag me
+        </div>
+      </Group>
+      <Text ta="center" mt="sm" size="sm">
+        Position: <Code>{`{ x: ${Math.round(pos.x)}, y: ${Math.round(pos.y)} }`}</Code>
+      </Text>
+    </>
+  );
+}
+```
+
+
+## Axis constraint
+
+Use the `axis` option to constrain movement to a single axis.
+Set `axis` to `'x'` or `'y'` for a fixed constraint, or `'lock'` to
+lock to whichever axis has more movement after `axisThreshold` is exceeded:
+
+```tsx
+import { useRef, useState } from 'react';
+import { Group, Text } from '@mantine/core';
+import { useDrag } from '@mantine/hooks';
+
+function Demo() {
+  const xPosRef = useRef(0);
+  const xStartRef = useRef(0);
+  const [xPos, setXPos] = useState(0);
+
+  const yPosRef = useRef(0);
+  const yStartRef = useRef(0);
+  const [yPos, setYPos] = useState(0);
+
+  const { ref: xRef, active: xActive } = useDrag(
+    (state) => {
+      if (state.first) {
+        xStartRef.current = xPosRef.current;
+      }
+      const x = xStartRef.current + state.movement[0];
+      xPosRef.current = x;
+      setXPos(x);
+    },
+    { axis: 'x' }
+  );
+
+  const { ref: yRef, active: yActive } = useDrag(
+    (state) => {
+      if (state.first) {
+        yStartRef.current = yPosRef.current;
+      }
+      const y = yStartRef.current + state.movement[1];
+      yPosRef.current = y;
+      setYPos(y);
+    },
+    { axis: 'y' }
+  );
+
+  return (
+    <>
+      <Group justify="center" gap="xl">
+        <div>
+          <div
+            ref={xRef}
+            style={{
+              width: 80,
+              height: 80,
+              backgroundColor: xActive
+                ? 'var(--mantine-color-teal-filled)'
+                : 'var(--mantine-color-blue-filled)',
+              borderRadius: 'var(--mantine-radius-md)',
+              transform: `translateX(${xPos}px)`,
+              cursor: xActive ? 'grabbing' : 'grab',
+              touchAction: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'var(--mantine-color-white)',
+              fontWeight: 600,
+              userSelect: 'none',
+            }}
+          >
+            X only
+          </div>
+          <Text ta="center" mt="xs" size="sm">x: {Math.round(xPos)}</Text>
+        </div>
+        <div>
+          <div
+            ref={yRef}
+            style={{
+              width: 80,
+              height: 80,
+              backgroundColor: yActive
+                ? 'var(--mantine-color-teal-filled)'
+                : 'var(--mantine-color-blue-filled)',
+              borderRadius: 'var(--mantine-radius-md)',
+              transform: `translateY(${yPos}px)`,
+              cursor: yActive ? 'grabbing' : 'grab',
+              touchAction: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'var(--mantine-color-white)',
+              fontWeight: 600,
+              userSelect: 'none',
+            }}
+          >
+            Y only
+          </div>
+          <Text ta="center" mt="xs" size="sm">y: {Math.round(yPos)}</Text>
+        </div>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## Distinguishing taps from drags
+
+When `filterTaps` is enabled, the last state includes a `tap` property that is `true`
+when the total distance is below `tapThreshold` (default `3px`). Combined with `threshold`,
+this lets you distinguish clicks from drags on the same element:
+
+```tsx
+import { useState } from 'react';
+import { Badge, Group, Text, UnstyledButton } from '@mantine/core';
+import { useDrag } from '@mantine/hooks';
+
+function Demo() {
+  const [taps, setTaps] = useState(0);
+  const [drags, setDrags] = useState(0);
+
+  const { ref, active } = useDrag(
+    (state) => {
+      if (state.last) {
+        if (state.tap) {
+          setTaps((t) => t + 1);
+        } else {
+          setDrags((d) => d + 1);
+        }
+      }
+    },
+    { filterTaps: true, threshold: 5 }
+  );
+
+  return (
+    <>
+      <Group justify="center">
+        <UnstyledButton
+          ref={ref}
+          style={{
+            width: 200,
+            height: 80,
+            backgroundColor: active
+              ? 'var(--mantine-color-teal-filled)'
+              : 'var(--mantine-color-blue-filled)',
+            borderRadius: 'var(--mantine-radius-md)',
+            cursor: active ? 'grabbing' : 'pointer',
+            touchAction: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--mantine-color-white)',
+            fontWeight: 600,
+            userSelect: 'none',
+          }}
+        >
+          Click or drag me
+        </UnstyledButton>
+      </Group>
+
+      <Group justify="center" mt="md" gap="lg">
+        <Text size="sm">
+          Taps: <Badge>{taps}</Badge>
+        </Text>
+        <Text size="sm">
+          Drags: <Badge color="teal">{drags}</Badge>
+        </Text>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## Swipe to dismiss
+
+Use `movement` and `velocity` on the last event to decide whether to dismiss an item.
+This pattern works well for notifications:
+
+```tsx
+import { useState } from 'react';
+import { Button, Group, Paper, Text } from '@mantine/core';
+import { useDrag } from '@mantine/hooks';
+
+interface NotificationItem {
+  id: number;
+  text: string;
+}
+
+function SwipeNotification({
+  notification,
+  onDismiss,
+}: {
+  notification: NotificationItem;
+  onDismiss: (id: number) => void;
+}) {
+  const [offset, setOffset] = useState(0);
+  const [dismissed, setDismissed] = useState(false);
+
+  const { ref, active } = useDrag(
+    (state) => {
+      if (state.last) {
+        const shouldDismiss =
+          Math.abs(state.movement[0]) > 120 || state.velocity[0] > 0.5;
+        if (shouldDismiss) {
+          setDismissed(true);
+          setTimeout(() => onDismiss(notification.id), 300);
+        } else {
+          setOffset(0);
+        }
+      } else {
+        setOffset(state.movement[0]);
+      }
+    },
+    { axis: 'x', threshold: 5, filterTaps: true }
+  );
+
+  return (
+    <Paper
+      ref={ref}
+      p="sm"
+      mb="xs"
+      withBorder
+      radius="md"
+      style={{
+        transform: dismissed
+          ? `translateX(${offset > 0 ? 400 : -400}px)`
+          : `translateX(${offset}px)`,
+        opacity: dismissed ? 0 : 1 - Math.min(Math.abs(offset) / 200, 1) * 0.6,
+        transition: active ? 'none' : 'transform 300ms ease, opacity 300ms ease',
+        cursor: active ? 'grabbing' : 'grab',
+        touchAction: 'pan-y',
+        userSelect: 'none',
+      }}
+    >
+      {notification.text}
+    </Paper>
+  );
+}
+
+const initialItems: NotificationItem[] = [
+  { id: 1, text: 'New message from Alice' },
+  { id: 2, text: 'Build succeeded' },
+  { id: 3, text: 'Deployment complete' },
+  { id: 4, text: 'Review requested' },
+];
+
+function Demo() {
+  const [notifications, setNotifications] = useState(initialItems);
+
+  return (
+    <div style={{ height: 300 }}>
+      {notifications.map((n) => (
+        <SwipeNotification
+          key={n.id}
+          notification={n}
+          onDismiss={(id) =>
+            setNotifications((items) => items.filter((item) => item.id !== id))
+          }
+        />
+      ))}
+
+      {notifications.length === 0 && (
+        <Text ta="center" c="dimmed" py="md">All cleared!</Text>
+      )}
+
+      <Group justify="center" mt="md">
+        <Button onClick={() => setNotifications(initialItems)}>
+          Reset
+        </Button>
+      </Group>
+    </div>
+  );
+}
+```
+
+
+## Drag to scroll
+
+Apply `delta` to a container's `scrollLeft` to create a drag-to-scroll interaction:
+
+```tsx
+import { useRef } from 'react';
+import { Text } from '@mantine/core';
+import { useDrag } from '@mantine/hooks';
+
+function Demo() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const { ref, active } = useDrag(
+    (state) => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollLeft -= state.delta[0];
+      }
+    },
+    { axis: 'x', filterTaps: true, threshold: 5 }
+  );
+
+  const assignRef = (node: HTMLDivElement | null) => {
+    scrollRef.current = node;
+    ref(node);
+  };
+
+  return (
+    <>
+      <div
+        ref={assignRef}
+        style={{
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          cursor: active ? 'grabbing' : 'grab',
+          touchAction: 'pan-y',
+          userSelect: 'none',
+          borderRadius: 'var(--mantine-radius-md)',
+          border: '1px solid var(--mantine-color-default-border)',
+          padding: 'var(--mantine-spacing-md)',
+        }}
+      >
+        {Array.from({ length: 20 }, (_, i) => (
+          <div
+            key={i}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 120,
+              height: 80,
+              marginRight: 12,
+              backgroundColor: `hsl(${i * 18}, 60%, 70%)`,
+              borderRadius: 'var(--mantine-radius-sm)',
+              fontWeight: 600,
+              verticalAlign: 'top',
+            }}
+          >
+            Card {i + 1}
+          </div>
+        ))}
+      </div>
+      <Text ta="center" mt="sm" size="sm" c="dimmed">
+        Drag horizontally to scroll
+      </Text>
+    </>
+  );
+}
+```
+
+
+## Touch support
+
+The hook uses the Pointer Events API which handles both mouse and touch automatically.
+For touch devices, set `touch-action: none` on the draggable element to prevent
+the browser from interpreting touch drag as scroll:
+
+```css
+.draggable {
+  touch-action: none;
+}
+```
+
+If you want to allow scrolling on one axis while dragging on the other (e.g. horizontal
+drag with vertical scroll), use `touch-action: pan-y` or `touch-action: pan-x`.
+
+## Definition
+
+```tsx
+type Vector2 = [number, number];
+
+interface UseDragState {
+  /** Current pointer position */
+  xy: Vector2;
+
+  /** Position where the gesture started */
+  initial: Vector2;
+
+  /** Displacement from start, respects axis constraint */
+  movement: Vector2;
+
+  /** Change since previous event */
+  delta: Vector2;
+
+  /** Absolute distance per axis */
+  distance: Vector2;
+
+  /** Movement direction per axis: -1, 0 or 1 */
+  direction: Vector2;
+
+  /** Speed per axis in px/ms */
+  velocity: Vector2;
+
+  /** Time since drag started in ms */
+  elapsedTime: number;
+
+  /** `true` on the first handler call */
+  first: boolean;
+
+  /** `true` on the last handler call (pointer released or canceled) */
+  last: boolean;
+
+  /** `true` while the gesture is ongoing */
+  active: boolean;
+
+  /** `true` when the gesture qualifies as a tap (requires `filterTaps`) */
+  tap: boolean;
+
+  /** `true` when the gesture was interrupted by a `pointercancel` event */
+  canceled: boolean;
+
+  /** Function to programmatically cancel the current gesture */
+  cancel: () => void;
+
+  /** The source pointer event */
+  event: PointerEvent;
+
+}
+
+interface UseDragOptions {
+  /** Constrain movement to an axis, `'lock'` locks to whichever axis has more movement */
+  axis?: 'x' | 'y' | 'lock';
+
+  /** Movement in px to determine lock axis, default `1` */
+  axisThreshold?: number;
+
+  /** Enable tap detection on the last event, default `false` */
+  filterTaps?: boolean;
+
+  /** Max displacement in px to be considered a tap, default `3` */
+  tapThreshold?: number;
+
+  /** Min displacement before drag activates, default `0` */
+  threshold?: number | Vector2;
+
+  /** Enable or disable the hook, default `true` */
+  enabled?: boolean;
+
+}
+
+interface UseDragReturnValue<T extends HTMLElement = any> {
+  /** Ref callback to attach to the target element */
+  ref: React.RefCallback<T | null>;
+
+  /** `true` while a drag gesture is active */
+  active: boolean;
+}
+
+function useDrag<T extends HTMLElement = any>(
+  handler: (state: UseDragState) => void,
+  options?: UseDragOptions,
+): UseDragReturnValue<T>
+```
+
+## Exported types
+
+`UseDragState`, `UseDragOptions` and `UseDragReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
+
+```tsx
+import type { UseDragState, UseDragOptions, UseDragReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -45340,6 +47224,26 @@ function Demo() {
 ```
 
 
+## Range
+
+Set `type="range"` to allow selecting a date and time range. In range mode,
+two time inputs are rendered for start and end times, and a range summary is displayed below:
+
+```tsx
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      type="range"
+      label="Pick dates and times range"
+      placeholder="Pick dates and times range"
+    />
+  );
+}
+```
+
+
 ## With seconds
 
 ```tsx
@@ -45418,6 +47322,27 @@ function Demo() {
   return (
     <DateTimePicker
       valueFormat="DD MMM YYYY hh:mm A"
+      label="Pick date and time"
+      placeholder="Pick date and time"
+    />
+  );
+}
+```
+
+
+`valueFormat` also accepts a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string
+and returns a custom formatted value. Use it when the formatting logic cannot be expressed with a
+dayjs format string:
+
+```tsx
+import dayjs from 'dayjs';
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      valueFormat={(date) => dayjs(date).format('dddd, MMMM D [at] h:mm A')}
+      defaultValue="2024-04-11 14:45:00"
       label="Pick date and time"
       placeholder="Pick date and time"
     />
@@ -45549,6 +47474,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type="range" |
 | ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |
 | clearButtonProps | React.ComponentProps<"button"> | - | Props passed down to the clear button |
 | clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
@@ -45559,11 +47485,12 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | defaultDate | string \| Date | - | Initial displayed date in uncontrolled mode |
 | defaultLevel | "month" \| "year" \| "decade" | - | Initial displayed level in uncontrolled mode |
 | defaultTimeValue | string | - | Default time value in HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. |
-| defaultValue | DateValue | - | Uncontrolled component default value |
+| defaultValue | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
 | disabled | boolean | - | Sets `disabled` attribute on the `input` element |
 | dropdownType | "popover" \| "modal" | - | Type of the dropdown |
+| endTimePickerProps | Omit<TimePickerProps, "value" \| "defaultValue"> | - | Props passed down to the end time `TimePicker` component in range mode |
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
@@ -45582,7 +47509,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
 | label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
 | labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
-| labelSeparator | string | - | Separator between range value |
+| labelSeparator | string | - | Separator between range values |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
 | leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
@@ -45600,7 +47527,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | nextIcon | React.ReactNode | - | Change next icon |
 | nextLabel | string | - | Next button `aria-label` |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | (value: string \| null) => void | - | Called when value changes |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
 | onDateChange | (date: string) => void | - | Called when date changes |
 | onDropdownClose | () => void | - | Called when the dropdown is closed |
 | onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
@@ -45615,7 +47542,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to `Popover` component |
-| presets | DatePickerPreset<"default">[] | - | Presets values |
+| presets | DatePickerPreset<Type>[] | - | Presets values |
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button `aria-label` |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
@@ -45630,8 +47557,9 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | sortDates | boolean | - | Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" |
 | submitButtonProps | ActionIconProps & ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> | - | Props passed down to the submit button |
 | timePickerProps | Omit<TimePickerProps, "value" \| "defaultValue"> | - | Props passed down to `TimePicker` component |
-| value | DateValue | - | Controlled component value |
-| valueFormat | string | - | `dayjs` format for input value |
+| type | "range" \| "multiple" \| "default" | - | Picker type: range or default |
+| value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Controlled component value |
+| valueFormat | string \| ((date: string) => string) | - | `dayjs` format for input value, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value |
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
@@ -45681,6 +47609,9 @@ DateTimePicker component supports Styles API. With Styles API, you can customize
 | timeWrapper | .mantine-DateTimePicker-timeWrapper | Wrapper around time input and submit button |
 | timeInput | .mantine-DateTimePicker-timeInput | TimeInput |
 | submitButton | .mantine-DateTimePicker-submitButton | Submit button |
+| rangeTimeWrapper | .mantine-DateTimePicker-rangeTimeWrapper | Wrapper around two time inputs in range mode |
+| rangeTimeInput | .mantine-DateTimePicker-rangeTimeInput | Time input in range mode |
+| rangeInfo | .mantine-DateTimePicker-rangeInfo | Range dates preview in range mode |
 
 
 --------------------------------------------------------------------------------
@@ -45827,6 +47758,209 @@ function Demo() {
   );
 }
 ```
+
+
+--------------------------------------------------------------------------------
+
+### InlineDateTimePicker
+Package: @mantine/dates
+Import: import { InlineDateTimePicker } from '@mantine/dates';
+Description: Inline date and time picker with range support
+
+## DatePicker props
+
+`InlineDateTimePicker` supports most of the [DatePicker](https://mantine.dev/llms/dates-date-picker.md) props.
+Read through the [DatePicker](https://mantine.dev/llms/dates-date-picker.md) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+`InlineDateTimePicker` renders a calendar with a time picker inline, without a dropdown.
+It combines [DatePicker](https://mantine.dev/llms/dates-date-picker.md) and [TimePicker](https://mantine.dev/llms/dates-time-picker.md) components:
+
+```tsx
+import { InlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <InlineDateTimePicker />;
+}
+```
+
+
+## With seconds
+
+Set `withSeconds` prop to display seconds input in the time picker:
+
+```tsx
+import { InlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <InlineDateTimePicker withSeconds />;
+}
+```
+
+
+## Range
+
+Set `type="range"` to allow selecting a date and time range. In range mode,
+two time inputs are rendered side by side, and a range summary is displayed
+below the time inputs:
+
+```tsx
+import { InlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <InlineDateTimePicker type="range" />;
+}
+```
+
+
+## Controlled range
+
+```tsx
+import { useState } from 'react';
+import { InlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<[string | null, string | null]>([null, null]);
+
+  return (
+    <InlineDateTimePicker
+      type="range"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+
+
+## Value format
+
+Use `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the range preview:
+
+```tsx
+import { InlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <InlineDateTimePicker type="range" valueFormat="MMMM YYYY, DD HH:mm" />;
+}
+```
+
+
+
+#### Props
+
+**InlineDateTimePicker props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| allowDeselect | boolean | - | Determines whether user can deselect the date by clicking on selected item, applicable only when type="default" |
+| allowSingleDateInRange | boolean | - | Determines whether a single day can be selected as range, applicable only when type="range" |
+| ariaLabels | CalendarAriaLabels | - | `aria-label` attributes for controls on different levels |
+| columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly |
+| date | string \| Date | - | Displayed date in controlled mode |
+| decadeLabelFormat | string \| ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | `dayjs` format for decade label or a function that returns decade label based on the date value |
+| defaultDate | string \| Date | - | Initial displayed date in uncontrolled mode |
+| defaultLevel | "month" \| "year" \| "decade" | - | Initial displayed level (uncontrolled) |
+| defaultTimeValue | string | - | Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. |
+| defaultValue | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Default value for uncontrolled component |
+| enableKeyboardNavigation | boolean | - | Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) |
+| endTimePickerProps | Omit<TimePickerProps, "value" \| "defaultValue"> | - | Props passed down to the end time `TimePicker` component in range mode |
+| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
+| firstDayOfWeek | 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
+| fullWidth | boolean | - | Determines whether the list should take the full width of its container |
+| getDayAriaLabel | (date: string) => string | - | Assigns `aria-label` to `Day` components based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "vars" \| "classNames" \| "styles"> & DataAttributes | - | Passes props down to `Day` components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
+| headerControlsOrder | ("next" \| "previous" \| "level")[] | - | Controls order |
+| hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
+| hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
+| highlightToday | boolean | - | Determines whether today should be highlighted with a border |
+| labelSeparator | string | - | Separator between range values |
+| level | "month" \| "year" \| "decade" | - | Current displayed level (controlled) |
+| locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
+| maxDate | string \| Date | - | Max date |
+| maxLevel | "month" \| "year" \| "decade" | - | - |
+| minDate | string \| Date | - | Min date |
+| monthLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display month label or a function that returns month label based on month value |
+| monthsListFormat | string | - | `dayjs` format for months list |
+| nextIcon | React.ReactNode | - | Change next icon |
+| nextLabel | string | - | Next button `aria-label` |
+| numberOfColumns | number | - | Number of columns displayed next to each other |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
+| onMonthMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters month control |
+| onMonthSelect | (date: string) => void | - | Called when user selects month |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
+| onSubmit | () => void | - | Called when the submit button is clicked |
+| onYearMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters year control |
+| onYearSelect | (date: string) => void | - | Called when user selects year |
+| presets | DatePickerPreset<Type>[] | - | Predefined values to pick from |
+| previousIcon | React.ReactNode | - | Change previous icon |
+| previousLabel | string | - | Previous button `aria-label` |
+| renderDay | (date: string) => React.ReactNode | - | Controls day value rendering |
+| size | MantineSize | - | Component size |
+| submitButtonProps | ActionIconProps & ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> | - | Props passed down to the submit button |
+| timePickerProps | Omit<TimePickerProps, "value" \| "defaultValue"> | - | Props passed down to `TimePicker` component |
+| type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
+| value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Value for controlled component |
+| valueFormat | string \| ((date: string) => string) | - | `dayjs` format for range display, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value |
+| weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
+| weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
+| withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withSeconds | boolean | - | Determines whether the seconds input should be displayed |
+| withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
+| yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
+| yearsListFormat | string | - | dayjs format for years list |
+
+
+#### Styles API
+
+InlineDateTimePicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**InlineDateTimePicker selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-InlineDateTimePicker-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-InlineDateTimePicker-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-InlineDateTimePicker-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-InlineDateTimePicker-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-InlineDateTimePicker-levelsGroup | Group of months levels |
+| yearsList | .mantine-InlineDateTimePicker-yearsList | Years list table element |
+| yearsListRow | .mantine-InlineDateTimePicker-yearsListRow | Years list row element |
+| yearsListCell | .mantine-InlineDateTimePicker-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-InlineDateTimePicker-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-InlineDateTimePicker-monthsList | Months list table element |
+| monthsListRow | .mantine-InlineDateTimePicker-monthsListRow | Months list row element |
+| monthsListCell | .mantine-InlineDateTimePicker-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-InlineDateTimePicker-monthsListControl | Button used to pick months and years |
+| monthThead | .mantine-InlineDateTimePicker-monthThead | thead element of month table |
+| monthRow | .mantine-InlineDateTimePicker-monthRow | tr element of month table |
+| monthTbody | .mantine-InlineDateTimePicker-monthTbody | tbody element of month table |
+| monthCell | .mantine-InlineDateTimePicker-monthCell | td element of month table |
+| month | .mantine-InlineDateTimePicker-month | Month table element |
+| weekdaysRow | .mantine-InlineDateTimePicker-weekdaysRow | Weekdays tr element |
+| weekday | .mantine-InlineDateTimePicker-weekday | Weekday th element |
+| day | .mantine-InlineDateTimePicker-day | Month day control |
+| weekNumber | .mantine-InlineDateTimePicker-weekNumber | Week number td element |
+| datePickerRoot | .mantine-InlineDateTimePicker-datePickerRoot | Date picker root element, contains calendar and presets |
+| presetsList | .mantine-InlineDateTimePicker-presetsList | Presets wrapper element |
+| presetButton | .mantine-InlineDateTimePicker-presetButton | Preset button |
+| root | .mantine-InlineDateTimePicker-root | Root element |
+| timeWrapper | .mantine-InlineDateTimePicker-timeWrapper | Wrapper around time input and submit button |
+| timeInput | .mantine-InlineDateTimePicker-timeInput | TimeInput |
+| submitButton | .mantine-InlineDateTimePicker-submitButton | Submit button |
+| rangeTimeWrapper | .mantine-InlineDateTimePicker-rangeTimeWrapper | Wrapper around two time inputs and submit button in range mode |
+| rangeTimeInput | .mantine-InlineDateTimePicker-rangeTimeInput | Time input in range mode |
+| rangeInfo | .mantine-InlineDateTimePicker-rangeInfo | Range dates preview in range mode |
 
 
 --------------------------------------------------------------------------------
@@ -59371,6 +61505,242 @@ RadialBarChart component supports Styles API. With Styles API, you can customize
 
 --------------------------------------------------------------------------------
 
+### SankeyChart
+Package: @mantine/charts
+Import: import { SankeyChart } from '@mantine/charts';
+Description: Sankey diagram component
+
+## Usage
+
+`SankeyChart` is based on the [Sankey recharts component](https://recharts.org/en-US/api/Sankey).
+It visualizes flow between nodes where the width of each link is proportional to the flow value:
+
+```tsx
+// Demo.tsx
+import { SankeyChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SankeyChart data={data} />;
+}
+
+// data.ts
+export const data = {
+  nodes: [
+    { name: 'Visit' },
+    { name: 'Direct-Favourite' },
+    { name: 'Page-Click' },
+    { name: 'Detail-Favourite' },
+    { name: 'Lost' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 3728.3 },
+    { source: 0, target: 2, value: 354170 },
+    { source: 2, target: 3, value: 62429 },
+    { source: 2, target: 4, value: 291741 },
+  ],
+};
+```
+
+
+## Node color
+
+You can set `color` on each node in the data to control individual node colors.
+Colors can reference [theme](https://mantine.dev/llms/theming-theme-object.md) values like `blue`, `red.5`, `orange.7`, etc.
+Any valid CSS color value is also accepted.
+
+```tsx
+// Demo.tsx
+import { SankeyChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SankeyChart data={data} linkOpacity={0.2} />;
+}
+
+// data.ts
+export const data = {
+  nodes: [
+    { name: 'Visit', color: 'indigo.6' },
+    { name: 'Direct-Favourite', color: 'teal.6' },
+    { name: 'Page-Click', color: 'blue.6' },
+    { name: 'Detail-Favourite', color: 'cyan.6' },
+    { name: 'Lost', color: 'red.6' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 3728.3 },
+    { source: 0, target: 2, value: 354170 },
+    { source: 2, target: 3, value: 62429 },
+    { source: 2, target: 4, value: 291741 },
+  ],
+};
+```
+
+
+## Custom colors
+
+Use `colors` prop to provide an array of colors that are used for nodes when no
+`color` is set on individual nodes. Colors can reference [theme](https://mantine.dev/llms/theming-theme-object.md) values.
+The colors cycle when there are more nodes than colors:
+
+```tsx
+// Demo.tsx
+import { SankeyChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <SankeyChart
+      data={data}
+      colors={['indigo.6', 'cyan.6', 'teal.6', 'orange.6', 'red.6']}
+    />
+  );
+}
+
+// data.ts
+export const data = {
+  nodes: [
+    { name: 'Visit' },
+    { name: 'Direct-Favourite' },
+    { name: 'Page-Click' },
+    { name: 'Detail-Favourite' },
+    { name: 'Lost' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 3728.3 },
+    { source: 0, target: 2, value: 354170 },
+    { source: 2, target: 3, value: 62429 },
+    { source: 2, target: 4, value: 291741 },
+  ],
+};
+```
+
+
+## Node width and padding
+
+Use `nodeWidth` to control the width of each node and `nodePadding` to control
+the spacing between nodes:
+
+```tsx
+// Demo.tsx
+import { SankeyChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SankeyChart data={data} nodeWidth={20} nodePadding={20} />;
+}
+
+// data.ts
+export const data = {
+  nodes: [
+    { name: 'Visit' },
+    { name: 'Direct-Favourite' },
+    { name: 'Page-Click' },
+    { name: 'Detail-Favourite' },
+    { name: 'Lost' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 3728.3 },
+    { source: 0, target: 2, value: 354170 },
+    { source: 2, target: 3, value: 62429 },
+    { source: 2, target: 4, value: 291741 },
+  ],
+};
+```
+
+
+## Link opacity
+
+Use `linkOpacity` prop to control the opacity of links between nodes:
+
+```tsx
+// Demo.tsx
+import { SankeyChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SankeyChart data={data} linkOpacity={0.2} />;
+}
+
+// data.ts
+export const data = {
+  nodes: [
+    { name: 'Visit', color: 'indigo.6' },
+    { name: 'Direct-Favourite', color: 'teal.6' },
+    { name: 'Page-Click', color: 'blue.6' },
+    { name: 'Detail-Favourite', color: 'cyan.6' },
+    { name: 'Lost', color: 'red.6' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 3728.3 },
+    { source: 0, target: 2, value: 354170 },
+    { source: 2, target: 3, value: 62429 },
+    { source: 2, target: 4, value: 291741 },
+  ],
+};
+```
+
+
+## Disable tooltip
+
+To disable the tooltip, set `withTooltip={false}`:
+
+```tsx
+// Demo.tsx
+import { SankeyChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SankeyChart data={data} withTooltip={false} />;
+}
+
+// data.ts
+export const data = {
+  nodes: [
+    { name: 'Visit' },
+    { name: 'Direct-Favourite' },
+    { name: 'Page-Click' },
+    { name: 'Detail-Favourite' },
+    { name: 'Lost' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 3728.3 },
+    { source: 0, target: 2, value: 354170 },
+    { source: 2, target: 3, value: 62429 },
+    { source: 2, target: 4, value: 291741 },
+  ],
+};
+```
+
+
+
+#### Props
+
+**SankeyChart props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Additional elements rendered inside `Sankey` component |
+| colors | DefaultMantineColor[] | - | An array of colors used for nodes when no `color` is set on individual nodes |
+| data | SankeyChartData | required | Data used to render chart, must include `nodes` and `links` arrays |
+| height | number | - | Controls chart height |
+| iterations | number | - | The number of relaxation iterations |
+| linkColor | MantineColor | - | Default color for links, by default depends on color scheme |
+| linkCurvature | number | - | The curvature of links between nodes |
+| linkOpacity | number | - | Opacity of the link fill |
+| nodeColor | MantineColor | - | Default color for nodes, by default depends on color scheme |
+| nodePadding | number | - | The padding between nodes |
+| nodeWidth | number | - | The width of each node |
+| sankeyProps | Partial<Omit<Props, "data" \| "ref">> | - | Props passed down to recharts `Sankey` component |
+| textColor | MantineColor | - | Controls text color of labels |
+| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
+| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
+| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and node labels |
+| withTooltip | boolean | - | Determines whether the tooltip should be displayed when hovered |
+
+
+--------------------------------------------------------------------------------
+
 ### ScatterChart
 Package: @mantine/charts
 Import: import { ScatterChart } from '@mantine/charts';
@@ -61866,7 +64236,7 @@ yet, you can continue using Mantine 8.x until you are ready to update React and 
 
 ## Update dependencies
 
-* Update all `@mantine/*` packages to version 9.1.1
+* Update all `@mantine/*` packages to version 9.2.0
 * If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
 * If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
@@ -73656,7 +76026,7 @@ function Demo() {
 ## Embla options
 
 You can pass configuration options directly to embla carousel with the `emblaOptions` prop.
-You can find embla options description in the [embla options reference](https://www.embla-carousel.com/api/options/).
+You can find embla options description in the [embla options reference](https://www.embla-carousel.com/docs/api/options).
 
 Example of passing `loop`, `dragFree` and `align` options:
 
@@ -73877,7 +76247,7 @@ export function PercentageHeight() {
 
 ## Get embla instance
 
-You can get the [embla instance](https://www.embla-carousel.com/api/methods/) with the `getEmblaApi` prop.
+You can get the [embla instance](https://www.embla-carousel.com/docs/api/methods) with the `getEmblaApi` prop.
 You will be able to enhance the carousel with additional logic after that using embla api methods:
 
 ```tsx
@@ -76225,6 +78595,7 @@ import {
 * `position` – notification position; by default, the value from the `position` prop of the `Notifications` component is used
 * `withBorder` – determines whether the notification should have a border
 * `withCloseButton` – determines whether the close button should be visible
+* `allowClose` – determines whether notification can be closed with close button, drag or horizontal scroll swipe, `true` by default
 * `onClose` – called when the notification is unmounted
 * `onOpen` – called when the notification is mounted
 * `autoClose` – defines timeout in ms after which the notification will be automatically closed; use `false` to disable auto close
@@ -76245,6 +78616,7 @@ notifications.show({
   id: 'hello-there',
   position: 'bottom-center',
   withCloseButton: true,
+  allowClose: true,
   onClose: () => console.log('unmounted'),
   onOpen: () => console.log('mounted'),
   autoClose: 5000,
@@ -76272,6 +78644,25 @@ function Demo() {
 }
 ```
 
+
+## Dismiss interactions
+
+Notifications can be dismissed by dragging them left or right, or with a horizontal scroll swipe
+while hovered.
+
+Use `allowDragDismiss` and `allowScrollDismiss` on `Notifications` to disable either interaction:
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications allowDragDismiss={false} allowScrollDismiss={false} />;
+}
+```
+
+To make a specific notification non-dismissible, set `allowClose: false` in
+`notifications.show` or `notifications.update`. This hides the close button and disables
+drag/scroll dismissal for that notification.
 
 ## Customize notification styles
 
@@ -76504,7 +78895,7 @@ function Demo() {
           title: 'Loading your data',
           message: 'Data will be loaded in 3 seconds, you cannot close this yet',
           autoClose: false,
-          withCloseButton: false,
+          allowClose: false,
         });
 
         setTimeout(() => {
@@ -76516,6 +78907,7 @@ function Demo() {
             icon: <CheckIcon size={18} />,
             loading: false,
             autoClose: 2000,
+            allowClose: true,
           });
         }, 3000);
       }}
@@ -76662,6 +79054,8 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| allowDragDismiss | boolean | - | Determines whether notifications can be dismissed by dragging left or right |
+| allowScrollDismiss | boolean | - | Determines whether notifications can be dismissed with horizontal scroll gesture while hovered |
 | autoClose | number \| false | - | Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function |
 | containerWidth | string \| number | - | Notification width, cannot exceed 100% |
 | limit | number | - | Maximum number of notifications displayed at a time, other new notifications will be added to queue |
@@ -78875,6 +81269,10 @@ This page demonstrates usage of `use-form` with all Mantine inputs.
 
 
 ## JsonInput
+
+
+
+## MaskInput
 
 
 
@@ -92097,6 +94495,37 @@ function Demo() {
 ```
 
 
+## Business hours per day
+
+Pass an object to `businessHours` to configure the range for each day of the week individually.
+Keys are day numbers (`0` – Sunday, `6` – Saturday). Days missing from the object or set to `null`
+are marked as fully outside business hours:
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={events}
+      highlightBusinessHours
+      businessHours={{
+        1: ['09:00:00', '17:00:00'],
+        2: ['09:00:00', '17:00:00'],
+        3: ['09:00:00', '17:00:00'],
+        4: ['09:00:00', '17:00:00'],
+        5: ['09:00:00', '13:00:00'],
+      }}
+      startTime="07:00:00"
+      endTime="20:00:00"
+    />
+  );
+}
+```
+
+
 ## Custom time slot props
 
 Use `getTimeSlotProps` to add custom props to individual time slots based on their time range.
@@ -93521,7 +95950,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | allDaySlotHeight | Height<string \| number> | - | Height of all-day slot |
-| businessHours | [string, string] | - | Business hours range in `HH:mm:ss` format |
+| businessHours | BusinessHoursValue | - | Business hours range in `HH:mm:ss` format shared across all days, or a per-day record keyed by day of the week (`0` – Sunday, `6` – Saturday) for day-specific ranges. Set a day to `null` to mark it as fully outside business hours. |
 | canDragEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be dragged |
 | canResizeEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be resized |
 | date | string \| Date | required | Week to display, Date object or date string in `YYYY-MM-DD` format |
@@ -106484,11 +108913,643 @@ function Demo() {
 
 --------------------------------------------------------------------------------
 
+### Changelog920
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+## TreeSelect component
+
+New [TreeSelect](https://mantine.dev/llms/core-tree-select.md) component allows picking one or more values from hierarchical tree data.
+It supports three selection modes: single, multiple, and checkbox (with parent-child cascade):
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Tree select Combobox examples
+
+New [Combobox examples](https://mantine.dev/combobox?e=TreeSelectCombobox) showing how to build tree select components
+from Combobox primitives with connecting lines, expand/collapse chevrons, and proper indentation:
+
+* [Tree select](https://mantine.dev/combobox?e=TreeSelectCombobox) – basic single-value tree select
+* [Tree multi select](https://mantine.dev/combobox?e=TreeMultiSelectCombobox) – multi select with checkbox cascade
+* [Searchable tree select](https://mantine.dev/combobox?e=TreeSelectSearchable) – tree select with search filtering
+* [Tree select with checkboxes](https://mantine.dev/combobox?e=TreeSelectCheckbox) – single select with expand-on-click
+* [Virtualized tree select](https://mantine.dev/combobox?e=TreeSelectVirtualized) – large tree (~500 nodes) with @tanstack/react-virtual
+
+## Notifications swipe dismissal
+
+[@mantine/notifications](https://mantine.dev/llms/x-notifications.md) now supports dismissing notifications by dragging them
+left or right, and with horizontal scroll swipe while hovered. Both interactions can be disabled
+on `Notifications`, and individual items can opt out with `allowClose: false`.
+
+```tsx
+import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() =>
+        notifications.show({
+          title: 'Default notification',
+          message: 'Do not forget to star Mantine on GitHub! 🌟',
+        })
+      }
+    >
+      Show notification
+    </Button>
+  );
+}
+```
+
+
+## use-drag hook
+
+New [use-drag](https://mantine.dev/llms/hooks-use-drag.md) hook handles pointer drag gestures with movement tracking,
+velocity, direction and axis constraints. It uses the Pointer Events API and works with
+both mouse and touch input:
+
+```tsx
+import { useState } from 'react';
+import { Button, Group, Paper, Text } from '@mantine/core';
+import { useDrag } from '@mantine/hooks';
+
+interface NotificationItem {
+  id: number;
+  text: string;
+}
+
+function SwipeNotification({
+  notification,
+  onDismiss,
+}: {
+  notification: NotificationItem;
+  onDismiss: (id: number) => void;
+}) {
+  const [offset, setOffset] = useState(0);
+  const [dismissed, setDismissed] = useState(false);
+
+  const { ref, active } = useDrag(
+    (state) => {
+      if (state.last) {
+        const shouldDismiss =
+          Math.abs(state.movement[0]) > 120 || state.velocity[0] > 0.5;
+        if (shouldDismiss) {
+          setDismissed(true);
+          setTimeout(() => onDismiss(notification.id), 300);
+        } else {
+          setOffset(0);
+        }
+      } else {
+        setOffset(state.movement[0]);
+      }
+    },
+    { axis: 'x', threshold: 5, filterTaps: true }
+  );
+
+  return (
+    <Paper
+      ref={ref}
+      p="sm"
+      mb="xs"
+      withBorder
+      radius="md"
+      style={{
+        transform: dismissed
+          ? `translateX(${offset > 0 ? 400 : -400}px)`
+          : `translateX(${offset}px)`,
+        opacity: dismissed ? 0 : 1 - Math.min(Math.abs(offset) / 200, 1) * 0.6,
+        transition: active ? 'none' : 'transform 300ms ease, opacity 300ms ease',
+        cursor: active ? 'grabbing' : 'grab',
+        touchAction: 'pan-y',
+        userSelect: 'none',
+      }}
+    >
+      {notification.text}
+    </Paper>
+  );
+}
+
+const initialItems: NotificationItem[] = [
+  { id: 1, text: 'New message from Alice' },
+  { id: 2, text: 'Build succeeded' },
+  { id: 3, text: 'Deployment complete' },
+  { id: 4, text: 'Review requested' },
+];
+
+function Demo() {
+  const [notifications, setNotifications] = useState(initialItems);
+
+  return (
+    <div style={{ height: 300 }}>
+      {notifications.map((n) => (
+        <SwipeNotification
+          key={n.id}
+          notification={n}
+          onDismiss={(id) =>
+            setNotifications((items) => items.filter((item) => item.id !== id))
+          }
+        />
+      ))}
+
+      {notifications.length === 0 && (
+        <Text ta="center" c="dimmed" py="md">All cleared!</Text>
+      )}
+
+      <Group justify="center" mt="md">
+        <Button onClick={() => setNotifications(initialItems)}>
+          Reset
+        </Button>
+      </Group>
+    </div>
+  );
+}
+```
+
+
+## InlineDateTimePicker component
+
+New [InlineDateTimePicker](https://mantine.dev/llms/dates-inline-date-time-picker.md) component renders a calendar
+with a time picker inline, without a dropdown. It supports both default and range modes:
+
+```tsx
+import { InlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <InlineDateTimePicker />;
+}
+```
+
+
+Set `type="range"` to select a date and time range with two time inputs:
+
+```tsx
+import { InlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return <InlineDateTimePicker type="range" />;
+}
+```
+
+
+## DateTimePicker range support
+
+[DateTimePicker](https://mantine.dev/llms/dates-date-time-picker.md) now supports `type="range"` to select
+a date and time range. In range mode, two time inputs are displayed in the dropdown
+for start and end times:
+
+```tsx
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      type="range"
+      label="Pick dates and times range"
+      placeholder="Pick dates and times range"
+    />
+  );
+}
+```
+
+
+## DateTimePicker valueFormat function
+
+[DateTimePicker](https://mantine.dev/llms/dates-date-time-picker.md) `valueFormat` prop now accepts a function in addition
+to a dayjs format string. The callback receives the value as a `YYYY-MM-DD HH:mm:ss` string and
+returns the formatted value, which is useful for cases that cannot be expressed with a dayjs
+format string:
+
+```tsx
+import dayjs from 'dayjs';
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      valueFormat={(date) => dayjs(date).format('dddd, MMMM D [at] h:mm A')}
+      defaultValue="2024-04-11 14:45:00"
+      label="Pick date and time"
+      placeholder="Pick date and time"
+    />
+  );
+}
+```
+
+
+## RollingNumber component
+
+New [RollingNumber](https://mantine.dev/llms/core-rolling-number.md) component animates value changes with rolling digit
+transitions. Each digit independently rolls to its new position when the value changes:
+
+```tsx
+import { useState } from 'react';
+import { Button, Group, RollingNumber } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(1234);
+
+  return (
+    <>
+      <RollingNumber value={value} fz="36px" />
+      <Group mt="md">
+        <Button onClick={() => setValue((v) => v + 1)}>Increment</Button>
+        <Button onClick={() => setValue((v) => v - 1)}>Decrement</Button>
+        <Button onClick={() => setValue(Math.floor(Math.random() * 10000))}>Random</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+## MaskInput improvements
+
+[MaskInput](https://mantine.dev/llms/core-mask-input.md) now supports a `resetRef` prop that assigns a function that
+clears the input value imperatively. This is useful because `MaskInput` is uncontrolled
+internally, so setting `value` from a parent does not clear it:
+
+```tsx
+import { useRef } from 'react';
+import { MaskInput, Button, Group } from '@mantine/core';
+
+function Demo() {
+  const resetRef = useRef<() => void>(null);
+
+  return (
+    <>
+      <MaskInput
+        label="Phone number"
+        placeholder="(___) ___-____"
+        mask="(999) 999-9999"
+        resetRef={resetRef}
+      />
+
+      <Group mt="md">
+        <Button onClick={() => resetRef.current?.()}>Reset</Button>
+      </Group>
+    </>
+  );
+}
+```
+
+
+`MaskInput` integration with [use-form](https://mantine.dev/llms/form-use-form.md) is now documented. Use `defaultValue`
+to seed the initial value and `onChangeRaw` to write the raw value to form state:
+
+```tsx
+import { Button, MaskInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { phone: '' },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <MaskInput
+        mask="(999) 999-9999"
+        placeholder="(___) ___-____"
+        label="Phone"
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+      />
+
+      <Button type="submit" mt="md">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
+
+
+## SankeyChart component
+
+New [SankeyChart](https://mantine.dev/llms/charts-sankey-chart.md) component visualizes flow between nodes as a Sankey diagram
+where the width of each link is proportional to the flow value:
+
+```tsx
+// Demo.tsx
+import { SankeyChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SankeyChart data={data} />;
+}
+
+// data.ts
+export const data = {
+  nodes: [
+    { name: 'Visit' },
+    { name: 'Direct-Favourite' },
+    { name: 'Page-Click' },
+    { name: 'Detail-Favourite' },
+    { name: 'Lost' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 3728.3 },
+    { source: 0, target: 2, value: 354170 },
+    { source: 2, target: 3, value: 62429 },
+    { source: 2, target: 4, value: 291741 },
+  ],
+};
+```
+
+
+## Reorder pills in MultiSelect and TagsInput
+
+[MultiSelect](https://mantine.dev/llms/core-multi-select.md) and [TagsInput](https://mantine.dev/llms/core-tags-input.md) now support reordering
+selected pills. Set the new `withPillsReorder` prop to enable it. Pills can be reordered with
+a mouse (drag-and-drop) or keyboard:
+
+* Pills are not part of the `Tab` order. `ArrowLeft` from the input (caret at start) moves
+  focus to the last pill.
+* `ArrowLeft` and `ArrowRight` navigate between pills (RTL-aware). `ArrowRight` on the last
+  pill returns focus to the input.
+* `Alt + ArrowLeft` and `Alt + ArrowRight` reorder the focused pill (RTL-aware). Focus follows
+  the moved pill so chained moves work.
+
+Reordering is automatically disabled when `disabled` or `readOnly` is set. Custom pill renderers
+receive a `reorderProps` payload that can be spread onto the pill element to keep reordering
+working:
+
+```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(['React', 'Angular', 'Vue']);
+
+  return (
+    <MultiSelect
+      label="Drag pills to reorder"
+      description="Selected values can be reordered by dragging pills"
+      placeholder="Pick value"
+      data={['React', 'Angular', 'Vue', 'Svelte', 'Solid', 'Ember']}
+      value={value}
+      onChange={setValue}
+      withPillsReorder
+    />
+  );
+}
+```
+
+
+## Restrict Tree drop targets
+
+[Tree](https://mantine.dev/llms/core-tree.md) component now supports restricting drop targets with the new `allowDrop` prop.
+The callback receives `{ draggedNode, targetNode, position }` and returning `false` hides the drop
+indicator and rejects the drop, so users get proper visual feedback before releasing:
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon } from '@phosphor-icons/react';
+import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'Pages',
+    value: 'pages',
+    children: [
+      { label: 'index.tsx', value: 'pages/index.tsx' },
+      { label: 'about.tsx', value: 'pages/about.tsx' },
+    ],
+  },
+  {
+    label: 'Components (locked)',
+    value: 'components',
+    children: [
+      { label: 'Header.tsx', value: 'components/Header.tsx' },
+      { label: 'Footer.tsx', value: 'components/Footer.tsx' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+];
+
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={5} {...elementProps}>
+      {hasChildren && (
+        <CaretDownIcon
+          size={18}
+          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [treeData, setTreeData] = useState(data);
+
+  return (
+    <Tree
+      data={treeData}
+      // Forbid dropping into or onto "components" branch
+      allowDrop={({ draggedNode, targetNode, position }) => {
+        if (draggedNode === 'components' || draggedNode.startsWith('components/')) {
+          return false;
+        }
+
+        if (targetNode === 'components' && position === 'inside') {
+          return false;
+        }
+
+        return !targetNode.startsWith('components/');
+      }}
+      onDragDrop={(payload) =>
+        setTreeData((current) => moveTreeNode(current, payload))
+      }
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
+## Tree drag handle
+
+[Tree](https://mantine.dev/llms/core-tree.md) component now supports restricting drag initiation to a dedicated handle with
+the new `withDragHandle` prop. The handle spreads `dragHandleProps` from the `renderNode` payload.
+This is useful when a node contains interactive controls (inputs, buttons) that would otherwise
+interfere with dragging:
+
+```tsx
+import { useState } from 'react';
+import { CaretDownIcon, DotsSixVerticalIcon } from '@phosphor-icons/react';
+import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    label: 'Pages',
+    value: 'pages',
+    children: [
+      { label: 'index.tsx', value: 'pages/index.tsx' },
+      { label: 'about.tsx', value: 'pages/about.tsx' },
+    ],
+  },
+  {
+    label: 'Components',
+    value: 'components',
+    children: [
+      { label: 'Header.tsx', value: 'components/Header.tsx' },
+      { label: 'Footer.tsx', value: 'components/Footer.tsx' },
+    ],
+  },
+  { label: 'package.json', value: 'package.json' },
+];
+
+function Leaf({ node, expanded, hasChildren, elementProps, dragHandleProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={4} {...elementProps}>
+      <DotsSixVerticalIcon
+        {...dragHandleProps}
+        size={16}
+        style={{ cursor: 'grab' }}
+      />
+      {hasChildren && (
+        <CaretDownIcon
+          size={18}
+          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
+function Demo() {
+  const [treeData, setTreeData] = useState(data);
+
+  return (
+    <Tree
+      data={treeData}
+      withDragHandle
+      onDragDrop={(payload) =>
+        setTreeData((current) => moveTreeNode(current, payload))
+      }
+      renderNode={(payload) => <Leaf {...payload} />}
+    />
+  );
+}
+```
+
+
+## Shared default props for all inputs
+
+Default props set on `Input` and `Input.Wrapper` in `theme.components` now cascade to every
+component built on top of them ([TextInput](https://mantine.dev/llms/core-text-input.md), [Textarea](https://mantine.dev/llms/core-textarea.md),
+[NumberInput](https://mantine.dev/llms/core-number-input.md), [Select](https://mantine.dev/llms/core-select.md), [DateInput](https://mantine.dev/llms/dates-date-input.md),
+and others). This makes it possible to apply shared `size`, `radius`, `variant`, `withAsterisk`
+and other props to all inputs at once, while still overriding individual components with their
+own default props:
+
+```tsx
+import { TextInput, NumberInput, NativeSelect, MantineProvider, createTheme, Input } from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Input: Input.extend({
+      defaultProps: {
+        size: 'md',
+        radius: 'md',
+      },
+    }),
+
+    InputWrapper: Input.Wrapper.extend({
+      defaultProps: {
+        withAsterisk: true,
+      },
+    }),
+
+    NumberInput: NumberInput.extend({
+      defaultProps: {
+        size: 'lg',
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <TextInput label="Text input" placeholder="Inherits size and radius from Input" />
+
+      <NativeSelect
+        mt="md"
+        label="Native select"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+
+      <NumberInput mt="md" label="Number input" placeholder="Overrides shared size with lg" />
+    </MantineProvider>
+  );
+}
+```
+
+
+## Per-day business hours in WeekView
+
+[WeekView](https://mantine.dev/llms/schedule-week-view.md) `businessHours` prop now accepts a per-day object keyed by day of
+the week (`0` – Sunday, `6` – Saturday) in addition to the shared `[start, end]` tuple. Days
+missing from the object or set to `null` are rendered as fully outside business hours, making it
+easy to model partial workdays and non-working days:
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={events}
+      highlightBusinessHours
+      businessHours={{
+        1: ['09:00:00', '17:00:00'],
+        2: ['09:00:00', '17:00:00'],
+        3: ['09:00:00', '17:00:00'],
+        4: ['09:00:00', '17:00:00'],
+        5: ['09:00:00', '13:00:00'],
+      }}
+      startTime="07:00:00"
+      endTime="20:00:00"
+    />
+  );
+}
+```
+
+
+
+--------------------------------------------------------------------------------
+
 ### AllReleases
 
 # All releases
 
 ## Releases
+
+### [9.2.0](https://mantine.dev/llms/changelog-9-2-0.md) (May 12, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.2.0
 
 ### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
@@ -106998,6 +110059,9 @@ See all releases: https://mantine.dev/changelog/all-releases
 # All releases
 
 ## Releases
+
+### [9.2.0](https://mantine.dev/llms/changelog-9-2-0.md) (May 12, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.2.0
 
 ### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
@@ -109713,7 +112777,7 @@ Learn how to change placeholder color with Styles API
 
 All Mantine inputs can be divided into two groups:
 
-* Inputs that are based on the `<input />` HTML element (for example, [TextInput](https://mantine.dev/core/text-input)). For these inputs, use the `&:placeholder` selector to change placeholder color.
+* Inputs that are based on the `<input />` HTML element (for example, [TextInput](https://mantine.dev/core/text-input)). For these inputs, use the `&::placeholder` selector to change placeholder color.
 * Inputs that are based on the `<button />` HTML element (for example, [DatePickerInput](https://mantine.dev/dates/date-picker-input)). For these inputs, use [Styles API](https://mantine.dev/styles/styles-api) to change placeholder color.
 
 

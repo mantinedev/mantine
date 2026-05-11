@@ -81,7 +81,7 @@ function Demo() {
 ## Embla options
 
 You can pass configuration options directly to embla carousel with the `emblaOptions` prop.
-You can find embla options description in the [embla options reference](https://www.embla-carousel.com/api/options/).
+You can find embla options description in the [embla options reference](https://www.embla-carousel.com/docs/api/options).
 
 Example of passing `loop`, `dragFree` and `align` options:
 
@@ -302,7 +302,7 @@ export function PercentageHeight() {
 
 ## Get embla instance
 
-You can get the [embla instance](https://www.embla-carousel.com/api/methods/) with the `getEmblaApi` prop.
+You can get the [embla instance](https://www.embla-carousel.com/docs/api/methods) with the `getEmblaApi` prop.
 You will be able to enhance the carousel with additional logic after that using embla api methods:
 
 ```tsx

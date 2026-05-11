@@ -384,6 +384,59 @@ function Demo() {
 ```
 
 
+## Shared default props for all inputs
+
+Default props on `Input` and `Input.Wrapper` cascade to every component that is built on top of
+them ([TextInput](https://mantine.dev/llms/core-text-input.md), [Textarea](https://mantine.dev/llms/core-textarea.md), [NumberInput](https://mantine.dev/llms/core-number-input.md),
+[Select](https://mantine.dev/llms/core-select.md), [DateInput](https://mantine.dev/llms/dates-date-input.md), and others). This is the easiest way to apply
+the same `size`, `radius`, `variant`, `withAsterisk` or any other shared prop to all inputs at once.
+Per-component default props always win over the shared ones, so you can still override individual
+components when needed:
+
+```tsx
+import { TextInput, NumberInput, NativeSelect, MantineProvider, createTheme, Input } from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Input: Input.extend({
+      defaultProps: {
+        size: 'md',
+        radius: 'md',
+      },
+    }),
+
+    InputWrapper: Input.Wrapper.extend({
+      defaultProps: {
+        withAsterisk: true,
+      },
+    }),
+
+    NumberInput: NumberInput.extend({
+      defaultProps: {
+        size: 'lg',
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <TextInput label="Text input" placeholder="Inherits size and radius from Input" />
+
+      <NativeSelect
+        mt="md"
+        label="Native select"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+
+      <NumberInput mt="md" label="Number input" placeholder="Overrides shared size with lg" />
+    </MantineProvider>
+  );
+}
+```
+
+
 ## Styles on theme
 
 Same as with default props, you can use `Input` and `Input.Wrapper` [Styles API](https://mantine.dev/llms/styles-styles-api.md)

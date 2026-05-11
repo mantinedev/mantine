@@ -21,6 +21,18 @@ function Demo() {
 ```
 
 
+## Notifications system features
+
+When you use [@mantine/notifications](https://mantine.dev/llms/x-notifications.md), notifications can be dismissed by:
+
+* dragging them left or right
+* horizontal scroll swipe while hovered
+
+You can disable these interactions on the `Notifications` component with
+`allowDragDismiss={false}` and `allowScrollDismiss={false}`.
+
+See the [notifications package documentation](https://mantine.dev/llms/x-notifications.md) for configuration details.
+
 ## Accessibility
 
 To support screen readers, set the close button's aria-label or title with `closeButtonProps`:
@@ -60,6 +72,8 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| allowDragDismiss | boolean | - | Determines whether notifications can be dismissed by dragging left or right |
+| allowScrollDismiss | boolean | - | Determines whether notifications can be dismissed with horizontal scroll gesture while hovered |
 | autoClose | number \| false | - | Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function |
 | containerWidth | string \| number | - | Notification width, cannot exceed 100% |
 | limit | number | - | Maximum number of notifications displayed at a time, other new notifications will be added to queue |
