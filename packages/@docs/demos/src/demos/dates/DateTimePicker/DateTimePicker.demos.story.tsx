@@ -38,6 +38,11 @@ export const Demo_format = {
   render: renderDemo(demos.format),
 };
 
+export const Demo_formatFunction = {
+  name: '⭐ Demo: formatFunction',
+  render: renderDemo(demos.formatFunction),
+};
+
 export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
@@ -51,4 +56,9 @@ export const Demo_timePickerProps = {
 export const Demo_presets = {
   name: '⭐ Demo: presets',
   render: renderDemo(demos.presets),
+};
+
+export const Demo_range = {
+  name: '⭐ Demo: range',
+  render: renderDemo(demos.range),
 };

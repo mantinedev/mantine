@@ -1,6 +1,6 @@
 {
   "name": "@mantine/mcp-server",
-  "version": "9.1.1",
+  "version": "9.2.0",
   "description": "MCP server for Mantine documentation",
   "homepage": "https://mantine.dev",
   "license": "MIT",

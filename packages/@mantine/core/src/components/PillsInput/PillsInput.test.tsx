@@ -43,4 +43,10 @@ describe('@mantine/core/PillsInput', () => {
     component: PillsInput,
     props: defaultProps,
   });
+
+  tests.itSupportsSharedInputDefaults<PillsInputProps>({
+    component: PillsInput,
+    props: defaultProps,
+    componentName: 'PillsInput',
+  });
 });

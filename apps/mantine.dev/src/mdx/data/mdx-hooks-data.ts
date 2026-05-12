@@ -206,4 +206,8 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useCollapse: hDocs('useCollapse', 'Animate height from 0 to auto and vice versa'),
   useMask: hDocs('useMask', 'Attach real-time input masking to any input element'),
   useRovingIndex: hDocs('useRovingIndex', 'Implement roving tabindex keyboard navigation pattern'),
+  useDrag: hDocs(
+    'useDrag',
+    'Handle pointer drag gestures with movement, velocity, direction and axis constraints'
+  ),
 };

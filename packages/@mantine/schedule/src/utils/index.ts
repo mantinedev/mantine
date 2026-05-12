@@ -45,6 +45,9 @@ export type {
   CalculateMonthDropDateResult,
 } from './calculate-month-drop-date/calculate-month-drop-date';
 export type {
-  GetBusinessHoursModInput,
   BusinessHoursMod,
+  BusinessHoursPerDay,
+  BusinessHoursRange,
+  BusinessHoursValue,
+  GetBusinessHoursModInput,
 } from './get-business-hours-mod/get-business-hours-mod';

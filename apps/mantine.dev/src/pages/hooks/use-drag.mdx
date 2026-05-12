@@ -1,0 +1,155 @@
+import { UseDragDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useDrag);
+
+## Usage
+
+`use-drag` hook handles pointer drag gestures over an element. It tracks movement,
+velocity, direction and supports axis constraints, threshold activation and tap detection.
+The hook uses the Pointer Events API and works with both mouse and touch input.
+
+<Demo data={UseDragDemos.usage} />
+
+## Axis constraint
+
+Use the `axis` option to constrain movement to a single axis.
+Set `axis` to `'x'` or `'y'` for a fixed constraint, or `'lock'` to
+lock to whichever axis has more movement after `axisThreshold` is exceeded:
+
+<Demo data={UseDragDemos.axis} />
+
+## Distinguishing taps from drags
+
+When `filterTaps` is enabled, the last state includes a `tap` property that is `true`
+when the total distance is below `tapThreshold` (default `3px`). Combined with `threshold`,
+this lets you distinguish clicks from drags on the same element:
+
+<Demo data={UseDragDemos.filterTaps} />
+
+## Swipe to dismiss
+
+Use `movement` and `velocity` on the last event to decide whether to dismiss an item.
+This pattern works well for notifications:
+
+<Demo data={UseDragDemos.swipe} />
+
+## Drag to scroll
+
+Apply `delta` to a container's `scrollLeft` to create a drag-to-scroll interaction:
+
+<Demo data={UseDragDemos.scroll} />
+
+## Touch support
+
+The hook uses the Pointer Events API which handles both mouse and touch automatically.
+For touch devices, set `touch-action: none` on the draggable element to prevent
+the browser from interpreting touch drag as scroll:
+
+```css
+.draggable {
+  touch-action: none;
+}
+```
+
+If you want to allow scrolling on one axis while dragging on the other (e.g. horizontal
+drag with vertical scroll), use `touch-action: pan-y` or `touch-action: pan-x`.
+
+
+## Definition
+
+```tsx
+type Vector2 = [number, number];
+
+interface UseDragState {
+  /** Current pointer position */
+  xy: Vector2;
+
+  /** Position where the gesture started */
+  initial: Vector2;
+
+  /** Displacement from start, respects axis constraint */
+  movement: Vector2;
+
+  /** Change since previous event */
+  delta: Vector2;
+
+  /** Absolute distance per axis */
+  distance: Vector2;
+
+  /** Movement direction per axis: -1, 0 or 1 */
+  direction: Vector2;
+
+  /** Speed per axis in px/ms */
+  velocity: Vector2;
+
+  /** Time since drag started in ms */
+  elapsedTime: number;
+
+  /** `true` on the first handler call */
+  first: boolean;
+
+  /** `true` on the last handler call (pointer released or canceled) */
+  last: boolean;
+
+  /** `true` while the gesture is ongoing */
+  active: boolean;
+
+  /** `true` when the gesture qualifies as a tap (requires `filterTaps`) */
+  tap: boolean;
+
+  /** `true` when the gesture was interrupted by a `pointercancel` event */
+  canceled: boolean;
+
+  /** Function to programmatically cancel the current gesture */
+  cancel: () => void;
+
+  /** The source pointer event */
+  event: PointerEvent;
+
+}
+
+interface UseDragOptions {
+  /** Constrain movement to an axis, `'lock'` locks to whichever axis has more movement */
+  axis?: 'x' | 'y' | 'lock';
+
+  /** Movement in px to determine lock axis, default `1` */
+  axisThreshold?: number;
+
+  /** Enable tap detection on the last event, default `false` */
+  filterTaps?: boolean;
+
+  /** Max displacement in px to be considered a tap, default `3` */
+  tapThreshold?: number;
+
+  /** Min displacement before drag activates, default `0` */
+  threshold?: number | Vector2;
+
+  /** Enable or disable the hook, default `true` */
+  enabled?: boolean;
+
+}
+
+interface UseDragReturnValue<T extends HTMLElement = any> {
+  /** Ref callback to attach to the target element */
+  ref: React.RefCallback<T | null>;
+
+  /** `true` while a drag gesture is active */
+  active: boolean;
+}
+
+function useDrag<T extends HTMLElement = any>(
+  handler: (state: UseDragState) => void,
+  options?: UseDragOptions,
+): UseDragReturnValue<T>
+```
+
+## Exported types
+
+`UseDragState`, `UseDragOptions` and `UseDragReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
+
+```tsx
+import type { UseDragState, UseDragOptions, UseDragReturnValue } from '@mantine/hooks';
+```

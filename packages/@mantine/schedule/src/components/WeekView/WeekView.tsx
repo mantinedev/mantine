@@ -37,6 +37,7 @@ import {
   ScheduleViewLevel,
 } from '../../types';
 import {
+  BusinessHoursValue,
   calculateDropTime,
   expandRecurringEvents,
   formatDate,
@@ -191,8 +192,8 @@ export interface WeekViewProps
   /** If set to true, highlights business hours with white background @default false */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] */
-  businessHours?: [string, string];
+  /** Business hours range in `HH:mm:ss` format shared across all days, or a per-day record keyed by day of the week (`0` – Sunday, `6` – Saturday) for day-specific ranges. Set a day to `null` to mark it as fully outside business hours. @default ['09:00:00', '17:00:00'] */
+  businessHours?: BusinessHoursValue;
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;

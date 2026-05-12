@@ -187,7 +187,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
     attributes,
     ref,
     ...others
-  } = useProps('PinInput', defaultProps, props);
+  } = useProps(['Input', 'PinInput'], defaultProps, props);
 
   const uuid = useId(id);
 

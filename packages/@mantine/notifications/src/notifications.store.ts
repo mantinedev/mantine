@@ -26,6 +26,9 @@ export interface NotificationData
    * */
   autoClose?: boolean | number;
 
+  /** Determines whether notification can be closed with close button, drag or horizontal scroll swipe, `true` by default */
+  allowClose?: boolean;
+
   /** Called when notification closes */
   onClose?: (props: NotificationData) => void;
 

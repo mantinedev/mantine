@@ -56,6 +56,12 @@ export interface NotificationsProps
   /** Notification transition duration in ms @default 250 */
   transitionDuration?: number;
 
+  /** Determines whether notifications can be dismissed by dragging left or right @default true */
+  allowDragDismiss?: boolean;
+
+  /** Determines whether notifications can be dismissed with horizontal scroll gesture while hovered @default true */
+  allowScrollDismiss?: boolean;
+
   /** Notification width, cannot exceed 100% @default 440 */
   containerWidth?: number | string;
 
@@ -100,6 +106,8 @@ const defaultProps = {
   position: 'bottom-right',
   autoClose: 4000,
   transitionDuration: 250,
+  allowDragDismiss: true,
+  allowScrollDismiss: true,
   containerWidth: 440,
   notificationMaxHeight: 200,
   limit: 5,
@@ -129,6 +137,8 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     position,
     autoClose,
     transitionDuration,
+    allowDragDismiss,
+    allowScrollDismiss,
     containerWidth,
     notificationMaxHeight,
     limit,
@@ -203,6 +213,9 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
               data={notification}
               onHide={(id) => hideNotification(id, store)}
               autoClose={autoClose}
+              transitionDuration={duration}
+              allowDragDismiss={allowDragDismiss}
+              allowScrollDismiss={allowScrollDismiss}
               paused={pauseResetOnHover === 'all' ? hoveredCount > 0 : false}
               onHoverStart={handleHoverStart}
               onHoverEnd={handleHoverEnd}

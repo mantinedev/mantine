@@ -31,3 +31,4 @@ export { isDuplicate } from './TagsInput.demo.isDuplicate';
 export { fuzzySearch } from './TagsInput.demo.fuzzySearch';
 export { loading } from './TagsInput.demo.loading';
 export { renderPill } from './TagsInput.demo.renderPill';
+export { dragReorder } from './TagsInput.demo.dragReorder';

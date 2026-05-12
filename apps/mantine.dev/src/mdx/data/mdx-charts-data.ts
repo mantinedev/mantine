@@ -190,4 +190,15 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/treemap.mdx',
     searchTags: 'hierarchical chart, nested rectangles, tree map, proportional blocks, recharts',
   },
+
+  SankeyChart: {
+    title: 'SankeyChart',
+    props: ['SankeyChart'],
+    styles: ['SankeyChart'],
+    package: '@mantine/charts',
+    slug: '/charts/sankey-chart',
+    description: 'Sankey diagram component',
+    source: '@mantine/charts/src/SankeyChart/SankeyChart.tsx',
+    docs: 'charts/sankey-chart.mdx',
+  },
 };

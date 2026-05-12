@@ -1,0 +1,157 @@
+import { DateTimePickerDemos, InlineDateTimePickerDemos, InputDemos, MaskInputDemos, MultiSelectDemos, NotificationsDemos, RollingNumberDemos, SankeyChartDemos, TreeDemos, TreeSelectDemos, UseDragDemos, WeekViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog920);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## TreeSelect component
+
+New [TreeSelect](/core/tree-select) component allows picking one or more values from hierarchical tree data.
+It supports three selection modes: single, multiple, and checkbox (with parent-child cascade):
+
+<Demo data={TreeSelectDemos.usage} />
+
+## Tree select Combobox examples
+
+New [Combobox examples](/combobox?e=TreeSelectCombobox) showing how to build tree select components
+from Combobox primitives with connecting lines, expand/collapse chevrons, and proper indentation:
+
+- [Tree select](/combobox?e=TreeSelectCombobox) – basic single-value tree select
+- [Tree multi select](/combobox?e=TreeMultiSelectCombobox) – multi select with checkbox cascade
+- [Searchable tree select](/combobox?e=TreeSelectSearchable) – tree select with search filtering
+- [Tree select with checkboxes](/combobox?e=TreeSelectCheckbox) – single select with expand-on-click
+- [Virtualized tree select](/combobox?e=TreeSelectVirtualized) – large tree (~500 nodes) with @tanstack/react-virtual
+
+## Notifications swipe dismissal
+
+[@mantine/notifications](/x/notifications) now supports dismissing notifications by dragging them
+left or right, and with horizontal scroll swipe while hovered. Both interactions can be disabled
+on `Notifications`, and individual items can opt out with `allowClose: false`.
+
+<Demo data={NotificationsDemos.base} />
+
+## use-drag hook
+
+New [use-drag](/hooks/use-drag) hook handles pointer drag gestures with movement tracking,
+velocity, direction and axis constraints. It uses the Pointer Events API and works with
+both mouse and touch input:
+
+<Demo data={UseDragDemos.swipe} />
+
+## InlineDateTimePicker component
+
+New [InlineDateTimePicker](/dates/inline-date-time-picker) component renders a calendar
+with a time picker inline, without a dropdown. It supports both default and range modes:
+
+<Demo data={InlineDateTimePickerDemos.usage} />
+
+Set `type="range"` to select a date and time range with two time inputs:
+
+<Demo data={InlineDateTimePickerDemos.range} />
+
+## DateTimePicker range support
+
+[DateTimePicker](/dates/date-time-picker) now supports `type="range"` to select
+a date and time range. In range mode, two time inputs are displayed in the dropdown
+for start and end times:
+
+<Demo data={DateTimePickerDemos.range} />
+
+## DateTimePicker valueFormat function
+
+[DateTimePicker](/dates/date-time-picker) `valueFormat` prop now accepts a function in addition
+to a dayjs format string. The callback receives the value as a `YYYY-MM-DD HH:mm:ss` string and
+returns the formatted value, which is useful for cases that cannot be expressed with a dayjs
+format string:
+
+<Demo data={DateTimePickerDemos.formatFunction} />
+
+## RollingNumber component
+
+New [RollingNumber](/core/rolling-number) component animates value changes with rolling digit
+transitions. Each digit independently rolls to its new position when the value changes:
+
+<Demo data={RollingNumberDemos.usage} />
+
+## MaskInput improvements
+
+[MaskInput](/core/mask-input) now supports a `resetRef` prop that assigns a function that
+clears the input value imperatively. This is useful because `MaskInput` is uncontrolled
+internally, so setting `value` from a parent does not clear it:
+
+<Demo data={MaskInputDemos.resetRef} />
+
+`MaskInput` integration with [use-form](/form/use-form) is now documented. Use `defaultValue`
+to seed the initial value and `onChangeRaw` to write the raw value to form state:
+
+<Demo data={MaskInputDemos.withUseForm} />
+
+## SankeyChart component
+
+New [SankeyChart](/charts/sankey-chart) component visualizes flow between nodes as a Sankey diagram
+where the width of each link is proportional to the flow value:
+
+<Demo data={SankeyChartDemos.usage} />
+
+## Reorder pills in MultiSelect and TagsInput
+
+[MultiSelect](/core/multi-select) and [TagsInput](/core/tags-input) now support reordering
+selected pills. Set the new `withPillsReorder` prop to enable it. Pills can be reordered with
+a mouse (drag-and-drop) or keyboard:
+
+- Pills are not part of the `Tab` order. `ArrowLeft` from the input (caret at start) moves
+  focus to the last pill.
+- `ArrowLeft` and `ArrowRight` navigate between pills (RTL-aware). `ArrowRight` on the last
+  pill returns focus to the input.
+- `Alt + ArrowLeft` and `Alt + ArrowRight` reorder the focused pill (RTL-aware). Focus follows
+  the moved pill so chained moves work.
+
+Reordering is automatically disabled when `disabled` or `readOnly` is set. Custom pill renderers
+receive a `reorderProps` payload that can be spread onto the pill element to keep reordering
+working:
+
+<Demo data={MultiSelectDemos.dragReorder} />
+
+## Restrict Tree drop targets
+
+[Tree](/core/tree) component now supports restricting drop targets with the new `allowDrop` prop.
+The callback receives `{ draggedNode, targetNode, position }` and returning `false` hides the drop
+indicator and rejects the drop, so users get proper visual feedback before releasing:
+
+<Demo data={TreeDemos.dragDropAllow} />
+
+## Tree drag handle
+
+[Tree](/core/tree) component now supports restricting drag initiation to a dedicated handle with
+the new `withDragHandle` prop. The handle spreads `dragHandleProps` from the `renderNode` payload.
+This is useful when a node contains interactive controls (inputs, buttons) that would otherwise
+interfere with dragging:
+
+<Demo data={TreeDemos.dragDropHandle} />
+
+## Shared default props for all inputs
+
+Default props set on `Input` and `Input.Wrapper` in `theme.components` now cascade to every
+component built on top of them ([TextInput](/core/text-input/), [Textarea](/core/textarea/),
+[NumberInput](/core/number-input/), [Select](/core/select/), [DateInput](/dates/date-input/),
+and others). This makes it possible to apply shared `size`, `radius`, `variant`, `withAsterisk`
+and other props to all inputs at once, while still overriding individual components with their
+own default props:
+
+<Demo data={InputDemos.sharedDefaultProps} />
+
+## Per-day business hours in WeekView
+
+[WeekView](/schedule/week-view) `businessHours` prop now accepts a per-day object keyed by day of
+the week (`0` – Sunday, `6` – Saturday) in addition to the shared `[start, end]` tuple. Days
+missing from the object or set to `null` are rendered as fully outside business hours, making it
+easy to model partial workdays and non-working days:
+
+<Demo data={WeekViewDemos.businessHoursPerDay} />

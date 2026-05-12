@@ -92,6 +92,7 @@ export {
   generatePattern,
 } from './use-mask/use-mask.js';
 export { useRovingIndex } from './use-roving-index/use-roving-index.js';
+export { useDrag } from './use-drag/use-drag.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type {
@@ -240,3 +241,4 @@ export type {
   UseRovingIndexGetItemPropsInput,
   UseRovingIndexReturnValue,
 } from './use-roving-index/use-roving-index';
+export type { UseDragState, UseDragOptions, UseDragReturnValue } from './use-drag/use-drag';

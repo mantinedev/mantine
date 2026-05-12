@@ -89,6 +89,83 @@ export function Controlled() {
   );
 }
 
+export function Range() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker type="range" placeholder="Date time range picker" />
+    </div>
+  );
+}
+
+export function RangeControlled() {
+  const [value, setValue] = useState<[string | null, string | null]>([
+    '2022-04-11 14:30:00',
+    '2022-04-15 16:00:00',
+  ]);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker
+        type="range"
+        placeholder="Date time range picker"
+        value={value}
+        onChange={setValue}
+      />
+      <Group mt="xl">
+        <Button onClick={() => setValue([null, null])}>Clear</Button>
+      </Group>
+    </div>
+  );
+}
+
+export function RangeWithSeconds() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker type="range" placeholder="Date time range picker" withSeconds />
+    </div>
+  );
+}
+
+export function RangeClearable() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker
+        type="range"
+        placeholder="Date time range picker"
+        defaultValue={['2022-04-11 14:30:00', '2022-04-15 16:00:00']}
+        clearable
+      />
+    </div>
+  );
+}
+
+export function RangeMinMaxDate() {
+  const minDate = new Date().toISOString().split('T')[0];
+  const maxDate = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <div style={{ marginBottom: 20 }}>
+        <div>Min date: {minDate}</div>
+        <div>Max date: {maxDate}</div>
+      </div>
+      <DateTimePicker
+        type="range"
+        placeholder="Date time range picker"
+        minDate={minDate}
+        maxDate={maxDate}
+      />
+    </div>
+  );
+}
+
+export function RangeModal() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker type="range" placeholder="Date time range picker" dropdownType="modal" />
+    </div>
+  );
+}
+
 export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <DateTimePicker
