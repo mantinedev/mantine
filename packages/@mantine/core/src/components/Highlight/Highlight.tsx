@@ -82,11 +82,17 @@ const defaultProps = {
 } satisfies Partial<HighlightProps>;
 
 export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
-  const { unstyled, children, highlight, highlightStyles, color, wholeWord, caseInsensitive, accentInsensitive, ...others } = useProps(
-    'Highlight',
-    defaultProps,
-    _props
-  );
+  const {
+    unstyled,
+    children,
+    highlight,
+    highlightStyles,
+    color,
+    wholeWord,
+    caseInsensitive,
+    accentInsensitive,
+    ...others
+  } = useProps('Highlight', defaultProps, _props);
 
   const isTermArray = Array.isArray(highlight) && typeof highlight[0] === 'object';
   const colorMap = new Map<string, string>();
@@ -105,7 +111,11 @@ export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
     highlightStrings = [highlight as string];
   }
 
-  const highlightChunks = highlighter(children, highlightStrings, { wholeWord, caseInsensitive, accentInsensitive });
+  const highlightChunks = highlighter(children, highlightStrings, {
+    wholeWord,
+    caseInsensitive,
+    accentInsensitive,
+  });
 
   return (
     <Text unstyled={unstyled} {...others} __staticSelector="Highlight">

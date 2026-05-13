@@ -6,4 +6,3 @@ export { props } from './Highlight.demo.props';
 export { styles } from './Highlight.demo.styles';
 export { usage } from './Highlight.demo.usage';
 export { wholeword } from './Highlight.demo.wholeword';
-

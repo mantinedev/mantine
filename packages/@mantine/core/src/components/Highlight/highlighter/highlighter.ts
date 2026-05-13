@@ -6,7 +6,6 @@ function foldAccents(text: string): string {
   return text.normalize('NFD').replace(/\p{M}/gu, '');
 }
 
-
 function getAccentInsensitiveChunks(value: string, re: RegExp): HighlightChunk[] {
   const foldedValue = foldAccents(value);
   const chunks: HighlightChunk[] = [];
