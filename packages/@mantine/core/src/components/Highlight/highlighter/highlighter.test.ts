@@ -74,6 +74,21 @@ describe('@mantine/core/Highlight/highlighter', () => {
     ]);
   });
 
+  describe('case sensitivity', () => {
+    it('does not match different casing when caseInsensitive is false', () => {
+      expect(highlighter(VALUE, 'hell', { caseInsensitive: false })).toStrictEqual([
+        { chunk: VALUE, highlighted: false },
+      ]);
+    });
+
+    it('matches different casing when caseInsensitive is true', () => {
+      expect(highlighter(VALUE, 'hell', { caseInsensitive: true })).toStrictEqual([
+        { chunk: 'Hell', highlighted: true },
+        { chunk: 'o, World', highlighted: false },
+      ]);
+    });
+  });
+
   describe('wholeWord option', () => {
     it('matches whole words only when wholeWord is true', () => {
       const text = 'the theme is there';

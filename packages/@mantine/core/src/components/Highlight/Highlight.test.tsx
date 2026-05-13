@@ -134,6 +134,34 @@ describe('@mantine/core/Highlight', () => {
     });
   });
 
+  describe('caseInsensitive option', () => {
+    it('matches different casing when caseInsensitive is true', () => {
+      const { container } = render(
+        <Highlight highlight="hello" caseInsensitive>
+          Hello HELLO hello
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(3);
+      expect(marks[0].textContent).toBe('Hello');
+      expect(marks[1].textContent).toBe('HELLO');
+      expect(marks[2].textContent).toBe('hello');
+    });
+
+    it('does not match different casing when caseInsensitive is false', () => {
+      const { container } = render(
+        <Highlight highlight="hello" caseInsensitive={false}>
+          Hello HELLO hello
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(1);
+      expect(marks[0].textContent).toBe('hello');
+    });
+  });
+
   it('adds data-highlight attribute to mark elements', () => {
     const { container } = render(<Highlight highlight="test">This is a test</Highlight>);
     const mark = container.querySelector('mark');

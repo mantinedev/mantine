@@ -10,12 +10,16 @@ export interface HighlightChunk {
 
 export interface HighlighterOptions {
   wholeWord?: boolean;
+  caseInsensitive?: boolean;
 }
 
 export function highlighter(
   value: string,
   _highlight: string | string[],
-  options: HighlighterOptions = {}
+  options: HighlighterOptions = {
+    caseInsensitive: true,
+    wholeWord: false,
+  }
 ): HighlightChunk[] {
   if (_highlight == null) {
     return [{ chunk: value, highlighted: false }];
@@ -45,7 +49,8 @@ export function highlighter(
   const pattern = options.wholeWord
     ? `(?<![\\p{L}\\p{N}_])(${matcher})(?![\\p{L}\\p{N}_])`
     : `(${matcher})`;
-  const re = new RegExp(pattern, options.wholeWord ? 'giu' : 'gi');
+  const flags = ['g', options.caseInsensitive ? 'i' : '', options.wholeWord ? 'u' : ''].join('');
+  const re = new RegExp(pattern, flags);
   const chunks = value
     .split(re)
     .map((part, index) => ({ chunk: part, highlighted: index % 2 === 1 }))

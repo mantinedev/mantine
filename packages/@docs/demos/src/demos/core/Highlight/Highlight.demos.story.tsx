@@ -32,3 +32,8 @@ export const Demo_wholeword = {
   name: '⭐ Demo: wholeword',
   render: renderDemo(demos.wholeword),
 };
+
+export const Demo_caseinsensitive = {
+  name: '⭐ Demo: caseinsensitive',
+  render: renderDemo(demos.caseinsensitive),
+};

@@ -51,6 +51,12 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * @default false
    */
   wholeWord?: boolean;
+
+  /**
+   * Perform case-insensitive matching.
+   * @default true
+   */
+  caseInsensitive?: boolean;
 }
 
 export type HighlightFactory = PolymorphicFactory<{
@@ -64,10 +70,11 @@ export type HighlightFactory = PolymorphicFactory<{
 const defaultProps = {
   color: 'yellow',
   wholeWord: false,
+  caseInsensitive: true,
 } satisfies Partial<HighlightProps>;
 
 export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
-  const { unstyled, children, highlight, highlightStyles, color, wholeWord, ...others } = useProps(
+  const { unstyled, children, highlight, highlightStyles, color, wholeWord, caseInsensitive, ...others } = useProps(
     'Highlight',
     defaultProps,
     _props
@@ -90,7 +97,7 @@ export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
     highlightStrings = [highlight as string];
   }
 
-  const highlightChunks = highlighter(children, highlightStrings, { wholeWord });
+  const highlightChunks = highlighter(children, highlightStrings, { wholeWord, caseInsensitive });
 
   return (
     <Text unstyled={unstyled} {...others} __staticSelector="Highlight">
