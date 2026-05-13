@@ -162,6 +162,49 @@ describe('@mantine/core/Highlight', () => {
     });
   });
 
+  describe('accentInsensitive option', () => {
+    it('matches accented and non-accented text when accentInsensitive is true', () => {
+      const { container } = render(
+        <Highlight highlight="cafe" accentInsensitive>
+          café cafe CAFÉ CAFE
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(4);
+      expect(marks[0].textContent).toBe('café');
+      expect(marks[1].textContent).toBe('cafe');
+      expect(marks[2].textContent).toBe('CAFÉ');
+      expect(marks[3].textContent).toBe('CAFE');
+    });
+
+    it('does not match accented variants when accentInsensitive is false', () => {
+      const { container } = render(
+        <Highlight highlight="cafe" accentInsensitive={false}>
+          café cafe CAFÉ CAFE
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(2);
+      expect(marks[0].textContent).toBe('cafe');
+      expect(marks[1].textContent).toBe('CAFE');
+    });
+
+    it('can be combined with caseInsensitive={false}', () => {
+      const { container } = render(
+        <Highlight highlight="cafe" accentInsensitive caseInsensitive={false}>
+          café cafe CAFE
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(2);
+      expect(marks[0].textContent).toBe('café');
+      expect(marks[1].textContent).toBe('cafe');
+    });
+  });
+
   it('adds data-highlight attribute to mark elements', () => {
     const { container } = render(<Highlight highlight="test">This is a test</Highlight>);
     const mark = container.querySelector('mark');

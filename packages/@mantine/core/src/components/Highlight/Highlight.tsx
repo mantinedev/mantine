@@ -57,6 +57,13 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * @default true
    */
   caseInsensitive?: boolean;
+
+  /**
+   * Perform accent-insensitive matching.
+   * When enabled cafe will match cafe, café, cafè, etc.
+   * @default true
+   */
+  accentInsensitive?: boolean;
 }
 
 export type HighlightFactory = PolymorphicFactory<{
@@ -71,10 +78,11 @@ const defaultProps = {
   color: 'yellow',
   wholeWord: false,
   caseInsensitive: true,
+  accentInsensitive: true,
 } satisfies Partial<HighlightProps>;
 
 export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
-  const { unstyled, children, highlight, highlightStyles, color, wholeWord, caseInsensitive, ...others } = useProps(
+  const { unstyled, children, highlight, highlightStyles, color, wholeWord, caseInsensitive, accentInsensitive, ...others } = useProps(
     'Highlight',
     defaultProps,
     _props
@@ -97,7 +105,7 @@ export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
     highlightStrings = [highlight as string];
   }
 
-  const highlightChunks = highlighter(children, highlightStrings, { wholeWord, caseInsensitive });
+  const highlightChunks = highlighter(children, highlightStrings, { wholeWord, caseInsensitive, accentInsensitive });
 
   return (
     <Text unstyled={unstyled} {...others} __staticSelector="Highlight">
