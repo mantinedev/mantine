@@ -33,7 +33,7 @@ const defaultProps = {
 } satisfies Partial<PillsInputProps>;
 
 export const PillsInput = factory<PillsInputFactory>((_props) => {
-  const props = useProps('PillsInput', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'PillsInput'], defaultProps, _props);
   const {
     children,
     onMouseDown,

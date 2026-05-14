@@ -1,4 +1,4 @@
-import { DateTimePickerDemos, InlineDateTimePickerDemos, MultiSelectDemos, NotificationsDemos, RollingNumberDemos, SankeyChartDemos, TreeDemos, TreeSelectDemos, UseDragDemos } from '@docs/demos';
+import { DateTimePickerDemos, InlineDateTimePickerDemos, InputDemos, MaskInputDemos, MultiSelectDemos, NotificationsDemos, RollingNumberDemos, SankeyChartDemos, TreeDemos, TreeSelectDemos, UseDragDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -64,12 +64,34 @@ for start and end times:
 
 <Demo data={DateTimePickerDemos.range} />
 
+## DateTimePicker valueFormat function
+
+[DateTimePicker](/dates/date-time-picker) `valueFormat` prop now accepts a function in addition
+to a dayjs format string. The callback receives the value as a `YYYY-MM-DD HH:mm:ss` string and
+returns the formatted value, which is useful for cases that cannot be expressed with a dayjs
+format string:
+
+<Demo data={DateTimePickerDemos.formatFunction} />
+
 ## RollingNumber component
 
 New [RollingNumber](/core/rolling-number) component animates value changes with rolling digit
 transitions. Each digit independently rolls to its new position when the value changes:
 
 <Demo data={RollingNumberDemos.usage} />
+
+## MaskInput improvements
+
+[MaskInput](/core/mask-input) now supports a `resetRef` prop that assigns a function that
+clears the input value imperatively. This is useful because `MaskInput` is uncontrolled
+internally, so setting `value` from a parent does not clear it:
+
+<Demo data={MaskInputDemos.resetRef} />
+
+`MaskInput` integration with [use-form](/form/use-form) is now documented. Use `defaultValue`
+to seed the initial value and `onChangeRaw` to write the raw value to form state:
+
+<Demo data={MaskInputDemos.withUseForm} />
 
 ## SankeyChart component
 
@@ -81,10 +103,19 @@ where the width of each link is proportional to the flow value:
 ## Reorder pills in MultiSelect and TagsInput
 
 [MultiSelect](/core/multi-select) and [TagsInput](/core/tags-input) now support reordering
-selected pills with drag-and-drop. Set the new `withPillsReorder` prop to make pills draggable;
-dropping a pill before or after another pill updates the component value. Reordering is
-automatically disabled when `disabled` or `readOnly` is set. Custom pill renderers receive a
-`reorderProps` payload that can be spread onto the pill element to keep reordering working:
+selected pills. Set the new `withPillsReorder` prop to enable it. Pills can be reordered with
+a mouse (drag-and-drop) or keyboard:
+
+- Pills are not part of the `Tab` order. `ArrowLeft` from the input (caret at start) moves
+  focus to the last pill.
+- `ArrowLeft` and `ArrowRight` navigate between pills (RTL-aware). `ArrowRight` on the last
+  pill returns focus to the input.
+- `Alt + ArrowLeft` and `Alt + ArrowRight` reorder the focused pill (RTL-aware). Focus follows
+  the moved pill so chained moves work.
+
+Reordering is automatically disabled when `disabled` or `readOnly` is set. Custom pill renderers
+receive a `reorderProps` payload that can be spread onto the pill element to keep reordering
+working:
 
 <Demo data={MultiSelectDemos.dragReorder} />
 
@@ -104,3 +135,23 @@ This is useful when a node contains interactive controls (inputs, buttons) that 
 interfere with dragging:
 
 <Demo data={TreeDemos.dragDropHandle} />
+
+## Shared default props for all inputs
+
+Default props set on `Input` and `Input.Wrapper` in `theme.components` now cascade to every
+component built on top of them ([TextInput](/core/text-input/), [Textarea](/core/textarea/),
+[NumberInput](/core/number-input/), [Select](/core/select/), [DateInput](/dates/date-input/),
+and others). This makes it possible to apply shared `size`, `radius`, `variant`, `withAsterisk`
+and other props to all inputs at once, while still overriding individual components with their
+own default props:
+
+<Demo data={InputDemos.sharedDefaultProps} />
+
+## Per-day business hours in WeekView
+
+[WeekView](/schedule/week-view) `businessHours` prop now accepts a per-day object keyed by day of
+the week (`0` – Sunday, `6` – Saturday) in addition to the shared `[start, end]` tuple. Days
+missing from the object or set to `null` are rendered as fully outside business hours, making it
+easy to model partial workdays and non-working days:
+
+<Demo data={WeekViewDemos.businessHoursPerDay} />

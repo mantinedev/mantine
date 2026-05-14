@@ -54,8 +54,8 @@ export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
   /** Picker type: range or default @default 'default' */
   type?: Type;
 
-  /** `dayjs` format for input value @default "DD/MM/YYYY HH:mm"  */
-  valueFormat?: string;
+  /** `dayjs` format for input value, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm"  */
+  valueFormat?: string | ((date: DateStringValue) => string);
 
   /** Controlled component value */
   value?: DatePickerValue<Type>;
@@ -111,7 +111,7 @@ const defaultProps = {
 } satisfies Partial<DateTimePickerProps>;
 
 export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => {
-  const props = useProps('DateTimePicker', defaultProps as any, _props);
+  const props = useProps(['Input', 'InputWrapper', 'DateTimePicker'], defaultProps as any, _props);
   const {
     value,
     defaultValue,
@@ -185,8 +185,15 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
   const [inlineKey, setInlineKey] = useState(0);
 
-  const formatDate = (v: DateStringValue | null) =>
-    v ? dayjs(v).locale(ctx.getLocale(locale)).format(_valueFormat) : '';
+  const formatDate = (v: DateStringValue | null) => {
+    if (!v) {
+      return '';
+    }
+    if (typeof _valueFormat === 'function') {
+      return _valueFormat(v);
+    }
+    return dayjs(v).locale(ctx.getLocale(locale)).format(_valueFormat);
+  };
 
   const getFormattedValue = () => {
     if (isRange && Array.isArray(_value)) {

@@ -3,7 +3,7 @@ import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, DateTimeStringValue, DayOfWeek, ScheduleMode } from '../../types';
-import { DayTimeInterval, getBusinessHoursMod } from '../../utils';
+import { BusinessHoursValue, DayTimeInterval, getBusinessHoursMod } from '../../utils';
 import type { WeekViewControlsRef } from './handle-week-view-key-down';
 import type { WeekViewFactory } from './WeekView';
 
@@ -32,8 +32,8 @@ export interface WeekViewDayProps {
   /** If set to true, highlights business hours with white background */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format */
-  businessHours?: [string, string];
+  /** Business hours range in `HH:mm:ss` format, or per-day record keyed by day of the week */
+  businessHours?: BusinessHoursValue;
 
   /** If true, slots are drop targets for drag and drop */
   withEventsDragAndDrop?: boolean;
@@ -123,7 +123,8 @@ export function WeekViewDay({
   getTimeSlotProps,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
-  const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
+  const dayOfWeek = dayjs(day).day() as DayOfWeek;
+  const weekend = ctx.getWeekendDays(weekendDays).includes(dayOfWeek);
   const today = dayjs(day).isSame(dayjs(), 'day');
 
   const dayGroup = dayjs(day).format('YYYY-MM-DD');
@@ -164,6 +165,7 @@ export function WeekViewDay({
             time: slot.startTime,
             businessHours,
             highlightBusinessHours,
+            dayOfWeek,
           }),
           'drop-target': isDropTarget,
           'drag-selected': isDragSelected,

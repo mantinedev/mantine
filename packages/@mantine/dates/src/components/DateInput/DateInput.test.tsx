@@ -61,6 +61,12 @@ describe('@mantine/dates/DateInput', () => {
     selector: 'input',
   });
 
+  tests.itSupportsSharedInputDefaults<DateInputProps>({
+    component: DateInput,
+    props: defaultPropsWithInputProps,
+    componentName: 'DateInput',
+  });
+
   datesTests.itSupportsClearableProps({
     component: DateInput,
     props: { defaultValue: '2022-04-11' },

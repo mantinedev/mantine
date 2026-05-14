@@ -53,6 +53,11 @@ export const Demo_defaultProps = {
   render: renderDemo(demos.defaultProps),
 };
 
+export const Demo_sharedDefaultProps = {
+  name: '⭐ Demo: sharedDefaultProps',
+  render: renderDemo(demos.sharedDefaultProps),
+};
+
 export const Demo_sharedStyles = {
   name: '⭐ Demo: sharedStyles',
   render: renderDemo(demos.sharedStyles),

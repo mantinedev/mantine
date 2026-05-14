@@ -144,6 +144,7 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
 
   return (
     <RadioCardContext value={{ checked: _checked }}>
+      {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus -- UnstyledButton renders a native <button> which is focusable */}
       <UnstyledButton
         mod={[{ 'with-border': withBorder, checked: _checked }, mod]}
         {...getStyles('card')}

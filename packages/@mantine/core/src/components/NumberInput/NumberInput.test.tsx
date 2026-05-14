@@ -51,6 +51,12 @@ describe('@mantine/core/NumberInput', () => {
     selector: '.mantine-NumberInput-input',
   });
 
+  tests.itSupportsSharedInputDefaults<NumberInputProps>({
+    component: NumberInput,
+    props: defaultProps,
+    componentName: 'NumberInput',
+  });
+
   it('exposes increment/decrement handlers with handlersRef prop', () => {
     const ref = createRef<NumberInputHandlers>();
     const spy = jest.fn();

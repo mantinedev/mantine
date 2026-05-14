@@ -44,6 +44,12 @@ Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/
 
 <Demo data={DateTimePickerDemos.format} />
 
+`valueFormat` also accepts a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string
+and returns a custom formatted value. Use it when the formatting logic cannot be expressed with a
+dayjs format string:
+
+<Demo data={DateTimePickerDemos.formatFunction} />
+
 ## Disabled state
 
 <Demo data={DateTimePickerDemos.disabled} />

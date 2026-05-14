@@ -71,7 +71,7 @@ const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => (
 }));
 
 export const PasswordInput = factory<PasswordInputFactory>((_props) => {
-  const props = useProps('PasswordInput', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'PasswordInput'], defaultProps, _props);
   const {
     classNames,
     className,

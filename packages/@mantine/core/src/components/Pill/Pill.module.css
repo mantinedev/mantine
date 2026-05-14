@@ -49,6 +49,11 @@
     cursor: grab;
   }
 
+  &:where([draggable='true']):focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
+
   &:where([data-dragging]) {
     opacity: 0.4;
     cursor: grabbing;

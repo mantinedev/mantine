@@ -34,6 +34,12 @@ describe('@mantine/dates/DatePickerInput', () => {
     selector: 'button',
   });
 
+  tests.itSupportsSharedInputDefaults<DatePickerInputProps>({
+    component: DatePickerInput,
+    props: defaultPropsWithInputProps,
+    componentName: 'DatePickerInput',
+  });
+
   datesTests.itSupportsDateInputProps({ component: DatePickerInput, props: defaultProps });
   datesTests.itSupportsClearableProps({
     component: DatePickerInput,

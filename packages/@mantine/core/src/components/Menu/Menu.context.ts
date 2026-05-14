@@ -17,6 +17,7 @@ export interface MenuContextValue {
   openedViaClick: boolean;
   setOpenedViaClick: (value: boolean) => void;
   withInitialFocusPlaceholder: boolean | undefined;
+  registerOpenSub: (closeFn: () => void) => () => void;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContextValue>(

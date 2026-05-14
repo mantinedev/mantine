@@ -144,6 +144,14 @@ Use `highlightBusinessHours` and `businessHours` props to visually distinguish b
 
 <Demo data={WeekViewDemos.businessHours} />
 
+## Business hours per day
+
+Pass an object to `businessHours` to configure the range for each day of the week individually.
+Keys are day numbers (`0` – Sunday, `6` – Saturday). Days missing from the object or set to `null`
+are marked as fully outside business hours:
+
+<Demo data={WeekViewDemos.businessHoursPerDay} />
+
 ## Custom time slot props
 
 Use `getTimeSlotProps` to add custom props to individual time slots based on their time range.

@@ -60,6 +60,9 @@ export interface MoreEventsProps
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
+
+  /** Called when an event inside the dropdown is clicked */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export type MoreEventsFactory = Factory<{
@@ -96,6 +99,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     id,
     labels,
     mode,
+    onEventClick,
     ...others
   } = props;
   const [dropdownOpened, dropdownHandlers] = useDisclosure();
@@ -130,6 +134,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
           renderEventBody={renderEventBody}
           renderEvent={renderEvent}
           mode={mode}
+          onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
         >
           {event.title}
         </ScheduleEvent>

@@ -1,16 +1,18 @@
+import type { SyncReactNode } from '../types';
+
 interface IsUrlOptions {
   protocols?: string[];
   allowLocalhost?: boolean;
 }
 
-export function isUrl(error?: React.ReactNode): (value: unknown) => React.ReactNode;
+export function isUrl(error?: SyncReactNode): (value: unknown) => SyncReactNode;
 export function isUrl(
   options: IsUrlOptions,
-  error?: React.ReactNode
-): (value: unknown) => React.ReactNode;
-export function isUrl(optionsOrError?: IsUrlOptions | React.ReactNode, error?: React.ReactNode) {
+  error?: SyncReactNode
+): (value: unknown) => SyncReactNode;
+export function isUrl(optionsOrError?: IsUrlOptions | SyncReactNode, error?: SyncReactNode) {
   let _options: IsUrlOptions = {};
-  let _error: React.ReactNode;
+  let _error: SyncReactNode;
 
   if (
     optionsOrError !== null &&
@@ -22,13 +24,13 @@ export function isUrl(optionsOrError?: IsUrlOptions | React.ReactNode, error?: R
     _options = optionsOrError as IsUrlOptions;
     _error = error || true;
   } else {
-    _error = (optionsOrError as React.ReactNode) || true;
+    _error = (optionsOrError as SyncReactNode) || true;
   }
 
   const protocols = _options.protocols ?? ['http', 'https'];
   const allowLocalhost = _options.allowLocalhost ?? false;
 
-  return (value: unknown): React.ReactNode => {
+  return (value: unknown): SyncReactNode => {
     if (typeof value !== 'string') {
       return _error;
     }

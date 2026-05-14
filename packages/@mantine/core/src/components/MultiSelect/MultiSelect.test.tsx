@@ -48,6 +48,12 @@ describe('@mantine/core/MultiSelect', () => {
     selector: 'input',
   });
 
+  tests.itSupportsSharedInputDefaults<MultiSelectProps>({
+    component: MultiSelect,
+    props: defaultProps,
+    componentName: 'MultiSelect',
+  });
+
   it('supports uncontrolled state', async () => {
     render(<MultiSelect {...defaultProps} name="test-multi-select" />);
     await userEvent.click(screen.getByRole('combobox'));
@@ -270,5 +276,245 @@ describe('@mantine/core/MultiSelect', () => {
       />
     );
     expect(document.querySelector('input[name="test"]')).toHaveValue('test-1|test-2');
+  });
+
+  describe('withPillsReorder', () => {
+    const reorderProps: MultiSelectProps = {
+      ...defaultProps,
+      data: ['a', 'b', 'c'],
+      defaultValue: ['a', 'b', 'c'],
+      withPillsReorder: true,
+    };
+
+    const getPills = (root: ParentNode = document) =>
+      Array.from(root.querySelectorAll<HTMLElement>('[data-mantine-pill-index]'));
+
+    function Controlled({ onChangeSpy }: { onChangeSpy?: (value: string[]) => void }) {
+      const [value, setValue] = useState(['a', 'b', 'c']);
+      return (
+        <MultiSelect
+          {...defaultProps}
+          data={['a', 'b', 'c']}
+          withPillsReorder
+          value={value}
+          onChange={(next) => {
+            setValue(next);
+            onChangeSpy?.(next);
+          }}
+        />
+      );
+    }
+
+    it('exposes the index attribute and keeps pills out of the tab order', () => {
+      render(<MultiSelect {...reorderProps} />);
+      const pills = getPills();
+      expect(pills).toHaveLength(3);
+      pills.forEach((pill, index) => {
+        expect(pill).toHaveAttribute('tabindex', '-1');
+        expect(pill).toHaveAttribute('data-mantine-pill-index', String(index));
+        expect(pill).toHaveAttribute('draggable', 'true');
+        expect(pill).toHaveAttribute('aria-keyshortcuts', 'Alt+ArrowLeft Alt+ArrowRight');
+      });
+    });
+
+    it('focuses the last pill when ArrowLeft is pressed in the empty input', async () => {
+      render(<Controlled />);
+      const input = screen.getByRole('combobox');
+      input.focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      const pills = getPills();
+      expect(pills[pills.length - 1]).toHaveFocus();
+    });
+
+    it('navigates between pills with bare ArrowLeft / ArrowRight', async () => {
+      render(<Controlled />);
+      const pills = getPills();
+      pills[2].focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(pills[1]).toHaveFocus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(pills[0]).toHaveFocus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(pills[1]).toHaveFocus();
+    });
+
+    it('does not move focus past the first pill on ArrowLeft', async () => {
+      render(<Controlled />);
+      const pills = getPills();
+      pills[0].focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(pills[0]).toHaveFocus();
+    });
+
+    it('returns focus to the input on ArrowRight from the last pill', async () => {
+      render(<Controlled />);
+      const pills = getPills();
+      pills[pills.length - 1].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('combobox')).toHaveFocus();
+    });
+
+    it('returns focus to the search input even when renderPill contains another input', async () => {
+      function CustomRenderPill() {
+        const [value, setValue] = useState(['a', 'b', 'c']);
+        return (
+          <MultiSelect
+            {...defaultProps}
+            data={['a', 'b', 'c']}
+            withPillsReorder
+            value={value}
+            onChange={setValue}
+            renderPill={({ value: pillValue, reorderProps }) => (
+              <span {...reorderProps} data-testid={`custom-${pillValue}`}>
+                <input aria-label={`pill-${pillValue}`} />
+              </span>
+            )}
+          />
+        );
+      }
+      render(<CustomRenderPill />);
+      const pills = getPills();
+      pills[pills.length - 1].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('combobox')).toHaveFocus();
+    });
+
+    it('flips bare arrow navigation in RTL layouts', async () => {
+      const original = window.getComputedStyle.bind(window);
+      const computedSpy = jest
+        .spyOn(window, 'getComputedStyle')
+        .mockImplementation((el, pseudo) => {
+          const style = original(el as Element, pseudo ?? null);
+          Object.defineProperty(style, 'direction', { value: 'rtl', configurable: true });
+          return style;
+        });
+      try {
+        render(<Controlled />);
+        const pills = getPills();
+        pills[2].focus();
+        await userEvent.keyboard('{ArrowRight}');
+        expect(pills[1]).toHaveFocus();
+        await userEvent.keyboard('{ArrowLeft}');
+        expect(pills[2]).toHaveFocus();
+      } finally {
+        computedSpy.mockRestore();
+      }
+    });
+
+    it('does not steal ArrowLeft when the caret is not at the start', async () => {
+      function WithSearch() {
+        const [value, setValue] = useState(['a', 'b', 'c']);
+        return (
+          <MultiSelect
+            {...defaultProps}
+            data={['a', 'b', 'c', 'd']}
+            withPillsReorder
+            searchable
+            value={value}
+            onChange={setValue}
+          />
+        );
+      }
+      render(<WithSearch />);
+      const input = screen.getByRole('combobox') as HTMLInputElement;
+      await userEvent.type(input, 'ab');
+      input.setSelectionRange(2, 2);
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(input).toHaveFocus();
+      expect(input.selectionStart).toBe(1);
+    });
+
+    it('does not enable reorder when disabled or readOnly', () => {
+      const { rerender } = render(<MultiSelect {...reorderProps} disabled />);
+      expect(getPills()).toHaveLength(0);
+
+      rerender(<MultiSelect {...reorderProps} disabled={false} readOnly />);
+      expect(getPills()).toHaveLength(0);
+    });
+
+    it('moves the focused pill forward with Alt+ArrowRight and focus follows', async () => {
+      const spy = jest.fn();
+      render(<Controlled onChangeSpy={spy} />);
+      getPills()[0].focus();
+      await userEvent.keyboard('{Alt>}{ArrowRight}{/Alt}');
+      expect(spy).toHaveBeenLastCalledWith(['b', 'a', 'c']);
+      expect(getPills()[1]).toHaveFocus();
+    });
+
+    it('moves the focused pill backward with Alt+ArrowLeft and focus follows', async () => {
+      const spy = jest.fn();
+      render(<Controlled onChangeSpy={spy} />);
+      getPills()[2].focus();
+      await userEvent.keyboard('{Alt>}{ArrowLeft}{/Alt}');
+      expect(spy).toHaveBeenLastCalledWith(['a', 'c', 'b']);
+      expect(getPills()[1]).toHaveFocus();
+    });
+
+    it('chains multiple moves keeping focus on the same item', async () => {
+      const spy = jest.fn();
+      render(<Controlled onChangeSpy={spy} />);
+      getPills()[0].focus();
+      await userEvent.keyboard('{Alt>}{ArrowRight}{ArrowRight}{/Alt}');
+      expect(spy).toHaveBeenLastCalledWith(['b', 'c', 'a']);
+      expect(getPills()[2]).toHaveFocus();
+    });
+
+    it('does not move past the boundary', async () => {
+      const spy = jest.fn();
+      render(<Controlled onChangeSpy={spy} />);
+      getPills()[0].focus();
+      await userEvent.keyboard('{Alt>}{ArrowLeft}{/Alt}');
+      getPills()[2].focus();
+      await userEvent.keyboard('{Alt>}{ArrowRight}{/Alt}');
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('ignores arrow keys without the Alt modifier', async () => {
+      const spy = jest.fn();
+      render(<Controlled onChangeSpy={spy} />);
+      getPills()[0].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('does not restore focus when a controlled parent rejects the change', async () => {
+      const spy = jest.fn();
+      render(
+        <MultiSelect
+          {...defaultProps}
+          data={['a', 'b', 'c']}
+          value={['a', 'b', 'c']}
+          onChange={spy}
+          withPillsReorder
+        />
+      );
+      const startingPill = getPills()[0];
+      startingPill.focus();
+      await userEvent.keyboard('{Alt>}{ArrowRight}{/Alt}');
+      expect(spy).toHaveBeenLastCalledWith(['b', 'a', 'c']);
+      expect(startingPill).toHaveFocus();
+    });
+
+    it('flips horizontal direction in RTL layouts', async () => {
+      const original = window.getComputedStyle.bind(window);
+      const computedSpy = jest
+        .spyOn(window, 'getComputedStyle')
+        .mockImplementation((el, pseudo) => {
+          const style = original(el as Element, pseudo ?? null);
+          Object.defineProperty(style, 'direction', { value: 'rtl', configurable: true });
+          return style;
+        });
+
+      try {
+        const spy = jest.fn();
+        render(<Controlled onChangeSpy={spy} />);
+        getPills()[0].focus();
+        await userEvent.keyboard('{Alt>}{ArrowLeft}{/Alt}');
+        expect(spy).toHaveBeenLastCalledWith(['b', 'a', 'c']);
+        expect(getPills()[1]).toHaveFocus();
+      } finally {
+        computedSpy.mockRestore();
+      }
+    });
   });
 });

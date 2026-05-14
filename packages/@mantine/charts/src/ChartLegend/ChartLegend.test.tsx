@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import { render, tests, userEvent } from '@mantine-tests/core';
 import {
   ChartLegend,
@@ -96,6 +97,64 @@ describe('@mantine/charts/ChartLegend', () => {
     expect(onHighlight).toHaveBeenCalledWith('Apples');
 
     await userEvent.unhover(items[0]);
+    expect(onHighlight).toHaveBeenCalledWith(null);
+  });
+
+  it('does not call onHighlight(null) when moving between legend items', () => {
+    const onHighlight = jest.fn();
+    const { container } = render(<ChartLegend {...defaultProps} onHighlight={onHighlight} />);
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
+
+    fireEvent.mouseOver(items[0]);
+    fireEvent.mouseOut(items[0], { relatedTarget: items[1] });
+    fireEvent.mouseOver(items[1], { relatedTarget: items[0] });
+
+    expect(onHighlight).not.toHaveBeenCalledWith(null);
+    expect(onHighlight).toHaveBeenNthCalledWith(1, 'Apples');
+    expect(onHighlight).toHaveBeenNthCalledWith(2, 'Oranges');
+  });
+
+  it('calls onHighlight(null) when the cursor leaves the legend container', () => {
+    const onHighlight = jest.fn();
+    const { container } = render(
+      <div data-testid="outside">
+        <ChartLegend {...defaultProps} onHighlight={onHighlight} />
+      </div>
+    );
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
+    const outside = container.querySelector('[data-testid="outside"]')!;
+
+    fireEvent.mouseOver(items[0]);
+    fireEvent.mouseOut(items[0], { relatedTarget: outside });
+
+    expect(onHighlight).toHaveBeenCalledWith(null);
+  });
+
+  it('produces no intermediate null when hovering sequentially through all items', () => {
+    const onHighlight = jest.fn();
+    const { container } = render(<ChartLegend {...defaultProps} onHighlight={onHighlight} />);
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
+
+    fireEvent.mouseOver(items[0]);
+    fireEvent.mouseOut(items[0], { relatedTarget: items[1] });
+    fireEvent.mouseOver(items[1], { relatedTarget: items[0] });
+    fireEvent.mouseOut(items[1], { relatedTarget: items[2] });
+    fireEvent.mouseOver(items[2], { relatedTarget: items[1] });
+
+    expect(onHighlight).not.toHaveBeenCalledWith(null);
+    expect(onHighlight.mock.calls).toEqual([['Apples'], ['Oranges'], ['Tomatoes']]);
+  });
+
+  it('still calls a consumer-provided onMouseLeave alongside the internal cleanup', () => {
+    const onHighlight = jest.fn();
+    const onMouseLeave = jest.fn();
+    const { container } = render(
+      <ChartLegend {...defaultProps} onHighlight={onHighlight} onMouseLeave={onMouseLeave} />
+    );
+    const legend = container.querySelector('.mantine-ChartLegend-legend')!;
+
+    fireEvent.mouseLeave(legend);
+    expect(onMouseLeave).toHaveBeenCalledTimes(1);
     expect(onHighlight).toHaveBeenCalledWith(null);
   });
 

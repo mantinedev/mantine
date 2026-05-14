@@ -115,9 +115,9 @@ export function selectPreviousAction(store: SpotlightStore) {
 
 export function triggerSelectedAction(store: SpotlightStore) {
   const state = store.getState();
-  const selected = findElementByQuerySelector<HTMLButtonElement>(
-    `#${state.listId} [data-selected]`
-  );
+  const selected = state.listId
+    ? findElementByQuerySelector<HTMLButtonElement>(`#${state.listId} [data-selected]`)
+    : null;
   selected?.click();
 }
 
