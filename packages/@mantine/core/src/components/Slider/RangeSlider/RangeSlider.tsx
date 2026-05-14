@@ -126,8 +126,8 @@ export interface RangeSliderProps
   /** `aria-label` for both thumbs (overridden by thumbFromLabel/thumbToLabel if provided) */
   thumbLabel?: string;
 
-  /** `aria-valuetext` for both thumbs */
-  ariaValueText?: string | ((value: number) => string);
+  /** `aria-valuetext` for both thumbs. When a function is provided, it receives the scaled value. */
+  thumbValueText?: string | ((value: number) => string);
 
   /** First thumb `aria-label` */
   thumbFromLabel?: string;
@@ -208,7 +208,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     labelAlwaysOn,
     thumbFromLabel,
     thumbToLabel,
-    ariaValueText,
+    thumbValueText,
     showLabelOnHover,
     thumbChildren,
     disabled,
@@ -599,7 +599,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
               }
             }}
             thumbLabel={thumbFromLabel}
-            ariaValueText={ariaValueText}
+            thumbValueText={thumbValueText}
             onMouseDown={() => handleThumbMouseDown(0)}
             onFocus={() => setFocused(0)}
             showLabelOnHover={showLabelOnHover}
@@ -626,7 +626,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
                 thumbs.current[1] = node;
               }
             }}
-            ariaValueText={ariaValueText}
+            thumbValueText={thumbValueText}
             onMouseDown={() => handleThumbMouseDown(1)}
             onFocus={() => setFocused(1)}
             showLabelOnHover={showLabelOnHover}

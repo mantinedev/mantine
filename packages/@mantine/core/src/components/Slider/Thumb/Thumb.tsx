@@ -10,7 +10,7 @@ export interface ThumbProps extends Omit<React.ComponentProps<'div'>, 'value'> {
   position: number;
   dragging: boolean;
   label: React.ReactNode;
-  ariaValueText?: string | ((value: number) => string);
+  thumbValueText?: string | ((value: number) => string);
   onKeyDownCapture?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   onMouseDown?: (event: any) => void;
   labelTransitionProps: TransitionOverride | undefined;
@@ -37,7 +37,7 @@ export function Thumb({
   labelTransitionProps,
   labelAlwaysOn,
   thumbLabel,
-  ariaValueText,
+  thumbValueText,
   onFocus,
   onBlur,
   showLabelOnHover,
@@ -52,7 +52,7 @@ export function Thumb({
   const [focused, setFocused] = useState(false);
 
   const isVisible = labelAlwaysOn || dragging || focused || (showLabelOnHover && isHovered);
-  const valueText = typeof ariaValueText === 'function' ? ariaValueText(value) : ariaValueText;
+  const valueText = typeof thumbValueText === 'function' ? thumbValueText(value) : thumbValueText;
 
   return (
     <Box<'div'>
