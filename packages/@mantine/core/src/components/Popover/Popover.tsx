@@ -29,6 +29,10 @@ import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
 import { PopoverContextProvider, PopoverContextValue } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
+import {
+  PopoverContextMenu,
+  PopoverContextMenuProps,
+} from './PopoverContextMenu/PopoverContextMenu';
 import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown/PopoverDropdown';
 import { PopoverTarget, PopoverTargetProps } from './PopoverTarget/PopoverTarget';
 import { usePopover } from './use-popover';
@@ -418,6 +422,7 @@ export function Popover(_props: PopoverProps) {
 
 Popover.Target = PopoverTarget;
 Popover.Dropdown = PopoverDropdown;
+Popover.ContextMenu = PopoverContextMenu;
 Popover.varsResolver = varsResolver;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
@@ -444,5 +449,9 @@ export namespace Popover {
 
   export namespace Dropdown {
     export type Props = PopoverDropdownProps;
+  }
+
+  export namespace ContextMenu {
+    export type Props = PopoverContextMenuProps;
   }
 }

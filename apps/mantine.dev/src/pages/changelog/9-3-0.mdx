@@ -1,4 +1,4 @@
-import { CodeHighlightDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -104,6 +104,14 @@ default context menu is suppressed, and right-clicking again repositions the dro
 the new coordinates.
 
 <Demo data={MenuDemos.contextMenu} />
+
+## Popover context menu
+
+[Popover](/core/popover/) now supports `Popover.ContextMenu` – a target replacement that
+opens the dropdown at the cursor position on right-click. Unlike `Menu.ContextMenu`,
+`Popover.Dropdown` can contain any content.
+
+<Demo data={PopoverDemos.contextMenu} />
 
 ## Highlight accent and case insensitive matching
 

@@ -359,7 +359,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     package: '@mantine/core',
     slug: '/core/popover',
     componentPrefix: 'Popover',
-    props: ['Popover', 'PopoverTarget'],
+    props: ['Popover', 'PopoverTarget', 'PopoverContextMenu'],
     styles: ['Popover'],
     description: 'Display popover section relative to given target element',
     source: '@mantine/core/src/components/Popover/Popover.tsx',

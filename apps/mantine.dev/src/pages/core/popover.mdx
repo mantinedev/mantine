@@ -215,6 +215,17 @@ function Demo() {
 
 <TargetComponent component="Popover" />
 
+## Context menu
+
+Use `Popover.ContextMenu` to open the dropdown at the cursor position on right-click.
+It replaces `Popover.Target` and wraps the element that should respond to the `contextmenu`
+event – the browser's default context menu is suppressed, and `Popover.Dropdown` is positioned
+at the cursor. Right-clicking again repositions the dropdown to the new coordinates.
+`Popover.Dropdown` can contain any content. Set `disabled` to restore the browser's default
+context menu:
+
+<Demo data={PopoverDemos.contextMenu} />
+
 ## Nested popovers
 
 Nested popovers require children rendering without [Portal](/core/portal/). Usually, you

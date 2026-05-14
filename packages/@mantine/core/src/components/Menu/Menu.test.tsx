@@ -567,6 +567,30 @@ describe('@mantine/core/Menu', () => {
       await userEvent.click(screen.getByText('Copy'));
       expectClosed();
     });
+
+    it('closes when the trigger is left-clicked while open', async () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expectOpened();
+
+      await userEvent.click(area);
+      expectClosed();
+    });
+
+    it('does not close on the mousedown that precedes a right-click', () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expectOpened();
+
+      fireEvent.mouseDown(area, { button: 2, clientX: 50, clientY: 50 });
+      expectOpened();
+
+      fireEvent.contextMenu(area, { clientX: 50, clientY: 50 });
+      expectOpened();
+    });
   });
 
   describe('alignItemsLabels', () => {
