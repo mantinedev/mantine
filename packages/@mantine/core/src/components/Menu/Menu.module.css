@@ -93,6 +93,16 @@
   flex: 1;
 }
 
+.itemIndicator {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-end: 8px;
+}
+
 .itemSection {
   display: flex;
   justify-content: center;

@@ -353,6 +353,187 @@ describe('@mantine/core/Menu', () => {
       expect(screen.getByTestId('query')).toHaveTextContent('initial');
     });
   });
+
+  describe('Menu.CheckboxItem', () => {
+    function CheckboxItemMenu({
+      defaultChecked,
+      onChange,
+      closeMenuOnClick,
+    }: {
+      defaultChecked?: boolean;
+      onChange?: (checked: boolean) => void;
+      closeMenuOnClick?: boolean;
+    }) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.CheckboxItem
+              defaultChecked={defaultChecked}
+              onChange={onChange}
+              closeMenuOnClick={closeMenuOnClick}
+            >
+              Show grid
+            </Menu.CheckboxItem>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('renders with role="menuitemcheckbox"', () => {
+      render(<CheckboxItemMenu />);
+      const item = screen.getByRole('menuitemcheckbox', { name: 'Show grid' });
+      expect(item).toBeInTheDocument();
+      expect(item).toHaveAttribute('aria-checked', 'false');
+    });
+
+    it('toggles checked state and reports it via onChange', async () => {
+      const handleChange = jest.fn();
+      render(<CheckboxItemMenu onChange={handleChange} />);
+      const item = screen.getByRole('menuitemcheckbox', { name: 'Show grid' });
+      await userEvent.click(item);
+      expect(handleChange).toHaveBeenLastCalledWith(true);
+      expect(item).toHaveAttribute('aria-checked', 'true');
+      await userEvent.click(item);
+      expect(handleChange).toHaveBeenLastCalledWith(false);
+      expect(item).toHaveAttribute('aria-checked', 'false');
+    });
+
+    it('starts as checked when defaultChecked is set', () => {
+      render(<CheckboxItemMenu defaultChecked />);
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Show grid' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+    });
+
+    it('does not close menu on click by default', async () => {
+      render(<CheckboxItemMenu />);
+      await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Show grid' }));
+      expectOpened();
+    });
+
+    it('closes menu on click when closeMenuOnClick is set', async () => {
+      render(<CheckboxItemMenu closeMenuOnClick />);
+      await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Show grid' }));
+      expectClosed();
+    });
+  });
+
+  describe('Menu.RadioGroup and Menu.RadioItem', () => {
+    function RadioMenu({
+      defaultValue,
+      onChange,
+    }: {
+      defaultValue?: string;
+      onChange?: (value: string) => void;
+    }) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.RadioGroup defaultValue={defaultValue} onChange={onChange}>
+              <Menu.RadioItem value="ascending">Ascending</Menu.RadioItem>
+              <Menu.RadioItem value="descending">Descending</Menu.RadioItem>
+            </Menu.RadioGroup>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('renders items with role="menuitemradio"', () => {
+      render(<RadioMenu />);
+      expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toBeInTheDocument();
+      expect(screen.getByRole('menuitemradio', { name: 'Descending' })).toBeInTheDocument();
+    });
+
+    it('marks the matching item as checked from group context', () => {
+      render(<RadioMenu defaultValue="descending" />);
+      expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toHaveAttribute(
+        'aria-checked',
+        'false'
+      );
+      expect(screen.getByRole('menuitemradio', { name: 'Descending' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+    });
+
+    it('updates selected value when an item is clicked', async () => {
+      const handleChange = jest.fn();
+      render(<RadioMenu onChange={handleChange} />);
+      await userEvent.click(screen.getByRole('menuitemradio', { name: 'Ascending' }));
+      expect(handleChange).toHaveBeenLastCalledWith('ascending');
+      expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+
+      await userEvent.click(screen.getByRole('menuitemradio', { name: 'Descending' }));
+      expect(handleChange).toHaveBeenLastCalledWith('descending');
+      expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toHaveAttribute(
+        'aria-checked',
+        'false'
+      );
+    });
+
+    it('does not close menu on click by default', async () => {
+      render(<RadioMenu />);
+      await userEvent.click(screen.getByRole('menuitemradio', { name: 'Ascending' }));
+      expectOpened();
+    });
+  });
+
+  describe('alignItemsLabels', () => {
+    function MixedMenu({ alignItemsLabels }: { alignItemsLabels?: MenuProps['alignItemsLabels'] }) {
+      return (
+        <Menu
+          transitionProps={{ duration: 0 }}
+          withinPortal={false}
+          defaultOpened
+          alignItemsLabels={alignItemsLabels}
+        >
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>Plain</Menu.Item>
+            <Menu.CheckboxItem>Toggle</Menu.CheckboxItem>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    const indicatorClass = '.mantine-Menu-itemIndicator';
+
+    it('with-indicators (default) reserves slot only on checkbox/radio items', () => {
+      render(<MixedMenu />);
+      const plain = screen.getByRole('menuitem', { name: 'Plain' });
+      const toggle = screen.getByRole('menuitemcheckbox', { name: 'Toggle' });
+      expect(plain.querySelector(indicatorClass)).toBeNull();
+      expect(toggle.querySelector(indicatorClass)).not.toBeNull();
+    });
+
+    it('all reserves slot on every Menu.Item', () => {
+      render(<MixedMenu alignItemsLabels="all" />);
+      const plain = screen.getByRole('menuitem', { name: 'Plain' });
+      const toggle = screen.getByRole('menuitemcheckbox', { name: 'Toggle' });
+      expect(plain.querySelector(indicatorClass)).not.toBeNull();
+      expect(toggle.querySelector(indicatorClass)).not.toBeNull();
+    });
+
+    it('none renders the slot only when the indicator is visible', () => {
+      render(<MixedMenu alignItemsLabels="none" />);
+      const plain = screen.getByRole('menuitem', { name: 'Plain' });
+      const toggle = screen.getByRole('menuitemcheckbox', { name: 'Toggle' });
+      expect(plain.querySelector(indicatorClass)).toBeNull();
+      expect(toggle.querySelector(indicatorClass)).toBeNull();
+    });
+  });
   it('correctly calls callbacks when opening and closing the uncontrolled menu via target click', async () => {
     const onOpen = jest.fn();
     const onClose = jest.fn();

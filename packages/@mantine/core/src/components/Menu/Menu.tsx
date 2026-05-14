@@ -12,10 +12,13 @@ import {
 import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
 import { MenuContextProvider, type MenuContextValue } from './Menu.context';
+import { MenuCheckboxItem, type MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem';
 import { MenuDivider, type MenuDividerProps } from './MenuDivider/MenuDivider';
 import { MenuDropdown, type MenuDropdownProps } from './MenuDropdown/MenuDropdown';
 import { MenuItem, type MenuItemProps } from './MenuItem/MenuItem';
 import { MenuLabel, type MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuRadioGroup, type MenuRadioGroupProps } from './MenuRadioGroup/MenuRadioGroup';
+import { MenuRadioItem, type MenuRadioItemProps } from './MenuRadioItem/MenuRadioItem';
 import { MenuSearch, type MenuSearchProps } from './MenuSearch/MenuSearch';
 import { MenuSub, type MenuSubProps } from './MenuSub/MenuSub';
 import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
@@ -28,6 +31,7 @@ export type MenuStylesNames =
   | 'item'
   | 'itemLabel'
   | 'itemSection'
+  | 'itemIndicator'
   | 'label'
   | 'divider'
   | 'chevron'
@@ -45,6 +49,9 @@ export type MenuFactory = Factory<{
     Divider: typeof MenuDivider;
     Search: typeof MenuSearch;
     Sub: typeof MenuSub;
+    CheckboxItem: typeof MenuCheckboxItem;
+    RadioItem: typeof MenuRadioItem;
+    RadioGroup: typeof MenuRadioGroup;
   };
 }>;
 
@@ -107,6 +114,12 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
 
   /** Determines whether focus should be automatically returned to control when dropdown closes @default `true` */
   returnFocus?: boolean;
+
+  /** Controls how indicator slot space is reserved on menu items for label alignment. `'all'` reserves space on every `Menu.Item`, `'with-indicators'` reserves space only on `Menu.CheckboxItem` and `Menu.RadioItem`, `'none'` reserves space only on items that currently display an indicator. @default 'with-indicators' */
+  alignItemsLabels?: 'all' | 'with-indicators' | 'none';
+
+  /** Custom icon rendered as the indicator of checked `Menu.CheckboxItem` and selected `Menu.RadioItem`. Can be overridden per item with the `checkIcon` prop. */
+  checkIcon?: React.ReactNode;
 }
 
 const defaultProps = {
@@ -119,6 +132,7 @@ const defaultProps = {
   openDelay: 0,
   closeDelay: 100,
   menuItemTabIndex: -1,
+  alignItemsLabels: 'with-indicators',
 } satisfies Partial<MenuProps>;
 
 export const Menu = factory<MenuFactory>((_props) => {
@@ -147,6 +161,8 @@ export const Menu = factory<MenuFactory>((_props) => {
     withInitialFocusPlaceholder,
     attributes,
     onExitTransitionEnd,
+    alignItemsLabels,
+    checkIcon,
     ...others
   } = props;
 
@@ -251,6 +267,8 @@ export const Menu = factory<MenuFactory>((_props) => {
         hasSearch,
         registerSearch,
         searchExitClearRef,
+        alignItemsLabels: alignItemsLabels!,
+        checkIcon,
       }}
     >
       <Popover
@@ -284,6 +302,9 @@ Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;
 Menu.Search = MenuSearch;
 Menu.Sub = MenuSub;
+Menu.CheckboxItem = MenuCheckboxItem;
+Menu.RadioItem = MenuRadioItem;
+Menu.RadioGroup = MenuRadioGroup;
 
 export namespace Menu {
   export type Props = MenuProps;
@@ -317,6 +338,18 @@ export namespace Menu {
 
   export namespace Sub {
     export type Props = MenuSubProps;
+  }
+
+  export namespace CheckboxItem {
+    export type Props = MenuCheckboxItemProps;
+  }
+
+  export namespace RadioItem {
+    export type Props = MenuRadioItemProps;
+  }
+
+  export namespace RadioGroup {
+    export type Props = MenuRadioGroupProps;
   }
 
   export namespace SubDropdown {

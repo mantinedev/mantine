@@ -84,6 +84,18 @@ The search value is cleared automatically after the menu close transition comple
 
 <Demo data={MenuDemos.search} />
 
+## Menu checkbox and radio items
+
+[Menu](/core/menu/) now supports `Menu.CheckboxItem`, `Menu.RadioItem`, and `Menu.RadioGroup`
+for building option menus. Checkbox and radio items render an indicator slot at the start
+and do not close the menu on click by default. The new `alignItemsLabels` prop on `Menu`
+controls how indicator slot space is reserved so labels stay aligned when mixing plain
+and indicator items.
+
+<Demo data={MenuDemos.checkboxItem} />
+
+<Demo data={MenuDemos.radioItem} />
+
 ## Highlight accent and case insensitive matching
 
 [Highlight](/core/highlight/) component now supports `caseInsensitive` and `accentInsensitive`

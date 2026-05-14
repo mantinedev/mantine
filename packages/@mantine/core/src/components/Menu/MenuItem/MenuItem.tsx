@@ -18,7 +18,7 @@ import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
 
-export type MenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
+export type MenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection' | 'itemIndicator';
 
 export interface MenuItemProps extends BoxProps, CompoundStylesApiProps<MenuItemFactory> {
   'data-disabled'?: boolean;
@@ -143,6 +143,9 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
         '--menu-item-hover': colors?.hover,
       }}
     >
+      {ctx.alignItemsLabels === 'all' && (
+        <div {...ctx.getStyles('itemIndicator', { styles, classNames })} data-placeholder />
+      )}
       {leftSection && (
         <div {...ctx.getStyles('itemSection', { styles, classNames })} data-position="left">
           {leftSection}

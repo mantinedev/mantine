@@ -67,3 +67,23 @@ export const Demo_searchNested = {
   name: '⭐ Demo: searchNested',
   render: renderDemo(demos.searchNested),
 };
+
+export const Demo_checkboxItem = {
+  name: '⭐ Demo: checkboxItem',
+  render: renderDemo(demos.checkboxItem),
+};
+
+export const Demo_radioItem = {
+  name: '⭐ Demo: radioItem',
+  render: renderDemo(demos.radioItem),
+};
+
+export const Demo_alignItemsLabels = {
+  name: '⭐ Demo: alignItemsLabels',
+  render: renderDemo(demos.alignItemsLabels),
+};
+
+export const Demo_checkIcon = {
+  name: '⭐ Demo: checkIcon',
+  render: renderDemo(demos.checkIcon),
+};

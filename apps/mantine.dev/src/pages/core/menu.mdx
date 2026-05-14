@@ -28,6 +28,49 @@ include the parent in the filtered tree if any of its descendants match the quer
 
 <Demo data={MenuDemos.searchNested} demoProps={{ defaultExpanded: false }} />
 
+## Checkbox items
+
+`Menu.CheckboxItem` renders a menu item with a check indicator. It works like a regular
+[Checkbox](/core/checkbox/) – manage state with `checked`/`onChange` or use `defaultChecked`
+for an uncontrolled value. By default, clicking a checkbox item does not close the menu;
+set `closeMenuOnClick` on the item (or `closeOnItemClick={false}` on the `Menu`)
+to override:
+
+<Demo data={MenuDemos.checkboxItem} />
+
+## Radio items
+
+`Menu.RadioItem` represents a single option inside a `Menu.RadioGroup`. The group manages
+the selected value via `value`/`onChange` (or `defaultValue` for uncontrolled). The currently
+selected item displays an indicator dot. Like checkbox items, radio items do not close the
+menu on click by default:
+
+<Demo data={MenuDemos.radioItem} />
+
+## Aligning labels of items with and without indicators
+
+Use the `alignItemsLabels` prop on `Menu` to control how indicator slot space is reserved.
+This is useful when mixing `Menu.Item` with `Menu.CheckboxItem` or `Menu.RadioItem` and you
+want labels to start at the same horizontal position:
+
+- `alignItemsLabels="with-indicators"` (default) – reserves indicator space on `Menu.CheckboxItem`
+  and `Menu.RadioItem` only. Regular `Menu.Item` is not padded.
+- `alignItemsLabels="all"` – reserves indicator space on every `Menu.Item`, so labels of plain
+  items align with checkbox and radio items.
+- `alignItemsLabels="none"` – reserves indicator space only on items that currently show an
+  indicator. Unchecked checkbox and radio items render without the slot (layout shifts when
+  toggled).
+
+<Demo data={MenuDemos.alignItemsLabels} />
+
+## Custom check icon
+
+Use the `checkIcon` prop to replace the default indicator rendered by `Menu.CheckboxItem` and
+`Menu.RadioItem`. Setting `checkIcon` on `Menu` applies to all checkbox/radio items in the
+dropdown. Setting `checkIcon` on an individual item overrides the menu-level value:
+
+<Demo data={MenuDemos.checkIcon} />
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:
