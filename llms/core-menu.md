@@ -88,6 +88,9 @@ function Demo() {
           </Menu.Sub.Dropdown>
         </Menu.Sub>
 
+        <Menu.Item>Customers</Menu.Item>
+        <Menu.Item>Reports</Menu.Item>
+
         <Menu.Sub>
           <Menu.Sub.Target>
             <Menu.Sub.Item>Orders</Menu.Sub.Item>

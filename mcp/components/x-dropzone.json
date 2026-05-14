@@ -307,7 +307,7 @@
       "name": "useFsAccessApi",
       "description": "Set to true to use the File System Access API to open the file picker instead of using an <code>input type=\"file\"</code> click event",
       "required": false,
-      "defaultValue": "true",
+      "defaultValue": "false",
       "type": {
         "name": "boolean"
       },

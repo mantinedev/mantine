@@ -714,10 +714,10 @@
     "package": "@mantine/core",
     "route": "/core/highlight",
     "description": "Highlight given part of a string with mark",
-    "propsCount": 12,
+    "propsCount": 14,
     "llmUrl": "https://mantine.dev/llms/core-highlight.md",
     "componentDataUrl": "/mcp/components/core-highlight.json",
-    "searchText": "highlight highlight given part of a string with mark @mantine/core /core/highlight children color gradient highlight highlightstyles inherit inline lineclamp size span truncate wholeword"
+    "searchText": "highlight highlight given part of a string with mark @mantine/core /core/highlight accentinsensitive caseinsensitive children color gradient highlight highlightstyles inherit inline lineclamp size span truncate wholeword"
   },
   {
     "id": "core-hover-card",
@@ -1278,10 +1278,10 @@
     "package": "@mantine/core",
     "route": "/core/range-slider",
     "description": "RangeSlider component",
-    "propsCount": 33,
+    "propsCount": 34,
     "llmUrl": "https://mantine.dev/llms/core-range-slider.md",
     "componentDataUrl": "/mcp/components/core-range-slider.json",
-    "searchText": "rangeslider rangeslider component @mantine/core /core/range-slider color defaultvalue disabled domain hiddeninputprops inverted label labelalwayson labeltransitionprops marks max maxrange min minrange name onchange onchangeend orientation precision pushonoverlap radius restricttomarks scale showlabelonhover size step thumbchildren thumbfromlabel thumblabel thumbprops thumbsize thumbtolabel value"
+    "searchText": "rangeslider rangeslider component @mantine/core /core/range-slider color defaultvalue disabled domain hiddeninputprops inverted label labelalwayson labeltransitionprops marks max maxrange min minrange name onchange onchangeend orientation precision pushonoverlap radius restricttomarks scale showlabelonhover size step thumbchildren thumbfromlabel thumblabel thumbprops thumbsize thumbtolabel thumbvaluetext value"
   },
   {
     "id": "core-rating",
@@ -1458,10 +1458,10 @@
     "package": "@mantine/core",
     "route": "/core/slider",
     "description": "Slider component",
-    "propsCount": 29,
+    "propsCount": 30,
     "llmUrl": "https://mantine.dev/llms/core-slider.md",
     "componentDataUrl": "/mcp/components/core-slider.json",
-    "searchText": "slider slider component @mantine/core /core/slider color defaultvalue disabled domain hiddeninputprops inverted label labelalwayson labeltransitionprops marks max min name onchange onchangeend orientation precision radius restricttomarks scale showlabelonhover size startpointvalue step thumbchildren thumblabel thumbprops thumbsize value"
+    "searchText": "slider slider component @mantine/core /core/slider color defaultvalue disabled domain hiddeninputprops inverted label labelalwayson labeltransitionprops marks max min name onchange onchangeend orientation precision radius restricttomarks scale showlabelonhover size startpointvalue step thumbchildren thumblabel thumbprops thumbsize thumbvaluetext value"
   },
   {
     "id": "charts-sparkline",

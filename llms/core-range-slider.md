@@ -404,6 +404,24 @@ function Demo() {
 }
 ```
 
+When `scale` is used or the displayed value is formatted (for example as a currency or
+percentage), set `thumbValueText` to provide a human-readable value for screen readers.
+It is rendered as `aria-valuetext` on both thumbs. When a function is provided, it receives
+the scaled value of the corresponding thumb:
+
+```tsx
+import { RangeSlider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <RangeSlider
+      scale={(v) => v * 10}
+      thumbValueText={(value) => `${value}%`}
+    />
+  );
+}
+```
+
 ## Keyboard interactions
 
 
@@ -445,4 +463,5 @@ function Demo() {
 | thumbProps | (index: 0 \| 1) => DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> | - | Props passed down to thumb element based on the thumb index |
 | thumbSize | string \| number | - | Thumb `width` and `height`, by default value is computed based on `size` prop |
 | thumbToLabel | string | - | Second thumb `aria-label` |
+| thumbValueText | string \| ((value: number) => string) | - | `aria-valuetext` for both thumbs. When a function is provided, it receives the scaled value. |
 | value | RangeSliderValue | - | Controlled component value |

@@ -8,7 +8,8 @@ Description: Highlight given part of a string with mark
 Use the Highlight component to highlight substrings within text using the HTML `<mark>` element.
 
 Pass the text as children and specify which substring(s) to highlight with the `highlight` prop.
-Matching is **case-insensitive** and highlights all occurrences of the matched substring.
+Matching is **case-insensitive** and **accent-insensitive** by default, and highlights all occurrences
+of the matched substring. Use the `caseInsensitive` and `accentInsensitive` props to opt out.
 
 ```tsx
 import { Highlight } from '@mantine/core';
@@ -25,11 +26,74 @@ function Demo() {
 
 ## Matching behavior
 
-* **Case-insensitive**: 'hello' matches 'Hello', 'HELLO', 'hElLo', etc.
+* **Case-insensitive**: 'hello' matches 'Hello', 'HELLO', 'hElLo', etc. (controlled by `caseInsensitive`, defaults to `true`)
+* **Accent-insensitive**: 'cafe' matches 'café', 'cafè', 'CAFÉ', etc. (controlled by `accentInsensitive`, defaults to `true`)
 * **All occurrences**: Every instance of the matched substring is highlighted
 * **Special characters**: Regex special characters like `[`, `]`, `(`, `)` are automatically escaped and treated as literal text
 * **Whitespace**: Leading and trailing whitespace in highlight strings is trimmed and ignored
 * **Empty strings**: Empty or whitespace-only highlight strings are ignored
+
+## Case-sensitive matching
+
+Set `caseInsensitive={false}` to only match substrings with the same casing as the highlight term:
+
+```tsx
+import { Highlight, Stack, Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stack gap="md">
+      <div>
+        <Text size="sm" fw={500} mb={5}>
+          With case-insensitive matching (default)
+        </Text>
+        <Highlight highlight="this">Highlight This, definitely THIS and also this!</Highlight>
+      </div>
+
+      <div>
+        <Text size="sm" fw={500} mb={5}>
+          {'With case-sensitive matching (caseInsensitive={false})'}
+        </Text>
+        <Highlight highlight="this" caseInsensitive={false}>
+          Highlight This, definitely THIS and also this!
+        </Highlight>
+      </div>
+    </Stack>
+  );
+}
+```
+
+
+## Accent-sensitive matching
+
+Set `accentInsensitive={false}` to require accented characters in the text to match the highlight term exactly:
+
+```tsx
+import { Highlight, Stack, Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stack gap="md">
+      <div>
+        <Text size="sm" fw={500} mb={5}>
+          With accent-insensitive matching (default)
+        </Text>
+        <Highlight highlight="cafe">We visited café and cafe.</Highlight>
+      </div>
+
+      <div>
+        <Text size="sm" fw={500} mb={5}>
+          {'With accent-sensitive matching (accentInsensitive={false})'}
+        </Text>
+        <Highlight highlight="cafe" accentInsensitive={false}>
+          We visited café and cafe.
+        </Highlight>
+      </div>
+    </Stack>
+  );
+}
+```
+
 
 ## Highlight multiple substrings
 
@@ -159,10 +223,12 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accentInsensitive | boolean | - | Perform accent-insensitive matching. When enabled cafe will match cafe, café, cafè, etc. |
+| caseInsensitive | boolean | - | Perform case-insensitive matching. |
 | children | string | required | String in which to highlight substrings |
 | color | string \| (string & {}) | - | Default background color for all highlighted text. Key of `theme.colors` or any valid CSS color, passed to `Mark` component. Can be overridden per term when using HighlightTerm objects. |
 | gradient | MantineGradient | - | Gradient configuration, ignored when `variant` is not `gradient` |
-| highlight | string \| string[] \| HighlightTerm[] | required | Substring(s) to highlight in `children`. Can be: - string: single term - string[]: multiple terms with same color - HighlightTerm[]: multiple terms with custom colors per term  - Matching is case-insensitive - Regex special characters are automatically escaped - When multiple substrings are provided, longer matches take precedence - Empty strings and whitespace-only strings are ignored |
+| highlight | string \| string[] \| HighlightTerm[] | required | Substring(s) to highlight in `children`. Can be: - string: single term - string[]: multiple terms with same color - HighlightTerm[]: multiple terms with custom colors per term  - Matching is case-insensitive and accent-insensitive by default, use `caseInsensitive` and `accentInsensitive` props to control this behavior - Regex special characters are automatically escaped - When multiple substrings are provided, longer matches take precedence - Empty strings and whitespace-only strings are ignored |
 | highlightStyles | CSSProperties \| ((theme: MantineTheme) => CSSProperties) | - | Styles applied to `mark` elements |
 | inherit | boolean | - | Determines whether font properties should be inherited from the parent |
 | inline | boolean | - | Sets `line-height` to 1 for centering |

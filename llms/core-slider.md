@@ -644,6 +644,24 @@ function Demo() {
 }
 ```
 
+When `scale` is used or the displayed value is formatted (for example as a currency or
+percentage), set `thumbValueText` to provide a human-readable value for screen readers.
+It is rendered as `aria-valuetext` on the thumb. When a function is provided, it receives
+the scaled value:
+
+```tsx
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Slider
+      scale={(v) => v * 10}
+      thumbValueText={(value) => `$${value}`}
+    />
+  );
+}
+```
+
 ## Keyboard interactions
 
 
@@ -681,6 +699,7 @@ function Demo() {
 | thumbLabel | string | - | Thumb `aria-label` |
 | thumbProps | React.ComponentProps<"div"> | - | Props passed down to thumb element |
 | thumbSize | string \| number | - | Thumb `width` and `height`, by default value is computed based on `size` prop |
+| thumbValueText | string \| ((value: number) => string) | - | Thumb `aria-valuetext`. When a function is provided, it receives the scaled value. |
 | value | number | - | Controlled component value |
 
 

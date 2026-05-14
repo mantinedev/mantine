@@ -37,6 +37,10 @@ After installing the `@mantine/dates` package and importing styles, you can use 
 
 
 
+## Date values as strings
+
+`@mantine/dates` components work with date strings: `YYYY-MM-DD` or `YYYY-MM-DD HH:mm:ss` depending on the component. Those strings do not include any timezone-specific information.
+
 ## dayjs
 
 `@mantine/dates` components use [dayjs](https://day.js.org/) under the hood for date manipulations and formatting.

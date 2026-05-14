@@ -1,0 +1,22 @@
+__turbopack_load_page_chunks__("/schedule/month-view", [
+  "static/chunks/04qlxbvnx~vmc.js",
+  "static/chunks/0wk_v7s4xgvsu.js",
+  "static/chunks/0lujajr1sp0_~.js",
+  "static/chunks/14soil4~p_wk7.js",
+  "static/chunks/0srd1_~6ogljb.js",
+  "static/chunks/13meiukob~a0c.js",
+  "static/chunks/03q8c~rlg3ia-.js",
+  "static/chunks/0unu1cldf4dlu.js",
+  "static/chunks/0clvy4cv~acni.js",
+  "static/chunks/0h~-h19zpz3l~.js",
+  "static/chunks/0co2l4h6.mlzz.js",
+  "static/chunks/10mne2s3yj-oj.js",
+  "static/chunks/01ax3wgi22i83.js",
+  "static/chunks/0cqrhcjhn7r.h.js",
+  "static/chunks/0qhzdoos5k_lf.js",
+  "static/chunks/07x3_hebxirgp.js",
+  "static/chunks/0~x3crfcns5r..css",
+  "static/chunks/0nwh6cog1rjyz.css",
+  "static/chunks/0bhh5m6n92r1r.css",
+  "static/chunks/turbopack-09h2l7i_wc4j_.js"
+])

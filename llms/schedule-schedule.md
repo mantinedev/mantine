@@ -1177,7 +1177,7 @@ For more control over individual views, use the view components directly:
 | monthViewProps | Partial<Omit<MonthViewProps, ScheduleCommonProps>> | - | Props specific to MonthView (includes `firstDayOfWeek`, `weekendDays`, etc.) |
 | onAllDaySlotClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when all-day slot is clicked in DayView/WeekView |
 | onDateChange | (date: string) => void | - | Called when date changes via navigation |
-| onDayClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when day is clicked in MonthView |
+| onDayClick | (date: string, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when a day is clicked in MonthView and YearView |
 | onEventClick | (event: ScheduleEventData, e: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when event is clicked in any view |
 | onEventDragEnd | () => void | - | Called when any event drag ends |
 | onEventDragStart | (event: ScheduleEventData) => void | - | Called when any event drag starts |
