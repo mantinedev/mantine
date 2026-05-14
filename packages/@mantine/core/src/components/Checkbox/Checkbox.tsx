@@ -206,6 +206,10 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
+  const descriptionId = description ? `${uuid}-description` : undefined;
+  const errorId = error && typeof error !== 'boolean' ? `${uuid}-error` : undefined;
+  const describedBy =
+    [descriptionId, errorId, rest['aria-describedby']].filter(Boolean).join(' ') || undefined;
 
   const withContextProps = {
     checked: ctx?.value.includes(rest.value as string) ?? checked,
@@ -263,6 +267,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           {...getStyles('input', { focusable: true, variant })}
           {...rest}
           {...withContextProps}
+          aria-describedby={describedBy}
           disabled={finalDisabled}
           inert={rest.inert}
           type="checkbox"
