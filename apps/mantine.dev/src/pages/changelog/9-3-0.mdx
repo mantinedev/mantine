@@ -96,6 +96,15 @@ and indicator items.
 
 <Demo data={MenuDemos.radioItem} />
 
+## Menu context menu
+
+[Menu](/core/menu/) now supports `Menu.ContextMenu` – a target replacement that opens the
+dropdown at the cursor position when the wrapped element is right-clicked. The browser's
+default context menu is suppressed, and right-clicking again repositions the dropdown to
+the new coordinates.
+
+<Demo data={MenuDemos.contextMenu} />
+
 ## Highlight accent and case insensitive matching
 
 [Highlight](/core/highlight/) component now supports `caseInsensitive` and `accentInsensitive`

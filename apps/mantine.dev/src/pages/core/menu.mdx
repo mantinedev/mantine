@@ -71,6 +71,16 @@ dropdown. Setting `checkIcon` on an individual item overrides the menu-level val
 
 <Demo data={MenuDemos.checkIcon} />
 
+## Context menu
+
+Use `Menu.ContextMenu` to open the menu dropdown at the cursor position on right-click.
+It replaces `Menu.Target` and wraps the element that should respond to the `contextmenu` event –
+the browser's default context menu is suppressed, and the Mantine `Menu.Dropdown` is positioned
+at the cursor instead. Right-clicking again repositions the dropdown to the new coordinates.
+Set `disabled` to restore the browser's default context menu:
+
+<Demo data={MenuDemos.contextMenu} />
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:

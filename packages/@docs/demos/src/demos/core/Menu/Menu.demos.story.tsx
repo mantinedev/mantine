@@ -87,3 +87,8 @@ export const Demo_checkIcon = {
   name: '⭐ Demo: checkIcon',
   render: renderDemo(demos.checkIcon),
 };
+
+export const Demo_contextMenu = {
+  name: '⭐ Demo: contextMenu',
+  render: renderDemo(demos.contextMenu),
+};

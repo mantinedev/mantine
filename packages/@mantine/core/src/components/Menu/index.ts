@@ -1,6 +1,7 @@
 import type { MenuFactory, MenuProps, MenuStylesNames } from './Menu';
 import type { MenuContextValue } from './Menu.context';
 import type { MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem';
+import type { MenuContextMenuProps } from './MenuContextMenu/MenuContextMenu';
 import type { MenuDividerProps } from './MenuDivider/MenuDivider';
 import type { MenuDropdownProps } from './MenuDropdown/MenuDropdown';
 import type { MenuItemProps } from './MenuItem/MenuItem';
@@ -24,6 +25,7 @@ export { MenuSearch } from './MenuSearch/MenuSearch';
 export { MenuCheckboxItem } from './MenuCheckboxItem/MenuCheckboxItem';
 export { MenuRadioItem } from './MenuRadioItem/MenuRadioItem';
 export { MenuRadioGroup } from './MenuRadioGroup/MenuRadioGroup';
+export { MenuContextMenu } from './MenuContextMenu/MenuContextMenu';
 export { useMenuContext } from './Menu.context';
 export { MenuSub } from './MenuSub/MenuSub';
 export { MenuSubDropdown } from './MenuSubDropdown/MenuSubDropdown';
@@ -43,6 +45,7 @@ export type {
   MenuCheckboxItemProps,
   MenuRadioItemProps,
   MenuRadioGroupProps,
+  MenuContextMenuProps,
   MenuContextValue,
   MenuSubProps,
   MenuSubDropdownProps,

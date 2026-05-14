@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cleanup } from '@testing-library/react';
+import { cleanup, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
@@ -485,6 +485,87 @@ describe('@mantine/core/Menu', () => {
       render(<RadioMenu />);
       await userEvent.click(screen.getByRole('menuitemradio', { name: 'Ascending' }));
       expectOpened();
+    });
+  });
+
+  describe('Menu.ContextMenu', () => {
+    function ContextMenuContainer({ disabled }: { disabled?: boolean } = {}) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false}>
+          <Menu.ContextMenu disabled={disabled}>
+            <div data-testid="context-area">Right-click me</div>
+          </Menu.ContextMenu>
+          <Menu.Dropdown>
+            <Menu.Item>Copy</Menu.Item>
+            <Menu.Item>Paste</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('opens the menu on contextmenu event', () => {
+      render(<ContextMenuContainer />);
+      expectClosed();
+
+      fireEvent.contextMenu(screen.getByTestId('context-area'), { clientX: 100, clientY: 200 });
+
+      expectOpened();
+    });
+
+    it('prevents default browser context menu', () => {
+      render(<ContextMenuContainer />);
+      const target = screen.getByTestId('context-area');
+      const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
+      fireEvent(target, event);
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('does not open and does not prevent default when disabled', () => {
+      render(<ContextMenuContainer disabled />);
+      const target = screen.getByTestId('context-area');
+      const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
+      fireEvent(target, event);
+      expect(event.defaultPrevented).toBe(false);
+      expectClosed();
+    });
+
+    it('preserves custom onContextMenu handler on the wrapped child', () => {
+      const handler = jest.fn();
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false}>
+          <Menu.ContextMenu>
+            <div data-testid="context-area" onContextMenu={handler}>
+              Right-click me
+            </div>
+          </Menu.ContextMenu>
+          <Menu.Dropdown>
+            <Menu.Item>Copy</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+
+      fireEvent.contextMenu(screen.getByTestId('context-area'), { clientX: 10, clientY: 10 });
+      expect(handler).toHaveBeenCalledTimes(1);
+      expectOpened();
+    });
+
+    it('sets data-expanded on the wrapped child when menu is open', () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+      expect(area).not.toHaveAttribute('data-expanded');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+
+      expect(screen.getByTestId('context-area')).toHaveAttribute('data-expanded', 'true');
+    });
+
+    it('closes when an item is clicked', async () => {
+      render(<ContextMenuContainer />);
+      fireEvent.contextMenu(screen.getByTestId('context-area'), { clientX: 10, clientY: 10 });
+      expectOpened();
+
+      await userEvent.click(screen.getByText('Copy'));
+      expectClosed();
     });
   });
 

@@ -15,3 +15,4 @@ export { checkboxItem } from './Menu.demo.checkboxItem';
 export { radioItem } from './Menu.demo.radioItem';
 export { alignItemsLabels } from './Menu.demo.alignItemsLabels';
 export { checkIcon } from './Menu.demo.checkIcon';
+export { contextMenu } from './Menu.demo.contextMenu';
