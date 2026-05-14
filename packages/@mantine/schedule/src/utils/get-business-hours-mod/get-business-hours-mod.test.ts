@@ -335,6 +335,130 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
     });
   });
 
+  describe('per-day businessHours record', () => {
+    it('returns no modifiers when dayOfWeek is not provided', () => {
+      const result = getBusinessHoursMod({
+        time: '12:00:00',
+        businessHours: { 1: ['09:00:00', '17:00:00'] },
+        highlightBusinessHours: true,
+      });
+
+      expect(result).toEqual({
+        'business-hours': false,
+        'non-business-hours': false,
+      });
+    });
+
+    it('applies the range configured for the given day of week', () => {
+      const monday = getBusinessHoursMod({
+        time: '10:00:00',
+        businessHours: {
+          1: ['09:00:00', '17:00:00'],
+          2: ['10:00:00', '14:00:00'],
+        },
+        highlightBusinessHours: true,
+        dayOfWeek: 1,
+      });
+
+      expect(monday).toEqual({
+        'business-hours': true,
+        'non-business-hours': false,
+      });
+
+      const tuesday = getBusinessHoursMod({
+        time: '15:00:00',
+        businessHours: {
+          1: ['09:00:00', '17:00:00'],
+          2: ['10:00:00', '14:00:00'],
+        },
+        highlightBusinessHours: true,
+        dayOfWeek: 2,
+      });
+
+      expect(tuesday).toEqual({
+        'business-hours': false,
+        'non-business-hours': true,
+      });
+    });
+
+    it('marks entire day as non-business when day is missing from the record', () => {
+      const resultMorning = getBusinessHoursMod({
+        time: '09:00:00',
+        businessHours: { 1: ['09:00:00', '17:00:00'] },
+        highlightBusinessHours: true,
+        dayOfWeek: 0,
+      });
+
+      expect(resultMorning).toEqual({
+        'business-hours': false,
+        'non-business-hours': true,
+      });
+
+      const resultEvening = getBusinessHoursMod({
+        time: '20:00:00',
+        businessHours: { 1: ['09:00:00', '17:00:00'] },
+        highlightBusinessHours: true,
+        dayOfWeek: 0,
+      });
+
+      expect(resultEvening).toEqual({
+        'business-hours': false,
+        'non-business-hours': true,
+      });
+    });
+
+    it('marks entire day as non-business when day is explicitly set to null', () => {
+      const result = getBusinessHoursMod({
+        time: '12:00:00',
+        businessHours: {
+          1: ['09:00:00', '17:00:00'],
+          6: null,
+        },
+        highlightBusinessHours: true,
+        dayOfWeek: 6,
+      });
+
+      expect(result).toEqual({
+        'business-hours': false,
+        'non-business-hours': true,
+      });
+    });
+
+    it('returns business-hours for times within the per-day range', () => {
+      const result = getBusinessHoursMod({
+        time: '11:30:00',
+        businessHours: {
+          1: ['09:00:00', '13:00:00'],
+          2: ['09:00:00', '17:00:00'],
+          3: ['09:00:00', '17:00:00'],
+          4: ['09:00:00', '17:00:00'],
+          5: ['09:00:00', '13:00:00'],
+        },
+        highlightBusinessHours: true,
+        dayOfWeek: 5,
+      });
+
+      expect(result).toEqual({
+        'business-hours': true,
+        'non-business-hours': false,
+      });
+    });
+
+    it('returns no modifiers when highlightBusinessHours is false even with per-day record', () => {
+      const result = getBusinessHoursMod({
+        time: '12:00:00',
+        businessHours: { 1: ['09:00:00', '17:00:00'] },
+        highlightBusinessHours: false,
+        dayOfWeek: 1,
+      });
+
+      expect(result).toEqual({
+        'business-hours': false,
+        'non-business-hours': false,
+      });
+    });
+  });
+
   describe('string comparison', () => {
     it('uses lexicographic comparison correctly', () => {
       // String comparison works for HH:mm:ss format

@@ -97,25 +97,28 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
     }
   });
 
-  const handleMouseEnter = createEventHandler(_others.onMouseEnter, subCtx?.open);
-  const handleMouseLeave = createEventHandler(_others.onMouseLeave, subCtx?.close);
+  const referenceProps = subCtx?.getReferenceProps({
+    onMouseEnter: _others.onMouseEnter,
+    onMouseLeave: _others.onMouseLeave,
+    onPointerEnter: _others.onPointerEnter,
+    onPointerLeave: _others.onPointerLeave,
+  });
 
   return (
     <UnstyledButton
       onMouseDown={(event) => event.preventDefault()}
       {...others}
+      {...referenceProps}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
       {...ctx.getStyles('item', { className, style, styles, classNames })}
-      ref={useMergedRef(itemRef, ref)}
+      ref={useMergedRef(itemRef, ref, subCtx?.setReference)}
       role="menuitem"
       disabled={disabled}
       data-menu-item
       data-sub-menu-item
       data-disabled={disabled || dataDisabled || undefined}
       data-mantine-stop-propagation
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-menu-item]:not([data-disabled])',

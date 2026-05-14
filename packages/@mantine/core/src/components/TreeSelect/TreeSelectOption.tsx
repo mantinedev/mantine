@@ -10,6 +10,14 @@ const BASE_PADDING = 8;
 const LINE_CONTENT_GAP = 5;
 const OPTION_GAP = 6;
 
+export interface TreeSelectChevronAriaLabels {
+  /** aria-label for the expand button when the node is collapsed @default 'Expand' */
+  expand?: string;
+
+  /** aria-label for the expand button when the node is expanded @default 'Collapse' */
+  collapse?: string;
+}
+
 export interface TreeSelectOptionProps {
   node: TreeNodeData;
   level: number;
@@ -24,6 +32,7 @@ export interface TreeSelectOptionProps {
   withLines: boolean;
   onToggleExpand: (value: string) => void;
   renderNode?: (payload: TreeSelectRenderNodePayload) => React.ReactNode;
+  chevronAriaLabels?: TreeSelectChevronAriaLabels;
 }
 
 export interface TreeSelectRenderNodePayload {
@@ -50,6 +59,7 @@ export function TreeSelectOption({
   withLines,
   onToggleExpand,
   renderNode,
+  chevronAriaLabels,
 }: TreeSelectOptionProps) {
   const indentPx = (level - 1) * LEVEL_OFFSET;
 
@@ -99,6 +109,8 @@ export function TreeSelectOption({
   const isActive = selected || checked;
   const showCheckMark = !showCheckbox && isActive;
 
+  const ariaChecked = showCheckbox ? (indeterminate && !checked ? 'mixed' : checked) : undefined;
+
   return (
     <Combobox.Option
       value={node.value}
@@ -113,6 +125,9 @@ export function TreeSelectOption({
           (!hasChildren ? OPTION_GAP : 0),
       }}
       aria-selected={isActive}
+      aria-level={level}
+      aria-expanded={hasChildren ? expanded : undefined}
+      aria-checked={ariaChecked}
     >
       {lineElements}
       {customContent || (
@@ -130,7 +145,11 @@ export function TreeSelectOption({
               onMouseDown={handleExpandMouseDown}
               role="button"
               tabIndex={-1}
-              aria-label={expanded ? 'Collapse' : 'Expand'}
+              aria-label={
+                expanded
+                  ? (chevronAriaLabels?.collapse ?? 'Collapse')
+                  : (chevronAriaLabels?.expand ?? 'Expand')
+              }
             >
               <AccordionChevron size="80%" />
             </span>

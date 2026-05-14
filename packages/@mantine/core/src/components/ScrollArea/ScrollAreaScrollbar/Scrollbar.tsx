@@ -37,7 +37,7 @@ export function Scrollbar(props: ScrollbarProps) {
   } = props;
   const context = useScrollAreaContext();
   const [scrollbar, setScrollbar] = useState<HTMLDivElement | null>(null);
-  const composeRefs = useMergedRef(ref, (node) => setScrollbar(node));
+  const composeRefs = useMergedRef(ref, setScrollbar);
   const rectRef = useRef<DOMRect | null>(null);
   const prevWebkitUserSelectRef = useRef<string>('');
   const { viewport } = context;

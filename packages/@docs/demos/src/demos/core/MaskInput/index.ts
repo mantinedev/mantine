@@ -6,3 +6,5 @@ export { transform } from './MaskInput.demo.transform';
 export { disabled } from './MaskInput.demo.disabled';
 export { error } from './MaskInput.demo.error';
 export { success } from './MaskInput.demo.success';
+export { resetRef } from './MaskInput.demo.resetRef';
+export { withUseForm } from './MaskInput.demo.withUseForm';

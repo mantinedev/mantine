@@ -256,4 +256,32 @@ describe('@mantine/core/RangeSlider', () => {
     expect(screen.getByLabelText('From slider')).toBeInTheDocument();
     expect(screen.getByLabelText('To slider')).toBeInTheDocument();
   });
+
+  it('does not set aria-valuetext when thumbValueText is not provided', () => {
+    render(<RangeSlider defaultValue={[20, 80]} />);
+    const sliders = getSliders();
+    expect(sliders[0]).not.toHaveAttribute('aria-valuetext');
+    expect(sliders[1]).not.toHaveAttribute('aria-valuetext');
+  });
+
+  it('sets aria-valuetext for both thumbs from a string', () => {
+    render(<RangeSlider defaultValue={[20, 80]} thumbValueText="custom" />);
+    const sliders = getSliders();
+    expect(sliders[0]).toHaveAttribute('aria-valuetext', 'custom');
+    expect(sliders[1]).toHaveAttribute('aria-valuetext', 'custom');
+  });
+
+  it('sets aria-valuetext for both thumbs from callback', () => {
+    render(
+      <RangeSlider
+        defaultValue={[20, 80]}
+        scale={(value) => value * 10}
+        thumbValueText={(value) => `${value}%`}
+      />
+    );
+
+    const sliders = getSliders();
+    expect(sliders[0]).toHaveAttribute('aria-valuetext', '200%');
+    expect(sliders[1]).toHaveAttribute('aria-valuetext', '800%');
+  });
 });

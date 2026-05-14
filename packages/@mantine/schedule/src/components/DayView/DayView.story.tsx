@@ -787,3 +787,36 @@ export function EventResizeWithDragAndDrop() {
 export function ScrollAreaProps() {
   return <DayView date={new Date()} scrollAreaProps={{ mah: 600 }} />;
 }
+
+export function UnalignedEndTime() {
+  const events: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'Should sit exactly at 01:00 - 02:00',
+      start: `${today} 01:00:00`,
+      end: `${today} 02:00:00`,
+      color: 'blue',
+      payload: {},
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <Text size="xs" c="dimmed">
+          Reproduction of mantinedev/mantine#8887. With `intervalMinutes=60` and `endTime=02:30:00`,
+          the last slot is truncated to 30 minutes but rendered full-height. The event below should
+          align with the 01:00 grid line but appears offset (~01:10).
+        </Text>
+        <DayView
+          date={new Date()}
+          events={events}
+          startTime="00:00:00"
+          endTime="02:30:00"
+          intervalMinutes={60}
+          withAllDaySlot={false}
+        />
+      </Stack>
+    </div>
+  );
+}
