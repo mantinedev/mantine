@@ -121,7 +121,7 @@ export interface DropzoneProps
   /** If `false`, allow dropped items to take over the current browser window */
   preventDropOnDocument?: boolean;
 
-  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default true */
+  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default false */
   useFsAccessApi?: boolean;
 
   /** Use this to provide a custom file aggregator */
@@ -160,7 +160,7 @@ const defaultProps = {
   activateOnDrag: true,
   dragEventsBubbling: true,
   activateOnKeyboard: true,
-  useFsAccessApi: true,
+  useFsAccessApi: false,
   variant: 'light',
   rejectColor: 'red',
 } satisfies Partial<DropzoneProps>;

@@ -7,7 +7,7 @@ import {
 } from '../../core';
 import { Mark } from '../Mark';
 import { Text, TextProps, TextStylesNames, TextVariant } from '../Text';
-import { highlighter } from './highlighter/highlighter';
+import { foldAccents, highlighter } from './highlighter/highlighter';
 
 export interface HighlightTerm {
   /** Text to highlight */
@@ -24,7 +24,7 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * - string[]: multiple terms with same color
    * - HighlightTerm[]: multiple terms with custom colors per term
    *
-   * - Matching is case-insensitive
+   * - Matching is case-insensitive and accent-insensitive by default, use `caseInsensitive` and `accentInsensitive` props to control this behavior
    * - Regex special characters are automatically escaped
    * - When multiple substrings are provided, longer matches take precedence
    * - Empty strings and whitespace-only strings are ignored
@@ -51,6 +51,19 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * @default false
    */
   wholeWord?: boolean;
+
+  /**
+   * Perform case-insensitive matching.
+   * @default true
+   */
+  caseInsensitive?: boolean;
+
+  /**
+   * Perform accent-insensitive matching.
+   * When enabled cafe will match cafe, café, cafè, etc.
+   * @default true
+   */
+  accentInsensitive?: boolean;
 }
 
 export type HighlightFactory = PolymorphicFactory<{
@@ -64,23 +77,42 @@ export type HighlightFactory = PolymorphicFactory<{
 const defaultProps = {
   color: 'yellow',
   wholeWord: false,
+  caseInsensitive: true,
+  accentInsensitive: true,
 } satisfies Partial<HighlightProps>;
 
 export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
-  const { unstyled, children, highlight, highlightStyles, color, wholeWord, ...others } = useProps(
-    'Highlight',
-    defaultProps,
-    _props
-  );
+  const {
+    unstyled,
+    children,
+    highlight,
+    highlightStyles,
+    color,
+    wholeWord,
+    caseInsensitive,
+    accentInsensitive,
+    ...others
+  } = useProps('Highlight', defaultProps, _props);
 
   const isTermArray = Array.isArray(highlight) && typeof highlight[0] === 'object';
   const colorMap = new Map<string, string>();
+
+  const normalizeKey = (s: string) => {
+    let key = s;
+    if (caseInsensitive) {
+      key = key.toLowerCase();
+    }
+    if (accentInsensitive) {
+      key = foldAccents(key);
+    }
+    return key;
+  };
 
   let highlightStrings: string[];
   if (isTermArray) {
     highlightStrings = (highlight as HighlightTerm[]).map((term) => {
       if (term.color) {
-        colorMap.set(term.text.toLowerCase(), term.color);
+        colorMap.set(normalizeKey(term.text), term.color);
       }
       return term.text;
     });
@@ -90,7 +122,11 @@ export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
     highlightStrings = [highlight as string];
   }
 
-  const highlightChunks = highlighter(children, highlightStrings, { wholeWord });
+  const highlightChunks = highlighter(children, highlightStrings, {
+    wholeWord,
+    caseInsensitive,
+    accentInsensitive,
+  });
 
   return (
     <Text unstyled={unstyled} {...others} __staticSelector="Highlight">
@@ -99,7 +135,7 @@ export const Highlight = polymorphicFactory<HighlightFactory>((_props) => {
           <Mark
             unstyled={unstyled}
             key={i}
-            color={colorMap.get(chunk.toLowerCase()) || color}
+            color={colorMap.get(normalizeKey(chunk)) || color}
             style={highlightStyles}
             data-highlight={chunk}
           >

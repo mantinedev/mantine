@@ -1,4 +1,5 @@
-import { screen } from '@testing-library/react';
+import { useState } from 'react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
 import { TagsInput, TagsInputProps, TagsInputStylesNames } from './TagsInput';
@@ -39,6 +40,12 @@ describe('@mantine/core/TagsInput', () => {
     component: TagsInput,
     props: defaultProps,
     selector: 'input',
+  });
+
+  tests.itSupportsSharedInputDefaults<TagsInputProps>({
+    component: TagsInput,
+    props: defaultProps,
+    componentName: 'TagsInput',
   });
 
   it('correctly handles custom isDuplicate', async () => {
@@ -326,5 +333,93 @@ describe('@mantine/core/TagsInput', () => {
 
     const tags = screen.queryAllByText(/^(One|one|ONE)$/);
     expect(tags).toHaveLength(3);
+  });
+
+  describe('withPillsReorder', () => {
+    function Controlled({
+      onChangeSpy,
+      renderPill,
+    }: {
+      onChangeSpy?: (value: string[]) => void;
+      renderPill?: TagsInputProps['renderPill'];
+    }) {
+      const [value, setValue] = useState(['a', 'b', 'c']);
+      return (
+        <TagsInput
+          {...defaultProps}
+          data={[]}
+          withPillsReorder
+          renderPill={renderPill}
+          value={value}
+          onChange={(next) => {
+            setValue(next);
+            onChangeSpy?.(next);
+          }}
+        />
+      );
+    }
+
+    const getPills = () =>
+      Array.from(document.querySelectorAll<HTMLElement>('[data-mantine-pill-index]'));
+
+    it('keeps pills out of the tab order and exposes aria-keyshortcuts', () => {
+      render(<Controlled />);
+      const pills = getPills();
+      expect(pills).toHaveLength(3);
+      pills.forEach((pill) => {
+        expect(pill).toHaveAttribute('tabindex', '-1');
+        expect(pill).toHaveAttribute('aria-keyshortcuts', 'Alt+ArrowLeft Alt+ArrowRight');
+      });
+    });
+
+    it('does not enable reorder when disabled or readOnly', () => {
+      const { rerender } = render(
+        <TagsInput {...defaultProps} value={['a', 'b']} withPillsReorder disabled />
+      );
+      expect(getPills()).toHaveLength(0);
+      rerender(<TagsInput {...defaultProps} value={['a', 'b']} withPillsReorder readOnly />);
+      expect(getPills()).toHaveLength(0);
+    });
+
+    it('reorders pills with Alt+Arrow keys and follows focus', async () => {
+      const spy = jest.fn();
+      render(<Controlled onChangeSpy={spy} />);
+      getPills()[0].focus();
+      await userEvent.keyboard('{Alt>}{ArrowRight}{/Alt}');
+      expect(spy).toHaveBeenLastCalledWith(['b', 'a', 'c']);
+      expect(getPills()[1]).toHaveFocus();
+    });
+
+    it('focuses the last pill when ArrowLeft is pressed in the empty input', async () => {
+      render(<Controlled />);
+      const input = screen.getByRole('combobox');
+      act(() => input.focus());
+      await userEvent.keyboard('{ArrowLeft}');
+      const pills = getPills();
+      expect(pills[pills.length - 1]).toHaveFocus();
+    });
+
+    it('navigates between pills with bare ArrowLeft / ArrowRight', async () => {
+      render(<Controlled />);
+      const pills = getPills();
+      pills[2].focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(pills[1]).toHaveFocus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(pills[2]).toHaveFocus();
+    });
+
+    it('returns focus to the input on ArrowRight from the last pill, even when renderPill contains another input', async () => {
+      const renderPill: TagsInputProps['renderPill'] = ({ value, reorderProps }) => (
+        <span {...reorderProps} data-testid={`custom-pill-${value}`}>
+          <input data-testid={`pill-input-${value}`} aria-label={`pill-${value}`} />
+        </span>
+      );
+      render(<Controlled renderPill={renderPill} />);
+      const pills = getPills();
+      pills[pills.length - 1].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('combobox')).toHaveFocus();
+    });
   });
 });

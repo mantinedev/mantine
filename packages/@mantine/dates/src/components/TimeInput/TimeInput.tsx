@@ -36,7 +36,7 @@ export type TimeInputFactory = Factory<{
 }>;
 
 export const TimeInput = factory<TimeInputFactory>((_props) => {
-  const props = useProps('TimeInput', { size: 'sm' } satisfies Partial<TimeInputProps>, _props);
+  const props = useProps(['Input', 'InputWrapper', 'TimeInput'], null, _props);
   const {
     classNames,
     styles,

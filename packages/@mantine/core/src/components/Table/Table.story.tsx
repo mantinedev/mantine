@@ -72,6 +72,78 @@ export function StickyHeader() {
   );
 }
 
+export function StickyHeaderBorderVariants() {
+  const longRows = Array.from({ length: 10 }, (_, i) => (
+    <Table.Tr key={i}>
+      <Table.Td>{i + 1}</Table.Td>
+      <Table.Td>Carbon</Table.Td>
+      <Table.Td>C</Table.Td>
+      <Table.Td>12.011</Table.Td>
+    </Table.Tr>
+  ));
+
+  const variants = [
+    {
+      title: 'withColumnBorders + withTableBorder + withRowBorders (default)',
+      props: { withColumnBorders: true, withTableBorder: true },
+    },
+    { title: 'withColumnBorders only', props: { withColumnBorders: true } },
+    {
+      title: 'withColumnBorders, withRowBorders=false',
+      props: { withColumnBorders: true, withRowBorders: false },
+    },
+    { title: 'No borders (withRowBorders=false)', props: { withRowBorders: false } },
+    { title: 'withTableBorder only', props: { withTableBorder: true } },
+    {
+      title: 'withColumnBorders + withTableBorder, withRowBorders=false',
+      props: { withColumnBorders: true, withTableBorder: true, withRowBorders: false },
+    },
+  ] as const;
+
+  return (
+    <div style={{ padding: 40, display: 'grid', gap: 32 }}>
+      {variants.map((variant) => (
+        <div key={variant.title}>
+          <h3 style={{ marginBottom: 8 }}>{variant.title}</h3>
+          <div style={{ maxHeight: 200, overflow: 'auto', border: '1px dashed #999' }}>
+            <Table stickyHeader {...variant.props}>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Position</Table.Th>
+                  <Table.Th>Name</Table.Th>
+                  <Table.Th>Symbol</Table.Th>
+                  <Table.Th>Mass</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>{longRows}</Table.Tbody>
+            </Table>
+          </div>
+        </div>
+      ))}
+
+      <div>
+        <h3 style={{ marginBottom: 8 }}>Sticky header with rowSpan</h3>
+        <div style={{ maxHeight: 240, overflow: 'auto', border: '1px dashed #999' }}>
+          <Table stickyHeader withColumnBorders withTableBorder>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th rowSpan={2}>Position</Table.Th>
+                <Table.Th colSpan={2}>Identity</Table.Th>
+                <Table.Th rowSpan={2}>Mass</Table.Th>
+              </Table.Tr>
+              <Table.Tr>
+                <Table.Th>Name</Table.Th>
+                <Table.Th>Symbol</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{longRows}</Table.Tbody>
+          </Table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function VerticalVariant() {
   return (
     <div style={{ padding: 40 }}>

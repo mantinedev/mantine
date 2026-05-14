@@ -1,4 +1,4 @@
-import { useMask, useMergedRef } from '@mantine/hooks';
+import { assignRef, useMask, useMergedRef } from '@mantine/hooks';
 import type { MaskInputProps } from './MaskInput';
 
 export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTMLInputElement> }) {
@@ -15,11 +15,12 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
     onChangeRaw,
     onComplete,
     beforeMaskedStateChange,
+    resetRef,
     ref,
     ...elementProps
   } = props;
 
-  const { ref: maskCallbackRef } = useMask({
+  const { ref: maskCallbackRef, reset } = useMask({
     mask,
     tokens,
     modify,
@@ -33,6 +34,8 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
     onComplete,
     beforeMaskedStateChange,
   });
+
+  assignRef(resetRef, reset);
 
   const maskRef = useMergedRef(ref, maskCallbackRef);
 

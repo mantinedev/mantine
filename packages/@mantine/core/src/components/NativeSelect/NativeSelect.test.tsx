@@ -35,6 +35,12 @@ describe('@mantine/core/NativeSelect', () => {
     selector: 'select',
   });
 
+  tests.itSupportsSharedInputDefaults<NativeSelectProps>({
+    component: NativeSelect,
+    props: defaultProps,
+    componentName: 'NativeSelect',
+  });
+
   it('renders options from data prop', () => {
     const { container, rerender } = render(<NativeSelect data={['test-1', 'test-2']} />);
     expect(container.querySelectorAll('option')).toHaveLength(2);

@@ -55,6 +55,49 @@ describe('@mantine/core/Switch', () => {
     expect(screen.getByRole('switch')).toBeDisabled();
   });
 
+  it('has aria-describedby attribute with id of description element', () => {
+    render(<Switch description="test-description" />);
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-describedby',
+      screen.getByText('test-description').id
+    );
+  });
+
+  it('has aria-describedby attribute with id of error element', () => {
+    render(<Switch error="test-error" />);
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-describedby',
+      screen.getByText('test-error').id
+    );
+  });
+
+  it('has aria-describedby attribute with description and error ids', () => {
+    render(<Switch description="test-description" error="test-error" />);
+    const description = screen.getByText('test-description');
+    const error = screen.getByText('test-error');
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-describedby',
+      `${description.id} ${error.id}`
+    );
+  });
+
+  it('merges user-supplied aria-describedby with description and error ids', () => {
+    render(
+      <Switch description="test-description" error="test-error" aria-describedby="extra-id" />
+    );
+    const description = screen.getByText('test-description');
+    const error = screen.getByText('test-error');
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-describedby',
+      `${description.id} ${error.id} extra-id`
+    );
+  });
+
+  it('does not link aria-describedby to error when error is a boolean', () => {
+    render(<Switch error />);
+    expect(screen.getByRole('switch')).not.toHaveAttribute('aria-describedby');
+  });
+
   it('exposes SwitchGroup component', () => {
     expect(Switch.Group).toBe(SwitchGroup);
   });

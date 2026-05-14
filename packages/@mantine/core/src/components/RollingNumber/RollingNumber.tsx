@@ -52,6 +52,9 @@ export interface RollingNumberProps
 
   /** If set, use tabular (monospace) numbers @default true */
   tabularNumbers?: boolean;
+
+  /** If set, the root element acts as an `aria-live="polite"` region (`role="status"`) and screen readers announce every value change. When `false`, the root uses `role="img"` so the current value is still accessible but updates are not announced. @default false */
+  withLiveRegion?: boolean;
 }
 
 export type RollingNumberFactory = Factory<{
@@ -96,6 +99,7 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
     animationDuration,
     timingFunction,
     tabularNumbers,
+    withLiveRegion,
     mod,
     attributes,
     ...others
@@ -121,6 +125,8 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
   useEffect(() => {
     previousValueRef.current = value;
   });
+
+  const valueDirection: 'up' | 'down' = value >= previousValue ? 'up' : 'down';
 
   const current = getDigitParts({ value, decimalScale, fixedDecimalScale });
   const prev = getDigitParts({ value: previousValue, decimalScale, fixedDecimalScale });
@@ -148,7 +154,7 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
     <Box
       {...getStyles('root')}
       mod={[{ 'tabular-numbers': tabularNumbers }, mod]}
-      role="status"
+      role={withLiveRegion ? 'status' : 'img'}
       aria-label={accessibleValue}
       {...others}
     >
@@ -161,6 +167,7 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
               previousDigit={slot.previousDigit}
               getStyles={getStyles}
               empty={slot.empty}
+              valueDirection={valueDirection}
             />
           );
         }

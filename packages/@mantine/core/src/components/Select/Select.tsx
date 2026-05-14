@@ -126,7 +126,7 @@ const defaultProps = {
 } satisfies Partial<SelectProps>;
 
 export const Select = genericFactory<SelectFactory>((_props) => {
-  const props = useProps('Select', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'Select'], defaultProps, _props);
   const {
     classNames,
     styles,

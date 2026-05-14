@@ -68,7 +68,7 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
   {
     id: 'StaticMode',
     name: 'Static mode',
-    description: 'AppShell with position: sticky sections',
+    description: 'AppShell rendered in normal document flow using CSS Grid',
   },
   {
     id: 'NestedAppShell',

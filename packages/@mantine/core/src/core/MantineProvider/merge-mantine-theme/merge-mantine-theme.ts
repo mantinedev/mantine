@@ -45,8 +45,11 @@ export function mergeMantineTheme(
 
   const result = deepMerge(currentTheme, themeOverride);
 
+  // deepMerge does a shallow root spread, so result.headings still aliases
+  // currentTheme.headings when the override has no `headings` key. Reassign
+  // rather than mutate to keep the input (typically DEFAULT_THEME) untouched.
   if (themeOverride.fontFamily && !themeOverride.headings?.fontFamily) {
-    result.headings.fontFamily = themeOverride.fontFamily;
+    result.headings = { ...result.headings, fontFamily: themeOverride.fontFamily };
   }
 
   validateMantineTheme(result);

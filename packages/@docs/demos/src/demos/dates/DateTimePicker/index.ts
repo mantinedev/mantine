@@ -5,6 +5,7 @@ export { configurator } from './DateTimePicker.demo.configurator';
 export { clearable } from './DateTimePicker.demo.clearable';
 export { clearSectionMode } from './DateTimePicker.demo.clearSectionMode';
 export { format } from './DateTimePicker.demo.format';
+export { formatFunction } from './DateTimePicker.demo.formatFunction';
 export { disabled } from './DateTimePicker.demo.disabled';
 export { timePickerProps } from './DateTimePicker.demo.timePickerProps';
 export { presets } from './DateTimePicker.demo.presets';

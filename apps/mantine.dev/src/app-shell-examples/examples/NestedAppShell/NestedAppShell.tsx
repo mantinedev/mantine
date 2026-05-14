@@ -15,8 +15,8 @@ export function NestedAppShell() {
         </Text>
         <Text mb="md">
           This example demonstrates a static mode AppShell nested inside a fixed mode AppShell. The
-          outer shell uses fixed positioning, while the inner shell uses static positioning with
-          sticky sections.
+          outer shell uses fixed positioning, while the inner shell renders its sections as part of
+          the normal document flow using CSS Grid.
         </Text>
 
         <AppShell
@@ -36,11 +36,11 @@ export function NestedAppShell() {
           </AppShell.Header>
           <AppShell.Navbar p="md">
             <Text size="sm" mb="sm" fw={500}>
-              Inner Navbar (Sticky)
+              Inner Navbar
             </Text>
             <Text size="sm">
-              This navbar uses position: sticky and will stick within the scrollable area of the
-              inner AppShell.
+              This navbar is rendered as part of the inner AppShell's CSS Grid layout, within the
+              normal document flow.
             </Text>
           </AppShell.Navbar>
           <AppShell.Main>
@@ -48,13 +48,13 @@ export function NestedAppShell() {
               Inner Main Content
             </Text>
             <Text size="sm" mb="sm">
-              Scroll this inner content area to see the sticky behavior of the inner header and
-              navbar. They stick within their container, which is the inner AppShell.
+              The inner header and navbar are placed in a CSS Grid layout within the inner AppShell
+              and rendered as part of the normal document flow.
             </Text>
             {Array.from({ length: 20 }, (_, index) => (
               <Text key={index} size="sm" mb="xs">
                 Inner paragraph {index + 1}: This demonstrates how static mode works within a nested
-                context. The sticky sections remain visible as you scroll within this container.
+                context. Sections are placed in a CSS Grid layout as part of the document flow.
               </Text>
             ))}
           </AppShell.Main>

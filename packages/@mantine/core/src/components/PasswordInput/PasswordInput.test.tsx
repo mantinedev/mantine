@@ -61,6 +61,12 @@ describe('@mantine/core/PasswordInput', () => {
     selector: 'input',
   });
 
+  tests.itSupportsSharedInputDefaults<PasswordInputProps>({
+    component: PasswordInput,
+    props: defaultProps,
+    componentName: 'PasswordInput',
+  });
+
   it('sets aria-pressed="false" on visibility toggle button when password is hidden', () => {
     render(<PasswordInput label="Password" />);
     const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });

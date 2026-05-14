@@ -28,4 +28,10 @@ describe('@mantine/core/ColorInput', () => {
     props: defaultProps,
     selector: 'input',
   });
+
+  tests.itSupportsSharedInputDefaults<ColorInputProps>({
+    component: ColorInput,
+    props: defaultProps,
+    componentName: 'ColorInput',
+  });
 });

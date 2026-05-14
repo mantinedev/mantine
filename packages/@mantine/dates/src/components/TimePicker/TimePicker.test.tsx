@@ -21,6 +21,12 @@ describe('@mantine/dates/TimePicker', () => {
     stylesApiSelectors: ['root'],
   });
 
+  tests.itSupportsSharedInputDefaults<TimePickerProps>({
+    component: TimePicker,
+    props: defaultProps,
+    componentName: 'TimePicker',
+  });
+
   it('manages focus properly (24h format)', async () => {
     render(<TimePicker {...defaultProps} withSeconds format="24h" />);
 

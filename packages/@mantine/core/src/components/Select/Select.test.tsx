@@ -43,6 +43,12 @@ describe('@mantine/core/Select', () => {
     selector: 'input',
   });
 
+  tests.itSupportsSharedInputDefaults<SelectProps>({
+    component: Select,
+    props: defaultProps,
+    componentName: 'Select',
+  });
+
   it('supports uncontrolled state', async () => {
     render(<Select {...defaultProps} />);
     await userEvent.click(screen.getByRole('combobox'));

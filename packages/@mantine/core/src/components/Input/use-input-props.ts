@@ -13,7 +13,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(
   defaultProps: U,
   _props: T
 ) {
-  const props = useProps<T, U>(component, defaultProps, _props);
+  const props = useProps<T, U>(['Input', 'InputWrapper', component], defaultProps, _props);
   const {
     label,
     description,

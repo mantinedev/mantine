@@ -52,7 +52,7 @@ type DatePickerInputComponent = (<Type extends DatePickerType = 'default'>(
 
 export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInputFactory>(
   (_props) => {
-    const props = useProps('DatePickerInput', defaultProps, _props);
+    const props = useProps(['Input', 'InputWrapper', 'DatePickerInput'], defaultProps, _props);
     const {
       type,
       value,

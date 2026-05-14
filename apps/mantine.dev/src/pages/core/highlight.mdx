@@ -9,17 +9,31 @@ export default Layout(MDX_DATA.Highlight);
 Use the Highlight component to highlight substrings within text using the HTML `<mark>` element.
 
 Pass the text as children and specify which substring(s) to highlight with the `highlight` prop.
-Matching is **case-insensitive** and highlights all occurrences of the matched substring.
+Matching is **case-insensitive** and **accent-insensitive** by default, and highlights all occurrences
+of the matched substring. Use the `caseInsensitive` and `accentInsensitive` props to opt out.
 
 <Demo data={HighlightDemos.usage} />
 
 ## Matching behavior
 
-- **Case-insensitive**: 'hello' matches 'Hello', 'HELLO', 'hElLo', etc.
+- **Case-insensitive**: 'hello' matches 'Hello', 'HELLO', 'hElLo', etc. (controlled by `caseInsensitive`, defaults to `true`)
+- **Accent-insensitive**: 'cafe' matches 'café', 'cafè', 'CAFÉ', etc. (controlled by `accentInsensitive`, defaults to `true`)
 - **All occurrences**: Every instance of the matched substring is highlighted
 - **Special characters**: Regex special characters like `[`, `]`, `(`, `)` are automatically escaped and treated as literal text
 - **Whitespace**: Leading and trailing whitespace in highlight strings is trimmed and ignored
 - **Empty strings**: Empty or whitespace-only highlight strings are ignored
+
+## Case-sensitive matching
+
+Set `caseInsensitive={false}` to only match substrings with the same casing as the highlight term:
+
+<Demo data={HighlightDemos.caseInsensitive} />
+
+## Accent-sensitive matching
+
+Set `accentInsensitive={false}` to require accented characters in the text to match the highlight term exactly:
+
+<Demo data={HighlightDemos.accentInsensitive} />
 
 ## Highlight multiple substrings
 

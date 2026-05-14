@@ -52,7 +52,7 @@ type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 
 export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInputFactory>(
   (_props) => {
-    const props = useProps('YearPickerInput', defaultProps, _props);
+    const props = useProps(['Input', 'InputWrapper', 'YearPickerInput'], defaultProps, _props);
     const {
       type,
       value,

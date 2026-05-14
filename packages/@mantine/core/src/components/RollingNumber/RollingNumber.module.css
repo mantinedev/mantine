@@ -27,7 +27,7 @@
 .digitColumn {
   display: flex;
   flex-direction: column;
-  transition: transform var(--rn-duration) var(--rn-timing-function);
+  animation: mantine-rolling-number-roll var(--rn-duration) var(--rn-timing-function);
 
   & > span {
     display: flex;
@@ -46,5 +46,15 @@
   &[data-empty] {
     width: 0;
     opacity: 0;
+  }
+}
+
+@keyframes mantine-rolling-number-roll {
+  from {
+    transform: var(--rn-roll-from);
+  }
+
+  to {
+    transform: var(--rn-roll-to);
   }
 }

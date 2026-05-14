@@ -1,6 +1,6 @@
 {
   "name": "@mantine/notifications",
-  "version": "9.1.0",
+  "version": "9.2.1",
   "description": "Mantine notifications system",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -44,20 +44,20 @@
     "directory": "packages/@mantine/notifications"
   },
   "peerDependencies": {
-    "@mantine/core": "9.1.0",
-    "@mantine/hooks": "9.1.0",
+    "@mantine/core": "9.2.1",
+    "@mantine/hooks": "9.2.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "dependencies": {
-    "@mantine/store": "9.1.0",
+    "@mantine/store": "9.2.1",
     "react-transition-group": "4.4.5"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.2.5",
-    "react-dom": "19.2.5"
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   }
 }

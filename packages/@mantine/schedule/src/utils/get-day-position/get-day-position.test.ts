@@ -74,6 +74,25 @@ describe('@mantine/schedule/get-day-position', () => {
     expect(result.height).toBeCloseTo(100, 1); // ~24 hours
   });
 
+  it('aligns canvas to whole slots when endTime does not divide evenly (issue #8887)', () => {
+    const event = testUtils.createEvent({
+      start: `${testUtils.testDate} 01:00:00`,
+      end: `${testUtils.testDate} 02:00:00`,
+    });
+
+    // startTime=00:00, endTime=02:30, intervalMinutes=60 renders three full-height slots
+    // covering 180 minutes visually. Position must be computed against that canvas, not 150 min.
+    const result = getDayPosition({
+      event,
+      startTime: '00:00:00',
+      endTime: '02:30:00',
+      intervalMinutes: 60,
+    });
+
+    expect(result.top).toBeCloseTo(33.333, 2); // 1h / 3 slots
+    expect(result.height).toBeCloseTo(33.333, 2); // 1h / 3 slots
+  });
+
   it('handles event at exact startTime/endTime boundaries', () => {
     const event = testUtils.createEvent({
       start: `${testUtils.testDate} 09:00:00`,

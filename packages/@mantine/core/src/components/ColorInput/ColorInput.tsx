@@ -109,7 +109,7 @@ const varsResolver = createVarsResolver<ColorInputFactory>((_, { size }) => ({
 }));
 
 export const ColorInput = factory<ColorInputFactory>((_props) => {
-  const props = useProps('ColorInput', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'ColorInput'], defaultProps, _props);
   const {
     classNames,
     styles,

@@ -7,6 +7,7 @@ export default { title: 'Dropzone' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
+      {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus -- Dropzone manages tabIndex internally via react-dropzone's getRootProps */}
       <Dropzone onDrop={console.log} accept={['image/jpeg', 'image/png']} role="button">
         <div>Drag and drop files</div>
       </Dropzone>

@@ -113,6 +113,7 @@ export function SpinInput({
   return (
     <input
       type="text"
+      // eslint-disable-next-line jsx-a11y/no-redundant-roles -- input type="text" has implicit role textbox, not spinbutton; the role is required here because this text input acts as a spinbutton
       role="spinbutton"
       aria-valuemin={min}
       aria-valuemax={max}

@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
+import { clampIntervalMinutes } from '../utils/clamp-interval-minutes/clamp-interval-minutes';
 import { parseTimeString } from '../utils/parse-time-string/parse-time-string';
 
 type ResizeEdge = 'top' | 'bottom';
@@ -52,15 +53,17 @@ export function useEventResize({
   const parsedEndTime = parseTimeString(endTime);
   const startMinutes = parsedStartTime.hours * 60 + parsedStartTime.minutes;
   const endMinutes = parsedEndTime.hours * 60 + parsedEndTime.minutes;
-  const totalMinutes = endMinutes - startMinutes;
-  const minHeightPercent = (intervalMinutes / totalMinutes) * 100;
+  const clampedInterval = clampIntervalMinutes(intervalMinutes);
+  const literalRange = endMinutes - startMinutes;
+  const totalMinutes = Math.ceil(literalRange / clampedInterval) * clampedInterval;
+  const minHeightPercent = (clampedInterval / totalMinutes) * 100;
 
   const clampAndSnap = useCallback(
     (minutes: number): number => {
-      const snapped = Math.round(minutes / intervalMinutes) * intervalMinutes;
-      return Math.max(0, Math.min(totalMinutes, snapped));
+      const snapped = Math.round(minutes / clampedInterval) * clampedInterval;
+      return Math.max(0, Math.min(literalRange, snapped));
     },
-    [totalMinutes, intervalMinutes]
+    [literalRange, clampedInterval]
   );
 
   const percentToDateTime = useCallback(

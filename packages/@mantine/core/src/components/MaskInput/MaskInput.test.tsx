@@ -1,4 +1,6 @@
-import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
+import { createRef } from 'react';
+import { act, fireEvent } from '@testing-library/react';
+import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { MaskInput, MaskInputProps } from './MaskInput';
 
@@ -27,5 +29,34 @@ describe('@mantine/core/MaskInput', () => {
     component: MaskInput,
     props: defaultProps,
     selector: 'input',
+  });
+
+  tests.itSupportsSharedInputDefaults<MaskInputProps>({
+    component: MaskInput,
+    props: defaultProps,
+    componentName: 'MaskInput',
+  });
+
+  it('clears the input value when resetRef is called', () => {
+    const resetRef = createRef<() => void>();
+    const onChangeRaw = jest.fn();
+    const { container } = render(
+      <MaskInput mask="999-999" resetRef={resetRef} onChangeRaw={onChangeRaw} />
+    );
+
+    const input = container.querySelector('input')!;
+
+    act(() => {
+      input.focus();
+      fireEvent.input(input, { target: { value: '123' } });
+    });
+    expect(input.value.length).toBeGreaterThan(0);
+
+    act(() => {
+      resetRef.current?.();
+    });
+
+    expect(input.value).toBe('');
+    expect(onChangeRaw).toHaveBeenLastCalledWith('', '');
   });
 });
