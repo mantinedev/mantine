@@ -61,8 +61,8 @@ export interface InlineDateTimePickerProps<Type extends DatePickerType = 'defaul
   /** Called when the submit button is clicked */
   onSubmit?: () => void;
 
-  /** `dayjs` format for range display @default "DD/MM/YYYY HH:mm" */
-  valueFormat?: string;
+  /** `dayjs` format for range display, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm" */
+  valueFormat?: string | ((date: DateStringValue) => string);
 
   /** Separator between range values */
   labelSeparator?: string;
@@ -282,8 +282,15 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
       return '';
     }
 
-    const formatDate = (v: DateStringValue | null) =>
-      v ? dayjs(v).locale(ctx.getLocale(locale)).format(_valueFormat) : '';
+    const formatDate = (v: DateStringValue | null) => {
+      if (!v) {
+        return '';
+      }
+      if (typeof _valueFormat === 'function') {
+        return _valueFormat(v);
+      }
+      return dayjs(v).locale(ctx.getLocale(locale)).format(_valueFormat);
+    };
 
     const start = formatDate(_value[0]);
     const end = formatDate(_value[1]);

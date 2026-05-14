@@ -8,9 +8,16 @@ interface GetDayViewEventsInput {
   date: AnyDateValue;
   startTime?: string;
   endTime?: string;
+  intervalMinutes?: number;
 }
 
-export function getDayViewEvents({ events, date, startTime, endTime }: GetDayViewEventsInput) {
+export function getDayViewEvents({
+  events,
+  date,
+  startTime,
+  endTime,
+  intervalMinutes,
+}: GetDayViewEventsInput) {
   if (events === undefined) {
     return {
       allDayEvents: [],
@@ -61,6 +68,7 @@ export function getDayViewEvents({ events, date, startTime, endTime }: GetDayVie
     events: filteredEvents,
     startTime,
     endTime,
+    intervalMinutes,
     date,
   });
 
@@ -105,7 +113,12 @@ export function getDayViewEvents({ events, date, startTime, endTime }: GetDayVie
         },
       });
     } else {
-      const { top, height } = getDayPosition({ event: clippedEvent, startTime, endTime });
+      const { top, height } = getDayPosition({
+        event: clippedEvent,
+        startTime,
+        endTime,
+        intervalMinutes,
+      });
       if (height <= 0) {
         continue;
       }

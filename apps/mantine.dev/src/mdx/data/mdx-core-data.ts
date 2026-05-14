@@ -663,7 +663,8 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Create custom select, autocomplete or multiselect inputs',
     source: '@mantine/core/src/components/Combobox/Combobox.tsx',
     docs: 'core/combobox.mdx',
-    searchTags: 'dropdown, autocomplete, typeahead, listbox, select custom, options',
+    searchTags:
+      'dropdown, autocomplete, typeahead, listbox, select custom, options, useCombobox, use-combobox',
   },
 
   Modal: {
@@ -675,7 +676,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'An accessible overlay dialog',
     source: '@mantine/core/src/components/Modal/Modal.tsx',
     docs: 'core/modal.mdx',
-    searchTags: 'dialog, popup, window, overlay, lightbox',
+    searchTags: 'dialog, popup, window, overlay, lightbox, useModalsStack, use-modals-stack',
   },
 
   Drawer: {
@@ -687,7 +688,8 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Display overlay area at any side of the screen',
     source: '@mantine/core/src/components/Drawer/Drawer.tsx',
     docs: 'core/drawer.mdx',
-    searchTags: 'side panel, offcanvas, sliding panel, sidebar overlay, sheet',
+    searchTags:
+      'side panel, offcanvas, sliding panel, sidebar overlay, sheet, useDrawersStack, use-drawers-stack',
   },
 
   Accordion: {
@@ -1238,7 +1240,8 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Display a Tree structure',
     source: '@mantine/core/src/components/Tree/Tree.tsx',
     docs: 'core/tree.mdx',
-    searchTags: 'tree view, hierarchy, nested list, folder tree, file explorer, directory tree',
+    searchTags:
+      'tree view, hierarchy, nested list, folder tree, file explorer, directory tree, useTree, use-tree',
   },
 
   TreeSelect: {

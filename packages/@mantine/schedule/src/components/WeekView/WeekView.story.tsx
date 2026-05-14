@@ -641,3 +641,37 @@ export function StaticMode() {
     </div>
   );
 }
+
+export function UnalignedEndTime() {
+  const day = _weekStart.add(1, 'day').format('YYYY-MM-DD');
+  const events: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'Should sit exactly at 01:00 - 02:00',
+      start: `${day} 01:00:00`,
+      end: `${day} 02:00:00`,
+      color: 'blue',
+      payload: {},
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <Text size="xs" c="dimmed">
+          Reproduction of mantinedev/mantine#8887. With `intervalMinutes=60` and `endTime=02:30:00`,
+          the last slot is truncated to 30 minutes but rendered full-height. The event should align
+          with the 01:00 grid line but appears offset (~01:10).
+        </Text>
+        <WeekView
+          date={new Date()}
+          events={events}
+          startTime="00:00:00"
+          endTime="02:30:00"
+          intervalMinutes={60}
+          withAllDaySlots={false}
+        />
+      </Stack>
+    </div>
+  );
+}

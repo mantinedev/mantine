@@ -1,6 +1,18 @@
 import { act, renderHook } from '@testing-library/react';
 import { FormMode } from '../../types';
 import { useForm } from '../../use-form';
+import {
+  hasLength,
+  isEmail,
+  isInRange,
+  isJSONString,
+  isNotEmpty,
+  isNotEmptyHTML,
+  isOneOf,
+  isUrl,
+  matches,
+  matchesField,
+} from '../../validators';
 
 function tests(mode: FormMode) {
   it('validate() with all sync rules returns plain object (not Promise)', () => {
@@ -243,6 +255,45 @@ function tests(mode: FormMode) {
     });
 
     expect(handleSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  it('isValid() returns boolean (not Promise) when using built-in validators', () => {
+    const hook = renderHook(() =>
+      useForm({
+        mode,
+        initialValues: {
+          email: '',
+          name: '',
+          url: '',
+          range: 0,
+          json: '',
+          html: '',
+          oneOf: '',
+          pattern: '',
+          password: '',
+          passwordConfirm: '',
+        },
+        validate: {
+          email: isEmail('Invalid email'),
+          name: isNotEmpty('Required'),
+          url: isUrl('Invalid URL'),
+          range: isInRange({ min: 1, max: 10 }, 'Out of range'),
+          json: isJSONString('Invalid JSON'),
+          html: isNotEmptyHTML('Required'),
+          oneOf: isOneOf(['a', 'b'], 'Invalid'),
+          pattern: matches(/^[a-z]+$/, 'Invalid'),
+          password: hasLength({ min: 8 }, 'Too short'),
+          passwordConfirm: matchesField('password', 'Does not match'),
+        },
+      })
+    );
+
+    const result = hook.result.current.isValid();
+    expect(result).not.toBeInstanceOf(Promise);
+    expect(result).toBe(false);
+
+    const _typeCheck: boolean = hook.result.current.isValid();
+    void _typeCheck;
   });
 
   it('onSubmit calls failure handler with sync validation errors', () => {

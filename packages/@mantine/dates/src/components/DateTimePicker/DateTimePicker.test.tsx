@@ -68,6 +68,12 @@ describe('@mantine/dates/DateTimePicker', () => {
     selector: 'button',
   });
 
+  tests.itSupportsSharedInputDefaults<DateTimePickerProps>({
+    component: DateTimePicker,
+    props: defaultPropsWithInputProps,
+    componentName: 'DateTimePicker',
+  });
+
   datesTests.itSupportsClearableProps({
     component: DateTimePicker,
     props: {
@@ -225,6 +231,16 @@ describe('@mantine/dates/DateTimePicker', () => {
     expectValue(container, '11 April, 2022 02:45:54 PM');
   });
 
+  it('supports valueFormat as a function', () => {
+    const valueFormat = jest.fn((date: string) => `formatted-${date}`);
+    const { container } = render(
+      <DateTimePicker {...defaultProps} value="2022-04-11 14:45:54" valueFormat={valueFormat} />
+    );
+
+    expect(valueFormat).toHaveBeenCalledWith('2022-04-11 14:45:54');
+    expectValue(container, 'formatted-2022-04-11 14:45:54');
+  });
+
   it('supports localization for custom valueFormat', () => {
     const { container } = render(
       <DateTimePicker
@@ -371,6 +387,18 @@ describe('@mantine/dates/DateTimePicker', () => {
       );
 
       expectValue(container, '11/04/2022 14:30 – 15/04/2022 16:00');
+    });
+
+    it('supports valueFormat as a function in range mode', () => {
+      const { container } = render(
+        <DateTimePicker
+          {...rangeProps}
+          defaultValue={['2022-04-11 14:30:00', '2022-04-15 16:00:00']}
+          valueFormat={(date) => `f(${date})`}
+        />
+      );
+
+      expectValue(container, 'f(2022-04-11 14:30:00) – f(2022-04-15 16:00:00)');
     });
 
     it('supports range uncontrolled state', async () => {

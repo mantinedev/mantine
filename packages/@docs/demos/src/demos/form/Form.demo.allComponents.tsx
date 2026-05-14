@@ -12,6 +12,7 @@ import {
   Group,
   Input,
   JsonInput,
+  MaskInput,
   MultiSelect,
   NativeSelect,
   NumberInput,
@@ -1694,4 +1695,67 @@ export const tagsInput: MantineDemo = {
   type: 'code',
   component: DemoTagsInput,
   code: codeTagsInput,
+};
+
+const codeMaskInput = `
+import { MaskInput, Button, Group } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      phone: '',
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <MaskInput
+        mask="(999) 999-9999"
+        placeholder="(___) ___-____"
+        label="Phone"
+        key={form.key('phone')}
+        defaultValue={form.getValues().phone}
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+      />
+
+      <Group mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+`;
+
+function DemoMaskInput() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      phone: '',
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <MaskInput
+        mask="(999) 999-9999"
+        placeholder="(___) ___-____"
+        label="Phone"
+        key={form.key('phone')}
+        defaultValue={form.getValues().phone}
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+      />
+
+      <Group mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+
+export const maskInput: MantineDemo = {
+  type: 'code',
+  component: DemoMaskInput,
+  code: codeMaskInput,
 };

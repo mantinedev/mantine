@@ -71,6 +71,12 @@ describe('@mantine/core/TreeSelect', () => {
     selector: 'input',
   });
 
+  tests.itSupportsSharedInputDefaults<TreeSelectProps>({
+    component: TreeSelect,
+    props: defaultProps,
+    componentName: 'TreeSelect',
+  });
+
   it('opens/closes dropdown on input click', async () => {
     render(<TreeSelect {...defaultProps} />);
     expect(screen.queryByRole('listbox')).toBe(null);
@@ -608,6 +614,60 @@ describe('@mantine/core/TreeSelect', () => {
       await userEvent.click(screen.getByRole('textbox'));
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('');
+    });
+
+    it('preserves search query when checkbox click is rejected by maxValues', async () => {
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="checkbox"
+          maxValues={1}
+          searchable
+          defaultExpandAll
+          defaultValue={['apple']}
+          name="test"
+        />
+      );
+      const input = screen.getByRole('textbox');
+      await userEvent.click(input);
+      await userEvent.type(input, 'Ban');
+      await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
+      expect(document.querySelector('input[name="test"]')).toHaveValue('apple');
+      expect(input).toHaveValue('Ban');
+    });
+  });
+
+  describe('maxValues in multiple mode', () => {
+    it('preserves search query when click is rejected by maxValues', async () => {
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          maxValues={1}
+          searchable
+          defaultExpandAll
+          defaultValue={['apple']}
+          name="test"
+        />
+      );
+      const input = screen.getByRole('textbox');
+      await userEvent.click(input);
+      await userEvent.type(input, 'Ban');
+      await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
+      expect(document.querySelector('input[name="test"]')).toHaveValue('apple');
+      expect(input).toHaveValue('Ban');
+    });
+
+    it('clears search after a successful selection', async () => {
+      render(
+        <TreeSelect {...defaultProps} mode="multiple" searchable defaultExpandAll name="test" />
+      );
+      const input = screen.getByRole('textbox');
+      await userEvent.click(input);
+      await userEvent.type(input, 'App');
+      await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
+      expect(document.querySelector('input[name="test"]')).toHaveValue('apple');
+      expect(input).toHaveValue('');
     });
   });
 });

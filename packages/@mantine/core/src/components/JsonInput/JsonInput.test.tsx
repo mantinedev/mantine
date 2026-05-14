@@ -36,6 +36,12 @@ describe('@mantine/core/JsonInput', () => {
     selector: 'textarea',
   });
 
+  tests.itSupportsSharedInputDefaults<JsonInputProps>({
+    component: JsonInput,
+    props: defaultProps,
+    componentName: 'JsonInput',
+  });
+
   it('formats JSON on blur when formatOnBlur is true', async () => {
     const user = userEvent.setup();
     const { container } = render(<JsonInput formatOnBlur label="test" />);

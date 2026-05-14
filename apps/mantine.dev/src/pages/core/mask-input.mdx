@@ -47,6 +47,21 @@ This example auto-uppercases input so the `A` token accepts lowercase letters:
 
 <Demo data={MaskInputDemos.error} />
 
+## Reset value
+
+`MaskInput` is uncontrolled internally – setting `value` from a parent will not clear it.
+Use the `resetRef` prop to get a function that clears the input value imperatively:
+
+<Demo data={MaskInputDemos.resetRef} />
+
+## With use-form
+
+`MaskInput` is uncontrolled by design – it manages its own DOM value internally.
+To integrate with [use-form](/form/use-form), pass the initial value via `defaultValue`
+and use the `onChangeRaw` callback to write the raw (unmasked) value to form state:
+
+<Demo data={MaskInputDemos.withUseForm} />
+
 ## Mask pattern syntax
 
 The mask string defines the expected format. Each character is either a **token** (editable slot)

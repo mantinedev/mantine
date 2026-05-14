@@ -113,6 +113,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props) => {
 
   return (
     <CheckboxCardContext value={{ checked: _value }}>
+      {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus -- UnstyledButton renders a native <button> which is focusable */}
       <UnstyledButton
         mod={[{ 'with-border': withBorder, checked: _value }, mod]}
         {...getStyles('card')}

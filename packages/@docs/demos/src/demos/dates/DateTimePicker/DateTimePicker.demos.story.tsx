@@ -38,6 +38,11 @@ export const Demo_format = {
   render: renderDemo(demos.format),
 };
 
+export const Demo_formatFunction = {
+  name: '⭐ Demo: formatFunction',
+  render: renderDemo(demos.formatFunction),
+};
+
 export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
