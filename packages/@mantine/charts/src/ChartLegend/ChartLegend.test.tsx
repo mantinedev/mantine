@@ -149,11 +149,7 @@ describe('@mantine/charts/ChartLegend', () => {
     const onHighlight = jest.fn();
     const onMouseLeave = jest.fn();
     const { container } = render(
-      <ChartLegend
-        {...defaultProps}
-        onHighlight={onHighlight}
-        onMouseLeave={onMouseLeave}
-      />
+      <ChartLegend {...defaultProps} onHighlight={onHighlight} onMouseLeave={onMouseLeave} />
     );
     const legend = container.querySelector('.mantine-ChartLegend-legend')!;
 
