@@ -1,6 +1,6 @@
 {
   "name": "@mantine/form",
-  "version": "9.1.0",
+  "version": "9.2.1",
   "description": "Mantine form management library",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -40,6 +40,6 @@
     "klona": "^2.0.6"
   },
   "devDependencies": {
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   }
 }

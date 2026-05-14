@@ -38,4 +38,10 @@ describe('@mantine/core/Autocomplete', () => {
     props: defaultProps,
     selector: 'input',
   });
+
+  tests.itSupportsSharedInputDefaults<AutocompleteProps>({
+    component: Autocomplete,
+    props: defaultProps,
+    componentName: 'Autocomplete',
+  });
 });

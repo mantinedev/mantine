@@ -134,6 +134,41 @@ describe('@mantine/modals/use-modals', () => {
     expect(screen.getByText('Cancel')).toContainHTML('span');
   });
 
+  it('does not open a duplicate modal when the same modalId is used twice', () => {
+    const wrapper = ({ children }: any) => (
+      <MantineProvider>
+        <ModalsProvider>{children}</ModalsProvider>
+      </MantineProvider>
+    );
+
+    const Component = () => {
+      const modals = useModals();
+
+      useEffect(() => {
+        modals.openModal({
+          modalId: 'duplicate-id',
+          title: 'First title',
+          children: <div>First content</div>,
+          transitionProps: { duration: 0 },
+        });
+        modals.openModal({
+          modalId: 'duplicate-id',
+          title: 'Second title',
+          children: <div>Second content</div>,
+          transitionProps: { duration: 0 },
+        });
+      }, []);
+
+      return <div>Empty</div>;
+    };
+
+    render(<Component />, { wrapper });
+    expect(screen.getByText('First title')).toBeInTheDocument();
+    expect(screen.getByText('First content')).toBeInTheDocument();
+    expect(screen.queryByText('Second title')).not.toBeInTheDocument();
+    expect(screen.queryByText('Second content')).not.toBeInTheDocument();
+  });
+
   it('correctly renders a regular modal with children and a title', () => {
     const wrapper = ({ children }: any) => (
       <MantineProvider>

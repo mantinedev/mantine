@@ -249,7 +249,7 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
     </Box>
   ));
 
-  const mergedRef = useMergedRef(ref, (node) => setParent(node));
+  const mergedRef = useMergedRef(ref, setParent);
 
   useShallowEffect(() => {
     setKey(randomId());

@@ -96,8 +96,11 @@ Set the `clearable` prop to display the clear button in the right section:
 
 ## Expand on click
 
-Set the `expandOnClick` prop to also toggle expansion when clicking a parent node.
-The node is both selected and expanded/collapsed:
+Set the `expandOnClick` prop to also toggle expansion when clicking a parent node
+(in addition to the chevron). Behavior depends on the selection mode:
+
+- `single` and `multiple` – clicking a parent only expands/collapses it. Only leaf nodes can be selected.
+- `checkbox` – clicking a parent both toggles its checked state and expands it.
 
 <Demo data={TreeSelectDemos.expandOnClick} />
 

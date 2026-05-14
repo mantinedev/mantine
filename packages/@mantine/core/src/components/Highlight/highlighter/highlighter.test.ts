@@ -74,6 +74,122 @@ describe('@mantine/core/Highlight/highlighter', () => {
     ]);
   });
 
+  describe('accentInsensitive option', () => {
+    it('matches accented characters when searching with unaccented term', () => {
+      expect(highlighter('I love café', 'cafe', { accentInsensitive: true })).toStrictEqual([
+        { chunk: 'I love ', highlighted: false },
+        { chunk: 'café', highlighted: true },
+      ]);
+    });
+
+    it('matches unaccented characters when searching with accented term', () => {
+      expect(highlighter('I love cafe', 'café', { accentInsensitive: true })).toStrictEqual([
+        { chunk: 'I love ', highlighted: false },
+        { chunk: 'cafe', highlighted: true },
+      ]);
+    });
+
+    it('preserves original accented characters in highlighted chunk', () => {
+      expect(highlighter('résumé and resume', 'resume', { accentInsensitive: true })).toStrictEqual(
+        [
+          { chunk: 'résumé', highlighted: true },
+          { chunk: ' and ', highlighted: false },
+          { chunk: 'resume', highlighted: true },
+        ]
+      );
+    });
+
+    it('does not match accented variant when accentInsensitive is false', () => {
+      expect(highlighter('I love café', 'cafe', { accentInsensitive: false })).toStrictEqual([
+        { chunk: 'I love café', highlighted: false },
+      ]);
+    });
+
+    it('combines with caseInsensitive', () => {
+      expect(
+        highlighter('CAFÉ is nice', 'cafe', { accentInsensitive: true, caseInsensitive: true })
+      ).toStrictEqual([
+        { chunk: 'CAFÉ', highlighted: true },
+        { chunk: ' is nice', highlighted: false },
+      ]);
+    });
+
+    it('does not match when case differs and caseInsensitive is false', () => {
+      expect(
+        highlighter('CAFÉ is nice', 'cafe', { accentInsensitive: true, caseInsensitive: false })
+      ).toStrictEqual([{ chunk: 'CAFÉ is nice', highlighted: false }]);
+    });
+
+    it('combines with wholeWord', () => {
+      expect(
+        highlighter('café cafés', 'cafe', { accentInsensitive: true, wholeWord: true })
+      ).toStrictEqual([
+        { chunk: 'café', highlighted: true },
+        { chunk: ' cafés', highlighted: false },
+      ]);
+    });
+
+    it('matches multiple accented terms', () => {
+      expect(
+        highlighter('naïve résumé', ['naive', 'resume'], { accentInsensitive: true })
+      ).toStrictEqual([
+        { chunk: 'naïve', highlighted: true },
+        { chunk: ' ', highlighted: false },
+        { chunk: 'résumé', highlighted: true },
+      ]);
+    });
+
+    it('handles decomposed (NFD) accents without corrupting later matches', () => {
+      const text = 'café cafe';
+      expect(highlighter(text, 'cafe', { accentInsensitive: true })).toStrictEqual([
+        { chunk: 'café', highlighted: true },
+        { chunk: ' ', highlighted: false },
+        { chunk: 'cafe', highlighted: true },
+      ]);
+    });
+
+    it('handles fully decomposed text with multiple matches', () => {
+      const text = 'näive résumé';
+      expect(highlighter(text, ['naive', 'resume'], { accentInsensitive: true })).toStrictEqual([
+        { chunk: 'näive', highlighted: true },
+        { chunk: ' ', highlighted: false },
+        { chunk: 'résumé', highlighted: true },
+      ]);
+    });
+
+    it('uses true as the default for accentInsensitive when options is omitted', () => {
+      expect(highlighter('café', 'cafe')).toStrictEqual([{ chunk: 'café', highlighted: true }]);
+    });
+
+    it('uses true as the default for accentInsensitive with partial options', () => {
+      expect(highlighter('café', 'cafe', { wholeWord: false })).toStrictEqual([
+        { chunk: 'café', highlighted: true },
+      ]);
+    });
+  });
+
+  describe('case sensitivity', () => {
+    it('does not match different casing when caseInsensitive is false', () => {
+      expect(highlighter(VALUE, 'hell', { caseInsensitive: false })).toStrictEqual([
+        { chunk: VALUE, highlighted: false },
+      ]);
+    });
+
+    it('matches different casing when caseInsensitive is true', () => {
+      expect(highlighter(VALUE, 'hell', { caseInsensitive: true })).toStrictEqual([
+        { chunk: 'Hell', highlighted: true },
+        { chunk: 'o, World', highlighted: false },
+      ]);
+    });
+
+    it('keeps caseInsensitive default of true when other options are passed', () => {
+      expect(highlighter(VALUE, 'hell', { wholeWord: false })).toStrictEqual([
+        { chunk: 'Hell', highlighted: true },
+        { chunk: 'o, World', highlighted: false },
+      ]);
+    });
+  });
+
   describe('wholeWord option', () => {
     it('matches whole words only when wholeWord is true', () => {
       const text = 'the theme is there';

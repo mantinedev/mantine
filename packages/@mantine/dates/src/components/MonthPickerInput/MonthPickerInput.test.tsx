@@ -34,6 +34,12 @@ describe('@mantine/dates/MonthPickerInput', () => {
     selector: 'button',
   });
 
+  tests.itSupportsSharedInputDefaults<MonthPickerInputProps>({
+    component: MonthPickerInput,
+    props: defaultPropsWithInputProps,
+    componentName: 'MonthPickerInput',
+  });
+
   datesTests.itSupportsDateInputProps({ component: MonthPickerInput, props: defaultProps });
   datesTests.itSupportsClearableProps({
     component: MonthPickerInput,

@@ -82,6 +82,21 @@ describe('@mantine/core/Highlight', () => {
       expect(marks[2].textContent).toBe('hello');
     });
 
+    it('applies custom color to accented matches when accentInsensitive is true', () => {
+      const { container } = render(
+        <Highlight highlight={[{ text: 'cafe', color: 'red' }]} color="yellow">
+          We visited café and cafe.
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(2);
+      expect(marks[0].textContent).toBe('café');
+      expect(marks[1].textContent).toBe('cafe');
+      expect(marks[0].getAttribute('style')).toContain('--mantine-color-red');
+      expect(marks[1].getAttribute('style')).toContain('--mantine-color-red');
+    });
+
     it('mixes terms with and without colors', () => {
       const { container } = render(
         <Highlight highlight={[{ text: 'red', color: 'red' }, { text: 'default' }]} color="yellow">
@@ -131,6 +146,77 @@ describe('@mantine/core/Highlight', () => {
       expect(marks).toHaveLength(2);
       expect(marks[0].textContent).toBe('test');
       expect(marks[1].textContent).toBe('testing');
+    });
+  });
+
+  describe('caseInsensitive option', () => {
+    it('matches different casing when caseInsensitive is true', () => {
+      const { container } = render(
+        <Highlight highlight="hello" caseInsensitive>
+          Hello HELLO hello
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(3);
+      expect(marks[0].textContent).toBe('Hello');
+      expect(marks[1].textContent).toBe('HELLO');
+      expect(marks[2].textContent).toBe('hello');
+    });
+
+    it('does not match different casing when caseInsensitive is false', () => {
+      const { container } = render(
+        <Highlight highlight="hello" caseInsensitive={false}>
+          Hello HELLO hello
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(1);
+      expect(marks[0].textContent).toBe('hello');
+    });
+  });
+
+  describe('accentInsensitive option', () => {
+    it('matches accented and non-accented text when accentInsensitive is true', () => {
+      const { container } = render(
+        <Highlight highlight="cafe" accentInsensitive>
+          café cafe CAFÉ CAFE
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(4);
+      expect(marks[0].textContent).toBe('café');
+      expect(marks[1].textContent).toBe('cafe');
+      expect(marks[2].textContent).toBe('CAFÉ');
+      expect(marks[3].textContent).toBe('CAFE');
+    });
+
+    it('does not match accented variants when accentInsensitive is false', () => {
+      const { container } = render(
+        <Highlight highlight="cafe" accentInsensitive={false}>
+          café cafe CAFÉ CAFE
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(2);
+      expect(marks[0].textContent).toBe('cafe');
+      expect(marks[1].textContent).toBe('CAFE');
+    });
+
+    it('can be combined with caseInsensitive={false}', () => {
+      const { container } = render(
+        <Highlight highlight="cafe" accentInsensitive caseInsensitive={false}>
+          café cafe CAFE
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(2);
+      expect(marks[0].textContent).toBe('café');
+      expect(marks[1].textContent).toBe('cafe');
     });
   });
 

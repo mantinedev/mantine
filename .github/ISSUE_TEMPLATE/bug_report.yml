@@ -24,6 +24,7 @@ body:
         - '@mantine/core'
         - '@mantine/hooks'
         - '@mantine/dates'
+        - '@mantine/schedule'
         - '@mantine/charts'
         - '@mantine/form'
         - '@mantine/notifications'
@@ -52,10 +53,8 @@ body:
       options:
         - 'Next.js'
         - 'Vite'
+        - 'Tanstack Start'
         - 'React Router'
-        - 'Gatsby'
-        - 'Redwood'
-        - 'create-react-app (CRA)'
         - 'Other, I will specify in the bug description'
     validations:
       required: true

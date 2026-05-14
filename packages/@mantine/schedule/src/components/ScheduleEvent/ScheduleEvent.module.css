@@ -87,6 +87,37 @@
       border-end-end-radius: 0;
     }
   }
+
+  &:where([data-clip-start]) {
+    .eventInner {
+      padding-inline-start: 12px;
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
+      clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+    }
+  }
+
+  &:where([data-clip-end]) {
+    .eventInner {
+      padding-inline-end: 12px;
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+    }
+  }
+
+  &:where([data-clip-start][data-clip-end]) {
+    .eventInner {
+      clip-path: polygon(
+        10px 0,
+        calc(100% - 10px) 0,
+        100% 50%,
+        calc(100% - 10px) 100%,
+        10px 100%,
+        0 50%
+      );
+    }
+  }
 }
 
 .eventInner {
