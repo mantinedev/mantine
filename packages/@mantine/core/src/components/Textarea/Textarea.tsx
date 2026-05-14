@@ -44,10 +44,6 @@ export type TextareaFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-const defaultProps = {
-  size: 'sm',
-} satisfies Partial<TextareaProps>;
-
 export const Textarea = factory<TextareaFactory>((props) => {
   const {
     autosize,
@@ -58,7 +54,7 @@ export const Textarea = factory<TextareaFactory>((props) => {
     bottomSection,
     bottomSectionProps,
     ...others
-  } = useProps('Textarea', defaultProps, props);
+  } = useProps(['Input', 'InputWrapper', 'Textarea'], null, props);
 
   const shouldAutosize = autosize && getEnv() !== 'test';
   const autosizeProps = shouldAutosize ? { maxRows, minRows } : {};

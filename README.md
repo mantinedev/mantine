@@ -1,15 +1,3 @@
-<div align="center">
-	<a href="https://formengine.io/documentation/components-library/mantine/?utm_source=github&utm_medium=hero-banner&utm_campaign=mantine-readme-core#getting-started-with-mantine-components" target="_blank">
-		<sup>Special thanks to:</sup>
-		<br>
-		<img alt="Formengine sponsorship" width="400" src="https://formengine.io/ads-images/mantine3.png?version=1">
-		<br>
-		<h>FormEngine Core – Lightweight React JSON Schema form builder library for Mantine</b>
-		<br>
-		<sup>No deep React knowledge required.</sup>
-	</a>
-</div>
-
 # Mantine
 
 [![NPM](https://img.shields.io/npm/l/@mantine/core)](https://github.com/mantinedev/mantine/blob/master/LICENSE)

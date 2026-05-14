@@ -95,4 +95,24 @@ describe('@mantine/core/merge-mantine-theme', () => {
   it('merges theme and override correctly when override is undefined', () => {
     expect(mergeMantineTheme(DEFAULT_THEME, undefined)).toBe(DEFAULT_THEME);
   });
+
+  it('does not mutate currentTheme.headings when only fontFamily is overridden', () => {
+    const originalFontFamily = DEFAULT_THEME.headings.fontFamily;
+    const originalHeadings = DEFAULT_THEME.headings;
+
+    mergeMantineTheme(DEFAULT_THEME, { fontFamily: 'mutation-canary' });
+
+    expect(DEFAULT_THEME.headings.fontFamily).toBe(originalFontFamily);
+    expect(DEFAULT_THEME.headings).toBe(originalHeadings);
+  });
+
+  it('does not leak fontFamily across successive merges', () => {
+    const originalFontFamily = DEFAULT_THEME.headings.fontFamily;
+
+    mergeMantineTheme(DEFAULT_THEME, { fontFamily: 'first-tenant-font' });
+    const subsequent = mergeMantineTheme(DEFAULT_THEME, { defaultRadius: 'sm' });
+
+    expect(subsequent.headings.fontFamily).toBe(originalFontFamily);
+    expect(subsequent.headings.fontFamily).not.toBe('first-tenant-font');
+  });
 });

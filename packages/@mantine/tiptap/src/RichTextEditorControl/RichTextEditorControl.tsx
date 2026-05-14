@@ -1,3 +1,4 @@
+import { useEditorState } from '@tiptap/react';
 import {
   BoxProps,
   CompoundStylesApiProps,
@@ -112,13 +113,26 @@ export function createControl({
   const Control = (props: RichTextEditorControlBaseProps) => {
     const { editor, labels } = useRichTextEditorContext();
     const _label = labels[label] as string;
+    const editorState = useEditorState({
+      editor: editor ?? null,
+      selector: (ctx) => ({
+        active: isActive?.name
+          ? (ctx.editor?.isActive(isActive.name, isActive.attributes) ?? false)
+          : false,
+        disabled: isDisabled?.(ctx.editor) ?? false,
+      }),
+    });
+
+    const active = editorState?.active ?? false;
+    const disabled = editorState?.disabled ?? false;
+
     return (
       <RichTextEditorControlBase
         aria-label={_label}
         title={_label}
-        active={isActive?.name ? editor?.isActive(isActive.name, isActive.attributes) : false}
+        active={active}
         icon={props.icon || icon}
-        disabled={isDisabled?.(editor) || false}
+        disabled={disabled}
         {...props}
         onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
       />

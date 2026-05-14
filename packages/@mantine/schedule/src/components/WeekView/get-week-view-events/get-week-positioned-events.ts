@@ -29,6 +29,9 @@ export interface GetWeekPositionedEventsInput {
   /** End time of the week view, used to calculate event positions */
   endTime?: string;
 
+  /** Number of minutes per time slot, used to align the canvas to whole slots */
+  intervalMinutes?: number;
+
   /** First day of the week, 0 - Sunday, 1 - Monday, etc., used to calculate events positions */
   firstDayOfWeek?: DayOfWeek;
 
@@ -51,6 +54,7 @@ export function getWeekPositionedEvents({
   events,
   startTime,
   endTime,
+  intervalMinutes,
   firstDayOfWeek = 1,
   weekendDays = [0, 6],
   withWeekendDays = true,
@@ -100,7 +104,7 @@ export function getWeekPositionedEvents({
         const isAllDay = isAllDayEvent({ event: clippedEvent, date: day });
         const verticalPosition = isAllDay
           ? { top: 0, height: 100 }
-          : getDayPosition({ event: clippedEvent, startTime, endTime });
+          : getDayPosition({ event: clippedEvent, startTime, endTime, intervalMinutes });
 
         if (!isAllDay && verticalPosition.height <= 0) {
           continue;
@@ -155,7 +159,7 @@ export function getWeekPositionedEvents({
 
     const verticalPosition = allDay
       ? { top: 0, height: 100 }
-      : getDayPosition({ event, startTime, endTime });
+      : getDayPosition({ event, startTime, endTime, intervalMinutes });
 
     if (allDay) {
       const offset = calculateAllDayEventOffset({

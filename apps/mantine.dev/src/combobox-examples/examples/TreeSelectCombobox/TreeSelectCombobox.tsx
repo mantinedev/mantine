@@ -203,6 +203,8 @@ export function TreeSelectCombobox() {
                   value={node.value}
                   active={isSelected}
                   aria-selected={isSelected}
+                  aria-level={level}
+                  aria-expanded={hasChildren ? isExpanded : undefined}
                   style={{
                     display: 'flex',
                     alignItems: 'center',

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { clamp } from '../utils';
 
 function radiansToDegrees(radians: number) {
@@ -63,6 +63,13 @@ export function useRadialMove<T extends HTMLElement = any>(
   { step = 0.01, onChangeEnd, onScrubStart, onScrubEnd }: UseRadialMoveOptions = {}
 ): UseRadialMoveReturnValue<T> {
   const [active, setActive] = useState(false);
+  const cleanupRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    return () => {
+      cleanupRef.current?.();
+    };
+  }, []);
 
   const refCallback: React.RefCallback<T | null> = useCallback(
     (node) => {
@@ -128,15 +135,18 @@ export function useRadialMove<T extends HTMLElement = any>(
       node?.addEventListener('mousedown', onMouseDown);
       node?.addEventListener('touchstart', handleTouchStart, { passive: false });
 
+      cleanupRef.current = () => {
+        document.removeEventListener('mousemove', handleMouseMove, false);
+        document.removeEventListener('mouseup', handleMouseUp, false);
+        document.removeEventListener('touchmove', handleTouchMove, false);
+        document.removeEventListener('touchend', handleTouchEnd, false);
+      };
+
       return () => {
         if (node) {
           node.removeEventListener('mousedown', onMouseDown);
           node.removeEventListener('touchstart', handleTouchStart);
         }
-        document.removeEventListener('mousemove', handleMouseMove, false);
-        document.removeEventListener('mouseup', handleMouseUp, false);
-        document.removeEventListener('touchmove', handleTouchMove, false);
-        document.removeEventListener('touchend', handleTouchEnd, false);
       };
     },
     [onChange]

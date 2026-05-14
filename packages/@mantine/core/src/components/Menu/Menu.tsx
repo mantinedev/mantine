@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   factory,
@@ -181,6 +181,20 @@ export const Menu = factory<MenuFactory>((_props) => {
 
   const { openDropdown, closeDropdown } = useDelayedHover({ open, close, closeDelay, openDelay });
 
+  const activeSubCloseRef = useRef<(() => void) | null>(null);
+  const registerOpenSub = useCallback((closeFn: () => void) => {
+    const prev = activeSubCloseRef.current;
+    if (prev && prev !== closeFn) {
+      prev();
+    }
+    activeSubCloseRef.current = closeFn;
+    return () => {
+      if (activeSubCloseRef.current === closeFn) {
+        activeSubCloseRef.current = null;
+      }
+    };
+  }, []);
+
   const getItemIndex = (node: HTMLButtonElement) =>
     getContextItemIndex('[data-menu-item]', '[data-menu-dropdown]', node);
 
@@ -208,6 +222,7 @@ export const Menu = factory<MenuFactory>((_props) => {
         unstyled,
         menuItemTabIndex,
         withInitialFocusPlaceholder,
+        registerOpenSub,
       }}
     >
       <Popover

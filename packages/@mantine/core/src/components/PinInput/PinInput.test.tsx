@@ -24,6 +24,13 @@ describe('@mantine/core/PinInput', () => {
     attributes: false,
   });
 
+  tests.itSupportsSharedInputDefaults<PinInputProps>({
+    component: PinInput,
+    props: defaultProps,
+    componentName: 'PinInput',
+    withWrapper: false,
+  });
+
   it('renders correct number of inputs based on length prop', () => {
     const { container } = render(<PinInput {...defaultProps} length={5} />);
     expect(getInputs(container)).toHaveLength(5);

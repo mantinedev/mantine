@@ -42,3 +42,13 @@ export const Demo_success = {
   name: '⭐ Demo: success',
   render: renderDemo(demos.success),
 };
+
+export const Demo_withUseForm = {
+  name: '⭐ Demo: withUseForm',
+  render: renderDemo(demos.withUseForm),
+};
+
+export const Demo_resetRef = {
+  name: '⭐ Demo: resetRef',
+  render: renderDemo(demos.resetRef),
+};

@@ -8,7 +8,6 @@ import { useFormValidating } from './hooks/use-form-validating/use-form-validati
 import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getDataPath, getPath } from './paths';
-import type { FormPathValue, LooseKeys } from './paths.types';
 import {
   FormErrors,
   FormRulesRecord,
@@ -27,6 +26,9 @@ import {
   UseFormReturnType,
 } from './types';
 import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
+
+const defaultResolveValidationError = (err: unknown) =>
+  err instanceof Error ? err.message : String(err);
 
 export function useForm<
   Values extends Record<string, any>,
@@ -72,13 +74,13 @@ export function useForm<
   touchTrigger = 'change',
   cascadeUpdates = false,
   validateDebounce = 0,
-  resolveValidationError = (err: unknown) => (err instanceof Error ? err.message : String(err)),
+  resolveValidationError = defaultResolveValidationError,
 }: UseFormInput<Values, TransformedValues> = {}): UseFormReturnType<Values, TransformedValues> {
   const $errors = useFormErrors<Values>(initialErrors);
   const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
-  const $list = useFormList<Values>({ $values, $errors, $status });
-  const $watch = useFormWatch<Values>({ $status, cascadeUpdates });
+  const $watch = useFormWatch<Values>({ $values, $status, cascadeUpdates });
+  const $list = useFormList<Values>({ $values, $errors, $status, $watch });
   const $validating = useFormValidating();
   const [formKey, setFormKey] = useState(0);
   const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
@@ -94,37 +96,13 @@ export function useForm<
     mode === 'uncontrolled' && setFormKey((key) => key + 1);
   }, []);
 
-  const notifyWatchSubscribers = useCallback((previousValues: Values) => {
-    Object.keys($watch.subscribers.current).forEach((path) => {
-      const value = getPath(path, $values.refValues.current);
-      const previousValue = getPath(path, previousValues);
-
-      if (value !== previousValue) {
-        $watch.subscribers.current[path]?.forEach((cb) =>
-          cb({
-            previousValue: getPath(path, previousValues) as FormPathValue<
-              Values,
-              LooseKeys<Values>
-            >,
-            value: getPath(path, $values.refValues.current) as FormPathValue<
-              Values,
-              LooseKeys<Values>
-            >,
-            touched: $status.isTouched(path),
-            dirty: $status.isDirty(path),
-          })
-        );
-      }
-    });
-  }, []);
-
   const handleValuesChanges = useCallback(
     (previousValues: Values) => {
       clearInputErrorOnChange && $errors.clearErrors();
       mode === 'uncontrolled' && setFormKey((key) => key + 1);
-      notifyWatchSubscribers(previousValues);
+      $watch.notifyWatchSubscribers(previousValues);
     },
-    [clearInputErrorOnChange, notifyWatchSubscribers]
+    [clearInputErrorOnChange]
   );
 
   const initialize: Initialize<Values> = useCallback(
@@ -476,26 +454,10 @@ export function useForm<
     getTouched: $status.getTouched,
     getDirty: $status.getDirty,
 
-    reorderListItem: ((path, payload) => {
-      const previousValues = $values.refValues.current;
-      $list.reorderListItem(path, payload);
-      notifyWatchSubscribers(previousValues);
-    }) as typeof $list.reorderListItem,
-    insertListItem: ((path, item, index) => {
-      const previousValues = $values.refValues.current;
-      $list.insertListItem(path, item, index);
-      notifyWatchSubscribers(previousValues);
-    }) as typeof $list.insertListItem,
-    removeListItem: ((path, index) => {
-      const previousValues = $values.refValues.current;
-      $list.removeListItem(path, index);
-      notifyWatchSubscribers(previousValues);
-    }) as typeof $list.removeListItem,
-    replaceListItem: ((path, index, item) => {
-      const previousValues = $values.refValues.current;
-      $list.replaceListItem(path, index, item);
-      notifyWatchSubscribers(previousValues);
-    }) as typeof $list.replaceListItem,
+    reorderListItem: $list.reorderListItem,
+    insertListItem: $list.insertListItem,
+    removeListItem: $list.removeListItem,
+    replaceListItem: $list.replaceListItem,
 
     reset,
     validate,

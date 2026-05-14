@@ -163,14 +163,26 @@ Note that since `TagsInput` allows adding custom values, `option` property might
 
 ## Reorder pills
 
-Set the `withPillsReorder` prop to allow reordering pills with drag-and-drop.
-Dropping a pill before or after another pill updates the component value accordingly.
-Reordering is automatically disabled when `disabled` or `readOnly` is set.
+Set the `withPillsReorder` prop to allow reordering pills. Dropping a pill before or after
+another pill updates the component value accordingly. Reordering is automatically disabled
+when `disabled` or `readOnly` is set.
+
+You can reorder pills with a mouse (drag-and-drop) or keyboard:
+
+- Pills are not part of the `Tab` order. With focus on the input, press `ArrowLeft` (when the
+  caret is at the start of the input) to move focus to the last pill.
+- `ArrowLeft` and `ArrowRight` move focus between pills (RTL-aware). Pressing `ArrowRight` on
+  the last pill returns focus to the input.
+- `Alt + ArrowLeft` and `Alt + ArrowRight` reorder the focused pill (RTL-aware).
+
+Focus follows the moved pill so multiple moves can be chained without re-focusing.
 
 <Demo data={TagsInputDemos.dragReorder} />
 
 If you use a custom pill renderer with the `renderPill` prop, spread the `reorderProps` from
-the render callback payload onto your pill element to keep reordering working:
+the render callback payload onto the focusable pill root element to keep reordering working.
+`reorderProps` carries the `tabIndex`, `data-mantine-pill-index` attribute and the keyboard
+handler that drive keyboard reorder, so it must land on the element the user can focus:
 
 ```tsx
 import { TagsInput } from '@mantine/core';

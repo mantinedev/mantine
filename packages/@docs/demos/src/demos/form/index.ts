@@ -49,6 +49,7 @@ export {
   fileInput,
   input,
   jsonInput,
+  maskInput,
   nativeSelect,
   numberInput,
   passwordInput,

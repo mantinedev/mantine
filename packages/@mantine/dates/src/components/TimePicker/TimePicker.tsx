@@ -234,7 +234,7 @@ const varsResolver = createVarsResolver<TimePickerFactory>((_theme, { size }) =>
 }));
 
 export const TimePicker = factory<TimePickerFactory>((_props) => {
-  const props = useProps('TimePicker', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'TimePicker'], defaultProps, _props);
   const {
     classNames,
     className,

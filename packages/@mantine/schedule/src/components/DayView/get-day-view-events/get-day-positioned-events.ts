@@ -45,12 +45,16 @@ interface GetDayPositionedEventsInput {
 
   /** End time of the day view, used to calculate event positions */
   endTime?: string;
+
+  /** Number of minutes per time slot, used to align the canvas to whole slots */
+  intervalMinutes?: number;
 }
 
 export function getDayPositionedEvents({
   events,
   startTime,
   endTime,
+  intervalMinutes,
   date,
 }: GetDayPositionedEventsInput) {
   const columns: ScheduleEventData[][] = [];
@@ -75,7 +79,7 @@ export function getDayPositionedEvents({
 
     const verticalPosition = allDay
       ? { top: 0, height: 100 }
-      : getDayPosition({ event, startTime, endTime });
+      : getDayPosition({ event, startTime, endTime, intervalMinutes });
 
     positioned.push({
       ...event,

@@ -29,4 +29,10 @@ describe('@mantine/core/InputBase', () => {
     props: defaultProps,
     selector: 'input',
   });
+
+  tests.itSupportsSharedInputDefaults<InputBaseProps>({
+    component: InputBase,
+    props: defaultProps,
+    componentName: 'InputBase',
+  });
 });

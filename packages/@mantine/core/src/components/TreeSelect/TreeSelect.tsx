@@ -39,7 +39,11 @@ import {
   checkedToValue,
   expandToLeafChecked,
 } from './get-checked-values-by-strategy';
-import { TreeSelectOption, TreeSelectRenderNodePayload } from './TreeSelectOption';
+import {
+  TreeSelectChevronAriaLabels,
+  TreeSelectOption,
+  TreeSelectRenderNodePayload,
+} from './TreeSelectOption';
 import classes from './TreeSelect.module.css';
 
 export type TreeSelectStylesNames =
@@ -94,7 +98,7 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
   /** Called when expanded state changes */
   onExpandedChange?: (values: string[]) => void;
 
-  /** Also toggle expand when clicking a parent node (not just the chevron) @default false */
+  /** Also toggle expand when clicking a parent node (not just the chevron). In `single` and `multiple` modes, parent clicks only expand; only leaves can be selected. In `checkbox` mode, parent clicks both check and expand. @default false */
   expandOnClick?: boolean;
 
   /** Enables search filtering @default false */
@@ -183,6 +187,9 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
 
   /** Opens dropdown on focus (searchable mode) @default true */
   openOnFocus?: boolean;
+
+  /** aria-label values for the expand/collapse chevron button */
+  chevronAriaLabels?: TreeSelectChevronAriaLabels;
 }
 
 export type TreeSelectFactory = Factory<{
@@ -231,7 +238,7 @@ function getAncestorsToNode(value: string, nodes: TreeNodeData[]): string[] | nu
 }
 
 export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
-  const props = useProps('TreeSelect', defaultProps as any, _props);
+  const props = useProps(['Input', 'InputWrapper', 'TreeSelect'], defaultProps as any, _props);
   const {
     classNames,
     className,
@@ -281,6 +288,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     comboboxProps,
     clearSearchOnChange,
     openOnFocus,
+    chevronAriaLabels,
     variant,
     onKeyDown,
     onFocus,
@@ -521,20 +529,19 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
           return;
         }
       }
-      if (clearSearchOnChange) {
-        setSearchValue('');
-      }
       const arr = (_value as string[]) || [];
       if (arr.includes(val)) {
         setValue(arr.filter((v: string) => v !== val));
         onRemove?.(val);
       } else if (arr.length < (maxValues ?? Infinity)) {
         setValue([...arr, val]);
+      } else {
+        return;
       }
-    } else if (mode === 'checkbox') {
       if (clearSearchOnChange) {
         setSearchValue('');
       }
+    } else if (mode === 'checkbox') {
       const nodeChecked = checkStrictly
         ? internalChecked.includes(val)
         : isNodeChecked(val, data, internalChecked);
@@ -558,6 +565,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
         return;
       }
       setValue(newValue);
+      if (clearSearchOnChange) {
+        setSearchValue('');
+      }
 
       if (expandOnClick) {
         const node = findTreeNode(val, data);
@@ -666,6 +676,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
         onClear?.();
         setValue(isMulti ? [] : null);
         handleSearchChange('');
+        combobox.focusTarget();
       }}
     />
   );
@@ -771,13 +782,17 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
         withLines={!!withLines}
         onToggleExpand={toggleExpand}
         renderNode={renderNode}
+        chevronAriaLabels={chevronAriaLabels}
       />
     );
   });
 
   const dropdown = (
     <Combobox.Dropdown hidden={readOnly || disabled}>
-      <Combobox.Options className={classes.optionsWrapper}>
+      <Combobox.Options
+        className={classes.optionsWrapper}
+        aria-multiselectable={isMulti || undefined}
+      >
         <ScrollArea.Autosize
           mah={maxDropdownHeight ?? 220}
           type="scroll"

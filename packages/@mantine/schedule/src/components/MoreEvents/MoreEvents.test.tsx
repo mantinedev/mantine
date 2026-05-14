@@ -115,6 +115,42 @@ describe('@mantine/schedule/MoreEvents', () => {
     });
   });
 
+  it('calls onEventClick when an event in the popover is clicked', async () => {
+    const spy = jest.fn();
+    render(<MoreEvents {...defaultProps} moreEventsCount={4} onEventClick={spy} />);
+
+    await userEvent.click(screen.getByRole('button', { name: '+4 more' }));
+    await userEvent.click(screen.getByText('Project Kickoff'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 1, title: 'Project Kickoff' }),
+      expect.any(Object)
+    );
+  });
+
+  it('calls onEventClick when an event in the modal is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <MoreEvents
+        {...defaultProps}
+        moreEventsCount={4}
+        dropdownType="modal"
+        modalTitle="Events"
+        onEventClick={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: '+4 more' }));
+    await userEvent.click(screen.getByText('Team Standup'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 2, title: 'Team Standup' }),
+      expect.any(Object)
+    );
+  });
+
   it('supports renderEvent prop', async () => {
     render(
       <MoreEvents

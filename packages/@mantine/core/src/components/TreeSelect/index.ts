@@ -8,7 +8,7 @@ import type {
 
 export { TreeSelect } from './TreeSelect';
 export { TreeSelectOption } from './TreeSelectOption';
-export type { TreeSelectRenderNodePayload } from './TreeSelectOption';
+export type { TreeSelectChevronAriaLabels, TreeSelectRenderNodePayload } from './TreeSelectOption';
 export type { CheckedStrategy } from './get-checked-values-by-strategy';
 export type {
   TreeSelectProps,

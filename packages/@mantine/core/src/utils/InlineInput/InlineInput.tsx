@@ -78,6 +78,9 @@ export function InlineInput({
     attributes,
   });
 
+  const descriptionId = description ? `${id}-description` : undefined;
+  const errorId = error && typeof error !== 'boolean' ? `${id}-error` : undefined;
+
   return (
     <Box
       {...getStyles('root')}
@@ -110,13 +113,18 @@ export function InlineInput({
           )}
 
           {description && (
-            <Input.Description size={size} __inheritStyles={false} {...getStyles('description')}>
+            <Input.Description
+              id={descriptionId}
+              size={size}
+              __inheritStyles={false}
+              {...getStyles('description')}
+            >
               {description}
             </Input.Description>
           )}
 
           {error && typeof error !== 'boolean' && (
-            <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
+            <Input.Error id={errorId} size={size} __inheritStyles={false} {...getStyles('error')}>
               {error}
             </Input.Error>
           )}

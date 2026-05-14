@@ -3,7 +3,6 @@ import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  createEventHandler,
   ElementProps,
   factory,
   Factory,
@@ -35,6 +34,8 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
     vars,
     onMouseEnter,
     onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
     onKeyDown,
     children,
     ref,
@@ -45,18 +46,20 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
   const ctx = useMenuContext();
   const subCtx = use(SubMenuContext);
 
-  const handleMouseEnter = createEventHandler<any>(onMouseEnter, subCtx?.open);
-
-  const handleMouseLeave = createEventHandler<any>(onMouseLeave, subCtx?.close);
+  const floatingProps = subCtx?.getFloatingProps({
+    onMouseEnter,
+    onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
+  });
 
   return (
     <Popover.Dropdown
       {...others}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      {...floatingProps}
       role="menu"
       aria-orientation="vertical"
-      ref={useMergedRef(ref, wrapperRef)}
+      ref={useMergedRef(ref, wrapperRef, subCtx?.setFloating)}
       {...ctx.getStyles('dropdown', {
         className,
         style,
