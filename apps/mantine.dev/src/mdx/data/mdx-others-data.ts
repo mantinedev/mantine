@@ -18,6 +18,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/notifications/src',
     license: 'MIT',
     docs: 'x/notifications.mdx',
+    searchTags: 'toast, snackbar, alerts, messages, notify, popup notification',
   },
 
   Spotlight: {
@@ -36,6 +37,8 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/spotlight/src',
     license: 'MIT',
     docs: 'x/spotlight.mdx',
+    searchTags:
+      'search, command palette, cmdk, cmd k, quick actions, global search, command bar, fuzzy search',
   },
 
   Carousel: {
@@ -48,6 +51,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/carousel/src',
     license: 'MIT',
     docs: 'x/carousel.mdx',
+    searchTags: 'slider, slideshow, gallery, swiper, embla, image carousel',
   },
 
   Dropzone: {
@@ -60,6 +64,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/dropzone/src',
     license: 'MIT',
     docs: 'x/dropzone.mdx',
+    searchTags: 'drag and drop, file upload, file drop zone, upload area, drop files',
   },
 
   Nprogress: {
@@ -71,6 +76,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/nprogress/src',
     license: 'MIT',
     docs: 'x/nprogress.mdx',
+    searchTags: 'top progress bar, page loading bar, route progress, nprogress, youtube bar',
   },
 
   CodeHighlight: {
@@ -83,6 +89,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/code-highlight/src',
     license: 'MIT',
     docs: 'x/code-highlight.mdx',
+    searchTags: 'syntax highlighting, prism, shiki, highlight.js, code block, snippet',
   },
 
   Modals: {
@@ -94,6 +101,8 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/modals/src',
     license: 'MIT',
     docs: 'x/modals.mdx',
+    searchTags:
+      'confirm dialog, alert dialog, dialog manager, prompt, confirmation, imperative modal',
   },
 
   TipTap: {
@@ -106,5 +115,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/tiptap/src',
     license: 'MIT',
     docs: 'x/tiptap.mdx',
+    searchTags:
+      'wysiwyg, rich text, tiptap, prosemirror, html editor, markdown editor, text editor',
   },
 };

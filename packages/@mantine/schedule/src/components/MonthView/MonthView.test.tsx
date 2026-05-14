@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { getWeekNumber, toDateString } from '../../utils';
@@ -382,6 +383,169 @@ describe('@mantine/schedule/MonthView', () => {
     expect(scrollArea).toBeInTheDocument();
     expect(scrollArea).toHaveClass('test-class');
     expect(scrollArea).toHaveStyle({ outline: '1px solid red' });
+  });
+
+  describe('MoreEvents customization', () => {
+    const manyEventsOnOneDay = Array.from({ length: 5 }, (_, i) => ({
+      id: i + 1,
+      title: `Event ${i + 1}`,
+      start: '2025-11-05 10:00:00',
+      end: '2025-11-05 11:00:00',
+      color: 'blue',
+      payload: {},
+    }));
+
+    it('forwards renderEventBody to MoreEvents', async () => {
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          renderEventBody={(event) => <span>Body[{event.title}]</span>}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+      expect(screen.getByText('Body[Event 5]')).toBeInTheDocument();
+    });
+
+    it('forwards renderEvent to MoreEvents', async () => {
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          renderEvent={(event, props) => (
+            <a href={`#event-${event.id}`} data-testid={`custom-event-${event.id}`}>
+              {props.children}
+            </a>
+          )}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+
+      const customized = screen.getByTestId('custom-event-5');
+      expect(customized.tagName).toBe('A');
+      expect(customized).toHaveAttribute('href', '#event-5');
+    });
+
+    it('forwards onEventClick to MoreEvents', async () => {
+      const spy = jest.fn();
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          onEventClick={spy}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+      await userEvent.click(screen.getByText('Event 5'));
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 5, title: 'Event 5' }),
+        expect.any(Object)
+      );
+    });
+
+    it('forwards labels.moreLabel to MoreEvents', () => {
+      render(
+        <MonthView
+          {...defaultProps}
+          events={manyEventsOnOneDay}
+          maxEventsPerDay={2}
+          labels={{ moreLabel: (count) => `Show ${count} additional` }}
+        />
+      );
+
+      expect(screen.getByRole('button', { name: 'Show 3 additional' })).toBeInTheDocument();
+    });
+  });
+
+  describe('multi-day event clipping', () => {
+    const clippedMultiDayEvents = [
+      {
+        id: 'blocker-1',
+        title: 'Blocker 1',
+        start: '2025-11-11 10:00:00',
+        end: '2025-11-11 11:00:00',
+        color: 'blue',
+        payload: {},
+      },
+      {
+        id: 'blocker-2',
+        title: 'Blocker 2',
+        start: '2025-11-11 12:00:00',
+        end: '2025-11-11 13:00:00',
+        color: 'blue',
+        payload: {},
+      },
+      {
+        id: 'trip',
+        title: 'Trip',
+        start: '2025-11-10 10:00:00',
+        end: '2025-11-12 11:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    it('renders multi-day event fragments around a truncated day', () => {
+      render(<MonthView {...defaultProps} events={clippedMultiDayEvents} maxEventsPerDay={2} />);
+
+      const tripFragments = screen
+        .getAllByText('Trip')
+        .map((node) => node.closest('.mantine-ScheduleEvent-event'));
+
+      expect(tripFragments).toHaveLength(2);
+      expect(tripFragments[0]).toHaveAttribute('data-clip-end');
+      expect(tripFragments[0]).not.toHaveAttribute('data-clip-start');
+      expect(tripFragments[1]).toHaveAttribute('data-clip-start');
+      expect(tripFragments[1]).not.toHaveAttribute('data-clip-end');
+      expect(screen.getByRole('button', { name: '+1 more' })).toBeInTheDocument();
+    });
+
+    it('calls onEventClick with the original event when a clipped fragment is clicked', async () => {
+      const spy = jest.fn();
+      render(
+        <MonthView
+          {...defaultProps}
+          events={clippedMultiDayEvents}
+          maxEventsPerDay={2}
+          onEventClick={spy}
+        />
+      );
+
+      await userEvent.click(screen.getAllByText('Trip')[0]);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ id: 'trip' }), expect.any(Object));
+    });
+
+    it('starts dragging with the original event when a clipped fragment is dragged', () => {
+      const spy = jest.fn();
+      render(
+        <MonthView
+          {...defaultProps}
+          events={clippedMultiDayEvents}
+          maxEventsPerDay={2}
+          withEventsDragAndDrop
+          onEventDragStart={spy}
+        />
+      );
+
+      fireEvent.dragStart(screen.getAllByText('Trip')[0].closest('.mantine-ScheduleEvent-event')!, {
+        dataTransfer: {
+          setData: jest.fn(),
+        },
+      });
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ id: 'trip' }));
+    });
   });
 
   describe('keyboard navigation', () => {

@@ -12,6 +12,8 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     title: 'Custom components',
     slug: '/guides/custom-components',
     search: 'factory, genericFactory, useStyles, varsResolver',
+    searchTags:
+      'useProps, use-props, useStyles, use-styles, polymorphicFactory, ExtendComponent, theme.components',
     hideHeader: true,
   },
 

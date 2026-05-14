@@ -73,6 +73,14 @@ Set `withCurrentTimeIndicator` to display a line showing the current time on tod
 
 <Demo data={WeekViewDemos.currentTimeIndicator} />
 
+## Force current time indicator
+
+Set `forceCurrentTimeIndicator` to display the current time indicator on the same day of week
+even when viewing a different week. This is useful to give users a sense of the current time
+position relative to their schedule.
+
+<Demo data={WeekViewDemos.forceCurrentTimeIndicator} />
+
 ## Without all-day slots
 
 Set `withAllDaySlots={false}` to hide the all-day events section at the top.
@@ -135,6 +143,14 @@ Use `radius` prop to customize the border radius of events.
 Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours.
 
 <Demo data={WeekViewDemos.businessHours} />
+
+## Business hours per day
+
+Pass an object to `businessHours` to configure the range for each day of the week individually.
+Keys are day numbers (`0` – Sunday, `6` – Saturday). Days missing from the object or set to `null`
+are marked as fully outside business hours:
+
+<Demo data={WeekViewDemos.businessHoursPerDay} />
 
 ## Custom time slot props
 

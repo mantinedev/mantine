@@ -157,3 +157,8 @@ export const Demo_renderPill = {
   name: '⭐ Demo: renderPill',
   render: renderDemo(demos.renderPill),
 };
+
+export const Demo_dragReorder = {
+  name: '⭐ Demo: dragReorder',
+  render: renderDemo(demos.dragReorder),
+};

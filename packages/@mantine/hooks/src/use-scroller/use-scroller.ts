@@ -76,10 +76,10 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       let newCanScrollEnd: boolean;
 
       if (isRtl) {
-        newCanScrollStart = scrollLeft < 0;
-        newCanScrollEnd = scrollLeft > -(scrollWidth - clientWidth);
+        newCanScrollStart = scrollLeft < -1;
+        newCanScrollEnd = scrollLeft > -(scrollWidth - clientWidth) + 1;
       } else {
-        newCanScrollStart = scrollLeft > 0;
+        newCanScrollStart = scrollLeft > 1;
         newCanScrollEnd = scrollLeft < scrollWidth - clientWidth - 1;
       }
 

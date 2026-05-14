@@ -13,17 +13,40 @@ export interface Version {
 
 export const allVersions = [
   {
+    version: '9.2.0',
+    date: 'May 12, 2026',
+    github: 'https://github.com/mantinedev/mantine/releases/tag/9.2.0',
+    link: 'https://mantine.dev/changelog/9-2-0',
+    patches: [],
+  },
+  {
+    version: '9.1.0',
+    date: 'April 21, 2026',
+    github: 'https://github.com/mantinedev/mantine/releases/tag/9.1.0',
+    link: 'https://mantine.dev/changelog/9-1-0',
+    patches: [],
+  },
+  {
     version: '9.0.0',
     date: 'March 31, 2026',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.0.0',
     link: 'https://mantine.dev/changelog/9-0-0',
-    patches: [],
+    patches: [
+      {
+        version: '9.0.2',
+        date: 'April 13, 2026',
+      },
+      {
+        version: '9.0.1',
+        date: 'April 6, 2026',
+      },
+    ],
   },
   {
     version: '8.3.0',
     date: 'September 8, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.3.0',
-    link: 'https://mantine.dev/changelog/8-3-0',
+    link: 'https://v8.mantine.dev/changelog/8-3-0',
     patches: [
       {
         version: '8.3.16',
@@ -89,13 +112,21 @@ export const allVersions = [
         version: '8.3.1',
         date: 'September 10, 2025',
       },
+      {
+        version: '8.3.18',
+        date: 'March 17, 2026',
+      },
+      {
+        version: '8.3.17',
+        date: 'March 14, 2026',
+      },
     ],
   },
   {
     version: '8.2.0',
     date: 'July 22, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.2.0',
-    link: 'https://mantine.dev/changelog/8-2-0',
+    link: 'https://v8.mantine.dev/changelog/8-2-0',
     patches: [
       {
         version: '8.2.2',
@@ -131,7 +162,7 @@ export const allVersions = [
     version: '8.1.0',
     date: 'June 10, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.1.0',
-    link: 'https://mantine.dev/changelog/8-1-0',
+    link: 'https://v8.mantine.dev/changelog/8-1-0',
     patches: [
       {
         version: '8.1.1',
@@ -151,7 +182,7 @@ export const allVersions = [
     version: '8.0.0',
     date: 'May 5, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.0.0',
-    link: 'https://mantine.dev/changelog/8-0-0',
+    link: 'https://v8.mantine.dev/changelog/8-0-0',
     patches: [
       {
         version: '8.0.1',

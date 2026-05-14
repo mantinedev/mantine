@@ -385,6 +385,30 @@ export function DragAndDrop() {
       color: 'gray',
       payload: { locked: true },
     },
+    {
+      id: 8,
+      title: 'Release Prep',
+      start: new Date(2024, 0, 16, 11, 0),
+      end: new Date(2024, 0, 16, 12, 0),
+      color: 'pink',
+      payload: {},
+    },
+    {
+      id: 9,
+      title: 'Launch Window',
+      start: new Date(2024, 0, 15, 0, 0),
+      end: new Date(2024, 0, 18, 0, 0),
+      color: 'grape',
+      payload: {},
+    },
+    {
+      id: 10,
+      title: 'Weekend Conference',
+      start: new Date(2024, 0, 19, 0, 0),
+      end: new Date(2024, 0, 22, 0, 0),
+      color: 'orange',
+      payload: {},
+    },
   ]);
   const [lastAction, setLastAction] = useState<string>('');
 

@@ -27,4 +27,10 @@ describe('@mantine/dates/TimeInput', () => {
     props: defaultProps,
     selector: 'input',
   });
+
+  tests.itSupportsSharedInputDefaults<TimeInputProps>({
+    component: TimeInput,
+    props: defaultProps,
+    componentName: 'TimeInput',
+  });
 });

@@ -7,11 +7,13 @@ interface UseComboboxTargetPropsInput {
   withKeyboardNavigation: boolean | undefined;
   withExpandedAttribute: boolean | undefined;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+  onClick: React.MouseEventHandler<HTMLInputElement> | undefined;
   autoComplete: string | undefined;
 }
 
 export function useComboboxTargetProps({
   onKeyDown,
+  onClick,
   withKeyboardNavigation,
   withAriaAttributes,
   withExpandedAttribute,
@@ -108,8 +110,20 @@ export function useComboboxTargetProps({
       }
     : {};
 
+  const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    // Safari does not give keyboard focus to non-text-input elements (including
+    // readOnly inputs rendered as buttons) on click, which prevents onKeyDown
+    // from firing. Explicitly focus the target when targetType is 'button'.
+    if (targetType === 'button') {
+      event.currentTarget.focus();
+    }
+
+    onClick?.(event);
+  };
+
   return {
     ...ariaAttributes,
     onKeyDown: handleKeyDown,
+    onClick: handleClick,
   };
 }

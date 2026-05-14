@@ -32,8 +32,8 @@ function scrollTo({ x, y }: Partial<UseWindowScrollPosition>) {
 export function useWindowScroll(): UseWindowScrollReturnValue {
   const [position, setPosition] = useState<UseWindowScrollPosition>({ x: 0, y: 0 });
 
-  useWindowEvent('scroll', () => setPosition(getScrollPosition()));
-  useWindowEvent('resize', () => setPosition(getScrollPosition()));
+  useWindowEvent('scroll', () => setPosition(getScrollPosition()), { passive: true });
+  useWindowEvent('resize', () => setPosition(getScrollPosition()), { passive: true });
 
   useEffect(() => {
     setPosition(getScrollPosition());

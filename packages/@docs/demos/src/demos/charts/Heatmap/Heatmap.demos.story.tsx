@@ -57,3 +57,8 @@ export const Demo_splitMonths = {
   name: '⭐ Demo: splitMonths',
   render: renderDemo(demos.splitMonths),
 };
+
+export const Demo_legend = {
+  name: '⭐ Demo: legend',
+  render: renderDemo(demos.legend),
+};

@@ -13,6 +13,13 @@ Read through the [DatePicker](/dates/date-picker/) documentation to learn about 
 
 <Demo data={DateTimePickerDemos.usage} />
 
+## Range
+
+Set `type="range"` to allow selecting a date and time range. In range mode,
+two time inputs are rendered for start and end times, and a range summary is displayed below:
+
+<Demo data={DateTimePickerDemos.range} />
+
 ## With seconds
 
 <Demo data={DateTimePickerDemos.withSeconds} />
@@ -36,6 +43,12 @@ for the time picker:
 Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label:
 
 <Demo data={DateTimePickerDemos.format} />
+
+`valueFormat` also accepts a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string
+and returns a custom formatted value. Use it when the formatting logic cannot be expressed with a
+dayjs format string:
+
+<Demo data={DateTimePickerDemos.formatFunction} />
 
 ## Disabled state
 

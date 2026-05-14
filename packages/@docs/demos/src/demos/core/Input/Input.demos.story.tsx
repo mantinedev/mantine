@@ -13,11 +13,6 @@ export const Demo_component = {
   render: renderDemo(demos.component),
 };
 
-export const Demo_mask = {
-  name: '⭐ Demo: mask',
-  render: renderDemo(demos.mask),
-};
-
 export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
@@ -56,6 +51,11 @@ export const Demo_placeholder = {
 export const Demo_defaultProps = {
   name: '⭐ Demo: defaultProps',
   render: renderDemo(demos.defaultProps),
+};
+
+export const Demo_sharedDefaultProps = {
+  name: '⭐ Demo: sharedDefaultProps',
+  render: renderDemo(demos.sharedDefaultProps),
 };
 
 export const Demo_sharedStyles = {

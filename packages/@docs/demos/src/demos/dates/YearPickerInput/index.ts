@@ -11,3 +11,5 @@ export { minMax } from './YearPickerInput.demo.minMax';
 export { controlProps } from './YearPickerInput.demo.controlProps';
 export { yearsListFormat } from './YearPickerInput.demo.yearsListFormat';
 export { decadeLabelFormat } from './YearPickerInput.demo.decadeLabelFormat';
+export { presets } from './YearPickerInput.demo.presets';
+export { presetsRange } from './YearPickerInput.demo.presetsRange';

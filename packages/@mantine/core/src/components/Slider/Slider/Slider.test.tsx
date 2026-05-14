@@ -112,6 +112,19 @@ describe('@mantine/core/Slider', () => {
     expect(screen.getByText('test-label-60')).toBeInTheDocument();
   });
 
+  it('does not set aria-valuetext when thumbValueText is not provided', () => {
+    render(<Slider value={50} />);
+    expect(screen.getByRole('slider')).not.toHaveAttribute('aria-valuetext');
+  });
+
+  it('sets aria-valuetext from string or callback', () => {
+    const { rerender } = render(<Slider value={50} thumbValueText="$50" />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuetext', '$50');
+
+    rerender(<Slider value={50} scale={(v) => v * 10} thumbValueText={(value) => `$${value}`} />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuetext', '$500');
+  });
+
   it('clamps initial value based on min prop', () => {
     const { container } = render(<Slider defaultValue={60} min={100} />);
     expectInputValue('100', container);

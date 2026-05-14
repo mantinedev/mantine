@@ -20,18 +20,24 @@ export function useResolvedStylesApi<Payload extends FactoryPayload>({
   const theme = useMantineTheme();
 
   return {
-    resolvedClassNames: resolveClassNames({
-      theme,
-      classNames,
-      props,
-      stylesCtx: stylesCtx || undefined,
-    }),
+    resolvedClassNames:
+      classNames === undefined
+        ? undefined
+        : resolveClassNames({
+            theme,
+            classNames,
+            props,
+            stylesCtx: stylesCtx || undefined,
+          }),
 
-    resolvedStyles: resolveStyles({
-      theme,
-      styles,
-      props,
-      stylesCtx: stylesCtx || undefined,
-    }),
+    resolvedStyles:
+      styles === undefined
+        ? undefined
+        : resolveStyles({
+            theme,
+            styles,
+            props,
+            stylesCtx: stylesCtx || undefined,
+          }),
   };
 }

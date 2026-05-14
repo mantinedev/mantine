@@ -18,15 +18,9 @@ export function useMouse<T extends HTMLElement = any>(
         if (node) {
           const rect = node.getBoundingClientRect();
 
-          const x = Math.max(
-            0,
-            Math.round(mouseEvent.pageX - rect.left - (window.scrollX || window.scrollX))
-          );
+          const x = Math.max(0, Math.round(mouseEvent.clientX - rect.left));
 
-          const y = Math.max(
-            0,
-            Math.round(mouseEvent.pageY - rect.top - (window.scrollY || window.scrollY))
-          );
+          const y = Math.max(0, Math.round(mouseEvent.clientY - rect.top));
 
           setPosition({ x, y });
         } else {

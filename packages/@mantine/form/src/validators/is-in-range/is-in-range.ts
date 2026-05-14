@@ -1,12 +1,14 @@
+import type { SyncReactNode } from '../types';
+
 interface IsInRangePayload {
   min?: number;
   max?: number;
 }
 
-export function isInRange({ min, max }: IsInRangePayload, error?: React.ReactNode) {
+export function isInRange({ min, max }: IsInRangePayload, error?: SyncReactNode) {
   const _error = error || true;
 
-  return (value: unknown): React.ReactNode => {
+  return (value: unknown): SyncReactNode => {
     if (typeof value !== 'number') {
       return _error;
     }
