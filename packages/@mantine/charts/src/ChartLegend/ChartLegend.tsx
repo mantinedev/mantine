@@ -122,8 +122,11 @@ export const ChartLegend = factory<ChartLegendFactory>((_props) => {
     <Box
       mod={[{ position: legendPosition, centered }, mod]}
       {...getStyles('legend')}
-      onMouseLeave={() => onHighlight(null)}
       {...others}
+      onMouseLeave={(event) => {
+        others.onMouseLeave?.(event);
+        onHighlight(null);
+      }}
     >
       {items}
     </Box>
