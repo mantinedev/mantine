@@ -82,6 +82,21 @@ describe('@mantine/core/Highlight', () => {
       expect(marks[2].textContent).toBe('hello');
     });
 
+    it('applies custom color to accented matches when accentInsensitive is true', () => {
+      const { container } = render(
+        <Highlight highlight={[{ text: 'cafe', color: 'red' }]} color="yellow">
+          We visited café and cafe.
+        </Highlight>
+      );
+
+      const marks = container.querySelectorAll('mark');
+      expect(marks).toHaveLength(2);
+      expect(marks[0].textContent).toBe('café');
+      expect(marks[1].textContent).toBe('cafe');
+      expect(marks[0].getAttribute('style')).toContain('--mantine-color-red');
+      expect(marks[1].getAttribute('style')).toContain('--mantine-color-red');
+    });
+
     it('mixes terms with and without colors', () => {
       const { container } = render(
         <Highlight highlight={[{ text: 'red', color: 'red' }, { text: 'default' }]} color="yellow">

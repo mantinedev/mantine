@@ -138,6 +138,34 @@ describe('@mantine/core/Highlight/highlighter', () => {
         { chunk: 'résumé', highlighted: true },
       ]);
     });
+
+    it('handles decomposed (NFD) accents without corrupting later matches', () => {
+      const text = 'café cafe';
+      expect(highlighter(text, 'cafe', { accentInsensitive: true })).toStrictEqual([
+        { chunk: 'café', highlighted: true },
+        { chunk: ' ', highlighted: false },
+        { chunk: 'cafe', highlighted: true },
+      ]);
+    });
+
+    it('handles fully decomposed text with multiple matches', () => {
+      const text = 'näive résumé';
+      expect(highlighter(text, ['naive', 'resume'], { accentInsensitive: true })).toStrictEqual([
+        { chunk: 'näive', highlighted: true },
+        { chunk: ' ', highlighted: false },
+        { chunk: 'résumé', highlighted: true },
+      ]);
+    });
+
+    it('uses true as the default for accentInsensitive when options is omitted', () => {
+      expect(highlighter('café', 'cafe')).toStrictEqual([{ chunk: 'café', highlighted: true }]);
+    });
+
+    it('uses true as the default for accentInsensitive with partial options', () => {
+      expect(highlighter('café', 'cafe', { wholeWord: false })).toStrictEqual([
+        { chunk: 'café', highlighted: true },
+      ]);
+    });
   });
 
   describe('case sensitivity', () => {
@@ -149,6 +177,13 @@ describe('@mantine/core/Highlight/highlighter', () => {
 
     it('matches different casing when caseInsensitive is true', () => {
       expect(highlighter(VALUE, 'hell', { caseInsensitive: true })).toStrictEqual([
+        { chunk: 'Hell', highlighted: true },
+        { chunk: 'o, World', highlighted: false },
+      ]);
+    });
+
+    it('keeps caseInsensitive default of true when other options are passed', () => {
+      expect(highlighter(VALUE, 'hell', { wholeWord: false })).toStrictEqual([
         { chunk: 'Hell', highlighted: true },
         { chunk: 'o, World', highlighted: false },
       ]);

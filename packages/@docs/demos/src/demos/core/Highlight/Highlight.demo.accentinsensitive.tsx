@@ -16,7 +16,7 @@ function Demo() {
 
       <div>
         <Text size="sm" fw={500} mb={5}>
-          With accent-sensitive matching (accentInsensitive={false})
+          {'With accent-sensitive matching (accentInsensitive={false})'}
         </Text>
         <Highlight highlight="cafe" accentInsensitive={false}>
           We visited café and cafe.
@@ -39,7 +39,7 @@ function Demo() {
 
       <div>
         <Text size="sm" fw={500} mb={5}>
-          With accent-sensitive matching (accentInsensitive={false})
+          {'With accent-sensitive matching (accentInsensitive={false})'}
         </Text>
         <Highlight highlight="cafe" accentInsensitive={false}>
           We visited café and cafe.

@@ -16,7 +16,7 @@ function Demo() {
 
       <div>
         <Text size="sm" fw={500} mb={5}>
-          With case-sensitive matching (caseInsensitive={false})
+          {'With case-sensitive matching (caseInsensitive={false})'}
         </Text>
         <Highlight highlight="this" caseInsensitive={false}>
           Highlight This, definitely THIS and also this!
@@ -39,7 +39,7 @@ function Demo() {
 
       <div>
         <Text size="sm" fw={500} mb={5}>
-          With case-sensitive matching (caseInsensitive={false})
+          {'With case-sensitive matching (caseInsensitive={false})'}
         </Text>
         <Highlight highlight="this" caseInsensitive={false}>
           Highlight This, definitely THIS and also this!

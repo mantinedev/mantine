@@ -2,29 +2,55 @@ function escapeRegex(value: string) {
   return value.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&');
 }
 
-function foldAccents(text: string): string {
+export function foldAccents(text: string): string {
   return text.normalize('NFD').replace(/\p{M}/gu, '');
 }
 
-function getAccentInsensitiveChunks(value: string, re: RegExp): HighlightChunk[] {
-  const foldedValue = foldAccents(value);
-  const chunks: HighlightChunk[] = [];
-  let lastEnd = 0;
-  let match: RegExpExecArray | null;
+function foldAccentsWithMap(text: string): { folded: string; map: number[] } {
+  let folded = '';
+  const map: number[] = [];
+  let i = 0;
 
-  while ((match = re.exec(foldedValue)) !== null) {
-    const start = match.index;
-    const end = start + match[0].length;
-
-    if (start > lastEnd) {
-      chunks.push({ chunk: value.slice(lastEnd, start), highlighted: false });
+  while (i < text.length) {
+    const cp = text.codePointAt(i)!;
+    const cpStr = String.fromCodePoint(cp);
+    const foldedCp = foldAccents(cpStr);
+    for (let j = 0; j < foldedCp.length; j += 1) {
+      map.push(i);
     }
-    chunks.push({ chunk: value.slice(start, end), highlighted: true });
-    lastEnd = end;
+    folded += foldedCp;
+    i += cpStr.length;
   }
 
-  if (lastEnd < value.length) {
-    chunks.push({ chunk: value.slice(lastEnd), highlighted: false });
+  map.push(text.length);
+  return { folded, map };
+}
+
+function getAccentInsensitiveChunks(value: string, re: RegExp): HighlightChunk[] {
+  const { folded, map } = foldAccentsWithMap(value);
+  const chunks: HighlightChunk[] = [];
+  let lastOrigEnd = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = re.exec(folded)) !== null) {
+    const foldedStart = match.index;
+    const foldedEnd = foldedStart + match[0].length;
+    const origStart = map[foldedStart];
+    const origEnd = map[foldedEnd];
+
+    if (origStart > lastOrigEnd) {
+      chunks.push({ chunk: value.slice(lastOrigEnd, origStart), highlighted: false });
+    }
+    chunks.push({ chunk: value.slice(origStart, origEnd), highlighted: true });
+    lastOrigEnd = origEnd;
+
+    if (match[0].length === 0) {
+      re.lastIndex += 1;
+    }
+  }
+
+  if (lastOrigEnd < value.length) {
+    chunks.push({ chunk: value.slice(lastOrigEnd), highlighted: false });
   }
 
   return chunks.filter(({ chunk }) => chunk);
@@ -45,17 +71,14 @@ export interface HighlighterOptions {
 export function highlighter(
   value: string,
   _highlight: string | string[],
-  options: HighlighterOptions = {
-    wholeWord: false,
-    caseInsensitive: true,
-    accentInsensitive: true,
-  }
+  options: HighlighterOptions = {}
 ): HighlightChunk[] {
   if (_highlight == null) {
     return [{ chunk: value, highlighted: false }];
   }
 
-  const accentInsensitive = options.accentInsensitive;
+  const { wholeWord = false, caseInsensitive = true, accentInsensitive = true } = options;
+
   const prepareTerm = (term: string) =>
     accentInsensitive ? foldAccents(escapeRegex(term)) : escapeRegex(term);
 
@@ -80,10 +103,10 @@ export function highlighter(
           .sort((a, b) => b.length - a.length)
           .join('|');
 
-  const pattern = options.wholeWord
+  const pattern = wholeWord
     ? `(?<![\\p{L}\\p{N}_])(${matcher})(?![\\p{L}\\p{N}_])`
     : `(${matcher})`;
-  const flags = ['g', options.caseInsensitive ? 'i' : '', options.wholeWord ? 'u' : ''].join('');
+  const flags = ['g', caseInsensitive ? 'i' : '', wholeWord ? 'u' : ''].join('');
   const re = new RegExp(pattern, flags);
 
   if (accentInsensitive) {
