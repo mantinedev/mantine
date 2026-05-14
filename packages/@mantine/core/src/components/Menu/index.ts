@@ -4,6 +4,7 @@ import type { MenuDividerProps } from './MenuDivider/MenuDivider';
 import type { MenuDropdownProps } from './MenuDropdown/MenuDropdown';
 import type { MenuItemProps } from './MenuItem/MenuItem';
 import type { MenuLabelProps } from './MenuLabel/MenuLabel';
+import type { MenuSearchProps } from './MenuSearch/MenuSearch';
 import type { MenuSubProps } from './MenuSub/MenuSub';
 import type { MenuSubDropdownProps } from './MenuSubDropdown/MenuSubDropdown';
 import type { MenuSubItemProps } from './MenuSubItem/MenuSubItem';
@@ -16,6 +17,7 @@ export { MenuItem } from './MenuItem/MenuItem';
 export { MenuLabel } from './MenuLabel/MenuLabel';
 export { MenuDropdown } from './MenuDropdown/MenuDropdown';
 export { MenuTarget } from './MenuTarget/MenuTarget';
+export { MenuSearch } from './MenuSearch/MenuSearch';
 export { useMenuContext } from './Menu.context';
 export { MenuSub } from './MenuSub/MenuSub';
 export { MenuSubDropdown } from './MenuSubDropdown/MenuSubDropdown';
@@ -31,6 +33,7 @@ export type {
   MenuLabelProps,
   MenuDropdownProps,
   MenuTargetProps,
+  MenuSearchProps,
   MenuContextValue,
   MenuSubProps,
   MenuSubDropdownProps,

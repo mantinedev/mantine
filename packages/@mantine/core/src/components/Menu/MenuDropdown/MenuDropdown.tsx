@@ -44,6 +44,9 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
   const ctx = useMenuContext();
 
   const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
+    if (ctx.hasSearch) {
+      return;
+    }
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       wrapperRef.current
@@ -81,7 +84,7 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
       data-menu-dropdown
       onKeyDown={handleKeyDown}
     >
-      {ctx.withInitialFocusPlaceholder && (
+      {ctx.withInitialFocusPlaceholder && !ctx.hasSearch && (
         <div tabIndex={-1} data-autofocus data-mantine-stop-propagation style={{ outline: 0 }} />
       )}
       {children}

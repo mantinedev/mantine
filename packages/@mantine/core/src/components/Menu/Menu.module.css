@@ -40,7 +40,7 @@
     cursor: not-allowed;
   }
 
-  &:where(:hover, :focus) {
+  &:where(:hover, :focus, [data-menu-active]) {
     &:where(:not(:disabled, [data-disabled])) {
       @mixin where-light {
         background-color: var(--menu-item-hover, var(--mantine-color-gray-1));
@@ -54,6 +54,38 @@
 
   &:where([data-sub-menu-item]) {
     padding-inline-end: 5px;
+  }
+}
+
+.search {
+  --menu-search-padding: var(--popover-padding, 4px);
+
+  margin-inline: calc(var(--menu-search-padding) * -1);
+  margin-top: calc(var(--menu-search-padding) * -1);
+  width: calc(100% + var(--menu-search-padding) * 2);
+  border-top-width: 0;
+  border-inline-width: 0;
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+  margin-bottom: var(--menu-search-padding);
+
+  &,
+  &:focus {
+    @mixin where-light {
+      border-color: var(--mantine-color-gray-2);
+    }
+
+    @mixin where-dark {
+      border-color: var(--mantine-color-dark-4);
+    }
+  }
+
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-7);
   }
 }
 

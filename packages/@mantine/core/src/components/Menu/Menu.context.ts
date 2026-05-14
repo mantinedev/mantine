@@ -18,6 +18,9 @@ export interface MenuContextValue {
   setOpenedViaClick: (value: boolean) => void;
   withInitialFocusPlaceholder: boolean | undefined;
   registerOpenSub: (closeFn: () => void) => () => void;
+  hasSearch: boolean;
+  registerSearch: () => () => void;
+  searchExitClearRef: React.RefObject<(() => void) | null>;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContextValue>(

@@ -57,3 +57,13 @@ export const Demo_sub = {
   name: '⭐ Demo: sub',
   render: renderDemo(demos.sub),
 };
+
+export const Demo_search = {
+  name: '⭐ Demo: search',
+  render: renderDemo(demos.search),
+};
+
+export const Demo_searchNested = {
+  name: '⭐ Demo: searchNested',
+  render: renderDemo(demos.searchNested),
+};

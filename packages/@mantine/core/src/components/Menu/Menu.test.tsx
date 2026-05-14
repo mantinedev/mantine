@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { cleanup } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';
@@ -170,6 +171,187 @@ describe('@mantine/core/Menu', () => {
 
   it('has correct displayName', () => {
     expect(Menu.displayName).toEqual('@mantine/core/Menu');
+  });
+
+  describe('Menu.Search', () => {
+    const items = ['Apple', 'Banana', 'Cherry', 'Date'];
+
+    function SearchMenu({
+      onItemClick,
+      itemsList = items,
+    }: {
+      onItemClick?: (value: string) => void;
+      itemsList?: string[];
+    }) {
+      const [query, setQuery] = useState('');
+      const filtered = itemsList.filter((item) => item.toLowerCase().includes(query.toLowerCase()));
+
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Search
+              aria-label="search"
+              value={query}
+              onChange={(event) => setQuery(event.currentTarget.value)}
+            />
+            {filtered.map((item) => (
+              <Menu.Item key={item} onClick={() => onItemClick?.(item)}>
+                {item}
+              </Menu.Item>
+            ))}
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('focuses search input when menu opens', async () => {
+      render(<SearchMenu />);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      expect(screen.getByLabelText('search')).toHaveFocus();
+    });
+
+    it('filters items via user-controlled state', async () => {
+      render(<SearchMenu />);
+      await userEvent.type(screen.getByLabelText('search'), 'an');
+      expect(screen.getByText('Banana')).toBeInTheDocument();
+      expect(screen.queryByText('Apple')).not.toBeInTheDocument();
+      expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+    });
+
+    it('moves data-menu-active highlight with ArrowDown/ArrowUp', async () => {
+      render(<SearchMenu />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByText('Apple').closest('button')).toHaveAttribute('data-menu-active');
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByText('Banana').closest('button')).toHaveAttribute('data-menu-active');
+      expect(screen.getByText('Apple').closest('button')).not.toHaveAttribute('data-menu-active');
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(screen.getByText('Apple').closest('button')).toHaveAttribute('data-menu-active');
+    });
+
+    it('loops with ArrowDown from last to first item', async () => {
+      render(<SearchMenu />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+
+      await userEvent.keyboard('{End}');
+      expect(screen.getByText('Date').closest('button')).toHaveAttribute('data-menu-active');
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByText('Apple').closest('button')).toHaveAttribute('data-menu-active');
+    });
+
+    it('Home/End jump to first/last item', async () => {
+      render(<SearchMenu />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+
+      await userEvent.keyboard('{End}');
+      expect(screen.getByText('Date').closest('button')).toHaveAttribute('data-menu-active');
+
+      await userEvent.keyboard('{Home}');
+      expect(screen.getByText('Apple').closest('button')).toHaveAttribute('data-menu-active');
+    });
+
+    it('Enter triggers click on active item and closes menu', async () => {
+      const handleClick = jest.fn();
+      render(<SearchMenu onItemClick={handleClick} />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+
+      await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+      expect(handleClick).toHaveBeenCalledWith('Banana');
+      expect(screen.queryAllByRole('menu')).toHaveLength(0);
+    });
+
+    it('Enter does nothing when no item is active', async () => {
+      const handleClick = jest.fn();
+      render(<SearchMenu onItemClick={handleClick} />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+
+      await userEvent.keyboard('{Enter}');
+      expect(handleClick).not.toHaveBeenCalled();
+    });
+
+    it('clears active highlight when query changes', async () => {
+      render(<SearchMenu />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByText('Apple').closest('button')).toHaveAttribute('data-menu-active');
+
+      await userEvent.type(search, 'an');
+      expect(document.querySelector('[data-menu-active]')).toBeNull();
+    });
+
+    it('Escape closes the menu', async () => {
+      render(<SearchMenu />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+
+      await userEvent.keyboard('{Escape}');
+      expect(screen.queryAllByRole('menu')).toHaveLength(0);
+    });
+
+    function ClearOnCloseMenu({ clearSearchOnClose }: { clearSearchOnClose?: boolean }) {
+      const [opened, setOpened] = useState(true);
+      const [query, setQuery] = useState('initial');
+      return (
+        <>
+          <button type="button" onClick={() => setOpened((o) => !o)}>
+            toggle
+          </button>
+          <span data-testid="query">{query}</span>
+          <Menu
+            opened={opened}
+            onChange={setOpened}
+            transitionProps={{ duration: 0, exitDuration: 0 }}
+            withinPortal={false}
+          >
+            <Menu.Target>
+              <button type="button">test-target</button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Search
+                aria-label="search"
+                value={query}
+                onChange={(event) => setQuery(event.currentTarget.value)}
+                clearSearchOnClose={clearSearchOnClose}
+              />
+              <Menu.Item>Item</Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </>
+      );
+    }
+
+    it('clears search value after close transition by default', async () => {
+      render(<ClearOnCloseMenu />);
+      expect(screen.getByTestId('query')).toHaveTextContent('initial');
+
+      await userEvent.click(screen.getByText('toggle'));
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      expect(screen.getByTestId('query')).toBeEmptyDOMElement();
+    });
+
+    it('keeps search value on close when clearSearchOnClose={false}', async () => {
+      render(<ClearOnCloseMenu clearSearchOnClose={false} />);
+      expect(screen.getByTestId('query')).toHaveTextContent('initial');
+
+      await userEvent.click(screen.getByText('toggle'));
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      expect(screen.getByTestId('query')).toHaveTextContent('initial');
+    });
   });
   it('correctly calls callbacks when opening and closing the uncontrolled menu via target click', async () => {
     const onOpen = jest.fn();

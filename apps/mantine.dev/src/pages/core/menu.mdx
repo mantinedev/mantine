@@ -12,6 +12,22 @@ export default Layout(MDX_DATA.Menu);
 
 <Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
 
+## Search
+
+`Menu.Search` renders a search input inside the dropdown. Focus stays on the input while
+`ArrowUp`/`ArrowDown` move a highlight through items, and `Enter` triggers the highlighted item.
+Filtering is controlled by the user – pass `value` and `onChange` and filter `Menu.Item` children
+based on the query. By default, the search value is cleared automatically after the menu close
+transition completes – disable with `clearSearchOnClose={false}` if you want to preserve the query
+between openings.
+
+<Demo data={MenuDemos.search} />
+
+The same approach works with submenus. To keep a parent visible when a nested item matches,
+include the parent in the filtered tree if any of its descendants match the query:
+
+<Demo data={MenuDemos.searchNested} demoProps={{ defaultExpanded: false }} />
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:
@@ -160,6 +176,16 @@ If you are using the Menu to build navigation, you can use the options from the 
       key: 'End',
       description: 'Moves focus to last menu item',
       condition: 'Focus within dropdown',
+    },
+    {
+      key: 'ArrowUp/ArrowDown',
+      description: 'Moves highlight to previous/next menu item without leaving the input',
+      condition: 'Focus on Menu.Search',
+    },
+    {
+      key: 'Enter',
+      description: 'Triggers the highlighted item',
+      condition: 'Focus on Menu.Search',
     },
   ]}
 />

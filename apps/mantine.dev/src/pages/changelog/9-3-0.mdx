@@ -73,6 +73,17 @@ across other menu items without accidentally closing the submenu.
 
 <Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
 
+## Menu search
+
+[Menu](/core/menu/) now supports `Menu.Search` – a search input that filters items
+without taking focus away from the input. Use `ArrowUp`/`ArrowDown` to move the
+highlight, `Enter` to trigger the highlighted item. Filtering logic is controlled
+by the user: pass `value`/`onChange` and filter `Menu.Item` children based on the query.
+The search value is cleared automatically after the menu close transition completes; set
+`clearSearchOnClose={false}` to keep the query between openings.
+
+<Demo data={MenuDemos.search} />
+
 ## Highlight accent and case insensitive matching
 
 [Highlight](/core/highlight/) component now supports `caseInsensitive` and `accentInsensitive`

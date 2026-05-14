@@ -16,6 +16,7 @@ import { MenuDivider, type MenuDividerProps } from './MenuDivider/MenuDivider';
 import { MenuDropdown, type MenuDropdownProps } from './MenuDropdown/MenuDropdown';
 import { MenuItem, type MenuItemProps } from './MenuItem/MenuItem';
 import { MenuLabel, type MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuSearch, type MenuSearchProps } from './MenuSearch/MenuSearch';
 import { MenuSub, type MenuSubProps } from './MenuSub/MenuSub';
 import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
 import classes from './Menu.module.css';
@@ -30,6 +31,7 @@ export type MenuStylesNames =
   | 'label'
   | 'divider'
   | 'chevron'
+  | 'search'
   | PopoverStylesNames;
 
 export type MenuFactory = Factory<{
@@ -41,6 +43,7 @@ export type MenuFactory = Factory<{
     Dropdown: typeof MenuDropdown;
     Target: typeof MenuTarget;
     Divider: typeof MenuDivider;
+    Search: typeof MenuSearch;
     Sub: typeof MenuSub;
   };
 }>;
@@ -143,6 +146,7 @@ export const Menu = factory<MenuFactory>((_props) => {
     keepMounted,
     withInitialFocusPlaceholder,
     attributes,
+    onExitTransitionEnd,
     ...others
   } = props;
 
@@ -195,6 +199,27 @@ export const Menu = factory<MenuFactory>((_props) => {
     };
   }, []);
 
+  const searchCountRef = useRef(0);
+  const [hasSearch, setHasSearch] = useState(false);
+  const registerSearch = useCallback(() => {
+    searchCountRef.current += 1;
+    if (searchCountRef.current === 1) {
+      setHasSearch(true);
+    }
+    return () => {
+      searchCountRef.current -= 1;
+      if (searchCountRef.current === 0) {
+        setHasSearch(false);
+      }
+    };
+  }, []);
+
+  const searchExitClearRef = useRef<(() => void) | null>(null);
+  const handleExitTransitionEnd = () => {
+    searchExitClearRef.current?.();
+    onExitTransitionEnd?.();
+  };
+
   const getItemIndex = (node: HTMLButtonElement) =>
     getContextItemIndex('[data-menu-item]', '[data-menu-dropdown]', node);
 
@@ -223,6 +248,9 @@ export const Menu = factory<MenuFactory>((_props) => {
         menuItemTabIndex,
         withInitialFocusPlaceholder,
         registerOpenSub,
+        hasSearch,
+        registerSearch,
+        searchExitClearRef,
       }}
     >
       <Popover
@@ -239,6 +267,7 @@ export const Menu = factory<MenuFactory>((_props) => {
         unstyled={unstyled}
         variant={variant}
         keepMounted={keepMounted}
+        onExitTransitionEnd={handleExitTransitionEnd}
       >
         {children}
       </Popover>
@@ -253,6 +282,7 @@ Menu.Label = MenuLabel;
 Menu.Dropdown = MenuDropdown;
 Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;
+Menu.Search = MenuSearch;
 Menu.Sub = MenuSub;
 
 export namespace Menu {
@@ -279,6 +309,10 @@ export namespace Menu {
 
   export namespace Target {
     export type Props = MenuTargetProps;
+  }
+
+  export namespace Search {
+    export type Props = MenuSearchProps;
   }
 
   export namespace Sub {

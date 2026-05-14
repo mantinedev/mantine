@@ -86,6 +86,21 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
     }
   });
 
+  const handleMouseMove = createEventHandler<any>(_others.onMouseMove, () => {
+    if (!ctx.hasSearch) {
+      return;
+    }
+    const dropdown = itemRef.current?.closest('[data-menu-dropdown]');
+    if (!dropdown) {
+      return;
+    }
+    dropdown.querySelectorAll<HTMLElement>('[data-menu-active]').forEach((node) => {
+      if (node !== itemRef.current && node.closest('[data-menu-dropdown]') === dropdown) {
+        node.removeAttribute('data-menu-active');
+      }
+    });
+  });
+
   const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
   const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
 
@@ -110,6 +125,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
       data-disabled={disabled || dataDisabled || undefined}
       data-mantine-stop-propagation
       onClick={handleClick}
+      onMouseMove={handleMouseMove}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-menu-item]:not([data-disabled])',
         parentSelector: '[data-menu-dropdown]',

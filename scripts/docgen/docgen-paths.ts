@@ -87,6 +87,7 @@ const FILES_PATHS = getPaths([
   // Menu
   'packages/@mantine/core/src/components/Menu/MenuItem/MenuItem.tsx',
   'packages/@mantine/core/src/components/Menu/MenuTarget/MenuTarget.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuSearch/MenuSearch.tsx',
   'packages/@mantine/core/src/components/Menu/MenuSub/MenuSub.tsx',
   'packages/@mantine/core/src/components/Menu/MenuSubItem/MenuSubItem.tsx',
   'packages/@mantine/core/src/components/Menu/MenuSubTarget/MenuSubTarget.tsx',

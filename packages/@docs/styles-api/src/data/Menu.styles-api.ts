@@ -11,6 +11,7 @@ export const MenuStylesApi: StylesApiData<MenuFactory> = {
     itemLabel: 'Label of `Menu.Item`',
     itemSection: 'Left and right sections of `Menu.Item`',
     chevron: 'Sub menu chevron',
+    search: '`Menu.Search` input element',
   },
 
   vars: {},
