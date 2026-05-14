@@ -1,4 +1,4 @@
-import { CodeHighlightDemos, OverflowListDemos, PaginationDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -64,6 +64,22 @@ inside the input border at the bottom. This is useful for displaying character c
 or other supplementary information:
 
 <Demo data={TextareaDemos.bottomSection} />
+
+## Menu submenu safe polygon
+
+[Menu](/core/menu/) submenus now use a safe polygon when moving the cursor from
+the parent item to the dropdown. This allows you to move the cursor diagonally
+across other menu items without accidentally closing the submenu.
+
+<Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
+
+## Highlight accent and case insensitive matching
+
+[Highlight](/core/highlight/) component now supports `caseInsensitive` and `accentInsensitive`
+props. Both are enabled by default – matching is case-insensitive and accent-insensitive,
+so `cafe` matches `café`, `CAFÉ`, etc. Set either prop to `false` to opt out:
+
+<Demo data={HighlightDemos.accentInsensitive} />
 
 ## Tooltip merge arrow position
 
