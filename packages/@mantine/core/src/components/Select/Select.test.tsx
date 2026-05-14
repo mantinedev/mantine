@@ -7,6 +7,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
+import { Input } from '../Input';
 import { Select, SelectProps, SelectStylesNames } from './Select';
 
 const defaultProps: SelectProps = {
@@ -40,6 +41,12 @@ describe('@mantine/core/Select', () => {
     component: Select,
     props: defaultProps,
     selector: 'input',
+  });
+
+  tests.itSupportsSharedInputDefaults<SelectProps>({
+    component: Select,
+    props: defaultProps,
+    componentName: 'Select',
   });
 
   it('supports uncontrolled state', async () => {
@@ -256,6 +263,24 @@ describe('@mantine/core/Select', () => {
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: 'One' }));
     expect(screen.getByRole('combobox')).toHaveValue('');
+  });
+
+  it('inherits classNames and styles from Input.extend defaultProps in theme', () => {
+    const theme = {
+      components: {
+        Input: Input.extend({
+          defaultProps: {
+            classNames: { input: 'theme-input-class', wrapper: 'theme-wrapper-class' },
+            styles: { input: { color: 'rgb(255, 0, 0)' } },
+          },
+        }),
+      },
+    };
+
+    render(<Select {...defaultProps} />, theme);
+    const input = screen.getByRole('combobox');
+    expect(input).toHaveClass('theme-input-class');
+    expect(input).toHaveStyle({ color: 'rgb(255, 0, 0)' });
   });
 
   it('allows to change controlled search value when value is controlled and selected', async () => {

@@ -55,7 +55,7 @@ type MonthPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 
 export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerInputFactory>(
   (_props) => {
-    const props = useProps('MonthPickerInput', defaultProps, _props);
+    const props = useProps(['Input', 'InputWrapper', 'MonthPickerInput'], defaultProps, _props);
     const {
       type,
       value,
@@ -76,6 +76,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
       maxDate,
       vars,
       valueFormatter,
+      presets,
       attributes,
       ...rest
     } = props;
@@ -149,6 +150,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          presets={presets}
           attributes={attributes}
         />
       </PickerInputBase>

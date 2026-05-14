@@ -2,7 +2,7 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Stack, Text } from '@mantine/core';
+import { Popover, Stack, Text, UnstyledButton } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { MonthView } from './MonthView';
 
@@ -149,6 +149,44 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <MonthView date={date} onDateChange={setDate} events={events} />
+    </div>
+  );
+}
+
+export function AllDayEvents() {
+  const allDayEvents: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'All-day (end at next day 00:00:00)',
+      start: '2025-11-04 00:00:00',
+      end: '2025-11-05 00:00:00',
+      color: 'blue',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'All-day (end at same day 23:59:59)',
+      start: '2025-11-11 00:00:00',
+      end: '2025-11-11 23:59:59',
+      color: 'teal',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Two-day all-day (end at next day 00:00:00)',
+      start: '2025-11-18 00:00:00',
+      end: '2025-11-20 00:00:00',
+      color: 'violet',
+      variant: 'filled',
+      payload: {},
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView date={month} events={allDayEvents} />
     </div>
   );
 }
@@ -329,6 +367,37 @@ export function MaxEventsPerDay() {
           </Text>
           <MonthView date={month} events={events} maxEventsPerDay={5} />
         </div>
+      </Stack>
+    </div>
+  );
+}
+
+export function RenderEventInMoreList() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            renderEvent propagates to MoreEvents list
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Click the "+X more" button on Nov 15 — events in the dropdown should be wrapped in a
+            Popover and show "★" prefix.
+          </Text>
+        </div>
+
+        <MonthView
+          date={month}
+          events={events}
+          renderEvent={(event, props) => (
+            <Popover position="right" withArrow>
+              <Popover.Target>
+                <UnstyledButton {...props}>★ {event.title}</UnstyledButton>
+              </Popover.Target>
+              <Popover.Dropdown>Details for {event.title}</Popover.Dropdown>
+            </Popover>
+          )}
+        />
       </Stack>
     </div>
   );

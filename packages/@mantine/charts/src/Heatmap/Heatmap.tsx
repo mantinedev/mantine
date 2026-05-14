@@ -20,7 +20,14 @@ import { HeatmapWeeks } from './HeatmapWeeks';
 import { rotateWeekdaysNames } from './rotate-weekdays-names/rotate-weekdays-names';
 import classes from './Heatmap.module.css';
 
-export type HeatmapStylesNames = 'root' | 'rect' | 'weekdayLabel' | 'monthLabel';
+export type HeatmapStylesNames =
+  | 'root'
+  | 'rect'
+  | 'weekdayLabel'
+  | 'monthLabel'
+  | 'legend'
+  | 'legendLabel'
+  | 'legendRect';
 
 interface HeatmapRectData {
   date: string;
@@ -97,6 +104,12 @@ export interface HeatmapProps
 
   /** If set, inserts a spacer column between months @default false */
   splitMonths?: boolean;
+
+  /** If set, legend with color levels is displayed below the heatmap @default false */
+  withLegend?: boolean;
+
+  /** Legend labels, array of 2 elements: [min label, max label] @default ['Less', 'More'] */
+  legendLabels?: [string, string];
 }
 
 export type HeatmapFactory = Factory<{
@@ -122,6 +135,7 @@ const defaultProps = {
     'var(--heatmap-level-3)',
     'var(--heatmap-level-4)',
   ],
+  legendLabels: ['Less', 'More'] as [string, string],
 } satisfies Partial<HeatmapProps>;
 
 export const Heatmap = factory<HeatmapFactory>((_props) => {
@@ -155,6 +169,8 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
     tooltipProps,
     getRectProps,
     splitMonths,
+    withLegend,
+    legendLabels,
     attributes,
     ...others
   } = props;
@@ -277,11 +293,72 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
 
   const label = getTooltipLabel && hoveredRect && withTooltip ? getTooltipLabel(hoveredRect) : null;
 
+  const legendPadding = 10;
+  const legendHeight = withLegend ? legendPadding + rectSize : 0;
+  const svgWidth = rectSizeWithGap * totalColumns + gap + weekdaysOffset;
+
+  const legendNode = withLegend
+    ? (() => {
+        const lessLabel = legendLabels![0];
+        const moreLabel = legendLabels![1];
+        const textGap = 6;
+        const charWidth = fontSize! * 0.6;
+        const lessWidth = lessLabel.length * charWidth;
+        const allColors = [undefined, ...(colors || [])];
+        const rectsWidth = allColors.length * rectSize + (allColors.length - 1) * gap;
+        const moreWidth = moreLabel.length * charWidth;
+        const totalLegendWidth = lessWidth + textGap + rectsWidth + textGap + moreWidth;
+
+        const legendX = svgWidth - totalLegendWidth;
+        const legendY = rectSizeWithGap * 7 + gap + monthsOffset + legendPadding;
+
+        return (
+          <g
+            transform={`translate(${legendX}, ${legendY})`}
+            data-id="legend"
+            {...getStyles('legend')}
+          >
+            <text
+              x={0}
+              y={rectSize / 2}
+              fontSize={fontSize}
+              dominantBaseline="central"
+              {...getStyles('legendLabel')}
+            >
+              {lessLabel}
+            </text>
+            {allColors.map((color, i) => (
+              <rect
+                key={i}
+                x={lessWidth + textGap + i * (rectSize + gap)}
+                y={0}
+                width={rectSize}
+                height={rectSize}
+                rx={rectRadius}
+                fill={color}
+                data-empty={color === undefined || undefined}
+                {...getStyles('legendRect')}
+              />
+            ))}
+            <text
+              x={lessWidth + textGap + rectsWidth + textGap}
+              y={rectSize / 2}
+              fontSize={fontSize}
+              dominantBaseline="central"
+              {...getStyles('legendLabel')}
+            >
+              {moreLabel}
+            </text>
+          </g>
+        );
+      })()
+    : null;
+
   return (
     <Box
       component="svg"
-      width={rectSizeWithGap * totalColumns + gap + weekdaysOffset}
-      height={rectSizeWithGap * 7 + gap + monthsOffset}
+      width={svgWidth}
+      height={rectSizeWithGap * 7 + gap + monthsOffset + legendHeight}
       {...getStyles('root')}
       {...others}
     >
@@ -305,6 +382,7 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
       </Tooltip.Floating>
       {weekdayLabelsNodes}
       {monthsLabelsNodes}
+      {legendNode}
     </Box>
   );
 });

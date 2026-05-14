@@ -41,7 +41,6 @@ export type JsonInputFactory = Factory<{
 const defaultProps = {
   serialize: JSON.stringify,
   deserialize: JSON.parse,
-  size: 'sm',
   indentSpaces: 2,
 } satisfies Partial<JsonInputProps>;
 
@@ -60,7 +59,7 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
     error,
     indentSpaces,
     ...others
-  } = useProps('JsonInput', defaultProps, props);
+  } = useProps(['Input', 'InputWrapper', 'JsonInput'], defaultProps, props);
 
   const [_value, setValue] = useUncontrolled({
     value,

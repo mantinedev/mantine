@@ -71,7 +71,7 @@ const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => (
 }));
 
 export const PasswordInput = factory<PasswordInputFactory>((_props) => {
-  const props = useProps('PasswordInput', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'PasswordInput'], defaultProps, _props);
   const {
     classNames,
     className,
@@ -218,7 +218,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         error={error}
         leftSection={leftSection}
         size={size}
-        classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames.input) }}
+        classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
         styles={resolvedStyles}
         radius={radius}
         disabled={disabled}

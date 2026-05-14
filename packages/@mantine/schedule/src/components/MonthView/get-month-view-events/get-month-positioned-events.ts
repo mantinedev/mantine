@@ -72,7 +72,11 @@ export function getMonthPositionedEvents({
 
   for (const event of events) {
     const eventStart = dayjs(event.start).startOf('day');
-    const eventEnd = dayjs(event.end).startOf('day');
+    const rawEnd = dayjs(event.end);
+    const endAtMidnight = rawEnd.hour() === 0 && rawEnd.minute() === 0 && rawEnd.second() === 0;
+    const eventEnd = endAtMidnight
+      ? rawEnd.startOf('day').subtract(1, 'day')
+      : rawEnd.startOf('day');
     const isMultiday = eventEnd.isAfter(eventStart);
 
     for (let weekIdx = 0; weekIdx < weeks.length; weekIdx++) {

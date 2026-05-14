@@ -90,6 +90,7 @@ import {
 - `position` – notification position; by default, the value from the `position` prop of the `Notifications` component is used
 - `withBorder` – determines whether the notification should have a border
 - `withCloseButton` – determines whether the close button should be visible
+- `allowClose` – determines whether notification can be closed with close button, drag or horizontal scroll swipe, `true` by default
 - `onClose` – called when the notification is unmounted
 - `onOpen` – called when the notification is mounted
 - `autoClose` – defines timeout in ms after which the notification will be automatically closed; use `false` to disable auto close
@@ -110,6 +111,7 @@ notifications.show({
   id: 'hello-there',
   position: 'bottom-center',
   withCloseButton: true,
+  allowClose: true,
   onClose: () => console.log('unmounted'),
   onOpen: () => console.log('mounted'),
   autoClose: 5000,
@@ -129,6 +131,25 @@ Notifications preview (`message` prop used as `children`):
   data={NotificationDemos.configurator}
   configuratorProps={{ includeCode: false }}
 />
+
+## Dismiss interactions
+
+Notifications can be dismissed by dragging them left or right, or with a horizontal scroll swipe
+while hovered.
+
+Use `allowDragDismiss` and `allowScrollDismiss` on `Notifications` to disable either interaction:
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications allowDragDismiss={false} allowScrollDismiss={false} />;
+}
+```
+
+To make a specific notification non-dismissible, set `allowClose: false` in
+`notifications.show` or `notifications.update`. This hides the close button and disables
+drag/scroll dismissal for that notification.
 
 ## Customize notification styles
 

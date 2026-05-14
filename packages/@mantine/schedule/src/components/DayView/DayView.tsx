@@ -470,7 +470,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
     expansionLimit: recurrenceExpansionLimit,
   });
 
-  const eventsData = getDayViewEvents({ events: expandedEvents, date, startTime, endTime });
+  const eventsData = getDayViewEvents({
+    events: expandedEvents,
+    date,
+    startTime,
+    endTime,
+    intervalMinutes,
+  });
 
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, slotIndex: number) => {
@@ -550,7 +556,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
             : undefined
         }
         mode={mode}
-        onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+        onClick={
+          onEventClick
+            ? (e) => {
+                if (!eventResize.wasResizing()) {
+                  onEventClick(event, e);
+                }
+              }
+            : undefined
+        }
         {...stylesApiProps}
         style={{
           ...stylesApiProps.styles?.event,
@@ -795,7 +809,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
                       events={eventsData.allDayEvents}
                       moreEventsCount={allDayEventsCount.hiddenEventsCount}
                       renderEventBody={renderEventBody}
+                      renderEvent={renderEvent}
                       mode={mode}
+                      labels={labels}
+                      onEventClick={onEventClick}
                       {...stylesApiProps}
                       {...moreEventsProps}
                     />

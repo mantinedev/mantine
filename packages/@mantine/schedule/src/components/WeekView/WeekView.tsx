@@ -37,6 +37,7 @@ import {
   ScheduleViewLevel,
 } from '../../types';
 import {
+  BusinessHoursValue,
   calculateDropTime,
   expandRecurringEvents,
   formatDate,
@@ -149,6 +150,9 @@ export interface WeekViewProps
   /** If set, the time indicator displays the current time in the bubble @default true */
   withCurrentTimeBubble?: boolean;
 
+  /** If set, displays the current time indicator on the same day of week even when viewing a different week @default false */
+  forceCurrentTimeIndicator?: boolean;
+
   /** If set, displays all-day slots at the top of the view @default true */
   withAllDaySlots?: boolean;
 
@@ -188,8 +192,8 @@ export interface WeekViewProps
   /** If set to true, highlights business hours with white background @default false */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] */
-  businessHours?: [string, string];
+  /** Business hours range in `HH:mm:ss` format shared across all days, or a per-day record keyed by day of the week (`0` – Sunday, `6` – Saturday) for day-specific ranges. Set a day to `null` to mark it as fully outside business hours. @default ['09:00:00', '17:00:00'] */
+  businessHours?: BusinessHoursValue;
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
@@ -337,6 +341,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     radius,
     highlightToday,
     withCurrentTimeIndicator,
+    forceCurrentTimeIndicator,
     scrollAreaProps,
     locale,
     withWeekNumber,
@@ -547,6 +552,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     events: expandedEvents,
     startTime,
     endTime,
+    intervalMinutes,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     weekendDays: ctx.getWeekendDays(weekendDays),
     withWeekendDays,
@@ -692,7 +698,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   };
 
   const currentWeekdayIndex = withCurrentTimeIndicator
-    ? weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
+    ? forceCurrentTimeIndicator
+      ? weekdays.findIndex((day) => dayjs(day).day() === dayjs().day())
+      : weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
     : -1;
 
   const weekdaysLabels = weekdays.map((day, dayIndex) => (
@@ -807,7 +815,15 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           renderEvent={renderEvent}
           radius={radius}
           mode={mode}
-          onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+          onClick={
+            onEventClick
+              ? (e) => {
+                  if (!eventResize.wasResizing()) {
+                    onEventClick(event, e);
+                  }
+                }
+              : undefined
+          }
           style={{
             position: 'absolute',
             top: `calc(${eventTop}% + 1px)`,

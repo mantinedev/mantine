@@ -27,10 +27,15 @@ export function useFavicon(url: string) {
     }
 
     const splittedUrl = url.split('.');
-    link.current.setAttribute(
-      'type',
-      MIME_TYPES[splittedUrl[splittedUrl.length - 1].toLowerCase()]
-    );
+    const extension = splittedUrl[splittedUrl.length - 1].toLowerCase();
+    const mimeType = MIME_TYPES[extension];
+
+    if (mimeType) {
+      link.current.setAttribute('type', mimeType);
+    } else {
+      link.current.removeAttribute('type');
+    }
+
     link.current.setAttribute('href', url);
   }, [url]);
 }

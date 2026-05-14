@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { StorybookConfig } from '@storybook/nextjs';
-import fg from 'fast-glob';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -14,15 +13,13 @@ if (argv instanceof Promise) {
 }
 
 const getPath = (storyPath: string) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
-const getGlobPaths = (paths: string[]) =>
-  paths.reduce<string[]>((acc, path) => [...acc, ...fg.sync(path)], []);
 
 function getStoryPaths(fileName: string | number = '*') {
-  return getGlobPaths([
+  return [
     getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`),
     getPath(`packages/@mantinex/*/src/**/${fileName}.story.@(ts|tsx)`),
     getPath(`packages/@docs/*/src/**/${fileName}.story.@(ts|tsx)`),
-  ]);
+  ];
 }
 
 const storiesPath = !argv._[1]

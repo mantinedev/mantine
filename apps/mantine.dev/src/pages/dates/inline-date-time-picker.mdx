@@ -1,0 +1,41 @@
+import { InlineDateTimePickerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.InlineDateTimePicker);
+
+## DatePicker props
+
+`InlineDateTimePicker` supports most of the [DatePicker](/dates/date-picker/) props.
+Read through the [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+`InlineDateTimePicker` renders a calendar with a time picker inline, without a dropdown.
+It combines [DatePicker](/dates/date-picker/) and [TimePicker](/dates/time-picker/) components:
+
+<Demo data={InlineDateTimePickerDemos.usage} />
+
+## With seconds
+
+Set `withSeconds` prop to display seconds input in the time picker:
+
+<Demo data={InlineDateTimePickerDemos.withSeconds} />
+
+## Range
+
+Set `type="range"` to allow selecting a date and time range. In range mode,
+two time inputs are rendered side by side, and a range summary is displayed
+below the time inputs:
+
+<Demo data={InlineDateTimePickerDemos.range} />
+
+## Controlled range
+
+<Demo data={InlineDateTimePickerDemos.rangeControlled} />
+
+## Value format
+
+Use `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the range preview:
+
+<Demo data={InlineDateTimePickerDemos.format} />

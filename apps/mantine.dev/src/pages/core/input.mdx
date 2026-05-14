@@ -59,10 +59,6 @@ Example of using `Input` as `button` and `select`:
 
 <Demo data={InputDemos.component} />
 
-Example of using [react-imask](https://github.com/uNmAnNeR/imaskjs/tree/master/packages/react-imask) with `Input`:
-
-<Demo data={InputDemos.mask} />
-
 ## Input.Wrapper component
 
 The `Input.Wrapper` component is used in all other inputs
@@ -148,6 +144,17 @@ to `Input` and `Input.Wrapper` components. These default props will be inherited
 that use `Input` and `Input.Wrapper` under the hood ([TextInput](/core/text-input/), [NativeSelect](/core/native-select/), [Textarea](/core/textarea/), etc.):
 
 <Demo data={InputDemos.defaultProps} />
+
+## Shared default props for all inputs
+
+Default props on `Input` and `Input.Wrapper` cascade to every component that is built on top of
+them ([TextInput](/core/text-input/), [Textarea](/core/textarea/), [NumberInput](/core/number-input/),
+[Select](/core/select/), [DateInput](/dates/date-input/), and others). This is the easiest way to apply
+the same `size`, `radius`, `variant`, `withAsterisk` or any other shared prop to all inputs at once.
+Per-component default props always win over the shared ones, so you can still override individual
+components when needed:
+
+<Demo data={InputDemos.sharedDefaultProps} />
 
 ## Styles on theme
 

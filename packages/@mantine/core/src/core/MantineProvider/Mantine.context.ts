@@ -20,6 +20,7 @@ interface MantineContextValue {
   headless?: boolean;
   stylesTransform?: MantineStylesTransform;
   env?: 'default' | 'test';
+  deduplicateInlineStyles?: boolean;
 }
 
 export const MantineContext = createContext<MantineContextValue | null>(null);
@@ -64,4 +65,8 @@ export function useMantineStylesTransform() {
 
 export function useMantineEnv() {
   return useMantineContext().env || 'default';
+}
+
+export function useMantineDeduplicateInlineStyles() {
+  return useMantineContext().deduplicateInlineStyles;
 }

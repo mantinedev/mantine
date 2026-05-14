@@ -25,6 +25,7 @@ import {
   OptionsDropdown,
   OptionsFilter,
   useCombobox,
+  usePillsReorder,
 } from '../Combobox';
 import {
   __BaseInputProps,
@@ -127,6 +128,9 @@ export interface TagsInputProps
 
   /** If set, the dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
+
+  /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
+  withPillsReorder?: boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -145,7 +149,7 @@ const defaultProps = {
 } satisfies Partial<TagsInputProps>;
 
 export const TagsInput = factory<TagsInputFactory>((_props) => {
-  const props = useProps('TagsInput', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'TagsInput'], defaultProps, _props);
   const {
     classNames,
     className,
@@ -227,6 +231,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     ref,
     loading,
     loadingPosition,
+    withPillsReorder,
     ...others
   } = props;
 
@@ -261,6 +266,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     defaultValue,
     finalValue: [],
     onChange,
+  });
+
+  const { getPillProps, getListProps, handleInputKeyDown } = usePillsReorder({
+    value: _value,
+    onChange: setValue,
+    enabled: withPillsReorder && !disabled && !readOnly,
   });
 
   const [_searchValue, setSearchValue] = useUncontrolled({
@@ -318,7 +329,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
-    if (event.isPropagationStopped()) {
+    if (event.defaultPrevented || event.isPropagationStopped()) {
       return;
     }
 
@@ -365,6 +376,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
+
+    handleInputKeyDown(event);
   };
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
@@ -396,6 +409,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       onRemove?.(item);
     };
 
+    const reorderProps = getPillProps(index);
+
     if (renderPill) {
       return (
         <Fragment key={`${item}-${index}`}>
@@ -404,6 +419,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             value: item,
             onRemove: onRemoveItem,
             disabled: disabled || readOnly,
+            reorderProps,
           })}
         </Fragment>
       );
@@ -418,6 +434,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         disabled={disabled}
         attributes={attributes}
         {...getStyles('pill')}
+        {...reorderProps}
       >
         {item}
       </Pill>
@@ -511,7 +528,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             mod={mod}
             attributes={attributes}
           >
-            <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
+            <Pill.Group
+              disabled={disabled}
+              unstyled={unstyled}
+              {...getStyles('pillsList')}
+              {...getListProps()}
+            >
               {values}
               <Combobox.EventsTarget autoComplete={autoComplete} withExpandedAttribute>
                 <PillsInput.Field

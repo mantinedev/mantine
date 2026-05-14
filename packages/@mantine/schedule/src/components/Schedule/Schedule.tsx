@@ -140,7 +140,7 @@ export interface ScheduleProps
   /** Called when all-day slot is clicked in DayView/WeekView */
   onAllDaySlotClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Called when day is clicked in MonthView */
+  /** Called when a day is clicked in MonthView and YearView */
   onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** If set, enables drag-to-select slot ranges @default false */

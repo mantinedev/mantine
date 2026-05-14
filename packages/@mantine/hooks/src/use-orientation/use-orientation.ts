@@ -65,8 +65,17 @@ export function useOrientation({
   };
 
   useIsomorphicEffect(() => {
-    window.screen.orientation?.addEventListener('change', handleOrientationChange);
-    return () => window.screen.orientation?.removeEventListener('change', handleOrientationChange);
+    if (window.screen.orientation) {
+      setOrientation({
+        angle: window.screen.orientation.angle,
+        type: window.screen.orientation.type,
+      });
+      window.screen.orientation.addEventListener('change', handleOrientationChange);
+      return () =>
+        window.screen.orientation?.removeEventListener('change', handleOrientationChange);
+    }
+
+    return undefined;
   }, []);
 
   return orientation;

@@ -1,0 +1,27 @@
+import { RollingNumberDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.RollingNumber);
+
+## Usage
+
+`RollingNumber` animates value changes with rolling digit transitions. Each digit
+independently rolls to its new position when the value changes.
+
+<Demo data={RollingNumberDemos.usage} />
+
+## Prefix and suffix
+
+Set `prefix` and `suffix` props to add static text before or after the animated number.
+Use `thousandSeparator` to separate thousands and `decimalScale` with `fixedDecimalScale`
+to control decimal formatting:
+
+<Demo data={RollingNumberDemos.prefix} />
+
+## Animation duration
+
+Control animation speed with `animationDuration` prop (in milliseconds, default is `600`).
+Use `timingFunction` prop to change the CSS timing function (default is `ease`):
+
+<Demo data={RollingNumberDemos.duration} />

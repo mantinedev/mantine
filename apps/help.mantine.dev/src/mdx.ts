@@ -33,7 +33,6 @@ import { meta as howToSetupStylelint } from './pages/q/how-to-setup-stylelint.md
 import { meta as howToUpdateDependencies } from './pages/q/how-to-update-dependencies.mdx';
 import { meta as howToUseDropzoneWithForm } from './pages/q/how-to-use-dropzone-with-form.mdx';
 import { meta as inputFocusStyles } from './pages/q/input-focus-styles.mdx';
-import { meta as inputMask } from './pages/q/input-mask.mdx';
 import { meta as inputsPlaceholderColor } from './pages/q/inputs-placeholder-color.mdx';
 import { meta as lightDarkElements } from './pages/q/light-dark-elements.mdx';
 import { meta as lightDarkIsNotEnough } from './pages/q/light-dark-is-not-enough.mdx';
@@ -108,7 +107,6 @@ export const MDX_DATA = [
   howToUpdateDependencies,
   howToUseDropzoneWithForm,
   inputFocusStyles,
-  inputMask,
   inputsPlaceholderColor,
   lightDarkElements,
   lightDarkIsNotEnough,

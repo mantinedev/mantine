@@ -114,4 +114,65 @@ describe('@mantine/schedule/MoreEvents', () => {
       expect(screen.getAllByText('Custom body')).toHaveLength(events.length);
     });
   });
+
+  it('calls onEventClick when an event in the popover is clicked', async () => {
+    const spy = jest.fn();
+    render(<MoreEvents {...defaultProps} moreEventsCount={4} onEventClick={spy} />);
+
+    await userEvent.click(screen.getByRole('button', { name: '+4 more' }));
+    await userEvent.click(screen.getByText('Project Kickoff'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 1, title: 'Project Kickoff' }),
+      expect.any(Object)
+    );
+  });
+
+  it('calls onEventClick when an event in the modal is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <MoreEvents
+        {...defaultProps}
+        moreEventsCount={4}
+        dropdownType="modal"
+        modalTitle="Events"
+        onEventClick={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: '+4 more' }));
+    await userEvent.click(screen.getByText('Team Standup'));
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 2, title: 'Team Standup' }),
+      expect.any(Object)
+    );
+  });
+
+  it('supports renderEvent prop', async () => {
+    render(
+      <MoreEvents
+        {...defaultProps}
+        moreEventsCount={4}
+        dropdownType="modal"
+        modalTitle="March 13, 2025 events"
+        renderEvent={(event, props) => (
+          <a href={`#event-${event.id}`} data-testid={`custom-event-${event.id}`}>
+            {props.children}
+          </a>
+        )}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: '+4 more' }));
+
+    events.forEach((event) => {
+      const custom = screen.getByTestId(`custom-event-${event.id}`);
+      expect(custom).toBeInTheDocument();
+      expect(custom.tagName).toBe('A');
+      expect(custom).toHaveAttribute('href', `#event-${event.id}`);
+    });
+  });
 });

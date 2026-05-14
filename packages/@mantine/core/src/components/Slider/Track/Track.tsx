@@ -10,6 +10,7 @@ export interface TrackProps {
   min: number;
   max: number;
   value: number;
+  startPointValue?: number;
   children: React.ReactNode;
   disabled: boolean | undefined;
   inverted: boolean | undefined;
@@ -23,6 +24,7 @@ export function Track({
   disabled,
   marksOffset,
   inverted,
+  startPointValue,
   containerProps,
   ...others
 }: TrackProps) {
@@ -42,7 +44,13 @@ export function Track({
 
         {children}
 
-        <Marks {...others} offset={marksOffset} disabled={disabled} inverted={inverted} />
+        <Marks
+          {...others}
+          offset={marksOffset}
+          disabled={disabled}
+          inverted={inverted}
+          startPointValue={startPointValue}
+        />
       </Box>
     </Box>
   );

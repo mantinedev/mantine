@@ -1,4 +1,4 @@
-import readline from 'readline';
+import readline from 'node:readline';
 import { MantineMcpDataClient } from './data-client';
 import { GetItemArgs, ListItemsArgs, SearchDocsArgs } from './types';
 
@@ -177,7 +177,7 @@ async function handleRequest(client: MantineMcpDataClient, request: JsonRpcReque
           },
           serverInfo: {
             name: '@mantine/mcp-server',
-            version: '9.0.0-alpha.1',
+            version: '9',
           },
         });
         return;

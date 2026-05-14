@@ -52,7 +52,7 @@ type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 
 export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInputFactory>(
   (_props) => {
-    const props = useProps('YearPickerInput', defaultProps, _props);
+    const props = useProps(['Input', 'InputWrapper', 'YearPickerInput'], defaultProps, _props);
     const {
       type,
       value,
@@ -73,6 +73,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       maxDate,
       vars,
       valueFormatter,
+      presets,
       attributes,
       ...rest
     } = props;
@@ -146,6 +147,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          presets={presets}
           attributes={attributes}
         />
       </PickerInputBase>

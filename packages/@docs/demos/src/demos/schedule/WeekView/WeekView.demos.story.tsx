@@ -78,6 +78,11 @@ export const Demo_businessHours = {
   render: renderDemo(demos.businessHours),
 };
 
+export const Demo_businessHoursPerDay = {
+  name: '⭐ Demo: businessHoursPerDay',
+  render: renderDemo(demos.businessHoursPerDay),
+};
+
 export const Demo_overlappingEvents = {
   name: '⭐ Demo: overlappingEvents',
   render: renderDemo(demos.overlappingEvents),
@@ -181,4 +186,9 @@ export const Demo_controlledDate = {
 export const Demo_viewChange = {
   name: '⭐ Demo: viewChange',
   render: renderDemo(demos.viewChange),
+};
+
+export const Demo_forceCurrentTimeIndicator = {
+  name: '⭐ Demo: forceCurrentTimeIndicator',
+  render: renderDemo(demos.forceCurrentTimeIndicator),
 };

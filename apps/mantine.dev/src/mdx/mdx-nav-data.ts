@@ -48,6 +48,8 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog920,
+      MDX_DATA.Changelog910,
       MDX_DATA.Changelog900,
       MDX_DATA.Changelog830,
       MDX_DATA.Changelog820,
@@ -94,7 +96,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.ThemeObject,
       MDX_DATA.Colors,
       MDX_DATA.ColorSchemes,
-      MDX_DATA.Typography,
+      MDX_DATA.TypographyTheming,
       MDX_DATA.DefaultProps,
     ],
   },
@@ -174,6 +176,9 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useOrientation,
       MDX_DATA.useFileDialog,
       MDX_DATA.useLongPress,
+      MDX_DATA.useDrag,
+      MDX_DATA.useMask,
+      MDX_DATA.useRovingIndex,
     ],
   },
 
@@ -276,6 +281,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.RangeSlider,
       MDX_DATA.Switch,
       MDX_DATA.TextInput,
+      MDX_DATA.MaskInput,
       MDX_DATA.Checkbox,
       MDX_DATA.Radio,
       MDX_DATA.Fieldset,
@@ -301,6 +307,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.TagsInput,
       MDX_DATA.Select,
       MDX_DATA.MultiSelect,
+      MDX_DATA.TreeSelect,
     ],
   },
   {
@@ -373,6 +380,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Timeline,
       MDX_DATA.Spoiler,
       MDX_DATA.NumberFormatter,
+      MDX_DATA.RollingNumber,
       MDX_DATA.OverflowList,
     ],
   },
@@ -420,6 +428,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.DatePicker,
       MDX_DATA.DatePickerInput,
       MDX_DATA.DateTimePicker,
+      MDX_DATA.InlineDateTimePicker,
       MDX_DATA.DateInput,
       MDX_DATA.MonthPicker,
       MDX_DATA.MonthPickerInput,
@@ -452,6 +461,8 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Sparkline,
       MDX_DATA.Heatmap,
       MDX_DATA.BarsList,
+      MDX_DATA.Treemap,
+      MDX_DATA.SankeyChart,
     ],
   },
 

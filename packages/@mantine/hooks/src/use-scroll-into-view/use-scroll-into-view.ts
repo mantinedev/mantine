@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from '../use-reduced-motion/use-reduced-motion';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
@@ -10,6 +10,9 @@ interface UseScrollIntoViewAnimation {
 export interface UseScrollIntoViewOptions {
   /** Callback fired after scroll */
   onScrollFinish?: () => void;
+
+  /** Callback fired when scroll animation is canceled by user interaction */
+  onScrollCancel?: () => void;
 
   /** Duration of scroll in milliseconds */
   duration?: number;
@@ -38,6 +41,7 @@ export interface UseScrollIntoViewReturnValue<
   targetRef: React.RefObject<Target | null>;
   scrollIntoView: (params?: UseScrollIntoViewAnimation) => void;
   cancel: () => void;
+  scrolling: boolean;
 }
 
 export function useScrollIntoView<
@@ -47,6 +51,7 @@ export function useScrollIntoView<
   duration = 1250,
   axis = 'y',
   onScrollFinish,
+  onScrollCancel,
   easing = easeInOutQuad,
   offset = 0,
   cancelable = true,
@@ -55,6 +60,7 @@ export function useScrollIntoView<
   const frameID = useRef(0);
   const startTime = useRef(0);
   const shouldStop = useRef(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const scrollableRef = useRef<Parent | null>(null);
   const targetRef = useRef<Target | null>(null);
@@ -64,6 +70,8 @@ export function useScrollIntoView<
   const cancel = (): void => {
     if (frameID.current) {
       cancelAnimationFrame(frameID.current);
+      frameID.current = 0;
+      setScrolling(false);
     }
   };
 
@@ -87,6 +95,8 @@ export function useScrollIntoView<
           isList,
         }) - (scrollableRef.current ? 0 : start);
 
+      setScrolling(true);
+
       function animateScroll() {
         if (startTime.current === 0) {
           startTime.current = performance.now();
@@ -109,15 +119,20 @@ export function useScrollIntoView<
         if (!shouldStop.current && t < 1) {
           frameID.current = requestAnimationFrame(animateScroll);
         } else {
-          typeof onScrollFinish === 'function' && onScrollFinish();
+          if (shouldStop.current) {
+            typeof onScrollCancel === 'function' && onScrollCancel();
+          } else {
+            typeof onScrollFinish === 'function' && onScrollFinish();
+          }
           startTime.current = 0;
           frameID.current = 0;
+          setScrolling(false);
           cancel();
         }
       }
       animateScroll();
     },
-    [axis, duration, easing, isList, offset, onScrollFinish, reducedMotion]
+    [axis, duration, easing, isList, offset, onScrollFinish, onScrollCancel, reducedMotion]
   );
 
   const handleStop = () => {
@@ -148,6 +163,7 @@ export function useScrollIntoView<
     targetRef,
     scrollIntoView,
     cancel,
+    scrolling,
   };
 }
 

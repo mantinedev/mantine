@@ -80,6 +80,9 @@ export interface TabsProps
   /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default true */
   keepMounted?: boolean;
 
+  /** Controls how inactive tabs content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles @default 'activity' */
+  keepMountedMode?: 'activity' | 'display-none';
+
   /** If set, adjusts text color based on background color for `pills` variant */
   autoContrast?: boolean;
 }
@@ -102,6 +105,7 @@ const VALUE_ERROR =
 
 const defaultProps = {
   keepMounted: true,
+  keepMountedMode: 'activity',
   orientation: 'horizontal',
   loop: true,
   activateTabWithKeyboard: true,
@@ -137,6 +141,7 @@ export const Tabs = factory<TabsFactory>((_props) => {
     inverted,
     placement,
     keepMounted,
+    keepMountedMode,
     classNames,
     styles,
     unstyled,
@@ -190,6 +195,7 @@ export const Tabs = factory<TabsFactory>((_props) => {
         radius,
         inverted,
         keepMounted,
+        keepMountedMode,
         unstyled,
         getStyles,
       }}

@@ -1,48 +1,47 @@
 import dayjs from 'dayjs';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
-  ActionIcon,
   ActionIconProps,
   BoxProps,
-  CheckIcon,
-  factory,
   Factory,
+  genericFactory,
   InputVariant,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
+import { useDidUpdate, useDisclosure } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
-import { CalendarLevel, DateStringValue, DateValue } from '../../types';
-import { assignTime, clampDate, getDefaultClampedDate } from '../../utils';
+import { CalendarLevel, DatePickerType, DatePickerValue, DateStringValue } from '../../types';
+import { clampDate } from '../../utils';
 import {
   CalendarBaseProps,
   CalendarSettings,
   CalendarStylesNames,
   pickCalendarProps,
 } from '../Calendar';
-import { DatePicker, DatePickerPreset } from '../DatePicker';
+import { DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
+import {
+  InlineDateTimePicker,
+  InlineDateTimePickerStylesNames,
+} from '../InlineDateTimePicker/InlineDateTimePicker';
 import {
   DateInputSharedProps,
   PickerInputBase,
   PickerInputBaseStylesNames,
 } from '../PickerInputBase';
-import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
-import { getMaxTime, getMinTime } from './get-min-max-time/get-min-max-time';
+import { TimePickerProps } from '../TimePicker/TimePicker';
 import classes from './DateTimePicker.module.css';
 
 export type DateTimePickerStylesNames =
-  | 'timeWrapper'
-  | 'timeInput'
-  | 'submitButton'
+  | InlineDateTimePickerStylesNames
   | 'placeholder'
   | PickerInputBaseStylesNames
   | CalendarStylesNames;
 
-export interface DateTimePickerProps
+export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
   extends
     BoxProps,
     Omit<
@@ -52,23 +51,29 @@ export interface DateTimePickerProps
     CalendarBaseProps,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
-  /** `dayjs` format for input value @default "DD/MM/YYYY HH:mm"  */
-  valueFormat?: string;
+  /** Picker type: range or default @default 'default' */
+  type?: Type;
+
+  /** `dayjs` format for input value, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm"  */
+  valueFormat?: string | ((date: DateStringValue) => string);
 
   /** Controlled component value */
-  value?: DateValue;
+  value?: DatePickerValue<Type>;
 
   /** Uncontrolled component default value */
-  defaultValue?: DateValue;
+  defaultValue?: DatePickerValue<Type>;
 
   /** Called when value changes */
-  onChange?: (value: DateStringValue | null) => void;
+  onChange?: (value: DatePickerValue<Type, DateStringValue>) => void;
 
   /** Default time value in HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
   defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
+
+  /** Props passed down to the end time `TimePicker` component in range mode */
+  endTimePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
 
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
@@ -80,7 +85,13 @@ export interface DateTimePickerProps
   maxLevel?: CalendarLevel;
 
   /** Presets values */
-  presets?: DatePickerPreset<'default'>[];
+  presets?: DatePickerPreset<Type>[];
+
+  /** Determines whether a single day can be selected as range, applicable only when type="range" */
+  allowSingleDateInRange?: Type extends 'range' ? boolean : never;
+
+  /** Separator between range values */
+  labelSeparator?: string;
 }
 
 export type DateTimePickerFactory = Factory<{
@@ -88,15 +99,19 @@ export type DateTimePickerFactory = Factory<{
   ref: HTMLButtonElement;
   stylesNames: DateTimePickerStylesNames;
   variant: InputVariant;
+  signature: <Type extends DatePickerType = 'default'>(
+    props: DateTimePickerProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
+  ) => React.JSX.Element;
 }>;
 
 const defaultProps = {
+  type: 'default',
   dropdownType: 'popover',
   size: 'sm',
 } satisfies Partial<DateTimePickerProps>;
 
-export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
-  const props = useProps('DateTimePicker', defaultProps, _props);
+export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => {
+  const props = useProps(['Input', 'InputWrapper', 'DateTimePicker'], defaultProps as any, _props);
   const {
     value,
     defaultValue,
@@ -107,6 +122,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
     styles,
     unstyled,
     timePickerProps,
+    endTimePickerProps,
     submitButtonProps,
     withSeconds,
     level,
@@ -122,13 +138,18 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
     presets,
     attributes,
     onDropdownClose,
+    type,
+    labelSeparator,
+    allowSingleDateInRange,
     ...rest
   } = props;
 
-  const getStyles = useStyles<DateTimePickerFactory>({
+  const isRange = (type as string) === 'range';
+
+  useStyles<DateTimePickerFactory>({
     name: 'DateTimePicker',
     classes,
-    props,
+    props: props as DateTimePickerProps,
     classNames,
     styles,
     unstyled,
@@ -139,85 +160,111 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DateTimePickerFactory>({
     classNames,
     styles,
-    props,
+    props: props as DateTimePickerProps,
   });
 
-  const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
-
-  const timePickerRef = useRef<HTMLInputElement>(null);
-  const timePickerRefMerged = useMergedRef(timePickerRef, timePickerProps?.hoursRef);
+  const _withSeconds = withSeconds || timePickerProps?.withSeconds;
+  const _valueFormat = valueFormat || (_withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
   const {
-    calendarProps: { allowSingleDateInRange, ...calendarProps },
+    calendarProps: { allowSingleDateInRange: _asdir, ...calendarProps },
     others,
   } = pickCalendarProps(rest);
 
   const ctx = useDatesContext();
+  const _labelSeparator = ctx.getLabelSeparator(labelSeparator);
+
   const [_value, setValue] = useUncontrolledDates({
-    type: 'default',
+    type: type as any,
     value,
     defaultValue,
-    onChange,
+    onChange: onChange as any,
     withTime: true,
   });
 
-  const _defaultDate = defaultDate || _value;
-
-  const formatTime = (dateValue: DateStringValue) =>
-    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
-
-  const [timeValue, setTimeValue] = useState(defaultTimeValue || formatTime(_value));
-  const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
-
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
-  const formattedValue = _value
-    ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
-    : '';
+  const [inlineKey, setInlineKey] = useState(0);
 
-  const handleTimeChange = (timeString: string) => {
-    timePickerProps?.onChange?.(timeString);
-    setTimeValue(timeString);
-
-    if (timeString) {
-      setValue(assignTime(_value, timeString));
+  const formatDate = (v: DateStringValue | null) => {
+    if (!v) {
+      return '';
     }
+    if (typeof _valueFormat === 'function') {
+      return _valueFormat(v);
+    }
+    return dayjs(v).locale(ctx.getLocale(locale)).format(_valueFormat);
   };
 
-  const handleDateChange = (date: DateValue) => {
-    if (date) {
-      setValue(assignTime(clampDate(minDate, maxDate, date), timeValue || defaultTimeValue || ''));
+  const getFormattedValue = () => {
+    if (isRange && Array.isArray(_value)) {
+      const start = formatDate(_value[0]);
+      const end = formatDate(_value[1]);
+      if (start && end) {
+        return `${start} ${_labelSeparator} ${end}`;
+      }
+      if (start) {
+        return `${start} ${_labelSeparator} ...`;
+      }
+      return '';
     }
-    timePickerRef.current?.focus();
+
+    return formatDate(_value as DateStringValue | null);
   };
 
-  const handleTimeInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      dropdownHandlers.close();
-    }
-  };
-
-  useDidUpdate(() => {
-    if (!dropdownOpened) {
-      setTimeValue(formatTime(_value));
-    }
-  }, [_value, dropdownOpened]);
+  const formattedValue = getFormattedValue();
 
   useDidUpdate(() => {
     if (dropdownOpened) {
-      setCurrentLevel('month');
+      setInlineKey((k) => k + 1);
     }
   }, [dropdownOpened]);
 
   const __stopPropagation = dropdownType === 'popover';
 
+  const clearIncompleteRange = () => {
+    if (isRange && Array.isArray(_value) && _value[0] && !_value[1]) {
+      setValue([null, null] as any);
+    }
+  };
+
   const handleDropdownClose = () => {
-    const clamped = clampDate(minDate, maxDate, _value);
-    if (_value && _value !== clamped) {
-      setValue(clampDate(minDate, maxDate, _value));
+    clearIncompleteRange();
+
+    if (isRange && Array.isArray(_value)) {
+      const clampedStart = _value[0] ? clampDate(minDate, maxDate, _value[0]) : null;
+      const clampedEnd = _value[1] ? clampDate(minDate, maxDate, _value[1]) : null;
+      if ((_value[0] && _value[0] !== clampedStart) || (_value[1] && _value[1] !== clampedEnd)) {
+        setValue([clampedStart, clampedEnd] as any);
+      }
+    } else if (_value) {
+      const clamped = clampDate(minDate, maxDate, _value as DateStringValue);
+      if (_value !== clamped) {
+        setValue(clamped);
+      }
     }
     onDropdownClose?.();
   };
+
+  const handleSubmitOrEnter = () => {
+    handleDropdownClose();
+    dropdownHandlers.close();
+  };
+
+  const onClear = () => {
+    if (isRange) {
+      setValue([null, null] as any);
+    } else {
+      setValue(null);
+    }
+  };
+
+  const shouldClear = isRange ? Array.isArray(_value) && !!_value[0] : !!_value;
+
+  const handlePresetSelect = !isRange
+    ? (val: any) => {
+        setValue(val);
+      }
+    : undefined;
 
   return (
     <PickerInputBase
@@ -227,99 +274,60 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       unstyled={unstyled}
-      onClear={() => setValue(null)}
-      shouldClear={!!_value}
+      onClear={onClear}
+      shouldClear={shouldClear}
       value={_value}
       size={size}
       variant={variant}
       dropdownType={dropdownType}
       {...others}
-      type="default"
+      type={type as any}
       __staticSelector="DateTimePicker"
       onDropdownClose={handleDropdownClose}
       withTime
       attributes={attributes}
     >
-      <DatePicker
+      <InlineDateTimePicker
+        key={inlineKey}
         {...calendarProps}
+        fullWidth={false}
+        type={type as any}
+        value={_value as any}
+        onChange={setValue as any}
         maxDate={maxDate}
         minDate={minDate}
         size={size}
         variant={variant}
-        type="default"
-        value={_value}
-        defaultDate={_defaultDate || getDefaultClampedDate({ maxDate, minDate })}
-        onChange={handleDateChange}
         locale={locale}
-        classNames={resolvedClassNames}
-        styles={resolvedStyles}
+        classNames={resolvedClassNames as any}
+        styles={resolvedStyles as any}
         unstyled={unstyled}
-        __staticSelector="DateTimePicker"
-        __stopPropagation={__stopPropagation}
         level={level}
         defaultLevel={defaultLevel}
-        onLevelChange={(_level) => {
-          setCurrentLevel(_level);
-          calendarProps.onLevelChange?.(_level);
-        }}
-        presets={presets}
-        __onPresetSelect={(val) => {
-          setValue(val);
-          val && setTimeValue(formatTime(val));
-        }}
+        defaultDate={defaultDate}
+        defaultTimeValue={defaultTimeValue}
+        presets={presets as any}
+        allowSingleDateInRange={allowSingleDateInRange}
+        timePickerProps={timePickerProps}
+        endTimePickerProps={endTimePickerProps}
+        submitButtonProps={submitButtonProps}
+        withSeconds={withSeconds}
+        valueFormat={valueFormat}
+        labelSeparator={labelSeparator}
         attributes={attributes}
+        onSubmit={handleSubmitOrEnter}
+        __stopPropagation={__stopPropagation}
+        __staticSelector="DateTimePicker"
+        __onEnter={handleSubmitOrEnter}
+        __onPresetSelect={handlePresetSelect}
       />
-
-      {currentLevel === 'month' && (
-        <div {...getStyles('timeWrapper')}>
-          <TimePicker
-            value={timeValue}
-            withSeconds={withSeconds}
-            unstyled={unstyled}
-            min={getMinTime({ minDate, value: _value })}
-            max={getMaxTime({ maxDate, value: _value })}
-            {...timePickerProps}
-            {...getStyles('timeInput', {
-              className: timePickerProps?.className,
-              style: timePickerProps?.style,
-            })}
-            onChange={handleTimeChange}
-            onKeyDown={handleTimeInputKeyDown}
-            size={size}
-            data-mantine-stop-propagation={__stopPropagation || undefined}
-            hoursRef={timePickerRefMerged}
-            attributes={attributes}
-          />
-
-          <ActionIcon
-            variant="default"
-            size={`input-${size || 'sm'}`}
-            {...getStyles('submitButton', {
-              className: submitButtonProps?.className,
-              style: submitButtonProps?.style,
-            })}
-            unstyled={unstyled}
-            data-mantine-stop-propagation={__stopPropagation || undefined}
-            // oxlint-disable-next-line react/no-children-prop
-            children={<CheckIcon size="30%" />}
-            {...submitButtonProps}
-            onClick={(event) => {
-              submitButtonProps?.onClick?.(event);
-              dropdownHandlers.close();
-              handleDropdownClose();
-            }}
-          />
-        </div>
-      )}
     </PickerInputBase>
   );
 });
 
-DateTimePicker.classes = { ...classes, ...PickerInputBase.classes, ...DatePicker.classes };
+DateTimePicker.classes = {
+  ...classes,
+  ...PickerInputBase.classes,
+  ...InlineDateTimePicker.classes,
+};
 DateTimePicker.displayName = '@mantine/dates/DateTimePicker';
-
-export namespace DateTimePicker {
-  export type Props = DateTimePickerProps;
-  export type StylesNames = DateTimePickerStylesNames;
-  export type Factory = DateTimePickerFactory;
-}
