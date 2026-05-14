@@ -7,15 +7,7 @@ describe('@mantine/core/Image', () => {
   tests.itSupportsSystemProps<ImageProps, ImageStylesNames>({
     component: Image,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLImageElement,
+    varsResolver: true,
     displayName: '@mantine/core/Image',
     stylesApiSelectors: ['root'],
   });

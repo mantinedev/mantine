@@ -51,7 +51,7 @@ export const usage: MantineDemo = {
       libraryValue: null,
     },
     { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: null },
-    { type: 'size', prop: 'size', initialValue: 'sm', libraryValue: '__' },
-    { type: 'size', prop: 'radius', initialValue: 'sm', libraryValue: '__' },
+    { type: 'size', prop: 'size', initialValue: 'md', libraryValue: '__' },
+    { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: '__' },
   ],
 };

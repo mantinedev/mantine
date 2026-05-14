@@ -1,4 +1,4 @@
-export function EyeDropperIcon({ style, ...others }: React.ComponentPropsWithoutRef<'svg'>) {
+export function EyeDropperIcon({ style, ...others }: React.ComponentProps<'svg'>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

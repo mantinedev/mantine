@@ -63,7 +63,7 @@ function Demo() {
       try {
         form.setValues(JSON.parse(window.localStorage.getItem('user-form')!));
       } catch (e) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line no-console
         console.log('Failed to parse stored value');
       }
     }

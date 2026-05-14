@@ -21,5 +21,4 @@ export interface ScrollAreaScrollbarAxisPrivateProps {
 }
 
 export interface ScrollAreaScrollbarAxisProps
-  extends ScrollAreaScrollbarAxisPrivateProps,
-    React.ComponentPropsWithoutRef<'div'> {}
+  extends ScrollAreaScrollbarAxisPrivateProps, React.ComponentProps<'div'> {}

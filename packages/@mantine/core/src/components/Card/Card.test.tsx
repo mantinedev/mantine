@@ -10,17 +10,9 @@ describe('@mantine/core/Card', () => {
   tests.itSupportsSystemProps<CardProps, CardStylesNames>({
     component: Card,
     props: defaultProps,
-    mod: true,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Card',
     stylesApiSelectors: ['root', 'section'],
   });
@@ -46,6 +38,24 @@ describe('@mantine/core/Card', () => {
 
     expect(sections[2]).not.toHaveAttribute('data-first-section');
     expect(sections[2]).toHaveAttribute('data-last-section');
+  });
+
+  it('assigns data-orientation attribute based on orientation prop on root and sections', () => {
+    const { container } = render(
+      <Card orientation="horizontal">
+        <Card.Section />
+        <div>Content</div>
+        <Card.Section />
+      </Card>
+    );
+
+    const root = container.querySelector('.mantine-Card-root');
+    const sections = container.querySelectorAll('.mantine-Card-section');
+
+    expect(root).toHaveAttribute('data-orientation', 'horizontal');
+    sections.forEach((section) => {
+      expect(section).toHaveAttribute('data-orientation', 'horizontal');
+    });
   });
 
   it('exports Card.Section component', () => {

@@ -16,12 +16,12 @@ import {
   useStyles,
 } from '../../../core';
 import { OptionalPortal } from '../../Portal';
-import classes from '../Tooltip.module.css';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from '../Tooltip.types';
 import { useFloatingTooltip } from './use-floating-tooltip';
+import classes from '../Tooltip.module.css';
 
 export interface TooltipFloatingProps extends TooltipBaseProps {
-  /** Offset from mouse in px @default `10` */
+  /** Offset from mouse in px @default 10 */
   offset?: number;
 
   /** Uncontrolled tooltip initial opened state */
@@ -51,7 +51,7 @@ const varsResolver = createVarsResolver<TooltipFloatingFactory>((theme, { radius
   },
 }));
 
-export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => {
+export const TooltipFloating = factory<TooltipFloatingFactory>((_props) => {
   const props = useProps('TooltipFloating', defaultProps, _props);
   const {
     children,
@@ -75,6 +75,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
     vars,
     portalProps,
     attributes,
+    ref,
     ...others
   } = props;
 
@@ -154,4 +155,5 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
 });
 
 TooltipFloating.classes = classes;
+TooltipFloating.varsResolver = varsResolver;
 TooltipFloating.displayName = '@mantine/core/TooltipFloating';

@@ -1,4 +1,4 @@
-import { IconChevronRight, IconHome2 } from '@tabler/icons-react';
+import { CaretRightIcon, HouseIcon } from '@phosphor-icons/react';
 import { useCounter } from '@mantine/hooks';
 import { Button } from '../Button';
 import { NavLink } from './NavLink';
@@ -11,14 +11,14 @@ export function SingleButton() {
       <NavLink
         label="Navigation link"
         description="Some description here"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
       />
       <NavLink
         label="Navigation link"
         description="Some description here"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
         active
       />
     </div>
@@ -31,54 +31,54 @@ export function Usage() {
       <NavLink
         label="Navigation link"
         description="Some description here"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
       />
       <NavLink
         label="Navigation link with label text overflow"
         description="And with description text overflow"
         noWrap
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
       />
       <NavLink
         label="Thislabelissolongthatitoverflowsitscontainernotnice"
         description="Thislabelissolongthatitoverflowsitscontainernotnice"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
       />
       <NavLink
         label="Navigation link"
         description="Some description here"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
         active
       />
       <NavLink
         label="Navigation link"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
       />
       <NavLink
         label="Navigation link"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
+        rightSection={<CaretRightIcon size={16} />}
         active
       />
       <NavLink
         label="Navigation link"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
         color="violet"
         variant="filled"
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        rightSection={<CaretRightIcon size={16} />}
         active
       />
       <NavLink
         label="Navigation link"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
         color="violet"
         variant="subtle"
-        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+        rightSection={<CaretRightIcon size={16} />}
         active
       />
     </div>
@@ -90,28 +90,28 @@ export function WithNestedItems() {
     <div style={{ padding: 40, maxWidth: 320 }}>
       <NavLink
         label="With nested links 1"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
         bg="red"
         rightSection={null}
       >
-        <NavLink label="Child link 1" leftSection={<IconHome2 size={16} stroke={1.5} />} />
-        <NavLink label="Child link 2" leftSection={<IconHome2 size={16} stroke={1.5} />} />
-        <NavLink label="Child link 3" leftSection={<IconHome2 size={16} stroke={1.5} />} />
-        <NavLink label="Second layer" leftSection={<IconHome2 size={16} stroke={1.5} />}>
-          <NavLink label="Child link 1" leftSection={<IconHome2 size={16} stroke={1.5} />} />
-          <NavLink label="Child link 2" leftSection={<IconHome2 size={16} stroke={1.5} />} />
-          <NavLink label="Child link 3" leftSection={<IconHome2 size={16} stroke={1.5} />} />
+        <NavLink label="Child link 1" leftSection={<HouseIcon size={16} />} />
+        <NavLink label="Child link 2" leftSection={<HouseIcon size={16} />} />
+        <NavLink label="Child link 3" leftSection={<HouseIcon size={16} />} />
+        <NavLink label="Second layer" leftSection={<HouseIcon size={16} />}>
+          <NavLink label="Child link 1" leftSection={<HouseIcon size={16} />} />
+          <NavLink label="Child link 2" leftSection={<HouseIcon size={16} />} />
+          <NavLink label="Child link 3" leftSection={<HouseIcon size={16} />} />
         </NavLink>
       </NavLink>
       <NavLink
         label="With nested links 2"
-        leftSection={<IconHome2 size={16} stroke={1.5} />}
+        leftSection={<HouseIcon size={16} />}
         disableRightSectionRotation
         childrenOffset={0}
       >
-        <NavLink label="Child link 1" leftSection={<IconHome2 size={16} stroke={1.5} />} />
-        <NavLink label="Child link 2" leftSection={<IconHome2 size={16} stroke={1.5} />} />
-        <NavLink label="Child link 3" leftSection={<IconHome2 size={16} stroke={1.5} />} />
+        <NavLink label="Child link 1" leftSection={<HouseIcon size={16} />} />
+        <NavLink label="Child link 2" leftSection={<HouseIcon size={16} />} />
+        <NavLink label="Child link 3" leftSection={<HouseIcon size={16} />} />
       </NavLink>
     </div>
   );
@@ -122,15 +122,11 @@ export function DynamicNestedItems() {
   const nested = Array(count)
     .fill(0)
     .map((_, index) => (
-      <NavLink
-        key={index}
-        label="Child link 1"
-        leftSection={<IconHome2 size={16} stroke={1.5} key={index} />}
-      />
+      <NavLink key={index} label="Child link 1" leftSection={<HouseIcon size={16} key={index} />} />
     ));
   return (
     <div style={{ padding: 40, maxWidth: 320 }}>
-      <NavLink label="With nested links" leftSection={<IconHome2 size={16} stroke={1.5} />}>
+      <NavLink label="With nested links" leftSection={<HouseIcon size={16} />}>
         {nested}
       </NavLink>
       <Button onClick={increment}>Add item</Button>

@@ -33,7 +33,7 @@ can use all the features, including hooks, compound components, callback functio
 ## Can I use Mantine components as server components?
 
 No, all Mantine components are client components and cannot be used as server components.
-It means that components render **both on the server and on the client, not only on client.**
+This means that components render **both on the server and on the client, not only on the client.**
 
 ## Should I add 'use client' directive to all files?
 
@@ -49,8 +49,8 @@ same way as server components, the only difference is that client components are
 
 <ErrorMessage error="Error: (0 , _barrel_optimize_names_useDisclosure_mantine_hooks__WEBPACK_IMPORTED_MODULE_1__.useDisclosure) is not a function or its return value is not iterable" />
 
-This error happens when you try to use hooks in server components. In the example above you are trying to use
-`useDisclosure` hook without `'use client';` directive. To fix it, add `'use client';` directive to the top of the file.
+This error happens when you try to use hooks in server components. In the example above, you are trying to use
+the `useDisclosure` hook without the `'use client';` directive. To fix it, add the `'use client';` directive to the top of the file.
 
 Example of code that will throw this error:
 
@@ -86,8 +86,8 @@ function Demo() {
 
 <ErrorMessage error="Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with 'use server'." />
 
-This error happens when you try to pass callback function as children to server component.
-If you need to pass callback function as children, you need to add `'use client';` to the top of the file.
+This error happens when you try to pass a callback function as children to a server component.
+If you need to pass a callback function as children, you need to add `'use client';` to the top of the file.
 
 Example of code that will throw this error:
 
@@ -133,8 +133,8 @@ function Demo() {
 
 <ErrorMessage error="You're importing a component that needs useRef. It only works in a Client Component but none of its parents are marked with 'use client', so they're Server Components by default." />
 
-The error above occurs when you try to use hook (`useState`, `useRef`, `useReducer`, `useEffect`, any other hook) in server component.
-To fix it, add `'use client';` directive to the top of the file.
+The error above occurs when you try to use a hook (`useState`, `useRef`, `useReducer`, `useEffect`, any other hook) in a server component.
+To fix it, add the `'use client';` directive to the top of the file.
 
 Example of code that will throw this error:
 
@@ -164,8 +164,8 @@ function Demo() {
 
 <ErrorMessage error="Could not find the module 'x/node_modules/@mantine/core/esm/components/Popover/Popover.mjs#Popover#Target' in the React Client Manifest. This is probably a bug in the React Server Components bundler." />
 
-The error above occurs when you try to use compound component (`<Tabs.Tab />`, `<Popover.Dropdown />`, etc.) in server component.
-To fix it, add `'use client';` directive to the top of the file or replace compound components with regular components (`TabsTab`, `PopoverDropdown`, etc.).
+The error above occurs when you try to use a compound component (`<Tabs.Tab />`, `<Popover.Dropdown />`, etc.) in a server component.
+To fix it, add the `'use client';` directive to the top of the file or replace compound components with regular components (`TabsTab`, `PopoverDropdown`, etc.).
 
 Example of code that will throw this error:
 
@@ -184,7 +184,7 @@ function Demo() {
 }
 ```
 
-Solution 1: add `'use client';` directive to the top of the file:
+Solution 1: add the `'use client';` directive to the top of the file:
 
 ```tsx
 // ✅ No error
@@ -206,7 +206,7 @@ function Demo() {
 Solution 2: replace compound components with regular components:
 
 ```tsx
-// ✅ No error, 'use client' directive is not required
+// ✅ No error, the 'use client' directive is not required
 import { Popover, PopoverTarget } from '@mantine/core';
 
 function Demo() {
@@ -224,8 +224,8 @@ function Demo() {
 
 <ErrorMessage error="Error: Attempted to call extend() from the server but extend is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component." />
 
-The error above occurs when you try to call `Component.extend` function without `'use client';` directive.
-To fix it, add `'use client';` directive to the top of the file.
+The error above occurs when you try to call the `Component.extend` function without the `'use client';` directive.
+To fix it, add the `'use client';` directive to the top of the file.
 
 Example of code that will throw this error:
 

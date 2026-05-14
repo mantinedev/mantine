@@ -21,13 +21,13 @@ import {
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
 import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
-import classes from '../Slider.module.css';
+import { SliderMark } from '../SliderMark';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
 import { Track } from '../Track/Track';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
-import { getFloatingValue } from '../utils/get-floating-value/get-gloating-value';
+import { getFloatingValue } from '../utils/get-floating-value/get-floating-value';
 import { getPosition } from '../utils/get-position/get-position';
 import { getPrecision } from '../utils/get-precision/get-precision';
 import {
@@ -36,32 +36,34 @@ import {
   getNextMarkValue,
   getPreviousMarkValue,
 } from '../utils/get-step-mark-value/get-step-mark-value';
+import classes from '../Slider.module.css';
 
 export type RangeSliderValue = [number, number];
 
 export interface RangeSliderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<RangeSliderFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
   radius?: MantineRadius;
 
-  /** Controls size of the track @default `'md'` */
+  /** Controls size of the track @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Minimal possible value @default `0` */
+  /** Minimal possible value @default 0 */
   min?: number;
 
-  /** Maximum possible value @default `100` */
+  /** Maximum possible value @default 100 */
   max?: number;
 
-  /** Domain of the slider, defines the full range of possible values @default `[min, max]` */
+  /** Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). @default [min, max] */
   domain?: [number, number];
 
-  /** Number by which value will be incremented/decremented with thumb drag and arrows @default `1` */
+  /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 */
   step?: number;
 
   /** Number of significant digits after the decimal point */
@@ -83,18 +85,18 @@ export interface RangeSliderProps
   name?: string;
 
   /** Marks displayed on the track */
-  marks?: { value: number; label?: React.ReactNode }[];
+  marks?: SliderMark[];
 
   /** Function to generate label or any react node to render instead, set to null to disable label */
   label?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Props passed down to the `Transition` component @default `{ transition: 'fade', duration: 0 }` */
+  /** Props passed down to the `Transition` component @default { transition: 'fade', duration: 0 } */
   labelTransitionProps?: TransitionOverride;
 
-  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default `false` */
+  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false */
   labelAlwaysOn?: boolean;
 
-  /** Determines whether the label should be displayed when the slider is hovered @default `true` */
+  /** Determines whether the label should be displayed when the slider is hovered @default true */
   showLabelOnHover?: boolean;
 
   /** Content rendered inside thumb */
@@ -109,14 +111,20 @@ export interface RangeSliderProps
   /** A transformation function to change the scale of the slider */
   scale?: (value: number) => number;
 
-  /** Determines whether track values representation should be inverted @default `false` */
+  /** Determines whether track values representation should be inverted @default false */
   inverted?: boolean;
 
-  /** Minimal range interval @default `10` */
+  /** Slider orientation @default 'horizontal' */
+  orientation?: 'horizontal' | 'vertical';
+
+  /** Minimal range interval between the two thumbs. Consider this value relative to the total range (max - min). @default 10 */
   minRange?: number;
 
-  /** Maximum range interval @default `Infinity` */
+  /** Maximum range interval @default Infinity */
   maxRange?: number;
+
+  /** `aria-label` for both thumbs (overridden by thumbFromLabel/thumbToLabel if provided) */
+  thumbLabel?: string;
 
   /** First thumb `aria-label` */
   thumbFromLabel?: string;
@@ -125,15 +133,15 @@ export interface RangeSliderProps
   thumbToLabel?: string;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'>;
 
-  /** Determines whether the selection should be only allowed from the given marks array @default `false` */
+  /** Determines whether the selection should be only allowed from the given marks array @default false */
   restrictToMarks?: boolean;
 
   /** Props passed down to thumb element based on the thumb index */
-  thumbProps?: (index: 0 | 1) => React.ComponentPropsWithoutRef<'div'>;
+  thumbProps?: (index: 0 | 1) => React.ComponentProps<'div'>;
 
-  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached @default `true` */
+  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached @default true */
   pushOnOverlap?: boolean;
 }
 
@@ -173,7 +181,7 @@ const defaultProps = {
   maxRange: Infinity,
 } satisfies Partial<RangeSliderProps>;
 
-export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
+export const RangeSlider = factory<RangeSliderFactory>((_props) => {
   const props = useProps('RangeSlider', defaultProps, _props);
   const {
     classNames,
@@ -203,6 +211,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     unstyled,
     scale,
     inverted,
+    orientation,
     className,
     style,
     vars,
@@ -211,6 +220,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     thumbProps,
     pushOnOverlap,
     attributes,
+    ref,
     ...others
   } = props;
 
@@ -374,7 +384,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   };
 
   const { ref: useMoveRef, active } = useMove(
-    ({ x }) => handleChange(x),
+    ({ x, y }) => handleChange(orientation === 'vertical' ? 1 - y : x),
     { onScrubEnd: () => !disabled && onChangeEnd?.(valueRef.current) },
     dir
   );
@@ -389,18 +399,35 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     if (containerRef.current) {
       containerRef.current.focus();
       const rect = containerRef.current.getBoundingClientRect();
-      const changePosition = getClientPosition(event.nativeEvent);
-      const changeValue = getChangeValue({
-        value: changePosition - rect.left,
-        max,
-        min,
-        step,
-        containerWidth: rect.width,
-      });
+      const changePosition = getClientPosition(event.nativeEvent, orientation);
+
+      const changeValue =
+        orientation === 'vertical'
+          ? getChangeValue({
+              value: rect.bottom - changePosition,
+              max,
+              min,
+              step,
+              containerWidth: rect.height,
+            })
+          : getChangeValue({
+              value: changePosition - rect.left,
+              max,
+              min,
+              step,
+              containerWidth: rect.width,
+            });
 
       const nearestHandle =
         Math.abs(_value[0] - changeValue) > Math.abs(_value[1] - changeValue) ? 1 : 0;
-      const _nearestHandle = dir === 'ltr' ? nearestHandle : nearestHandle === 1 ? 0 : 1;
+      const _nearestHandle =
+        orientation === 'vertical'
+          ? nearestHandle
+          : dir === 'ltr'
+            ? nearestHandle
+            : nearestHandle === 1
+              ? 0
+              : 1;
 
       thumbIndex.current = _nearestHandle;
     }
@@ -425,7 +452,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           const nextValue =
             restrictToMarks && marks
               ? getNextMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max);
+              : Math.min(Math.max(valueRef.current[focusedIndex] + step, domainMin), domainMax);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -446,9 +473,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
                     dir === 'rtl'
                       ? valueRef.current[focusedIndex] - step
                       : valueRef.current[focusedIndex] + step,
-                    min
+                    domainMin
                   ),
-                  max
+                  domainMax
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
@@ -462,7 +489,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           const nextValue =
             restrictToMarks && marks
               ? getPreviousMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max);
+              : Math.min(Math.max(valueRef.current[focusedIndex] - step, domainMin), domainMax);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -483,9 +510,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
                     dir === 'rtl'
                       ? valueRef.current[focusedIndex] + step
                       : valueRef.current[focusedIndex] - step,
-                    min
+                    domainMin
                   ),
-                  max
+                  domainMax
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
@@ -505,6 +532,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     size,
     labelTransitionProps,
     labelAlwaysOn,
+    orientation,
     onBlur: () => setFocused(-1),
   };
 
@@ -517,6 +545,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
         size={size}
         ref={useMergedRef(ref, root)}
         disabled={disabled}
+        orientation={orientation}
         onMouseDownCapture={() => root.current?.focus()}
         onKeyDownCapture={() => {
           if (thumbs.current[0]?.parentElement?.contains(document.activeElement)) {
@@ -611,4 +640,14 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
 });
 
 RangeSlider.classes = classes;
+RangeSlider.varsResolver = varsResolver;
 RangeSlider.displayName = '@mantine/core/RangeSlider';
+
+export namespace RangeSlider {
+  export type Props = RangeSliderProps;
+  export type Value = RangeSliderValue;
+  export type Factory = RangeSliderFactory;
+  export type StylesNames = SliderStylesNames;
+  export type CssVariables = SliderCssVariables;
+  export type Mark = SliderMark;
+}

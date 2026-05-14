@@ -6,18 +6,16 @@ import {
   ModalProps,
   ModalStylesNames,
   rem,
-  resolveClassNames,
-  resolveStyles,
   StylesApiProps,
-  useMantineTheme,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { useDidUpdate, useHotkeys } from '@mantine/hooks';
 import { getHotkeys } from './get-hotkeys';
 import { SpotlightProvider } from './Spotlight.context';
-import classes from './Spotlight.module.css';
 import { spotlightActions, SpotlightStore, spotlightStore, useSpotlight } from './spotlight.store';
+import classes from './Spotlight.module.css';
 
 export type SpotlightRootStylesNames =
   | ModalStylesNames
@@ -33,7 +31,8 @@ export type SpotlightRootStylesNames =
   | 'actionsGroup';
 
 export interface SpotlightRootProps
-  extends StylesApiProps<SpotlightRootFactory>,
+  extends
+    StylesApiProps<SpotlightRootFactory>,
     Omit<
       ModalProps,
       | 'styles'
@@ -54,16 +53,16 @@ export interface SpotlightRootProps
   /** Called when query changes */
   onQueryChange?: (query: string) => void;
 
-  /** Determines whether the search query should be cleared when the spotlight is closed @default `true` */
+  /** Determines whether the search query should be cleared when the spotlight is closed @default true */
   clearQueryOnClose?: boolean;
 
-  /** Keyboard shortcut or a list of shortcuts to trigger spotlight @default `'mod + K'` */
+  /** Keyboard shortcut or a list of shortcuts to trigger spotlight @default 'mod + K' */
   shortcut?: string | string[] | null;
 
-  /** A list of tags which when focused will be ignored by shortcut @default `['input', 'textarea', 'select']` */
+  /** A list of tags which when focused will be ignored by shortcut @default ['input', 'textarea', 'select'] */
   tagsToIgnore?: string[];
 
-  /** Determines whether shortcut should trigger based in contentEditable @default `false` */
+  /** Determines whether shortcut should trigger based in contentEditable @default false */
   triggerOnContentEditable?: boolean;
 
   /** If set, spotlight will not be rendered */
@@ -78,13 +77,13 @@ export interface SpotlightRootProps
   /** Forces opened state, useful for tests */
   forceOpened?: boolean;
 
-  /** Determines whether spotlight should be closed when one of the actions is triggered @default `true` */
+  /** Determines whether spotlight should be closed when one of the actions is triggered @default true */
   closeOnActionTrigger?: boolean;
 
-  /** Spotlight content max-height. Ignored unless `scrollable` prop is set. @default `400` */
+  /** Spotlight content max-height. Ignored unless `scrollable` prop is set. @default 400 */
   maxHeight?: React.CSSProperties['maxHeight'];
 
-  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored @default `false` */
+  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored @default false */
   scrollable?: boolean;
 }
 
@@ -108,7 +107,7 @@ const defaultProps = {
   maxHeight: 400,
 } satisfies Partial<SpotlightRootProps>;
 
-export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
+export const SpotlightRoot = factory<SpotlightRootFactory>((_props) => {
   const props = useProps('SpotlightRoot', defaultProps, _props);
   const {
     classNames,
@@ -137,7 +136,6 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
     ...others
   } = props;
 
-  const theme = useMantineTheme();
   const { opened, query: storeQuery } = useSpotlight(store);
   const _query = typeof query === 'string' ? query : storeQuery;
   const setQuery = (q: string) => {
@@ -155,6 +153,12 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
     styles,
     unstyled,
     attributes,
+  });
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<SpotlightRootFactory>({
+    classNames,
+    styles,
+    props,
   });
 
   useHotkeys(getHotkeys(shortcut, store), tagsToIgnore, triggerOnContentEditable);
@@ -178,7 +182,6 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
       }}
     >
       <Modal
-        ref={ref}
         {...others}
         withCloseButton={false}
         opened={opened || !!forceOpened}
@@ -186,13 +189,9 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
         onClose={() => spotlightActions.close(store)}
         className={className}
         style={style}
-        classNames={resolveClassNames({
-          theme,
-          classNames: [classes, classNames],
-          props,
-          stylesCtx: undefined,
-        })}
-        styles={resolveStyles({ theme, styles, props, stylesCtx: undefined })}
+        classNames={resolvedClassNames}
+        styles={resolvedStyles}
+        attributes={attributes}
         transitionProps={{
           ...transitionProps,
           onExited: () => {

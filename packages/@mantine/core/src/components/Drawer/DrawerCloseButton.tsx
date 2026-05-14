@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerCloseButtonStylesNames = 'close';
 
 export interface DrawerCloseButtonProps
-  extends ModalBaseCloseButtonProps,
-    CompoundStylesApiProps<DrawerCloseButtonFactory> {}
+  extends ModalBaseCloseButtonProps, CompoundStylesApiProps<DrawerCloseButtonFactory> {}
 
 export type DrawerCloseButtonFactory = Factory<{
   props: DrawerCloseButtonProps;
@@ -16,7 +15,7 @@ export type DrawerCloseButtonFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerCloseButton = factory<DrawerCloseButtonFactory>((_props, ref) => {
+export const DrawerCloseButton = factory<DrawerCloseButtonFactory>((_props) => {
   const props = useProps('DrawerCloseButton', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +23,6 @@ export const DrawerCloseButton = factory<DrawerCloseButtonFactory>((_props, ref)
 
   return (
     <ModalBaseCloseButton
-      ref={ref}
       {...ctx.getStyles('close', { classNames, style, styles, className })}
       {...others}
     />

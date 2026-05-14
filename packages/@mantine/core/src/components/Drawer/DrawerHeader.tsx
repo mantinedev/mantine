@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerHeaderStylesNames = 'header';
 
 export interface DrawerHeaderProps
-  extends ModalBaseHeaderProps,
-    CompoundStylesApiProps<DrawerHeaderFactory> {}
+  extends ModalBaseHeaderProps, CompoundStylesApiProps<DrawerHeaderFactory> {}
 
 export type DrawerHeaderFactory = Factory<{
   props: DrawerHeaderProps;
@@ -16,7 +15,7 @@ export type DrawerHeaderFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerHeader = factory<DrawerHeaderFactory>((_props, ref) => {
+export const DrawerHeader = factory<DrawerHeaderFactory>((_props) => {
   const props = useProps('DrawerHeader', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +23,6 @@ export const DrawerHeader = factory<DrawerHeaderFactory>((_props, ref) => {
 
   return (
     <ModalBaseHeader
-      ref={ref}
       {...ctx.getStyles('header', { classNames, style, styles, className })}
       {...others}
     />

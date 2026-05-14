@@ -14,8 +14,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { AreaChartCurveType, AreaGradient } from '../AreaChart';
-
-const classes = {};
+import classes from './Sparkline.module.css';
 
 export interface SparklineTrendColors {
   positive: MantineColor;
@@ -29,35 +28,33 @@ export type SparklineCssVariables = {
 };
 
 export interface SparklineProps
-  extends BoxProps,
-    StylesApiProps<SparklineFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<SparklineFactory>, ElementProps<'div'> {
   /** Data used to render the chart */
   data: (number | null)[];
 
-  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Determines whether the chart fill should be a gradient @default `true` */
+  /** Determines whether the chart fill should be a gradient @default true */
   withGradient?: boolean;
 
-  /** Controls fill opacity of the area @default `0.6` */
+  /** Controls fill opacity of the area @default 0.6 */
   fillOpacity?: number;
 
-  /** Type of the curve @default `'linear'` */
+  /** Type of the curve @default 'linear' */
   curveType?: AreaChartCurveType;
 
-  /** Area stroke width @default `2` */
+  /** Area stroke width @default 2 */
   strokeWidth?: number;
 
   /** If set, `color` prop is ignored and chart color is determined by the difference between first and last value. */
   trendColors?: SparklineTrendColors;
 
-  /** Determines whether null values should be connected with other values @default `true` */
+  /** Determines whether null values should be connected with other values @default true */
   connectNulls?: boolean;
 
   /** Props passed down to the underlying recharts `Area` component */
-  areaProps?: Omit<AreaProps, 'data' | 'dataKey' | 'ref'>;
+  areaProps?: Omit<AreaProps<any, any>, 'data' | 'dataKey' | 'ref'>;
 }
 
 export type SparklineFactory = Factory<{
@@ -106,7 +103,7 @@ const varsResolver = createVarsResolver<SparklineFactory>(
   })
 );
 
-export const Sparkline = factory<SparklineFactory>((_props, ref) => {
+export const Sparkline = factory<SparklineFactory>((_props) => {
   const props = useProps('Sparkline', defaultProps, _props);
   const {
     classNames,
@@ -145,7 +142,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
   const mappedData = useMemo(() => data.map((value, index) => ({ value, index })), [data]);
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others} dir="ltr">
+    <Box {...getStyles('root')} {...others} dir="ltr">
       <ResponsiveContainer>
         <ReChartsAreaChart data={mappedData}>
           <Area
@@ -157,6 +154,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
             connectNulls={connectNulls}
             strokeWidth={strokeWidth}
             fillOpacity={1}
+            activeDot={false}
             {...areaProps}
           />
 
@@ -176,3 +174,11 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
 
 Sparkline.displayName = '@mantine/charts/Sparkline';
 Sparkline.classes = classes;
+Sparkline.varsResolver = varsResolver;
+
+export namespace Sparkline {
+  export type Props = SparklineProps;
+  export type StylesNames = SparklineStylesNames;
+  export type CssVariables = SparklineCssVariables;
+  export type Factory = SparklineFactory;
+}

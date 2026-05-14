@@ -1,7 +1,8 @@
-import { useCallbackRef, useIsomorphicEffect } from '@mantine/hooks';
+import { useEffectEvent } from 'react';
+import { useIsomorphicEffect } from '@mantine/hooks';
 
 export function useResizeObserver(element: HTMLElement | null, onResize: () => void) {
-  const handleResize = useCallbackRef(onResize);
+  const handleResize = useEffectEvent(onResize);
 
   useIsomorphicEffect(() => {
     let rAF = 0;
@@ -20,5 +21,5 @@ export function useResizeObserver(element: HTMLElement | null, onResize: () => v
     }
 
     return undefined;
-  }, [element, handleResize]);
+  }, [element]);
 }

@@ -17,7 +17,7 @@ export function NativeSelectOption({ data }: NativeSelectOptionProps) {
   const { value, label, ...others } = data;
 
   return (
-    <option key={data.value} value={data.value} {...others}>
+    <option value={data.value} {...others}>
       {data.label}
     </option>
   );

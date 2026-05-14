@@ -50,5 +50,9 @@ export const baseDemoItems = data.map((item) => (
 ));
 
 export function BaseDemo(props: Partial<AccordionProps>) {
-  return <Accordion {...props}>{baseDemoItems}</Accordion>;
+  return (
+    <Accordion order={3} {...props}>
+      {baseDemoItems}
+    </Accordion>
+  );
 }

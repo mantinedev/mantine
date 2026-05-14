@@ -17,3 +17,18 @@ export const Demo_nested = {
   name: '⭐ Demo: nested',
   render: renderDemo(demos.nested),
 };
+
+export const Demo_start = {
+  name: '⭐ Demo: start',
+  render: renderDemo(demos.start),
+};
+
+export const Demo_reversed = {
+  name: '⭐ Demo: reversed',
+  render: renderDemo(demos.reversed),
+};
+
+export const Demo_value = {
+  name: '⭐ Demo: value',
+  render: renderDemo(demos.value),
+};

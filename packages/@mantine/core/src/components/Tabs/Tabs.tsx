@@ -17,12 +17,11 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { TabsProvider } from './Tabs.context';
+import { TabsProvider, type TabsContextValue } from './Tabs.context';
+import { TabsList, TabsListStylesNames, type TabsListProps } from './TabsList/TabsList';
+import { TabsPanel, TabsPanelStylesNames, type TabsPanelProps } from './TabsPanel/TabsPanel';
+import { TabsTab, TabsTabStylesNames, type TabsTabProps } from './TabsTab/TabsTab';
 import classes from './Tabs.module.css';
-import { TabsList, TabsListStylesNames } from './TabsList/TabsList';
-import { TabsPanel, TabsPanelStylesNames } from './TabsPanel/TabsPanel';
-import { TabsTab, TabsTabStylesNames } from './TabsTab/TabsTab';
-
 export type TabsStylesNames =
   | 'root'
   | TabsListStylesNames
@@ -35,7 +34,8 @@ export type TabsCssVariables = {
 };
 
 export interface TabsProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<TabsFactory>,
     ElementProps<'div', 'defaultValue' | 'value' | 'onChange'> {
   /** Uncontrolled component default value */
@@ -47,22 +47,22 @@ export interface TabsProps
   /** Called when value changes */
   onChange?: (value: string | null) => void;
 
-  /** Tabs orientation @default `'horizontal'` */
+  /** Tabs orientation @default 'horizontal' */
   orientation?: 'vertical' | 'horizontal';
 
-  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"` @default `'left'` */
+  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"` @default 'left' */
   placement?: 'left' | 'right';
 
   /** Base id, used to generate ids to connect labels with controls, generated randomly by default */
   id?: string;
 
-  /** If set, arrow key presses loop though items (first to last and last to first) @default `true` */
+  /** If set, arrow key presses loop though items (first to last and last to first) @default true */
   loop?: boolean;
 
-  /** If set, tab is activated with arrow key press @default `true` */
+  /** If set, tab is activated with arrow key press @default true */
   activateTabWithKeyboard?: boolean;
 
-  /** If set, tab can be deactivated @default `false` */
+  /** If set, tab can be deactivated @default false */
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
@@ -71,14 +71,17 @@ export interface TabsProps
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Determines whether tabs should have inverted styles @default `false` */
+  /** Determines whether tabs should have inverted styles @default false */
   inverted?: boolean;
 
-  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default `true` */
+  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default true */
   keepMounted?: boolean;
+
+  /** Controls how inactive tabs content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles @default 'activity' */
+  keepMountedMode?: 'activity' | 'display-none';
 
   /** If set, adjusts text color based on background color for `pills` variant */
   autoContrast?: boolean;
@@ -102,6 +105,7 @@ const VALUE_ERROR =
 
 const defaultProps = {
   keepMounted: true,
+  keepMountedMode: 'activity',
   orientation: 'horizontal',
   loop: true,
   activateTabWithKeyboard: true,
@@ -119,7 +123,7 @@ const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, au
   },
 }));
 
-export const Tabs = factory<TabsFactory>((_props, ref) => {
+export const Tabs = factory<TabsFactory>((_props) => {
   const props = useProps('Tabs', defaultProps, _props);
   const {
     defaultValue,
@@ -137,6 +141,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     inverted,
     placement,
     keepMounted,
+    keepMountedMode,
     classNames,
     styles,
     unstyled,
@@ -190,12 +195,12 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
         radius,
         inverted,
         keepMounted,
+        keepMountedMode,
         unstyled,
         getStyles,
       }}
     >
       <Box
-        ref={ref}
         id={uid}
         variant={variant}
         mod={[
@@ -216,7 +221,32 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
 });
 
 Tabs.classes = classes;
+Tabs.varsResolver = varsResolver;
 Tabs.displayName = '@mantine/core/Tabs';
 Tabs.Tab = TabsTab;
 Tabs.Panel = TabsPanel;
 Tabs.List = TabsList;
+
+export namespace Tabs {
+  export type Props = TabsProps;
+  export type StylesNames = TabsStylesNames;
+  export type CssVariables = TabsCssVariables;
+  export type Factory = TabsFactory;
+  export type Variant = TabsVariant;
+  export type ContextValue = TabsContextValue;
+
+  export namespace Tab {
+    export type Props = TabsTabProps;
+    export type StylesNames = TabsTabStylesNames;
+  }
+
+  export namespace Panel {
+    export type Props = TabsPanelProps;
+    export type StylesNames = TabsPanelStylesNames;
+  }
+
+  export namespace List {
+    export type Props = TabsListProps;
+    export type StylesNames = TabsListStylesNames;
+  }
+}

@@ -1,4 +1,14 @@
+import type {
+  TitleCssVariables,
+  TitleFactory,
+  TitleOrder,
+  TitleProps,
+  TitleSize,
+  TitleStylesNames,
+} from './Title';
+
 export { Title } from './Title';
+
 export type {
   TitleProps,
   TitleOrder,
@@ -6,4 +16,4 @@ export type {
   TitleStylesNames,
   TitleCssVariables,
   TitleFactory,
-} from './Title';
+};

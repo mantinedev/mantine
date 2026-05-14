@@ -5,13 +5,13 @@ export default Layout(MDX_DATA.ColorFunctions);
 
 # Color functions
 
-`@mantine/core` package exports several functions that can be used to manipulate colors
-or extract information before using them as CSS value.
+The `@mantine/core` package exports several functions that can be used to manipulate colors
+or extract information before using them as CSS values.
 
 ## darken and lighten
 
-`darken` and `lighten` functions can be used to manipulate color brightness,
-they accept color in any format as first argument and the amount of lightness to add/remove as second argument.
+The `darken` and `lighten` functions can be used to manipulate color brightness.
+They accept a color in any format as the first argument and the amount of lightness to add/remove as the second argument.
 
 ```tsx
 import { darken, lighten } from '@mantine/core';
@@ -31,10 +31,10 @@ lighten('var(--mantine-color-gray-4)', 0.74);
 
 ## alpha
 
-`alpha` function converts color to rgba format with a given alpha channel,
-it is usually used to make colors more transparent. If it is not possible to convert color to rgba
-format (for example if color is a CSS variable), the function will use [color-mix](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix).
-Note that `color-mix` is not supported in some older browsers, you can check [caniuse](https://caniuse.com/mdn-css_types_color_color-mix)
+The `alpha` function converts a color to rgba format with a given alpha channel.
+It is usually used to make colors more transparent. If it is not possible to convert the color to rgba
+format (for example, if the color is a CSS variable), the function will use [color-mix](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix).
+Note that `color-mix` is not supported in some older browsers. You can check [caniuse](https://caniuse.com/mdn-css_types_color_color-mix)
 for more information.
 
 ```tsx
@@ -47,51 +47,51 @@ alpha('var(--mantine-color-gray-4)', 0.74);
 
 ## parseThemeColor
 
-`parseThemeColor` function returns information about a given color in the following format:
+The `parseThemeColor` function returns information about a given color in the following format:
 
 ```tsx
 interface ParseThemeColorResult {
   /**
-   * True if given color is theme color, for example
-   * `blue`, `orange.9`, `pink.3` are theme colors
-   * `#fff`, `rgba(0, 0, 0, .5)` are not
+   * True if the given color is a theme color. For example,
+   * `blue`, `orange.9`, `pink.3` are theme colors,
+   * while `#fff`, `rgba(0, 0, 0, .5)` are not
    */
   isThemeColor: boolean;
 
   /**
-   * Key of `theme.colors` if given color is theme color, for example
-   * if given color is `blue` it will be `blue`,
-   * if given color is `orange.9` it will be `orange`
+   * Key of `theme.colors` if the given color is a theme color. For example,
+   * if the given color is `blue` it will be `blue`,
+   * if the given color is `orange.9` it will be `orange`
    */
   color: string;
 
   /**
-   * Resolved color value, for example
-   * if given color is `blue.7` it will be value of `theme.colors.blue[7]`,
-   * if given color is `#fff` it will be `#fff`
+   * Resolved color value. For example,
+   * if the given color is `blue.7` it will be the value of `theme.colors.blue[7]`,
+   * if the given color is `#fff` it will be `#fff`
    */
   value: string;
 
   /**
-   * If given color is theme color, this will be shade of that color
-   * for example if given color is `blue.7` it will be `7`,
-   * if given color does not have index or is not theme color then it will be `undefined`
+   * If the given color is a theme color, this will be the shade of that color.
+   * For example, if the given color is `blue.7` it will be `7`.
+   * If the given color does not have an index or is not a theme color, then it will be `undefined`
    */
   shade: MantineColorShade | undefined;
 
   /**
-   * Color CSS variable, for example
+   * Color CSS variable. For example:
    * `blue.7` – `--mantine-color-blue-7`,
    * `red` – `--mantine-color-red-filled`,
-   * `white` – `--mantine-color-white`
+   * `white` – `--mantine-color-white`,
    * `#fff` – `undefined`
    */
   variable: CssVariable | undefined;
 }
 ```
 
-`parseThemeColor` function can be used everywhere `theme` object is available,
-for example in [CSS variables resolver](/styles/css-variables), [variant color resolver](/theming/colors#colors-variant-resolver)
+The `parseThemeColor` function can be used anywhere the `theme` object is available,
+for example in [CSS variables resolver](/styles/css-variables), [variant color resolver](/theming/colors#colors-variant-resolver),
 or component body:
 
 ```tsx
@@ -123,8 +123,8 @@ function Demo({ color }: DemoProps) {
 
 ## getThemeColor
 
-`getThemeColor` is a simpler version of `parseThemeColor` function, it accepts a color string
-as first argument and theme object as second argument. It returns parsed color value or CSS variable:
+`getThemeColor` is a simpler version of the `parseThemeColor` function. It accepts a color string
+as the first argument and a theme object as the second argument. It returns the parsed color value or CSS variable:
 
 ```tsx
 import { getThemeColor, useMantineTheme } from '@mantine/core';
@@ -141,7 +141,7 @@ function Demo() {
 
 ## getGradient
 
-`getGradient` function transforms given `MantineGradient` object to CSS gradient string:
+The `getGradient` function transforms a given `MantineGradient` object to a CSS gradient string:
 
 ```tsx
 import { getGradient, useMantineTheme } from '@mantine/core';
@@ -156,7 +156,7 @@ function Demo() {
 
 ## isLightColor
 
-`isLightColor` function can be used to achieve better contrast between text and background:
+The `isLightColor` function can be used to achieve better contrast between text and background:
 
 ```tsx
 import { Box, isLightColor } from '@mantine/core';
@@ -176,7 +176,7 @@ export function Demo({ color }: DemoProps) {
 
 ## luminance
 
-`luminance` function returns color luminance, it can be used to check colors contrast:
+The `luminance` function returns the color luminance. It can be used to check color contrast:
 
 ```tsx
 import { luminance } from '@mantine/core';

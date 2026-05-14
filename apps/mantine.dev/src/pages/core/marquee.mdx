@@ -1,0 +1,56 @@
+import { MarqueeDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Marquee);
+
+## Usage
+
+`Marquee` component creates a continuous scrolling animation for its children.
+It is commonly used for displaying logos, testimonials, or any repeating content.
+
+<Demo data={MarqueeDemos.usage} />
+
+## Pause on hover
+
+Set `pauseOnHover` prop to pause the animation when the user hovers over the component:
+
+<Demo data={MarqueeDemos.pauseOnHover} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to scroll content vertically. Note that you need to set
+a fixed height on the container for vertical scrolling:
+
+<Demo data={MarqueeDemos.vertical} />
+
+## Multiple rows
+
+You can combine multiple `Marquee` components with different directions to create
+more complex layouts:
+
+<Demo data={MarqueeDemos.multipleRows} />
+
+## Fade edges
+
+By default, `Marquee` displays gradient fade on edges to create a smooth transition effect.
+You can customize the fade using the following props:
+
+- `fadeEdges` – enables/disables fade gradient (default: `true`)
+- `fadeEdgeColor` – color of the fade gradient (default: `var(--mantine-color-body)`)
+- `fadeEdgeSize` – size of the fade area (default: `5%`)
+
+<Demo data={MarqueeDemos.fadeEdges} />
+
+## Customization
+
+Use the following props to customize the marquee behavior:
+
+- `reverse` – reverses animation direction
+- `pauseOnHover` – pauses animation on hover
+- `orientation` – `horizontal` (default) or `vertical` scroll direction
+- `repeat` – number of times children are repeated for seamless scrolling (default: 4)
+- `duration` – animation duration in ms (default: 40000)
+- `gap` – gap between repeated children, key of `theme.spacing` or any valid CSS value
+
+<Demo data={MarqueeDemos.configurator} />

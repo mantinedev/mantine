@@ -12,12 +12,7 @@ describe('@mantine/core/AngleSlider', () => {
   tests.itSupportsSystemProps<AngleSliderProps, AngleSliderStylesNames>({
     component: AngleSlider,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/core/AngleSlider',
     stylesApiSelectors: ['root', 'thumb', 'label', 'mark', 'marks'],
   });

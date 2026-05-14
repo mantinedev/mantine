@@ -38,7 +38,7 @@ export const usage: MantineDemo = {
   dimmed: true,
   controls: [
     { prop: 'shadow', type: 'size', initialValue: 'xs', libraryValue: 'none' },
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'withBorder', type: 'boolean', initialValue: false, libraryValue: false },
   ],
 };

@@ -13,16 +13,14 @@ import classes from '../Tabs.module.css';
 export type TabsListStylesNames = 'list';
 
 export interface TabsListProps
-  extends BoxProps,
-    CompoundStylesApiProps<TabsListFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<TabsListFactory>, ElementProps<'div'> {
   /** `Tabs.Tab` components */
   children: React.ReactNode;
 
-  /** Determines whether tabs should take all available space @default `false` */
+  /** Determines whether tabs should take all available space @default false */
   grow?: boolean;
 
-  /** Tabs alignment @default `flex-start` */
+  /** Tabs alignment @default flex-start */
   justify?: React.CSSProperties['justifyContent'];
 }
 
@@ -33,7 +31,7 @@ export type TabsListFactory = Factory<{
   compound: true;
 }>;
 
-export const TabsList = factory<TabsListFactory>((_props, ref) => {
+export const TabsList = factory<TabsListFactory>((_props) => {
   const props = useProps('TabsList', null, _props);
   const { children, className, grow, justify, classNames, styles, style, mod, ...others } = props;
 
@@ -41,7 +39,6 @@ export const TabsList = factory<TabsListFactory>((_props, ref) => {
 
   return (
     <Box
-      {...others}
       {...ctx.getStyles('list', {
         className,
         style,
@@ -50,7 +47,6 @@ export const TabsList = factory<TabsListFactory>((_props, ref) => {
         props,
         variant: ctx.variant,
       })}
-      ref={ref}
       role="tablist"
       variant={ctx.variant}
       mod={[
@@ -64,6 +60,7 @@ export const TabsList = factory<TabsListFactory>((_props, ref) => {
       ]}
       aria-orientation={ctx.orientation}
       __vars={{ '--tabs-justify': justify }}
+      {...others}
     >
       {children}
     </Box>

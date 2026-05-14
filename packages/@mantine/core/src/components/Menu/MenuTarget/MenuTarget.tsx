@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef } from 'react';
+import { cloneElement } from 'react';
 import { createEventHandler, getSingleElementChild, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
@@ -7,7 +7,7 @@ export interface MenuTargetProps {
   /** Target element */
   children: React.ReactNode;
 
-  /** Key of the prop used to get element ref @default `'ref'` */
+  /** Key of the prop used to get element ref, useful for forwarding refs to custom components @default 'ref' */
   refProp?: string;
 }
 
@@ -15,7 +15,7 @@ const defaultProps = {
   refProp: 'ref',
 } satisfies Partial<MenuTargetProps>;
 
-export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) => {
+export function MenuTarget(props: MenuTargetProps) {
   const { children, refProp, ...others } = useProps('MenuTarget', defaultProps, props);
 
   const child = getSingleElementChild(children);
@@ -53,7 +53,7 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
   });
 
   return (
-    <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>
+    <Popover.Target refProp={refProp} popupType="menu" {...others}>
       {cloneElement(child, {
         onClick,
         onMouseEnter,
@@ -62,6 +62,6 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
       } as any)}
     </Popover.Target>
   );
-});
+}
 
 MenuTarget.displayName = '@mantine/core/MenuTarget';

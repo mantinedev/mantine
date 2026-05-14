@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 
-export interface UseFocusReturnOptions {
+export interface UseFocusReturnInput {
   opened: boolean;
   shouldReturnFocus?: boolean;
 }
@@ -11,7 +11,7 @@ export type UseFocusReturnReturnValue = () => void;
 export function useFocusReturn({
   opened,
   shouldReturnFocus = true,
-}: UseFocusReturnOptions): UseFocusReturnReturnValue {
+}: UseFocusReturnInput): UseFocusReturnReturnValue {
   const lastActiveElement = useRef<HTMLElement>(null);
   const returnFocus = () => {
     if (
@@ -37,7 +37,17 @@ export function useFocusReturn({
     if (opened) {
       lastActiveElement.current = document.activeElement as HTMLElement;
     } else if (shouldReturnFocus) {
-      timeout = window.setTimeout(returnFocus, 10);
+      const activeElementAtClose = document.activeElement;
+      timeout = window.setTimeout(() => {
+        const currentActiveElement = document.activeElement;
+        if (
+          currentActiveElement === null ||
+          currentActiveElement === document.body ||
+          currentActiveElement === activeElementAtClose
+        ) {
+          returnFocus();
+        }
+      }, 10);
     }
 
     return () => {
@@ -47,4 +57,9 @@ export function useFocusReturn({
   }, [opened, shouldReturnFocus]);
 
   return returnFocus;
+}
+
+export namespace useFocusReturn {
+  export type Input = UseFocusReturnInput;
+  export type ReturnValue = UseFocusReturnReturnValue;
 }

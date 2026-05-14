@@ -67,3 +67,18 @@ export const Demo_controlledDate = {
   name: '⭐ Demo: controlledDate',
   render: renderDemo(demos.controlledDate),
 };
+
+export const Demo_fullWidth = {
+  name: '⭐ Demo: fullWidth',
+  render: renderDemo(demos.fullWidth),
+};
+
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};
+
+export const Demo_presetsRange = {
+  name: '⭐ Demo: presetsRange',
+  render: renderDemo(demos.presetsRange),
+};

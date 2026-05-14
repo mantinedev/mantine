@@ -7,17 +7,9 @@ describe('@mantine/core/Text', () => {
   tests.itSupportsSystemProps<TextProps, TextStylesNames>({
     component: Text,
     props: defaultProps,
-    mod: true,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLParagraphElement,
     displayName: '@mantine/core/Text',
     stylesApiSelectors: ['root'],
   });

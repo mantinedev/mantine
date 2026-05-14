@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { DatesRangeValue, DateStringValue } from '../../types';
 import { YearPicker } from './YearPicker';
@@ -83,4 +84,35 @@ export function Sizes() {
     <YearPicker size={size} key={size} />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
+}
+
+export function Presets() {
+  const [value, setValue] = useState<DateStringValue | null>(null);
+  return (
+    <div style={{ padding: 40 }}>
+      <YearPicker
+        value={value}
+        onChange={setValue}
+        presets={[
+          { value: dayjs().startOf('year').format('YYYY-MM-DD'), label: 'This year' },
+          {
+            value: dayjs().add(1, 'year').startOf('year').format('YYYY-MM-DD'),
+            label: 'Next year',
+          },
+          {
+            value: dayjs().subtract(1, 'year').startOf('year').format('YYYY-MM-DD'),
+            label: 'Last year',
+          },
+          {
+            value: dayjs().add(5, 'year').startOf('year').format('YYYY-MM-DD'),
+            label: 'In 5 years',
+          },
+          {
+            value: dayjs().subtract(5, 'year').startOf('year').format('YYYY-MM-DD'),
+            label: '5 years ago',
+          },
+        ]}
+      />
+    </div>
+  );
 }

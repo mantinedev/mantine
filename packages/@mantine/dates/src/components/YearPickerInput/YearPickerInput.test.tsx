@@ -24,14 +24,6 @@ describe('@mantine/dates/YearPickerInput', () => {
   tests.itSupportsSystemProps<YearPickerInputProps, __InputStylesNames>({
     component: YearPickerInput,
     props: defaultPropsWithInputProps,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/dates/YearPickerInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -40,6 +32,12 @@ describe('@mantine/dates/YearPickerInput', () => {
     component: YearPickerInput,
     props: defaultPropsWithInputProps,
     selector: 'button',
+  });
+
+  tests.itSupportsSharedInputDefaults<YearPickerInputProps>({
+    component: YearPickerInput,
+    props: defaultPropsWithInputProps,
+    componentName: 'YearPickerInput',
   });
 
   datesTests.itSupportsDateInputProps({ component: YearPickerInput, props: defaultProps });

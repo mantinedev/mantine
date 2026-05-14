@@ -1,11 +1,11 @@
-import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
+import { ChatCircleIcon, GearSixIcon, ImageIcon } from '@phosphor-icons/react';
 import { Tabs } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Tabs.demo.customize.module.css';
 
 const code = `
 import { Tabs } from '@mantine/core';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
+import { ImageIcon, ChatCircleIcon, GearSixIcon } from '@phosphor-icons/react';
 import classes from './Demo.module.css';
 
 function Demo() {
@@ -14,19 +14,19 @@ function Demo() {
       <Tabs.List grow>
         <Tabs.Tab
           value="settings"
-          leftSection={<IconSettings size={16} />}
+          leftSection={<GearSixIcon size={16} />}
         >
           Settings
         </Tabs.Tab>
         <Tabs.Tab
           value="messages"
-          leftSection={<IconMessageCircle size={16} />}
+          leftSection={<ChatCircleIcon size={16} />}
         >
           Messages
         </Tabs.Tab>
         <Tabs.Tab
           value="gallery"
-          leftSection={<IconPhoto size={16} />}
+          leftSection={<ImageIcon size={16} />}
         >
           Gallery
         </Tabs.Tab>
@@ -87,13 +87,13 @@ function Demo() {
   return (
     <Tabs variant="unstyled" defaultValue="settings" classNames={classes}>
       <Tabs.List grow>
-        <Tabs.Tab value="settings" leftSection={<IconSettings size={16} />}>
+        <Tabs.Tab value="settings" leftSection={<GearSixIcon size={16} />}>
           Settings
         </Tabs.Tab>
-        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={16} />}>
+        <Tabs.Tab value="messages" leftSection={<ChatCircleIcon size={16} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={16} />}>
+        <Tabs.Tab value="gallery" leftSection={<ImageIcon size={16} />}>
           Gallery
         </Tabs.Tab>
       </Tabs.List>

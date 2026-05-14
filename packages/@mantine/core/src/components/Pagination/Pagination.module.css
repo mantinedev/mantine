@@ -4,6 +4,13 @@
   --pagination-control-size-md: 32px;
   --pagination-control-size-lg: 38px;
   --pagination-control-size-xl: 44px;
+
+  --pagination-control-size-input-xs: 30px;
+  --pagination-control-size-input-sm: 36px;
+  --pagination-control-size-input-md: 42px;
+  --pagination-control-size-input-lg: 50px;
+  --pagination-control-size-input-xl: 60px;
+
   --pagination-control-size: var(--pagination-control-size-md);
   --pagination-control-fz: var(--mantine-font-size-md);
   --pagination-active-bg: var(--mantine-primary-color-filled);

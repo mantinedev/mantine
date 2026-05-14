@@ -1,3 +1,4 @@
+import { MdxLlmAffix } from '@/components/MdxLlmAffix';
 import { MdxPage } from '@/components/MdxPage';
 import { Frontmatter } from '@/types';
 import { PageHead } from '../PageHead';
@@ -12,6 +13,7 @@ export function MdxLayout({ meta, children }: MdxLayoutProps) {
     <>
       <PageHead title={meta.title} description={meta.description} />
       <MdxPage meta={meta}>{children}</MdxPage>
+      <MdxLlmAffix meta={meta} />
     </>
   );
 }

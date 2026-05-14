@@ -24,7 +24,7 @@ export const DEFAULT_THEME: MantineTheme = {
   respectReducedMotion: false,
   cursorType: 'default',
   defaultGradient: { from: 'blue', to: 'cyan', deg: 45 },
-  defaultRadius: 'sm',
+  defaultRadius: 'md',
   activeClassName: 'mantine-active',
   focusClassName: '',
 
@@ -56,6 +56,12 @@ export const DEFAULT_THEME: MantineTheme = {
     md: '1.55',
     lg: '1.6',
     xl: '1.65',
+  },
+
+  fontWeights: {
+    regular: '400',
+    medium: '600',
+    bold: '700',
   },
 
   radius: {

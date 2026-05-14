@@ -1,9 +1,9 @@
-import { useCallback, useContext } from 'react';
+import { use, useCallback } from 'react';
 import { DayOfWeek } from '../../types';
 import { DatesProviderContext } from './DatesProvider';
 
 export function useDatesContext() {
-  const ctx = useContext(DatesProviderContext);
+  const ctx = use(DatesProviderContext);
   const getLocale = useCallback((input?: string) => input || ctx.locale, [ctx.locale]);
 
   const getFirstDayOfWeek = useCallback(

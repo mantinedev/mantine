@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { use, useRef, useState } from 'react';
 import {
   clampUseMovePosition,
   useDidUpdate,
@@ -19,24 +19,38 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useColorPickerContext } from '../ColorPicker.context';
-import classes from '../ColorPicker.module.css';
+import { ColorPickerContext } from '../ColorPicker.context';
 import { Thumb } from '../Thumb/Thumb';
+import classes from '../ColorPicker.module.css';
 
 export type ColorSliderStylesNames = 'slider' | 'sliderOverlay' | 'thumb';
 
 export interface __ColorSliderProps extends ElementProps<'div', 'onChange'> {
+  /** Controlled component value */
   value: number;
+
+  /** Called when value changes */
   onChange?: (value: number) => void;
+
+  /** Called when user stops dragging the slider or uses keyboard to change value */
   onChangeEnd?: (value: number) => void;
+
+  /** Called when user starts dragging the slider */
   onScrubStart?: () => void;
+
+  /** Called when user stops dragging the slider */
   onScrubEnd?: () => void;
+
+  /** Slider size @default 'md' */
   size?: MantineSize | (string & {});
+
+  /** If set, slider thumb can be focused @default true */
   focusable?: boolean;
 }
 
 export interface ColorSliderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<ColorSliderFactory>,
     __ColorSliderProps,
     ElementProps<'div', 'onChange'> {
@@ -47,13 +61,18 @@ export interface ColorSliderProps
   thumbColor?: string;
 }
 
+export type ColorSliderOptions = Omit<
+  ColorSliderProps,
+  'maxValue' | 'overlays' | 'round' | 'thumbColor'
+>;
+
 export type ColorSliderFactory = Factory<{
   props: ColorSliderProps;
   ref: HTMLDivElement;
   stylesNames: ColorSliderStylesNames;
 }>;
 
-export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
+export const ColorSlider = factory<ColorSliderFactory>((_props) => {
   const props = useProps('ColorSlider', null, _props);
   const {
     classNames,
@@ -75,6 +94,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
     onScrubEnd,
     __staticSelector = 'ColorPicker',
     attributes,
+    ref,
     ...others
   } = props;
 
@@ -88,9 +108,10 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
     styles,
     unstyled,
     attributes,
+    rootSelector: 'slider',
   });
 
-  const ctxGetStyles = useColorPickerContext()?.getStyles;
+  const ctxGetStyles = use(ColorPickerContext)?.getStyles;
   const getStyles = ctxGetStyles || _getStyles;
 
   const theme = useMantineTheme();
@@ -146,6 +167,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
       {...others}
       ref={useMergedRef(sliderRef, ref)}
       {...getStyles('slider')}
+      size={size}
       role="slider"
       aria-valuenow={value}
       aria-valuemax={maxValue}
@@ -168,3 +190,4 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
 });
 
 ColorSlider.displayName = '@mantine/core/ColorSlider';
+ColorSlider.classes = classes;

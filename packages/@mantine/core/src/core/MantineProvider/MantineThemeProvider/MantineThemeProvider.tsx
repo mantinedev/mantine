@@ -1,14 +1,14 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, use, useMemo } from 'react';
 import { DEFAULT_THEME } from '../default-theme';
 import { mergeMantineTheme } from '../merge-mantine-theme';
 import { MantineTheme, MantineThemeOverride } from '../theme.types';
 
 export const MantineThemeContext = createContext<MantineTheme | null>(null);
 
-export const useSafeMantineTheme = () => useContext(MantineThemeContext) || DEFAULT_THEME;
+export const useSafeMantineTheme = () => use(MantineThemeContext) || DEFAULT_THEME;
 
 export function useMantineTheme() {
-  const ctx = useContext(MantineThemeContext);
+  const ctx = use(MantineThemeContext);
   if (!ctx) {
     throw new Error(
       '@mantine/core: MantineProvider was not found in component tree, make sure you have it in your app'
@@ -19,7 +19,7 @@ export function useMantineTheme() {
 }
 
 export interface MantineThemeProviderProps {
-  /** Determines whether theme should be inherited from parent MantineProvider @default `true` */
+  /** Determines whether theme should be inherited from parent MantineProvider @default true */
   inherit?: boolean;
 
   /** Theme override object */
@@ -40,9 +40,7 @@ export function MantineThemeProvider({
     [theme, parentTheme, inherit]
   );
 
-  return (
-    <MantineThemeContext.Provider value={mergedTheme}>{children}</MantineThemeContext.Provider>
-  );
+  return <MantineThemeContext value={mergedTheme}>{children}</MantineThemeContext>;
 }
 
 MantineThemeProvider.displayName = '@mantine/core/MantineThemeProvider';

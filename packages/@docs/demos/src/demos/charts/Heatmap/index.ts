@@ -9,3 +9,4 @@ export { getRectProps } from './Heatmap.demo.getRectProps';
 export { colors } from './Heatmap.demo.colors';
 export { cssColors } from './Heatmap.demo.cssColors';
 export { splitMonths } from './Heatmap.demo.splitMonths';
+export { legend } from './Heatmap.demo.legend';

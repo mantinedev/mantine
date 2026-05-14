@@ -1,6 +1,10 @@
 .propName {
   font-family: var(--mantine-font-family-monospace);
   font-size: 12px;
+  max-width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &[data-deprecated] {
     color: var(--mantine-color-dimmed);

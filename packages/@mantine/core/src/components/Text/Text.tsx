@@ -5,8 +5,6 @@ import {
   getFontSize,
   getGradient,
   getLineHeight,
-  getThemeColor,
-  MantineColor,
   MantineFontSize,
   MantineGradient,
   MantineLineHeight,
@@ -41,7 +39,7 @@ export type TextCssVariables = {
 export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   __staticSelector?: string;
 
-  /** Controls `font-size` and `line-height` @default `'md'` */
+  /** Controls `font-size` and `line-height` @default 'md' */
   size?: MantineFontSize | MantineLineHeight;
 
   /** Number of lines after which Text will be truncated */
@@ -50,20 +48,17 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   /** Side on which Text must be truncated, if `true`, text is truncated from the start */
   truncate?: TextTruncate;
 
-  /** Sets `line-height` to 1 for centering @default `false` */
+  /** Sets `line-height` to 1 for centering @default false */
   inline?: boolean;
 
-  /** Determines whether font properties should be inherited from the parent @default `false` */
+  /** Determines whether font properties should be inherited from the parent @default false */
   inherit?: boolean;
 
-  /** Gradient configuration, ignored when `variant` is not `gradient` @default `theme.defaultGradient` */
+  /** Gradient configuration, ignored when `variant` is not `gradient` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** Shorthand for `component="span"` */
   span?: boolean;
-
-  /** @deprecated Use `c` prop instead */
-  color?: MantineColor;
 }
 
 export type TextFactory = PolymorphicFactory<{
@@ -81,19 +76,18 @@ const defaultProps = {
 
 const varsResolver = createVarsResolver<TextFactory>(
   // Will be removed in 9.0
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  (theme, { variant, lineClamp, gradient, size, color }) => ({
+
+  (theme, { variant, lineClamp, gradient, size }) => ({
     root: {
       '--text-fz': getFontSize(size),
       '--text-lh': getLineHeight(size),
       '--text-gradient': variant === 'gradient' ? getGradient(gradient, theme) : undefined,
       '--text-line-clamp': typeof lineClamp === 'number' ? lineClamp.toString() : undefined,
-      '--text-color': color ? getThemeColor(color, theme) : undefined,
     },
   })
 );
 
-export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
+export const Text = polymorphicFactory<TextFactory>((_props) => {
   const props = useProps('Text', defaultProps, _props);
   const {
     lineClamp,
@@ -133,7 +127,6 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
   return (
     <Box
       {...getStyles('root', { focusable: true })}
-      ref={ref}
       component={span ? 'span' : 'p'}
       variant={variant}
       mod={[
@@ -152,4 +145,13 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
 });
 
 Text.classes = classes;
+Text.varsResolver = varsResolver;
 Text.displayName = '@mantine/core/Text';
+
+export namespace Text {
+  export type Props = TextProps;
+  export type StylesNames = TextStylesNames;
+  export type CssVariables = TextCssVariables;
+  export type Factory = TextFactory;
+  export type Variant = TextVariant;
+}

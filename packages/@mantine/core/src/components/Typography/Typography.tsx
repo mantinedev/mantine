@@ -13,9 +13,7 @@ import classes from './Typography.module.css';
 export type TypographyStylesNames = 'root';
 
 export interface TypographyProps
-  extends BoxProps,
-    StylesApiProps<TypographyFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, StylesApiProps<TypographyFactory>, ElementProps<'div'> {}
 
 export type TypographyFactory = Factory<{
   props: TypographyProps;
@@ -23,7 +21,7 @@ export type TypographyFactory = Factory<{
   stylesNames: TypographyStylesNames;
 }>;
 
-export const Typography = factory<TypographyFactory>((_props, ref) => {
+export const Typography = factory<TypographyFactory>((_props) => {
   const props = useProps('Typography', null, _props);
   const { classNames, className, style, styles, unstyled, attributes, ...others } = props;
 
@@ -39,8 +37,14 @@ export const Typography = factory<TypographyFactory>((_props, ref) => {
     attributes,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return <Box {...getStyles('root')} {...others} />;
 });
 
 Typography.classes = classes;
 Typography.displayName = '@mantine/core/Typography';
+
+export namespace Typography {
+  export type Props = TypographyProps;
+  export type StylesNames = TypographyStylesNames;
+  export type Factory = TypographyFactory;
+}

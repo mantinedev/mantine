@@ -12,8 +12,10 @@ export function Usage() {
         label="Tooltip label"
         withArrow
         color="cyan"
-        radius="md"
         target={ref}
+        opened
+        withinPortal={false}
+        attributes={{ tooltip: { 'data-test-id': 'tooltip' } }}
       />
       <button type="button" ref={setRef} style={{ position: 'fixed', bottom: 100, left: 100 }}>
         target
@@ -33,7 +35,6 @@ export function AutoContrast() {
           transitionProps={{ duration: 0 }}
           opened
           color="lime.4"
-          radius="md"
         >
           <button type="button">target</button>
         </Tooltip>
@@ -46,7 +47,6 @@ export function AutoContrast() {
           transitionProps={{ duration: 0 }}
           opened
           color="lime.4"
-          radius="md"
           autoContrast
         >
           <button type="button">target</button>
@@ -65,7 +65,6 @@ export function Unstyled() {
         withArrow
         transitionProps={{ duration: 0 }}
         color="cyan"
-        radius="md"
         unstyled
       >
         <button type="button">target</button>
@@ -83,7 +82,6 @@ export function Multiline() {
         w={300}
         withArrow
         transitionProps={{ duration: 0 }}
-        radius="md"
         multiline
       >
         <button type="button">target</button>
@@ -111,7 +109,6 @@ export function MultilineWithJsx() {
         w={300}
         // WithArrow
         // TransitionProps={{ duration: 0 }}
-        radius="md"
         multiline
       >
         <button type="button">target</button>
@@ -267,7 +264,6 @@ export function DefaultOpened() {
         withArrow
         transitionProps={{ duration: 0 }}
         color="cyan"
-        radius="md"
         defaultOpened
       >
         <button type="button">target</button>

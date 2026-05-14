@@ -3,6 +3,8 @@ import { Popover } from '../../Popover';
 import { useComboboxContext } from '../Combobox.context';
 
 export interface ComboboxDropdownTargetProps {
+  ref?: React.RefObject<HTMLElement>;
+
   /** Target element */
   children: React.ReactNode;
 
@@ -20,8 +22,10 @@ export type ComboboxDropdownTargetFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxDropdownTarget = factory<ComboboxDropdownTargetFactory>((props, ref) => {
-  const { children, refProp } = useProps('ComboboxDropdownTarget', defaultProps, props);
+export const ComboboxDropdownTarget = factory<ComboboxDropdownTargetFactory>((props) => {
+  const { children, refProp, ref } = useProps('ComboboxDropdownTarget', defaultProps, props);
+
+  // Context not used, just to throw error if used outside of Combobox
   useComboboxContext();
 
   if (!isElement(children)) {

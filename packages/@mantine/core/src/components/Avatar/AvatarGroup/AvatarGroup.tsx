@@ -1,3 +1,4 @@
+import { createContext } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,7 +13,12 @@ import {
   useStyles,
 } from '../../../core';
 import classes from '../Avatar.module.css';
-import { AvatarGroupProvider } from './AvatarGroup.context';
+
+export interface AvatarGroupContextValue {
+  withinGroup: boolean;
+}
+
+export const AvatarGroupContext = createContext<AvatarGroupContextValue>({ withinGroup: false });
 
 export type AvatarGroupStylesNames = 'group';
 export type AvatarGroupCssVariables = {
@@ -20,10 +26,8 @@ export type AvatarGroupCssVariables = {
 };
 
 export interface AvatarGroupProps
-  extends BoxProps,
-    StylesApiProps<AvatarGroupFactory>,
-    ElementProps<'div'> {
-  /** Negative space between Avatar components @default `'sm'` */
+  extends BoxProps, StylesApiProps<AvatarGroupFactory>, ElementProps<'div'> {
+  /** Negative space between Avatar components @default 'sm' */
   spacing?: MantineSpacing;
 }
 
@@ -40,7 +44,7 @@ const varsResolver = createVarsResolver<AvatarGroupFactory>((_, { spacing }) => 
   },
 }));
 
-export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
+export const AvatarGroup = factory<AvatarGroupFactory>((_props) => {
   const props = useProps('AvatarGroup', null, _props);
   const { classNames, className, style, styles, unstyled, vars, spacing, attributes, ...others } =
     props;
@@ -61,11 +65,12 @@ export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
   });
 
   return (
-    <AvatarGroupProvider value>
-      <Box ref={ref} {...getStyles('group')} {...others} />
-    </AvatarGroupProvider>
+    <AvatarGroupContext value={{ withinGroup: true }}>
+      <Box {...getStyles('group')} {...others} />
+    </AvatarGroupContext>
   );
 });
 
 AvatarGroup.classes = classes;
+AvatarGroup.varsResolver = varsResolver;
 AvatarGroup.displayName = '@mantine/core/AvatarGroup';

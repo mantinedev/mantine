@@ -1,5 +1,6 @@
 export { usage } from './TimePicker.demo.usage';
 export { clearable } from './TimePicker.demo.clearable';
+export { clearSectionMode } from './TimePicker.demo.clearSectionMode';
 export { disabled } from './TimePicker.demo.disabled';
 export { readOnly } from './TimePicker.demo.readOnly';
 export { withSeconds } from './TimePicker.demo.withSeconds';
@@ -17,3 +18,5 @@ export { presetsRange } from './TimePicker.demo.presetsRange';
 export { dropdownPosition } from './TimePicker.demo.dropdownPosition';
 export { dropdownWidth } from './TimePicker.demo.dropdownWidth';
 export { withPlaceholders } from './TimePicker.demo.withPlaceholders';
+export { duration } from './TimePicker.demo.duration';
+export { minHoursDigits } from './TimePicker.demo.minHoursDigits';

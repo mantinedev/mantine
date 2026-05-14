@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 
 export function useWindowEvent<K extends string>(
   type: K,
@@ -7,8 +7,10 @@ export function useWindowEvent<K extends string>(
     : (this: Window, ev: CustomEvent) => void,
   options?: boolean | AddEventListenerOptions
 ) {
+  const stableListener = useEffectEvent(listener);
+
   useEffect(() => {
-    window.addEventListener(type as any, listener, options);
-    return () => window.removeEventListener(type as any, listener, options);
-  }, [type, listener]);
+    window.addEventListener(type as any, stableListener, options);
+    return () => window.removeEventListener(type as any, stableListener, options);
+  }, [type]);
 }

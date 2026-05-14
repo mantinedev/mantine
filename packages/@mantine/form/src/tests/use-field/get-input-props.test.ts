@@ -40,6 +40,46 @@ describe('@mantine/form/use-field/get-input-props', () => {
     expect(hook.result.current.isTouched()).toBe(true);
   });
 
+  it('returns correct props for type="radio" (controlled, matching value)', () => {
+    const hook = renderHook(() =>
+      useField({ initialValue: 'red', type: 'radio', initialError: 'test-error' })
+    );
+    expect(hook.result.current.getInputProps({ value: 'red' })).toStrictEqual({
+      checked: true,
+      value: 'red',
+      error: 'test-error',
+      onChange: expect.any(Function),
+      onBlur: expect.any(Function),
+      onFocus: expect.any(Function),
+    });
+  });
+
+  it('returns correct props for type="radio" (controlled, non-matching value)', () => {
+    const hook = renderHook(() => useField({ initialValue: 'red', type: 'radio' }));
+    expect(hook.result.current.getInputProps({ value: 'blue' })).toStrictEqual({
+      checked: false,
+      value: 'blue',
+      error: null,
+      onChange: expect.any(Function),
+      onBlur: expect.any(Function),
+      onFocus: expect.any(Function),
+    });
+  });
+
+  it('returns correct props for type="radio" (uncontrolled)', () => {
+    const hook = renderHook(() =>
+      useField({ mode: 'uncontrolled', initialValue: 'red', type: 'radio' })
+    );
+    expect(hook.result.current.getInputProps({ value: 'red' })).toStrictEqual({
+      defaultChecked: true,
+      value: 'red',
+      error: null,
+      onChange: expect.any(Function),
+      onBlur: expect.any(Function),
+      onFocus: expect.any(Function),
+    });
+  });
+
   it('returns correct props for type="checkbox" (controlled)', () => {
     const hook = renderHook(() =>
       useField({ initialValue: false, type: 'checkbox', initialError: 'test-error' })

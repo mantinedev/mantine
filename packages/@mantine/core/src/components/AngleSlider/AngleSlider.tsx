@@ -21,10 +21,8 @@ export type AngleSliderCssVariables = {
 };
 
 export interface AngleSliderProps
-  extends BoxProps,
-    StylesApiProps<AngleSliderFactory>,
-    ElementProps<'div', 'onChange'> {
-  /** Step between values @default `1` */
+  extends BoxProps, StylesApiProps<AngleSliderFactory>, ElementProps<'div', 'onChange'> {
+  /** Step between values @default 1 */
   step?: number;
 
   /** Controlled component value */
@@ -45,13 +43,13 @@ export interface AngleSliderProps
   /** Called in `onMouseUp` and `onTouchEnd` */
   onScrubEnd?: () => void;
 
-  /** If set, the label is displayed inside the slider @default `true` */
+  /** If set, the label is displayed inside the slider @default true */
   withLabel?: boolean;
 
   /** Array of marks displayed on the slider */
   marks?: { value: number; label?: string }[];
 
-  /** Slider size in px @default `60px` */
+  /** Slider size in px @default 60 */
   size?: number;
 
   /** Size of the thumb in px. Calculated based on the `size` value by default. */
@@ -63,11 +61,11 @@ export interface AngleSliderProps
   /** Sets `data-disabled` attribute, disables interactions */
   disabled?: boolean;
 
-  /** If set, the selection is allowed only from the given marks array @default `false` */
+  /** If set, the selection is allowed only from the given marks array @default false */
   restrictToMarks?: boolean;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'>;
 
   /** Hidden input name, use with uncontrolled component */
   name?: string;
@@ -92,7 +90,7 @@ const varsResolver = createVarsResolver<AngleSliderFactory>((_, { size, thumbSiz
   },
 }));
 
-export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
+export const AngleSlider = factory<AngleSliderFactory>((_props) => {
   const props = useProps('AngleSlider', defaultProps, _props);
   const {
     classNames,
@@ -122,6 +120,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     onScrubEnd,
     mod,
     attributes,
+    ref,
     ...others
   } = props;
 
@@ -178,12 +177,20 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
       event.preventDefault();
-      newValue = normalizeRadialValue(_value - step, step);
+      if (_value === 0) {
+        newValue = 359;
+      } else {
+        newValue = normalizeRadialValue(_value - step, step);
+      }
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
       event.preventDefault();
-      newValue = normalizeRadialValue(_value + step, step);
+      if (_value === 359) {
+        newValue = 0;
+      } else {
+        newValue = normalizeRadialValue(_value + step, step);
+      }
     }
 
     if (event.key === 'Home') {
@@ -200,9 +207,9 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
 
       if (currentIndex !== -1) {
         if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-          newValue = markValues[Math.max(0, currentIndex - 1)];
+          newValue = markValues[currentIndex === 0 ? markValues.length - 1 : currentIndex - 1];
         } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-          newValue = markValues[Math.min(markValues.length - 1, currentIndex + 1)];
+          newValue = markValues[currentIndex === markValues.length - 1 ? 0 : currentIndex + 1];
         } else {
           newValue = findClosestNumber(newValue, markValues);
         }
@@ -254,3 +261,11 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
 
 AngleSlider.displayName = '@mantine/core/AngleSlider';
 AngleSlider.classes = classes;
+AngleSlider.varsResolver = varsResolver;
+
+export namespace AngleSlider {
+  export type Props = AngleSliderProps;
+  export type StylesNames = AngleSliderStylesNames;
+  export type CssVariables = AngleSliderCssVariables;
+  export type Factory = AngleSliderFactory;
+}

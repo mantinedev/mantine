@@ -18,15 +18,6 @@ describe('@mantine/core/TextInput', () => {
   tests.itSupportsSystemProps<TextInputProps, __InputStylesNames>({
     component: TextInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/TextInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -35,5 +26,11 @@ describe('@mantine/core/TextInput', () => {
     component: TextInput,
     props: defaultProps,
     selector: 'input',
+  });
+
+  tests.itSupportsSharedInputDefaults<TextInputProps>({
+    component: TextInput,
+    props: defaultProps,
+    componentName: 'TextInput',
   });
 });

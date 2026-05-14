@@ -37,7 +37,7 @@ const getPills = (props: any) => (
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <PillsInput>
+      <PillsInput id="test-pills-input">
         <Pill.Group>
           {getPills({})}
           <PillsInput.Field placeholder="Pills input" />

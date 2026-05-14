@@ -13,7 +13,7 @@ export function PointLabel({ x, y, value, valueFormatter }: PointLabelProps) {
         y={0}
         dy={-8}
         dx={-10}
-        textAnchor="top"
+        textAnchor="start"
         fill="var(--chart-text-color, var(--mantine-color-dimmed))"
         fontSize={8}
       >

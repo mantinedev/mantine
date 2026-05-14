@@ -1,6 +1,9 @@
-export { MonthPickerInput } from './MonthPickerInput';
-export type {
+import type {
+  MonthPickerInputFactory,
   MonthPickerInputProps,
   MonthPickerInputStylesNames,
-  MonthPickerInputFactory,
 } from './MonthPickerInput';
+
+export { MonthPickerInput } from './MonthPickerInput';
+
+export type { MonthPickerInputProps, MonthPickerInputStylesNames, MonthPickerInputFactory };

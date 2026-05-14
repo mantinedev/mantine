@@ -1,4 +1,4 @@
-import { IconError404, IconFingerprint, IconPhoto } from '@tabler/icons-react';
+import { FingerprintIcon, ImageIcon, WarningIcon } from '@phosphor-icons/react';
 import {
   darken,
   defaultVariantColorsResolver,
@@ -12,7 +12,7 @@ import {
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconPhoto, IconFingerprint, IconError404 } from '@tabler/icons-react';
+import { ImageIcon, FingerprintIcon, WarningIcon } from '@phosphor-icons/react';
 import {
   ThemeIcon,
   Group,
@@ -68,15 +68,15 @@ function Demo() {
     <MantineProvider theme={{ variantColorResolver }}>
       <Group>
         <ThemeIcon color="lime.4" variant="filled">
-          <IconPhoto size={20} />
+          <ImageIcon size={20} />
         </ThemeIcon>
 
         <ThemeIcon color="orange" variant="light">
-          <IconFingerprint size={20} />
+          <FingerprintIcon size={20} />
         </ThemeIcon>
 
         <ThemeIcon variant="danger">
-          <IconError404 size={20} />
+          <WarningIcon size={20} />
         </ThemeIcon>
       </Group>
     </MantineProvider>
@@ -128,15 +128,15 @@ function Demo() {
     <MantineThemeProvider theme={{ variantColorResolver }}>
       <Group>
         <ThemeIcon color="lime.4" variant="filled" size="lg">
-          <IconPhoto size={20} stroke={1.5} />
+          <ImageIcon size={20} />
         </ThemeIcon>
 
         <ThemeIcon color="orange" variant="light" size="lg">
-          <IconFingerprint size={20} stroke={1.5} />
+          <FingerprintIcon size={20} />
         </ThemeIcon>
 
         <ThemeIcon variant="danger" size="lg">
-          <IconError404 size={20} stroke={1.5} />
+          <WarningIcon size={20} />
         </ThemeIcon>
       </Group>
     </MantineThemeProvider>

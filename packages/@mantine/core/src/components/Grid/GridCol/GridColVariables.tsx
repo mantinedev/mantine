@@ -14,6 +14,7 @@ interface GridColVariablesProps {
   span: GridColProps['span'] | undefined;
   order?: GridColProps['order'] | undefined;
   offset?: GridColProps['offset'] | undefined;
+  align?: GridColProps['align'] | undefined;
 }
 
 const getColumnFlexBasis = (colSpan: ColSpan | undefined, columns: number) => {
@@ -25,7 +26,17 @@ const getColumnFlexBasis = (colSpan: ColSpan | undefined, columns: number) => {
     return '0rem';
   }
 
-  return colSpan ? `${100 / (columns / colSpan)}%` : undefined;
+  if (!colSpan) {
+    return undefined;
+  }
+
+  if (colSpan === columns) {
+    return '100%';
+  }
+
+  const percentage = (100 * colSpan) / columns;
+  const gapFactor = (columns - colSpan) / columns;
+  return `calc(${percentage}% - ${gapFactor} * var(--grid-column-gap))`;
 };
 
 const getColumnMaxWidth = (
@@ -52,16 +63,27 @@ const getColumnFlexGrow = (colSpan: ColSpan | undefined, grow: boolean | undefin
   return colSpan === 'auto' || grow ? '1' : 'auto';
 };
 
-const getColumnOffset = (offset: number | undefined, columns: number) =>
-  offset === 0 ? '0' : offset ? `${100 / (columns / offset)}%` : undefined;
+const getColumnOffset = (offset: number | undefined, columns: number) => {
+  if (offset === 0) {
+    return '0';
+  }
 
-export function GridColVariables({ span, order, offset, selector }: GridColVariablesProps) {
+  if (!offset) {
+    return undefined;
+  }
+
+  const percentage = (100 * offset) / columns;
+  const gapFactor = offset / columns;
+  return `calc(${percentage}% + ${gapFactor} * var(--grid-column-gap))`;
+};
+
+export function GridColVariables({ span, order, offset, align, selector }: GridColVariablesProps) {
   const theme = useMantineTheme();
   const ctx = useGridContext();
   const _breakpoints = ctx.breakpoints || theme.breakpoints;
 
   const baseValue = getBaseValue(span);
-  const baseSpan = baseValue === undefined ? 12 : getBaseValue(span);
+  const baseSpan = baseValue === undefined ? 12 : baseValue;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--col-order': getBaseValue(order)?.toString(),
@@ -70,6 +92,7 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
     '--col-width': baseSpan === 'content' ? 'auto' : undefined,
     '--col-max-width': getColumnMaxWidth(baseSpan, ctx.columns, ctx.grow),
     '--col-offset': getColumnOffset(getBaseValue(offset), ctx.columns),
+    '--col-align-self': getBaseValue(align),
   });
 
   const queries = keys(_breakpoints).reduce<Record<string, Record<string, any>>>(
@@ -95,6 +118,10 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
 
       if (typeof offset === 'object' && offset[breakpoint] !== undefined) {
         acc[breakpoint]['--col-offset'] = getColumnOffset(offset[breakpoint], ctx.columns);
+      }
+
+      if (typeof align === 'object' && align[breakpoint] !== undefined) {
+        acc[breakpoint]['--col-align-self'] = align[breakpoint];
       }
 
       return acc;

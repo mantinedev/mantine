@@ -24,11 +24,11 @@ function Demo() {
 
   return (
     <Combobox
+      store={combobox}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
         combobox.closeDropdown();
       }}
-      store={combobox}
     >
       <Combobox.Target>
         <TextInput
@@ -74,11 +74,11 @@ function Demo() {
 
   return (
     <Combobox
+      store={combobox}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
         combobox.closeDropdown();
       }}
-      store={combobox}
     >
       <Combobox.Target>
         <TextInput

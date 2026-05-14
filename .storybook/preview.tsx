@@ -1,57 +1,74 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react';
-import { addons } from '@storybook/preview-api';
-import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { TextAlignLeftIcon, TextAlignRightIcon } from '@phosphor-icons/react';
+import type { Decorator, Preview } from '@storybook/nextjs';
+import { useGlobals } from 'storybook/preview-api';
 import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
-import {
-  ActionIcon,
-  DirectionProvider,
-  MantineProvider,
-  useDirection,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { ActionIcon, DirectionProvider, MantineProvider, useDirection } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import { theme } from '../apps/mantine.dev/theme';
 
+export const globalTypes = {
+  theme: {
+    name: 'Theme',
+    description: 'Mantine color scheme',
+    defaultValue: 'light',
+    toolbar: {
+      icon: 'mirror',
+      items: [
+        { value: 'light', title: 'Light' },
+        { value: 'dark', title: 'Dark' },
+      ],
+    },
+  },
+};
+
+const preview: Preview = {
+  parameters: {
+    layout: 'fullscreen',
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+  },
+};
+
+export default preview;
+
 export const parameters = {
   layout: 'fullscreen',
   options: {
     showPanel: false,
+    // Storybook fails to compile if `(a: any, b: any)` is added to storySort function
+    // @ts-expect-error
     storySort: (a, b) => {
       return a.title.localeCompare(b.title, undefined, { numeric: true });
     },
   },
 };
 
-const channel = addons.getChannel();
-
-// Removes incorrect key error from SliderMarks component visible only in Storybook
-const originalError = console.error;
-console.error = (...args: any[]) => {
-  if (args.join('').includes('It was passed a child from @mantine/core/SliderMarks')) {
-    return;
-  }
-
-  originalError.call(console, ...args);
-};
-
-function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
-  const { setColorScheme } = useMantineColorScheme();
-  const handleColorScheme = (value: boolean) => setColorScheme(value ? 'dark' : 'light');
-
-  useEffect(() => {
-    channel.on(DARK_MODE_EVENT_NAME, handleColorScheme);
-    return () => channel.off(DARK_MODE_EVENT_NAME, handleColorScheme);
-  }, [channel]);
-
-  return <DirectionProvider>{children}</DirectionProvider>;
-}
-
 function DirectionWrapper({ children }: { children: React.ReactNode }) {
   const { dir, toggleDirection } = useDirection();
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const isToggleDirection = event.altKey && event.shiftKey && event.code === 'KeyR';
+
+      if (!isToggleDirection) {
+        return;
+      }
+
+      event.preventDefault();
+      toggleDirection();
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [toggleDirection]);
+
   return (
     <>
       <ActionIcon
@@ -65,7 +82,7 @@ function DirectionWrapper({ children }: { children: React.ReactNode }) {
         style={{ zIndex: 1000 }}
         aria-label="Toggle text direction"
       >
-        {dir === 'ltr' ? <IconTextDirectionLtr /> : <IconTextDirectionRtl />}
+        {dir === 'ltr' ? <TextAlignLeftIcon /> : <TextAlignRightIcon />}
       </ActionIcon>
       {children}
     </>
@@ -84,15 +101,13 @@ async function loadShiki() {
 
 const shikiAdapter = createShikiAdapter(loadShiki);
 
-export const decorators = [
-  (renderStory: any) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
-  (renderStory: any) => <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>,
-  (renderStory: any) => (
+export const decorators: Decorator[] = [
+  (renderStory) => (
     <CodeHighlightAdapterProvider adapter={shikiAdapter}>
       {renderStory()}
     </CodeHighlightAdapterProvider>
   ),
-  (renderStory: any) => (
+  (renderStory) => (
     <ModalsProvider
       labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
       modalProps={{ trapFocus: false }}
@@ -100,10 +115,36 @@ export const decorators = [
       {renderStory()}
     </ModalsProvider>
   ),
-  (renderStory: any) => (
-    <MantineProvider theme={theme}>
-      <Notifications zIndex={10000} />
-      <MantineEmotionProvider>{renderStory()}</MantineEmotionProvider>
-    </MantineProvider>
-  ),
+  (renderStory, context) => {
+    const [{ theme: globalTheme }, updateGlobals] = useGlobals();
+
+    useEffect(() => {
+      const onKeyDown = (event: KeyboardEvent) => {
+        const isMod = event.metaKey || event.ctrlKey;
+        const isJ = event.code === 'KeyJ';
+
+        if (!isMod || !isJ) {
+          return;
+        }
+
+        event.preventDefault();
+        updateGlobals({ theme: globalTheme === 'dark' ? 'light' : 'dark' });
+      };
+
+      window.addEventListener('keydown', onKeyDown);
+      return () => window.removeEventListener('keydown', onKeyDown);
+    }, [globalTheme, updateGlobals]);
+
+    const scheme = (context.globals.theme || 'light') as 'light' | 'dark';
+    return (
+      <DirectionProvider initialDirection="ltr" detectDirection={false}>
+        <MantineProvider theme={theme} forceColorScheme={scheme}>
+          <Notifications zIndex={10000} />
+          <MantineEmotionProvider>
+            <DirectionWrapper>{renderStory()}</DirectionWrapper>
+          </MantineEmotionProvider>
+        </MantineProvider>
+      </DirectionProvider>
+    );
+  },
 ];

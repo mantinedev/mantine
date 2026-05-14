@@ -1,0 +1,13 @@
+import { ColorPickerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.AlphaSlider);
+
+## Usage
+
+Use `AlphaSlider` component to allow users to select alpha (opacity) value of a color.
+It accepts values from `0` to `1`. `AlphaSlider` is a part of [ColorPicker](/core/color-picker) component,
+but can also be used separately.
+
+<Demo data={ColorPickerDemos.alphaSlider} />

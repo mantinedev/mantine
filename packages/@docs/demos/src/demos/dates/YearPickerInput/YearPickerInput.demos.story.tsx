@@ -38,6 +38,11 @@ export const Demo_clearable = {
   render: renderDemo(demos.clearable),
 };
 
+export const Demo_clearSectionMode = {
+  name: '⭐ Demo: clearSectionMode',
+  render: renderDemo(demos.clearSectionMode),
+};
+
 export const Demo_valueFormat = {
   name: '⭐ Demo: valueFormat',
   render: renderDemo(demos.valueFormat),
@@ -51,4 +56,14 @@ export const Demo_disabled = {
 export const Demo_valueFormatter = {
   name: '⭐ Demo: valueFormatter',
   render: renderDemo(demos.valueFormatter),
+};
+
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};
+
+export const Demo_presetsRange = {
+  name: '⭐ Demo: presetsRange',
+  render: renderDemo(demos.presetsRange),
 };

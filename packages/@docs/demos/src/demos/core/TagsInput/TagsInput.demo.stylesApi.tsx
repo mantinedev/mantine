@@ -1,17 +1,17 @@
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { TagsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { TagsInputStylesApi } from '@docs/styles-api';
 
 const code = `
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { TagsInput } from '@mantine/core';
 
 function Demo() {
   return (
     <TagsInput
      {{props}}
-      leftSection={<IconAt size={18} stroke={1.5} />}
+      leftSection={<AtIcon size={18} />}
       label="TagsInput"
       description="Description"
       error="Error"
@@ -28,7 +28,7 @@ function Demo(props: any) {
     <TagsInput
       {...props}
       dropdownOpened
-      leftSection={<IconAt size={18} stroke={1.5} />}
+      leftSection={<AtIcon size={18} />}
       withAsterisk
       label="TagsInput"
       description="Description"

@@ -7,16 +7,7 @@ describe('@mantine/core/Flex', () => {
   tests.itSupportsSystemProps<FlexProps, FlexStylesNames>({
     component: Flex,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Flex',
     stylesApiSelectors: ['root'],
   });

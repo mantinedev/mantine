@@ -11,8 +11,7 @@ export type NotificationPosition =
   | 'bottom-center';
 
 export interface NotificationData
-  extends Omit<NotificationProps, 'onClose'>,
-    Record<`data-${string}`, any> {
+  extends Omit<NotificationProps, 'onClose'>, Record<`data-${string}`, any> {
   /** Notification id, can be used to close or update notification */
   id?: string;
 
@@ -26,6 +25,9 @@ export interface NotificationData
    *  number is auto close timeout in ms, overrides `autoClose` from `Notifications`
    * */
   autoClose?: boolean | number;
+
+  /** Determines whether notification can be closed with close button, drag or horizontal scroll swipe, `true` by default */
+  allowClose?: boolean;
 
   /** Called when notification closes */
   onClose?: (props: NotificationData) => void;

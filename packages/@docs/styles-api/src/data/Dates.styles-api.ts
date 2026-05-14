@@ -6,6 +6,7 @@ import type {
   DatePickerInputFactory,
   DateTimePickerFactory,
   DecadeLevelGroupFactory,
+  InlineDateTimePickerFactory,
   MonthFactory,
   MonthLevelGroupFactory,
   MonthPickerFactory,
@@ -31,7 +32,12 @@ export const MonthStylesApi: StylesApiData<MonthFactory> = {
     weekNumber: 'Week number td element',
   },
 
-  vars: {},
+  vars: {
+    weekNumber: {
+      '--wn-fz': 'Controls font size',
+      '--wn-size': 'Controls size',
+    },
+  },
 
   modifiers: [
     {
@@ -150,9 +156,16 @@ export const YearPickerStylesApi: StylesApiData<YearPickerFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
     ...DecadeLevelGroupStylesApi.selectors,
+    yearPickerRoot: 'Year picker root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
   },
 
-  vars: {},
+  vars: {
+    yearPickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
 
   modifiers: CalendarHeaderStylesApi.modifiers,
 };
@@ -162,9 +175,16 @@ export const MonthPickerStylesApi: StylesApiData<MonthPickerFactory> = {
     ...CalendarHeaderStylesApi.selectors,
     ...DecadeLevelGroupStylesApi.selectors,
     ...YearLevelGroupStylesApi.selectors,
+    monthPickerRoot: 'Month picker root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
   },
 
-  vars: {},
+  vars: {
+    monthPickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
 
   modifiers: CalendarHeaderStylesApi.modifiers,
 };
@@ -180,7 +200,11 @@ export const DatePickerStylesApi: StylesApiData<DatePickerFactory> = {
     presetButton: 'Preset button',
   },
 
-  vars: {},
+  vars: {
+    datePickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
 
   modifiers: [...CalendarHeaderStylesApi.modifiers!, ...MonthStylesApi.modifiers!],
 };
@@ -243,6 +267,26 @@ export const DateTimePickerStylesApi: StylesApiData<DateTimePickerFactory> = {
     timeWrapper: 'Wrapper around time input and submit button',
     timeInput: 'TimeInput',
     submitButton: 'Submit button',
+    rangeTimeWrapper: 'Wrapper around two time inputs in range mode',
+    rangeTimeInput: 'Time input in range mode',
+    rangeInfo: 'Range dates preview in range mode',
+  },
+
+  vars: {},
+
+  modifiers: DatePickerStylesApi.modifiers as any,
+};
+
+export const InlineDateTimePickerStylesApi: StylesApiData<InlineDateTimePickerFactory> = {
+  selectors: {
+    root: 'Root element',
+    ...DatePickerStylesApi.selectors,
+    timeWrapper: 'Wrapper around time input and submit button',
+    timeInput: 'TimeInput',
+    submitButton: 'Submit button',
+    rangeTimeWrapper: 'Wrapper around two time inputs and submit button in range mode',
+    rangeTimeInput: 'Time input in range mode',
+    rangeInfo: 'Range dates preview in range mode',
   },
 
   vars: {},

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { ScrollArea } from '../ScrollArea';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
@@ -18,10 +18,12 @@ const largeData = Array(10000)
 
 export function Virtualized() {
   const [opened, setOpened] = useState(false);
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [value, setValue] = useState('');
-  const virtuoso = useRef<any>(null);
-  const viewportRef = useRef<HTMLDivElement>(null);
+  const virtuoso = useRef<VirtuosoHandle>(null);
+  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
+
+  const activeIndex = largeData.findIndex((item) => item.value === value);
 
   const store = useVirtualizedCombobox({
     opened,
@@ -30,10 +32,19 @@ export function Virtualized() {
     totalOptionsCount: largeData.length,
     getOptionId: (index) => largeData[index].id,
     selectedOptionIndex,
+    activeOptionIndex: activeIndex,
     setSelectedOptionIndex: (index) => {
       setSelectedOptionIndex(index);
       if (index !== -1) {
-        virtuoso.current.scrollToIndex({ index, align: 'end' });
+        virtuoso.current?.scrollIntoView({ index });
+      }
+    },
+    onDropdownOpen: () => {
+      if (activeIndex !== -1) {
+        setSelectedOptionIndex(activeIndex);
+        requestAnimationFrame(() => {
+          virtuoso.current?.scrollToIndex({ index: activeIndex });
+        });
       }
     },
     onSelectedOptionSubmit: onOptionSubmit,
@@ -67,18 +78,20 @@ export function Virtualized() {
             <ScrollArea.Autosize
               mah={300}
               type="scroll"
-              viewportRef={viewportRef}
+              scrollbarSize={4}
+              viewportRef={setScrollParent}
               onMouseDown={(event) => event.preventDefault()}
             >
               <Virtuoso
                 data={largeData}
                 ref={virtuoso}
                 style={{ height: 400 }}
-                customScrollParent={viewportRef.current!}
+                customScrollParent={scrollParent ?? undefined}
                 itemContent={(index, item) => (
                   <Combobox.Option
                     value={item.value}
                     key={item.value}
+                    active={index === activeIndex}
                     selected={index === selectedOptionIndex}
                     onClick={() => onOptionSubmit(index)}
                   >

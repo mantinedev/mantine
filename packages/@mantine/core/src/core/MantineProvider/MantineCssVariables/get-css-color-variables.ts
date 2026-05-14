@@ -1,4 +1,4 @@
-import { alpha, getPrimaryShade } from '../color-functions';
+import { alpha, darken, getPrimaryShade } from '../color-functions';
 import { MantineColor, MantineTheme } from '../theme.types';
 
 interface GetColorVariablesInput {
@@ -29,9 +29,9 @@ export function getCSSColorVariables({
       [`--mantine-color-${name}-filled-hover`]: `var(--mantine-color-${name}-${
         primaryShade === 9 ? 8 : primaryShade + 1
       })`,
-      [`--mantine-color-${name}-light`]: alpha(theme.colors[color][primaryShade], 0.1),
-      [`--mantine-color-${name}-light-hover`]: alpha(theme.colors[color][primaryShade], 0.12),
-      [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${primaryShade})`,
+      [`--mantine-color-${name}-light`]: `var(--mantine-color-${name}-${1})`,
+      [`--mantine-color-${name}-light-hover`]: `var(--mantine-color-${name}-${2})`,
+      [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${9})`,
       [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${primaryShade})`,
       [`--mantine-color-${name}-outline-hover`]: alpha(theme.colors[color][primaryShade], 0.05),
     };
@@ -62,15 +62,9 @@ export function getCSSColorVariables({
     [`--mantine-color-${name}-filled-hover`]: `var(--mantine-color-${name}-${
       primaryShade === 9 ? 8 : primaryShade + 1
     })`,
-    [`--mantine-color-${name}-light`]: alpha(
-      theme.colors[color][Math.max(0, primaryShade - 2)],
-      0.15
-    ),
-    [`--mantine-color-${name}-light-hover`]: alpha(
-      theme.colors[color][Math.max(0, primaryShade - 2)],
-      0.2
-    ),
-    [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 5, 0)})`,
+    [`--mantine-color-${name}-light`]: darken(theme.colors[color][9], 0.5),
+    [`--mantine-color-${name}-light-hover`]: darken(theme.colors[color][9], 0.3),
+    [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-0)`,
     [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 4, 0)})`,
     [`--mantine-color-${name}-outline-hover`]: alpha(
       theme.colors[color][Math.max(primaryShade - 4, 0)],

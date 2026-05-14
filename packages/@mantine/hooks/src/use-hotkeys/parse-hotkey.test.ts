@@ -24,7 +24,6 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
       alt: false,
       ctrl: false,
       meta: false,
-      mod: true,
       shift: false,
       key: 'k',
     });
@@ -42,7 +41,6 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
       alt: false,
       ctrl: false,
       meta: false,
-      mod: true,
       shift: false,
       key: 's',
     });

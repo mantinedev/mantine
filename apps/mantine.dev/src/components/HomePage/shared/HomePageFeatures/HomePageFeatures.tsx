@@ -1,9 +1,9 @@
-import { IconPuzzle } from '@tabler/icons-react';
+import { PuzzlePieceIcon } from '@phosphor-icons/react';
 import { Text, ThemeIcon } from '@mantine/core';
 import classes from './HomePageFeature.module.css';
 
 interface HomePageFeatureProps {
-  icon: typeof IconPuzzle;
+  icon: typeof PuzzlePieceIcon;
   title: string;
   description: string;
 }
@@ -14,7 +14,7 @@ function HomePageFeature({ icon: Icon, title, description }: HomePageFeatureProp
   return (
     <section className={classes.feature}>
       <ThemeIcon className={classes.featureIcon} size={50} radius="md">
-        <Icon size={30} stroke={1.5} />
+        <Icon size={30} />
       </ThemeIcon>
       <div>
         <Text component="h3" className={classes.featureTitle}>

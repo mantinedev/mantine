@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { StepperFactory } from './Stepper';
 
-interface StepperContextValue {
+export interface StepperContextValue {
   getStyles: GetStylesApi<StepperFactory>;
   orientation: 'horizontal' | 'vertical' | undefined;
   iconPosition: 'left' | 'right' | undefined;

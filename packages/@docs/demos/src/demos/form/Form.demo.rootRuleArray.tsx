@@ -1,11 +1,11 @@
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
@@ -18,7 +18,7 @@ function Demo() {
     },
     validate: {
       employees: {
-        [formRootRule]: isNotEmpty('At least one employee is required'),
+        [formRootRule]: isNotEmpty('AtIcon least one employee is required'),
         name: isNotEmpty('Name is required'),
       },
     },
@@ -39,7 +39,7 @@ function Demo() {
         {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <TrashIcon size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -94,7 +94,7 @@ function Demo() {
     },
     validate: {
       employees: {
-        [formRootRule]: isNotEmpty('At least one employee is required'),
+        [formRootRule]: isNotEmpty('AtIcon least one employee is required'),
         name: isNotEmpty('Name is required'),
       },
     },
@@ -115,7 +115,7 @@ function Demo() {
         {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <TrashIcon size={16} />
       </ActionIcon>
     </Group>
   ));

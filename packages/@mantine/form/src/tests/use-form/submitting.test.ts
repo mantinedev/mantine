@@ -9,7 +9,7 @@ function tests(mode: FormMode) {
     const hook = renderHook(() => useForm({ mode, initialValues: { a: 1, b: 2 } }));
     expect(hook.result.current.submitting).toBe(false);
 
-    act(() => {
+    await act(async () => {
       hook.result.current.onSubmit(asyncHandler)();
     });
 

@@ -49,7 +49,7 @@
 }
 
 .placeholder {
-  font-weight: 700;
+  font-weight: var(--mantine-font-weight-bold);
   display: flex;
   align-items: center;
   justify-content: center;

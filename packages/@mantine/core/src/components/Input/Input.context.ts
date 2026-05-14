@@ -1,9 +1,8 @@
-import { createOptionalContext, MantineSize } from '../../core';
+import { createContext } from 'react';
+import { MantineSize } from '../../core';
 
-interface InputContext {
+interface InputContextValue {
   size: MantineSize | (string & {});
 }
 
-export const [InputContext, useInputContext] = createOptionalContext<InputContext>({
-  size: 'sm',
-});
+export const InputContext = createContext<InputContextValue>({ size: 'sm' });

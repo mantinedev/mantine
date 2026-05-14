@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { CarouselFactory } from './Carousel';
 
-interface CarouselContextValue {
+export interface CarouselContextValue {
   getStyles: GetStylesApi<CarouselFactory>;
   orientation: 'horizontal' | 'vertical' | undefined;
 }

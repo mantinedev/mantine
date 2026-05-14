@@ -8,7 +8,7 @@ function Demo() {
   return (
     <NumberInput
       label="You can enter only 2 digits after decimal point"
-      placeholder="Do not enter more that 2"
+      placeholder="Do not enter more than 2"
       decimalScale={2}
     />
   );
@@ -19,7 +19,7 @@ function Demo() {
   return (
     <NumberInput
       label="You can enter only 2 digits after decimal point"
-      placeholder="Do not enter more that 2"
+      placeholder="Do not enter more than 2"
       decimalScale={2}
     />
   );

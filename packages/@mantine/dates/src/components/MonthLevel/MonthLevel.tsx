@@ -20,14 +20,15 @@ import { Month, MonthSettings, MonthStylesNames } from '../Month';
 export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames;
 
 export interface MonthLevelBaseSettings extends MonthSettings {
-  /** dayjs label format to display month label or a function that returns month label based on month value @default `"MMMM YYYY"` */
+  /** dayjs label format to display month label or a function that returns month label based on month value @default "MMMM YYYY" */
   monthLabelFormat?: DateLabelFormat;
 }
 
 export interface MonthLevelSettings extends MonthLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface MonthLevelProps
-  extends BoxProps,
+  extends
+    BoxProps,
     MonthLevelSettings,
     Omit<StylesApiProps<MonthLevelFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {
@@ -43,6 +44,9 @@ export interface MonthLevelProps
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
   static?: boolean;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type MonthLevelFactory = Factory<{
@@ -55,7 +59,7 @@ const defaultProps = {
   monthLabelFormat: 'MMMM YYYY',
 } satisfies Partial<MonthLevelProps>;
 
-export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
+export const MonthLevel = factory<MonthLevelFactory>((_props) => {
   const props = useProps('MonthLevel', defaultProps, _props);
   const {
     // Month settings
@@ -106,6 +110,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     __staticSelector,
     size,
     static: isStatic,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -136,7 +141,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         : false;
 
   return (
-    <Box data-month-level size={size} ref={ref} {...others}>
+    <Box data-month-level size={size} {...others}>
       <CalendarHeader
         label={
           typeof monthLabelFormat === 'function'
@@ -161,6 +166,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
 
@@ -188,6 +194,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         withCellSpacing={withCellSpacing}
         highlightToday={highlightToday}
         withWeekNumbers={withWeekNumbers}
+        fullWidth={fullWidth}
         {...stylesApiProps}
       />
     </Box>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
 import { DEFAULT_THEME, rem } from '../../core';
 import { FileButton } from '../FileButton';
 import { Button, ButtonProps } from './Button';
@@ -373,14 +373,14 @@ export function GroupSection() {
   return (
     <div>
       <Button.Group>
-        <Button variant="default" size="lg" radius="md">
-          <IconChevronDown color="var(--mantine-color-red-text)" />
+        <Button variant="default" size="lg">
+          <CaretDownIcon color="var(--mantine-color-red-text)" />
         </Button>
         <Button.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)">
           118
         </Button.GroupSection>
-        <Button variant="default" size="lg" radius="md">
-          <IconChevronUp color="var(--mantine-color-teal-text)" />
+        <Button variant="default" size="lg">
+          <CaretUpIcon color="var(--mantine-color-teal-text)" />
         </Button>
       </Button.Group>
     </div>

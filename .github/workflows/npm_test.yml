@@ -15,8 +15,8 @@ jobs:
   test_pull_request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -28,4 +28,4 @@ jobs:
       - name: Build public packages
         run: npm run build all
       - name: Run tests
-        run: npm test
+        run: npm run test:all

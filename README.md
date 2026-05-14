@@ -1,15 +1,3 @@
-<div align="center">
-	<a href="https://formengine.io/documentation/components-library/mantine/?utm_source=github&utm_medium=hero-banner&utm_campaign=mantine-readme-core#getting-started-with-mantine-components" target="_blank">
-		<sup>Special thanks to:</sup>
-		<br>
-		<img alt="Formengine sponsorship" width="400" src="https://formengine.io/ads-images/mantine3.png?version=1">
-		<br>
-		<h>FormEngine Core – Lightweight React JSON Schema form builder library for Mantine</b>
-		<br>
-		<sup>No deep React knowledge required.</sup>
-	</a>
-</div>
-
 # Mantine
 
 [![NPM](https://img.shields.io/npm/l/@mantine/core)](https://github.com/mantinedev/mantine/blob/master/LICENSE)
@@ -32,7 +20,7 @@
 
 ## Packages
 
-- [`@mantine/hooks`](https://mantine.dev/hooks/package/) – collection of 50+ hooks for state and UI management
+- [`@mantine/hooks`](https://mantine.dev/hooks/package/) – collection of 80+ hooks for state and UI management
 - [`@mantine/core`](https://mantine.dev/core/package/) – core components library – 100+ components
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
 - [`@mantine/charts`](https://mantine.dev/charts/getting-started/) – recharts based charts library
@@ -44,6 +32,7 @@
 - [`@mantine/carousel`](https://mantine.dev/x/carousel) – Carousel component
 - [`@mantine/nprogress`](https://mantine.dev/x/nprogress) – navigation progress
 - [`@mantine/modals`](https://mantine.dev/x/modals) – centralized modals manager
+- [`@mantine/schedule`](https://mantine.dev/x/schedule) – Schedule component for displaying events
 
 ## Getting help
 

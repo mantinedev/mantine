@@ -62,11 +62,13 @@ export function useRadialMove<T extends HTMLElement = any>(
   onChange: (value: number) => void,
   { step = 0.01, onChangeEnd, onScrubStart, onScrubEnd }: UseRadialMoveOptions = {}
 ): UseRadialMoveReturnValue<T> {
-  const mounted = useRef<boolean>(false);
   const [active, setActive] = useState(false);
+  const cleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    mounted.current = true;
+    return () => {
+      cleanupRef.current?.();
+    };
   }, []);
 
   const refCallback: React.RefCallback<T | null> = useCallback(
@@ -133,6 +135,13 @@ export function useRadialMove<T extends HTMLElement = any>(
       node?.addEventListener('mousedown', onMouseDown);
       node?.addEventListener('touchstart', handleTouchStart, { passive: false });
 
+      cleanupRef.current = () => {
+        document.removeEventListener('mousemove', handleMouseMove, false);
+        document.removeEventListener('mouseup', handleMouseUp, false);
+        document.removeEventListener('touchmove', handleTouchMove, false);
+        document.removeEventListener('touchend', handleTouchEnd, false);
+      };
+
       return () => {
         if (node) {
           node.removeEventListener('mousedown', onMouseDown);
@@ -144,4 +153,9 @@ export function useRadialMove<T extends HTMLElement = any>(
   );
 
   return { ref: refCallback, active };
+}
+
+export namespace useRadialMove {
+  export type Options = UseRadialMoveOptions;
+  export type ReturnValue<T extends HTMLElement> = UseRadialMoveReturnValue<T>;
 }

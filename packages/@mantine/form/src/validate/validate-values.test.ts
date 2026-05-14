@@ -1,47 +1,43 @@
 import { formRootRule, validateValues } from './validate-values';
 
 describe('@mantine/form/validate-values', () => {
-  it('returns correct results if form does not have any errors', () => {
+  it('returns correct results if form does not have any errors', async () => {
     expect(
-      validateValues(
+      await validateValues(
         {
           a: (value) => (value === 1 ? null : 'error-a'),
           b: (value) => (value === 1 ? null : 'error-b'),
         },
         { a: 1, b: 1 }
       )
+    ).toStrictEqual({ hasErrors: false, errors: {} });
+  });
+
+  it('validates values with function', async () => {
+    expect(
+      await validateValues(() => ({ a: 'error-a', b: 'error-b' }), { a: 1, b: 2 })
     ).toStrictEqual({
-      hasErrors: false,
-      errors: {},
-    });
-  });
-
-  it('validates values with function', () => {
-    expect(validateValues(() => ({ a: 'error-a', b: 'error-b' }), { a: 1, b: 2 })).toStrictEqual({
       hasErrors: true,
-      errors: {
-        a: 'error-a',
-        b: 'error-b',
-      },
+      errors: { a: 'error-a', b: 'error-b' },
     });
   });
 
-  it('correctly handles empty errors with validate function', () => {
-    expect(validateValues(() => ({}), { a: 1, b: 2 })).toStrictEqual({
+  it('correctly handles empty errors with validate function', async () => {
+    expect(await validateValues(() => ({}), { a: 1, b: 2 })).toStrictEqual({
       hasErrors: false,
       errors: {},
     });
   });
 
-  it('calls validate function with values', () => {
+  it('calls validate function with values', async () => {
     const spy = jest.fn();
-    validateValues(spy, { a: 1, b: 2 });
+    await validateValues(spy, { a: 1, b: 2 });
     expect(spy).toHaveBeenCalledWith({ a: 1, b: 2 });
   });
 
-  it('validates values with rules record (root properties)', () => {
+  it('validates values with rules record (root properties)', async () => {
     expect(
-      validateValues(
+      await validateValues(
         {
           a: (value) => (value < 2 ? 'error-a' : null),
           b: (value) => (value === '' ? null : 'error-b'),
@@ -51,16 +47,13 @@ describe('@mantine/form/validate-values', () => {
       )
     ).toStrictEqual({
       hasErrors: true,
-      errors: {
-        a: 'error-a',
-        c: 'error-c',
-      },
+      errors: { a: 'error-a', c: 'error-c' },
     });
   });
 
-  it('validates lists values with rules record (root properties)', () => {
+  it('validates lists values with rules record (root properties)', async () => {
     expect(
-      validateValues(
+      await validateValues(
         {
           a: (value) => (value < 2 ? 'error-a' : null),
           b: (value) => (value.length === 0 ? 'error-b' : null),
@@ -70,16 +63,13 @@ describe('@mantine/form/validate-values', () => {
       )
     ).toStrictEqual({
       hasErrors: true,
-      errors: {
-        a: 'error-a',
-        b: 'error-b',
-      },
+      errors: { a: 'error-a', b: 'error-b' },
     });
   });
 
-  it('validates values with rules record (within list)', () => {
+  it('validates values with rules record (within list)', async () => {
     expect(
-      validateValues(
+      await validateValues(
         {
           a: (value) => (value < 2 ? 'error-a' : null),
           b: {
@@ -109,9 +99,9 @@ describe('@mantine/form/validate-values', () => {
     });
   });
 
-  it('validates values with rules record (within object)', () => {
+  it('validates values with rules record (within object)', async () => {
     expect(
-      validateValues(
+      await validateValues(
         {
           a: {
             b: (value) => (value === 1 ? 'error-b' : null),
@@ -131,9 +121,9 @@ describe('@mantine/form/validate-values', () => {
     });
   });
 
-  it('validates nested lists correctly', () => {
+  it('validates nested lists correctly', async () => {
     expect(
-      validateValues(
+      await validateValues(
         {
           a: {
             b: {
@@ -152,9 +142,9 @@ describe('@mantine/form/validate-values', () => {
     });
   });
 
-  it('validates mixed nested lists and objects', () => {
+  it('validates mixed nested lists and objects', async () => {
     expect(
-      validateValues(
+      await validateValues(
         {
           a: {
             b: {
@@ -180,9 +170,9 @@ describe('@mantine/form/validate-values', () => {
     });
   });
 
-  it('validates values based their path', () => {
+  it('validates values based their path', async () => {
     expect(
-      validateValues(
+      await validateValues(
         { a: { b: { c: (_value, _values, path) => (path === 'a.b.0.c' ? 'error' : null) } } },
         { a: { b: [{ c: 1 }, { c: 2 }] } }
       )
@@ -194,9 +184,9 @@ describe('@mantine/form/validate-values', () => {
     });
   });
 
-  it('supports formRootRule in nested objects', () => {
+  it('supports formRootRule in nested objects', async () => {
     expect(
-      validateValues(
+      await validateValues(
         { a: { [formRootRule]: (value) => (value.b === 0 ? 'error' : null) } },
         { a: { b: 0 } }
       )
@@ -206,7 +196,7 @@ describe('@mantine/form/validate-values', () => {
     });
 
     expect(
-      validateValues(
+      await validateValues(
         {
           a: {
             b: {
@@ -222,7 +212,7 @@ describe('@mantine/form/validate-values', () => {
     });
 
     expect(
-      validateValues(
+      await validateValues(
         { a: { [formRootRule]: (value) => (value.b === 0 ? 'error' : null) } },
         { a: { b: 1 } }
       )
@@ -232,9 +222,9 @@ describe('@mantine/form/validate-values', () => {
     });
   });
 
-  it('supports formRootRule in nested lists', () => {
+  it('supports formRootRule in nested lists', async () => {
     expect(
-      validateValues(
+      await validateValues(
         { a: { [formRootRule]: (value) => (value.length === 2 ? 'error' : null) } },
         { a: [{ b: 0 }, { b: 1 }] }
       )
@@ -244,7 +234,7 @@ describe('@mantine/form/validate-values', () => {
     });
 
     expect(
-      validateValues(
+      await validateValues(
         { a: { [formRootRule]: (value) => (value.length === 2 ? 'error' : null) } },
         { a: [{ b: 0 }] }
       )

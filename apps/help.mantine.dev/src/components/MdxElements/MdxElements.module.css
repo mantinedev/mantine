@@ -24,7 +24,7 @@
   margin-top: calc(var(--mantine-spacing-xl) * 1.2);
   margin-bottom: var(--mantine-spacing-md);
   overflow-wrap: break-word;
-  font-weight: 500;
+  font-weight: 600;
 
   @mixin light {
     color: var(--mantine-color-black);

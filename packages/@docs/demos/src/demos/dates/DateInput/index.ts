@@ -1,5 +1,6 @@
 export { usage } from './DateInput.demo.usage';
 export { clearable } from './DateInput.demo.clearable';
+export { clearSectionMode } from './DateInput.demo.clearSectionMode';
 export { configurator } from './DateInput.demo.configurator';
 export { format } from './DateInput.demo.format';
 export { parser } from './DateInput.demo.parser';

@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { PaginationRootFactory } from './PaginationRoot/PaginationRoot';
 
-interface PaginationContext {
+export interface PaginationContextValue {
   total: number;
   range: (number | 'dots')[];
   active: number;
@@ -15,6 +15,6 @@ interface PaginationContext {
   getStyles: GetStylesApi<PaginationRootFactory>;
 }
 
-export const [PaginationProvider, usePaginationContext] = createSafeContext<PaginationContext>(
+export const [PaginationProvider, usePaginationContext] = createSafeContext<PaginationContextValue>(
   'Pagination.Root component was not found in tree'
 );

@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.MonthPickerInput);
 
 ## MonthPicker props
 
-`MonthPickerInput` supports most of the [MonthPicker](/dates/month-picker/) props,
-read through [MonthPicker](/dates/month-picker/) documentation to learn about all component features that are not listed on this page.
+`MonthPickerInput` supports most of the [MonthPicker](/dates/month-picker/) props.
+Read through the [MonthPicker](/dates/month-picker/) documentation to learn about all component features that are not listed on this page.
 
 ## Usage
 
@@ -15,15 +15,25 @@ read through [MonthPicker](/dates/month-picker/) documentation to learn about al
 
 ## Multiple dates
 
-Set `type="multiple"` to allow user to pick multiple dates:
+Set `type="multiple"` to allow users to pick multiple dates:
 
 <Demo data={MonthPickerInputDemos.multiple} />
 
 ## Dates range
 
-Set `type="range"` to allow user to pick dates range:
+Set `type="range"` to allow users to pick a date range:
 
 <Demo data={MonthPickerInputDemos.range} />
+
+## Presets
+
+Use the `presets` prop to add custom month presets. Presets are displayed next to the calendar:
+
+<Demo data={MonthPickerInputDemos.presets} />
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+<Demo data={MonthPickerInputDemos.presetsRange} />
 
 ## Open picker in modal
 
@@ -34,14 +44,14 @@ You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
 
 ## Value format
 
-Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label:
 
 <Demo data={MonthPickerInputDemos.valueFormat} />
 
 ## Value formatter
 
-`valueFormatter` is a more powerful alternative to `valueFormat` prop.
-It allows formatting value label with a custom function.
+`valueFormatter` is a more powerful alternative to the `valueFormat` prop.
+It allows formatting the value label with a custom function.
 The function is the same for all component types (`default`, `multiple` and `range`)
 – you need to perform additional checks inside the function to handle different types.
 
@@ -51,14 +61,52 @@ Example of using a custom formatter function with `type="multiple"`:
 
 ## Clearable
 
-Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
-prop, clear button will not be displayed.
+Set the `clearable` prop to display a clear button in the right section. Note that if you set the `rightSection`
+prop, the clear button will not be displayed.
 
 <Demo data={MonthPickerInputDemos.clearable} />
+
+<ClearSectionMode />
+
+<Demo data={MonthPickerInputDemos.clearSectionMode} />
 
 ## Disabled state
 
 <Demo data={MonthPickerInputDemos.disabled} />
+
+## Min and max dates
+
+`minDate` and `maxDate` props define the minimum and maximum dates that can be picked.
+You can specify `minDate` and `maxDate` as `Date` objects:
+
+<Demo data={MonthPickerInputDemos.minMax} />
+
+## Control props
+
+`getYearControlProps` and `getMonthControlProps` props allow passing props to the control component based on the date.
+It is useful for disabling specific dates or customising styles/className.
+
+<Demo data={MonthPickerInputDemos.controlProps} />
+
+## Label format
+
+`decadeLabelFormat` and `yearLabelFormat` props allow changing the format of the label in the header.
+The props accept a [dayjs format string](https://day.js.org/docs/en/display/format).
+
+<Demo data={MonthPickerInputDemos.labelFormat} />
+
+## List format
+
+`monthsListFormat` and `yearsListFormat` props allow changing the format of the month and year labels in the list.
+The props accept a [dayjs format string](https://day.js.org/docs/en/display/format).
+
+<Demo data={MonthPickerInputDemos.listFormat} />
+
+## Max level
+
+`maxLevel` prop allows to set the maximum level that can be reached by clicking on the label in the header.
+
+<Demo data={MonthPickerInputDemos.maxLevel} />
 
 ## Input props
 

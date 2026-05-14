@@ -16,6 +16,7 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     source: '@mantine/form/src',
     license: 'MIT',
     docs: 'form/use-form.mdx',
+    searchTags: 'form state, form hook, form management, mantine form, form library',
   },
 
   createFormContext: {
@@ -120,5 +121,12 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     slug: '/form/use-field',
     description: 'use-field hook – manage single field state',
     docs: 'form/use-field.mdx',
+  },
+  formAllInputs: {
+    title: 'use-form with all inputs',
+    package: '@mantine/form',
+    slug: '/form/all-inputs',
+    description: 'use-form usage with all Mantine inputs',
+    docs: 'form/all-inputs.mdx',
   },
 };

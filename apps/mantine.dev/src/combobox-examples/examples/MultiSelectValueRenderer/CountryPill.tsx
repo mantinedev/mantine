@@ -2,7 +2,7 @@ import { CloseButton } from '@mantine/core';
 import { countriesData, flags } from './countries-data';
 import classes from './CountryPill.module.css';
 
-interface CountryPillProps extends React.ComponentPropsWithoutRef<'div'> {
+interface CountryPillProps extends React.ComponentProps<'div'> {
   value: string;
   onRemove?: () => void;
 }

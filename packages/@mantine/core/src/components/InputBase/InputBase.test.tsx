@@ -18,16 +18,7 @@ describe('@mantine/core/InputBase', () => {
   tests.itSupportsSystemProps<InputBaseProps, __InputStylesNames>({
     component: InputBase,
     props: defaultProps,
-    mod: true,
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/InputBase',
     stylesApiSelectors: [...inputStylesApiSelectors],
     polymorphicSelector: '.mantine-InputBase-input',
@@ -37,5 +28,11 @@ describe('@mantine/core/InputBase', () => {
     component: InputBase,
     props: defaultProps,
     selector: 'input',
+  });
+
+  tests.itSupportsSharedInputDefaults<InputBaseProps>({
+    component: InputBase,
+    props: defaultProps,
+    componentName: 'InputBase',
   });
 });

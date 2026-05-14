@@ -2,7 +2,12 @@ import Link from 'next/link';
 import { SimpleGrid, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { Demo } from '@mantinex/demo';
-import { HooksDemos, SliderDemos } from '@docs/demos';
+import {
+  SliderDemos,
+  UseEyeDropperDemos,
+  UseHotkeysDemos,
+  UseResizeObserverDemos,
+} from '@docs/demos';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore';
@@ -64,7 +69,7 @@ export function HomePageHooks() {
             description="use-resize-observer hook tracks element size and position changes"
             link="/hooks/use-resize-observer"
           >
-            <Demo data={HooksDemos.useResizeObserverDemo} demoProps={{ defaultExpanded: false }} />
+            <Demo data={UseResizeObserverDemos.usage} demoProps={{ defaultExpanded: false }} />
           </DemoColumn>
 
           <DemoColumn
@@ -72,7 +77,7 @@ export function HomePageHooks() {
             description="use-hotkeys hook allows binding keyboard shortcuts to actions"
             link="/hooks/use-hotkeys"
           >
-            <Demo data={HooksDemos.useHotkeysDemoIndex} demoProps={{ defaultExpanded: false }} />
+            <Demo data={UseHotkeysDemos.index} demoProps={{ defaultExpanded: false }} />
           </DemoColumn>
 
           <DemoColumn
@@ -81,7 +86,7 @@ export function HomePageHooks() {
             link="/hooks/use-eye-dropper"
           >
             <Demo
-              data={HooksDemos.useEyeDropperUsage}
+              data={UseEyeDropperDemos.usage}
               demoProps={{ defaultExpanded: false, maxCollapsedHeight: isMobile ? 150 : 256 }}
             />
           </DemoColumn>

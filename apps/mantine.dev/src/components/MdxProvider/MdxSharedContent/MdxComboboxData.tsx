@@ -69,21 +69,26 @@ export function MdxComboboxData({ component }: MdxComboboxDataProps) {
         following formats:
       </MdxParagraph>
 
-      <MdxParagraph>Array of strings:</MdxParagraph>
+      <MdxParagraph>
+        Array of {!stringDataFormat ? 'strings' : 'primitive values (strings, numbers, booleans)'}:
+      </MdxParagraph>
 
       <MdxCodeHighlight language="tsx" code={getStringArrayCode(component)} />
 
       {stringDataFormat && (
         <>
           <MdxParagraph>
-            Array of object with <MdxCode>value</MdxCode>, <MdxCode>label</MdxCode> and optional{' '}
+            Array of objects with <MdxCode>value</MdxCode>, <MdxCode>label</MdxCode> and optional{' '}
             <MdxCode>disabled</MdxCode> keys:
           </MdxParagraph>
           <MdxCodeHighlight language="tsx" code={getArrayCode(component)} />
         </>
       )}
 
-      <MdxParagraph>Array of groups with string options:</MdxParagraph>
+      <MdxParagraph>
+        Array of groups with{' '}
+        {!stringDataFormat ? 'string' : 'primitive value (string, number, boolean)'} options:
+      </MdxParagraph>
       <MdxCodeHighlight language="tsx" code={getStringGroupsCode(component)} />
 
       {stringDataFormat && (

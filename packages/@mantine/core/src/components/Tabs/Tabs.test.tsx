@@ -48,17 +48,9 @@ describe('@mantine/core/Tabs', () => {
   tests.itSupportsSystemProps<TabsProps, TabsStylesNames>({
     component: Tabs,
     props: defaultProps,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/core/Tabs',
     children: true,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
     stylesApiSelectors: ['root', 'tab', 'list', 'panel'],
   });
 

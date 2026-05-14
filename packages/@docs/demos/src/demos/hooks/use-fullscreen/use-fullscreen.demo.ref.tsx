@@ -1,0 +1,50 @@
+import { Button, Stack } from '@mantine/core';
+import { useFullscreenElement } from '@mantine/hooks';
+import { MantineDemo } from '@mantinex/demo';
+
+const refCode = `
+import { useFullscreenElement } from '@mantine/hooks';
+import { Button, Stack } from '@mantine/core';
+
+function RefDemo() {
+  const { ref, toggle, fullscreen } = useFullscreenElement();
+
+  return (
+    <Stack align="center">
+      <img
+        ref={ref}
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png"
+        alt="For demo"
+        width={200}
+      />
+      <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
+        {fullscreen ? 'Exit Fullscreen' : 'View Image Fullscreen'}
+      </Button>
+    </Stack>
+  );
+}
+`;
+
+function RefDemo() {
+  const { ref, toggle, fullscreen } = useFullscreenElement();
+
+  return (
+    <Stack align="center">
+      <img
+        ref={ref}
+        src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png"
+        alt="For demo"
+        width={200}
+      />
+      <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
+        {fullscreen ? 'Exit Fullscreen' : 'View Image Fullscreen'}
+      </Button>
+    </Stack>
+  );
+}
+
+export const ref: MantineDemo = {
+  type: 'code',
+  code: refCode,
+  component: RefDemo,
+};

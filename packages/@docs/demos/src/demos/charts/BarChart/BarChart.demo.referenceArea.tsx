@@ -25,7 +25,6 @@ function Demo() {
         x2="March"
         y1={0}
         y2={1250}
-        yAxisId="left"
         fillOpacity={0.3}
         strokeOpacity={0.9}
         fill="var(--mantine-color-gray-4)"
@@ -60,7 +59,6 @@ function Demo() {
         x2="March"
         y1={0}
         y2={1250}
-        yAxisId="left"
         fillOpacity={0.3}
         strokeOpacity={0.9}
         fill="var(--mantine-color-gray-4)"

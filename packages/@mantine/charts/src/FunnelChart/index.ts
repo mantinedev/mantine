@@ -1,8 +1,17 @@
-export { FunnelChart } from './FunnelChart';
-export type {
+import type {
+  FunnelChartCell,
   FunnelChartCssVariables,
   FunnelChartFactory,
   FunnelChartProps,
   FunnelChartStylesNames,
-  FunnelChartCell,
 } from './FunnelChart';
+
+export { FunnelChart } from './FunnelChart';
+
+export type {
+  FunnelChartProps,
+  FunnelChartStylesNames,
+  FunnelChartFactory,
+  FunnelChartCssVariables,
+  FunnelChartCell,
+};

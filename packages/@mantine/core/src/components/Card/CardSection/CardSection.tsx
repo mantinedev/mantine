@@ -27,7 +27,7 @@ export type CardSectionFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) => {
+export const CardSection = polymorphicFactory<CardSectionFactory>((_props) => {
   const props = useProps('CardSection', null, _props);
   const { classNames, className, style, styles, vars, withBorder, inheritPadding, mod, ...others } =
     props;
@@ -35,7 +35,6 @@ export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) 
 
   return (
     <Box
-      ref={ref}
       mod={[{ 'with-border': withBorder, 'inherit-padding': inheritPadding }, mod]}
       {...ctx.getStyles('section', { className, style, styles, classNames })}
       {...others}

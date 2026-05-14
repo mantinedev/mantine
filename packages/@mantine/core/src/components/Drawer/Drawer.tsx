@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
-import classes from './Drawer.module.css';
 import { DrawerBody } from './DrawerBody';
 import { DrawerCloseButton } from './DrawerCloseButton';
 import { DrawerContent } from './DrawerContent';
@@ -13,8 +12,9 @@ import {
   DrawerRootProps,
   DrawerRootStylesNames,
 } from './DrawerRoot';
-import { DrawerStack, useDrawerStackContext } from './DrawerStack';
+import { DrawerStack, DrawerStackContext } from './DrawerStack';
 import { DrawerTitle } from './DrawerTitle';
+import classes from './Drawer.module.css';
 
 export type DrawerStylesNames = DrawerRootStylesNames;
 export type DrawerCssVariables = DrawerRootCssVariables;
@@ -23,7 +23,7 @@ export interface DrawerProps extends DrawerRootProps {
   /** Drawer title */
   title?: React.ReactNode;
 
-  /** If set, the overlay is displayed @default `true` */
+  /** If set, the overlay is displayed @default true */
   withOverlay?: boolean;
 
   /** Props passed down to the `Overlay` component, can be used to configure opacity, `background-color`, styles and other properties */
@@ -32,7 +32,7 @@ export interface DrawerProps extends DrawerRootProps {
   /** Drawer content */
   children?: React.ReactNode;
 
-  /** If set, the close button is displayed @default `true` */
+  /** If set, the close button is displayed @default true */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
@@ -72,7 +72,7 @@ const defaultProps = {
   withCloseButton: true,
 } satisfies Partial<DrawerProps>;
 
-export const Drawer = factory<DrawerFactory>((_props, ref) => {
+export const Drawer = factory<DrawerFactory>((_props) => {
   const {
     title,
     withOverlay,
@@ -86,7 +86,7 @@ export const Drawer = factory<DrawerFactory>((_props, ref) => {
     ...others
   } = useProps('Drawer', defaultProps, _props);
 
-  const ctx = useDrawerStackContext();
+  const ctx = use(DrawerStackContext);
   const hasHeader = !!title || withCloseButton;
   const stackProps =
     ctx && stackId
@@ -110,7 +110,6 @@ export const Drawer = factory<DrawerFactory>((_props, ref) => {
 
   return (
     <DrawerRoot
-      ref={ref}
       opened={opened}
       zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
       {...others}

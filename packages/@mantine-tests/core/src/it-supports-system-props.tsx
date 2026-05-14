@@ -1,5 +1,6 @@
 import { itHasClasses } from './shared/it-has-classes';
 import { itHasExtend } from './shared/it-has-extend';
+import { itHasStaticVarsResolver } from './shared/it-has-static-vars-resolver';
 import { itHasWithProps } from './shared/it-has-withProps';
 import { itIsPolymorphic } from './shared/it-is-polymorphic';
 import { itRendersChildren } from './shared/it-renders-children';
@@ -28,6 +29,7 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
   props: Props;
   mod?: boolean;
   classes?: boolean;
+  varsResolver?: boolean;
   withProps?: boolean;
   styleProps?: boolean;
   polymorphic?: boolean;
@@ -48,12 +50,26 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
   sizeSelector?: string;
   providerStylesApi?: boolean;
   compound?: boolean;
+  attributes?: boolean;
 }
+
+const defaultOptions: Partial<Options<Record<string, any>, string>> = {
+  mod: true,
+  styleProps: true,
+  classes: true,
+  withProps: true,
+  extend: true,
+  variant: true,
+  id: true,
+  size: true,
+  attributes: true,
+};
 
 export function itSupportsSystemProps<
   Props extends Record<string, any>,
   StylesApiSelectors extends string = string,
->(options: Options<Props, StylesApiSelectors>) {
+>(_options: Options<Props, StylesApiSelectors>) {
+  const options = { ...defaultOptions, ..._options } as Options<Props, StylesApiSelectors>;
   describe('supports system properties', () => {
     const splittedDisplayName = options.displayName ? options.displayName.split('/') : [];
     const predictedProviderName = options.displayName
@@ -67,7 +83,8 @@ export function itSupportsSystemProps<
     itSupportsLightDarkHidden(options);
     itSupportsStyle(options);
     itSupportsOthers(options);
-    options.refType && itSupportsRef({ ...options, refType: options.refType });
+    options.refType !== null &&
+      itSupportsRef({ ...options, refType: options.refType || HTMLElement });
     options.polymorphic &&
       itIsPolymorphic({ ...options, selector: options.polymorphicSelector || options.selector });
     options.children && itRendersChildren(options);
@@ -111,6 +128,10 @@ export function itSupportsSystemProps<
 
     if (options.classes) {
       itHasClasses(options);
+    }
+
+    if (options.varsResolver) {
+      itHasStaticVarsResolver(options);
     }
 
     if (options.withProps) {

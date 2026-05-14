@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useState } from 'react';
-import { useIsomorphicEffect, useMutationObserver } from '@mantine/hooks';
+import { createContext, use, useCallback, useState } from 'react';
+import { useIsomorphicEffect, useMutationObserverTarget } from '@mantine/hooks';
 
 export type Direction = 'ltr' | 'rtl';
 
@@ -16,7 +16,7 @@ export const DirectionContext = createContext<DirectionContextValue>({
 });
 
 export function useDirection() {
-  return useContext(DirectionContext);
+  return use(DirectionContext);
 }
 
 export interface DirectionProviderProps {
@@ -26,7 +26,7 @@ export interface DirectionProviderProps {
   /** Direction set as a default value, `ltr` by default */
   initialDirection?: Direction;
 
-  /** Determines whether direction should be updated on mount based on `dir` attribute set on root element (usually html element) @default `true`  */
+  /** Determines whether direction should be updated on mount based on `dir` attribute set on root element (usually html element) @default true  */
   detectDirection?: boolean;
 }
 
@@ -65,15 +65,13 @@ export function DirectionProvider({
     }
   }, []);
 
-  useMutationObserver(
+  useMutationObserverTarget(
     mutationCallback,
     detectDirection ? { attributes: true, attributeFilter: ['dir'] } : {},
     typeof document !== 'undefined' && detectDirection ? document.documentElement : null
   );
 
   return (
-    <DirectionContext.Provider value={{ dir, toggleDirection, setDirection }}>
-      {children}
-    </DirectionContext.Provider>
+    <DirectionContext value={{ dir, toggleDirection, setDirection }}>{children}</DirectionContext>
   );
 }

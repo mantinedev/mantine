@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  Primitive,
   useProps,
 } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
@@ -14,11 +15,9 @@ import classes from '../Combobox.module.css';
 export type ComboboxOptionStylesNames = 'option';
 
 export interface ComboboxOptionProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxOptionFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<ComboboxOptionFactory>, ElementProps<'div'> {
   /** Option value */
-  value: string;
+  value: Primitive;
 
   /** Current active state */
   active?: boolean;
@@ -37,7 +36,7 @@ export type ComboboxOptionFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
+export const ComboboxOption = factory<ComboboxOptionFactory>((_props) => {
   const props = useProps('ComboboxOption', null, _props);
   const {
     classNames,
@@ -64,7 +63,6 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
     <Box
       {...ctx.getStyles('option', { className, classNames, styles, style })}
       {...others}
-      ref={ref}
       id={_id}
       mod={[
         'combobox-option',
@@ -74,7 +72,7 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
       role="option"
       onClick={(event) => {
         if (!disabled) {
-          ctx.onOptionSubmit?.(props.value, props);
+          ctx.onOptionSubmit?.(props.value as any, props);
           onClick?.(event);
         } else {
           event.preventDefault();

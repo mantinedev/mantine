@@ -1,7 +1,7 @@
 .root {
   --scp-filled-segment-color: var(--mantine-primary-color-filled);
   --scp-transition-duration: 0ms;
-  --scp-thickness: 10px;
+  --scp-thickness: 12px;
 
   @mixin where-light {
     --scp-empty-segment-color: var(--mantine-color-gray-2);
@@ -48,6 +48,7 @@
 
   &:where([data-position='center']) {
     top: 50%;
+    transform: translateY(-50%);
     padding-inline: calc(var(--scp-thickness) * 3);
   }
 }

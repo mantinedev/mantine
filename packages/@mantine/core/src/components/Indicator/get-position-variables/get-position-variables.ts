@@ -2,7 +2,10 @@ import { rem } from '../../../core';
 import type { IndicatorPositionVariables } from '../Indicator';
 import type { IndicatorPosition } from '../Indicator.types';
 
-export function getPositionVariables(_position: IndicatorPosition = 'top-end', offset = 0) {
+export function getPositionVariables(
+  _position: IndicatorPosition = 'top-end',
+  offset: number | { x: number; y: number } = 0
+) {
   const variables: Record<IndicatorPositionVariables, string | undefined> = {
     '--indicator-top': undefined,
     '--indicator-bottom': undefined,
@@ -12,11 +15,15 @@ export function getPositionVariables(_position: IndicatorPosition = 'top-end', o
     '--indicator-translate-y': undefined,
   };
 
-  const _offset = rem(offset);
+  const offsetX = typeof offset === 'number' ? offset : offset.x;
+  const offsetY = typeof offset === 'number' ? offset : offset.y;
+
+  const _offsetX = rem(offsetX);
+  const _offsetY = rem(offsetY);
   const [position, placement] = _position.split('-');
 
   if (position === 'top') {
-    variables['--indicator-top'] = _offset;
+    variables['--indicator-top'] = _offsetY;
     variables['--indicator-translate-y'] = '-50%';
   }
 
@@ -26,12 +33,12 @@ export function getPositionVariables(_position: IndicatorPosition = 'top-end', o
   }
 
   if (position === 'bottom') {
-    variables['--indicator-bottom'] = _offset;
+    variables['--indicator-bottom'] = _offsetY;
     variables['--indicator-translate-y'] = '50%';
   }
 
   if (placement === 'start') {
-    variables['--indicator-left'] = _offset;
+    variables['--indicator-left'] = _offsetX;
     variables['--indicator-translate-x'] = '-50%';
   }
 
@@ -41,7 +48,7 @@ export function getPositionVariables(_position: IndicatorPosition = 'top-end', o
   }
 
   if (placement === 'end') {
-    variables['--indicator-right'] = _offset;
+    variables['--indicator-right'] = _offsetX;
     variables['--indicator-translate-x'] = '50%';
   }
 

@@ -7,17 +7,9 @@ describe('@mantine/core/Overlay', () => {
   tests.itSupportsSystemProps<OverlayProps, OverlayStylesNames>({
     component: Overlay,
     props: defaultProps,
-    mod: true,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Overlay',
     stylesApiSelectors: ['root'],
   });

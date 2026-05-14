@@ -7,11 +7,11 @@ describe('@mantine/core/Box', () => {
   tests.itSupportsSystemProps<BoxProps>({
     component: Box,
     props: defaultProps,
-    mod: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    refType: HTMLDivElement,
+    withProps: false,
+    extend: false,
+    classes: false,
     displayName: '@mantine/core/Box',
     providerName: null,
   });

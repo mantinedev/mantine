@@ -1,11 +1,11 @@
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { ThemeIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { gradientControls } from '../../../shared';
 
 const code = (props: any) => `
 import { ThemeIcon } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
       aria-label="Gradient action icon"
       gradient={{ from: '${props.gradientFrom}', to: '${props.gradientTo}', deg: ${props.gradientDegree} }}
     >
-      <IconHeart />
+      <HeartIcon />
     </ThemeIcon>
   );
 }
@@ -29,7 +29,7 @@ function Wrapper(props: any) {
       aria-label="Gradient action icon"
       gradient={{ from: props.gradientFrom, to: props.gradientTo, deg: props.gradientDegree }}
     >
-      <IconHeart />
+      <HeartIcon />
     </ThemeIcon>
   );
 }

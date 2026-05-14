@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react';
 import type {
-  _TransformValues,
   ClearErrors,
   ClearFieldError,
   InsertListItem,
@@ -16,7 +15,6 @@ import type {
   SetInitialValues,
   SetValues,
   UseFormReturnType,
-  ValidateField,
 } from '../types';
 
 function dispatchEvent(type: string, detail?: any): any {
@@ -61,7 +59,7 @@ export function createFormActions<FormValues extends Record<string, any> = Recor
 
   const validate: () => void = () => dispatchEvent(`mantine-form:${name}:validate`);
 
-  const validateField: ValidateField<FormValues> = (path) =>
+  const validateField: (path: any) => void = (path) =>
     dispatchEvent(`mantine-form:${name}:validate-field`, path);
 
   const reorderListItem: ReorderListItem<FormValues> = (path, payload) =>
@@ -114,10 +112,10 @@ function useFormEvent(eventKey: string | undefined, handler: (event: any) => voi
   }, [eventKey]);
 }
 
-export function useFormActions<
-  Values = Record<string, unknown>,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
->(name: string | undefined, form: UseFormReturnType<Values, TransformValues>) {
+export function useFormActions<Values = Record<string, unknown>, TransformedValues = Values>(
+  name: string | undefined,
+  form: UseFormReturnType<Values, TransformedValues, any>
+) {
   if (name) {
     validateFormName(name);
   }

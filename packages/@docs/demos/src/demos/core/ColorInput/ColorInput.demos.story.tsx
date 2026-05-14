@@ -87,3 +87,8 @@ export const Demo_withPicker = {
   name: '⭐ Demo: withPicker',
   render: renderDemo(demos.withPicker),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

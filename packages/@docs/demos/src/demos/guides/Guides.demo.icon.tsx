@@ -1,14 +1,13 @@
-import { IconBrandMantine } from '@tabler/icons-react';
+import { AtomIcon } from '@phosphor-icons/react';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconBrandMantine } from '@tabler/icons-react';
+import { AtomIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
-    <IconBrandMantine
+    <AtomIcon
       size={80}
-      stroke={1.5}
       color="var(--mantine-color-blue-filled)"
     />
   );
@@ -16,7 +15,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return <IconBrandMantine size={80} stroke={1.5} color="var(--mantine-color-blue-filled)" />;
+  return <AtomIcon size={80} color="var(--mantine-color-blue-filled)" />;
 }
 
 export const icon: MantineDemo = {

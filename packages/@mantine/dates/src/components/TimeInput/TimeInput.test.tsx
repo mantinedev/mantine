@@ -18,15 +18,6 @@ describe('@mantine/dates/TimeInput', () => {
   tests.itSupportsSystemProps<TimeInputProps, __InputStylesNames>({
     component: TimeInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/dates/TimeInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -35,5 +26,11 @@ describe('@mantine/dates/TimeInput', () => {
     component: TimeInput,
     props: defaultProps,
     selector: 'input',
+  });
+
+  tests.itSupportsSharedInputDefaults<TimeInputProps>({
+    component: TimeInput,
+    props: defaultProps,
+    componentName: 'TimeInput',
   });
 });

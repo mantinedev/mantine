@@ -1,11 +1,11 @@
-import { IconXboxX } from '@tabler/icons-react';
+import { XCircleIcon } from '@phosphor-icons/react';
 import { Button, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import { IconXboxX } from '@tabler/icons-react';
+import { XCircleIcon } from '@phosphor-icons/react';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
 
@@ -19,7 +19,7 @@ function Demo() {
         onClose={close}
         title="Authentication"
         closeButtonProps={{
-          icon: <IconXboxX size={20} stroke={1.5} />,
+          icon: <XCircleIcon size={20} />,
         }}
       >
         {/* Modal content */}
@@ -43,7 +43,7 @@ function Demo() {
         onClose={close}
         title="Authentication"
         closeButtonProps={{
-          icon: <IconXboxX size={20} stroke={1.5} />,
+          icon: <XCircleIcon size={20} />,
         }}
       >
         <AuthenticationForm noShadow noPadding />

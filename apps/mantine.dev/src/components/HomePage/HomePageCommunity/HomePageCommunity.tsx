@@ -1,12 +1,12 @@
-import { IconExternalLink } from '@tabler/icons-react';
+import { ArrowSquareOutIcon } from '@phosphor-icons/react';
 import { Anchor, Avatar, Group, SimpleGrid, Text } from '@mantine/core';
 import { meta } from '@mantinex/mantine-meta';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import classes from './HomePageCommunity.module.css';
 import { ReviewData, reviews } from './reviews-data';
+import classes from './HomePageCommunity.module.css';
 
 interface ReviewProps {
   data: ReviewData;
@@ -29,7 +29,7 @@ function Review({ data }: ReviewProps) {
 
         <Anchor className={classes.reviewExternalLink} href={data.link} target="_blank">
           <span>Open on GitHub</span>
-          <IconExternalLink size={16} />
+          <ArrowSquareOutIcon size={16} />
         </Anchor>
       </div>
 
@@ -66,10 +66,10 @@ export function HomePageCommunity() {
         <SimpleGrid cols={{ md: 2 }} spacing={60}>
           <div>
             <div className={classes.primaryColumn}>
-              <HomePageTitle order={2}>Loved by the community</HomePageTitle>
+              <HomePageTitle order={2}>Trusted by thousands of developers</HomePageTitle>
               <HomePageDescription>
-                Mantine is used by thousands of developers from all over the world. It is a
-                community-driven project with more than 500 contributors.
+                30,000+ GitHub stars, 5M+ monthly downloads, 500+ contributors. Mantine is built in
+                the open and shaped by the developers who use it every day.
               </HomePageDescription>
 
               <HomePageLearnMore href="https://github.com/orgs/mantinedev/discussions/categories/kind-words">
@@ -77,9 +77,9 @@ export function HomePageCommunity() {
               </HomePageLearnMore>
 
               <div className={classes.stats}>
-                <Stat value="28,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
+                <Stat value="30,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
                 <Stat
-                  value="2.2M+"
+                  value="5M+"
                   label="Monthly downloads"
                   link="https://www.npmjs.com/package/@mantine/hooks"
                 />

@@ -9,7 +9,8 @@ import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 export type DecadeLevelGroupStylesNames = LevelsGroupStylesNames | DecadeLevelStylesNames;
 
 export interface DecadeLevelGroupProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<StylesApiProps<DecadeLevelGroupFactory>, 'classNames' | 'styles'>,
     Omit<
       DecadeLevelSettings,
@@ -28,6 +29,9 @@ export interface DecadeLevelGroupProps
 
   /** Function that returns level control `aria-label` based on year date */
   levelControlAriaLabel?: ((decade: DateStringValue) => string) | string;
+
+  /** Determines whether the calendar should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export type DecadeLevelGroupFactory = Factory<{
@@ -40,7 +44,7 @@ const defaultProps = {
   numberOfColumns: 1,
 } satisfies Partial<DecadeLevelGroupProps>;
 
-export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) => {
+export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
   const props = useProps('DecadeLevelGroup', defaultProps, _props);
   const {
     // DecadeLevel settings
@@ -76,6 +80,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
     levelControlAriaLabel,
     decadeLabelFormat,
     size,
+    fullWidth,
     vars,
     attributes,
     ...others
@@ -146,6 +151,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
           unstyled={unstyled}
           withCellSpacing={withCellSpacing}
           headerControlsOrder={headerControlsOrder}
+          fullWidth={fullWidth}
           attributes={attributes}
         />
       );
@@ -156,9 +162,9 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'DecadeLevelGroup'}
-      ref={ref}
       size={size}
       unstyled={unstyled}
+      fullWidth={fullWidth}
       attributes={attributes}
       {...others}
     >

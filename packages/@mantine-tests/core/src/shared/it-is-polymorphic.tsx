@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { render } from '../render';
 
 interface Options<Props = any> {
@@ -7,9 +6,7 @@ interface Options<Props = any> {
   selector?: string;
 }
 
-const TestComponent = forwardRef<HTMLElement, React.ComponentPropsWithoutRef<'mark'>>(
-  (props, ref) => <mark ref={ref} data-child-prop {...props} />
-);
+const TestComponent = (props: React.ComponentProps<'mark'>) => <mark data-child-prop {...props} />;
 
 export function itIsPolymorphic<Props>(options: Options<Props>, name = 'is polymorphic') {
   const getTarget = (container: HTMLElement): HTMLElement =>

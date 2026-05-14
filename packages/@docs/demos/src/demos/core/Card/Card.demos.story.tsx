@@ -22,3 +22,8 @@ export const Demo_section = {
   name: '⭐ Demo: section',
   render: renderDemo(demos.section),
 };
+
+export const Demo_horizontal = {
+  name: '⭐ Demo: horizontal',
+  render: renderDemo(demos.horizontal),
+};

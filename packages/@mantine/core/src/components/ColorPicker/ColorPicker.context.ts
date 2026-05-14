@@ -1,4 +1,5 @@
-import { createOptionalContext, GetStylesApi } from '../../core';
+import { createContext } from 'react';
+import { GetStylesApi } from '../../core';
 import type { ColorPickerFactory } from './ColorPicker';
 
 interface ColorPickerContextValue {
@@ -6,5 +7,4 @@ interface ColorPickerContextValue {
   unstyled: boolean | undefined;
 }
 
-export const [ColorPickerProvider, useColorPickerContext] =
-  createOptionalContext<ColorPickerContextValue>(null);
+export const ColorPickerContext = createContext<ColorPickerContextValue | null>(null);

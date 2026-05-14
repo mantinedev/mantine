@@ -28,16 +28,16 @@ export interface ColorSwatchProps extends BoxProps, StylesApiProps<ColorSwatchFa
   /** Valid CSS color to display */
   color: string;
 
-  /** Controls `width` and `height` of the swatch, any valid CSS value, numbers are converted to rem. @default `28` */
+  /** Swatch `width` and `height`, any valid CSS value, numbers are converted to rem. @default 28 */
   size?: React.CSSProperties['width'];
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem. @default `1000` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem. @default 1000 */
   radius?: MantineRadius;
 
-  /** Determines whether the swatch should have inner `box-shadow` @default `true` */
+  /** If set, the swatch has inner `box-shadow` @default true */
   withShadow?: boolean;
 
-  /** Content displayed inside the swatch */
+  /** Children inside the swatch */
   children?: React.ReactNode;
 }
 
@@ -60,7 +60,7 @@ const varsResolver = createVarsResolver<ColorSwatchFactory>((_, { radius, size }
   },
 }));
 
-export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) => {
+export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props) => {
   const props = useProps('ColorSwatch', defaultProps, _props);
   const {
     classNames,
@@ -70,11 +70,9 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
     unstyled,
     vars,
     color,
-    size,
     radius,
     withShadow,
     children,
-    variant,
     attributes,
     ...others
   } = useProps('ColorSwatch', defaultProps, props);
@@ -94,13 +92,7 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
   });
 
   return (
-    <Box
-      ref={ref}
-      variant={variant}
-      size={size}
-      {...getStyles('root', { focusable: true })}
-      {...others}
-    >
+    <Box {...getStyles('root', { focusable: true })} {...others}>
       <span {...getStyles('alphaOverlay')} />
       {withShadow && <span {...getStyles('shadowOverlay')} />}
       <span {...getStyles('colorOverlay', { style: { backgroundColor: color } })} />
@@ -110,4 +102,12 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
 });
 
 ColorSwatch.classes = classes;
+ColorSwatch.varsResolver = varsResolver;
 ColorSwatch.displayName = '@mantine/core/ColorSwatch';
+
+export namespace ColorSwatch {
+  export type Props = ColorSwatchProps;
+  export type CssVariables = ColorSwatchCssVariables;
+  export type Factory = ColorSwatchFactory;
+  export type StylesNames = ColorSwatchStylesNames;
+}

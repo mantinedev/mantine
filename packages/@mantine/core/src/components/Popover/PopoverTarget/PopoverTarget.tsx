@@ -11,7 +11,7 @@ export interface PopoverTargetProps {
   /** Key of the prop that should be used to access element ref */
   refProp?: string;
 
-  /** Popup accessible type @default `'dialog'` */
+  /** Popup accessible type @default 'dialog' */
   popupType?: string;
 }
 
@@ -26,8 +26,8 @@ export type PopoverTargetFactory = Factory<{
   compound: true;
 }>;
 
-export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
-  const { children, refProp, popupType, ...others } = useProps(
+export const PopoverTarget = factory<PopoverTargetFactory>((props) => {
+  const { children, refProp, popupType, ref, ...others } = useProps(
     'PopoverTarget',
     defaultProps,
     props
@@ -62,9 +62,9 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
     [refProp]: targetRef,
     ...(!ctx.controlled
       ? {
-          onClick: () => {
+          onClick: (event: React.MouseEvent<HTMLElement>) => {
             ctx.onToggle();
-            childProps.onClick?.();
+            childProps.onClick?.(event);
           },
         }
       : null),

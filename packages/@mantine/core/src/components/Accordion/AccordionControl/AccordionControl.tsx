@@ -10,15 +10,13 @@ import {
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useAccordionContext } from '../Accordion.context';
-import classes from '../Accordion.module.css';
 import { useAccordionItemContext } from '../AccordionItem.context';
+import classes from '../Accordion.module.css';
 
 export type AccordionControlStylesNames = 'control' | 'chevron' | 'label' | 'itemTitle' | 'icon';
 
 export interface AccordionControlProps
-  extends BoxProps,
-    CompoundStylesApiProps<AccordionControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<AccordionControlFactory>, ElementProps<'button'> {
   /** Sets `disabled` attribute, prevents interactions */
   disabled?: boolean;
 
@@ -39,7 +37,7 @@ export type AccordionControlFactory = Factory<{
   compound: true;
 }>;
 
-export const AccordionControl = factory<AccordionControlFactory>((props, ref) => {
+export const AccordionControl = factory<AccordionControlFactory>((props) => {
   const {
     classNames,
     className,
@@ -63,8 +61,7 @@ export const AccordionControl = factory<AccordionControlFactory>((props, ref) =>
   const Heading = `h${ctx.order!}` as const;
 
   const content = (
-    <UnstyledButton<'button'>
-      {...others}
+    <UnstyledButton
       {...ctx.getStyles('control', { className, classNames, style, styles, variant: ctx.variant })}
       unstyled={ctx.unstyled}
       mod={[
@@ -72,7 +69,6 @@ export const AccordionControl = factory<AccordionControlFactory>((props, ref) =>
         { active: isActive, 'chevron-position': ctx.chevronPosition, disabled },
         mod,
       ]}
-      ref={ref}
       onClick={(event) => {
         onClick?.(event);
         ctx.onChange(value);
@@ -90,6 +86,7 @@ export const AccordionControl = factory<AccordionControlFactory>((props, ref) =>
         orientation: 'vertical',
         onKeyDown,
       })}
+      {...others}
     >
       <Box
         component="span"

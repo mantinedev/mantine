@@ -10,10 +10,10 @@ Charts components built with recharts and Mantine
 
 ```bash
 # With yarn
-yarn add @mantine/charts
+yarn add @mantine/charts @mantine/core @mantine/hooks recharts
 
 # With npm
-npm install @mantine/charts
+npm install @mantine/charts @mantine/core @mantine/hooks recharts
 ```
 
 ## License

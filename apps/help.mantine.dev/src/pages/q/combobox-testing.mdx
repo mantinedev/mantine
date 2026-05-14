@@ -26,8 +26,8 @@ export default Layout(meta);
 
 Before jumping into the testing part, make sure that you've configured
 [Jest](https://mantine.dev/guides/jest) or [Vitest](https://mantine.dev/guides/vitest) in your project
-as specified in the documentation. Assume that `render`, `screen` and `userEvent` variables
-are imported from your project `test-utils` file.
+as specified in the documentation. Assume that the `render`, `screen`, and `userEvent` variables
+are imported from your project's `test-utils` file.
 
 This guide is applicable to:
 
@@ -39,7 +39,7 @@ This guide is applicable to:
 
 ## Selecting one option (Select, Autocomplete)
 
-To select one of the options in [Select](https://mantine.dev/core/select) or
+To select one of the options in the [Select](https://mantine.dev/core/select) or
 [Autocomplete](https://mantine.dev/core/autocomplete) components, you need to:
 
 1. Click the input to open the options list
@@ -69,17 +69,17 @@ function MyForm() {
 it('selects option', () => {
   render(<MyForm />);
 
-  // Click Select to open the options list
+  // Click the Select to open the options list
   // Note that the dropdown is closed when one of the options is selected
   // If you want to select several options one after another,
   // you need to click the input again to open the dropdown
   await userEvent.click(screen.getByRole('textbox', { name: 'Select your age' }));
 
-  // Get option by its label and click it
+  // Get the option by its label and click it
   await userEvent.click(screen.getByRole('option', { name: 'I am 18 or older' }));
 
   // Verify that the option is selected
-  // This is what user sees in the input
+  // This is what the user sees in the input
   expect(screen.getByRole('textbox')).toHaveValue('I am 18 or older');
 
   // This is what will be submitted with the form
@@ -89,7 +89,7 @@ it('selects option', () => {
 
 ## Selecting multiple options (MultiSelect, TagsInput)
 
-Selecting options in [MultiSelect](https://mantine.dev/core/multi-select) and
+Selecting options in the [MultiSelect](https://mantine.dev/core/multi-select) and
 [TagsInput](https://mantine.dev/core/tags-input) components is similar to
 `Select` and `Autocomplete`. The main difference is that the dropdown does not close
 when one of the options is selected, so you can select several options one after another
@@ -115,7 +115,7 @@ function MyForm() {
 it('selects multiple options', () => {
   render(<MyForm />);
 
-  // Click Select to open the options list
+  // Click the Select to open the options list
   // Note that unlike Select, MultiSelect does not close the dropdown when one of the options is selected
   // You can select several options one after another without clicking the input again
   await userEvent.click(screen.getByRole('textbox', { name: 'Select groceries' }));

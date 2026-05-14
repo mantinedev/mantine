@@ -19,4 +19,11 @@ describe('@mantine/core/Box/extract-style-props', () => {
       rest: { firstProp: 1, secondProp: 'test' },
     });
   });
+
+  it('correctly extracts logical style props', () => {
+    expect(extractStyleProps({ mis: 10, mie: 15, pis: 20, pie: 25 })).toStrictEqual({
+      styleProps: { mis: 10, mie: 15, pis: 20, pie: 25 },
+      rest: {},
+    });
+  });
 });

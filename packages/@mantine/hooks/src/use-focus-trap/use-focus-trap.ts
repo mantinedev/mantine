@@ -19,7 +19,7 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
     if (focusElement) {
       focusElement.focus({ preventScroll: true });
     } else if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.warn(
         '[@mantine/hooks/use-focus-trap] Failed to find focusable element within provided node',
         node
@@ -34,6 +34,7 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
       }
 
       if (node === null) {
+        ref.current = null;
         return;
       }
 
@@ -41,21 +42,17 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
         return;
       }
 
-      if (node) {
-        // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
-        setTimeout(() => {
-          if (node.getRootNode()) {
-            focusNode(node);
-          } else if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.warn('[@mantine/hooks/use-focus-trap] Ref node is not part of the dom', node);
-          }
-        });
+      // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
+      setTimeout(() => {
+        if (node.getRootNode()) {
+          focusNode(node);
+        } else if (process.env.NODE_ENV === 'development') {
+          // oxlint-disable-next-line no-console
+          console.warn('[@mantine/hooks/use-focus-trap] Ref node is not part of the dom', node);
+        }
+      });
 
-        ref.current = node;
-      } else {
-        ref.current = null;
-      }
+      ref.current = node;
     },
     [active]
   );
@@ -65,7 +62,13 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
       return undefined;
     }
 
-    ref.current && setTimeout(() => focusNode(ref.current!));
+    if (ref.current) {
+      setTimeout(() => {
+        if (ref.current) {
+          focusNode(ref.current);
+        }
+      });
+    }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Tab' && ref.current) {

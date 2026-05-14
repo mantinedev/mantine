@@ -6,7 +6,7 @@
 
 .tab {
   font-size: var(--mantine-font-size-md);
-  font-weight: 500;
+  font-weight: 600;
   height: 42px;
   padding-inline-start: var(--mantine-spacing-sm);
   padding-inline-end: var(--mantine-spacing-lg);
@@ -18,10 +18,11 @@
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
   }
 
-  @mixin smaller-than $docs-mdx-breakpoint {
+  @mixin smaller-than $mantine-breakpoint-xs {
     font-size: var(--mantine-font-size-sm);
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
+    flex: 1;
   }
 
   &[data-active] {
@@ -46,7 +47,7 @@
 .tabIcon {
   color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
 
-  @mixin smaller-than $docs-mdx-breakpoint {
+  @mixin smaller-than $mantine-breakpoint-xs {
     display: none;
   }
 }
@@ -54,6 +55,7 @@
 .main {
   padding-inline: var(--docs-inline-spacing);
   width: 100%;
+  padding-inline-end: 0;
   max-width: 994px;
 
   @mixin smaller-than 1750px {
@@ -61,11 +63,25 @@
   }
 
   @mixin smaller-than 1450px {
-    max-width: calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 48px);
+    max-width: calc(100vw - var(--docs-navbar-width) - 48px);
   }
 
-  @mixin smaller-than $docs-toc-breakpoint {
-    padding-inline-end: 0;
+  @media (hover: none) and (max-width: 750px) {
+    max-width: calc(100vw - var(--docs-navbar-width) - 28px);
+  }
+
+  &[data-with-toc] {
+    padding-inline-end: var(--docs-inline-spacing);
+
+    @mixin smaller-than 1450px {
+      max-width: calc(
+        100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 48px
+      );
+    }
+
+    @mixin smaller-than $docs-toc-breakpoint {
+      padding-inline-end: 0;
+    }
   }
 }
 

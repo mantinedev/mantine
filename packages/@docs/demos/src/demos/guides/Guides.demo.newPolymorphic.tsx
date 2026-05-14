@@ -1,21 +1,19 @@
-import { forwardRef } from 'react';
-import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
+import { Box, BoxProps, Group, polymorphic } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { forwardRef } from 'react';
-import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
+import { Box, BoxProps, polymorphic, Group } from '@mantine/core';
 
 interface MyButtonProps extends BoxProps {
   label: string;
 }
 
-const MyButton = createPolymorphicComponent<'button', MyButtonProps>(
-  forwardRef<HTMLButtonElement, MyButtonProps>(({ label, ...others }, ref) => (
-    <Box component="button" {...others} ref={ref}>
+const MyButton = polymorphic<'button', MyButtonProps>(
+  ({ label, ...others }: MyButtonProps) => (
+    <Box component="button" {...others}>
       {label}
     </Box>
-  ))
+  )
 );
 
 function Demo() {
@@ -37,13 +35,11 @@ interface MyButtonProps extends BoxProps {
   label: string;
 }
 
-const MyButton = createPolymorphicComponent<'button', MyButtonProps>(
-  forwardRef<HTMLButtonElement, MyButtonProps>(({ label, ...others }, ref) => (
-    <Box component="button" {...others} ref={ref}>
-      {label}
-    </Box>
-  ))
-);
+const MyButton = polymorphic<'button', MyButtonProps>(({ label, ...others }: MyButtonProps) => (
+  <Box component="button" {...others}>
+    {label}
+  </Box>
+));
 
 function Demo() {
   return (

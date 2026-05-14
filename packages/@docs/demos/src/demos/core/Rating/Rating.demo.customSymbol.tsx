@@ -1,22 +1,16 @@
 import {
-  IconMoodCrazyHappy,
-  IconMoodCry,
-  IconMoodHappy,
-  IconMoodSad,
-  IconMoodSmile,
-} from '@tabler/icons-react';
+  SmileyIcon,
+  SmileyMehIcon,
+  SmileyNervousIcon,
+  SmileySadIcon,
+  SmileyWinkIcon,
+} from '@phosphor-icons/react';
 import { Rating } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Rating } from '@mantine/core';
-import {
-  IconMoodCry,
-  IconMoodSad,
-  IconMoodSmile,
-  IconMoodHappy,
-  IconMoodCrazyHappy,
-} from '@tabler/icons-react';
+import { SmileySadIcon, SmileyNervousIcon, SmileyIcon, SmileyMehIcon, SmileyWinkIcon } from '@phosphor-icons/react';
 
 const getIconStyle = (color?: string) => ({
   width: 24,
@@ -29,15 +23,15 @@ const getEmptyIcon = (value: number) => {
 
   switch (value) {
     case 1:
-      return <IconMoodCry style={iconStyle} />;
+      return <SmileySadIcon style={iconStyle} />;
     case 2:
-      return <IconMoodSad style={iconStyle} />;
+      return <SmileyNervousIcon style={iconStyle} />;
     case 3:
-      return <IconMoodSmile style={iconStyle} />;
+      return <SmileyIcon style={iconStyle} />;
     case 4:
-      return <IconMoodHappy style={iconStyle} />;
+      return <SmileyMehIcon style={iconStyle} />;
     case 5:
-      return <IconMoodCrazyHappy style={iconStyle} />;
+      return <SmileyWinkIcon style={iconStyle} />;
     default:
       return null;
   }
@@ -46,15 +40,15 @@ const getEmptyIcon = (value: number) => {
 const getFullIcon = (value: number) => {
   switch (value) {
     case 1:
-      return <IconMoodCry style={getIconStyle('red')} />;
+      return <SmileySadIcon style={getIconStyle('red')} />;
     case 2:
-      return <IconMoodSad style={getIconStyle('orange')} />;
+      return <SmileyNervousIcon style={getIconStyle('orange')} />;
     case 3:
-      return <IconMoodSmile style={getIconStyle('yellow')} />;
+      return <SmileyIcon style={getIconStyle('yellow')} />;
     case 4:
-      return <IconMoodHappy style={getIconStyle('lime')} />;
+      return <SmileyMehIcon style={getIconStyle('lime')} />;
     case 5:
-      return <IconMoodCrazyHappy style={getIconStyle('green')} />;
+      return <SmileyWinkIcon style={getIconStyle('green')} />;
     default:
       return null;
   }
@@ -76,15 +70,15 @@ const getEmptyIcon = (value: number) => {
 
   switch (value) {
     case 1:
-      return <IconMoodCry style={iconStyle} />;
+      return <SmileySadIcon style={iconStyle} />;
     case 2:
-      return <IconMoodSad style={iconStyle} />;
+      return <SmileyNervousIcon style={iconStyle} />;
     case 3:
-      return <IconMoodSmile style={iconStyle} />;
+      return <SmileyIcon style={iconStyle} />;
     case 4:
-      return <IconMoodHappy style={iconStyle} />;
+      return <SmileyMehIcon style={iconStyle} />;
     case 5:
-      return <IconMoodCrazyHappy style={iconStyle} />;
+      return <SmileyWinkIcon style={iconStyle} />;
     default:
       return null;
   }
@@ -93,15 +87,15 @@ const getEmptyIcon = (value: number) => {
 const getFullIcon = (value: number) => {
   switch (value) {
     case 1:
-      return <IconMoodCry style={getIconStyle('red')} />;
+      return <SmileySadIcon style={getIconStyle('red')} />;
     case 2:
-      return <IconMoodSad style={getIconStyle('orange')} />;
+      return <SmileyNervousIcon style={getIconStyle('orange')} />;
     case 3:
-      return <IconMoodSmile style={getIconStyle('yellow')} />;
+      return <SmileyIcon style={getIconStyle('yellow')} />;
     case 4:
-      return <IconMoodHappy style={getIconStyle('lime')} />;
+      return <SmileyMehIcon style={getIconStyle('lime')} />;
     case 5:
-      return <IconMoodCrazyHappy style={getIconStyle('green')} />;
+      return <SmileyWinkIcon style={getIconStyle('green')} />;
     default:
       return null;
   }

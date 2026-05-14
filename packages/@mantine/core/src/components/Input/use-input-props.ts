@@ -2,9 +2,7 @@ import { BoxProps, extractStyleProps, StylesApiProps, useProps } from '../../cor
 import { __BaseInputProps } from './Input';
 
 interface BaseProps
-  extends __BaseInputProps,
-    BoxProps,
-    StylesApiProps<{ props: any; stylesNames: string }> {
+  extends __BaseInputProps, BoxProps, StylesApiProps<{ props: any; stylesNames: string }> {
   __staticSelector?: string;
   __stylesApiProps?: Record<string, any>;
   id?: string;
@@ -15,7 +13,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(
   defaultProps: U,
   _props: T
 ) {
-  const props = useProps<T, U>(component, defaultProps, _props);
+  const props = useProps<T, U>(['Input', 'InputWrapper', component], defaultProps, _props);
   const {
     label,
     description,

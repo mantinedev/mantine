@@ -10,14 +10,14 @@ export default Layout(MDX_DATA.FileButton);
 
 ## Multiple files
 
-Set `multiple` prop to allow picking multiple files:
+Set the `multiple` prop to allow picking multiple files:
 
 <Demo data={FileButtonDemos.multiple} />
 
 ## Reset file
 
-`resetRef` should be used to fix issue with stale value on hidden input element as input type file cannot be controlled.
-Call `resetRef` when user selection is cleared:
+`resetRef` should be used to fix the issue with stale value on the hidden input element as input type file cannot be controlled.
+Call `resetRef` when the user selection is cleared:
 
 <Demo data={FileButtonDemos.reset} />
 

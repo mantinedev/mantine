@@ -6,3 +6,5 @@ export { isInRange } from './is-in-range/is-in-range';
 export { matchesField } from './matches-field/matches-field';
 export { isNotEmptyHTML } from './is-not-empty-html/is-not-empty-html';
 export { isJSONString } from './is-json-string/is-json-string';
+export { isUrl } from './is-url/is-url';
+export { isOneOf } from './is-one-of/is-one-of';

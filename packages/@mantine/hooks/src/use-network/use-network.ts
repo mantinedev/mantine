@@ -64,3 +64,7 @@ export function useNetwork(): UserNetworkReturnValue {
 
   return status;
 }
+
+export namespace useNetwork {
+  export type ReturnValue = UserNetworkReturnValue;
+}

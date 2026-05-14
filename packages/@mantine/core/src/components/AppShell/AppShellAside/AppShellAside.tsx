@@ -10,13 +10,14 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
-import classes from '../AppShell.module.css';
 import { AppShellCompoundProps } from '../AppShell.types';
+import classes from '../AppShell.module.css';
 
 export type AppShellAsideStylesNames = 'aside';
 
 export interface AppShellAsideProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AppShellCompoundProps,
     StylesApiProps<AppShellAsideFactory>,
     ElementProps<'aside'> {}
@@ -27,7 +28,7 @@ export type AppShellAsideFactory = Factory<{
   stylesNames: AppShellAsideStylesNames;
 }>;
 
-export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
+export const AppShellAside = factory<AppShellAsideFactory>((_props) => {
   const {
     classNames,
     className,
@@ -50,7 +51,6 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
   return (
     <Box
       component="aside"
-      ref={ref}
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('aside', {
         className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),

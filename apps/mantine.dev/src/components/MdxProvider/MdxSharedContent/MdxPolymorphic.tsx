@@ -48,15 +48,15 @@ export function MdxPolymorphic(props: MdxPolymorphicProps) {
         <MdxCode>{props.component}</MdxCode> is a{' '}
         <MdxLink href="/guides/polymorphic/">polymorphic component</MdxLink> – its default root
         element is <MdxCode>{props.defaultElement}</MdxCode>, but it can be changed to any other
-        element or component with <MdxCode>component</MdxCode> prop:
+        element or component with the <MdxCode>component</MdxCode> prop:
       </MdxParagraph>
 
       <MdxCodeHighlight language="tsx" code={getElementCode(props)} />
       {props.withNext && (
         <>
           <MdxParagraph>
-            You can also use components in <MdxCode>component</MdxCode> prop, for example, Next.js{' '}
-            <MdxCode>Link</MdxCode>:
+            You can also use components in the <MdxCode>component</MdxCode> prop, for example,
+            Next.js <MdxCode>Link</MdxCode>:
           </MdxParagraph>
           <MdxCodeHighlight language="tsx" code={getNextLinkCode(props)} />
         </>
@@ -70,26 +70,26 @@ export function MdxPolymorphic(props: MdxPolymorphicProps) {
         </MdxParagraph>
 
         <MdxParagraph>
-          Note that polymorphic components props types are different from regular components – they
-          do not extend HTML element props of the default element. For example,{' '}
+          Note that polymorphic component prop types are different from regular components – they do
+          not extend HTML element props of the default element. For example,{' '}
           <MdxCode>{props.component}Props</MdxCode> does not extend{' '}
           <MdxCode>
-            React.ComponentPropsWithoutRef{"'<'"}div{"'>'"}
+            React.ComponentProps{"'<'"}div{"'>'"}
           </MdxCode>{' '}
           although <MdxCode>{props.defaultElement}</MdxCode> is the default element.
         </MdxParagraph>
 
         <MdxParagraph>
           If you want to create a wrapper for a polymorphic component that is not polymorphic (does
-          not support <MdxCode>component</MdxCode> prop), then your component props interface should
-          extend HTML element props, for example:{' '}
+          not support the <MdxCode>component</MdxCode> prop), then your component props interface
+          should extend HTML element props, for example:{' '}
         </MdxParagraph>
 
         <MdxCodeHighlight language="tsx" code={getInterfaceCode(props)} />
 
         <MdxParagraph>
-          If you want your component to remain polymorphic after wrapping, use{' '}
-          <MdxCode>createPolymorphicComponent</MdxCode> function described in{' '}
+          If you want your component to remain polymorphic after wrapping, use the{' '}
+          <MdxCode>polymorphic</MdxCode> function described in{' '}
           <MdxLink href="/guides/polymorphic/">this guide</MdxLink>.
         </MdxParagraph>
       </MdxInfo>

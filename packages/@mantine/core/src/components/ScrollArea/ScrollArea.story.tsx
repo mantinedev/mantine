@@ -1,4 +1,12 @@
-import { createRef, useEffect, useState } from 'react';
+import {
+  createRef,
+  StrictMode,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Box } from '../../core';
 import { Button } from '../Button';
 import { Code } from '../Code';
@@ -30,6 +38,7 @@ export function Usage() {
         scrollbars="y"
         onBottomReached={() => console.log('bottom')}
         onTopReached={() => console.log('top')}
+        variant="test-variant"
       >
         <div style={{ width: 600 }}>{content}</div>
       </ScrollArea>
@@ -212,6 +221,70 @@ export function OnBottomReached() {
         Custom Has Reached Bottom: <Code>{`{ ${customReachedBottom} }`}</Code>
       </div>
     </Stack>
+  );
+}
+
+export function StartScrollPosition() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <ScrollArea h={200} startScrollPosition={{ y: 200 }}>
+        <div style={{ width: 600 }}>{content}</div>
+      </ScrollArea>
+    </div>
+  );
+}
+
+// Repro for https://github.com/mantinedev/mantine/issues/8886
+// Inline arrow functions in `useMergedRef` inside `ScrollAreaRoot` / `Scrollbar`
+// produce a new merged-ref callback every render. Each parent re-render reaches
+// commit, React 19 sees a "new" callback ref and runs cleanup + reattach. With
+// enough mount-time state churn (typical in apps with many context providers)
+// this exceeds React's 50-update safety threshold.
+//
+// This story instruments the root ref of `ScrollArea` and counts how many times
+// it is invoked during mount. With the bug present (inline arrow inside
+// `ScrollAreaRoot`), this number grows linearly with parent re-renders — the
+// fix should keep it at the single mount call.
+function CounterParent() {
+  const refCallCount = useRef(0);
+  const [, forceRender] = useState(0);
+  const [renderCount, setRenderCount] = useState(0);
+
+  useLayoutEffect(() => {
+    if (renderCount < 8) {
+      setRenderCount((value) => value + 1);
+    }
+  });
+
+  const trackingRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      refCallCount.current += 1;
+    }
+  }, []);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <p>
+        Parent renders: <strong>{renderCount}</strong>
+      </p>
+      <p data-testid="ref-calls">
+        ScrollArea root ref invocations: <strong>{refCallCount.current}</strong>
+      </p>
+      <button type="button" onClick={() => forceRender((value) => value + 1)}>
+        Force parent re-render
+      </button>
+      <ScrollArea h={200} ref={trackingRef} mt={12}>
+        <div style={{ width: 600 }}>{content}</div>
+      </ScrollArea>
+    </div>
+  );
+}
+
+export function MaxUpdateDepthRepro() {
+  return (
+    <StrictMode>
+      <CounterParent />
+    </StrictMode>
   );
 }
 

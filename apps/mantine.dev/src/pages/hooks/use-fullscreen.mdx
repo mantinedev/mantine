@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseFullscreenDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -6,17 +6,17 @@ export default Layout(MDX_DATA.useFullscreen);
 
 ## Usage
 
-`use-fullscreen` allows to enter/exit fullscreen for given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
-By default, if you don't provide `ref`, the hook will target `document.documentElement`:
+The `use-fullscreen` hook allows you to enter/exit fullscreen for a given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
+By default, if you don't provide a `ref`, the hook will target `document.documentElement`:
 
-<Demo data={HooksDemos.useFullscreenDemo} />
+<Demo data={UseFullscreenDemos.usage} />
 
 ## Custom target element
 
 The hook returns an optional `ref` function that can be passed to an element to act as root.
 Be sure to follow best practices to not [confuse or trap the end user](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide#things_your_users_want_to_know):
 
-<Demo data={HooksDemos.useFullscreenRefDemo} />
+<Demo data={UseFullscreenDemos.ref} />
 
 ## Mobile Safari limitations
 
@@ -29,20 +29,26 @@ Also note that entering fullscreen usually requires a direct user interaction (f
 ## Definition
 
 ```tsx
-interface UseFullscreenReturnValue<T extends HTMLElement = any> {
+interface UseFullscreenElementReturnValue<T extends HTMLElement = any> {
   ref: React.RefCallback<T | null>;
   toggle: () => Promise<void>;
   fullscreen: boolean;
 }
 
-function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<T>
+interface UseFullscreenDocumentReturnValue {
+  toggle: () => Promise<void>;
+  fullscreen: boolean;
+}
+
+function useFullscreenElement<T extends HTMLElement = any>(): UseFullscreenElementReturnValue<T>
+function useFullscreenDocument(): UseFullscreenDocumentReturnValue
 ```
 
 ## Exported types
 
-`UseFullscreenReturnValue` type is exported from `@mantine/hooks` package,
-you can import it in your application:
+The `UseFullscreenElementReturnValue` and `UseFullscreenDocumentReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
 
 ```tsx
-import type { UseFullscreenReturnValue } from '@mantine/hooks';
+import type { UseFullscreenElementReturnValue, UseFullscreenDocumentReturnValue } from '@mantine/hooks';
 ```

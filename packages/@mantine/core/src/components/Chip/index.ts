@@ -1,11 +1,21 @@
-export { Chip } from './Chip';
-export { ChipGroup } from './ChipGroup/ChipGroup';
-
-export type {
+import type {
   ChipCssVariables,
   ChipFactory,
   ChipProps,
   ChipStylesNames,
   ChipVariant,
 } from './Chip';
-export type { ChipGroupProps } from './ChipGroup/ChipGroup';
+import type { ChipGroupContextValue, ChipGroupProps } from './ChipGroup/ChipGroup';
+
+export { Chip } from './Chip';
+export { ChipGroup, ChipGroupContext } from './ChipGroup/ChipGroup';
+
+export type {
+  ChipProps,
+  ChipStylesNames,
+  ChipCssVariables,
+  ChipFactory,
+  ChipVariant,
+  ChipGroupProps,
+  ChipGroupContextValue,
+};

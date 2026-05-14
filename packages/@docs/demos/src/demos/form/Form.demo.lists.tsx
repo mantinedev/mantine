@@ -1,4 +1,4 @@
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Box, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
@@ -8,7 +8,7 @@ const code = `
 import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const form = useForm({
@@ -33,7 +33,7 @@ function Demo() {
         {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <TrashIcon size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -94,7 +94,7 @@ function Demo() {
         {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size={16} />
+        <TrashIcon size={16} />
       </ActionIcon>
     </Group>
   ));

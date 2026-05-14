@@ -12,7 +12,7 @@ import { TransitionOverride } from '../Transition';
 import type { PopoverFactory } from './Popover';
 import { PopoverWidth } from './Popover.types';
 
-interface PopoverContext {
+export interface PopoverContextValue {
   x: number;
   y: number;
   arrowX: number | undefined;
@@ -53,11 +53,11 @@ interface PopoverContext {
   variant: string | undefined;
   keepMounted: boolean | undefined;
   getStyles: GetStylesApi<PopoverFactory>;
-  resolvedStyles: Record<string, any>;
+  resolvedStyles: Record<string, any> | undefined;
   floatingStrategy: FloatingStrategy | undefined;
   referenceHidden: boolean | undefined;
 }
 
-export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(
+export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContextValue>(
   'Popover component was not found in the tree'
 );

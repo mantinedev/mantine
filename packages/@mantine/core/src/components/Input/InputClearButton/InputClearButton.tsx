@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   BoxProps,
   ElementProps,
@@ -9,12 +10,10 @@ import {
   useResolvedStylesApi,
 } from '../../../core';
 import { CloseButton, CloseButtonStylesNames } from '../../CloseButton';
-import { useInputContext } from '../Input.context';
+import { InputContext } from '../Input.context';
 
 export interface InputClearButtonProps
-  extends BoxProps,
-    StylesApiProps<InputClearButtonFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, StylesApiProps<InputClearButtonFactory>, ElementProps<'button'> {
   /** Size of the button, by default value is based on input context */
   size?: MantineSize | (string & {});
 }
@@ -25,10 +24,10 @@ export type InputClearButtonFactory = Factory<{
   stylesNames: CloseButtonStylesNames;
 }>;
 
-export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) => {
+export const InputClearButton = factory<InputClearButtonFactory>((_props) => {
   const props = useProps('InputClearButton', null, _props);
   const { size, variant, vars, classNames, styles, ...others } = props;
-  const ctx = useInputContext();
+  const ctx = use(InputContext);
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<InputClearButtonFactory>({
     classNames,
@@ -39,7 +38,6 @@ export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) =
   return (
     <CloseButton
       variant={variant || 'transparent'}
-      ref={ref}
       size={size || ctx?.size || 'sm'}
       classNames={resolvedClassNames}
       styles={resolvedStyles}

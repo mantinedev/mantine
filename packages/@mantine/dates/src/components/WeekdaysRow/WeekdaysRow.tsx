@@ -23,9 +23,7 @@ export type WeekdaysRowCssVariables = {
 };
 
 export interface WeekdaysRowProps
-  extends BoxProps,
-    StylesApiProps<WeekdaysRowFactory>,
-    ElementProps<'tr'> {
+  extends BoxProps, StylesApiProps<WeekdaysRowFactory>, ElementProps<'tr'> {
   __staticSelector?: string;
 
   /** Controls size */
@@ -34,13 +32,13 @@ export interface WeekdaysRowProps
   /** dayjs locale */
   locale?: string;
 
-  /** Number 0-6, 0 – Sunday, 6 – Saturday @default `1` – Monday */
+  /** Number 0-6, 0 – Sunday, 6 – Saturday @default 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format to get weekday name @default `'dd'` */
+  /** dayjs format to get weekday name @default 'dd' */
   weekdayFormat?: DateLabelFormat;
 
-  /** Sets cell type that is used for weekdays @default `'th'` */
+  /** Sets cell type that is used for weekdays @default 'th' */
   cellComponent?: 'td' | 'th';
 
   /** If set, heading for week numbers is displayed */
@@ -61,7 +59,7 @@ const varsResolver = createVarsResolver<WeekdaysRowFactory>((_, { size }) => ({
   },
 }));
 
-export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
+export const WeekdaysRow = factory<WeekdaysRowFactory>((_props) => {
   const props = useProps('WeekdaysRow', null, _props);
   const {
     classNames,
@@ -108,7 +106,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
   ));
 
   return (
-    <Box component="tr" ref={ref} {...getStyles('weekdaysRow')} {...others}>
+    <Box component="tr" {...getStyles('weekdaysRow')} {...others}>
       {withWeekNumbers && <CellComponent {...getStyles('weekday')}>#</CellComponent>}
       {weekdays}
     </Box>
@@ -116,4 +114,5 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
 });
 
 WeekdaysRow.classes = classes;
+WeekdaysRow.varsResolver = varsResolver;
 WeekdaysRow.displayName = '@mantine/dates/WeekdaysRow';

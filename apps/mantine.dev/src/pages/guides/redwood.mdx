@@ -9,8 +9,8 @@ export default Layout(MDX_DATA.Redwood);
 
 ## Generate new application
 
-Follow [Redwood getting started guide](https://redwoodjs.com/docs/quick-start) guide to
-create new Redwood application:
+Follow the [Redwood getting started guide](https://redwoodjs.com/docs/quick-start) to
+create a new Redwood application:
 
 ```bash
 yarn create redwood-app my-redwood-project --typescript
@@ -18,9 +18,9 @@ yarn create redwood-app my-redwood-project --typescript
 
 ## Installation
 
-**Note that it is recommended to use `yarn` instead of `npm` to install dependencies.**
+**Note that it's recommended to use `yarn` instead of `npm` to install dependencies.**
 
-Open `web` directory before installing dependencies:
+Open the `web` directory before installing dependencies:
 
 ```bash
 cd web
@@ -37,7 +37,7 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
   dev
 />
 
-Create `postcss.config.js` file in `web` directory with the following content:
+Create a `postcss.config.js` file in the `web` directory with the following content:
 
 ```js
 module.exports = {
@@ -59,7 +59,7 @@ module.exports = {
 ## Setup
 
 Add styles imports, [MantineProvider](/theming/mantine-provider) and [ColorSchemeScript](/theming/color-schemes)
-to `web/src/App.tsx` file:
+to the `web/src/App.tsx` file:
 
 ```tsx
 // Import styles of packages that you've installed.
@@ -88,7 +88,7 @@ const App = () => (
 export default App;
 ```
 
-All set! Start development server:
+All set! Start the development server:
 
 ```bash
 yarn rw dev

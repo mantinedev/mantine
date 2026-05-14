@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { MenuFactory } from './Menu';
 
-interface MenuContext {
+export interface MenuContextValue {
   toggleDropdown: () => void;
   closeDropdownImmediately: () => void;
   closeDropdown: () => void;
@@ -17,8 +17,9 @@ interface MenuContext {
   openedViaClick: boolean;
   setOpenedViaClick: (value: boolean) => void;
   withInitialFocusPlaceholder: boolean | undefined;
+  registerOpenSub: (closeFn: () => void) => () => void;
 }
 
-export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
+export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContextValue>(
   'Menu component was not found in the tree'
 );
