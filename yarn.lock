@@ -9218,7 +9218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.11.0, css-loader@npm:^6.7.3":
+"css-loader@npm:^6.7.3":
   version: 6.11.0
   resolution: "css-loader@npm:6.11.0"
   dependencies:
@@ -14195,7 +14195,6 @@ __metadata:
     chalk: "npm:^5.6.2"
     chroma-js: "npm:^3.2.0"
     clsx: "npm:^2.1.1"
-    css-loader: "npm:^6.11.0"
     csstype: "npm:^3.2.3"
     dayjs: "npm:^1.11.20"
     embla-carousel: "npm:^8.6.0"
