@@ -7,10 +7,10 @@ export default Layout(MDX_DATA.LoadingOverlay);
 ## Usage
 
 `LoadingOverlay` renders an overlay with a loader over the parent element with relative position.
-It is usually used to indicate loading state of forms.
-Note that elements under overlay are still focusable with keyboard, remember to add additional logic to handle this case.
+It is usually used to indicate the loading state of forms.
+Note that elements under the overlay are still focusable with the keyboard, so remember to add additional logic to handle this case.
 
-`LoadingOverlay` rendering is controlled by `visible` prop:
+The `LoadingOverlay` rendering is controlled by the `visible` prop:
 
 <Demo data={LoadingOverlayDemos.usage} />
 
@@ -22,7 +22,7 @@ You can pass props down to the [Loader](/core/loader) component with `loaderProp
 
 ## Custom inline loaders
 
-To replace default loader with any custom content, set `loaderProps={{ children: <div>Your content</div> }}`.
+To replace the default loader with any custom content, set `loaderProps={{ children: <div>Your content</div> }}`.
 You can put any React node inside `loaderProps.children`:
 
 <Demo data={LoadingOverlayDemos.customLoader} />

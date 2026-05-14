@@ -1,4 +1,4 @@
-import { IconPhoto } from '@tabler/icons-react';
+import { ImageIcon } from '@phosphor-icons/react';
 import { ThemeIcon, ThemeIconProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -6,7 +6,7 @@ function Wrapper(props: ThemeIconProps) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <ThemeIcon {...props}>
-        <IconPhoto style={{ width: '70%', height: '70%' }} />
+        <ImageIcon style={{ width: '70%', height: '70%' }} />
       </ThemeIcon>
     </div>
   );
@@ -14,12 +14,12 @@ function Wrapper(props: ThemeIconProps) {
 
 const code = `
 import { ThemeIcon } from '@mantine/core';
-import { IconPhoto } from '@tabler/icons-react';
+import { ImageIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <ThemeIcon{{props}}>
-      <IconPhoto style={{ width: '70%', height: '70%' }} />
+      <ImageIcon style={{ width: '70%', height: '70%' }} />
     </ThemeIcon>
   );
 }
@@ -44,7 +44,7 @@ export const usage: MantineDemo = {
         { label: 'white', value: 'white' },
       ],
     },
-    { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+    { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'size', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
   ],

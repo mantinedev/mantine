@@ -1,4 +1,4 @@
-import { IconError404, IconFingerprint, IconPhoto } from '@tabler/icons-react';
+import { FingerprintIcon, ImageIcon, WarningIcon } from '@phosphor-icons/react';
 import {
   ActionIcon,
   darken,
@@ -12,7 +12,7 @@ import {
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconPhoto, IconFingerprint, IconError404 } from '@tabler/icons-react';
+import { ImageIcon, FingerprintIcon, WarningIcon } from '@phosphor-icons/react';
 import {
   ActionIcon,
   Group,
@@ -67,16 +67,16 @@ function Demo() {
   return (
     <MantineProvider theme={{ variantColorResolver }}>
       <Group>
-        <ActionIcon color="lime.4" variant="filled">
-          <IconPhoto size={20} />
+        <ActionIcon color="lime.4" variant="filled" size="lg" aria-label="Photo">
+          <ImageIcon size={20} />
         </ActionIcon>
 
-        <ActionIcon color="orange" variant="light">
-          <IconFingerprint size={20} />
+        <ActionIcon color="orange" variant="light" size="lg" aria-label="FingerprintIcon">
+          <FingerprintIcon size={20} />
         </ActionIcon>
 
-        <ActionIcon variant="danger">
-          <IconError404 size={20} />
+        <ActionIcon variant="danger" size="lg" aria-label="Error 404">
+          <WarningIcon size={20} />
         </ActionIcon>
       </Group>
     </MantineProvider>
@@ -127,16 +127,16 @@ function Demo() {
   return (
     <MantineThemeProvider theme={{ variantColorResolver }}>
       <Group>
-        <ActionIcon color="lime.4" variant="filled" size="lg">
-          <IconPhoto size={20} stroke={1.5} />
+        <ActionIcon color="lime.4" variant="filled" size="lg" aria-label="Photo">
+          <ImageIcon size={20} />
         </ActionIcon>
 
-        <ActionIcon color="orange" variant="light" size="lg">
-          <IconFingerprint size={20} stroke={1.5} />
+        <ActionIcon color="orange" variant="light" size="lg" aria-label="FingerprintIcon">
+          <FingerprintIcon size={20} />
         </ActionIcon>
 
-        <ActionIcon variant="danger" size="lg">
-          <IconError404 size={20} stroke={1.5} />
+        <ActionIcon variant="danger" size="lg" aria-label="Error 404">
+          <WarningIcon size={20} />
         </ActionIcon>
       </Group>
     </MantineThemeProvider>

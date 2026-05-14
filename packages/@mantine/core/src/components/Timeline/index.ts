@@ -1,3 +1,15 @@
+import type {
+  TimelineCssVariables,
+  TimelineFactory,
+  TimelineProps,
+  TimelineStylesNames,
+} from './Timeline';
+import type {
+  TimelineItemFactory,
+  TimelineItemProps,
+  TimelineItemStylesNames,
+} from './TimelineItem/TimelineItem';
+
 export { Timeline } from './Timeline';
 export { TimelineItem } from './TimelineItem/TimelineItem';
 
@@ -6,9 +18,7 @@ export type {
   TimelineStylesNames,
   TimelineCssVariables,
   TimelineFactory,
-} from './Timeline';
-export type {
-  TimelineItemStylesNames,
   TimelineItemProps,
+  TimelineItemStylesNames,
   TimelineItemFactory,
-} from './TimelineItem/TimelineItem';
+};

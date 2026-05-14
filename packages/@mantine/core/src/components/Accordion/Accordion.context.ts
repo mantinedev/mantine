@@ -2,7 +2,7 @@ import { createSafeContext, GetStylesApi } from '../../core';
 import type { AccordionFactory } from './Accordion';
 import { AccordionChevronPosition, AccordionHeadingOrder } from './Accordion.types';
 
-interface AccordionContext {
+export interface AccordionContextValue {
   loop: boolean | undefined;
   transitionDuration: number | undefined;
   disableChevronRotation: boolean | undefined;
@@ -16,8 +16,9 @@ interface AccordionContext {
   getStyles: GetStylesApi<AccordionFactory>;
   variant: string | undefined;
   unstyled: boolean | undefined;
+  keepMounted: boolean | undefined;
 }
 
-export const [AccordionProvider, useAccordionContext] = createSafeContext<AccordionContext>(
+export const [AccordionProvider, useAccordionContext] = createSafeContext<AccordionContextValue>(
   'Accordion component was not found in the tree'
 );

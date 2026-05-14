@@ -1,10 +1,10 @@
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import { Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Input } from '@mantine/core';
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
 
       <Input
         component="select"
-        rightSection={<IconChevronDown size={14} stroke={1.5} />}
+        rightSection={<CaretDownIcon size={14} />}
         pointer
         mt="md"
       >
@@ -34,12 +34,7 @@ function Demo() {
         Button input
       </Input>
 
-      <Input
-        component="select"
-        rightSection={<IconChevronDown size={14} stroke={1.5} />}
-        pointer
-        mt="md"
-      >
+      <Input component="select" rightSection={<CaretDownIcon size={14} />} pointer mt="md">
         <option value="1">1</option>
         <option value="2">2</option>
       </Input>

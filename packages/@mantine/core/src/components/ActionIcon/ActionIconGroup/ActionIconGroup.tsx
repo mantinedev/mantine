@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  ElementProps,
   factory,
   Factory,
   rem,
@@ -16,14 +17,15 @@ export type ActionIconGroupCssVariables = {
   group: '--ai-border-width';
 };
 
-export interface ActionIconGroupProps extends BoxProps, StylesApiProps<ActionIconGroupFactory> {
+export interface ActionIconGroupProps
+  extends BoxProps, StylesApiProps<ActionIconGroupFactory>, ElementProps<'div'> {
   /** `ActionIcon` and `ActionIcon.GroupSection` components only */
   children?: React.ReactNode;
 
-  /** Group orientation @default `'horizontal'` */
+  /** Group orientation @default 'horizontal' */
   orientation?: 'horizontal' | 'vertical';
 
-  /** `border-width` of the child components. @default `1` */
+  /** `border-width` of the child components. @default 1 */
   borderWidth?: number | string;
 }
 
@@ -42,7 +44,7 @@ const varsResolver = createVarsResolver<ActionIconGroupFactory>((_, { borderWidt
   group: { '--ai-border-width': rem(borderWidth) },
 }));
 
-export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => {
+export const ActionIconGroup = factory<ActionIconGroupFactory>((_props) => {
   const props = useProps('ActionIconGroup', defaultProps, _props);
   const {
     className,
@@ -77,7 +79,6 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => 
   return (
     <Box
       {...getStyles('group')}
-      ref={ref}
       variant={variant}
       mod={[{ 'data-orientation': orientation }, mod]}
       role="group"
@@ -87,4 +88,5 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => 
 });
 
 ActionIconGroup.classes = classes;
+ActionIconGroup.varsResolver = varsResolver;
 ActionIconGroup.displayName = '@mantine/core/ActionIconGroup';

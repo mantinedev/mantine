@@ -12,7 +12,7 @@ export const PaginationStylesApi: StylesApiData<PaginationFactory> = {
     root: {
       '--pagination-active-bg': 'Active control `background-color`',
       '--pagination-active-color': 'Active control `color`',
-      '--pagination-control-fz': 'Controls control `font-size`',
+      '--pagination-control-fz': 'Controls `font-size`',
       '--pagination-control-radius': 'Controls control `border-radius`',
       '--pagination-control-size': 'Controls control `min-width` and `height`',
     },

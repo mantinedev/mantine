@@ -8,15 +8,13 @@ import {
   useProps,
 } from '../../../core';
 import { useAccordionContext } from '../Accordion.context';
-import classes from '../Accordion.module.css';
 import { AccordionItemProvider } from '../AccordionItem.context';
+import classes from '../Accordion.module.css';
 
 export type AccordionItemStylesNames = 'item';
 
 export interface AccordionItemProps
-  extends BoxProps,
-    CompoundStylesApiProps<AccordionItemFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<AccordionItemFactory>, ElementProps<'div'> {
   /** Value that is used to manage the accordion state */
   value: string;
 }
@@ -28,18 +26,18 @@ export type AccordionItemFactory = Factory<{
   compound: true;
 }>;
 
-export const AccordionItem = factory<AccordionItemFactory>((props, ref) => {
+export const AccordionItem = factory<AccordionItemFactory>((props) => {
   const { classNames, className, style, styles, vars, value, mod, ...others } = useProps(
     'AccordionItem',
     null,
     props
   );
+
   const ctx = useAccordionContext();
 
   return (
     <AccordionItemProvider value={{ value }}>
       <Box
-        ref={ref}
         mod={[{ active: ctx.isItemActive(value) }, mod]}
         {...ctx.getStyles('item', { className, classNames, styles, style, variant: ctx.variant })}
         {...others}

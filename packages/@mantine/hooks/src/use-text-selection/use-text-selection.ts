@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import { useForceUpdate } from '../use-force-update/use-force-update';
 
 export function useTextSelection(): Selection | null {
   const forceUpdate = useForceUpdate();
   const [selection, setSelection] = useState<Selection | null>(null);
 
-  const handleSelectionChange = () => {
+  const handleSelectionChange = useEffectEvent(() => {
     setSelection(document.getSelection());
     forceUpdate();
-  };
+  });
 
   useEffect(() => {
     setSelection(document.getSelection());

@@ -10,6 +10,7 @@ const FILES_PATHS = getPaths([
 
   // Button
   'packages/@mantine/core/src/components/Button/ButtonGroup/ButtonGroup.tsx',
+  'packages/@mantine/core/src/components/Button/ButtonGroupSection/ButtonGroupSection.tsx',
 
   // Avatar
   'packages/@mantine/core/src/components/Avatar/AvatarGroup/AvatarGroup.tsx',
@@ -109,6 +110,10 @@ const FILES_PATHS = getPaths([
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 
+  // ColorPicker
+  'packages/@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx',
+  'packages/@mantine/core/src/components/ColorPicker/HueSlider/HueSlider.tsx',
+
   // Spotlight
   'packages/@mantine/spotlight/src/Spotlight.tsx',
   'packages/@mantine/spotlight/src/SpotlightAction.tsx',
@@ -139,6 +144,14 @@ const FILES_PATHS = getPaths([
 
   // Notifications
   'packages/@mantine/notifications/src/Notifications.tsx',
+
+  // Schedule
+  'packages/@mantine/schedule/src/components/DayView/DayView.tsx',
+  'packages/@mantine/schedule/src/components/MonthView/MonthView.tsx',
+  'packages/@mantine/schedule/src/components/WeekView/WeekView.tsx',
+  'packages/@mantine/schedule/src/components/YearView/YearView.tsx',
+  'packages/@mantine/schedule/src/components/Schedule/Schedule.tsx',
+  'packages/@mantine/schedule/src/components/MobileMonthView/MobileMonthView.tsx',
 ]);
 
 export const DOCGEN_PATHS = getDeclarationsPaths([

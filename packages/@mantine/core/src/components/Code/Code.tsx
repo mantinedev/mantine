@@ -39,7 +39,7 @@ const varsResolver = createVarsResolver<CodeFactory>((theme, { color }) => ({
   },
 }));
 
-export const Code = factory<CodeFactory>((_props, ref) => {
+export const Code = factory<CodeFactory>((_props) => {
   const props = useProps('Code', null, _props);
   const {
     classNames,
@@ -50,7 +50,6 @@ export const Code = factory<CodeFactory>((_props, ref) => {
     vars,
     color,
     block,
-    variant,
     mod,
     attributes,
     ...others
@@ -73,8 +72,6 @@ export const Code = factory<CodeFactory>((_props, ref) => {
   return (
     <Box<any>
       component={block ? 'pre' : 'code'}
-      variant={variant}
-      ref={ref}
       mod={[{ block }, mod]}
       {...getStyles('root')}
       {...others}
@@ -84,4 +81,12 @@ export const Code = factory<CodeFactory>((_props, ref) => {
 });
 
 Code.classes = classes;
+Code.varsResolver = varsResolver;
 Code.displayName = '@mantine/core/Code';
+
+export namespace Code {
+  export type Props = CodeProps;
+  export type CssVariables = CodeCssVariables;
+  export type Factory = CodeFactory;
+  export type StylesNames = CodeStylesNames;
+}

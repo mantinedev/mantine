@@ -3,6 +3,7 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
+  ClearSectionMode,
   ElementProps,
   factory,
   Factory,
@@ -25,12 +26,13 @@ import classes from './PickerInputBase.module.css';
 export type PickerInputBaseStylesNames = __InputStylesNames;
 
 export interface DateInputSharedProps
-  extends Omit<__BaseInputProps, 'size'>,
+  extends
+    Omit<__BaseInputProps, 'size'>,
     ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
-  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default `true` */
+  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default true */
   closeOnChange?: boolean;
 
-  /** Type of the dropdown @default `'popover'` */
+  /** Type of the dropdown @default 'popover' */
   dropdownType?: 'popover' | 'modal';
 
   /** Props passed down to `Popover` component */
@@ -39,16 +41,19 @@ export interface DateInputSharedProps
   /** Props passed down to `Modal` component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default `false` */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false */
   clearable?: boolean;
 
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
+
   /** Props passed down to the clear button */
-  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+  clearButtonProps?: React.ComponentProps<'button'>;
 
   /** If set, the component value cannot be changed by the user */
   readOnly?: boolean;
 
-  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" @default `true` */
+  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" @default true */
   sortDates?: boolean;
 
   /** Separator between range value */
@@ -65,7 +70,8 @@ export interface DateInputSharedProps
 }
 
 export interface PickerInputBaseProps
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     Omit<StylesApiProps<PickerInputBaseFactory>, 'classNames' | 'styles'> {
   classNames?: Partial<Record<string, string>>;
@@ -90,7 +96,7 @@ export type PickerInputBaseFactory = Factory<{
   variant: InputVariant;
 }>;
 
-export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => {
+export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
   const {
     inputProps,
     wrapperProps,
@@ -107,6 +113,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     dropdownOpened,
     onClick,
     clearable,
+    clearSectionMode,
     onClear,
     clearButtonProps,
     rightSection,
@@ -182,9 +189,9 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
               }}
               __clearSection={clearButton}
               __clearable={clearable && shouldClear && !readOnly && !disabled}
+              __clearSectionMode={clearSectionMode}
               rightSection={rightSection}
               {...inputProps}
-              ref={ref}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}
             >

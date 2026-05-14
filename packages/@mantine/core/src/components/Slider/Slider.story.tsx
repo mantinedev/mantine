@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Card } from '../Card/Card';
+import { Stack } from '../Stack/Stack';
 import { RangeSlider } from './RangeSlider/RangeSlider';
 import { Slider } from './Slider/Slider';
 
@@ -154,6 +156,53 @@ export function Sizes() {
       <Slider defaultValue={45} mt="xl" marks={marks} size="1rem" />
       <Slider defaultValue={45} mt="xl" marks={marks} size={20} />
       <Slider defaultValue={45} mt="xl" marks={marks} size="2rem" />
+    </div>
+  );
+}
+
+export function VerticalUsage() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <Slider defaultValue={45} orientation="vertical" />
+    </div>
+  );
+}
+
+export function VerticalWithMarks() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <Slider defaultValue={45} marks={marks} orientation="vertical" labelAlwaysOn />
+    </div>
+  );
+}
+
+export function VerticalRange() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <RangeSlider defaultValue={[25, 65]} marks={marks} orientation="vertical" labelAlwaysOn />
+    </div>
+  );
+}
+
+export function VerticalInverted() {
+  return (
+    <div style={{ padding: 40, height: 300 }}>
+      <Slider defaultValue={80} orientation="vertical" inverted />
+    </div>
+  );
+}
+
+export function HorizontalInsideCard() {
+  return (
+    <div style={{ maxWidth: 320, padding: 24 }}>
+      <Stack>
+        <Card withBorder>
+          <Stack>
+            <Slider defaultValue={45} />
+            <RangeSlider defaultValue={[25, 75]} />
+          </Stack>
+        </Card>
+      </Stack>
     </div>
   );
 }

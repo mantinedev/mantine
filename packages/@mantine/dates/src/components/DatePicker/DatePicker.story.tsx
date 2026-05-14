@@ -84,6 +84,32 @@ export function RangeCancelled() {
   );
 }
 
+export function ConditionalMinDate() {
+  const [value, setValue] = useState<[string | null, string | null]>([null, null]);
+
+  const minDate =
+    value[0] && !value[1] ? dayjs(value[0]).subtract(1, 'month').format('YYYY-MM-DD') : undefined;
+
+  return (
+    <div style={{ padding: 40 }}>
+      <p>
+        Select a start date, then select an end date. The month should NOT jump when minDate changes
+        dynamically.
+      </p>
+      <p>minDate: {minDate ?? 'none'}</p>
+      <p>
+        value: {value[0] ?? 'null'} – {value[1] ?? 'null'}
+      </p>
+      <DatePicker
+        type="range"
+        value={value}
+        onChange={setValue}
+        minDate={minDate as DateStringValue | undefined}
+      />
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>

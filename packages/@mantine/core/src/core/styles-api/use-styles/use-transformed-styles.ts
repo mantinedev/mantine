@@ -1,13 +1,18 @@
-import { useMantineStylesTransform, useMantineTheme } from '../../MantineProvider';
+import { MantineTheme, useMantineStylesTransform } from '../../MantineProvider';
 
 interface UseTransformedStylesInput {
   props: Record<string, any>;
   stylesCtx: Record<string, any> | undefined;
   themeName: string[];
+  theme: MantineTheme;
 }
 
-export function useStylesTransform({ props, stylesCtx, themeName }: UseTransformedStylesInput) {
-  const theme = useMantineTheme();
+export function useStylesTransform({
+  props,
+  stylesCtx,
+  themeName,
+  theme,
+}: UseTransformedStylesInput) {
   const stylesTransform = useMantineStylesTransform()?.();
 
   const getTransformedStyles = (styles: any[]) => {

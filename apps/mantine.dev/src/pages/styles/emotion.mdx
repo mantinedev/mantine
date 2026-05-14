@@ -6,15 +6,15 @@ export default Layout(MDX_DATA.Emotion);
 
 # Usage with Emotion
 
-Prior to version 7.0 Mantine used [Emotion](https://emotion.sh/) as a styling solution.
+Prior to version 7.0, Mantine used [Emotion](https://emotion.sh/) as a styling solution.
 It was replaced with [CSS modules](/styles/css-modules/) in version 7.0, but you can still
 use Emotion with Mantine if you prefer it over CSS modules.
 
-Note that `createStyles` function, `sx` and `styles` prop work different from the same
+Note that the `createStyles` function, `sx` and `styles` props work differently from the same
 features in [version 6.x](https://v6.mantine.dev/styles/create-styles/). If you are planning
 to upgrade from version 6.x to 7.x, follow the [migration guide](/guides/6x-to-7x/).
 
-`@mantine/emotion` package is compatible with `@mantine/core` 7.9.0 and higher. Before
+The `@mantine/emotion` package is compatible with `@mantine/core` 7.9.0 and higher. Before
 installing, make sure that you are using the latest version of all `@mantine/*` packages.
 
 ## Caveats and support
@@ -23,27 +23,27 @@ installing, make sure that you are using the latest version of all `@mantine/*` 
 and injected into the DOM at runtime. This approach has some limitations:
 
 - **Limited server-side rendering support** – modern frameworks like Next.js with app router
-  do not fully support emotion or require additional configuration.
+  do not fully support Emotion or require additional configuration.
 - **Runtime overhead** – styles are generated and injected at runtime, which can lead to
-  performance issues on pages with a lot of components.
+  performance issues on pages with many components.
 - **Additional bundle size** – your bundle will include `@emotion/react` (21.2kB minified),
   `@mantine/emotion` (~2kb minified) and all styles that you use in your components.
 
-`@mantine/emotion` package can be used with the following frameworks:
+The `@mantine/emotion` package can be used with the following frameworks:
 
 - **Vite** and **CRA** with basic setup
-- **Next.js with pages router** with additional setup for server side rendering provided by the package
-- **Next.js with app router** with additional setup for server side rendering provided by Emotion
+- **Next.js with pages router** with additional setup for server-side rendering provided by the package
+- **Next.js with app router** with additional setup for server-side rendering provided by Emotion
 - Any other framework that does not require server-side rendering with basic setup
 
-There is no official support (the package probably can be used but it's not tested and documentation is not provided) for:
+There is no official support (the package can probably be used but it's not tested and documentation is not provided) for:
 
 - **React Router**
 - **Gatsby**
 - **Redwood**
 - Any other framework that has server-side rendering
 
-Note that Emotion is not recommended for new projects, if you are starting a new project with Mantine,
+Note that Emotion is not recommended for new projects. If you are starting a new project with Mantine,
 consider using [CSS modules](/styles/css-modules/) instead.
 
 ## Usage with Vite

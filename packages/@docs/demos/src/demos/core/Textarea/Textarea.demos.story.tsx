@@ -32,3 +32,8 @@ export const Demo_resize = {
   name: '⭐ Demo: resize',
   render: renderDemo(demos.resize),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

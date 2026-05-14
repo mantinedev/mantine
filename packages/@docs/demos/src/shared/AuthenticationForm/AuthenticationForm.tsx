@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconAt, IconLock } from '@tabler/icons-react';
+import { AtIcon, LockIcon } from '@phosphor-icons/react';
 import {
   Anchor,
   Button,
@@ -78,7 +78,6 @@ export function AuthenticationForm({
               required
               placeholder="Your first name"
               label="First name"
-              radius="md"
               {...form.getInputProps('firstName')}
             />
 
@@ -86,7 +85,6 @@ export function AuthenticationForm({
               required
               placeholder="Your last name"
               label="Last name"
-              radius="md"
               {...form.getInputProps('lastName')}
             />
           </Group>
@@ -97,8 +95,7 @@ export function AuthenticationForm({
           required
           placeholder="Your email"
           label="Email"
-          leftSection={<IconAt size={16} stroke={1.5} />}
-          radius="md"
+          leftSection={<AtIcon size={16} />}
           {...form.getInputProps('email')}
         />
 
@@ -107,8 +104,7 @@ export function AuthenticationForm({
           required
           placeholder="Password"
           label="Password"
-          leftSection={<IconLock size={16} stroke={1.5} />}
-          radius="md"
+          leftSection={<LockIcon size={16} />}
           {...form.getInputProps('password')}
         />
 
@@ -118,8 +114,7 @@ export function AuthenticationForm({
             required
             label="Confirm Password"
             placeholder="Confirm password"
-            leftSection={<IconLock size={16} stroke={1.5} />}
-            radius="md"
+            leftSection={<LockIcon size={16} />}
             {...form.getInputProps('confirmPassword')}
           />
         )}
@@ -146,7 +141,7 @@ export function AuthenticationForm({
                 : "Don't have an account? Register"}
             </Anchor>
 
-            <Button color="blue" type="submit" radius="md">
+            <Button color="blue" type="submit">
               {formType === 'register' ? 'Register' : 'Login'}
             </Button>
           </Group>

@@ -76,7 +76,14 @@ export function Usage() {
         >
           El 3
         </button>
-        <FloatingIndicator target={refs[active]} parent={parentRef} c="red" bg="gray">
+        <FloatingIndicator
+          target={refs[active]}
+          parent={parentRef}
+          c="red"
+          bg="gray"
+          onTransitionStart={() => console.log('start')}
+          onTransitionEnd={() => console.log('end')}
+        >
           Indicator
         </FloatingIndicator>
       </div>

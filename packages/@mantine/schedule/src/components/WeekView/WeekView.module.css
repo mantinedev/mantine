@@ -1,0 +1,330 @@
+.weekView {
+  --week-view-week-day-height: 58px;
+  --week-view-all-day-slots-height: 48px;
+  --week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --week-view-slots-label-width: 80px;
+  --week-view-min-slot-width: 80px;
+  --week-view-slot-height: 64px;
+
+  @mixin where-light {
+    --week-view-border-color: var(--mantine-color-gray-3);
+    --week-view-business-hours-bg: var(--mantine-color-white);
+    --week-view-non-business-hours-bg: var(--mantine-color-gray-0);
+  }
+
+  @mixin where-dark {
+    --week-view-border-color: var(--mantine-color-dark-4);
+    --week-view-business-hours-bg: var(--mantine-color-dark-7);
+    --week-view-non-business-hours-bg: var(--mantine-color-dark-6);
+  }
+}
+
+.weekViewRoot {
+  --indicator-labels-offset: calc(var(--week-view-slots-label-width) / var(--number-of-days));
+
+  border: 1px solid var(--week-view-border-color);
+  border-radius: var(--week-view-radius);
+  overflow: hidden;
+}
+
+.weekViewInner {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.weekViewScrollArea {
+  :where(:global(.mantine-ScrollArea-scrollbar)) {
+    z-index: 4;
+  }
+}
+
+.weekViewHeader {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid var(--week-view-border-color);
+  margin-bottom: -1px;
+  transition: box-shadow 100ms ease;
+
+  &:where([data-scrolled]) {
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
+.weekViewCorner {
+  height: var(--week-view-week-day-height);
+  flex: 0 0 var(--week-view-slots-label-width);
+  min-width: var(--week-view-slots-label-width);
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekViewSlotLabels {
+  flex: 0 0 var(--week-view-slots-label-width);
+  min-width: var(--week-view-slots-label-width);
+  background-color: var(--mantine-color-body);
+}
+
+.weekViewSlotLabel {
+  border-top: 1px solid var(--week-view-border-color);
+  text-align: right;
+  height: var(--week-view-slot-height);
+  padding: 4px;
+  padding-inline-end: 8px;
+  font-size: var(--mantine-font-size-sm);
+  user-select: none;
+  cursor: default;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+
+  &:where([data-business-hours]) {
+    background-color: var(--week-view-business-hours-bg);
+  }
+
+  &:where([data-non-business-hours]) {
+    background-color: var(--week-view-non-business-hours-bg);
+  }
+}
+
+.weekViewDay {
+  flex: 1;
+  border-inline-start: 1px solid var(--week-view-border-color);
+}
+
+.weekViewDayLabel {
+  height: var(--week-view-week-day-height);
+  min-width: var(--week-view-min-slot-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  cursor: pointer;
+  flex: 1;
+  border-inline-start: 1px solid var(--week-view-border-color);
+  padding-inline-start: 5px;
+
+  &:where([data-weekend]) {
+    color: var(--mantine-color-error);
+  }
+
+  &:where([data-today]) {
+    gap: 6px;
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.weekViewDayNumber {
+  text-align: center;
+  width: 26px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: var(--mantine-font-size-sm);
+
+  :where(.weekViewDayLabel[data-today]) & {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
+}
+
+.weekViewDayWeekday {
+  text-align: center;
+  font-size: var(--mantine-font-size-sm);
+  text-transform: capitalize;
+}
+
+.weekViewBackgroundEvent {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: var(--week-view-radius);
+  background-color: var(--bg-event-bg);
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: 3px 4px;
+  color: var(--bg-event-color);
+}
+
+.weekViewDaySlots {
+  position: relative;
+}
+
+.weekViewDaySlot {
+  display: block;
+  width: 100%;
+  border-top: 1px solid var(--week-view-border-color);
+  height: var(--week-view-slot-height);
+  min-width: var(--week-view-min-slot-width);
+  padding: 4px;
+  cursor: pointer;
+  position: relative;
+
+  &:where(:focus) {
+    z-index: 1;
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+
+  &:where([data-business-hours]) {
+    background-color: var(--week-view-business-hours-bg);
+  }
+
+  &:where([data-non-business-hours]) {
+    background-color: var(--week-view-non-business-hours-bg);
+  }
+
+  &:where([data-drop-target]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-blue-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
+    }
+  }
+
+  &:where([data-drag-selected]) {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-light);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+
+      @mixin where-light {
+        border-color: var(--mantine-primary-color-2);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-primary-color-9);
+      }
+    }
+  }
+
+  &:where([data-drag-slot-index]) {
+    touch-action: none;
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.weekViewWeekLabel {
+  text-align: center;
+  margin-bottom: 4px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.weekViewWeekNumber {
+  font-weight: var(--mantine-font-weight-medium);
+  text-align: center;
+  font-size: var(--mantine-font-size-lg);
+}
+
+.weekViewAllDaySlots {
+  display: flex;
+  height: var(--week-view-all-day-slots-height);
+}
+
+.weekViewAllDaySlotsLabel {
+  flex: 0 0 var(--week-view-slots-label-width);
+  text-align: right;
+  padding: 4px 8px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.weekViewAllDaySlotsEvents {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.weekViewAllDaySlotsList {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  & > .weekViewDaySlot {
+    flex: 1;
+    border-inline-start: 1px solid var(--week-view-border-color);
+    height: 100%;
+  }
+
+  &:hover,
+  &:focus-within {
+    .weekViewAllDaySlotsEvents {
+      overflow: visible;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 100%;
+        height: calc(var(--week-view-all-day-slots-height) / 2 * var(--extra-rows));
+        inset-inline: 0;
+        z-index: 1;
+        pointer-events: all;
+      }
+    }
+  }
+}

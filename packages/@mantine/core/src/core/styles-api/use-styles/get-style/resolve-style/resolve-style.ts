@@ -9,7 +9,7 @@ interface ResolveStyleInput {
 
 export function resolveStyle({ style, theme }: ResolveStyleInput): CSSProperties {
   if (Array.isArray(style)) {
-    return [...style].reduce<Record<string, any>>(
+    return style.reduce<Record<string, any>>(
       (acc, item) => ({ ...acc, ...resolveStyle({ style: item, theme }) }),
       {}
     );

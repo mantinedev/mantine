@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalCloseButtonStylesNames = 'close';
 
 export interface ModalCloseButtonProps
-  extends ModalBaseCloseButtonProps,
-    CompoundStylesApiProps<ModalCloseButtonFactory> {}
+  extends ModalBaseCloseButtonProps, CompoundStylesApiProps<ModalCloseButtonFactory> {}
 
 export type ModalCloseButtonFactory = Factory<{
   props: ModalCloseButtonProps;
@@ -16,7 +15,7 @@ export type ModalCloseButtonFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalCloseButton = factory<ModalCloseButtonFactory>((_props, ref) => {
+export const ModalCloseButton = factory<ModalCloseButtonFactory>((_props) => {
   const props = useProps('ModalCloseButton', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +23,6 @@ export const ModalCloseButton = factory<ModalCloseButtonFactory>((_props, ref) =
 
   return (
     <ModalBaseCloseButton
-      ref={ref}
       {...ctx.getStyles('close', { classNames, style, styles, className })}
       {...others}
     />

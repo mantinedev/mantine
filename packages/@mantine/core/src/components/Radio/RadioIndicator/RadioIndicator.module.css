@@ -42,7 +42,6 @@
     border-color: var(--mantine-color-dark-4);
   }
 
-  &[data-indeterminate],
   &[data-checked] {
     background-color: var(--radio-color);
     border-color: var(--radio-color);
@@ -66,7 +65,6 @@
 }
 
 .indicator--outline {
-  &[data-indeterminate]:not([data-disabled]),
   &[data-checked]:not([data-disabled]) {
     background-color: transparent;
     border-color: var(--radio-color);

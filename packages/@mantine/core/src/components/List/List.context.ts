@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { ListFactory } from './List';
 
-interface ListContextValue {
+export interface ListContextValue {
   getStyles: GetStylesApi<ListFactory>;
   center: boolean | undefined;
   icon: React.ReactNode | undefined;

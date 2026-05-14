@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -18,7 +19,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useRadioCardContext } from '../RadioCard/RadioCard.context';
+import { RadioCardContext } from '../RadioCard/RadioCard';
 import { RadioIcon, RadioIconProps } from '../RadioIcon';
 import classes from './RadioIndicator.module.css';
 
@@ -34,25 +35,23 @@ export type RadioIndicatorCssVariables = {
 };
 
 export interface RadioIndicatorProps
-  extends BoxProps,
-    StylesApiProps<RadioIndicatorFactory>,
-    ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
+  extends BoxProps, StylesApiProps<RadioIndicatorFactory>, ElementProps<'div'> {
+  /** Key of theme.colors or any valid CSS color to set indicator background color in checked state @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls size of the component @default `'sm'` */
+  /** Controls size of the component @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
+  /** Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting */
   iconColor?: MantineColor;
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** A component that replaces default check icon */
+  /** A component that replaces the default radio icon (centered dot) */
   icon?: React.FC<RadioIconProps>;
 
   /** Checked state */
@@ -98,7 +97,7 @@ const varsResolver = createVarsResolver<RadioIndicatorFactory>(
   }
 );
 
-export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
+export const RadioIndicator = factory<RadioIndicatorFactory>((_props) => {
   const props = useProps('RadioIndicator', defaultProps, _props);
   const {
     classNames,
@@ -135,12 +134,11 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
     rootSelector: 'indicator',
   });
 
-  const ctx = useRadioCardContext();
+  const ctx = use(RadioCardContext);
   const _checked = typeof checked === 'boolean' ? checked : ctx?.checked || false;
 
   return (
     <Box
-      ref={ref}
       {...getStyles('indicator', { variant })}
       variant={variant}
       mod={[{ checked: _checked, disabled }, mod]}
@@ -153,3 +151,4 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
 
 RadioIndicator.displayName = '@mantine/core/RadioIndicator';
 RadioIndicator.classes = classes;
+RadioIndicator.varsResolver = varsResolver;

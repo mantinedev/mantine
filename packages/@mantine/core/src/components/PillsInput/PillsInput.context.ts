@@ -1,4 +1,5 @@
-import { createOptionalContext, MantineSize } from '../../core';
+import { createContext } from 'react';
+import { MantineSize } from '../../core';
 import { InputVariant } from '../Input';
 
 export interface PillsInputContextValue {
@@ -9,5 +10,4 @@ export interface PillsInputContextValue {
   variant: InputVariant | (string & {}) | undefined;
 }
 
-export const [PillsInputProvider, usePillsInputContext] =
-  createOptionalContext<PillsInputContextValue>();
+export const PillsInputContext = createContext<PillsInputContextValue | null>(null);

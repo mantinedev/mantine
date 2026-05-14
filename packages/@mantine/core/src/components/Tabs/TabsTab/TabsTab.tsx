@@ -17,7 +17,8 @@ import classes from '../Tabs.module.css';
 export type TabsTabStylesNames = 'tab' | 'tabSection' | 'tabLabel';
 
 export interface TabsTabProps
-  extends Omit<UnstyledButtonProps, 'classNames' | 'styles' | 'vars'>,
+  extends
+    Omit<UnstyledButtonProps, 'classNames' | 'styles' | 'vars'>,
     CompoundStylesApiProps<TabsTabFactory>,
     ElementProps<'button'> {
   /** Value of associated panel */
@@ -32,7 +33,7 @@ export interface TabsTabProps
   /** Content displayed on the left side of the label */
   leftSection?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color, controls control color based on `variant` */
+  /** Key of `theme.colors` or any valid CSS color, controls tab color based on `variant` */
   color?: MantineColor;
 }
 
@@ -43,7 +44,7 @@ export type TabsTabFactory = Factory<{
   compound: true;
 }>;
 
-export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
+export const TabsTab = factory<TabsTabFactory>((_props) => {
   const props = useProps('TabsTab', null, _props);
   const {
     className,
@@ -91,7 +92,6 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
         },
         mod,
       ]}
-      ref={ref}
       role="tab"
       id={ctx.getTabId(value)}
       aria-selected={active}

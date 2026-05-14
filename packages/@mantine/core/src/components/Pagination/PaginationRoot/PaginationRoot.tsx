@@ -34,19 +34,20 @@ export type PaginationRootCssVariables = {
 };
 
 export interface PaginationRootProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<PaginationRootFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
-  /** `height` and `min-width` of controls @default `'md'` */
-  size?: MantineSize | (string & {}) | number;
+  /** `height` and `min-width` of controls @default 'md' */
+  size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
   /** Total number of pages, must be an integer */
   total: number;
 
-  /** Active page for controlled component, must be an integer in [0, total] interval */
+  /** Active page for controlled component, must be an integer in [1, total] interval */
   value?: number;
 
-  /** Active page for uncontrolled component, must be an integer in [0, total] interval */
+  /** Active page for uncontrolled component, must be an integer in [1, total] interval */
   defaultValue?: number;
 
   /** Called when page changes */
@@ -55,16 +56,16 @@ export interface PaginationRootProps
   /** Disables all controls, applies disabled styles */
   disabled?: boolean;
 
-  /** Number of siblings displayed on the left/right side of the selected page @default `1` */
+  /** Number of siblings displayed on the left/right side of the selected page @default 1 */
   siblings?: number;
 
-  /** Number of elements visible on the left/right edges @default `1` */
+  /** Number of elements visible on the left/right edges @default 1 */
   boundaries?: number;
 
-  /** Key of `theme.colors`, active item color @default `theme.primaryColor` */
+  /** Key of `theme.colors`, active item color @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Called when next page control is clicked */
@@ -82,8 +83,11 @@ export interface PaginationRootProps
   /** Additional props passed down to controls */
   getItemProps?: (page: number) => Record<string, any>;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on the active page background color to ensure sufficient contrast */
   autoContrast?: boolean;
+
+  /** Starting page number, defaults to 1 */
+  startValue?: number;
 }
 
 export type PaginationRootFactory = Factory<{
@@ -112,7 +116,7 @@ const varsResolver = createVarsResolver<PaginationRootFactory>(
   })
 );
 
-export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
+export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
   const props = useProps('PaginationRoot', defaultProps, _props);
   const {
     classNames,
@@ -136,6 +140,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     onLastPage,
     getItemProps,
     autoContrast,
+    startValue,
     attributes,
     ...others
   } = props;
@@ -161,12 +166,8 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     total,
     siblings,
     boundaries,
+    startValue,
   });
-
-  const handleNextPage = createEventHandler(onNextPage, next);
-  const handlePreviousPage = createEventHandler(onPreviousPage, previous);
-  const handleFirstPage = createEventHandler(onFirstPage, first);
-  const handleLastPage = createEventHandler(onLastPage, last);
 
   return (
     <PaginationProvider
@@ -177,17 +178,18 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
         disabled,
         getItemProps,
         onChange: setPage,
-        onNext: handleNextPage,
-        onPrevious: handlePreviousPage,
-        onFirst: handleFirstPage,
-        onLast: handleLastPage,
+        onNext: createEventHandler(onNextPage, next),
+        onPrevious: createEventHandler(onPreviousPage, previous),
+        onFirst: createEventHandler(onFirstPage, first),
+        onLast: createEventHandler(onLastPage, last),
         getStyles,
       }}
     >
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box {...getStyles('root')} {...others} />
     </PaginationProvider>
   );
 });
 
 PaginationRoot.classes = classes;
+PaginationRoot.varsResolver = varsResolver;
 PaginationRoot.displayName = '@mantine/core/PaginationRoot';

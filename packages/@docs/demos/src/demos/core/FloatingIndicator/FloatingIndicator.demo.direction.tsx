@@ -1,32 +1,22 @@
 import { useState } from 'react';
 import {
-  IconArrowDown,
-  IconArrowDownLeft,
-  IconArrowDownRight,
-  IconArrowLeft,
-  IconArrowRight,
-  IconArrowUp,
-  IconArrowUpLeft,
-  IconArrowUpRight,
-  IconCircle,
-} from '@tabler/icons-react';
+  ArrowDownIcon,
+  ArrowDownLeftIcon,
+  ArrowDownRightIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowUpIcon,
+  ArrowUpLeftIcon,
+  ArrowUpRightIcon,
+  CircleIcon,
+} from '@phosphor-icons/react';
 import { FloatingIndicator, UnstyledButton } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './FloatingIndicator.demo.direction.module.css';
 
 const code = `
 import { useState } from 'react';
-import {
-  IconArrowDown,
-  IconArrowDownLeft,
-  IconArrowDownRight,
-  IconArrowLeft,
-  IconArrowRight,
-  IconArrowUp,
-  IconArrowUpLeft,
-  IconArrowUpRight,
-  IconCircle,
-} from '@tabler/icons-react';
+import { ArrowDownIcon, ArrowDownLeftIcon, ArrowDownRightIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, ArrowUpLeftIcon, ArrowUpRightIcon, CircleIcon } from '@phosphor-icons/react';
 import { FloatingIndicator, UnstyledButton } from '@mantine/core';
 import classes from './Demo.module.css';
 
@@ -55,7 +45,7 @@ function Demo() {
           ref={setControlRef('up-left')}
           mod={{ active: active === 'up-left' }}
         >
-          <IconArrowUpLeft size={26} stroke={1.5} />
+          <ArrowUpLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -63,7 +53,7 @@ function Demo() {
           ref={setControlRef('up')}
           mod={{ active: active === 'up' }}
         >
-          <IconArrowUp size={26} stroke={1.5} />
+          <ArrowUpIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -71,7 +61,7 @@ function Demo() {
           ref={setControlRef('up-right')}
           mod={{ active: active === 'up-right' }}
         >
-          <IconArrowUpRight size={26} stroke={1.5} />
+          <ArrowUpRightIcon size={26} />
         </UnstyledButton>
       </div>
       <div className={classes.controlsGroup}>
@@ -81,7 +71,7 @@ function Demo() {
           ref={setControlRef('left')}
           mod={{ active: active === 'left' }}
         >
-          <IconArrowLeft size={26} stroke={1.5} />
+          <ArrowLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -89,7 +79,7 @@ function Demo() {
           ref={setControlRef('center')}
           mod={{ active: active === 'center' }}
         >
-          <IconCircle size={26} stroke={1.5} />
+          <CircleIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -97,7 +87,7 @@ function Demo() {
           ref={setControlRef('right')}
           mod={{ active: active === 'right' }}
         >
-          <IconArrowRight size={26} stroke={1.5} />
+          <ArrowRightIcon size={26} />
         </UnstyledButton>
       </div>
       <div className={classes.controlsGroup}>
@@ -107,7 +97,7 @@ function Demo() {
           ref={setControlRef('down-left')}
           mod={{ active: active === 'down-left' }}
         >
-          <IconArrowDownLeft size={26} stroke={1.5} />
+          <ArrowDownLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -115,7 +105,7 @@ function Demo() {
           ref={setControlRef('down')}
           mod={{ active: active === 'down' }}
         >
-          <IconArrowDown size={26} stroke={1.5} />
+          <ArrowDownIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -123,7 +113,7 @@ function Demo() {
           ref={setControlRef('down-right')}
           mod={{ active: active === 'down-right' }}
         >
-          <IconArrowDownRight size={26} stroke={1.5} />
+          <ArrowDownRightIcon size={26} />
         </UnstyledButton>
       </div>
     </div>
@@ -200,7 +190,7 @@ function Demo() {
           ref={setControlRef('up-left')}
           mod={{ active: active === 'up-left' }}
         >
-          <IconArrowUpLeft size={26} stroke={1.5} />
+          <ArrowUpLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -208,7 +198,7 @@ function Demo() {
           ref={setControlRef('up')}
           mod={{ active: active === 'up' }}
         >
-          <IconArrowUp size={26} stroke={1.5} />
+          <ArrowUpIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -216,7 +206,7 @@ function Demo() {
           ref={setControlRef('up-right')}
           mod={{ active: active === 'up-right' }}
         >
-          <IconArrowUpRight size={26} stroke={1.5} />
+          <ArrowUpRightIcon size={26} />
         </UnstyledButton>
       </div>
       <div className={classes.controlsGroup}>
@@ -226,7 +216,7 @@ function Demo() {
           ref={setControlRef('left')}
           mod={{ active: active === 'left' }}
         >
-          <IconArrowLeft size={26} stroke={1.5} />
+          <ArrowLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -234,7 +224,7 @@ function Demo() {
           ref={setControlRef('center')}
           mod={{ active: active === 'center' }}
         >
-          <IconCircle size={26} stroke={1.5} />
+          <CircleIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -242,7 +232,7 @@ function Demo() {
           ref={setControlRef('right')}
           mod={{ active: active === 'right' }}
         >
-          <IconArrowRight size={26} stroke={1.5} />
+          <ArrowRightIcon size={26} />
         </UnstyledButton>
       </div>
       <div className={classes.controlsGroup}>
@@ -252,7 +242,7 @@ function Demo() {
           ref={setControlRef('down-left')}
           mod={{ active: active === 'down-left' }}
         >
-          <IconArrowDownLeft size={26} stroke={1.5} />
+          <ArrowDownLeftIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -260,7 +250,7 @@ function Demo() {
           ref={setControlRef('down')}
           mod={{ active: active === 'down' }}
         >
-          <IconArrowDown size={26} stroke={1.5} />
+          <ArrowDownIcon size={26} />
         </UnstyledButton>
         <UnstyledButton
           className={classes.control}
@@ -268,7 +258,7 @@ function Demo() {
           ref={setControlRef('down-right')}
           mod={{ active: active === 'down-right' }}
         >
-          <IconArrowDownRight size={26} stroke={1.5} />
+          <ArrowDownRightIcon size={26} />
         </UnstyledButton>
       </div>
     </div>

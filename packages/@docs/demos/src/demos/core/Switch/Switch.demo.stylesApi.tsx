@@ -6,7 +6,7 @@ const code = `
 import { Switch } from '@mantine/core';
 
 function Demo() {
-  return <Switch{{props}} label="Switch component" description="Switch description" error="Switch error />;
+  return <Switch{{props}} label="Switch component" description="Switch description" error="Switch error" />;
 }
 `;
 

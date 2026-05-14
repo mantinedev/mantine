@@ -52,6 +52,7 @@ interface SetValueOptions {
 interface GetInputPropsOptions {
   withError?: boolean;
   withFocus?: boolean;
+  [key: string]: any;
 }
 
 interface GetInputPropsSharedReturn {
@@ -69,9 +70,13 @@ type GetInputPropsTypeValue<
   ? Mode extends 'controlled'
     ? { checked: boolean }
     : { defaultChecked: boolean }
-  : Mode extends 'controlled'
-    ? { value: T }
-    : { defaultValue: T };
+  : FieldType extends 'radio'
+    ? Mode extends 'controlled'
+      ? { checked: boolean; value: T }
+      : { defaultChecked: boolean; value: T }
+    : Mode extends 'controlled'
+      ? { value: T }
+      : { defaultValue: T };
 
 type GetInputPropsReturnType<
   T,
@@ -223,7 +228,7 @@ export function useField<
     }
   }, []);
 
-  const getInputProps = ({ withError = true, withFocus = true } = {}) => {
+  const getInputProps = ({ withError = true, withFocus = true, ...otherOptions }: any = {}) => {
     const onChange = getInputOnChange<T>((val) => setValue(val as any, { updateKey: false }));
 
     const payload: any = { onChange };
@@ -234,6 +239,10 @@ export function useField<
 
     if (type === 'checkbox') {
       payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] = valueRef.current;
+    } else if (type === 'radio') {
+      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] =
+        valueRef.current === otherOptions.value;
+      payload.value = otherOptions.value;
     } else {
       payload[mode === 'controlled' ? 'value' : 'defaultValue'] = valueRef.current;
     }

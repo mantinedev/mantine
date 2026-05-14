@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { IconPencil } from '@tabler/icons-react';
+import { PencilSimpleIcon } from '@phosphor-icons/react';
 import { Box, ScrollArea, Space, Text } from '@mantine/core';
 import { useScrollSpy } from '@mantine/hooks';
 import classes from './TableOfContents.module.css';
@@ -49,7 +49,7 @@ export function TableOfContents({ editPageLink }: TableOfContentsProps) {
 
             {editPageLink && (
               <Text component="a" className={classes.editPage} href={editPageLink} target="_blank">
-                <IconPencil className={classes.editPageIcon} size={18} stroke={1.5} />
+                <PencilSimpleIcon className={classes.editPageIcon} size={18} />
                 <span>Edit this page</span>
               </Text>
             )}

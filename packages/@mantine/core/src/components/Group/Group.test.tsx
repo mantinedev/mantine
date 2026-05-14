@@ -7,17 +7,9 @@ describe('@mantine/core/Group', () => {
   tests.itSupportsSystemProps<GroupProps, GroupStylesNames>({
     component: Group,
     props: defaultProps,
-    mod: true,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Group',
     stylesApiSelectors: ['root'],
   });

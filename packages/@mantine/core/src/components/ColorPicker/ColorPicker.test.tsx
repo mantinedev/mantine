@@ -21,15 +21,7 @@ describe('@mantine/core/ColorPicker', () => {
   tests.itSupportsSystemProps<ColorPickerProps, ColorPickerStylesNames>({
     component: ColorPicker,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
+    varsResolver: true,
     displayName: '@mantine/core/ColorPicker',
     stylesApiSelectors: [
       'wrapper',
@@ -85,5 +77,14 @@ describe('@mantine/core/ColorPicker', () => {
     );
     await userEvent.click(container.querySelectorAll('.mantine-ColorSwatch-root')[0]);
     expect(spy).toHaveBeenCalledWith('#ffffff');
+  });
+
+  it('renders hidden input with given name and value', () => {
+    const { container } = render(
+      <ColorPicker name="color" value="#ff0000" format="hex" withPicker={false} />
+    );
+    const input = container.querySelector('input[name="color"]') as HTMLInputElement;
+    expect(input).toBeInTheDocument();
+    expect(input.value).toBe('#ff0000');
   });
 });

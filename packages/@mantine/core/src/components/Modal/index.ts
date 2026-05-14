@@ -1,3 +1,14 @@
+import type { ModalCssVariables, ModalFactory, ModalProps, ModalStylesNames } from './Modal';
+import type { ModalContextValue } from './Modal.context';
+import type { ModalBodyProps } from './ModalBody';
+import type { ModalCloseButtonProps } from './ModalCloseButton';
+import type { ModalContentProps } from './ModalContent';
+import type { ModalHeaderProps } from './ModalHeader';
+import type { ModalOverlayProps } from './ModalOverlay';
+import type { ModalRootProps } from './ModalRoot';
+import type { ModalStackProps } from './ModalStack';
+import type { ModalTitleProps } from './ModalTitle';
+
 export { Modal } from './Modal';
 export { ModalRoot } from './ModalRoot';
 export { ModalBody } from './ModalBody';
@@ -6,15 +17,22 @@ export { ModalContent } from './ModalContent';
 export { ModalHeader } from './ModalHeader';
 export { ModalOverlay } from './ModalOverlay';
 export { ModalTitle } from './ModalTitle';
-export { ModalStack, useModalStackContext } from './ModalStack';
+export { ModalStack, ModalStackContext } from './ModalStack';
 export { useModalsStack, useDrawersStack } from './use-modals-stack';
+export { useModalContext } from './Modal.context';
 
-export type { ModalCssVariables, ModalFactory, ModalProps, ModalStylesNames } from './Modal';
-export type { ModalRootProps } from './ModalRoot';
-export type { ModalBodyProps } from './ModalBody';
-export type { ModalCloseButtonProps } from './ModalCloseButton';
-export type { ModalContentProps } from './ModalContent';
-export type { ModalHeaderProps } from './ModalHeader';
-export type { ModalOverlayProps } from './ModalOverlay';
-export type { ModalTitleProps } from './ModalTitle';
-export type { ModalStackProps } from './ModalStack';
+export type {
+  ModalProps,
+  ModalStylesNames,
+  ModalCssVariables,
+  ModalFactory,
+  ModalRootProps,
+  ModalBodyProps,
+  ModalCloseButtonProps,
+  ModalContentProps,
+  ModalHeaderProps,
+  ModalOverlayProps,
+  ModalTitleProps,
+  ModalStackProps,
+  ModalContextValue,
+};

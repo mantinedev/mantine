@@ -17,9 +17,7 @@ export interface TooltipMiddlewares {
 }
 
 export interface TooltipBaseProps
-  extends BoxProps,
-    StylesApiProps<TooltipFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<TooltipFactory>, ElementProps<'div'> {
   /** Target element, must support `ref` prop and `...others` */
   children?: React.ReactNode;
 
@@ -35,7 +33,7 @@ export interface TooltipBaseProps
   /** Determines whether tooltip should be rendered within `Portal`, `true` by default */
   withinPortal?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem@default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem@default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color, controls tooltip background, by default set based on current color scheme */

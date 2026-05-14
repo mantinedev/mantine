@@ -1,16 +1,16 @@
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
+import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 import { PasswordInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
+import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 
 const VisibilityToggleIcon = ({ reveal }: { reveal: boolean }) =>
   reveal ? (
-    <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+    <EyeSlashIcon style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
   ) : (
-    <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+    <EyeIcon style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
   );
 
 function Demo() {
@@ -29,9 +29,9 @@ function Demo() {
 
 const VisibilityToggleIcon = ({ reveal }: { reveal: boolean }) =>
   reveal ? (
-    <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+    <EyeSlashIcon style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
   ) : (
-    <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+    <EyeIcon style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
   );
 
 function Demo() {

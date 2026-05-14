@@ -1,13 +1,13 @@
-import { IconBiohazard, IconRadioactive } from '@tabler/icons-react';
-import { Checkbox, CheckboxProps } from '@mantine/core';
+import { BiohazardIcon, RadioactiveIcon } from '@phosphor-icons/react';
+import { Checkbox, CheckboxIconComponent } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Checkbox, CheckboxProps } from '@mantine/core';
-import { IconBiohazard, IconRadioactive } from '@tabler/icons-react';
+import { Checkbox, CheckboxIconComponent } from '@mantine/core';
+import { BiohazardIcon, RadioactiveIcon } from '@phosphor-icons/react';
 
-const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, ...others }) =>
-  indeterminate ? <IconRadioactive {...others} /> : <IconBiohazard {...others} />;
+const CheckboxIcon: CheckboxIconComponent = ({ indeterminate, ...others }) =>
+  indeterminate ? <RadioactiveIcon {...others} /> : <BiohazardIcon {...others} />;
 
 function Demo() {
   return (
@@ -19,8 +19,8 @@ function Demo() {
 }
 `;
 
-const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, ...others }) =>
-  indeterminate ? <IconRadioactive {...others} /> : <IconBiohazard {...others} />;
+const CheckboxIcon: CheckboxIconComponent = ({ indeterminate, ...others }) =>
+  indeterminate ? <RadioactiveIcon {...others} /> : <BiohazardIcon {...others} />;
 
 function Demo() {
   return (

@@ -22,15 +22,8 @@ describe('@mantine/dates/PickerControl', () => {
   tests.itSupportsSystemProps<PickerControlProps, PickerControlStylesNames>({
     component: PickerControl,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/dates/PickerControl',
     stylesApiSelectors: ['pickerControl'],
   });

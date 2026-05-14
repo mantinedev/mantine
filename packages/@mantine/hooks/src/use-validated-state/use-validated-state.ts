@@ -44,3 +44,7 @@ export function useValidatedState<T>(
 
   return [{ value, lastValidValue, valid }, onChange] as const;
 }
+
+export namespace useValidatedState {
+  export type ReturnValue<T> = UseValidatedStateReturnValue<T>;
+}

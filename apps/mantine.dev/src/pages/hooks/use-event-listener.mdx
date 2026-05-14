@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { UseEventListenerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -6,18 +6,18 @@ export default Layout(MDX_DATA.useEventListener);
 
 ## Usage
 
-`use-event-listener` adds a given event listener to an element to which `ref` is assigned.
-Hook supports the same options as `addEventListener` method.
+The `use-event-listener` hook adds a given event listener to an element to which `ref` is assigned.
+The hook supports the same options as the `addEventListener` method.
 After the component is unmounted, the listener is automatically removed.
 
-<Demo data={HooksDemos.useEventListenerDemo} />
+<Demo data={UseEventListenerDemos.usage} />
 
 ## Definition
 
 ```tsx
 function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
   type: K,
-  listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => any,
+  listener: (this: T, ev: HTMLElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions,
 ): React.RefCallback<T | null>
 ```

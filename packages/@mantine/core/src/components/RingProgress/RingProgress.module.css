@@ -12,7 +12,7 @@
   height: var(--rp-size);
   min-width: var(--rp-size);
   min-height: var(--rp-size);
-  transform: rotate(-90deg);
+  transform: rotate(calc(var(--rp-start-angle, 270deg) - 360deg));
 }
 
 .curve {

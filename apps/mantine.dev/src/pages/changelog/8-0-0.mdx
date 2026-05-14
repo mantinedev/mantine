@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core';
-import { IconHeartFilled } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import {
   DatePickerDemos,
   DateTimePickerDemos,
@@ -259,7 +259,7 @@ declare module '@mantine/core' {
 - [Kbd](/core/kbd) component now supports `size` prop
 - [DateInput](/dates/date-input) component no longer supports `preserveTime` prop, use different component to capture time values
 - [ScrollArea](/core/scroll-area) component no longer has forced `display: table` styles on the wrapper element of the content. It also now supports `content` Styles API selector to apply styles to the content element.
-- [Image](/core/image) component no longer includes `flex: 0` styles by default
+- [ImageIcon](/core/image) component no longer includes `flex: 0` styles by default
 - [SegmentedControl](/core/segmented-control) default height values were changed to match sizes of [Input](/core/input) components
 - Type of `wrapperProps` prop in all components that support it (`Checkbox`, `Radio`, `Chip`, most inputs) was changed to more strict type
 - [Portal](/core/portal) component now has `reuseTargetNode` prop enabled by default
@@ -268,4 +268,4 @@ declare module '@mantine/core' {
 - [use-os](/hooks/use-os) now supports Chrome OS detection, its return type now includes `chromeos` value in the union
 - The default eye dropper icon of [ColorInput](/core/color-input) component was updated
 - The default spacing of [Notification](/core/notification) component was increased
-- [Code](/core/code) component color styles were updated
+- [CodeIcon](/core/code) component color styles were updated

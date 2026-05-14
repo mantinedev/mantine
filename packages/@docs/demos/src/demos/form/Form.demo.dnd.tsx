@@ -13,7 +13,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { Button, Center, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
@@ -23,7 +23,7 @@ const code = `
 import { Group, TextInput, Button, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
-import { IconGripVertical } from '@tabler/icons-react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -38,7 +38,7 @@ function SortableItem({ id, index, form }) {
   return (
     <Group ref={setNodeRef} mt="xs" style={style} {...attributes}>
       <Center {...listeners}>
-        <IconGripVertical size={18} />
+        <DotsSixVerticalIcon size={18} />
       </Center>
       <TextInput
         placeholder="John Doe"
@@ -114,7 +114,7 @@ function SortableItem({ id, index, form }: any) {
   return (
     <Group ref={setNodeRef} mt="xs" style={style} {...attributes}>
       <Center {...listeners}>
-        <IconGripVertical size={18} />
+        <DotsSixVerticalIcon size={18} />
       </Center>
       <TextInput
         placeholder="John Doe"

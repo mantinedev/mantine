@@ -13,15 +13,7 @@ describe('@mantine/core/Checkbox', () => {
   tests.itSupportsSystemProps<CheckboxProps, CheckboxStylesNames>({
     component: Checkbox,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
+    varsResolver: true,
     displayName: '@mantine/core/Checkbox',
     stylesApiSelectors: [
       'root',
@@ -118,6 +110,59 @@ describe('@mantine/core/Checkbox', () => {
 
     rerender(<Checkbox error={false} />);
     expect(screen.getByRole('checkbox')).not.toHaveAttribute('data-error');
+  });
+
+  it('has aria-describedby attribute with id of description element', () => {
+    render(<Checkbox description="test-description" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute(
+      'aria-describedby',
+      screen.getByText('test-description').id
+    );
+  });
+
+  it('has aria-describedby attribute with id of error element', () => {
+    render(<Checkbox error="test-error" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute(
+      'aria-describedby',
+      screen.getByText('test-error').id
+    );
+  });
+
+  it('has aria-describedby attribute with description and error ids', () => {
+    render(<Checkbox description="test-description" error="test-error" />);
+    const description = screen.getByText('test-description');
+    const error = screen.getByText('test-error');
+    expect(screen.getByRole('checkbox')).toHaveAttribute(
+      'aria-describedby',
+      `${description.id} ${error.id}`
+    );
+  });
+
+  it('merges user-supplied aria-describedby with description and error ids', () => {
+    render(
+      <Checkbox description="test-description" error="test-error" aria-describedby="extra-id" />
+    );
+    const description = screen.getByText('test-description');
+    const error = screen.getByText('test-error');
+    expect(screen.getByRole('checkbox')).toHaveAttribute(
+      'aria-describedby',
+      `${description.id} ${error.id} extra-id`
+    );
+  });
+
+  it('preserves user-supplied aria-describedby when description and error are not set', () => {
+    render(<Checkbox aria-describedby="extra-id" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('aria-describedby', 'extra-id');
+  });
+
+  it('does not set aria-describedby when there is no description, error or user value', () => {
+    render(<Checkbox />);
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-describedby');
+  });
+
+  it('does not link aria-describedby to error when error is a boolean', () => {
+    render(<Checkbox error />);
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-describedby');
   });
 
   it('sets disabled attribute on input based on disabled prop', () => {

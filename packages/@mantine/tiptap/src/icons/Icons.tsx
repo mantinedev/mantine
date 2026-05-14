@@ -1,4 +1,4 @@
-interface IconProps extends React.ComponentPropsWithoutRef<'svg'> {}
+interface IconProps extends React.ComponentProps<'svg'> {}
 
 export function IconBase(props: IconProps) {
   return (

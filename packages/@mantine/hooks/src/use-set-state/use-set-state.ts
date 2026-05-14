@@ -22,3 +22,8 @@ export function useSetState<T extends Record<string, any>>(
 
   return [state, _setState];
 }
+
+export namespace useSetState {
+  export type Callback<T> = UseSetStateCallback<T>;
+  export type ReturnValue<T> = UseSetStateReturnValue<T>;
+}

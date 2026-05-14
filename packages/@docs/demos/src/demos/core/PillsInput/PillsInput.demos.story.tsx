@@ -12,3 +12,8 @@ export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

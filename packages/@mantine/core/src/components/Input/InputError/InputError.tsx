@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,8 +13,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
+import { InputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';
-import { useInputWrapperContext } from '../InputWrapper.context';
 
 export type InputErrorStylesNames = 'error';
 export type InputErrorCssVariables = {
@@ -21,13 +22,11 @@ export type InputErrorCssVariables = {
 };
 
 export interface InputErrorProps
-  extends BoxProps,
-    StylesApiProps<InputErrorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<InputErrorFactory>, ElementProps<'div'> {
   __staticSelector?: string;
   __inheritStyles?: boolean;
 
-  /** Controls error `font-size` @default `'sm'` */
+  /** Controls error `font-size` @default 'sm' */
   size?: MantineFontSize;
 }
 
@@ -44,7 +43,7 @@ const varsResolver = createVarsResolver<InputErrorFactory>((_, { size }) => ({
   },
 }));
 
-export const InputError = factory<InputErrorFactory>((_props, ref) => {
+export const InputError = factory<InputErrorFactory>((_props) => {
   const props = useProps('InputError', null, _props);
   const {
     classNames,
@@ -53,11 +52,9 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
-    size,
     attributes,
     __staticSelector,
     __inheritStyles = true,
-    variant,
     ...others
   } = props;
 
@@ -76,15 +73,12 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
   const getStyles = (__inheritStyles && ctx?.getStyles) || _getStyles;
 
   return (
     <Box
       component="p"
-      ref={ref}
-      variant={variant}
-      size={size}
       {...getStyles('error', ctx?.getStyles ? { className, style } : undefined)}
       {...others}
     />
@@ -92,4 +86,5 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
 });
 
 InputError.classes = classes;
+InputError.varsResolver = varsResolver;
 InputError.displayName = '@mantine/core/InputError';

@@ -1,4 +1,4 @@
-import { IconTrash } from '@tabler/icons-react';
+import { TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Button, Code, Group, Text, TextInput } from '@mantine/core';
 import { useForm } from '../use-form';
 
@@ -25,7 +25,7 @@ export function Dirty() {
       {form.values.formArray.map((_item, index) => (
         <Group key={index}>
           <ActionIcon onClick={() => form.removeListItem('formArray', index)}>
-            <IconTrash size={16} />
+            <TrashIcon size={16} />
           </ActionIcon>
           <TextInput {...form.getInputProps(`formArray.${index}.one`)} />
           <TextInput {...form.getInputProps(`formArray.${index}.two`)} />

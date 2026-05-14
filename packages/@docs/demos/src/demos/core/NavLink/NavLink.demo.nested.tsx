@@ -1,10 +1,10 @@
-import { IconFingerprint, IconGauge } from '@tabler/icons-react';
+import { FingerprintIcon, GaugeIcon } from '@phosphor-icons/react';
 import { NavLink } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { NavLink } from '@mantine/core';
-import { IconGauge, IconFingerprint } from '@tabler/icons-react';
+import { GaugeIcon, FingerprintIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -12,7 +12,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="First parent link"
-        leftSection={<IconGauge size={16} stroke={1.5} />}
+        leftSection={<GaugeIcon size={16} />}
         childrenOffset={28}
       >
         <NavLink href="#required-for-focus" label="First child link" />
@@ -27,7 +27,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Second parent link"
-        leftSection={<IconFingerprint size={16} stroke={1.5} />}
+        leftSection={<FingerprintIcon size={16} />}
         childrenOffset={28}
         defaultOpened
       >
@@ -46,7 +46,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="First parent link"
-        leftSection={<IconGauge size={16} stroke={1.5} />}
+        leftSection={<GaugeIcon size={16} />}
         childrenOffset={28}
       >
         <NavLink href="#required-for-focus" label="First child link" />
@@ -61,7 +61,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Second parent link"
-        leftSection={<IconFingerprint size={16} stroke={1.5} />}
+        leftSection={<FingerprintIcon size={16} />}
         childrenOffset={28}
         defaultOpened
       >

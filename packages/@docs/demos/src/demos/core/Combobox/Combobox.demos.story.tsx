@@ -87,3 +87,8 @@ export const Demo_dropdownPosition = {
   name: '⭐ Demo: dropdownPosition',
   render: renderDemo(demos.dropdownPosition),
 };
+
+export const Demo_virtualized = {
+  name: '⭐ Demo: virtualized',
+  render: renderDemo(demos.virtualized),
+};

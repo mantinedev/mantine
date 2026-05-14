@@ -1,0 +1,173 @@
+import { HeatmapDemos, MaskInputDemos, MonthPickerDemos, MonthViewDemos, SliderDemos, TimePickerDemos, TreeDemos, TreemapDemos, UseMaskDemos, UseRovingIndexDemos, WeekViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog910);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## deduplicateInlineStyles
+
+New `deduplicateInlineStyles` prop on [MantineProvider](/theming/mantine-provider) enables
+React 19 style tag deduplication for responsive [style props](/styles/style-props).
+When many components share the same responsive style prop values, only a single `<style />`
+tag is generated and hoisted to `<head />` instead of each component injecting its own:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider deduplicateInlineStyles>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+This can significantly improve performance when rendering large lists of components
+with identical responsive style props. See the
+[styles performance guide](/styles/styles-performance) for more details.
+
+## use-mask hook
+
+New [use-mask](/hooks/use-mask) hook attaches real-time input masking to any `<input>` element via
+a ref callback. It formats user input against a defined pattern and exposes both the masked display
+value and the raw unmasked value. The hook supports built-in and custom tokens, dynamic masks,
+character transforms, optional segments, and regex array format:
+
+<Demo data={UseMaskDemos.usage} />
+
+## MaskInput component
+
+New [MaskInput](/core/mask-input) component is a wrapper around [use-mask](/hooks/use-mask) hook
+that provides all standard input props (label, description, error, etc.) and supports all mask options:
+
+<Demo data={MaskInputDemos.usage} />
+
+## Treemap component
+
+New [Treemap](/charts/treemap) component displays hierarchical data as a set of nested
+rectangles. It is based on the [Treemap recharts component](https://recharts.org/en-US/api/Treemap):
+
+<Demo data={TreemapDemos.nestedDataDemo} />
+
+## TimePicker duration type
+
+[TimePicker](/dates/time-picker) component now supports `type="duration"` prop that allows
+entering durations that exceed 24 hours. In this mode, the hours field has no upper limit
+and the input width adjusts dynamically based on the entered value:
+
+<Demo data={TimePickerDemos.duration} />
+
+## Heatmap legend
+
+[Heatmap](/charts/heatmap) component now supports `withLegend` prop that displays
+a color legend below the chart. Use `legendLabels` prop to customize labels
+(default: `['Less', 'More']`):
+
+<Demo data={HeatmapDemos.legend} />
+
+## MonthPicker and YearPicker presets
+
+[MonthPicker](/dates/month-picker) and [YearPicker](/dates/year-picker) components now support
+`presets` prop that allows adding predefined values to pick from. Presets are also available
+in [MonthPickerInput](/dates/month-picker-input) and [YearPickerInput](/dates/year-picker-input)
+components:
+
+<Demo data={MonthPickerDemos.presets} />
+
+## use-roving-index hook
+
+New [use-roving-index](/hooks/use-roving-index) hook implements the
+[roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)
+keyboard navigation pattern. It manages `tabIndex` state for a group of focusable elements,
+handles arrow key navigation with disabled item skipping, and supports both 1D lists and 2D grids:
+
+<Demo data={UseRovingIndexDemos.usage} />
+
+## Tree drag and drop
+
+[Tree](/core/tree) component now supports drag-and-drop reordering of nodes.
+Provide `onDragDrop` callback to enable it, and use the `moveTreeNode` utility
+to update data based on the result:
+
+<Demo data={TreeDemos.dragDrop} />
+
+## Tree async loading
+
+[Tree](/core/tree) now supports lazy loading of children. Set `hasChildren: true`
+on a node without providing `children` – when the node is expanded for the first time,
+`onLoadChildren` callback passed to `useTree` is called. Use `mergeAsyncChildren`
+utility to splice loaded children into your data:
+
+<Demo data={TreeDemos.asyncLoading} />
+
+## Tree search and filtering
+
+[Tree](/core/tree) now includes `filterTreeData` utility to filter tree data based on
+a search query. Matching nodes and their ancestors are preserved in the result. You can
+provide a custom filter function for advanced matching (for example, fuzzy search with fuse.js):
+
+<Demo data={TreeDemos.searchFilter} />
+
+## Tree connecting lines
+
+[Tree](/core/tree) now supports `withLines` prop to display connecting lines
+showing parent-child relationships. Lines adapt to `levelOffset` spacing automatically:
+
+<Demo data={TreeDemos.lines} />
+
+## Tree virtualization
+
+[Tree](/core/tree) now provides `flattenTreeData` utility and `FlatTreeNode` component
+for virtualized rendering of large trees. The component does not depend on any
+virtualization library – you supply one yourself (e.g., `@tanstack/react-virtual`):
+
+<Demo data={TreeDemos.virtualized} />
+
+## Tree checkStrictly mode
+
+[useTree](/core/tree) hook now supports `checkStrictly` option. When enabled, checking
+a parent node does not affect children and vice versa – each node's checked state is
+fully independent:
+
+<Demo data={TreeDemos.checkStrictly} />
+
+## Slider startPointValue
+
+[Slider](/core/slider) component now supports `startPointValue` prop that changes
+the origin of the filled bar. When set, the bar extends from the given value toward the
+current value – to the left for values below the start point and to the right for values above it:
+
+<Demo data={SliderDemos.startPoint} />
+
+## WeekView forceCurrentTimeIndicator
+
+[WeekView](/schedule/week-view) component now supports `forceCurrentTimeIndicator` prop.
+When set, the current time indicator is displayed on the same day of week even when viewing
+a different week:
+
+<Demo data={WeekViewDemos.forceCurrentTimeIndicator} />
+
+## New demo: MonthView events rendering
+
+New [MonthView](/schedule/month-view) demo shows how to use `renderEvent` to visually
+differentiate all-day and timed events. All-day events render as regular colored bars,
+while timed events display as a colored dot with the start time and title:
+
+<Demo data={MonthViewDemos.timedEvents} />
+
+## Other changes
+
+- [Tabs](/core/tabs) component now supports `keepMountedMode` prop that controls how inactive tab panels are hidden when `keepMounted` is `true`. Set `keepMountedMode="display-none"` to use `display: none` styles instead of the default `Activity` component.
+- [useClickOutside](/hooks/use-click-outside) hook now supports `enabled` parameter to dynamically enable/disable the listener. The hook also uses `event.composedPath()` in both `ref` and `nodes` branches for consistent Shadow DOM support and correctly ignores clicks on detached DOM nodes in the single-ref mode.
+- [useCounter](/hooks/use-counter) hook now supports `step` option to configure increment/decrement step size (default `1`).
+- [useDebouncedCallback](/hooks/use-debounced-callback) hook now supports `maxWait` option to guarantee execution within a maximum time window during continuous calls, and `isPending()` method to check if a debounced call is waiting.
+- [useDebouncedValue](/hooks/use-debounced-value) hook now returns a `flush` method to immediately apply the pending debounced value.
+- [useScrollIntoView](/hooks/use-scroll-into-view) hook now supports `onScrollCancel` callback that fires when the scroll animation is interrupted by the user, and returns a `scrolling` boolean to indicate whether a scroll animation is in progress.

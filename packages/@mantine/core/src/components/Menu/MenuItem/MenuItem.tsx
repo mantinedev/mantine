@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { use, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
@@ -15,8 +15,8 @@ import {
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';
+import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
-import { useSubMenuContext } from '../MenuSub/MenuSub.context';
 
 export type MenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
 
@@ -29,7 +29,7 @@ export interface MenuItemProps extends BoxProps, CompoundStylesApiProps<MenuItem
   /** Key of `theme.colors` or any valid CSS color */
   color?: MantineColor;
 
-  /** If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. */
+  /** Controls whether the menu closes when this item is clicked. When undefined, inherits from Menu's `closeOnItemClick` prop. When true or false, overrides the Menu-level setting */
   closeMenuOnClick?: boolean;
 
   /** Section displayed at the start of the label */
@@ -50,7 +50,7 @@ export type MenuItemFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
+export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
   const {
     classNames,
     className,
@@ -64,11 +64,12 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
     children,
     disabled,
     'data-disabled': dataDisabled,
+    ref,
     ...others
   } = useProps('MenuItem', null, props);
 
   const ctx = useMenuContext();
-  const subCtx = useSubMenuContext();
+  const subCtx = use(SubMenuContext);
   const theme = useMantineTheme();
   const { dir } = useDirection();
   const itemRef = useRef<HTMLButtonElement>(null);

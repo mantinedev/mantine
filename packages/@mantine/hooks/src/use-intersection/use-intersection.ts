@@ -35,3 +35,7 @@ export function useIntersection<T extends HTMLElement = any>(
 
   return { ref, entry };
 }
+
+export namespace useIntersection {
+  export type ReturnValue<T> = UseIntersectionReturnValue<T>;
+}

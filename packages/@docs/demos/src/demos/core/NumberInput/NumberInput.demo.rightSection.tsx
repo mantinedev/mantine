@@ -1,10 +1,10 @@
-import { IconChartBubble } from '@tabler/icons-react';
+import { ChartScatterIcon } from '@phosphor-icons/react';
 import { NumberInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { NumberInput } from '@mantine/core';
-import { IconChartBubble } from '@tabler/icons-react';
+import { ChartScatterIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -14,7 +14,7 @@ function Demo() {
         label="Custom right section"
         placeholder="Custom right section"
         mt="md"
-        rightSection={<IconChartBubble />}
+        rightSection={<ChartScatterIcon />}
         rightSectionPointerEvents="none"
       />
     </>
@@ -30,7 +30,7 @@ function Demo() {
         label="Custom right section"
         placeholder="Custom right section"
         mt="md"
-        rightSection={<IconChartBubble />}
+        rightSection={<ChartScatterIcon />}
         rightSectionPointerEvents="none"
       />
     </>

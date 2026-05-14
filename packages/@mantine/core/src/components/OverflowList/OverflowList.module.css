@@ -1,0 +1,6 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  contain: layout style;
+  gap: var(--ol-gap, var(--mantine-spacing-xs));
+}

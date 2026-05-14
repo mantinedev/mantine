@@ -1,4 +1,4 @@
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import {
   Button,
   Checkbox,
@@ -12,7 +12,7 @@ import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './data';
 
 const code = `
-import { IconChevronDown } from '@tabler/icons-react';
+import { CaretDownIcon } from '@phosphor-icons/react';
 import {
   Button,
   Checkbox,
@@ -46,7 +46,7 @@ const renderTreeNode = ({
         <span>{node.label}</span>
 
         {hasChildren && (
-          <IconChevronDown
+          <CaretDownIcon
             size={14}
             style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
@@ -69,7 +69,7 @@ function Demo() {
   return (
     <>
       <Group mb="md">
-        <Button onClick={() => tree.checkAllNodes()}>Check all</Button>
+        <Button onClick={() => tree.checkAllNodes()}>CheckIcon all</Button>
         <Button onClick={() => tree.uncheckAllNodes()}>Uncheck all</Button>
       </Group>
 
@@ -107,7 +107,7 @@ const renderTreeNode = ({
         <span>{node.label}</span>
 
         {hasChildren && (
-          <IconChevronDown
+          <CaretDownIcon
             size={14}
             style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
@@ -130,7 +130,7 @@ function Demo() {
   return (
     <>
       <Group mb="md">
-        <Button onClick={() => tree.checkAllNodes()}>Check all</Button>
+        <Button onClick={() => tree.checkAllNodes()}>CheckIcon all</Button>
         <Button onClick={() => tree.uncheckAllNodes()}>Uncheck all</Button>
       </Group>
 

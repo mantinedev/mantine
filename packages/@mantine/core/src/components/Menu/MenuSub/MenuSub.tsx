@@ -1,12 +1,19 @@
+import { use, useCallback, useRef } from 'react';
+import { safePolygon, useFloating, useHover, useInteractions } from '@floating-ui/react';
 import { useDisclosure, useId } from '@mantine/hooks';
-import { ExtendComponent, Factory, useProps } from '../../../core';
-import { FloatingAxesOffsets, FloatingPosition, useDelayedHover } from '../../../utils/Floating';
+import { ExtendComponent, Factory, useDirection, useProps } from '../../../core';
+import {
+  FloatingAxesOffsets,
+  FloatingPosition,
+  getFloatingPosition,
+} from '../../../utils/Floating';
 import { __PopoverProps, Popover } from '../../Popover';
 import { TransitionOverride } from '../../Transition';
+import { useMenuContext } from '../Menu.context';
 import { MenuSubDropdown } from '../MenuSubDropdown/MenuSubDropdown';
 import { MenuSubItem } from '../MenuSubItem/MenuSubItem';
 import { MenuSubTarget } from '../MenuSubTarget/MenuSubTarget';
-import { SubMenuProvider, useSubMenuContext } from './MenuSub.context';
+import { SubMenuContext } from './MenuSub.context';
 
 export type MenuSubFactory = Factory<{
   props: MenuSubProps;
@@ -18,19 +25,19 @@ export interface MenuSubProps extends __PopoverProps {
   /** Called with current state when dropdown opens or closes */
   onChange?: (opened: boolean) => void;
 
-  /** Open delay in ms */
+  /** Open delay in ms, applicable when hover trigger is used */
   openDelay?: number;
 
-  /** Close delay in ms */
+  /** Close delay in ms, applicable when hover trigger is used */
   closeDelay?: number;
 
-  /** Dropdown position relative to the target element @default `'right-start'` */
+  /** Dropdown position relative to the target element @default 'right-start' */
   position?: FloatingPosition;
 
-  /** Offset of the dropdown element @default `0` */
+  /** Offset of the dropdown element @default 0 */
   offset?: number | FloatingAxesOffsets;
 
-  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default `{ duration: 0 }` */
+  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default { duration: 0 } */
   transitionProps?: TransitionOverride;
 }
 
@@ -48,17 +55,64 @@ const defaultProps = {
 } satisfies Partial<MenuSubProps>;
 
 export function MenuSub(_props: MenuSubProps) {
-  const { children, closeDelay, openDelay, ...others } = useProps('MenuSub', defaultProps, _props);
+  const { children, closeDelay, openDelay, position, ...others } = useProps(
+    'MenuSub',
+    defaultProps,
+    _props
+  );
   const id = useId();
   const [opened, { open, close }] = useDisclosure(false);
-  const ctx = useSubMenuContext();
+  const parentSubCtx = use(SubMenuContext);
+  const menuCtx = useMenuContext();
+  const { dir } = useDirection();
+  const resolvedPosition = getFloatingPosition(dir, position);
 
-  const { openDropdown, closeDropdown } = useDelayedHover({
-    open,
-    close,
-    closeDelay,
-    openDelay,
+  const levelRegister = parentSubCtx?.registerOpenSub ?? menuCtx.registerOpenSub;
+  const unregisterRef = useRef<(() => void) | null>(null);
+
+  const activeChildCloseRef = useRef<(() => void) | null>(null);
+  const registerOpenSub = useCallback((closeFn: () => void) => {
+    const prev = activeChildCloseRef.current;
+    if (prev && prev !== closeFn) {
+      prev();
+    }
+    activeChildCloseRef.current = closeFn;
+    return () => {
+      if (activeChildCloseRef.current === closeFn) {
+        activeChildCloseRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleOpen = useCallback(() => {
+    unregisterRef.current = levelRegister(close);
+    open();
+  }, [close, levelRegister, open]);
+
+  const handleClose = useCallback(() => {
+    unregisterRef.current?.();
+    unregisterRef.current = null;
+    close();
+  }, [close]);
+
+  const { context, refs } = useFloating({
+    placement: resolvedPosition,
+    open: opened,
+    onOpenChange: (nextOpen) => {
+      if (nextOpen) {
+        handleOpen();
+      } else {
+        handleClose();
+      }
+    },
   });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useHover(context, {
+      handleClose: safePolygon(),
+      delay: { open: openDelay, close: closeDelay },
+    }),
+  ]);
 
   const focusFirstItem = () =>
     window.setTimeout(() => {
@@ -74,20 +128,32 @@ export function MenuSub(_props: MenuSubProps) {
     }, 16);
 
   return (
-    <SubMenuProvider
+    <SubMenuContext
       value={{
         opened,
-        close: closeDropdown,
-        open: openDropdown,
+        close: handleClose,
+        open: handleOpen,
         focusFirstItem,
         focusParentItem,
-        parentContext: ctx,
+        parentContext: parentSubCtx,
+        setReference: refs.setReference,
+        setFloating: refs.setFloating,
+        getReferenceProps,
+        getFloatingProps,
+        registerOpenSub,
       }}
     >
-      <Popover opened={opened} withinPortal={false} withArrow={false} id={id} {...others}>
+      <Popover
+        opened={opened}
+        withinPortal={false}
+        withArrow={false}
+        id={id}
+        position={position}
+        {...others}
+      >
         {children}
       </Popover>
-    </SubMenuProvider>
+    </SubMenuContext>
   );
 }
 

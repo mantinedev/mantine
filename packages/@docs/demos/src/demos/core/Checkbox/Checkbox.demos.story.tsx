@@ -77,3 +77,28 @@ export const Demo_indicator = {
   name: '⭐ Demo: indicator',
   render: renderDemo(demos.indicator),
 };
+
+export const Demo_autoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};
+
+export const Demo_error = {
+  name: '⭐ Demo: error',
+  render: renderDemo(demos.error),
+};
+
+export const Demo_withUseForm = {
+  name: '⭐ Demo: withUseForm',
+  render: renderDemo(demos.withUseForm),
+};
+
+export const Demo_groupWithUseForm = {
+  name: '⭐ Demo: groupWithUseForm',
+  render: renderDemo(demos.groupWithUseForm),
+};
+
+export const Demo_maxSelectedValues = {
+  name: '⭐ Demo: maxSelectedValues',
+  render: renderDemo(demos.maxSelectedValues),
+};

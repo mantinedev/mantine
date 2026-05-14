@@ -16,16 +16,11 @@ describe('@mantine/core/Tooltip', () => {
   tests.itSupportsSystemProps<TooltipProps, TooltipStylesNames>({
     component: Tooltip,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
+    varsResolver: true,
+    attributes: false,
+    id: false,
     selector: '[role="tooltip"]',
     // Gets ref from children instead of tooltip to allow nested tooltips/popovers to work
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/Tooltip',
     stylesApiSelectors: ['tooltip'],
   });

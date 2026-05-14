@@ -38,6 +38,11 @@ export const Demo_clearable = {
   render: renderDemo(demos.clearable),
 };
 
+export const Demo_clearSectionMode = {
+  name: '⭐ Demo: clearSectionMode',
+  render: renderDemo(demos.clearSectionMode),
+};
+
 export const Demo_valueFormat = {
   name: '⭐ Demo: valueFormat',
   render: renderDemo(demos.valueFormat),

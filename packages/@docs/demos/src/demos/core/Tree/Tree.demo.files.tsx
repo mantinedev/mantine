@@ -1,4 +1,5 @@
-import { IconFolder, IconFolderOpen } from '@tabler/icons-react';
+import { FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
+import cx from 'clsx';
 import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { CssIcon, NpmIcon, TypeScriptCircleIcon } from '@mantinex/dev-icons';
@@ -10,37 +11,23 @@ const cssCode = `.root {
   font-size: 13px;
 }
 
-.label {
+.leaf {
   padding-block: 3px;
-
-  &[data-hovered] {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-      color: var(--mantine-color-white);
-    }
-  }
 
   &[data-selected] {
     font-weight: 700;
+    background-color: var(--mantine-color-blue-light) !important;
+    color: var(--mantine-color-bright);
+  }
 
-    @mixin light {
-      background-color: var(--mantine-color-blue-0);
-      color: var(--mantine-color-black);
-    }
-
-    @mixin dark {
-      background-color: alpha(var(--mantine-color-blue-8), 0.35);
-      color: var(--mantine-color-blue-0);
-    }
+  &:hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+    color: var(--mantine-color-bright);
   }
 }`;
 
 const code = `
-import { IconFolder, IconFolderOpen } from '@tabler/icons-react';
+import { FolderSimpleIcon, FolderOpenIcon } from '@phosphor-icons/react';
 import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { CssIcon, NpmIcon, TypeScriptCircleIcon } from '@mantinex/dev-icons';
 import { data, dataCode } from './data';
@@ -67,9 +54,9 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
   if (isFolder) {
     return expanded ? (
-      <IconFolderOpen color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={14} />
     ) : (
-      <IconFolder color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={14} />
     );
   }
 
@@ -119,9 +106,9 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
   if (isFolder) {
     return expanded ? (
-      <IconFolderOpen color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={14} />
     ) : (
-      <IconFolder color="var(--mantine-color-yellow-9)" size={14} stroke={2.5} />
+      <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={14} />
     );
   }
 
@@ -130,7 +117,7 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
 function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} {...elementProps}>
+    <Group gap={5} {...elementProps} className={cx(classes.leaf, elementProps.className)}>
       <FileIcon name={node.value} isFolder={hasChildren} expanded={expanded} />
       <span>{node.label}</span>
     </Group>

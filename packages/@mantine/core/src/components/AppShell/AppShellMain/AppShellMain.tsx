@@ -13,9 +13,7 @@ import classes from '../AppShell.module.css';
 export type AppShellMainStylesNames = 'main';
 
 export interface AppShellMainProps
-  extends BoxProps,
-    CompoundStylesApiProps<AppShellMainFactory>,
-    ElementProps<'main'> {}
+  extends BoxProps, CompoundStylesApiProps<AppShellMainFactory>, ElementProps<'main'> {}
 
 export type AppShellMainFactory = Factory<{
   props: AppShellMainProps;
@@ -24,7 +22,7 @@ export type AppShellMainFactory = Factory<{
   compound: true;
 }>;
 
-export const AppShellMain = factory<AppShellMainFactory>((_props, ref) => {
+export const AppShellMain = factory<AppShellMainFactory>((_props) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'AppShellMain',
     null,
@@ -36,7 +34,6 @@ export const AppShellMain = factory<AppShellMainFactory>((_props, ref) => {
   return (
     <Box
       component="main"
-      ref={ref}
       {...ctx.getStyles('main', { className, style, classNames, styles })}
       {...others}
     />

@@ -4,7 +4,12 @@ export interface UseDebouncedValueOptions {
   leading?: boolean;
 }
 
-export type UseDebouncedValueReturnValue<T> = [T, () => void];
+export interface UseDebouncedValueHandlers {
+  cancel: () => void;
+  flush: () => void;
+}
+
+export type UseDebouncedValueReturnValue<T> = [T, () => void, UseDebouncedValueHandlers];
 
 export function useDebouncedValue<T = any>(
   value: T,
@@ -16,13 +21,31 @@ export function useDebouncedValue<T = any>(
   const timeoutRef = useRef<number | null>(null);
   const cooldownRef = useRef(false);
 
-  const cancel = useCallback(() => window.clearTimeout(timeoutRef.current!), []);
+  const latestValueRef = useRef(value);
+  latestValueRef.current = value;
+
+  const cancel = useCallback(() => {
+    window.clearTimeout(timeoutRef.current!);
+    timeoutRef.current = null;
+    cooldownRef.current = false;
+  }, []);
+
+  const flush = useCallback(() => {
+    if (timeoutRef.current) {
+      cancel();
+      cooldownRef.current = false;
+      setValue(latestValueRef.current);
+    }
+  }, []);
 
   useEffect(() => {
     if (mountedRef.current) {
       if (!cooldownRef.current && options.leading) {
         cooldownRef.current = true;
         setValue(value);
+        timeoutRef.current = window.setTimeout(() => {
+          cooldownRef.current = false;
+        }, wait);
       } else {
         cancel();
         timeoutRef.current = window.setTimeout(() => {
@@ -38,5 +61,11 @@ export function useDebouncedValue<T = any>(
     return cancel;
   }, []);
 
-  return [_value, cancel];
+  return [_value, cancel, { cancel, flush }];
+}
+
+export namespace useDebouncedValue {
+  export type Handlers = UseDebouncedValueHandlers;
+  export type Options = UseDebouncedValueOptions;
+  export type ReturnValue<T> = UseDebouncedValueReturnValue<T>;
 }

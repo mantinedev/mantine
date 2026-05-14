@@ -1,0 +1,82 @@
+.root {
+  --scroller-control-size: 50px;
+  --scroller-background-color: var(--mantine-color-body);
+
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.container {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  user-select: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &[data-draggable] {
+    cursor: grab;
+  }
+}
+
+.content {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.chevron {
+  width: var(--scroller-control-size);
+  height: var(--scroller-control-size);
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--scroller-control-size);
+  z-index: 1;
+  color: var(--mantine-color-dimmed);
+  opacity: 1;
+  pointer-events: auto;
+  transition:
+    opacity 200ms ease,
+    color 150ms ease;
+
+  &:hover {
+    color: var(--mantine-color-text);
+  }
+
+  &:where([data-position='start']) {
+    inset-inline-start: 0;
+    background: linear-gradient(to right, var(--scroller-background-color) 40%, transparent);
+    justify-content: flex-start;
+
+    & .chevron {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:where([data-position='end']) {
+    inset-inline-end: 0;
+    background: linear-gradient(to left, var(--scroller-background-color) 40%, transparent);
+    justify-content: flex-end;
+
+    & .chevron {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &:where([data-hidden]) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

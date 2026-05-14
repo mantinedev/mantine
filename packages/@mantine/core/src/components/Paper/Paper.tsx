@@ -23,7 +23,7 @@ export interface PaperBaseProps {
   /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Adds border to the root element */
@@ -47,7 +47,7 @@ const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) =>
   },
 }));
 
-export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
+export const Paper = polymorphicFactory<PaperFactory>((_props) => {
   const props = useProps('Paper', null, _props);
   const {
     classNames,
@@ -81,7 +81,6 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
 
   return (
     <Box
-      ref={ref}
       mod={[{ 'data-with-border': withBorder }, mod]}
       {...getStyles('root')}
       variant={variant}
@@ -91,4 +90,13 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
 });
 
 Paper.classes = classes;
+Paper.varsResolver = varsResolver;
 Paper.displayName = '@mantine/core/Paper';
+
+export namespace Paper {
+  export type Props = PaperProps;
+  export type StylesNames = PaperStylesNames;
+  export type CssVariables = PaperCssVariables;
+  export type Factory = PaperFactory;
+  export type BaseProps = PaperBaseProps;
+}

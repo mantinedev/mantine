@@ -1,9 +1,8 @@
-import { useRef } from 'react';
+import { use, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  createEventHandler,
   ElementProps,
   factory,
   Factory,
@@ -11,15 +10,13 @@ import {
 } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
+import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
-import { useSubMenuContext } from '../MenuSub/MenuSub.context';
 
 export type MenuSubDropdownStylesNames = 'dropdown';
 
 export interface MenuSubDropdownProps
-  extends BoxProps,
-    CompoundStylesApiProps<MenuSubDropdownFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<MenuSubDropdownFactory>, ElementProps<'div'> {}
 
 export type MenuSubDropdownFactory = Factory<{
   props: MenuSubDropdownProps;
@@ -28,7 +25,7 @@ export type MenuSubDropdownFactory = Factory<{
   compound: true;
 }>;
 
-export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props, ref) => {
+export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
   const {
     classNames,
     className,
@@ -37,27 +34,32 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props, ref) => {
     vars,
     onMouseEnter,
     onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
     onKeyDown,
     children,
+    ref,
     ...others
   } = useProps('MenuSubDropdown', null, props);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ctx = useMenuContext();
-  const subCtx = useSubMenuContext();
+  const subCtx = use(SubMenuContext);
 
-  const handleMouseEnter = createEventHandler<any>(onMouseEnter, subCtx?.open);
-
-  const handleMouseLeave = createEventHandler<any>(onMouseLeave, subCtx?.close);
+  const floatingProps = subCtx?.getFloatingProps({
+    onMouseEnter,
+    onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
+  });
 
   return (
     <Popover.Dropdown
       {...others}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      {...floatingProps}
       role="menu"
       aria-orientation="vertical"
-      ref={useMergedRef(ref, wrapperRef)}
+      ref={useMergedRef(ref, wrapperRef, subCtx?.setFloating)}
       {...ctx.getStyles('dropdown', {
         className,
         style,

@@ -1,18 +1,18 @@
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@phosphor-icons/react';
 import { Carousel } from '@mantine/carousel';
 import { MantineDemo } from '@mantinex/demo';
 import { Slides } from './_slides';
 
 const code = `
 import { Carousel } from '@mantine/carousel';
-import { IconArrowRight, IconArrowLeft } from '@tabler/icons-react';
+import { ArrowRightIcon, ArrowLeftIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Carousel
       height={180}
-      nextControlIcon={<IconArrowRight size={16} />}
-      previousControlIcon={<IconArrowLeft size={16} />}
+      nextControlIcon={<ArrowRightIcon size={16} />}
+      previousControlIcon={<ArrowLeftIcon size={16} />}
     >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
@@ -27,8 +27,8 @@ function Demo() {
   return (
     <Carousel
       height={180}
-      nextControlIcon={<IconArrowRight size={16} />}
-      previousControlIcon={<IconArrowLeft size={16} />}
+      nextControlIcon={<ArrowRightIcon size={16} />}
+      previousControlIcon={<ArrowLeftIcon size={16} />}
     >
       <Slides count={5} />
     </Carousel>

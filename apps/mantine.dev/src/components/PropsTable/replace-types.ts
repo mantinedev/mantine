@@ -10,5 +10,8 @@ export function prepareType(type: string): string {
     return REPLACE_TYPES[type];
   }
 
-  return type.replaceAll('DefaultMantineColor', 'MantineColor');
+  return type
+    .replaceAll('DefaultMantineColor', 'MantineColor')
+    .replaceAll('| undefined', '')
+    .trim();
 }

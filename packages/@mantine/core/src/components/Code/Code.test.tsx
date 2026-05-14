@@ -7,16 +7,8 @@ describe('@mantine/core/Code', () => {
   tests.itSupportsSystemProps<CodeProps, CodeStylesNames>({
     component: Code,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLElement,
     displayName: '@mantine/core/Code',
     stylesApiSelectors: ['root'],
   });

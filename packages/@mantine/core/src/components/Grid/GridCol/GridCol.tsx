@@ -11,24 +11,25 @@ import {
   useRandomClassName,
 } from '../../../core';
 import { useGridContext } from '../Grid.context';
-import classes from '../Grid.module.css';
 import { GridColVariables } from './GridColVariables';
+import classes from '../Grid.module.css';
 
 export type GridColStylesNames = 'col';
 export type ColSpan = number | 'auto' | 'content';
 
 export interface GridColProps
-  extends BoxProps,
-    CompoundStylesApiProps<GridColFactory>,
-    ElementProps<'div'> {
-  /** Column span @default `12` */
+  extends BoxProps, CompoundStylesApiProps<GridColFactory>, ElementProps<'div'> {
+  /** Column span @default 12 */
   span?: StyleProp<ColSpan>;
 
-  /** Column order, can be used to reorder columns at different viewport sizes */
+  /** Column order, use to reorder columns at different viewport sizes */
   order?: StyleProp<number>;
 
-  /** Column offset on the left side – number of columns that are left empty before this column */
+  /** Column start offset – number of empty columns before this column */
   offset?: StyleProp<number>;
+
+  /** Vertical alignment of the column, controls `align-self` CSS property */
+  align?: StyleProp<React.CSSProperties['alignSelf']>;
 }
 
 export type GridColFactory = Factory<{
@@ -42,9 +43,10 @@ const defaultProps = {
   span: 12,
 } satisfies Partial<GridColProps>;
 
-export const GridCol = factory<GridColFactory>((_props, ref) => {
+export const GridCol = factory<GridColFactory>((_props) => {
   const props = useProps('GridCol', defaultProps, _props);
-  const { classNames, className, style, styles, vars, span, order, offset, ...others } = props;
+  const { classNames, className, style, styles, vars, span, order, offset, align, ...others } =
+    props;
   const ctx = useGridContext();
   const responsiveClassName = useRandomClassName();
   return (
@@ -54,10 +56,10 @@ export const GridCol = factory<GridColFactory>((_props, ref) => {
         span={span}
         order={order}
         offset={offset}
+        align={align}
       />
 
       <Box
-        ref={ref}
         {...ctx.getStyles('col', {
           className: cx(className, responsiveClassName),
           style,

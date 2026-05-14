@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { use, useCallback, useEffect, useRef, useState } from 'react';
 import {
   useDelayGroup,
   useDismiss,
@@ -8,7 +8,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 import { useId } from '@mantine/hooks';
-import { useHoverCardGroupContext } from './HoverCardGroup/HoverCardGroup.context';
+import { HoverCardGroupContext } from './HoverCardGroup/HoverCardGroup';
 
 interface UseHoverCard {
   openDelay?: number;
@@ -23,7 +23,7 @@ export function useHoverCard(settings: UseHoverCard) {
   const [uncontrolledOpened, setUncontrolledOpened] = useState(settings.defaultOpened);
   const controlled = typeof settings.opened === 'boolean';
   const opened = controlled ? settings.opened : uncontrolledOpened;
-  const withinGroup = useHoverCardGroupContext();
+  const withinGroup = use(HoverCardGroupContext).withinGroup;
   const uid = useId();
 
   const openTimeout = useRef(-1);

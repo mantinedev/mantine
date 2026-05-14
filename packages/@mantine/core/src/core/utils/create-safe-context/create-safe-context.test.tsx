@@ -10,19 +10,19 @@ interface ContextType {
 describe('@mantine/core/create-safe-context', () => {
   it('throws error if useSafeContext hook was called without Provider', () => {
     patchConsoleError();
-    const [, useContext] = createSafeContext<ContextType>('test-error');
-    expect(() => renderHook(() => useContext())).toThrow(new Error('test-error'));
+    const [, useCtx] = createSafeContext<ContextType>('test-error');
+    expect(() => renderHook(() => useCtx())).toThrow(new Error('test-error'));
     patchConsoleError.release();
   });
 
   it('returns context value when useSafeContext hook was called within Provider', () => {
     const fn = jest.fn();
-    const [Provider, useContext] = createSafeContext<ContextType>('test-error');
+    const [Provider, useCtx] = createSafeContext<ContextType>('test-error');
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <Provider value={{ value: 100, onChange: fn }}>{children}</Provider>
     );
 
-    const view = renderHook(() => useContext(), { wrapper });
+    const view = renderHook(() => useCtx(), { wrapper });
     expect(view.result.current).toStrictEqual({ value: 100, onChange: fn });
   });
 });

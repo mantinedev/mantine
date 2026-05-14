@@ -1,8 +1,17 @@
-export { DonutChart } from './DonutChart';
-export type {
+import type {
+  DonutChartCell,
   DonutChartCssVariables,
   DonutChartFactory,
   DonutChartProps,
   DonutChartStylesNames,
-  DonutChartCell,
 } from './DonutChart';
+
+export { DonutChart } from './DonutChart';
+
+export type {
+  DonutChartProps,
+  DonutChartStylesNames,
+  DonutChartFactory,
+  DonutChartCssVariables,
+  DonutChartCell,
+};

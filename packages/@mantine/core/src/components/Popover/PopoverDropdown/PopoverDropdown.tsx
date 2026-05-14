@@ -19,9 +19,7 @@ import { usePopoverContext } from '../Popover.context';
 import classes from '../Popover.module.css';
 
 export interface PopoverDropdownProps
-  extends BoxProps,
-    CompoundStylesApiProps<PopoverDropdownFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<PopoverDropdownFactory>, ElementProps<'div'> {}
 
 export type PopoverDropdownFactory = Factory<{
   props: PopoverDropdownProps;
@@ -30,7 +28,7 @@ export type PopoverDropdownFactory = Factory<{
   compound: true;
 }>;
 
-export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => {
+export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
   const props = useProps('PopoverDropdown', null, _props);
   const {
     className,
@@ -41,6 +39,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
     variant,
     classNames,
     styles,
+    ref,
     ...others
   } = props;
 
@@ -113,7 +112,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
                     width: ctx.width === 'target' ? undefined : rem(ctx.width),
                     ...(ctx.referenceHidden ? { display: 'none' } : null),
                   },
-                  ctx.resolvedStyles.dropdown,
+                  ctx.resolvedStyles?.dropdown,
                   styles?.dropdown,
                   style,
                 ],

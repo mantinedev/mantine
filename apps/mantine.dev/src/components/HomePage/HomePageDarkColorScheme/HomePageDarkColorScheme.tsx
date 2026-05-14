@@ -1,11 +1,11 @@
-import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { MoonStarsIcon, SunIcon } from '@phosphor-icons/react';
 import { Button, Group, Image, SimpleGrid, useMantineColorScheme } from '@mantine/core';
 import { MdxCodeHighlight } from '@/components/MdxProvider';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import classes from './HomePageDarkColorScheme.module.css';
 import demo from './images/new.webp';
+import classes from './HomePageDarkColorScheme.module.css';
 
 const code = `import { MantineProvider } from '@mantine/core';
 
@@ -44,8 +44,8 @@ export function HomePageDarkColorScheme() {
                 onClick={() => toggleColorScheme()}
                 leftSection={
                   <>
-                    <IconSun className={classes.darkIcon} />
-                    <IconMoonStars className={classes.lightIcon} />
+                    <SunIcon className={classes.darkIcon} />
+                    <MoonStarsIcon className={classes.lightIcon} />
                   </>
                 }
               >

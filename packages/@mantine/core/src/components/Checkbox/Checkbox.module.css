@@ -53,7 +53,7 @@
     border-color: var(--mantine-color-dark-4);
   }
 
-  &:where([data-error]) {
+  &:where([data-with-error-styles][data-error]) {
     border-color: var(--mantine-color-error);
   }
 

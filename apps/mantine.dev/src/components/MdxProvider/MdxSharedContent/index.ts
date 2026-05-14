@@ -16,3 +16,4 @@ export { MdxServerComponentsIncompatible } from './MdxServerComponentsIncompatib
 export { MdxWrapperProps } from './MdxWrapperProps';
 export { MdxInputSections } from './MdxInputSections';
 export { MdxAutoContrast } from './MdxAutoContrast';
+export { MdxClearSectionMode } from './MdxClearSectionMode';

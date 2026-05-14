@@ -10,7 +10,6 @@ function Demo() {
 
   return (
     <Button
-      radius="md"
       styles={{
         root: {
           padding: 2,
@@ -45,7 +44,6 @@ function Demo() {
 
   return (
     <Button
-      radius="md"
       styles={{
         root: {
           padding: 2,

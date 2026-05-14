@@ -1,4 +1,4 @@
-interface ChevronProps extends React.ComponentPropsWithoutRef<'svg'> {
+interface ChevronProps extends React.ComponentProps<'svg'> {
   direction: 'up' | 'down';
 }
 

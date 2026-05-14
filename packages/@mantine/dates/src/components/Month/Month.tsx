@@ -40,6 +40,10 @@ export type MonthStylesNames =
   | 'weekNumber'
   | DayStylesNames;
 
+export type MonthCssVariables = {
+  weekNumber: '--wn-fz' | '--wn-size';
+};
+
 export interface MonthSettings {
   /** Determines whether propagation for `Escape` key should be stopped */
   __stopPropagation?: boolean;
@@ -65,10 +69,10 @@ export interface MonthSettings {
   /** `dayjs` locale, the default value is defined by `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names @default `'dd'` */
+  /** `dayjs` format for weekdays names @default 'dd' */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
@@ -91,10 +95,10 @@ export interface MonthSettings {
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether outside dates should be hidden @default `false` */
+  /** Determines whether outside dates should be hidden @default false */
   hideOutsideDates?: boolean;
 
-  /** Determines whether weekdays row should be hidden @default `false` */
+  /** Determines whether weekdays row should be hidden @default false */
   hideWeekdays?: boolean;
 
   /** Assigns `aria-label` to `Day` components based on date */
@@ -103,21 +107,21 @@ export interface MonthSettings {
   /** Controls size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated by space @default `true` */
+  /** Determines whether controls should be separated by space @default true */
   withCellSpacing?: boolean;
 
-  /** Determines whether today should be highlighted with a border @default `false` */
+  /** Determines whether today should be highlighted with a border @default false */
   highlightToday?: boolean;
 
-  /** Determines whether week numbers should be displayed @default `false` */
+  /** Determines whether week numbers should be displayed @default false */
   withWeekNumbers?: boolean;
+
+  /** Determines whether the month should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface MonthProps
-  extends BoxProps,
-    MonthSettings,
-    StylesApiProps<MonthFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, MonthSettings, StylesApiProps<MonthFactory>, ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Month to display, value `YYYY-MM-DD` */
@@ -131,6 +135,7 @@ export type MonthFactory = Factory<{
   props: MonthProps;
   ref: HTMLTableElement;
   stylesNames: MonthStylesNames;
+  vars: MonthCssVariables;
 }>;
 
 const defaultProps = {
@@ -144,7 +149,7 @@ const varsResolver = createVarsResolver<MonthFactory>((_, { size }) => ({
   },
 }));
 
-export const Month = factory<MonthFactory>((_props, ref) => {
+export const Month = factory<MonthFactory>((_props) => {
   const props = useProps('Month', defaultProps, _props);
   const {
     classNames,
@@ -178,6 +183,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     size,
     highlightToday,
     withWeekNumbers,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -241,6 +247,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             __staticSelector={__staticSelector || 'Month'}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
+            attributes={attributes}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             highlightToday={highlightToday}
@@ -252,6 +259,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             hidden={hideOutsideDates ? outside : false}
             aria-label={ariaLabel}
             static={isStatic}
+            fullWidth={fullWidth}
             disabled={
               excludeDate?.(date) ||
               !isBeforeMaxDate(date, toDateString(maxDate)!) ||
@@ -295,7 +303,13 @@ export const Month = factory<MonthFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="table" {...getStyles('month')} size={size} ref={ref} {...others}>
+    <Box
+      component="table"
+      {...getStyles('month')}
+      size={size}
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       {!hideWeekdays && (
         <thead {...getStyles('monthThead')}>
           <WeekdaysRow
@@ -303,11 +317,12 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             locale={locale}
             firstDayOfWeek={firstDayOfWeek}
             weekdayFormat={weekdayFormat}
+            withWeekNumbers={withWeekNumbers}
             size={size}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             unstyled={unstyled}
-            withWeekNumbers={withWeekNumbers}
+            attributes={attributes}
           />
         </thead>
       )}
@@ -317,4 +332,12 @@ export const Month = factory<MonthFactory>((_props, ref) => {
 });
 
 Month.classes = classes;
+Month.varsResolver = varsResolver;
 Month.displayName = '@mantine/dates/Month';
+
+export namespace Month {
+  export type Props = MonthProps;
+  export type Settings = MonthSettings;
+  export type StylesNames = MonthStylesNames;
+  export type Factory = MonthFactory;
+}

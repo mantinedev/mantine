@@ -13,6 +13,11 @@ export const Demo_clearable = {
   render: renderDemo(demos.clearable),
 };
 
+export const Demo_clearSectionMode = {
+  name: '⭐ Demo: clearSectionMode',
+  render: renderDemo(demos.clearSectionMode),
+};
+
 export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
@@ -96,4 +101,14 @@ export const Demo_dropdownWidth = {
 export const Demo_withPlaceholders = {
   name: '⭐ Demo: withPlaceholders',
   render: renderDemo(demos.withPlaceholders),
+};
+
+export const Demo_duration = {
+  name: '⭐ Demo: duration',
+  render: renderDemo(demos.duration),
+};
+
+export const Demo_minHoursDigits = {
+  name: '⭐ Demo: minHoursDigits',
+  render: renderDemo(demos.minHoursDigits),
 };

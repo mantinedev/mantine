@@ -1,15 +1,13 @@
-import { forwardRef } from 'react';
-
 export function createContextContainer<T>(
   Component: React.FC<T>,
   Provider: React.FC<any>,
   providerProps?: Record<string, any>
 ) {
-  const Container = forwardRef((props: React.PropsWithoutRef<T>, ref) => (
+  const Container = (props: React.PropsWithoutRef<T>) => (
     <Provider {...providerProps}>
-      <Component {...(props as any)} ref={ref} />
+      <Component {...(props as any)} />
     </Provider>
-  ));
+  );
 
   Container.displayName = Component.displayName;
   (Container as any).extend = (Component as any).extend;

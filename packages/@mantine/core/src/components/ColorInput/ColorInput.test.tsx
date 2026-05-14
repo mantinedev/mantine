@@ -18,15 +18,7 @@ describe('@mantine/core/ColorInput', () => {
   tests.itSupportsSystemProps<ColorInputProps, __InputStylesNames>({
     component: ColorInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLInputElement,
+    varsResolver: true,
     displayName: '@mantine/core/ColorInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -35,5 +27,11 @@ describe('@mantine/core/ColorInput', () => {
     component: ColorInput,
     props: defaultProps,
     selector: 'input',
+  });
+
+  tests.itSupportsSharedInputDefaults<ColorInputProps>({
+    component: ColorInput,
+    props: defaultProps,
+    componentName: 'ColorInput',
   });
 });

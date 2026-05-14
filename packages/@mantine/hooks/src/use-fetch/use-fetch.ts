@@ -30,8 +30,13 @@ export function useFetch<T>(
 
     setLoading(true);
 
-    return fetch(url, { signal: controller.current.signal, ...options })
-      .then((res) => res.json())
+    return fetch(url, { ...options, signal: controller.current.signal })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Request failed with status ${res.status}`);
+        }
+        return res.json();
+      })
       .then((res) => {
         setData(res);
         setLoading(false);
@@ -46,7 +51,7 @@ export function useFetch<T>(
 
         return err;
       });
-  }, [url]);
+  }, [url, JSON.stringify(options)]);
 
   const abort = useCallback(() => {
     if (controller.current) {
@@ -67,4 +72,9 @@ export function useFetch<T>(
   }, [refetch, autoInvoke]);
 
   return { data, loading, error, refetch, abort };
+}
+
+export namespace useFetch {
+  export type Options = UseFetchOptions;
+  export type ReturnValue<T> = UseFetchReturnValue<T>;
 }

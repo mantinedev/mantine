@@ -79,9 +79,7 @@ export interface BubbleChartDataKey {
 }
 
 export interface BubbleChartProps
-  extends BoxProps,
-    StylesApiProps<BubbleChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<BubbleChartFactory>, ElementProps<'div'> {
   /** Chart data */
   data: Record<string, any>[];
 
@@ -91,7 +89,7 @@ export interface BubbleChartProps
   /** Z axis range */
   range: [number, number];
 
-  /** Color of the chart items. Key of `theme.colors` or any valid CSS color. @default `blue.6` */
+  /** Color of the chart items. Key of `theme.colors` or any valid CSS color. @default blue.6 */
   color?: MantineColor;
 
   /** Props passed down to the `XAxis` recharts component */
@@ -109,7 +107,7 @@ export interface BubbleChartProps
   /** Props passed down to the `Scatter` component */
   scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
 
-  /** Color of the text displayed inside the chart @default `'dimmed'` */
+  /** Color of the text displayed inside the chart @default 'dimmed' */
   textColor?: MantineColor;
 
   /** Color of the grid and cursor lines, by default depends on color scheme */
@@ -118,7 +116,7 @@ export interface BubbleChartProps
   /** Chart label displayed next to the x axis */
   label?: string;
 
-  /** Determines whether the tooltip should be displayed @default `true` */
+  /** Determines whether the tooltip should be displayed @default true */
   withTooltip?: boolean;
 
   /** Function to format z axis values */
@@ -144,7 +142,7 @@ const varsResolver = createVarsResolver<BubbleChartFactory>((theme, { textColor,
   },
 }));
 
-export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
+export const BubbleChart = factory<BubbleChartFactory>((_props) => {
   const props = useProps('BubbleChart', defaultProps, _props);
   const {
     classNames,
@@ -188,7 +186,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
   const yAxisWidth = label ? undefined : { width: 0 };
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ScatterChart>
           <XAxis
@@ -255,3 +253,12 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
 
 BubbleChart.displayName = '@mantine/charts/BubbleChart';
 BubbleChart.classes = classes;
+BubbleChart.varsResolver = varsResolver;
+
+export namespace BubbleChart {
+  export type Props = BubbleChartProps;
+  export type StylesNames = BubbleChartStylesNames;
+  export type CssVariables = BubbleChartCssVariables;
+  export type Factory = BubbleChartFactory;
+  export type DataKey = BubbleChartDataKey;
+}

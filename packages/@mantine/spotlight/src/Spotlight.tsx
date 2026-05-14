@@ -9,15 +9,39 @@ import { useUncontrolled } from '@mantine/hooks';
 import { defaultSpotlightFilter } from './default-spotlight-filter';
 import { isActionsGroup } from './is-actions-group';
 import { limitActions } from './limit-actions';
-import classes from './Spotlight.module.css';
 import { spotlight, spotlightStore } from './spotlight.store';
-import { SpotlightAction, SpotlightActionProps } from './SpotlightAction';
-import { SpotlightActionsGroup } from './SpotlightActionsGroup';
-import { SpotlightActionsList } from './SpotlightActionsList';
-import { SpotlightEmpty } from './SpotlightEmpty';
-import { SpotlightFooter } from './SpotlightFooter';
+import {
+  SpotlightAction,
+  SpotlightActionProps,
+  type SpotlightActionStylesNames,
+} from './SpotlightAction';
+import {
+  SpotlightActionsGroup,
+  type SpotlightActionsGroupProps,
+  type SpotlightActionsGroupStylesNames,
+} from './SpotlightActionsGroup';
+import {
+  SpotlightActionsList,
+  type SpotlightActionsListProps,
+  type SpotlightActionsListStylesNames,
+} from './SpotlightActionsList';
+import {
+  SpotlightEmpty,
+  type SpotlightEmptyProps,
+  type SpotlightEmptyStylesNames,
+} from './SpotlightEmpty';
+import {
+  SpotlightFooter,
+  type SpotlightFooterProps,
+  type SpotlightFooterStylesNames,
+} from './SpotlightFooter';
 import { SpotlightRoot, SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
-import { SpotlightSearch, SpotlightSearchProps } from './SpotlightSearch';
+import {
+  SpotlightSearch,
+  SpotlightSearchProps,
+  type SpotlightSearchStylesNames,
+} from './SpotlightSearch';
+import classes from './Spotlight.module.css';
 
 export type SpotlightFilterFunction = (
   query: string,
@@ -51,10 +75,10 @@ export interface SpotlightProps extends SpotlightRootProps {
   /** Message displayed when none of the actions match given `filter` */
   nothingFound?: React.ReactNode;
 
-  /** Determines whether search query should be highlighted in action label @default `false` */
+  /** Determines whether search query should be highlighted in action label @default false */
   highlightQuery?: boolean;
 
-  /** Maximum number of actions displayed at a time @default `Infinity` */
+  /** Maximum number of actions displayed at a time @default Infinity */
   limit?: number;
 
   /** Props passed down to the `ScrollArea` component */
@@ -93,7 +117,7 @@ const defaultProps = {
   shortcut: 'mod + K',
 } satisfies Partial<SpotlightProps>;
 
-export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
+export const Spotlight = factory<SpotlightFactory>((_props) => {
   const props = useProps('Spotlight', defaultProps, _props);
   const {
     searchProps,
@@ -132,7 +156,7 @@ export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
   });
 
   return (
-    <SpotlightRoot {...others} query={_query} onQueryChange={setQuery} ref={ref}>
+    <SpotlightRoot {...others} query={_query} onQueryChange={setQuery}>
       <SpotlightSearch {...searchProps} />
       {filteredActions.length > 0 && (
         <SpotlightActionsList {...(scrollAreaProps as any)}>{filteredActions}</SpotlightActionsList>
@@ -156,3 +180,47 @@ Spotlight.Root = SpotlightRoot;
 Spotlight.open = spotlight.open;
 Spotlight.close = spotlight.close;
 Spotlight.toggle = spotlight.toggle;
+
+export namespace Spotlight {
+  export type Props = SpotlightProps;
+  export type StylesNames = SpotlightStylesNames;
+  export type Factory = SpotlightFactory;
+  export type FilterFunction = SpotlightFilterFunction;
+  export type ActionData = SpotlightActionData;
+  export type ActionGroupData = SpotlightActionGroupData;
+
+  export namespace Action {
+    export type Props = SpotlightActionProps;
+    export type StylesNames = SpotlightActionStylesNames;
+  }
+
+  export namespace ActionsGroup {
+    export type Props = SpotlightActionsGroupProps;
+    export type StylesNames = SpotlightActionsGroupStylesNames;
+  }
+
+  export namespace ActionsList {
+    export type Props = SpotlightActionsListProps;
+    export type StylesNames = SpotlightActionsListStylesNames;
+  }
+
+  export namespace Empty {
+    export type Props = SpotlightEmptyProps;
+    export type StylesNames = SpotlightEmptyStylesNames;
+  }
+
+  export namespace Footer {
+    export type Props = SpotlightFooterProps;
+    export type StylesNames = SpotlightFooterStylesNames;
+  }
+
+  export namespace Search {
+    export type Props = SpotlightSearchProps;
+    export type StylesNames = SpotlightSearchStylesNames;
+  }
+
+  export namespace Root {
+    export type Props = SpotlightRootProps;
+    export type StylesNames = SpotlightRootStylesNames;
+  }
+}

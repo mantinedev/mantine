@@ -1,10 +1,10 @@
-import { IconArrowUp } from '@tabler/icons-react';
+import { ArrowUpIcon } from '@phosphor-icons/react';
 import { Affix, Button, Text, Transition } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { IconArrowUp } from '@tabler/icons-react';
+import { ArrowUpIcon } from '@phosphor-icons/react';
 import { useWindowScroll } from '@mantine/hooks';
 import { Affix, Button, Text, Transition } from '@mantine/core';
 
@@ -18,7 +18,7 @@ function Demo() {
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftSection={<IconArrowUp size={16} />}
+              leftSection={<ArrowUpIcon size={16} />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >
@@ -42,7 +42,7 @@ function Demo() {
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftSection={<IconArrowUp size={16} />}
+              leftSection={<ArrowUpIcon size={16} />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >

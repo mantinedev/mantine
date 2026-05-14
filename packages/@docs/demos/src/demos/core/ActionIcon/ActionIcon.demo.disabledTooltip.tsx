@@ -1,16 +1,21 @@
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { ActionIcon, Tooltip } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <Tooltip label="Tooltip for disabled button">
-      <ActionIcon size="xl" data-disabled onClick={(event) => event.preventDefault()}>
-        <IconHeart />
+      <ActionIcon
+        aria-label="Hover to see tooltip"
+        size="xl"
+        data-disabled
+        onClick={(event) => event.preventDefault()}
+      >
+        <HeartIcon />
       </ActionIcon>
     </Tooltip>
   );
@@ -20,8 +25,13 @@ function Demo() {
 function Demo() {
   return (
     <Tooltip label="Tooltip for disabled button">
-      <ActionIcon size="xl" data-disabled onClick={(event) => event.preventDefault()}>
-        <IconHeart />
+      <ActionIcon
+        aria-label="Hover to see tooltip"
+        size="xl"
+        data-disabled
+        onClick={(event) => event.preventDefault()}
+      >
+        <HeartIcon />
       </ActionIcon>
     </Tooltip>
   );

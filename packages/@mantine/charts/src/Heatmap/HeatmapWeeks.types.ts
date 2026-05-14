@@ -26,7 +26,7 @@ export interface HeatmapWeeksSharedProps {
   /** Function to set hovered rect state */
   setHoveredRect: (rect: HeatmapRectData | null) => void;
   /** Props passed down to each rect depending on its date and associated value */
-  getRectProps?: (input: HeatmapRectData) => React.ComponentPropsWithoutRef<'rect'>;
+  getRectProps?: (input: HeatmapRectData) => React.ComponentProps<'rect'>;
   /** Styles API getter - function that returns styles for a given selector */
   getStyles: (selector: HeatmapStylesNames) => Record<string, any>;
 }

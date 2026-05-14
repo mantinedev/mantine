@@ -45,7 +45,7 @@
   position: absolute;
   display: block;
   z-index: 1;
-  border-radius: var(--sc-radius, var(--mantine-radius-default));
+  border-radius: calc(var(--sc-radius, var(--mantine-radius-default)) - 4px);
 
   @mixin where-light {
     box-shadow: var(--sc-shadow, none);
@@ -60,14 +60,14 @@
 
 .label {
   -webkit-tap-highlight-color: transparent;
-  font-weight: 500;
+  font-weight: var(--mantine-font-weight-medium);
   display: block;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;
-  border-radius: var(--sc-radius, var(--mantine-radius-default));
+  border-radius: calc(var(--sc-radius, var(--mantine-radius-default)) - 4px);
   font-size: var(--sc-font-size);
   padding: var(--sc-padding);
   transition: color var(--sc-transition-duration) var(--sc-transition-timing-function);
@@ -111,7 +111,7 @@
       inset: 0;
       z-index: 0;
       position: absolute;
-      border-radius: var(--sc-radius, var(--mantine-radius-default));
+      border-radius: calc(var(--sc-radius, var(--mantine-radius-default)) - 4px);
 
       @mixin where-light {
         box-shadow: var(--sc-shadow, none);

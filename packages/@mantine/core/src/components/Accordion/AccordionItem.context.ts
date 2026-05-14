@@ -1,8 +1,10 @@
 import { createSafeContext } from '../../core';
 
-interface AccordionItemContext {
+export interface AccordionItemContextValue {
   value: string;
 }
 
 export const [AccordionItemProvider, useAccordionItemContext] =
-  createSafeContext<AccordionItemContext>('Accordion.Item component was not found in the tree');
+  createSafeContext<AccordionItemContextValue>(
+    'Accordion.Item component was not found in the tree'
+  );

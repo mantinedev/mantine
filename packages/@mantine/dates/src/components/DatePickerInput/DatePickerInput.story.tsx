@@ -265,16 +265,9 @@ export function DarkColorSchemeDemo() {
         defaultValue={['2024-10-12', '2024-10-17']}
         label="Date range picker"
         size="lg"
-        radius="md"
       />
 
-      <Select
-        data={['React']}
-        placeholder="Custom select"
-        label="Custom select"
-        size="lg"
-        radius="md"
-      />
+      <Select data={['React']} placeholder="Custom select" label="Custom select" size="lg" />
 
       <MultiSelect
         data={['React', 'Angular']}
@@ -282,7 +275,6 @@ export function DarkColorSchemeDemo() {
         label="Multiselect"
         placeholder="Search items"
         size="lg"
-        radius="md"
         styles={{ pill: { background: 'var(--mantine-color-dark-5)' } }}
       />
 
@@ -294,18 +286,10 @@ export function DarkColorSchemeDemo() {
         decimalScale={2}
         prefix="$ "
         size="lg"
-        radius="md"
       />
 
       <div>
-        <Autocomplete
-          label="Autocomplete"
-          placeholder="Autocomplete"
-          data={[]}
-          size="lg"
-          radius="md"
-          mb="md"
-        />
+        <Autocomplete label="Autocomplete" placeholder="Autocomplete" data={[]} size="lg" mb="md" />
         <Stack gap="lg">
           <Radio.Group label="Radio" size="lg" defaultValue="react">
             <Group mt={5}>
@@ -325,7 +309,6 @@ export function DarkColorSchemeDemo() {
           withEyeDropper={false}
           label="Color input"
           size="lg"
-          radius="md"
           mb="md"
         />
 

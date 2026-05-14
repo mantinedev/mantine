@@ -1,10 +1,10 @@
-import { IconHeartFilled } from '@tabler/icons-react';
+import { HeartIcon } from '@phosphor-icons/react';
 import { Button } from '@mantine/core';
 
 export function MdxSponsorButton() {
   return (
     <Button
-      rightSection={<IconHeartFilled size={22} color="var(--mantine-color-red-7)" />}
+      rightSection={<HeartIcon weight="fill" size={22} color="var(--mantine-color-red-7)" />}
       size="lg"
       miw={300}
       justify="space-between"

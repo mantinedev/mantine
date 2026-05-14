@@ -14,14 +14,14 @@ export default Layout(MDX_DATA.Text);
 
 ## Truncate
 
-Set `truncate` prop to add `text-overflow: ellipsis` styles:
+Set the `truncate` prop to add `text-overflow: ellipsis` styles:
 
 <Demo data={TextDemos.truncate} />
 
 ## Line clamp
 
-Specify maximum number of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
-CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on text element:
+Specify the maximum number of lines with the `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on the text element:
 
 <Demo data={TextDemos.linesConfigurator} />
 
@@ -32,8 +32,8 @@ Line clamp can also be used with any children (not only strings), for example wi
 ## Inherit styles
 
 Text always applies font-size, font-family and line-height styles,
-but in some cases this is not a desired behavior. To force Text to inherit parent
-styles set `inherit` prop. For example, highlight part of [Title](/core/title/):
+but in some cases this is not the desired behavior. To force Text to inherit parent
+styles, set the `inherit` prop. For example, highlight part of [Title](/core/title/):
 
 <Demo data={TextDemos.inherit} />
 
@@ -45,7 +45,7 @@ styles set `inherit` prop. For example, highlight part of [Title](/core/title/):
 
 ## span prop
 
-Use `span` prop as a shorthand for `component="span"`:
+Use the `span` prop as a shorthand for `component="span"`:
 
 ```tsx
 import { Text } from '@mantine/core';

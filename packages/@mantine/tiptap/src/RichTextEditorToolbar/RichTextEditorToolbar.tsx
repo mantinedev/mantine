@@ -14,13 +14,11 @@ import classes from '../RichTextEditor.module.css';
 export type RichTextEditorToolbarStylesNames = 'toolbar';
 
 export interface RichTextEditorToolbarProps
-  extends BoxProps,
-    CompoundStylesApiProps<RichTextEditorToolbarFactory>,
-    ElementProps<'div'> {
-  /** Determines whether `position: sticky` styles should be added to the toolbar @default `false` */
+  extends BoxProps, CompoundStylesApiProps<RichTextEditorToolbarFactory>, ElementProps<'div'> {
+  /** Determines whether `position: sticky` styles should be added to the toolbar @default false */
   sticky?: boolean;
 
-  /** Sets top style to offset elements with fixed position @default `0` */
+  /** Sets top style to offset elements with fixed position @default 0 */
   stickyOffset?: React.CSSProperties['top'];
 }
 
@@ -31,7 +29,7 @@ export type RichTextEditorToolbarFactory = Factory<{
   compound: true;
 }>;
 
-export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_props, ref) => {
+export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_props) => {
   const props = useProps('RichTextEditorToolbar', null, _props);
   const {
     classNames,
@@ -49,7 +47,6 @@ export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_pro
 
   return (
     <Box
-      ref={ref}
       mod={[{ sticky }, mod]}
       variant={variant || ctx.variant}
       {...ctx.getStyles('toolbar', { className, style, styles, classNames })}

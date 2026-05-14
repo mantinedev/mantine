@@ -9,16 +9,8 @@ describe('@mantine/core/Fieldset', () => {
   tests.itSupportsSystemProps<FieldsetProps, FieldsetStylesNames>({
     component: Fieldset,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
+    varsResolver: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLFieldSetElement,
     displayName: '@mantine/core/Fieldset',
     stylesApiSelectors: ['root', 'legend'],
   });

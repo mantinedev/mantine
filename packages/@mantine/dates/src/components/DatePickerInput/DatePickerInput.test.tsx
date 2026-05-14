@@ -24,14 +24,6 @@ describe('@mantine/dates/DatePickerInput', () => {
   tests.itSupportsSystemProps<DatePickerInputProps, __InputStylesNames>({
     component: DatePickerInput,
     props: defaultPropsWithInputProps,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/dates/DatePickerInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -40,6 +32,12 @@ describe('@mantine/dates/DatePickerInput', () => {
     component: DatePickerInput,
     props: defaultPropsWithInputProps,
     selector: 'button',
+  });
+
+  tests.itSupportsSharedInputDefaults<DatePickerInputProps>({
+    component: DatePickerInput,
+    props: defaultPropsWithInputProps,
+    componentName: 'DatePickerInput',
   });
 
   datesTests.itSupportsDateInputProps({ component: DatePickerInput, props: defaultProps });

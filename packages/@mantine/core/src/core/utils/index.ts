@@ -6,7 +6,6 @@ export { filterProps } from './filter-props/filter-props';
 export { isNumberLike } from './is-number-like/is-number-like';
 export { isElement } from './is-element/is-element';
 export { createSafeContext } from './create-safe-context/create-safe-context';
-export { createOptionalContext } from './create-optional-context/create-optional-context';
 export { getSafeId } from './get-safe-id/get-safe-id';
 export { createScopedKeydownHandler } from './create-scoped-keydown-handler/create-scoped-keydown-handler';
 export { findElementAncestor } from './find-element-ancestor/find-element-ancestor';
@@ -32,9 +31,12 @@ export { getEnv } from './get-env/get-env';
 export { memoize } from './memoize/memoize';
 export { findClosestNumber } from './find-closest-number/find-closest-number';
 export { getRefProp } from './get-ref-prop/get-ref-prop';
+export { isPrimitive } from './primitive/primitive';
 export {
   findElementBySelector,
   findElementsBySelector,
   getRootElement,
 } from './find-element-in-shadow-dom/find-element-in-shadow-dom';
+
 export { getSingleElementChild } from './get-single-element-child/get-single-element-child';
+export type { Primitive } from './primitive/primitive';

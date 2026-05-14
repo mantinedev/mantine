@@ -37,7 +37,7 @@
 
 .title {
   font-size: var(--mantine-font-size-lg);
-  font-weight: 500;
+  font-weight: 600;
   font-family: var(--docs-font-primary);
   margin-bottom: calc(var(--mantine-spacing-sm) / 2);
   color: var(--mantine-color-bright);

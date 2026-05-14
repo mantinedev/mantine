@@ -1,0 +1,30 @@
+.moreEventsButton {
+  color: var(--mantine-color-dimmed);
+  font-size: 13px;
+  pointer-events: all;
+  flex: 1;
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+    text-decoration: underline;
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+
+    @mixin hover {
+      color: var(--mantine-color-dimmed);
+      text-decoration: none;
+    }
+  }
+}
+
+.moreEventsDropdown {
+  padding: 4px;
+}
+
+.moreEventsList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

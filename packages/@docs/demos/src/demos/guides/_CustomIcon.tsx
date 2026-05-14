@@ -1,4 +1,4 @@
-interface AddressBookIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+interface AddressBookIconProps extends React.ComponentProps<'svg'> {
   size?: number | string;
 }
 

@@ -1,0 +1,60 @@
+.root {
+  display: inline-flex;
+  align-items: baseline;
+  overflow: hidden;
+
+  &[data-tabular-numbers] {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.digit {
+  display: inline-block;
+  width: 1ch;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+  transition:
+    width var(--rn-duration) var(--rn-timing-function),
+    opacity var(--rn-duration) var(--rn-timing-function);
+
+  &[data-empty] {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+.digitColumn {
+  display: flex;
+  flex-direction: column;
+  animation: mantine-rolling-number-roll var(--rn-duration) var(--rn-timing-function);
+
+  & > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1em;
+  }
+}
+
+.char {
+  display: inline-block;
+  overflow: hidden;
+  white-space: pre;
+  transition: opacity var(--rn-duration) var(--rn-timing-function);
+
+  &[data-empty] {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes mantine-rolling-number-roll {
+  from {
+    transform: var(--rn-roll-from);
+  }
+
+  to {
+    transform: var(--rn-roll-to);
+  }
+}

@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core';
-import classes from './icons.module.css';
 import { IconProps } from './types';
+import classes from './icons.module.css';
 
 export function GatsbyIcon({ size = 28, ...others }: IconProps) {
   return (

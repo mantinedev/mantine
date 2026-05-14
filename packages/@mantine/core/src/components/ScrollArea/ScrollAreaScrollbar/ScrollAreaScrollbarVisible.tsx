@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDirection } from '../../../core';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import {
@@ -10,15 +10,14 @@ import { getScrollPositionFromPointer, getThumbOffsetFromScroll, getThumbRatio }
 import { ScrollAreaScrollbarX } from './ScrollbarX';
 import { ScrollAreaScrollbarY } from './ScrollbarY';
 
-export interface ScrollAreaScrollbarVisibleProps
-  extends Omit<ScrollAreaScrollbarAxisProps, keyof ScrollAreaScrollbarAxisPrivateProps> {
+export interface ScrollAreaScrollbarVisibleProps extends Omit<
+  ScrollAreaScrollbarAxisProps,
+  keyof ScrollAreaScrollbarAxisPrivateProps
+> {
   orientation?: 'horizontal' | 'vertical';
 }
 
-export const ScrollAreaScrollbarVisible = forwardRef<
-  HTMLDivElement,
-  ScrollAreaScrollbarVisibleProps
->((props, forwardedRef) => {
+export function ScrollAreaScrollbarVisible(props: ScrollAreaScrollbarVisibleProps) {
   const { orientation = 'vertical', ...scrollbarProps } = props;
   const { dir } = useDirection();
   const context = useScrollAreaContext();
@@ -58,7 +57,6 @@ export const ScrollAreaScrollbarVisible = forwardRef<
     return (
       <ScrollAreaScrollbarX
         {...commonProps}
-        ref={forwardedRef}
         onThumbPositionChange={() => {
           if (context.viewport && thumbRef.current) {
             const scrollPos = context.viewport.scrollLeft;
@@ -84,7 +82,6 @@ export const ScrollAreaScrollbarVisible = forwardRef<
     return (
       <ScrollAreaScrollbarY
         {...commonProps}
-        ref={forwardedRef}
         onThumbPositionChange={() => {
           if (context.viewport && thumbRef.current) {
             const scrollPos = context.viewport.scrollTop;
@@ -112,6 +109,6 @@ export const ScrollAreaScrollbarVisible = forwardRef<
   }
 
   return null;
-});
+}
 
 ScrollAreaScrollbarVisible.displayName = '@mantine/core/ScrollAreaScrollbarVisible';

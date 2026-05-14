@@ -3,6 +3,7 @@ import {
   BoxProps,
   ElementProps,
   filterProps,
+  hashStyleProps,
   InlineStyles,
   MantineSpacing,
   parseStyleProps,
@@ -10,6 +11,7 @@ import {
   PolymorphicFactory,
   StyleProp,
   StylesApiProps,
+  useMantineDeduplicateInlineStyles,
   useMantineTheme,
   useProps,
   useRandomClassName,
@@ -50,7 +52,7 @@ export type FlexFactory = PolymorphicFactory<{
   stylesNames: FlexStylesNames;
 }>;
 
-export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
+export const Flex = polymorphicFactory<FlexFactory>((_props) => {
   const props = useProps('Flex', null, _props);
   const {
     classNames,
@@ -84,12 +86,18 @@ export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
   });
 
   const theme = useMantineTheme();
-  const responsiveClassName = useRandomClassName();
+  const randomClassName = useRandomClassName();
   const parsedStyleProps = parseStyleProps({
     styleProps: { gap, rowGap, columnGap, align, justify, wrap, direction },
     theme,
     data: FLEX_STYLE_PROPS_DATA,
   });
+
+  const deduplicateInlineStyles = useMantineDeduplicateInlineStyles();
+  const responsiveClassName =
+    deduplicateInlineStyles && parsedStyleProps.hasResponsiveStyles
+      ? hashStyleProps(parsedStyleProps.styles, parsedStyleProps.media)
+      : randomClassName;
 
   return (
     <>
@@ -98,10 +106,10 @@ export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
           selector={`.${responsiveClassName}`}
           styles={parsedStyleProps.styles}
           media={parsedStyleProps.media}
+          deduplicate={deduplicateInlineStyles}
         />
       )}
       <Box
-        ref={ref}
         {...getStyles('root', {
           className: responsiveClassName,
           style: filterProps(parsedStyleProps.inlineStyles),
@@ -114,3 +122,9 @@ export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
 
 Flex.classes = classes;
 Flex.displayName = '@mantine/core/Flex';
+
+export namespace Flex {
+  export type Props = FlexProps;
+  export type StylesNames = FlexStylesNames;
+  export type Factory = FlexFactory;
+}

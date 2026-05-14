@@ -1,0 +1,263 @@
+import { use, useEffect, useRef } from 'react';
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  ElementProps,
+  factory,
+  Factory,
+  getRadius,
+  MantineRadius,
+  StylesApiProps,
+  UnstyledButton,
+  useProps,
+  useStyles,
+} from '@mantine/core';
+import { ScheduleEventData, ScheduleMode } from '../../types';
+import { DragContext } from '../DragContext/DragContext';
+import classes from './ScheduleEvent.module.css';
+
+export type ScheduleEventStylesNames = 'event' | 'eventInner' | 'eventResizeHandle';
+
+export type ScheduleEventVariant = 'filled' | 'light';
+export type ScheduleEventCssVariables = {
+  event: '--event-bg' | '--event-color' | '--event-radius' | '--event-hover';
+};
+
+export type RenderEventBody = (event: ScheduleEventData<any>) => React.ReactNode;
+
+export type RenderEvent = (
+  event: ScheduleEventData,
+  props: React.ComponentPropsWithoutRef<'button'> & { children: React.ReactNode }
+) => React.ReactElement;
+
+export interface ScheduleEventProps
+  extends BoxProps, StylesApiProps<ScheduleEventFactory>, ElementProps<'button'> {
+  __staticSelector?: string;
+
+  /** Event to display */
+  event: ScheduleEventData;
+
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 'sm' */
+  radius?: MantineRadius;
+
+  /** If set, event has `white-space: nowrap` @default false */
+  nowrap?: boolean;
+
+  /** If set, event shrinks its font-size with limited height @default false */
+  autoSize?: boolean;
+
+  /** Event size @default 'sm' */
+  size?: 'sm' | 'md' | (string & {});
+
+  /** Function to customize event body, `event` object is passed as first argument */
+  renderEventBody?: RenderEventBody;
+
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
+
+  /** Event hanging position */
+  hanging?: 'start' | 'end' | 'both' | 'none';
+
+  /** If true, event can be dragged @default false */
+  draggable?: boolean;
+
+  /** Called when event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when event drag ends */
+  onEventDragEnd?: () => void;
+
+  /** If true, event is currently being dragged @default false */
+  isDragging?: boolean;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
+  mode?: ScheduleMode;
+
+  /** If true, event can be resized by dragging its edges @default false */
+  withResize?: boolean;
+
+  /** Called when resize starts on an edge */
+  onResizeStart?: (edge: 'top' | 'bottom', e: React.PointerEvent) => void;
+
+  /** If true, event is currently being resized @default false */
+  isResizing?: boolean;
+}
+
+export type ScheduleEventFactory = Factory<{
+  props: ScheduleEventProps;
+  ref: HTMLButtonElement;
+  stylesNames: ScheduleEventStylesNames;
+  vars: ScheduleEventCssVariables;
+  variant: ScheduleEventVariant;
+}>;
+
+const defaultProps = {
+  __staticSelector: 'ScheduleEvent',
+  mode: 'default',
+  radius: 'sm' as MantineRadius,
+} satisfies Partial<ScheduleEventProps>;
+
+const varsResolver = createVarsResolver<ScheduleEventFactory>(
+  (theme, { event, variant, radius }) => {
+    const colors = theme.variantColorResolver({
+      color: event.color || theme.primaryColor,
+      theme,
+      variant: variant || event.variant || 'light',
+      autoContrast: true,
+    });
+
+    return {
+      event: {
+        '--event-bg': colors.background,
+        '--event-hover': colors.hover,
+        '--event-color': colors.color,
+        '--event-radius': getRadius(radius),
+      },
+    };
+  }
+);
+
+export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
+  const props = useProps('ScheduleEvent', defaultProps, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    children,
+    nowrap,
+    radius,
+    color,
+    __staticSelector,
+    event,
+    renderEventBody,
+    renderEvent,
+    size,
+    autoSize,
+    mod,
+    hanging,
+    draggable = false,
+    onEventDragStart,
+    onEventDragEnd,
+    isDragging = false,
+    mode,
+    withResize = false,
+    onResizeStart,
+    isResizing = false,
+    ...others
+  } = props;
+
+  const ctx = use(DragContext);
+
+  const getStyles = useStyles<ScheduleEventFactory>({
+    name: __staticSelector,
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
+    vars,
+    varsResolver,
+    rootSelector: 'event',
+  });
+
+  const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
+    if (!draggable) {
+      e.preventDefault();
+      return;
+    }
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('application/json', JSON.stringify({ eventId: event.id }));
+    onEventDragStart?.(event);
+    ctx.onDragStart?.(event);
+  };
+
+  const handleDragEnd = () => {
+    onEventDragEnd?.();
+    ctx.onDragEnd?.();
+  };
+
+  const isCurrentlyDragging = isDragging || ctx.draggedEventId === event.id;
+  const isAnyEventDragging = ctx.isDragging || false;
+
+  const dragEndRef = useRef(ctx.onDragEnd);
+  dragEndRef.current = ctx.onDragEnd;
+
+  useEffect(() => {
+    if (isCurrentlyDragging) {
+      return () => {
+        dragEndRef.current?.();
+      };
+    }
+    return undefined;
+  }, [isCurrentlyDragging]);
+
+  const showResizeHandles = withResize && mode !== 'static';
+
+  const eventChildren = (
+    <>
+      {showResizeHandles && (
+        <Box
+          {...getStyles('eventResizeHandle')}
+          mod={{ edge: 'top' }}
+          onPointerDown={(e: React.PointerEvent) => onResizeStart?.('top', e)}
+        />
+      )}
+      <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>
+        {typeof renderEventBody === 'function' ? renderEventBody(event) : event.title}
+      </Box>
+      {showResizeHandles && (
+        <Box
+          {...getStyles('eventResizeHandle')}
+          mod={{ edge: 'bottom' }}
+          onPointerDown={(e: React.PointerEvent) => onResizeStart?.('bottom', e)}
+        />
+      )}
+    </>
+  );
+
+  const rootProps = {
+    ...getStyles('event'),
+    'data-event-id': event.id,
+    size,
+    title: event.title,
+    mod: [
+      {
+        autoSize,
+        hanging,
+        draggable,
+        dragging: isCurrentlyDragging,
+        'any-dragging': isAnyEventDragging,
+        static: mode === 'static',
+        resizing: isResizing,
+        resizable: showResizeHandles,
+      },
+      mod,
+    ],
+    draggable: draggable && mode !== 'static',
+    tabIndex: mode === 'static' ? -1 : 0,
+    onDragStart: mode === 'static' ? undefined : handleDragStart,
+    onDragEnd: mode === 'static' ? undefined : handleDragEnd,
+    onClick: mode === 'static' ? undefined : others.onClick,
+    ...others,
+    children: eventChildren,
+  };
+
+  if (typeof renderEvent === 'function') {
+    return renderEvent(event, rootProps);
+  }
+
+  return <UnstyledButton {...rootProps} />;
+});
+
+ScheduleEvent.displayName = '@mantine/schedule/ScheduleEvent';
+ScheduleEvent.classes = classes;
+ScheduleEvent.varsResolver = varsResolver;

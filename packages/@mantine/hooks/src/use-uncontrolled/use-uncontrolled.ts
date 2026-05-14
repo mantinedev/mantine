@@ -46,3 +46,8 @@ export function useUncontrolled<T>({
 
   return [uncontrolledValue as T, handleUncontrolledChange, false];
 }
+
+export namespace useUncontrolled {
+  export type Options<T> = UseUncontrolledOptions<T>;
+  export type ReturnValue<T> = UseUncontrolledReturnValue<T>;
+}

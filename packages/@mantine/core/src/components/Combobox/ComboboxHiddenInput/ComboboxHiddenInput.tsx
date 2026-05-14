@@ -1,9 +1,10 @@
-export interface ComboboxHiddenInputProps
-  extends Omit<React.ComponentPropsWithoutRef<'input'>, 'value'> {
-  /** Input value */
-  value: string | string[] | null;
+import { Primitive } from '../../../core';
 
-  /** Divider character to join array values into string @default `','` */
+export interface ComboboxHiddenInputProps extends Omit<React.ComponentProps<'input'>, 'value'> {
+  /** Input value */
+  value: Primitive | Primitive[] | null;
+
+  /** Divider character to join array values into string @default ',' */
   valuesDivider?: string;
 }
 
@@ -15,7 +16,7 @@ export function ComboboxHiddenInput({
   return (
     <input
       type="hidden"
-      value={Array.isArray(value) ? value.join(valuesDivider) : value || ''}
+      value={Array.isArray(value) ? value.join(valuesDivider) : value ? `${value}` : ''}
       {...others}
     />
   );

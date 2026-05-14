@@ -33,15 +33,15 @@ export interface MonthsListSettings extends ControlsGroupSettings {
   /** Passes props down month picker control */
   getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
 
-  /** Determines whether controls should be separated @default `true` */
+  /** Determines whether controls should be separated @default true */
   withCellSpacing?: boolean;
+
+  /** Determines whether the list should take the full width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface MonthsListProps
-  extends BoxProps,
-    MonthsListSettings,
-    StylesApiProps<MonthsListFactory>,
-    ElementProps<'table'> {
+  extends BoxProps, MonthsListSettings, StylesApiProps<MonthsListFactory>, ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Prevents focus shift when buttons are clicked */
@@ -68,7 +68,7 @@ const defaultProps = {
   withCellSpacing: true,
 } satisfies Partial<MonthsListProps>;
 
-export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
+export const MonthsList = factory<MonthsListFactory>((_props) => {
   const props = useProps('MonthsList', defaultProps, _props);
   const {
     classNames,
@@ -91,6 +91,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
     __preventFocus,
     __stopPropagation,
     withCellSpacing,
+    fullWidth,
     size,
     attributes,
     ...others
@@ -136,6 +137,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
             {...getStyles('monthsListControl')}
             size={size}
             unstyled={unstyled}
+            fullWidth={fullWidth}
             __staticSelector={__staticSelector || 'MonthsList'}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isMonthDisabled({
@@ -182,7 +184,13 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="table" ref={ref} size={size} {...getStyles('monthsList')} {...others}>
+    <Box
+      component="table"
+      size={size}
+      {...getStyles('monthsList')}
+      data-full-width={fullWidth || undefined}
+      {...others}
+    >
       <tbody>{rows}</tbody>
     </Box>
   );

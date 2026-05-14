@@ -13,9 +13,7 @@ import classes from '../Menu.module.css';
 export type MenuDividerStylesNames = 'divider';
 
 export interface MenuDividerProps
-  extends BoxProps,
-    CompoundStylesApiProps<MenuDividerFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<MenuDividerFactory>, ElementProps<'div'> {}
 
 export type MenuDividerFactory = Factory<{
   props: MenuDividerProps;
@@ -24,7 +22,7 @@ export type MenuDividerFactory = Factory<{
   compound: true;
 }>;
 
-export const MenuDivider = factory<MenuDividerFactory>((props, ref) => {
+export const MenuDivider = factory<MenuDividerFactory>((props) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'MenuDivider',
     null,
@@ -33,11 +31,7 @@ export const MenuDivider = factory<MenuDividerFactory>((props, ref) => {
   const ctx = useMenuContext();
 
   return (
-    <Box
-      ref={ref}
-      {...ctx.getStyles('divider', { className, style, styles, classNames })}
-      {...others}
-    />
+    <Box {...ctx.getStyles('divider', { className, style, styles, classNames })} {...others} />
   );
 });
 

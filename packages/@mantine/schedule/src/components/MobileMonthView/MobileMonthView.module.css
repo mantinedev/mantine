@@ -1,0 +1,281 @@
+.mobileMonthView {
+  --mobile-month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --week-numbers-offset: 0rem;
+  --day-base-color: var(--mantine-color-text);
+  --day-dimmed-color: alpha(var(--day-base-color), 0.5);
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @mixin where-light {
+    --mobile-month-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --mobile-month-view-border-color: var(--mantine-color-dark-4);
+  }
+
+  &:where([data-with-week-numbers]) {
+    --week-numbers-offset: 32px;
+  }
+}
+
+.mobileMonthViewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--mantine-spacing-sm);
+  border-bottom: 1px solid var(--mobile-month-view-border-color);
+}
+
+.mobileMonthViewHeaderBackButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: var(--mantine-font-weight-medium);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--mobile-month-view-font-size);
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.mobileMonthViewHeaderLabel {
+  user-select: none;
+  font-weight: var(--mantine-font-weight-semibold);
+  text-transform: capitalize;
+}
+
+.mobileMonthViewCalendar {
+  --mobile-month-view-font-size: clamp(6px, 3.5cqw, 22px);
+
+  container-type: inline-size;
+  padding: var(--mantine-spacing-sm);
+  border-bottom: 1px solid var(--mobile-month-view-border-color);
+}
+
+.mobileMonthViewWeekdays {
+  display: flex;
+  margin-bottom: var(--mantine-spacing-xs);
+}
+
+.mobileMonthViewWeekdaysCorner {
+  flex: 0 0 var(--week-numbers-offset);
+}
+
+.mobileMonthViewWeekday {
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  font-size: var(--mobile-month-view-font-size);
+  font-weight: var(--mantine-font-weight-medium);
+  text-align: center;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  user-select: none;
+  color: var(--day-dimmed-color);
+  padding-block: 4px;
+}
+
+.mobileMonthViewWeek {
+  display: flex;
+}
+
+.mobileMonthViewWeekNumber {
+  flex: 0 0 calc(var(--week-numbers-offset) - rem(4px));
+  margin-inline-end: rem(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-xs);
+  border-radius: var(--mobile-month-view-radius);
+  padding: 4px;
+  font-weight: var(--mantine-font-weight-medium);
+  cursor: pointer;
+  user-select: none;
+  color: var(--day-dimmed-color);
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.mobileMonthViewDay {
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  height: 48px;
+  padding: 4px;
+  font-weight: var(--mantine-font-weight-medium);
+  font-size: var(--mobile-month-view-font-size);
+  color: var(--day-base-color);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: calc(50% - 16px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  &:focus {
+    z-index: 1;
+  }
+
+  &:where([data-hidden]) {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &:where([data-weekend]) {
+    color: var(--mantine-color-red-6);
+  }
+
+  &:where([data-outside]) {
+    color: var(--day-dimmed-color);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-today]:not([data-selected])) {
+    @mixin where-light {
+      &::before {
+        background-color: var(--mantine-color-gray-2);
+      }
+    }
+
+    @mixin where-dark {
+      &::before {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+
+  &:where([data-selected]) {
+    color: var(--mantine-primary-color-contrast);
+
+    &::before {
+      background-color: var(--mantine-primary-color-filled);
+    }
+
+    @mixin hover {
+      &::before {
+        background-color: var(--mantine-primary-color-filled-hover);
+      }
+    }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.mobileMonthViewDayIndicators {
+  position: absolute;
+  bottom: 2px;
+  inset-inline: 0;
+  display: flex;
+  justify-content: center;
+  padding-inline-start: 2px;
+}
+
+.mobileMonthViewDayIndicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 100%;
+  margin-inline-start: -1px;
+}
+
+.mobileMonthViewEventsList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--mantine-spacing-sm);
+}
+
+.mobileMonthViewEventsHeader {
+  margin-bottom: var(--mantine-spacing-sm);
+  font-weight: var(--mantine-font-weight-semibold);
+  text-transform: capitalize;
+}
+
+.mobileMonthViewEvent {
+  display: block;
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
+
+  &:where(:not(:last-child)) {
+    border-bottom: 1px solid var(--mobile-month-view-border-color);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+}
+
+.mobileMonthViewEventBody {
+  display: flex;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) 0;
+}
+
+.mobileMonthViewEventColor {
+  width: 4px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.mobileMonthViewEventTime {
+  margin-top: 2px;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+}
+
+.mobileMonthViewNoEvents {
+  color: var(--mantine-color-dimmed);
+  text-align: center;
+  padding-block: var(--mantine-spacing-xl);
+}

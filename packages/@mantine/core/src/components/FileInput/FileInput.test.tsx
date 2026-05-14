@@ -13,16 +13,7 @@ describe('@mantine/core/FileInput', () => {
   tests.itSupportsSystemProps<FileInputProps, __InputStylesNames | 'placeholder'>({
     component: FileInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
     selector: '.mantine-FileInput-root',
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/FileInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
@@ -31,5 +22,11 @@ describe('@mantine/core/FileInput', () => {
     component: FileInput,
     props: defaultProps,
     selector: 'button',
+  });
+
+  tests.itSupportsSharedInputDefaults<FileInputProps>({
+    component: FileInput,
+    props: defaultProps,
+    componentName: 'FileInput',
   });
 });

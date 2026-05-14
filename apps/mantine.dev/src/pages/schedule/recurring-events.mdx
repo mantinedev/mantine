@@ -1,0 +1,120 @@
+import { DayViewDemos, MonthViewDemos, ScheduleDemos, WeekViewDemos, YearViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.RecurringEventsSchedule);
+
+## Recurring events
+
+`@mantine/schedule` supports recurring events via [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545)
+recurrence rules (powered by the [rrule](https://github.com/jkbrzt/rrule) library).
+
+There are three event shapes:
+
+1. **Series event** – has a `recurrence` field with an `rrule` string
+2. **Override event** – has `recurringEventId` + `recurrenceId` to replace one generated occurrence
+3. **One-off event** – has none of the recurring fields (regular event)
+
+## Series event
+
+Series events define recurrence with `recurrence.rrule`. You can optionally add
+`recurrence.exdate` to exclude specific occurrences and `recurrence.dtstart` to set
+an explicit series start date (defaults to `start`).
+
+```tsx
+const event = {
+  id: 'weekly-series',
+  title: 'Weekly planning',
+  start: '2024-01-15 10:00:00',
+  end: '2024-01-15 11:00:00',
+  color: 'blue',
+  recurrence: {
+    rrule: 'FREQ=WEEKLY;BYDAY=MO,WE;COUNT=16',
+    exdate: ['2024-01-17 10:00:00'],
+  },
+};
+```
+
+Common rrule patterns:
+
+- `FREQ=DAILY;COUNT=10` – every day, 10 occurrences
+- `FREQ=WEEKLY;BYDAY=MO,WE,FR` – every Mon, Wed, Fri
+- `FREQ=MONTHLY;BYMONTHDAY=15` – 15th of every month
+- `FREQ=YEARLY;COUNT=5` – once a year, 5 times
+
+## Override event
+
+Override events replace a single generated occurrence from a series.
+Use `recurringEventId` to point to the series and `recurrenceId` to identify
+which occurrence to replace (in `YYYY-MM-DD HH:mm:ss` format matching the original start time):
+
+```tsx
+const override = {
+  id: 'weekly-series-override',
+  title: 'Weekly planning (moved)',
+  start: '2024-01-17 16:00:00',
+  end: '2024-01-17 17:00:00',
+  color: 'grape',
+  recurringEventId: 'weekly-series',
+  recurrenceId: '2024-01-17 10:00:00',
+};
+```
+
+## How rendering works
+
+Each view expands recurring events only for its visible date range:
+
+1. Parse the `rrule` string and generate occurrence start times within the range
+2. Remove occurrences that match `exdate` entries
+3. Replace matching occurrences with override events
+4. Merge with one-off events and render
+
+Generated instances include a `recurringInstance` metadata object with:
+
+- `isRecurringInstance` – always `true` for generated events
+- `recurringEventId` – parent series id
+- `recurrenceId` – occurrence identifier
+- `originalStart` / `originalEnd` – the occurrence dates before any overrides
+
+## expandRecurringEvents utility
+
+You can use the `expandRecurringEvents` utility directly for custom logic:
+
+```tsx
+import { expandRecurringEvents } from '@mantine/schedule';
+
+const expanded = expandRecurringEvents({
+  events,
+  rangeStart: '2024-01-15 00:00:00',
+  rangeEnd: '2024-01-21 23:59:59',
+  expansionLimit: 2000, // optional, default 2000
+});
+```
+
+## recurrenceExpansionLimit prop
+
+All views accept a `recurrenceExpansionLimit` prop (default `2000`) to cap the number
+of generated instances per recurring series. This prevents performance issues with
+unbounded recurrence rules (e.g., `FREQ=DAILY` without `COUNT` or `UNTIL`).
+Note that the limit applies independently to each series, so a schedule with
+multiple unbounded series may generate up to `limit × number of series` total instances.
+
+## Schedule demo
+
+<Demo data={ScheduleDemos.recurringEvents} />
+
+## DayView demo
+
+<Demo data={DayViewDemos.recurringEvents} />
+
+## WeekView demo
+
+<Demo data={WeekViewDemos.recurringEvents} />
+
+## MonthView demo
+
+<Demo data={MonthViewDemos.recurringEvents} />
+
+## YearView demo
+
+<Demo data={YearViewDemos.recurringEvents} />

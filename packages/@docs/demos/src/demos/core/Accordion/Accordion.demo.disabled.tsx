@@ -17,7 +17,7 @@ function Demo() {
   ));
 
   return (
-    <Accordion maw={400} defaultValue="Apples">
+    <Accordion defaultValue="Apples" order={3}>
       {items}
     </Accordion>
   );
@@ -35,7 +35,7 @@ function Demo() {
   ));
 
   return (
-    <Accordion defaultValue="Apples" mih={270}>
+    <Accordion defaultValue="Apples" order={3} mih={270}>
       {items}
     </Accordion>
   );

@@ -149,6 +149,40 @@ function tests(mode: FormMode) {
     });
   });
 
+  it('returns correct checked prop for type="radio" when value matches', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { color: 'red' } }));
+
+    const result = hook.result.current.getInputProps('color', {
+      type: 'radio',
+      value: 'red',
+    }) as any;
+
+    expect(result[mode === 'controlled' ? 'checked' : 'defaultChecked']).toBe(true);
+    expect(result.value).toBe('red');
+    expect(result.defaultValue).toBe(undefined);
+  });
+
+  it('returns correct checked prop for type="radio" when value does not match', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { color: 'red' } }));
+
+    const result = hook.result.current.getInputProps('color', {
+      type: 'radio',
+      value: 'blue',
+    }) as any;
+
+    expect(result[mode === 'controlled' ? 'checked' : 'defaultChecked']).toBe(false);
+    expect(result.value).toBe('blue');
+  });
+
+  it('updates form value with returned onChange handler for type="radio"', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { color: 'red' } }));
+
+    act(() =>
+      hook.result.current.getInputProps('color', { type: 'radio', value: 'blue' }).onChange('blue')
+    );
+    expect(hook.result.current.getValues()).toStrictEqual({ color: 'blue' });
+  });
+
   it('returns onFocus if withFocus is true', () => {
     const hook = renderHook(() => useForm({ mode, initialValues: { a: 1 } }));
     expect(typeof hook.result.current.getInputProps('a').onFocus).toBe('function');

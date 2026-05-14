@@ -1,4 +1,4 @@
-import { IconInfoCircle } from '@tabler/icons-react';
+import { InfoIcon } from '@phosphor-icons/react';
 import { rem } from '../../core';
 import { Blockquote } from './Blockquote';
 
@@ -7,9 +7,7 @@ export default { title: 'Blockquote' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 820 }}>
-      <Blockquote
-        icon={<IconInfoCircle style={{ width: rem(32), height: rem(32) }} stroke={1.5} />}
-      >
+      <Blockquote icon={<InfoIcon style={{ width: rem(32), height: rem(32) }} />}>
         <b>Hello there</b>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime fugiat rerum officiis,
@@ -32,7 +30,7 @@ export function Unstyled() {
     <div style={{ padding: 40, maxWidth: 820 }}>
       <Blockquote
         unstyled
-        icon={<IconInfoCircle style={{ width: rem(32), height: rem(32) }} stroke={1.5} />}
+        icon={<InfoIcon style={{ width: rem(32), height: rem(32) }} />}
         color="#F0000E"
       >
         <b>Hello there</b>

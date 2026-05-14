@@ -29,6 +29,7 @@
 .icon {
   color: var(--radio-icon-color);
   opacity: var(--radio-icon-opacity, 0);
+  translate: -50% -50%;
   transform: var(--radio-icon-transform, scale(0.2) translateY(rem(10px)));
   transition:
     opacity 100ms ease,
@@ -37,8 +38,8 @@
   width: var(--radio-icon-size);
   height: var(--radio-icon-size);
   position: absolute;
-  top: calc(50% - var(--radio-icon-size) / 2);
-  left: calc(50% - var(--radio-icon-size) / 2);
+  top: 50%;
+  left: 50%;
 }
 
 .radio {
@@ -88,7 +89,7 @@
     }
   }
 
-  &:where([data-error]) {
+  &:where([data-with-error-styles][data-error]) {
     border-color: var(--mantine-color-error);
   }
 }

@@ -1,22 +1,16 @@
 import {
-  IconArrowBarToLeft,
-  IconArrowBarToRight,
-  IconArrowLeft,
-  IconArrowRight,
-  IconGripHorizontal,
-} from '@tabler/icons-react';
+  ArrowLeftIcon,
+  ArrowLineLeftIcon,
+  ArrowLineRightIcon,
+  ArrowRightIcon,
+  DotsSixIcon,
+} from '@phosphor-icons/react';
 import { Group, Pagination } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Group, Pagination } from '@mantine/core';
-import {
-  IconArrowBarToRight,
-  IconArrowBarToLeft,
-  IconArrowLeft,
-  IconArrowRight,
-  IconGripHorizontal,
-} from '@tabler/icons-react';
+import { ArrowLineRightIcon, ArrowLineLeftIcon, ArrowLeftIcon, ArrowRightIcon, DotsSixIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
@@ -25,21 +19,21 @@ function Demo() {
       <Pagination
         total={10}
         withEdges
-        nextIcon={IconArrowRight}
-        previousIcon={IconArrowLeft}
-        firstIcon={IconArrowBarToLeft}
-        lastIcon={IconArrowBarToRight}
-        dotsIcon={IconGripHorizontal}
+        nextIcon={ArrowRightIcon}
+        previousIcon={ArrowLeftIcon}
+        firstIcon={ArrowLineLeftIcon}
+        lastIcon={ArrowLineRightIcon}
+        dotsIcon={DotsSixIcon}
       />
 
       {/* Compound pagination */}
       <Pagination.Root total={10}>
         <Group gap={7} mt="xl">
-          <Pagination.First icon={IconArrowBarToLeft} />
-          <Pagination.Previous icon={IconArrowLeft} />
-          <Pagination.Items dotsIcon={IconGripHorizontal} />
-          <Pagination.Next icon={IconArrowRight} />
-          <Pagination.Last icon={IconArrowBarToRight} />
+          <Pagination.First icon={ArrowLineLeftIcon} />
+          <Pagination.Previous icon={ArrowLeftIcon} />
+          <Pagination.Items dotsIcon={DotsSixIcon} />
+          <Pagination.Next icon={ArrowRightIcon} />
+          <Pagination.Last icon={ArrowLineRightIcon} />
         </Group>
       </Pagination.Root>
     </>
@@ -54,21 +48,21 @@ function Demo() {
       <Pagination
         total={10}
         withEdges
-        nextIcon={IconArrowRight}
-        previousIcon={IconArrowLeft}
-        firstIcon={IconArrowBarToLeft}
-        lastIcon={IconArrowBarToRight}
-        dotsIcon={IconGripHorizontal}
+        nextIcon={ArrowRightIcon}
+        previousIcon={ArrowLeftIcon}
+        firstIcon={ArrowLineLeftIcon}
+        lastIcon={ArrowLineRightIcon}
+        dotsIcon={DotsSixIcon}
       />
 
       {/* Compound pagination */}
       <Pagination.Root total={10}>
         <Group gap={7} mt="xl">
-          <Pagination.First icon={IconArrowBarToLeft} />
-          <Pagination.Previous icon={IconArrowLeft} />
-          <Pagination.Items dotsIcon={IconGripHorizontal} />
-          <Pagination.Next icon={IconArrowRight} />
-          <Pagination.Last icon={IconArrowBarToRight} />
+          <Pagination.First icon={ArrowLineLeftIcon} />
+          <Pagination.Previous icon={ArrowLeftIcon} />
+          <Pagination.Items dotsIcon={DotsSixIcon} />
+          <Pagination.Next icon={ArrowRightIcon} />
+          <Pagination.Last icon={ArrowLineRightIcon} />
         </Group>
       </Pagination.Root>
     </>

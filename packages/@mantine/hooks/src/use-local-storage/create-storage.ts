@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 import { useCallback, useEffect, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
@@ -123,9 +123,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
             setItem(key, serialize(result));
             // Defer dispatching this event to avoid the handler being called during render.
             queueMicrotask(() => {
-              window.dispatchEvent(
-                new CustomEvent(eventName, { detail: { key, value: val(current) } })
-              );
+              window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: result } }));
             });
             return result;
           });

@@ -8,5 +8,7 @@ export { responsive } from './Grid.demo.responsive';
 export { columns } from './Grid.demo.columns';
 export { auto } from './Grid.demo.auto';
 export { content } from './Grid.demo.content';
-export { gutter } from './Grid.demo.gutter';
+export { gap } from './Grid.demo.gap';
+export { rowColumnGap } from './Grid.demo.rowColumnGap';
+export { columnAlign } from './Grid.demo.columnAlign';
 export { container } from './Grid.demo.container';

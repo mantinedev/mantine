@@ -2,7 +2,7 @@ import { MantineColor, parseThemeColor, useMantineTheme } from '@mantine/core';
 
 export type MantineLogoVariant = 'mantine.dev' | 'ui.mantine.dev';
 
-export interface LogoProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface LogoProps extends React.ComponentProps<'svg'> {
   color?: MantineColor;
   variant?: MantineLogoVariant;
   size?: number | string;

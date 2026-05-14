@@ -13,13 +13,11 @@ import classes from '../Pagination.module.css';
 export type PaginationControlStylesNames = 'control';
 
 export interface PaginationControlProps
-  extends BoxProps,
-    CompoundStylesApiProps<PaginationControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<PaginationControlFactory>, ElementProps<'button'> {
   /** Applies active styles, adds `data-active` attribute */
   active?: boolean;
 
-  /** Applies padding @default `true` */
+  /** Applies padding @default true */
   withPadding?: boolean;
 }
 
@@ -34,7 +32,7 @@ const defaultProps = {
   withPadding: true,
 } satisfies Partial<PaginationControlProps>;
 
-export const PaginationControl = factory<PaginationControlFactory>((_props, ref) => {
+export const PaginationControl = factory<PaginationControlFactory>((_props) => {
   const props = useProps('PaginationControl', defaultProps, _props);
   const {
     classNames,
@@ -54,7 +52,6 @@ export const PaginationControl = factory<PaginationControlFactory>((_props, ref)
 
   return (
     <UnstyledButton
-      ref={ref}
       disabled={_disabled}
       mod={[{ active, disabled: _disabled, 'with-padding': withPadding }, mod]}
       {...ctx.getStyles('control', { className, style, classNames, styles, active: !_disabled })}

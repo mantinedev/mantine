@@ -1,13 +1,13 @@
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { TextInput } from '@mantine/core';
-import { IconAt } from '@tabler/icons-react';
+import { AtIcon } from '@phosphor-icons/react';
 
 function Demo() {
-  const icon = <IconAt size={16} />;
+  const icon = <AtIcon size={16} />;
   return (
     <>
       <TextInput
@@ -29,7 +29,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconAt size={16} />;
+  const icon = <AtIcon size={16} />;
   return (
     <>
       <TextInput

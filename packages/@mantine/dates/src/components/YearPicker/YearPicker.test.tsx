@@ -6,16 +6,10 @@ import { YearPicker, YearPickerProps, YearPickerStylesNames } from './YearPicker
 describe('@mantine/dates/YearPicker', () => {
   tests.itSupportsSystemProps<YearPickerProps, YearPickerStylesNames>({
     component: YearPicker,
-    props: {},
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
+    props: {
+      presets: [{ label: 'This year', value: '2022-01-01' }],
+    },
+    varsResolver: true,
     displayName: '@mantine/dates/YearPicker',
     stylesApiSelectors: [
       'calendarHeader',
@@ -26,6 +20,9 @@ describe('@mantine/dates/YearPicker', () => {
       'yearsListCell',
       'yearsListControl',
       'yearsListRow',
+      'presetsList',
+      'presetButton',
+      'yearPickerRoot',
     ],
     providerStylesApi: false,
   });
@@ -180,6 +177,22 @@ describe('@mantine/dates/YearPicker', () => {
 
     await userEvent.tab();
     expect(document.body).toHaveFocus();
+  });
+
+  it('correctly handles presets', () => {
+    const spy = jest.fn();
+    render(
+      <YearPicker
+        onChange={spy}
+        presets={[
+          { label: 'This year', value: '2022-01-01' },
+          { label: 'Next year', value: '2023-01-01' },
+        ]}
+      />
+    );
+
+    expect(screen.getByText('This year')).toBeInTheDocument();
+    expect(screen.getByText('Next year')).toBeInTheDocument();
   });
 
   it('only adds first non-disabled year of decade to tab order', async () => {

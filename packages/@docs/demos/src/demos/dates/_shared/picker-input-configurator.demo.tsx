@@ -51,7 +51,7 @@ export function getPickerInputConfiguratorDemo(Component: React.FC<any>): Mantin
         initialValue: 'default',
         libraryValue: 'default',
       },
-      { prop: 'radius', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
+      { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
       { prop: 'size', type: 'size', initialValue: 'sm', libraryValue: 'sm' },
       { prop: 'disabled', type: 'boolean', initialValue: false, libraryValue: false },
       {

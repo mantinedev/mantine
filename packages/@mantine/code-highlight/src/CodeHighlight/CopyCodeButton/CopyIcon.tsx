@@ -1,4 +1,4 @@
-interface CopyIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+interface CopyIconProps extends React.ComponentProps<'svg'> {
   copied: boolean;
 }
 

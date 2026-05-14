@@ -64,3 +64,8 @@ export function useQueue<T>({
     cleanQueue,
   };
 }
+
+export namespace useQueue {
+  export type Options<T> = UseQueueOptions<T>;
+  export type ReturnValue<T> = UseQueueReturnValue<T>;
+}

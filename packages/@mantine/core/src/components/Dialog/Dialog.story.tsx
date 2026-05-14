@@ -13,14 +13,7 @@ export function Usage() {
         <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog
-        opened={opened}
-        withCloseButton
-        onClose={close}
-        size="lg"
-        radius="md"
-        className="testeasdda"
-      >
+      <Dialog opened={opened} withCloseButton onClose={close} size="lg" className="testeasdda">
         <Text size="sm" mb="xs" fw={500}>
           Subscribe to email newsletter
         </Text>
@@ -48,7 +41,6 @@ export function Unstyled() {
         withCloseButton
         onClose={close}
         size="lg"
-        radius="md"
         className="testeasdda"
         unstyled
       >

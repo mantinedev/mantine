@@ -15,6 +15,6 @@
 .label {
   font-size: inherit;
   color: var(--mantine-color-red-6);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: var(--mantine-spacing-xs);
 }

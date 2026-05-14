@@ -3,7 +3,7 @@ import { FormMode } from '../../types';
 import { useForm } from '../../use-form';
 
 function tests(mode: FormMode) {
-  it('validates object with nested values', () => {
+  it('validates object with nested values', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -19,8 +19,8 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
 
-    act(() => {
-      expect(hook.result.current.validate()).toStrictEqual({
+    await act(async () => {
+      expect(await hook.result.current.validate()).toStrictEqual({
         hasErrors: true,
         errors: { 'a.b.c': 'error-c' },
       });
@@ -31,8 +31,8 @@ function tests(mode: FormMode) {
     act(() => hook.result.current.setFieldValue('a.b.c', 2));
     expect(hook.result.current.errors).toStrictEqual({ 'a.b.c': 'error-c' });
 
-    act(() => {
-      expect(hook.result.current.validate()).toStrictEqual({
+    await act(async () => {
+      expect(await hook.result.current.validate()).toStrictEqual({
         hasErrors: false,
         errors: {},
       });
@@ -40,7 +40,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.errors).toStrictEqual({});
   });
 
-  it('validates array with nested values', () => {
+  it('validates array with nested values', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,
@@ -52,8 +52,8 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
 
-    act(() => {
-      expect(hook.result.current.validate()).toStrictEqual({
+    await act(async () => {
+      expect(await hook.result.current.validate()).toStrictEqual({
         hasErrors: true,
         errors: { 'a.0.b': 'error-b', 'a.1.b': 'error-b' },
       });
@@ -68,8 +68,8 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({ 'a.0.b': 'error-b', 'a.1.b': 'error-b' });
 
-    act(() => {
-      expect(hook.result.current.validate()).toStrictEqual({
+    await act(async () => {
+      expect(await hook.result.current.validate()).toStrictEqual({
         hasErrors: false,
         errors: {},
       });
@@ -78,7 +78,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.errors).toStrictEqual({});
   });
 
-  it('allows readonly array types', () => {
+  it('allows readonly array types', async () => {
     interface Person {
       readonly name: string;
       readonly age: number;
@@ -106,8 +106,8 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
 
-    act(() => {
-      expect(hook.result.current.validate()).toStrictEqual({
+    await act(async () => {
+      expect(await hook.result.current.validate()).toStrictEqual({
         hasErrors: true,
         errors: { 'people.0.age': 'error-age', 'people.0.name': 'error-name' },
       });

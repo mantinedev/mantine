@@ -1,37 +1,33 @@
+import fs from 'node:fs';
 import path from 'node:path';
-import alias, { Alias } from '@rollup/plugin-alias';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 import { generateScopedName } from 'hash-css-selector';
-import { RollupOptions } from 'rollup';
+import { RolldownOptions } from 'rolldown';
 import banner from 'rollup-plugin-banner2';
-import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
 import { getPackagesList } from '../../packages/get-packages-list';
 import { getPath } from '../../utils/get-path';
 import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
 
-export function createPackageConfig(packagePath: string): RollupOptions {
+export function createPackageConfig(packagePath: string): RolldownOptions {
+  const pkgJson = JSON.parse(fs.readFileSync(path.resolve(packagePath, 'package.json'), 'utf-8'));
+  const pkgDeps = [
+    ...Object.keys(pkgJson.dependencies || {}),
+    ...Object.keys(pkgJson.peerDependencies || {}),
+  ];
   const packagesList = getPackagesList();
 
-  const aliasEntries: Alias[] = packagesList.map((pkg) => ({
-    find: new RegExp(`^${pkg.packageJson.name}`),
-    replacement: path.resolve(pkg.path, 'src'),
-  }));
+  const aliasEntries: Record<string, string> = {};
+  for (const pkg of packagesList) {
+    aliasEntries[pkg.packageJson.name!] = path.resolve(pkg.path, 'src');
+  }
 
   const plugins = [
-    nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
-    esbuild({
-      tsconfig: getPath('tsconfig.json'),
-    }),
-    alias({ entries: aliasEntries }),
-    replace({ preventAssignment: true }),
     postcss({
       extract: true,
       modules: { generateScopedName },
     }),
-    banner((chunk) => {
+    banner((chunk: any) => {
       if (!ROLLUP_EXCLUDE_USE_CLIENT.includes(chunk.fileName)) {
         return "'use client';\n";
       }
@@ -41,7 +37,17 @@ export function createPackageConfig(packagePath: string): RollupOptions {
   ];
 
   return {
+    onwarn(warning, warn) {
+      if (warning.code === 'CIRCULAR_DEPENDENCY') {
+        return;
+      }
+      warn(warning);
+    },
     input: path.resolve(packagePath, 'src/index.ts'),
+    resolve: {
+      alias: aliasEntries,
+    },
+    tsconfig: getPath('tsconfig.json'),
     output: [
       {
         format: 'es',
@@ -56,10 +62,13 @@ export function createPackageConfig(packagePath: string): RollupOptions {
         dir: path.resolve(packagePath, 'cjs'),
         preserveModules: true,
         sourcemap: true,
-        interop: 'auto',
       },
     ],
-    external: ROLLUP_EXTERNALS,
+    moduleTypes: {
+      '.css': 'js',
+      '.module.css': 'js',
+    },
+    external: [...ROLLUP_EXTERNALS, ...pkgDeps],
     plugins,
   };
 }

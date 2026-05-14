@@ -10,14 +10,14 @@ import { data } from './data';
 
 interface ChartTooltipProps {
   label: React.ReactNode;
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ label, payload }: ChartTooltipProps) {
   if (!payload) return null;
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       <Text fw={500} mb={5}>
         {label}
       </Text>
@@ -52,7 +52,7 @@ function Demo() {
 
 interface ChartTooltipProps {
   label: React.ReactNode;
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 }
 
 function ChartTooltip({ label, payload }: ChartTooltipProps) {
@@ -61,7 +61,7 @@ function ChartTooltip({ label, payload }: ChartTooltipProps) {
   }
 
   return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+    <Paper px="md" py="sm" withBorder shadow="md">
       <Text fw={500} mb={5}>
         {label}
       </Text>

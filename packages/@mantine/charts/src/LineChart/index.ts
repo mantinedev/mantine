@@ -1,4 +1,14 @@
+import type {
+  LineChartCssVariables,
+  LineChartCurveType,
+  LineChartFactory,
+  LineChartProps,
+  LineChartSeries,
+  LineChartStylesNames,
+} from './LineChart';
+
 export { LineChart } from './LineChart';
+
 export type {
   LineChartProps,
   LineChartCssVariables,
@@ -6,4 +16,4 @@ export type {
   LineChartSeries,
   LineChartStylesNames,
   LineChartCurveType,
-} from './LineChart';
+};

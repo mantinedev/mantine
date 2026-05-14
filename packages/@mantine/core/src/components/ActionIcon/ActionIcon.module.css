@@ -172,7 +172,7 @@
   --section-padding-x: var(--section-padding-x-sm);
   --section-color: var(--mantine-color-white);
 
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
   width: auto;
   border-radius: var(--section-radius, var(--mantine-radius-default));
   font-size: var(--section-fz, var(--mantine-font-size-sm));

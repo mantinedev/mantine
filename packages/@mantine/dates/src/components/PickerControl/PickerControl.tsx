@@ -20,9 +20,7 @@ export type PickerControlCssVariables = {
 };
 
 export interface PickerControlProps
-  extends BoxProps,
-    StylesApiProps<PickerControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, StylesApiProps<PickerControlFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
   /** Control children */
@@ -45,6 +43,9 @@ export interface PickerControlProps
 
   /** Component size */
   size?: MantineSize;
+
+  /** Determines whether the control should take the full width of its cell @default false */
+  fullWidth?: boolean;
 }
 
 export type PickerControlFactory = Factory<{
@@ -61,7 +62,7 @@ const varsResolver = createVarsResolver<PickerControlFactory>((_, { size }) => (
   },
 }));
 
-export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
+export const PickerControl = factory<PickerControlFactory>((_props) => {
   const props = useProps('PickerControl', null, _props);
   const {
     classNames,
@@ -76,6 +77,7 @@ export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
     __staticSelector,
     selected,
     disabled,
+    fullWidth,
     attributes,
     ...others
   } = props;
@@ -98,9 +100,9 @@ export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
   return (
     <UnstyledButton
       {...getStyles('pickerControl')}
-      ref={ref}
       unstyled={unstyled}
       data-picker-control
+      data-full-width={fullWidth || undefined}
       data-selected={(selected && !disabled) || undefined}
       data-disabled={disabled || undefined}
       data-in-range={(inRange && !disabled && !selected) || undefined}
@@ -113,4 +115,5 @@ export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
 });
 
 PickerControl.classes = classes;
+PickerControl.varsResolver = varsResolver;
 PickerControl.displayName = '@mantine/dates/PickerControl';

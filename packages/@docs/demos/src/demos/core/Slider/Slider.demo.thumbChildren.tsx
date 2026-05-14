@@ -1,16 +1,16 @@
-import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
+import { HeartBreakIcon, HeartIcon } from '@phosphor-icons/react';
 import { RangeSlider, Slider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { Slider, RangeSlider } from '@mantine/core';
-import { IconHeart, IconHeartBroken } from '@tabler/icons-react';
+import { HeartIcon, HeartBreakIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
     <>
       <Slider
-        thumbChildren={<IconHeart size={16} />}
+        thumbChildren={<HeartIcon size={16} />}
         color="red"
         label={null}
         defaultValue={40}
@@ -25,7 +25,7 @@ function Demo() {
         label={null}
         defaultValue={[20, 60]}
         thumbSize={26}
-        thumbChildren={[<IconHeart size={16} key="1" />, <IconHeartBroken size={16} key="2" />]}
+        thumbChildren={[<HeartIcon size={16} key="1" />, <HeartBreakIcon size={16} key="2" />]}
       />
     </>
   );
@@ -36,7 +36,7 @@ function Demo() {
   return (
     <>
       <Slider
-        thumbChildren={<IconHeart size={16} stroke={1.5} />}
+        thumbChildren={<HeartIcon size={16} />}
         color="red"
         label={null}
         defaultValue={40}
@@ -51,10 +51,7 @@ function Demo() {
         label={null}
         defaultValue={[20, 60]}
         thumbSize={26}
-        thumbChildren={[
-          <IconHeart size={16} stroke={1.5} key="1" />,
-          <IconHeartBroken size={16} stroke={1.5} key="2" />,
-        ]}
+        thumbChildren={[<HeartIcon size={16} key="1" />, <HeartBreakIcon size={16} key="2" />]}
       />
     </>
   );

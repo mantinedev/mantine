@@ -18,6 +18,12 @@ export const ProgressStylesApi: StylesApiData<ProgressFactory> = {
 
   modifiers: [
     {
+      modifier: 'data-orientation',
+      selector: 'root',
+      value: 'vertical | horizontal',
+      condition: '`orientation` prop',
+    },
+    {
       modifier: 'data-striped',
       selector: 'section',
       condition: '`striped` or `animated` props are set',

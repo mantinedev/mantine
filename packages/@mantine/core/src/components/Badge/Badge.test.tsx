@@ -10,17 +10,9 @@ describe('@mantine/core/Badge', () => {
   tests.itSupportsSystemProps<BadgeProps, BadgeStylesNames>({
     component: Badge,
     props: defaultProps,
-    mod: true,
+    varsResolver: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Badge',
     stylesApiSelectors: ['root', 'section', 'label'],
   });
