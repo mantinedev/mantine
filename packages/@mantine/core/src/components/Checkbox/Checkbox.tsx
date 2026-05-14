@@ -208,7 +208,8 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   const uuid = useId(id);
   const descriptionId = description ? `${uuid}-description` : undefined;
   const errorId = error && typeof error !== 'boolean' ? `${uuid}-error` : undefined;
-  const describedBy = [descriptionId, errorId].filter(Boolean).join(' ') || undefined;
+  const describedBy =
+    [descriptionId, errorId, rest['aria-describedby']].filter(Boolean).join(' ') || undefined;
 
   const withContextProps = {
     checked: ctx?.value.includes(rest.value as string) ?? checked,

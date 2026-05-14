@@ -138,6 +138,33 @@ describe('@mantine/core/Checkbox', () => {
     );
   });
 
+  it('merges user-supplied aria-describedby with description and error ids', () => {
+    render(
+      <Checkbox description="test-description" error="test-error" aria-describedby="extra-id" />
+    );
+    const description = screen.getByText('test-description');
+    const error = screen.getByText('test-error');
+    expect(screen.getByRole('checkbox')).toHaveAttribute(
+      'aria-describedby',
+      `${description.id} ${error.id} extra-id`
+    );
+  });
+
+  it('preserves user-supplied aria-describedby when description and error are not set', () => {
+    render(<Checkbox aria-describedby="extra-id" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('aria-describedby', 'extra-id');
+  });
+
+  it('does not set aria-describedby when there is no description, error or user value', () => {
+    render(<Checkbox />);
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-describedby');
+  });
+
+  it('does not link aria-describedby to error when error is a boolean', () => {
+    render(<Checkbox error />);
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-describedby');
+  });
+
   it('sets disabled attribute on input based on disabled prop', () => {
     const { rerender } = render(<Checkbox disabled />);
     expect(screen.getByRole('checkbox')).toBeDisabled();
