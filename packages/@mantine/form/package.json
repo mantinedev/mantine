@@ -40,6 +40,6 @@
     "klona": "^2.0.6"
   },
   "devDependencies": {
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   }
 }
