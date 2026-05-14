@@ -49,7 +49,7 @@ function Demo() {
   );
 }
 
-export const accentinsensitive: MantineDemo = {
+export const accentInsensitive: MantineDemo = {
   type: 'code',
   code,
   component: Demo,

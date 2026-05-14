@@ -49,7 +49,7 @@ function Demo() {
   );
 }
 
-export const caseinsensitive: MantineDemo = {
+export const caseInsensitive: MantineDemo = {
   type: 'code',
   code,
   component: Demo,

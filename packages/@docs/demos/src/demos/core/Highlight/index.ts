@@ -1,5 +1,5 @@
-export { accentinsensitive } from './Highlight.demo.accentinsensitive';
-export { caseinsensitive } from './Highlight.demo.caseinsensitive';
+export { accentInsensitive } from './Highlight.demo.accentInsensitive';
+export { caseInsensitive } from './Highlight.demo.caseInsensitive';
 export { colors } from './Highlight.demo.colors';
 export { multiple } from './Highlight.demo.multiple';
 export { props } from './Highlight.demo.props';
