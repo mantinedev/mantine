@@ -126,13 +126,15 @@ export function createControl({
             safeEditor && isActive?.name
               ? safeEditor.isActive(isActive.name, isActive.attributes)
               : false,
-          disabled: safeEditor ? (isDisabled?.(safeEditor) ?? false) : false,
+          // Without a usable editor the operation cannot run, so the control must
+          // appear disabled regardless of whether a user-provided `isDisabled` exists.
+          disabled: safeEditor ? (isDisabled?.(safeEditor) ?? false) : true,
         };
       },
     });
 
     const active = editorState?.active ?? false;
-    const disabled = editorState?.disabled ?? false;
+    const disabled = editorState?.disabled ?? true;
 
     return (
       <RichTextEditorControlBase
@@ -142,7 +144,14 @@ export function createControl({
         icon={props.icon || icon}
         disabled={disabled}
         {...props}
-        onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
+        onClick={() => {
+          // Mirror the selector's guard so a click landing during teardown does not
+          // invoke commands on a `null`/destroyed editor.
+          if (!editor || editor.isDestroyed) {
+            return;
+          }
+          (editor as any).chain().focus()[operation.name](operation.attributes).run();
+        }}
       />
     );
   };
