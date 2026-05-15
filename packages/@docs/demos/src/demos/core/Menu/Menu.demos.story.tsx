@@ -73,6 +73,11 @@ export const Demo_checkboxItem = {
   render: renderDemo(demos.checkboxItem),
 };
 
+export const Demo_checkboxGroup = {
+  name: '⭐ Demo: checkboxGroup',
+  render: renderDemo(demos.checkboxGroup),
+};
+
 export const Demo_radioItem = {
   name: '⭐ Demo: radioItem',
   render: renderDemo(demos.radioItem),

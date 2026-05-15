@@ -16,6 +16,7 @@ import {
 } from '../../../core';
 import { CheckIcon } from '../../Checkbox/CheckIcon';
 import { UnstyledButton } from '../../UnstyledButton';
+import { MenuCheckboxGroupContext } from '../MenuCheckboxGroup/MenuCheckboxGroup.context';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
@@ -26,7 +27,7 @@ export interface MenuCheckboxItemProps
   extends
     BoxProps,
     CompoundStylesApiProps<MenuCheckboxItemFactory>,
-    ElementProps<'button', 'color' | 'onChange'> {
+    ElementProps<'button', 'color' | 'onChange' | 'value'> {
   'data-disabled'?: boolean;
 
   /** Item label */
@@ -44,13 +45,16 @@ export interface MenuCheckboxItemProps
   /** Sets disabled attribute, applies disabled styles */
   disabled?: boolean;
 
-  /** Controlled checked state */
+  /** Value of the checkbox item. When used inside `Menu.CheckboxGroup`, determines whether the item is checked and what value is added/removed on toggle. */
+  value?: string;
+
+  /** Controlled checked state. Overrides selection derived from the parent `Menu.CheckboxGroup`. */
   checked?: boolean;
 
-  /** Uncontrolled default checked state */
+  /** Uncontrolled default checked state. Ignored when the item is used inside `Menu.CheckboxGroup`. */
   defaultChecked?: boolean;
 
-  /** Called when checked state changes */
+  /** Called when checked state changes. Overrides `onChange` of the parent `Menu.CheckboxGroup`. */
   onChange?: (checked: boolean) => void;
 
   /** Replaces the default check icon rendered in the indicator slot when the item is checked. Overrides `checkIcon` set on `Menu`. */
@@ -78,6 +82,7 @@ export const MenuCheckboxItem = factory<MenuCheckboxItemFactory>((_props) => {
     children,
     disabled,
     'data-disabled': dataDisabled,
+    value,
     checked,
     defaultChecked,
     onChange,
@@ -87,14 +92,18 @@ export const MenuCheckboxItem = factory<MenuCheckboxItemFactory>((_props) => {
   } = props;
 
   const ctx = useMenuContext();
+  const groupCtx = use(MenuCheckboxGroupContext);
   const subCtx = use(SubMenuContext);
   const theme = useMantineTheme();
   const { dir } = useDirection();
   const itemRef = useRef<HTMLButtonElement>(null);
   const _others: any = others;
 
+  const groupChecked =
+    groupCtx && value !== undefined ? groupCtx.values.includes(value) : undefined;
+
   const [_checked, setChecked] = useUncontrolled({
-    value: checked,
+    value: checked ?? groupChecked,
     defaultValue: defaultChecked,
     finalValue: false,
     onChange,
@@ -104,7 +113,13 @@ export const MenuCheckboxItem = factory<MenuCheckboxItemFactory>((_props) => {
     if (dataDisabled) {
       return;
     }
-    setChecked(!_checked);
+    if (onChange) {
+      setChecked(!_checked);
+    } else if (groupCtx && value !== undefined) {
+      groupCtx.onChange(value);
+    } else {
+      setChecked(!_checked);
+    }
     if (closeMenuOnClick) {
       ctx.closeDropdownImmediately();
     }

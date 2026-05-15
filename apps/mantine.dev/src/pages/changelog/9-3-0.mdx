@@ -1,4 +1,4 @@
-import { CodeHighlightDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PieChartDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -127,6 +127,13 @@ props. Both are enabled by default – matching is case-insensitive and accent-i
 so `cafe` matches `café`, `CAFÉ`, etc. Set either prop to `false` to opt out:
 
 <Demo data={HighlightDemos.accentInsensitive} />
+
+## PieChart and DonutChart labelsType="name"
+
+[PieChart](/charts/pie-chart/) and [DonutChart](/charts/donut-chart/) components now support
+`labelsType="name"` to display segment names as labels instead of values or percentages:
+
+<Demo data={PieChartDemos.labelsTypeName} />
 
 ## Tooltip merge arrow position
 

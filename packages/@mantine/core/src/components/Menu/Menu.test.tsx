@@ -422,6 +422,137 @@ describe('@mantine/core/Menu', () => {
     });
   });
 
+  describe('Menu.CheckboxGroup', () => {
+    function CheckboxGroupMenu({
+      value,
+      defaultValue,
+      onChange,
+    }: {
+      value?: string[];
+      defaultValue?: string[];
+      onChange?: (value: string[]) => void;
+    }) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.CheckboxGroup value={value} defaultValue={defaultValue} onChange={onChange}>
+              <Menu.CheckboxItem value="name">Name</Menu.CheckboxItem>
+              <Menu.CheckboxItem value="email">Email</Menu.CheckboxItem>
+              <Menu.CheckboxItem value="role">Role</Menu.CheckboxItem>
+            </Menu.CheckboxGroup>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('marks items as checked when their value is in the group value', () => {
+      render(<CheckboxGroupMenu defaultValue={['name', 'role']} />);
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Name' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Email' })).toHaveAttribute(
+        'aria-checked',
+        'false'
+      );
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Role' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+    });
+
+    it('adds value when an unchecked item is clicked', async () => {
+      const onChange = jest.fn();
+      render(<CheckboxGroupMenu defaultValue={['name']} onChange={onChange} />);
+      await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Email' }));
+      expect(onChange).toHaveBeenLastCalledWith(['name', 'email']);
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Email' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+    });
+
+    it('removes value when a checked item is clicked', async () => {
+      const onChange = jest.fn();
+      render(<CheckboxGroupMenu defaultValue={['name', 'email']} onChange={onChange} />);
+      await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Name' }));
+      expect(onChange).toHaveBeenLastCalledWith(['email']);
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Name' })).toHaveAttribute(
+        'aria-checked',
+        'false'
+      );
+    });
+
+    it('supports controlled mode', async () => {
+      const onChange = jest.fn();
+      const { rerender } = render(<CheckboxGroupMenu value={['name']} onChange={onChange} />);
+      await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Email' }));
+      expect(onChange).toHaveBeenLastCalledWith(['name', 'email']);
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Email' })).toHaveAttribute(
+        'aria-checked',
+        'false'
+      );
+
+      rerender(<CheckboxGroupMenu value={['name', 'email']} onChange={onChange} />);
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Email' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+    });
+
+    it('does not close the menu on click by default', async () => {
+      render(<CheckboxGroupMenu defaultValue={[]} />);
+      await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Name' }));
+      expectOpened();
+    });
+
+    it('item-level checked overrides group state', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.CheckboxGroup defaultValue={[]}>
+              <Menu.CheckboxItem value="name" checked>
+                Name
+              </Menu.CheckboxItem>
+            </Menu.CheckboxGroup>
+          </Menu.Dropdown>
+        </Menu>
+      );
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Name' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
+    });
+
+    it('item-level onChange overrides group onChange', async () => {
+      const groupOnChange = jest.fn();
+      const itemOnChange = jest.fn();
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.CheckboxGroup defaultValue={[]} onChange={groupOnChange}>
+              <Menu.CheckboxItem value="name" onChange={itemOnChange}>
+                Name
+              </Menu.CheckboxItem>
+            </Menu.CheckboxGroup>
+          </Menu.Dropdown>
+        </Menu>
+      );
+      await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Name' }));
+      expect(itemOnChange).toHaveBeenCalledWith(true);
+      expect(groupOnChange).not.toHaveBeenCalled();
+    });
+  });
+
   describe('Menu.RadioGroup and Menu.RadioItem', () => {
     function RadioMenu({
       defaultValue,

@@ -12,6 +12,10 @@ import {
 import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
 import { MenuContextProvider, type MenuContextValue } from './Menu.context';
+import {
+  MenuCheckboxGroup,
+  type MenuCheckboxGroupProps,
+} from './MenuCheckboxGroup/MenuCheckboxGroup';
 import { MenuCheckboxItem, type MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem';
 import { MenuContextMenu, type MenuContextMenuProps } from './MenuContextMenu/MenuContextMenu';
 import { MenuDivider, type MenuDividerProps } from './MenuDivider/MenuDivider';
@@ -51,6 +55,7 @@ export type MenuFactory = Factory<{
     Search: typeof MenuSearch;
     Sub: typeof MenuSub;
     CheckboxItem: typeof MenuCheckboxItem;
+    CheckboxGroup: typeof MenuCheckboxGroup;
     RadioItem: typeof MenuRadioItem;
     RadioGroup: typeof MenuRadioGroup;
     ContextMenu: typeof MenuContextMenu;
@@ -305,6 +310,7 @@ Menu.Divider = MenuDivider;
 Menu.Search = MenuSearch;
 Menu.Sub = MenuSub;
 Menu.CheckboxItem = MenuCheckboxItem;
+Menu.CheckboxGroup = MenuCheckboxGroup;
 Menu.RadioItem = MenuRadioItem;
 Menu.RadioGroup = MenuRadioGroup;
 Menu.ContextMenu = MenuContextMenu;
@@ -353,6 +359,10 @@ export namespace Menu {
 
   export namespace RadioGroup {
     export type Props = MenuRadioGroupProps;
+  }
+
+  export namespace CheckboxGroup {
+    export type Props = MenuCheckboxGroupProps;
   }
 
   export namespace ContextMenu {

@@ -7,3 +7,4 @@ export { strokeColor } from './PieChart.demo.strokeColor';
 export { strokeWidth } from './PieChart.demo.strokeWidth';
 export { tooltipDataSource } from './PieChart.demo.tooltipDataSource';
 export { withLabels } from './PieChart.demo.withLabels';
+export { labelsTypeName } from './PieChart.demo.labelsTypeName';

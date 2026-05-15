@@ -874,6 +874,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
       'MenuItem',
       'MenuSearch',
       'MenuCheckboxItem',
+      'MenuCheckboxGroup',
       'MenuRadioItem',
       'MenuRadioGroup',
       'MenuContextMenu',

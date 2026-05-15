@@ -9,3 +9,4 @@ export { angle } from './DonutChart.demo.angle';
 export { chartLabel } from './DonutChart.demo.chartLabel';
 export { noTooltip } from './DonutChart.demo.noTooltip';
 export { strokeColor } from './DonutChart.demo.strokeColor';
+export { labelsTypeName } from './DonutChart.demo.labelsTypeName';

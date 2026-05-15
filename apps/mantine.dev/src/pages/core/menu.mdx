@@ -38,6 +38,18 @@ to override:
 
 <Demo data={MenuDemos.checkboxItem} />
 
+## Checkbox group
+
+Wrap `Menu.CheckboxItem` components in `Menu.CheckboxGroup` to manage multi-select state with a
+single `value: string[]` / `onChange` pair (or `defaultValue` for uncontrolled). Each item needs
+a `value`. Clicking an item toggles its value in the group:
+
+<Demo data={MenuDemos.checkboxGroup} />
+
+`Menu.CheckboxItem` can still be used standalone (without a group) with its own `checked` /
+`defaultChecked` / `onChange` props. Item-level `checked` and `onChange` also override the group
+when both are present.
+
 ## Radio items
 
 `Menu.RadioItem` represents a single option inside a `Menu.RadioGroup`. The group manages
