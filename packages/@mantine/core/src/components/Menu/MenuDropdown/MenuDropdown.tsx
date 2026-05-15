@@ -11,6 +11,7 @@ import {
 } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
+import { useMenuTypeAhead } from '../use-menu-type-ahead';
 import classes from '../Menu.module.css';
 
 export type MenuDropdownStylesNames = 'dropdown';
@@ -43,8 +44,14 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ctx = useMenuContext();
 
+  const typeAhead = useMenuTypeAhead({
+    enabled: !ctx.hasSearch,
+    getDropdown: () => wrapperRef.current,
+  });
+
   const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
-    if (ctx.hasSearch) {
+    typeAhead(event);
+    if (event.defaultPrevented || ctx.hasSearch) {
       return;
     }
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {

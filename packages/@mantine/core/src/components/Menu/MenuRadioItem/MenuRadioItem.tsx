@@ -183,7 +183,11 @@ export const MenuRadioItem = factory<MenuRadioItemFactory>((_props) => {
           {_checked ? resolvedCheckIcon : null}
         </div>
       )}
-      {children && <div {...ctx.getStyles('itemLabel', { styles, classNames })}>{children}</div>}
+      {children && (
+        <div {...ctx.getStyles('itemLabel', { styles, classNames })} data-menu-item-label>
+          {children}
+        </div>
+      )}
       {rightSection && (
         <div {...ctx.getStyles('itemSection', { styles, classNames })} data-position="right">
           {rightSection}

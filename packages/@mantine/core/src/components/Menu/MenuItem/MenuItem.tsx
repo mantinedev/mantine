@@ -151,7 +151,11 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
           {leftSection}
         </div>
       )}
-      {children && <div {...ctx.getStyles('itemLabel', { styles, classNames })}>{children}</div>}
+      {children && (
+        <div {...ctx.getStyles('itemLabel', { styles, classNames })} data-menu-item-label>
+          {children}
+        </div>
+      )}
       {rightSection && (
         <div {...ctx.getStyles('itemSection', { styles, classNames })} data-position="right">
           {rightSection}

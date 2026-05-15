@@ -71,6 +71,14 @@ dropdown. Setting `checkIcon` on an individual item overrides the menu-level val
 
 <Demo data={MenuDemos.checkIcon} />
 
+## Type-ahead navigation
+
+When focus is inside the dropdown and `Menu.Search` is not used, pressing a printable character
+key moves focus to the next menu item whose label starts with the typed character. Pressing the
+same character again cycles through items that start with it. Multiple characters typed in quick
+succession (within 500ms) match items whose labels start with the full typed string. Disabled
+items are skipped.
+
 ## Context menu
 
 Use `Menu.ContextMenu` to open the menu dropdown at the cursor position on right-click.
@@ -239,6 +247,12 @@ If you are using the Menu to build navigation, you can use the options from the 
       key: 'Enter',
       description: 'Triggers the highlighted item',
       condition: 'Focus on Menu.Search',
+    },
+    {
+      key: 'Printable character',
+      description:
+        'Moves focus to the next item whose label starts with the typed character. Pressing the same character cycles through matches. Multiple characters typed within 500ms match items whose labels start with the typed string.',
+      condition: 'Focus within dropdown, no Menu.Search',
     },
   ]}
 />

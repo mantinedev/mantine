@@ -488,6 +488,169 @@ describe('@mantine/core/Menu', () => {
     });
   });
 
+  describe('type-ahead navigation', () => {
+    function TypeAheadMenu({ withSearch = false }: { withSearch?: boolean } = {}) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            {withSearch && <Menu.Search aria-label="search" />}
+            <Menu.Item>Apple</Menu.Item>
+            <Menu.Item>Apricot</Menu.Item>
+            <Menu.Item disabled>Avocado</Menu.Item>
+            <Menu.Item>Banana</Menu.Item>
+            <Menu.Item>Cherry</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    function getDropdown() {
+      return screen.getByRole('menu');
+    }
+
+    it('focuses first matching item when a letter is pressed', () => {
+      render(<TypeAheadMenu />);
+      getDropdown().focus();
+      fireEvent.keyDown(getDropdown(), { key: 'b' });
+      expect(screen.getByText('Banana').closest('button')).toHaveFocus();
+    });
+
+    it('cycles to next match when the same letter is pressed again', () => {
+      render(<TypeAheadMenu />);
+      getDropdown().focus();
+      fireEvent.keyDown(getDropdown(), { key: 'a' });
+      expect(screen.getByText('Apple').closest('button')).toHaveFocus();
+      fireEvent.keyDown(screen.getByText('Apple').closest('button')!, { key: 'a' });
+      expect(screen.getByText('Apricot').closest('button')).toHaveFocus();
+    });
+
+    it('matches multi-character prefix typed in quick succession', () => {
+      render(<TypeAheadMenu />);
+      getDropdown().focus();
+      fireEvent.keyDown(getDropdown(), { key: 'a' });
+      fireEvent.keyDown(screen.getByText('Apple').closest('button')!, { key: 'p' });
+      fireEvent.keyDown(screen.getByText('Apple').closest('button')!, { key: 'r' });
+      expect(screen.getByText('Apricot').closest('button')).toHaveFocus();
+    });
+
+    it('skips disabled items', () => {
+      render(<TypeAheadMenu />);
+      getDropdown().focus();
+      fireEvent.keyDown(getDropdown(), { key: 'a' });
+      expect(screen.getByText('Apple').closest('button')).toHaveFocus();
+      fireEvent.keyDown(screen.getByText('Apple').closest('button')!, { key: 'a' });
+      expect(screen.getByText('Apricot').closest('button')).toHaveFocus();
+      fireEvent.keyDown(screen.getByText('Apricot').closest('button')!, { key: 'a' });
+      expect(screen.getByText('Apple').closest('button')).toHaveFocus();
+    });
+
+    it('does not move focus when Menu.Search is rendered', () => {
+      render(<TypeAheadMenu withSearch />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+      fireEvent.keyDown(search, { key: 'b' });
+      expect(screen.getByText('Banana').closest('button')).not.toHaveFocus();
+    });
+
+    it('ignores modifier-key combinations', () => {
+      render(<TypeAheadMenu />);
+      const initialActive = document.activeElement;
+      fireEvent.keyDown(getDropdown(), { key: 'b', ctrlKey: true });
+      expect(document.activeElement).toBe(initialActive);
+      fireEvent.keyDown(getDropdown(), { key: 'b', metaKey: true });
+      expect(document.activeElement).toBe(initialActive);
+    });
+
+    it('resets the buffer after the timeout so a new letter starts fresh', () => {
+      jest.useFakeTimers();
+      try {
+        render(<TypeAheadMenu />);
+        getDropdown().focus();
+        fireEvent.keyDown(getDropdown(), { key: 'a' });
+        expect(screen.getByText('Apple').closest('button')).toHaveFocus();
+        jest.advanceTimersByTime(600);
+        fireEvent.keyDown(screen.getByText('Apple').closest('button')!, { key: 'c' });
+        expect(screen.getByText('Cherry').closest('button')).toHaveFocus();
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
+    it('matches against the item label, ignoring leftSection text', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item leftSection="1.">Apple</Menu.Item>
+            <Menu.Item leftSection="2.">Banana</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+
+      getDropdown().focus();
+      fireEvent.keyDown(getDropdown(), { key: 'b' });
+      expect(screen.getByText('Banana').closest('button')).toHaveFocus();
+    });
+
+    it('does not fire when keydown originates in a custom input inside the dropdown', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <input aria-label="custom-input" />
+            <Menu.Item>Apple</Menu.Item>
+            <Menu.Item>Banana</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+
+      const input = screen.getByLabelText('custom-input');
+      input.focus();
+      fireEvent.keyDown(input, { key: 'b' });
+      expect(screen.getByText('Banana').closest('button')).not.toHaveFocus();
+      expect(input).toHaveFocus();
+    });
+
+    it('does not leak from submenu to parent dropdown', async () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>Banana</Menu.Item>
+            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>More</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Cherry</Menu.Item>
+                <Menu.Item>Strawberry</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menu.Dropdown>
+        </Menu>
+      );
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      const cherry = await screen.findByText('Cherry');
+      const subItem = cherry.closest('button')!;
+      subItem.focus();
+      fireEvent.keyDown(subItem, { key: 'b' });
+      expect(screen.getByText('Banana').closest('button')).not.toHaveFocus();
+    });
+  });
+
   describe('Menu.ContextMenu', () => {
     function ContextMenuContainer({ disabled }: { disabled?: boolean } = {}) {
       return (

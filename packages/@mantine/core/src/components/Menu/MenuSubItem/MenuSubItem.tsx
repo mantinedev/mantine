@@ -162,7 +162,11 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
         </div>
       )}
 
-      {children && <div {...ctx.getStyles('itemLabel', { styles, classNames })}>{children}</div>}
+      {children && (
+        <div {...ctx.getStyles('itemLabel', { styles, classNames })} data-menu-item-label>
+          {children}
+        </div>
+      )}
 
       <div {...ctx.getStyles('itemSection', { styles, classNames })} data-position="right">
         {rightSection || <AccordionChevron {...ctx.getStyles('chevron')} size={14} />}

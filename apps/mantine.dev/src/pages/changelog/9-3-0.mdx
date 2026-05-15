@@ -113,6 +113,13 @@ opens the dropdown at the cursor position on right-click. Unlike `Menu.ContextMe
 
 <Demo data={PopoverDemos.contextMenu} />
 
+## Menu type-ahead navigation
+
+When focus is inside [Menu](/core/menu/) dropdown (and `Menu.Search` is not used), pressing a
+printable character key now moves focus to the next item whose label starts with the typed
+character. Pressing the same character cycles through matches, and multiple characters typed
+within 500ms match items by full prefix.
+
 ## Highlight accent and case insensitive matching
 
 [Highlight](/core/highlight/) component now supports `caseInsensitive` and `accentInsensitive`
