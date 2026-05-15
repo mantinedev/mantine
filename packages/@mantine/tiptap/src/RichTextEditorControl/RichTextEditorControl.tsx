@@ -115,12 +115,20 @@ export function createControl({
     const _label = labels[label] as string;
     const editorState = useEditorState({
       editor: editor ?? null,
-      selector: (ctx) => ({
-        active: isActive?.name
-          ? (ctx.editor?.isActive(isActive.name, isActive.attributes) ?? false)
-          : false,
-        disabled: isDisabled?.(ctx.editor) ?? false,
-      }),
+      selector: (ctx) => {
+        // `ctx.editor` is `null` on the first render before `useEditor()` produces an
+        // instance, and `editor.commandManager` is set to `null` by `editor.destroy()`.
+        // Either state would make `isDisabled?.(ctx.editor)` (which typically calls
+        // `editor.can()`) throw, taking down the surrounding tree.
+        const safeEditor = ctx.editor && !ctx.editor.isDestroyed ? ctx.editor : null;
+        return {
+          active:
+            safeEditor && isActive?.name
+              ? safeEditor.isActive(isActive.name, isActive.attributes)
+              : false,
+          disabled: safeEditor ? (isDisabled?.(safeEditor) ?? false) : false,
+        };
+      },
     });
 
     const active = editorState?.active ?? false;
