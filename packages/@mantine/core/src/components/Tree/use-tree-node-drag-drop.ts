@@ -112,6 +112,11 @@ export function useTreeNodeDragDrop({
     dragStateRef.current.draggedValue = nodeValue;
 
     const target = event.currentTarget as HTMLElement;
+    const treeItem = target.closest('[role=treeitem]') as HTMLElement | null;
+    if (treeItem) {
+      treeItem.setAttribute('data-dragging', 'true');
+    }
+
     requestAnimationFrame(() => {
       target.setAttribute('data-dragging', 'true');
     });
@@ -191,6 +196,11 @@ export function useTreeNodeDragDrop({
   const handleDragEnd = (event: React.DragEvent) => {
     const target = event.currentTarget as HTMLElement;
     target.removeAttribute('data-dragging');
+
+    const treeItem = target.closest('[role=treeitem]') as HTMLElement | null;
+    if (treeItem) {
+      treeItem.removeAttribute('data-dragging');
+    }
 
     const prevTarget = dragStateRef.current.currentDropTarget;
     if (prevTarget) {

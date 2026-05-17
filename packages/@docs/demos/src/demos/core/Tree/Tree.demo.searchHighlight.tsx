@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import {
   defaultTreeNodeFilter,
   getTreeExpandedState,
+  Group,
   Highlight,
   TextInput,
   Tree,
@@ -12,9 +14,11 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import {
   defaultTreeNodeFilter,
   getTreeExpandedState,
+  Group,
   Highlight,
   TextInput,
   Tree,
@@ -106,15 +110,25 @@ function Demo() {
       <Tree
         data={data}
         tree={tree}
+        withLines
         renderNode={({ node, elementProps, hasChildren, expanded }) => {
           const label =
             typeof node.label === 'string' ? node.label : node.value;
           return (
-            <div {...elementProps}>
+            <Group gap={6} {...elementProps}>
+              {hasChildren ? (
+                expanded ? (
+                  <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+                ) : (
+                  <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+                )
+              ) : (
+                <FileTextIcon size={14} style={{ opacity: 0.75 }} />
+              )}
               <Highlight highlight={search} component="span">
                 {label}
               </Highlight>
-            </div>
+            </Group>
           );
         }}
       />
@@ -197,14 +211,24 @@ function Demo() {
       <Tree
         data={data}
         tree={tree}
-        renderNode={({ node, elementProps }) => {
+        withLines
+        renderNode={({ node, elementProps, hasChildren, expanded }) => {
           const label = typeof node.label === 'string' ? node.label : node.value;
           return (
-            <div {...elementProps}>
+            <Group gap={6} {...elementProps}>
+              {hasChildren ? (
+                expanded ? (
+                  <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+                ) : (
+                  <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+                )
+              ) : (
+                <FileTextIcon size={14} style={{ opacity: 0.75 }} />
+              )}
               <Highlight highlight={search} component="span">
                 {label}
               </Highlight>
-            </div>
+            </Group>
           );
         }}
       />

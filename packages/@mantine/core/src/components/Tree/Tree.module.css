@@ -1,7 +1,10 @@
-.root {
+:where([data-tree-root]) {
   --level-offset: var(--mantine-spacing-lg);
   --tree-line-width: rem(1px);
   --tree-line-color: var(--mantine-color-default-border);
+}
+
+.root {
   margin: 0;
   padding: 0;
   user-select: none;
@@ -79,18 +82,22 @@
     position: relative;
   }
 
-  .subtree > .node {
-    &::before {
-      content: '';
-      position: absolute;
-      top: rem(12px);
-      inset-inline-start: calc(var(--label-offset) - var(--level-offset) / 2);
-      width: calc(var(--level-offset) / 2);
-      height: 0;
-      border-top: var(--tree-line-width) solid var(--tree-line-color);
-      pointer-events: none;
-    }
+  /* Horizontal connector at the node's own level — applies to both nested and flat layouts */
+  .node:not([data-level='1'])::before {
+    content: '';
+    position: absolute;
+    top: rem(12px);
+    inset-inline-start: calc(var(--label-offset) - var(--level-offset) / 2);
+    width: calc(var(--level-offset) / 2);
+    height: 0;
+    border-top: var(--tree-line-width) solid var(--tree-line-color);
+    pointer-events: none;
+    z-index: 1;
+  }
 
+  /* Vertical line for nested layout (regular Tree): the line spans the parent <li>'s
+     full height — including descendants — so ancestor columns stay continuous. */
+  .subtree > .node {
     &::after {
       content: '';
       position: absolute;
@@ -100,6 +107,7 @@
       width: 0;
       border-inline-start: var(--tree-line-width) solid var(--tree-line-color);
       pointer-events: none;
+      z-index: 1;
     }
 
     &:last-child::after {
@@ -107,4 +115,40 @@
       height: rem(12px);
     }
   }
+
+  .node:where([data-dragging]) {
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .flatLine {
+      display: none;
+    }
+  }
+}
+
+/* Vertical line markers rendered as DOM children by `FlatTreeNode` for flat layouts
+   (e.g. virtualized trees) where ::after on a single node can't span ancestor rows.
+   Each marker is positioned at column `--flat-line-column` and is only visible
+   inside a `[data-with-lines]` tree. */
+.flatLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  inset-inline-start: calc((var(--flat-line-column) - 1.5) * var(--level-offset));
+  border-inline-start: var(--tree-line-width) solid var(--tree-line-color);
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+}
+
+:where([data-with-lines]) .flatLine {
+  display: block;
+}
+
+.flatLineClosing {
+  bottom: auto;
+  height: rem(12px);
 }

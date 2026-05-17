@@ -1,54 +1,54 @@
-import { CaretDownIcon } from '@phosphor-icons/react';
-import { Group, Tree } from '@mantine/core';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
+import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './data';
 
 const code = `
-import { CaretDownIcon } from '@phosphor-icons/react';
-import { Group, Tree } from '@mantine/core';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
+import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { data } from './data';
 
-function Demo() {
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Tree
-      data={data}
-      levelOffset={23}
-      renderNode={({ node, expanded, hasChildren, elementProps }) => (
-        <Group gap={5} {...elementProps}>
-          {hasChildren && (
-            <CaretDownIcon
-              size={18}
-              style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-            />
-          )}
-
-          <span>{node.label}</span>
-        </Group>
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
       )}
-    />
+      <span>{node.label}</span>
+    </Group>
   );
+}
+
+function Demo() {
+  return <Tree data={data} withLines renderNode={(payload) => <Leaf {...payload} />} />;
 }
 `;
 
-function Demo() {
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Tree
-      data={data}
-      levelOffset={23}
-      renderNode={({ node, expanded, hasChildren, elementProps }) => (
-        <Group gap={5} {...elementProps}>
-          {hasChildren && (
-            <CaretDownIcon
-              size={18}
-              style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-            />
-          )}
-
-          <span>{node.label}</span>
-        </Group>
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
       )}
-    />
+      <span>{node.label}</span>
+    </Group>
   );
+}
+
+function Demo() {
+  return <Tree data={data} withLines renderNode={(payload) => <Leaf {...payload} />} />;
 }
 
 export const renderNode: MantineDemo = {

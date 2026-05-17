@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { CaretDownIcon } from '@phosphor-icons/react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { CaretDownIcon } from '@phosphor-icons/react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
 
 const data: TreeNodeData[] = [
@@ -30,12 +30,15 @@ const data: TreeNodeData[] = [
 
 function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} {...elementProps}>
-      {hasChildren && (
-        <CaretDownIcon
-          size={18}
-          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        />
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
       )}
       <span>{node.label}</span>
     </Group>
@@ -48,6 +51,7 @@ function Demo() {
   return (
     <Tree
       data={treeData}
+      withLines
       // Forbid dropping into or onto "components" branch
       allowDrop={({ draggedNode, targetNode, position }) => {
         if (draggedNode === 'components' || draggedNode.startsWith('components/')) {
@@ -91,12 +95,15 @@ const demoData: TreeNodeData[] = [
 
 function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} {...elementProps}>
-      {hasChildren && (
-        <CaretDownIcon
-          size={18}
-          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        />
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
       )}
       <span>{node.label}</span>
     </Group>
@@ -109,6 +116,7 @@ function Demo() {
   return (
     <Tree
       data={treeData}
+      withLines
       allowDrop={({ draggedNode, targetNode, position }) => {
         if (draggedNode === 'components' || draggedNode.startsWith('components/')) {
           return false;
