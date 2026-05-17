@@ -10,6 +10,7 @@ export { groups } from './Select.demo.groups';
 export { limit } from './Select.demo.limit';
 export { readOnly } from './Select.demo.readOnly';
 export { scrollArea } from './Select.demo.scrollArea';
+export { floatingHeight } from './Select.demo.floatingHeight';
 export { search } from './Select.demo.search';
 export { sort } from './Select.demo.sort';
 export { stylesApi } from './Select.demo.stylesApi';

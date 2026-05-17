@@ -1,4 +1,4 @@
-import { CodeHighlightDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PieChartDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, ComboboxDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PieChartDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -64,6 +64,16 @@ inside the input border at the bottom. This is useful for displaying character c
 or other supplementary information:
 
 <Demo data={TextareaDemos.bottomSection} />
+
+## Combobox floatingHeight
+
+[Combobox](/core/combobox/), [Select](/core/select/), [MultiSelect](/core/multi-select/),
+[Autocomplete](/core/autocomplete/) and [TagsInput](/core/tags-input/) now support
+`floatingHeight="viewport"`. When set, the dropdown grows to fill the available vertical
+space in the viewport and the `flip` middleware is disabled – useful when working with
+large option lists:
+
+<Demo data={ComboboxDemos.floatingHeight} />
 
 ## Menu submenu safe polygon
 

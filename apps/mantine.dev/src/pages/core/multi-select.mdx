@@ -209,6 +209,15 @@ you will need to change the dropdown styles with [Styles API](/styles/styles-api
 
 <Demo data={MultiSelectDemos.scrollArea} />
 
+## Fit dropdown to viewport height
+
+Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical
+space in the viewport. The `flip` middleware is disabled in this mode – the dropdown
+always opens in the configured direction and is constrained to the viewport edges instead
+of flipping to the other side. Useful when working with large option lists:
+
+<Demo data={MultiSelectDemos.floatingHeight} />
+
 ## Group options
 
 <Demo data={MultiSelectDemos.groups} />

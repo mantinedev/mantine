@@ -167,3 +167,8 @@ export const Demo_dragReorder = {
   name: '⭐ Demo: dragReorder',
   render: renderDemo(demos.dragReorder),
 };
+
+export const Demo_floatingHeight = {
+  name: '⭐ Demo: floatingHeight',
+  render: renderDemo(demos.floatingHeight),
+};

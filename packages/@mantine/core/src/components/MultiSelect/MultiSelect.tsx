@@ -193,6 +193,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     limit,
     withScrollArea,
     maxDropdownHeight,
+    floatingHeight,
     searchValue,
     defaultSearchValue,
     onSearchChange,
@@ -421,6 +422,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
         readOnly={readOnly}
         __staticSelector="MultiSelect"
         attributes={attributes}
+        floatingHeight={floatingHeight}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val as any);
           if (clearSearchOnChange) {
@@ -547,6 +549,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
           hiddenWhenEmpty={!nothingFoundMessage}
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
+          floatingHeight={floatingHeight}
           filterOptions={searchable}
           value={_value}
           checkIconPosition={checkIconPosition}

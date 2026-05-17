@@ -12,6 +12,7 @@ import {
   useStyles,
 } from '../../core';
 import { __PopoverProps, Popover } from '../Popover';
+import { PopoverMiddlewares } from '../Popover/Popover.types';
 import { ComboboxProvider } from './Combobox.context';
 import { ComboboxChevron, ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
 import {
@@ -81,6 +82,9 @@ export interface ComboboxProps extends __PopoverProps, StylesApiProps<ComboboxFa
 
   /** Determines whether the `Combobox` value can be changed */
   readOnly?: boolean;
+
+  /** If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. */
+  floatingHeight?: 'viewport';
 }
 
 export type ComboboxFactory = Factory<{
@@ -145,8 +149,40 @@ export const Combobox = (_props: ComboboxProps) => {
     __staticSelector,
     readOnly,
     attributes,
+    floatingHeight,
+    middlewares,
     ...others
   } = props;
+
+  const resolvedMiddlewares: PopoverMiddlewares | undefined =
+    floatingHeight === 'viewport'
+      ? {
+          ...middlewares,
+          flip: false,
+          size: {
+            ...(typeof middlewares?.size === 'object' ? middlewares.size : {}),
+            padding:
+              typeof middlewares?.size === 'object' && middlewares.size.padding !== undefined
+                ? middlewares.size.padding
+                : 10,
+            apply: ({ availableHeight, availableWidth, elements, ...rest }) => {
+              elements.floating.style.setProperty(
+                '--combobox-floating-max-height',
+                `${availableHeight}px`
+              );
+              const userSize = middlewares?.size;
+              if (typeof userSize === 'object' && userSize.apply) {
+                userSize.apply({ availableHeight, availableWidth, elements, ...rest });
+              } else if (userSize) {
+                Object.assign(elements.floating.style, {
+                  maxWidth: `${availableWidth}px`,
+                  maxHeight: `${availableHeight}px`,
+                });
+              }
+            },
+          },
+        }
+      : middlewares;
 
   const uncontrolledStore = useCombobox();
   const store = controlledStore || uncontrolledStore;
@@ -177,12 +213,14 @@ export const Combobox = (_props: ComboboxProps) => {
         size,
         resetSelectionOnOptionHover,
         readOnly,
+        floatingHeight,
       }}
     >
       <Popover
         opened={store.dropdownOpened}
         preventPositionChangeWhenVisible={false}
         {...others}
+        middlewares={resolvedMiddlewares}
         onChange={(_opened) => !_opened && onDropdownClose()}
         withRoles={false}
         unstyled={unstyled}

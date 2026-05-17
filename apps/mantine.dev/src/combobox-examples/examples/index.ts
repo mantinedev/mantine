@@ -27,6 +27,8 @@ import { ButtonSearch } from './ButtonSearch/ButtonSearch';
 import ButtonSearchCode from './ButtonSearch/code.json';
 import DropdownAnimationCode from './DropdownAnimation/code.json';
 import { DropdownAnimation } from './DropdownAnimation/DropdownAnimation';
+import DropdownFloatingHeightCode from './DropdownFloatingHeight/code.json';
+import { DropdownFloatingHeight } from './DropdownFloatingHeight/DropdownFloatingHeight';
 import DropdownFooterCode from './DropdownFooter/code.json';
 import { DropdownFooter } from './DropdownFooter/DropdownFooter';
 import DropdownHeaderCode from './DropdownHeader/code.json';
@@ -182,6 +184,11 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   DropdownScrollArea: {
     component: DropdownScrollArea,
     code: DropdownScrollAreaCode as ComboboxExampleComponent['code'],
+  },
+
+  DropdownFloatingHeight: {
+    component: DropdownFloatingHeight,
+    code: DropdownFloatingHeightCode as ComboboxExampleComponent['code'],
   },
 
   AutocompleteDynamic: {

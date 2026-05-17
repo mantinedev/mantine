@@ -15,6 +15,14 @@
   &[data-hidden] {
     display: none;
   }
+
+  &[data-floating-height='viewport']:not([data-hidden]) {
+    --combobox-floating-options-max-height: calc(
+      var(--combobox-floating-max-height, 100vh) - var(--combobox-padding) * 2
+    );
+    max-height: var(--combobox-floating-max-height, none);
+    overflow: hidden;
+  }
 }
 
 /* Variables must be both on dropdown and options to support usage of Combobox.Options without Combobox.Dropdown */

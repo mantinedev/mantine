@@ -153,6 +153,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     limit,
     withScrollArea,
     maxDropdownHeight,
+    floatingHeight,
     size,
     searchable,
     rightSection,
@@ -308,6 +309,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
         readOnly={readOnly}
         size={size}
         attributes={attributes}
+        floatingHeight={floatingHeight}
         keepMounted={autoSelectOnBlur}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val as any);
@@ -395,6 +397,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
           hiddenWhenEmpty={!nothingFoundMessage}
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
+          floatingHeight={floatingHeight}
           filterOptions={!!searchable && selectedOption?.label !== search}
           value={_value}
           checkIconPosition={checkIconPosition}

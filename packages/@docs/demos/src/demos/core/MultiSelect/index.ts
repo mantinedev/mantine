@@ -31,3 +31,4 @@ export { dragReorder } from './MultiSelect.demo.dragReorder';
 export { dropdownWidth } from './MultiSelect.demo.dropdownWidth';
 export { fuzzySearch } from './MultiSelect.demo.fuzzySearch';
 export { loading } from './MultiSelect.demo.loading';
+export { floatingHeight } from './MultiSelect.demo.floatingHeight';

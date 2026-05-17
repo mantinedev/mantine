@@ -102,6 +102,7 @@ export interface OptionsDropdownProps {
   limit: number | undefined;
   withScrollArea: boolean | undefined;
   maxDropdownHeight: number | string | undefined;
+  floatingHeight?: 'viewport';
   hidden?: boolean;
   hiddenWhenEmpty?: boolean;
   filterOptions?: boolean;
@@ -125,6 +126,7 @@ export function OptionsDropdown({
   search,
   limit,
   maxDropdownHeight,
+  floatingHeight,
   withScrollArea = true,
   filterOptions = true,
   withCheckIcon = false,
@@ -168,7 +170,11 @@ export function OptionsDropdown({
       <Combobox.Options labelledBy={labelId} aria-label={ariaLabel}>
         {withScrollArea ? (
           <ScrollArea.Autosize
-            mah={maxDropdownHeight ?? 220}
+            mah={
+              floatingHeight === 'viewport'
+                ? 'var(--combobox-floating-options-max-height)'
+                : (maxDropdownHeight ?? 220)
+            }
             type="scroll"
             scrollbarSize="var(--combobox-padding)"
             offsetScrollbars="y"
