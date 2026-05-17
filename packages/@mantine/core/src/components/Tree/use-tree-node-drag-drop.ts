@@ -8,6 +8,7 @@ export type TreeAllowDrop = (payload: TreeDragDropPayload) => boolean;
 interface UseTreeNodeDragDropInput {
   nodeValue: string;
   hasChildren: boolean;
+  isExpanded: boolean;
   data: TreeNodeData[];
   onDragDrop: ((payload: TreeDragDropPayload) => void) | undefined;
   dragStateRef: React.RefObject<TreeDragState>;
@@ -49,13 +50,27 @@ function isDescendantOf(
 function getDragDropPosition(
   event: React.DragEvent,
   element: HTMLElement,
-  hasChildren: boolean
+  hasChildren: boolean,
+  isExpanded: boolean
 ): TreeDragDropPosition {
   const rect = element.getBoundingClientRect();
   const y = event.clientY - rect.top;
   const height = rect.height;
 
   if (hasChildren) {
+    // Expanded folder: the subtree is visually below the label, so an 'after' drop
+    // on the label itself would be ambiguous — the indicator would render between
+    // the folder name and its first child, which reads as "as first child". Use
+    // 2 zones: 'before' (top half) and 'inside' (bottom half). To drop after an
+    // expanded folder, hover over the next sibling's 'before' position.
+    if (isExpanded) {
+      if (y < height * 0.5) {
+        return 'before';
+      }
+      return 'inside';
+    }
+
+    // Collapsed folder: full 3-zone behavior.
     if (y < height * 0.25) {
       return 'before';
     }
@@ -79,6 +94,7 @@ const EMPTY_DRAG_PROPS = { elementProps: {}, dragHandleProps: undefined } as con
 export function useTreeNodeDragDrop({
   nodeValue,
   hasChildren,
+  isExpanded,
   data,
   onDragDrop,
   dragStateRef,
@@ -133,7 +149,7 @@ export function useTreeNodeDragDrop({
     }
 
     const target = event.currentTarget as HTMLElement;
-    const position = getDragDropPosition(event, target, hasChildren);
+    const position = getDragDropPosition(event, target, hasChildren, isExpanded);
 
     if (allowDrop && !allowDrop({ draggedNode: draggedValue, targetNode: nodeValue, position })) {
       const prevTarget = dragStateRef.current.currentDropTarget;

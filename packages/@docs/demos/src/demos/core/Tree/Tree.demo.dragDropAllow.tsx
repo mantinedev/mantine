@@ -28,9 +28,13 @@ const data: TreeNodeData[] = [
   { label: 'package.json', value: 'package.json' },
 ];
 
+const isLocked = (value: string) => value === 'components' || value.startsWith('components/');
+
 function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  const locked = isLocked(node.value);
+
   return (
-    <Group gap={6} {...elementProps}>
+    <Group gap={6} {...elementProps} draggable={!locked && elementProps.draggable}>
       {hasChildren ? (
         expanded ? (
           <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -52,16 +56,17 @@ function Demo() {
     <Tree
       data={treeData}
       withLines
-      // Forbid dropping into or onto "components" branch
+      // Locked items can't be dragged (also enforced by \`draggable={false}\` in the
+      // Leaf above), items inside the "components" branch can't be drop targets,
+      // and the "components" folder itself only accepts siblings before/after — not
+      // dropping items inside it.
       allowDrop={({ draggedNode, targetNode, position }) => {
-        if (draggedNode === 'components' || draggedNode.startsWith('components/')) {
+        if (isLocked(draggedNode)) {
           return false;
         }
-
         if (targetNode === 'components' && position === 'inside') {
           return false;
         }
-
         return !targetNode.startsWith('components/');
       }}
       onDragDrop={(payload) =>
@@ -93,9 +98,13 @@ const demoData: TreeNodeData[] = [
   { label: 'package.json', value: 'package.json' },
 ];
 
+const isLocked = (value: string) => value === 'components' || value.startsWith('components/');
+
 function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  const locked = isLocked(node.value);
+
   return (
-    <Group gap={6} {...elementProps}>
+    <Group gap={6} {...elementProps} draggable={!locked && elementProps.draggable}>
       {hasChildren ? (
         expanded ? (
           <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -118,14 +127,12 @@ function Demo() {
       data={treeData}
       withLines
       allowDrop={({ draggedNode, targetNode, position }) => {
-        if (draggedNode === 'components' || draggedNode.startsWith('components/')) {
+        if (isLocked(draggedNode)) {
           return false;
         }
-
         if (targetNode === 'components' && position === 'inside') {
           return false;
         }
-
         return !targetNode.startsWith('components/');
       }}
       onDragDrop={(payload) => setTreeData((current) => moveTreeNode(current, payload))}

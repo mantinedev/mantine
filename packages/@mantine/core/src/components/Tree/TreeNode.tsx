@@ -98,6 +98,7 @@ export function TreeNode({
   const { elementProps: dragElementProps, dragHandleProps } = useTreeNodeDragDrop({
     nodeValue: node.value,
     hasChildren,
+    isExpanded,
     data,
     onDragDrop,
     dragStateRef,
