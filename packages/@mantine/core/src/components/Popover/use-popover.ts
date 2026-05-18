@@ -219,8 +219,12 @@ export function usePopover(options: UsePopoverOptions) {
     floating.update,
   ]);
 
-  useDidUpdate(() => {
-    options.onPositionChange?.(floating.placement);
+  const previousPlacementRef = useRef(floating.placement);
+  useIsomorphicEffect(() => {
+    if (previousPlacementRef.current !== floating.placement) {
+      previousPlacementRef.current = floating.placement;
+      options.onPositionChange?.(floating.placement);
+    }
   }, [floating.placement]);
 
   useDidUpdate(() => {
