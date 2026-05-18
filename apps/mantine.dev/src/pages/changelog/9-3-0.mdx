@@ -152,3 +152,30 @@ now support `arrowPosition="merge"`. When set, the arrow forms a right triangle 
 with the corresponding corner of the dropdown, and the border radius of that corner is removed.
 
 <Demo data={TooltipDemos.arrow} />
+
+## Popover preventPositionChangeWhenVisible default
+
+[Popover](/core/popover/) and all components built on top of it ([Combobox](/core/combobox/),
+[Select](/core/select/), [MultiSelect](/core/multi-select/), [Autocomplete](/core/autocomplete/),
+[TagsInput](/core/tags-input/), [Menu](/core/menu/), [HoverCard](/core/hover-card/), [Tooltip](/core/tooltip/),
+[ColorInput](/core/color-input/), date pickers and others) now treat `preventPositionChangeWhenVisible`
+as `true` by default.
+
+With this behavior, the dropdown picks its side once on open – respecting the `position` prop
+when there is enough room – and then stays on that side until the dropdown is closed. Scrolling,
+resizing, or changes to the dropdown content (for example narrowing a searchable `Select`) no
+longer cause the dropdown to flip between top and bottom while it is open. The next open recalculates
+the side from scratch.
+
+The flip is also more predictable: when neither side fits, the dropdown falls back to the
+preferred `position` prop instead of the side with marginally more space.
+
+To restore the previous behavior – where the dropdown could re-flip while open whenever
+available space changed – pass `preventPositionChangeWhenVisible={false}`:
+
+```tsx
+<Select
+  comboboxProps={{ preventPositionChangeWhenVisible: false }}
+  data={['React', 'Angular', 'Svelte']}
+/>
+```

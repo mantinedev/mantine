@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   arrow,
   autoUpdate,
@@ -14,7 +14,6 @@ import {
   UseFloatingReturn,
 } from '@floating-ui/react';
 import { useDidUpdate, useIsomorphicEffect, useUncontrolled } from '@mantine/hooks';
-import { useMantineEnv } from '../../core';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 
@@ -33,9 +32,6 @@ interface UsePopoverOptions {
   arrowRef: React.RefObject<HTMLDivElement | null>;
   arrowOffset: number;
   strategy?: FloatingStrategy;
-  dropdownVisible: boolean;
-  setDropdownVisible: (visible: boolean) => void;
-  positionRef: React.RefObject<FloatingPosition>;
   disabled: boolean | undefined;
   preventPositionChangeWhenVisible: boolean | undefined;
   keepMounted: boolean | undefined;
@@ -61,19 +57,18 @@ function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): Pop
 function getPopoverMiddlewares(
   options: UsePopoverOptions,
   getFloating: () => UseFloatingReturn<Element>,
-  env: 'test' | 'default'
+  disableFlip: boolean,
+  lockEnabled: boolean
 ) {
   const middlewaresOptions = getDefaultMiddlewares(options.middlewares);
   const middlewares: Middleware[] = [offset(options.offset), hide()];
 
-  if (options.dropdownVisible && env !== 'test' && options.preventPositionChangeWhenVisible) {
-    middlewaresOptions.flip = false;
-  }
-
-  if (middlewaresOptions.flip) {
-    middlewares.push(
-      typeof middlewaresOptions.flip === 'boolean' ? flip() : flip(middlewaresOptions.flip)
-    );
+  if (middlewaresOptions.flip && !disableFlip) {
+    const userFlip = typeof middlewaresOptions.flip === 'boolean' ? {} : middlewaresOptions.flip;
+    const flipOptions = lockEnabled
+      ? { fallbackStrategy: 'initialPlacement' as const, ...userFlip }
+      : userFlip;
+    middlewares.push(flip(flipOptions));
   }
 
   if (middlewaresOptions.shift) {
@@ -128,7 +123,6 @@ function getPopoverMiddlewares(
 }
 
 export function usePopover(options: UsePopoverOptions) {
-  const env = useMantineEnv();
   const [_opened, setOpened] = useUncontrolled({
     value: options.opened,
     defaultValue: options.defaultOpened,
@@ -137,6 +131,19 @@ export function usePopover(options: UsePopoverOptions) {
   });
 
   const previouslyOpened = useRef(_opened);
+
+  const [lockedPlacement, setLockedPlacement] = useState<FloatingPosition | null>(null);
+  const lockEnabled = options.preventPositionChangeWhenVisible !== false;
+
+  const wasOpenedRef = useRef(_opened);
+  if (_opened !== wasOpenedRef.current) {
+    wasOpenedRef.current = _opened;
+    if (_opened && lockedPlacement !== null) {
+      setLockedPlacement(null);
+    }
+  }
+
+  const resetLockedPlacement = useCallback(() => setLockedPlacement(null), []);
 
   const onClose = () => {
     if (_opened && !options.disabled) {
@@ -151,11 +158,15 @@ export function usePopover(options: UsePopoverOptions) {
   };
 
   const floating: UseFloatingReturn<Element> = useFloating({
+    open: _opened,
     strategy: options.strategy,
-    placement: options.preventPositionChangeWhenVisible
-      ? options.positionRef.current
-      : options.position,
-    middleware: getPopoverMiddlewares(options, () => floating, env),
+    placement: lockEnabled ? (lockedPlacement ?? options.position) : options.position,
+    middleware: getPopoverMiddlewares(
+      options,
+      () => floating,
+      lockEnabled && lockedPlacement !== null,
+      lockEnabled
+    ),
     whileElementsMounted: !options.keepMounted ? autoUpdate : undefined,
   });
 
@@ -173,10 +184,44 @@ export function usePopover(options: UsePopoverOptions) {
     }
   }, [_opened, floating.update]);
 
+  const measuredAfterShowRef = useRef(false);
+
+  useIsomorphicEffect(() => {
+    if (!_opened) {
+      measuredAfterShowRef.current = false;
+      return;
+    }
+
+    if (!lockEnabled || lockedPlacement !== null) {
+      return;
+    }
+
+    const flEl = floating.refs.floating.current as HTMLElement | null;
+    if (!flEl || flEl.offsetHeight === 0 || flEl.offsetWidth === 0) {
+      return;
+    }
+
+    if (!measuredAfterShowRef.current) {
+      measuredAfterShowRef.current = true;
+      floating.update();
+      return;
+    }
+
+    if (floating.isPositioned) {
+      setLockedPlacement(floating.placement);
+    }
+  }, [
+    lockEnabled,
+    _opened,
+    floating.isPositioned,
+    floating.placement,
+    lockedPlacement,
+    floating.update,
+  ]);
+
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
-    options.positionRef.current = floating.placement;
-  }, [floating.placement, options.preventPositionChangeWhenVisible]);
+  }, [floating.placement]);
 
   useDidUpdate(() => {
     if (_opened !== previouslyOpened.current) {
@@ -190,24 +235,12 @@ export function usePopover(options: UsePopoverOptions) {
     previouslyOpened.current = _opened;
   }, [_opened, options.onClose, options.onOpen]);
 
-  useIsomorphicEffect(() => {
-    let timeout: number = -1;
-
-    if (_opened) {
-      // Required to be in timeout to give floating ui render time to flip/shift popover
-      timeout = window.setTimeout(() => options.setDropdownVisible(true), 4);
-    }
-
-    return () => {
-      window.clearTimeout(timeout);
-    };
-  }, [_opened, options.position]);
-
   return {
     floating,
     controlled: typeof options.opened === 'boolean',
     opened: _opened,
     onClose,
     onToggle,
+    resetLockedPlacement,
   };
 }

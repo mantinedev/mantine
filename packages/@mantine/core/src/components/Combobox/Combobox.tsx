@@ -218,7 +218,6 @@ export const Combobox = (_props: ComboboxProps) => {
     >
       <Popover
         opened={store.dropdownOpened}
-        preventPositionChangeWhenVisible={false}
         {...others}
         middlewares={resolvedMiddlewares}
         onChange={(_opened) => !_opened && onDropdownClose()}
