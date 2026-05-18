@@ -12,6 +12,11 @@ export default Layout(MDX_DATA.Menu);
 
 <Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
 
+Use `safeAreaPolygon` to keep a submenu open while the cursor moves from the target toward the dropdown.
+Pass an object to adjust [Floating UI `safePolygon`](https://floating-ui.com/docs/useHover#safepolygon) options, for example when `offset` creates a larger gap between the target and dropdown.
+
+<Demo data={MenuDemos.subSafeAreaPolygon} demoProps={{ defaultExpanded: false }} />
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:
