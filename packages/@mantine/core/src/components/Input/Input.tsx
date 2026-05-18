@@ -159,6 +159,9 @@ export interface __InputProps {
 
   /** Position of the loading indicator @default 'right' */
   loadingPosition?: 'left' | 'right';
+
+  /** Sets `dir` attribute on the input wrapper and the input element. Useful for overriding direction inside a parent with a different `dir`. Accepts `'ltr'`, `'rtl'`, or `'auto'`. */
+  dir?: React.ComponentProps<'input'>['dir'];
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -273,6 +276,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     loading,
     loadingPosition,
     rootRef,
+    dir,
     ...others
   } = props;
 
@@ -330,6 +334,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     <InputContext value={{ size: size || 'sm' }}>
       <Box
         ref={rootRef}
+        dir={dir}
         {...getStyles('wrapper')}
         {...styleProps}
         {...wrapperProps}
@@ -363,6 +368,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
         <Box
           component="input"
           {...rest}
+          dir={dir}
           {...ariaAttributes}
           required={required}
           mod={{ disabled, error: !!error && withErrorStyles }}

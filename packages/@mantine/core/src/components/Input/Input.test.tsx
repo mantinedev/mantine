@@ -159,6 +159,24 @@ describe('@mantine/core/Input', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('size', '5');
   });
 
+  it('sets dir attribute on the input wrapper and input element', () => {
+    const { container } = render(<Input dir="ltr" rightSection="right" />);
+
+    expect(getInputWrapper(container)).toHaveAttribute('dir', 'ltr');
+    expect(screen.getByRole('textbox')).toHaveAttribute('dir', 'ltr');
+  });
+
+  it('keeps dir attribute on the wrapper when nested inside an opposite-direction parent', () => {
+    const { container } = render(
+      <div dir="rtl">
+        <Input dir="ltr" rightSection="right" />
+      </div>
+    );
+
+    expect(getInputWrapper(container)).toHaveAttribute('dir', 'ltr');
+    expect(screen.getByRole('textbox')).toHaveAttribute('dir', 'ltr');
+  });
+
   it('displays given __clearSection in right section if __clearable is true', () => {
     const { rerender } = render(<Input __clearable __clearSection="clear" />);
     expect(screen.getByText('clear')).toBeInTheDocument();
