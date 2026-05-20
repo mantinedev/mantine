@@ -40,7 +40,7 @@ export interface RadioIndicatorProps
   color?: MantineColor;
 
   /** Controls size of the component @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | number;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
@@ -86,7 +86,10 @@ const varsResolver = createVarsResolver<RadioIndicatorFactory>(
         '--radio-size': getSize(size, 'radio-size'),
         '--radio-radius': radius === undefined ? undefined : getRadius(radius),
         '--radio-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
-        '--radio-icon-size': getSize(size, 'radio-icon-size'),
+        '--radio-icon-size':
+          typeof size === 'number'
+            ? `calc(${getSize(size, 'radio-size')} * 0.4)`
+            : getSize(size, 'radio-icon-size'),
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
           : getAutoContrastValue(autoContrast, theme)
