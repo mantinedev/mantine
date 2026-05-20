@@ -26,8 +26,17 @@ async function fetchSponsors() {
   const sponsors = data
     .filter((item: any) => {
       const isActiveSponsor = item.role === 'BACKER' && item.tier === 'sponsor';
-      const hasRecentTransaction =
-        item.lastTransactionAt && dayjs(item.lastTransactionAt).isAfter(thirtyOneDaysAgo);
+      if (!item.lastTransactionAt) {
+        return false;
+      }
+      const lastTransaction = dayjs(item.lastTransactionAt);
+      if (!lastTransaction.isValid()) {
+        logger.error(
+          `Skipping sponsor "${item.name}" — OpenCollective returned unparseable lastTransactionAt: ${item.lastTransactionAt}`
+        );
+        return false;
+      }
+      const hasRecentTransaction = lastTransaction.isAfter(thirtyOneDaysAgo);
       return isActiveSponsor && hasRecentTransaction;
     })
     .reduce((unique: Sponsor[], item: any) => {
