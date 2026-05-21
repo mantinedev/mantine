@@ -146,6 +146,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
   });
 
   const { styleProps, rest } = extractStyleProps(others);
+  const inputDirection = (rest as { dir?: React.HTMLAttributes<HTMLElement>['dir'] }).dir;
   const errorId = errorProps?.id || `${uuid}-error`;
   const descriptionId = descriptionProps?.id || `${uuid}-description`;
   const hasError = !!error && typeof error !== 'boolean';
@@ -215,6 +216,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     >
       <Input
         component="div"
+        dir={inputDirection}
         error={error}
         leftSection={leftSection}
         size={size}

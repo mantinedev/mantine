@@ -277,6 +277,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
   } = props;
 
   const { styleProps, rest } = extractStyleProps(others);
+  const inputDirection = (rest as { dir?: React.HTMLAttributes<HTMLElement>['dir'] }).dir;
   const ctx = use(InputWrapperContext);
   const stylesCtx: InputStylesCtx = { offsetBottom: ctx?.offsetBottom, offsetTop: ctx?.offsetTop };
 
@@ -332,6 +333,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
         ref={rootRef}
         {...getStyles('wrapper')}
         {...styleProps}
+        dir={inputDirection}
         {...wrapperProps}
         mod={[
           {

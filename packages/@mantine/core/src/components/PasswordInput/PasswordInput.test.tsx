@@ -145,6 +145,12 @@ describe('@mantine/core/PasswordInput', () => {
     expect(input.type).toBe('text');
   });
 
+  it('sets dir attribute on input wrapper based on input dir prop', () => {
+    const { container } = render(<PasswordInput label="Password" dir="ltr" />);
+    expect(container.querySelector('.mantine-Input-wrapper')).toHaveAttribute('dir', 'ltr');
+    expect(screen.getByLabelText('Password')).toHaveAttribute('dir', 'ltr');
+  });
+
   it('passes visibilityToggleButtonProps to toggle button', () => {
     render(
       <PasswordInput
