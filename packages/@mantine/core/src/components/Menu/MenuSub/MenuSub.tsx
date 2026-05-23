@@ -1,5 +1,11 @@
 import { use, useCallback, useRef } from 'react';
-import { safePolygon, useFloating, useHover, useInteractions } from '@floating-ui/react';
+import {
+  safePolygon,
+  useFloating,
+  useHover,
+  useInteractions,
+  type SafePolygonOptions,
+} from '@floating-ui/react';
 import { useDisclosure, useId } from '@mantine/hooks';
 import { ExtendComponent, Factory, useDirection, useProps } from '../../../core';
 import {
@@ -39,11 +45,15 @@ export interface MenuSubProps extends __PopoverProps {
 
   /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default { duration: 0 } */
   transitionProps?: TransitionOverride;
+
+  /** Determines whether submenu stays open while the cursor moves toward its dropdown. Pass an object to configure safe polygon behavior. @default true */
+  safeAreaPolygon?: boolean | SafePolygonOptions;
 }
 
 const defaultProps = {
   offset: 0,
   position: 'right-start',
+  safeAreaPolygon: true,
   transitionProps: { duration: 0 },
   openDelay: 0,
   middlewares: {
@@ -55,7 +65,7 @@ const defaultProps = {
 } satisfies Partial<MenuSubProps>;
 
 export function MenuSub(_props: MenuSubProps) {
-  const { children, closeDelay, openDelay, position, ...others } = useProps(
+  const { children, closeDelay, openDelay, position, safeAreaPolygon, ...others } = useProps(
     'MenuSub',
     defaultProps,
     _props
@@ -109,7 +119,9 @@ export function MenuSub(_props: MenuSubProps) {
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
-      handleClose: safePolygon(),
+      handleClose: safeAreaPolygon
+        ? safePolygon(typeof safeAreaPolygon === 'object' ? safeAreaPolygon : undefined)
+        : undefined,
       delay: { open: openDelay, close: closeDelay },
     }),
   ]);
