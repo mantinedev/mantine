@@ -310,6 +310,52 @@ To control the dropdown opened state, pass `opened` to `useCombobox` hook:
 
 <Demo data={ComboboxDemos.controlledDropdown} />
 
+## Read only
+
+Set `readOnly` prop on `Combobox` to disable keyboard-based selection. When `readOnly`
+is set, arrow key navigation and `Enter` key selection have no effect:
+
+```tsx
+import { useState } from 'react';
+import { Combobox, TextInput, useCombobox } from '@mantine/core';
+
+const options = ['React', 'Vue', 'Angular', 'Svelte'];
+
+function Demo() {
+  const [value, setValue] = useState('React');
+  const combobox = useCombobox();
+
+  return (
+    <Combobox
+      readOnly
+      store={combobox}
+      onOptionSubmit={(val) => {
+        setValue(val);
+        combobox.closeDropdown();
+      }}
+    >
+      <Combobox.Target>
+        <TextInput
+          readOnly
+          value={value}
+          onClick={() => combobox.toggleDropdown()}
+        />
+      </Combobox.Target>
+
+      <Combobox.Dropdown>
+        <Combobox.Options>
+          {options.map((opt) => (
+            <Combobox.Option key={opt} value={opt}>
+              {opt}
+            </Combobox.Option>
+          ))}
+        </Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
+  );
+}
+```
+
 ## Popover props
 
 `Combobox` supports most of [Popover](/core/popover) props. For example,
