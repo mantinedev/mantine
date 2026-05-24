@@ -18,7 +18,6 @@ export const Swatches = forwardRef<HTMLDivElement, SwatchesProps>(
   (
     {
       className,
-      datatype,
       setValue,
       onChangeEnd,
       size,
