@@ -18,7 +18,7 @@ const defaultProps = {
 } satisfies Partial<HueSliderProps>;
 
 export const HueSlider = factory<HueSliderFactory>((props: HueSliderProps) => {
-  const { value, onChange, onChangeEnd, color, ...others } = useProps(
+  const { value, onChange, onChangeEnd, ...others } = useProps(
     'HueSlider',
     defaultProps,
     props
