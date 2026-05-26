@@ -246,3 +246,36 @@ export function WithSubMenu() {
     </div>
   );
 }
+
+export function WithSubMenuSafeAreaPolygon() {
+  return (
+    <div style={{ padding: 400 }}>
+      <Menu width={200} position="bottom-start">
+        <Menu.Target>
+          <Button>Toggle menu</Button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Item>Dashboard</Menu.Item>
+
+          <Menu.Sub offset={16} safeAreaPolygon={{ buffer: 16, requireIntent: false }}>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item>Products</Menu.Sub.Item>
+            </Menu.Sub.Target>
+
+            <Menu.Sub.Dropdown>
+              <Menu.Item closeMenuOnClick={false}>All products</Menu.Item>
+              <Menu.Item closeMenuOnClick={false}>Categories</Menu.Item>
+              <Menu.Item closeMenuOnClick={false}>Tags</Menu.Item>
+              <Menu.Item closeMenuOnClick={false}>Attributes</Menu.Item>
+              <Menu.Item closeMenuOnClick={false}>Shipping classes</Menu.Item>
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
+
+          <Menu.Item>Customers</Menu.Item>
+          <Menu.Item>Reports</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
