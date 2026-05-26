@@ -351,6 +351,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
   const [maskedValue, setMaskedValue] = useState('');
   const [rawValue, setRawValue] = useState('');
   const processedRef = useRef('');
+  const displayValueRef = useRef('');
   const wasCompleteRef = useRef(false);
   const isFocusedRef = useRef(false);
 
@@ -380,6 +381,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       const displayValue = buildDisplayValue(reprocessed, resolvedSlots, slotChar, shouldShowSlots);
 
       processedRef.current = reprocessed;
+      displayValueRef.current = displayValue;
       setMaskedValue(displayValue);
       setRawValue(newRaw);
 
@@ -412,9 +414,42 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       const opts = optionsRef.current;
 
       const { slots: resolvedSlots, slotChar, transform } = getResolvedOptions(opts, '');
-      const raw = extractRaw(input.value, resolvedSlots);
-      const reformatted = applyMaskToRaw(raw, resolvedSlots, slotChar, transform);
-      updateValue(reformatted, reformatted.length);
+      const prev = displayValueRef.current;
+      const curr = input.value;
+
+      let prefixLen = 0;
+      const maxPrefix = Math.min(prev.length, curr.length);
+      while (prefixLen < maxPrefix && prev[prefixLen] === curr[prefixLen]) {
+        prefixLen++;
+      }
+
+      let suffixLen = 0;
+      const maxSuffix = Math.min(prev.length - prefixLen, curr.length - prefixLen);
+      while (
+        suffixLen < maxSuffix &&
+        prev[prev.length - 1 - suffixLen] === curr[curr.length - 1 - suffixLen]
+      ) {
+        suffixLen++;
+      }
+
+      const insertedText = curr.slice(prefixLen, curr.length - suffixLen);
+      const removedEnd = prev.length - suffixLen;
+
+      const beforeRaw = extractRaw(prev.slice(0, prefixLen), resolvedSlots.slice(0, prefixLen));
+      const afterRaw = extractRaw(prev.slice(removedEnd), resolvedSlots.slice(removedEnd));
+      const reformatted = applyMaskToRaw(
+        beforeRaw + insertedText + afterRaw,
+        resolvedSlots,
+        slotChar,
+        transform
+      );
+      const maskedPrefix = applyMaskToRaw(
+        beforeRaw + insertedText,
+        resolvedSlots,
+        slotChar,
+        transform
+      );
+      updateValue(reformatted, maskedPrefix.length);
     },
     [updateValue]
   );
@@ -456,6 +491,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     if (showOnFocus || opts.alwaysShowMask) {
       const display = buildDisplayValue(processed, slots, slotChar, true);
       input.value = display;
+      displayValueRef.current = display;
       setMaskedValue(display);
     }
 
@@ -526,6 +562,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     if (opts.autoClear && !complete && processed.length > 0) {
       input.value = '';
       processedRef.current = '';
+      displayValueRef.current = '';
       setMaskedValue('');
       setRawValue('');
       wasCompleteRef.current = false;
@@ -537,6 +574,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       if (opts.alwaysShowMask) {
         const emptyDisplay = buildDisplayValue('', slots, slotChar, true);
         input.value = emptyDisplay;
+        displayValueRef.current = emptyDisplay;
         setMaskedValue(emptyDisplay);
       }
       return;
@@ -546,6 +584,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       if (extractRaw(processed, slots).length === 0) {
         input.value = '';
         processedRef.current = '';
+        displayValueRef.current = '';
         setMaskedValue('');
         setRawValue('');
         wasCompleteRef.current = false;
@@ -558,6 +597,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
       const display = buildDisplayValue(processed, slots, slotChar, false);
       input.value = display;
+      displayValueRef.current = display;
       setMaskedValue(display);
     }
   }, [rawValue]);
@@ -712,8 +752,9 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       const processed = processedRef.current;
 
       const { slots, slotChar, transform } = getResolvedOptions(opts, '');
+      const clampedStart = Math.min(start, processed.length);
       const clampedEnd = Math.min(end, processed.length);
-      const beforeRaw = extractRaw(processed.slice(0, start), slots.slice(0, start));
+      const beforeRaw = extractRaw(processed.slice(0, clampedStart), slots.slice(0, clampedStart));
       const afterRaw = extractRaw(processed.slice(clampedEnd), slots.slice(clampedEnd));
       const newValue = applyMaskToRaw(
         beforeRaw + pastedText + afterRaw,
@@ -722,9 +763,10 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         transform
       );
 
-      const { reprocessed } = updateValue(newValue);
+      updateValue(newValue);
 
-      const pasteEndPos = Math.min((reprocessed || newValue).length, slots.length);
+      const maskedPrefix = applyMaskToRaw(beforeRaw + pastedText, slots, slotChar, transform);
+      const pasteEndPos = Math.min(maskedPrefix.length, slots.length);
       if (input === document.activeElement) {
         input.setSelectionRange(pasteEndPos, pasteEndPos);
       }
@@ -773,6 +815,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
           const { slots, slotChar } = getResolvedOptions(options, '');
           const display = buildDisplayValue('', slots, slotChar, true);
           node.value = display;
+          displayValueRef.current = display;
           setMaskedValue(display);
         }
       }
@@ -809,6 +852,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     const input = inputRef.current;
 
     processedRef.current = '';
+    displayValueRef.current = '';
     setMaskedValue('');
     setRawValue('');
     wasCompleteRef.current = false;
@@ -818,6 +862,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         const { slots, slotChar } = getResolvedOptions(opts, '');
         const display = buildDisplayValue('', slots, slotChar, true);
         input.value = display;
+        displayValueRef.current = display;
         setMaskedValue(display);
       } else {
         input.value = '';

@@ -237,6 +237,119 @@ describe('@mantine/hooks/use-mask', () => {
       document.body.removeChild(input);
     });
 
+    it('positions cursor at the cut location when content is removed via cut', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        for (const d of '3334445555') {
+          input.dispatchEvent(new KeyboardEvent('keydown', { key: d }));
+        }
+      });
+
+      expect(input.value).toBe('(333) 444-5555');
+
+      act(() => {
+        const nativeSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLInputElement.prototype,
+          'value'
+        )!.set!;
+        input.setSelectionRange(6, 9);
+        nativeSetter.call(input, '(333) -5555');
+        input.setSelectionRange(6, 6);
+        input.dispatchEvent(new InputEvent('input', { inputType: 'deleteByCut' }));
+      });
+
+      expect(input.selectionStart).toBe(6);
+      expect(input.selectionEnd).toBe(6);
+      expect(result.current.rawValue).toBe('3335555');
+
+      document.body.removeChild(input);
+    });
+
+    it('positions cursor at the cut location for partially filled mask with placeholders', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        for (const d of '12345') {
+          input.dispatchEvent(new KeyboardEvent('keydown', { key: d }));
+        }
+      });
+
+      expect(input.value).toBe('(123) 45_-____');
+
+      act(() => {
+        const nativeSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLInputElement.prototype,
+          'value'
+        )!.set!;
+        input.setSelectionRange(6, 7);
+        nativeSetter.call(input, '(123) 5_-____');
+        input.setSelectionRange(6, 6);
+        input.dispatchEvent(new InputEvent('input', { inputType: 'deleteByCut' }));
+      });
+
+      expect(input.selectionStart).toBe(6);
+      expect(input.selectionEnd).toBe(6);
+      expect(result.current.rawValue).toBe('1235');
+
+      document.body.removeChild(input);
+    });
+
+    it('positions cursor after pasted content rather than at the end', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        for (const d of '3335555') {
+          input.dispatchEvent(new KeyboardEvent('keydown', { key: d }));
+        }
+      });
+
+      act(() => {
+        input.setSelectionRange(4, 4);
+        const pasteEvent = new Event('paste', { bubbles: true, cancelable: true });
+        Object.defineProperty(pasteEvent, 'clipboardData', {
+          value: { getData: () => '444' },
+        });
+        input.dispatchEvent(pasteEvent);
+      });
+
+      expect(input.value).toBe('(333) 444-5555');
+      expect(input.selectionStart).toBe(10);
+      expect(input.selectionEnd).toBe(10);
+
+      document.body.removeChild(input);
+    });
+
     it('removes event listeners on cleanup', () => {
       const input = document.createElement('input');
       const removeSpy = jest.spyOn(input, 'removeEventListener');
