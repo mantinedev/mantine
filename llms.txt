@@ -346,6 +346,7 @@ For a single consolidated file with all content, use:
 - [MonthView](https://mantine.dev/llms/schedule-month-view.md): Standalone schedule month view component
 - [RecurringEventsSchedule](https://mantine.dev/llms/schedule-recurring-events.md)
 - [Schedule](https://mantine.dev/llms/schedule-schedule.md): Schedule component with day, week, month and year views
+- [ScheduleEventsData](https://mantine.dev/llms/schedule-events-data.md)
 - [WeekView](https://mantine.dev/llms/schedule-week-view.md): Standalone schedule week view component
 - [YearView](https://mantine.dev/llms/schedule-year-view.md): Standalone schedule year view component
 

@@ -1,0 +1,360 @@
+# ScheduleEventsData
+Package: @mantine/schedule
+Import: import { ScheduleEventsData } from '@mantine/schedule';
+
+## Overview
+
+All `@mantine/schedule` components accept events through the `events` prop. Each event
+is typed as `ScheduleEventData` and can be one of three shapes:
+
+* **One-off event** – a regular event without recurrence
+* **Recurring series event** – a source event that expands into multiple occurrences
+* **Recurring override event** – an event that replaces a single occurrence of a series
+
+All three variants share a common set of base fields described in `ScheduleEventBase`.
+
+## ScheduleEventBase
+
+`ScheduleEventBase` defines the fields that every event has, regardless of its shape.
+
+```tsx
+import type { DateTimeStringValue, EventPayload } from '@mantine/schedule';
+import type { MantineColor } from '@mantine/core';
+
+interface ScheduleEventBase<Payload extends EventPayload = EventPayload> {
+  /** Unique event id, used for key and identification */
+  id: string | number;
+
+  /** Event title, displayed in month, week and day views */
+  title: string;
+
+  /** Event start date/time */
+  start: Date | DateTimeStringValue;
+
+  /** Event end date/time */
+  end: Date | DateTimeStringValue;
+
+  /** Event background color. Key of `theme.colors` or any valid CSS color. */
+  color: MantineColor;
+
+  /** Event variant, default is `'light'` */
+  variant?: 'filled' | 'light';
+
+  /** Event display mode. Background events render as full-width,
+   *  non-interactive blocks behind regular events. @default 'default' */
+  display?: 'default' | 'background';
+
+  /** Additional event data, defined by the user, not used internally by the library */
+  payload?: Payload;
+}
+```
+
+`start` and `end` accept either a `Date` instance or a string in `YYYY-MM-DD HH:mm:ss`
+format (the `DateTimeStringValue` type used by all Mantine date components).
+
+## ScheduleSingleEventData
+
+A one-off event without recurrence. This is the most common shape:
+
+```tsx
+import type { ScheduleSingleEventData } from '@mantine/schedule';
+
+const event: ScheduleSingleEventData = {
+  id: 'meeting-1',
+  title: 'Team sync',
+  start: '2024-01-15 10:00:00',
+  end: '2024-01-15 11:00:00',
+  color: 'blue',
+};
+```
+
+## ScheduleRecurringSeriesEventData
+
+A source event for a recurring series. Adds a `recurrence` field with an [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545)
+recurrence rule:
+
+```tsx
+import type { ScheduleRecurringSeriesEventData } from '@mantine/schedule';
+
+const series: ScheduleRecurringSeriesEventData = {
+  id: 'weekly-planning',
+  title: 'Weekly planning',
+  start: '2024-01-15 10:00:00',
+  end: '2024-01-15 11:00:00',
+  color: 'blue',
+  recurrence: {
+    rrule: 'FREQ=WEEKLY;BYDAY=MO;COUNT=12',
+    exdate: ['2024-02-12 10:00:00'],
+    dtstart: '2024-01-15 10:00:00',
+  },
+};
+```
+
+The `recurrence` object has the following shape:
+
+```tsx
+interface ScheduleRecurrenceData {
+  /** Recurrence rule string, for example: `FREQ=WEEKLY;BYDAY=MO,WE` */
+  rrule: string;
+
+  /** Exception datetimes in `YYYY-MM-DD HH:mm:ss` or valid date string format */
+  exdate?: DateTimeStringValue[];
+
+  /** Optional explicit series start datetime */
+  dtstart?: DateTimeStringValue;
+}
+```
+
+See the [Recurring events guide](https://mantine.dev/llms/schedule-recurring-events.md) for more details on
+recurrence rules and series expansion.
+
+## ScheduleRecurringOverrideEventData
+
+An override event replaces a single generated occurrence from a series:
+
+```tsx
+import type { ScheduleRecurringOverrideEventData } from '@mantine/schedule';
+
+const override: ScheduleRecurringOverrideEventData = {
+  id: 'weekly-planning-override',
+  title: 'Weekly planning (moved)',
+  start: '2024-01-17 16:00:00',
+  end: '2024-01-17 17:00:00',
+  color: 'grape',
+  recurringEventId: 'weekly-planning',
+  recurrenceId: '2024-01-15 10:00:00',
+};
+```
+
+* `recurringEventId` – id of the parent series event
+* `recurrenceId` – original occurrence datetime in `YYYY-MM-DD HH:mm:ss` format
+
+## EventPayload
+
+Use the `payload` field to attach arbitrary data to events. The payload is not used
+internally by the library – it is meant for application-specific data that you can
+access in callbacks (`onEventClick`, `onEventDrop`, etc.) and in custom event renderers
+(`renderEventBody`):
+
+```tsx
+import type { ScheduleEventData } from '@mantine/schedule';
+
+interface MyEventPayload {
+  description: string;
+  attendees: string[];
+  location?: string;
+}
+
+const event: ScheduleEventData<MyEventPayload> = {
+  id: 'meeting-1',
+  title: 'Team sync',
+  start: '2024-01-15 10:00:00',
+  end: '2024-01-15 11:00:00',
+  color: 'blue',
+  payload: {
+    description: 'Weekly planning meeting',
+    attendees: ['Alice', 'Bob'],
+    location: 'Conference room A',
+  },
+};
+```
+
+`EventPayload` itself is just `Record<PropertyKey, any>` – you typically pass your own
+payload type as a generic argument to `ScheduleEventData<MyPayload>`.
+
+## Recurring instance metadata
+
+When a recurring series is expanded for the visible date range, each generated event
+includes a `recurringInstance` metadata object. This object is added by the library –
+you do not set it yourself, but you can read it in callbacks and custom renderers to
+distinguish generated occurrences from regular events:
+
+```tsx
+interface RecurringInstanceMeta {
+  /** If true, event is generated from recurrence rule */
+  isRecurringInstance: boolean;
+
+  /** Parent series event id */
+  recurringEventId: string | number;
+
+  /** Original occurrence datetime key */
+  recurrenceId: DateTimeStringValue;
+
+  /** Original occurrence dates before any drag/drop updates */
+  originalStart: DateTimeStringValue;
+  originalEnd: DateTimeStringValue;
+}
+```
+
+Example of reading the metadata in `onEventClick`:
+
+```tsx
+<Schedule
+  events={events}
+  onEventClick={(event) => {
+    if (event.recurringInstance?.isRecurringInstance) {
+      console.log('Clicked generated occurrence of', event.recurringInstance.recurringEventId);
+    } else {
+      console.log('Clicked regular event', event.id);
+    }
+  }}
+/>
+```
+
+## Callback payloads
+
+All event callbacks accept structured data describing what the user interacted with.
+The following sections document the exact payload received by each callback.
+
+### onEventClick
+
+Called when an event is clicked in any view:
+
+```tsx
+onEventClick?: (
+  event: ScheduleEventData,
+  e: React.MouseEvent<HTMLButtonElement>
+) => void;
+```
+
+* `event` – the clicked event, including `recurringInstance` metadata if it is a
+  generated occurrence.
+* `e` – the native React mouse event.
+
+### onEventDrop
+
+Called when an event is dropped after a drag (requires `withEventsDragAndDrop`):
+
+```tsx
+onEventDrop?: (data: {
+  eventId: string | number;
+  newStart: DateTimeStringValue;
+  newEnd: DateTimeStringValue;
+  event: ScheduleEventData;
+}) => void;
+```
+
+* `eventId` – id of the dropped event (same as `event.id`). For generated recurring
+  instances this is the synthesized occurrence id (`"<seriesId>::<recurrenceId>"`),
+  not the series id. Use `event.recurringInstance?.recurringEventId` to get the parent
+  series id when handling occurrences.
+* `newStart` / `newEnd` – new datetime values in `YYYY-MM-DD HH:mm:ss` format.
+* `event` – full event data, including `recurringInstance` metadata if applicable.
+
+### onEventResize
+
+Called when an event is resized by dragging its top or bottom edge
+(requires `withEventResize`):
+
+```tsx
+onEventResize?: (data: {
+  eventId: string | number;
+  newStart: DateTimeStringValue;
+  newEnd: DateTimeStringValue;
+  event: ScheduleEventData;
+}) => void;
+```
+
+The payload has the same shape as `onEventDrop`, including the caveat about `eventId`
+for generated recurring instances.
+
+### onEventDragStart / onEventDragEnd
+
+Called when an event drag starts or ends:
+
+```tsx
+onEventDragStart?: (event: ScheduleEventData) => void;
+onEventDragEnd?: () => void;
+```
+
+`onEventDragEnd` is called both for successful drops and for cancelled drags – use
+`onEventDrop` if you need the new position.
+
+### onTimeSlotClick
+
+Called when a time slot is clicked in `DayView` or `WeekView`:
+
+```tsx
+onTimeSlotClick?: (data: {
+  slotStart: DateTimeStringValue;
+  slotEnd: DateTimeStringValue;
+  nativeEvent: React.MouseEvent<HTMLButtonElement>;
+}) => void;
+```
+
+* `slotStart` / `slotEnd` – the slot range in `YYYY-MM-DD HH:mm:ss` format. Slot length
+  is controlled by the view's `intervalMinutes` prop.
+
+### onAllDaySlotClick
+
+Called when the all-day slot is clicked in `DayView` or `WeekView`:
+
+```tsx
+onAllDaySlotClick?: (
+  date: DateStringValue,
+  event: React.MouseEvent<HTMLButtonElement>
+) => void;
+```
+
+* `date` – the clicked date in `YYYY-MM-DD` format.
+
+### onDayClick
+
+Called when a day is clicked in `MonthView` or `YearView`:
+
+```tsx
+onDayClick?: (
+  date: DateStringValue,
+  event: React.MouseEvent<HTMLButtonElement>
+) => void;
+```
+
+* `date` – the clicked date in `YYYY-MM-DD` format.
+
+### onSlotDragEnd
+
+Called when a slot range is selected by dragging across time slots or day cells
+(requires `withDragSlotSelect`):
+
+```tsx
+onSlotDragEnd?: (
+  rangeStart: DateTimeStringValue,
+  rangeEnd: DateTimeStringValue
+) => void;
+```
+
+* `rangeStart` / `rangeEnd` – the selected range in `YYYY-MM-DD HH:mm:ss` format.
+
+### onExternalEventDrop
+
+Called when an item is dragged from outside the schedule and dropped onto a slot:
+
+```tsx
+onExternalEventDrop?: (
+  dataTransfer: DataTransfer,
+  dropDateTime: DateTimeStringValue
+) => void;
+```
+
+* `dataTransfer` – the native `DataTransfer` object set by the external item during its
+  `onDragStart` handler. Read your custom data with `dataTransfer.getData(type)`.
+* `dropDateTime` – the drop target datetime in `YYYY-MM-DD HH:mm:ss` format.
+
+### canDragEvent / canResizeEvent
+
+Permission callbacks – return `false` to prevent dragging or resizing for a specific event:
+
+```tsx
+canDragEvent?: (event: ScheduleEventData) => boolean;
+canResizeEvent?: (event: ScheduleEventData) => boolean;
+```
+
+## Date and time value formats
+
+Event data and callback payloads use the following string formats consistently:
+
+* `DateStringValue` – `YYYY-MM-DD` (e.g. `2024-01-15`)
+* `DateTimeStringValue` – `YYYY-MM-DD HH:mm:ss` (e.g. `2024-01-15 10:00:00`)
+
+These types are shared across `@mantine/dates` and `@mantine/schedule` and are exported
+from both packages.

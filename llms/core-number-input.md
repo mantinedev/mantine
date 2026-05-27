@@ -204,6 +204,40 @@ function Demo() {
 ```
 
 
+## Boundary callbacks
+
+Use `onMinReached` and `onMaxReached` to call a function when the value hits the `min` or `max` boundary.
+These callbacks are triggered when the user attempts to increment beyond `max` or decrement below `min`
+using the controls or keyboard arrows.
+
+```tsx
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NumberInput
+      min={0}
+      max={100}
+      onMinReached={() => console.log('Minimum value reached')}
+      onMaxReached={() => console.log('Maximum value reached')}
+    />
+  );
+}
+```
+
+## Select all on focus
+
+Set `selectAllOnFocus` to automatically select the entire input value when the field receives focus.
+This is useful when you expect users to replace the value rather than edit it:
+
+```tsx
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return <NumberInput selectAllOnFocus defaultValue={100} />;
+}
+```
+
 ## Prefix and suffix
 
 Set the `prefix` and `suffix` props to add a given string to the start or end of the input value:

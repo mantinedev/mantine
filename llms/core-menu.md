@@ -121,6 +121,11 @@ function Demo() {
 ```
 
 
+Use `safeAreaPolygon` to keep a submenu open while the cursor moves from the target toward the dropdown.
+Pass an object to adjust [Floating UI `safePolygon`](https://floating-ui.com/docs/useHover#safepolygon) options, for example when `offset` creates a larger gap between the target and dropdown.
+
+
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:
@@ -448,6 +453,7 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |
+| safeAreaPolygon | boolean \| SafePolygonOptions | - | Determines whether submenu stays open while the cursor moves toward its dropdown. Pass an object to configure safe polygon behavior. |
 | shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |
 | transitionProps | TransitionProps | - | Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type |
 | width | PopoverWidth | - | Dropdown width, or `'target'` to make dropdown width the same as target element |
