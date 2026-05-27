@@ -58,6 +58,11 @@ export const Demo_sub = {
   render: renderDemo(demos.sub),
 };
 
+export const Demo_subSafeAreaPolygon = {
+  name: '⭐ Demo: sub(safeAreaPolygon)',
+  render: renderDemo(demos.subSafeAreaPolygon),
+};
+
 export const Demo_search = {
   name: '⭐ Demo: search',
   render: renderDemo(demos.search),

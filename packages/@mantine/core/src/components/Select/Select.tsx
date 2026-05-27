@@ -296,7 +296,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     />
   );
 
-  const _clearable = clearable && !!_value && !disabled && !readOnly;
+  const _clearable = clearable && _value != null && !disabled && !readOnly;
 
   return (
     <>

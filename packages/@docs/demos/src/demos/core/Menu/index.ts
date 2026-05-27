@@ -10,7 +10,7 @@ export { clickHover } from './Menu.demo.clickHover';
 export { navigation } from './Menu.demo.navigation';
 export { search } from './Menu.demo.search';
 export { searchNested } from './Menu.demo.searchNested';
-export { sub } from './Menu.demo.sub';
+export { sub, subSafeAreaPolygon } from './Menu.demo.sub';
 export { checkboxItem } from './Menu.demo.checkboxItem';
 export { checkboxGroup } from './Menu.demo.checkboxGroup';
 export { radioItem } from './Menu.demo.radioItem';

@@ -281,8 +281,9 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     __bottomSection,
     __bottomSectionProps,
     rootRef,
+    dir,
     ...others
-  } = props;
+  } = props as typeof props & Pick<React.HTMLAttributes<HTMLDivElement>, 'dir'>;
 
   const { styleProps, rest } = extractStyleProps(others);
   const ctx = use(InputWrapperContext);
@@ -338,6 +339,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     <InputContext value={{ size: size || 'sm' }}>
       <Box
         ref={rootRef}
+        dir={dir}
         {...getStyles('wrapper')}
         {...styleProps}
         {...wrapperProps}
