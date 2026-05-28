@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const RESET_DELAY = 500;
 
 interface UseMenuTypeAheadOptions {
   enabled: boolean;
+  opened: boolean;
   getDropdown: () => HTMLElement | null;
 }
 
@@ -21,8 +22,30 @@ function isRepeatedChar(buffer: string): boolean {
   return buffer.length > 1 && buffer.split('').every((char) => char === buffer[0]);
 }
 
-export function useMenuTypeAhead({ enabled, getDropdown }: UseMenuTypeAheadOptions) {
+export function useMenuTypeAhead({ enabled, opened, getDropdown }: UseMenuTypeAheadOptions) {
   const stateRef = useRef<TypeAheadState>({ buffer: '', timeoutId: null });
+
+  useEffect(() => {
+    if (opened && enabled) {
+      return;
+    }
+    const state = stateRef.current;
+    if (state.timeoutId !== null) {
+      window.clearTimeout(state.timeoutId);
+      state.timeoutId = null;
+    }
+    state.buffer = '';
+  }, [opened, enabled]);
+
+  useEffect(
+    () => () => {
+      const { timeoutId } = stateRef.current;
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+    },
+    []
+  );
 
   return (event: React.KeyboardEvent<HTMLElement>) => {
     if (!enabled || event.defaultPrevented) {

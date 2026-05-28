@@ -749,6 +749,47 @@ describe('@mantine/core/Menu', () => {
       expect(input).toHaveFocus();
     });
 
+    it('resets the buffer when the menu is closed and reopened', () => {
+      function ControlledMenu() {
+        const [opened, setOpened] = useState(true);
+        return (
+          <>
+            <button type="button" onClick={() => setOpened((o) => !o)}>
+              toggle
+            </button>
+            <Menu
+              opened={opened}
+              transitionProps={{ duration: 0 }}
+              withinPortal={false}
+              keepMounted
+            >
+              <Menu.Target>
+                <button type="button">test-target</button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item>Apple</Menu.Item>
+                <Menu.Item>Banana</Menu.Item>
+                <Menu.Item>Cherry</Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </>
+        );
+      }
+
+      render(<ControlledMenu />);
+      getDropdown().focus();
+      fireEvent.keyDown(getDropdown(), { key: 'a' });
+      expect(screen.getByText('Apple').closest('button')).toHaveFocus();
+
+      fireEvent.click(screen.getByText('toggle'));
+      fireEvent.click(screen.getByText('toggle'));
+
+      const reopened = getDropdown();
+      reopened.focus();
+      fireEvent.keyDown(reopened, { key: 'c' });
+      expect(screen.getByText('Cherry').closest('button')).toHaveFocus();
+    });
+
     it('does not leak from submenu to parent dropdown', async () => {
       render(
         <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>

@@ -72,7 +72,10 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
-  useEffect(() => ctx.registerSearch(), [ctx.registerSearch]);
+  useEffect(() => {
+    const unregister = ctx.registerSearch();
+    return unregister;
+  }, [ctx.registerSearch]);
 
   useEffect(() => {
     if (clearSearchOnClose) {

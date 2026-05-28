@@ -46,6 +46,7 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
 
   const typeAhead = useMenuTypeAhead({
     enabled: !ctx.hasSearch,
+    opened: ctx.opened,
     getDropdown: () => wrapperRef.current,
   });
 
