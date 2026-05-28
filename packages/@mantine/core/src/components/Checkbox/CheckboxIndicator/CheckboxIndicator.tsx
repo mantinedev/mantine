@@ -36,7 +36,7 @@ export interface CheckboxIndicatorProps
   color?: MantineColor;
 
   /** Controls size of the component @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | number;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;

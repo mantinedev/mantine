@@ -40,6 +40,9 @@ export interface RenderTreeNodePayload {
   /** `true` if the node is selected */
   selected: boolean;
 
+  /** `true` if the node is at the top-most level of the tree (level 1) */
+  isRoot: boolean;
+
   /** `true` if the node's children are currently being loaded */
   isLoading: boolean;
 

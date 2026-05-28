@@ -76,7 +76,7 @@ function Demo() {
             color: 'var(--mantine-color-dimmed)',
           }}
         >
-          <DotsSixVerticalIcon />
+          <DotsSixVerticalIcon style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
       <div
@@ -131,7 +131,7 @@ function Demo() {
               color: 'var(--mantine-color-dimmed)',
             }}
           >
-            <DotsSixIcon />
+            <DotsSixIcon style={{ width: '100%', height: '100%' }} />
           </div>
         </div>
         <div
@@ -226,7 +226,7 @@ function Demo() {
             color: 'var(--mantine-color-dimmed)',
           }}
         >
-          <DotsSixVerticalIcon />
+          <DotsSixVerticalIcon style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
       <div
@@ -281,7 +281,7 @@ function Demo() {
               color: 'var(--mantine-color-dimmed)',
             }}
           >
-            <DotsSixIcon />
+            <DotsSixIcon style={{ width: '100%', height: '100%' }} />
           </div>
         </div>
         <div

@@ -179,6 +179,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     limit,
     withScrollArea,
     maxDropdownHeight,
+    floatingHeight,
     searchValue,
     defaultSearchValue,
     onSearchChange,
@@ -474,6 +475,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         readOnly={readOnly}
         __staticSelector="TagsInput"
         attributes={attributes}
+        floatingHeight={floatingHeight}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');

@@ -12,6 +12,100 @@ export default Layout(MDX_DATA.Menu);
 
 <Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
 
+Use `safeAreaPolygon` to keep a submenu open while the cursor moves from the target toward the dropdown.
+Pass an object to adjust [Floating UI `safePolygon`](https://floating-ui.com/docs/useHover#safepolygon) options, for example when `offset` creates a larger gap between the target and dropdown.
+
+<Demo data={MenuDemos.subSafeAreaPolygon} demoProps={{ defaultExpanded: false }} />
+
+## Search
+
+`Menu.Search` renders a search input inside the dropdown. Focus stays on the input while
+`ArrowUp`/`ArrowDown` move a highlight through items, and `Enter` triggers the highlighted item.
+Filtering is controlled by the user – pass `value` and `onChange` and filter `Menu.Item` children
+based on the query. By default, the search value is cleared automatically after the menu close
+transition completes – disable with `clearSearchOnClose={false}` if you want to preserve the query
+between openings.
+
+<Demo data={MenuDemos.search} />
+
+The same approach works with submenus. To keep a parent visible when a nested item matches,
+include the parent in the filtered tree if any of its descendants match the query:
+
+<Demo data={MenuDemos.searchNested} demoProps={{ defaultExpanded: false }} />
+
+## Checkbox items
+
+`Menu.CheckboxItem` renders a menu item with a check indicator. It works like a regular
+[Checkbox](/core/checkbox/) – manage state with `checked`/`onChange` or use `defaultChecked`
+for an uncontrolled value. By default, clicking a checkbox item does not close the menu;
+set `closeMenuOnClick` on the item (or `closeOnItemClick={false}` on the `Menu`)
+to override:
+
+<Demo data={MenuDemos.checkboxItem} />
+
+## Checkbox group
+
+Wrap `Menu.CheckboxItem` components in `Menu.CheckboxGroup` to manage multi-select state with a
+single `value: string[]` / `onChange` pair (or `defaultValue` for uncontrolled). Each item needs
+a `value`. Clicking an item toggles its value in the group:
+
+<Demo data={MenuDemos.checkboxGroup} />
+
+`Menu.CheckboxItem` can still be used standalone (without a group) with its own `checked` /
+`defaultChecked` / `onChange` props. Item-level `checked` and `onChange` also override the group
+when both are present.
+
+## Radio items
+
+`Menu.RadioItem` represents a single option inside a `Menu.RadioGroup`. The group manages
+the selected value via `value`/`onChange` (or `defaultValue` for uncontrolled). The currently
+selected item displays an indicator dot. Like checkbox items, radio items do not close the
+menu on click by default:
+
+<Demo data={MenuDemos.radioItem} />
+
+## Aligning labels of items with and without indicators
+
+Use the `alignItemsLabels` prop on `Menu` to control how indicator slot space is reserved.
+This is useful when mixing `Menu.Item` with `Menu.CheckboxItem` or `Menu.RadioItem` and you
+want labels to start at the same horizontal position:
+
+- `alignItemsLabels="with-indicators"` (default) – reserves indicator space on `Menu.CheckboxItem`
+  and `Menu.RadioItem` only. Regular `Menu.Item` is not padded.
+- `alignItemsLabels="all"` – reserves indicator space on every `Menu.Item`, so labels of plain
+  items align with checkbox and radio items.
+- `alignItemsLabels="none"` – reserves indicator space only on items that currently show an
+  indicator. Unchecked checkbox and radio items render without the slot (layout shifts when
+  toggled).
+
+<Demo data={MenuDemos.alignItemsLabels} />
+
+## Custom check icon
+
+Use the `checkIcon` prop to replace the default indicator rendered by `Menu.CheckboxItem` and
+`Menu.RadioItem`. Setting `checkIcon` on `Menu` applies to all checkbox/radio items in the
+dropdown. Setting `checkIcon` on an individual item overrides the menu-level value:
+
+<Demo data={MenuDemos.checkIcon} />
+
+## Type-ahead navigation
+
+When focus is inside the dropdown and `Menu.Search` is not used, pressing a printable character
+key moves focus to the next menu item whose label starts with the typed character. Pressing the
+same character again cycles through items that start with it. Multiple characters typed in quick
+succession (within 500ms) match items whose labels start with the full typed string. Disabled
+items are skipped.
+
+## Context menu
+
+Use `Menu.ContextMenu` to open the menu dropdown at the cursor position on right-click.
+It replaces `Menu.Target` and wraps the element that should respond to the `contextmenu` event –
+the browser's default context menu is suppressed, and the Mantine `Menu.Dropdown` is positioned
+at the cursor instead. Right-clicking again repositions the dropdown to the new coordinates.
+Set `disabled` to restore the browser's default context menu:
+
+<Demo data={MenuDemos.contextMenu} />
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:
@@ -160,6 +254,22 @@ If you are using the Menu to build navigation, you can use the options from the 
       key: 'End',
       description: 'Moves focus to last menu item',
       condition: 'Focus within dropdown',
+    },
+    {
+      key: 'ArrowUp/ArrowDown',
+      description: 'Moves highlight to previous/next menu item without leaving the input',
+      condition: 'Focus on Menu.Search',
+    },
+    {
+      key: 'Enter',
+      description: 'Triggers the highlighted item',
+      condition: 'Focus on Menu.Search',
+    },
+    {
+      key: 'Printable character',
+      description:
+        'Moves focus to the next item whose label starts with the typed character. Pressing the same character cycles through matches. Multiple characters typed within 500ms match items whose labels start with the typed string.',
+      condition: 'Focus within dropdown, no Menu.Search',
     },
   ]}
 />

@@ -95,9 +95,15 @@ export function useTimePicker({
   };
 
   const handleTimeChange = (field: 'hours' | 'minutes' | 'seconds' | 'amPm', val: any) => {
-    const computedValue = { hours, minutes, seconds, amPm, [field]: val };
-
-    const timeString = getTimeString({ ...computedValue, format, withSeconds, amPmLabels });
+    const timeString = getTimeString({
+      hours: field === 'hours' ? val : hours,
+      minutes: field === 'minutes' ? val : minutes,
+      seconds: field === 'seconds' ? val : seconds,
+      amPm: field === 'amPm' ? val : amPm,
+      format,
+      withSeconds,
+      amPmLabels,
+    });
 
     if (timeString.valid) {
       acceptChange.current = false;
