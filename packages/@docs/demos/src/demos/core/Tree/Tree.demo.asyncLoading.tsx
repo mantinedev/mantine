@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CaretDownIcon, SpinnerIcon } from '@phosphor-icons/react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import {
   Group,
   mergeAsyncChildren,
@@ -12,7 +12,7 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { CaretDownIcon, SpinnerIcon } from '@phosphor-icons/react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import {
   Group,
   mergeAsyncChildren,
@@ -42,18 +42,17 @@ async function fetchChildren(parentValue: string): Promise<TreeNodeData[]> {
   ];
 }
 
-function Leaf({ node, expanded, hasChildren, elementProps, isLoading }: RenderTreeNodePayload) {
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} wrap="nowrap" {...elementProps}>
-      {isLoading ? (
-        <SpinnerIcon size={18} style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }} />
-      ) : (
-        hasChildren && (
-          <CaretDownIcon
-            size={18}
-            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
-          />
+    <Group gap={6} wrap="nowrap" {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
         )
+      ) : (
+        <FileTextIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
       )}
       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {node.label}
@@ -75,6 +74,7 @@ function Demo() {
     <Tree
       data={data}
       tree={tree}
+      withLines
       renderNode={(payload) => <Leaf {...payload} />}
     />
   );
@@ -102,18 +102,17 @@ async function fetchChildren(parentValue: string): Promise<TreeNodeData[]> {
   ];
 }
 
-function Leaf({ node, expanded, hasChildren, elementProps, isLoading }: RenderTreeNodePayload) {
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} wrap="nowrap" {...elementProps}>
-      {isLoading ? (
-        <SpinnerIcon size={18} style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }} />
-      ) : (
-        hasChildren && (
-          <CaretDownIcon
-            size={18}
-            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
-          />
+    <Group gap={6} wrap="nowrap" {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
         )
+      ) : (
+        <FileTextIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
       )}
       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {node.label}
@@ -131,7 +130,7 @@ function Demo() {
     },
   });
 
-  return <Tree data={data} tree={tree} renderNode={(payload) => <Leaf {...payload} />} />;
+  return <Tree data={data} tree={tree} withLines renderNode={(payload) => <Leaf {...payload} />} />;
 }
 
 export const asyncLoading: MantineDemo = {

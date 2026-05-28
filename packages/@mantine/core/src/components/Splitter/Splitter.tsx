@@ -1,5 +1,10 @@
 import { Children, cloneElement, useImperativeHandle } from 'react';
-import { useMergedRef, useSplitter, UseSplitterReturnValue } from '@mantine/hooks';
+import {
+  useMergedRef,
+  useSplitter,
+  UseSplitterRedistributeFn,
+  UseSplitterReturnValue,
+} from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -51,7 +56,7 @@ export interface SplitterProps
   onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
 
   /** How to redistribute space when immediate neighbor is at its min/max */
-  redistribute?: 'nearest' | 'equal' | ((input: any) => number[]);
+  redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
 
   /** Keyboard step size in percentage @default 1 */
   step?: number;

@@ -283,6 +283,54 @@ describe('@mantine/core/Select', () => {
     expect(input).toHaveStyle({ color: 'rgb(255, 0, 0)' });
   });
 
+  it('displays clear button when clearable is true and value is set', () => {
+    const { container } = render(
+      <Select data={['test-1', 'test-2']} value="test-1" clearable onChange={() => {}} />
+    );
+    expect(container.querySelector('.mantine-InputClearButton-root')).toBeInTheDocument();
+  });
+
+  it('does not display clear button when clearable is true and value is null', () => {
+    const { container } = render(
+      <Select data={['test-1', 'test-2']} value={null} clearable onChange={() => {}} />
+    );
+    expect(container.querySelector('.mantine-InputClearButton-root')).not.toBeInTheDocument();
+  });
+
+  it('displays clear button when clearable is true and value is false', () => {
+    const { container } = render(
+      <Select
+        data={[{ value: false, label: 'False option' }]}
+        value={false}
+        clearable
+        onChange={() => {}}
+      />
+    );
+    expect(container.querySelector('.mantine-InputClearButton-root')).toBeInTheDocument();
+  });
+
+  it('displays clear button when clearable is true and value is 0', () => {
+    const { container } = render(
+      <Select data={[{ value: 0, label: 'Zero option' }]} value={0} clearable onChange={() => {}} />
+    );
+    expect(container.querySelector('.mantine-InputClearButton-root')).toBeInTheDocument();
+  });
+
+  it('displays clear button when clearable is true and value is an empty string', () => {
+    const { container } = render(
+      <Select
+        data={[
+          { value: '', label: 'Empty' },
+          { value: 'test-1', label: 'Test 1' },
+        ]}
+        value=""
+        clearable
+        onChange={() => {}}
+      />
+    );
+    expect(container.querySelector('.mantine-InputClearButton-root')).toBeInTheDocument();
+  });
+
   it('allows to change controlled search value when value is controlled and selected', async () => {
     const Wrapper: React.FunctionComponent = () => {
       const [value, setValue] = useState<string | null>('Angular');

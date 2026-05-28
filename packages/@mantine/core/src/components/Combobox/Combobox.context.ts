@@ -10,6 +10,7 @@ export interface ComboboxContextValue {
   size: MantineSize | (string & {});
   resetSelectionOnOptionHover: boolean | undefined;
   readOnly: boolean | undefined;
+  floatingHeight: 'viewport' | undefined;
 }
 
 export const [ComboboxProvider, useComboboxContext] = createSafeContext<ComboboxContextValue>(

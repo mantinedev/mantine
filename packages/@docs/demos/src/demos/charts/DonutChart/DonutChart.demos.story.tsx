@@ -57,3 +57,8 @@ export const Demo_strokeColor = {
   name: '⭐ Demo: strokeColor',
   render: renderDemo(demos.strokeColor),
 };
+
+export const Demo_labelsTypeName = {
+  name: '⭐ Demo: labelsTypeName',
+  render: renderDemo(demos.labelsTypeName),
+};

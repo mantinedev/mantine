@@ -3,6 +3,7 @@ import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
+  createEventHandler,
   ElementProps,
   factory,
   Factory,
@@ -11,6 +12,7 @@ import {
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
+import { useMenuTypeAhead } from '../use-menu-type-ahead';
 import classes from '../Menu.module.css';
 
 export type MenuSubDropdownStylesNames = 'dropdown';
@@ -46,6 +48,25 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
   const ctx = useMenuContext();
   const subCtx = use(SubMenuContext);
 
+  const typeAhead = useMenuTypeAhead({
+    enabled: !ctx.hasSearch,
+    opened: subCtx?.opened ?? false,
+    getDropdown: () => wrapperRef.current,
+  });
+
+  const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
+    typeAhead(event);
+    if (
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      event.key.length === 1 &&
+      event.key !== ' '
+    ) {
+      event.stopPropagation();
+    }
+  });
+
   const floatingProps = subCtx?.getFloatingProps({
     onMouseEnter,
     onMouseLeave,
@@ -69,6 +90,7 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
       })}
       tabIndex={-1}
       data-menu-dropdown
+      onKeyDown={handleKeyDown}
     >
       {children}
     </Popover.Dropdown>

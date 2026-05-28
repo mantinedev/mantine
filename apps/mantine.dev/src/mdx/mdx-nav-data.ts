@@ -499,6 +499,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.ResourcesMonthView,
       MDX_DATA.ResourcesSchedule,
       MDX_DATA.RecurringEventsSchedule,
+      MDX_DATA.ScheduleEventsData,
     ],
   },
 

@@ -145,6 +145,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     autoContrast,
     startValue,
     layout,
+    mod,
     attributes,
     ...others
   } = props;
@@ -190,7 +191,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
         getStyles,
       }}
     >
-      <Box {...getStyles('root')} mod={{ layout }} {...others} />
+      <Box {...getStyles('root')} mod={[{ layout }, mod]} {...others} />
     </PaginationProvider>
   );
 });

@@ -112,7 +112,8 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
 
   const active = useEditorState({
     editor: ctx.editor ?? null,
-    selector: (state) => state.editor?.isActive('link') ?? false,
+    selector: (state) =>
+      state.editor && !state.editor.isDestroyed ? state.editor.isActive('link') : false,
   });
 
   const { resolvedClassNames, resolvedStyles } =

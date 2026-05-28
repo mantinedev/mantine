@@ -18,6 +18,11 @@ export interface MenuContextValue {
   setOpenedViaClick: (value: boolean) => void;
   withInitialFocusPlaceholder: boolean | undefined;
   registerOpenSub: (closeFn: () => void) => () => void;
+  hasSearch: boolean;
+  registerSearch: () => () => void;
+  searchExitClearRef: React.RefObject<(() => void) | null>;
+  alignItemsLabels: 'all' | 'with-indicators' | 'none';
+  checkIcon: React.ReactNode;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContextValue>(

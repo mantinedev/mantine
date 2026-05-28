@@ -87,6 +87,9 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
 
   /** `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default */
   maxDropdownHeight?: number | string;
+
+  /** If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. */
+  floatingHeight?: 'viewport';
 }
 
 export interface ComboboxLikeRenderOptionInput<T> {

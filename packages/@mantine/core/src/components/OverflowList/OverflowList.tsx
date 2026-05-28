@@ -1,6 +1,6 @@
 // Originally based on https://github.com/Eliav2/react-responsive-overflow-list (MIT License)
 // Contains the modified version adapted for Mantine
-import { cloneElement, useRef, useState } from 'react';
+import { cloneElement, useMemo, useRef, useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import {
@@ -47,6 +47,12 @@ export interface OverflowListProps<T = any>
 
   /** Direction from which items are collapsed when they overflow, `'end'` collapses last items, `'start'` collapses first items @default 'end' */
   collapseFrom?: 'start' | 'end';
+
+  /** A function to resolve a unique key for each item. Used to detect when the contents of `data`
+   * change (for example when items are reordered while the length stays the same) so the
+   * visible/overflow split can be recomputed. Required to detect reordering when `data` contains
+   * objects; for primitive items (strings, numbers) the item value is used by default. */
+  getItemKey?: (item: T, index: number) => React.Key;
 }
 
 export type OverflowListFactory = Factory<{
@@ -68,6 +74,22 @@ const varsResolver = createVarsResolver<OverflowListFactory>((_, { gap }) => ({
   },
 }));
 
+function getDataSignature<T>(
+  data: T[],
+  getItemKey: ((item: T, index: number) => React.Key) | undefined
+): string {
+  return data
+    .map((item, index) => {
+      if (getItemKey) {
+        return getItemKey(item, index);
+      }
+      return item !== null && (typeof item === 'object' || typeof item === 'function')
+        ? index
+        : String(item);
+    })
+    .join('\u0000');
+}
+
 export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
   const props = useProps('OverflowList', defaultProps, _props);
   const {
@@ -84,6 +106,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     maxRows,
     maxVisibleItems,
     collapseFrom,
+    getItemKey,
     ref,
     ...others
   } = props;
@@ -122,12 +145,13 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
   const _overflowRef = useRef<HTMLElement>(null);
   const overflowRef = useMergedRef(_overflowRef, (overflowElement as any)?.ref);
   const dimensions = useDimensions(containerRef);
+  const dataKey = useMemo(() => getDataSignature(data, getItemKey), [data, getItemKey]);
 
   useIsomorphicEffect(() => {
     setPhase('measuring');
     setVisibleCount(data.length);
     setSubtractCount(0);
-  }, [data.length, maxRows, collapseFrom]);
+  }, [dataKey, maxRows, collapseFrom]);
 
   useIsomorphicEffect(() => {
     if (phase === 'measuring') {
@@ -152,11 +176,17 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     }
   }, [dimensions]);
 
-  const fitsInRows = (itemWidths: number[], containerWidth: number, columnGap: number) => {
+  const fitsInRows = (
+    itemWidths: number[],
+    containerWidth: number,
+    columnGap: number,
+    startIndex = 0
+  ) => {
     let rows = 1;
     let rowWidth = 0;
 
-    for (const width of itemWidths) {
+    for (let i = startIndex; i < itemWidths.length; i += 1) {
+      const width = itemWidths[i];
       const needed = rowWidth > 0 ? width + columnGap : width;
 
       if (rowWidth + needed > containerWidth && rowWidth > 0) {
@@ -179,19 +209,23 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
       return;
     }
 
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
+
     if (isCollapseStart) {
-      const containerWidth = containerRef.current?.getBoundingClientRect().width ?? 0;
-      const columnGap = parseFloat(getComputedStyle(containerRef.current!).columnGap) || 0;
+      const containerWidth = container.getBoundingClientRect().width;
+      const columnGap = parseFloat(getComputedStyle(container).columnGap) || 0;
       const children = rowData.children;
       const widths = children.map((child) => child.getBoundingClientRect().width);
 
       let count = 0;
       for (let i = widths.length - 1; i >= 0; i--) {
-        const candidate = widths.slice(i);
-        if (!fitsInRows(candidate, containerWidth, columnGap)) {
+        if (!fitsInRows(widths, containerWidth, columnGap, i)) {
           break;
         }
-        count = candidate.length;
+        count = widths.length - i;
       }
 
       count = Math.min(count, maxVisibleItems!);
@@ -201,7 +235,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
 
     if (data.length === 1) {
       const itemRef = rowData.itemsSizesMap[rowData.rowPositions[0]].elements.values().next().value;
-      const containerWidth = containerRef.current?.getBoundingClientRect().width ?? 0;
+      const containerWidth = container.getBoundingClientRect().width;
       const itemWidth = itemRef?.getBoundingClientRect().width ?? 0;
 
       if (itemWidth > containerWidth) {
@@ -235,8 +269,12 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     const { rowPositions, itemsSizesMap } = rowData;
 
     if (isCollapseStart) {
-      const containerWidth = containerRef.current?.getBoundingClientRect().width ?? 0;
-      const columnGap = parseFloat(getComputedStyle(containerRef.current!).columnGap) || 0;
+      const container = containerRef.current;
+      if (!container) {
+        return false;
+      }
+      const containerWidth = container.getBoundingClientRect().width;
+      const columnGap = parseFloat(getComputedStyle(container).columnGap) || 0;
       const overflowWidth = _overflowRef.current.getBoundingClientRect().width;
       const children = rowData.children;
       const itemWidths = [
@@ -276,6 +314,8 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
       : finalItems.slice(0, maxVisibleItems);
   }
 
+  const indexOffset = isCollapseStart ? data.length - finalItems.length : 0;
+
   return (
     <Box ref={rootRef} {...getStyles('root')} {...others}>
       {isCollapseStart && clonedOverflowElement}
@@ -289,9 +329,10 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
         if (!isVisible) {
           return null;
         }
-        const itemComponent = renderItem(item, index);
+        const dataIndex = indexOffset + index;
+        const itemComponent = renderItem(item, dataIndex);
 
-        return <Fragment key={index}>{itemComponent}</Fragment>;
+        return <Fragment key={dataIndex}>{itemComponent}</Fragment>;
       })}
 
       {!isCollapseStart && clonedOverflowElement}

@@ -162,6 +162,11 @@
     --left-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
     --right-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
   }
+
+  &[dir='ltr'] {
+    --left-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
+    --right-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
+  }
 }
 
 .input {

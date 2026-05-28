@@ -88,6 +88,11 @@ export const Demo_dropdownPosition = {
   render: renderDemo(demos.dropdownPosition),
 };
 
+export const Demo_floatingHeight = {
+  name: '⭐ Demo: floatingHeight',
+  render: renderDemo(demos.floatingHeight),
+};
+
 export const Demo_virtualized = {
   name: '⭐ Demo: virtualized',
   render: renderDemo(demos.virtualized),

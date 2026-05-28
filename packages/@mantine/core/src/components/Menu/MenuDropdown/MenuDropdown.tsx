@@ -11,6 +11,7 @@ import {
 } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
+import { useMenuTypeAhead } from '../use-menu-type-ahead';
 import classes from '../Menu.module.css';
 
 export type MenuDropdownStylesNames = 'dropdown';
@@ -43,7 +44,17 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ctx = useMenuContext();
 
+  const typeAhead = useMenuTypeAhead({
+    enabled: !ctx.hasSearch,
+    opened: ctx.opened,
+    getDropdown: () => wrapperRef.current,
+  });
+
   const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
+    typeAhead(event);
+    if (event.defaultPrevented || ctx.hasSearch) {
+      return;
+    }
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       wrapperRef.current
@@ -81,7 +92,7 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
       data-menu-dropdown
       onKeyDown={handleKeyDown}
     >
-      {ctx.withInitialFocusPlaceholder && (
+      {ctx.withInitialFocusPlaceholder && !ctx.hasSearch && (
         <div tabIndex={-1} data-autofocus data-mantine-stop-propagation style={{ outline: 0 }} />
       )}
       {children}
