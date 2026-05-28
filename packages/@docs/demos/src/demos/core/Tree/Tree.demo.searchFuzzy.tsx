@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import Fuse from 'fuse.js';
 import {
   filterTreeData,
   getTreeExpandedState,
+  Group,
+  RenderTreeNodePayload,
   TextInput,
   Tree,
   TreeNodeData,
@@ -13,10 +16,13 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useMemo, useState } from 'react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import Fuse from 'fuse.js';
 import {
   filterTreeData,
   getTreeExpandedState,
+  Group,
+  RenderTreeNodePayload,
   TextInput,
   Tree,
   TreeNodeData,
@@ -84,6 +90,23 @@ function createFuzzyFilter(nodes: TreeNodeData[]): TreeNodeFilter {
   };
 }
 
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
 function Demo() {
   const [search, setSearch] = useState('');
   const tree = useTree();
@@ -112,7 +135,12 @@ function Demo() {
         value={search}
         onChange={(event) => handleSearchChange(event.currentTarget.value)}
       />
-      <Tree data={filteredData} tree={tree} />
+      <Tree
+        data={filteredData}
+        tree={tree}
+        withLines
+        renderNode={(payload) => <Leaf {...payload} />}
+      />
     </div>
   );
 }
@@ -178,6 +206,23 @@ function createFuzzyFilter(nodes: TreeNodeData[]): TreeNodeFilter {
   };
 }
 
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
 function Demo() {
   const [search, setSearch] = useState('');
   const tree = useTree();
@@ -206,7 +251,12 @@ function Demo() {
         value={search}
         onChange={(event) => handleSearchChange(event.currentTarget.value)}
       />
-      <Tree data={filteredData} tree={tree} />
+      <Tree
+        data={filteredData}
+        tree={tree}
+        withLines
+        renderNode={(payload) => <Leaf {...payload} />}
+      />
     </div>
   );
 }

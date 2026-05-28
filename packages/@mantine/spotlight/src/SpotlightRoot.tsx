@@ -43,6 +43,7 @@ export interface SpotlightRootProps
       | 'onClose'
       | 'closeButtonProps'
       | 'withCloseButton'
+      | 'attributes'
     > {
   /** Spotlight store, can be used to create multiple instances of spotlight */
   store?: SpotlightStore;
@@ -91,7 +92,6 @@ export type SpotlightRootFactory = Factory<{
   props: SpotlightRootProps;
   ref: HTMLDivElement;
   stylesNames: SpotlightRootStylesNames;
-  compound: true;
 }>;
 
 const defaultProps = {

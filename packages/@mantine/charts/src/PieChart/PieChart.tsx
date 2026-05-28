@@ -95,7 +95,7 @@ export interface PieChartProps
   labelsPosition?: 'inside' | 'outside';
 
   /** Type of labels to display @default 'value' */
-  labelsType?: 'value' | 'percent';
+  labelsType?: 'value' | 'percent' | 'name';
 
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
@@ -140,8 +140,13 @@ const getLabelValue = (
   labelsType: PieChartProps['labelsType'],
   value: number | undefined,
   percent: number | undefined,
+  name: string | undefined,
   valueFormatter?: PieChartProps['valueFormatter']
 ) => {
+  if (labelsType === 'name') {
+    return name;
+  }
+
   if (labelsType === 'percent' && typeof percent === 'number') {
     return `${(percent * 100).toFixed(0)}%`;
   }
@@ -154,8 +159,11 @@ const getLabelValue = (
 };
 
 const getInsideLabel =
-  (labelsType: 'value' | 'percent', valueFormatter?: PieChartProps['valueFormatter']): PieLabel =>
-  ({ cx, cy, midAngle, innerRadius, outerRadius, value, percent }) => {
+  (
+    labelsType: 'value' | 'percent' | 'name',
+    valueFormatter?: PieChartProps['valueFormatter']
+  ): PieLabel =>
+  ({ cx, cy, midAngle, innerRadius, outerRadius, value, percent, name }) => {
     const RADIAN = Math.PI / 180;
     const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.5;
     const x = Number(cx) + radius * Math.cos(-(midAngle || 0) * RADIAN);
@@ -169,14 +177,17 @@ const getInsideLabel =
         dominantBaseline="central"
         className={classes.label}
       >
-        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
+        {getLabelValue(labelsType, Number(value), Number(percent), name as string, valueFormatter)}
       </text>
     );
   };
 
 const getOutsideLabel =
-  (labelsType: 'value' | 'percent', valueFormatter?: PieChartProps['valueFormatter']): PieLabel =>
-  ({ x, y, cx, cy, percent, value }) => (
+  (
+    labelsType: 'value' | 'percent' | 'name',
+    valueFormatter?: PieChartProps['valueFormatter']
+  ): PieLabel =>
+  ({ x, y, cx, cy, percent, value, name }) => (
     <text
       x={x}
       y={y}
@@ -188,7 +199,7 @@ const getOutsideLabel =
       fontSize={12}
     >
       <tspan x={x}>
-        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
+        {getLabelValue(labelsType, Number(value), Number(percent), name as string, valueFormatter)}
       </tspan>
     </text>
   );

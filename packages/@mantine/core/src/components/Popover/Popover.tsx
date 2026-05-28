@@ -29,6 +29,10 @@ import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
 import { PopoverContextProvider, PopoverContextValue } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
+import {
+  PopoverContextMenu,
+  PopoverContextMenuProps,
+} from './PopoverContextMenu/PopoverContextMenu';
 import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown/PopoverDropdown';
 import { PopoverTarget, PopoverTargetProps } from './PopoverTarget/PopoverTarget';
 import { usePopover } from './use-popover';
@@ -124,7 +128,7 @@ export interface __PopoverProps {
   /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen @default true */
   hideDetached?: boolean;
 
-  /** Prevents popover from flipping/shifting when it the dropdown is visible */
+  /** If `true`, the dropdown picks its side on open (flip runs once, preferring the `position` prop) and then never changes side — scrolling, resizing, and content size changes will not flip the dropdown. The side is recalculated fresh on the next open. Does not affect the `shift` middleware. Set to `false` to keep flip active and allow the dropdown to re-flip on every change. @default true */
   preventPositionChangeWhenVisible?: boolean;
 }
 
@@ -185,6 +189,7 @@ const defaultProps = {
   returnFocus: false,
   withOverlay: false,
   hideDetached: true,
+  preventPositionChangeWhenVisible: true,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
@@ -265,8 +270,6 @@ export function Popover(_props: PopoverProps) {
 
   const { resolvedStyles } = useResolvedStylesApi<PopoverFactory>({ classNames, styles, props });
 
-  const [dropdownVisible, setDropdownVisible] = useState(opened ?? defaultOpened ?? false);
-  const positionRef = useRef<FloatingPosition>(position);
   const arrowRef = useRef<HTMLDivElement | null>(null);
   const [targetNode, setTargetNode] = useState<HTMLElement | null>(null);
   const [dropdownNode, setDropdownNode] = useState<HTMLElement | null>(null);
@@ -289,9 +292,6 @@ export function Popover(_props: PopoverProps) {
     onClose,
     onDismiss,
     strategy: floatingStrategy,
-    dropdownVisible,
-    setDropdownVisible,
-    positionRef,
     disabled,
     preventPositionChangeWhenVisible,
     keepMounted,
@@ -327,13 +327,8 @@ export function Popover(_props: PopoverProps) {
   const onExited = useCallback(() => {
     transitionProps?.onExited?.();
     onExitTransitionEnd?.();
-    setDropdownVisible(false);
-    // Only reset position if preventPositionChangeWhenVisible is false
-    // to maintain the flipped position on subsequent opens
-    if (!preventPositionChangeWhenVisible) {
-      positionRef.current = position;
-    }
-  }, [transitionProps?.onExited, onExitTransitionEnd, preventPositionChangeWhenVisible, position]);
+    popover.resetLockedPlacement();
+  }, [transitionProps?.onExited, onExitTransitionEnd, popover.resetLockedPlacement]);
 
   const onEntered = useCallback(() => {
     transitionProps?.onEntered?.();
@@ -418,6 +413,7 @@ export function Popover(_props: PopoverProps) {
 
 Popover.Target = PopoverTarget;
 Popover.Dropdown = PopoverDropdown;
+Popover.ContextMenu = PopoverContextMenu;
 Popover.varsResolver = varsResolver;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
@@ -444,5 +440,9 @@ export namespace Popover {
 
   export namespace Dropdown {
     export type Props = PopoverDropdownProps;
+  }
+
+  export namespace ContextMenu {
+    export type Props = PopoverContextMenuProps;
   }
 }

@@ -1,0 +1,41 @@
+.root {
+  font-size: 13px;
+}
+
+.row {
+  padding-block: 3px;
+  padding-inline-end: 4px;
+
+  &[data-selected] {
+    background-color: var(--mantine-color-blue-light) !important;
+    color: var(--mantine-color-bright);
+  }
+
+  &:hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+
+    .actions {
+      opacity: 1;
+    }
+
+    .count {
+      opacity: 0;
+    }
+  }
+}
+
+.label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.count {
+  transition: opacity 100ms ease;
+}
+
+.actions {
+  opacity: 0;
+  transition: opacity 100ms ease;
+}

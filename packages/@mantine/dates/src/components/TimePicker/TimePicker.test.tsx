@@ -292,6 +292,28 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenCalledWith('20:30:45');
   });
 
+  it('preserves AM/PM when only the hours field is changed (12h format)', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="12h" defaultValue="13:00" onChange={spy} />);
+
+    const hoursInput = screen.getByLabelText('test-hours');
+    await userEvent.clear(hoursInput);
+    await userEvent.type(hoursInput, '2');
+
+    expect(spy).toHaveBeenLastCalledWith('14:00');
+  });
+
+  it('preserves AM/PM when only the minutes field is changed (12h format)', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="12h" defaultValue="13:00" onChange={spy} />);
+
+    const minutesInput = screen.getByLabelText('test-minutes');
+    await userEvent.clear(minutesInput);
+    await userEvent.type(minutesInput, '30');
+
+    expect(spy).toHaveBeenLastCalledWith('13:30');
+  });
+
   it('clamps time based on the given min and max props (24h format)', async () => {
     const spy = jest.fn();
     render(

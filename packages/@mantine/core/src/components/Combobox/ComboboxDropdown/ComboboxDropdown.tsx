@@ -31,6 +31,7 @@ export const ComboboxDropdown = factory<ComboboxDropdownFactory>((props) => {
       {...others}
       role="presentation"
       data-hidden={hidden || undefined}
+      data-floating-height={ctx.floatingHeight || undefined}
       {...ctx.getStyles('dropdown', { className, style, classNames, styles })}
     />
   );
