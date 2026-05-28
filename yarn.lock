@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 9
+  version: 10
   cacheKey: 10c0
 
 "@adobe/css-tools@npm:^4.4.0":
@@ -5532,7 +5532,7 @@ __metadata:
     "@mantinex/dev-icons": ">=1.0.0"
     react: ^19.2.0
     react-dom: ^19.2.0
-    shiki: ^3.11.0
+    shiki: ">=3.11.0"
   languageName: unknown
   linkType: soft
 
