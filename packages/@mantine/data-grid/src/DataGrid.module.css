@@ -22,9 +22,6 @@
   --dg-row-height: rem(48px);
 }
 
-.densityToggle {
-}
-
 .table {
   table-layout: fixed;
   width: 100%;
@@ -69,9 +66,6 @@
 .tr[data-pinned-top],
 .tr[data-pinned-bottom] {
   background: var(--mantine-color-body);
-}
-
-.thead {
 }
 
 .root[data-sticky-header] .thead {
@@ -298,6 +292,8 @@
   padding: var(--dg-spacing, var(--mantine-spacing-xs));
 }
 
+/* Styles API selector for the ScrollArea wrapper; ScrollArea provides its own styles */
+/* stylelint-disable-next-line block-no-empty */
 .scrollContainer {
 }
 

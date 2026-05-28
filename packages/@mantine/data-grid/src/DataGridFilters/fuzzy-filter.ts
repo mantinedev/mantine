@@ -1,7 +1,5 @@
-import { compareItems, rankItem } from '@tanstack/match-sorter-utils';
-import type { RankingInfo } from '@tanstack/match-sorter-utils';
-import { sortingFns } from '@tanstack/react-table';
-import type { FilterFn, SortingFn } from '@tanstack/react-table';
+import { compareItems, rankItem, type RankingInfo } from '@tanstack/match-sorter-utils';
+import { sortingFns, type FilterFn, type SortingFn } from '@tanstack/react-table';
 
 interface FuzzyFilterMeta {
   itemRank: RankingInfo;

@@ -34,6 +34,10 @@ const config = {
   ],
   versionGroups: [
     {
+      dependencyTypes: ['peer'],
+      isIgnored: true,
+    },
+    {
       packages: ['docs'],
       dependencies: ['@mantine/store'],
       isIgnored: true,
