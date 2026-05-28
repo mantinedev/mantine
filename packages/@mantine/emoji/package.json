@@ -39,8 +39,8 @@
     "@tanstack/react-virtual": "^3.13.21"
   },
   "peerDependencies": {
-    "@mantine/core": "9.0.1",
-    "@mantine/hooks": "9.0.1",
+    "@mantine/core": ">=9.0.0",
+    "@mantine/hooks": ">=9.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
