@@ -32,6 +32,9 @@ const config: StorybookConfig = {
     disableTelemetry: true,
     enableCrashReports: false,
   },
+  features: {
+    sidebarOnboardingChecklist: false,
+  },
   stories: storiesPath,
   addons: [],
   framework: {

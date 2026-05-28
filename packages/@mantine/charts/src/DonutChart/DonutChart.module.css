@@ -7,6 +7,10 @@
   & :where(*) {
     outline: 0;
   }
+
+  & :where(:global(.recharts-surface)) {
+    overflow: visible;
+  }
 }
 
 .label {

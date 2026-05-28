@@ -43,6 +43,9 @@ export function useDebouncedValue<T = any>(
       if (!cooldownRef.current && options.leading) {
         cooldownRef.current = true;
         setValue(value);
+        timeoutRef.current = window.setTimeout(() => {
+          cooldownRef.current = false;
+        }, wait);
       } else {
         cancel();
         timeoutRef.current = window.setTimeout(() => {

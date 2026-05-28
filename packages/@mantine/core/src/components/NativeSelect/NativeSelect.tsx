@@ -30,7 +30,7 @@ const defaultProps = {
 
 export const NativeSelect = factory<NativeSelectFactory>((props) => {
   const { data, children, size, error, rightSection, unstyled, ...others } = useProps(
-    'NativeSelect',
+    ['Input', 'InputWrapper', 'NativeSelect'],
     defaultProps,
     props
   );

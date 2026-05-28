@@ -57,3 +57,48 @@ export const Demo_sub = {
   name: '⭐ Demo: sub',
   render: renderDemo(demos.sub),
 };
+
+export const Demo_subSafeAreaPolygon = {
+  name: '⭐ Demo: sub(safeAreaPolygon)',
+  render: renderDemo(demos.subSafeAreaPolygon),
+};
+
+export const Demo_search = {
+  name: '⭐ Demo: search',
+  render: renderDemo(demos.search),
+};
+
+export const Demo_searchNested = {
+  name: '⭐ Demo: searchNested',
+  render: renderDemo(demos.searchNested),
+};
+
+export const Demo_checkboxItem = {
+  name: '⭐ Demo: checkboxItem',
+  render: renderDemo(demos.checkboxItem),
+};
+
+export const Demo_checkboxGroup = {
+  name: '⭐ Demo: checkboxGroup',
+  render: renderDemo(demos.checkboxGroup),
+};
+
+export const Demo_radioItem = {
+  name: '⭐ Demo: radioItem',
+  render: renderDemo(demos.radioItem),
+};
+
+export const Demo_alignItemsLabels = {
+  name: '⭐ Demo: alignItemsLabels',
+  render: renderDemo(demos.alignItemsLabels),
+};
+
+export const Demo_checkIcon = {
+  name: '⭐ Demo: checkIcon',
+  render: renderDemo(demos.checkIcon),
+};
+
+export const Demo_contextMenu = {
+  name: '⭐ Demo: contextMenu',
+  render: renderDemo(demos.contextMenu),
+};

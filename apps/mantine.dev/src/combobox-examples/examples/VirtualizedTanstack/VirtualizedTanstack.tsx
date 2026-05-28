@@ -62,7 +62,7 @@ export function VirtualizedTanstack() {
 
   return (
     <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>
-      <Combobox.Target>
+      <Combobox.Target targetType="button">
         <InputBase component="button" onClick={() => combobox.toggleDropdown()} pointer>
           {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
         </InputBase>

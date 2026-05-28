@@ -622,3 +622,65 @@ export function InputWithSections() {
     </div>
   );
 }
+
+export function ConditionalRenderNearBottom() {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <p style={{ maxWidth: 500 }}>
+        #8577. Scroll to the bottom of the page, then click the button to render a Combobox near the
+        fold. Open the dropdown. Expected: dropdown positions correctly and the page does not
+        freeze.
+      </p>
+      <div style={{ height: 1500 }} />
+      <Button onClick={() => setShow((s) => !s)}>{show ? 'Hide' : 'Show'} dropdown</Button>
+      {show && (
+        <div style={{ marginTop: 16 }}>
+          <NearBottomCombobox />
+        </div>
+      )}
+      <div style={{ height: 200 }} />
+    </div>
+  );
+}
+
+function NearBottomCombobox() {
+  const combobox = useCombobox();
+  const [value, setValue] = useState<string | null>(null);
+
+  const options = ['React', 'Angular', 'Svelte', 'Vue', 'Ember', 'Backbone', 'Preact'].map(
+    (item) => (
+      <Combobox.Option value={item} key={item}>
+        {item}
+      </Combobox.Option>
+    )
+  );
+
+  return (
+    <Combobox
+      store={combobox}
+      onOptionSubmit={(val) => {
+        setValue(val);
+        combobox.closeDropdown();
+      }}
+    >
+      <Combobox.Target>
+        <InputBase
+          component="button"
+          type="button"
+          pointer
+          rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
+          onClick={() => combobox.toggleDropdown()}
+        >
+          {value || <Input.Placeholder>Pick value</Input.Placeholder>}
+        </InputBase>
+      </Combobox.Target>
+
+      <Combobox.Dropdown>
+        <Combobox.Options>{options}</Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
+  );
+}

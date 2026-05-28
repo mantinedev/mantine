@@ -103,7 +103,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.ThemeObject,
       MDX_DATA.Colors,
       MDX_DATA.ColorSchemes,
-      MDX_DATA.Typography,
+      MDX_DATA.TypographyTheming,
       MDX_DATA.DefaultProps,
     ],
   },
@@ -503,6 +503,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.ResourcesMonthView,
       MDX_DATA.ResourcesSchedule,
       MDX_DATA.RecurringEventsSchedule,
+      MDX_DATA.ScheduleEventsData,
     ],
   },
 

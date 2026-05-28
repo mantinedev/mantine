@@ -27,6 +27,8 @@ import { ButtonSearch } from './ButtonSearch/ButtonSearch';
 import ButtonSearchCode from './ButtonSearch/code.json';
 import DropdownAnimationCode from './DropdownAnimation/code.json';
 import { DropdownAnimation } from './DropdownAnimation/DropdownAnimation';
+import DropdownFloatingHeightCode from './DropdownFloatingHeight/code.json';
+import { DropdownFloatingHeight } from './DropdownFloatingHeight/DropdownFloatingHeight';
 import DropdownFooterCode from './DropdownFooter/code.json';
 import { DropdownFooter } from './DropdownFooter/DropdownFooter';
 import DropdownHeaderCode from './DropdownHeader/code.json';
@@ -51,6 +53,8 @@ import MultiSelectCreatableCode from './MultiSelectCreatable/code.json';
 import { MultiSelectCreatable } from './MultiSelectCreatable/MultiSelectCreatable';
 import MultiSelectValueRendererCode from './MultiSelectValueRenderer/code.json';
 import { MultiSelectValueRenderer } from './MultiSelectValueRenderer/MultiSelectValueRenderer';
+import ReorderablePillsMultiSelectCode from './ReorderablePillsMultiSelect/code.json';
+import { ReorderablePillsMultiSelect } from './ReorderablePillsMultiSelect/ReorderablePillsMultiSelect';
 import SearchableMultiSelectCode from './SearchableMultiSelect/code.json';
 import { SearchableMultiSelect } from './SearchableMultiSelect/SearchableMultiSelect';
 import SearchableSelectCode from './SearchableSelect/code.json';
@@ -182,6 +186,11 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
     code: DropdownScrollAreaCode as ComboboxExampleComponent['code'],
   },
 
+  DropdownFloatingHeight: {
+    component: DropdownFloatingHeight,
+    code: DropdownFloatingHeightCode as ComboboxExampleComponent['code'],
+  },
+
   AutocompleteDynamic: {
     component: AutocompleteDynamic,
     code: AutocompleteDynamicCode as ComboboxExampleComponent['code'],
@@ -290,6 +299,11 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   MultiSelectValueRenderer: {
     component: MultiSelectValueRenderer,
     code: MultiSelectValueRendererCode as ComboboxExampleComponent['code'],
+  },
+
+  ReorderablePillsMultiSelect: {
+    component: ReorderablePillsMultiSelect,
+    code: ReorderablePillsMultiSelectCode as ComboboxExampleComponent['code'],
   },
 
   SelectGroups: {

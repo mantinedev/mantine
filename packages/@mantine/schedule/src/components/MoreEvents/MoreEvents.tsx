@@ -16,7 +16,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { ScheduleEventData, ScheduleMode } from '../../types';
-import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import classes from './MoreEvents.module.css';
 
 export type MoreEventsDropdownType = 'popover' | 'modal';
@@ -52,11 +52,17 @@ export interface MoreEventsProps
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
 
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
+
   /** Labels override */
   labels?: ScheduleLabelsOverride;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
+
+  /** Called when an event inside the dropdown is clicked */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export type MoreEventsFactory = Factory<{
@@ -89,9 +95,11 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     children,
     modalTitle,
     renderEventBody,
+    renderEvent,
     id,
     labels,
     mode,
+    onEventClick,
     ...others
   } = props;
   const [dropdownOpened, dropdownHandlers] = useDisclosure();
@@ -124,7 +132,9 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
           event={event}
           size="md"
           renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
           mode={mode}
+          onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
         >
           {event.title}
         </ScheduleEvent>

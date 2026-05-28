@@ -99,7 +99,7 @@ const defaultProps = {
 } satisfies Partial<FileInputProps>;
 
 export const FileInput = genericFactory<FileInputFactory>((_props) => {
-  const props = useProps('FileInput', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'FileInput'], defaultProps, _props);
   const {
     unstyled,
     vars,

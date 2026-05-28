@@ -25,6 +25,7 @@ import {
   OptionsDropdown,
   OptionsFilter,
   useCombobox,
+  usePillsReorder,
 } from '../Combobox';
 import {
   __BaseInputProps,
@@ -124,7 +125,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
 
   /** A function to render content of the pill */
   renderPill?: (props: ComboboxRenderPillInput<Value>) => React.ReactNode;
@@ -140,6 +141,9 @@ export interface MultiSelectProps<Value extends Primitive = string>
 
   /** Controls whether dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
+
+  /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
+  withPillsReorder?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -162,7 +166,7 @@ const defaultProps = {
 } satisfies Partial<MultiSelectProps>;
 
 export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
-  const props = useProps('MultiSelect', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'MultiSelect'], defaultProps, _props);
   const {
     classNames,
     className,
@@ -189,6 +193,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     limit,
     withScrollArea,
     maxDropdownHeight,
+    floatingHeight,
     searchValue,
     defaultSearchValue,
     onSearchChange,
@@ -249,6 +254,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     openOnFocus,
     loading,
     loadingPosition,
+    withPillsReorder,
     ...others
   } = props;
 
@@ -284,6 +290,12 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     onChange,
   });
 
+  const { getPillProps, getListProps, handleInputKeyDown } = usePillsReorder({
+    value: _value,
+    onChange: setValue,
+    enabled: withPillsReorder && !disabled && !readOnly,
+  });
+
   const [_searchValue, setSearchValue] = useUncontrolled({
     value: searchValue,
     defaultValue: defaultSearchValue,
@@ -315,6 +327,10 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
+    if (event.defaultPrevented) {
+      return;
+    }
+
     if (event.key === ' ' && !searchable) {
       event.preventDefault();
       combobox.toggleDropdown();
@@ -324,10 +340,13 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
+
+    handleInputKeyDown(event);
   };
 
   const values = _value.map((item, index) => {
     const optionData = optionsLockup[`${item}`] || retainedSelectedOptions.current[`${item}`];
+    const reorderProps = getPillProps(index);
 
     if (renderPill) {
       return (
@@ -340,6 +359,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
               onRemove?.(item);
             },
             disabled,
+            reorderProps,
           })}
         </Fragment>
       );
@@ -356,6 +376,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
         unstyled={unstyled}
         disabled={disabled}
         {...getStyles('pill')}
+        {...reorderProps}
       >
         {optionData?.label || item}
       </Pill>
@@ -404,6 +425,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
         readOnly={readOnly}
         __staticSelector="MultiSelect"
         attributes={attributes}
+        floatingHeight={floatingHeight}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val as any);
           if (clearSearchOnChange) {
@@ -488,6 +510,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
               disabled={disabled}
               unstyled={unstyled}
               {...getStyles('pillsList', { style: pillsListStyle })}
+              {...getListProps()}
             >
               {values}
               <Combobox.EventsTarget autoComplete={autoComplete} withExpandedAttribute>

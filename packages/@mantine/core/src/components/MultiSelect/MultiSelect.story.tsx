@@ -312,3 +312,20 @@ export function PlaceholderOverflow() {
     </Box>
   );
 }
+
+export function LongPillText() {
+  const longLabel =
+    'This is a very long label that should be truncated with an ellipsis when it does not fit';
+  return (
+    <div style={{ padding: 40, maxWidth: 360 }}>
+      <MultiSelect
+        data={[
+          { value: '1', label: longLabel },
+          { value: '2', label: 'Short' },
+        ]}
+        defaultValue={['1', '2']}
+        placeholder="Select"
+      />
+    </div>
+  );
+}

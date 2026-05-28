@@ -67,3 +67,8 @@ export const Demo_hideDetached = {
   name: '⭐ Demo: hideDetached',
   render: renderDemo(demos.hideDetached),
 };
+
+export const Demo_contextMenu = {
+  name: '⭐ Demo: contextMenu',
+  render: renderDemo(demos.contextMenu),
+};

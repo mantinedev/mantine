@@ -169,7 +169,10 @@ export function getArrowPositionStyles({
   dir: 'rtl' | 'ltr';
 }) {
   if (arrowPosition === 'merge') {
-    return getMergeArrowStyles({ position, arrowSize, dir }) || {};
+    const mergeStyles = getMergeArrowStyles({ position, arrowSize, dir });
+    if (mergeStyles) {
+      return mergeStyles;
+    }
   }
 
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];

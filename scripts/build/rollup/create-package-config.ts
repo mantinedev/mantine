@@ -37,6 +37,9 @@ export function createPackageConfig(packagePath: string): RolldownOptions {
   ];
 
   return {
+    checks: {
+      pluginTimings: false,
+    },
     onwarn(warning, warn) {
       if (warning.code === 'CIRCULAR_DEPENDENCY') {
         return;

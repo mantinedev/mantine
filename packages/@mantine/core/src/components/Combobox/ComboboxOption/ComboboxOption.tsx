@@ -60,6 +60,7 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props) => {
   const _id = id || uuid;
 
   return (
+    // eslint-disable-next-line jsx-a11y/interactive-supports-focus -- Combobox uses aria-activedescendant pattern: focus stays on the target, options are highlighted via aria-activedescendant rather than DOM focus
     <Box
       {...ctx.getStyles('option', { className, classNames, styles, style })}
       {...others}

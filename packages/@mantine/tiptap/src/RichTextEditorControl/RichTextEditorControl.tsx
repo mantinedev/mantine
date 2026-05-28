@@ -1,3 +1,4 @@
+import { useEditorState } from '@tiptap/react';
 import {
   BoxProps,
   CompoundStylesApiProps,
@@ -112,15 +113,45 @@ export function createControl({
   const Control = (props: RichTextEditorControlBaseProps) => {
     const { editor, labels } = useRichTextEditorContext();
     const _label = labels[label] as string;
+    const editorState = useEditorState({
+      editor: editor ?? null,
+      selector: (ctx) => {
+        // `ctx.editor` is `null` on the first render before `useEditor()` produces an
+        // instance, and `editor.commandManager` is set to `null` by `editor.destroy()`.
+        // Either state would make `isDisabled?.(ctx.editor)` (which typically calls
+        // `editor.can()`) throw, taking down the surrounding tree.
+        const safeEditor = ctx.editor && !ctx.editor.isDestroyed ? ctx.editor : null;
+        return {
+          active:
+            safeEditor && isActive?.name
+              ? safeEditor.isActive(isActive.name, isActive.attributes)
+              : false,
+          // Without a usable editor the operation cannot run, so the control must
+          // appear disabled regardless of whether a user-provided `isDisabled` exists.
+          disabled: safeEditor ? (isDisabled?.(safeEditor) ?? false) : true,
+        };
+      },
+    });
+
+    const active = editorState?.active ?? false;
+    const disabled = editorState?.disabled ?? true;
+
     return (
       <RichTextEditorControlBase
         aria-label={_label}
         title={_label}
-        active={isActive?.name ? editor?.isActive(isActive.name, isActive.attributes) : false}
+        active={active}
         icon={props.icon || icon}
-        disabled={isDisabled?.(editor) || false}
+        disabled={disabled}
         {...props}
-        onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
+        onClick={() => {
+          // Mirror the selector's guard so a click landing during teardown does not
+          // invoke commands on a `null`/destroyed editor.
+          if (!editor || editor.isDestroyed) {
+            return;
+          }
+          (editor as any).chain().focus()[operation.name](operation.attributes).run();
+        }}
       />
     );
   };

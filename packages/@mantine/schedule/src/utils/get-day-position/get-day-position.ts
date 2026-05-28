@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { ScheduleEventData } from '../../types';
+import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
 import { parseTimeString } from '../parse-time-string/parse-time-string';
 
 interface GetDayPositionInput {
@@ -11,6 +12,9 @@ interface GetDayPositionInput {
 
   /** End time boundary for the day in HH:mm:ss format, `23:59:59` by default */
   endTime?: string;
+
+  /** Number of minutes per time slot, `60` by default. Used to align the canvas to whole slots when `endTime` does not divide evenly. */
+  intervalMinutes?: number;
 }
 
 /** Calculates day position within given start and end time boundaries. Returns top and height in percentages. */
@@ -18,6 +22,7 @@ export function getDayPosition({
   event,
   startTime = '00:00:00',
   endTime = '23:59:59',
+  intervalMinutes = 60,
 }: GetDayPositionInput) {
   const eventStart = dayjs(event.start);
   const eventEnd = dayjs(event.end);
@@ -29,18 +34,24 @@ export function getDayPosition({
   const boundaryStart = startOfDay
     .hour(parsedStartTime.hours)
     .minute(parsedStartTime.minutes)
-    .second(0);
-  const boundaryEnd = startOfDay.hour(parsedEndTime.hours).minute(parsedEndTime.minutes).second(0);
-  const totalMinutes = boundaryEnd.diff(boundaryStart, 'minute');
+    .second(parsedStartTime.seconds);
+  const literalEnd = startOfDay
+    .hour(parsedEndTime.hours)
+    .minute(parsedEndTime.minutes)
+    .second(parsedEndTime.seconds);
+
+  const intervalSeconds = clampIntervalMinutes(intervalMinutes) * 60;
+  const literalRangeSeconds = literalEnd.diff(boundaryStart, 'second');
+  const totalSeconds = Math.ceil(literalRangeSeconds / intervalSeconds) * intervalSeconds;
 
   const clippedEventStart = eventStart.isBefore(boundaryStart) ? boundaryStart : eventStart;
-  const eventStartMinutes = clippedEventStart.diff(boundaryStart, 'minute');
+  const eventStartSeconds = clippedEventStart.diff(boundaryStart, 'second');
 
-  const clippedEventEnd = eventEnd.isAfter(boundaryEnd) ? boundaryEnd : eventEnd;
-  const eventEndMinutes = clippedEventEnd.diff(boundaryStart, 'minute');
+  const clippedEventEnd = eventEnd.isAfter(literalEnd) ? literalEnd : eventEnd;
+  const eventEndSeconds = clippedEventEnd.diff(boundaryStart, 'second');
 
-  const startPercent = (eventStartMinutes / totalMinutes) * 100;
-  const endPercent = (eventEndMinutes / totalMinutes) * 100;
+  const startPercent = (eventStartSeconds / totalSeconds) * 100;
+  const endPercent = (eventEndSeconds / totalSeconds) * 100;
 
   return {
     top: startPercent,

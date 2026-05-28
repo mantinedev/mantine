@@ -339,7 +339,7 @@ function clampAndSanitizeBigIntInput(
 export const NumberInput = genericFactory<NumberInputFactory>(
   <T extends NumberInputNumericType = number>(_props: NumberInputProps<T>) => {
     const props = useProps(
-      'NumberInput',
+      ['Input', 'InputWrapper', 'NumberInput'],
       defaultProps as Partial<NumberInputProps>,
       _props as unknown as NumberInputProps
     );

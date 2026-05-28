@@ -89,6 +89,8 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     title: 'Responsive styles',
     slug: '/styles/responsive',
     search: 'Media queries, breakpoints, inline responsive styles',
+    searchTags:
+      'use-matches, useMatches, use-media-query, useMediaQuery, hiddenFrom, visibleFrom, container queries, responsive style props',
     hideHeader: true,
   },
 
@@ -96,6 +98,7 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     title: 'Styles API',
     slug: '/styles/styles-api',
     search: 'classNames, styles and unstyled props',
+    searchTags: 'classNames prop, styles prop, selectors, css variables, static classes',
     hideHeader: true,
   },
 
@@ -103,6 +106,7 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     title: 'data-* attributes',
     slug: '/styles/data-attributes',
     search: 'Usage of data-* attributes to apply styles',
+    searchTags: 'mod prop, data attributes, modifiers',
     hideHeader: true,
   },
 
@@ -110,6 +114,7 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     title: 'Variants and sizes',
     slug: '/styles/variants-sizes',
     search: 'Customize components sizes and variants',
+    searchTags: 'variantColorResolver, custom variants, custom sizes, data-size',
     hideHeader: true,
   },
 
@@ -124,6 +129,7 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     title: 'RTL (right-to-left)',
     slug: '/styles/rtl',
     search: 'Change text direction to right-to-left',
+    searchTags: 'DirectionProvider, useDirection, use-direction, dir attribute, rtl mixin',
     hideHeader: true,
   },
 
@@ -138,6 +144,7 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     title: 'Unstyled / headless',
     slug: '/styles/unstyled',
     search: 'Headless/unstyled components',
+    searchTags: 'HeadlessMantineProvider, unstyled prop, headless ui',
     hideHeader: true,
   },
 

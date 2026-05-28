@@ -8,8 +8,18 @@ interface IsEventInTimeRangeInput {
   endTime?: string;
 }
 
+function spansFullDay(event: ScheduleEventData) {
+  const start = dayjs(event.start);
+  const end = dayjs(event.end);
+  if (!start.isSame(start.startOf('day'))) {
+    return false;
+  }
+  const nextDayStart = start.startOf('day').add(1, 'day');
+  return end.isSame(nextDayStart) || end.isSame(nextDayStart.subtract(1, 'second'));
+}
+
 export function isEventInTimeRange({ event, startTime, endTime }: IsEventInTimeRangeInput) {
-  if (isMultidayEvent(event)) {
+  if (isMultidayEvent(event) || spansFullDay(event)) {
     return true;
   }
 

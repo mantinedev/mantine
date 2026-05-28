@@ -34,7 +34,7 @@ export function DropdownPositionStyles() {
         combobox.closeDropdown();
       }}
     >
-      <Combobox.Target>
+      <Combobox.Target targetType="button">
         <InputBase
           component="button"
           type="button"

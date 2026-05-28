@@ -55,7 +55,7 @@ export function ScrollAreaRoot(_props: ScrollAreaRootProps) {
   const [cornerHeight, setCornerHeight] = useState(0);
   const [scrollbarXEnabled, setScrollbarXEnabled] = useState(false);
   const [scrollbarYEnabled, setScrollbarYEnabled] = useState(false);
-  const rootRef = useMergedRef(ref, (node) => setScrollArea(node));
+  const rootRef = useMergedRef(ref, setScrollArea);
 
   return (
     <ScrollAreaProvider

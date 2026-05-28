@@ -1,19 +1,27 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { getPath } from '../../paths';
-import { LooseKeys } from '../../paths.types';
+import { FormPathValue, LooseKeys } from '../../paths.types';
 import { FormFieldSubscriber, Watch } from '../../types';
 import { $FormStatus } from '../use-form-status/use-form-status';
-import { SetValuesSubscriberPayload } from '../use-form-values/use-form-values';
+import { $FormValues, SetValuesSubscriberPayload } from '../use-form-values/use-form-values';
 
 interface UseFormWatchInput<out Values extends Record<PropertyKey, any>> {
+  $values: $FormValues<Values>;
   $status: $FormStatus<Values>;
   cascadeUpdates?: boolean;
+}
+
+export interface $FormWatch<Values extends Record<PropertyKey, any>> {
+  subscribers: React.RefObject<Record<string, FormFieldSubscriber<Values, any>[]>>;
+  watch: Watch<Values, any>;
+  getFieldSubscribers: (path: any) => ((input: SetValuesSubscriberPayload<Values>) => void)[];
+  notifyWatchSubscribers: (previousValues: Values) => void;
 }
 
 export function useFormWatch<
   Values extends Record<PropertyKey, any>,
   Field extends LooseKeys<Values> = LooseKeys<Values>,
->({ $status, cascadeUpdates }: UseFormWatchInput<Values>) {
+>({ $values, $status, cascadeUpdates }: UseFormWatchInput<Values>) {
   const subscribers = useRef<Record<Field, FormFieldSubscriber<Values, Field>[]>>({} as any);
 
   const watch: Watch<Values, Field> = useCallback((path, callback) => {
@@ -61,9 +69,28 @@ export function useFormWatch<
     return result;
   }, []);
 
+  const notifyWatchSubscribers = useCallback((previousValues: Values) => {
+    Object.keys(subscribers.current).forEach((path) => {
+      const value = getPath(path, $values.refValues.current);
+      const previousValue = getPath(path, previousValues);
+
+      if (value !== previousValue) {
+        subscribers.current[path as Field]?.forEach((cb) =>
+          cb({
+            previousValue: getPath(path, previousValues) as FormPathValue<Values, Field>,
+            value: getPath(path, $values.refValues.current) as FormPathValue<Values, Field>,
+            touched: $status.isTouched(path),
+            dirty: $status.isDirty(path),
+          })
+        );
+      }
+    });
+  }, []);
+
   return {
     subscribers,
     watch,
     getFieldSubscribers,
+    notifyWatchSubscribers,
   };
 }

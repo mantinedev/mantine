@@ -55,7 +55,7 @@ type MonthPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 
 export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerInputFactory>(
   (_props) => {
-    const props = useProps('MonthPickerInput', defaultProps, _props);
+    const props = useProps(['Input', 'InputWrapper', 'MonthPickerInput'], defaultProps, _props);
     const {
       type,
       value,

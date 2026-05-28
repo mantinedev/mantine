@@ -23,4 +23,10 @@ describe('@mantine/core/FileInput', () => {
     props: defaultProps,
     selector: 'button',
   });
+
+  tests.itSupportsSharedInputDefaults<FileInputProps>({
+    component: FileInput,
+    props: defaultProps,
+    componentName: 'FileInput',
+  });
 });

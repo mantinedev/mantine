@@ -13,6 +13,11 @@ export const Demo_files = {
   render: renderDemo(demos.files),
 };
 
+export const Demo_docsEditor = {
+  name: '⭐ Demo: docsEditor',
+  render: renderDemo(demos.docsEditor),
+};
+
 export const Demo_renderNode = {
   name: '⭐ Demo: renderNode',
   render: renderDemo(demos.renderNode),
@@ -41,6 +46,16 @@ export const Demo_checkAllNodes = {
 export const Demo_dragDrop = {
   name: '⭐ Demo: dragDrop',
   render: renderDemo(demos.dragDrop),
+};
+
+export const Demo_dragDropAllow = {
+  name: '⭐ Demo: dragDropAllow',
+  render: renderDemo(demos.dragDropAllow),
+};
+
+export const Demo_dragDropHandle = {
+  name: '⭐ Demo: dragDropHandle',
+  render: renderDemo(demos.dragDropHandle),
 };
 
 export const Demo_asyncLoading = {

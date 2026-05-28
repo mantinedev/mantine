@@ -1,3 +1,5 @@
+import type { SyncReactNode } from '../types';
+
 interface HasLengthOptions {
   max?: number;
   min?: number;
@@ -24,10 +26,10 @@ function isLengthValid(payload: HasLengthPayload, value: any) {
   return valid;
 }
 
-export function hasLength(payload: HasLengthPayload, error?: React.ReactNode) {
+export function hasLength(payload: HasLengthPayload, error?: SyncReactNode) {
   const _error = error || true;
 
-  return (value: unknown): React.ReactNode => {
+  return (value: unknown): SyncReactNode => {
     if (typeof value === 'string') {
       return isLengthValid(payload, value.trim()) ? null : _error;
     }

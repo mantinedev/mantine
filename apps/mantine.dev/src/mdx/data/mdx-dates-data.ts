@@ -20,6 +20,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['Calendar'],
     source: '@mantine/dates/src/components/Calendar/Calendar.tsx',
     docs: 'dates/calendar.mdx',
+    searchTags: 'date picker, schedule, agenda, month view, days grid',
   },
 
   DateInput: {
@@ -31,6 +32,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['DateInput'],
     source: '@mantine/dates/src/components/DateInput/DateInput.tsx',
     docs: 'dates/date-input.mdx',
+    searchTags: 'date field, calendar input, text date input, date textbox',
   },
 
   MaskedDateInput: {
@@ -53,6 +55,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['DatePicker'],
     source: '@mantine/dates/src/components/DatePicker/DatePicker.tsx',
     docs: 'dates/date-picker.mdx',
+    searchTags: 'calendar, date range, daterange, inline calendar, days picker',
   },
 
   DatePickerInput: {
@@ -64,6 +67,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     styles: ['DatePickerInput'],
     source: '@mantine/dates/src/components/DatePickerInput/DatePickerInput.tsx',
     docs: 'dates/date-picker-input.mdx',
+    searchTags: 'calendar input, date range input, daterange input, date field',
   },
 
   DateTimePicker: {
@@ -75,6 +79,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Capture datetime from the user',
     source: '@mantine/dates/src/components/DateTimePicker/DateTimePicker.tsx',
     docs: 'dates/date-time-picker.mdx',
+    searchTags: 'datetime, date time picker, calendar clock, timestamp input',
   },
 
   InlineDateTimePicker: {
@@ -97,6 +102,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Inline month, multiple months and months range picker',
     source: '@mantine/dates/src/components/MonthPicker/MonthPicker.tsx',
     docs: 'dates/month-picker.mdx',
+    searchTags: 'calendar, month range, months calendar, month selector',
   },
 
   MonthPickerInput: {
@@ -108,6 +114,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Month, multiple months and months range picker input',
     source: '@mantine/dates/src/components/MonthPickerInput/MonthPickerInput.tsx',
     docs: 'dates/month-picker-input.mdx',
+    searchTags: 'calendar input, month range input, month selector input, month field',
   },
 
   TimeInput: {
@@ -119,6 +126,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Capture time from the user',
     source: '@mantine/dates/src/components/TimeInput/TimeInput.tsx',
     docs: 'dates/time-input.mdx',
+    searchTags: 'clock, hours, minutes, time field, time text input',
   },
 
   YearPicker: {
@@ -130,6 +138,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Inline year, multiple years and years range picker',
     source: '@mantine/dates/src/components/YearPicker/YearPicker.tsx',
     docs: 'dates/year-picker.mdx',
+    searchTags: 'calendar, year range, years, year selector',
   },
 
   YearPickerInput: {
@@ -141,6 +150,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Inline year, multiple years and years range picker',
     source: '@mantine/dates/src/components/YearPickerInput/YearPickerInput.tsx',
     docs: 'dates/year-picker-input.mdx',
+    searchTags: 'calendar input, year range input, years input, year selector',
   },
 
   TimePicker: {
@@ -152,6 +162,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Captures time value from the user',
     source: '@mantine/dates/src/components/TimePicker/TimePicker.tsx',
     docs: 'dates/time-picker.mdx',
+    searchTags: 'clock, hours, minutes, seconds, am pm, time dropdown',
   },
 
   TimeGrid: {
@@ -163,6 +174,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Captures time value from the user with a predefined set of options',
     source: '@mantine/dates/src/components/TimeGrid/TimeGrid.tsx',
     docs: 'dates/time-grid.mdx',
+    searchTags: 'time slots, appointment slots, booking slots, clock grid, schedule slots',
   },
 
   TimeValue: {
@@ -173,6 +185,7 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Display a formatted time value',
     source: '@mantine/dates/src/components/TimeValue/TimeValue.tsx',
     docs: 'dates/time-value.mdx',
+    searchTags: 'format time, time formatter, display time, clock',
   },
 
   MiniCalendar: {
@@ -184,5 +197,6 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     description: 'Compact calendar to display a small number of days in a row',
     source: '@mantine/dates/src/components/MiniCalendar/MiniCalendar.tsx',
     docs: 'dates/mini-calendar.mdx',
+    searchTags: 'small calendar, compact calendar, days strip, date strip, schedule',
   },
 };

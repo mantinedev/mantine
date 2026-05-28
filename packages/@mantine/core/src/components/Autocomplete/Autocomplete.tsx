@@ -92,7 +92,7 @@ export type AutocompleteFactory = Factory<{
 
 export const Autocomplete = factory<AutocompleteFactory>((_props) => {
   const props = useProps(
-    'Autocomplete',
+    ['Input', 'InputWrapper', 'Autocomplete'],
     { size: 'sm' } satisfies Partial<AutocompleteProps>,
     _props
   );
@@ -122,6 +122,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     limit,
     withScrollArea,
     maxDropdownHeight,
+    floatingHeight,
     size,
     id,
     renderOption,
@@ -203,6 +204,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
       readOnly={readOnly}
       size={size}
       attributes={attributes}
+      floatingHeight={floatingHeight}
       keepMounted={autoSelectOnBlur}
       onOptionSubmit={(val) => {
         onOptionSubmit?.(val);

@@ -162,7 +162,7 @@ function Demo() {
 
       <div {...horizontal.getHandleProps({ index: 0 })} style={handleH}>
         <div style={gripH}>
-          <DotsSixVerticalIcon />
+          <DotsSixVerticalIcon style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
 
@@ -194,7 +194,7 @@ function Demo() {
 
         <div {...vertical.getHandleProps({ index: 0 })} style={handleV}>
           <div style={gripV}>
-            <DotsSixIcon />
+            <DotsSixIcon style={{ width: '100%', height: '100%' }} />
           </div>
         </div>
 
@@ -379,7 +379,7 @@ function Demo() {
 
       <div {...horizontal.getHandleProps({ index: 0 })} style={handleH}>
         <div style={gripH}>
-          <DotsSixVerticalIcon />
+          <DotsSixVerticalIcon style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
 
@@ -411,7 +411,7 @@ function Demo() {
 
         <div {...vertical.getHandleProps({ index: 0 })} style={handleV}>
           <div style={gripV}>
-            <DotsSixIcon />
+            <DotsSixIcon style={{ width: '100%', height: '100%' }} />
           </div>
         </div>
 

@@ -28,6 +28,9 @@ function Demo() {
           </Menu.Sub.Dropdown>
         </Menu.Sub>
 
+        <Menu.Item>Customers</Menu.Item>
+        <Menu.Item>Reports</Menu.Item>
+
         <Menu.Sub>
           <Menu.Sub.Target>
             <Menu.Sub.Item>Orders</Menu.Sub.Item>
@@ -81,6 +84,9 @@ function Demo() {
           </Menu.Sub.Dropdown>
         </Menu.Sub>
 
+        <Menu.Item>Customers</Menu.Item>
+        <Menu.Item>Reports</Menu.Item>
+
         <Menu.Sub>
           <Menu.Sub.Target>
             <Menu.Sub.Item>Orders</Menu.Sub.Item>
@@ -113,5 +119,78 @@ export const sub: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+};
+
+const safeAreaPolygonCode = `
+import { Button, Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu width={200} position="bottom-start">
+      <Menu.Target>
+        <Button>Toggle Menu</Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item>Dashboard</Menu.Item>
+
+        <Menu.Sub offset={16} safeAreaPolygon={{ buffer: 16, requireIntent: false }}>
+          <Menu.Sub.Target>
+            <Menu.Sub.Item>Products</Menu.Sub.Item>
+          </Menu.Sub.Target>
+
+          <Menu.Sub.Dropdown>
+            <Menu.Item>All products</Menu.Item>
+            <Menu.Item>Categories</Menu.Item>
+            <Menu.Item>Tags</Menu.Item>
+            <Menu.Item>Attributes</Menu.Item>
+            <Menu.Item>Shipping classes</Menu.Item>
+          </Menu.Sub.Dropdown>
+        </Menu.Sub>
+
+        <Menu.Item>Customers</Menu.Item>
+        <Menu.Item>Reports</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+`;
+
+function SafeAreaPolygonDemo() {
+  return (
+    <Menu width={200} position="bottom-start">
+      <Menu.Target>
+        <Button>Toggle Menu</Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item>Dashboard</Menu.Item>
+
+        <Menu.Sub offset={16} safeAreaPolygon={{ buffer: 16, requireIntent: false }}>
+          <Menu.Sub.Target>
+            <Menu.Sub.Item>Products</Menu.Sub.Item>
+          </Menu.Sub.Target>
+
+          <Menu.Sub.Dropdown>
+            <Menu.Item>All products</Menu.Item>
+            <Menu.Item>Categories</Menu.Item>
+            <Menu.Item>Tags</Menu.Item>
+            <Menu.Item>Attributes</Menu.Item>
+            <Menu.Item>Shipping classes</Menu.Item>
+          </Menu.Sub.Dropdown>
+        </Menu.Sub>
+
+        <Menu.Item>Customers</Menu.Item>
+        <Menu.Item>Reports</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+
+export const subSafeAreaPolygon: MantineDemo = {
+  type: 'code',
+  component: SafeAreaPolygonDemo,
+  code: safeAreaPolygonCode,
   centered: true,
 };
