@@ -42,6 +42,30 @@ The `GitHub` column is the exact canonical `owner/repo` path — pass it directl
 | Ant Design Vue    | vueComponent/ant-design-vue | last release Nov 2024              | antdv-next/antdv-next |
 | Headless UI (Vue) | tailwindlabs/headlessui     | Vue package no release in ~2 years | use React v2 only     |
 
+## Component doc URL patterns
+
+Use these to build a per-feature link to the competitor's component docs (the report requires one
+for every feature). `<slug>` is the kebab-case component name. When unsure of the exact slug, link
+the components index page instead.
+
+| Library | Component page pattern |
+|---|---|
+| Material UI | `https://mui.com/material-ui/react-<slug>/` |
+| Chakra UI | `https://chakra-ui.com/docs/components/<slug>` |
+| Ant Design | `https://ant.design/components/<slug>` |
+| HeroUI | `https://www.heroui.com/docs/components/<slug>` |
+| Base UI | `https://base-ui.com/react/components/<slug>` |
+| Radix Primitives | `https://www.radix-ui.com/primitives/docs/components/<slug>` |
+| Ark UI | `https://ark-ui.com/react/docs/components/<slug>` |
+| React Aria | `https://react-spectrum.adobe.com/react-aria/<Component>.html` |
+| Fluent UI | `https://react.fluentui.dev/?path=/docs/components-<slug>--docs` |
+| shadcn/ui | `https://ui.shadcn.com/docs/components/<slug>` |
+| Vuetify | `https://vuetifyjs.com/en/components/<slug>/` |
+| PrimeVue | `https://primevue.org/<slug>` |
+| Element Plus | `https://element-plus.org/en-US/component/<slug>.html` |
+| Nuxt UI | `https://ui.nuxt.com/components/<slug>` |
+| Reka UI | `https://reka-ui.com/docs/components/<slug>` |
+
 ## Notes for maintenance
 
 - Verify `owner/repo` paths occasionally — orgs rename (NextUI→HeroUI, Radix Vue→Reka UI, Park UI→chakra-ui org).

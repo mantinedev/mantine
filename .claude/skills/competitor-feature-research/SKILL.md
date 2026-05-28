@@ -64,7 +64,12 @@ core/umbrella package and ignore satellite packages (icons, codemods, docs).
 ### Step 3 — Distill features
 
 From the raw notes, extract only **genuinely new capabilities**. For each, capture: the
-component/area, a one-line description, and the source (version/PR link).
+component/area, a one-line description, the source (version/PR link), and a **link to the
+competitor's component documentation page** (the specific component page, e.g.
+`https://www.heroui.com/docs/components/empty-state`, not the site root). Construct it from the
+library's website base in `references/libraries.md` following that site's component URL pattern;
+if unsure of the exact slug, link the site's components index. This doc link is required for every
+feature so the Mantine team can quickly see the competitor's implementation.
 
 KEEP: new components, new props/APIs, new variants/modes, new behaviors, new hooks, notable
 accessibility or theming capabilities.
@@ -122,7 +127,7 @@ to do steps 2–4, then synthesize their structured results in step 5. Give each
 - the `owner/repo`, website, and `SINCE` date,
 - the path to `scripts/fetch_releases.sh`,
 - the Mantine search paths above and the bucket definitions,
-- a request to return a compact structured list: `feature | component | bucket | evidence`.
+- a request to return a compact structured list: `feature | component | bucket | evidence | competitor doc link`.
 
 This keeps the heavy changelog text out of the main context. See the
 `superpowers:dispatching-parallel-agents` skill for mechanics.
@@ -136,26 +141,30 @@ Libraries scanned: <list>. Period: <window>.
 
 ## Missing in Mantine (prioritized gaps)
 
-- **<Feature>** — <one line>. Seen in: <Library vX.Y> (<PR/link>). Nearest Mantine surface: <component or "none">.
+- **<Feature>** ([<Library> docs](<competitor-component-doc-url>)) — <one line>. Seen in: <Library vX.Y> (<PR/link>). Nearest Mantine surface: <component or "none">.
 - ...
 
 ## Implemented differently
 
-- **<Feature>** — Them: <approach>. Mantine: <approach>. Component: <name>.
+- **<Feature>** ([<Library> docs](<competitor-component-doc-url>)) — Them: <approach>. Mantine: <approach>. Component: <name>.
 - ...
 
 ## Already covered (spot-check)
 
-- **<Feature>** (<Library>) — Mantine has it via <prop/component>.
+- **<Feature>** ([<Library> docs](<competitor-component-doc-url>)) — Mantine has it via <prop/component>.
 
 ## Per-library detail
 
 ### <Library> (<versions in window>)
 
-| Feature | Component | Bucket                 | Evidence          |
-| ------- | --------- | ---------------------- | ----------------- |
-| ...     | ...       | Have/Missing/Different | <prop or PR link> |
+| Feature | Component | Bucket                 | Evidence          | Competitor docs                          |
+| ------- | --------- | ---------------------- | ----------------- | ---------------------------------------- |
+| ...     | ...       | Have/Missing/Different | <prop or PR link> | [<component>](<competitor-doc-url>)      |
 ```
+
+Every feature row/bullet must include a link to the competitor's component documentation page
+(e.g. a new HeroUI `Meter` links to its HeroUI docs page). Link the component index page if the
+exact component slug can't be confirmed.
 
 ## Notes
 
