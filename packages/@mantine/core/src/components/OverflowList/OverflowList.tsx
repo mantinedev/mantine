@@ -1,6 +1,6 @@
 // Originally based on https://github.com/Eliav2/react-responsive-overflow-list (MIT License)
 // Contains the modified version adapted for Mantine
-import { cloneElement, useRef, useState } from 'react';
+import { cloneElement, useMemo, useRef, useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import {
@@ -47,6 +47,12 @@ export interface OverflowListProps<T = any>
 
   /** Direction from which items are collapsed when they overflow, `'end'` collapses last items, `'start'` collapses first items @default 'end' */
   collapseFrom?: 'start' | 'end';
+
+  /** A function to resolve a unique key for each item. Used to detect when the contents of `data`
+   * change (for example when items are reordered while the length stays the same) so the
+   * visible/overflow split can be recomputed. Required to detect reordering when `data` contains
+   * objects; for primitive items (strings, numbers) the item value is used by default. */
+  getItemKey?: (item: T, index: number) => React.Key;
 }
 
 export type OverflowListFactory = Factory<{
@@ -68,6 +74,22 @@ const varsResolver = createVarsResolver<OverflowListFactory>((_, { gap }) => ({
   },
 }));
 
+function getDataSignature<T>(
+  data: T[],
+  getItemKey: ((item: T, index: number) => React.Key) | undefined
+): string {
+  return data
+    .map((item, index) => {
+      if (getItemKey) {
+        return getItemKey(item, index);
+      }
+      return item !== null && (typeof item === 'object' || typeof item === 'function')
+        ? index
+        : String(item);
+    })
+    .join('\u0000');
+}
+
 export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
   const props = useProps('OverflowList', defaultProps, _props);
   const {
@@ -84,6 +106,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     maxRows,
     maxVisibleItems,
     collapseFrom,
+    getItemKey,
     ref,
     ...others
   } = props;
@@ -122,12 +145,13 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
   const _overflowRef = useRef<HTMLElement>(null);
   const overflowRef = useMergedRef(_overflowRef, (overflowElement as any)?.ref);
   const dimensions = useDimensions(containerRef);
+  const dataKey = useMemo(() => getDataSignature(data, getItemKey), [data, getItemKey]);
 
   useIsomorphicEffect(() => {
     setPhase('measuring');
     setVisibleCount(data.length);
     setSubtractCount(0);
-  }, [data.length, maxRows, collapseFrom]);
+  }, [dataKey, maxRows, collapseFrom]);
 
   useIsomorphicEffect(() => {
     if (phase === 'measuring') {
