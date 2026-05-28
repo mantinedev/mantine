@@ -74,3 +74,4 @@ apps/help.mantine.dev/next-env.d.ts
 .superpowers/
 /.claude/scheduled_tasks.lock
 /.claude/settings.local.json
+/.playwright-mcp

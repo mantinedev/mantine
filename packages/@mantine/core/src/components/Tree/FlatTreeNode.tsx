@@ -1,5 +1,6 @@
 import { memo, useRef } from 'react';
 import { findElementAncestor } from '../../core';
+import type { FlatTreeLineState } from './flatten-tree-data/flatten-tree-data';
 import type { RenderNode, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
 import classes from './Tree.module.css';
@@ -43,6 +44,10 @@ export interface FlatTreeNodeProps {
 
   /** Tab index for the node */
   tabIndex?: number;
+
+  /** Line state per ancestor + own level, computed by `flattenTreeData`.
+   * When provided and the tree root has `data-with-lines`, connector lines are rendered. */
+  linesPath?: FlatTreeLineState[];
 }
 
 export const FlatTreeNode = memo(function FlatTreeNode({
@@ -59,6 +64,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
   renderNode,
   style,
   tabIndex = -1,
+  linesPath,
 }: FlatTreeNodeProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isLoading = tree.isNodeLoading(node.value);
@@ -183,11 +189,26 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       tabIndex={tabIndex}
       onKeyDown={handleKeyDown}
     >
+      {linesPath?.map((state, idx) => {
+        if (state === 'none') {
+          return null;
+        }
+        const column = idx + 2;
+        return (
+          <span
+            key={column}
+            aria-hidden
+            className={`${classes.flatLine}${state === 'closing' ? ` ${classes.flatLineClosing}` : ''}`}
+            style={{ '--flat-line-column': column } as React.CSSProperties}
+          />
+        );
+      })}
       {typeof renderNode === 'function' ? (
         renderNode({
           node,
           level,
           selected,
+          isRoot: level === 1,
           tree,
           expanded,
           hasChildren,

@@ -1,5 +1,7 @@
+import { fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Popover, PopoverProps, PopoverStylesNames } from './Popover';
+import { PopoverContextMenu } from './PopoverContextMenu/PopoverContextMenu';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
 
@@ -130,5 +132,131 @@ describe('@mantine/core/Popover', () => {
   it('exposes PopoverTarget and PopoverDropdown as static properties', () => {
     expect(Popover.Dropdown).toBe(PopoverDropdown);
     expect(Popover.Target).toBe(PopoverTarget);
+    expect(Popover.ContextMenu).toBe(PopoverContextMenu);
+  });
+
+  describe('Popover.ContextMenu', () => {
+    function ContextMenuContainer({ disabled }: { disabled?: boolean } = {}) {
+      return (
+        <Popover transitionProps={{ duration: 0 }} withinPortal={false}>
+          <Popover.ContextMenu disabled={disabled}>
+            <div data-testid="context-area">Right-click me</div>
+          </Popover.ContextMenu>
+          <Popover.Dropdown>
+            <div>test-context-dropdown</div>
+          </Popover.Dropdown>
+        </Popover>
+      );
+    }
+
+    it('opens the popover on contextmenu event', () => {
+      render(<ContextMenuContainer />);
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+
+      fireEvent.contextMenu(screen.getByTestId('context-area'), { clientX: 100, clientY: 200 });
+
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+    });
+
+    it('prevents default browser context menu', () => {
+      render(<ContextMenuContainer />);
+      const target = screen.getByTestId('context-area');
+      const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
+      fireEvent(target, event);
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('does not open and does not prevent default when disabled', () => {
+      render(<ContextMenuContainer disabled />);
+      const target = screen.getByTestId('context-area');
+      const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
+      fireEvent(target, event);
+      expect(event.defaultPrevented).toBe(false);
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+    });
+
+    it('preserves custom onContextMenu handler on the wrapped child', () => {
+      const handler = jest.fn();
+      render(
+        <Popover transitionProps={{ duration: 0 }} withinPortal={false}>
+          <Popover.ContextMenu>
+            <div data-testid="context-area" onContextMenu={handler}>
+              Right-click me
+            </div>
+          </Popover.ContextMenu>
+          <Popover.Dropdown>
+            <div>test-context-dropdown</div>
+          </Popover.Dropdown>
+        </Popover>
+      );
+
+      fireEvent.contextMenu(screen.getByTestId('context-area'), { clientX: 10, clientY: 10 });
+      expect(handler).toHaveBeenCalledTimes(1);
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+    });
+
+    it('sets data-expanded on the wrapped child when popover is open', () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+      expect(area).not.toHaveAttribute('data-expanded');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+
+      expect(screen.getByTestId('context-area')).toHaveAttribute('data-expanded', 'true');
+    });
+
+    it('does not intercept right-click when parent Popover is disabled', () => {
+      render(
+        <Popover transitionProps={{ duration: 0 }} withinPortal={false} disabled>
+          <Popover.ContextMenu>
+            <div data-testid="context-area">Right-click me</div>
+          </Popover.ContextMenu>
+          <Popover.Dropdown>
+            <div>test-context-dropdown</div>
+          </Popover.Dropdown>
+        </Popover>
+      );
+      const target = screen.getByTestId('context-area');
+      const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
+      fireEvent(target, event);
+      expect(event.defaultPrevented).toBe(false);
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+    });
+
+    it('does not toggle closed when right-clicked again while open', () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+
+      fireEvent.contextMenu(area, { clientX: 50, clientY: 50 });
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+    });
+
+    it('closes the popover when the trigger is left-clicked while open', async () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+
+      await userEvent.click(area);
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+    });
+
+    it('does not close the popover on the mousedown that precedes a right-click', () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+
+      fireEvent.mouseDown(area, { button: 2, clientX: 50, clientY: 50 });
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+
+      fireEvent.contextMenu(area, { clientX: 50, clientY: 50 });
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+    });
   });
 });

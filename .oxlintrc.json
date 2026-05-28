@@ -100,14 +100,16 @@
       "files": ["**/*.test.ts", "**/*.test.tsx"],
       "rules": {
         "react/jsx-key": "off",
-        "no-unsafe-optional-chaining": "off"
+        "no-unsafe-optional-chaining": "off",
+        "jsx-a11y/control-has-associated-label": "off"
       }
     },
     {
       "files": ["**/*.story.tsx"],
       "rules": {
         "no-console": "off",
-        "react/button-has-type": "off"
+        "react/button-has-type": "off",
+        "jsx-a11y/control-has-associated-label": "off"
       }
     }
   ]

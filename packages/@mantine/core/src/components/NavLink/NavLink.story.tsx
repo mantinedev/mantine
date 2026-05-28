@@ -130,7 +130,7 @@ export function DynamicNestedItems() {
         {nested}
       </NavLink>
       <Button onClick={increment}>Add item</Button>
-      <Button onClick={decrement}>Remove item item</Button>
+      <Button onClick={decrement}>Remove item</Button>
     </div>
   );
 }

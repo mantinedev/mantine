@@ -296,6 +296,20 @@ instead of native scrollbars:
 
 <Demo data={ComboboxDemos.scrollArea} />
 
+## Fit dropdown to viewport height
+
+Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical
+space in the viewport. The dropdown size is recalculated automatically when the trigger
+position changes. When the prop is set, the `flip` middleware is disabled – the dropdown
+always opens in the configured direction and is constrained to the viewport edges instead
+of flipping to the other side.
+
+The dropdown exposes a `--combobox-floating-options-max-height` CSS variable equal to the
+available height minus the dropdown padding. Pass it as `mah` to your `ScrollArea.Autosize`
+(or use it on any element you want to scroll within the bounded dropdown):
+
+<Demo data={ComboboxDemos.floatingHeight} />
+
 ## Hide dropdown
 
 Set `hidden` prop on `Combobox.Dropdown` to hide the dropdown. For example,

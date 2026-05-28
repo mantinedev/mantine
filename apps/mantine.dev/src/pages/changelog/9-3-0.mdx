@@ -1,4 +1,4 @@
-import { CodeHighlightDemos, OverflowListDemos, PaginationDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, ComboboxDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PieChartDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -65,6 +65,90 @@ or other supplementary information:
 
 <Demo data={TextareaDemos.bottomSection} />
 
+## Combobox floatingHeight
+
+[Combobox](/core/combobox/), [Select](/core/select/), [MultiSelect](/core/multi-select/),
+[Autocomplete](/core/autocomplete/) and [TagsInput](/core/tags-input/) now support
+`floatingHeight="viewport"`. When set, the dropdown grows to fill the available vertical
+space in the viewport and the `flip` middleware is disabled – useful when working with
+large option lists:
+
+<Demo data={ComboboxDemos.floatingHeight} />
+
+## Menu submenu safe polygon
+
+[Menu](/core/menu/) submenus now use a safe polygon when moving the cursor from
+the parent item to the dropdown. This allows you to move the cursor diagonally
+across other menu items without accidentally closing the submenu.
+
+<Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
+
+## Menu search
+
+[Menu](/core/menu/) now supports `Menu.Search` – a search input that filters items
+without taking focus away from the input. Use `ArrowUp`/`ArrowDown` to move the
+highlight, `Enter` to trigger the highlighted item. Filtering logic is controlled
+by the user: pass `value`/`onChange` and filter `Menu.Item` children based on the query.
+The search value is cleared automatically after the menu close transition completes; set
+`clearSearchOnClose={false}` to keep the query between openings.
+
+<Demo data={MenuDemos.search} />
+
+## Menu checkbox and radio items
+
+[Menu](/core/menu/) now supports `Menu.CheckboxItem`, `Menu.RadioItem`, and `Menu.RadioGroup`
+for building option menus. Checkbox and radio items render an indicator slot at the start
+and do not close the menu on click by default. The new `alignItemsLabels` prop on `Menu`
+controls how indicator slot space is reserved so labels stay aligned when mixing plain
+and indicator items.
+
+<Demo data={MenuDemos.checkboxItem} />
+
+<br />
+
+<Demo data={MenuDemos.radioItem} />
+
+## Menu context menu
+
+[Menu](/core/menu/) now supports `Menu.ContextMenu` – a target replacement that opens the
+dropdown at the cursor position when the wrapped element is right-clicked. The browser's
+default context menu is suppressed, and right-clicking again repositions the dropdown to
+the new coordinates.
+
+<Demo data={MenuDemos.contextMenu} />
+
+## Popover context menu
+
+[Popover](/core/popover/) now supports `Popover.ContextMenu` – a target replacement that
+opens the dropdown at the cursor position on right-click. Unlike `Menu.ContextMenu`,
+`Popover.Dropdown` can contain any content.
+
+<Demo data={PopoverDemos.contextMenu} />
+
+## Menu type-ahead navigation
+
+When focus is inside [Menu](/core/menu/) dropdown (and `Menu.Search` is not used), pressing a
+printable character key now moves focus to the next item whose label starts with the typed
+character. Pressing the same character cycles through matches, and multiple characters typed
+within 500ms match items by full prefix.
+
+<Demo data={MenuDemos.usage} />
+
+## Highlight accent and case insensitive matching
+
+[Highlight](/core/highlight/) component now supports `caseInsensitive` and `accentInsensitive`
+props. Both are enabled by default – matching is case-insensitive and accent-insensitive,
+so `cafe` matches `café`, `CAFÉ`, etc. Set either prop to `false` to opt out:
+
+<Demo data={HighlightDemos.accentInsensitive} />
+
+## PieChart and DonutChart labelsType="name"
+
+[PieChart](/charts/pie-chart/) and [DonutChart](/charts/donut-chart/) components now support
+`labelsType="name"` to display segment names as labels instead of values or percentages:
+
+<Demo data={PieChartDemos.labelsTypeName} />
+
 ## Tooltip merge arrow position
 
 [Tooltip](/core/tooltip/), [Popover](/core/popover/) and other components based on [Popover](/core/popover/)
@@ -72,3 +156,30 @@ now support `arrowPosition="merge"`. When set, the arrow forms a right triangle 
 with the corresponding corner of the dropdown, and the border radius of that corner is removed.
 
 <Demo data={TooltipDemos.arrow} />
+
+## Popover preventPositionChangeWhenVisible default
+
+[Popover](/core/popover/) and all components built on top of it ([Combobox](/core/combobox/),
+[Select](/core/select/), [MultiSelect](/core/multi-select/), [Autocomplete](/core/autocomplete/),
+[TagsInput](/core/tags-input/), [Menu](/core/menu/), [HoverCard](/core/hover-card/), [Tooltip](/core/tooltip/),
+[ColorInput](/core/color-input/), date pickers and others) now treat `preventPositionChangeWhenVisible`
+as `true` by default.
+
+With this behavior, the dropdown picks its side once on open – respecting the `position` prop
+when there is enough room – and then stays on that side until the dropdown is closed. Scrolling,
+resizing, or changes to the dropdown content (for example narrowing a searchable `Select`) no
+longer cause the dropdown to flip between top and bottom while it is open. The next open recalculates
+the side from scratch.
+
+The flip is also more predictable: when neither side fits, the dropdown falls back to the
+preferred `position` prop instead of the side with marginally more space.
+
+To restore the previous behavior – where the dropdown could re-flip while open whenever
+available space changed – pass `preventPositionChangeWhenVisible={false}`:
+
+```tsx
+<Select
+  comboboxProps={{ preventPositionChangeWhenVisible: false }}
+  data={['React', 'Angular', 'Svelte']}
+/>
+```

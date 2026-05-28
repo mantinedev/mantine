@@ -480,3 +480,12 @@ and `role="tree"` attributes for keyboard navigation to work.
 ## Example: files tree
 
 <Demo data={TreeDemos.files} />
+
+## Example: docs navigation editor
+
+The example below combines drag-and-drop, search with `Highlight`, single-selection,
+hover-revealed actions menu, a folder page count badge and `withLines` into a single
+documentation-navigation editor. The `renderNode` callback receives every payload field
+the component exposes, so most application-level UX can be assembled from these primitives.
+
+<Demo data={TreeDemos.docsEditor} />

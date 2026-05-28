@@ -5,6 +5,8 @@
 
 .leaf {
   padding-block: 3px;
+  padding-inline-start: calc(var(--label-offset) + 4px);
+  padding-inline-end: 4px;
 
   &[data-selected] {
     font-weight: 700;

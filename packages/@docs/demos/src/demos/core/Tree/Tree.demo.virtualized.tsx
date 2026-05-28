@@ -82,6 +82,7 @@ function Demo() {
     <div ref={scrollParentRef} style={{ height: 400, overflow: 'auto' }}>
       <div
         data-tree-root
+        data-with-lines
         role="tree"
         style={{
           height: virtualizer.getTotalSize(),
@@ -169,6 +170,7 @@ function Demo() {
     <div ref={scrollParentRef} style={{ height: 400, overflow: 'auto' }}>
       <div
         data-tree-root
+        data-with-lines
         role="tree"
         style={{ height: virtualizer.getTotalSize(), position: 'relative' }}
       >

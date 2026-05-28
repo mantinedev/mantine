@@ -36,6 +36,15 @@ describe('@mantine/core/Pagination', () => {
     expect(container.querySelector('[data-layout="responsive"]')).toBeTruthy();
   });
 
+  it('preserves data-layout when a custom mod is provided', () => {
+    const { container } = render(
+      <Pagination {...defaultProps} layout="responsive" mod={{ 'data-custom': true }} />
+    );
+    const root = container.querySelector('[data-layout="responsive"]');
+    expect(root).toBeTruthy();
+    expect(root).toHaveAttribute('data-custom');
+  });
+
   it('renders label with correct default text in responsive mode', () => {
     render(<Pagination {...defaultProps} layout="responsive" />);
     expect(screen.getByText('Page 1 of 10')).toBeTruthy();
