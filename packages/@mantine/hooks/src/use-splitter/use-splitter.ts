@@ -550,6 +550,9 @@ export function useSplitter<T extends HTMLElement = any>(
 
         const flushResize = (pointerEvent: PointerEvent) => {
           const s = internalStateRef.current;
+          if (!s.containerSize) {
+            return;
+          }
           const isHorizontal = (optionsRef.current.orientation ?? 'horizontal') === 'horizontal';
           const isRtl = isHorizontal && optionsRef.current.dir === 'rtl';
           const pointerPos = isHorizontal ? pointerEvent.clientX : pointerEvent.clientY;
@@ -665,27 +668,31 @@ export function useSplitter<T extends HTMLElement = any>(
 
           switch (event.key) {
             case 'ArrowLeft': {
-              if (isHorizontal) {
-                delta = isRtl ? currentStep : -currentStep;
+              if (!isHorizontal) {
+                return;
               }
+              delta = isRtl ? currentStep : -currentStep;
               break;
             }
             case 'ArrowRight': {
-              if (isHorizontal) {
-                delta = isRtl ? -currentStep : currentStep;
+              if (!isHorizontal) {
+                return;
               }
+              delta = isRtl ? -currentStep : currentStep;
               break;
             }
             case 'ArrowUp': {
-              if (!isHorizontal) {
-                delta = -currentStep;
+              if (isHorizontal) {
+                return;
               }
+              delta = -currentStep;
               break;
             }
             case 'ArrowDown': {
-              if (!isHorizontal) {
-                delta = currentStep;
+              if (isHorizontal) {
+                return;
               }
+              delta = currentStep;
               break;
             }
             case 'Home': {

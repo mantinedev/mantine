@@ -27,7 +27,7 @@ export function MenuContextMenu(props: MenuContextMenuProps) {
 
   const handlers = createContextMenuHandlers({
     childProps: child.props as any,
-    disabled,
+    disabled: disabled || popoverCtx.disabled,
     opened: ctx.opened,
     setReference: popoverCtx.reference as unknown as (node: object) => void,
     open: () => ctx.openDropdown(),

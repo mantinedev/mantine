@@ -243,6 +243,21 @@ describe('useSplitter', () => {
     expect(handle.getAttribute('aria-valuenow')).toBe('50');
   });
 
+  it('ignores wrong-axis arrow keys without preventing default (allows page scroll)', () => {
+    render(<TestComponent panels={[{ defaultSize: 50 }, { defaultSize: 50 }]} />);
+
+    const handle = screen.getByTestId('handle-0');
+
+    // Horizontal splitter: Up/Down are the wrong axis -> no-op and default not prevented
+    expect(fireEvent.keyDown(handle, { key: 'ArrowUp' })).toBe(true);
+    expect(fireEvent.keyDown(handle, { key: 'ArrowDown' })).toBe(true);
+    expect(handle.getAttribute('aria-valuenow')).toBe('50');
+
+    // Matching axis still resizes and prevents default
+    expect(fireEvent.keyDown(handle, { key: 'ArrowRight' })).toBe(false);
+    expect(handle.getAttribute('aria-valuenow')).toBe('51');
+  });
+
   it('Enter toggles collapse on collapsible panel', () => {
     render(
       <TestComponent panels={[{ defaultSize: 30, collapsible: true }, { defaultSize: 70 }]} />
@@ -601,6 +616,29 @@ describe('useSplitter', () => {
 
     expect(document.body.style.cursor).toBe('');
     expect(document.body.style.userSelect).toBe('');
+  });
+
+  it('does not change sizes when the container has zero measured size', () => {
+    // jsdom getBoundingClientRect() reports 0 width/height, so containerSize is 0.
+    // Dragging must be a no-op rather than dividing by zero and producing NaN/Infinity sizes.
+    render(<TestComponent panels={[{ defaultSize: 50 }, { defaultSize: 50 }]} />);
+
+    const handle = screen.getByTestId('handle-0');
+
+    fireEvent(
+      handle,
+      new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+    );
+
+    act(() => {
+      fireEvent(
+        document,
+        new MouseEvent('pointerup', { bubbles: true, clientX: 300, clientY: 100 })
+      );
+    });
+
+    expect(screen.getByTestId('panel-0').style.width).toBe('50%');
+    expect(screen.getByTestId('panel-1').style.width).toBe('50%');
   });
 
   describe('redistribute preserves sum', () => {

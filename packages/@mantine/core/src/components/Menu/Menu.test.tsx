@@ -864,6 +864,24 @@ describe('@mantine/core/Menu', () => {
       expectClosed();
     });
 
+    it('does not open and does not prevent default when the parent Menu is disabled', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} disabled>
+          <Menu.ContextMenu>
+            <div data-testid="context-area">Right-click me</div>
+          </Menu.ContextMenu>
+          <Menu.Dropdown>
+            <Menu.Item>Copy</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+      const target = screen.getByTestId('context-area');
+      const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
+      fireEvent(target, event);
+      expect(event.defaultPrevented).toBe(false);
+      expectClosed();
+    });
+
     it('preserves custom onContextMenu handler on the wrapped child', () => {
       const handler = jest.fn();
       render(
