@@ -152,11 +152,17 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     }
   }, [dimensions]);
 
-  const fitsInRows = (itemWidths: number[], containerWidth: number, columnGap: number) => {
+  const fitsInRows = (
+    itemWidths: number[],
+    containerWidth: number,
+    columnGap: number,
+    startIndex = 0
+  ) => {
     let rows = 1;
     let rowWidth = 0;
 
-    for (const width of itemWidths) {
+    for (let i = startIndex; i < itemWidths.length; i += 1) {
+      const width = itemWidths[i];
       const needed = rowWidth > 0 ? width + columnGap : width;
 
       if (rowWidth + needed > containerWidth && rowWidth > 0) {
@@ -179,19 +185,23 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
       return;
     }
 
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
+
     if (isCollapseStart) {
-      const containerWidth = containerRef.current?.getBoundingClientRect().width ?? 0;
-      const columnGap = parseFloat(getComputedStyle(containerRef.current!).columnGap) || 0;
+      const containerWidth = container.getBoundingClientRect().width;
+      const columnGap = parseFloat(getComputedStyle(container).columnGap) || 0;
       const children = rowData.children;
       const widths = children.map((child) => child.getBoundingClientRect().width);
 
       let count = 0;
       for (let i = widths.length - 1; i >= 0; i--) {
-        const candidate = widths.slice(i);
-        if (!fitsInRows(candidate, containerWidth, columnGap)) {
+        if (!fitsInRows(widths, containerWidth, columnGap, i)) {
           break;
         }
-        count = candidate.length;
+        count = widths.length - i;
       }
 
       count = Math.min(count, maxVisibleItems!);
@@ -201,7 +211,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
 
     if (data.length === 1) {
       const itemRef = rowData.itemsSizesMap[rowData.rowPositions[0]].elements.values().next().value;
-      const containerWidth = containerRef.current?.getBoundingClientRect().width ?? 0;
+      const containerWidth = container.getBoundingClientRect().width;
       const itemWidth = itemRef?.getBoundingClientRect().width ?? 0;
 
       if (itemWidth > containerWidth) {
@@ -235,8 +245,12 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     const { rowPositions, itemsSizesMap } = rowData;
 
     if (isCollapseStart) {
-      const containerWidth = containerRef.current?.getBoundingClientRect().width ?? 0;
-      const columnGap = parseFloat(getComputedStyle(containerRef.current!).columnGap) || 0;
+      const container = containerRef.current;
+      if (!container) {
+        return false;
+      }
+      const containerWidth = container.getBoundingClientRect().width;
+      const columnGap = parseFloat(getComputedStyle(container).columnGap) || 0;
       const overflowWidth = _overflowRef.current.getBoundingClientRect().width;
       const children = rowData.children;
       const itemWidths = [
@@ -276,6 +290,8 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
       : finalItems.slice(0, maxVisibleItems);
   }
 
+  const indexOffset = isCollapseStart ? data.length - finalItems.length : 0;
+
   return (
     <Box ref={rootRef} {...getStyles('root')} {...others}>
       {isCollapseStart && clonedOverflowElement}
@@ -289,9 +305,10 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
         if (!isVisible) {
           return null;
         }
-        const itemComponent = renderItem(item, index);
+        const dataIndex = indexOffset + index;
+        const itemComponent = renderItem(item, dataIndex);
 
-        return <Fragment key={index}>{itemComponent}</Fragment>;
+        return <Fragment key={dataIndex}>{itemComponent}</Fragment>;
       })}
 
       {!isCollapseStart && clonedOverflowElement}
