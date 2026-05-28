@@ -552,6 +552,57 @@ describe('useSplitter', () => {
     });
   });
 
+  it('expand does not fire onCollapseChange or set negative sizes when neighbor has no space to give', () => {
+    const onCollapseChange = jest.fn();
+    const { result } = renderHook(() =>
+      useSplitter({
+        panels: [
+          { defaultSize: 30, collapsible: true },
+          { defaultSize: 70, min: 100 },
+        ],
+        onCollapseChange,
+      })
+    );
+
+    act(() => {
+      result.current.collapse(0);
+    });
+
+    expect(result.current.sizes).toEqual([0, 100]);
+    onCollapseChange.mockClear();
+
+    act(() => {
+      result.current.expand(0);
+    });
+
+    expect(result.current.sizes).toEqual([0, 100]);
+    expect(result.current.sizes[0]).toBeGreaterThanOrEqual(0);
+    expect(onCollapseChange).not.toHaveBeenCalled();
+  });
+
+  it('cleans up body styles on unmount during an active drag', () => {
+    const { unmount } = render(
+      <TestComponent panels={[{ defaultSize: 50 }, { defaultSize: 50 }]} />
+    );
+
+    const handle = screen.getByTestId('handle-0');
+
+    fireEvent(
+      handle,
+      new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+    );
+
+    expect(document.body.style.cursor).toBe('col-resize');
+    expect(document.body.style.userSelect).toBe('none');
+
+    act(() => {
+      unmount();
+    });
+
+    expect(document.body.style.cursor).toBe('');
+    expect(document.body.style.userSelect).toBe('');
+  });
+
   describe('redistribute preserves sum', () => {
     it('nearest: sizes sum to 100 after multiple operations', () => {
       render(

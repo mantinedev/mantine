@@ -11,7 +11,7 @@ function Demo() {
       <Splitter splitterRef={splitterRef} h={200}>
         <Splitter.Pane
           defaultSize={30}
-          min={15}
+          min={20}
           collapsible
           bg="blue"
           c="white"
@@ -51,7 +51,7 @@ function Demo() {
   return (
     <>
       <Splitter splitterRef={splitterRef} h={200}>
-        <Splitter.Pane defaultSize={30} min={15} collapsible bg="blue">
+        <Splitter.Pane defaultSize={30} min={20} collapsible bg="blue">
           Collapsible sidebar
         </Splitter.Pane>
         <Splitter.Pane defaultSize={70} min={30} bg="teal">

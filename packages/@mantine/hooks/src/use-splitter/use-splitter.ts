@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-deprecated */
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
 
 export interface UseSplitterPanel {
@@ -452,8 +452,12 @@ export function useSplitter<T extends HTMLElement = any>(
       const newSizes = [...sizes];
 
       const neighbor = panelIndex === 0 ? 1 : panelIndex - 1;
-      const available = newSizes[neighbor] - getMin(panels[neighbor]);
+      const available = Math.max(0, newSizes[neighbor] - getMin(panels[neighbor]));
       const actualRestore = Math.min(restoreSize, available);
+
+      if (actualRestore <= 0) {
+        return;
+      }
 
       newSizes[panelIndex] = actualRestore;
       newSizes[neighbor] -= actualRestore;
@@ -762,6 +766,24 @@ export function useSplitter<T extends HTMLElement = any>(
       updateSizes,
       onCollapseChange,
     ]
+  );
+
+  useEffect(
+    () => () => {
+      documentControllerRef.current?.abort();
+      documentControllerRef.current = null;
+      handleElementControllers.current.forEach((controller) => controller.abort());
+      handleElementControllers.current.clear();
+      cancelAnimationFrame(frameRef.current);
+
+      if (internalStateRef.current.isDragging) {
+        internalStateRef.current.isDragging = false;
+        document.body.style.userSelect = '';
+        document.body.style.webkitUserSelect = '';
+        document.body.style.cursor = '';
+      }
+    },
+    []
   );
 
   return {
