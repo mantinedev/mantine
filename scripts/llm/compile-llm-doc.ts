@@ -8,6 +8,8 @@ import remarkStringify from 'remark-stringify';
 import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 import { allVersions } from '@mantinex/mantine-meta';
+import { DEFAULT_THEME } from '../../packages/@mantine/core/src/core/MantineProvider/default-theme';
+import { defaultCssVariablesResolver } from '../../packages/@mantine/core/src/core/MantineProvider/MantineCssVariables/default-css-variables-resolver';
 import { extractCodeVariable, loadDemoCode } from '../utils/demo-loader';
 
 interface CompilerConfig {
@@ -840,6 +842,14 @@ class MantineLLMCompiler {
                   value: 'VERSIONSLISTPLACEHOLDER::END',
                 },
               ];
+            } else if (node.name === 'CssVariablesList') {
+              node.type = 'paragraph';
+              node.children = [
+                {
+                  type: 'text',
+                  value: 'CSSVARIABLESLISTPLACEHOLDER::END',
+                },
+              ];
             }
             // Remove other unwanted components
             else if (
@@ -857,7 +867,6 @@ class MantineLLMCompiler {
                 'StylePropsTable',
                 'ThemeColors',
                 'CssFilesList',
-                'CssVariablesList',
                 'LogoAssets',
                 'TemplatesList',
                 'FrameworksGuides',
@@ -1060,8 +1069,33 @@ import '${trimmedPkg}/styles.css';`;
     });
 
     result = result.replace('VERSIONSLISTPLACEHOLDER::END', this.getVersionsListContent());
+    result = result.replace('CSSVARIABLESLISTPLACEHOLDER::END', this.getCssVariablesListContent());
 
     return result;
+  }
+
+  private getCssVariablesListContent(): string {
+    const resolved = defaultCssVariablesResolver(DEFAULT_THEME);
+    const lines: string[] = [];
+
+    const renderTable = (title: string, vars: Record<string, string>) => {
+      lines.push(`## ${title}`);
+      lines.push('');
+      lines.push('| Variable | Value |');
+      lines.push('|----------|-------|');
+      for (const key of Object.keys(vars)) {
+        lines.push(
+          `| ${this.escapeTableCell(`\`${key}\``)} | ${this.escapeTableCell(`\`${vars[key]}\``)} |`
+        );
+      }
+      lines.push('');
+    };
+
+    renderTable('CSS variables not depending on color scheme', resolved.variables);
+    renderTable('Light color scheme only variables', resolved.light);
+    renderTable('Dark color scheme only variables', resolved.dark);
+
+    return lines.join('\n').trim();
   }
 
   private replaceAllLiteral(input: string, search: string, replacement: string): string {

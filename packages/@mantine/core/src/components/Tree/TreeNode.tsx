@@ -98,6 +98,7 @@ export function TreeNode({
   const { elementProps: dragElementProps, dragHandleProps } = useTreeNodeDragDrop({
     nodeValue: node.value,
     hasChildren,
+    isExpanded,
     data,
     onDragDrop,
     dragStateRef,
@@ -222,6 +223,7 @@ export function TreeNode({
           node,
           level,
           selected,
+          isRoot: level === 1,
           tree: controller,
           expanded: isExpanded,
           hasChildren,
@@ -242,7 +244,7 @@ export function TreeNode({
             })}
           >
             <div {...getStyles('label')}>
-              <Loader size={16} />
+              <Loader size={16} style={{ marginInlineStart: 4 }} />
             </div>
           </li>
         </Box>

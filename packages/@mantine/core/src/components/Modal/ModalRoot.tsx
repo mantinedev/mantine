@@ -48,7 +48,6 @@ export type ModalRootFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: ModalRootStylesNames;
   vars: ModalRootCssVariables;
-  compound: true;
 }>;
 
 const defaultProps = {

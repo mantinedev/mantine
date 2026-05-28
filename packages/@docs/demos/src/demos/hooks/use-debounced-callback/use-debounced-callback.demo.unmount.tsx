@@ -24,6 +24,7 @@ function InputWithDebounce({ onChange }) {
 
   return (
     <input
+      aria-label="Enter text"
       placeholder="Enter text..."
       value={innerValue}
       onChange={(event) => handleChange(event.target.value)}
@@ -74,6 +75,7 @@ function InputWithDebounce({ onChange }: { onChange: (value: string) => void }) 
 
   return (
     <input
+      aria-label="Enter text"
       placeholder="Enter text..."
       value={innerValue}
       onChange={(event) => handleChange(event.target.value)}

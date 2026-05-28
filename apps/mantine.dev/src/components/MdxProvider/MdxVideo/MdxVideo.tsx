@@ -6,5 +6,16 @@ interface VideoProps {
 }
 
 export function MdxVideo({ src }: VideoProps) {
-  return <video src={src} className={classes.video} loop autoPlay muted playsInline controls />;
+  return (
+    <video
+      src={src}
+      className={classes.video}
+      aria-label="Demonstration video"
+      loop
+      autoPlay
+      muted
+      playsInline
+      controls
+    />
+  );
 }

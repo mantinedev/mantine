@@ -30,7 +30,7 @@ export const withLabels: MantineDemo = {
       prop: 'labelsType',
       initialValue: 'value',
       libraryValue: '__',
-      data: ['value', 'percent'],
+      data: ['value', 'percent', 'name'],
     },
   ],
 };

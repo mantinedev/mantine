@@ -102,13 +102,11 @@
 
 .label {
   cursor: inherit;
+  display: block;
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
   height: 100%;
-  text-box-trim: trim-both;
-  text-box-edge: cap alphabetic;
+  line-height: var(--pill-height);
+  text-overflow: ellipsis;
 }
 
 .remove {

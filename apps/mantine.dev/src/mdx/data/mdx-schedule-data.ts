@@ -146,4 +146,14 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     docs: 'schedule/recurring-events.mdx',
     searchTags: 'calendar, recurring, rrule, repeat, recurrence, repeating events',
   },
+
+  ScheduleEventsData: {
+    title: 'Events data',
+    package: '@mantine/schedule',
+    slug: '/schedule/events-data',
+    description: 'Event data shapes and callback payloads for @mantine/schedule',
+    docs: 'schedule/events-data.mdx',
+    searchTags:
+      'event, ScheduleEventData, ScheduleEventBase, ScheduleSingleEventData, ScheduleRecurringSeriesEventData, ScheduleRecurringOverrideEventData, EventPayload, payload, recurringInstance, onEventDrop, onEventClick, onEventResize, onTimeSlotClick, onSlotDragEnd, callbacks, types',
+  },
 };

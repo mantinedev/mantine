@@ -1,4 +1,4 @@
-import { use, useCallback, useState } from 'react';
+import { use, useCallback, useRef, useState } from 'react';
 import {
   arrow,
   autoUpdate,
@@ -15,7 +15,7 @@ import {
   useRole,
   type Middleware,
 } from '@floating-ui/react';
-import { useDidUpdate, useId } from '@mantine/hooks';
+import { useId, useIsomorphicEffect } from '@mantine/hooks';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { type TooltipMiddlewares } from './Tooltip.types';
 import { TooltipGroupContext } from './TooltipGroup/TooltipGroup';
@@ -134,8 +134,12 @@ export function useTooltip(settings: UseTooltip) {
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
   ]);
 
-  useDidUpdate(() => {
-    settings.onPositionChange?.(placement);
+  const previousPlacementRef = useRef(placement);
+  useIsomorphicEffect(() => {
+    if (previousPlacementRef.current !== placement) {
+      previousPlacementRef.current = placement;
+      settings.onPositionChange?.(placement);
+    }
   }, [placement]);
 
   const isGroupPhase = opened && currentId && currentId !== uid;

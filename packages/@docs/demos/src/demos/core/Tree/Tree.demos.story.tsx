@@ -13,6 +13,11 @@ export const Demo_files = {
   render: renderDemo(demos.files),
 };
 
+export const Demo_docsEditor = {
+  name: '⭐ Demo: docsEditor',
+  render: renderDemo(demos.docsEditor),
+};
+
 export const Demo_renderNode = {
   name: '⭐ Demo: renderNode',
   render: renderDemo(demos.renderNode),

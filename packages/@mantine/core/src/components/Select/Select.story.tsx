@@ -1,8 +1,10 @@
+import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import { createTheme, MantineThemeProvider } from '../../core';
 import { Autocomplete } from '../Autocomplete';
 import { Button } from '../Button';
 import { Input } from '../Input';
+import { Modal } from '../Modal';
 import { MultiSelect } from '../MultiSelect';
 import { TagsInput } from '../TagsInput';
 import { TextInput } from '../TextInput';
@@ -107,6 +109,72 @@ export function FlipDropdownPosition() {
         searchable
       />
       <div style={{ height: 2000 }} />
+    </div>
+  );
+}
+
+export function FlipLockOnSearch() {
+  return (
+    <div style={{ padding: 40 }}>
+      <p style={{ maxWidth: 500 }}>
+        #8194. The Select sits so the full list cannot fit below. Open it (expect: flips to top
+        because 10 items don't fit below). Type "a" to narrow the list to a few items that DO fit
+        below. Expected: dropdown stays at top. Bug: dropdown flips to bottom because content
+        shrunk.
+      </p>
+      <div style={{ height: 1200 }} />
+      <Select
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
+        placeholder="Select something"
+        searchable
+      />
+      <div style={{ height: 1200 }} />
+    </div>
+  );
+}
+
+export function CenteredModalWithSelectAtBottom() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <p style={{ maxWidth: 500 }}>
+        #8255. Open the modal. In mobile emulation mode (viewport ~390x844), the Select sits at the
+        very bottom edge of the centered Modal. Clicking it should not freeze the page. The dropdown
+        should render in a stable position (top or bottom) and not oscillate.
+      </p>
+      <Button onClick={open}>Open modal</Button>
+      <Modal opened={opened} onClose={close} centered title="Form">
+        <div style={{ paddingTop: 200, paddingBottom: 0 }}>
+          <Select
+            data={[
+              'React',
+              'Angular',
+              'Svelte',
+              'Vue',
+              'Ember',
+              'Backbone',
+              'Preact',
+              'Inferno',
+              'Aurelia',
+              'Meteor',
+            ]}
+            placeholder="Select something"
+            searchable
+          />
+        </div>
+      </Modal>
     </div>
   );
 }

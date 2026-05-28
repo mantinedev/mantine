@@ -2,16 +2,24 @@ import { Box, factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { usePaginationContext } from './Pagination.context';
 import { PaginationIcon } from './Pagination.icons';
-import { PaginationControl } from './PaginationControl/PaginationControl';
-import { PaginationDots } from './PaginationDots/PaginationDots';
+import {
+  PaginationControl,
+  type PaginationControlProps,
+} from './PaginationControl/PaginationControl';
+import { PaginationDots, type PaginationDotsProps } from './PaginationDots/PaginationDots';
 import {
   PaginationFirst,
   PaginationLast,
   PaginationNext,
   PaginationPrevious,
+  type PaginationEdgeProps,
 } from './PaginationEdges/PaginationEdges';
-import { PaginationItems } from './PaginationItems/PaginationItems';
-import { PaginationFormatLabel, PaginationLabel } from './PaginationLabel/PaginationLabel';
+import { PaginationItems, type PaginationItemsProps } from './PaginationItems/PaginationItems';
+import {
+  PaginationFormatLabel,
+  PaginationLabel,
+  type PaginationLabelProps,
+} from './PaginationLabel/PaginationLabel';
 import {
   PaginationRoot,
   PaginationRootCssVariables,
@@ -160,3 +168,34 @@ Pagination.Next = PaginationNext;
 Pagination.Previous = PaginationPrevious;
 Pagination.Items = PaginationItems;
 Pagination.Label = PaginationLabel;
+
+export namespace Pagination {
+  export type Props = PaginationProps;
+  export type StylesNames = PaginationStylesNames;
+  export type CssVariables = PaginationCssVariables;
+  export type Factory = PaginationFactory;
+
+  export namespace Root {
+    export type Props = PaginationRootProps;
+  }
+
+  export namespace Control {
+    export type Props = PaginationControlProps;
+  }
+
+  export namespace Dots {
+    export type Props = PaginationDotsProps;
+  }
+
+  export namespace Edge {
+    export type Props = PaginationEdgeProps;
+  }
+
+  export namespace Items {
+    export type Props = PaginationItemsProps;
+  }
+
+  export namespace Label {
+    export type Props = PaginationLabelProps;
+  }
+}

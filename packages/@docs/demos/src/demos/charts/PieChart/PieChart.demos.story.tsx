@@ -47,3 +47,8 @@ export const Demo_withLabels = {
   name: '⭐ Demo: withLabels',
   render: renderDemo(demos.withLabels),
 };
+
+export const Demo_labelsTypeName = {
+  name: '⭐ Demo: labelsTypeName',
+  render: renderDemo(demos.labelsTypeName),
+};

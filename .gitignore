@@ -75,3 +75,4 @@ claude/
 .superpowers/
 /.claude/scheduled_tasks.lock
 /.claude/settings.local.json
+/.playwright-mcp
