@@ -575,7 +575,6 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
           hiddenWhenEmpty
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
-          floatingHeight={floatingHeight}
           unstyled={unstyled}
           labelId={label ? `${_id}-label` : undefined}
           aria-label={label ? undefined : others['aria-label']}

@@ -3,6 +3,7 @@ import { Primitive } from '../../../core';
 import { CheckIcon } from '../../Checkbox';
 import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';
 import { Combobox } from '../Combobox';
+import { useComboboxContext } from '../Combobox.context';
 import { ComboboxItem, ComboboxLikeRenderOptionInput, ComboboxParsedItem } from '../Combobox.types';
 import { defaultOptionsFilter, FilterOptionsInput } from './default-options-filter';
 import { isEmptyComboboxData } from './is-empty-combobox-data';
@@ -102,6 +103,7 @@ export interface OptionsDropdownProps {
   limit: number | undefined;
   withScrollArea: boolean | undefined;
   maxDropdownHeight: number | string | undefined;
+  /** Overrides `floatingHeight` from the `Combobox` context, used by `Combobox`-based components */
   floatingHeight?: 'viewport';
   hidden?: boolean;
   hiddenWhenEmpty?: boolean;
@@ -140,6 +142,7 @@ export function OptionsDropdown({
   scrollAreaProps,
   'aria-label': ariaLabel,
 }: OptionsDropdownProps) {
+  const ctx = useComboboxContext();
   validateOptions(data);
 
   const shouldFilter = typeof search === 'string';
@@ -171,7 +174,7 @@ export function OptionsDropdown({
         {withScrollArea ? (
           <ScrollArea.Autosize
             mah={
-              floatingHeight === 'viewport'
+              (floatingHeight ?? ctx.floatingHeight) === 'viewport'
                 ? 'var(--combobox-floating-options-max-height)'
                 : (maxDropdownHeight ?? 220)
             }

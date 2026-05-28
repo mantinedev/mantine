@@ -397,7 +397,6 @@ export const Select = genericFactory<SelectFactory>((_props) => {
           hiddenWhenEmpty={!nothingFoundMessage}
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
-          floatingHeight={floatingHeight}
           filterOptions={!!searchable && selectedOption?.label !== search}
           value={_value}
           checkIconPosition={checkIconPosition}

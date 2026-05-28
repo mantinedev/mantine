@@ -263,7 +263,6 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
         hiddenWhenEmpty
         withScrollArea={withScrollArea}
         maxDropdownHeight={maxDropdownHeight}
-        floatingHeight={floatingHeight}
         unstyled={unstyled}
         labelId={others.label ? `${_id}-label` : undefined}
         aria-label={others.label ? undefined : others['aria-label']}

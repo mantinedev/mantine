@@ -549,7 +549,6 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
           hiddenWhenEmpty={!nothingFoundMessage}
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
-          floatingHeight={floatingHeight}
           filterOptions={searchable}
           value={_value}
           checkIconPosition={checkIconPosition}
