@@ -29,7 +29,7 @@ function tests(mode: FormMode) {
     });
   });
 
-  it('allows to insert multiple values with consecutive insetListItem calls', () => {
+  it('allows you to insert multiple values with consecutive insetListItem calls', () => {
     const hook = renderHook(() => useForm({ mode, initialValues: { a: [{ b: 1 }, { b: 2 }] } }));
     act(() => {
       hook.result.current.insertListItem('a', { b: 3 });

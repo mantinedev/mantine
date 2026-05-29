@@ -7,7 +7,7 @@ describe('@mantine/form/values', () => {
     expect(hook.result.current.values).toStrictEqual({ a: 1, b: 2 });
   });
 
-  it('allows to initialize form without initial values', () => {
+  it('allows you to initialize form without initial values', () => {
     const hook = renderHook(() => useForm<{ a: 1; b: 2 }>());
     expect(hook.result.current.values).toStrictEqual({});
   });
@@ -59,7 +59,7 @@ describe('@mantine/form/values-uncontrolled', () => {
     expect(hook.result.current.getValues()).toStrictEqual({ a: 1, b: 2 });
   });
 
-  it('allows to initialize form without initial values', () => {
+  it('allows you to initialize form without initial values', () => {
     const hook = renderHook(() => useForm<{ a: 1; b: 2 }>({ mode: 'uncontrolled' }));
     expect(hook.result.current.getValues()).toStrictEqual({});
   });

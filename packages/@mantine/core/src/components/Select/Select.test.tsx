@@ -63,7 +63,7 @@ describe('@mantine/core/Select', () => {
     expect(screen.getByRole('combobox')).toHaveValue('');
   });
 
-  it('does not allow to deselect option if allowDeselect is false', async () => {
+  it('does not allow you to deselect option if allowDeselect is false', async () => {
     render(<Select {...defaultProps} defaultValue="test-1" allowDeselect={false} />);
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: 'test-1' }));
@@ -331,7 +331,7 @@ describe('@mantine/core/Select', () => {
     expect(container.querySelector('.mantine-InputClearButton-root')).toBeInTheDocument();
   });
 
-  it('allows to change controlled search value when value is controlled and selected', async () => {
+  it('allows you to change controlled search value when value is controlled and selected', async () => {
     const Wrapper: React.FunctionComponent = () => {
       const [value, setValue] = useState<string | null>('Angular');
       const [searchValue, setSearchValue] = useState('');

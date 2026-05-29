@@ -13,7 +13,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.errors).toStrictEqual({});
   });
 
-  it('allows to set errors object with setErrors handler', () => {
+  it('allows you to set errors object with setErrors handler', () => {
     const hook = renderHook(() => useForm({ mode }));
     act(() => hook.result.current.setErrors({ a: true, b: true }));
     expect(hook.result.current.errors).toStrictEqual({ a: true, b: true });

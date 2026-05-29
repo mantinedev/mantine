@@ -44,7 +44,7 @@ describe('@mantine/hooks/use-state-history', () => {
     expect(hook.result.current[2]).toStrictEqual({ history: [1, 2, 3, 4], current: 3 });
   });
 
-  it('does not allow to go back/forward beyond history', () => {
+  it('does not allow you to go back/forward beyond history', () => {
     const hook = renderHook(() => useStateHistory(1));
     act(() => hook.result.current[1].set(2));
     act(() => hook.result.current[1].set(3));

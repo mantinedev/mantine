@@ -20,7 +20,7 @@ function tests(mode: FormMode) {
     });
   });
 
-  it('allows to set submitting state manually', () => {
+  it('allows you to set submitting state manually', () => {
     const hook = renderHook(() => useForm({ mode, initialValues: { a: 1, b: 2 } }));
     expect(hook.result.current.submitting).toBe(false);
 

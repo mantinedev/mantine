@@ -26,7 +26,7 @@ describe('@mantine/core/Breadcrumbs', () => {
     expect(screen.getAllByText('test-separator')).toHaveLength(2);
   });
 
-  it('allows to set child className', () => {
+  it('allows you to set child className', () => {
     render(
       <Breadcrumbs>
         <button type="button" className="test-class">

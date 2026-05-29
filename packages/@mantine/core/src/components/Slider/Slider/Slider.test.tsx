@@ -71,14 +71,14 @@ describe('@mantine/core/Slider', () => {
     expectInputValue('50', container);
   });
 
-  it('does not allow to set value greater than max', async () => {
+  it('does not allow you to set value greater than max', async () => {
     const { container } = render(<Slider defaultValue={115} step={10} max={120} />);
     expectInputValue('115', container);
     await pressArrow('right');
     expectInputValue('120', container);
   });
 
-  it('does not allow to set value smaller than min', async () => {
+  it('does not allow you to set value smaller than min', async () => {
     const { container } = render(<Slider defaultValue={50} step={10} min={45} />);
     expectInputValue('50', container);
     await pressArrow('left');

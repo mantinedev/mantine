@@ -60,7 +60,7 @@ describe('@mantine/dates/Day', () => {
     expect(screen.getByRole('button')).toHaveClass('mantine-Month-day');
   });
 
-  it('allows to customize day rendering with renderDay function', () => {
+  it('allows you to customize day rendering with renderDay function', () => {
     render(<Day {...defaultProps} renderDay={(date) => new Date(date).getFullYear()} />);
     expect(screen.getByRole('button')).toHaveTextContent('2022');
   });

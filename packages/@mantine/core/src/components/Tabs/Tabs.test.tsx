@@ -200,14 +200,14 @@ describe('@mantine/core/Tabs', () => {
     expectActiveTab('tab-1');
   });
 
-  it('allows to deactivate tab when allowTabDeactivation is true', async () => {
+  it('allows you to deactivate tab when allowTabDeactivation is true', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-1" allowTabDeactivation />);
     expectActiveTab('tab-1');
     await clickTab('tab-1');
     expectActiveTab(null);
   });
 
-  it('allows to set root element id', () => {
+  it('allows you to set root element id', () => {
     const view = render(<Tabs {...defaultProps} defaultValue="tab-1" id="test-id" />);
     expect(view.container.querySelector('#test-id')).toBeInTheDocument();
   });

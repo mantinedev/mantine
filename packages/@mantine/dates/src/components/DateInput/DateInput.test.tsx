@@ -210,7 +210,7 @@ describe('@mantine/dates/DateInput', () => {
     expect(spy).toHaveBeenLastCalledWith(null);
   });
 
-  it('allows to clear input value when clearable is set (uncontrolled)', async () => {
+  it('allows you to clear input value when clearable is set (uncontrolled)', async () => {
     const { container } = render(
       <DateInput {...defaultProps} clearable defaultValue="2022-04-11" />
     );
@@ -221,7 +221,7 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, '');
   });
 
-  it('allows to clear input value when clearable is set (controlled)', async () => {
+  it('allows you to clear input value when clearable is set (controlled)', async () => {
     const spy = jest.fn();
     const { container } = render(
       <DateInput {...defaultProps} clearable value="2022-04-11" onChange={spy} />
@@ -234,7 +234,7 @@ describe('@mantine/dates/DateInput', () => {
     expect(spy).toHaveBeenLastCalledWith(null);
   });
 
-  it('does not allow to clear input value when clearable is not set (uncontrolled)', async () => {
+  it('does not allow you to clear input value when clearable is not set (uncontrolled)', async () => {
     const { container } = render(
       <DateInput {...defaultProps} clearable={false} defaultValue="2022-04-11" />
     );
@@ -245,7 +245,7 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, 'April 11, 2022');
   });
 
-  it('does not allow to clear input value when clearable is not set (controlled)', async () => {
+  it('does not allow you to clear input value when clearable is not set (controlled)', async () => {
     const spy = jest.fn();
     const { container } = render(
       <DateInput {...defaultProps} clearable={false} value="2022-04-11" onChange={spy} />
@@ -258,7 +258,7 @@ describe('@mantine/dates/DateInput', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('allows to clear input value by clicking the selected date when clearable and allowDeselect are set (uncontrolled)', async () => {
+  it('allows you to clear input value by clicking the selected date when clearable and allowDeselect are set (uncontrolled)', async () => {
     const { container } = render(
       <DateInput {...defaultProps} clearable allowDeselect defaultValue="2022-04-01" />
     );
@@ -269,7 +269,7 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, '');
   });
 
-  it('allows to clear input value by clicking the selected date when clearable and allowDeselect are set (controlled)', async () => {
+  it('allows you to clear input value by clicking the selected date when clearable and allowDeselect are set (controlled)', async () => {
     const spy = jest.fn();
     const { container } = render(
       <DateInput {...defaultProps} clearable allowDeselect value="2022-04-01" onChange={spy} />
@@ -282,7 +282,7 @@ describe('@mantine/dates/DateInput', () => {
     expect(spy).toHaveBeenLastCalledWith(null);
   });
 
-  it('does not allow to clear input value by clicking the selected date when allowDeselect is not set (uncontrolled)', async () => {
+  it('does not allow you to clear input value by clicking the selected date when allowDeselect is not set (uncontrolled)', async () => {
     const { container } = render(
       <DateInput {...defaultProps} clearable allowDeselect={false} defaultValue="2022-04-01" />
     );
@@ -293,7 +293,7 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, 'April 1, 2022');
   });
 
-  it('does not allow to clear input value by clicking the selected date when allowDeselect is not set (controlled)', async () => {
+  it('does not allow you to clear input value by clicking the selected date when allowDeselect is not set (controlled)', async () => {
     const spy = jest.fn();
     const { container } = render(
       <DateInput

@@ -90,7 +90,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.errors).toStrictEqual({});
   });
 
-  it('allows to validate values based on their path', async () => {
+  it('allows you to validate values based on their path', async () => {
     const hook = renderHook(() =>
       useForm({
         mode,

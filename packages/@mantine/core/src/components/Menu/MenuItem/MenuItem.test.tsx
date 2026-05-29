@@ -22,7 +22,7 @@ describe('@mantine/core/MenuItem', () => {
     providerStylesApi: false,
   });
 
-  it('allows to add onMouseEnter and onMouseLeave events', async () => {
+  it('allows you to add onMouseEnter and onMouseLeave events', async () => {
     const onMouseEnter = jest.fn();
     const onMouseLeave = jest.fn();
     render(<TestContainer onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />);
@@ -35,7 +35,7 @@ describe('@mantine/core/MenuItem', () => {
     expect(onMouseLeave).toHaveBeenCalled();
   });
 
-  it('allows to add onClick event', async () => {
+  it('allows you to add onClick event', async () => {
     const spy = jest.fn();
     render(<TestContainer onClick={spy} />);
     expect(spy).not.toHaveBeenCalled();

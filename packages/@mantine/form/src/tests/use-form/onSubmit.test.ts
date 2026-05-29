@@ -77,7 +77,7 @@ function tests(mode: FormMode) {
     );
   });
 
-  it('allows to call onSubmit without event', async () => {
+  it('allows you to call onSubmit without event', async () => {
     const hook = renderHook(() => useForm({ mode, initialValues: { a: 1 } }));
     const handleSubmit = jest.fn();
     await act(async () => hook.result.current.onSubmit(handleSubmit)());

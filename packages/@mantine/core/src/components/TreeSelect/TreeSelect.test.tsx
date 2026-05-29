@@ -155,7 +155,7 @@ describe('@mantine/core/TreeSelect', () => {
       expect(screen.getByRole('textbox')).toHaveValue('');
     });
 
-    it('does not allow to deselect option if allowDeselect is false', async () => {
+    it('does not allow you to deselect option if allowDeselect is false', async () => {
       render(<TreeSelect {...defaultProps} defaultValue="milk" allowDeselect={false} />);
       await userEvent.click(screen.getByRole('textbox'));
       await userEvent.click(screen.getByRole('option', { name: 'Milk' }));

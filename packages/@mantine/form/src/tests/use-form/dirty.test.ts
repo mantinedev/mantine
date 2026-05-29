@@ -24,7 +24,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.isDirty()).toBe(false);
   });
 
-  it('allows to set dirty state with setDirty handler', () => {
+  it('allows you to set dirty state with setDirty handler', () => {
     const hook = renderHook(() => useForm());
     expect(hook.result.current.isDirty()).toBe(false);
     expect(hook.result.current.isDirty('a')).toBe(false);

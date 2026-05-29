@@ -20,7 +20,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.isTouched()).toBe(true);
   });
 
-  it('allows to set touched state with setTouched handler', () => {
+  it('allows you to set touched state with setTouched handler', () => {
     const hook = renderHook(() => useForm({ mode }));
     expect(hook.result.current.isTouched()).toBe(false);
     expect(hook.result.current.isTouched('a')).toBe(false);

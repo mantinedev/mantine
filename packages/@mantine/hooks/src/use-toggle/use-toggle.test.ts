@@ -36,7 +36,7 @@ describe('@mantine/hooks/use-toggle', () => {
     expect(hook.result.current[0]).toBe('dark');
   });
 
-  it('allows to set value', () => {
+  it('allows you to set value', () => {
     const hook = renderHook(() => useToggle(['dark', 'light'] as const));
 
     act(() => hook.result.current[1]('dark'));
@@ -46,13 +46,13 @@ describe('@mantine/hooks/use-toggle', () => {
     expect(hook.result.current[0]).toBe('dark');
   });
 
-  it('allows to set value with callback function', () => {
+  it('allows you to set value with callback function', () => {
     const hook = renderHook(() => useToggle(['dark', 'light'] as const));
     act(() => hook.result.current[1]((v) => v));
     expect(hook.result.current[0]).toBe('dark');
   });
 
-  it('allows to use hook without options', () => {
+  it('allows you to use hook without options', () => {
     const hook = renderHook(() => useToggle());
     expect(hook.result.current[0]).toBe(false);
     act(() => hook.result.current[1]());

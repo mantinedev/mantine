@@ -237,7 +237,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       expectValue(container, 'test-placeholder');
     });
 
-    it('does not allow to deselect value if allowDeselect is not set (type="default")', async () => {
+    it('does not allow you to deselect value if allowDeselect is not set (type="default")', async () => {
       const { container } = render(
         <options.component {...options.props} type="default" placeholder="test-placeholder" />
       );
@@ -252,7 +252,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       expect(getInputValue(container)).not.toBe('test-placeholder');
     });
 
-    it('allows to pick single date as range if allowSingleDateInRange prop is set (type="range")', async () => {
+    it('allows you to pick single date as range if allowSingleDateInRange prop is set (type="range")', async () => {
       const { container } = render(
         <options.component
           {...options.props}
@@ -271,7 +271,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       expect(getInputValue(container)).not.toBe('test-placeholder');
     });
 
-    it('does not allow to pick single date as range if allowSingleDateInRange prop is not set (type="range")', async () => {
+    it('does not allow you to pick single date as range if allowSingleDateInRange prop is not set (type="range")', async () => {
       const { container } = render(
         <options.component {...options.props} type="range" placeholder="test-placeholder" />
       );
