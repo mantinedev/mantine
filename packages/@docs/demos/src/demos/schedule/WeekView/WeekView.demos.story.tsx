@@ -48,6 +48,11 @@ export const Demo_currentTimeIndicator = {
   render: renderDemo(demos.currentTimeIndicator),
 };
 
+export const Demo_timezone = {
+  name: '⭐ Demo: timezone',
+  render: renderDemo(demos.timezone),
+};
+
 export const Demo_withoutAllDaySlots = {
   name: '⭐ Demo: withoutAllDaySlots',
   render: renderDemo(demos.withoutAllDaySlots),

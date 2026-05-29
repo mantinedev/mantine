@@ -1,15 +1,17 @@
 import dayjs from 'dayjs';
+import { AnyDateValue } from '../../types';
 
 interface GetCurrentTimePositionInput {
   startTime?: string;
   endTime?: string;
+  now?: AnyDateValue;
 }
 
 export function getCurrentTimePosition(input?: GetCurrentTimePositionInput) {
-  const now = dayjs();
+  const now = dayjs(input?.now);
 
   if (!input?.startTime || !input?.endTime) {
-    const startOf = dayjs().startOf('date');
+    const startOf = now.startOf('date');
     const diffInMinutes = now.diff(startOf, 'minute');
     return (diffInMinutes / 1440) * 100;
   }
