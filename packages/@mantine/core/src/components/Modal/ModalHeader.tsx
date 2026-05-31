@@ -1,12 +1,22 @@
-import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
-import { ModalBaseHeader, ModalBaseHeaderProps } from '../ModalBase';
+import cx from 'clsx';
+import {
+  Box,
+  BoxProps,
+  CompoundStylesApiProps,
+  ElementProps,
+  factory,
+  Factory,
+  useProps,
+} from '../../core';
+import { useModalBaseContext } from '../ModalBase';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useModalContext } from './Modal.context';
 import classes from './Modal.module.css';
 
 export type ModalHeaderStylesNames = 'header';
 
 export interface ModalHeaderProps
-  extends ModalBaseHeaderProps, CompoundStylesApiProps<ModalHeaderFactory> {}
+  extends BoxProps, CompoundStylesApiProps<ModalHeaderFactory>, ElementProps<'header'> {}
 
 export type ModalHeaderFactory = Factory<{
   props: ModalHeaderProps;
@@ -20,10 +30,21 @@ export const ModalHeader = factory<ModalHeaderFactory>((_props) => {
   const { classNames, className, style, styles, vars, ...others } = props;
 
   const ctx = useModalContext();
+  const baseCtx = useModalBaseContext();
+
+  const { className: stylesClassName, ...headerStyles } = ctx.getStyles('header', {
+    classNames,
+    style,
+    styles,
+    className,
+  });
 
   return (
-    <ModalBaseHeader
-      {...ctx.getStyles('header', { classNames, style, styles, className })}
+    <Box
+      component="header"
+      data-sticky={ctx.stickyHeader || undefined}
+      className={cx({ [baseClasses.header]: !baseCtx.unstyled }, stylesClassName)}
+      {...headerStyles}
       {...others}
     />
   );

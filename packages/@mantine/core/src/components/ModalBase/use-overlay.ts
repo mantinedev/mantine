@@ -3,17 +3,36 @@ import { useFocusReturn, useId, useWindowEvent } from '@mantine/hooks';
 import { TransitionOverride } from '../Transition';
 import { useLockScroll } from './use-lock-scroll';
 
-interface UseModalInput {
+export interface UseOverlayInput {
   opened: boolean;
   onClose: () => void;
-  id: string | undefined;
-  transitionProps: TransitionOverride | undefined;
-  trapFocus: boolean | undefined;
-  closeOnEscape: boolean | undefined;
-  returnFocus: boolean | undefined;
+  id?: string;
+  transitionProps?: TransitionOverride;
+  trapFocus?: boolean;
+  closeOnEscape?: boolean;
+  returnFocus?: boolean;
 }
 
-export function useModal({
+export interface UseOverlayReturn {
+  _id: string;
+  titleMounted: boolean;
+  bodyMounted: boolean;
+  shouldLockScroll: boolean;
+  setTitleMounted: (value: boolean) => void;
+  setBodyMounted: (value: boolean) => void;
+  getTitleId: () => string;
+  getBodyId: () => string;
+  focusTrapActive: boolean;
+  getContentProps: () => {
+    role: 'dialog';
+    tabIndex: -1;
+    'aria-modal': true;
+    'aria-describedby'?: string;
+    'aria-labelledby'?: string;
+  };
+}
+
+export function useOverlay({
   id,
   transitionProps,
   opened,
@@ -21,7 +40,7 @@ export function useModal({
   closeOnEscape,
   onClose,
   returnFocus,
-}: UseModalInput) {
+}: UseOverlayInput): UseOverlayReturn {
   const _id = useId(id);
   const [titleMounted, setTitleMounted] = useState(false);
   const [bodyMounted, setBodyMounted] = useState(false);
@@ -45,6 +64,17 @@ export function useModal({
 
   useFocusReturn({ opened, shouldReturnFocus: trapFocus && returnFocus });
 
+  const getTitleId = () => `${_id}-title`;
+  const getBodyId = () => `${_id}-body`;
+
+  const getContentProps: UseOverlayReturn['getContentProps'] = () => ({
+    role: 'dialog',
+    tabIndex: -1,
+    'aria-modal': true,
+    'aria-describedby': bodyMounted ? getBodyId() : undefined,
+    'aria-labelledby': titleMounted ? getTitleId() : undefined,
+  });
+
   return {
     _id,
     titleMounted,
@@ -52,5 +82,9 @@ export function useModal({
     shouldLockScroll,
     setTitleMounted,
     setBodyMounted,
+    getTitleId,
+    getBodyId,
+    focusTrapActive: !!(opened && trapFocus),
+    getContentProps,
   };
 }

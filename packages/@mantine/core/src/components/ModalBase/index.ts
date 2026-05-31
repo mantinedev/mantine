@@ -1,23 +1,22 @@
-export { ModalBase } from './ModalBase';
-export { ModalBaseBody } from './ModalBaseBody';
-export { ModalBaseCloseButton } from './ModalBaseCloseButton';
-export { ModalBaseContent } from './ModalBaseContent';
-export { ModalBaseHeader } from './ModalBaseHeader';
-export { ModalBaseOverlay } from './ModalBaseOverlay';
-export { ModalBaseTitle } from './ModalBaseTitle';
-export { NativeScrollArea } from './NativeScrollArea';
+export { ModalBaseProvider, useModalBaseContext } from './ModalBase.context';
+export { useOverlay } from './use-overlay';
+export { useLockScroll } from './use-lock-scroll';
+export { useOverlayTransition } from './use-modal-transition';
+export { useOverlayBodyId } from './use-modal-body-id';
+export { useOverlayTitleId } from './use-modal-title-id';
 
-export type { ModalBaseProps } from './ModalBase';
-export type { ModalBaseBodyProps } from './ModalBaseBody';
-export type { ModalBaseCloseButtonProps } from './ModalBaseCloseButton';
-export type { ModalBaseContentProps } from './ModalBaseContent';
-export type { ModalBaseHeaderProps } from './ModalBaseHeader';
-export type { ModalBaseOverlayProps } from './ModalBaseOverlay';
-export type { ModalBaseTitleProps } from './ModalBaseTitle';
+export type { UseOverlayInput, UseOverlayReturn } from './use-overlay';
+export type {
+  ModalBaseProps,
+  ModalBaseContentProps,
+  ModalBaseOverlayProps,
+  RemoveScrollProps,
+} from './ModalBase.types';
 
 export type ModalBaseStylesNames =
   | 'body'
   | 'header'
+  | 'footer'
   | 'title'
   | 'overlay'
   | 'root'

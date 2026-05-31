@@ -77,3 +77,23 @@ export const Demo_transitionEnd = {
   name: '⭐ Demo: transitionEnd',
   render: renderDemo(demos.transitionEnd),
 };
+
+export const Demo_footer = {
+  name: '⭐ Demo: footer',
+  render: renderDemo(demos.footer),
+};
+
+export const Demo_stickySections = {
+  name: '⭐ Demo: stickySections',
+  render: renderDemo(demos.stickySections),
+};
+
+export const Demo_swipe = {
+  name: '⭐ Demo: swipe',
+  render: renderDemo(demos.swipe),
+};
+
+export const Demo_snapPoints = {
+  name: '⭐ Demo: snapPoints',
+  render: renderDemo(demos.snapPoints),
+};

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useModalBaseContext } from './ModalBase.context';
 
-export function useModalTitle() {
+export function useOverlayTitleId() {
   const ctx = useModalBaseContext();
 
   useEffect(() => {

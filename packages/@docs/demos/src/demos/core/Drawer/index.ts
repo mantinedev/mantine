@@ -13,3 +13,7 @@ export { closeIcon } from './Drawer.demo.closeIcon';
 export { initialFocusTrap } from './Drawer.demo.initialFocusTrap';
 export { stack } from './Drawer.demo.stack';
 export { transitionEnd } from './Drawer.demo.transitionEnd';
+export { footer } from './Drawer.demo.footer';
+export { stickySections } from './Drawer.demo.stickySections';
+export { swipe } from './Drawer.demo.swipe';
+export { snapPoints } from './Drawer.demo.snapPoints';

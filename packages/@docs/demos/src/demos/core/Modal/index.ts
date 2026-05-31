@@ -15,4 +15,7 @@ export { fullScreenMobile } from './Modal.demo.fullScreenMobile';
 export { closeIcon } from './Modal.demo.closeIcon';
 export { initialFocusTrap } from './Modal.demo.initialFocusTrap';
 export { stack } from './Modal.demo.stack';
+export { stackSizes } from './Modal.demo.stackSizes';
 export { transitionEnd } from './Modal.demo.transitionEnd';
+export { footer } from './Modal.demo.footer';
+export { stickySections } from './Modal.demo.stickySections';

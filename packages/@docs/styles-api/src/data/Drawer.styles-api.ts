@@ -7,10 +7,13 @@ export const DrawerStylesApi: StylesApiData<DrawerFactory> = {
     inner: 'Element used to center modal, has fixed position, takes entire screen',
     content: '`Drawer.Content` root element',
     header: 'Contains title and close button',
+    footer: '`Drawer.Footer` root element',
     overlay: 'Overlay displayed under the `Drawer.Content`',
     title: 'Drawer title (h2 tag), displayed in the header',
     body: 'Drawer body, displayed after header',
     close: 'Close button',
+    panel: 'Wraps the content and handle, carries the open/close slide animation',
+    handle: 'Drag handle displayed on the overlay when `withHandle` is set',
   },
 
   vars: {

@@ -3,6 +3,7 @@ import type { ModalContextValue } from './Modal.context';
 import type { ModalBodyProps } from './ModalBody';
 import type { ModalCloseButtonProps } from './ModalCloseButton';
 import type { ModalContentProps } from './ModalContent';
+import type { ModalFooterProps } from './ModalFooter';
 import type { ModalHeaderProps } from './ModalHeader';
 import type { ModalOverlayProps } from './ModalOverlay';
 import type { ModalRootProps } from './ModalRoot';
@@ -14,6 +15,7 @@ export { ModalRoot } from './ModalRoot';
 export { ModalBody } from './ModalBody';
 export { ModalCloseButton } from './ModalCloseButton';
 export { ModalContent } from './ModalContent';
+export { ModalFooter } from './ModalFooter';
 export { ModalHeader } from './ModalHeader';
 export { ModalOverlay } from './ModalOverlay';
 export { ModalTitle } from './ModalTitle';
@@ -30,6 +32,7 @@ export type {
   ModalBodyProps,
   ModalCloseButtonProps,
   ModalContentProps,
+  ModalFooterProps,
   ModalHeaderProps,
   ModalOverlayProps,
   ModalTitleProps,

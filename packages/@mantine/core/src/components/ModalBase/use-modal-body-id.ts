@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useModalBaseContext } from './ModalBase.context';
 
-export function useModalBodyId() {
+export function useOverlayBodyId() {
   const ctx = useModalBaseContext();
 
   useEffect(() => {

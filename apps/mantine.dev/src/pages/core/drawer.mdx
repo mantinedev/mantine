@@ -53,6 +53,22 @@ To remove the header, set `withCloseButton={false}`
 
 <Demo data={DrawerDemos.header} />
 
+## Footer
+
+Use `Drawer.Footer` component to render a footer with actions. By default, the footer stays pinned
+to the bottom of the drawer while the body scrolls between the header and the footer. When the body
+content is short, the footer sits at the very bottom with free space above it:
+
+<Demo data={DrawerDemos.footer} />
+
+## Sticky header and footer
+
+By default, both the header and the footer stay pinned in place while the body scrolls. This is
+controlled by the `stickyHeader` and `stickyFooter` props (both default to `true`). Set either to
+`false` to make that section scroll away with the body content:
+
+<Demo data={DrawerDemos.stickySections} />
+
 ## Drawer with scroll
 
 <Demo data={DrawerDemos.overflow} />
@@ -60,6 +76,95 @@ To remove the header, set `withCloseButton={false}`
 ## Usage with ScrollArea
 
 <Demo data={DrawerDemos.scrollarea} />
+
+## Swipe to dismiss
+
+`Drawer` can be dismissed with a swipe gesture. Swipe to dismiss is enabled by default for all
+four positions and is RTL-aware. Swipe the drawer towards its edge of the viewport to close it:
+
+<Demo data={DrawerDemos.swipe} />
+
+To disable swipe to dismiss, set `withSwipe={false}`:
+
+```tsx
+import { Drawer } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Drawer withSwipe={false} opened onClose={() => {}}>
+      {/* Drawer content */}
+    </Drawer>
+  );
+}
+```
+
+Use the `swipeThreshold` prop to control how far the drawer must be dragged before it is
+dismissed. The value is a fraction of the drawer size along the drag axis (`0.25` by default,
+meaning the drawer is dismissed once dragged past 25% of its size):
+
+```tsx
+import { Drawer } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Drawer swipeThreshold={0.5} opened onClose={() => {}}>
+      {/* Drawer content */}
+    </Drawer>
+  );
+}
+```
+
+## Drag handle
+
+Set the `withHandle` prop to display a grab-bar drag affordance. The handle is rendered on the
+overlay at the drawer's leading edge (the edge that faces the viewport interior) and stays attached
+to the panel while it slides and during swipe/snap drags. It provides a visual hint that the drawer
+can be dragged:
+
+```tsx
+import { Drawer } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Drawer position="bottom" opened onClose={() => {}} withHandle>
+      {/* Drawer content */}
+    </Drawer>
+  );
+}
+```
+
+## Snap points
+
+Set the `snapPoints` prop to enable snap points. Snap points are an array of numbers (fractions of
+the viewport, for example `0.4` for 40%) or strings (for example `300px`). When snap points are
+enabled, the drawer can be dragged between them:
+
+<Demo data={DrawerDemos.snapPoints} />
+
+The active snap point can be controlled with `activeSnapPoint`/`onSnapPointChange` props
+or used in uncontrolled mode with `defaultActiveSnapPoint`:
+
+```tsx
+import { useState } from 'react';
+import { Drawer } from '@mantine/core';
+
+function Demo() {
+  const [activeSnapPoint, setActiveSnapPoint] = useState<number | string>(0.4);
+
+  return (
+    <Drawer
+      position="bottom"
+      snapPoints={[0.4, 0.75, 1]}
+      activeSnapPoint={activeSnapPoint}
+      onSnapPointChange={setActiveSnapPoint}
+      opened
+      onClose={() => {}}
+    >
+      {/* Drawer content */}
+    </Drawer>
+  );
+}
+```
 
 ## Change transition
 
@@ -141,6 +246,7 @@ You can use the following compound components to have full control over the `Dra
 - `Drawer.Title` – `h2` element, `aria-labelledby` of `Drawer.Content` is pointing to this element, usually is rendered inside `Drawer.Header`
 - `Drawer.CloseButton` – close button, usually rendered inside `Drawer.Header`
 - `Drawer.Body` – a place for main content, `aria-describedby` of `Drawer.Content` is pointing to this element
+- `Drawer.Footer` – footer element, usually contains action buttons, pinned to the bottom by default (controlled with `stickyFooter`)
 
 <Demo data={DrawerDemos.composition} />
 
@@ -154,10 +260,29 @@ Differences from using multiple `Drawer` components:
 
 - `Drawer.Stack` manages z-index values – drawers that are opened later will always have higher z-index value disregarding their order in the DOM
 - `Drawer.Stack` disables focus trap and `Escape` key handling for all drawers except the one that is currently opened
-- Drawers that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`
+- All opened drawers stay mounted and visible with a stacked depth effect – drawers below the top one are scaled down and offset to create a sense of depth
 - Only one overlay is rendered at a time
 
 <Demo data={DrawerDemos.stack} />
+
+Use the `maxDepth` prop (default `5`) to control how many stacked drawers are visible behind the
+top one at the same time:
+
+```tsx
+import { Drawer, useDrawersStack } from '@mantine/core';
+
+function Demo() {
+  const stack = useDrawersStack(['first', 'second', 'third']);
+
+  return (
+    <Drawer.Stack maxDepth={3}>
+      <Drawer {...stack.register('first')}>First</Drawer>
+      <Drawer {...stack.register('second')}>Second</Drawer>
+      <Drawer {...stack.register('third')}>Third</Drawer>
+    </Drawer.Stack>
+  );
+}
+```
 
 Note that `Drawer.Stack` can only be used with `Drawer` component. Components built with `Drawer.Root`
 and other compound components are not compatible with `Drawer.Stack`.

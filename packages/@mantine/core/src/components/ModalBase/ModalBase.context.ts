@@ -1,14 +1,9 @@
 import { createSafeContext } from '../../core';
 import { TransitionOverride } from '../Transition';
+import { UseOverlayReturn } from './use-overlay';
 
-interface ModalBaseContextValue {
+interface ModalBaseContextValue extends UseOverlayReturn {
   unstyled: boolean | undefined;
-  titleMounted: boolean;
-  bodyMounted: boolean;
-  setTitleMounted: (value: boolean) => void;
-  setBodyMounted: (value: boolean) => void;
-  getTitleId: () => string;
-  getBodyId: () => string;
   transitionProps: Partial<TransitionOverride> | undefined;
   onExitTransitionEnd: (() => void) | undefined;
   onEnterTransitionEnd: (() => void) | undefined;
@@ -23,5 +18,5 @@ interface ModalBaseContextValue {
 }
 
 export const [ModalBaseProvider, useModalBaseContext] = createSafeContext<ModalBaseContextValue>(
-  'ModalBase component was not found in tree'
+  'Modal/Drawer component was not found in tree'
 );

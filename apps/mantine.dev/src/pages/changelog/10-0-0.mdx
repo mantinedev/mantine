@@ -1,4 +1,4 @@
-import { DataGridDemos } from '@docs/demos';
+import { DataGridDemos, DrawerDemos, ModalDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -37,3 +37,50 @@ Key features:
 `with*` boolean props:
 
 <Demo data={DataGridDemos.usage} />
+
+## @mantine/core
+
+### Modal.Footer and Drawer.Footer
+
+[Modal](/core/modal) and [Drawer](/core/drawer) now support `Modal.Footer`/`Drawer.Footer`
+compound components to render a footer with actions. By default the footer stays pinned to the
+bottom while the body scrolls:
+
+<Demo data={DrawerDemos.footer} />
+
+### stickyHeader and stickyFooter props
+
+[Modal](/core/modal) and [Drawer](/core/drawer) now support the `stickyHeader` and `stickyFooter`
+props (both default to `true`). When enabled, the header stays pinned to the top and the footer
+stays pinned to the bottom while the body scrolls between them. Set either to `false` to make that
+section scroll away with the body content.
+
+### Drawer swipe to dismiss
+
+[Drawer](/core/drawer) can now be dismissed with a swipe gesture. Swipe to dismiss is enabled by
+default for all four positions and is RTL-aware. Opt out with `withSwipe={false}` and adjust the
+distance required to dismiss with `swipeThreshold`:
+
+<Demo data={DrawerDemos.swipe} />
+
+### Drawer drag handle
+
+[Drawer](/core/drawer) now supports the `withHandle` prop – an optional grab-bar drag affordance
+rendered on the overlay at the drawer's leading edge that hints the drawer can be dragged.
+
+### Drawer snap points
+
+[Drawer](/core/drawer) now supports opt-in snap points with the `snapPoints` prop. The active snap
+point can be controlled with `activeSnapPoint`/`onSnapPointChange` or used in uncontrolled mode
+with `defaultActiveSnapPoint`:
+
+<Demo data={DrawerDemos.snapPoints} />
+
+### Reworked Modal.Stack and Drawer.Stack
+
+[Modal.Stack](/core/modal/#modalstack) and [Drawer.Stack](/core/drawer/#drawerstack) have been
+reworked – all opened stacked items now stay mounted and visible with a stacked depth effect
+instead of hiding items below the top one. The new `maxDepth` prop (default `5`) controls how many
+stacked items are visible behind the top one at the same time.
+
+<Demo data={ModalDemos.stack} />

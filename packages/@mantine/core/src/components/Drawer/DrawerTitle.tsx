@@ -1,12 +1,22 @@
-import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
-import { ModalBaseTitle, ModalBaseTitleProps } from '../ModalBase';
+import cx from 'clsx';
+import {
+  Box,
+  BoxProps,
+  CompoundStylesApiProps,
+  ElementProps,
+  factory,
+  Factory,
+  useProps,
+} from '../../core';
+import { useModalBaseContext, useOverlayTitleId } from '../ModalBase';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useDrawerContext } from './Drawer.context';
 import classes from './Drawer.module.css';
 
 export type DrawerTitleStylesNames = 'title';
 
 export interface DrawerTitleProps
-  extends ModalBaseTitleProps, CompoundStylesApiProps<DrawerTitleFactory> {}
+  extends BoxProps, CompoundStylesApiProps<DrawerTitleFactory>, ElementProps<'h2'> {}
 
 export type DrawerTitleFactory = Factory<{
   props: DrawerTitleProps;
@@ -20,10 +30,22 @@ export const DrawerTitle = factory<DrawerTitleFactory>((_props) => {
   const { classNames, className, style, styles, vars, ...others } = props;
 
   const ctx = useDrawerContext();
+  const baseCtx = useModalBaseContext();
+  const titleId = useOverlayTitleId();
+
+  const { className: stylesClassName, ...titleStyles } = ctx.getStyles('title', {
+    classNames,
+    style,
+    styles,
+    className,
+  });
 
   return (
-    <ModalBaseTitle
-      {...ctx.getStyles('title', { classNames, style, styles, className })}
+    <Box
+      component="h2"
+      className={cx({ [baseClasses.title]: !baseCtx.unstyled }, stylesClassName)}
+      id={titleId}
+      {...titleStyles}
       {...others}
     />
   );

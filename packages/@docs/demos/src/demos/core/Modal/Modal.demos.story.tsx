@@ -88,7 +88,22 @@ export const Demo_stack = {
   render: renderDemo(demos.stack),
 };
 
+export const Demo_stackSizes = {
+  name: '⭐ Demo: stackSizes',
+  render: renderDemo(demos.stackSizes),
+};
+
 export const Demo_transitionEnd = {
   name: '⭐ Demo: transitionEnd',
   render: renderDemo(demos.transitionEnd),
+};
+
+export const Demo_footer = {
+  name: '⭐ Demo: footer',
+  render: renderDemo(demos.footer),
+};
+
+export const Demo_stickySections = {
+  name: '⭐ Demo: stickySections',
+  render: renderDemo(demos.stickySections),
 };

@@ -1,17 +1,22 @@
+import { RemoveScroll } from 'react-remove-scroll';
 import {
+  Box,
   createVarsResolver,
   factory,
   Factory,
   getDefaultZIndex,
   getRadius,
+  getShadow,
   getSize,
+  getSpacing,
   MantineRadius,
   rem,
   StylesApiProps,
   useProps,
   useStyles,
 } from '../../core';
-import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
+import { ModalBaseProps, ModalBaseProvider, ModalBaseStylesNames, useOverlay } from '../ModalBase';
+import { OptionalPortal } from '../Portal';
 import { ScrollArea } from '../ScrollArea';
 import { ModalProvider, ScrollAreaComponent } from './Modal.context';
 import classes from './Modal.module.css';
@@ -41,6 +46,12 @@ export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalB
 
   /** If set, the modal takes the entire screen @default false */
   fullScreen?: boolean;
+
+  /** If set, the header stays pinned to the top while the body scrolls @default true */
+  stickyHeader?: boolean;
+
+  /** If set, the footer stays pinned to the bottom while the body scrolls @default true */
+  stickyFooter?: boolean;
 }
 
 export type ModalRootFactory = Factory<{
@@ -62,6 +73,8 @@ const defaultProps = {
   zIndex: getDefaultZIndex('modal'),
   transitionProps: { duration: 200, transition: 'fade-down' },
   yOffset: '5dvh',
+  stickyHeader: true,
+  stickyFooter: true,
 } satisfies Partial<ModalRootProps>;
 
 const varsResolver = createVarsResolver<ModalRootFactory>(
@@ -89,9 +102,31 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     radius,
     fullScreen,
     centered,
+    stickyHeader,
+    stickyFooter,
     xOffset,
     __staticSelector,
     attributes,
+    keepMounted,
+    opened,
+    onClose,
+    id,
+    transitionProps,
+    onExitTransitionEnd,
+    onEnterTransitionEnd,
+    trapFocus,
+    closeOnEscape,
+    returnFocus,
+    closeOnClickOutside,
+    withinPortal,
+    portalProps,
+    lockScroll,
+    children,
+    zIndex,
+    shadow,
+    padding,
+    __vars,
+    removeScrollProps,
     ...others
   } = props;
 
@@ -109,16 +144,62 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     varsResolver,
   });
 
+  const overlay = useOverlay({
+    id,
+    transitionProps,
+    opened,
+    trapFocus,
+    closeOnEscape,
+    onClose,
+    returnFocus,
+  });
+
+  const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
+
   return (
-    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen }}>
-      <ModalBase
-        {...getStyles('root')}
-        data-full-screen={fullScreen || undefined}
-        data-centered={centered || undefined}
-        data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
-        unstyled={unstyled}
-        {...others}
-      />
+    <ModalProvider
+      value={{ yOffset, scrollAreaComponent, getStyles, fullScreen, stickyHeader, stickyFooter }}
+    >
+      <ModalBaseProvider
+        value={{
+          ...overlay,
+          opened,
+          onClose,
+          closeOnClickOutside,
+          onExitTransitionEnd,
+          onEnterTransitionEnd,
+          transitionProps: { ...transitionProps, keepMounted },
+          trapFocus,
+          closeOnEscape,
+          zIndex,
+          unstyled,
+        }}
+      >
+        <OptionalPortal {...portalProps} withinPortal={withinPortal}>
+          <RemoveScroll
+            enabled={overlay.shouldLockScroll && lockScroll}
+            key={removeScrollKey}
+            {...otherRemoveScrollProps}
+          >
+            <Box
+              {...getStyles('root')}
+              data-full-screen={fullScreen || undefined}
+              data-centered={centered || undefined}
+              data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
+              {...others}
+              id={overlay._id}
+              __vars={{
+                ...__vars,
+                '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),
+                '--mb-shadow': getShadow(shadow),
+                '--mb-padding': getSpacing(padding),
+              }}
+            >
+              {children}
+            </Box>
+          </RemoveScroll>
+        </OptionalPortal>
+      </ModalBaseProvider>
     </ModalProvider>
   );
 });

@@ -1,9 +1,9 @@
 import { use, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
-import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { ModalBody, type ModalBodyProps } from './ModalBody';
 import { ModalCloseButton, type ModalCloseButtonProps } from './ModalCloseButton';
 import { ModalContent, type ModalContentProps } from './ModalContent';
+import { ModalFooter, type ModalFooterProps } from './ModalFooter';
 import { ModalHeader, type ModalHeaderProps } from './ModalHeader';
 import { ModalOverlay, type ModalOverlayProps } from './ModalOverlay';
 import {
@@ -28,7 +28,7 @@ export interface ModalProps extends ModalRootProps {
   withOverlay?: boolean;
 
   /** Props passed down to the `Overlay` component, use to configure opacity, `background-color`, styles and other properties */
-  overlayProps?: ModalBaseOverlayProps;
+  overlayProps?: ModalOverlayProps;
 
   /** Modal content */
   children?: React.ReactNode;
@@ -37,7 +37,7 @@ export interface ModalProps extends ModalRootProps {
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
-  closeButtonProps?: ModalBaseCloseButtonProps;
+  closeButtonProps?: ModalCloseButtonProps;
 
   /** Id of the modal in the `Modal.Stack` */
   stackId?: string;
@@ -54,11 +54,18 @@ export type ModalFactory = Factory<{
     Content: typeof ModalContent;
     Body: typeof ModalBody;
     Header: typeof ModalHeader;
+    Footer: typeof ModalFooter;
     Title: typeof ModalTitle;
     CloseButton: typeof ModalCloseButton;
     Stack: typeof ModalStack;
   };
 }>;
+
+const STACK_TRANSITION = {
+  in: { opacity: 1, transform: 'translateY(0)' },
+  out: { opacity: 0, transform: 'translateY(50px)' },
+  transitionProperty: 'opacity, transform',
+};
 
 const defaultProps = {
   closeOnClickOutside: true,
@@ -86,15 +93,22 @@ export const Modal = factory<ModalFactory>((_props) => {
     opened,
     stackId,
     zIndex,
+    onExitTransitionEnd,
+    transitionProps,
     ...others
   } = useProps('Modal', defaultProps, _props);
   const ctx = use(ModalStackContext);
   const hasHeader = !!title || withCloseButton;
+  const isStackActive = !!(ctx && stackId && ctx.currentId === stackId);
+  const hasOtherModals = !!(ctx && stackId && ctx.stack.some((id) => id !== stackId));
+  const stackTransitionProps = hasOtherModals
+    ? { ...transitionProps, transition: STACK_TRANSITION }
+    : transitionProps;
   const stackProps =
     ctx && stackId
       ? {
-          closeOnEscape: ctx.currentId === stackId,
-          trapFocus: ctx.currentId === stackId,
+          closeOnEscape: isStackActive,
+          trapFocus: isStackActive,
           zIndex: ctx.getZIndex(stackId),
         }
       : {};
@@ -102,19 +116,47 @@ export const Modal = factory<ModalFactory>((_props) => {
   const overlayVisible =
     withOverlay === false ? false : stackId && ctx ? ctx.currentId === stackId : opened;
 
+  const depthProps =
+    ctx && stackId
+      ? {
+          ...(ctx.withStackTransform
+            ? {
+                __depth: ctx.getDepth(stackId),
+                __visible: ctx.isVisible(stackId),
+                __dragProgress: ctx.dragProgress,
+                __topRect: ctx.topRect,
+                __reportTopRect: (rect: { width: number; height: number }) =>
+                  ctx.reportTopRect(stackId, rect),
+              }
+            : { __visible: ctx.isVisible(stackId) }),
+          __instant: !opened && ctx.getDepth(stackId) > 0,
+        }
+      : {};
+
   useEffect(() => {
     if (ctx && stackId) {
-      opened
-        ? ctx.addModal(stackId, zIndex || getDefaultZIndex('modal'))
-        : ctx.removeModal(stackId);
+      if (opened) {
+        ctx.addOverlay(stackId, zIndex || getDefaultZIndex('modal'));
+      } else {
+        ctx.markClosing(stackId);
+      }
     }
   }, [opened, stackId, zIndex]);
+
+  const handleExitTransitionEnd = () => {
+    if (ctx && stackId) {
+      ctx.removeOverlay(stackId);
+    }
+    onExitTransitionEnd?.();
+  };
 
   return (
     <ModalRoot
       radius={radius}
       opened={opened}
       zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
+      onExitTransitionEnd={handleExitTransitionEnd}
+      transitionProps={stackTransitionProps}
       {...others}
       {...stackProps}
     >
@@ -122,13 +164,11 @@ export const Modal = factory<ModalFactory>((_props) => {
         <ModalOverlay
           visible={overlayVisible}
           transitionProps={ctx && stackId ? { duration: 0 } : undefined}
+          {...(ctx && stackId ? { zIndex: ctx.maxZIndex } : null)}
           {...overlayProps}
         />
       )}
-      <ModalContent
-        radius={radius}
-        __hidden={ctx && stackId && opened ? stackId !== ctx.currentId : false}
-      >
+      <ModalContent radius={radius} {...depthProps}>
         {hasHeader && (
           <ModalHeader>
             {title && <ModalTitle>{title}</ModalTitle>}
@@ -149,6 +189,7 @@ Modal.Overlay = ModalOverlay;
 Modal.Content = ModalContent;
 Modal.Body = ModalBody;
 Modal.Header = ModalHeader;
+Modal.Footer = ModalFooter;
 Modal.Title = ModalTitle;
 Modal.CloseButton = ModalCloseButton;
 Modal.Stack = ModalStack;
@@ -177,6 +218,10 @@ export namespace Modal {
 
   export namespace Header {
     export type Props = ModalHeaderProps;
+  }
+
+  export namespace Footer {
+    export type Props = ModalFooterProps;
   }
 
   export namespace Overlay {

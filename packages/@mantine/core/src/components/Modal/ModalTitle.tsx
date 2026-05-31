@@ -1,12 +1,22 @@
-import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
-import { ModalBaseTitle, ModalBaseTitleProps } from '../ModalBase';
+import cx from 'clsx';
+import {
+  Box,
+  BoxProps,
+  CompoundStylesApiProps,
+  ElementProps,
+  factory,
+  Factory,
+  useProps,
+} from '../../core';
+import { useModalBaseContext, useOverlayTitleId } from '../ModalBase';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useModalContext } from './Modal.context';
 import classes from './Modal.module.css';
 
 export type ModalTitleStylesNames = 'title';
 
 export interface ModalTitleProps
-  extends ModalBaseTitleProps, CompoundStylesApiProps<ModalTitleFactory> {}
+  extends BoxProps, CompoundStylesApiProps<ModalTitleFactory>, ElementProps<'h2'> {}
 
 export type ModalTitleFactory = Factory<{
   props: ModalTitleProps;
@@ -20,10 +30,22 @@ export const ModalTitle = factory<ModalTitleFactory>((_props) => {
   const { classNames, className, style, styles, vars, ...others } = props;
 
   const ctx = useModalContext();
+  const baseCtx = useModalBaseContext();
+  const titleId = useOverlayTitleId();
+
+  const { className: stylesClassName, ...titleStyles } = ctx.getStyles('title', {
+    classNames,
+    style,
+    styles,
+    className,
+  });
 
   return (
-    <ModalBaseTitle
-      {...ctx.getStyles('title', { classNames, style, styles, className })}
+    <Box
+      component="h2"
+      className={cx({ [baseClasses.title]: !baseCtx.unstyled }, stylesClassName)}
+      id={titleId}
+      {...titleStyles}
       {...others}
     />
   );

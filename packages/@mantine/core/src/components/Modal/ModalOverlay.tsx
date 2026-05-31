@@ -1,5 +1,7 @@
 import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
-import { ModalBaseOverlay, ModalBaseOverlayProps } from '../ModalBase';
+import { ModalBaseOverlayProps, useModalBaseContext, useOverlayTransition } from '../ModalBase';
+import { Overlay } from '../Overlay';
+import { Transition } from '../Transition';
 import { useModalContext } from './Modal.context';
 import classes from './Modal.module.css';
 
@@ -17,15 +19,50 @@ export type ModalOverlayFactory = Factory<{
 
 export const ModalOverlay = factory<ModalOverlayFactory>((_props) => {
   const props = useProps('ModalOverlay', null, _props);
-  const { classNames, className, style, styles, vars, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    onClick,
+    transitionProps,
+    visible,
+    ...others
+  } = props;
 
   const ctx = useModalContext();
+  const baseCtx = useModalBaseContext();
+  const transition = useOverlayTransition(transitionProps);
+
+  const { style: overlayStyle, ...overlayStyles } = ctx.getStyles('overlay', {
+    classNames,
+    style,
+    styles,
+    className,
+  });
 
   return (
-    <ModalBaseOverlay
-      {...ctx.getStyles('overlay', { classNames, style, styles, className })}
-      {...others}
-    />
+    <Transition
+      mounted={visible !== undefined ? visible : baseCtx.opened}
+      {...transition}
+      transition="fade"
+    >
+      {(transitionStyles) => (
+        <Overlay
+          fixed
+          style={[overlayStyle, transitionStyles]}
+          zIndex={baseCtx.zIndex}
+          unstyled={baseCtx.unstyled}
+          onClick={(event) => {
+            onClick?.(event);
+            baseCtx.closeOnClickOutside && baseCtx.onClose();
+          }}
+          {...overlayStyles}
+          {...others}
+        />
+      )}
+    </Transition>
   );
 });
 

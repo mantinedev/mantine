@@ -1,11 +1,11 @@
-import { use, useEffect } from 'react';
+import { use, useCallback, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
-import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { DrawerBody } from './DrawerBody';
-import { DrawerCloseButton } from './DrawerCloseButton';
+import { DrawerCloseButton, DrawerCloseButtonProps } from './DrawerCloseButton';
 import { DrawerContent } from './DrawerContent';
+import { DrawerFooter } from './DrawerFooter';
 import { DrawerHeader } from './DrawerHeader';
-import { DrawerOverlay } from './DrawerOverlay';
+import { DrawerOverlay, DrawerOverlayProps } from './DrawerOverlay';
 import {
   DrawerRoot,
   DrawerRootCssVariables,
@@ -27,7 +27,7 @@ export interface DrawerProps extends DrawerRootProps {
   withOverlay?: boolean;
 
   /** Props passed down to the `Overlay` component, can be used to configure opacity, `background-color`, styles and other properties */
-  overlayProps?: ModalBaseOverlayProps;
+  overlayProps?: DrawerOverlayProps;
 
   /** Drawer content */
   children?: React.ReactNode;
@@ -36,7 +36,7 @@ export interface DrawerProps extends DrawerRootProps {
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
-  closeButtonProps?: ModalBaseCloseButtonProps;
+  closeButtonProps?: DrawerCloseButtonProps;
 
   /** Id of the drawer in the `Drawer.Stack` */
   stackId?: string;
@@ -53,6 +53,7 @@ export type DrawerFactory = Factory<{
     Content: typeof DrawerContent;
     Body: typeof DrawerBody;
     Header: typeof DrawerHeader;
+    Footer: typeof DrawerFooter;
     Title: typeof DrawerTitle;
     CloseButton: typeof DrawerCloseButton;
     Stack: typeof DrawerStack;
@@ -83,16 +84,18 @@ export const Drawer = factory<DrawerFactory>((_props) => {
     opened,
     stackId,
     zIndex,
+    onExitTransitionEnd,
     ...others
   } = useProps('Drawer', defaultProps, _props);
 
   const ctx = use(DrawerStackContext);
   const hasHeader = !!title || withCloseButton;
+  const isStackActive = !!(ctx && stackId && ctx.currentId === stackId);
   const stackProps =
     ctx && stackId
       ? {
-          closeOnEscape: ctx.currentId === stackId,
-          trapFocus: ctx.currentId === stackId,
+          closeOnEscape: isStackActive,
+          trapFocus: isStackActive,
           zIndex: ctx.getZIndex(stackId),
         }
       : {};
@@ -100,18 +103,54 @@ export const Drawer = factory<DrawerFactory>((_props) => {
   const overlayVisible =
     withOverlay === false ? false : stackId && ctx ? ctx.currentId === stackId : opened;
 
+  const reportDrag = ctx?.reportDrag;
+  const handleDragProgress = useCallback(
+    (progress: number) => {
+      if (stackId) {
+        reportDrag?.(stackId, progress);
+      }
+    },
+    [reportDrag, stackId]
+  );
+
+  const depthProps =
+    ctx && stackId
+      ? {
+          ...(ctx.withStackTransform
+            ? {
+                __depth: ctx.getDepth(stackId),
+                __visible: ctx.isVisible(stackId),
+                __dragProgress: ctx.dragProgress,
+              }
+            : { __visible: ctx.isVisible(stackId) }),
+          __onDragProgress: handleDragProgress,
+          __active: isStackActive,
+          __instant: !opened && ctx.getDepth(stackId) > 0,
+        }
+      : {};
+
   useEffect(() => {
     if (ctx && stackId) {
-      opened
-        ? ctx.addModal(stackId, zIndex || getDefaultZIndex('modal'))
-        : ctx.removeModal(stackId);
+      if (opened) {
+        ctx.addOverlay(stackId, zIndex || getDefaultZIndex('modal'));
+      } else {
+        ctx.markClosing(stackId);
+      }
     }
   }, [opened, stackId, zIndex]);
+
+  const handleExitTransitionEnd = () => {
+    if (ctx && stackId) {
+      ctx.removeOverlay(stackId);
+    }
+    onExitTransitionEnd?.();
+  };
 
   return (
     <DrawerRoot
       opened={opened}
       zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
+      onExitTransitionEnd={handleExitTransitionEnd}
       {...others}
       {...stackProps}
     >
@@ -119,10 +158,11 @@ export const Drawer = factory<DrawerFactory>((_props) => {
         <DrawerOverlay
           visible={overlayVisible}
           transitionProps={ctx && stackId ? { duration: 0 } : undefined}
+          {...(ctx && stackId ? { zIndex: ctx.maxZIndex } : null)}
           {...overlayProps}
         />
       )}
-      <DrawerContent __hidden={ctx && stackId && opened ? stackId !== ctx.currentId : false}>
+      <DrawerContent {...depthProps}>
         {hasHeader && (
           <DrawerHeader>
             {title && <DrawerTitle>{title}</DrawerTitle>}
@@ -143,6 +183,7 @@ Drawer.Overlay = DrawerOverlay;
 Drawer.Content = DrawerContent;
 Drawer.Body = DrawerBody;
 Drawer.Header = DrawerHeader;
+Drawer.Footer = DrawerFooter;
 Drawer.Title = DrawerTitle;
 Drawer.CloseButton = DrawerCloseButton;
 Drawer.Stack = DrawerStack;

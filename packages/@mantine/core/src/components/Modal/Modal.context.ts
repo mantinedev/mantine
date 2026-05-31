@@ -5,6 +5,8 @@ export type ScrollAreaComponent = React.FC<any>;
 
 export interface ModalContextValue {
   fullScreen: boolean | undefined;
+  stickyHeader: boolean | undefined;
+  stickyFooter: boolean | undefined;
   yOffset: string | number | undefined;
   scrollAreaComponent: ScrollAreaComponent | undefined;
   getStyles: GetStylesApi<ModalRootFactory>;

@@ -7,7 +7,7 @@ const DEFAULT_TRANSITION: TransitionOverride = {
   transition: 'fade',
 };
 
-export function useModalTransition(
+export function useOverlayTransition(
   transitionOverride: TransitionOverride | undefined
 ): TransitionOverride {
   const ctx = useModalBaseContext();

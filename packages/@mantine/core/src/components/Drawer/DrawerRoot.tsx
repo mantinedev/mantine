@@ -1,9 +1,13 @@
+import { RemoveScroll } from 'react-remove-scroll';
 import {
+  Box,
   createVarsResolver,
   factory,
   Factory,
   getDefaultZIndex,
+  getShadow,
   getSize,
+  getSpacing,
   MantineRadius,
   rem,
   StylesApiProps,
@@ -11,7 +15,8 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
+import { ModalBaseProps, ModalBaseProvider, ModalBaseStylesNames, useOverlay } from '../ModalBase';
+import { OptionalPortal } from '../Portal';
 import { ScrollArea } from '../ScrollArea';
 import { MantineTransition } from '../Transition';
 import { DrawerProvider, ScrollAreaComponent } from './Drawer.context';
@@ -38,7 +43,7 @@ function getDrawerFlex(position: DrawerPosition | undefined) {
   return undefined;
 }
 
-export type DrawerRootStylesNames = ModalBaseStylesNames;
+export type DrawerRootStylesNames = ModalBaseStylesNames | 'panel' | 'handle';
 export type DrawerRootCssVariables = {
   root:
     | '--drawer-size'
@@ -61,6 +66,33 @@ export interface DrawerRootProps extends StylesApiProps<DrawerRootFactory>, Moda
 
   /** Drawer container offset from the viewport end @default 0 */
   offset?: number | string;
+
+  /** If set, the header stays pinned to the top while the body scrolls @default true */
+  stickyHeader?: boolean;
+
+  /** If set, the footer stays pinned to the bottom while the body scrolls @default true */
+  stickyFooter?: boolean;
+
+  /** If set, the drawer can be dismissed with a swipe gesture in the direction of its position @default true */
+  withSwipe?: boolean;
+
+  /** If set, a drag handle is displayed on the overlay at the drawer's leading edge @default false */
+  withHandle?: boolean;
+
+  /** Fraction of the drawer size past which a swipe release dismisses the drawer @default 0.25 */
+  swipeThreshold?: number;
+
+  /** Snap points along the position axis at which the drawer can rest. Each point is a fraction of the viewport in `(0, 1]` (for example `0.5`), a number of pixels (`> 1`), or a percentage string (for example `'50%'`). When set, the drawer is sized to fill the viewport along its axis and rests at these points */
+  snapPoints?: (number | string)[];
+
+  /** Controlled active snap point */
+  activeSnapPoint?: number | string;
+
+  /** Uncontrolled active snap point initial value @default largest snap point */
+  defaultActiveSnapPoint?: number | string;
+
+  /** Called when the active snap point changes */
+  onSnapPointChange?: (point: number | string) => void;
 }
 
 export type DrawerRootFactory = Factory<{
@@ -94,19 +126,35 @@ const defaultProps = {
   keepMounted: false,
   zIndex: getDefaultZIndex('modal'),
   position: 'left',
+  stickyHeader: true,
+  stickyFooter: true,
+  withSwipe: true,
+  withHandle: false,
 } satisfies Partial<DrawerRootProps>;
 
-const varsResolver = createVarsResolver<DrawerRootFactory>((_, { position, size, offset }) => ({
-  root: {
-    '--drawer-size': getSize(size, 'drawer-size'),
-    '--drawer-flex': getDrawerFlex(position),
-    '--drawer-height':
-      position === 'left' || position === 'right' ? undefined : 'var(--drawer-size)',
-    '--drawer-align': getDrawerAlign(position),
-    '--drawer-justify': position === 'right' ? 'flex-end' : undefined,
-    '--drawer-offset': rem(offset),
-  },
-}));
+const varsResolver = createVarsResolver<DrawerRootFactory>(
+  (_, { position, size, offset, snapPoints }) => {
+    const hasSnapPoints = Array.isArray(snapPoints) && snapPoints.length > 0;
+    const isHorizontal = position === 'left' || position === 'right';
+    const fillAxis = 'calc(100% - var(--drawer-offset, 0rem) * 2)';
+
+    return {
+      root: {
+        '--drawer-size': getSize(size, 'drawer-size'),
+        '--drawer-flex':
+          hasSnapPoints && isHorizontal ? `0 0 ${fillAxis}` : getDrawerFlex(position),
+        '--drawer-height': isHorizontal
+          ? undefined
+          : hasSnapPoints
+            ? fillAxis
+            : 'var(--drawer-size)',
+        '--drawer-align': getDrawerAlign(position),
+        '--drawer-justify': position === 'right' ? 'flex-end' : undefined,
+        '--drawer-offset': rem(offset),
+      },
+    };
+  }
+);
 
 export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
   const props = useProps('DrawerRoot', defaultProps, _props);
@@ -119,9 +167,37 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     vars,
     scrollAreaComponent,
     position,
+    stickyHeader,
+    stickyFooter,
+    withSwipe,
+    withHandle,
+    swipeThreshold,
+    snapPoints,
+    activeSnapPoint,
+    defaultActiveSnapPoint,
+    onSnapPointChange,
     transitionProps,
     radius,
     attributes,
+    keepMounted,
+    opened,
+    onClose,
+    id,
+    onExitTransitionEnd,
+    onEnterTransitionEnd,
+    trapFocus,
+    closeOnEscape,
+    returnFocus,
+    closeOnClickOutside,
+    withinPortal,
+    portalProps,
+    lockScroll,
+    children,
+    zIndex,
+    shadow,
+    padding,
+    __vars,
+    removeScrollProps,
     ...others
   } = props;
 
@@ -142,16 +218,76 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
   });
 
   const drawerTransition = (dir === 'rtl' ? rtlTransitions : transitions)[position];
+  const mergedTransitionProps = { transition: drawerTransition, ...transitionProps };
+
+  const overlay = useOverlay({
+    id,
+    transitionProps: mergedTransitionProps,
+    opened,
+    trapFocus,
+    closeOnEscape,
+    onClose,
+    returnFocus,
+  });
+
+  const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
 
   return (
-    <DrawerProvider value={{ scrollAreaComponent, getStyles, radius }}>
-      <ModalBase
-        {...getStyles('root')}
-        transitionProps={{ transition: drawerTransition, ...transitionProps }}
-        data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
-        unstyled={unstyled}
-        {...others}
-      />
+    <DrawerProvider
+      value={{
+        scrollAreaComponent,
+        getStyles,
+        radius,
+        stickyHeader,
+        stickyFooter,
+        position,
+        withSwipe,
+        withHandle,
+        swipeThreshold,
+        snapPoints,
+        activeSnapPoint,
+        defaultActiveSnapPoint,
+        onSnapPointChange,
+      }}
+    >
+      <ModalBaseProvider
+        value={{
+          ...overlay,
+          opened,
+          onClose,
+          closeOnClickOutside,
+          onExitTransitionEnd,
+          onEnterTransitionEnd,
+          transitionProps: { ...mergedTransitionProps, keepMounted },
+          trapFocus,
+          closeOnEscape,
+          zIndex,
+          unstyled,
+        }}
+      >
+        <OptionalPortal {...portalProps} withinPortal={withinPortal}>
+          <RemoveScroll
+            enabled={overlay.shouldLockScroll && lockScroll}
+            key={removeScrollKey}
+            {...otherRemoveScrollProps}
+          >
+            <Box
+              {...getStyles('root')}
+              data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
+              {...others}
+              id={overlay._id}
+              __vars={{
+                ...__vars,
+                '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),
+                '--mb-shadow': getShadow(shadow),
+                '--mb-padding': getSpacing(padding),
+              }}
+            >
+              {children}
+            </Box>
+          </RemoveScroll>
+        </OptionalPortal>
+      </ModalBaseProvider>
     </DrawerProvider>
   );
 });

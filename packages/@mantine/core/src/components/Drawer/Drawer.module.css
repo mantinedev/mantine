@@ -12,22 +12,92 @@
   z-index: 1000;
 }
 
-.content {
+.footer {
+  z-index: 1000;
+}
+
+.panel {
+  position: relative;
   flex: var(--drawer-flex, 0 0 var(--drawer-size));
   height: var(--drawer-height, calc(100% - var(--drawer-offset) * 2));
   margin: var(--drawer-offset);
   max-width: calc(100% - var(--drawer-offset) * 2);
   max-height: calc(100% - var(--drawer-offset) * 2);
-  overflow-y: auto;
+}
 
-  &[data-hidden] {
-    opacity: 0 !important;
-    pointer-events: none;
-  }
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .inner {
   display: flex;
   justify-content: var(--drawer-justify, flex-start);
   align-items: var(--drawer-align, flex-start);
+}
+
+.handle {
+  position: absolute;
+  width: 2rem;
+  height: 0.25rem;
+  border-radius: var(--mantine-radius-xl);
+  background-color: var(--mantine-color-gray-5);
+  cursor: grab;
+  touch-action: none;
+  pointer-events: all;
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-3);
+  }
+
+  &:where([data-position='bottom']) {
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:where([data-position='top']) {
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:where([data-position='left']) {
+    left: calc(100% + 4px);
+    top: 50%;
+    width: 0.25rem;
+    height: 2rem;
+    transform: translateY(-50%);
+  }
+
+  &:where([data-position='right']) {
+    right: calc(100% + 4px);
+    top: 50%;
+    width: 0.25rem;
+    height: 2rem;
+    transform: translateY(-50%);
+  }
+
+  &:where([data-position='bottom'][data-snap-points]) {
+    bottom: auto;
+    top: 8px;
+  }
+
+  &:where([data-position='top'][data-snap-points]) {
+    top: auto;
+    bottom: 8px;
+  }
+
+  &:where([data-position='left'][data-snap-points]) {
+    left: auto;
+    right: 8px;
+  }
+
+  &:where([data-position='right'][data-snap-points]) {
+    right: auto;
+    left: 8px;
+  }
 }

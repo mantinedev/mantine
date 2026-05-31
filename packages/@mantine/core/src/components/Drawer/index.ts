@@ -3,6 +3,7 @@ import type { DrawerContextValue } from './Drawer.context';
 import type { DrawerBodyProps } from './DrawerBody';
 import type { DrawerCloseButtonProps } from './DrawerCloseButton';
 import type { DrawerContentProps } from './DrawerContent';
+import type { DrawerFooterProps } from './DrawerFooter';
 import type { DrawerHeaderProps } from './DrawerHeader';
 import type { DrawerOverlayProps } from './DrawerOverlay';
 import type { DrawerRootProps } from './DrawerRoot';
@@ -14,6 +15,7 @@ export { DrawerRoot } from './DrawerRoot';
 export { DrawerBody } from './DrawerBody';
 export { DrawerCloseButton } from './DrawerCloseButton';
 export { DrawerContent } from './DrawerContent';
+export { DrawerFooter } from './DrawerFooter';
 export { DrawerHeader } from './DrawerHeader';
 export { DrawerOverlay } from './DrawerOverlay';
 export { DrawerTitle } from './DrawerTitle';
@@ -29,6 +31,7 @@ export type {
   DrawerBodyProps,
   DrawerCloseButtonProps,
   DrawerContentProps,
+  DrawerFooterProps,
   DrawerHeaderProps,
   DrawerOverlayProps,
   DrawerTitleProps,

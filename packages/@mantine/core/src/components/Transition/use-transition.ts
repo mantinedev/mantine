@@ -62,6 +62,9 @@ export function useTransition({
       typeof preHandler === 'function' && preHandler();
       typeof handler === 'function' && handler();
       setStatus(shouldMount ? 'entered' : 'exited');
+      if (!shouldMount && !reduceMotion) {
+        setTransitionDuration(duration);
+      }
     } else {
       rafRef.current = requestAnimationFrame(() => {
         ReactDOM.flushSync(() => {

@@ -1,21 +1,39 @@
 import { RemoveScroll } from 'react-remove-scroll';
 import {
-  Box,
   BoxProps,
   ElementProps,
-  getDefaultZIndex,
-  getShadow,
-  getSpacing,
+  MantineRadius,
   MantineShadow,
   MantineSize,
   MantineSpacing,
 } from '../../core';
-import { BasePortalProps, OptionalPortal } from '../Portal';
+import { OverlayProps } from '../Overlay';
+import { BasePortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
-import { ModalBaseProvider } from './ModalBase.context';
-import { useModal } from './use-modal';
 
-type RemoveScrollProps = Omit<React.ComponentProps<typeof RemoveScroll>, 'children'>;
+export type RemoveScrollProps = Omit<React.ComponentProps<typeof RemoveScroll>, 'children'>;
+
+export interface ModalBaseContentProps extends BoxProps, ElementProps<'div'> {
+  /** Props passed down to the `Transition` component */
+  transitionProps?: TransitionOverride;
+
+  /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
+  shadow?: MantineShadow;
+
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
+  radius?: MantineRadius;
+}
+
+export interface ModalBaseOverlayProps
+  extends
+    Omit<OverlayProps, 'styles' | 'classNames' | 'variant' | 'vars'>,
+    ElementProps<'div', 'color'> {
+  /** Props passed down to the `Transition` component */
+  transitionProps?: TransitionOverride;
+
+  /** Determines whether the overlay should be visible. By default, has the same value as `opened` state. */
+  visible?: boolean;
+}
 
 export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   unstyled?: boolean;
@@ -80,79 +98,3 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   /** Props passed down to react-remove-scroll, can be used to customize scroll lock behavior */
   removeScrollProps?: RemoveScrollProps;
 }
-
-export function ModalBase({
-  keepMounted,
-  opened,
-  onClose,
-  id,
-  transitionProps,
-  onExitTransitionEnd,
-  onEnterTransitionEnd,
-  trapFocus,
-  closeOnEscape,
-  returnFocus,
-  closeOnClickOutside,
-  withinPortal,
-  portalProps,
-  lockScroll,
-  children,
-  zIndex,
-  shadow,
-  padding,
-  __vars,
-  unstyled,
-  removeScrollProps,
-  ...others
-}: ModalBaseProps) {
-  const { _id, titleMounted, bodyMounted, shouldLockScroll, setTitleMounted, setBodyMounted } =
-    useModal({ id, transitionProps, opened, trapFocus, closeOnEscape, onClose, returnFocus });
-
-  const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
-
-  return (
-    <OptionalPortal {...portalProps} withinPortal={withinPortal}>
-      <ModalBaseProvider
-        value={{
-          opened,
-          onClose,
-          closeOnClickOutside,
-          onExitTransitionEnd,
-          onEnterTransitionEnd,
-          transitionProps: { ...transitionProps, keepMounted },
-          getTitleId: () => `${_id}-title`,
-          getBodyId: () => `${_id}-body`,
-          titleMounted,
-          bodyMounted,
-          setTitleMounted,
-          setBodyMounted,
-          trapFocus,
-          closeOnEscape,
-          zIndex,
-          unstyled,
-        }}
-      >
-        <RemoveScroll
-          enabled={shouldLockScroll && lockScroll}
-          key={removeScrollKey}
-          {...otherRemoveScrollProps}
-        >
-          <Box
-            {...others}
-            id={_id}
-            __vars={{
-              ...__vars,
-              '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),
-              '--mb-shadow': getShadow(shadow),
-              '--mb-padding': getSpacing(padding),
-            }}
-          >
-            {children}
-          </Box>
-        </RemoveScroll>
-      </ModalBaseProvider>
-    </OptionalPortal>
-  );
-}
-
-ModalBase.displayName = '@mantine/core/ModalBase';

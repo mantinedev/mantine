@@ -1,12 +1,26 @@
-import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
-import { ModalBaseCloseButton, ModalBaseCloseButtonProps } from '../ModalBase';
+import cx from 'clsx';
+import {
+  BoxProps,
+  CompoundStylesApiProps,
+  ElementProps,
+  factory,
+  Factory,
+  useProps,
+} from '../../core';
+import { __CloseButtonProps, CloseButton } from '../CloseButton';
+import { useModalBaseContext } from '../ModalBase';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useModalContext } from './Modal.context';
 import classes from './Modal.module.css';
 
 export type ModalCloseButtonStylesNames = 'close';
 
 export interface ModalCloseButtonProps
-  extends ModalBaseCloseButtonProps, CompoundStylesApiProps<ModalCloseButtonFactory> {}
+  extends
+    __CloseButtonProps,
+    BoxProps,
+    CompoundStylesApiProps<ModalCloseButtonFactory>,
+    ElementProps<'button'> {}
 
 export type ModalCloseButtonFactory = Factory<{
   props: ModalCloseButtonProps;
@@ -17,14 +31,28 @@ export type ModalCloseButtonFactory = Factory<{
 
 export const ModalCloseButton = factory<ModalCloseButtonFactory>((_props) => {
   const props = useProps('ModalCloseButton', null, _props);
-  const { classNames, className, style, styles, vars, ...others } = props;
+  const { classNames, className, style, styles, vars, onClick, ...others } = props;
 
   const ctx = useModalContext();
+  const baseCtx = useModalBaseContext();
+
+  const { className: stylesClassName, ...closeStyles } = ctx.getStyles('close', {
+    classNames,
+    style,
+    styles,
+    className,
+  });
 
   return (
-    <ModalBaseCloseButton
-      {...ctx.getStyles('close', { classNames, style, styles, className })}
+    <CloseButton
       {...others}
+      {...closeStyles}
+      onClick={(event) => {
+        baseCtx.onClose();
+        onClick?.(event);
+      }}
+      className={cx({ [baseClasses.close]: !baseCtx.unstyled }, stylesClassName)}
+      unstyled={baseCtx.unstyled}
     />
   );
 });

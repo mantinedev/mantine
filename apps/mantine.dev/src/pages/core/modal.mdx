@@ -50,6 +50,22 @@ supports with `overlayProps`:
 
 <Demo data={ModalDemos.overlay} />
 
+## Footer
+
+Use `Modal.Footer` component to render a footer with actions. By default, the footer stays pinned
+to the bottom of the modal while the body scrolls between the header and the footer. When the body
+content is short, the footer sits at the very bottom with free space above it:
+
+<Demo data={ModalDemos.footer} />
+
+## Sticky header and footer
+
+By default, both the header and the footer stay pinned in place while the body scrolls. This is
+controlled by the `stickyHeader` and `stickyFooter` props (both default to `true`). Set either to
+`false` to make that section scroll away with the body content:
+
+<Demo data={ModalDemos.stickySections} />
+
 ## Modal with scroll
 
 <Demo data={ModalDemos.overflow} />
@@ -142,6 +158,7 @@ You can use the following compound components to have full control over the `Mod
 - `Modal.Title` – `h2` element, the `aria-labelledby` of `Modal.Content` is pointing to this element, usually rendered inside `Modal.Header`
 - `Modal.CloseButton` – close button, usually rendered inside `Modal.Header`
 - `Modal.Body` – a place for main content, the `aria-describedby` of `Modal.Content` is pointing to this element
+- `Modal.Footer` – footer element, usually contains action buttons, pinned to the bottom by default (controlled with `stickyFooter`)
 
 <Demo data={ModalDemos.composition} />
 
@@ -155,10 +172,29 @@ Differences from using multiple `Modal` components:
 
 - `Modal.Stack` manages z-index values – modals that are opened later will always have a higher z-index value regardless of their order in the DOM
 - `Modal.Stack` disables focus trap and `Escape` key handling for all modals except the one that is currently opened
-- Modals that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`
+- All opened modals stay mounted and visible with a stacked depth effect – modals below the top one are scaled down and offset to create a sense of depth
 - Only one overlay is rendered at a time
 
 <Demo data={ModalDemos.stack} />
+
+Use the `maxDepth` prop (default `5`) to control how many stacked modals are visible behind the
+top one at the same time:
+
+```tsx
+import { Modal, useModalsStack } from '@mantine/core';
+
+function Demo() {
+  const stack = useModalsStack(['first', 'second', 'third']);
+
+  return (
+    <Modal.Stack maxDepth={3}>
+      <Modal {...stack.register('first')}>First</Modal>
+      <Modal {...stack.register('second')}>Second</Modal>
+      <Modal {...stack.register('third')}>Third</Modal>
+    </Modal.Stack>
+  );
+}
+```
 
 Note that `Modal.Stack` can only be used with the `Modal` component. Components built with `Modal.Root`
 and other compound components are not compatible with `Modal.Stack`.
