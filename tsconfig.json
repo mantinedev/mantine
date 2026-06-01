@@ -35,6 +35,7 @@
     "skipLibCheck": true,
     "noEmitOnError": true,
     "allowJs": true,
+    "allowImportingTsExtensions": true,
     "strict": true,
     "paths": {
       "@mantine/*": ["./packages/@mantine/*/src"],

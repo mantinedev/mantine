@@ -5203,8 +5203,8 @@ __metadata:
 "@mantine/colors-generator@workspace:*, @mantine/colors-generator@workspace:packages/@mantine/colors-generator":
   version: 0.0.0-use.local
   resolution: "@mantine/colors-generator@workspace:packages/@mantine/colors-generator"
-  peerDependencies:
-    chroma-js: ">=2.4.2"
+  dependencies:
+    culori: "npm:^4.0.2"
   languageName: unknown
   linkType: soft
 
@@ -7644,6 +7644,13 @@ __metadata:
   version: 3.1.2
   resolution: "@types/chroma-js@npm:3.1.2"
   checksum: 10c0/d2a7d9612c5abe3733a113d339eb8158cb36aeeeb571a3c371e81e8f3a682cd70f1649cea521716fbb5d79eb96f585a539b304be44e3fa818bd56b2a05f29f73
+  languageName: node
+  linkType: hard
+
+"@types/culori@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@types/culori@npm:4.0.1"
+  checksum: 10c0/f25fcf01fe709d2fce569892eae71a268b19cf85a7c8f6bf6b041f02f232e5a7d1218e8213349d6b2a458be9f61158ed1e1893e7b81e2ee4a7cebc2a172b7ebb
   languageName: node
   linkType: hard
 
@@ -10482,6 +10489,13 @@ __metadata:
   version: 3.2.3
   resolution: "csstype@npm:3.2.3"
   checksum: 10c0/cd29c51e70fa822f1cecd8641a1445bed7063697469d35633b516e60fe8c1bde04b08f6c5b6022136bb669b64c63d4173af54864510fbb4ee23281801841a3ce
+  languageName: node
+  linkType: hard
+
+"culori@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "culori@npm:4.0.2"
+  checksum: 10c0/5d3c952b947ac5915409bab513e1d2e8bd813caa491af8ded0c769fdc1186a5ff61fb3c59fc8edf5393237d92074dbc54a492e6e99cb039dd6535d5d96106bfe
   languageName: node
   linkType: hard
 
@@ -15242,6 +15256,7 @@ __metadata:
     "@tiptap/react": "npm:^3.23.6"
     "@tiptap/starter-kit": "npm:^3.23.6"
     "@types/chroma-js": "npm:^3.1.2"
+    "@types/culori": "npm:^4.0.1"
     "@types/fs-extra": "npm:^11.0.4"
     "@types/gh-pages": "npm:^6.1.0"
     "@types/jest": "npm:^30.0.0"

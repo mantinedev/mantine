@@ -12,6 +12,7 @@ export const ROLLUP_EXTERNALS = [
   'dayjs/plugin/utc.js',
   'dayjs/plugin/isoWeek.js',
   'klona/full',
+  'culori/fn',
   'highlight.js/lib/languages/typescript',
   'react-is',
   'react/jsx-runtime',

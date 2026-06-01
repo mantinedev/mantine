@@ -36,7 +36,7 @@
     "type": "git",
     "directory": "packages/@mantine/colors-generator"
   },
-  "peerDependencies": {
-    "chroma-js": ">=2.4.2"
+  "dependencies": {
+    "culori": "^4.0.2"
   }
 }

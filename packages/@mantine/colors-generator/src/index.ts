@@ -1,1 +1,1 @@
-export { generateColors, generateColorsMap } from './generate-colors';
+export { generateColorFormats, generateColors, generateColorsMap } from './generate-colors';

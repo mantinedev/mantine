@@ -1,33 +1,9 @@
-import chroma from 'chroma-js';
+import { formatHex, formatHsl, formatRgb, modeHsl, modeOklch, modeRgb, useMode } from 'culori/fn';
+import { generateColorsMapV2 } from './generate-colors-v2';
 
-const LIGHTNESS_MAP = [0.96, 0.907, 0.805, 0.697, 0.605, 0.547, 0.518, 0.445, 0.395, 0.34];
-const SATURATION_MAP = [0.32, 0.16, 0.08, 0.04, 0, 0, 0.04, 0.08, 0.16, 0.32];
-
-function getClosestLightness(colorObject: chroma.Color) {
-  const lightnessGoal = colorObject.get('hsl.l');
-  return LIGHTNESS_MAP.reduce((prev, curr) =>
-    Math.abs(curr - lightnessGoal) < Math.abs(prev - lightnessGoal) ? curr : prev
-  );
-}
-
-export function generateColorsMap(color: string) {
-  const colorObject = chroma(color);
-  const closestLightness = getClosestLightness(colorObject);
-  const baseColorIndex = LIGHTNESS_MAP.findIndex((l) => l === closestLightness);
-
-  const colors = LIGHTNESS_MAP.map((l) => colorObject.set('hsl.l', l))
-    .map((c) => chroma(c))
-    .map((c, i) => {
-      const saturationDelta = SATURATION_MAP[i] - SATURATION_MAP[baseColorIndex];
-      return saturationDelta >= 0
-        ? c.saturate(saturationDelta)
-        : c.desaturate(saturationDelta * -1);
-    });
-
-  colors[baseColorIndex] = chroma(color);
-
-  return { baseColorIndex, colors };
-}
+const oklch = useMode(modeOklch);
+useMode(modeRgb);
+useMode(modeHsl);
 
 export type MantineColorsTuple = readonly [
   string,
@@ -43,6 +19,35 @@ export type MantineColorsTuple = readonly [
   ...string[],
 ];
 
+export { generateColorsMapV2 as generateColorsMap };
+
+/**
+ * Generates 10 oklch shades from the given color value on a shared lightness
+ * ramp with a chroma envelope, gamut-mapped to sRGB. The returned value is a
+ * `MantineColorsTuple` of `oklch(...)` strings that can be used directly in
+ * `theme.colors`.
+ */
 export function generateColors(color: string) {
-  return generateColorsMap(color).colors.map((c) => c.hex()) as unknown as MantineColorsTuple;
+  return generateColorsMapV2(color).colors as unknown as MantineColorsTuple;
+}
+
+/**
+ * Generates 10 shades from the given color value and returns them in multiple
+ * color formats (`oklch`, `hex`, `rgb`, `hsl`) along with the index of the
+ * shade that matches the input color (`baseColorIndex`).
+ */
+export function generateColorFormats(color: string) {
+  const { baseColorIndex, colors } = generateColorsMapV2(color);
+  const parsed = colors.map((value) => oklch(value)!);
+
+  return {
+    baseColorIndex,
+    colors,
+    formats: {
+      oklch: colors,
+      hex: parsed.map((value) => formatHex(value)),
+      rgb: parsed.map((value) => formatRgb(value)),
+      hsl: parsed.map((value) => formatHsl(value)),
+    },
+  };
 }

@@ -148,6 +148,7 @@
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
     "@types/chroma-js": "^3.1.2",
+    "@types/culori": "^4.0.1",
     "@types/fs-extra": "^11.0.4",
     "@types/gh-pages": "^6.1.0",
     "@types/jest": "^30.0.0",

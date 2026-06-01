@@ -1,17 +1,21 @@
+import { oklchToLinearSrgb } from '../parse-oklch/oklch-to-linear-srgb';
+import { parseOklch } from '../parse-oklch/parse-oklch';
 import { toRgba } from '../to-rgba/to-rgba';
 
 function gammaCorrect(c: number) {
   return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
 }
 
-function getLightnessFromOklch(oklchColor: string) {
-  const match = oklchColor.match(/oklch\((.*?)%\s/);
-  return match ? parseFloat(match[1]) : null;
-}
-
 export function luminance(color: string): number {
   if (color.startsWith('oklch(')) {
-    return (getLightnessFromOklch(color) || 0) / 100;
+    const parsed = parseOklch(color);
+
+    if (!parsed) {
+      return 0;
+    }
+
+    const { r, g, b } = oklchToLinearSrgb(parsed);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
 
   const { r, g, b } = toRgba(color);

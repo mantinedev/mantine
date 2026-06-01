@@ -1,6 +1,7 @@
+import chroma from 'chroma-js';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { generateColorsMap } from '@mantine/colors-generator';
+import { generateColorFormats } from '@mantine/colors-generator';
 import { Title } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { ColorsInput } from './ColorsInput/ColorsInput';
@@ -12,7 +13,8 @@ export function ColorsGenerator() {
   const router = useRouter();
   const urlColor = `#${router.query.color}`;
   const [color, setColor] = useState('#5474B4');
-  const { colors, baseColorIndex } = generateColorsMap(color);
+  const { baseColorIndex, formats } = generateColorFormats(color);
+  const colors = formats.hex.map((value) => chroma(value));
   const [displayColorsInfo, setDisplayColorsInfo] = useLocalStorage({
     key: 'display-colors-info',
     defaultValue: true,
