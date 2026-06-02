@@ -347,6 +347,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Alert,
       MDX_DATA.Notification,
       MDX_DATA.Skeleton,
+      MDX_DATA.EmptyState,
       MDX_DATA.Progress,
       MDX_DATA.RingProgress,
       MDX_DATA.SemiCircleProgress,

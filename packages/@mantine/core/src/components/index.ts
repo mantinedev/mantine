@@ -49,6 +49,7 @@ export * from './DataList';
 export * from './Dialog';
 export * from './Divider';
 export * from './Drawer';
+export * from './EmptyState';
 export * from './Fieldset';
 export * from './FileButton';
 export * from './FileInput';

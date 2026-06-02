@@ -1,4 +1,4 @@
-import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, InputDemos, MonthViewDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, WeekViewDemos } from '@docs/demos';
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MonthViewDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -27,6 +27,16 @@ list using `dl`, `dt`, and `dd` HTML elements. Supports vertical and horizontal 
 dividers between items, and all standard Mantine features like Styles API and size prop.
 
 <Demo data={DataListDemos.usage} />
+
+## EmptyState component
+
+New [EmptyState](/core/empty-state) component displays a placeholder for "no data" situations:
+empty search results, empty tables and lists, first-run states or error illustrations with an
+optional call to action. It can be used with `icon`, `title` and `description` shorthand props
+or with `EmptyState.Indicator`, `EmptyState.Title`, `EmptyState.Description` and
+`EmptyState.Actions` compound components for full control.
+
+<Demo data={EmptyStateDemos.compound} />
 
 ## ResourcesDayView component
 
