@@ -860,6 +860,7 @@ TreeSelect component supports Styles API. With Styles API, you can customize sty
 | wrapper | .mantine-TreeSelect-wrapper | Root element of the Input |
 | input | .mantine-TreeSelect-input | Input element |
 | section | .mantine-TreeSelect-section | Left and right sections |
+| bottomSection | .mantine-TreeSelect-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-TreeSelect-root | Root element |
 | label | .mantine-TreeSelect-label | Label element |
 | required | .mantine-TreeSelect-required | Required asterisk element, rendered inside label |

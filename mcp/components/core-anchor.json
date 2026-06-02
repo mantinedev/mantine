@@ -5,13 +5,13 @@
   "package": "@mantine/core",
   "route": "/core/anchor",
   "description": "Display link with theme styles",
-  "propsCount": 7,
+  "propsCount": 8,
   "llmUrl": "https://mantine.dev/llms/core-anchor.md",
   "componentDataUrl": "/mcp/components/core-anchor.json",
-  "searchText": "anchor display link with theme styles @mantine/core /core/anchor gradient inherit inline lineclamp size truncate underline",
+  "searchText": "anchor display link with theme styles @mantine/core /core/anchor gradient inherit inline lineclamp size textwrap truncate underline",
   "source": "@mantine/core/src/components/Anchor/Anchor.tsx",
   "docs": "core/anchor.mdx",
-  "markdown": "# Anchor\nPackage: @mantine/core\nImport: import { Anchor } from '@mantine/core';\nDescription: Display link with theme styles\n\n## Usage\n\n```tsx\nimport { Anchor } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Anchor href=\"https://mantine.dev/\" target=\"_blank\">\n      Anchor component\n    </Anchor>\n  );\n}\n```\n\n\n## Underline\n\nUse the `underline` prop to configure the `text-decoration` property. It accepts the following values:\n\n* `always` - link is always underlined\n* `hover` - link is underlined on hover\n* `never` - link is never underlined\n* `not-hover` - link is underlined when not hovered\n\n```tsx\nimport { Anchor, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"always\">\n        Underline always\n      </Anchor>\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"hover\">\n        Underline hover\n      </Anchor>\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"never\">\n        Underline never\n      </Anchor>\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"not-hover\">\n        Underline not-hover\n      </Anchor>\n    </Group>\n  );\n}\n```\n\n\nYou can also configure the `underline` prop for all `Anchor` components with [default props](https://mantine.dev/llms/theming-default-props.md):\n\n```tsx\nimport { Anchor, createTheme, MantineProvider } from '@mantine/core';\n\nconst theme = createTheme({\n  components: {\n    Anchor: Anchor.extend({\n      defaultProps: {\n        underline: 'always',\n      },\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      {/* Your app here */}\n    </MantineProvider>\n  );\n}\n```\n\n## Text props\n\nThe `Anchor` component supports all [Text](https://mantine.dev/llms/core-text.md) component props.\nFor example, you can use the gradient variant:\n\n```tsx\nimport { Anchor } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Anchor\n      variant=\"gradient\"\n      gradient={{ from: 'pink', to: 'yellow' }}\n      fw={500}\n      fz=\"lg\"\n      href=\"#text-props\"\n    >\n      A link with pink to yellow gradient\n    </Anchor>\n  );\n}\n```\n\n\n\n#### Props\n\n**Anchor props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| gradient | MantineGradient | - | Gradient configuration, ignored when `variant` is not `gradient` |\n| inherit | boolean | - | Determines whether font properties should be inherited from the parent |\n| inline | boolean | - | Sets `line-height` to 1 for centering |\n| lineClamp | number | - | Number of lines after which Text will be truncated |\n| size | MantineSize \\| (string & {}) | - | Controls `font-size` and `line-height` |\n| truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |\n| underline | \"always\" \\| \"hover\" \\| \"not-hover\" \\| \"never\" | - | Defines when `text-decoration: underline` styles are applied. |",
+  "markdown": "# Anchor\nPackage: @mantine/core\nImport: import { Anchor } from '@mantine/core';\nDescription: Display link with theme styles\n\n## Usage\n\n```tsx\nimport { Anchor } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Anchor href=\"https://mantine.dev/\" target=\"_blank\">\n      Anchor component\n    </Anchor>\n  );\n}\n```\n\n\n## Underline\n\nUse the `underline` prop to configure the `text-decoration` property. It accepts the following values:\n\n* `always` - link is always underlined\n* `hover` - link is underlined on hover\n* `never` - link is never underlined\n* `not-hover` - link is underlined when not hovered\n\n```tsx\nimport { Anchor, Group } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Group justify=\"center\">\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"always\">\n        Underline always\n      </Anchor>\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"hover\">\n        Underline hover\n      </Anchor>\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"never\">\n        Underline never\n      </Anchor>\n      <Anchor href=\"https://mantine.dev/\" target=\"_blank\" underline=\"not-hover\">\n        Underline not-hover\n      </Anchor>\n    </Group>\n  );\n}\n```\n\n\nYou can also configure the `underline` prop for all `Anchor` components with [default props](https://mantine.dev/llms/theming-default-props.md):\n\n```tsx\nimport { Anchor, createTheme, MantineProvider } from '@mantine/core';\n\nconst theme = createTheme({\n  components: {\n    Anchor: Anchor.extend({\n      defaultProps: {\n        underline: 'always',\n      },\n    }),\n  },\n});\n\nfunction Demo() {\n  return (\n    <MantineProvider theme={theme}>\n      {/* Your app here */}\n    </MantineProvider>\n  );\n}\n```\n\n## Text props\n\nThe `Anchor` component supports all [Text](https://mantine.dev/llms/core-text.md) component props.\nFor example, you can use the gradient variant:\n\n```tsx\nimport { Anchor } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Anchor\n      variant=\"gradient\"\n      gradient={{ from: 'pink', to: 'yellow' }}\n      fw={500}\n      fz=\"lg\"\n      href=\"#text-props\"\n    >\n      A link with pink to yellow gradient\n    </Anchor>\n  );\n}\n```\n\n\n\n#### Props\n\n**Anchor props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| gradient | MantineGradient | - | Gradient configuration, ignored when `variant` is not `gradient` |\n| inherit | boolean | - | Determines whether font properties should be inherited from the parent |\n| inline | boolean | - | Sets `line-height` to 1 for centering |\n| lineClamp | number | - | Number of lines after which Text will be truncated |\n| size | MantineSize \\| (string & {}) | - | Controls `font-size` and `line-height` |\n| textWrap | \"wrap\" \\| \"nowrap\" \\| \"balance\" \\| \"pretty\" \\| \"stable\" | - | Controls `text-wrap` CSS property |\n| truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |\n| underline | \"always\" \\| \"hover\" \\| \"not-hover\" \\| \"never\" | - | Defines when `text-decoration: underline` styles are applied. |",
   "props": [
     {
       "name": "gradient",
@@ -60,6 +60,37 @@
       "defaultValue": "'md'",
       "type": {
         "name": "MantineSize | (string & {})"
+      },
+      "sourceComponent": "Anchor"
+    },
+    {
+      "name": "textWrap",
+      "description": "Controls <code>text-wrap</code> CSS property",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "\"wrap\" | \"nowrap\" | \"balance\" | \"pretty\" | \"stable\"",
+        "raw": "\"wrap\" | \"nowrap\" | \"balance\" | \"pretty\" | \"stable\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"wrap\""
+          },
+          {
+            "value": "\"nowrap\""
+          },
+          {
+            "value": "\"balance\""
+          },
+          {
+            "value": "\"pretty\""
+          },
+          {
+            "value": "\"stable\""
+          }
+        ]
       },
       "sourceComponent": "Anchor"
     },

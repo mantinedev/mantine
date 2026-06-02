@@ -308,6 +308,7 @@ MaskInput component supports Styles API. With Styles API, you can customize styl
 | wrapper | .mantine-MaskInput-wrapper | Root element of the Input |
 | input | .mantine-MaskInput-input | Input element |
 | section | .mantine-MaskInput-section | Left and right sections |
+| bottomSection | .mantine-MaskInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-MaskInput-root | Root element |
 | label | .mantine-MaskInput-label | Label element |
 | required | .mantine-MaskInput-required | Required asterisk element, rendered inside label |

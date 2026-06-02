@@ -130,6 +130,25 @@ function Demo() {
 ```
 
 
+## Text wrap
+
+Use the `textWrap` prop to control the `text-wrap` CSS property. For example, `balance` evens out
+line lengths and `pretty` prevents orphaned words on the last line:
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text textWrap="wrap">
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi voluptatibus inventore iusto
+      cum dolore molestiae perspiciatis! Totam repudiandae impedit maxime!
+    </Text>
+  );
+}
+```
+
+
 ## span prop
 
 Use the `span` prop as a shorthand for `component="span"`:
@@ -160,6 +179,7 @@ function Demo() {
 | lineClamp | number | - | Number of lines after which Text will be truncated |
 | size | MantineSize \| (string & {}) | - | Controls `font-size` and `line-height` |
 | span | boolean | - | Shorthand for `component="span"` |
+| textWrap | "wrap" \| "nowrap" \| "balance" \| "pretty" \| "stable" | - | Controls `text-wrap` CSS property |
 | truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |
 
 **Text.Input props**
@@ -199,6 +219,8 @@ function Demo() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | autosize | boolean | - | If set, enables textarea height growing with its content |
+| bottomSection | React.ReactNode | - | Content rendered at the bottom of the input, inside the border |
+| bottomSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `bottomSection` element |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
 | disabled | boolean | - | Sets `disabled` attribute on the `input` element |
@@ -249,6 +271,7 @@ Text component supports Styles API. With Styles API, you can customize styles of
 | root | --text-lh | Controls `line-height` property |
 | root | --text-gradient | Text fill gradient |
 | root | --text-line-clamp | Number of lines that should be visible |
+| root | --text-text-wrap | Controls `text-wrap` property |
 
 **Text data attributes**
 
@@ -266,6 +289,7 @@ Text component supports Styles API. With Styles API, you can customize styles of
 | wrapper | .mantine-Textinput-wrapper | Root element of the Input |
 | input | .mantine-Textinput-input | Input element |
 | section | .mantine-Textinput-section | Left and right sections |
+| bottomSection | .mantine-Textinput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-Textinput-root | Root element |
 | label | .mantine-Textinput-label | Label element |
 | required | .mantine-Textinput-required | Required asterisk element, rendered inside label |
@@ -279,6 +303,7 @@ Text component supports Styles API. With Styles API, you can customize styles of
 | wrapper | .mantine-Textarea-wrapper | Root element of the Input |
 | input | .mantine-Textarea-input | Input element |
 | section | .mantine-Textarea-section | Left and right sections |
+| bottomSection | .mantine-Textarea-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-Textarea-root | Root element |
 | label | .mantine-Textarea-label | Label element |
 | required | .mantine-Textarea-required | Required asterisk element, rendered inside label |

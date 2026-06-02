@@ -20,6 +20,26 @@ function Demo() {
 ```
 
 
+## Text wrap
+
+Use the `textWrap` prop to control the `text-wrap` CSS property:
+
+```tsx
+import { Blockquote } from '@mantine/core';
+import { InfoIcon } from '@phosphor-icons/react';
+
+function Demo() {
+  const icon = <InfoIcon />;
+  return (
+    <Blockquote icon={icon} cite="– Forrest Gump" textWrap="wrap">
+      Life is like a box of chocolates. You never know what you are gonna get. But whatever you
+      get, you should make the most of it and enjoy every moment.
+    </Blockquote>
+  );
+}
+```
+
+
 
 #### Props
 
@@ -32,6 +52,7 @@ function Demo() {
 | icon | React.ReactNode | - | Blockquote icon, displayed at the top left side |
 | iconSize | string \| number | - | Controls icon `width` and `height`, numbers are converted to rem |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
+| textWrap | "wrap" \| "nowrap" \| "balance" \| "pretty" \| "stable" | - | Controls `text-wrap` CSS property |
 
 
 #### Styles API
@@ -55,3 +76,4 @@ Blockquote component supports Styles API. With Styles API, you can customize sty
 | root | --bq-bg-light | Controls `background-color` in light color scheme |
 | root | --bq-icon-size | Controls `width` and `height` of the icon |
 | root | --bq-radius | Controls `border-radius` |
+| root | --bq-text-wrap | Controls `text-wrap` property |

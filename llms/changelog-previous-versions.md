@@ -4,6 +4,9 @@
 
 ## Releases
 
+### [9.3.0](https://mantine.dev/llms/changelog-9-3-0.md) (June 2, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.3.0
+
 ### [9.2.0](https://mantine.dev/llms/changelog-9-2-0.md) (May 12, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.2.0
 

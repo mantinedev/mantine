@@ -158,6 +158,8 @@ function Demo() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | autosize | boolean | - | If set, enables textarea height growing with its content |
+| bottomSection | React.ReactNode | - | Content rendered at the bottom of the input, inside the border |
+| bottomSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `bottomSection` element |
 | defaultValue | string | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
@@ -209,6 +211,7 @@ JsonInput component supports Styles API. With Styles API, you can customize styl
 | wrapper | .mantine-JsonInput-wrapper | Root element of the Input |
 | input | .mantine-JsonInput-input | Input element |
 | section | .mantine-JsonInput-section | Left and right sections |
+| bottomSection | .mantine-JsonInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-JsonInput-root | Root element |
 | label | .mantine-JsonInput-label | Label element |
 | required | .mantine-JsonInput-required | Required asterisk element, rendered inside label |

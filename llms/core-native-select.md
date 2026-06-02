@@ -373,3 +373,4 @@ NativeSelect component supports Styles API. With Styles API, you can customize s
 | wrapper | .mantine-NativeSelect-wrapper | Root element of the Input |
 | input | .mantine-NativeSelect-input | Input element |
 | section | .mantine-NativeSelect-section | Left and right sections |
+| bottomSection | .mantine-NativeSelect-bottomSection | Bottom section element, rendered inside the input border at the bottom |

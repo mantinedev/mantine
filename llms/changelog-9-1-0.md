@@ -233,7 +233,7 @@ to update data based on the result:
 
 ```tsx
 import { useState } from 'react';
-import { CaretDownIcon } from '@phosphor-icons/react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import { Group, moveTreeNode, RenderTreeNodePayload, Tree, TreeNodeData } from '@mantine/core';
 
 const data: TreeNodeData[] = [
@@ -261,12 +261,15 @@ const data: TreeNodeData[] = [
 
 function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} {...elementProps}>
-      {hasChildren && (
-        <CaretDownIcon
-          size={18}
-          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        />
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
       )}
       <span>{node.label}</span>
     </Group>
@@ -279,6 +282,7 @@ function Demo() {
   return (
     <Tree
       data={treeData}
+      withLines
       onDragDrop={(payload) =>
         setTreeData((current) => moveTreeNode(current, payload))
       }
@@ -298,7 +302,7 @@ utility to splice loaded children into your data:
 
 ```tsx
 import { useState } from 'react';
-import { CaretDownIcon, SpinnerIcon } from '@phosphor-icons/react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import {
   Group,
   mergeAsyncChildren,
@@ -328,18 +332,17 @@ async function fetchChildren(parentValue: string): Promise<TreeNodeData[]> {
   ];
 }
 
-function Leaf({ node, expanded, hasChildren, elementProps, isLoading }: RenderTreeNodePayload) {
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} wrap="nowrap" {...elementProps}>
-      {isLoading ? (
-        <SpinnerIcon size={18} style={{ animation: 'spin 1s linear infinite', flexShrink: 0 }} />
-      ) : (
-        hasChildren && (
-          <CaretDownIcon
-            size={18}
-            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
-          />
+    <Group gap={6} wrap="nowrap" {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
         )
+      ) : (
+        <FileTextIcon size={14} style={{ flexShrink: 0, opacity: 0.75 }} />
       )}
       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {node.label}
@@ -361,6 +364,7 @@ function Demo() {
     <Tree
       data={data}
       tree={tree}
+      withLines
       renderNode={(payload) => <Leaf {...payload} />}
     />
   );
@@ -376,9 +380,12 @@ provide a custom filter function for advanced matching (for example, fuzzy searc
 
 ```tsx
 import { useMemo, useState } from 'react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import {
   filterTreeData,
   getTreeExpandedState,
+  Group,
+  RenderTreeNodePayload,
   TextInput,
   Tree,
   TreeNodeData,
@@ -422,6 +429,23 @@ const data: TreeNodeData[] = [
   { label: 'tsconfig.json', value: 'tsconfig.json' },
 ];
 
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
+
 function Demo() {
   const [search, setSearch] = useState('');
   const tree = useTree();
@@ -449,7 +473,12 @@ function Demo() {
         value={search}
         onChange={(event) => handleSearchChange(event.currentTarget.value)}
       />
-      <Tree data={filteredData} tree={tree} />
+      <Tree
+        data={filteredData}
+        tree={tree}
+        withLines
+        renderNode={(payload) => <Leaf {...payload} />}
+      />
     </div>
   );
 }
@@ -462,15 +491,39 @@ function Demo() {
 showing parent-child relationships. Lines adapt to `levelOffset` spacing automatically:
 
 ```tsx
-import { getTreeExpandedState, Tree, useTree } from '@mantine/core';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
+import {
+  getTreeExpandedState,
+  Group,
+  RenderTreeNodePayload,
+  Tree,
+  useTree,
+} from '@mantine/core';
 import { data } from './data';
+
+function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
+  return (
+    <Group gap={6} {...elementProps}>
+      {hasChildren ? (
+        expanded ? (
+          <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+        ) : (
+          <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+        )
+      ) : (
+        <FileTextIcon size={14} style={{ opacity: 0.75 }} />
+      )}
+      <span>{node.label}</span>
+    </Group>
+  );
+}
 
 function Demo() {
   const tree = useTree({
     initialExpandedState: getTreeExpandedState(data, '*'),
   });
 
-  return <Tree data={data} tree={tree} withLines />;
+  return <Tree data={data} tree={tree} withLines renderNode={(payload) => <Leaf {...payload} />} />;
 }
 ```
 
@@ -554,6 +607,7 @@ function Demo() {
     <div ref={scrollParentRef} style={{ height: 400, overflow: 'auto' }}>
       <div
         data-tree-root
+        data-with-lines
         role="tree"
         style={{
           height: virtualizer.getTotalSize(),
@@ -592,7 +646,7 @@ a parent node does not affect children and vice versa – each node's checked st
 fully independent:
 
 ```tsx
-import { CaretDownIcon } from '@phosphor-icons/react';
+import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
 import { Checkbox, Group, RenderTreeNodePayload, Tree, useTree } from '@mantine/core';
 import { data } from './data';
 
@@ -600,6 +654,7 @@ const renderTreeNode = ({
   node,
   expanded,
   hasChildren,
+  isRoot,
   elementProps,
   tree,
 }: RenderTreeNodePayload) => {
@@ -609,6 +664,8 @@ const renderTreeNode = ({
     <Group gap="xs" {...elementProps}>
       <Checkbox.Indicator
         checked={checked}
+        size="xs"
+        mis={isRoot ? undefined : 2}
         onClick={() =>
           checked
             ? tree.uncheckNode(node.value)
@@ -616,17 +673,17 @@ const renderTreeNode = ({
         }
       />
 
-      <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>
-        <span>{node.label}</span>
-
-        {hasChildren && (
-          <CaretDownIcon
-            size={14}
-            style={{
-              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
-            }}
-          />
+      <Group gap={6} onClick={() => tree.toggleExpanded(node.value)}>
+        {hasChildren ? (
+          expanded ? (
+            <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
+          ) : (
+            <FolderSimpleIcon size={14} style={{ opacity: 0.75 }} />
+          )
+        ) : (
+          <FileTextIcon size={14} style={{ opacity: 0.75 }} />
         )}
+        <span>{node.label}</span>
       </Group>
     </Group>
   );
@@ -640,6 +697,7 @@ function Demo() {
       tree={tree}
       levelOffset={23}
       expandOnClick={false}
+      withLines
       renderNode={renderTreeNode}
     />
   );

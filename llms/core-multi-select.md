@@ -596,6 +596,33 @@ function Demo() {
 ```
 
 
+## Fit dropdown to viewport height
+
+Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical
+space in the viewport. The `flip` middleware is disabled in this mode – the dropdown
+always opens in the configured direction and is constrained to the viewport edges instead
+of flipping to the other side. Useful when working with large option lists:
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+const data = Array(100)
+  .fill(0)
+  .map((_, index) => `Option ${index}`);
+
+function Demo() {
+  return (
+    <MultiSelect
+      label="Fits viewport height"
+      placeholder="Pick values"
+      data={data}
+      floatingHeight="viewport"
+    />
+  );
+}
+```
+
+
 ## Group options
 
 ```tsx
@@ -974,6 +1001,7 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |
+| floatingHeight | "viewport" | - | If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. |
 | hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input `value` attribute |
 | hidePickedOptions | boolean | - | When enabled, selected options are hidden from the dropdown list |
@@ -1037,6 +1065,7 @@ MultiSelect component supports Styles API. With Styles API, you can customize st
 | wrapper | .mantine-MultiSelect-wrapper | Root element of the Input |
 | input | .mantine-MultiSelect-input | Input element |
 | section | .mantine-MultiSelect-section | Left and right sections |
+| bottomSection | .mantine-MultiSelect-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-MultiSelect-root | Root element |
 | label | .mantine-MultiSelect-label | Label element |
 | required | .mantine-MultiSelect-required | Required asterisk element, rendered inside label |

@@ -203,7 +203,7 @@ that is not required to understand the context.
 | overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
 | portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
-| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
+| preventPositionChangeWhenVisible | boolean | - | If `true`, the dropdown picks its side on open (flip runs once, preferring the `position` prop) and then never changes side — scrolling, resizing, and content size changes will not flip the dropdown. The side is recalculated fresh on the next open. Does not affect the `shift` middleware. Set to `false` to keep flip active and allow the dropdown to re-flip on every change. |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |
 | shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |

@@ -111,5 +111,6 @@ function Demo() {
 | inline | boolean | - | Sets `line-height` to 1 for centering |
 | lineClamp | number | - | Number of lines after which Text will be truncated |
 | size | MantineSize \| (string & {}) | - | Controls `font-size` and `line-height` |
+| textWrap | "wrap" \| "nowrap" \| "balance" \| "pretty" \| "stable" | - | Controls `text-wrap` CSS property |
 | truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |
 | underline | "always" \| "hover" \| "not-hover" \| "never" | - | Defines when `text-decoration: underline` styles are applied. |

@@ -717,6 +717,7 @@ Input component supports Styles API. With Styles API, you can customize styles o
 | wrapper | .mantine-Input-wrapper | Root element of the Input |
 | input | .mantine-Input-input | Input element |
 | section | .mantine-Input-section | Left and right sections |
+| bottomSection | .mantine-Input-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 
 **Input CSS variables**
 
@@ -754,6 +755,7 @@ Input component supports Styles API. With Styles API, you can customize styles o
 | wrapper | .mantine-Inputbase-wrapper | Root element of the Input |
 | input | .mantine-Inputbase-input | Input element |
 | section | .mantine-Inputbase-section | Left and right sections |
+| bottomSection | .mantine-Inputbase-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-Inputbase-root | Root element |
 | label | .mantine-Inputbase-label | Label element |
 | required | .mantine-Inputbase-required | Required asterisk element, rendered inside label |

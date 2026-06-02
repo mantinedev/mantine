@@ -275,7 +275,7 @@ export const data = [
 | endAngle | number | - | Controls angle at which charts ends. Set to `0` to render the chart as semicircle. |
 | labelColor | MantineColor | - | Controls text color of all labels, white by default |
 | labelsPosition | "outside" \| "inside" | - | Controls labels position relative to the segment |
-| labelsType | "value" \| "percent" | - | Type of labels to display |
+| labelsType | "value" \| "name" \| "percent" | - | Type of labels to display |
 | paddingAngle | number | - | Controls padding between segments |
 | pieChartProps | (PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `PieChart` component |
 | pieProps | Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Pie` component |

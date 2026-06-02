@@ -341,6 +341,7 @@ PasswordInput component supports Styles API. With Styles API, you can customize 
 | wrapper | .mantine-PasswordInput-wrapper | Root element of the Input |
 | input | .mantine-PasswordInput-input | Input element |
 | section | .mantine-PasswordInput-section | Left and right sections |
+| bottomSection | .mantine-PasswordInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-PasswordInput-root | Root element |
 | label | .mantine-PasswordInput-label | Label element |
 | required | .mantine-PasswordInput-required | Required asterisk element, rendered inside label |

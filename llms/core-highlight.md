@@ -235,6 +235,7 @@ function Demo() {
 | lineClamp | number | - | Number of lines after which Text will be truncated |
 | size | MantineSize \| (string & {}) | - | Controls `font-size` and `line-height` |
 | span | boolean | - | Shorthand for `component="span"` |
+| textWrap | "wrap" \| "nowrap" \| "balance" \| "pretty" \| "stable" | - | Controls `text-wrap` CSS property |
 | truncate | TextTruncate | - | Side on which Text must be truncated, if `true`, text is truncated from the start |
 | wholeWord | boolean | - | Only match whole words (adds word boundaries to regex). When enabled, 'the' will not match 'there'. |
 

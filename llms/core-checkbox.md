@@ -780,7 +780,7 @@ function GoodLabel() {
 | iconColor | MantineColor | - | Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` |
 | indeterminate | boolean | - | Indeterminate state of the checkbox. If set, `checked` prop is ignored. |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
-| size | MantineSize | - | Controls size of the component |
+| size | MantineSize \| number | - | Controls size of the component |
 
 **Checkbox.CardContext props**
 

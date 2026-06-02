@@ -556,6 +556,33 @@ function Demo() {
 ```
 
 
+## Fit dropdown to viewport height
+
+Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical
+space in the viewport. The `flip` middleware is disabled in this mode – the dropdown
+always opens in the configured direction and is constrained to the viewport edges instead
+of flipping to the other side. Useful when working with large option lists:
+
+```tsx
+import { Select } from '@mantine/core';
+
+const data = Array(100)
+  .fill(0)
+  .map((_, index) => `Option ${index}`);
+
+function Demo() {
+  return (
+    <Select
+      label="Fits viewport height"
+      placeholder="Pick value"
+      data={data}
+      floatingHeight="viewport"
+    />
+  );
+}
+```
+
+
 ## Group options
 
 ```tsx
@@ -950,6 +977,7 @@ function Demo() {
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |
+| floatingHeight | "viewport" | - | If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. |
 | hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
 | inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
@@ -1006,6 +1034,7 @@ Select component supports Styles API. With Styles API, you can customize styles 
 | wrapper | .mantine-Select-wrapper | Root element of the Input |
 | input | .mantine-Select-input | Input element |
 | section | .mantine-Select-section | Left and right sections |
+| bottomSection | .mantine-Select-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-Select-root | Root element |
 | label | .mantine-Select-label | Label element |
 | required | .mantine-Select-required | Required asterisk element, rendered inside label |

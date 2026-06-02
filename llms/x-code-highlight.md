@@ -502,6 +502,26 @@ function Demo() {
 ```
 
 
+## Line numbers
+
+Set `withLineNumbers` prop to display line numbers alongside the code:
+
+
+```tsx
+...
+```
+
+```tsx
+import { CodeHighlight } from '@mantine/code-highlight';
+
+const exampleCode = `...`;
+
+function Demo() {
+  return <CodeHighlight code={exampleCode} language="tsx" withLineNumbers />;
+}
+```
+
+
 ## Expandable code
 
 If the code snippet is too long, you can make it expandable with `withExpandButton`
@@ -665,6 +685,7 @@ function Demo() {
 | withBorder | boolean | - | Adds border to the root element |
 | withCopyButton | boolean | - | Determines whether the copy button should be displayed |
 | withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |
+| withLineNumbers | boolean | - | Determines whether line numbers should be displayed |
 
 **CodeHighlight.Tabs props**
 
@@ -690,6 +711,7 @@ function Demo() {
 | withBorder | boolean | - | Adds border to the root element |
 | withCopyButton | boolean | - | Determines whether the copy button should be displayed |
 | withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |
+| withLineNumbers | boolean | - | Determines whether line numbers should be displayed |
 
 
 #### Styles API
@@ -708,6 +730,8 @@ CodeHighlight component supports Styles API. With Styles API, you can customize 
 | controlTooltip | .mantine-CodeHighlight-controlTooltip | Root element of control tooltip |
 | controls | .mantine-CodeHighlight-controls | A wrapper around controls |
 | scrollarea | .mantine-CodeHighlight-scrollarea | Scroll area, contains code |
+| lineNumbers | .mantine-CodeHighlight-lineNumbers | Line numbers column |
+| codeWrapper | .mantine-CodeHighlight-codeWrapper | Wrapper element around line numbers and scroll area |
 
 **CodeHighlight CSS variables**
 
@@ -729,6 +753,8 @@ CodeHighlight component supports Styles API. With Styles API, you can customize 
 | controlTooltip | .mantine-CodeHighlightTabs-controlTooltip | Root element of control tooltip |
 | controls | .mantine-CodeHighlightTabs-controls | A wrapper around controls |
 | scrollarea | .mantine-CodeHighlightTabs-scrollarea | Scroll area, contains code |
+| lineNumbers | .mantine-CodeHighlightTabs-lineNumbers | Line numbers column |
+| codeWrapper | .mantine-CodeHighlightTabs-codeWrapper | Wrapper element around line numbers and scroll area |
 | root | .mantine-CodeHighlightTabs-root | Root element |
 | filesScrollarea | .mantine-CodeHighlightTabs-filesScrollarea | Scrollarea with files list |
 | files | .mantine-CodeHighlightTabs-files | Files names list |

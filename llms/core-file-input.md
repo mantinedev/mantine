@@ -301,6 +301,7 @@ FileInput component supports Styles API. With Styles API, you can customize styl
 | wrapper | .mantine-FileInput-wrapper | Root element of the Input |
 | input | .mantine-FileInput-input | Input element |
 | section | .mantine-FileInput-section | Left and right sections |
+| bottomSection | .mantine-FileInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-FileInput-root | Root element |
 | label | .mantine-FileInput-label | Label element |
 | required | .mantine-FileInput-required | Required asterisk element, rendered inside label |

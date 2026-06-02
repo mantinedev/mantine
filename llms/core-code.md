@@ -87,6 +87,7 @@ function Demo() {
 | withBorder | boolean | - | Adds border to the root element |
 | withCopyButton | boolean | - | Determines whether the copy button should be displayed |
 | withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |
+| withLineNumbers | boolean | - | Determines whether line numbers should be displayed |
 
 **Code.HighlightTabs props**
 
@@ -112,6 +113,7 @@ function Demo() {
 | withBorder | boolean | - | Adds border to the root element |
 | withCopyButton | boolean | - | Determines whether the copy button should be displayed |
 | withExpandButton | boolean | - | Determines whether the expand/collapse button should be displayed |
+| withLineNumbers | boolean | - | Determines whether line numbers should be displayed |
 
 
 #### Styles API
@@ -148,6 +150,8 @@ Code component supports Styles API. With Styles API, you can customize styles of
 | controlTooltip | .mantine-Codehighlight-controlTooltip | Root element of control tooltip |
 | controls | .mantine-Codehighlight-controls | A wrapper around controls |
 | scrollarea | .mantine-Codehighlight-scrollarea | Scroll area, contains code |
+| lineNumbers | .mantine-Codehighlight-lineNumbers | Line numbers column |
+| codeWrapper | .mantine-Codehighlight-codeWrapper | Wrapper element around line numbers and scroll area |
 
 **Codehighlight CSS variables**
 
@@ -169,6 +173,8 @@ Code component supports Styles API. With Styles API, you can customize styles of
 | controlTooltip | .mantine-Codehighlighttabs-controlTooltip | Root element of control tooltip |
 | controls | .mantine-Codehighlighttabs-controls | A wrapper around controls |
 | scrollarea | .mantine-Codehighlighttabs-scrollarea | Scroll area, contains code |
+| lineNumbers | .mantine-Codehighlighttabs-lineNumbers | Line numbers column |
+| codeWrapper | .mantine-Codehighlighttabs-codeWrapper | Wrapper element around line numbers and scroll area |
 | root | .mantine-Codehighlighttabs-root | Root element |
 | filesScrollarea | .mantine-Codehighlighttabs-filesScrollarea | Scrollarea with files list |
 | files | .mantine-Codehighlighttabs-files | Files names list |

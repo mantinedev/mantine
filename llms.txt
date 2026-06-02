@@ -174,6 +174,7 @@ For a single consolidated file with all content, use:
 - [Skeleton](https://mantine.dev/llms/core-skeleton.md): Indicate content loading state
 - [Slider](https://mantine.dev/llms/core-slider.md): Slider component
 - [Space](https://mantine.dev/llms/core-space.md): Add horizontal or vertical spacing from theme
+- [Splitter](https://mantine.dev/llms/core-splitter.md): Resizable split pane layout
 - [Spoiler](https://mantine.dev/llms/core-spoiler.md): Hide long sections of content under a spoiler
 - [Stack](https://mantine.dev/llms/core-stack.md): Compose elements and components in a vertical flex container
 - [Stepper](https://mantine.dev/llms/core-stepper.md): Display content divided into a steps sequence
@@ -267,6 +268,7 @@ For a single consolidated file with all content, use:
 - [useSet](https://mantine.dev/llms/hooks-use-set.md)
 - [useSetState](https://mantine.dev/llms/hooks-use-set-state.md)
 - [useShallowEffect](https://mantine.dev/llms/hooks-use-shallow-effect.md)
+- [useSplitter](https://mantine.dev/llms/hooks-use-splitter.md)
 - [useStateHistory](https://mantine.dev/llms/hooks-use-state-history.md)
 - [useTextSelection](https://mantine.dev/llms/hooks-use-text-selection.md)
 - [useThrottledCallback](https://mantine.dev/llms/hooks-use-throttled-callback.md)
@@ -449,6 +451,7 @@ For a single consolidated file with all content, use:
 - [Changelog900](https://mantine.dev/llms/changelog-9-0-0.md)
 - [Changelog910](https://mantine.dev/llms/changelog-9-1-0.md)
 - [Changelog920](https://mantine.dev/llms/changelog-9-2-0.md)
+- [Changelog930](https://mantine.dev/llms/changelog-9-3-0.md)
 - [Contribute](https://mantine.dev/llms/contribute.md)
 - [EslintConfig](https://mantine.dev/llms/eslint-config-mantine.md)
 - [GettingStarted](https://mantine.dev/llms/getting-started.md)

@@ -119,6 +119,7 @@ Pill component supports Styles API. With Styles API, you can customize styles of
 | wrapper | .mantine-Pillsinput-wrapper | Root element of the Input |
 | input | .mantine-Pillsinput-input | Input element |
 | section | .mantine-Pillsinput-section | Left and right sections |
+| bottomSection | .mantine-Pillsinput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-Pillsinput-root | Root element |
 | label | .mantine-Pillsinput-label | Label element |
 | required | .mantine-Pillsinput-required | Required asterisk element, rendered inside label |

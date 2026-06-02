@@ -80,6 +80,38 @@ function Demo() {
 }
 ```
 
+## Bottom section
+
+Use `bottomSection` prop to render content inside the input border at the bottom.
+This is useful for displaying character counters, hints, or other supplementary information:
+
+```tsx
+import { useState } from 'react';
+import { Text, Textarea } from '@mantine/core';
+
+function Demo() {
+  const maxLength = 500;
+  const [value, setValue] = useState('');
+
+  return (
+    <Textarea
+      label="Your message"
+      placeholder="Type your message..."
+      autosize
+      minRows={4}
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value.slice(0, maxLength))}
+      bottomSection={
+        <Text size="xs" c="dimmed">
+          {value.length}/{maxLength} characters
+        </Text>
+      }
+    />
+  );
+}
+```
+
+
 ## Autosize
 
 The autosize textarea height grows until maxRows are reached or indefinitely if maxRows is not set:
@@ -153,6 +185,8 @@ function Demo() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | autosize | boolean | - | If set, enables textarea height growing with its content |
+| bottomSection | React.ReactNode | - | Content rendered at the bottom of the input, inside the border |
+| bottomSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `bottomSection` element |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
 | disabled | boolean | - | Sets `disabled` attribute on the `input` element |
@@ -196,6 +230,7 @@ Textarea component supports Styles API. With Styles API, you can customize style
 | wrapper | .mantine-Textarea-wrapper | Root element of the Input |
 | input | .mantine-Textarea-input | Input element |
 | section | .mantine-Textarea-section | Left and right sections |
+| bottomSection | .mantine-Textarea-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-Textarea-root | Root element |
 | label | .mantine-Textarea-label | Label element |
 | required | .mantine-Textarea-required | Required asterisk element, rendered inside label |

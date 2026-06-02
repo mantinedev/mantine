@@ -260,6 +260,7 @@ PillsInput component supports Styles API. With Styles API, you can customize sty
 | wrapper | .mantine-PillsInput-wrapper | Root element of the Input |
 | input | .mantine-PillsInput-input | Input element |
 | section | .mantine-PillsInput-section | Left and right sections |
+| bottomSection | .mantine-PillsInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-PillsInput-root | Root element |
 | label | .mantine-PillsInput-label | Label element |
 | required | .mantine-PillsInput-required | Required asterisk element, rendered inside label |

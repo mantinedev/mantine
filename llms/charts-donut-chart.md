@@ -319,7 +319,7 @@ export const data = [
 | data | DonutChartCell[] | required | Data used to render chart |
 | endAngle | number | - | Controls angle at which charts ends. Set to `0` to render the chart as semicircle. |
 | labelColor | MantineColor | - | Controls text color of all labels, by default depends on color scheme |
-| labelsType | "value" \| "percent" | - | Type of labels to display, `'value'` by default |
+| labelsType | "value" \| "name" \| "percent" | - | Type of labels to display, `'value'` by default |
 | paddingAngle | number | - | Controls padding between segments |
 | pieChartProps | (PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `PieChart` component |
 | pieProps | Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Pie` component |

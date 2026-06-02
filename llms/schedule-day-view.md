@@ -514,6 +514,76 @@ const events = [
 ```
 
 
+## Current time indicator in a different timezone
+
+`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
+perform any timezone conversions on its own. By default, the current time indicator is positioned
+based on the user's local time.
+
+To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
+that returns the current time and is called on every tick, so the indicator keeps updating
+automatically. In the example below, the current time is converted to the selected timezone with
+the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
+see the indicator and the time bubble move accordingly:
+
+```tsx
+// Demo.tsx
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import { Select, Stack } from '@mantine/core';
+import { DayView } from '@mantine/schedule';
+import { getEvents } from './data';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const timezones = ['UTC', 'America/New_York', 'Europe/Berlin', 'Asia/Kolkata', 'Asia/Tokyo'];
+
+function Demo() {
+  const [tz, setTz] = useState('UTC');
+
+  // getCurrentTime is called on every tick, so the indicator keeps updating
+  const getCurrentTime = () => dayjs().tz(tz).format('YYYY-MM-DD HH:mm:ss');
+  const currentDate = getCurrentTime().split(' ')[0];
+
+  return (
+    <Stack>
+      <Select
+        label="Display timezone"
+        data={timezones}
+        value={tz}
+        onChange={(value) => setTz(value!)}
+        allowDeselect={false}
+      />
+
+      <DayView
+        date={currentDate}
+        events={getEvents(currentDate)}
+        getCurrentTime={getCurrentTime}
+        startScrollTime={dayjs(getCurrentTime()).subtract(2, 'hour').format('HH:mm:ss')}
+        withCurrentTimeIndicator
+        withCurrentTimeBubble
+      />
+    </Stack>
+  );
+}
+
+// data.ts
+import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
+
+export function getEvents(date: string): ScheduleEventData[] {
+  return [
+    { id: 1, title: 'Morning standup', start: `${date} 09:00:00`, end: `${date} 09:30:00`, color: 'blue' },
+    { id: 2, title: 'Team meeting', start: `${date} 12:00:00`, end: `${date} 13:00:00`, color: 'teal' },
+    { id: 3, title: 'Code review', start: `${date} 16:00:00`, end: `${date} 17:00:00`, color: 'grape' },
+  ];
+}
+```
+
+
 ## Business hours
 
 Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours
@@ -2763,6 +2833,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | date | string \| Date | required | Day to display, Date object or date string in `YYYY-MM-DD` format |
 | endTime | string | - | Time slots end time in `HH:mm:ss` format |
 | events | ScheduleEventData[] | - | Events to display, must be a stable reference |
+| getCurrentTime | () => AnyDateValue | - | A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. |
 | getTimeSlotProps | ((data: { start: string; end: string; }) => Record<string, any>) \| undefined | - | Function to get additional props for each time slot. Receives slot start and end datetime strings. Returned props are spread onto the slot element. Event handlers returned by this function are composed with internal handlers (e.g. onClick) rather than overriding them. |
 | headerFormat | string \| ((date: string) => string) | - | Date format in the header |
 | highlightBusinessHours | boolean | - | If set to true, highlights business hours with white background |

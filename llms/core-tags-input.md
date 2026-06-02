@@ -580,6 +580,33 @@ function Demo() {
 ```
 
 
+## Fit dropdown to viewport height
+
+Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical
+space in the viewport. The `flip` middleware is disabled in this mode – the dropdown
+always opens in the configured direction and is constrained to the viewport edges instead
+of flipping to the other side. Useful when working with large option lists:
+
+```tsx
+import { TagsInput } from '@mantine/core';
+
+const data = Array(100)
+  .fill(0)
+  .map((_, index) => `Option ${index}`);
+
+function Demo() {
+  return (
+    <TagsInput
+      label="Fits viewport height"
+      placeholder="Pick values"
+      data={data}
+      floatingHeight="viewport"
+    />
+  );
+}
+```
+
+
 ## Group options
 
 ```tsx
@@ -913,6 +940,7 @@ function Demo() {
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<string> | - | Function based on which items are filtered and sorted |
+| floatingHeight | "viewport" | - | If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. |
 | hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
 | hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input `value` attribute |
 | inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
@@ -974,6 +1002,7 @@ TagsInput component supports Styles API. With Styles API, you can customize styl
 | wrapper | .mantine-TagsInput-wrapper | Root element of the Input |
 | input | .mantine-TagsInput-input | Input element |
 | section | .mantine-TagsInput-section | Left and right sections |
+| bottomSection | .mantine-TagsInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-TagsInput-root | Root element |
 | label | .mantine-TagsInput-label | Label element |
 | required | .mantine-TagsInput-required | Required asterisk element, rendered inside label |

@@ -981,6 +981,85 @@ function Demo() {
 ```
 
 
+## Fit dropdown to viewport height
+
+Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical
+space in the viewport. The dropdown size is recalculated automatically when the trigger
+position changes. When the prop is set, the `flip` middleware is disabled – the dropdown
+always opens in the configured direction and is constrained to the viewport edges instead
+of flipping to the other side.
+
+The dropdown exposes a `--combobox-floating-options-max-height` CSS variable equal to the
+available height minus the dropdown padding. Pass it as `mah` to your `ScrollArea.Autosize`
+(or use it on any element you want to scroll within the bounded dropdown):
+
+```tsx
+import { useState } from 'react';
+import { Combobox, Input, InputBase, ScrollArea, useCombobox } from '@mantine/core';
+
+const countries = [
+  'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Argentina', 'Armenia', 'Australia',
+  'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium',
+  'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso',
+  'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Chad', 'Chile', 'China', 'Colombia',
+  'Comoros', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti',
+  'Dominica', 'Ecuador', 'Egypt', 'El Salvador', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji',
+  'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada',
+  'Guatemala', 'Guinea', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia',
+  'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya',
+  'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya',
+  'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives',
+  'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia',
+];
+
+function Demo() {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [value, setValue] = useState<string | null>(null);
+
+  const options = countries.map((item) => (
+    <Combobox.Option value={item} key={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  return (
+    <Combobox
+      store={combobox}
+      floatingHeight="viewport"
+      onOptionSubmit={(val) => {
+        setValue(val);
+        combobox.closeDropdown();
+      }}
+    >
+      <Combobox.Target>
+        <InputBase
+          component="button"
+          type="button"
+          pointer
+          rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
+          onClick={() => combobox.toggleDropdown()}
+        >
+          {value || <Input.Placeholder>Pick a country</Input.Placeholder>}
+        </InputBase>
+      </Combobox.Target>
+
+      <Combobox.Dropdown>
+        <Combobox.Options>
+          <ScrollArea.Autosize mah="var(--combobox-floating-options-max-height)" type="scroll">
+            {options}
+          </ScrollArea.Autosize>
+        </Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
+  );
+}
+```
+
+
 ## Hide dropdown
 
 Set `hidden` prop on `Combobox.Dropdown` to hide the dropdown. For example,
@@ -1424,6 +1503,7 @@ export interface UseVirtualizedComboboxOptions {
 | children | React.ReactNode | - | Combobox content |
 | disabled | boolean | - | If set, popover dropdown will not be rendered |
 | dropdownPadding | Padding<string \| number> | - | Controls `padding` of the dropdown |
+| floatingHeight | "viewport" | - | If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. |
 | floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |
 | hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
@@ -1439,7 +1519,7 @@ export interface UseVirtualizedComboboxOptions {
 | overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
 | portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
-| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
+| preventPositionChangeWhenVisible | boolean | - | If `true`, the dropdown picks its side on open (flip runs once, preferring the `position` prop) and then never changes side — scrolling, resizing, and content size changes will not flip the dropdown. The side is recalculated fresh on the next open. Does not affect the `shift` middleware. Set to `false` to keep flip active and allow the dropdown to re-flip on every change. |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | readOnly | boolean | - | Determines whether the `Combobox` value can be changed |
 | resetSelectionOnOptionHover | boolean | - | Determines whether selection should be reset when option is hovered |

@@ -179,6 +179,7 @@ TextInput component supports Styles API. With Styles API, you can customize styl
 | wrapper | .mantine-TextInput-wrapper | Root element of the Input |
 | input | .mantine-TextInput-input | Input element |
 | section | .mantine-TextInput-section | Left and right sections |
+| bottomSection | .mantine-TextInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-TextInput-root | Root element |
 | label | .mantine-TextInput-label | Label element |
 | required | .mantine-TextInput-required | Required asterisk element, rendered inside label |

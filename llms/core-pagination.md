@@ -119,6 +119,24 @@ function Demo() {
 ```
 
 
+## Responsive layout
+
+Set `layout="responsive"` to use CSS container queries to show a compact "Page X of Y" label
+when the container is narrow. Use `formatLabel` prop to customize the label text.
+
+```tsx
+import { Box, Pagination } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box style={{ resize: 'horizontal', overflow: 'auto', minWidth: 200, maxWidth: '100%' }}>
+      <Pagination total={20} layout="responsive" />
+    </Box>
+  );
+}
+```
+
+
 ## Compound components
 
 You can use the following compound components to have full control over the `Pagination` rendering:
@@ -129,6 +147,7 @@ You can use the following compound components to have full control over the `Pag
 * `Pagination.Previous` – previous control
 * `Pagination.First` – first control
 * `Pagination.Last` – last control
+* `Pagination.Label` – compact label for responsive layout
 
 ```tsx
 import { Group, Pagination } from '@mantine/core';
@@ -385,11 +404,13 @@ You can use it to create custom pagination components.
 | disabled | boolean | - | Disables all controls, applies disabled styles |
 | dotsIcon | PaginationIcon | - | Dots icon component |
 | firstIcon | PaginationIcon | - | First control icon component |
+| formatLabel | PaginationFormatLabel | - | Function to format the label text displayed in responsive mode |
 | gap | MantineSpacing | - | Key of `theme.spacing`, gap between controls |
 | getControlProps | (control: "next" \| "previous" \| "first" \| "last") => Record<string, any> | - | Props passed down to next/previous/first/last controls |
 | getItemProps | (page: number) => Record<string, any> | - | Additional props passed down to controls |
 | hideWithOnePage | boolean | - | If set, the pagination is hidden when only one page is available (`total={1}`) |
 | lastIcon | PaginationIcon | - | Last control icon component |
+| layout | "default" \| "responsive" | - | Determines how the pagination is displayed, `'responsive'` uses CSS container queries to switch between pages and a compact label |
 | nextIcon | PaginationIcon | - | Next control icon component |
 | onChange | (value: number) => void | - | Called when page changes |
 | onFirstPage | () => void | - | Called when first page control is clicked |
@@ -417,6 +438,7 @@ You can use it to create custom pagination components.
 | defaultValue | number | - | Active page for uncontrolled component, must be an integer in [1, total] interval |
 | disabled | boolean | - | Disables all controls, applies disabled styles |
 | getItemProps | (page: number) => Record<string, any> | - | Additional props passed down to controls |
+| layout | "default" \| "responsive" | - | Determines how the pagination is displayed, `'responsive'` uses CSS container queries to switch between pages and a compact label |
 | onChange | (value: number) => void | - | Called when page changes |
 | onFirstPage | () => void | - | Called when first page control is clicked |
 | onLastPage | () => void | - | Called when last page control is clicked |
@@ -484,6 +506,8 @@ Pagination component supports Styles API. With Styles API, you can customize sty
 | root | .mantine-Pagination-root | Root element |
 | control | .mantine-Pagination-control | Control element: items, next/previous, first/last buttons |
 | dots | .mantine-Pagination-dots | Dots icon wrapper |
+| items | .mantine-Pagination-items | Wrapper around page number controls, used with `layout="responsive"` |
+| label | .mantine-Pagination-label | Compact label element displayed in narrow containers with `layout="responsive"` |
 
 **Pagination CSS variables**
 
@@ -501,3 +525,4 @@ Pagination component supports Styles API. With Styles API, you can customize sty
 |----------|-----------|-----------|-------|
 | control | data-active | Control is active | - |
 | control | data-disabled | Control is disabled | - |
+| root | data-layout | - | Value of `layout` prop |

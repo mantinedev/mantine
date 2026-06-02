@@ -6,6 +6,7 @@ New [Tree](https://mantine.dev/llms/core-tree.md) component:
 
 ```tsx
 import { FolderSimpleIcon, FolderOpenIcon } from '@phosphor-icons/react';
+import cx from 'clsx';
 import { Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { CssIcon, NpmIcon, TypeScriptCircleIcon } from '@mantinex/dev-icons';
 import { data, dataCode } from './data';
@@ -43,7 +44,7 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
 function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePayload) {
   return (
-    <Group gap={5} {...elementProps}>
+    <Group gap={6} {...elementProps} className={cx(classes.leaf, elementProps.className)}>
       <FileIcon name={node.value} isFolder={hasChildren} expanded={expanded} />
       <span>{node.label}</span>
     </Group>
@@ -56,6 +57,7 @@ function Demo() {
       classNames={classes}
       selectOnClick
       clearSelectionOnOutsideClick
+      withLines
       data={data}
       renderNode={(payload) => <Leaf {...payload} />}
     />

@@ -622,6 +622,7 @@ TimePicker component supports Styles API. With Styles API, you can customize sty
 | wrapper | .mantine-TimePicker-wrapper | Root element of the Input |
 | input | .mantine-TimePicker-input | Input element |
 | section | .mantine-TimePicker-section | Left and right sections |
+| bottomSection | .mantine-TimePicker-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-TimePicker-root | Root element |
 | label | .mantine-TimePicker-label | Label element |
 | required | .mantine-TimePicker-required | Required asterisk element, rendered inside label |

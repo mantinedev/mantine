@@ -374,6 +374,7 @@ ColorInput component supports Styles API. With Styles API, you can customize sty
 | wrapper | .mantine-ColorInput-wrapper | Root element |
 | input | .mantine-ColorInput-input | Input element |
 | section | .mantine-ColorInput-section | Left and right sections |
+| bottomSection | .mantine-ColorInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-ColorInput-root | Root element |
 | label | .mantine-ColorInput-label | Label element |
 | required | .mantine-ColorInput-required | Required asterisk element, rendered inside label |

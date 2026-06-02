@@ -155,6 +155,54 @@ export const data = [
 ```
 
 
+## Collapse from
+
+Use `collapseFrom` prop to control from which direction items are collapsed
+when they overflow. By default, items are collapsed from the end. Set
+`collapseFrom="start"` to collapse items from the beginning – this is useful
+for breadcrumb-like patterns where the last items should remain visible.
+
+```tsx
+// OverflowListDemo.tsx
+import { Badge, OverflowList } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <div style={{ resize: 'horizontal', overflow: 'auto', maxWidth: '100%' }}>
+      <OverflowList
+        data={data}
+        gap={4}
+        collapseFrom="start"
+        renderOverflow={(items) => <Badge>+{items.length} more</Badge>}
+        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}
+      />
+    </div>
+  );
+}
+
+// data.ts
+export const data = [
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Elderberry',
+  'Fig',
+  'Grape',
+  'Honeydew',
+  'Indian Fig',
+  'Jackfruit',
+  'Kiwi',
+  'Lemon',
+  'Mango',
+  'Nectarine',
+  'Orange',
+  'Papaya',
+];
+```
+
+
 ## Example: overflow with hover card
 
 You can use any React components in `renderOverflow` function. Example
@@ -220,8 +268,10 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| collapseFrom | "end" \| "start" | - | Direction from which items are collapsed when they overflow, `'end'` collapses last items, `'start'` collapses first items |
 | data | T[] | required | Array of items to display |
 | gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem |
+| getItemKey | (item: T, index: number) => Key | - | A function to resolve a unique key for each item. Used to detect when the contents of `data` change (for example when items are reordered while the length stays the same) so the visible/overflow split can be recomputed. Required to detect reordering when `data` contains objects; for primitive items (strings, numbers) the item value is used by default. |
 | maxRows | number | - | Number of rows to display |
 | maxVisibleItems | number | - | Maximum number of visible items |
 | renderItem | (item: T, index: number) => ReactNode | required | Function to render item |

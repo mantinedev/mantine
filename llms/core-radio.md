@@ -371,7 +371,7 @@ function GoodLabel() {
 | icon | FC<RadioIconProps> | - | A component that replaces the default radio icon (centered dot) |
 | iconColor | MantineColor | - | Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |
-| size | MantineSize | - | Controls size of the component |
+| size | MantineSize \| number | - | Controls size of the component |
 
 **Radio.CardContext props**
 

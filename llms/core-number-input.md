@@ -645,6 +645,7 @@ NumberInput component supports Styles API. With Styles API, you can customize st
 | wrapper | .mantine-NumberInput-wrapper | Root element of the Input |
 | input | .mantine-NumberInput-input | Input element |
 | section | .mantine-NumberInput-section | Left and right sections |
+| bottomSection | .mantine-NumberInput-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-NumberInput-root | Root element |
 | label | .mantine-NumberInput-label | Label element |
 | required | .mantine-NumberInput-required | Required asterisk element, rendered inside label |

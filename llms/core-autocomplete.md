@@ -368,6 +368,33 @@ function Demo() {
 ```
 
 
+## Fit dropdown to viewport height
+
+Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical
+space in the viewport. The `flip` middleware is disabled in this mode – the dropdown
+always opens in the configured direction and is constrained to the viewport edges instead
+of flipping to the other side. Useful when working with large option lists:
+
+```tsx
+import { Autocomplete } from '@mantine/core';
+
+const data = Array(100)
+  .fill(0)
+  .map((_, index) => `Option ${index}`);
+
+function Demo() {
+  return (
+    <Autocomplete
+      label="Fits viewport height"
+      placeholder="Pick value"
+      data={data}
+      floatingHeight="viewport"
+    />
+  );
+}
+```
+
+
 ## Group options
 
 ```tsx
@@ -743,6 +770,7 @@ function Demo() {
 | error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
 | errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
 | filter | OptionsFilter<string> | - | Function based on which items are filtered and sorted |
+| floatingHeight | "viewport" | - | If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. |
 | inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
 | inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
 | inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
@@ -791,6 +819,7 @@ Autocomplete component supports Styles API. With Styles API, you can customize s
 | wrapper | .mantine-Autocomplete-wrapper | Root element of the Input |
 | input | .mantine-Autocomplete-input | Input element |
 | section | .mantine-Autocomplete-section | Left and right sections |
+| bottomSection | .mantine-Autocomplete-bottomSection | Bottom section element, rendered inside the input border at the bottom |
 | root | .mantine-Autocomplete-root | Root element |
 | label | .mantine-Autocomplete-label | Label element |
 | required | .mantine-Autocomplete-required | Required asterisk element, rendered inside label |

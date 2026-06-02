@@ -485,6 +485,51 @@ function Demo() {
 
 The target element determines where the Popover will be positioned relative to.
 
+## Context menu
+
+Use `Popover.ContextMenu` to open the dropdown at the cursor position on right-click.
+It replaces `Popover.Target` and wraps the element that should respond to the `contextmenu`
+event – the browser's default context menu is suppressed, and `Popover.Dropdown` is positioned
+at the cursor. Right-clicking again repositions the dropdown to the new coordinates.
+`Popover.Dropdown` can contain any content. Set `disabled` to restore the browser's default
+context menu:
+
+```tsx
+import { Avatar, Button, Group, Paper, Popover, Stack, Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover width={260} shadow="md" position="bottom-start" offset={0}>
+      <Popover.ContextMenu>
+        <Paper withBorder p="xl" radius="md" style={{ userSelect: 'none', textAlign: 'center' }}>
+          <Text fw={500}>Right-click anywhere inside this area</Text>
+          <Text c="dimmed" size="sm" mt={4}>
+            A popover will open at the cursor position
+          </Text>
+        </Paper>
+      </Popover.ContextMenu>
+
+      <Popover.Dropdown>
+        <Stack gap="xs">
+          <Group gap="sm" wrap="nowrap">
+            <Avatar radius="xl" color="blue">JD</Avatar>
+            <div>
+              <Text size="sm" fw={500}>Jane Doe</Text>
+              <Text size="xs" c="dimmed">jane@example.com</Text>
+            </div>
+          </Group>
+          <Group grow gap="xs">
+            <Button size="xs" variant="default">Message</Button>
+            <Button size="xs">Follow</Button>
+          </Group>
+        </Stack>
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+
 ## Nested popovers
 
 Nested popovers require children rendering without [Portal](https://mantine.dev/llms/core-portal.md). Usually, you
@@ -572,7 +617,7 @@ Other elements will not support `Space` and `Enter` key presses.
 | overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
 | portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
-| preventPositionChangeWhenVisible | boolean | - | Prevents popover from flipping/shifting when it the dropdown is visible |
+| preventPositionChangeWhenVisible | boolean | - | If `true`, the dropdown picks its side on open (flip runs once, preferring the `position` prop) and then never changes side — scrolling, resizing, and content size changes will not flip the dropdown. The side is recalculated fresh on the next open. Does not affect the `shift` middleware. Set to `false` to keep flip active and allow the dropdown to re-flip on every change. |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius |
 | returnFocus | boolean | - | Determines whether focus should be automatically returned to control when dropdown closes |
 | shadow | MantineShadow | - | Key of `theme.shadows` or any other valid CSS `box-shadow` value |
@@ -598,6 +643,13 @@ Other elements will not support `Space` and `Enter` key presses.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 
+**Popover..ContextMenu props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Element that opens the popover when right-clicked. Dropdown is positioned at the cursor. The trigger element must not call `event.preventDefault()` in its own `onContextMenu` handler, otherwise the native context menu is not suppressed. |
+| disabled | boolean | - | If set, the right-click trigger is disabled and the browser's default context menu is shown |
+
 **Popover.Target props**
 
 | Prop | Type | Default | Description |
@@ -610,6 +662,13 @@ Other elements will not support `Space` and `Enter` key presses.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+
+**Popover.ContextMenu props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | required | Element that opens the popover when right-clicked. Dropdown is positioned at the cursor. The trigger element must not call `event.preventDefault()` in its own `onContextMenu` handler, otherwise the native context menu is not suppressed. |
+| disabled | boolean | - | If set, the right-click trigger is disabled and the browser's default context menu is shown |
 
 
 #### Styles API
