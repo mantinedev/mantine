@@ -11,6 +11,7 @@ export function scopeTab(node: HTMLElement, event: KeyboardEvent) {
   let leavingFinalTabbable = finalTabbable === root.activeElement || node === root.activeElement;
 
   const activeElement = root.activeElement as Element;
+  if (!activeElement) return;  // detached node or no focus
   const activeElementIsRadio =
     activeElement.tagName === 'INPUT' && activeElement.getAttribute('type') === 'radio';
   if (activeElementIsRadio) {
