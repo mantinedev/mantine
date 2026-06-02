@@ -71,6 +71,17 @@ describe('@mantine/core/Tree', () => {
       expect(document.activeElement).toBe(nodes[1]);
     });
 
+    it('skips collapsed kept-mounted nodes during arrow navigation', async () => {
+      render(<Tree data={complexTreeData} keepMounted />);
+      const nodes = screen.getAllByRole('treeitem');
+
+      nodes[0].focus();
+      await userEvent.keyboard('{ArrowDown}');
+
+      expect(document.activeElement).toBe(nodes[1]);
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-2');
+    });
+
     it('handles Space to expand/collapse when expandOnSpace is true', async () => {
       const TestComponent = () => {
         const tree = useTree();
