@@ -176,4 +176,17 @@ describe('@mantine/core/PasswordInput', () => {
     const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
     expect(toggleButton).toBeDisabled();
   });
+
+  it('forwards dir to the input wrapper when it overrides parent direction (#8905)', () => {
+    const { container } = render(
+      <div dir="rtl">
+        <PasswordInput dir="ltr" aria-label="password" rightSection="X" />
+      </div>
+    );
+
+    const input = container.querySelector('input')!;
+    const wrapper = container.querySelector('.mantine-Input-wrapper')!;
+    expect(wrapper).toHaveAttribute('dir', 'ltr');
+    expect(input).toHaveAttribute('dir', 'ltr');
+  });
 });
