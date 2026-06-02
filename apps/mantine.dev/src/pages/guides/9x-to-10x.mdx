@@ -1,0 +1,252 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.NineToTen);
+
+# 9.x → 10.x migration guide
+
+## Update dependencies
+
+Update all `@mantine/*` packages to version 10.x.
+
+## Colors system changes
+
+Version 10 ships a reworked color system. Most applications will see a refreshed look with
+no code changes required, but a few patterns need attention.
+
+### New OKLCH default palettes
+
+All 14 built-in palettes have been re-derived in the OKLCH color space on a shared perceptual-
+lightness ramp. Colors at the same index now have consistent perceived brightness across hues,
+so filled buttons and badges look visually uniform regardless of their color.
+
+The number of shades (10) and color names are unchanged. The `primaryShade` default has changed in
+dark mode from `{ light: 6, dark: 8 }` to `{ light: 6, dark: 7 }`, so dark-scheme filled controls
+use a slightly lighter shade. The visual appearance will also change — the new palettes are
+generally more vivid and perceptually balanced, with bright hues (yellow, orange, lime) slightly
+lifted to compensate for the Abney effect.
+
+### `--mantine-color-*` CSS variables are now OKLCH strings
+
+In v9 these variables emitted hex or RGB values. In v10 they emit `oklch(L C H)` strings, for
+example `oklch(0.52 0.22 255)`.
+
+**Action required** if your application:
+- Reads `--mantine-color-*` values from the DOM and parses them as hex/RGB
+- Uses `getComputedStyle(el).getPropertyValue('--mantine-color-blue-6')` and then converts to
+  a hex string
+- Passes raw CSS variable values to a canvas `ctx.fillStyle` or similar API that only accepts
+  legacy formats
+
+In those cases you can either update the code to work with oklch, or use the v9 opt-out
+described below.
+
+### `autoContrast` now defaults to `true`
+
+In v9 `theme.autoContrast` defaulted to `false`. In v10 it defaults to `true`, meaning filled
+controls automatically switch between black and white text based on the luminance of their
+background color (luminance threshold `0.2`).
+
+The following components are affected:
+
+| Component | Affected element |
+|-----------|-----------------|
+| `Button` | button label text |
+| `ActionIcon` | icon color |
+| `ActionIconGroupSection` | icon color |
+| `Badge` | badge label text (filled variant) |
+| `ThemeIcon` | icon color |
+| `Alert` | alert icon color |
+| `Avatar` | initials text |
+| `Chip` | chip label text |
+| `NavLink` | label/icon when active |
+| `TableOfContents` | active link color |
+| `Toggle` | toggle label |
+| `Tooltip` | tooltip label text |
+| `Tabs` | active tab indicator color |
+| `Pagination` | active page button text |
+| `Radio` / `RadioIndicator` | radio icon |
+| `Checkbox` / `CheckboxIndicator` | checkmark icon |
+| `Indicator` | indicator label text |
+| `Progress` | section label text |
+| `Stepper` | step icon |
+| `SegmentedControl` | active segment label |
+| `Timeline` | bullet icon |
+| `Toolbar` / `ToolbarToggle` / `ToolbarToggleItem` | toolbar item icon/label |
+
+To restore the v9 behaviour, disable `autoContrast` globally:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  autoContrast: false,
+});
+
+function Demo() {
+  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
+}
+```
+
+You can also disable it on individual components without changing the theme:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return <Button autoContrast={false} color="yellow.3">Label</Button>;
+}
+```
+
+### Paper is deprecated — use Surface
+
+`Paper` is deprecated in v10 and will be removed in v11. The replacement is `Surface`, which has
+the same API (`shadow`, `radius`, `withBorder`, padding props, polymorphic `component` prop) plus
+depth-aware background stepping in dark mode.
+
+The deprecated `Paper` wrapper still works in v10 with no visual change — it renders a flat surface
+on the body background with no depth stepping, so existing code is safe until v11.
+
+To migrate:
+
+```tsx
+import { Paper, Surface } from '@mantine/core';
+
+// ❌ Deprecated
+function Demo() {
+  return <Paper shadow="sm" p="md">Content</Paper>;
+}
+
+// ✅ Use Surface instead
+function Demo() {
+  return <Surface shadow="sm" p="md">Content</Surface>;
+}
+```
+
+`Surface` gains depth awareness when you add the `autoDepth` prop or set an explicit `level`:
+
+```tsx
+import { Surface } from '@mantine/core';
+
+// Automatic depth stepping – each nested Surface steps one level higher in dark mode
+function Demo() {
+  return (
+    <Surface autoDepth shadow="sm" p="md">
+      <Surface autoDepth p="md">
+        One level deeper
+      </Surface>
+    </Surface>
+  );
+}
+```
+
+### Darker dark theme
+
+The dark color scheme is darker than in v9. The base/page background is approximately two steps
+darker than the old `dark-7`, giving more headroom for surface elevation levels. If you relied on
+specific `dark-N` shade values for backgrounds, test your application in dark mode and adjust
+as needed.
+
+### New semantic color variables
+
+A layer of semantic role CSS variables has been added. Components use these tokens instead of
+hardcoding raw `gray-N` or `dark-N` indices. You can override them in CSS to theme the entire
+application uniformly:
+
+```css
+/* Example: custom border color */
+[data-mantine-color-scheme='light'] {
+  --mantine-color-border: #d0d0d0;
+  --mantine-color-border-subtle: #e8e8e8;
+}
+
+[data-mantine-color-scheme='dark'] {
+  --mantine-color-border: #404040;
+  --mantine-color-border-subtle: #333;
+}
+```
+
+The variables are defined as `var()` references to the underlying palette shades, so overriding
+`--mantine-color-gray-3` still cascades into `--mantine-color-border` automatically — existing
+shade-level overrides continue to work.
+
+Key role variables:
+
+| Variable | Purpose |
+|----------|---------|
+| `--mantine-color-border` | Default border |
+| `--mantine-color-border-subtle` | Subtle/light border |
+| `--mantine-color-border-strong` | Emphasized border |
+| `--mantine-color-divider` | Divider lines |
+| `--mantine-color-hover` | Hover background |
+| `--mantine-color-active` | Active/pressed background |
+| `--mantine-color-selected` | Selected item background |
+| `--mantine-color-track` | Track background (Slider, Switch, etc.) |
+| `--mantine-color-text-muted` | Muted/secondary text |
+| `--mantine-color-surface-0..5` | Surface elevation levels |
+| `--mantine-color-surface-recessed` | Inset/sunken surface (code blocks, troughs) |
+
+### Warning and info color mappings
+
+Mantine's built-in semantic colors are `error` and `success` only. For `warning` and `info`
+states in `Alert`, `Notification`, and similar components, use the `yellow` and `blue` palette
+colors respectively:
+
+```tsx
+import { Alert } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Alert color="yellow" title="Warning">
+        This is a warning message.
+      </Alert>
+      <Alert color="blue" title="Info">
+        This is an informational message.
+      </Alert>
+    </>
+  );
+}
+```
+
+## v9 opt-out
+
+If your application cannot migrate immediately, you can restore the full v9 colors, variant
+derivations, and `autoContrast: false` with a single import:
+
+```tsx
+import {
+  MantineProvider,
+  v9Theme,
+  v9CssVariablesResolver,
+} from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={v9Theme}
+      cssVariablesResolver={v9CssVariablesResolver}
+    >
+      {/* Your app */}
+    </MantineProvider>
+  );
+}
+```
+
+`v9Theme` re-exports the v9 hex color tuples and sets `autoContrast: false`.
+`v9CssVariablesResolver` emits CSS variables as hex/RGB values as they were in v9.
+
+Note: `v9Theme` and `v9CssVariablesResolver` are provided for temporary migration purposes and
+will be removed in v11.
+
+## Browser support
+
+The OKLCH color format and `color-mix()` function used for variant derivations require the
+following minimum browser versions:
+
+- Chrome/Edge 111+ (released March 2023)
+- Safari 16.2+ (released December 2022)
+- Firefox 113+ (released May 2023)
+
+Applications that must support older browsers should use the v9 opt-out above, or configure
+a PostCSS plugin to downconvert oklch values.

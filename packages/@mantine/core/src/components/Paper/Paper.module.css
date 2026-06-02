@@ -10,13 +10,7 @@
   box-shadow: var(--paper-shadow);
   background-color: var(--mantine-color-body);
 
-  @mixin light {
-    --paper-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin dark {
-    --paper-border-color: var(--mantine-color-dark-4);
-  }
+  --paper-border-color: var(--mantine-color-border);
 
   &:where([data-with-border]) {
     border: rem(1px) solid var(--paper-border-color);

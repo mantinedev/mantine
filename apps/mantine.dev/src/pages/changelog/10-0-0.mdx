@@ -84,3 +84,138 @@ instead of hiding items below the top one. The new `maxDepth` prop (default `5`)
 stacked items are visible behind the top one at the same time.
 
 <Demo data={ModalDemos.stack} />
+
+## Colors system
+
+### OKLCH default palettes
+
+All 14 built-in color palettes (`dark`, `gray`, `red`, `pink`, `grape`, `violet`, `indigo`, `blue`,
+`cyan`, `teal`, `green`, `lime`, `yellow`, `orange`) have been re-derived in the OKLCH color space.
+The new palettes use a **shared perceptual-lightness ramp**: every color at index `N` has the same
+perceived brightness regardless of hue, so filled buttons, badges, and other colored controls look
+visually consistent across all hues. Warm and bright hues (yellow, orange, lime, green) are lifted on
+a separate ramp to compensate for the Abney effect.
+
+The number of shades (10), the color names, and the `primaryShade` default (`{ light: 6, dark: 7 }`)
+are unchanged. All default shades remain within the sRGB gamut.
+
+`--mantine-color-*` CSS variables are now emitted as `oklch(L C H)` strings. Code that reads and
+parses these variables as hex or RGB must be updated. See the [9.x → 10.x migration guide](/guides/9x-to-10x)
+for details.
+
+### autoContrast enabled by default
+
+`theme.autoContrast` now defaults to `true`. Filled controls automatically pick black or white text
+based on the luminance of their background color (threshold `0.2`), so light shades used as a filled
+color will switch to dark text without any extra configuration.
+
+The following 22 components are affected: `Button`, `ActionIcon`, `ActionIconGroupSection`, `Badge`,
+`ThemeIcon`, `Alert`, `Avatar`, `Chip`, `NavLink`, `TableOfContents`, `Toggle`, `Tooltip`, `Tabs`,
+`Pagination`, `Radio`, `RadioIndicator`, `Checkbox`, `CheckboxIndicator`, `Indicator`, `Progress`,
+`Stepper`, `SegmentedControl`, `Timeline`, and `Toolbar`/`ToolbarToggle`/`ToolbarToggleItem`.
+
+To restore the v9 behaviour set `autoContrast: false` in the theme, or use the one-line v9 opt-out
+described in the migration guide.
+
+### Semantic color CSS variables
+
+A new layer of semantic role variables has been added. Components now use these tokens instead of
+hardcoding raw `gray-N` or `dark-N` indices, making it easier to theme borders, surfaces, and text
+consistently without touching individual component styles.
+
+New variables (values differ per color scheme):
+
+| Token | Light default | Dark default |
+|-------|---------------|--------------|
+| `--mantine-color-border` | `gray-3` | `dark-4` |
+| `--mantine-color-border-subtle` | `gray-2` | `dark-5` |
+| `--mantine-color-border-strong` | `gray-4` | `dark-3` |
+| `--mantine-color-divider` | `gray-3` | `dark-4` |
+| `--mantine-color-hover` | `gray-0` | `dark-6` |
+| `--mantine-color-active` | `gray-1` | `dark-5` |
+| `--mantine-color-selected` | `gray-1` | `dark-5` |
+| `--mantine-color-track` | `gray-2` | `dark-4` |
+| `--mantine-color-text-muted` | `gray-6` | `dark-2` |
+| `--mantine-color-surface-0` | `white` | `dark-8` |
+| `--mantine-color-surface-1` | `white` | `dark-7` |
+| `--mantine-color-surface-2` | `gray-0` | `dark-6` |
+| `--mantine-color-surface-3` | `gray-1` | `dark-5` |
+| `--mantine-color-surface-4` | `gray-2` | `dark-4` |
+| `--mantine-color-surface-5` | `gray-2` | `dark-4` |
+| `--mantine-color-surface-recessed` | `gray-0` | `dark-9` |
+
+Role variables are defined as `var()` references to the underlying shade variables, so overriding
+`--mantine-color-gray-3` (for example) still cascades into `--mantine-color-border` automatically.
+
+### Surface component
+
+A new `Surface` component replaces `Paper` as the depth-aware background primitive. In dark mode,
+each nested `Surface` steps one shade lighter, giving your UI natural elevation layers (up to 5
+levels plus a `recessed` level for inset elements like code blocks and slider tracks). In light mode,
+the surface is near-flat and relies on shadows and borders.
+
+`Surface` is a strict superset of `Paper` (`shadow`, `radius`, `withBorder`, padding, polymorphic
+`component` prop) and can be used as a drop-in replacement. `Paper` is deprecated in v10 and will be
+removed in v11.
+
+```tsx
+import { Surface } from '@mantine/core';
+
+// Manual level
+function Demo() {
+  return <Surface level={2} p="md">Content on elevation level 2</Surface>;
+}
+
+// Automatic depth stepping (each nested Surface steps up one level)
+function Demo() {
+  return (
+    <Surface autoDepth p="md">
+      Outer surface
+      <Surface autoDepth p="md">
+        Inner surface – one level higher
+      </Surface>
+    </Surface>
+  );
+}
+```
+
+### Dark neutral flavors
+
+Four pre-built dark neutral color tuples are exported from `@mantine/core` and can be assigned to
+`theme.colors.dark` to change the overall tone of the dark scheme:
+
+| Export | Description |
+|--------|-------------|
+| `darkColors` | Neutral (near-zero chroma) |
+| `darkColdColors` | Slightly cool-tinted |
+| `darkWarmColors` | Slightly warm-tinted |
+| `darkTintedColors` | Primary-color hue mixed in |
+
+```tsx
+import { darkWarmColors, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    dark: darkWarmColors,
+  },
+});
+```
+
+### OKLCH colors generator
+
+`@mantine/colors-generator` has been updated to output OKLCH color palettes. The `generateColors`
+function still returns a `MantineColorsTuple` (now containing `oklch(...)` strings) so existing
+usage is unchanged:
+
+```tsx
+import { generateColors } from '@mantine/colors-generator';
+
+const theme = createTheme({
+  colors: {
+    brand: generateColors('#375EAC'), // returns MantineColorsTuple of oklch strings
+  },
+});
+```
+
+A new `generateColorFormats` function is also available when you need the full palette in multiple
+formats (oklch, hex, rgb, hsl) along with the detected base color index.

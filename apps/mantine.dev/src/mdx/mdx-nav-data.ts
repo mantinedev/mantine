@@ -90,6 +90,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.SixToSeven,
       MDX_DATA.SevenToEight,
       MDX_DATA.EightToNine,
+      MDX_DATA.NineToTen,
       MDX_DATA.Tiptap3Migration,
     ],
   },

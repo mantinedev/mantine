@@ -3,13 +3,7 @@
   --scp-transition-duration: 0ms;
   --scp-thickness: 12px;
 
-  @mixin where-light {
-    --scp-empty-segment-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    --scp-empty-segment-color: var(--mantine-color-dark-4);
-  }
+  --scp-empty-segment-color: var(--mantine-color-track);
 
   position: relative;
   width: fit-content;

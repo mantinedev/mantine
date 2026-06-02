@@ -19,13 +19,7 @@
     overflow: auto;
   }
 
-  @mixin light {
-    --app-shell-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin dark {
-    --app-shell-border-color: var(--mantine-color-dark-4);
-  }
+  --app-shell-border-color: var(--mantine-color-border);
 }
 
 .navbar,

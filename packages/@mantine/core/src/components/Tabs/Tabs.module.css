@@ -1,11 +1,5 @@
 .root {
-  @mixin light {
-    --tab-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin dark {
-    --tab-border-color: var(--mantine-color-dark-4);
-  }
+  --tab-border-color: var(--mantine-color-border);
 
   display: var(--tabs-display);
   flex-direction: var(--tabs-flex-direction);
@@ -74,14 +68,7 @@
 
   &[data-variant='default'] {
     --tabs-list-border-width: 2px;
-
-    @mixin light {
-      --tab-hover-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin dark {
-      --tab-hover-color: var(--mantine-color-dark-6);
-    }
+    --tab-hover-color: var(--mantine-color-hover);
   }
 
   &[data-variant='outline'] {
@@ -90,14 +77,7 @@
 
   &[data-variant='pills'] {
     --tabs-list-gap: calc(var(--mantine-spacing-sm) / 2);
-
-    @mixin light {
-      --tab-hover-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin dark {
-      --tab-hover-color: var(--mantine-color-dark-6);
-    }
+    --tab-hover-color: var(--mantine-color-hover);
   }
 }
 

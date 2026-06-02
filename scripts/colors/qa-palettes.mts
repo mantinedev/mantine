@@ -64,8 +64,6 @@ for (const { spec, shades } of palettes) {
   const peakC = 'peakC' in spec ? spec.peakC : 0;
   const hue = spec.hue;
 
-  const overrides = 'overrides' in spec ? spec.overrides : undefined;
-
   const outOfGamutIndices: number[] = [];
   for (const shade of shades) {
     const parsed = oklch(shade.oklch);
@@ -78,8 +76,7 @@ for (const { spec, shades } of palettes) {
   const baseRamp = isDark ? (DARK_LIGHTNESS_RAMP as readonly number[]) : lightnessRampForHue(hue);
   const lDeviations: ColorQA['lDeviations'] = [];
   for (const shade of shades) {
-    const lDelta = overrides?.lDelta?.[shade.index] ?? 0;
-    const expected = baseRamp[shade.index]! + lDelta;
+    const expected = baseRamp[shade.index]!;
     const delta = Math.abs(shade.l - expected);
     if (delta > 0.005) {
       lDeviations.push({ index: shade.index, actual: shade.l, expected, delta });
@@ -140,7 +137,7 @@ function pct(n: number): string {
 
 let md = `# Palette Proofs — Mantine v10 Colors QA\n\n`;
 md += `Generated: ${new Date().toISOString()}\n\n`;
-md += `Gates: gamut=sRGB, L-ramp matches \`lightnessRampForHue(hue)[i] + (lDelta[i] ?? 0)\` within ±0.005 AND strictly decreasing, contrast≥4.5 (BUFFER-PASS≥4.65), chroma-retention≥70%.\n\n`;
+md += `Gates: gamut=sRGB, L-ramp strictly decreasing, index-6 contrast≥4.5 with white text (BUFFER-PASS≥4.65), chroma-retention≥70%.\n\n`;
 md += `Bright hues (yellow/lime/orange/green) use an elevated lightness ramp.\n\n`;
 
 md += `## Summary Table\n\n`;

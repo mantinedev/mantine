@@ -4,7 +4,7 @@ import { Button } from '@mantine/core';
 export function MdxSponsorButton() {
   return (
     <Button
-      rightSection={<HeartIcon weight="fill" size={22} color="var(--mantine-color-red-7)" />}
+      rightSection={<HeartIcon weight="fill" size={22} color="var(--mantine-color-red-text)" />}
       size="lg"
       miw={300}
       justify="space-between"

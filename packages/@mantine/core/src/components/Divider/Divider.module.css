@@ -6,13 +6,7 @@
   --divider-size-xl: 5px;
   --divider-size: var(--divider-size-xs);
 
-  @mixin where-light {
-    --divider-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    --divider-color: var(--mantine-color-dark-4);
-  }
+  --divider-color: var(--mantine-color-divider);
 
   &:where([data-orientation='horizontal']) {
     border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);

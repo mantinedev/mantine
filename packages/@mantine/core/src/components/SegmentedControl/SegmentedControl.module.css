@@ -196,13 +196,7 @@
     }
   }
 
-  @mixin where-light {
-    --separator-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    --separator-color: var(--mantine-color-dark-4);
-  }
+  --separator-color: var(--mantine-color-border);
 
   &:first-of-type {
     &::before {

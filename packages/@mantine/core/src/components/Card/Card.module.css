@@ -28,13 +28,7 @@
   display: block;
   margin-inline: calc(var(--card-padding) * -1);
 
-  @mixin where-light {
-    --border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    --border-color: var(--mantine-color-dark-4);
-  }
+  --border-color: var(--mantine-color-border);
 
   &:where([data-orientation='vertical']) {
     &:first-child {

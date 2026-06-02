@@ -12,7 +12,7 @@ useMode(modeLrgb);
 
 const palettes = buildDefaultPalettes();
 
-const LUMINANCE_THRESHOLD = 0.3;
+const LUMINANCE_THRESHOLD = 0.2;
 
 function textColor(hex: string): string {
   const lum = wcagLuminance(hex) ?? 0;
@@ -38,9 +38,9 @@ function getButtonSpec(entry: PaletteEntry, darkSection: boolean): ButtonSpec {
   if (darkSection) {
     return {
       name,
-      filledBg: s[8]!.oklch,
-      filledHover: s[7]!.oklch,
-      filledText: textColor(s[8]!.hex),
+      filledBg: s[7]!.oklch,
+      filledHover: s[8]!.oklch,
+      filledText: textColor(s[7]!.hex),
       lightBg: `color-mix(in srgb, ${s[8]!.oklch}, ${darkSurface} 50%)`,
       lightHover: `color-mix(in srgb, ${s[7]!.oklch}, ${darkSurface} 45%)`,
       lightText: s[2]!.oklch,
@@ -54,7 +54,7 @@ function getButtonSpec(entry: PaletteEntry, darkSection: boolean): ButtonSpec {
     filledText: textColor(s[6]!.hex),
     lightBg: s[1]!.oklch,
     lightHover: s[2]!.oklch,
-    lightText: s[8]!.oklch,
+    lightText: s[9]!.oklch,
   };
 }
 
@@ -106,23 +106,21 @@ function renderSwatchRow(entry: PaletteEntry, darkSection: boolean): string {
   return html;
 }
 
-function renderButtonRow(entries: PaletteEntry[], darkSection: boolean): string {
+function renderColorButtons(entry: PaletteEntry, darkSection: boolean): string {
   const suffix = darkSection ? '-dark' : '-light';
+  const name = entry.spec.name;
+  const cls = `btn-${name}${suffix}`;
+  const clsLight = `btn-light-${name}${suffix}`;
+  const s = entry.shades;
   let html = `<div class="button-row">`;
-  for (const entry of entries) {
-    const name = entry.spec.name;
-    const cls = `btn-${name}${suffix}`;
-    const clsLight = `btn-light-${name}${suffix}`;
-    const s = entry.shades;
-    html += `<div class="btn-pair">`;
-    html += `<button class="btn ${cls}">${name}</button>`;
-    if (darkSection) {
-      html += `<button class="btn ${clsLight} dark-light-btn" data-c8="${s[8]!.oklch}" data-c7="${s[7]!.oklch}">${name} light</button>`;
-    } else {
-      html += `<button class="btn ${clsLight}">${name} light</button>`;
-    }
-    html += `</div>`;
+  html += `<div class="btn-pair">`;
+  html += `<button class="btn ${cls}">${name}</button>`;
+  if (darkSection) {
+    html += `<button class="btn ${clsLight} dark-light-btn" data-c8="${s[8]!.oklch}" data-c7="${s[7]!.oklch}">${name} light</button>`;
+  } else {
+    html += `<button class="btn ${clsLight}">${name} light</button>`;
   }
+  html += `</div>`;
   html += `</div>`;
   return html;
 }
@@ -157,12 +155,11 @@ function renderSection(entries: PaletteEntry[], darkSection: boolean): string {
   }
 
   for (const entry of entries) {
+    html += `<div class="color-group">`;
     html += renderSwatchRow(entry, darkSection);
+    html += renderColorButtons(entry, darkSection);
+    html += `</div>`;
   }
-
-  html += `<div class="section-divider"></div>`;
-  html += `<h3 style="font-family:system-ui,sans-serif;color:${labelColor};margin:20px 0 12px;font-size:14px;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;">Buttons</h3>`;
-  html += renderButtonRow(entries, darkSection);
 
   html += `</section>`;
   return html;
@@ -205,7 +202,8 @@ const html = `<!DOCTYPE html>
 
   .section-divider{height:1px;background:rgba(128,128,128,0.2);margin:24px 0 0;}
 
-  .button-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:0;}
+  .color-group{margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid rgba(128,128,128,0.18);}
+  .button-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
   .btn-pair{display:flex;gap:6px;}
   .btn{
     padding:8px 16px;

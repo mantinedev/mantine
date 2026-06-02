@@ -29,16 +29,15 @@
   z-index: 1;
   box-sizing: border-box;
 
+  border: 1px solid var(--mantine-color-border);
+  box-shadow: var(--mantine-shadow-md);
+
   @mixin where-light {
     background-color: var(--mantine-color-white);
-    border: 1px solid var(--mantine-color-gray-3);
-    box-shadow: var(--mantine-shadow-md);
   }
 
   @mixin where-dark {
     background-color: var(--mantine-color-dark-7);
-    border: 1px solid var(--mantine-color-dark-4);
-    box-shadow: var(--mantine-shadow-md);
   }
 
   &:where([data-centered]) {

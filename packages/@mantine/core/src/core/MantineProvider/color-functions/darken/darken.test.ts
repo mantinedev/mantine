@@ -28,4 +28,10 @@ describe('@mantine/core/darken', () => {
       'color-mix(in srgb, var(--color-primary), black 10%)'
     );
   });
+
+  it('supports oklch colors via color-mix (avoids black hover on oklch theme shades)', () => {
+    expect(darken('oklch(0.55 0.21 256)', 0.1)).toBe(
+      'color-mix(in srgb, oklch(0.55 0.21 256), black 10%)'
+    );
+  });
 });

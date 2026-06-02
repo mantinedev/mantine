@@ -28,4 +28,10 @@ describe('@mantine/core/lighten', () => {
       'color-mix(in srgb, var(--color-primary), white 10%)'
     );
   });
+
+  it('supports oklch colors via color-mix', () => {
+    expect(lighten('oklch(0.55 0.21 256)', 0.1)).toBe(
+      'color-mix(in srgb, oklch(0.55 0.21 256), white 10%)'
+    );
+  });
 });

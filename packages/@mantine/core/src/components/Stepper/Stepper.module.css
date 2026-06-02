@@ -13,13 +13,7 @@
   --stepper-fz: var(--mantine-font-size-md);
   --stepper-outline-thickness: 2px;
 
-  @mixin light {
-    --stepper-outline-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin dark {
-    --stepper-outline-color: var(--mantine-color-dark-5);
-  }
+  --stepper-outline-color: var(--mantine-color-border-subtle);
 }
 
 .steps {

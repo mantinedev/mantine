@@ -117,6 +117,14 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     searchTags: '8x, 9x, 8to9, 89',
   },
 
+  NineToTen: {
+    title: '9.x to 10.x migration',
+    slug: '/guides/9x-to-10x',
+    search: 'Migration guide from 9.x to 10.x',
+    hideHeader: true,
+    searchTags: '9x, 10x, 9to10, 910, oklch, colors, autoContrast, Surface',
+  },
+
   Tiptap3Migration: {
     title: 'Migration guide Tiptap 2 → Tiptap 3',
     slug: '/guides/tiptap-3-migration',

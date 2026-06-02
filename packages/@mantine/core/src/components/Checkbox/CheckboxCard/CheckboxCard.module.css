@@ -13,12 +13,6 @@
   &:where([data-with-border]) {
     border: 1px solid transparent;
 
-    @mixin where-light {
-      border-color: var(--mantine-color-gray-3);
-    }
-
-    @mixin where-dark {
-      border-color: var(--mantine-color-dark-4);
-    }
+    border-color: var(--mantine-color-border);
   }
 }

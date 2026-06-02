@@ -100,6 +100,7 @@ export * from './Splitter';
 export * from './Spoiler';
 export * from './Stack';
 export * from './Stepper';
+export * from './Surface';
 export * from './Switch';
 export * from './Table';
 export * from './TableOfContents';

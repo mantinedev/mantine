@@ -70,13 +70,7 @@
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   }
 
-  @mixin where-light {
-    --item-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    --item-border-color: var(--mantine-color-dark-4);
-  }
+  --item-border-color: var(--mantine-color-border);
 
   &:where([data-line-active]) {
     &::before {
@@ -106,13 +100,7 @@
   justify-content: center;
   color: var(--mantine-color-text);
 
-  @mixin where-light {
-    border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
-  }
+  border-color: var(--mantine-color-border);
 
   .root:where(:not([data-opposite])):where([data-align='left']) & {
     inset-inline-start: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
@@ -134,14 +122,7 @@
 
   &:where([data-with-child]) {
     border-width: var(--tl-line-width);
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-3);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-4);
-    }
+    background-color: var(--mantine-color-border);
   }
 
   &:where([data-active]) {

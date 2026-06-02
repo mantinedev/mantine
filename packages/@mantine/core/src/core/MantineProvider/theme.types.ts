@@ -29,7 +29,7 @@ export interface MantineTheme {
   /** Index of theme.colors[color].
    *  Primary shade is used in all components to determine which color from theme.colors[color] should be used.
    *  Can be either a number (0–9) or an object to specify different color shades for light and dark color schemes.
-   *  Default value `{ light: 6, dark: 8 }`
+   *  Default value `{ light: 6, dark: 7 }`
    *
    *  For example,
    *  { primaryShade: 6 } // shade 6 is used both for dark and light color schemes
@@ -51,13 +51,13 @@ export interface MantineTheme {
 
   /** Determines whether text color must be changed based on the given `color` prop in filled variant
    *  For example, if you pass `color="blue.1"` to Button component, text color will be changed to `var(--mantine-color-black)`
-   *  Default value – `false`
+   *  Default value – `true`
    * */
   autoContrast: boolean;
 
   /** Determines which luminance value is used to determine if text color should be light or dark.
    *  Used only if `theme.autoContrast` is set to `true`.
-   *  Default value is `0.3`
+   *  Default value is `0.2`
    * */
   luminanceThreshold: number;
 

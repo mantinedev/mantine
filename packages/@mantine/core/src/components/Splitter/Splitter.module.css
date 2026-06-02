@@ -45,14 +45,14 @@
   color: var(--mantine-color-dimmed);
   transition: color 100ms ease;
 
+  border: rem(1px) solid var(--mantine-color-border);
+
   @mixin where-light {
     background-color: var(--mantine-color-white);
-    border: rem(1px) solid var(--mantine-color-gray-3);
   }
 
   @mixin where-dark {
     background-color: var(--mantine-color-dark-6);
-    border: rem(1px) solid var(--mantine-color-dark-4);
   }
 
   &:where([data-orientation='horizontal']) {

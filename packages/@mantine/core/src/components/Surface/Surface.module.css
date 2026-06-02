@@ -1,0 +1,18 @@
+.root {
+  --surface-radius: var(--mantine-radius-default);
+
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+  display: block;
+  touch-action: manipulation;
+  text-decoration: none;
+  border-radius: var(--surface-radius);
+  box-shadow: var(--surface-shadow);
+  background-color: var(--surface-bg);
+
+  --surface-border-color: var(--mantine-color-border);
+
+  &:where([data-with-border]) {
+    border: rem(1px) solid var(--surface-border-color);
+  }
+}

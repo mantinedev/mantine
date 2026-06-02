@@ -1,4 +1,3 @@
-import chroma from 'chroma-js';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { generateColorFormats } from '@mantine/colors-generator';
@@ -9,12 +8,14 @@ import { ColorsList } from './ColorsList/ColorsList';
 import { ColorsOutput } from './ColorsOutput/ColorsOutput';
 import { ComponentsPreview } from './ComponentsPreview/ComponentsPreview';
 
+export type ColorFormat = 'oklch' | 'hex' | 'rgb' | 'hsl';
+
 export function ColorsGenerator() {
   const router = useRouter();
   const urlColor = `#${router.query.color}`;
   const [color, setColor] = useState('#5474B4');
+  const [colorFormat, setColorFormat] = useState<ColorFormat>('oklch');
   const { baseColorIndex, formats } = generateColorFormats(color);
-  const colors = formats.hex.map((value) => chroma(value));
   const [displayColorsInfo, setDisplayColorsInfo] = useLocalStorage({
     key: 'display-colors-info',
     defaultValue: true,
@@ -26,6 +27,8 @@ export function ColorsGenerator() {
     }
   }, [router.query.color]);
 
+  const outputColors = formats[colorFormat];
+
   return (
     <div style={{ maxWidth: 'calc(100vw - var(--mantine-spacing-lg) * 2)' }}>
       <Title fw={500} mb="md" pt="lg" c="bright">
@@ -36,16 +39,19 @@ export function ColorsGenerator() {
         onChange={setColor}
         displayColorsInfo={displayColorsInfo}
         setDisplayColorsInfo={setDisplayColorsInfo}
+        colorFormat={colorFormat}
+        setColorFormat={setColorFormat}
       />
       <ColorsList
-        colors={colors}
+        hexColors={formats.hex}
+        displayColors={outputColors}
         baseColorIndex={baseColorIndex}
         displayColorsInfo={displayColorsInfo}
       />
 
-      <ComponentsPreview colors={colors.map((c) => c.hex()) as any} />
+      <ComponentsPreview colors={formats.oklch as any} />
 
-      <ColorsOutput colors={colors.map((c) => c.hex())} />
+      <ColorsOutput colors={outputColors} />
     </div>
   );
 }

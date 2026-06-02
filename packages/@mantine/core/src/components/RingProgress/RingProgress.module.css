@@ -22,13 +22,7 @@
     stroke-dasharray var(--rp-transition-duration) ease,
     stroke var(--rp-transition-duration);
 
-  @mixin light {
-    --rp-curve-root-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin dark {
-    --rp-curve-root-color: var(--mantine-color-dark-4);
-  }
+  --rp-curve-root-color: var(--mantine-color-track);
 }
 
 .label {

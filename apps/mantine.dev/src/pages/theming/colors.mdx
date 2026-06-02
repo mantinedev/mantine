@@ -7,8 +7,10 @@ export default Layout(MDX_DATA.Colors);
 
 # Colors
 
-Mantine uses [open-color](https://yeun.github.io/open-color/) in the default theme with some additions.
-Each color has 10 shades.
+Mantine's default theme includes 14 color palettes, each with 10 shades. In v10 all default
+palettes were re-derived in the [OKLCH](https://oklch.com/) color space on a shared
+perceptual-lightness ramp: every shade index has the same perceived brightness across all hues,
+so filled buttons and other colored controls look visually consistent regardless of color.
 
 Colors are exposed on the [theme object](/theming/theme-object) as an array of strings.
 You can access a color shade by color name and index (0-9); colors with a larger index are darker:
@@ -41,6 +43,12 @@ Colors are also exposed as [CSS variables](/styles/css-variables):
   border: 1px solid var(--mantine-color-blue-1);
 }
 ```
+
+> **OKLCH CSS variables**
+>
+> In v10, `--mantine-color-*` variables emit `oklch(L C H)` strings instead of hex/RGB.
+> Code that reads these values and parses them as hex or RGB must be updated.
+> See the [9.x → 10.x migration guide](/guides/9x-to-10x) for details and the one-line v9 opt-out.
 
 ## Adding extra colors
 
@@ -156,6 +164,129 @@ function Demo() {
 }
 ```
 
+## autoContrast
+
+`theme.autoContrast` controls whether filled controls automatically switch their text color between
+black and white based on the luminance of their background. It defaults to `true` in v10.
+
+When `autoContrast` is enabled, any component that accepts a `color` prop and renders in the
+`filled` variant will pick the highest-contrast text color (black or white) automatically. This is
+especially useful when using light shades as the filled color:
+
+```tsx
+import { Button, MantineProvider } from '@mantine/core';
+
+// autoContrast is on by default – text color is chosen automatically
+function Demo() {
+  return <Button color="yellow.3">Label</Button>;
+}
+```
+
+To disable `autoContrast` globally, set it to `false` in the theme:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  autoContrast: false,
+});
+
+function Demo() {
+  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
+}
+```
+
+`theme.luminanceThreshold` controls the luminance cutoff (default `0.2`). Backgrounds with
+relative luminance above the threshold get black text; those below get white text.
+
+## Semantic color variables
+
+In addition to the raw shade variables (`--mantine-color-gray-3`, etc.), Mantine v10 exposes
+semantic role tokens that components use internally. You can override these to theme borders,
+surfaces, and text uniformly:
+
+```css
+[data-mantine-color-scheme='light'] {
+  --mantine-color-border: #d0d5dd;
+  --mantine-color-text-muted: #6b7280;
+}
+
+[data-mantine-color-scheme='dark'] {
+  --mantine-color-border: #374151;
+  --mantine-color-text-muted: #9ca3af;
+}
+```
+
+Key role variables and their defaults:
+
+| Variable | Light | Dark |
+|----------|-------|------|
+| `--mantine-color-border` | `gray-3` | `dark-4` |
+| `--mantine-color-border-subtle` | `gray-2` | `dark-5` |
+| `--mantine-color-border-strong` | `gray-4` | `dark-3` |
+| `--mantine-color-divider` | `gray-3` | `dark-4` |
+| `--mantine-color-hover` | `gray-0` | `dark-6` |
+| `--mantine-color-active` | `gray-1` | `dark-5` |
+| `--mantine-color-track` | `gray-2` | `dark-4` |
+| `--mantine-color-text-muted` | `gray-6` | `dark-2` |
+| `--mantine-color-surface-0` | `white` | `dark-8` |
+| `--mantine-color-surface-1` | `white` | `dark-7` |
+| `--mantine-color-surface-2` | `gray-0` | `dark-6` |
+| `--mantine-color-surface-3` | `gray-1` | `dark-5` |
+| `--mantine-color-surface-4` | `gray-2` | `dark-4` |
+| `--mantine-color-surface-5` | `gray-2` | `dark-4` |
+| `--mantine-color-surface-recessed` | `gray-0` | `dark-9` |
+
+Role variables are defined as `var()` references to the underlying shade variables, so overriding
+`--mantine-color-gray-3` still cascades into `--mantine-color-border`.
+
+## Dark neutral flavors
+
+Four pre-built neutral color tuples are exported for use as `theme.colors.dark`:
+
+```tsx
+import {
+  darkColors,
+  darkColdColors,
+  darkWarmColors,
+  darkTintedColors,
+  createTheme,
+} from '@mantine/core';
+
+// Use a warm-tinted dark neutral ramp
+const theme = createTheme({
+  colors: {
+    dark: darkWarmColors,
+  },
+});
+```
+
+| Export | Description |
+|--------|-------------|
+| `darkColors` | Neutral (near-zero chroma) |
+| `darkColdColors` | Slightly cool-tinted |
+| `darkWarmColors` | Slightly warm-tinted |
+| `darkTintedColors` | Primary-color hue mixed in |
+
+## Surface component
+
+Surface is the depth-aware background primitive introduced in v10. It replaces
+`Paper` (deprecated in v10, removed in v11) and supports automatic elevation stepping in dark mode:
+
+```tsx
+import { Surface } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Surface shadow="sm" radius="md" p="md">
+      <Surface autoDepth p="md">
+        Inner surface – one level deeper in dark mode
+      </Surface>
+    </Surface>
+  );
+}
+```
+
 ## Color prop
 
 Components that support changing their color have `color` prop. This prop supports the following values:
@@ -235,12 +366,12 @@ or to add support for new variants:
 You can use the [colors generator](/colors-generator) to generate 10 shades of color based on a single value
 or install the `@mantine/colors-generator` package to generate dynamic colors in your application:
 
-<InstallScript packages="chroma-js @mantine/colors-generator" />
+<InstallScript packages="@mantine/colors-generator" />
 
-The package exports a `generateColors` function that accepts a color value and returns an array of 10 shades.
-Note that the `generateColors` function works best with darker colors (blue, violet, red) and may produce
-colors with poor contrast for lighter colors (yellow, teal, orange). Usually, it's better to generate
-colors in advance to avoid contrast issues.
+The package exports a `generateColors` function that accepts a color value (hex or oklch) and returns
+a `MantineColorsTuple` of 10 OKLCH shades built on the same shared lightness ramp as the built-in
+palettes. The input color is placed at its closest natural lightness slot, so the palette will look
+consistent alongside Mantine's defaults.
 
 ```tsx
 import { generateColors } from '@mantine/colors-generator';
@@ -251,7 +382,7 @@ function Demo() {
     <MantineProvider
       theme={{
         colors: {
-          'pale-blue': generateColors('#375EAC'),
+          brand: generateColors('#375EAC'),
         },
       }}
     >
@@ -259,6 +390,19 @@ function Demo() {
     </MantineProvider>
   );
 }
+```
+
+When you need the full palette in multiple formats (oklch, hex, rgb, hsl) together with the detected
+base color index, use `generateColorFormats`:
+
+```tsx
+import { generateColorFormats } from '@mantine/colors-generator';
+
+const result = generateColorFormats('#375EAC');
+// result.colors       – MantineColorsTuple (oklch strings)
+// result.formats.hex  – string[]
+// result.formats.rgb  – string[]
+// result.baseColorIndex – number
 ```
 
 ## Default colors

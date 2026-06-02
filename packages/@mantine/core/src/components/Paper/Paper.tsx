@@ -30,6 +30,7 @@ export interface PaperBaseProps {
   withBorder?: boolean;
 }
 
+/** @deprecated Deprecated in 10.0, use `Surface` instead. Will be removed in 11.0. */
 export interface PaperProps extends BoxProps, PaperBaseProps, StylesApiProps<PaperFactory> {}
 
 export type PaperFactory = PolymorphicFactory<{
@@ -47,6 +48,7 @@ const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) =>
   },
 }));
 
+/** @deprecated Deprecated in 10.0, use `Surface` instead. Will be removed in 11.0. */
 export const Paper = polymorphicFactory<PaperFactory>((_props) => {
   const props = useProps('Paper', null, _props);
   const {

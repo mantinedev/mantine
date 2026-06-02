@@ -34,8 +34,18 @@ export { createTheme } from './create-theme/create-theme';
 export { mergeThemeOverrides } from './merge-theme-overrides/merge-theme-overrides';
 export { defaultCssVariablesResolver } from './MantineCssVariables/default-css-variables-resolver';
 export { v8CssVariablesResolver } from './MantineCssVariables/v8-css-variables-resolver';
+export { v9CssVariablesResolver } from './MantineCssVariables/v9-css-variables-resolver';
 export type { CSSVariablesResolver } from './MantineCssVariables/default-css-variables-resolver';
-export { virtualColor, getCSSColorVariables, isVirtualColor } from './MantineCssVariables';
+export {
+  virtualColor,
+  getCSSColorVariables,
+  getV9CSSColorVariables,
+  isVirtualColor,
+} from './MantineCssVariables';
+export { V9_DEFAULT_COLORS } from './default-colors.v9';
+export { V10_DEFAULT_COLORS } from './default-colors.v10';
+export { darkColors, darkColdColors, darkWarmColors, darkTintedColors } from './dark-colors';
+export { v9Theme } from './v9-theme';
 export { useMatches } from './use-matches/use-matches';
 export type { MantineStylesTransform } from './Mantine.context';
 export { mantineHtmlProps } from './mantine-html-props';

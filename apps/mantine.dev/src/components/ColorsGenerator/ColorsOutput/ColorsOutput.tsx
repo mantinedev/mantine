@@ -27,7 +27,6 @@ function Demo() {
 }
 
 export function ColorsOutput({ colors }: ColorsOutputProps) {
-  // For some reason code highlight does not properly update when colors change without key
   const keyBase = JSON.stringify(colors);
   return (
     <>
