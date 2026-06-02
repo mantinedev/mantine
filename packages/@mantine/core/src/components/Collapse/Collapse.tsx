@@ -47,6 +47,7 @@ const defaultProps = {
   transitionTimingFunction: 'ease',
   animateOpacity: true,
   orientation: 'vertical',
+  keepMounted: false,
 } satisfies Partial<CollapseProps>;
 
 export const Collapse = factory<CollapseFactory>((props) => {
@@ -94,13 +95,9 @@ export const Collapse = factory<CollapseFactory>((props) => {
 
   const isExited = collapse.state === 'exited';
 
-  let content: React.ReactNode;
-  if (keepMounted === false) {
-    content = isExited ? null : children;
-  } else if (keepMounted === true) {
+  let content: React.ReactNode = isExited ? null : children;
+  if (keepMounted) {
     content = <Activity mode={isExited ? 'hidden' : 'visible'}>{children}</Activity>;
-  } else {
-    content = children;
   }
 
   return (
