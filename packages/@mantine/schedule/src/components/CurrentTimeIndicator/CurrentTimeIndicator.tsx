@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useInterval } from '@mantine/hooks';
-import { DateLabelFormat } from '../../types';
+import { AnyDateValue, DateLabelFormat } from '../../types';
 import { formatDate, getCurrentTimePosition, isInTimeRange } from '../../utils';
 import classes from './CurrentTimeIndicator.module.css';
 
@@ -65,6 +65,9 @@ export interface CurrentTimeIndicatorProps
 
   /** End time of the day */
   endTime?: string;
+
+  /** A function to get the current time, called on every tick. Can be used to display the indicator in a different timezone. @default () => dayjs() */
+  getCurrentTime?: () => AnyDateValue;
 }
 
 export type CurrentTimeIndicatorFactory = Factory<{
@@ -110,6 +113,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     topOffset,
     startTime,
     endTime,
+    getCurrentTime,
     ...others
   } = props;
 
@@ -129,17 +133,18 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   });
 
   const ctx = useDatesContext();
-  const [offsetPercent, setOffsetPercent] = useState(
-    getCurrentTimePosition({ startTime, endTime })
-  );
-  useInterval(() => setOffsetPercent(getCurrentTimePosition({ startTime, endTime })), 1000 * 60, {
+  const [, setTick] = useState(0);
+  useInterval(() => setTick((tick) => tick + 1), 1000 * 60, {
     autoInvoke: true,
   });
+
+  const now = getCurrentTime ? dayjs(getCurrentTime()) : dayjs();
+  const offsetPercent = getCurrentTimePosition({ startTime, endTime, now });
   const formattedTime = withTimeBubble
-    ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: currentTimeFormat })
+    ? formatDate({ locale: ctx.getLocale(locale), date: now, format: currentTimeFormat })
     : '';
 
-  if (!isInTimeRange({ date: dayjs().toDate(), startTime, endTime })) {
+  if (!isInTimeRange({ date: now, startTime, endTime })) {
     return null;
   }
 

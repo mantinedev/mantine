@@ -28,6 +28,7 @@ import { useEventResize } from '../../hooks/use-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
+  AnyDateValue,
   DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
@@ -154,6 +155,9 @@ export interface WeekViewProps
 
   /** If set, displays the current time indicator on the same day of week even when viewing a different week @default false */
   forceCurrentTimeIndicator?: boolean;
+
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  getCurrentTime?: () => AnyDateValue;
 
   /** If set, displays all-day slots at the top of the view @default true */
   withAllDaySlots?: boolean;
@@ -347,6 +351,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     highlightToday,
     withCurrentTimeIndicator,
     forceCurrentTimeIndicator,
+    getCurrentTime,
     scrollAreaProps,
     locale,
     withWeekNumber,
@@ -705,10 +710,13 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     }
   };
 
+  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
+  const now = resolveNow();
+
   const currentWeekdayIndex = withCurrentTimeIndicator
     ? forceCurrentTimeIndicator
-      ? weekdays.findIndex((day) => dayjs(day).day() === dayjs().day())
-      : weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
+      ? weekdays.findIndex((day) => dayjs(day).day() === now.day())
+      : weekdays.findIndex((day) => dayjs(day).isSame(now, 'date'))
     : -1;
 
   const weekdaysLabels = weekdays.map((day, dayIndex) => (
@@ -720,7 +728,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       }}
       aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
-        today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
+        today: dayjs(day).isSame(now, 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
         static: mode === 'static',
       }}
@@ -1006,7 +1014,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
             next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
-            today: () => toDateString(dayjs()),
+            today: () => toDateString(resolveNow()),
           }}
           control={{
             miw: 140,
@@ -1112,6 +1120,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                   locale={locale}
                   startTime={startTime}
                   endTime={endTime}
+                  getCurrentTime={getCurrentTime}
                   {...stylesApiProps}
                 />
               )}
