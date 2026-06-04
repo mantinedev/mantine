@@ -68,6 +68,7 @@ export * from './Mark';
 export * from './Marquee';
 export * from './MaskInput';
 export * from './Menu';
+export * from './Menubar';
 export * from './Modal';
 export * from './MultiSelect';
 export * from './NativeSelect';

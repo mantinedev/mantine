@@ -931,6 +931,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
       'dropdown menu, context menu, popup menu, options menu, overflow menu, kebab menu, actions menu',
   },
 
+  Menubar: {
+    title: 'Menubar',
+    package: '@mantine/core',
+    slug: '/core/menubar',
+    props: ['Menubar', 'MenubarMenu', 'MenubarTarget', 'MenubarDropdown'],
+    styles: ['Menubar'],
+    componentPrefix: 'Menubar',
+    description: 'Desktop application style menubar with a row of menu triggers',
+    source: '@mantine/core/src/components/Menubar/Menubar.tsx',
+    docs: 'core/menubar.mdx',
+    searchTags: 'menu bar, application menu, desktop menu, top menu, menubar, file edit view',
+  },
+
   Progress: {
     title: 'Progress',
     package: '@mantine/core',
