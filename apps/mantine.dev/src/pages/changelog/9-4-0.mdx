@@ -1,4 +1,4 @@
-import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, WeekViewDemos } from '@docs/demos';
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -104,3 +104,12 @@ a success message below the input. If both `error` and `success` props are set, 
 New `--mantine-color-success` CSS variable has been added (resolves to `teal-6` in light mode and `teal-8` in dark mode).
 
 <Demo data={InputDemos.success} />
+
+## Notifications priority
+
+Notifications now support a `priority` property. When the number of active notifications exceeds
+the `limit`, notifications with a higher `priority` take the visible slots and lower priority ones
+are pushed into the queue. Notifications with equal priority keep insertion order (FIFO), so the
+default behavior is unchanged (`priority` defaults to `0`).
+
+<Demo data={NotificationsDemos.priority} />
