@@ -256,6 +256,28 @@ describe('@mantine/schedule/WeekView', () => {
     jest.useRealTimers();
   });
 
+  it('uses getCurrentTime to position the indicator within the displayed week', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-15 10:30:00'));
+
+    const { container, rerender } = render(
+      <WeekView {...defaultProps} date="2025-11-03" withCurrentTimeIndicator />
+    );
+    expect(
+      container.querySelector('.mantine-WeekView-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+
+    rerender(
+      <WeekView
+        {...defaultProps}
+        date="2025-11-03"
+        withCurrentTimeIndicator
+        getCurrentTime={() => '2025-11-05 10:30:00'}
+      />
+    );
+    expect(container.querySelector('.mantine-WeekView-currentTimeIndicator')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
   it('does not display current time indicator on a different week by default', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-11-05 10:30:00'));
     const { container } = render(
@@ -360,6 +382,16 @@ describe('@mantine/schedule/WeekView', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Today' }));
     expect(spy).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('navigates to getCurrentTime date when Today control is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <WeekView {...defaultProps} onDateChange={spy} getCurrentTime={() => '2025-12-25 10:00:00'} />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-12-25 10:00:00')));
   });
 
   it('calls onViewChange when view button is clicked', async () => {

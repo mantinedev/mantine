@@ -65,4 +65,36 @@ describe('@mantine/core/Splitter', () => {
     render(<Splitter {...defaultProps} />);
     expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'horizontal');
   });
+
+  it('renders percentage panes with percent flex-basis', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize={30}>Left</Splitter.Pane>
+        <Splitter.Pane defaultSize={70}>Right</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Left')).toHaveStyle({ flexBasis: '30%' });
+    expect(screen.getByText('Right')).toHaveStyle({ flexBasis: '70%' });
+  });
+
+  it('renders fixed pixel pane with pixel flex-basis and flexible neighbor with flex-grow', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize="240px">Sidebar</Splitter.Pane>
+        <Splitter.Pane defaultSize={60}>Content</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Sidebar')).toHaveStyle({ flexGrow: '0', flexBasis: '240px' });
+    expect(screen.getByText('Content')).toHaveStyle({ flexGrow: '60' });
+  });
+
+  it('renders fixed rem pane with rem flex-basis', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize="15rem">Sidebar</Splitter.Pane>
+        <Splitter.Pane defaultSize={60}>Content</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Sidebar')).toHaveStyle({ flexGrow: '0', flexBasis: '15rem' });
+  });
 });

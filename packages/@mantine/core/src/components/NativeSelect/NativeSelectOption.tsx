@@ -11,7 +11,7 @@ function isGroup(input: ComboboxParsedItem): input is ComboboxParsedItemGroup {
 export function NativeSelectOption({ data }: NativeSelectOptionProps) {
   if (isGroup(data)) {
     const items = data.items.map((item) => <NativeSelectOption key={item.value} data={item} />);
-    return <optgroup label={data.group}>{items}</optgroup>;
+    return <optgroup label={data.group as string}>{items}</optgroup>;
   }
 
   const { value, label, ...others } = data;

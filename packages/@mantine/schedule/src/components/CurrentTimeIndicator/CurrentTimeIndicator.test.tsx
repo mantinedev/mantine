@@ -1,5 +1,7 @@
 import 'dayjs/locale/ru';
 
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { DatesProvider } from '@mantine/dates';
 import { render, tests } from '@mantine-tests/core';
 import {
@@ -7,6 +9,8 @@ import {
   CurrentTimeIndicatorProps,
   CurrentTimeIndicatorStylesNames,
 } from './CurrentTimeIndicator';
+
+dayjs.extend(utc);
 
 const defaultProps: CurrentTimeIndicatorProps = {};
 
@@ -160,6 +164,56 @@ describe('@mantine/schedule/CurrentTimeIndicator', () => {
   it('renders indicator when current time is just before end boundary', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-11-17 16:59:59').getTime());
     const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime instead of local time for the time bubble', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 14:30:00').getTime());
+    const { container } = render(
+      <CurrentTimeIndicator
+        currentTimeFormat="HH:mm"
+        withTimeBubble
+        getCurrentTime={() => '2025-11-17 20:45:00'}
+      />
+    );
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicatorTimeBubble')
+    ).toHaveTextContent('20:45');
+    jest.useRealTimers();
+  });
+
+  it('keeps bubble and visibility consistent for a timezone-aware getCurrentTime value', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 23:00:00').getTime());
+    const { container } = render(
+      <CurrentTimeIndicator
+        currentTimeFormat="HH:mm"
+        withTimeBubble
+        startTime="09:00:00"
+        endTime="17:00:00"
+        getCurrentTime={() => dayjs.utc('2025-11-17 12:30:00')}
+      />
+    );
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicatorTimeBubble')
+    ).toHaveTextContent('12:30');
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime when evaluating the visible time range', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 08:00:00').getTime());
+    const { container } = render(
+      <CurrentTimeIndicator
+        startTime="09:00:00"
+        endTime="17:00:00"
+        getCurrentTime={() => '2025-11-17 12:30:00'}
+      />
+    );
     expect(
       container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
     ).toBeInTheDocument();

@@ -226,6 +226,15 @@ context menu:
 
 <Demo data={PopoverDemos.contextMenu} />
 
+### Touch devices
+
+On touch devices (most notably iOS Safari, which does not fire the `contextmenu` event),
+the dropdown is opened with a long-press instead. Use the `longPressDelay` prop to control
+how long the element must be pressed before the dropdown opens, `500`ms by default. To
+prevent the native text-selection callout from appearing under the dropdown on touch
+devices, `Popover.ContextMenu` disables text selection (`user-select: none`) on the wrapped
+element.
+
 ## Nested popovers
 
 Nested popovers require children rendering without [Portal](/core/portal/). Usually, you

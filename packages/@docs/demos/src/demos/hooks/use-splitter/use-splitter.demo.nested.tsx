@@ -46,7 +46,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel A ({Math.round(horizontal.sizes[0])}%)
+        Panel A ({Math.round(horizontal.sizes[0] as number)}%)
       </div>
       <div
         {...horizontal.getHandleProps({ index: 0 })}
@@ -101,7 +101,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(vertical.sizes[0])}%)
+          Panel B ({Math.round(vertical.sizes[0] as number)}%)
         </div>
         <div
           {...vertical.getHandleProps({ index: 0 })}
@@ -148,7 +148,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel C ({Math.round(vertical.sizes[1])}%)
+          Panel C ({Math.round(vertical.sizes[1] as number)}%)
         </div>
       </div>
     </div>
@@ -196,7 +196,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel A ({Math.round(horizontal.sizes[0])}%)
+        Panel A ({Math.round(horizontal.sizes[0] as number)}%)
       </div>
       <div
         {...horizontal.getHandleProps({ index: 0 })}
@@ -251,7 +251,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(vertical.sizes[0])}%)
+          Panel B ({Math.round(vertical.sizes[0] as number)}%)
         </div>
         <div
           {...vertical.getHandleProps({ index: 0 })}
@@ -298,7 +298,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel C ({Math.round(vertical.sizes[1])}%)
+          Panel C ({Math.round(vertical.sizes[1] as number)}%)
         </div>
       </div>
     </div>

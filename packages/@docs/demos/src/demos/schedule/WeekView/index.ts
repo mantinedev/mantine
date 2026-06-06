@@ -8,6 +8,7 @@ export { highlightToday } from './WeekView.demo.highlightToday';
 export { withoutWeekNumber } from './WeekView.demo.withoutWeekNumber';
 export { currentTimeIndicator } from './WeekView.demo.currentTimeIndicator';
 export { forceCurrentTimeIndicator } from './WeekView.demo.forceCurrentTimeIndicator';
+export { timezone } from './WeekView.demo.timezone';
 export { withoutAllDaySlots } from './WeekView.demo.withoutAllDaySlots';
 export { withoutHeader } from './WeekView.demo.withoutHeader';
 export { weekLabelFormat } from './WeekView.demo.weekLabelFormat';
