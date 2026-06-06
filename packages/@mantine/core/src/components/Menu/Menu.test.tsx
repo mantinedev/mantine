@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cleanup, fireEvent } from '@testing-library/react';
+import { act, cleanup, createEvent, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
@@ -943,6 +943,230 @@ describe('@mantine/core/Menu', () => {
 
       fireEvent.contextMenu(area, { clientX: 50, clientY: 50 });
       expectOpened();
+    });
+
+    it('reopens via contextmenu after closing when no mousedown precedes the event', async () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expectOpened();
+
+      await userEvent.click(screen.getByText('Copy'));
+      expectClosed();
+
+      fireEvent.contextMenu(area, { clientX: 20, clientY: 20 });
+      expectOpened();
+    });
+
+    it('disables text selection on the trigger only when enabled', () => {
+      const { rerender } = render(<ContextMenuContainer />);
+      expect(screen.getByTestId('context-area')).toHaveStyle({ userSelect: 'none' });
+
+      rerender(<ContextMenuContainer disabled />);
+      expect(screen.getByTestId('context-area')).not.toHaveStyle({ userSelect: 'none' });
+    });
+  });
+
+  describe('Menu.ContextMenu touch support', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    function TouchContainer({
+      disabled,
+      longPressDelay,
+    }: {
+      disabled?: boolean;
+      longPressDelay?: number;
+    } = {}) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false}>
+          <Menu.ContextMenu disabled={disabled} longPressDelay={longPressDelay}>
+            <div data-testid="context-area">Long-press me</div>
+          </Menu.ContextMenu>
+          <Menu.Dropdown>
+            <Menu.Item>Copy</Menu.Item>
+            <Menu.Item>Paste</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('opens the menu on touch long-press', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      expectClosed();
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectOpened();
+    });
+
+    it('does not open on a short tap', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+      fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectClosed();
+    });
+
+    it('cancels the long-press when the finger moves beyond the threshold', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      fireEvent.touchMove(area, { touches: [{ clientX: 30, clientY: 120 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectClosed();
+    });
+
+    it('prevents default on touchend after a long-press to suppress synthetic mouse events', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectOpened();
+
+      const endEvent = createEvent.touchEnd(area, {
+        changedTouches: [{ clientX: 30, clientY: 40 }],
+      });
+      fireEvent(area, endEvent);
+
+      expect(endEvent.defaultPrevented).toBe(true);
+    });
+
+    it('does not open via touch when disabled', () => {
+      render(<TouchContainer disabled />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectClosed();
+    });
+
+    it('respects a custom longPressDelay', () => {
+      render(<TouchContainer longPressDelay={1000} />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 0, clientY: 0 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectClosed();
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectOpened();
+    });
+
+    it('keeps the menu open when a native contextmenu follows a touch long-press', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectOpened();
+
+      fireEvent.contextMenu(area, { clientX: 30, clientY: 40 });
+      expectOpened();
+    });
+
+    it('allows a mouse contextmenu to reopen after a completed touch long-press', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
+      expectOpened();
+
+      fireEvent.click(screen.getByText('Copy'));
+      expectClosed();
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expectOpened();
+    });
+
+    it('does not prevent default on touchend when disabled', () => {
+      render(<TouchContainer disabled />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      const endEvent = createEvent.touchEnd(area, {
+        changedTouches: [{ clientX: 30, clientY: 40 }],
+      });
+      fireEvent(area, endEvent);
+
+      expect(endEvent.defaultPrevented).toBe(false);
+    });
+
+    it('does not open if disabled becomes true during the press', () => {
+      const { rerender } = render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+
+      rerender(<TouchContainer disabled />);
+      act(() => {
+        jest.advanceTimersByTime(300);
+      });
+
+      expectClosed();
+    });
+
+    it('does not open if the press started while disabled', () => {
+      const { rerender } = render(<TouchContainer disabled />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+
+      rerender(<TouchContainer />);
+      act(() => {
+        jest.advanceTimersByTime(300);
+      });
+
+      expectClosed();
     });
   });
 

@@ -1,6 +1,6 @@
 import { cloneElement } from 'react';
 import { getSingleElementChild, useProps } from '../../../core';
-import { createContextMenuHandlers } from '../../../utils/Floating/create-context-menu-handlers';
+import { useContextMenuHandlers } from '../../../utils/Floating/use-context-menu-handlers';
 import { usePopoverContext } from '../Popover.context';
 
 export interface PopoverContextMenuProps {
@@ -9,10 +9,13 @@ export interface PopoverContextMenuProps {
 
   /** If set, the right-click trigger is disabled and the browser's default context menu is shown */
   disabled?: boolean;
+
+  /** Delay in ms before a touch long-press opens the dropdown on touch devices, `500` by default */
+  longPressDelay?: number;
 }
 
 export function PopoverContextMenu(props: PopoverContextMenuProps) {
-  const { children, disabled } = useProps('PopoverContextMenu', null, props);
+  const { children, disabled, longPressDelay } = useProps('PopoverContextMenu', null, props);
 
   const child = getSingleElementChild(children);
   if (!child) {
@@ -23,10 +26,11 @@ export function PopoverContextMenu(props: PopoverContextMenuProps) {
 
   const ctx = usePopoverContext();
 
-  const handlers = createContextMenuHandlers({
+  const handlers = useContextMenuHandlers({
     childProps: child.props as any,
     disabled: disabled || ctx.disabled,
     opened: ctx.opened,
+    longPressDelay,
     setReference: ctx.reference as unknown as (node: object) => void,
     open: () => {
       if (!ctx.opened) {
