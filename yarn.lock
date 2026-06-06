@@ -7921,12 +7921,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.9.1":
-  version: 25.9.1
-  resolution: "@types/node@npm:25.9.1"
+"@types/node@npm:^25.9.2":
+  version: 25.9.2
+  resolution: "@types/node@npm:25.9.2"
   dependencies:
     undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10c0/9a04682842bebbcf21a1779dfeab9aa733d7bd7bbc0a0edb641ab3a9a3d43eac543225acf669c334f458f1956443ebc072bc3c72840c543b8b356cab5c82d456
+  checksum: 10c0/f14c0d56361febb985eccc45cf0834ee6e2f07c4389a636f3e1a55ebde320077a80bface18c9afd3092f5fa295925502c1a9d55f805efa813f634aa9c941cbac
   languageName: node
   linkType: hard
 
@@ -10906,7 +10906,7 @@ __metadata:
     "@tiptap/starter-kit": "npm:^3.23.6"
     "@types/chroma-js": "npm:^3.1.2"
     "@types/github-slugger": "npm:^2.0.0"
-    "@types/node": "npm:^25.9.1"
+    "@types/node": "npm:^25.9.2"
     "@types/react": "npm:19.2.15"
     chroma-js: "npm:^3.2.0"
     dayjs: "npm:^1.11.21"
@@ -13074,7 +13074,7 @@ __metadata:
     "@next/mdx": "npm:16.2.6"
     "@phosphor-icons/react": "npm:^2.1.10"
     "@types/mdx": "npm:2.0.13"
-    "@types/node": "npm:^25.9.1"
+    "@types/node": "npm:^25.9.2"
     "@types/react": "npm:19.2.15"
     "@types/react-dom": "npm:19.2.3"
     dayjs: "npm:^1.11.21"
@@ -15216,7 +15216,7 @@ __metadata:
     "@types/jest": "npm:^30.0.0"
     "@types/jest-axe": "npm:^3.5.9"
     "@types/lodash": "npm:^4.17.24"
-    "@types/node": "npm:^25.9.1"
+    "@types/node": "npm:^25.9.2"
     "@types/react": "npm:19.2.15"
     "@types/react-dom": "npm:19.2.3"
     "@types/react-transition-group": "npm:^4.4.12"
