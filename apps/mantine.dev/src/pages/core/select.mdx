@@ -206,6 +206,12 @@ of flipping to the other side. Useful when working with large option lists:
 
 <Demo data={SelectDemos.groups} />
 
+The `group` property accepts any React node, so you can render custom markup
+(icons, badges, styled text) as a group label instead of a plain string. This
+also applies to `MultiSelect`, `Autocomplete` and `TagsInput`. Note that
+`NativeSelect` renders native `optgroup` elements and only supports string
+group labels.
+
 ## Disabled options
 
 When an option is disabled, it cannot be selected and is ignored in keyboard navigation.
