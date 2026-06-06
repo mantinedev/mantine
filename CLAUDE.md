@@ -1,7 +1,5 @@
 ## Links
 
-- Testing guidelines, read only if you write tests – `llms/testing.md`
-
 ## Finalizing Your Work
 
 Choose these commands to run after finalizing your work:
