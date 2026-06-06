@@ -8,6 +8,11 @@ export const Demo_usage = {
   render: renderDemo(demos.usage),
 };
 
+export const Demo_cssUnits = {
+  name: '⭐ Demo: cssUnits',
+  render: renderDemo(demos.cssUnits),
+};
+
 export const Demo_vertical = {
   name: '⭐ Demo: vertical',
   render: renderDemo(demos.vertical),

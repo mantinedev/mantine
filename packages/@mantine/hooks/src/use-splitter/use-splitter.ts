@@ -2,27 +2,50 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
 
+/** Pane size expressed in CSS units. A bare `number` or `%` string is a flexible size (shares
+ * the leftover space), `px`/`rem` strings are fixed sizes that keep their pixel size when the
+ * container is resized. */
+export type SplitterPaneSize = number | `${number}%` | `${number}px` | `${number}rem`;
+
+/** Keyboard step expressed in CSS units. A bare `number` or `%` string is a percentage of the
+ * container, `px`/`rem` strings are resolved to pixels. */
+export type SplitterStep = number | `${number}%` | `${number}px` | `${number}rem`;
+
 export interface UseSplitterPanel {
-  /** Initial size as percentage (0-100). All panels must sum to 100. */
-  defaultSize: number;
-  /** Minimum size percentage, `0` by default */
-  min?: number;
-  /** Maximum size percentage, `100` by default */
-  max?: number;
+  /** Initial size, a `number`/`%` is a flexible size, `px`/`rem` is a fixed size. A bare number is treated as a percentage. */
+  defaultSize: SplitterPaneSize;
+  /** Minimum size in the same units as `defaultSize`, `0` by default */
+  min?: SplitterPaneSize;
+  /** Maximum size in the same units as `defaultSize`, no limit by default */
+  max?: SplitterPaneSize;
   /** Whether this panel can be collapsed, `false` by default */
   collapsible?: boolean;
-  /** Size below which the panel snaps to collapsed (percentage), defaults to `min` */
+  /** Size below which the panel snaps to collapsed, defaults to `min` */
+  collapseThreshold?: SplitterPaneSize;
+}
+
+/** Panel configuration resolved to numeric units (percent or pixels) passed to redistribute functions */
+export interface UseSplitterResolvedPanel {
+  /** Resolved default size in the same units as redistribute sizes */
+  defaultSize: number;
+  /** Resolved minimum size */
+  min?: number;
+  /** Resolved maximum size */
+  max?: number;
+  /** Whether this panel can be collapsed */
+  collapsible?: boolean;
+  /** Resolved collapse threshold */
   collapseThreshold?: number;
 }
 
 export interface UseSplitterRedistributeInput {
-  /** Current sizes before applying delta */
+  /** Current sizes before applying delta, in resolved units (percent or pixels) */
   sizes: number[];
-  /** Panel configurations */
-  panels: UseSplitterPanel[];
+  /** Resolved panel configurations, in the same units as `sizes` */
+  panels: UseSplitterResolvedPanel[];
   /** Index of the handle being dragged */
   handleIndex: number;
-  /** Requested size change in percentage (positive = grow before-panel) */
+  /** Requested size change in resolved units (positive = grow before-panel) */
   delta: number;
 }
 
@@ -33,14 +56,14 @@ export interface UseSplitterOptions {
   panels: UseSplitterPanel[];
   /** Layout direction, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
-  /** Controlled sizes (percentages summing to 100) */
-  sizes?: number[];
-  /** Called during resize with updated sizes */
-  onSizeChange?: (sizes: number[]) => void;
+  /** Controlled sizes, each value keeps the unit it was declared in */
+  sizes?: SplitterPaneSize[];
+  /** Called during resize with updated sizes, each value keeps its declared unit */
+  onSizeChange?: (sizes: SplitterPaneSize[]) => void;
   /** Called when drag starts */
   onResizeStart?: (handleIndex: number) => void;
   /** Called when drag ends */
-  onResizeEnd?: (handleIndex: number, sizes: number[]) => void;
+  onResizeEnd?: (handleIndex: number, sizes: SplitterPaneSize[]) => void;
   /** Called when a panel collapses or expands */
   onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
   /** How to borrow space from non-adjacent panels when the immediate neighbor is at its min/max.
@@ -49,10 +72,10 @@ export interface UseSplitterOptions {
    * A function receives sizes, panels, handleIndex and delta, and returns new sizes.
    * When not set, only the two adjacent panels are affected. */
   redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
-  /** Keyboard step size in percentage, `1` by default */
-  step?: number;
-  /** Shift+arrow step size in percentage, `10` by default */
-  shiftStep?: number;
+  /** Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels, `1` by default */
+  step?: SplitterStep;
+  /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels, `10` by default */
+  shiftStep?: SplitterStep;
   /** Text direction for keyboard nav, `'ltr'` by default */
   dir?: 'ltr' | 'rtl';
   /** Enable/disable the hook, `true` by default */
@@ -62,8 +85,8 @@ export interface UseSplitterOptions {
 export interface UseSplitterReturnValue<T extends HTMLElement = any> {
   /** Ref callback for the container element */
   ref: React.RefCallback<T | null>;
-  /** Current panel sizes as percentages */
-  sizes: number[];
+  /** Current panel sizes, each value keeps the unit it was declared in */
+  sizes: SplitterPaneSize[];
   /** Which panels are currently collapsed */
   collapsed: boolean[];
   /** Index of handle being dragged, or -1 */
@@ -81,8 +104,8 @@ export interface UseSplitterReturnValue<T extends HTMLElement = any> {
     'data-active': boolean | undefined;
     'data-orientation': 'horizontal' | 'vertical';
   };
-  /** Programmatically set sizes */
-  setSizes: (sizes: number[]) => void;
+  /** Programmatically set sizes, each value keeps its declared unit */
+  setSizes: (sizes: SplitterPaneSize[]) => void;
   /** Collapse a panel */
   collapse: (panelIndex: number) => void;
   /** Expand a collapsed panel */
@@ -91,19 +114,178 @@ export interface UseSplitterReturnValue<T extends HTMLElement = any> {
   toggleCollapse: (panelIndex: number) => void;
 }
 
+const PX_RE = /^(-?[\d.]+)px$/;
+const REM_RE = /^(-?[\d.]+)rem$/;
+const PERCENT_RE = /^(-?[\d.]+)%$/;
+
+function isFixedSize(size: SplitterPaneSize | undefined): boolean {
+  return typeof size === 'string' && (PX_RE.test(size) || REM_RE.test(size));
+}
+
+function sizeMagnitude(size: SplitterPaneSize): number {
+  return typeof size === 'number' ? size : parseFloat(size);
+}
+
+function detectPixelMode(options: UseSplitterOptions): boolean {
+  return (
+    options.panels.some(
+      (panel) =>
+        isFixedSize(panel.defaultSize) ||
+        isFixedSize(panel.min) ||
+        isFixedSize(panel.max) ||
+        isFixedSize(panel.collapseThreshold)
+    ) ||
+    isFixedSize(options.step) ||
+    isFixedSize(options.shiftStep) ||
+    (options.sizes?.some(isFixedSize) ?? false)
+  );
+}
+
+function getRootFontSize(): number {
+  if (typeof window === 'undefined') {
+    return 16;
+  }
+  const fontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return Number.isFinite(fontSize) && fontSize > 0 ? fontSize : 16;
+}
+
+function resolveSize(
+  size: SplitterPaneSize,
+  pixelMode: boolean,
+  containerPx: number,
+  rootFontSize: number
+): number {
+  if (!pixelMode) {
+    return sizeMagnitude(size);
+  }
+
+  if (typeof size === 'number') {
+    return (size / 100) * containerPx;
+  }
+
+  const percent = PERCENT_RE.exec(size);
+  if (percent) {
+    return (parseFloat(percent[1]) / 100) * containerPx;
+  }
+
+  const rem = REM_RE.exec(size);
+  if (rem) {
+    return parseFloat(rem[1]) * rootFontSize;
+  }
+
+  const px = PX_RE.exec(size);
+  if (px) {
+    return parseFloat(px[1]);
+  }
+
+  return 0;
+}
+
+/** Resolves all sizes to pixels at once. Fixed panes get their absolute pixel size, flexible panes
+ * share the leftover space by their weight ratio – matching how the layout is rendered with
+ * `flex-grow`, so drag math operates on the same pixel sizes the user sees. */
+function resolveWorkingSizes(
+  sizes: SplitterPaneSize[],
+  pixelMode: boolean,
+  containerPx: number,
+  rootFontSize: number
+): number[] {
+  if (!pixelMode) {
+    return sizes.map((size) => sizeMagnitude(size));
+  }
+
+  let fixedTotal = 0;
+  let flexibleWeight = 0;
+  sizes.forEach((size) => {
+    if (isFixedSize(size)) {
+      fixedTotal += resolveSize(size, true, containerPx, rootFontSize);
+    } else {
+      flexibleWeight += sizeMagnitude(size);
+    }
+  });
+
+  const leftover = Math.max(0, containerPx - fixedTotal);
+  const fixedScale = fixedTotal > containerPx && fixedTotal > 0 ? containerPx / fixedTotal : 1;
+
+  return sizes.map((size) => {
+    if (isFixedSize(size)) {
+      return resolveSize(size, true, containerPx, rootFontSize) * fixedScale;
+    }
+    return flexibleWeight > 0 ? (sizeMagnitude(size) / flexibleWeight) * leftover : 0;
+  });
+}
+
+function encodeSize(
+  value: number,
+  original: SplitterPaneSize,
+  pixelMode: boolean,
+  containerPx: number,
+  rootFontSize: number
+): SplitterPaneSize {
+  if (!pixelMode) {
+    return typeof original === 'string' && PERCENT_RE.test(original) ? `${value}%` : value;
+  }
+
+  if (typeof original === 'number') {
+    return containerPx > 0 ? (value / containerPx) * 100 : original;
+  }
+
+  if (PERCENT_RE.test(original)) {
+    return `${containerPx > 0 ? (value / containerPx) * 100 : parseFloat(original)}%`;
+  }
+
+  if (REM_RE.test(original)) {
+    return `${rootFontSize > 0 ? value / rootFontSize : 0}rem`;
+  }
+
+  return `${value}px`;
+}
+
+function resolvePanel(
+  panel: UseSplitterPanel,
+  pixelMode: boolean,
+  containerPx: number,
+  rootFontSize: number
+): UseSplitterResolvedPanel {
+  return {
+    defaultSize: resolveSize(panel.defaultSize, pixelMode, containerPx, rootFontSize),
+    min: panel.min != null ? resolveSize(panel.min, pixelMode, containerPx, rootFontSize) : 0,
+    max:
+      panel.max != null
+        ? resolveSize(panel.max, pixelMode, containerPx, rootFontSize)
+        : pixelMode
+          ? containerPx
+          : 100,
+    collapseThreshold:
+      panel.collapseThreshold != null
+        ? resolveSize(panel.collapseThreshold, pixelMode, containerPx, rootFontSize)
+        : undefined,
+    collapsible: panel.collapsible,
+  };
+}
+
+function resolveStep(
+  step: SplitterStep,
+  pixelMode: boolean,
+  containerPx: number,
+  rootFontSize: number
+): number {
+  return resolveSize(step, pixelMode, containerPx, rootFontSize);
+}
+
 function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
-function getMin(panel: UseSplitterPanel): number {
+function getMin(panel: UseSplitterResolvedPanel): number {
   return panel.min ?? 0;
 }
 
-function getMax(panel: UseSplitterPanel): number {
-  return panel.max ?? 100;
+function getMax(panel: UseSplitterResolvedPanel): number {
+  return panel.max ?? Infinity;
 }
 
-function getCollapseThreshold(panel: UseSplitterPanel): number {
+function getCollapseThreshold(panel: UseSplitterResolvedPanel): number {
   return panel.collapseThreshold ?? getMin(panel);
 }
 
@@ -112,8 +294,11 @@ interface SplitterInternalState {
   handleIndex: number;
   startPointer: number;
   containerSize: number;
+  rootFontSize: number;
+  pixelMode: boolean;
   startSizes: number[];
-  preCollapseSizes: number[];
+  startRaw: SplitterPaneSize[];
+  preCollapseSizes: SplitterPaneSize[];
 }
 
 function createInitialInternalState(): SplitterInternalState {
@@ -122,14 +307,17 @@ function createInitialInternalState(): SplitterInternalState {
     handleIndex: -1,
     startPointer: 0,
     containerSize: 0,
+    rootFontSize: 16,
+    pixelMode: false,
     startSizes: [],
+    startRaw: [],
     preCollapseSizes: [],
   };
 }
 
 function checkCollapse(
   sizes: number[],
-  panels: UseSplitterPanel[],
+  panels: UseSplitterResolvedPanel[],
   handleIndex: number,
   delta: number
 ): number[] | null {
@@ -168,7 +356,7 @@ function checkCollapse(
 
 function applyAdjacentOnly(
   sizes: number[],
-  panels: UseSplitterPanel[],
+  panels: UseSplitterResolvedPanel[],
   handleIndex: number,
   delta: number
 ): number[] {
@@ -187,7 +375,7 @@ function applyAdjacentOnly(
 
 function redistributeNearest(
   sizes: number[],
-  panels: UseSplitterPanel[],
+  panels: UseSplitterResolvedPanel[],
   handleIndex: number,
   delta: number
 ): number[] {
@@ -228,7 +416,7 @@ function redistributeNearest(
 
 function redistributeEqual(
   sizes: number[],
-  panels: UseSplitterPanel[],
+  panels: UseSplitterResolvedPanel[],
   handleIndex: number,
   delta: number
 ): number[] {
@@ -317,7 +505,7 @@ function redistributeEqual(
 
 function applyConstraints(
   sizes: number[],
-  panels: UseSplitterPanel[],
+  panels: UseSplitterResolvedPanel[],
   handleIndex: number,
   delta: number,
   redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn
@@ -380,9 +568,11 @@ export function useSplitter<T extends HTMLElement = any>(
     enabled = true,
   } = options;
 
-  const defaultSizes = panels.map((p) => p.defaultSize);
+  const pixelMode = detectPixelMode(options);
 
-  const [currentSizes, setCurrentSizes] = useUncontrolled({
+  const defaultSizes = panels.map((panel) => panel.defaultSize);
+
+  const [currentSizes, setCurrentSizes] = useUncontrolled<SplitterPaneSize[]>({
     value: controlledSizes,
     defaultValue: defaultSizes,
     finalValue: defaultSizes,
@@ -390,23 +580,37 @@ export function useSplitter<T extends HTMLElement = any>(
   });
 
   const [activeHandle, setActiveHandle] = useState(-1);
+  const [containerSize, setContainerSize] = useState(0);
 
   const optionsRef = useRef(options);
   optionsRef.current = options;
 
   const internalStateRef = useRef<SplitterInternalState>(createInitialInternalState());
   const containerRef = useRef<T | null>(null);
+  const containerSizeRef = useRef(0);
+  const rootFontSizeRef = useRef(16);
   const documentControllerRef = useRef<AbortController | null>(null);
   const frameRef = useRef(0);
   const currentSizesRef = useRef(currentSizes);
   currentSizesRef.current = currentSizes;
 
-  const preCollapseSizesRef = useRef<number[]>(defaultSizes);
+  const preCollapseSizesRef = useRef<SplitterPaneSize[]>(defaultSizes);
 
-  const collapsed = currentSizes.map((size) => size === 0);
+  const collapsed = currentSizes.map((size) => sizeMagnitude(size) === 0);
+
+  const measureContainer = useCallback(() => {
+    const node = containerRef.current;
+    if (!node) {
+      return 0;
+    }
+    const rect = node.getBoundingClientRect();
+    return (optionsRef.current.orientation ?? 'horizontal') === 'horizontal'
+      ? rect.width
+      : rect.height;
+  }, []);
 
   const updateSizes = useCallback(
-    (newSizes: number[]) => {
+    (newSizes: SplitterPaneSize[]) => {
       currentSizesRef.current = newSizes;
       setCurrentSizes(newSizes);
     },
@@ -418,23 +622,28 @@ export function useSplitter<T extends HTMLElement = any>(
       if (!panels[panelIndex]?.collapsible) {
         return;
       }
-      const sizes = currentSizesRef.current;
-      if (sizes[panelIndex] === 0) {
+      const raw = currentSizesRef.current;
+      if (sizeMagnitude(raw[panelIndex]) === 0) {
         return;
       }
 
-      preCollapseSizesRef.current = [...sizes];
-      const newSizes = [...sizes];
-      const freedSize = newSizes[panelIndex];
-      newSizes[panelIndex] = 0;
+      const container = pixelMode ? containerSizeRef.current || measureContainer() : 0;
+      const rootFontSize = rootFontSizeRef.current;
+      const working = resolveWorkingSizes(raw, pixelMode, container, rootFontSize);
+
+      preCollapseSizesRef.current = [...raw];
+      const freedSize = working[panelIndex];
+      working[panelIndex] = 0;
 
       const neighbor = panelIndex === 0 ? 1 : panelIndex - 1;
-      newSizes[neighbor] += freedSize;
+      working[neighbor] += freedSize;
 
-      updateSizes(newSizes);
+      updateSizes(
+        working.map((value, i) => encodeSize(value, raw[i], pixelMode, container, rootFontSize))
+      );
       onCollapseChange?.(panelIndex, true);
     },
-    [panels, updateSizes, onCollapseChange]
+    [panels, pixelMode, measureContainer, updateSizes, onCollapseChange]
   );
 
   const expandPanel = useCallback(
@@ -442,35 +651,48 @@ export function useSplitter<T extends HTMLElement = any>(
       if (!panels[panelIndex]?.collapsible) {
         return;
       }
-      const sizes = currentSizesRef.current;
-      if (sizes[panelIndex] !== 0) {
+      const raw = currentSizesRef.current;
+      if (sizeMagnitude(raw[panelIndex]) !== 0) {
         return;
       }
 
+      const container = pixelMode ? containerSizeRef.current || measureContainer() : 0;
+      const rootFontSize = rootFontSizeRef.current;
+      const working = resolveWorkingSizes(raw, pixelMode, container, rootFontSize);
+
       const preCollapse = preCollapseSizesRef.current;
-      const restoreSize = preCollapse[panelIndex] || panels[panelIndex].defaultSize;
-      const newSizes = [...sizes];
+      const restoreSource =
+        preCollapse[panelIndex] != null && sizeMagnitude(preCollapse[panelIndex]) !== 0
+          ? preCollapse[panelIndex]
+          : panels[panelIndex].defaultSize;
+      const restoreSize = resolveSize(restoreSource, pixelMode, container, rootFontSize);
 
       const neighbor = panelIndex === 0 ? 1 : panelIndex - 1;
-      const available = Math.max(0, newSizes[neighbor] - getMin(panels[neighbor]));
+      const neighborMin =
+        panels[neighbor].min != null
+          ? resolveSize(panels[neighbor].min!, pixelMode, container, rootFontSize)
+          : 0;
+      const available = Math.max(0, working[neighbor] - neighborMin);
       const actualRestore = Math.min(restoreSize, available);
 
       if (actualRestore <= 0) {
         return;
       }
 
-      newSizes[panelIndex] = actualRestore;
-      newSizes[neighbor] -= actualRestore;
+      working[panelIndex] = actualRestore;
+      working[neighbor] -= actualRestore;
 
-      updateSizes(newSizes);
+      updateSizes(
+        working.map((value, i) => encodeSize(value, raw[i], pixelMode, container, rootFontSize))
+      );
       onCollapseChange?.(panelIndex, false);
     },
-    [panels, updateSizes, onCollapseChange]
+    [panels, pixelMode, measureContainer, updateSizes, onCollapseChange]
   );
 
   const toggleCollapsePanel = useCallback(
     (panelIndex: number) => {
-      if (currentSizesRef.current[panelIndex] === 0) {
+      if (sizeMagnitude(currentSizesRef.current[panelIndex]) === 0) {
         expandPanel(panelIndex);
       } else {
         collapsePanel(panelIndex);
@@ -482,6 +704,42 @@ export function useSplitter<T extends HTMLElement = any>(
   const containerRefCallback: React.RefCallback<T | null> = useCallback((node) => {
     containerRef.current = node;
   }, []);
+
+  useEffect(() => {
+    if (!pixelMode || typeof ResizeObserver === 'undefined') {
+      return undefined;
+    }
+
+    const node = containerRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    let frame = 0;
+    const update = () => {
+      const rect = node.getBoundingClientRect();
+      const size =
+        (optionsRef.current.orientation ?? 'horizontal') === 'horizontal'
+          ? rect.width
+          : rect.height;
+      rootFontSizeRef.current = getRootFontSize();
+      containerSizeRef.current = size;
+      setContainerSize((prev) => (prev !== size ? size : prev));
+    };
+
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    });
+
+    observer.observe(node);
+    update();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [pixelMode, orientation]);
 
   const handleRefCallbacks = useRef<Map<number, (node: HTMLElement | null) => void>>(new Map());
   const handleElementControllers = useRef<Map<number, AbortController>>(new Map());
@@ -519,17 +777,28 @@ export function useSplitter<T extends HTMLElement = any>(
             return;
           }
 
+          const opts = optionsRef.current;
+          const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal';
           const rect = container.getBoundingClientRect();
-          const isHorizontal = (optionsRef.current.orientation ?? 'horizontal') === 'horizontal';
-          const containerSize = isHorizontal ? rect.width : rect.height;
+          const containerSizePx = isHorizontal ? rect.width : rect.height;
           const pointerPos = isHorizontal ? event.clientX : event.clientY;
+          const isPixelMode = detectPixelMode(opts);
+          const rootFontSize = getRootFontSize();
 
           const s = internalStateRef.current;
           s.isDragging = true;
           s.handleIndex = handleIndex;
           s.startPointer = pointerPos;
-          s.containerSize = containerSize;
-          s.startSizes = [...currentSizesRef.current];
+          s.containerSize = containerSizePx;
+          s.rootFontSize = rootFontSize;
+          s.pixelMode = isPixelMode;
+          s.startRaw = [...currentSizesRef.current];
+          s.startSizes = resolveWorkingSizes(
+            s.startRaw,
+            isPixelMode,
+            containerSizePx,
+            rootFontSize
+          );
           s.preCollapseSizes = [...preCollapseSizesRef.current];
 
           setActiveHandle(handleIndex);
@@ -537,7 +806,7 @@ export function useSplitter<T extends HTMLElement = any>(
           document.body.style.webkitUserSelect = 'none';
           document.body.style.cursor = isHorizontal ? 'col-resize' : 'row-resize';
 
-          optionsRef.current.onResizeStart?.(handleIndex);
+          opts.onResizeStart?.(handleIndex);
 
           documentControllerRef.current?.abort();
           documentControllerRef.current = new AbortController();
@@ -553,43 +822,52 @@ export function useSplitter<T extends HTMLElement = any>(
           if (!s.containerSize) {
             return;
           }
-          const isHorizontal = (optionsRef.current.orientation ?? 'horizontal') === 'horizontal';
-          const isRtl = isHorizontal && optionsRef.current.dir === 'rtl';
-          const pointerPos = isHorizontal ? pointerEvent.clientX : pointerEvent.clientY;
-          const pixelDelta = pointerPos - s.startPointer;
-          const percentDelta = ((isRtl ? -pixelDelta : pixelDelta) / s.containerSize) * 100;
-
           const opts = optionsRef.current;
+          const isHorizontal = (opts.orientation ?? 'horizontal') === 'horizontal';
+          const isRtl = isHorizontal && opts.dir === 'rtl';
+          const pointerPos = isHorizontal ? pointerEvent.clientX : pointerEvent.clientY;
+          const pixelDelta = (isRtl ? -1 : 1) * (pointerPos - s.startPointer);
+          const delta = s.pixelMode ? pixelDelta : (pixelDelta / s.containerSize) * 100;
+
+          const resolvedPanels = opts.panels.map((panel) =>
+            resolvePanel(panel, s.pixelMode, s.containerSize, s.rootFontSize)
+          );
+
           const newSizes = applyConstraints(
             s.startSizes,
-            opts.panels,
+            resolvedPanels,
             s.handleIndex,
-            percentDelta,
+            delta,
             opts.redistribute
           );
 
           const prevSizes = currentSizesRef.current;
-          const beforeWasCollapsed = prevSizes[s.handleIndex] === 0;
-          const afterWasCollapsed = prevSizes[s.handleIndex + 1] === 0;
+          const beforeWasCollapsed = sizeMagnitude(prevSizes[s.handleIndex]) === 0;
+          const afterWasCollapsed = sizeMagnitude(prevSizes[s.handleIndex + 1]) === 0;
           const beforeNowCollapsed = newSizes[s.handleIndex] === 0;
           const afterNowCollapsed = newSizes[s.handleIndex + 1] === 0;
 
           if (!beforeWasCollapsed && beforeNowCollapsed) {
-            preCollapseSizesRef.current = [...s.startSizes];
+            preCollapseSizesRef.current = [...s.startRaw];
             opts.onCollapseChange?.(s.handleIndex, true);
           } else if (beforeWasCollapsed && !beforeNowCollapsed) {
             opts.onCollapseChange?.(s.handleIndex, false);
           }
 
           if (!afterWasCollapsed && afterNowCollapsed) {
-            preCollapseSizesRef.current = [...s.startSizes];
+            preCollapseSizesRef.current = [...s.startRaw];
             opts.onCollapseChange?.(s.handleIndex + 1, true);
           } else if (afterWasCollapsed && !afterNowCollapsed) {
             opts.onCollapseChange?.(s.handleIndex + 1, false);
           }
 
-          currentSizesRef.current = newSizes;
-          setCurrentSizes(newSizes);
+          const encoded = newSizes.map((value, i) =>
+            Math.abs(value - s.startSizes[i]) > 1e-6
+              ? encodeSize(value, s.startRaw[i], s.pixelMode, s.containerSize, s.rootFontSize)
+              : s.startRaw[i]
+          );
+          currentSizesRef.current = encoded;
+          setCurrentSizes(encoded);
         };
 
         const onPointerMove = (event: PointerEvent) => {
@@ -643,9 +921,13 @@ export function useSplitter<T extends HTMLElement = any>(
     (input: { index: number }) => {
       const { index } = input;
       const orient = orientation;
-      const beforeSize = currentSizes[index] ?? 0;
-      const beforePanel = panels[index];
-      const afterPanel = panels[index + 1];
+      const rootFontSize = rootFontSizeRef.current;
+      const working = resolveWorkingSizes(currentSizes, pixelMode, containerSize, rootFontSize);
+      const resolvedPanels = panels.map((panel) =>
+        resolvePanel(panel, pixelMode, containerSize, rootFontSize)
+      );
+      const beforeSize = working[index] ?? 0;
+      const beforePanel = resolvedPanels[index];
 
       return {
         ref: getHandleRefCallback(index),
@@ -663,8 +945,27 @@ export function useSplitter<T extends HTMLElement = any>(
           const isHorizontal = orient === 'horizontal';
           const isRtl = dir === 'rtl';
 
+          const container = pixelMode ? containerSizeRef.current || measureContainer() : 0;
+          const liveRootFontSize = rootFontSizeRef.current;
+          const liveWorking = resolveWorkingSizes(
+            currentSizes,
+            pixelMode,
+            container,
+            liveRootFontSize
+          );
+          const livePanels = panels.map((panel) =>
+            resolvePanel(panel, pixelMode, container, liveRootFontSize)
+          );
+          const liveBeforePanel = livePanels[index];
+          const liveAfterPanel = livePanels[index + 1];
+
           let delta = 0;
-          const currentStep = event.shiftKey ? shiftStep : step;
+          const currentStep = resolveStep(
+            event.shiftKey ? shiftStep : step,
+            pixelMode,
+            container,
+            liveRootFontSize
+          );
 
           switch (event.key) {
             case 'ArrowLeft': {
@@ -696,18 +997,18 @@ export function useSplitter<T extends HTMLElement = any>(
               break;
             }
             case 'Home': {
-              delta = -(currentSizes[index] - getMin(beforePanel));
+              delta = -(liveWorking[index] - getMin(liveBeforePanel));
               break;
             }
             case 'End': {
-              delta = getMax(beforePanel) - currentSizes[index];
+              delta = getMax(liveBeforePanel) - liveWorking[index];
               break;
             }
             case 'Enter': {
-              const beforeCollapsible = beforePanel?.collapsible;
-              const afterCollapsible = afterPanel?.collapsible;
+              const beforeCollapsible = liveBeforePanel?.collapsible;
+              const afterCollapsible = liveAfterPanel?.collapsible;
 
-              if (beforeCollapsible && currentSizes[index] <= currentSizes[index + 1]) {
+              if (beforeCollapsible && liveWorking[index] <= liveWorking[index + 1]) {
                 toggleCollapsePanel(index);
                 event.preventDefault();
                 return;
@@ -731,9 +1032,9 @@ export function useSplitter<T extends HTMLElement = any>(
           event.preventDefault();
 
           if (delta !== 0) {
-            const newSizes = applyConstraints(currentSizes, panels, index, delta, redistribute);
-            const beforeWas = currentSizes[index] === 0;
-            const afterWas = currentSizes[index + 1] === 0;
+            const newSizes = applyConstraints(liveWorking, livePanels, index, delta, redistribute);
+            const beforeWas = sizeMagnitude(currentSizes[index]) === 0;
+            const afterWas = sizeMagnitude(currentSizes[index + 1]) === 0;
             const beforeNow = newSizes[index] === 0;
             const afterNow = newSizes[index + 1] === 0;
 
@@ -751,7 +1052,13 @@ export function useSplitter<T extends HTMLElement = any>(
               onCollapseChange?.(index + 1, false);
             }
 
-            updateSizes(newSizes);
+            updateSizes(
+              newSizes.map((value, i) =>
+                Math.abs(value - liveWorking[i]) > 1e-6
+                  ? encodeSize(value, currentSizes[i], pixelMode, container, liveRootFontSize)
+                  : currentSizes[i]
+              )
+            );
           }
         },
         'data-active': activeHandle === index || undefined,
@@ -762,12 +1069,15 @@ export function useSplitter<T extends HTMLElement = any>(
       orientation,
       currentSizes,
       panels,
+      pixelMode,
+      containerSize,
       enabled,
       dir,
       step,
       shiftStep,
       activeHandle,
       redistribute,
+      measureContainer,
       getHandleRefCallback,
       toggleCollapsePanel,
       updateSizes,
@@ -811,5 +1121,8 @@ export namespace useSplitter {
   export type Options = UseSplitterOptions;
   export type RedistributeInput = UseSplitterRedistributeInput;
   export type RedistributeFn = UseSplitterRedistributeFn;
+  export type ResolvedPanel = UseSplitterResolvedPanel;
   export type ReturnValue<T extends HTMLElement = any> = UseSplitterReturnValue<T>;
+  export type PaneSize = SplitterPaneSize;
+  export type Step = SplitterStep;
 }

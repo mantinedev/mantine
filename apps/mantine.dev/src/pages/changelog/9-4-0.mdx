@@ -1,4 +1,4 @@
-import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, WeekViewDemos } from '@docs/demos';
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -104,6 +104,15 @@ a success message below the input. If both `error` and `success` props are set, 
 New `--mantine-color-success` CSS variable has been added (resolves to `teal-6` in light mode and `teal-8` in dark mode).
 
 <Demo data={InputDemos.success} />
+
+## Splitter CSS units
+
+[Splitter.Pane](/core/splitter) `defaultSize`, `min` and `max` props now accept CSS units in
+addition to plain numbers. A plain `number` or `%` string is a flexible size that shares the
+leftover space, while a `px` or `rem` string is a fixed size that keeps its pixel size when the
+container is resized. This makes it possible to mix a fixed-width sidebar with a fluid content pane:
+
+<Demo data={SplitterDemos.cssUnits} />
 
 ## Notifications priority
 

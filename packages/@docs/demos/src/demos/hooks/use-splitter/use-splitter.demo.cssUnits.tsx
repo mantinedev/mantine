@@ -1,28 +1,32 @@
 import React from 'react';
 import { DotsSixVerticalIcon } from '@phosphor-icons/react';
-import { useSplitter } from '@mantine/hooks';
+import { SplitterPaneSize, useSplitter } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import React from 'react';
 import { DotsSixVerticalIcon } from '@phosphor-icons/react';
-import { useSplitter } from '@mantine/hooks';
+import { SplitterPaneSize, useSplitter } from '@mantine/hooks';
 
-const colors = [
-  'var(--mantine-color-blue-filled)',
-  'var(--mantine-color-teal-filled)',
-  'var(--mantine-color-grape-filled)',
-];
-const labels = ['Panel A', 'Panel B', 'Panel C'];
+const colors = ['var(--mantine-color-blue-filled)', 'var(--mantine-color-teal-filled)'];
+
+function getPaneStyle(size: SplitterPaneSize): React.CSSProperties {
+  if (typeof size === 'string' && (size.endsWith('px') || size.endsWith('rem'))) {
+    return { flexGrow: 0, flexShrink: 1, flexBasis: size };
+  }
+  const weight = typeof size === 'number' ? size : parseFloat(size);
+  return { flexGrow: weight, flexShrink: 1, flexBasis: 0 };
+}
 
 function Demo() {
   const splitter = useSplitter({
     panels: [
-      { defaultSize: 25, min: 10 },
-      { defaultSize: 50, min: 20 },
-      { defaultSize: 25, min: 10 },
+      { defaultSize: '240px', min: '160px', max: '50%' },
+      { defaultSize: 100 },
     ],
   });
+
+  const labels = ['Fixed 240px sidebar', 'Flexible content'];
 
   return (
     <div
@@ -71,19 +75,17 @@ function Demo() {
           )}
           <div
             style={{
-              width: \`\${size}%\`,
+              ...getPaneStyle(size),
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               backgroundColor: colors[i],
               color: 'var(--mantine-color-white)',
               fontWeight: 500,
               whiteSpace: 'nowrap',
-              gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size as number)}%)
+            {labels[i]}
           </div>
         </React.Fragment>
       ))}
@@ -92,21 +94,22 @@ function Demo() {
 }
 `;
 
-const colors = [
-  'var(--mantine-color-blue-filled)',
-  'var(--mantine-color-teal-filled)',
-  'var(--mantine-color-grape-filled)',
-];
-const labels = ['Panel A', 'Panel B', 'Panel C'];
+const colors = ['var(--mantine-color-blue-filled)', 'var(--mantine-color-teal-filled)'];
+
+function getPaneStyle(size: SplitterPaneSize): React.CSSProperties {
+  if (typeof size === 'string' && (size.endsWith('px') || size.endsWith('rem'))) {
+    return { flexGrow: 0, flexShrink: 1, flexBasis: size };
+  }
+  const weight = typeof size === 'number' ? size : parseFloat(size);
+  return { flexGrow: weight, flexShrink: 1, flexBasis: 0 };
+}
 
 function Demo() {
   const splitter = useSplitter({
-    panels: [
-      { defaultSize: 25, min: 10 },
-      { defaultSize: 50, min: 20 },
-      { defaultSize: 25, min: 10 },
-    ],
+    panels: [{ defaultSize: '240px', min: '160px', max: '50%' }, { defaultSize: 100 }],
   });
+
+  const labels = ['Fixed 240px sidebar', 'Flexible content'];
 
   return (
     <div
@@ -155,19 +158,17 @@ function Demo() {
           )}
           <div
             style={{
-              width: `${size}%`,
+              ...getPaneStyle(size),
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               backgroundColor: colors[i],
               color: 'var(--mantine-color-white)',
               fontWeight: 500,
               whiteSpace: 'nowrap',
-              gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size as number)}%)
+            {labels[i]}
           </div>
         </React.Fragment>
       ))}
@@ -175,7 +176,7 @@ function Demo() {
   );
 }
 
-export const multiple: MantineDemo = {
+export const cssUnits: MantineDemo = {
   type: 'code',
   code,
   component: Demo,
