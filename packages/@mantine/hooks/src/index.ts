@@ -210,7 +210,11 @@ export type {
   UseWindowScrollTo,
   UseWindowScrollReturnValue,
 } from './use-window-scroll/use-window-scroll';
-export type { UseLongPressOptions, UseLongPressReturnValue } from './use-long-press/use-long-press';
+export type {
+  UseLongPressEvent,
+  UseLongPressOptions,
+  UseLongPressReturnValue,
+} from './use-long-press/use-long-press';
 export type {
   SetFloatingWindowPosition,
   UseFloatingWindowOptions,

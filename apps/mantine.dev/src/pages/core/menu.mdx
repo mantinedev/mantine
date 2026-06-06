@@ -106,6 +106,34 @@ Set `disabled` to restore the browser's default context menu:
 
 <Demo data={MenuDemos.contextMenu} />
 
+### Touch devices
+
+On touch devices (most notably iOS Safari, which does not fire the `contextmenu` event),
+the dropdown is opened with a long-press instead. Use the `longPressDelay` prop to control
+how long the element must be pressed before the dropdown opens, `500`ms by default:
+
+```tsx
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.ContextMenu longPressDelay={400}>
+        <div>Long-press me</div>
+      </Menu.ContextMenu>
+      <Menu.Dropdown>
+        <Menu.Item>Copy</Menu.Item>
+        <Menu.Item>Paste</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+```
+
+To prevent the native text-selection callout from appearing under the dropdown on touch
+devices, `Menu.ContextMenu` disables text selection (`user-select: none`) on the wrapped
+element.
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:

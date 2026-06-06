@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cleanup, fireEvent } from '@testing-library/react';
+import { act, cleanup, createEvent, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
@@ -209,7 +209,9 @@ describe('@mantine/core/Menu', () => {
 
     it('focuses search input when menu opens', async () => {
       render(<SearchMenu />);
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 10));
+      });
       expect(screen.getByLabelText('search')).toHaveFocus();
     });
 
@@ -823,6 +825,186 @@ describe('@mantine/core/Menu', () => {
     });
   });
 
+  describe('Menu.Sub controlled opened', () => {
+    function SubMenuContainer(subProps: Partial<React.ComponentProps<typeof Menu.Sub>> = {}) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>Banana</Menu.Item>
+            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false} {...subProps}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>More</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Cherry</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('renders the sub-dropdown when opened={true} is controlled', async () => {
+      render(SubMenuContainer({ opened: true }));
+      expect(await screen.findByText('Cherry')).toBeInTheDocument();
+    });
+
+    it('keeps the sub-dropdown closed when opened={false} is controlled', () => {
+      render(SubMenuContainer({ opened: false }));
+      expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+    });
+
+    it('calls onChange with true when the submenu is opened via keyboard', async () => {
+      const onChange = jest.fn();
+      render(SubMenuContainer({ onChange }));
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      await screen.findByText('Cherry');
+      expect(onChange).toHaveBeenCalledWith(true);
+    });
+
+    it('calls onChange with false when the submenu is closed via keyboard', async () => {
+      const onChange = jest.fn();
+      render(SubMenuContainer({ onChange }));
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      const cherry = await screen.findByText('Cherry');
+      const childItem = cherry.closest('button')!;
+      childItem.focus();
+      fireEvent.keyDown(childItem, { key: 'ArrowLeft' });
+
+      expect(onChange).toHaveBeenLastCalledWith(false);
+    });
+
+    it('calls onChange with false when the open submenu is dismissed with Escape', async () => {
+      const onChange = jest.fn();
+      render(SubMenuContainer({ onChange }));
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      const cherry = await screen.findByText('Cherry');
+      const subDropdown = cherry.closest('[role="menu"]')!;
+      fireEvent.keyDown(subDropdown, { key: 'Escape' });
+
+      expect(onChange).toHaveBeenLastCalledWith(false);
+    });
+
+    it('still opens an uncontrolled submenu via keyboard (no regression)', async () => {
+      render(SubMenuContainer());
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      expect(await screen.findByText('Cherry')).toBeInTheDocument();
+    });
+
+    it('does not call onChange after the submenu is unmounted while open', async () => {
+      const onChange = jest.fn();
+      function Container({ showFirst }: { showFirst: boolean }) {
+        return (
+          <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+            <Menu.Target>
+              <button type="button">test-target</button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              {showFirst && (
+                <Menu.Sub
+                  transitionProps={{ duration: 0 }}
+                  withinPortal={false}
+                  onChange={onChange}
+                >
+                  <Menu.Sub.Target>
+                    <Menu.Sub.Item>First</Menu.Sub.Item>
+                  </Menu.Sub.Target>
+                  <Menu.Sub.Dropdown>
+                    <Menu.Item>First child</Menu.Item>
+                  </Menu.Sub.Dropdown>
+                </Menu.Sub>
+              )}
+              <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+                <Menu.Sub.Target>
+                  <Menu.Sub.Item>Second</Menu.Sub.Item>
+                </Menu.Sub.Target>
+                <Menu.Sub.Dropdown>
+                  <Menu.Item>Second child</Menu.Item>
+                </Menu.Sub.Dropdown>
+              </Menu.Sub>
+            </Menu.Dropdown>
+          </Menu>
+        );
+      }
+
+      const { rerender } = render(<Container showFirst />);
+
+      const firstTarget = screen.getByText('First').closest('button')!;
+      firstTarget.focus();
+      fireEvent.keyDown(firstTarget, { key: 'ArrowRight' });
+      await screen.findByText('First child');
+
+      onChange.mockClear();
+      rerender(<Container showFirst={false} />);
+
+      const secondTarget = screen.getByText('Second').closest('button')!;
+      secondTarget.focus();
+      fireEvent.keyDown(secondTarget, { key: 'ArrowRight' });
+      await screen.findByText('Second child');
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('auto-closes a previously open sibling submenu when another opens', async () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>First</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>First child</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>Second</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Second child</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menu.Dropdown>
+        </Menu>
+      );
+
+      const firstTarget = screen.getByText('First').closest('button')!;
+      firstTarget.focus();
+      fireEvent.keyDown(firstTarget, { key: 'ArrowRight' });
+      await screen.findByText('First child');
+
+      const secondTarget = screen.getByText('Second').closest('button')!;
+      secondTarget.focus();
+      fireEvent.keyDown(secondTarget, { key: 'ArrowRight' });
+      await screen.findByText('Second child');
+
+      expect(screen.queryByText('First child')).not.toBeInTheDocument();
+    });
+  });
+
   describe('Menu.ContextMenu', () => {
     function ContextMenuContainer({ disabled }: { disabled?: boolean } = {}) {
       return (
@@ -943,6 +1125,230 @@ describe('@mantine/core/Menu', () => {
 
       fireEvent.contextMenu(area, { clientX: 50, clientY: 50 });
       expectOpened();
+    });
+
+    it('reopens via contextmenu after closing when no mousedown precedes the event', async () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expectOpened();
+
+      await userEvent.click(screen.getByText('Copy'));
+      expectClosed();
+
+      fireEvent.contextMenu(area, { clientX: 20, clientY: 20 });
+      expectOpened();
+    });
+
+    it('disables text selection on the trigger only when enabled', () => {
+      const { rerender } = render(<ContextMenuContainer />);
+      expect(screen.getByTestId('context-area')).toHaveStyle({ userSelect: 'none' });
+
+      rerender(<ContextMenuContainer disabled />);
+      expect(screen.getByTestId('context-area')).not.toHaveStyle({ userSelect: 'none' });
+    });
+  });
+
+  describe('Menu.ContextMenu touch support', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    function TouchContainer({
+      disabled,
+      longPressDelay,
+    }: {
+      disabled?: boolean;
+      longPressDelay?: number;
+    } = {}) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false}>
+          <Menu.ContextMenu disabled={disabled} longPressDelay={longPressDelay}>
+            <div data-testid="context-area">Long-press me</div>
+          </Menu.ContextMenu>
+          <Menu.Dropdown>
+            <Menu.Item>Copy</Menu.Item>
+            <Menu.Item>Paste</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('opens the menu on touch long-press', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      expectClosed();
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectOpened();
+    });
+
+    it('does not open on a short tap', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+      fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectClosed();
+    });
+
+    it('cancels the long-press when the finger moves beyond the threshold', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      fireEvent.touchMove(area, { touches: [{ clientX: 30, clientY: 120 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectClosed();
+    });
+
+    it('prevents default on touchend after a long-press to suppress synthetic mouse events', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectOpened();
+
+      const endEvent = createEvent.touchEnd(area, {
+        changedTouches: [{ clientX: 30, clientY: 40 }],
+      });
+      fireEvent(area, endEvent);
+
+      expect(endEvent.defaultPrevented).toBe(true);
+    });
+
+    it('does not open via touch when disabled', () => {
+      render(<TouchContainer disabled />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expectClosed();
+    });
+
+    it('respects a custom longPressDelay', () => {
+      render(<TouchContainer longPressDelay={1000} />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 0, clientY: 0 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectClosed();
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectOpened();
+    });
+
+    it('keeps the menu open when a native contextmenu follows a touch long-press', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectOpened();
+
+      fireEvent.contextMenu(area, { clientX: 30, clientY: 40 });
+      expectOpened();
+    });
+
+    it('allows a mouse contextmenu to reopen after a completed touch long-press', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
+      expectOpened();
+
+      fireEvent.click(screen.getByText('Copy'));
+      expectClosed();
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      expectOpened();
+    });
+
+    it('does not prevent default on touchend when disabled', () => {
+      render(<TouchContainer disabled />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      const endEvent = createEvent.touchEnd(area, {
+        changedTouches: [{ clientX: 30, clientY: 40 }],
+      });
+      fireEvent(area, endEvent);
+
+      expect(endEvent.defaultPrevented).toBe(false);
+    });
+
+    it('does not open if disabled becomes true during the press', () => {
+      const { rerender } = render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+
+      rerender(<TouchContainer disabled />);
+      act(() => {
+        jest.advanceTimersByTime(300);
+      });
+
+      expectClosed();
+    });
+
+    it('does not open if the press started while disabled', () => {
+      const { rerender } = render(<TouchContainer disabled />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+
+      rerender(<TouchContainer />);
+      act(() => {
+        jest.advanceTimersByTime(300);
+      });
+
+      expectClosed();
     });
   });
 

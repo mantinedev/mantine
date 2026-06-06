@@ -1,10 +1,14 @@
 import dayjs from 'dayjs';
 import { AnyDateValue } from '../../types';
+import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
 
 interface GetCurrentTimePositionInput {
   startTime?: string;
   endTime?: string;
   now?: AnyDateValue;
+
+  /** Number of minutes per time slot. Used to align the indicator to whole slots when `endTime` does not divide evenly. */
+  intervalMinutes?: number;
 }
 
 export function getCurrentTimePosition(input?: GetCurrentTimePositionInput) {
@@ -16,15 +20,22 @@ export function getCurrentTimePosition(input?: GetCurrentTimePositionInput) {
     return (diffInMinutes / 1440) * 100;
   }
 
-  const [startHour, startMinute] = input.startTime.split(':').map(Number);
-  const [endHour, endMinute] = input.endTime.split(':').map(Number);
+  const [startHour, startMinute, startSecond = 0] = input.startTime.split(':').map(Number);
+  const [endHour, endMinute, endSecond = 0] = input.endTime.split(':').map(Number);
 
   const startOfDay = now.startOf('date');
-  const startDateTime = startOfDay.hour(startHour).minute(startMinute).second(0);
-  const endDateTime = startOfDay.hour(endHour).minute(endMinute).second(0);
+  const startDateTime = startOfDay.hour(startHour).minute(startMinute).second(startSecond);
+  const endDateTime = startOfDay.hour(endHour).minute(endMinute).second(endSecond);
 
-  const totalMinutes = endDateTime.diff(startDateTime, 'minute');
-  const currentMinutes = now.diff(startDateTime, 'minute');
+  const literalSeconds = endDateTime.diff(startDateTime, 'second');
+  const intervalSeconds =
+    input.intervalMinutes !== undefined
+      ? clampIntervalMinutes(input.intervalMinutes) * 60
+      : undefined;
+  const totalSeconds = intervalSeconds
+    ? Math.ceil(literalSeconds / intervalSeconds) * intervalSeconds
+    : literalSeconds;
+  const currentSeconds = now.diff(startDateTime, 'second');
 
-  return (currentMinutes / totalMinutes) * 100;
+  return (currentSeconds / totalSeconds) * 100;
 }

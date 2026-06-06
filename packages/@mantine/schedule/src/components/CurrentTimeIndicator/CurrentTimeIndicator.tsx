@@ -66,6 +66,9 @@ export interface CurrentTimeIndicatorProps
   /** End time of the day */
   endTime?: string;
 
+  /** Number of minutes per time slot. Used to align the indicator to whole slots when `endTime` does not divide evenly. */
+  intervalMinutes?: number;
+
   /** A function to get the current time, called on every tick. Can be used to display the indicator in a different timezone. @default () => dayjs() */
   getCurrentTime?: () => AnyDateValue;
 }
@@ -113,6 +116,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     topOffset,
     startTime,
     endTime,
+    intervalMinutes,
     getCurrentTime,
     ...others
   } = props;
@@ -139,7 +143,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   });
 
   const now = getCurrentTime ? dayjs(getCurrentTime()) : dayjs();
-  const offsetPercent = getCurrentTimePosition({ startTime, endTime, now });
+  const offsetPercent = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
   const formattedTime = withTimeBubble
     ? formatDate({ locale: ctx.getLocale(locale), date: now, format: currentTimeFormat })
     : '';

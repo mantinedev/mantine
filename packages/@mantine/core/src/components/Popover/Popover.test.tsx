@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Popover, PopoverProps, PopoverStylesNames } from './Popover';
 import { PopoverContextMenu } from './PopoverContextMenu/PopoverContextMenu';
@@ -256,6 +256,93 @@ describe('@mantine/core/Popover', () => {
       expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
 
       fireEvent.contextMenu(area, { clientX: 50, clientY: 50 });
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+    });
+  });
+
+  describe('Popover.ContextMenu touch support', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    function TouchContainer({
+      disabled,
+      longPressDelay,
+    }: {
+      disabled?: boolean;
+      longPressDelay?: number;
+    } = {}) {
+      return (
+        <Popover transitionProps={{ duration: 0 }} withinPortal={false}>
+          <Popover.ContextMenu disabled={disabled} longPressDelay={longPressDelay}>
+            <div data-testid="context-area">Long-press me</div>
+          </Popover.ContextMenu>
+          <Popover.Dropdown>
+            <div>test-context-dropdown</div>
+          </Popover.Dropdown>
+        </Popover>
+      );
+    }
+
+    it('opens the popover on touch long-press', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
+    });
+
+    it('does not open on a short tap', () => {
+      render(<TouchContainer />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+      fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+    });
+
+    it('does not open via touch when disabled', () => {
+      render(<TouchContainer disabled />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+    });
+
+    it('respects a custom longPressDelay', () => {
+      render(<TouchContainer longPressDelay={1000} />);
+      const area = screen.getByTestId('context-area');
+
+      fireEvent.touchStart(area, { touches: [{ clientX: 0, clientY: 0 }] });
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
       expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
     });
   });
