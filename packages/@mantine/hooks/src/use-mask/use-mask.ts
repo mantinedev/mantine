@@ -370,6 +370,51 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     return getResolvedOptions(opts, rawValue);
   }, [rawValue]);
 
+  const applyValue = useCallback(
+    ({
+      reprocessed,
+      newRaw,
+      displayValue,
+      resolvedSlots,
+      cursorPos,
+      notifyChange,
+    }: {
+      reprocessed: string;
+      newRaw: string;
+      displayValue: string;
+      resolvedSlots: MaskSlot[];
+      cursorPos?: number;
+      notifyChange: boolean;
+    }) => {
+      const opts = optionsRef.current;
+
+      processedRef.current = reprocessed;
+      displayValueRef.current = displayValue;
+      rawValueRef.current = newRaw;
+      setMaskedValue(displayValue);
+      setRawValue(newRaw);
+
+      if (inputRef.current) {
+        inputRef.current.value = displayValue;
+        if (cursorPos !== undefined && document.activeElement === inputRef.current) {
+          const pos = Math.min(cursorPos, reprocessed.length);
+          inputRef.current.setSelectionRange(pos, pos);
+        }
+      }
+
+      if (notifyChange && opts.onChangeRaw) {
+        opts.onChangeRaw(newRaw, displayValue);
+      }
+
+      const complete = checkComplete(reprocessed, resolvedSlots);
+      if (notifyChange && complete && !wasCompleteRef.current && opts.onComplete) {
+        opts.onComplete(displayValue, newRaw);
+      }
+      wasCompleteRef.current = complete;
+    },
+    []
+  );
+
   const updateValue = useCallback(
     (newMasked: string, cursorPos?: number) => {
       const opts = optionsRef.current;
@@ -390,33 +435,50 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
       const displayValue = buildDisplayValue(reprocessed, resolvedSlots, slotChar, shouldShowSlots);
 
-      processedRef.current = reprocessed;
-      displayValueRef.current = displayValue;
-      rawValueRef.current = newRaw;
-      setMaskedValue(displayValue);
-      setRawValue(newRaw);
-
-      if (inputRef.current) {
-        inputRef.current.value = displayValue;
-        if (cursorPos !== undefined && document.activeElement === inputRef.current) {
-          const pos = Math.min(cursorPos, reprocessed.length);
-          inputRef.current.setSelectionRange(pos, pos);
-        }
-      }
-
-      if (opts.onChangeRaw) {
-        opts.onChangeRaw(newRaw, displayValue);
-      }
-
-      const complete = checkComplete(reprocessed, resolvedSlots);
-      if (complete && !wasCompleteRef.current && opts.onComplete) {
-        opts.onComplete(displayValue, newRaw);
-      }
-      wasCompleteRef.current = complete;
+      applyValue({
+        reprocessed,
+        newRaw,
+        displayValue,
+        resolvedSlots,
+        cursorPos,
+        notifyChange: true,
+      });
 
       return { displayValue, newRaw, reprocessed, resolvedSlots };
     },
-    [getOptions]
+    [applyValue, getOptions]
+  );
+
+  const initializeInputValue = useCallback(
+    (node: HTMLInputElement) => {
+      const opts = optionsRef.current;
+
+      if (!node.value) {
+        return false;
+      }
+
+      const { slots: initialSlots, slotChar: initialSlotChar } = getResolvedOptions(opts, '');
+      const initialProcessed = processInput(node.value, initialSlots, initialSlotChar);
+      const initialRaw = extractRaw(initialProcessed, initialSlots);
+      const { slots: resolvedSlots, slotChar } = getResolvedOptions(opts, initialRaw);
+      const reprocessed = processInput(node.value, resolvedSlots, slotChar);
+      const newRaw = extractRaw(reprocessed, resolvedSlots);
+      const showSlots = opts.alwaysShowMask || isFocusedRef.current;
+      const showOnFocus = opts.showMaskOnFocus !== false;
+      const shouldShowSlots = showSlots && (showOnFocus || reprocessed.length > 0);
+      const displayValue = buildDisplayValue(reprocessed, resolvedSlots, slotChar, shouldShowSlots);
+
+      applyValue({
+        reprocessed,
+        newRaw,
+        displayValue,
+        resolvedSlots,
+        notifyChange: false,
+      });
+
+      return true;
+    },
+    [applyValue]
   );
 
   const pushUndoState = useCallback(() => {
@@ -895,7 +957,9 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
         setAriaAttributes(node);
 
-        if (options.alwaysShowMask && !node.value) {
+        const hasInitialValue = initializeInputValue(node);
+
+        if (options.alwaysShowMask && !hasInitialValue) {
           const { slots, slotChar } = getResolvedOptions(options, '');
           const display = buildDisplayValue('', slots, slotChar, true);
           node.value = display;
@@ -912,6 +976,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       handleMouseUp,
       handleKeyDown,
       handlePaste,
+      initializeInputValue,
       setAriaAttributes,
       options,
     ]

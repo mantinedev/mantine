@@ -47,7 +47,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel A ({Math.round(splitter.sizes[0])}%)
+          Panel A ({Math.round(splitter.sizes[0] as number)}%)
         </div>
         <div
           {...splitter.getHandleProps({ index: 0 })}
@@ -94,7 +94,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(splitter.sizes[1])}%)
+          Panel B ({Math.round(splitter.sizes[1] as number)}%)
         </div>
       </div>
       <Text size="sm" mt="sm">
@@ -119,7 +119,7 @@ function Demo() {
       { defaultSize: 50, min: 20 },
     ],
     sizes,
-    onSizeChange: setSizes,
+    onSizeChange: (next) => setSizes(next as number[]),
   });
 
   return (
@@ -147,7 +147,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel A ({Math.round(splitter.sizes[0])}%)
+          Panel A ({Math.round(splitter.sizes[0] as number)}%)
         </div>
         <div
           {...splitter.getHandleProps({ index: 0 })}
@@ -194,7 +194,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(splitter.sizes[1])}%)
+          Panel B ({Math.round(splitter.sizes[1] as number)}%)
         </div>
       </div>
       <Text size="sm" mt="sm">

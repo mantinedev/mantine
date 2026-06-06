@@ -38,6 +38,7 @@ export type {
   ComboboxParsedItem,
   ComboboxParsedItemGroup,
   ComboboxRenderPillInput,
+  ComboboxStringGroupData,
 } from './Combobox.types';
 export type { ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
 export type { ComboboxClearButtonProps } from './ComboboxClearButton/ComboboxClearButton';
