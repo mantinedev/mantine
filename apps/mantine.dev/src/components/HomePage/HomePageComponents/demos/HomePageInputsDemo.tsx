@@ -4,11 +4,11 @@ import {
   Input,
   MultiSelect,
   NumberInput,
-  PasswordInput,
   PinInput,
   Select,
   SimpleGrid,
   TextInput,
+  TreeSelect,
 } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 
@@ -16,6 +16,27 @@ const inputProps = {
   size: 'lg' as const,
   radius: 'md',
 };
+
+const treeSelectData = [
+  {
+    value: 'frontend',
+    label: 'Frontend',
+    children: [
+      { value: 'react', label: 'React' },
+      { value: 'vue', label: 'Vue' },
+      { value: 'svelte', label: 'Svelte' },
+    ],
+  },
+  {
+    value: 'backend',
+    label: 'Backend',
+    children: [
+      { value: 'nodejs', label: 'Node.js' },
+      { value: 'go', label: 'Go' },
+      { value: 'rust', label: 'Rust' },
+    ],
+  },
+];
 
 export function HomePageInputsDemo() {
   return (
@@ -45,11 +66,13 @@ export function HomePageInputsDemo() {
           popoverProps={{ radius: 'md' }}
           {...inputProps}
         />
-        <PasswordInput
-          label="Password input"
-          placeholder="Secret"
-          defaultValue="😎🤏🤨🕶️🤏"
+        <TreeSelect
+          label="Tree select"
+          placeholder="Pick from the tree"
           {...inputProps}
+          data={treeSelectData}
+          defaultValue="react"
+          comboboxProps={{ radius: 'md' }}
         />
 
         <FileInput label="File input" placeholder="Upload file" {...inputProps} />
