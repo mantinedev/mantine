@@ -45,6 +45,10 @@ export const ComboboxPopoverTarget = factory<ComboboxPopoverTargetFactory>((prop
     withKeyboardNavigation: true,
     withExpandedAttribute: true,
     onKeyDown: (child.props as any).onKeyDown,
+    onClick: (event) => {
+      ctx.store.toggleDropdown();
+      (child.props as any).onClick?.(event);
+    },
     autoComplete: 'off',
   });
 
@@ -52,10 +56,6 @@ export const ComboboxPopoverTarget = factory<ComboboxPopoverTargetFactory>((prop
     ...targetProps,
     ...others,
     [refProp!]: targetRef,
-    onClick: (event: React.MouseEvent) => {
-      ctx.store.toggleDropdown();
-      (child.props as any).onClick?.(event);
-    },
   } as any);
 
   return <Popover.Target refProp={refProp}>{clonedElement}</Popover.Target>;

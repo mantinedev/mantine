@@ -1,4 +1,4 @@
-import { CodeHighlightDemos, ComboboxDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PieChartDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
+import { CodeHighlightDemos, ComboboxDemos, DayViewDemos, HighlightDemos, MenuDemos, OverflowListDemos, PaginationDemos, PieChartDemos, PopoverDemos, SplitterDemos, TextareaDemos, TextDemos, TooltipDemos, UseSplitterDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -183,3 +183,12 @@ available space changed – pass `preventPositionChangeWhenVisible={false}`:
   data={['React', 'Angular', 'Svelte']}
 />
 ```
+
+## Schedule getCurrentTime
+
+[DayView](/schedule/day-view/) and [WeekView](/schedule/week-view/) components now support `getCurrentTime`
+prop – a function that returns the current time used by the current time indicator. It is called on
+every tick, so the indicator keeps updating automatically. Combined with the timezone-agnostic event
+strings, this allows displaying the indicator in any timezone without re-implementing the update loop:
+
+<Demo data={DayViewDemos.timezone} />

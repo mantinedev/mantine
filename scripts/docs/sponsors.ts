@@ -28,7 +28,8 @@ async function fetchSponsors() {
       const isActiveSponsor = item.role === 'BACKER' && item.tier === 'sponsor';
       const hasRecentTransaction =
         item.lastTransactionAt && dayjs(item.lastTransactionAt).isAfter(thirtyOneDaysAgo);
-      return isActiveSponsor && hasRecentTransaction;
+      const hasPositiveTransaction = item.lastTransactionAmount > 0;
+      return isActiveSponsor && hasRecentTransaction && hasPositiveTransaction;
     })
     .reduce((unique: Sponsor[], item: any) => {
       const sponsor: Sponsor = {

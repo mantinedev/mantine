@@ -45,7 +45,10 @@
   position: absolute;
   display: block;
   z-index: 1;
-  border-radius: calc(var(--sc-radius, var(--mantine-radius-default)) - 4px);
+  border-radius: max(
+    calc(var(--sc-radius, var(--mantine-radius-default)) - 4px),
+    calc(var(--sc-radius, var(--mantine-radius-default)) / 4)
+  );
 
   @mixin where-light {
     box-shadow: var(--sc-shadow, none);

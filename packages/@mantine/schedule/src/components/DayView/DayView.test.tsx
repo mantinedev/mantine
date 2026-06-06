@@ -151,6 +151,26 @@ describe('@mantine/schedule/DayView', () => {
     jest.useRealTimers();
   });
 
+  it('aligns the current time indicator with the slot grid when endTime does not divide evenly by intervalMinutes', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-03 02:00:00'));
+
+    const { container } = render(
+      <DayView
+        {...defaultProps}
+        withCurrentTimeIndicator
+        startTime="00:00:00"
+        endTime="02:30:00"
+        intervalMinutes={60}
+        getCurrentTime={() => '2025-11-03 02:00:00'}
+      />
+    );
+
+    // Canvas is rounded up from 02:30 to 03:00 (3 whole slots), so 02:00 sits at 120/180 = 66.66%
+    const indicator = container.querySelector('.mantine-DayView-currentTimeIndicator');
+    expect(indicator?.getAttribute('style')).toContain('66.66');
+    jest.useRealTimers();
+  });
+
   it('displays time bubble in the current time indicator based on withCurrentTimeBubble prop', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-11-03 10:30:00'));
 
@@ -180,6 +200,39 @@ describe('@mantine/schedule/DayView', () => {
     jest.useRealTimers();
   });
 
+  it('uses getCurrentTime to decide whether the indicator is displayed by default', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-03 10:30:00'));
+
+    const { container, rerender } = render(<DayView {...defaultProps} date="2025-11-04" />);
+    expect(
+      container.querySelector('.mantine-DayView-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+
+    rerender(
+      <DayView {...defaultProps} date="2025-11-04" getCurrentTime={() => '2025-11-04 10:30:00'} />
+    );
+    expect(container.querySelector('.mantine-DayView-currentTimeIndicator')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime for the current time bubble', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-03 10:30:00'));
+
+    const { container } = render(
+      <DayView
+        {...defaultProps}
+        withCurrentTimeIndicator
+        withCurrentTimeBubble
+        slotLabelFormat="HH:mm"
+        getCurrentTime={() => '2025-11-03 20:45:00'}
+      />
+    );
+    expect(
+      container.querySelector('.mantine-DayView-currentTimeIndicatorTimeBubble')
+    ).toHaveTextContent('20:45');
+    jest.useRealTimers();
+  });
+
   it('supports __staticSelector prop', () => {
     const { container } = render(<DayView {...defaultProps} __staticSelector="TestDayView" />);
     expect(container.querySelector('.mantine-TestDayView-dayView')).toBeInTheDocument();
@@ -205,6 +258,16 @@ describe('@mantine/schedule/DayView', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Today' }));
     expect(spy).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('navigates to getCurrentTime date when Today control is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <DayView {...defaultProps} onDateChange={spy} getCurrentTime={() => '2025-12-25 10:00:00'} />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-12-25 10:00:00')));
   });
 
   it('calls onViewChange when view button is clicked', async () => {

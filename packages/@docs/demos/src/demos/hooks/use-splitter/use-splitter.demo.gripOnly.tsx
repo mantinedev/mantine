@@ -38,7 +38,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel A ({Math.round(splitter.sizes[0])}%)
+        Panel A ({Math.round(splitter.sizes[0] as number)}%)
       </div>
       <div
         style={{
@@ -86,7 +86,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel B ({Math.round(splitter.sizes[1])}%)
+        Panel B ({Math.round(splitter.sizes[1] as number)}%)
       </div>
     </div>
   );
@@ -125,7 +125,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel A ({Math.round(splitter.sizes[0])}%)
+        Panel A ({Math.round(splitter.sizes[0] as number)}%)
       </div>
       <div
         style={{
@@ -173,7 +173,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel B ({Math.round(splitter.sizes[1])}%)
+        Panel B ({Math.round(splitter.sizes[1] as number)}%)
       </div>
     </div>
   );

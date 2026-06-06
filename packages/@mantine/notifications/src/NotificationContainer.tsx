@@ -63,8 +63,10 @@ export function NotificationContainer({
     withCloseButton,
     renderNotification: _renderNotification,
     onOpen: _onOpen,
+    priority: _priority,
+    __sequence: _sequence,
     ...notificationProps
-  } = data;
+  } = data as NotificationData & { __sequence?: number };
   const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
   const autoCloseTimeout = useRef<number>(-1);
   const hideTimeout = useRef<number>(-1);

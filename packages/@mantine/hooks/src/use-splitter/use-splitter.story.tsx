@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { useSplitter } from './use-splitter';
+import { SplitterPaneSize, useSplitter } from './use-splitter';
 
 export default { title: 'use-splitter' };
+
+const pct = (size: SplitterPaneSize) =>
+  Math.round(typeof size === 'number' ? size : parseFloat(size));
 
 const handleStyle: React.CSSProperties = {
   width: 8,
@@ -37,11 +40,11 @@ export function Usage() {
   return (
     <div ref={splitter.ref} style={{ display: 'flex', height: 300, border: '1px solid #ddd' }}>
       <div style={{ ...panelStyle, width: `${splitter.sizes[0]}%`, backgroundColor: '#e3f2fd' }}>
-        Panel 1 ({Math.round(splitter.sizes[0])}%)
+        Panel 1 ({pct(splitter.sizes[0])}%)
       </div>
       <div {...splitter.getHandleProps({ index: 0 })} style={handleStyle} />
       <div style={{ ...panelStyle, width: `${splitter.sizes[1]}%`, backgroundColor: '#fce4ec' }}>
-        Panel 2 ({Math.round(splitter.sizes[1])}%)
+        Panel 2 ({pct(splitter.sizes[1])}%)
       </div>
     </div>
   );
@@ -59,11 +62,11 @@ export function Vertical() {
       style={{ display: 'flex', flexDirection: 'column', height: 400, border: '1px solid #ddd' }}
     >
       <div style={{ ...panelStyle, height: `${splitter.sizes[0]}%`, backgroundColor: '#e3f2fd' }}>
-        Panel 1 ({Math.round(splitter.sizes[0])}%)
+        Panel 1 ({pct(splitter.sizes[0])}%)
       </div>
       <div {...splitter.getHandleProps({ index: 0 })} style={handleStyleVertical} />
       <div style={{ ...panelStyle, height: `${splitter.sizes[1]}%`, backgroundColor: '#fce4ec' }}>
-        Panel 2 ({Math.round(splitter.sizes[1])}%)
+        Panel 2 ({pct(splitter.sizes[1])}%)
       </div>
     </div>
   );
@@ -77,15 +80,15 @@ export function ThreePanels() {
   return (
     <div ref={splitter.ref} style={{ display: 'flex', height: 300, border: '1px solid #ddd' }}>
       <div style={{ ...panelStyle, width: `${splitter.sizes[0]}%`, backgroundColor: '#e3f2fd' }}>
-        {Math.round(splitter.sizes[0])}%
+        {pct(splitter.sizes[0])}%
       </div>
       <div {...splitter.getHandleProps({ index: 0 })} style={handleStyle} />
       <div style={{ ...panelStyle, width: `${splitter.sizes[1]}%`, backgroundColor: '#e8f5e9' }}>
-        {Math.round(splitter.sizes[1])}%
+        {pct(splitter.sizes[1])}%
       </div>
       <div {...splitter.getHandleProps({ index: 1 })} style={handleStyle} />
       <div style={{ ...panelStyle, width: `${splitter.sizes[2]}%`, backgroundColor: '#fce4ec' }}>
-        {Math.round(splitter.sizes[2])}%
+        {pct(splitter.sizes[2])}%
       </div>
     </div>
   );
@@ -100,11 +103,11 @@ export function Collapsible() {
     <div>
       <div ref={splitter.ref} style={{ display: 'flex', height: 300, border: '1px solid #ddd' }}>
         <div style={{ ...panelStyle, width: `${splitter.sizes[0]}%`, backgroundColor: '#e3f2fd' }}>
-          {splitter.collapsed[0] ? 'Collapsed' : `${Math.round(splitter.sizes[0])}%`}
+          {splitter.collapsed[0] ? 'Collapsed' : `${pct(splitter.sizes[0])}%`}
         </div>
         <div {...splitter.getHandleProps({ index: 0 })} style={handleStyle} />
         <div style={{ ...panelStyle, width: `${splitter.sizes[1]}%`, backgroundColor: '#fce4ec' }}>
-          {Math.round(splitter.sizes[1])}%
+          {pct(splitter.sizes[1])}%
         </div>
       </div>
       <button type="button" onClick={() => splitter.toggleCollapse(0)} style={{ marginTop: 10 }}>
@@ -115,7 +118,7 @@ export function Collapsible() {
 }
 
 export function Controlled() {
-  const [sizes, setSizes] = useState([50, 50]);
+  const [sizes, setSizes] = useState<SplitterPaneSize[]>([50, 50]);
 
   const splitter = useSplitter({
     panels: [{ defaultSize: 50 }, { defaultSize: 50 }],
@@ -127,11 +130,11 @@ export function Controlled() {
     <div>
       <div ref={splitter.ref} style={{ display: 'flex', height: 300, border: '1px solid #ddd' }}>
         <div style={{ ...panelStyle, width: `${splitter.sizes[0]}%`, backgroundColor: '#e3f2fd' }}>
-          {Math.round(splitter.sizes[0])}%
+          {pct(splitter.sizes[0])}%
         </div>
         <div {...splitter.getHandleProps({ index: 0 })} style={handleStyle} />
         <div style={{ ...panelStyle, width: `${splitter.sizes[1]}%`, backgroundColor: '#fce4ec' }}>
-          {Math.round(splitter.sizes[1])}%
+          {pct(splitter.sizes[1])}%
         </div>
       </div>
       <button type="button" onClick={() => setSizes([30, 70])} style={{ marginTop: 10 }}>

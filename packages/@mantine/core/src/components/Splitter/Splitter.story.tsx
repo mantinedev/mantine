@@ -67,7 +67,7 @@ export function Controlled() {
         <button onClick={() => setSizes([50, 50])}>50/50</button>
         <button onClick={() => setSizes([70, 30])}>70/30</button>
       </div>
-      <Splitter sizes={sizes} onSizeChange={setSizes} h={300}>
+      <Splitter sizes={sizes} onSizeChange={(next) => setSizes(next as number[])} h={300}>
         <Splitter.Pane defaultSize={50} min={20} bg="blue">
           <div style={{ padding: 20, color: 'white' }}>Left ({sizes[0].toFixed(1)}%)</div>
         </Splitter.Pane>

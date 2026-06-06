@@ -80,7 +80,7 @@ function Demo() {
               gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size)}%)
+            {labels[i]} ({Math.round(size as number)}%)
           </div>
         </React.Fragment>
       ))}
@@ -161,7 +161,7 @@ function Demo() {
               gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size)}%)
+            {labels[i]} ({Math.round(size as number)}%)
           </div>
         </React.Fragment>
       ))}

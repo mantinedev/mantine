@@ -35,7 +35,7 @@
   "devDependencies": {
     "@mdx-js/loader": "^3.1.1",
     "@types/mdx": "2.0.13",
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.2",
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
     "typescript": "6.0.3"

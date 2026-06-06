@@ -1717,7 +1717,7 @@ function Demo() {
         label="Phone"
         key={form.key('phone')}
         defaultValue={form.getValues().phone}
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
       />
 
       <Group mt="md">
@@ -1744,7 +1744,7 @@ function DemoMaskInput() {
         label="Phone"
         key={form.key('phone')}
         defaultValue={form.getValues().phone}
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
       />
 
       <Group mt="md">

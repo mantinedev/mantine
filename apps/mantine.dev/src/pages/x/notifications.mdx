@@ -94,6 +94,7 @@ import {
 - `onClose` – called when the notification is unmounted
 - `onOpen` – called when the notification is mounted
 - `autoClose` – defines timeout in ms after which the notification will be automatically closed; use `false` to disable auto close
+- `priority` – display priority used when the number of active notifications exceeds `limit`; higher numbers are shown first, defaults to `0`
 - `message` – required notification body
 - `color, icon, title, radius, className, style, loading` – props passed down to the [Notification](/core/notification/) component
 
@@ -200,6 +201,34 @@ All notifications added after the `limit` was reached are added to the queue
 and displayed when a notification from the current state is hidden.
 
 <Demo data={NotificationsDemos.limit} />
+
+## Priority
+
+By default, notifications are distributed between the visible state and the queue in
+insertion order (FIFO): the first `limit` notifications are visible and the rest wait
+in the queue. Set the `priority` property in `notifications.show` or `notifications.update`
+to control which notifications take the visible slots when there are more active
+notifications than the `limit` allows.
+
+- Notifications with a higher `priority` are shown before notifications with a lower one.
+- Notifications with equal `priority` keep insertion order (FIFO).
+- `priority` defaults to `0`, so notifications without it behave exactly as before.
+- Within the visible set, higher priority notifications are rendered first.
+
+When a high priority notification is added while the visible state is already at `limit`,
+it takes a visible slot and the lowest priority visible notification is moved into the queue –
+even if it was already displayed. Priority is applied independently for each position.
+
+Note that a notification that is moved from the visible state back into the queue is unmounted
+and mounted again when it returns to a visible slot, so its `onOpen` callback runs each time it
+becomes visible.
+
+In the following example the `Notifications` component uses `limit={1}`. Show a low priority
+notification first, then a high priority one: the high priority notification replaces the
+low priority one, which is moved to the queue and shown again once the high priority
+notification is closed.
+
+<Demo data={NotificationsDemos.priority} />
 
 ## Remove notifications from state and queue
 

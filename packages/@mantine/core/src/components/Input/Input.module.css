@@ -177,7 +177,7 @@
   width: 100%;
   transition: border-color 100ms ease;
 
-  text-align: start;
+  text-align: var(--input-text-align, start);
   color: var(--input-color);
   border: rem(1px) solid var(--input-bd);
   background-color: var(--input-bg);

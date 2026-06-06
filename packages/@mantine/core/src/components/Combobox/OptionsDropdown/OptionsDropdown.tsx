@@ -16,7 +16,7 @@ export type OptionsFilter<Value extends Primitive = string> = (
 ) => ComboboxParsedItem<Value>[];
 
 export interface OptionsGroup {
-  group: string;
+  group: React.ReactNode;
   items: ComboboxItem<Primitive>[];
 }
 
@@ -155,10 +155,14 @@ export function OptionsDropdown({
     : data;
   const isEmpty = isEmptyComboboxData(filteredData);
 
-  const options = filteredData.map((item) => (
+  const options = filteredData.map((item, index) => (
     <Option
       data={item}
-      key={isOptionsGroup(item) ? item.group : `${item.value}`}
+      key={
+        isOptionsGroup(item)
+          ? `group-${typeof item.group === 'string' ? item.group : index}`
+          : `${item.value}`
+      }
       withCheckIcon={withCheckIcon}
       withAlignedLabels={withAlignedLabels}
       value={value}

@@ -1,4 +1,5 @@
 export { usage } from './Splitter.demo.usage';
+export { cssUnits } from './Splitter.demo.cssUnits';
 export { vertical } from './Splitter.demo.vertical';
 export { collapsible } from './Splitter.demo.collapsible';
 export { controlled } from './Splitter.demo.controlled';
