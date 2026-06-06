@@ -559,6 +559,24 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/DataList/DataList.tsx',
     docs: 'core/data-list.mdx',
   },
+  EmptyState: {
+    title: 'EmptyState',
+    package: '@mantine/core',
+    slug: '/core/empty-state',
+    componentPrefix: 'EmptyState',
+    props: [
+      'EmptyState',
+      'EmptyStateIndicator',
+      'EmptyStateTitle',
+      'EmptyStateDescription',
+      'EmptyStateActions',
+    ],
+    styles: ['EmptyState'],
+    description: 'Display a placeholder for no data, empty results and first-run states',
+    source: '@mantine/core/src/components/EmptyState/EmptyState.tsx',
+    docs: 'core/empty-state.mdx',
+    searchTags: 'no data, no results, placeholder, nothing found, blank state, first run',
+  },
   Divider: {
     title: 'Divider',
     package: '@mantine/core',
@@ -911,6 +929,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/menu.mdx',
     searchTags:
       'dropdown menu, context menu, popup menu, options menu, overflow menu, kebab menu, actions menu',
+  },
+
+  Menubar: {
+    title: 'Menubar',
+    package: '@mantine/core',
+    slug: '/core/menubar',
+    props: ['Menubar', 'MenubarMenu', 'MenubarTarget', 'MenubarDropdown'],
+    styles: ['Menubar'],
+    componentPrefix: 'Menubar',
+    description: 'Desktop application style menubar with a row of menu triggers',
+    source: '@mantine/core/src/components/Menubar/Menubar.tsx',
+    docs: 'core/menubar.mdx',
+    searchTags: 'menu bar, application menu, desktop menu, top menu, menubar, file edit view',
   },
 
   Progress: {

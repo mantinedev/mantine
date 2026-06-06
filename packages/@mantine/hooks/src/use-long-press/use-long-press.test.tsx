@@ -273,4 +273,151 @@ describe('useLongPress', () => {
 
     expect(onLongPress).toHaveBeenCalledTimes(2);
   });
+
+  it('only triggers on touch when events is ["touch"]', () => {
+    const onLongPress = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ events: ['touch'] }} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.mouseDown(element);
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    expect(onLongPress).not.toHaveBeenCalled();
+
+    fireEvent.touchStart(element);
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(element);
+  });
+
+  it('only triggers on mouse when events is ["mouse"]', () => {
+    const onLongPress = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ events: ['mouse'] }} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element);
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    expect(onLongPress).not.toHaveBeenCalled();
+
+    fireEvent.mouseDown(element);
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+
+    fireEvent.mouseUp(element);
+  });
+
+  it('cancels long press when touch moves beyond threshold with cancelOnMove', () => {
+    const onLongPress = jest.fn();
+    const onCancel = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ cancelOnMove: true, onCancel }} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element, { touches: [{ clientX: 0, clientY: 0 }] });
+    fireEvent.touchMove(element, { touches: [{ clientX: 0, clientY: 40 }] });
+
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+
+    expect(onLongPress).not.toHaveBeenCalled();
+    expect(onCancel).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not cancel long press when touch moves within threshold with cancelOnMove', () => {
+    const onLongPress = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ cancelOnMove: true }} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element, { touches: [{ clientX: 0, clientY: 0 }] });
+    fireEvent.touchMove(element, { touches: [{ clientX: 3, clientY: 3 }] });
+
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(element);
+  });
+
+  it('respects a custom numeric cancelOnMove threshold', () => {
+    const onLongPress = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ cancelOnMove: 50 }} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element, { touches: [{ clientX: 0, clientY: 0 }] });
+    fireEvent.touchMove(element, { touches: [{ clientX: 0, clientY: 30 }] });
+
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(element);
+  });
+
+  it('cancels on any movement when cancelOnMove is 0', () => {
+    const onLongPress = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ cancelOnMove: 0 }} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element, { touches: [{ clientX: 0, clientY: 0 }] });
+    fireEvent.touchMove(element, { touches: [{ clientX: 2, clientY: 0 }] });
+
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+
+    expect(onLongPress).not.toHaveBeenCalled();
+  });
+
+  it('still fires with cancelOnMove 0 when there is no movement', () => {
+    const onLongPress = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ cancelOnMove: 0 }} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element, { touches: [{ clientX: 5, clientY: 5 }] });
+
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(element);
+  });
+
+  it('does not cancel on move when cancelOnMove is not set', () => {
+    const onLongPress = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} />);
+
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element, { touches: [{ clientX: 0, clientY: 0 }] });
+    fireEvent.touchMove(element, { touches: [{ clientX: 0, clientY: 200 }] });
+
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(element);
+  });
 });

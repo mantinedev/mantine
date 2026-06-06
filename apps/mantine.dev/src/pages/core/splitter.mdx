@@ -12,6 +12,24 @@ Styles API integration.
 
 <Demo data={SplitterDemos.usage} />
 
+## CSS units
+
+`Splitter.Pane` `defaultSize`, `min` and `max` props accept CSS units in addition to plain numbers:
+
+- A plain `number` or a `%` string (`'30%'`) is a **flexible** size – the pane shares the leftover
+  space with other flexible panes.
+- A `px` or `rem` string (`'240px'`, `'15rem'`) is a **fixed** size – the pane keeps its pixel size
+  when the container is resized and only changes when its own handle is dragged.
+
+This makes it possible to mix a fixed-width sidebar with a fluid content pane that absorbs the
+remaining space:
+
+<Demo data={SplitterDemos.cssUnits} />
+
+Sizes are reported back in the unit they were declared in: a `'240px'` pane stays `'240px'` in
+`sizes` / `onSizeChange`, while a flexible pane reports its resolved percentage. When the container
+becomes smaller than the sum of the fixed panes, fixed panes shrink proportionally.
+
 ## Vertical orientation
 
 Set `orientation="vertical"` to split panes vertically:

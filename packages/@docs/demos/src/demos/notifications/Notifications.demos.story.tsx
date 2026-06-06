@@ -23,6 +23,11 @@ export const Demo_limit = {
   render: renderDemo(demos.limit),
 };
 
+export const Demo_priority = {
+  name: '⭐ Demo: priority',
+  render: renderDemo(demos.priority),
+};
+
 export const Demo_update = {
   name: '⭐ Demo: update',
   render: renderDemo(demos.update),

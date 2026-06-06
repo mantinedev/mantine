@@ -42,6 +42,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Vitest,
       MDX_DATA.EslintConfig,
       MDX_DATA.LLMDocumentation,
+      MDX_DATA.Icons,
     ],
   },
 
@@ -348,6 +349,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Alert,
       MDX_DATA.Notification,
       MDX_DATA.Skeleton,
+      MDX_DATA.EmptyState,
       MDX_DATA.Progress,
       MDX_DATA.RingProgress,
       MDX_DATA.SemiCircleProgress,
@@ -364,6 +366,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Drawer,
       MDX_DATA.HoverCard,
       MDX_DATA.Menu,
+      MDX_DATA.Menubar,
       MDX_DATA.LoadingOverlay,
       MDX_DATA.Dialog,
       MDX_DATA.FloatingIndicator,
