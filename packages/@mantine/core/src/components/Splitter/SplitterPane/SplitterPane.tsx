@@ -1,3 +1,4 @@
+import type { SplitterPaneSize } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -14,20 +15,20 @@ export type SplitterPaneStylesNames = 'pane';
 
 export interface SplitterPaneProps
   extends BoxProps, CompoundStylesApiProps<SplitterPaneFactory>, ElementProps<'div'> {
-  /** Initial size as percentage (0-100). All panes must sum to 100. */
-  defaultSize: number;
+  /** Initial size, a `number`/`%` is a flexible size (shares leftover space), `px`/`rem` is a fixed size. A bare number is treated as a percentage. */
+  defaultSize: SplitterPaneSize;
 
-  /** Minimum size percentage @default 0 */
-  min?: number;
+  /** Minimum size in the same units as `defaultSize` @default 0 */
+  min?: SplitterPaneSize;
 
-  /** Maximum size percentage @default 100 */
-  max?: number;
+  /** Maximum size in the same units as `defaultSize`, no limit by default */
+  max?: SplitterPaneSize;
 
   /** Whether this pane can be collapsed @default false */
   collapsible?: boolean;
 
-  /** Size below which the pane snaps to collapsed (percentage), defaults to `min` */
-  collapseThreshold?: number;
+  /** Size below which the pane snaps to collapsed, defaults to `min` */
+  collapseThreshold?: SplitterPaneSize;
 
   /** Pane content */
   children?: React.ReactNode;
@@ -63,10 +64,9 @@ export const SplitterPane = factory<SplitterPaneFactory>((_props) => {
   } = props;
 
   const ctx = useSplitterContext();
-  const size = ctx.sizes[__index!];
   const isCollapsed = ctx.collapsed[__index!];
 
-  const sizeStyle = { flexBasis: `${size}%` };
+  const sizeStyle = ctx.getPaneStyle(__index!);
 
   return (
     <Box

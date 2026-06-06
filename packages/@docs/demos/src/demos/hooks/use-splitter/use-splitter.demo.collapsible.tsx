@@ -42,7 +42,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          {!splitter.collapsed[0] && \`Panel A (\${Math.round(splitter.sizes[0])}%)\`}
+          {!splitter.collapsed[0] && \`Panel A (\${Math.round(splitter.sizes[0] as number)}%)\`}
         </div>
         <div
           {...splitter.getHandleProps({ index: 0 })}
@@ -89,7 +89,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(splitter.sizes[1])}%)
+          Panel B ({Math.round(splitter.sizes[1] as number)}%)
         </div>
       </div>
       <Group mt="md">
@@ -136,7 +136,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          {!splitter.collapsed[0] && `Panel A (${Math.round(splitter.sizes[0])}%)`}
+          {!splitter.collapsed[0] && `Panel A (${Math.round(splitter.sizes[0] as number)}%)`}
         </div>
         <div
           {...splitter.getHandleProps({ index: 0 })}
@@ -183,7 +183,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(splitter.sizes[1])}%)
+          Panel B ({Math.round(splitter.sizes[1] as number)}%)
         </div>
       </div>
       <Group mt="md">

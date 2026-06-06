@@ -1,6 +1,7 @@
 export default {
   testTimeout: 30_000,
   testEnvironment: 'jest-environment-jsdom',
+  workerIdleMemoryLimit: '512MB',
   transform: {
     '^.+\\.tsx?$': 'esbuild-jest',
   },

@@ -8,10 +8,20 @@ export default Layout(MDX_DATA.useSplitter);
 
 `use-splitter` hook provides resizable split-pane functionality. It handles pointer drag
 on resize handles, keyboard navigation following the WAI-ARIA Window Splitter pattern,
-collapsible panels and min/max constraints. All sizes are percentages to avoid
-SSR/hydration issues.
+collapsible panels and min/max constraints. Sizes can be percentages (flexible panes) or
+`px`/`rem` (fixed panes).
 
 <Demo data={UseSplitterDemos.usage} />
+
+## CSS units
+
+`defaultSize`, `min` and `max` accept CSS units. A plain `number` or `%` string is a flexible size
+that shares the leftover space, while a `px` or `rem` string is a fixed size that stays constant
+when the container is resized. Sizes are reported back in the unit they were declared in, so a
+`'240px'` pane stays `'240px'` in `sizes` and `onSizeChange`. When at least one pane uses a fixed
+unit, the hook resolves the layout in pixels using the measured container size:
+
+<Demo data={UseSplitterDemos.cssUnits} />
 
 ## Vertical orientation
 
@@ -127,22 +137,37 @@ interpreting touch drag as scroll:
 ## Definition
 
 ```tsx
+/** A bare number/`%` is a flexible size, `px`/`rem` is a fixed size */
+type SplitterPaneSize = number | `${number}%` | `${number}px` | `${number}rem`;
+
+/** A bare number/`%` is a percentage of the container, `px`/`rem` is resolved to pixels */
+type SplitterStep = number | `${number}%` | `${number}px` | `${number}rem`;
+
 interface UseSplitterPanel {
-  /** Initial size as percentage (0-100). All panels must sum to 100. */
-  defaultSize: number;
-  /** Minimum size percentage, `0` by default */
-  min?: number;
-  /** Maximum size percentage, `100` by default */
-  max?: number;
+  /** Initial size, a `number`/`%` is flexible, `px`/`rem` is fixed. A bare number is a percentage. */
+  defaultSize: SplitterPaneSize;
+  /** Minimum size in the same units as `defaultSize`, `0` by default */
+  min?: SplitterPaneSize;
+  /** Maximum size in the same units as `defaultSize`, no limit by default */
+  max?: SplitterPaneSize;
   /** Whether this panel can be collapsed, `false` by default */
   collapsible?: boolean;
-  /** Size below which the panel snaps to collapsed (percentage), defaults to `min` */
+  /** Size below which the panel snaps to collapsed, defaults to `min` */
+  collapseThreshold?: SplitterPaneSize;
+}
+
+/** Panel config resolved to numeric units (percent or pixels) */
+interface UseSplitterResolvedPanel {
+  defaultSize: number;
+  min?: number;
+  max?: number;
+  collapsible?: boolean;
   collapseThreshold?: number;
 }
 
 type UseSplitterRedistributeFn = (input: {
   sizes: number[];
-  panels: UseSplitterPanel[];
+  panels: UseSplitterResolvedPanel[];
   handleIndex: number;
   delta: number;
 }) => number[];
@@ -152,22 +177,22 @@ interface UseSplitterOptions {
   panels: UseSplitterPanel[];
   /** Layout direction, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
-  /** Controlled sizes (percentages summing to 100) */
-  sizes?: number[];
-  /** Called during resize with updated sizes */
-  onSizeChange?: (sizes: number[]) => void;
+  /** Controlled sizes, each value keeps the unit it was declared in */
+  sizes?: SplitterPaneSize[];
+  /** Called during resize with updated sizes, each value keeps its declared unit */
+  onSizeChange?: (sizes: SplitterPaneSize[]) => void;
   /** Called when drag starts */
   onResizeStart?: (handleIndex: number) => void;
   /** Called when drag ends */
-  onResizeEnd?: (handleIndex: number, sizes: number[]) => void;
+  onResizeEnd?: (handleIndex: number, sizes: SplitterPaneSize[]) => void;
   /** Called when a panel collapses or expands */
   onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
   /** How to borrow space from non-adjacent panels */
   redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
-  /** Keyboard step size in percentage, `1` by default */
-  step?: number;
-  /** Shift+arrow step size in percentage, `10` by default */
-  shiftStep?: number;
+  /** Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is pixels, `1` by default */
+  step?: SplitterStep;
+  /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is pixels, `10` by default */
+  shiftStep?: SplitterStep;
   /** Text direction for keyboard nav, `'ltr'` by default */
   dir?: 'ltr' | 'rtl';
   /** Enable/disable the hook, `true` by default */
@@ -177,8 +202,8 @@ interface UseSplitterOptions {
 interface UseSplitterReturnValue<T extends HTMLElement = any> {
   /** Ref callback for the container element */
   ref: React.RefCallback<T | null>;
-  /** Current panel sizes as percentages */
-  sizes: number[];
+  /** Current panel sizes, each value keeps the unit it was declared in */
+  sizes: SplitterPaneSize[];
   /** Which panels are currently collapsed */
   collapsed: boolean[];
   /** Index of handle being dragged, or -1 */
@@ -186,7 +211,7 @@ interface UseSplitterReturnValue<T extends HTMLElement = any> {
   /** Get props to spread on each resize handle */
   getHandleProps: (input: { index: number }) => HandleProps;
   /** Programmatically set sizes */
-  setSizes: (sizes: number[]) => void;
+  setSizes: (sizes: SplitterPaneSize[]) => void;
   /** Collapse a panel */
   collapse: (panelIndex: number) => void;
   /** Expand a collapsed panel */
@@ -202,15 +227,19 @@ function useSplitter<T extends HTMLElement = any>(
 
 ## Exported types
 
-`UseSplitterPanel`, `UseSplitterOptions`, `UseSplitterReturnValue`, `UseSplitterRedistributeInput`
-and `UseSplitterRedistributeFn` types are exported from the `@mantine/hooks` package:
+`UseSplitterPanel`, `UseSplitterOptions`, `UseSplitterReturnValue`, `UseSplitterRedistributeInput`,
+`UseSplitterRedistributeFn`, `UseSplitterResolvedPanel`, `SplitterPaneSize` and `SplitterStep` types
+are exported from the `@mantine/hooks` package:
 
 ```tsx
 import type {
+  SplitterPaneSize,
+  SplitterStep,
   UseSplitterPanel,
   UseSplitterOptions,
   UseSplitterReturnValue,
   UseSplitterRedistributeInput,
   UseSplitterRedistributeFn,
+  UseSplitterResolvedPanel,
 } from '@mantine/hooks';
 ```

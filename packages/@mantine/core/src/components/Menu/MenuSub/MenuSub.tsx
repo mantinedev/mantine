@@ -1,4 +1,4 @@
-import { use, useCallback, useRef } from 'react';
+import { use, useCallback, useEffect, useRef } from 'react';
 import {
   safePolygon,
   useFloating,
@@ -6,7 +6,7 @@ import {
   useInteractions,
   type SafePolygonOptions,
 } from '@floating-ui/react';
-import { useDisclosure, useId } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import { ExtendComponent, Factory, useDirection, useProps } from '../../../core';
 import {
   FloatingAxesOffsets,
@@ -27,6 +27,9 @@ export type MenuSubFactory = Factory<{
 
 export interface MenuSubProps extends __PopoverProps {
   children: React.ReactNode;
+
+  /** Controlled opened state */
+  opened?: boolean;
 
   /** Called with current state when dropdown opens or closes */
   onChange?: (opened: boolean) => void;
@@ -65,20 +68,28 @@ const defaultProps = {
 } satisfies Partial<MenuSubProps>;
 
 export function MenuSub(_props: MenuSubProps) {
-  const { children, closeDelay, openDelay, position, safeAreaPolygon, ...others } = useProps(
-    'MenuSub',
-    defaultProps,
-    _props
-  );
+  const {
+    children,
+    closeDelay,
+    openDelay,
+    position,
+    safeAreaPolygon,
+    opened: openedProp,
+    onChange,
+    ...others
+  } = useProps('MenuSub', defaultProps, _props);
   const id = useId();
-  const [opened, { open, close }] = useDisclosure(false);
+  const [opened, setOpened] = useUncontrolled({
+    value: openedProp,
+    finalValue: false,
+    onChange,
+  });
   const parentSubCtx = use(SubMenuContext);
   const menuCtx = useMenuContext();
   const { dir } = useDirection();
   const resolvedPosition = getFloatingPosition(dir, position);
 
   const levelRegister = parentSubCtx?.registerOpenSub ?? menuCtx.registerOpenSub;
-  const unregisterRef = useRef<(() => void) | null>(null);
 
   const activeChildCloseRef = useRef<(() => void) | null>(null);
   const registerOpenSub = useCallback((closeFn: () => void) => {
@@ -94,16 +105,19 @@ export function MenuSub(_props: MenuSubProps) {
     };
   }, []);
 
-  const handleOpen = useCallback(() => {
-    unregisterRef.current = levelRegister(close);
-    open();
-  }, [close, levelRegister, open]);
+  const setOpenedRef = useRef(setOpened);
+  setOpenedRef.current = setOpened;
 
-  const handleClose = useCallback(() => {
-    unregisterRef.current?.();
-    unregisterRef.current = null;
-    close();
-  }, [close]);
+  const handleOpen = useCallback(() => setOpenedRef.current(true), []);
+  const handleClose = useCallback(() => setOpenedRef.current(false), []);
+
+  useEffect(() => {
+    if (!opened) {
+      return undefined;
+    }
+
+    return levelRegister(handleClose);
+  }, [opened, levelRegister, handleClose]);
 
   const { context, refs } = useFloating({
     placement: resolvedPosition,
@@ -157,6 +171,7 @@ export function MenuSub(_props: MenuSubProps) {
     >
       <Popover
         opened={opened}
+        onChange={(nextOpened) => (nextOpened ? handleOpen() : handleClose())}
         withinPortal={false}
         withArrow={false}
         id={id}
