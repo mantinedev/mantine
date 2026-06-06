@@ -151,6 +151,26 @@ describe('@mantine/schedule/DayView', () => {
     jest.useRealTimers();
   });
 
+  it('aligns the current time indicator with the slot grid when endTime does not divide evenly by intervalMinutes', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-03 02:00:00'));
+
+    const { container } = render(
+      <DayView
+        {...defaultProps}
+        withCurrentTimeIndicator
+        startTime="00:00:00"
+        endTime="02:30:00"
+        intervalMinutes={60}
+        getCurrentTime={() => '2025-11-03 02:00:00'}
+      />
+    );
+
+    // Canvas is rounded up from 02:30 to 03:00 (3 whole slots), so 02:00 sits at 120/180 = 66.66%
+    const indicator = container.querySelector('.mantine-DayView-currentTimeIndicator');
+    expect(indicator?.getAttribute('style')).toContain('66.66');
+    jest.useRealTimers();
+  });
+
   it('displays time bubble in the current time indicator based on withCurrentTimeBubble prop', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-11-03 10:30:00'));
 

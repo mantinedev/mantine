@@ -804,9 +804,10 @@ export function UnalignedEndTime() {
     <div style={{ padding: 40 }}>
       <Stack gap="md">
         <Text size="xs" c="dimmed">
-          Reproduction of mantinedev/mantine#8887. With `intervalMinutes=60` and `endTime=02:30:00`,
-          the last slot is truncated to 30 minutes but rendered full-height. The event below should
-          align with the 01:00 grid line but appears offset (~01:10).
+          Reproduction of mantinedev/mantine#8887 and #8945. With `intervalMinutes=60` and
+          `endTime=02:30:00`, the last slot is truncated to 30 minutes but rendered full-height. The
+          event and the current time indicator (pinned to 02:00 here) should both align with the
+          02:00 grid line.
         </Text>
         <DayView
           date={new Date()}
@@ -815,6 +816,8 @@ export function UnalignedEndTime() {
           endTime="02:30:00"
           intervalMinutes={60}
           withAllDaySlot={false}
+          withCurrentTimeIndicator
+          getCurrentTime={() => `${today} 02:00:00`}
         />
       </Stack>
     </div>

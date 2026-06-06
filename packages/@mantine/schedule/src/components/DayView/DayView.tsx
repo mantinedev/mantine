@@ -882,6 +882,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                   locale={locale}
                   startTime={startTime}
                   endTime={endTime}
+                  intervalMinutes={intervalMinutes}
                   getCurrentTime={getCurrentTime}
                   {...stylesApiProps}
                 />

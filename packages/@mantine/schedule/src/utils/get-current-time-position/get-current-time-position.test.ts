@@ -54,4 +54,54 @@ describe('@mantine/schedule/get-current-time-position', () => {
       getCurrentTimePosition({ startTime: '10:00', endTime: '12:00', now: '2024-01-01 11:00:00' })
     ).toBe(50);
   });
+
+  it('rounds the canvas up to whole slots when endTime does not divide evenly by intervalMinutes', () => {
+    jest.setSystemTime(new Date('2024-01-01 00:00:00').getTime());
+
+    // start 00:00, end 02:30, intervalMinutes 60 -> canvas rounded up to 03:00 (180 minutes)
+    expect(
+      getCurrentTimePosition({
+        startTime: '00:00',
+        endTime: '02:30',
+        intervalMinutes: 60,
+        now: '2024-01-01 02:00:00',
+      })
+    ).toBeCloseTo((120 / 180) * 100);
+
+    expect(
+      getCurrentTimePosition({
+        startTime: '00:00',
+        endTime: '02:30',
+        intervalMinutes: 60,
+        now: '2024-01-01 01:30:00',
+      })
+    ).toBe(50);
+  });
+
+  it('rounds the canvas up at second precision when endTime has a seconds remainder', () => {
+    jest.setSystemTime(new Date('2024-01-01 00:00:00').getTime());
+
+    // start 00:00:00, end 02:00:30, intervalMinutes 60 -> canvas rounded up to 03:00 (3 whole slots)
+    expect(
+      getCurrentTimePosition({
+        startTime: '00:00:00',
+        endTime: '02:00:30',
+        intervalMinutes: 60,
+        now: '2024-01-01 02:00:00',
+      })
+    ).toBeCloseTo((7200 / 10800) * 100);
+  });
+
+  it('does not change the canvas when endTime divides evenly by intervalMinutes', () => {
+    jest.setSystemTime(new Date('2024-01-01 00:00:00').getTime());
+
+    expect(
+      getCurrentTimePosition({
+        startTime: '10:00',
+        endTime: '12:00',
+        intervalMinutes: 60,
+        now: '2024-01-01 11:00:00',
+      })
+    ).toBe(50);
+  });
 });
