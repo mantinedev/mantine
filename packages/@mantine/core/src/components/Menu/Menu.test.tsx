@@ -823,6 +823,186 @@ describe('@mantine/core/Menu', () => {
     });
   });
 
+  describe('Menu.Sub controlled opened', () => {
+    function SubMenuContainer(subProps: Partial<React.ComponentProps<typeof Menu.Sub>> = {}) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>Banana</Menu.Item>
+            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false} {...subProps}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>More</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Cherry</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    it('renders the sub-dropdown when opened={true} is controlled', async () => {
+      render(SubMenuContainer({ opened: true }));
+      expect(await screen.findByText('Cherry')).toBeInTheDocument();
+    });
+
+    it('keeps the sub-dropdown closed when opened={false} is controlled', () => {
+      render(SubMenuContainer({ opened: false }));
+      expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+    });
+
+    it('calls onChange with true when the submenu is opened via keyboard', async () => {
+      const onChange = jest.fn();
+      render(SubMenuContainer({ onChange }));
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      await screen.findByText('Cherry');
+      expect(onChange).toHaveBeenCalledWith(true);
+    });
+
+    it('calls onChange with false when the submenu is closed via keyboard', async () => {
+      const onChange = jest.fn();
+      render(SubMenuContainer({ onChange }));
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      const cherry = await screen.findByText('Cherry');
+      const childItem = cherry.closest('button')!;
+      childItem.focus();
+      fireEvent.keyDown(childItem, { key: 'ArrowLeft' });
+
+      expect(onChange).toHaveBeenLastCalledWith(false);
+    });
+
+    it('calls onChange with false when the open submenu is dismissed with Escape', async () => {
+      const onChange = jest.fn();
+      render(SubMenuContainer({ onChange }));
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      const cherry = await screen.findByText('Cherry');
+      const subDropdown = cherry.closest('[role="menu"]')!;
+      fireEvent.keyDown(subDropdown, { key: 'Escape' });
+
+      expect(onChange).toHaveBeenLastCalledWith(false);
+    });
+
+    it('still opens an uncontrolled submenu via keyboard (no regression)', async () => {
+      render(SubMenuContainer());
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      expect(await screen.findByText('Cherry')).toBeInTheDocument();
+    });
+
+    it('does not call onChange after the submenu is unmounted while open', async () => {
+      const onChange = jest.fn();
+      function Container({ showFirst }: { showFirst: boolean }) {
+        return (
+          <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+            <Menu.Target>
+              <button type="button">test-target</button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              {showFirst && (
+                <Menu.Sub
+                  transitionProps={{ duration: 0 }}
+                  withinPortal={false}
+                  onChange={onChange}
+                >
+                  <Menu.Sub.Target>
+                    <Menu.Sub.Item>First</Menu.Sub.Item>
+                  </Menu.Sub.Target>
+                  <Menu.Sub.Dropdown>
+                    <Menu.Item>First child</Menu.Item>
+                  </Menu.Sub.Dropdown>
+                </Menu.Sub>
+              )}
+              <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+                <Menu.Sub.Target>
+                  <Menu.Sub.Item>Second</Menu.Sub.Item>
+                </Menu.Sub.Target>
+                <Menu.Sub.Dropdown>
+                  <Menu.Item>Second child</Menu.Item>
+                </Menu.Sub.Dropdown>
+              </Menu.Sub>
+            </Menu.Dropdown>
+          </Menu>
+        );
+      }
+
+      const { rerender } = render(<Container showFirst />);
+
+      const firstTarget = screen.getByText('First').closest('button')!;
+      firstTarget.focus();
+      fireEvent.keyDown(firstTarget, { key: 'ArrowRight' });
+      await screen.findByText('First child');
+
+      onChange.mockClear();
+      rerender(<Container showFirst={false} />);
+
+      const secondTarget = screen.getByText('Second').closest('button')!;
+      secondTarget.focus();
+      fireEvent.keyDown(secondTarget, { key: 'ArrowRight' });
+      await screen.findByText('Second child');
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('auto-closes a previously open sibling submenu when another opens', async () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>First</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>First child</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>Second</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Second child</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menu.Dropdown>
+        </Menu>
+      );
+
+      const firstTarget = screen.getByText('First').closest('button')!;
+      firstTarget.focus();
+      fireEvent.keyDown(firstTarget, { key: 'ArrowRight' });
+      await screen.findByText('First child');
+
+      const secondTarget = screen.getByText('Second').closest('button')!;
+      secondTarget.focus();
+      fireEvent.keyDown(secondTarget, { key: 'ArrowRight' });
+      await screen.findByText('Second child');
+
+      expect(screen.queryByText('First child')).not.toBeInTheDocument();
+    });
+  });
+
   describe('Menu.ContextMenu', () => {
     function ContextMenuContainer({ disabled }: { disabled?: boolean } = {}) {
       return (
