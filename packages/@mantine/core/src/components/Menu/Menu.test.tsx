@@ -209,7 +209,9 @@ describe('@mantine/core/Menu', () => {
 
     it('focuses search input when menu opens', async () => {
       render(<SearchMenu />);
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 10));
+      });
       expect(screen.getByLabelText('search')).toHaveFocus();
     });
 
