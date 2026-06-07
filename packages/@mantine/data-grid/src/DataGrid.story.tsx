@@ -199,9 +199,7 @@ const employees: Employee[] = [
 ];
 
 const columns: ColumnDef<Employee>[] = [
-  { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
-  { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
-  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'firstName', header: 'Name', enableSorting: true },
   { accessorKey: 'department', header: 'Department', enableSorting: true },
   {
     accessorKey: 'salary',
@@ -243,10 +241,7 @@ export function Usage() {
 
 export function CustomCells() {
   const customColumns: ColumnDef<Employee>[] = [
-    { accessorKey: 'firstName', header: 'First Name' },
-    { accessorKey: 'lastName', header: 'Last Name' },
-    { accessorKey: 'email', header: 'Email' },
-    { accessorKey: 'department', header: 'Department' },
+    { accessorKey: 'firstName', header: 'Name' },
     {
       accessorKey: 'salary',
       header: 'Salary',
@@ -574,10 +569,7 @@ export function Density() {
 
 export function CompoundComponents() {
   const columnsWithFooter: ColumnDef<Employee>[] = [
-    { accessorKey: 'firstName', header: 'First Name', footer: 'Total' },
-    { accessorKey: 'lastName', header: 'Last Name' },
-    { accessorKey: 'email', header: 'Email' },
-    { accessorKey: 'department', header: 'Department' },
+    { accessorKey: 'firstName', header: 'Name', footer: 'Total' },
     {
       accessorKey: 'salary',
       header: 'Salary',
