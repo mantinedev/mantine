@@ -50,24 +50,19 @@ export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
       {...ctx.getStyles('tr', { className, classNames, style, styles })}
       {...others}
     >
-      <Box
-        component="td"
-        colSpan={totalColumns}
-        {...ctx.getStyles('groupHeader', { classNames, styles })}
-      >
-        <Box
-          component="button"
+      <td colSpan={totalColumns} {...ctx.getStyles('groupHeader', { classNames, styles })}>
+        <button
           type="button"
           onClick={() => row.toggleExpanded()}
           aria-label={isExpanded ? ctx.labels.groupCollapse : ctx.labels.groupExpand}
           {...ctx.getStyles('groupToggle', { classNames, styles })}
         >
           <ExpandChevron expanded={isExpanded} />
-        </Box>
+        </button>
         <span>
           {groupingColumnId}: {String(groupingValue)} ({row.subRows.length})
         </span>
-      </Box>
+      </td>
     </Box>
   );
 });

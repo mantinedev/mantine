@@ -215,8 +215,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       {...others}
     >
       {ctx.withRowReorder && (
-        <Box
-          component="td"
+        <td
           {...ctx.getStyles('td', { classNames, styles })}
           {...ctx.getStyles('dragHandle', { classNames, styles })}
           draggable
@@ -224,11 +223,10 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
           aria-label={ctx.labels.dragToReorder ?? 'Drag to reorder'}
         >
           <GripIcon />
-        </Box>
+        </td>
       )}
       {ctx.withRowSelection && (
-        <Box
-          component="td"
+        <td
           {...ctx.getStyles('td', { classNames, styles })}
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
@@ -246,12 +244,11 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
                 {...ctx.getStyles('selectionCheckbox', { classNames, styles })}
               />
             ))}
-        </Box>
+        </td>
       )}
       {ctx.withRowExpansion && !ctx.withTreeData && (
-        <Box component="td" {...ctx.getStyles('td', { classNames, styles })}>
-          <Box
-            component="button"
+        <td {...ctx.getStyles('td', { classNames, styles })}>
+          <button
             type="button"
             aria-expanded={row.getIsExpanded()}
             aria-label={row.getIsExpanded() ? 'Collapse row' : 'Expand row'}
@@ -262,17 +259,16 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
             {...ctx.getStyles('expandIcon', { classNames, styles })}
           >
             <ExpandChevron expanded={row.getIsExpanded()} />
-          </Box>
-        </Box>
+          </button>
+        </td>
       )}
       {ctx.withRowNumbers && (
-        <Box
-          component="td"
+        <td
           {...ctx.getStyles('td', { classNames, styles })}
           {...ctx.getStyles('rowNumber', { classNames, styles })}
         >
           {rowIndex + 1}
-        </Box>
+        </td>
       )}
       {dataCells}
     </Box>

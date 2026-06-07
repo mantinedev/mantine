@@ -93,17 +93,15 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
       {...others}
     >
       {ctx.table.getHeaderGroups().map((headerGroup) => (
-        <Box component="tr" key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
+        <tr key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
           {ctx.withRowReorder && (
-            <Box
-              component="th"
+            <th
               {...ctx.getStyles('th', { classNames, styles })}
               style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
             />
           )}
           {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection !== false && (
-            <Box
-              component="th"
+            <th
               {...ctx.getStyles('th', { classNames, styles })}
               style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
             >
@@ -125,31 +123,28 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 }
                 {...ctx.getStyles('selectAllCheckbox', { classNames, styles })}
               />
-            </Box>
+            </th>
           )}
           {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection === false && (
-            <Box
-              component="th"
+            <th
               {...ctx.getStyles('th', { classNames, styles })}
               style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
             />
           )}
           {ctx.withRowExpansion && !ctx.withTreeData && (
-            <Box
-              component="th"
+            <th
               {...ctx.getStyles('th', { classNames, styles })}
               style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
             />
           )}
           {ctx.withRowNumbers && (
-            <Box
-              component="th"
+            <th
               {...ctx.getStyles('th', { classNames, styles })}
               {...ctx.getStyles('rowNumber', { classNames, styles })}
               style={ctx.tableLayout === 'fixed' ? { width: rem(48) } : undefined}
             >
               #
-            </Box>
+            </th>
           )}
           {headerGroup.headers.map((header) => {
             const canSort = ctx.withSorting && header.column.getCanSort();
@@ -177,8 +172,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
               : {};
 
             return (
-              <Box
-                component="th"
+              <th
                 key={header.id}
                 colSpan={header.colSpan}
                 aria-sort={ariaSort}
@@ -206,30 +200,26 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                         {...ctx.getStyles('headerCell', { classNames, styles })}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        <Box
-                          component="span"
-                          {...ctx.getStyles('sortIcon', { classNames, styles })}
-                        >
+                        <span {...ctx.getStyles('sortIcon', { classNames, styles })}>
                           {sortDirection
                             ? (ctx.sortedIcon ?? <SortIcon size={12} />)
                             : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
-                        </Box>
+                        </span>
                       </UnstyledButton>
                     ) : (
-                      <Box component="div" {...ctx.getStyles('headerCell', { classNames, styles })}>
+                      <div {...ctx.getStyles('headerCell', { classNames, styles })}>
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                      </Box>
+                      </div>
                     )}
                     {ctx.withFiltering && !ctx.headerFilters && header.column.getCanFilter() && (
-                      <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+                      <div onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                         <FilterDispatcher column={header.column} />
-                      </Box>
+                      </div>
                     )}
                   </>
                 )}
                 {ctx.withColumnResizing && header.column.getCanResize() && (
-                  <Box
-                    component="div"
+                  <div
                     {...ctx.getStyles('resizeHandle', { classNames, styles })}
                     onPointerDown={header.getResizeHandler()}
                     onTouchStart={header.getResizeHandler()}
@@ -237,32 +227,25 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                     data-resizing={isResizing || undefined}
                   />
                 )}
-              </Box>
+              </th>
             );
           })}
-        </Box>
+        </tr>
       ))}
       {ctx.headerFilters && ctx.withFiltering && (
-        <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
-          {ctx.withRowReorder && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
-          )}
-          {ctx.withRowSelection && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
-          )}
+        <tr {...ctx.getStyles('tr', { classNames, styles })}>
+          {ctx.withRowReorder && <th {...ctx.getStyles('th', { classNames, styles })} />}
+          {ctx.withRowSelection && <th {...ctx.getStyles('th', { classNames, styles })} />}
           {ctx.withRowExpansion && !ctx.withTreeData && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
+            <th {...ctx.getStyles('th', { classNames, styles })} />
           )}
-          {ctx.withRowNumbers && (
-            <Box component="th" {...ctx.getStyles('th', { classNames, styles })} />
-          )}
+          {ctx.withRowNumbers && <th {...ctx.getStyles('th', { classNames, styles })} />}
           {ctx.table.getVisibleLeafColumns().map((column) => {
             const isPinned = ctx.withColumnPinning ? column.getIsPinned() : false;
             const pinnedStyle = ctx.withColumnPinning ? getPinnedStyles(column) : undefined;
 
             return (
-              <Box
-                component="th"
+              <th
                 key={column.id}
                 data-pinned-left={isPinned === 'left' || undefined}
                 data-pinned-right={isPinned === 'right' || undefined}
@@ -276,10 +259,10 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 }}
               >
                 {column.getCanFilter() ? <FilterDispatcher column={column} /> : null}
-              </Box>
+              </th>
             );
           })}
-        </Box>
+        </tr>
       )}
     </Box>
   );

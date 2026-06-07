@@ -137,15 +137,14 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
             row.getIsExpanded() &&
             !row.getIsGrouped() &&
             ctx.renderExpandedRow && (
-              <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
-                <Box
-                  component="td"
+              <tr {...ctx.getStyles('tr', { classNames, styles })}>
+                <td
                   colSpan={totalColumns}
                   {...ctx.getStyles('expandedRow', { classNames, styles })}
                 >
                   {ctx.renderExpandedRow({ row })}
-                </Box>
-              </Box>
+                </td>
+              </tr>
             )}
         </React.Fragment>
       );
@@ -154,8 +153,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
   return (
     <>
       {ctx.withRowPinning && topRows.length > 0 && (
-        <Box
-          component="tbody"
+        <tbody
           ref={pinnedTopRef}
           data-pinned-top
           onKeyDown={handleKeyDown}
@@ -163,7 +161,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
           style={{ top: pinnedTopOffset > 0 ? pinnedTopOffset : undefined }}
         >
           {renderRows(topRows, 0)}
-        </Box>
+        </tbody>
       )}
       <Box
         component="tbody"
@@ -172,28 +170,23 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
         {...others}
       >
         {allEmpty && ctx.emptyState ? (
-          <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
-            <Box
-              component="td"
-              colSpan={totalColumns}
-              {...ctx.getStyles('emptyState', { classNames, styles })}
-            >
+          <tr {...ctx.getStyles('tr', { classNames, styles })}>
+            <td colSpan={totalColumns} {...ctx.getStyles('emptyState', { classNames, styles })}>
               {ctx.emptyState}
-            </Box>
-          </Box>
+            </td>
+          </tr>
         ) : (
           renderRows(rows, topRows.length)
         )}
       </Box>
       {ctx.withRowPinning && bottomRows.length > 0 && (
-        <Box
-          component="tbody"
+        <tbody
           data-pinned-bottom
           onKeyDown={handleKeyDown}
           {...ctx.getStyles('tbody', { className, classNames, style, styles })}
         >
           {renderRows(bottomRows, topRows.length + rows.length)}
-        </Box>
+        </tbody>
       )}
     </>
   );

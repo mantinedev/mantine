@@ -472,24 +472,24 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
                   onScroll={onScrollToBottom ? handleScroll : undefined}
                 />
                 {hasFooter && (
-                  <Box component="table" {...getStyles('table')}>
+                  <table {...getStyles('table')}>
                     <DataGridFooter />
-                  </Box>
+                  </table>
                 )}
               </>
             ) : onScrollToBottom && height ? (
-              <Box
+              <div
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
                 {...getStyles('virtualScrollContainer')}
                 style={{ height: rem(height), overflow: 'auto' }}
               >
-                <Box component="table" {...getStyles('table')}>
+                <table {...getStyles('table')}>
                   <DataGridHeader />
                   <DataGridBody />
                   {hasFooter && <DataGridFooter />}
-                </Box>
-              </Box>
+                </table>
+              </div>
             ) : withScrollArea ? (
               <ScrollArea
                 scrollbarSize={4}
@@ -499,20 +499,20 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
                 {...getStyles('scrollContainer')}
                 {...scrollAreaProps}
               >
-                <Box component="table" {...getStyles('table')}>
+                <table {...getStyles('table')}>
                   <DataGridHeader />
                   <DataGridBody />
                   {hasFooter && <DataGridFooter />}
-                </Box>
+                </table>
               </ScrollArea>
             ) : (
-              <Box style={{ overflowX: 'auto' }}>
-                <Box component="table" {...getStyles('table')}>
+              <div style={{ overflowX: 'auto' }}>
+                <table {...getStyles('table')}>
                   <DataGridHeader />
                   <DataGridBody />
                   {hasFooter && <DataGridFooter />}
-                </Box>
-              </Box>
+                </table>
+              </div>
             )}
           </>
         )}

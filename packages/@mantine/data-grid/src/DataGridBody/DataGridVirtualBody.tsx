@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { flexRender, Header } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
-  Box,
   BoxProps,
   Checkbox,
   CompoundStylesApiProps,
@@ -239,13 +238,12 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         }}
       >
         {isTreeFirstCell ? (
-          <Box
+          <div
             {...ctx.getStyles('treeIndent', { classNames, styles })}
             style={{ paddingLeft: rowObj.depth * 20 }}
           >
             {ctx.withRowExpansion && rowObj.getCanExpand() ? (
-              <Box
-                component="button"
+              <button
                 type="button"
                 aria-expanded={rowObj.getIsExpanded()}
                 aria-label={rowObj.getIsExpanded() ? 'Collapse row' : 'Expand row'}
@@ -256,10 +254,10 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                 {...ctx.getStyles('treeToggle', { classNames, styles })}
               >
                 <ExpandChevron expanded={rowObj.getIsExpanded()} />
-              </Box>
+              </button>
             ) : null}
             {flexRender(row.column.columnDef.cell, row.getContext())}
-          </Box>
+          </div>
         ) : (
           flexRender(row.column.columnDef.cell, row.getContext())
         )}
@@ -407,8 +405,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
               aria-colindex={ctx.withRowSelection ? 2 : 1}
               {...ctx.getStyles('virtualCell', { classNames, styles })}
             >
-              <Box
-                component="button"
+              <button
                 type="button"
                 onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
@@ -417,7 +414,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                 {...ctx.getStyles('expandIcon', { classNames, styles })}
               >
                 <ExpandChevron expanded={row.getIsExpanded()} />
-              </Box>
+              </button>
             </div>
           )}
           {ctx.withRowNumbers && (
@@ -518,27 +515,26 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                 {...ctx.getStyles('headerCell', { classNames, styles })}
               >
                 {flexRender(header.column.columnDef.header, header.getContext())}
-                <Box component="span" {...ctx.getStyles('sortIcon', { classNames, styles })}>
+                <span {...ctx.getStyles('sortIcon', { classNames, styles })}>
                   {sortDirection
                     ? (ctx.sortedIcon ?? <SortIcon size={12} />)
                     : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
-                </Box>
+                </span>
               </UnstyledButton>
             ) : (
-              <Box component="div" {...ctx.getStyles('headerCell', { classNames, styles })}>
+              <div {...ctx.getStyles('headerCell', { classNames, styles })}>
                 {flexRender(header.column.columnDef.header, header.getContext())}
-              </Box>
+              </div>
             )}
             {ctx.withFiltering && !ctx.headerFilters && header.column.getCanFilter() && (
-              <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+              <div onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                 <FilterDispatcher column={header.column} />
-              </Box>
+              </div>
             )}
           </>
         )}
         {ctx.withColumnResizing && header.column.getCanResize() && (
-          <Box
-            component="div"
+          <div
             {...ctx.getStyles('resizeHandle', { classNames, styles })}
             onPointerDown={header.getResizeHandler()}
             onTouchStart={header.getResizeHandler()}

@@ -56,22 +56,15 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
       {...others}
     >
       {ctx.table.getFooterGroups().map((footerGroup) => (
-        <Box component="tr" key={footerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
-          {ctx.withRowReorder && (
-            <Box component="td" {...ctx.getStyles('td', { classNames, styles })} />
-          )}
-          {ctx.withRowSelection && (
-            <Box component="td" {...ctx.getStyles('td', { classNames, styles })} />
-          )}
+        <tr key={footerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
+          {ctx.withRowReorder && <td {...ctx.getStyles('td', { classNames, styles })} />}
+          {ctx.withRowSelection && <td {...ctx.getStyles('td', { classNames, styles })} />}
           {ctx.withRowExpansion && !ctx.withTreeData && (
-            <Box component="td" {...ctx.getStyles('td', { classNames, styles })} />
+            <td {...ctx.getStyles('td', { classNames, styles })} />
           )}
-          {ctx.withRowNumbers && (
-            <Box component="td" {...ctx.getStyles('td', { classNames, styles })} />
-          )}
+          {ctx.withRowNumbers && <td {...ctx.getStyles('td', { classNames, styles })} />}
           {footerGroup.headers.map((header) => (
-            <Box
-              component="td"
+            <td
               key={header.id}
               colSpan={header.colSpan}
               {...ctx.getStyles('td', { classNames, styles })}
@@ -79,24 +72,19 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
               {header.isPlaceholder
                 ? null
                 : flexRender(header.column.columnDef.footer, header.getContext())}
-            </Box>
+            </td>
           ))}
-        </Box>
+        </tr>
       ))}
       {aggregation.hasAny() && (
-        <Box component="tr" {...ctx.getStyles('tr', { classNames, styles })}>
+        <tr {...ctx.getStyles('tr', { classNames, styles })}>
           {Array.from({ length: extraColCount }).map((_, i) => (
-            <Box
-              component="td"
-              key={`extra-${i}`}
-              {...ctx.getStyles('td', { classNames, styles })}
-            />
+            <td key={`extra-${i}`} {...ctx.getStyles('td', { classNames, styles })} />
           ))}
           {ctx.table.getVisibleLeafColumns().map((column) => {
             const agg = aggregation.get(column.id);
             return (
-              <Box
-                component="td"
+              <td
                 key={column.id}
                 {...ctx.getStyles('td', { classNames, styles })}
                 {...ctx.getStyles('aggregationCell', { classNames, styles })}
@@ -106,10 +94,10 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
                     ? `${agg.label}: ${agg.value ?? ''}`
                     : String(agg.value ?? '')
                   : null}
-              </Box>
+              </td>
             );
           })}
-        </Box>
+        </tr>
       )}
     </Box>
   );

@@ -34,14 +34,14 @@ export const DataGridListView = factory<DataGridListViewFactory>((props) => {
   const rows = ctx.table.getRowModel().rows;
 
   const defaultRenderItem = (row: any) => (
-    <Box
+    <div
       {...ctx.getStyles('listItem', { classNames, styles })}
       key={row.id}
       data-row-id={row.id}
       data-selected={(ctx.withRowSelection && row.getIsSelected()) || undefined}
     >
       {row.getVisibleCells().map((cell: any) => (
-        <Box
+        <div
           key={cell.id}
           style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}
         >
@@ -53,9 +53,9 @@ export const DataGridListView = factory<DataGridListViewFactory>((props) => {
           <Box component="span" fz="sm">
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
           </Box>
-        </Box>
+        </div>
       ))}
-    </Box>
+    </div>
   );
 
   return (

@@ -171,7 +171,7 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
       {...others}
     >
       {isEditing ? (
-        <Box {...ctx.getStyles('editCell', { classNames, styles })}>
+        <div {...ctx.getStyles('editCell', { classNames, styles })}>
           {editComponent ? (
             editComponent({
               value: editValue,
@@ -191,15 +191,14 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
               disabled={isSaving}
             />
           )}
-        </Box>
+        </div>
       ) : treeData ? (
-        <Box
+        <div
           {...ctx.getStyles('treeIndent', { classNames, styles })}
           style={{ paddingLeft: treeData.row.depth * 20 }}
         >
           {ctx.withRowExpansion && treeData.row.getCanExpand() ? (
-            <Box
-              component="button"
+            <button
               type="button"
               aria-expanded={treeData.row.getIsExpanded()}
               aria-label={treeData.row.getIsExpanded() ? 'Collapse row' : 'Expand row'}
@@ -210,10 +209,10 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
               {...ctx.getStyles('treeToggle', { classNames, styles })}
             >
               <ExpandChevron expanded={treeData.row.getIsExpanded()} />
-            </Box>
+            </button>
           ) : null}
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </Box>
+        </div>
       ) : (
         flexRender(cell.column.columnDef.cell, cell.getContext())
       )}
