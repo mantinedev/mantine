@@ -71,6 +71,17 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     searchTags: 'datetime, date time picker, calendar clock, timestamp input',
   },
 
+  InlineDateTimePicker: {
+    title: 'InlineDateTimePicker',
+    package: '@mantine/dates',
+    slug: '/dates/inline-date-time-picker',
+    props: ['InlineDateTimePicker'],
+    styles: ['InlineDateTimePicker'],
+    description: 'Inline date and time picker with range support',
+    source: '@mantine/dates/src/components/InlineDateTimePicker/InlineDateTimePicker.tsx',
+    docs: 'dates/inline-date-time-picker.mdx',
+  },
+
   MonthPicker: {
     title: 'MonthPicker',
     package: '@mantine/dates',

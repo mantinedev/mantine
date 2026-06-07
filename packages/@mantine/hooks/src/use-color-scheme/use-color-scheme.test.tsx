@@ -29,7 +29,7 @@ describe('@mantine/hooks/use-color-scheme', () => {
     return colorScheme;
   }
 
-  it('correctly returns initial dark state state without useEffect', () => {
+  it('correctly returns initial dark state without useEffect', () => {
     window.matchMedia = mockMatchMedia;
     render(<WrapperComponent initialValue="dark" getInitialValueInEffect={false} />);
     expect(trace).toHaveBeenCalledTimes(1);

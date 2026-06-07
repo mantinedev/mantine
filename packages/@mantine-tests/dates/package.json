@@ -41,8 +41,8 @@
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "dayjs": "^1.11.20",
-    "react": "19.2.5",
-    "react-dom": "19.2.5"
+    "dayjs": "^1.11.21",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   }
 }

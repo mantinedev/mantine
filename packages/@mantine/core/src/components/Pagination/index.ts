@@ -9,6 +9,10 @@ import type { PaginationControlProps } from './PaginationControl/PaginationContr
 import type { PaginationDotsProps } from './PaginationDots/PaginationDots';
 import type { PaginationEdgeProps } from './PaginationEdges/PaginationEdges';
 import type { PaginationItemsProps } from './PaginationItems/PaginationItems';
+import type {
+  PaginationFormatLabel,
+  PaginationLabelProps,
+} from './PaginationLabel/PaginationLabel';
 import type { PaginationRootProps } from './PaginationRoot/PaginationRoot';
 
 export { Pagination } from './Pagination';
@@ -21,6 +25,7 @@ export {
   PaginationPrevious,
 } from './PaginationEdges/PaginationEdges';
 export { PaginationItems } from './PaginationItems/PaginationItems';
+export { PaginationLabel } from './PaginationLabel/PaginationLabel';
 export { PaginationRoot } from './PaginationRoot/PaginationRoot';
 export { usePaginationContext } from './Pagination.context';
 
@@ -34,5 +39,7 @@ export type {
   PaginationDotsProps,
   PaginationEdgeProps,
   PaginationItemsProps,
+  PaginationLabelProps,
+  PaginationFormatLabel,
   PaginationContextValue,
 };

@@ -6,6 +6,7 @@ export const InputStylesApi: StylesApiData<InputFactory> = {
     wrapper: 'Root element of the Input',
     input: 'Input element',
     section: 'Left and right sections',
+    bottomSection: 'Bottom section element, rendered inside the input border at the bottom',
   },
 
   vars: {

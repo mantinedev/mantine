@@ -6,6 +6,8 @@ export const PaginationStylesApi: StylesApiData<PaginationFactory> = {
     root: 'Root element',
     control: 'Control element: items, next/previous, first/last buttons',
     dots: 'Dots icon wrapper',
+    items: 'Wrapper around page number controls, used with `layout="responsive"`',
+    label: 'Compact label element displayed in narrow containers with `layout="responsive"`',
   },
 
   vars: {
@@ -21,5 +23,10 @@ export const PaginationStylesApi: StylesApiData<PaginationFactory> = {
   modifiers: [
     { modifier: 'data-active', selector: 'control', condition: 'Control is active' },
     { modifier: 'data-disabled', selector: 'control', condition: 'Control is disabled' },
+    {
+      modifier: 'data-layout',
+      selector: 'root',
+      value: 'Value of `layout` prop',
+    },
   ],
 };

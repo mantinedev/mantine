@@ -184,12 +184,8 @@
   }
 
   &:where([data-icon-position='right']) {
-    text-align: right;
+    text-align: end;
     margin-inline-end: var(--mantine-spacing-sm);
-
-    @mixin where-rtl {
-      text-align: left;
-    }
   }
 }
 

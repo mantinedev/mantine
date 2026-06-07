@@ -68,7 +68,6 @@ export type DrawerRootFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: DrawerRootStylesNames;
   vars: DrawerRootCssVariables;
-  compound: true;
 }>;
 
 const transitions: Record<DrawerPosition, MantineTransition> = {

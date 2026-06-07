@@ -12,6 +12,7 @@ import {
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
+import { useMenuTypeAhead } from '../use-menu-type-ahead';
 import classes from '../Menu.module.css';
 
 export type MenuSubDropdownStylesNames = 'dropdown';
@@ -35,6 +36,8 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
     vars,
     onMouseEnter,
     onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
     onKeyDown,
     children,
     ref,
@@ -45,18 +48,39 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
   const ctx = useMenuContext();
   const subCtx = use(SubMenuContext);
 
-  const handleMouseEnter = createEventHandler<any>(onMouseEnter, subCtx?.open);
+  const typeAhead = useMenuTypeAhead({
+    enabled: !ctx.hasSearch,
+    opened: subCtx?.opened ?? false,
+    getDropdown: () => wrapperRef.current,
+  });
 
-  const handleMouseLeave = createEventHandler<any>(onMouseLeave, subCtx?.close);
+  const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
+    typeAhead(event);
+    if (
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      event.key.length === 1 &&
+      event.key !== ' '
+    ) {
+      event.stopPropagation();
+    }
+  });
+
+  const floatingProps = subCtx?.getFloatingProps({
+    onMouseEnter,
+    onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
+  });
 
   return (
     <Popover.Dropdown
       {...others}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      {...floatingProps}
       role="menu"
       aria-orientation="vertical"
-      ref={useMergedRef(ref, wrapperRef)}
+      ref={useMergedRef(ref, wrapperRef, subCtx?.setFloating)}
       {...ctx.getStyles('dropdown', {
         className,
         style,
@@ -66,6 +90,7 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
       })}
       tabIndex={-1}
       data-menu-dropdown
+      onKeyDown={handleKeyDown}
     >
       {children}
     </Popover.Dropdown>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEditorState } from '@tiptap/react';
 import {
   BoxProps,
   Button,
@@ -109,6 +110,12 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
 
   useWindowEvent('edit-link', handleOpen, false);
 
+  const active = useEditorState({
+    editor: ctx.editor ?? null,
+    selector: (state) =>
+      state.editor && !state.editor.isDestroyed ? state.editor.isActive('link') : false,
+  });
+
   const { resolvedClassNames, resolvedStyles } =
     useResolvedStylesApi<RichTextEditorLinkControlFactory>({ classNames, styles, props });
 
@@ -130,7 +137,7 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
           aria-label={ctx.labels.linkControlLabel}
           title={ctx.labels.linkControlLabel}
           onClick={handleOpen}
-          active={ctx.editor?.isActive('link')}
+          active={active ?? false}
           classNames={resolvedClassNames}
           styles={resolvedStyles}
           className={className}

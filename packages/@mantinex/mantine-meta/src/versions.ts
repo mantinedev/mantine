@@ -13,11 +13,39 @@ export interface Version {
 
 export const allVersions = [
   {
+    version: '9.3.0',
+    date: 'June 2, 2026',
+    github: 'https://github.com/mantinedev/mantine/releases/tag/9.3.0',
+    link: 'https://mantine.dev/changelog/9-3-0',
+    patches: [],
+  },
+  {
+    version: '9.2.0',
+    date: 'May 12, 2026',
+    github: 'https://github.com/mantinedev/mantine/releases/tag/9.2.0',
+    link: 'https://mantine.dev/changelog/9-2-0',
+    patches: [
+      {
+        version: '9.2.2',
+        date: 'May 27, 2026',
+      },
+      {
+        version: '9.2.1',
+        date: 'May 14, 2026',
+      },
+    ],
+  },
+  {
     version: '9.1.0',
     date: 'April 21, 2026',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.1.0',
     link: 'https://mantine.dev/changelog/9-1-0',
-    patches: [],
+    patches: [
+      {
+        version: '9.1.1',
+        date: 'April 27, 2026',
+      },
+    ],
   },
   {
     version: '9.0.0',

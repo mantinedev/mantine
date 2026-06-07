@@ -84,6 +84,13 @@ interface MaskSlot {
   optional?: boolean;
 }
 
+interface UndoState {
+  rawValue: string;
+  selectionStart: number;
+}
+
+const MAX_UNDO_HISTORY = 100;
+
 function parseMask(
   mask: string | Array<string | RegExp>,
   tokens: Record<string, RegExp>
@@ -351,13 +358,62 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
   const [maskedValue, setMaskedValue] = useState('');
   const [rawValue, setRawValue] = useState('');
   const processedRef = useRef('');
+  const displayValueRef = useRef('');
+  const rawValueRef = useRef('');
   const wasCompleteRef = useRef(false);
   const isFocusedRef = useRef(false);
+  const undoStackRef = useRef<UndoState[]>([]);
+  const redoStackRef = useRef<UndoState[]>([]);
 
   const getOptions = useCallback(() => {
     const opts = optionsRef.current;
     return getResolvedOptions(opts, rawValue);
   }, [rawValue]);
+
+  const applyValue = useCallback(
+    ({
+      reprocessed,
+      newRaw,
+      displayValue,
+      resolvedSlots,
+      cursorPos,
+      notifyChange,
+    }: {
+      reprocessed: string;
+      newRaw: string;
+      displayValue: string;
+      resolvedSlots: MaskSlot[];
+      cursorPos?: number;
+      notifyChange: boolean;
+    }) => {
+      const opts = optionsRef.current;
+
+      processedRef.current = reprocessed;
+      displayValueRef.current = displayValue;
+      rawValueRef.current = newRaw;
+      setMaskedValue(displayValue);
+      setRawValue(newRaw);
+
+      if (inputRef.current) {
+        inputRef.current.value = displayValue;
+        if (cursorPos !== undefined && document.activeElement === inputRef.current) {
+          const pos = Math.min(cursorPos, reprocessed.length);
+          inputRef.current.setSelectionRange(pos, pos);
+        }
+      }
+
+      if (notifyChange && opts.onChangeRaw) {
+        opts.onChangeRaw(newRaw, displayValue);
+      }
+
+      const complete = checkComplete(reprocessed, resolvedSlots);
+      if (notifyChange && complete && !wasCompleteRef.current && opts.onComplete) {
+        opts.onComplete(displayValue, newRaw);
+      }
+      wasCompleteRef.current = complete;
+    },
+    []
+  );
 
   const updateValue = useCallback(
     (newMasked: string, cursorPos?: number) => {
@@ -379,31 +435,79 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
       const displayValue = buildDisplayValue(reprocessed, resolvedSlots, slotChar, shouldShowSlots);
 
-      processedRef.current = reprocessed;
-      setMaskedValue(displayValue);
-      setRawValue(newRaw);
-
-      if (inputRef.current) {
-        inputRef.current.value = displayValue;
-        if (cursorPos !== undefined && document.activeElement === inputRef.current) {
-          const pos = Math.min(cursorPos, reprocessed.length);
-          inputRef.current.setSelectionRange(pos, pos);
-        }
-      }
-
-      if (opts.onChangeRaw) {
-        opts.onChangeRaw(newRaw, displayValue);
-      }
-
-      const complete = checkComplete(reprocessed, resolvedSlots);
-      if (complete && !wasCompleteRef.current && opts.onComplete) {
-        opts.onComplete(displayValue, newRaw);
-      }
-      wasCompleteRef.current = complete;
+      applyValue({
+        reprocessed,
+        newRaw,
+        displayValue,
+        resolvedSlots,
+        cursorPos,
+        notifyChange: true,
+      });
 
       return { displayValue, newRaw, reprocessed, resolvedSlots };
     },
-    [getOptions]
+    [applyValue, getOptions]
+  );
+
+  const initializeInputValue = useCallback(
+    (node: HTMLInputElement) => {
+      const opts = optionsRef.current;
+
+      if (!node.value) {
+        return false;
+      }
+
+      const { slots: initialSlots, slotChar: initialSlotChar } = getResolvedOptions(opts, '');
+      const initialProcessed = processInput(node.value, initialSlots, initialSlotChar);
+      const initialRaw = extractRaw(initialProcessed, initialSlots);
+      const { slots: resolvedSlots, slotChar } = getResolvedOptions(opts, initialRaw);
+      const reprocessed = processInput(node.value, resolvedSlots, slotChar);
+      const newRaw = extractRaw(reprocessed, resolvedSlots);
+      const showSlots = opts.alwaysShowMask || isFocusedRef.current;
+      const showOnFocus = opts.showMaskOnFocus !== false;
+      const shouldShowSlots = showSlots && (showOnFocus || reprocessed.length > 0);
+      const displayValue = buildDisplayValue(reprocessed, resolvedSlots, slotChar, shouldShowSlots);
+
+      applyValue({
+        reprocessed,
+        newRaw,
+        displayValue,
+        resolvedSlots,
+        notifyChange: false,
+      });
+
+      return true;
+    },
+    [applyValue]
+  );
+
+  const pushUndoState = useCallback(() => {
+    const input = inputRef.current;
+    const selectionStart = input?.selectionStart ?? rawValueRef.current.length;
+    const state: UndoState = {
+      rawValue: rawValueRef.current,
+      selectionStart,
+    };
+    const stack = undoStackRef.current;
+    const top = stack[stack.length - 1];
+    if (top && top.rawValue === state.rawValue && top.selectionStart === state.selectionStart) {
+      return;
+    }
+    stack.push(state);
+    if (stack.length > MAX_UNDO_HISTORY) {
+      stack.shift();
+    }
+    redoStackRef.current = [];
+  }, []);
+
+  const applyHistoryState = useCallback(
+    (target: UndoState) => {
+      const opts = optionsRef.current;
+      const { slots, slotChar, transform } = getResolvedOptions(opts, target.rawValue);
+      const newMasked = applyMaskToRaw(target.rawValue, slots, slotChar, transform);
+      updateValue(newMasked, target.selectionStart);
+    },
+    [updateValue]
   );
 
   const handleInput = useCallback(
@@ -412,11 +516,48 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       const opts = optionsRef.current;
 
       const { slots: resolvedSlots, slotChar, transform } = getResolvedOptions(opts, '');
-      const raw = extractRaw(input.value, resolvedSlots);
-      const reformatted = applyMaskToRaw(raw, resolvedSlots, slotChar, transform);
-      updateValue(reformatted, reformatted.length);
+      const prev = displayValueRef.current;
+      const curr = input.value;
+
+      let prefixLen = 0;
+      const maxPrefix = Math.min(prev.length, curr.length);
+      while (prefixLen < maxPrefix && prev[prefixLen] === curr[prefixLen]) {
+        prefixLen++;
+      }
+
+      let suffixLen = 0;
+      const maxSuffix = Math.min(prev.length - prefixLen, curr.length - prefixLen);
+      while (
+        suffixLen < maxSuffix &&
+        prev[prev.length - 1 - suffixLen] === curr[curr.length - 1 - suffixLen]
+      ) {
+        suffixLen++;
+      }
+
+      const insertedText = curr.slice(prefixLen, curr.length - suffixLen);
+      const removedEnd = prev.length - suffixLen;
+
+      const beforeRaw = extractRaw(prev.slice(0, prefixLen), resolvedSlots.slice(0, prefixLen));
+      const afterRaw = extractRaw(prev.slice(removedEnd), resolvedSlots.slice(removedEnd));
+      const reformatted = applyMaskToRaw(
+        beforeRaw + insertedText + afterRaw,
+        resolvedSlots,
+        slotChar,
+        transform
+      );
+      const maskedPrefix = applyMaskToRaw(
+        beforeRaw + insertedText,
+        resolvedSlots,
+        slotChar,
+        transform
+      );
+
+      if (reformatted !== prev) {
+        pushUndoState();
+      }
+      updateValue(reformatted, maskedPrefix.length);
     },
-    [updateValue]
+    [pushUndoState, updateValue]
   );
 
   const clampCursorToProcessed = useCallback((input: HTMLInputElement) => {
@@ -456,6 +597,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     if (showOnFocus || opts.alwaysShowMask) {
       const display = buildDisplayValue(processed, slots, slotChar, true);
       input.value = display;
+      displayValueRef.current = display;
       setMaskedValue(display);
     }
 
@@ -526,6 +668,8 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     if (opts.autoClear && !complete && processed.length > 0) {
       input.value = '';
       processedRef.current = '';
+      displayValueRef.current = '';
+      rawValueRef.current = '';
       setMaskedValue('');
       setRawValue('');
       wasCompleteRef.current = false;
@@ -537,6 +681,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       if (opts.alwaysShowMask) {
         const emptyDisplay = buildDisplayValue('', slots, slotChar, true);
         input.value = emptyDisplay;
+        displayValueRef.current = emptyDisplay;
         setMaskedValue(emptyDisplay);
       }
       return;
@@ -546,6 +691,8 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       if (extractRaw(processed, slots).length === 0) {
         input.value = '';
         processedRef.current = '';
+        displayValueRef.current = '';
+        rawValueRef.current = '';
         setMaskedValue('');
         setRawValue('');
         wasCompleteRef.current = false;
@@ -558,6 +705,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
       const display = buildDisplayValue(processed, slots, slotChar, false);
       input.value = display;
+      displayValueRef.current = display;
       setMaskedValue(display);
     }
   }, [rawValue]);
@@ -572,6 +720,37 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       const end = input.selectionEnd ?? 0;
       const processed = processedRef.current;
 
+      const modifier = e.metaKey || (e.ctrlKey && !e.altKey);
+      const key = e.key.toLowerCase();
+
+      if (modifier && key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        const prev = undoStackRef.current.pop();
+        if (!prev) {
+          return;
+        }
+        redoStackRef.current.push({
+          rawValue: rawValueRef.current,
+          selectionStart: input.selectionStart ?? 0,
+        });
+        applyHistoryState(prev);
+        return;
+      }
+
+      if (modifier && ((key === 'z' && e.shiftKey) || (key === 'y' && !e.shiftKey))) {
+        e.preventDefault();
+        const next = redoStackRef.current.pop();
+        if (!next) {
+          return;
+        }
+        undoStackRef.current.push({
+          rawValue: rawValueRef.current,
+          selectionStart: input.selectionStart ?? 0,
+        });
+        applyHistoryState(next);
+        return;
+      }
+
       if (e.key === 'Backspace') {
         e.preventDefault();
 
@@ -579,6 +758,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
           const clampedStart = Math.min(start, processed.length);
           const afterRaw = extractRaw(processed.slice(clampedStart), slots.slice(clampedStart));
           const newValue = applyMaskToRaw(afterRaw, slots, slotChar, transform);
+          pushUndoState();
           updateValue(newValue, 0);
           return;
         }
@@ -593,6 +773,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
             slotChar,
             transform
           );
+          pushUndoState();
           updateValue(newValue, start);
           return;
         }
@@ -613,6 +794,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         const beforeRaw = extractRaw(processed.slice(0, deletePos), slots.slice(0, deletePos));
         const afterRaw = extractRaw(processed.slice(deletePos + 1), slots.slice(deletePos + 1));
         const newValue = applyMaskToRaw(beforeRaw + afterRaw, slots, slotChar, transform);
+        pushUndoState();
         updateValue(newValue, deletePos);
       } else if (e.key === 'Delete') {
         e.preventDefault();
@@ -627,6 +809,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
             slotChar,
             transform
           );
+          pushUndoState();
           updateValue(newValue, start);
           return;
         }
@@ -647,6 +830,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         const beforeRaw = extractRaw(processed.slice(0, start), slots.slice(0, start));
         const afterRaw = extractRaw(processed.slice(deletePos + 1), slots.slice(deletePos + 1));
         const newValue = applyMaskToRaw(beforeRaw + afterRaw, slots, slotChar, transform);
+        pushUndoState();
         updateValue(newValue, start);
       } else if (e.key === 'ArrowRight' && !e.shiftKey) {
         const nextPos = findNextEditablePosition(start + 1, slots, input.value);
@@ -694,10 +878,11 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
             : extractRaw(processed.slice(insertPos), slots.slice(insertPos));
         const newValue = applyMaskToRaw(beforeRaw + ch + afterRaw, slots, slotChar, transform);
         const newCursorPos = findNextEditablePosition(insertPos + 1, slots, newValue);
+        pushUndoState();
         updateValue(newValue, newCursorPos);
       }
     },
-    [rawValue, updateValue]
+    [applyHistoryState, pushUndoState, rawValue, updateValue]
   );
 
   const handlePaste = useCallback(
@@ -712,8 +897,9 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       const processed = processedRef.current;
 
       const { slots, slotChar, transform } = getResolvedOptions(opts, '');
+      const clampedStart = Math.min(start, processed.length);
       const clampedEnd = Math.min(end, processed.length);
-      const beforeRaw = extractRaw(processed.slice(0, start), slots.slice(0, start));
+      const beforeRaw = extractRaw(processed.slice(0, clampedStart), slots.slice(0, clampedStart));
       const afterRaw = extractRaw(processed.slice(clampedEnd), slots.slice(clampedEnd));
       const newValue = applyMaskToRaw(
         beforeRaw + pastedText + afterRaw,
@@ -722,14 +908,16 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         transform
       );
 
-      const { reprocessed } = updateValue(newValue);
+      pushUndoState();
+      updateValue(newValue);
 
-      const pasteEndPos = Math.min((reprocessed || newValue).length, slots.length);
+      const maskedPrefix = applyMaskToRaw(beforeRaw + pastedText, slots, slotChar, transform);
+      const pasteEndPos = Math.min(maskedPrefix.length, slots.length);
       if (input === document.activeElement) {
         input.setSelectionRange(pasteEndPos, pasteEndPos);
       }
     },
-    [updateValue]
+    [pushUndoState, updateValue]
   );
 
   const setAriaAttributes = useCallback((input: HTMLInputElement) => {
@@ -769,10 +957,13 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
         setAriaAttributes(node);
 
-        if (options.alwaysShowMask && !node.value) {
+        const hasInitialValue = initializeInputValue(node);
+
+        if (options.alwaysShowMask && !hasInitialValue) {
           const { slots, slotChar } = getResolvedOptions(options, '');
           const display = buildDisplayValue('', slots, slotChar, true);
           node.value = display;
+          displayValueRef.current = display;
           setMaskedValue(display);
         }
       }
@@ -785,6 +976,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       handleMouseUp,
       handleKeyDown,
       handlePaste,
+      initializeInputValue,
       setAriaAttributes,
       options,
     ]
@@ -809,6 +1001,10 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     const input = inputRef.current;
 
     processedRef.current = '';
+    displayValueRef.current = '';
+    rawValueRef.current = '';
+    undoStackRef.current = [];
+    redoStackRef.current = [];
     setMaskedValue('');
     setRawValue('');
     wasCompleteRef.current = false;
@@ -818,6 +1014,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         const { slots, slotChar } = getResolvedOptions(opts, '');
         const display = buildDisplayValue('', slots, slotChar, true);
         input.value = display;
+        displayValueRef.current = display;
         setMaskedValue(display);
       } else {
         input.value = '';

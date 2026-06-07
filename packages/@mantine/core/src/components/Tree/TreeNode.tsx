@@ -19,6 +19,17 @@ function getValuesRange(anchor: string | null, value: string | undefined, flatVa
   return flatValues.slice(start, end + 1);
 }
 
+function isVisibleTreeNode(node: HTMLElement, root: Element) {
+  for (let current: HTMLElement | null = node; current && current !== root; ) {
+    if (current.style.display === 'none') {
+      return false;
+    }
+    current = current.parentElement;
+  }
+
+  return true;
+}
+
 interface TreeNodeProps {
   node: TreeNodeData;
   getStyles: GetStylesApi<TreeFactory>;
@@ -98,6 +109,7 @@ export function TreeNode({
   const { elementProps: dragElementProps, dragHandleProps } = useTreeNodeDragDrop({
     nodeValue: node.value,
     hasChildren,
+    isExpanded,
     data,
     onDragDrop,
     dragStateRef,
@@ -137,7 +149,7 @@ export function TreeNode({
       event.stopPropagation();
       event.preventDefault();
       const nodes = Array.from(root.querySelectorAll<HTMLLIElement>('[role=treeitem]')).filter(
-        (treeNode) => treeNode.style.display !== 'none'
+        (treeNode) => isVisibleTreeNode(treeNode, root)
       );
       const index = nodes.indexOf(event.currentTarget as HTMLLIElement);
 
@@ -222,6 +234,7 @@ export function TreeNode({
           node,
           level,
           selected,
+          isRoot: level === 1,
           tree: controller,
           expanded: isExpanded,
           hasChildren,
@@ -242,7 +255,7 @@ export function TreeNode({
             })}
           >
             <div {...getStyles('label')}>
-              <Loader size={16} />
+              <Loader size={16} style={{ marginInlineStart: 4 }} />
             </div>
           </li>
         </Box>

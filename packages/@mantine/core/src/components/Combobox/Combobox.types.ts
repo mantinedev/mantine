@@ -1,6 +1,7 @@
 import { Primitive } from '../../core';
 import type { ComboboxProps, ComboboxStylesNames } from './Combobox';
 import type { OptionsFilter } from './OptionsDropdown/OptionsDropdown';
+import type { PillReorderProps } from './use-pills-reorder/use-pills-reorder';
 
 export interface ComboboxGenericItem<Value extends Primitive = string> {
   value: Value;
@@ -86,6 +87,9 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
 
   /** `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default */
   maxDropdownHeight?: number | string;
+
+  /** If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. */
+  floatingHeight?: 'viewport';
 }
 
 export interface ComboboxLikeRenderOptionInput<T> {
@@ -98,4 +102,7 @@ export interface ComboboxRenderPillInput<Value extends Primitive = string> {
   value?: Value;
   onRemove?: () => void;
   disabled?: boolean;
+
+  /** Props to spread into the pill element to enable drag-and-drop reordering. Defined only when `withPillsReorder` is set. */
+  reorderProps?: PillReorderProps;
 }

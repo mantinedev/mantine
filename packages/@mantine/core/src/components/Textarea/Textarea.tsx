@@ -30,6 +30,12 @@ export interface TextareaProps
 
   /** Controls `resize` CSS property @default 'none' */
   resize?: React.CSSProperties['resize'];
+
+  /** Content rendered at the bottom of the input, inside the border */
+  bottomSection?: React.ReactNode;
+
+  /** Props passed down to the `bottomSection` element */
+  bottomSectionProps?: React.ComponentProps<'div'>;
 }
 
 export type TextareaFactory = Factory<{
@@ -38,16 +44,17 @@ export type TextareaFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-const defaultProps = {
-  size: 'sm',
-} satisfies Partial<TextareaProps>;
-
 export const Textarea = factory<TextareaFactory>((props) => {
-  const { autosize, maxRows, minRows, __staticSelector, resize, ...others } = useProps(
-    'Textarea',
-    defaultProps,
-    props
-  );
+  const {
+    autosize,
+    maxRows,
+    minRows,
+    __staticSelector,
+    resize,
+    bottomSection,
+    bottomSectionProps,
+    ...others
+  } = useProps(['Input', 'InputWrapper', 'Textarea'], null, props);
 
   const shouldAutosize = autosize && getEnv() !== 'test';
   const autosizeProps = shouldAutosize ? { maxRows, minRows } : {};
@@ -57,6 +64,8 @@ export const Textarea = factory<TextareaFactory>((props) => {
       component={shouldAutosize ? TextareaAutosize : 'textarea'}
       {...others}
       __staticSelector={__staticSelector || 'Textarea'}
+      __bottomSection={bottomSection}
+      __bottomSectionProps={bottomSectionProps}
       multiline
       data-no-overflow={(autosize && maxRows === undefined) || undefined}
       __vars={{ '--input-resize': resize }}

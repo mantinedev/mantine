@@ -48,6 +48,11 @@ export const Demo_currentTimeIndicator = {
   render: renderDemo(demos.currentTimeIndicator),
 };
 
+export const Demo_timezone = {
+  name: '⭐ Demo: timezone',
+  render: renderDemo(demos.timezone),
+};
+
 export const Demo_withoutAllDaySlots = {
   name: '⭐ Demo: withoutAllDaySlots',
   render: renderDemo(demos.withoutAllDaySlots),
@@ -76,6 +81,11 @@ export const Demo_slotHeight = {
 export const Demo_businessHours = {
   name: '⭐ Demo: businessHours',
   render: renderDemo(demos.businessHours),
+};
+
+export const Demo_businessHoursPerDay = {
+  name: '⭐ Demo: businessHoursPerDay',
+  render: renderDemo(demos.businessHoursPerDay),
 };
 
 export const Demo_overlappingEvents = {

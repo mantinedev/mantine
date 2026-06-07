@@ -22,6 +22,7 @@ export interface ComboboxExample {
     | 'button'
     | 'animations'
     | 'virtualization'
+    | 'treeselect'
     | 'other';
 }
 
@@ -279,6 +280,14 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     type: 'multiselect',
   },
   {
+    id: 'ReorderablePillsMultiSelect',
+    name: 'Reorderable pills multiselect',
+    description: 'Multiselect with drag-and-drop pill reordering',
+    fullDescription:
+      'Built from Combobox primitives with the usePillsReorder hook. Each pill becomes draggable and dropping one before or after another reorders the value array automatically.',
+    type: 'multiselect',
+  },
+  {
     id: 'SelectList',
     name: 'Inline options list',
     description: 'Inline list with checkboxes',
@@ -307,5 +316,45 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     name: 'Virtualized select (react-virtuoso)',
     description: 'Virtualized options list with react-virtuoso',
     type: 'virtualization',
+  },
+  {
+    id: 'TreeSelectCombobox',
+    name: 'Tree select',
+    description: 'Select with expandable tree options',
+    fullDescription:
+      'A tree select built from Combobox primitives. Nodes with children can be expanded or collapsed with connecting tree lines.',
+    type: 'treeselect',
+  },
+  {
+    id: 'TreeMultiSelectCombobox',
+    name: 'Tree multi select',
+    description: 'Multi select with tree hierarchy and checkboxes',
+    fullDescription:
+      'A multi-select tree with checkbox indicators. Checking a parent checks all children. Supports indeterminate state for partially checked groups.',
+    type: 'treeselect',
+  },
+  {
+    id: 'TreeSelectSearchable',
+    name: 'Searchable tree select',
+    description: 'Tree select with search filtering',
+    fullDescription:
+      'A searchable tree select that filters nodes as you type. Matching nodes and their ancestors are displayed with all parent groups auto-expanded.',
+    type: 'treeselect',
+  },
+  {
+    id: 'TreeSelectCheckbox',
+    name: 'Tree select with checkboxes',
+    description: 'Single-select tree with checkbox indicators and expand-on-click',
+    fullDescription:
+      'A tree select with checkbox indicators. Clicking a parent node expands or collapses it, clicking a leaf node selects it.',
+    type: 'treeselect',
+  },
+  {
+    id: 'TreeSelectVirtualized',
+    name: 'Virtualized tree select',
+    description: 'Virtualized tree select with large data set',
+    fullDescription:
+      'A virtualized tree select using @tanstack/react-virtual to efficiently render a large tree with ~500 nodes. Supports expand/collapse with chevron icons.',
+    type: 'treeselect',
   },
 ];

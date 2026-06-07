@@ -75,7 +75,7 @@ export interface __BaseInputProps extends __InputWrapperProps, __InputProps {
 
 export type __InputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
-export type InputStylesNames = 'input' | 'wrapper' | 'section';
+export type InputStylesNames = 'input' | 'wrapper' | 'section' | 'bottomSection';
 export type InputVariant = 'default' | 'filled' | 'unstyled';
 export type InputCssVariables = {
   wrapper:
@@ -159,6 +159,12 @@ export interface __InputProps {
 
   /** Position of the loading indicator @default 'right' */
   loadingPosition?: 'left' | 'right';
+
+  /** Content section displayed at the bottom of the input, inside the border */
+  __bottomSection?: React.ReactNode;
+
+  /** Props passed down to the `__bottomSection` element */
+  __bottomSectionProps?: React.ComponentProps<'div'>;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -272,6 +278,8 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     __defaultRightSection,
     loading,
     loadingPosition,
+    __bottomSection,
+    __bottomSectionProps,
     rootRef,
     dir,
     ...others
@@ -343,6 +351,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
             multiline,
             'data-with-right-section': !!_rightSection,
             'data-with-left-section': !!_leftSection,
+            'data-with-bottom-section': !!__bottomSection,
           },
           mod,
         ]}
@@ -372,6 +381,18 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
           __size={inputSize}
           {...getStyles('input')}
         />
+
+        {__bottomSection && (
+          <div
+            {...__bottomSectionProps}
+            {...getStyles('bottomSection', {
+              className: __bottomSectionProps?.className,
+              style: __bottomSectionProps?.style,
+            })}
+          >
+            {__bottomSection}
+          </div>
+        )}
 
         {_rightSection && (
           <div

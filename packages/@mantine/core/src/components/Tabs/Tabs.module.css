@@ -219,8 +219,7 @@
 .tab--outline {
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-left: 1px solid transparent;
+  border-inline: 1px solid transparent;
   border-top-color: var(--tab-border-top-color);
   border-bottom-color: var(--tab-border-bottom-color);
   border-radius: var(--tab-radius);
@@ -237,8 +236,8 @@
       position: absolute;
       background-color: var(--tab-border-color);
       bottom: var(--tab-before-bottom, rem(-1px));
-      left: var(--tab-before-left, rem(-1px));
-      right: var(--tab-before-right, auto);
+      inset-inline-start: var(--tab-before-start, rem(-1px));
+      inset-inline-end: var(--tab-before-end, auto);
       top: var(--tab-before-top, auto);
       width: 1px;
       height: 1px;
@@ -249,8 +248,8 @@
       position: absolute;
       background-color: var(--tab-border-color);
       bottom: var(--tab-after-bottom, rem(-1px));
-      right: var(--tab-after-right, rem(-1px));
-      left: var(--tab-after-left, auto);
+      inset-inline-end: var(--tab-after-end, rem(-1px));
+      inset-inline-start: var(--tab-after-start, auto);
       top: var(--tab-after-top, auto);
       width: 1px;
       height: 1px;
@@ -282,19 +281,12 @@
         --tab-border-inline-start-color: var(--tab-border-color);
         --tab-border-bottom-color: var(--tab-border-color);
 
-        --tab-before-right: -1px;
-        --tab-before-left: auto;
+        --tab-before-end: -1px;
+        --tab-before-start: auto;
         --tab-before-bottom: auto;
         --tab-before-top: -1px;
-        --tab-after-left: auto;
-        --tab-after-right: -1px;
-
-        @mixin rtl {
-          --tab-before-right: auto;
-          --tab-before-left: -1px;
-          --tab-after-left: -1px;
-          --tab-after-right: auto;
-        }
+        --tab-after-start: auto;
+        --tab-after-end: -1px;
       }
 
       &[data-placement='right'] {
@@ -302,19 +294,12 @@
         --tab-border-inline-end-color: var(--tab-border-color);
         --tab-border-bottom-color: var(--tab-border-color);
 
-        --tab-before-left: -1px;
-        --tab-before-right: auto;
+        --tab-before-start: -1px;
+        --tab-before-end: auto;
         --tab-before-bottom: auto;
         --tab-before-top: -1px;
-        --tab-after-right: auto;
-        --tab-after-left: -1px;
-
-        @mixin rtl {
-          --tab-before-left: auto;
-          --tab-before-right: -1px;
-          --tab-after-right: -1px;
-          --tab-after-left: auto;
-        }
+        --tab-after-end: auto;
+        --tab-after-start: -1px;
       }
     }
   }

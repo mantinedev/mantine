@@ -145,6 +145,17 @@ that use `Input` and `Input.Wrapper` under the hood ([TextInput](/core/text-inpu
 
 <Demo data={InputDemos.defaultProps} />
 
+## Shared default props for all inputs
+
+Default props on `Input` and `Input.Wrapper` cascade to every component that is built on top of
+them ([TextInput](/core/text-input/), [Textarea](/core/textarea/), [NumberInput](/core/number-input/),
+[Select](/core/select/), [DateInput](/dates/date-input/), and others). This is the easiest way to apply
+the same `size`, `radius`, `variant`, `withAsterisk` or any other shared prop to all inputs at once.
+Per-component default props always win over the shared ones, so you can still override individual
+components when needed:
+
+<Demo data={InputDemos.sharedDefaultProps} />
+
 ## Styles on theme
 
 Same as with default props, you can use `Input` and `Input.Wrapper` [Styles API](/styles/styles-api/)

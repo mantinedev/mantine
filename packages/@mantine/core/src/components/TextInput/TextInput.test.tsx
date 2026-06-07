@@ -27,4 +27,10 @@ describe('@mantine/core/TextInput', () => {
     props: defaultProps,
     selector: 'input',
   });
+
+  tests.itSupportsSharedInputDefaults<TextInputProps>({
+    component: TextInput,
+    props: defaultProps,
+    componentName: 'TextInput',
+  });
 });

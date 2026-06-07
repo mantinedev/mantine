@@ -27,6 +27,8 @@ import { ButtonSearch } from './ButtonSearch/ButtonSearch';
 import ButtonSearchCode from './ButtonSearch/code.json';
 import DropdownAnimationCode from './DropdownAnimation/code.json';
 import { DropdownAnimation } from './DropdownAnimation/DropdownAnimation';
+import DropdownFloatingHeightCode from './DropdownFloatingHeight/code.json';
+import { DropdownFloatingHeight } from './DropdownFloatingHeight/DropdownFloatingHeight';
 import DropdownFooterCode from './DropdownFooter/code.json';
 import { DropdownFooter } from './DropdownFooter/DropdownFooter';
 import DropdownHeaderCode from './DropdownHeader/code.json';
@@ -51,6 +53,8 @@ import MultiSelectCreatableCode from './MultiSelectCreatable/code.json';
 import { MultiSelectCreatable } from './MultiSelectCreatable/MultiSelectCreatable';
 import MultiSelectValueRendererCode from './MultiSelectValueRenderer/code.json';
 import { MultiSelectValueRenderer } from './MultiSelectValueRenderer/MultiSelectValueRenderer';
+import ReorderablePillsMultiSelectCode from './ReorderablePillsMultiSelect/code.json';
+import { ReorderablePillsMultiSelect } from './ReorderablePillsMultiSelect/ReorderablePillsMultiSelect';
 import SearchableMultiSelectCode from './SearchableMultiSelect/code.json';
 import { SearchableMultiSelect } from './SearchableMultiSelect/SearchableMultiSelect';
 import SearchableSelectCode from './SearchableSelect/code.json';
@@ -85,6 +89,16 @@ import SelectOptionOnHoverCode from './SelectOptionOnHover/code.json';
 import { SelectOptionOnHover } from './SelectOptionOnHover/SelectOptionOnHover';
 import TransferListCode from './TransferList/code.json';
 import { TransferList } from './TransferList/TransferList';
+import TreeMultiSelectComboboxCode from './TreeMultiSelectCombobox/code.json';
+import { TreeMultiSelectCombobox } from './TreeMultiSelectCombobox/TreeMultiSelectCombobox';
+import TreeSelectCheckboxCode from './TreeSelectCheckbox/code.json';
+import { TreeSelectCheckbox } from './TreeSelectCheckbox/TreeSelectCheckbox';
+import TreeSelectComboboxCode from './TreeSelectCombobox/code.json';
+import { TreeSelectCombobox } from './TreeSelectCombobox/TreeSelectCombobox';
+import TreeSelectSearchableCode from './TreeSelectSearchable/code.json';
+import { TreeSelectSearchable } from './TreeSelectSearchable/TreeSelectSearchable';
+import TreeSelectVirtualizedCode from './TreeSelectVirtualized/code.json';
+import { TreeSelectVirtualized } from './TreeSelectVirtualized/TreeSelectVirtualized';
 import VirtualizedOptionsCode from './VirtualizedOptions/code.json';
 import { VirtualizedOptions } from './VirtualizedOptions/VirtualizedOptions';
 import VirtualizedSearchableTanstackCode from './VirtualizedSearchableTanstack/code.json';
@@ -170,6 +184,11 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   DropdownScrollArea: {
     component: DropdownScrollArea,
     code: DropdownScrollAreaCode as ComboboxExampleComponent['code'],
+  },
+
+  DropdownFloatingHeight: {
+    component: DropdownFloatingHeight,
+    code: DropdownFloatingHeightCode as ComboboxExampleComponent['code'],
   },
 
   AutocompleteDynamic: {
@@ -282,6 +301,11 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
     code: MultiSelectValueRendererCode as ComboboxExampleComponent['code'],
   },
 
+  ReorderablePillsMultiSelect: {
+    component: ReorderablePillsMultiSelect,
+    code: ReorderablePillsMultiSelectCode as ComboboxExampleComponent['code'],
+  },
+
   SelectGroups: {
     component: SelectGroups,
     code: SelectGroupsCode as ComboboxExampleComponent['code'],
@@ -330,6 +354,31 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   VirtualizedSearchableTanstack: {
     component: VirtualizedSearchableTanstack,
     code: VirtualizedSearchableTanstackCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectCombobox: {
+    component: TreeSelectCombobox,
+    code: TreeSelectComboboxCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeMultiSelectCombobox: {
+    component: TreeMultiSelectCombobox,
+    code: TreeMultiSelectComboboxCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectSearchable: {
+    component: TreeSelectSearchable,
+    code: TreeSelectSearchableCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectCheckbox: {
+    component: TreeSelectCheckbox,
+    code: TreeSelectCheckboxCode as ComboboxExampleComponent['code'],
+  },
+
+  TreeSelectVirtualized: {
+    component: TreeSelectVirtualized,
+    code: TreeSelectVirtualizedCode as ComboboxExampleComponent['code'],
   },
 };
 

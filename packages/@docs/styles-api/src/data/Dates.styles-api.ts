@@ -6,6 +6,7 @@ import type {
   DatePickerInputFactory,
   DateTimePickerFactory,
   DecadeLevelGroupFactory,
+  InlineDateTimePickerFactory,
   MonthFactory,
   MonthLevelGroupFactory,
   MonthPickerFactory,
@@ -266,6 +267,26 @@ export const DateTimePickerStylesApi: StylesApiData<DateTimePickerFactory> = {
     timeWrapper: 'Wrapper around time input and submit button',
     timeInput: 'TimeInput',
     submitButton: 'Submit button',
+    rangeTimeWrapper: 'Wrapper around two time inputs in range mode',
+    rangeTimeInput: 'Time input in range mode',
+    rangeInfo: 'Range dates preview in range mode',
+  },
+
+  vars: {},
+
+  modifiers: DatePickerStylesApi.modifiers as any,
+};
+
+export const InlineDateTimePickerStylesApi: StylesApiData<InlineDateTimePickerFactory> = {
+  selectors: {
+    root: 'Root element',
+    ...DatePickerStylesApi.selectors,
+    timeWrapper: 'Wrapper around time input and submit button',
+    timeInput: 'TimeInput',
+    submitButton: 'Submit button',
+    rangeTimeWrapper: 'Wrapper around two time inputs and submit button in range mode',
+    rangeTimeInput: 'Time input in range mode',
+    rangeInfo: 'Range dates preview in range mode',
   },
 
   vars: {},

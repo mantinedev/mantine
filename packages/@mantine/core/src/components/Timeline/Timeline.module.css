@@ -31,41 +31,31 @@
     pointer-events: none;
     position: absolute;
     top: 0;
-    left: var(--timeline-line-left, 0);
-    right: var(--timeline-line-right, 0);
+    inset-inline-start: var(--timeline-line-start, 0);
+    inset-inline-end: var(--timeline-line-end, 0);
     bottom: calc(var(--mantine-spacing-xl) * -1);
     border-inline-start: var(--item-border);
     display: var(--timeline-line-display, none);
 
     .root[data-align='left'] & {
-      --timeline-line-left: calc(var(--tl-line-width) * -1);
-      --timeline-line-right: auto;
-
-      @mixin rtl {
-        --timeline-line-left: auto;
-        --timeline-line-right: calc(var(--tl-line-width) * -1);
-      }
+      --timeline-line-start: calc(var(--tl-line-width) * -1);
+      --timeline-line-end: auto;
     }
 
     .root[data-align='right'] & {
-      --timeline-line-left: auto;
-      --timeline-line-right: calc(var(--tl-line-width) * -1);
-
-      @mixin rtl {
-        --timeline-line-left: calc(var(--tl-line-width) * -1);
-        --timeline-line-right: auto;
-      }
+      --timeline-line-start: auto;
+      --timeline-line-end: calc(var(--tl-line-width) * -1);
     }
   }
 
   .root:where([data-align='left']) & {
     padding-inline-start: var(--offset);
-    text-align: left;
+    text-align: start;
   }
 
   .root:where([data-align='right']) & {
     padding-inline-end: var(--offset);
-    text-align: right;
+    text-align: end;
   }
 
   @mixin where-light {
@@ -113,23 +103,13 @@
   }
 
   .root:where([data-align='left']) & {
-    left: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
-    right: auto;
-
-    @mixin where-rtl {
-      left: auto;
-      right: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
-    }
+    inset-inline-start: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
+    inset-inline-end: auto;
   }
 
   .root:where([data-align='right']) & {
-    left: auto;
-    right: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
-
-    @mixin where-rtl {
-      left: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
-      right: auto;
-    }
+    inset-inline-start: auto;
+    inset-inline-end: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
   }
 
   &:where([data-with-child]) {
@@ -159,19 +139,11 @@
 .itemBody {
   .root:where([data-align='left']) & {
     padding-inline-start: var(--offset);
-    text-align: left;
-
-    @mixin where-rtl {
-      text-align: right;
-    }
+    text-align: start;
   }
 
   .root:where([data-align='right']) & {
     padding-inline-end: var(--offset);
-    text-align: right;
-
-    @mixin where-rtl {
-      text-align: left;
-    }
+    text-align: end;
   }
 }

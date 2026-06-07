@@ -33,7 +33,7 @@ function getTextTruncate(truncate: TextTruncate | undefined) {
 export type TextStylesNames = 'root';
 export type TextVariant = 'text' | 'gradient';
 export type TextCssVariables = {
-  root: '--text-gradient' | '--text-line-clamp' | '--text-fz' | '--text-lh';
+  root: '--text-gradient' | '--text-line-clamp' | '--text-fz' | '--text-lh' | '--text-text-wrap';
 };
 
 export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
@@ -59,6 +59,9 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
 
   /** Shorthand for `component="span"` */
   span?: boolean;
+
+  /** Controls `text-wrap` CSS property */
+  textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
 }
 
 export type TextFactory = PolymorphicFactory<{
@@ -77,12 +80,13 @@ const defaultProps = {
 const varsResolver = createVarsResolver<TextFactory>(
   // Will be removed in 9.0
 
-  (theme, { variant, lineClamp, gradient, size }) => ({
+  (theme, { variant, lineClamp, gradient, size, textWrap }) => ({
     root: {
       '--text-fz': getFontSize(size),
       '--text-lh': getLineHeight(size),
       '--text-gradient': variant === 'gradient' ? getGradient(gradient, theme) : undefined,
       '--text-line-clamp': typeof lineClamp === 'number' ? lineClamp.toString() : undefined,
+      '--text-text-wrap': textWrap,
     },
   })
 );
@@ -96,6 +100,7 @@ export const Text = polymorphicFactory<TextFactory>((_props) => {
     inherit,
     gradient,
     span,
+    textWrap,
     __staticSelector,
     vars,
     className,

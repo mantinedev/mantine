@@ -27,4 +27,10 @@ describe('@mantine/core/Textarea', () => {
     props: defaultProps,
     selector: 'textarea',
   });
+
+  tests.itSupportsSharedInputDefaults<TextareaProps>({
+    component: Textarea,
+    props: defaultProps,
+    componentName: 'Textarea',
+  });
 });

@@ -41,15 +41,15 @@
     "@mantinex/dev-icons": ">=1.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "shiki": "^3.11.0"
+    "shiki": ">=3.11.0"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/code-highlight": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "shiki": "^4.0.2"
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "shiki": "^4.1.0"
   }
 }

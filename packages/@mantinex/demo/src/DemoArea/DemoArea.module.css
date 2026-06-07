@@ -1,5 +1,7 @@
 .demo {
   flex: 1;
+  position: relative;
+  z-index: 3;
   border-top-left-radius: calc(var(--mantine-radius-md) - 1px);
   border-top-right-radius: calc(var(--mantine-radius-md) - 1px);
 

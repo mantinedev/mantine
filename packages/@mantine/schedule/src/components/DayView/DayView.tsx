@@ -28,6 +28,7 @@ import { useEventResize } from '../../hooks/use-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
+  AnyDateValue,
   DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
@@ -128,6 +129,9 @@ export interface DayViewProps
 
   /** If set, the time indicator displays the current time in the bubble @default true */
   withCurrentTimeBubble?: boolean;
+
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  getCurrentTime?: () => AnyDateValue;
 
   /** If set, the header is displayed @default true */
   withHeader?: boolean;
@@ -300,7 +304,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     locale,
     slotLabelFormat,
     headerFormat,
-    withCurrentTimeIndicator = dayjs(date).isSame(dayjs(), 'day'),
+    getCurrentTime,
+    withCurrentTimeIndicator,
     withCurrentTimeBubble,
     withHeader,
     radius,
@@ -372,6 +377,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const theme = useMantineTheme();
   const ctx = useDatesContext();
+  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
+  const showCurrentTimeIndicator =
+    withCurrentTimeIndicator ?? dayjs(date).isSame(resolveNow(), 'day');
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
   const slotsRef = useRef<HTMLButtonElement[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -470,7 +478,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
     expansionLimit: recurrenceExpansionLimit,
   });
 
-  const eventsData = getDayViewEvents({ events: expandedEvents, date, startTime, endTime });
+  const eventsData = getDayViewEvents({
+    events: expandedEvents,
+    date,
+    startTime,
+    endTime,
+    intervalMinutes,
+  });
 
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, slotIndex: number) => {
@@ -756,7 +770,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => toDateString(dayjs(date).subtract(1, 'day')),
             next: () => toDateString(dayjs(date).add(1, 'day')),
-            today: () => toDateString(dayjs()),
+            today: () => toDateString(resolveNow()),
           }}
           control={{
             title: formatDate({ locale: ctx.getLocale(locale), date, format: headerFormat }),
@@ -856,7 +870,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
               {eventsNodes}
 
-              {withCurrentTimeIndicator && (
+              {showCurrentTimeIndicator && (
                 <CurrentTimeIndicator
                   startOffset="calc(var(--day-view-slot-labels-width) * -1)"
                   endOffset="0rem"
@@ -868,6 +882,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
                   locale={locale}
                   startTime={startTime}
                   endTime={endTime}
+                  intervalMinutes={intervalMinutes}
+                  getCurrentTime={getCurrentTime}
                   {...stylesApiProps}
                 />
               )}

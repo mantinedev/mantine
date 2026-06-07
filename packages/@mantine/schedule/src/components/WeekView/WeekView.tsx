@@ -28,6 +28,7 @@ import { useEventResize } from '../../hooks/use-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
+  AnyDateValue,
   DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
@@ -37,6 +38,7 @@ import {
   ScheduleViewLevel,
 } from '../../types';
 import {
+  BusinessHoursValue,
   calculateDropTime,
   expandRecurringEvents,
   formatDate,
@@ -152,6 +154,9 @@ export interface WeekViewProps
   /** If set, displays the current time indicator on the same day of week even when viewing a different week @default false */
   forceCurrentTimeIndicator?: boolean;
 
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  getCurrentTime?: () => AnyDateValue;
+
   /** If set, displays all-day slots at the top of the view @default true */
   withAllDaySlots?: boolean;
 
@@ -191,8 +196,8 @@ export interface WeekViewProps
   /** If set to true, highlights business hours with white background @default false */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] */
-  businessHours?: [string, string];
+  /** Business hours range in `HH:mm:ss` format shared across all days, or a per-day record keyed by day of the week (`0` – Sunday, `6` – Saturday) for day-specific ranges. Set a day to `null` to mark it as fully outside business hours. @default ['09:00:00', '17:00:00'] */
+  businessHours?: BusinessHoursValue;
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
@@ -341,6 +346,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     highlightToday,
     withCurrentTimeIndicator,
     forceCurrentTimeIndicator,
+    getCurrentTime,
     scrollAreaProps,
     locale,
     withWeekNumber,
@@ -551,6 +557,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     events: expandedEvents,
     startTime,
     endTime,
+    intervalMinutes,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     weekendDays: ctx.getWeekendDays(weekendDays),
     withWeekendDays,
@@ -695,10 +702,13 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     }
   };
 
+  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
+  const now = resolveNow();
+
   const currentWeekdayIndex = withCurrentTimeIndicator
     ? forceCurrentTimeIndicator
-      ? weekdays.findIndex((day) => dayjs(day).day() === dayjs().day())
-      : weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
+      ? weekdays.findIndex((day) => dayjs(day).day() === now.day())
+      : weekdays.findIndex((day) => dayjs(day).isSame(now, 'date'))
     : -1;
 
   const weekdaysLabels = weekdays.map((day, dayIndex) => (
@@ -710,7 +720,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       }}
       aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
-        today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
+        today: dayjs(day).isSame(now, 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
         static: mode === 'static',
       }}
@@ -996,7 +1006,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
             next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
-            today: () => toDateString(dayjs()),
+            today: () => toDateString(resolveNow()),
           }}
           control={{
             miw: 140,
@@ -1085,6 +1095,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                 locale={locale}
                 startTime={startTime}
                 endTime={endTime}
+                intervalMinutes={intervalMinutes}
+                getCurrentTime={getCurrentTime}
                 {...stylesApiProps}
               />
             )}

@@ -1,5 +1,6 @@
-import { factory, Factory, MantineSpacing, useProps } from '../../core';
+import { Box, factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
+import { usePaginationContext } from './Pagination.context';
 import { PaginationIcon } from './Pagination.icons';
 import {
   PaginationControl,
@@ -14,6 +15,11 @@ import {
   type PaginationEdgeProps,
 } from './PaginationEdges/PaginationEdges';
 import { PaginationItems, type PaginationItemsProps } from './PaginationItems/PaginationItems';
+import {
+  PaginationFormatLabel,
+  PaginationLabel,
+  type PaginationLabelProps,
+} from './PaginationLabel/PaginationLabel';
 import {
   PaginationRoot,
   PaginationRootCssVariables,
@@ -57,6 +63,9 @@ export interface PaginationProps extends PaginationRootProps {
 
   /** If set to `false`, page number buttons are hidden, only next/previous controls remain @default `true` */
   withPages?: boolean;
+
+  /** Function to format the label text displayed in responsive mode */
+  formatLabel?: PaginationFormatLabel;
 }
 
 export type PaginationFactory = Factory<{
@@ -73,6 +82,7 @@ export type PaginationFactory = Factory<{
     Next: typeof PaginationNext;
     Previous: typeof PaginationPrevious;
     Items: typeof PaginationItems;
+    Label: typeof PaginationLabel;
   };
 }>;
 
@@ -83,6 +93,15 @@ const defaultProps = {
   boundaries: 1,
   gap: 8,
 } satisfies Partial<PaginationProps>;
+
+interface PaginationItemsGroupProps {
+  children: React.ReactNode;
+}
+
+function PaginationItemsGroup({ children }: PaginationItemsGroupProps) {
+  const ctx = usePaginationContext();
+  return <Box {...ctx.getStyles('items')}>{children}</Box>;
+}
 
 export const Pagination = factory<PaginationFactory>((_props) => {
   const props = useProps('Pagination', defaultProps, _props);
@@ -99,6 +118,8 @@ export const Pagination = factory<PaginationFactory>((_props) => {
     gap,
     hideWithOnePage,
     withPages,
+    layout,
+    formatLabel,
     ...others
   } = props;
 
@@ -106,14 +127,29 @@ export const Pagination = factory<PaginationFactory>((_props) => {
     return null;
   }
 
+  const isResponsive = layout === 'responsive';
+
+  const pagesContent = withPages ? (
+    isResponsive ? (
+      <>
+        <PaginationItemsGroup>
+          <PaginationItems dotsIcon={dotsIcon} />
+        </PaginationItemsGroup>
+        <PaginationLabel formatLabel={formatLabel} />
+      </>
+    ) : (
+      <PaginationItems dotsIcon={dotsIcon} />
+    )
+  ) : null;
+
   return (
-    <PaginationRoot total={total} {...others}>
+    <PaginationRoot total={total} layout={layout} {...others}>
       <Group gap={gap}>
         {withEdges && <PaginationFirst icon={firstIcon} {...getControlProps?.('first')} />}
         {withControls && (
           <PaginationPrevious icon={previousIcon} {...getControlProps?.('previous')} />
         )}
-        {withPages && <PaginationItems dotsIcon={dotsIcon} />}
+        {pagesContent}
         {withControls && <PaginationNext icon={nextIcon} {...getControlProps?.('next')} />}
         {withEdges && <PaginationLast icon={lastIcon} {...getControlProps?.('last')} />}
       </Group>
@@ -131,6 +167,7 @@ Pagination.Last = PaginationLast;
 Pagination.Next = PaginationNext;
 Pagination.Previous = PaginationPrevious;
 Pagination.Items = PaginationItems;
+Pagination.Label = PaginationLabel;
 
 export namespace Pagination {
   export type Props = PaginationProps;
@@ -156,5 +193,9 @@ export namespace Pagination {
 
   export namespace Items {
     export type Props = PaginationItemsProps;
+  }
+
+  export namespace Label {
+    export type Props = PaginationLabelProps;
   }
 }

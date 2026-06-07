@@ -32,3 +32,13 @@ export const Demo_wholeword = {
   name: '⭐ Demo: wholeword',
   render: renderDemo(demos.wholeword),
 };
+
+export const Demo_accentInsensitive = {
+  name: '⭐ Demo: accentInsensitive',
+  render: renderDemo(demos.accentInsensitive),
+};
+
+export const Demo_caseInsensitive = {
+  name: '⭐ Demo: caseInsensitive',
+  render: renderDemo(demos.caseInsensitive),
+};

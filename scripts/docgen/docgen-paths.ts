@@ -21,6 +21,7 @@ const FILES_PATHS = getPaths([
   // Popover
   'packages/@mantine/core/src/components/Popover/PopoverTarget/PopoverTarget.tsx',
   'packages/@mantine/core/src/components/Popover/PopoverDropdown/PopoverDropdown.tsx',
+  'packages/@mantine/core/src/components/Popover/PopoverContextMenu/PopoverContextMenu.tsx',
 
   // Slider
   'packages/@mantine/core/src/components/Slider/Slider/Slider.tsx',
@@ -87,6 +88,12 @@ const FILES_PATHS = getPaths([
   // Menu
   'packages/@mantine/core/src/components/Menu/MenuItem/MenuItem.tsx',
   'packages/@mantine/core/src/components/Menu/MenuTarget/MenuTarget.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuSearch/MenuSearch.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuCheckboxItem/MenuCheckboxItem.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuRadioItem/MenuRadioItem.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuRadioGroup/MenuRadioGroup.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuCheckboxGroup/MenuCheckboxGroup.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuContextMenu/MenuContextMenu.tsx',
   'packages/@mantine/core/src/components/Menu/MenuSub/MenuSub.tsx',
   'packages/@mantine/core/src/components/Menu/MenuSubItem/MenuSubItem.tsx',
   'packages/@mantine/core/src/components/Menu/MenuSubTarget/MenuSubTarget.tsx',

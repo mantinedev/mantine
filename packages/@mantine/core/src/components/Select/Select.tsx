@@ -126,7 +126,7 @@ const defaultProps = {
 } satisfies Partial<SelectProps>;
 
 export const Select = genericFactory<SelectFactory>((_props) => {
-  const props = useProps('Select', defaultProps, _props);
+  const props = useProps(['Input', 'InputWrapper', 'Select'], defaultProps, _props);
   const {
     classNames,
     styles,
@@ -153,6 +153,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     limit,
     withScrollArea,
     maxDropdownHeight,
+    floatingHeight,
     size,
     searchable,
     rightSection,
@@ -295,7 +296,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     />
   );
 
-  const _clearable = clearable && !!_value && !disabled && !readOnly;
+  const _clearable = clearable && _value != null && !disabled && !readOnly;
 
   return (
     <>
@@ -308,6 +309,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
         readOnly={readOnly}
         size={size}
         attributes={attributes}
+        floatingHeight={floatingHeight}
         keepMounted={autoSelectOnBlur}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val as any);

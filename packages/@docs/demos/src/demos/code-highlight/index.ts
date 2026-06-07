@@ -6,3 +6,4 @@ export { expand } from './CodeHighlight.demo.expand';
 export { copy } from './CodeHighlight.demo.copy';
 export { inline } from './CodeHighlight.demo.inline';
 export { customControl } from './CodeHighlight.demo.customControl';
+export { lineNumbers } from './CodeHighlight.demo.lineNumbers';

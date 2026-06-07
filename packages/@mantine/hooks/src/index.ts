@@ -92,6 +92,8 @@ export {
   generatePattern,
 } from './use-mask/use-mask.js';
 export { useRovingIndex } from './use-roving-index/use-roving-index.js';
+export { useDrag } from './use-drag/use-drag.js';
+export { useSplitter } from './use-splitter/use-splitter.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type {
@@ -208,7 +210,11 @@ export type {
   UseWindowScrollTo,
   UseWindowScrollReturnValue,
 } from './use-window-scroll/use-window-scroll';
-export type { UseLongPressOptions, UseLongPressReturnValue } from './use-long-press/use-long-press';
+export type {
+  UseLongPressEvent,
+  UseLongPressOptions,
+  UseLongPressReturnValue,
+} from './use-long-press/use-long-press';
 export type {
   SetFloatingWindowPosition,
   UseFloatingWindowOptions,
@@ -240,3 +246,11 @@ export type {
   UseRovingIndexGetItemPropsInput,
   UseRovingIndexReturnValue,
 } from './use-roving-index/use-roving-index';
+export type { UseDragState, UseDragOptions, UseDragReturnValue } from './use-drag/use-drag';
+export type {
+  UseSplitterPanel,
+  UseSplitterOptions,
+  UseSplitterReturnValue,
+  UseSplitterRedistributeInput,
+  UseSplitterRedistributeFn,
+} from './use-splitter/use-splitter';

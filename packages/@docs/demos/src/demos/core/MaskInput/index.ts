@@ -5,3 +5,5 @@ export { regex } from './MaskInput.demo.regex';
 export { transform } from './MaskInput.demo.transform';
 export { disabled } from './MaskInput.demo.disabled';
 export { error } from './MaskInput.demo.error';
+export { resetRef } from './MaskInput.demo.resetRef';
+export { withUseForm } from './MaskInput.demo.withUseForm';

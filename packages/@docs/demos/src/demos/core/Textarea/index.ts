@@ -5,3 +5,4 @@ export { disabled } from './Textarea.demo.disabled';
 export { stylesApi } from './Textarea.demo.stylesApi';
 export { resize } from './Textarea.demo.resize';
 export { loading } from './Textarea.demo.loading';
+export { bottomSection } from './Textarea.demo.bottomSection';
