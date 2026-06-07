@@ -1,6 +1,23 @@
 import { AccordionChevron } from '@mantine/core';
 
-export { AccordionChevron as SortIcon } from '@mantine/core';
+export function SortIcon({ size = 12 }: { size?: number | string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 256 256"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="24"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'block' }}
+    >
+      <path d="M128 40v176M56 144l72 72 72-72" />
+    </svg>
+  );
+}
 
 export function ExpandChevron({ expanded }: { expanded: boolean }) {
   return (

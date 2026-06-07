@@ -208,7 +208,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                           {...ctx.getStyles('sortIcon', { classNames, styles })}
                         >
                           {sortDirection
-                            ? (ctx.sortedIcon ?? <SortIcon size={14} />)
+                            ? (ctx.sortedIcon ?? <SortIcon size={12} />)
                             : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
                         </Box>
                       )}
