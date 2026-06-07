@@ -9,6 +9,7 @@ import {
   factory,
   Factory,
   rem,
+  UnstyledButton,
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
@@ -187,7 +188,6 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 data-pinned-left={isPinned === 'left' || undefined}
                 data-pinned-right={isPinned === 'right' || undefined}
                 data-resizing={isResizing || undefined}
-                onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
                   ...pinnedStyles,
@@ -200,9 +200,12 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
               >
                 {header.isPlaceholder ? null : (
                   <>
-                    <Box component="div" {...ctx.getStyles('headerCell', { classNames, styles })}>
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                      {canSort && (
+                    {canSort ? (
+                      <UnstyledButton
+                        onClick={header.column.getToggleSortingHandler()}
+                        {...ctx.getStyles('headerCell', { classNames, styles })}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
                         <Box
                           component="span"
                           {...ctx.getStyles('sortIcon', { classNames, styles })}
@@ -211,8 +214,12 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                             ? (ctx.sortedIcon ?? <SortIcon size={12} />)
                             : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
                         </Box>
-                      )}
-                    </Box>
+                      </UnstyledButton>
+                    ) : (
+                      <Box component="div" {...ctx.getStyles('headerCell', { classNames, styles })}>
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                      </Box>
+                    )}
                     {ctx.withFiltering && !ctx.headerFilters && header.column.getCanFilter() && (
                       <Box onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                         <FilterDispatcher column={header.column} />

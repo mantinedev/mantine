@@ -137,6 +137,32 @@ describe('@mantine/data-grid/DataGrid', () => {
       const sortedTh = container.querySelector('th[aria-sort="ascending"]');
       expect(sortedTh).not.toBeInTheDocument();
     });
+
+    it('exposes sortable headers as focusable buttons', async () => {
+      render(
+        <DataGridWithStore storeOptions={{ data, columns: sortableColumns, withSorting: true }} />
+      );
+      const nameButton = screen.getByRole('button', { name: 'Name' });
+
+      await userEvent.tab();
+      expect(nameButton).toHaveFocus();
+    });
+
+    it('sorts via keyboard when the header button is focused', async () => {
+      const { container } = render(
+        <DataGridWithStore storeOptions={{ data, columns: sortableColumns, withSorting: true }} />
+      );
+      const nameButton = screen.getByRole('button', { name: 'Name' });
+      nameButton.focus();
+
+      await userEvent.keyboard('{Enter}');
+      expect(container.querySelector('th[aria-sort="ascending"]')).toBeInTheDocument();
+      expect(screen.getAllByRole('row')[1]).toHaveTextContent('Alice');
+
+      await userEvent.keyboard('{Enter}');
+      expect(container.querySelector('th[aria-sort="descending"]')).toBeInTheDocument();
+      expect(screen.getAllByRole('row')[1]).toHaveTextContent('Charlie');
+    });
   });
 
   describe('filtering', () => {

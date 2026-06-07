@@ -140,6 +140,12 @@
   gap: rem(4px);
 }
 
+button.headerCell {
+  width: 100%;
+  font: inherit;
+  user-select: none;
+}
+
 .th[data-sortable] {
   cursor: pointer;
   user-select: none;
