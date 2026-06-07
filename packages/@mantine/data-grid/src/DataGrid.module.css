@@ -10,16 +10,16 @@
   --dg-spacing: var(--dg-spacing);
 
   position: relative;
-}
 
-.root[data-density='compact'] {
-  --dg-spacing: var(--mantine-spacing-xs);
-  --dg-row-height: rem(28px);
-}
+  &:where([data-density='compact']) {
+    --dg-spacing: var(--mantine-spacing-xs);
+    --dg-row-height: rem(28px);
+  }
 
-.root[data-density='comfortable'] {
-  --dg-spacing: var(--mantine-spacing-md);
-  --dg-row-height: rem(48px);
+  &:where([data-density='comfortable']) {
+    --dg-spacing: var(--mantine-spacing-md);
+    --dg-row-height: rem(48px);
+  }
 }
 
 .table {
@@ -41,48 +41,67 @@
     --dg-stripe-color: var(--mantine-color-dark-6);
     --dg-hover-color: var(--mantine-color-dark-5);
   }
-}
 
-.root[data-table-layout='auto'] .table {
-  table-layout: auto;
+  :where(.root[data-table-layout='auto']) & {
+    table-layout: auto;
+  }
 }
 
 .tbody {
   border-collapse: inherit;
+
+  &:where([data-pinned-top]) {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  &:where([data-pinned-bottom]) {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+  }
 }
 
-.tbody[data-pinned-top] {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.tbody[data-pinned-bottom] {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-}
-
-.tr[data-pinned-top],
-.tr[data-pinned-bottom] {
-  background: var(--mantine-color-body);
-}
-
-.root[data-sticky-header] .thead {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background: var(--mantine-color-body);
+.thead {
+  :where(.root[data-sticky-header]) & {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--mantine-color-body);
+  }
 }
 
 .tr {
   border-bottom: rem(1px) solid var(--dg-border-color);
   outline: none;
-}
 
-.tr:focus-visible {
-  outline: rem(2px) solid var(--mantine-primary-color-filled);
-  outline-offset: rem(-2px);
+  &:focus-visible {
+    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline-offset: rem(-2px);
+  }
+
+  &:where([data-pinned-top]),
+  &:where([data-pinned-bottom]) {
+    background: var(--mantine-color-body);
+  }
+
+  &:where([data-striped]) {
+    background-color: var(--dg-stripe-color);
+  }
+
+  &:where([data-selected]) {
+    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+    border-color: var(--mantine-primary-color-light);
+  }
+
+  &:where([data-hover]):hover {
+    background-color: var(--dg-hover-color);
+  }
+
+  &:where([data-selected]):hover {
+    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+  }
 }
 
 .th {
@@ -92,25 +111,33 @@
     var(--dg-spacing, var(--mantine-spacing-xs));
   height: var(--dg-header-height, auto);
   position: relative;
+
+  &:where([data-sortable]) {
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      background-color: var(--dg-hover-color);
+    }
+  }
 }
 
-.th[data-pinned-left],
-.th[data-pinned-right],
-.td[data-pinned-left],
-.td[data-pinned-right] {
-  position: sticky;
-  z-index: 1;
-  background: var(--mantine-color-body);
-}
+.th,
+.td {
+  &:where([data-pinned-left]),
+  &:where([data-pinned-right]) {
+    position: sticky;
+    z-index: 1;
+    background: var(--mantine-color-body);
+  }
 
-.th[data-pinned-left],
-.td[data-pinned-left] {
-  box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
-}
+  &:where([data-pinned-left]) {
+    box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+  }
 
-.th[data-pinned-right],
-.td[data-pinned-right] {
-  box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+  &:where([data-pinned-right]) {
+    box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+  }
 }
 
 .td {
@@ -122,15 +149,13 @@
   white-space: nowrap;
 }
 
-.root[data-text-overflow='wrap'] .td,
-.root[data-text-overflow='wrap'] .virtualCell {
+:where(.root[data-text-overflow='wrap']) :where(.td, .virtualCell) {
   overflow: visible;
   text-overflow: unset;
   white-space: normal;
 }
 
-.root[data-text-overflow='clip'] .td,
-.root[data-text-overflow='clip'] .virtualCell {
+:where(.root[data-text-overflow='clip']) :where(.td, .virtualCell) {
   text-overflow: clip;
 }
 
@@ -138,21 +163,12 @@
   display: inline-flex;
   align-items: center;
   gap: rem(4px);
-}
 
-button.headerCell {
-  width: 100%;
-  font: inherit;
-  user-select: none;
-}
-
-.th[data-sortable] {
-  cursor: pointer;
-  user-select: none;
-}
-
-.th[data-sortable]:hover {
-  background-color: var(--dg-hover-color);
+  &:where(button) {
+    width: 100%;
+    font: inherit;
+    user-select: none;
+  }
 }
 
 .sortIcon {
@@ -160,17 +176,17 @@ button.headerCell {
   align-items: center;
   opacity: 0.5;
   margin-inline-start: rem(2px);
-}
 
-.th[data-sort-asc] .sortIcon,
-.virtualCell[data-sort-asc] .sortIcon {
-  opacity: 1;
-  transform: rotate(180deg);
-}
+  :where(.th[data-sort-asc]) &,
+  :where(.virtualCell[data-sort-asc]) & {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
 
-.th[data-sort-desc] .sortIcon,
-.virtualCell[data-sort-desc] .sortIcon {
-  opacity: 1;
+  :where(.th[data-sort-desc]) &,
+  :where(.virtualCell[data-sort-desc]) & {
+    opacity: 1;
+  }
 }
 
 .toolbar {
@@ -202,15 +218,15 @@ button.headerCell {
   background: var(--dg-border-color);
   opacity: 0;
   transition: opacity 150ms ease;
-}
 
-.th:hover .resizeHandle,
-.resizeHandle[data-resizing] {
-  opacity: 1;
-}
+  :where(.th):hover & {
+    opacity: 1;
+  }
 
-.resizeHandle[data-resizing] {
-  background: var(--mantine-primary-color-filled);
+  &:where([data-resizing]) {
+    opacity: 1;
+    background: var(--mantine-primary-color-filled);
+  }
 }
 
 .tfoot {
@@ -223,23 +239,6 @@ button.headerCell {
 
 .loadingOverlay {
   border-radius: inherit;
-}
-
-.tr[data-striped] {
-  background-color: var(--dg-stripe-color);
-}
-
-.tr[data-hover]:hover {
-  background-color: var(--dg-hover-color);
-}
-
-.tr[data-selected] {
-  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
-  border-color: var(--mantine-primary-color-light);
-}
-
-.tr[data-selected]:hover {
-  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
 }
 
 .selectionCheckbox {
@@ -351,23 +350,23 @@ button.headerCell {
 .virtualRow {
   display: flex;
   border-bottom: rem(1px) solid var(--dg-border-color);
-}
 
-.virtualRow[data-striped] {
-  background-color: var(--dg-stripe-color);
-}
+  &:where([data-striped]) {
+    background-color: var(--dg-stripe-color);
+  }
 
-.virtualRow[data-hover]:hover {
-  background-color: var(--dg-hover-color);
-}
+  &:where([data-selected]) {
+    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+    border-color: var(--mantine-primary-color-light);
+  }
 
-.virtualRow[data-selected] {
-  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
-  border-color: var(--mantine-primary-color-light);
-}
+  &:where([data-hover]):hover {
+    background-color: var(--dg-hover-color);
+  }
 
-.virtualRow[data-selected]:hover {
-  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+  &:where([data-selected]):hover {
+    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+  }
 }
 
 .virtualCell {
@@ -380,21 +379,21 @@ button.headerCell {
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
-}
 
-.virtualCell[data-pinned-left],
-.virtualCell[data-pinned-right] {
-  position: sticky;
-  z-index: 1;
-  background: var(--mantine-color-body);
-}
+  &:where([data-pinned-left]),
+  &:where([data-pinned-right]) {
+    position: sticky;
+    z-index: 1;
+    background: var(--mantine-color-body);
+  }
 
-.virtualCell[data-pinned-left] {
-  box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
-}
+  &:where([data-pinned-left]) {
+    box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+  }
 
-.virtualCell[data-pinned-right] {
-  box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+  &:where([data-pinned-right]) {
+    box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+  }
 }
 
 .treeIndent {
@@ -424,10 +423,10 @@ button.headerCell {
   justify-content: center;
   color: var(--mantine-color-dimmed);
   white-space: nowrap;
-}
 
-.dragHandle:active {
-  cursor: grabbing;
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .listView {
@@ -440,8 +439,8 @@ button.headerCell {
   border: 1px solid var(--dg-border-color, var(--mantine-color-default-border));
   border-radius: var(--mantine-radius-sm);
   padding: var(--dg-spacing, var(--mantine-spacing-xs));
-}
 
-.listItem[data-selected] {
-  background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+  &:where([data-selected]) {
+    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+  }
 }
