@@ -77,6 +77,9 @@ export interface __InputWrapperProps {
 
   /** Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. @default ['label', 'description', 'input', 'error'] */
   inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[];
+
+  /** If set, the error element stays mounted even when `error` is not set. Useful for `aria-live` validation announcements that require a persistent DOM node. @default false */
+  keepErrorMounted?: boolean;
 }
 
 export interface InputWrapperProps
@@ -107,6 +110,7 @@ const defaultProps = {
   labelElement: 'label',
   inputContainer: (children) => children,
   inputWrapperOrder: ['label', 'description', 'input', 'error'],
+  keepErrorMounted: false,
 } satisfies Partial<InputWrapperProps>;
 
 const varsResolver = createVarsResolver<InputWrapperFactory>((_, { size }) => ({
@@ -150,6 +154,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
     withAsterisk,
     id,
     required,
+    keepErrorMounted,
     __stylesApiProps,
     mod,
     attributes,
@@ -182,8 +187,9 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
   const descriptionId = descriptionProps?.id || `${idBase}-description`;
   const inputId = idBase;
   const hasError = !!error && typeof error !== 'boolean';
+  const errorMounted = hasError || keepErrorMounted;
   const hasDescription = !!description;
-  const _describedBy = `${hasError ? errorId : ''} ${hasDescription ? descriptionId : ''}`;
+  const _describedBy = `${errorMounted ? errorId : ''} ${hasDescription ? descriptionId : ''}`;
   const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
   const labelId = labelProps?.id || `${idBase}-label`;
 
@@ -215,7 +221,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
 
   const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
 
-  const _error = hasError && (
+  const _error = errorMounted && (
     <InputError
       {...errorProps}
       {...sharedProps}
@@ -223,7 +229,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
       key="error"
       id={errorProps?.id || errorId}
     >
-      {error}
+      {hasError ? error : null}
     </InputError>
   );
 
@@ -249,7 +255,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
         describedBy,
         inputId,
         labelId,
-        ...getInputOffsets(inputWrapperOrder, { hasDescription, hasError }),
+        ...getInputOffsets(inputWrapperOrder, { hasDescription, hasError, keepErrorMounted }),
       }}
     >
       <Box

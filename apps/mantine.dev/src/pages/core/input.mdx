@@ -115,6 +115,29 @@ to a React node and `withErrorStyles={false}`:
 
 <Demo data={InputDemos.error} />
 
+## keepErrorMounted prop
+
+By default, the error element is removed from the DOM when the `error` prop is not set. Set
+`keepErrorMounted` to keep the error element mounted even when there is no error. This is useful for
+`aria-live` validation announcements that require a persistent DOM node: instead of mounting a new
+node every time an error appears, the existing node text is updated, which makes screen reader
+announcements more reliable.
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      label="Email"
+      keepErrorMounted
+      errorProps={{ 'aria-live': 'polite' }}
+      error={/* error message or null */ null}
+    />
+  );
+}
+```
+
 ## Input.Label, Input.Description and Input.Error components
 
 `Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom

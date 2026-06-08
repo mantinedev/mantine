@@ -78,4 +78,17 @@ describe('@mantine/core/InputWrapper/get-input-offsets', () => {
       offsetTop: false,
     });
   });
+
+  it('reserves offset for the error slot when keepErrorMounted is set and there is no error', () => {
+    expect(
+      getInputOffsets(['label', 'input', 'error'], {
+        hasDescription: false,
+        hasError: false,
+        keepErrorMounted: true,
+      })
+    ).toStrictEqual({
+      offsetBottom: true,
+      offsetTop: false,
+    });
+  });
 });

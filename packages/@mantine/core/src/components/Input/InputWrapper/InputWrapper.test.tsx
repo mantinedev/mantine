@@ -1,4 +1,5 @@
-import { inputWrapperQueries, render, tests } from '@mantine-tests/core';
+import { useState } from 'react';
+import { inputWrapperQueries, render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Input } from '../Input';
 import { InputWrapper, InputWrapperProps, InputWrapperStylesNames } from './InputWrapper';
 
@@ -30,6 +31,43 @@ describe('@mantine/core/InputWrapper', () => {
   it('does not render error if error prop is boolean', () => {
     const { container } = render(<InputWrapper {...defaultProps} error />);
     expect(inputWrapperQueries.getError(container)).toBe(null);
+  });
+
+  it('keeps the error element mounted when keepErrorMounted is set and error is not defined', () => {
+    const { container } = render(<InputWrapper {...defaultProps} error={null} keepErrorMounted />);
+    const error = inputWrapperQueries.getError(container);
+    expect(error).not.toBe(null);
+    expect(error).toHaveTextContent('');
+  });
+
+  it('does not mount the error element when keepErrorMounted is not set and error is not defined', () => {
+    const { container } = render(<InputWrapper {...defaultProps} error={null} />);
+    expect(inputWrapperQueries.getError(container)).toBe(null);
+  });
+
+  it('reuses the same error node when error toggles with keepErrorMounted', async () => {
+    function ToggleError() {
+      const [error, setError] = useState<React.ReactNode>(null);
+      return (
+        <>
+          <button type="button" onClick={() => setError('New error')}>
+            set error
+          </button>
+          <InputWrapper {...defaultProps} error={error} keepErrorMounted />
+        </>
+      );
+    }
+
+    const { container } = render(<ToggleError />);
+    const initialError = inputWrapperQueries.getError(container);
+    expect(initialError).not.toBe(null);
+    expect(initialError).toHaveTextContent('');
+
+    await userEvent.click(screen.getByText('set error'));
+
+    const updatedError = inputWrapperQueries.getError(container);
+    expect(updatedError).toBe(initialError);
+    expect(updatedError).toHaveTextContent('New error');
   });
 
   it('generates correct ids for description and error', () => {
