@@ -33,7 +33,7 @@ export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'
   /** Determines whether the opacity is animated @default true */
   animateOpacity?: boolean;
 
-  /** If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. @default false */
+  /** If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. @default true */
   keepMounted?: boolean;
 }
 
@@ -47,7 +47,7 @@ const defaultProps = {
   transitionTimingFunction: 'ease',
   animateOpacity: true,
   orientation: 'vertical',
-  keepMounted: false,
+  keepMounted: true,
 } satisfies Partial<CollapseProps>;
 
 export const Collapse = factory<CollapseFactory>((props) => {
