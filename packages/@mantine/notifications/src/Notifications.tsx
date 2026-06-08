@@ -208,6 +208,8 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
               ref={(node) => {
                 if (node) {
                   refs.current[notification.id!] = node;
+                } else {
+                  delete refs.current[notification.id!];
                 }
               }}
               data={notification}
