@@ -252,6 +252,9 @@ export const DateInputStylesApi: StylesApiData<DateInputFactory> = {
     ...DecadeLevelGroupStylesApi.selectors,
     ...YearLevelGroupStylesApi.selectors,
     ...MonthLevelGroupStylesApi.selectors,
+    presetsRoot: 'Root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
   },
 
   vars: {},

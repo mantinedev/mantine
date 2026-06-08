@@ -3,23 +3,28 @@ import { useEffect, useRef, useState } from 'react';
 import {
   __BaseInputProps,
   __InputStylesNames,
+  Box,
   BoxProps,
   ClearSectionMode,
   ElementProps,
   factory,
   Factory,
+  getFontSize,
   Input,
   InputVariant,
   MantineSize,
   Popover,
   PopoverProps,
   StylesApiProps,
+  UnstyledButton,
   useInputProps,
+  useStyles,
 } from '@mantine/core';
 import { useClickOutside, useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue, DateValue } from '../../types';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
+import { DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
@@ -28,8 +33,14 @@ import { MonthLevelSettings } from '../MonthLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { dateStringParser } from './date-string-parser/date-string-parser';
 import { isDateValid } from './is-date-valid/is-date-valid';
+import classes from './DateInput.module.css';
 
-export type DateInputStylesNames = __InputStylesNames | CalendarStylesNames;
+export type DateInputStylesNames =
+  | __InputStylesNames
+  | CalendarStylesNames
+  | 'presetsRoot'
+  | 'presetsList'
+  | 'presetButton';
 
 export interface DateInputProps
   extends
@@ -88,6 +99,9 @@ export interface DateInputProps
 
   /** Called when the level changes */
   onLevelChange?: (level: CalendarLevel) => void;
+
+  /** Predefined values to pick from */
+  presets?: DatePickerPreset<'default'>[];
 }
 
 export type DateInputFactory = Factory<{
@@ -141,8 +155,19 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     getMonthControlProps,
     getYearControlProps,
     disabled,
+    presets,
     ...rest
   } = props;
+
+  const getStyles = useStyles<DateInputFactory>({
+    name: 'DateInput',
+    classes,
+    props: props as unknown as DateInputProps,
+    classNames,
+    styles,
+    unstyled,
+    attributes: wrapperProps.attributes,
+  });
 
   const _wrapperRef = useRef<HTMLDivElement>(null);
   const _dropdownRef = useRef<HTMLDivElement>(null);
@@ -241,6 +266,28 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     },
   });
 
+  const handlePresetSelect = (val: DateStringValue | null) => {
+    setValue(val);
+    if (val) {
+      setDate(val);
+    }
+    if (!controlled) {
+      setInputValue(val ? formatValue(val) : '');
+    }
+    setDropdownOpened(false);
+  };
+
+  const presetButtons = presets?.map((preset, index) => (
+    <UnstyledButton
+      key={index}
+      {...getStyles('presetButton')}
+      onClick={() => handlePresetSelect(preset.value)}
+      onMouseDown={(event) => event.preventDefault()}
+    >
+      {preset.label}
+    </UnstyledButton>
+  ));
+
   const clearButton = (
     <Input.ClearButton
       onClick={() => {
@@ -263,6 +310,33 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     _wrapperRef.current,
     _dropdownRef.current,
   ]);
+
+  const calendar = (
+    <Calendar
+      __staticSelector="DateInput"
+      {...calendarProps}
+      classNames={classNames}
+      styles={styles}
+      unstyled={unstyled}
+      __preventFocus
+      minDate={minDate}
+      maxDate={maxDate}
+      locale={locale}
+      getDayProps={_getDayProps}
+      size={inputProps.size as MantineSize}
+      date={_date}
+      onDateChange={setDate}
+      getMonthControlProps={(date) => ({
+        selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
+        ...getMonthControlProps?.(date),
+      })}
+      getYearControlProps={(date) => ({
+        selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
+        ...getYearControlProps?.(date),
+      })}
+      attributes={wrapperProps.attributes}
+    />
+  );
 
   return (
     <>
@@ -303,30 +377,18 @@ export const DateInput = factory<DateInputFactory>((_props) => {
             data-dates-dropdown
             ref={_dropdownRef}
           >
-            <Calendar
-              __staticSelector="DateInput"
-              {...calendarProps}
-              classNames={classNames}
-              styles={styles}
-              unstyled={unstyled}
-              __preventFocus
-              minDate={minDate}
-              maxDate={maxDate}
-              locale={locale}
-              getDayProps={_getDayProps}
-              size={inputProps.size as MantineSize}
-              date={_date}
-              onDateChange={setDate}
-              getMonthControlProps={(date) => ({
-                selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
-                ...getMonthControlProps?.(date),
-              })}
-              getYearControlProps={(date) => ({
-                selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
-                ...getYearControlProps?.(date),
-              })}
-              attributes={wrapperProps.attributes}
-            />
+            {presets ? (
+              <Box
+                {...getStyles('presetsRoot', {
+                  style: { '--preset-font-size': getFontSize(inputProps.size) },
+                })}
+              >
+                <div {...getStyles('presetsList')}>{presetButtons}</div>
+                {calendar}
+              </Box>
+            ) : (
+              calendar
+            )}
           </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
@@ -335,7 +397,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
   );
 });
 
-DateInput.classes = { ...Input.classes, ...Calendar.classes };
+DateInput.classes = { ...Input.classes, ...Calendar.classes, ...classes };
 DateInput.displayName = '@mantine/dates/DateInput';
 
 export namespace DateInput {
