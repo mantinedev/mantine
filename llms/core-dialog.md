@@ -28,7 +28,13 @@ function Demo() {
         <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog opened={opened} withCloseButton onClose={close} size="lg">
+      <Dialog
+        opened={opened}
+        withCloseButton
+        onClose={close}
+        size="lg"
+        position={{ bottom: 20, left: 20 }}
+      >
         <Text size="sm" mb="xs" fw={500}>
           Subscribe to email newsletter
         </Text>

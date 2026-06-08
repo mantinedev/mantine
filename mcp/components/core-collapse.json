@@ -37,7 +37,7 @@
       "name": "keepMounted",
       "description": "If set, the element is kept in the DOM when collapsed. When <code>true</code>, React 19 <code>Activity</code> is used to preserve state while collapsed. When <code>false</code>, the element is unmounted after the exit animation.",
       "required": false,
-      "defaultValue": "false",
+      "defaultValue": "true",
       "type": {
         "name": "boolean"
       },

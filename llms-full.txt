@@ -9568,7 +9568,13 @@ function Demo() {
         <Button onClick={toggle}>Toggle dialog</Button>
       </Group>
 
-      <Dialog opened={opened} withCloseButton onClose={close} size="lg">
+      <Dialog
+        opened={opened}
+        withCloseButton
+        onClose={close}
+        size="lg"
+        position={{ bottom: 20, left: 20 }}
+      >
         <Text size="sm" mb="xs" fw={500}>
           Subscribe to email newsletter
         </Text>
@@ -15770,7 +15776,9 @@ function Demo() {
 
 `MaskInput` is uncontrolled by design – it manages its own DOM value internally.
 To integrate with [use-form](https://mantine.dev/llms/form-use-form.md), pass the initial value via `defaultValue`
-and use the `onChangeRaw` callback to write the raw (unmasked) value to form state:
+and use the `onChangeRaw` callback to write the raw (unmasked) value to form state.
+In uncontrolled form mode, pass `{ forceUpdate: false }` to `form.setFieldValue` so the
+input is not remounted on every keystroke:
 
 ```tsx
 import { Button, MaskInput } from '@mantine/core';
@@ -15788,7 +15796,7 @@ function Demo() {
         mask="(999) 999-9999"
         placeholder="(___) ___-____"
         label="Phone"
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
       />
 
       <Button type="submit" mt="md">
@@ -16440,6 +16448,34 @@ function Demo() {
 ```
 
 
+### Touch devices
+
+On touch devices (most notably iOS Safari, which does not fire the `contextmenu` event),
+the dropdown is opened with a long-press instead. Use the `longPressDelay` prop to control
+how long the element must be pressed before the dropdown opens, `500`ms by default:
+
+```tsx
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.ContextMenu longPressDelay={400}>
+        <div>Long-press me</div>
+      </Menu.ContextMenu>
+      <Menu.Dropdown>
+        <Menu.Item>Copy</Menu.Item>
+        <Menu.Item>Paste</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+```
+
+To prevent the native text-selection callout from appearing under the dropdown on touch
+devices, `Menu.ContextMenu` disables text selection (`user-select: none`) on the wrapped
+element.
+
 ## Controlled
 
 The dropdown's opened state can be controlled with the `opened` and `onChange` props:
@@ -16822,6 +16858,7 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 |------|------|---------|-------------|
 | children | React.ReactNode | required | Element that opens the menu when right-clicked. Menu dropdown is positioned at the cursor. The trigger element must not call `event.preventDefault()` in its own `onContextMenu` handler, otherwise the native context menu is not suppressed. |
 | disabled | boolean | - | If set, the right-click trigger is disabled and the browser's default context menu is shown |
+| longPressDelay | number | - | Delay in ms before a touch long-press opens the dropdown on touch devices, `500` by default |
 
 **Menu.Sub props**
 
@@ -16846,6 +16883,7 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | onOpen | () => void | - | Called when dropdown opens |
 | onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
 | openDelay | number | - | Open delay in ms, applicable when hover trigger is used |
+| opened | boolean | - | Controlled opened state |
 | overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to `Overlay` component |
 | portalProps | BasePortalProps | - | Props to pass down to the `Portal` when `withinPortal` is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
@@ -23041,6 +23079,15 @@ function Demo() {
 ```
 
 
+### Touch devices
+
+On touch devices (most notably iOS Safari, which does not fire the `contextmenu` event),
+the dropdown is opened with a long-press instead. Use the `longPressDelay` prop to control
+how long the element must be pressed before the dropdown opens, `500`ms by default. To
+prevent the native text-selection callout from appearing under the dropdown on touch
+devices, `Popover.ContextMenu` disables text selection (`user-select: none`) on the wrapped
+element.
+
 ## Nested popovers
 
 Nested popovers require children rendering without [Portal](https://mantine.dev/llms/core-portal.md). Usually, you
@@ -23160,6 +23207,7 @@ Other elements will not support `Space` and `Enter` key presses.
 |------|------|---------|-------------|
 | children | React.ReactNode | required | Element that opens the popover when right-clicked. Dropdown is positioned at the cursor. The trigger element must not call `event.preventDefault()` in its own `onContextMenu` handler, otherwise the native context menu is not suppressed. |
 | disabled | boolean | - | If set, the right-click trigger is disabled and the browser's default context menu is shown |
+| longPressDelay | number | - | Delay in ms before a touch long-press opens the dropdown on touch devices, `500` by default |
 
 **Popover.Target props**
 
@@ -23180,6 +23228,7 @@ Other elements will not support `Space` and `Enter` key presses.
 |------|------|---------|-------------|
 | children | React.ReactNode | required | Element that opens the popover when right-clicked. Dropdown is positioned at the cursor. The trigger element must not call `event.preventDefault()` in its own `onContextMenu` handler, otherwise the native context menu is not suppressed. |
 | disabled | boolean | - | If set, the right-click trigger is disabled and the browser's default context menu is shown |
+| longPressDelay | number | - | Delay in ms before a touch long-press opens the dropdown on touch devices, `500` by default |
 
 
 #### Styles API
@@ -42425,9 +42474,17 @@ function Demo() {
 ## Definition
 
 ```tsx
+type UseLongPressEvent = 'mouse' | 'touch';
+
 interface UseLongPressOptions {
   /** Time in milliseconds to trigger the long press, default is 400ms */
   threshold?: number;
+
+  /** Input types that can trigger the long press, `['mouse', 'touch']` by default */
+  events?: UseLongPressEvent[];
+
+  /** If set, the long press is canceled when the pointer moves further than the given distance in px from the start position. `true` uses a 10px threshold, a number sets a custom threshold. `false` by default */
+  cancelOnMove?: boolean | number;
 
   /** Callback triggered when the long press starts */
   onStart?: (event: React.MouseEvent | React.TouchEvent) => void;
@@ -42440,11 +42497,14 @@ interface UseLongPressOptions {
 }
 
 interface UseLongPressReturnValue {
-  onMouseDown: (event: React.MouseEvent) => void;
-  onMouseUp: (event: React.MouseEvent) => void;
-  onMouseLeave: (event: React.MouseEvent) => void;
-  onTouchStart: (event: React.TouchEvent) => void;
-  onTouchEnd: (event: React.TouchEvent) => void;
+  onMouseDown?: (event: React.MouseEvent) => void;
+  onMouseUp?: (event: React.MouseEvent) => void;
+  onMouseLeave?: (event: React.MouseEvent) => void;
+  onMouseMove?: (event: React.MouseEvent) => void;
+  onTouchStart?: (event: React.TouchEvent) => void;
+  onTouchEnd?: (event: React.TouchEvent) => void;
+  onTouchCancel?: (event: React.TouchEvent) => void;
+  onTouchMove?: (event: React.TouchEvent) => void;
 }
 
 function useLongPress(
@@ -42453,13 +42513,54 @@ function useLongPress(
 ): UseLongPressReturnValue
 ```
 
-## Exported types
+## Restrict to specific input types
 
-`UseLongPressOptions` and `UseLongPressReturnValue` types are exported from the `@mantine/hooks` package;
-you can import them in your application:
+By default the long press is triggered by both mouse and touch input. Use the `events`
+option to restrict it to a subset – for example, `['touch']` returns only touch handlers,
+leaving mouse input to your own handlers:
 
 ```tsx
-import type { UseLongPressOptions, UseLongPressReturnValue } from '@mantine/hooks';
+import { useLongPress } from '@mantine/hooks';
+
+function Demo() {
+  const handlers = useLongPress(() => console.log('Long pressed'), {
+    events: ['touch'],
+  });
+
+  return <button {...handlers}>Press me</button>;
+}
+```
+
+## Cancel on movement
+
+Set `cancelOnMove` to cancel a pending long press when the pointer moves further than the
+given distance from the start position. This is useful on touch devices so that a scroll
+gesture does not trigger the long press. Pass `true` to use the default 10px threshold or a
+number to set a custom one:
+
+```tsx
+import { useLongPress } from '@mantine/hooks';
+
+function Demo() {
+  const handlers = useLongPress(() => console.log('Long pressed'), {
+    cancelOnMove: true,
+  });
+
+  return <button {...handlers}>Press me</button>;
+}
+```
+
+## Exported types
+
+`UseLongPressEvent`, `UseLongPressOptions` and `UseLongPressReturnValue` types are exported
+from the `@mantine/hooks` package; you can import them in your application:
+
+```tsx
+import type {
+  UseLongPressEvent,
+  UseLongPressOptions,
+  UseLongPressReturnValue,
+} from '@mantine/hooks';
 ```
 
 
@@ -48556,6 +48657,34 @@ function Demo() {
 ```
 
 
+## Presets
+
+Use the `presets` prop to add custom date presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { DateInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateInput
+      label="With presets"
+      placeholder="Select date"
+      presets={[
+        { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD'), label: 'Yesterday' },
+        { value: dayjs().format('YYYY-MM-DD'), label: 'Today' },
+        { value: dayjs().add(1, 'day').format('YYYY-MM-DD'), label: 'Tomorrow' },
+        { value: dayjs().add(1, 'month').format('YYYY-MM-DD'), label: 'Next month' },
+        { value: dayjs().add(1, 'year').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'month').format('YYYY-MM-DD'), label: 'Last month' },
+        { value: dayjs().subtract(1, 'year').format('YYYY-MM-DD'), label: 'Last year' },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Value format
 
 Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label.
@@ -48844,6 +48973,7 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to the `Popover` component |
+| presets | DatePickerPreset<"default">[] | - | Predefined values to pick from |
 | previousDisabled | boolean | - | Disables previous control |
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button `aria-label` |
@@ -48901,6 +49031,9 @@ DateInput component supports Styles API. With Styles API, you can customize styl
 | weekday | .mantine-DateInput-weekday | Weekday th element |
 | day | .mantine-DateInput-day | Month day control |
 | weekNumber | .mantine-DateInput-weekNumber | Week number td element |
+| presetsRoot | .mantine-DateInput-presetsRoot | Root element, contains calendar and presets |
+| presetsList | .mantine-DateInput-presetsList | Presets wrapper element |
+| presetButton | .mantine-DateInput-presetButton | Preset button |
 
 
 --------------------------------------------------------------------------------
@@ -67533,7 +67666,7 @@ yet, you can continue using Mantine 8.x until you are ready to update React and 
 
 ## Update dependencies
 
-* Update all `@mantine/*` packages to version 9.3.0
+* Update all `@mantine/*` packages to version 9.3.1
 * If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
 * If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
@@ -113631,7 +113764,7 @@ function Demo() {
         mask="(999) 999-9999"
         placeholder="(___) ___-____"
         label="Phone"
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
       />
 
       <Button type="submit" mt="md">
@@ -114830,9 +114963,14 @@ export function getEvents(date: string): ScheduleEventData[] {
 
 ### [9.2.0](https://mantine.dev/llms/changelog-9-2-0.md) (May 12, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.2.0
+- Patches:
+  - [9.2.2](https://github.com/mantinedev/mantine/releases/tag/9.2.2) (May 27, 2026)
+  - [9.2.1](https://github.com/mantinedev/mantine/releases/tag/9.2.1) (May 14, 2026)
 
 ### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
+- Patches:
+  - [9.1.1](https://github.com/mantinedev/mantine/releases/tag/9.1.1) (April 27, 2026)
 
 ### [9.0.0](https://mantine.dev/llms/changelog-9-0-0.md) (March 31, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.0.0
@@ -115345,9 +115483,14 @@ See all releases: https://mantine.dev/changelog/all-releases
 
 ### [9.2.0](https://mantine.dev/llms/changelog-9-2-0.md) (May 12, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.2.0
+- Patches:
+  - [9.2.2](https://github.com/mantinedev/mantine/releases/tag/9.2.2) (May 27, 2026)
+  - [9.2.1](https://github.com/mantinedev/mantine/releases/tag/9.2.1) (May 14, 2026)
 
 ### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
+- Patches:
+  - [9.1.1](https://github.com/mantinedev/mantine/releases/tag/9.1.1) (April 27, 2026)
 
 ### [9.0.0](https://mantine.dev/llms/changelog-9-0-0.md) (March 31, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.0.0

@@ -530,6 +530,15 @@ function Demo() {
 ```
 
 
+### Touch devices
+
+On touch devices (most notably iOS Safari, which does not fire the `contextmenu` event),
+the dropdown is opened with a long-press instead. Use the `longPressDelay` prop to control
+how long the element must be pressed before the dropdown opens, `500`ms by default. To
+prevent the native text-selection callout from appearing under the dropdown on touch
+devices, `Popover.ContextMenu` disables text selection (`user-select: none`) on the wrapped
+element.
+
 ## Nested popovers
 
 Nested popovers require children rendering without [Portal](https://mantine.dev/llms/core-portal.md). Usually, you
@@ -649,6 +658,7 @@ Other elements will not support `Space` and `Enter` key presses.
 |------|------|---------|-------------|
 | children | React.ReactNode | required | Element that opens the popover when right-clicked. Dropdown is positioned at the cursor. The trigger element must not call `event.preventDefault()` in its own `onContextMenu` handler, otherwise the native context menu is not suppressed. |
 | disabled | boolean | - | If set, the right-click trigger is disabled and the browser's default context menu is shown |
+| longPressDelay | number | - | Delay in ms before a touch long-press opens the dropdown on touch devices, `500` by default |
 
 **Popover.Target props**
 
@@ -669,6 +679,7 @@ Other elements will not support `Space` and `Enter` key presses.
 |------|------|---------|-------------|
 | children | React.ReactNode | required | Element that opens the popover when right-clicked. Dropdown is positioned at the cursor. The trigger element must not call `event.preventDefault()` in its own `onContextMenu` handler, otherwise the native context menu is not suppressed. |
 | disabled | boolean | - | If set, the right-click trigger is disabled and the browser's default context menu is shown |
+| longPressDelay | number | - | Delay in ms before a touch long-press opens the dropdown on touch devices, `500` by default |
 
 
 #### Styles API

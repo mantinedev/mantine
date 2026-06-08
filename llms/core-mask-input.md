@@ -189,7 +189,9 @@ function Demo() {
 
 `MaskInput` is uncontrolled by design – it manages its own DOM value internally.
 To integrate with [use-form](https://mantine.dev/llms/form-use-form.md), pass the initial value via `defaultValue`
-and use the `onChangeRaw` callback to write the raw (unmasked) value to form state:
+and use the `onChangeRaw` callback to write the raw (unmasked) value to form state.
+In uncontrolled form mode, pass `{ forceUpdate: false }` to `form.setFieldValue` so the
+input is not remounted on every keystroke:
 
 ```tsx
 import { Button, MaskInput } from '@mantine/core';
@@ -207,7 +209,7 @@ function Demo() {
         mask="(999) 999-9999"
         placeholder="(___) ___-____"
         label="Phone"
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw)}
+        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
       />
 
       <Button type="submit" mt="md">

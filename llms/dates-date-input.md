@@ -28,6 +28,34 @@ function Demo() {
 ```
 
 
+## Presets
+
+Use the `presets` prop to add custom date presets. Presets are displayed next to the calendar:
+
+```tsx
+import dayjs from 'dayjs';
+import { DateInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateInput
+      label="With presets"
+      placeholder="Select date"
+      presets={[
+        { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD'), label: 'Yesterday' },
+        { value: dayjs().format('YYYY-MM-DD'), label: 'Today' },
+        { value: dayjs().add(1, 'day').format('YYYY-MM-DD'), label: 'Tomorrow' },
+        { value: dayjs().add(1, 'month').format('YYYY-MM-DD'), label: 'Next month' },
+        { value: dayjs().add(1, 'year').format('YYYY-MM-DD'), label: 'Next year' },
+        { value: dayjs().subtract(1, 'month').format('YYYY-MM-DD'), label: 'Last month' },
+        { value: dayjs().subtract(1, 'year').format('YYYY-MM-DD'), label: 'Last year' },
+      ]}
+    />
+  );
+}
+```
+
+
 ## Value format
 
 Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label.
@@ -316,6 +344,7 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
 | pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to the `Popover` component |
+| presets | DatePickerPreset<"default">[] | - | Predefined values to pick from |
 | previousDisabled | boolean | - | Disables previous control |
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button `aria-label` |
@@ -373,3 +402,6 @@ DateInput component supports Styles API. With Styles API, you can customize styl
 | weekday | .mantine-DateInput-weekday | Weekday th element |
 | day | .mantine-DateInput-day | Month day control |
 | weekNumber | .mantine-DateInput-weekNumber | Week number td element |
+| presetsRoot | .mantine-DateInput-presetsRoot | Root element, contains calendar and presets |
+| presetsList | .mantine-DateInput-presetsList | Presets wrapper element |
+| presetButton | .mantine-DateInput-presetButton | Preset button |

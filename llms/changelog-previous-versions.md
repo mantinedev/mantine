@@ -9,9 +9,14 @@
 
 ### [9.2.0](https://mantine.dev/llms/changelog-9-2-0.md) (May 12, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.2.0
+- Patches:
+  - [9.2.2](https://github.com/mantinedev/mantine/releases/tag/9.2.2) (May 27, 2026)
+  - [9.2.1](https://github.com/mantinedev/mantine/releases/tag/9.2.1) (May 14, 2026)
 
 ### [9.1.0](https://mantine.dev/llms/changelog-9-1-0.md) (April 21, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.1.0
+- Patches:
+  - [9.1.1](https://github.com/mantinedev/mantine/releases/tag/9.1.1) (April 27, 2026)
 
 ### [9.0.0](https://mantine.dev/llms/changelog-9-0-0.md) (March 31, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.0.0
