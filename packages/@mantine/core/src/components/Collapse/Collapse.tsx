@@ -47,6 +47,7 @@ const defaultProps = {
   transitionTimingFunction: 'ease',
   animateOpacity: true,
   orientation: 'vertical',
+  keepMounted: false,
 } satisfies Partial<CollapseProps>;
 
 export const Collapse = factory<CollapseFactory>((props) => {
