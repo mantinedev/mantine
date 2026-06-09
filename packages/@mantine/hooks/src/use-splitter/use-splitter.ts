@@ -55,6 +55,8 @@ export interface UseSplitterOptions {
   shiftStep?: number;
   /** Text direction for keyboard nav, `'ltr'` by default */
   dir?: 'ltr' | 'rtl';
+  /** Restore the two panels adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked, `true` by default */
+  resetOnDoubleClick?: boolean;
   /** Enable/disable the hook, `true` by default */
   enabled?: boolean;
 }
@@ -78,6 +80,7 @@ export interface UseSplitterReturnValue<T extends HTMLElement = any> {
     'aria-valuemax': number;
     tabIndex: number;
     onKeyDown: React.KeyboardEventHandler;
+    onDoubleClick: React.MouseEventHandler;
     'data-active': boolean | undefined;
     'data-orientation': 'horizontal' | 'vertical';
   };
@@ -89,6 +92,9 @@ export interface UseSplitterReturnValue<T extends HTMLElement = any> {
   expand: (panelIndex: number) => void;
   /** Toggle collapse of a panel */
   toggleCollapse: (panelIndex: number) => void;
+  /** Reset the two panels adjacent to a handle to their default ratio, preserving
+   * their combined size */
+  reset: (handleIndex: number) => void;
 }
 
 function clamp(value: number, min: number, max: number): number {
@@ -377,6 +383,7 @@ export function useSplitter<T extends HTMLElement = any>(
     step = 1,
     shiftStep = 10,
     dir = 'ltr',
+    resetOnDoubleClick = true,
     enabled = true,
   } = options;
 
@@ -479,6 +486,52 @@ export function useSplitter<T extends HTMLElement = any>(
     [collapsePanel, expandPanel]
   );
 
+  const emitCollapseTransitions = useCallback(
+    (prev: number[], next: number[], indices: number[], preCollapseSnapshot: number[]) => {
+      const onChange = optionsRef.current.onCollapseChange;
+      for (const idx of indices) {
+        const wasCollapsed = prev[idx] === 0;
+        const nowCollapsed = next[idx] === 0;
+        if (!wasCollapsed && nowCollapsed) {
+          preCollapseSizesRef.current = [...preCollapseSnapshot];
+          onChange?.(idx, true);
+        } else if (wasCollapsed && !nowCollapsed) {
+          onChange?.(idx, false);
+        }
+      }
+    },
+    []
+  );
+
+  const reset = useCallback(
+    (handleIndex: number) => {
+      const prev = currentSizesRef.current;
+      const currentPanels = optionsRef.current.panels;
+
+      const beforeIdx = handleIndex;
+      const afterIdx = handleIndex + 1;
+      if (beforeIdx < 0 || afterIdx >= prev.length) {
+        return;
+      }
+
+      const total = prev[beforeIdx] + prev[afterIdx];
+      const defBefore = currentPanels[beforeIdx].defaultSize;
+      const defAfter = currentPanels[afterIdx].defaultSize;
+      const defTotal = defBefore + defAfter;
+      const targetBefore = defTotal === 0 ? total / 2 : total * (defBefore / defTotal);
+
+      const next = applyAdjacentOnly(
+        prev,
+        currentPanels,
+        beforeIdx,
+        targetBefore - prev[beforeIdx]
+      );
+      emitCollapseTransitions(prev, next, [beforeIdx, afterIdx], prev);
+      updateSizes(next);
+    },
+    [emitCollapseTransitions, updateSizes]
+  );
+
   const containerRefCallback: React.RefCallback<T | null> = useCallback((node) => {
     containerRef.current = node;
   }, []);
@@ -569,24 +622,12 @@ export function useSplitter<T extends HTMLElement = any>(
           );
 
           const prevSizes = currentSizesRef.current;
-          const beforeWasCollapsed = prevSizes[s.handleIndex] === 0;
-          const afterWasCollapsed = prevSizes[s.handleIndex + 1] === 0;
-          const beforeNowCollapsed = newSizes[s.handleIndex] === 0;
-          const afterNowCollapsed = newSizes[s.handleIndex + 1] === 0;
-
-          if (!beforeWasCollapsed && beforeNowCollapsed) {
-            preCollapseSizesRef.current = [...s.startSizes];
-            opts.onCollapseChange?.(s.handleIndex, true);
-          } else if (beforeWasCollapsed && !beforeNowCollapsed) {
-            opts.onCollapseChange?.(s.handleIndex, false);
-          }
-
-          if (!afterWasCollapsed && afterNowCollapsed) {
-            preCollapseSizesRef.current = [...s.startSizes];
-            opts.onCollapseChange?.(s.handleIndex + 1, true);
-          } else if (afterWasCollapsed && !afterNowCollapsed) {
-            opts.onCollapseChange?.(s.handleIndex + 1, false);
-          }
+          emitCollapseTransitions(
+            prevSizes,
+            newSizes,
+            [s.handleIndex, s.handleIndex + 1],
+            s.startSizes
+          );
 
           currentSizesRef.current = newSizes;
           setCurrentSizes(newSizes);
@@ -732,27 +773,15 @@ export function useSplitter<T extends HTMLElement = any>(
 
           if (delta !== 0) {
             const newSizes = applyConstraints(currentSizes, panels, index, delta, redistribute);
-            const beforeWas = currentSizes[index] === 0;
-            const afterWas = currentSizes[index + 1] === 0;
-            const beforeNow = newSizes[index] === 0;
-            const afterNow = newSizes[index + 1] === 0;
-
-            if (!beforeWas && beforeNow) {
-              preCollapseSizesRef.current = [...currentSizes];
-              onCollapseChange?.(index, true);
-            } else if (beforeWas && !beforeNow) {
-              onCollapseChange?.(index, false);
-            }
-
-            if (!afterWas && afterNow) {
-              preCollapseSizesRef.current = [...currentSizes];
-              onCollapseChange?.(index + 1, true);
-            } else if (afterWas && !afterNow) {
-              onCollapseChange?.(index + 1, false);
-            }
-
+            emitCollapseTransitions(currentSizes, newSizes, [index, index + 1], currentSizes);
             updateSizes(newSizes);
           }
+        },
+        onDoubleClick: () => {
+          if (!enabled || !resetOnDoubleClick) {
+            return;
+          }
+          reset(index);
         },
         'data-active': activeHandle === index || undefined,
         'data-orientation': orient,
@@ -766,12 +795,14 @@ export function useSplitter<T extends HTMLElement = any>(
       dir,
       step,
       shiftStep,
+      resetOnDoubleClick,
       activeHandle,
       redistribute,
       getHandleRefCallback,
       toggleCollapsePanel,
       updateSizes,
-      onCollapseChange,
+      emitCollapseTransitions,
+      reset,
     ]
   );
 
@@ -803,6 +834,7 @@ export function useSplitter<T extends HTMLElement = any>(
     collapse: collapsePanel,
     expand: expandPanel,
     toggleCollapse: toggleCollapsePanel,
+    reset,
   };
 }
 

@@ -696,4 +696,75 @@ describe('useSplitter', () => {
       expect(sum).toBe(100);
     });
   });
+
+  describe('reset', () => {
+    it('reset(handleIndex) restores adjacent panels to their default ratio and leaves other panels untouched', () => {
+      const { result } = renderHook(() =>
+        useSplitter({ panels: [{ defaultSize: 20 }, { defaultSize: 30 }, { defaultSize: 50 }] })
+      );
+
+      act(() => {
+        result.current.setSizes([10, 20, 70]);
+      });
+
+      act(() => {
+        result.current.reset(0);
+      });
+
+      // combined size of panes 0 and 1 (30) preserved, restored to 20:30 ratio
+      expect(result.current.sizes).toEqual([12, 18, 70]);
+    });
+
+    it('reset clamps adjacent panels to their min constraints', () => {
+      const { result } = renderHook(() =>
+        useSplitter({
+          panels: [{ defaultSize: 20 }, { defaultSize: 60, min: 50 }, { defaultSize: 20 }],
+        })
+      );
+
+      act(() => {
+        result.current.setSizes([55, 5, 40]);
+      });
+
+      act(() => {
+        result.current.reset(0);
+      });
+
+      // default ratio would put pane 0 at 15, but pane 1 must keep its min of 50
+      expect(result.current.sizes).toEqual([10, 50, 40]);
+    });
+
+    it('double-clicking a handle resets its adjacent panels to the default ratio', () => {
+      render(
+        <TestComponent panels={[{ defaultSize: 20 }, { defaultSize: 30 }, { defaultSize: 50 }]} />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      for (let i = 0; i < 10; i++) {
+        fireEvent.keyDown(handle, { key: 'ArrowRight' });
+      }
+      expect(handle.getAttribute('aria-valuenow')).toBe('30');
+
+      fireEvent.doubleClick(handle);
+      expect(handle.getAttribute('aria-valuenow')).toBe('20');
+    });
+
+    it('does not reset on double click when resetOnDoubleClick is false', () => {
+      render(
+        <TestComponent
+          panels={[{ defaultSize: 20 }, { defaultSize: 30 }, { defaultSize: 50 }]}
+          resetOnDoubleClick={false}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      for (let i = 0; i < 10; i++) {
+        fireEvent.keyDown(handle, { key: 'ArrowRight' });
+      }
+      expect(handle.getAttribute('aria-valuenow')).toBe('30');
+
+      fireEvent.doubleClick(handle);
+      expect(handle.getAttribute('aria-valuenow')).toBe('30');
+    });
+  });
 });
