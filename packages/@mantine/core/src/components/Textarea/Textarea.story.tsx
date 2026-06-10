@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Splitter } from '../Splitter';
 import { Textarea } from './Textarea';
 
 export default { title: 'Textarea' };
@@ -32,6 +33,24 @@ export function Autosize() {
     <div style={{ padding: 40 }}>
       <Textarea label="Autosize" placeholder="Autosize" autosize minRows={4} />
     </div>
+  );
+}
+
+export function AutosizeInSplitter() {
+  const value =
+    'Drag the splitter handle to resize this pane. As the textarea width changes the autosize height should recalculate so that all of this text stays visible without scrolling. Resizing the pane narrower should make the textarea taller and wider should make it shorter.';
+
+  return (
+    <Splitter h={400}>
+      <Splitter.Pane defaultSize={50} min={20}>
+        <div style={{ padding: 20 }}>
+          <Textarea label="Autosize in Splitter" autosize minRows={2} defaultValue={value} />
+        </div>
+      </Splitter.Pane>
+      <Splitter.Pane defaultSize={50} min={20} bg="teal">
+        <div style={{ padding: 20, color: 'white' }}>Drag the handle to resize the left pane</div>
+      </Splitter.Pane>
+    </Splitter>
   );
 }
 

@@ -114,6 +114,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     withSuccessStyles,
     mod,
     attributes,
+    dir,
     ...others
   } = props;
 
@@ -222,6 +223,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     >
       <Input
         component="div"
+        dir={dir}
         error={error}
         success={success}
         leftSection={leftSection}
@@ -253,6 +255,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
           {...getStyles('innerInput')}
           disabled={disabled}
           id={uuid}
+          dir={dir}
           {...rest}
           aria-describedby={describedBy}
           autoComplete={rest.autoComplete || 'off'}

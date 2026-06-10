@@ -4,7 +4,7 @@
   font-size: var(--text-fz, var(--mantine-font-size-md));
   line-height: var(--text-lh, var(--mantine-line-height-md));
   font-weight: var(--mantine-font-weight-regular);
-  text-wrap: var(--text-text-wrap, var(--mantine-text-wrap, wrap));
+  text-wrap: var(--text-text-wrap, var(--mantine-text-wrap));
   margin: 0;
   padding: 0;
 

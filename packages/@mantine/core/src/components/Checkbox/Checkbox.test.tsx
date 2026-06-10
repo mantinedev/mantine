@@ -1,5 +1,5 @@
-import { createRef } from 'react';
-import { render, screen, tests } from '@mantine-tests/core';
+import { createRef, useState } from 'react';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Checkbox, CheckboxProps, CheckboxStylesNames } from './Checkbox';
 
 const defaultProps: CheckboxProps = {
@@ -177,5 +177,65 @@ describe('@mantine/core/Checkbox', () => {
     const ref = createRef<HTMLDivElement>();
     render(<Checkbox {...defaultProps} rootRef={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+
+  it('does not toggle controlled checkbox on click when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(<Checkbox checked={false} readOnly onChange={spy} aria-label="readonly" />);
+    const input = screen.getByLabelText('readonly') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not toggle uncontrolled checkbox on click when readOnly is set', async () => {
+    render(<Checkbox defaultChecked readOnly aria-label="readonly" />);
+    const input = screen.getByLabelText('readonly') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(true);
+  });
+
+  it('keeps controlled readOnly checkbox in sync with external value changes after a click', async () => {
+    function Controlled() {
+      const [checked, setChecked] = useState(false);
+      return (
+        <>
+          <Checkbox checked={checked} readOnly aria-label="readonly" />
+          <button type="button" onClick={() => setChecked((c) => !c)}>
+            toggle
+          </button>
+        </>
+      );
+    }
+
+    render(<Controlled />);
+    const input = screen.getByLabelText('readonly') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+
+    await userEvent.click(screen.getByText('toggle'));
+    expect(input.checked).toBe(true);
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(true);
+
+    await userEvent.click(screen.getByText('toggle'));
+    expect(input.checked).toBe(false);
+  });
+
+  it('does not change Checkbox.Group value when a readOnly checkbox is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <Checkbox.Group value={[]} onChange={spy}>
+        <Checkbox value="test-value" readOnly aria-label="readonly" />
+      </Checkbox.Group>
+    );
+
+    await userEvent.click(screen.getByLabelText('readonly'));
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('readonly')).not.toBeChecked();
   });
 });
