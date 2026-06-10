@@ -214,6 +214,10 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   const withContextProps = {
     checked: ctx?.value.includes(rest.value as string) ?? checked,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (readOnly) {
+        return;
+      }
+
       ctx?.onChange(event);
       onChange?.(event);
     },
@@ -272,7 +276,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           inert={rest.inert}
           type="checkbox"
           onClick={(event) => {
-            if (readOnly) {
+            if (readOnly && withContextProps.checked === undefined) {
               event.preventDefault();
             }
 

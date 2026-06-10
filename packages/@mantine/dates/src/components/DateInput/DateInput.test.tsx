@@ -373,6 +373,30 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, 'April 11, 2022');
   });
 
+  it('correctly handles presets', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        onChange={spy}
+        presets={[
+          { label: 'Today', value: '2022-04-11' },
+          { label: 'Tomorrow', value: '2022-04-12' },
+        ]}
+      />
+    );
+
+    await userEvent.tab();
+    expectOpenedPopover(container);
+    expect(screen.getByText('Today')).toBeInTheDocument();
+    expect(screen.getByText('Tomorrow')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Tomorrow'));
+    expect(spy).toHaveBeenLastCalledWith('2022-04-12');
+    expectValue(container, 'April 12, 2022');
+    expectNoPopover(container);
+  });
+
   it('has correct default __staticSelector', () => {
     const { container } = render(
       <DateInput

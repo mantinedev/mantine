@@ -31,7 +31,7 @@ export interface DialogProps
   /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default false */
   keepMounted?: boolean;
 
-  /** If set, displays the close button @default true */
+  /** If set, displays the close button @default false */
   withCloseButton?: boolean;
 
   /** Called on close button click */

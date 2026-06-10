@@ -52,3 +52,8 @@ export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
+
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};
