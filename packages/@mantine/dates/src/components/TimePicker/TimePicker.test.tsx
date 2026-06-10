@@ -780,4 +780,32 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-seconds')).toHaveValue('');
     expect(spy).toHaveBeenLastCalledWith('');
   });
+
+  it('keeps the dropdown open after selecting a preset by default', async () => {
+    render(<TimePicker {...defaultProps} withDropdown presets={['12:30', '15:45']} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    const preset = screen.getByText('12:30');
+    await userEvent.click(preset);
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('12');
+    expect(screen.getByText('12:30')).toBeInTheDocument();
+  });
+
+  it('closes the dropdown after selecting a preset when closeDropdownOnPresetSelect is set', async () => {
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        closeDropdownOnPresetSelect
+        presets={['12:30', '15:45']}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.click(screen.getByText('12:30'));
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('12');
+    expect(screen.queryByText('15:45')).not.toBeInTheDocument();
+  });
 });
