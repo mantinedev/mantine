@@ -76,6 +76,9 @@ export interface SplitterProps
   /** Determines whether the thumb with grip icon is displayed on the handle @default true */
   withHandle?: boolean;
 
+  /** Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked @default true */
+  resetOnDoubleClick?: boolean;
+
   /** Ref to imperative splitter API (sizes, collapse, expand, etc.) */
   splitterRef?: React.RefObject<UseSplitterReturnValue | null>;
 
@@ -97,6 +100,7 @@ const defaultProps = {
   orientation: 'horizontal',
   lineSize: 2,
   withHandle: true,
+  resetOnDoubleClick: true,
 } satisfies Partial<SplitterProps>;
 
 const varsResolver = createVarsResolver<SplitterFactory>((theme, { lineSize, handleColor }) => ({
@@ -122,6 +126,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
     handleColor,
     handleIcon,
     withHandle,
+    resetOnDoubleClick,
     splitterRef,
     children,
     className,
@@ -160,6 +165,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
     step,
     shiftStep,
     dir,
+    resetOnDoubleClick,
   });
 
   useImperativeHandle(splitterRef, () => splitter, [splitter]);
