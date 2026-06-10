@@ -88,6 +88,11 @@ export const Demo_presetsRange = {
   render: renderDemo(demos.presetsRange),
 };
 
+export const Demo_closeDropdownOnPresetSelect = {
+  name: '⭐ Demo: closeDropdownOnPresetSelect',
+  render: renderDemo(demos.closeDropdownOnPresetSelect),
+};
+
 export const Demo_dropdownPosition = {
   name: '⭐ Demo: dropdownPosition',
   render: renderDemo(demos.dropdownPosition),

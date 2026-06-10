@@ -1,4 +1,5 @@
 import { DateStringValue, MonthEventPositionData, MonthPositionedEventData } from '../../types';
+import { getVisibleColumnMap } from './get-visible-columns';
 
 const DAYS_IN_WEEK = 7;
 const DAY_WIDTH = 100 / DAYS_IN_WEEK;
@@ -8,6 +9,12 @@ interface GetRenderableMonthEventSegmentsInput {
   groupedByDay: Record<string, MonthPositionedEventData[]>;
   maxEventsPerDay: number;
   week: DateStringValue[];
+
+  /** Week-relative indices (0–6) of hidden columns, e.g. weekend days */
+  hiddenColumns?: number[];
+
+  /** Number of visible columns, defaults to 7 */
+  columnsCount?: number;
 }
 
 interface EventDayRange {
@@ -74,15 +81,19 @@ function getSegmentHanging(
 function getSegmentPosition(
   event: MonthPositionedEventData,
   segment: SegmentRange,
-  eventRange: EventDayRange
+  eventRange: EventDayRange,
+  visibleColumnMap: number[],
+  columnsCount: number
 ): MonthEventPositionData {
   const touchesStart = segment.startDayIndex === eventRange.startDayIndex;
   const touchesEnd = segment.endDayIndex === eventRange.endDayIndex;
+  const startColumn = visibleColumnMap[segment.startDayIndex];
+  const endColumn = visibleColumnMap[segment.endDayIndex];
 
   return {
     ...event.position,
-    startOffset: (segment.startDayIndex / DAYS_IN_WEEK) * 100,
-    width: ((segment.endDayIndex - segment.startDayIndex + 1) / DAYS_IN_WEEK) * 100,
+    startOffset: (startColumn / columnsCount) * 100,
+    width: ((endColumn - startColumn + 1) / columnsCount) * 100,
     row: segment.row,
     hanging: getSegmentHanging(event.position.hanging, touchesStart, touchesEnd),
   };
@@ -97,7 +108,11 @@ export function getRenderableMonthEventSegments({
   groupedByDay,
   maxEventsPerDay,
   week,
+  hiddenColumns = [],
+  columnsCount = DAYS_IN_WEEK,
 }: GetRenderableMonthEventSegmentsInput): RenderableMonthEventSegment[] {
+  const hiddenColumnSet = new Set(hiddenColumns);
+  const visibleColumnMap = getVisibleColumnMap(hiddenColumns);
   const eventIndexes = new Map<MonthPositionedEventData, number>();
   const eventRanges = new Map<MonthPositionedEventData, EventDayRange>();
   const renderRows = new Map<MonthPositionedEventData, Map<number, number>>();
@@ -116,6 +131,10 @@ export function getRenderableMonthEventSegments({
   };
 
   for (let dayIndex = 0; dayIndex < week.length; dayIndex += 1) {
+    if (hiddenColumnSet.has(dayIndex)) {
+      continue;
+    }
+
     const dayEvents = groupedByDay[week[dayIndex]] || [];
     const dayEventIds = new Set(dayEvents.map((event) => getEventKey(event)));
     const dayWeekEvents = events.filter((event) => {
@@ -173,7 +192,13 @@ export function getRenderableMonthEventSegments({
     let currentSegment: SegmentRange | null = null;
 
     const addSegment = (segment: SegmentRange) => {
-      const position = getSegmentPosition(event, segment, eventRange);
+      const position = getSegmentPosition(
+        event,
+        segment,
+        eventRange,
+        visibleColumnMap,
+        columnsCount
+      );
 
       segments.push({
         event,

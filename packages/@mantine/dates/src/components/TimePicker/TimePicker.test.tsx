@@ -436,6 +436,29 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-seconds')).toHaveValue('15');
   });
 
+  it('does not get stuck at the field maximum when typing more digits (like input[type="time"])', async () => {
+    render(<TimePicker {...defaultProps} format="24h" />);
+
+    // Type "59" then keep typing "12" without re-focusing the field. The minutes
+    // field should roll over to "12" instead of sticking at the maximum (59).
+    await userEvent.type(screen.getByLabelText('test-minutes'), '5912');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('12');
+  });
+
+  it('replaces the value when a typed digit cannot extend it into a valid value', async () => {
+    render(<TimePicker {...defaultProps} withSeconds format="24h" />);
+
+    // Hours field max is 23. Typing "2" then "5" cannot form 25, so the entry
+    // restarts from "5" producing "05" (matches input[type="time"]).
+    await userEvent.type(screen.getByLabelText('test-hours'), '25');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('05');
+
+    // Seconds field max is 59. Typing "5", "9", then "9" rolls the trailing "9"
+    // into a fresh entry instead of staying stuck at 59.
+    await userEvent.type(screen.getByLabelText('test-seconds'), '599');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('09');
+  });
+
   it('handles default value correctly', async () => {
     render(<TimePicker {...defaultProps} withSeconds defaultValue="12:34:55" />);
     expect(screen.getByLabelText('test-hours')).toHaveValue('12');
@@ -756,5 +779,33 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-minutes')).toHaveValue('');
     expect(screen.getByLabelText('test-seconds')).toHaveValue('');
     expect(spy).toHaveBeenLastCalledWith('');
+  });
+
+  it('keeps the dropdown open after selecting a preset by default', async () => {
+    render(<TimePicker {...defaultProps} withDropdown presets={['12:30', '15:45']} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    const preset = screen.getByText('12:30');
+    await userEvent.click(preset);
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('12');
+    expect(screen.getByText('12:30')).toBeInTheDocument();
+  });
+
+  it('closes the dropdown after selecting a preset when closeDropdownOnPresetSelect is set', async () => {
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        closeDropdownOnPresetSelect
+        presets={['12:30', '15:45']}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.click(screen.getByText('12:30'));
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('12');
+    expect(screen.queryByText('15:45')).not.toBeInTheDocument();
   });
 });

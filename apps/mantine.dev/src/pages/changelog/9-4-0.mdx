@@ -95,6 +95,15 @@ for the currently visible date range.
 
 <Demo data={MonthViewDemos.withAgenda} />
 
+## MonthView hide weekend days
+
+[MonthView](/schedule/month-view) now supports `withWeekendDays` prop. Set it to `false`
+to hide weekend days: the grid shrinks to the remaining columns and events that span hidden
+days are clipped to the visible days. The days that are considered weekend are controlled by
+the `weekendDays` prop (or `DatesProvider`, `[0, 6]` by default).
+
+<Demo data={MonthViewDemos.withoutWeekendDays} />
+
 ## Input success state
 
 All inputs based on `Input` and `Input.Wrapper` now support a `success` prop. When set, it changes the
@@ -122,3 +131,7 @@ are pushed into the queue. Notifications with equal priority keep insertion orde
 default behavior is unchanged (`priority` defaults to `0`).
 
 <Demo data={NotificationsDemos.priority} />
+
+## Other changes
+
+- [useLongPress](/hooks/use-long-press) hook now handles `onTouchCancel` events: the returned handlers include an `onTouchCancel` callback so that a long press is correctly canceled when the touch is interrupted by the system (incoming call, browser gesture, etc.).

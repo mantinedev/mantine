@@ -43,7 +43,13 @@ export function SpinInput({
 
     const clearValue = value.replace(/\D/g, '');
     if (clearValue !== '') {
-      const parsedValue = parseInt(clearValue, 10);
+      let parsedValue = 0;
+      for (let i = 0; i < clearValue.length; i += 1) {
+        const digit = clearValue.charCodeAt(i) - 48;
+        const next = parsedValue * 10 + digit;
+        parsedValue = next > max ? digit : next;
+      }
+
       const clampedValue =
         allowTemporaryZero && parsedValue === 0 && min > 0 ? 0 : clamp(parsedValue, min, max);
 

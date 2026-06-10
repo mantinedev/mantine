@@ -1,3 +1,6 @@
+import { createRef } from 'react';
+import { act, fireEvent } from '@testing-library/react';
+import { UseSplitterReturnValue } from '@mantine/hooks';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Splitter, SplitterProps, SplitterStylesNames } from './Splitter';
 
@@ -96,5 +99,51 @@ describe('@mantine/core/Splitter', () => {
       </Splitter>
     );
     expect(screen.getByText('Sidebar')).toHaveStyle({ flexGrow: '0', flexBasis: '15rem' });
+  });
+
+  it('resets adjacent panes to their default ratio when their handle is double-clicked', () => {
+    const ref = createRef<UseSplitterReturnValue>();
+    render(
+      <Splitter splitterRef={ref}>
+        <Splitter.Pane defaultSize={20} key="1">
+          A
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={30} key="2">
+          B
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={50} key="3">
+          C
+        </Splitter.Pane>
+      </Splitter>
+    );
+
+    act(() => ref.current!.setSizes([10, 20, 70]));
+
+    fireEvent.doubleClick(screen.getAllByRole('separator')[0]);
+
+    expect(ref.current!.sizes).toEqual([12, 18, 70]);
+  });
+
+  it('does not reset on double click when resetOnDoubleClick is false', () => {
+    const ref = createRef<UseSplitterReturnValue>();
+    render(
+      <Splitter splitterRef={ref} resetOnDoubleClick={false}>
+        <Splitter.Pane defaultSize={20} key="1">
+          A
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={30} key="2">
+          B
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={50} key="3">
+          C
+        </Splitter.Pane>
+      </Splitter>
+    );
+
+    act(() => ref.current!.setSizes([10, 20, 70]));
+
+    fireEvent.doubleClick(screen.getAllByRole('separator')[0]);
+
+    expect(ref.current!.sizes).toEqual([10, 20, 70]);
   });
 });

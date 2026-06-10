@@ -160,6 +160,7 @@ export function TextareaAutosize({
   const libRef = useRef<HTMLTextAreaElement | null>(null);
   const ref = useMergedRef(libRef, userRef);
   const heightRef = useRef(0);
+  const widthRef = useRef(0);
 
   const resizeTextarea = () => {
     const node = libRef.current;
@@ -200,6 +201,26 @@ export function TextareaAutosize({
     const handleResize = () => resizeTextarea();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const node = libRef.current;
+
+    if (!node || typeof ResizeObserver === 'undefined') {
+      return undefined;
+    }
+
+    widthRef.current = node.offsetWidth;
+
+    const observer = new ResizeObserver(() => {
+      if (libRef.current && libRef.current.offsetWidth !== widthRef.current) {
+        widthRef.current = libRef.current.offsetWidth;
+        resizeTextarea();
+      }
+    });
+
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
