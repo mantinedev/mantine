@@ -182,6 +182,9 @@ export interface TimePickerProps
   /** Time presets to display in the dropdown */
   presets?: TimePickerPresets;
 
+  /** If set, the dropdown is closed when a value is selected from the presets list @default false */
+  closeDropdownOnPresetSelect?: boolean;
+
   /** Maximum height of the content displayed in the dropdown in px @default 200 */
   maxDropdownContentHeight?: number;
 
@@ -287,6 +290,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     secondsRef,
     amPmRef,
     presets,
+    closeDropdownOnPresetSelect,
     maxDropdownContentHeight,
     scrollAreaProps,
     attributes,
@@ -355,6 +359,15 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     }
   };
 
+  const handlePresetSelect = (timeString: string) => {
+    controller.setTimeString(timeString);
+
+    if (closeDropdownOnPresetSelect) {
+      setDropdownOpened(false);
+      popoverProps?.onChange?.(false);
+    }
+  };
+
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
       const computedValue = controller.values;
@@ -395,6 +408,9 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
             onClick={(event) => {
               onClick?.(event);
               controller.focus('hours');
+              if (!disabled) {
+                setDropdownOpened(true);
+              }
             }}
             onMouseDown={(event) => {
               event.preventDefault();
@@ -580,7 +596,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
           {presets ? (
             <TimePresets
               value={controller.hiddenInputValue}
-              onChange={controller.setTimeString}
+              onChange={handlePresetSelect}
               format={format}
               presets={presets}
               amPmLabels={amPmLabels}

@@ -207,6 +207,30 @@ export function WeekendDays() {
   );
 }
 
+export function WithoutWeekendDays() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView date={month} events={events} withWeekendDays={false} />
+    </div>
+  );
+}
+
+export function WithoutWeekendDaysWeekNumbers() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView date={month} events={events} withWeekendDays={false} withWeekNumbers />
+    </div>
+  );
+}
+
+export function WithoutWeekendDaysSunday() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView date={month} events={events} withWeekendDays={false} firstDayOfWeek={0} />
+    </div>
+  );
+}
+
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>

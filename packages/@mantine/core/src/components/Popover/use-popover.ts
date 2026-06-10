@@ -72,12 +72,19 @@ function getPopoverMiddlewares(
   }
 
   if (middlewaresOptions.shift) {
+    const shiftOptions =
+      typeof middlewaresOptions.shift === 'boolean' ? {} : middlewaresOptions.shift;
     middlewares.push(
-      shift(
-        typeof middlewaresOptions.shift === 'boolean'
-          ? { limiter: limitShift(), padding: 5 }
-          : { limiter: limitShift(), padding: 5, ...middlewaresOptions.shift }
-      )
+      shift((state) => {
+        const isVerticalPlacement =
+          state.placement.startsWith('top') || state.placement.startsWith('bottom');
+        return {
+          limiter: limitShift(),
+          padding: 5,
+          ...(options.width === 'target' && isVerticalPlacement ? { mainAxis: false } : null),
+          ...shiftOptions,
+        };
+      })
     );
   }
 
@@ -171,18 +178,25 @@ export function usePopover(options: UsePopoverOptions) {
   });
 
   useEffect(() => {
-    if (!floating.refs.reference.current || !floating.refs.floating.current) {
-      return;
+    if (!options.keepMounted) {
+      return undefined;
     }
 
-    if (_opened) {
-      return autoUpdate(
-        floating.refs.reference.current,
-        floating.refs.floating.current,
-        floating.update
-      );
+    const referenceElement = floating.refs.reference.current;
+    const floatingElement = floating.refs.floating.current;
+
+    if (_opened && referenceElement && floatingElement) {
+      return autoUpdate(referenceElement, floatingElement, floating.update);
     }
-  }, [_opened, floating.update]);
+
+    return undefined;
+  }, [
+    options.keepMounted,
+    _opened,
+    floating.update,
+    floating.elements.reference,
+    floating.elements.floating,
+  ]);
 
   const measuredAfterShowRef = useRef(false);
 

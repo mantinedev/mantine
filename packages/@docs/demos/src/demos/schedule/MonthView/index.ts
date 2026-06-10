@@ -1,6 +1,7 @@
 export { usage } from './MonthView.demo.usage';
 export { withWeekNumbers } from './MonthView.demo.withWeekNumbers';
 export { withoutWeekDays } from './MonthView.demo.withoutWeekDays';
+export { withoutWeekendDays } from './MonthView.demo.withoutWeekendDays';
 export { firstDayOfWeek } from './MonthView.demo.firstDayOfWeek';
 export { weekdayFormat } from './MonthView.demo.weekdayFormat';
 export { consistentWeeks } from './MonthView.demo.consistentWeeks';
