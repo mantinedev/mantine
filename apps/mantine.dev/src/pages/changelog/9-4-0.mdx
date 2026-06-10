@@ -131,3 +131,7 @@ are pushed into the queue. Notifications with equal priority keep insertion orde
 default behavior is unchanged (`priority` defaults to `0`).
 
 <Demo data={NotificationsDemos.priority} />
+
+## Other changes
+
+- [useLongPress](/hooks/use-long-press) hook now handles `onTouchCancel` events: the returned handlers include an `onTouchCancel` callback so that a long press is correctly canceled when the touch is interrupted by the system (incoming call, browser gesture, etc.).
