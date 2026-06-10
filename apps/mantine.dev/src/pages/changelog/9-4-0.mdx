@@ -1,4 +1,4 @@
-import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, WeekViewDemos } from '@docs/demos';
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, TimePickerDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -131,6 +131,18 @@ are pushed into the queue. Notifications with equal priority keep insertion orde
 default behavior is unchanged (`priority` defaults to `0`).
 
 <Demo data={NotificationsDemos.priority} />
+
+## Splitter reset on double click
+
+[Splitter](/core/splitter) now supports `resetOnDoubleClick` prop. When enabled, double-clicking
+a resize handle restores the adjacent panes to their default ratio.
+
+## TimePicker close dropdown on preset select
+
+[TimePicker](/dates/time-picker) now supports `closeDropdownOnPresetSelect` prop. When set, the
+dropdown is closed once a value is selected from the presets list.
+
+<Demo data={TimePickerDemos.closeDropdownOnPresetSelect} />
 
 ## Other changes
 
