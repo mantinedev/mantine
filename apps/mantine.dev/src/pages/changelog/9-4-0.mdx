@@ -1,4 +1,4 @@
-import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, TimePickerDemos, WeekViewDemos } from '@docs/demos';
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, PieChartDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, TimePickerDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -143,6 +143,15 @@ a resize handle restores the adjacent panes to their default ratio.
 dropdown is closed once a value is selected from the presets list.
 
 <Demo data={TimePickerDemos.closeDropdownOnPresetSelect} />
+
+## Legend support for PieChart, DonutChart and FunnelChart
+
+[PieChart](/charts/pie-chart), [DonutChart](/charts/donut-chart) and [FunnelChart](/charts/funnel-chart)
+now support the `withLegend` prop. When enabled, a legend with the name and color of each segment
+is displayed. Hovering over a legend item highlights the corresponding segment. Use the `legendProps`
+prop to pass props down to the underlying recharts `Legend` component.
+
+<Demo data={PieChartDemos.legend} />
 
 ## Other changes
 
