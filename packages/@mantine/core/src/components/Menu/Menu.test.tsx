@@ -161,6 +161,39 @@ describe('@mantine/core/Menu', () => {
     expect(document.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(0);
   });
 
+  describe('ARIA roles of dropdown children', () => {
+    it('assigns role="presentation" to the initial focus placeholder', () => {
+      render(<TestContainer defaultOpened />);
+      const placeholder = screen.getByRole('menu').querySelector('[data-autofocus]');
+      expect(placeholder).toHaveAttribute('role', 'presentation');
+    });
+
+    it('assigns role="presentation" to the arrow', () => {
+      render(<TestContainer defaultOpened withArrow />);
+      expect(document.querySelector('.mantine-Menu-arrow')).toHaveAttribute('role', 'presentation');
+    });
+
+    it('assigns role="separator" to Menu.Divider and role="presentation" to Menu.Label', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Label>Section</Menu.Label>
+            <Menu.Item>Item</Menu.Item>
+            <Menu.Divider />
+          </Menu.Dropdown>
+        </Menu>
+      );
+      expect(screen.getByText('Section')).toHaveAttribute('role', 'presentation');
+      expect(screen.getByRole('menu').querySelector('.mantine-Menu-divider')).toHaveAttribute(
+        'role',
+        'separator'
+      );
+    });
+  });
+
   it('exposes related components as static properties', () => {
     expect(Menu.Item).toBe(MenuItem);
     expect(Menu.Dropdown).toBe(MenuDropdown);

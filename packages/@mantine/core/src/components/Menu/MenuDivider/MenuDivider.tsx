@@ -31,7 +31,11 @@ export const MenuDivider = factory<MenuDividerFactory>((props) => {
   const ctx = useMenuContext();
 
   return (
-    <Box {...ctx.getStyles('divider', { className, style, styles, classNames })} {...others} />
+    <Box
+      role="separator"
+      {...ctx.getStyles('divider', { className, style, styles, classNames })}
+      {...others}
+    />
   );
 });
 

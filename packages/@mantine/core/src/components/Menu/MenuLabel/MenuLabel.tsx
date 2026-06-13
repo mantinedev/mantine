@@ -30,7 +30,13 @@ export const MenuLabel = factory<MenuLabelFactory>((props) => {
   );
   const ctx = useMenuContext();
 
-  return <Box {...ctx.getStyles('label', { className, style, styles, classNames })} {...others} />;
+  return (
+    <Box
+      role="presentation"
+      {...ctx.getStyles('label', { className, style, styles, classNames })}
+      {...others}
+    />
+  );
 });
 
 MenuLabel.classes = classes;

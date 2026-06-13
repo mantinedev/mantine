@@ -130,6 +130,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
               {children}
 
               <FloatingArrow
+                role="presentation"
                 ref={ctx.arrowRef}
                 arrowX={ctx.arrowX}
                 arrowY={ctx.arrowY}
