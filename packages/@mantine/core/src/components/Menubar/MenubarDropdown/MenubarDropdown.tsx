@@ -66,7 +66,7 @@ export function MenubarDropdown(props: MenubarDropdownProps) {
   return (
     <Menu.Dropdown
       {...others}
-      data-menubar-dropdown
+      data-menubar-dropdown={ctx.id}
       onKeyDown={handleKeyDown}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

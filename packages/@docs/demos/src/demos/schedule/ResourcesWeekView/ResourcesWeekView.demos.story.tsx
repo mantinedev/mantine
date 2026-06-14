@@ -8,6 +8,11 @@ export const Demo_usage = {
   render: renderDemo(demos.usage),
 };
 
+export const Demo_allDayEvents = {
+  name: '⭐ Demo: allDayEvents',
+  render: renderDemo(demos.allDayEvents),
+};
+
 export const Demo_dragDrop = {
   name: '⭐ Demo: dragDrop',
   render: renderDemo(demos.dragDrop),

@@ -13,9 +13,9 @@ export const Demo_divider = {
   render: renderDemo(demos.divider),
 };
 
-export const Demo_horizontal = {
-  name: '⭐ Demo: horizontal',
-  render: renderDemo(demos.horizontal),
+export const Demo_vertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
 };
 
 export const Demo_stylesApi = {

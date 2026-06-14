@@ -486,7 +486,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
     expansionLimit: recurrenceExpansionLimit,
   });
 
-  const eventsData = getDayViewEvents({ events: expandedEvents, date, startTime, endTime });
+  const eventsData = getDayViewEvents({
+    events: expandedEvents,
+    date,
+    startTime,
+    endTime,
+    intervalMinutes,
+  });
 
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, slotIndex: number) => {
