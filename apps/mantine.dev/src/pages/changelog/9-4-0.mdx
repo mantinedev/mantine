@@ -1,4 +1,4 @@
-import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, PieChartDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, TimePickerDemos, WeekViewDemos } from '@docs/demos';
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, PieChartDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, ThemingDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -132,18 +132,6 @@ default behavior is unchanged (`priority` defaults to `0`).
 
 <Demo data={NotificationsDemos.priority} />
 
-## Splitter reset on double click
-
-[Splitter](/core/splitter) now supports `resetOnDoubleClick` prop. When enabled, double-clicking
-a resize handle restores the adjacent panes to their default ratio.
-
-## TimePicker close dropdown on preset select
-
-[TimePicker](/dates/time-picker) now supports `closeDropdownOnPresetSelect` prop. When set, the
-dropdown is closed once a value is selected from the presets list.
-
-<Demo data={TimePickerDemos.closeDropdownOnPresetSelect} />
-
 ## Legend support for PieChart, DonutChart and FunnelChart
 
 [PieChart](/charts/pie-chart), [DonutChart](/charts/donut-chart) and [FunnelChart](/charts/funnel-chart)
@@ -153,6 +141,19 @@ prop to pass props down to the underlying recharts `Legend` component.
 
 <Demo data={PieChartDemos.legend} />
 
+## autoContrast support for virtual colors
+
+[Virtual colors](/theming/colors/#virtual-colors) now support [autoContrast](/theming/theme-object/#autocontrast).
+Previously, `filled` components with a virtual color always used white text because the underlying color
+could not be resolved on the JavaScript side. The contrast color is now calculated separately for each
+color scheme based on the resolved background color, so text stays readable when the virtual color resolves
+to a light color in one scheme and a dark color in another. Switch between light and dark color schemes
+(`Ctrl + J`) to see the text color adjust:
+
+<Demo data={ThemingDemos.virtualColorsAutoContrast} />
+
 ## Other changes
 
+- [Splitter](/core/splitter) now supports `resetOnDoubleClick` prop. When enabled, double-clicking a resize handle restores the adjacent panes to their default ratio.
+- [TimePicker](/dates/time-picker) now supports `closeDropdownOnPresetSelect` prop. When set, the dropdown is closed once a value is selected from the presets list.
 - [useLongPress](/hooks/use-long-press) hook now handles `onTouchCancel` events: the returned handlers include an `onTouchCancel` callback so that a long press is correctly canceled when the touch is interrupted by the system (incoming call, browser gesture, etc.).
