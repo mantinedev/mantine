@@ -33,7 +33,10 @@ export type StylesApiRecord<
     : never;
 
 export type Styles<Payload extends FactoryPayload> = StylesApiRecord<Payload, CSSProperties>;
-export type ClassNames<Payload extends FactoryPayload> = StylesApiRecord<Payload, string>;
+export type ClassNames<Payload extends FactoryPayload> = StylesApiRecord<
+  Payload,
+  string | undefined
+>;
 export type ClassNamesArray<Payload extends FactoryPayload> = (
   | StylesApiRecord<Payload, string>
   | undefined
