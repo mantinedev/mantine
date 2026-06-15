@@ -2,7 +2,7 @@ import classes from './MdxVideo.module.css';
 
 interface VideoProps {
   src: string;
-  className?: string | undefined;
+  className?: string;
 }
 
 export function MdxVideo({ src }: VideoProps) {
