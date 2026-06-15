@@ -638,6 +638,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           slotsRef.current[index] = node!;
         }}
         mod={{
+          first: index === 0,
           'hour-start': slot.isHourStart,
           ...getBusinessHoursMod({
             time: slot.startTime,
