@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { clamp } from '@mantine/hooks';
 import { padTime } from '../TimePicker/utils/pad-time/pad-time';
 
@@ -35,6 +36,7 @@ export function SpinInput({
 }: SpinInputProps) {
   const maxDigit = getMaxDigit(max);
   const arrowsMax = max + 1 - step;
+  const shouldAdvanceZeroRef = useRef(false);
 
   const handleChange = (value: string) => {
     if (readOnly) {
@@ -53,11 +55,14 @@ export function SpinInput({
       const clampedValue =
         allowTemporaryZero && parsedValue === 0 && min > 0 ? 0 : clamp(parsedValue, min, max);
 
+      shouldAdvanceZeroRef.current = clampedValue === 0 && clearValue === '0';
       onChange(clampedValue);
 
       if (!disableAutoAdvance && (clampedValue > maxDigit || value.startsWith('00'))) {
         onNextInput?.();
       }
+    } else {
+      shouldAdvanceZeroRef.current = false;
     }
   };
 
@@ -67,19 +72,26 @@ export function SpinInput({
     }
 
     if (event.key === '0' || event.key === 'Num0') {
-      if (value === 0) {
+      const isValueSelected =
+        event.currentTarget.selectionStart === 0 &&
+        event.currentTarget.selectionEnd === event.currentTarget.value.length;
+
+      if (value === 0 && (!isValueSelected || shouldAdvanceZeroRef.current)) {
         event.preventDefault();
+        shouldAdvanceZeroRef.current = false;
         onNextInput?.();
       }
     }
 
     if (event.key === 'Home') {
       event.preventDefault();
+      shouldAdvanceZeroRef.current = false;
       onChange(min);
     }
 
     if (event.key === 'End') {
       event.preventDefault();
+      shouldAdvanceZeroRef.current = false;
       onChange(max);
     }
 
@@ -87,6 +99,7 @@ export function SpinInput({
       event.preventDefault();
 
       if (value !== null) {
+        shouldAdvanceZeroRef.current = false;
         onChange(null);
       } else {
         onPreviousInput?.();
@@ -105,12 +118,14 @@ export function SpinInput({
 
     if (event.key === 'ArrowUp') {
       event.preventDefault();
+      shouldAdvanceZeroRef.current = false;
       const newValue = value === null ? min : clamp(value + step, min, arrowsMax);
       onChange(newValue);
     }
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
+      shouldAdvanceZeroRef.current = false;
       const newValue = value === null ? arrowsMax : clamp(value - step, min, arrowsMax);
       onChange(newValue);
     }

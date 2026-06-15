@@ -37,6 +37,16 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-seconds')).toHaveFocus();
   });
 
+  it('allows editing 00 hours with a leading zero', async () => {
+    render(<TimePicker {...defaultProps} defaultValue="00:00" format="24h" />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.type(document.activeElement!, '02');
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('02');
+    expect(screen.getByLabelText('test-minutes')).toHaveFocus();
+  });
+
   it('manages focus properly (12h format)', async () => {
     render(<TimePicker {...defaultProps} withSeconds format="12h" />);
 
