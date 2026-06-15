@@ -4,7 +4,7 @@ import type { MantineTheme } from '../MantineProvider';
 import { PartialVarsResolver } from './create-vars-resolver/create-vars-resolver';
 
 export interface GetStylesApiOptions {
-  className?: string;
+  className?: string | undefined;
   style?: MantineStyleProp;
   focusable?: boolean;
   active?: boolean;

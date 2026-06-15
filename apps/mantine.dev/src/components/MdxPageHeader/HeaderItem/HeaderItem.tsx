@@ -5,7 +5,7 @@ import classes from './HeaderItem.module.css';
 interface HeaderItemProps {
   label: React.ReactNode;
   children: React.ReactNode;
-  className?: string;
+  className?: string | undefined;
 }
 
 export function HeaderItem({ label, children, className }: HeaderItemProps) {
