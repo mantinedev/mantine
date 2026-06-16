@@ -75,6 +75,7 @@ export type ResourcesDayViewStylesNames =
   | 'resourcesDayViewRowSlot'
   | 'resourcesDayViewRowSlots'
   | 'resourcesDayViewBackgroundEvent'
+  | 'resourcesDayViewAllDayEvent'
   | 'resourcesDayViewCurrentTimeIndicator'
   | 'resourcesDayViewCurrentTimeIndicatorLine'
   | 'resourcesDayViewCurrentTimeIndicatorThumb'
@@ -525,11 +526,13 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
 
   const [timeIndicatorOffset, setTimeIndicatorOffset] = useState(
-    getCurrentTimePosition({ startTime, endTime })
+    getCurrentTimePosition({ startTime, endTime, intervalMinutes })
   );
-  useInterval(() => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime })), 60000, {
-    autoInvoke: true,
-  });
+  useInterval(
+    () => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime, intervalMinutes })),
+    60000,
+    { autoInvoke: true }
+  );
   const showTimeIndicator =
     withCurrentTimeIndicator && isInTimeRange({ date: dayjs().toDate(), startTime, endTime });
   const formattedCurrentTime = withCurrentTimeBubble
@@ -664,7 +667,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   };
 
   const rows = orderedResources.map((resource, resourceIndex) => {
-    const allBgEvents = resourceEvents.backgroundTimedEvents[resource.id] || [];
+    const allBgEvents = [
+      ...(resourceEvents.backgroundTimedEvents[resource.id] || []),
+      ...(resourceEvents.backgroundAllDayEvents[resource.id] || []),
+    ];
 
     // oxlint-disable-next-line react/jsx-key
     const backgroundEventNodes = allBgEvents.map((event) => {
@@ -810,6 +816,31 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
       );
     });
 
+    const allDayEvents = resourceEvents.allDayEvents[resource.id] || [];
+
+    const allDayEventNodes = allDayEvents.map((event, index) => (
+      <Box
+        key={`all-day-${event.id}`}
+        {...getStyles('resourcesDayViewAllDayEvent', {
+          style: {
+            top: `calc(${index} * (var(--resources-day-view-all-day-height) + 2px) + 2px)`,
+          },
+        })}
+      >
+        <ScheduleEvent
+          event={event}
+          autoSize
+          nowrap
+          renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
+          radius={radius}
+          mode={mode}
+          onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+          style={{ width: '100%', height: '100%' }}
+        />
+      </Box>
+    ));
+
     const moreEventsForResource =
       maxEventsPerTimeSlot !== undefined
         ? getOverlapClusters(allRegularEvents)
@@ -889,8 +920,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         renderGroupLabel={renderGroupLabel}
         scrolledX={scrolledX}
         groupInfo={hasGroups ? resourceGroupMap[resourceIndex] : undefined}
+        allDayCount={allDayEvents.length}
       >
         {backgroundEventNodes}
+        {allDayEventNodes}
         {regularEvents}
         {moreEventsForResource}
       </ResourcesDayViewRow>

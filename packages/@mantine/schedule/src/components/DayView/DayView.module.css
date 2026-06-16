@@ -46,7 +46,7 @@
 .dayViewTimeSlots {
   position: relative;
 
-  &:where(:first-of-type) .dayViewSlot:first-of-type {
+  &:where(:first-of-type) .dayViewSlot:where([data-first]) {
     border-top-color: transparent;
   }
 }

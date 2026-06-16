@@ -1,4 +1,5 @@
 export { color } from './FunnelChart.demo.color';
+export { legend } from './FunnelChart.demo.legend';
 export { noTooltip } from './FunnelChart.demo.noTooltip';
 export { size } from './FunnelChart.demo.size';
 export { strokeColor } from './FunnelChart.demo.strokeColor';

@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
-import { DEFAULT_THEME, rem } from '../../core';
+import {
+  colorsTuple,
+  createTheme,
+  DEFAULT_THEME,
+  MantineProvider,
+  rem,
+  useMantineColorScheme,
+  virtualColor,
+} from '../../core';
 import { FileButton } from '../FileButton';
 import { Button, ButtonProps } from './Button';
 
@@ -35,6 +43,61 @@ export function AutoContrast() {
     >
       {buttons}
     </div>
+  );
+}
+
+const virtualColorTheme = createTheme({
+  autoContrast: true,
+  primaryColor: 'adaptive',
+  colors: {
+    white: colorsTuple('#FFFFFF'),
+    black: colorsTuple('#000000'),
+    // Resolves to a black background in light scheme and a white background in dark scheme
+    adaptive: virtualColor({ name: 'adaptive', dark: 'white', light: 'black' }),
+    // Resolves to a light (yellow) background in light scheme and a dark (violet) one in dark scheme
+    brand: virtualColor({ name: 'brand', dark: 'violet', light: 'yellow' }),
+  },
+});
+
+function VirtualColorAutoContrastContent() {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 16,
+        padding: 40,
+      }}
+    >
+      <Button variant="default" onClick={toggleColorScheme}>
+        Toggle color scheme (current: {colorScheme})
+      </Button>
+
+      <Button color="adaptive" autoContrast>
+        adaptive — autoContrast
+      </Button>
+      <Button color="adaptive" autoContrast={false}>
+        adaptive — no autoContrast
+      </Button>
+
+      <Button color="brand" autoContrast>
+        brand — autoContrast
+      </Button>
+      <Button color="brand" autoContrast={false}>
+        brand — no autoContrast
+      </Button>
+    </div>
+  );
+}
+
+export function VirtualColorAutoContrast() {
+  return (
+    <MantineProvider theme={virtualColorTheme}>
+      <VirtualColorAutoContrastContent />
+    </MantineProvider>
   );
 }
 

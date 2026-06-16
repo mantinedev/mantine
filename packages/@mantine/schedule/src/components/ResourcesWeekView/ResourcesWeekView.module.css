@@ -4,6 +4,7 @@
   --resources-week-view-slot-width: 60px;
   --resources-week-view-row-height: 64px;
   --resources-week-view-group-label-width: 80px;
+  --resources-week-view-all-day-height: 20px;
 
   @mixin where-light {
     --resources-week-view-border-color: var(--mantine-color-gray-3);
@@ -325,6 +326,12 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+}
+
+.resourcesWeekViewAllDayEvent {
+  position: absolute;
+  height: var(--resources-week-view-all-day-height);
+  z-index: 3;
 }
 
 .resourcesWeekViewResizeHandle {

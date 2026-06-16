@@ -80,6 +80,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
         transition={ctx.transitionProps?.transition || 'fade'}
         duration={ctx.transitionProps?.duration ?? 150}
         keepMounted={ctx.keepMounted}
+        keepMountedMode={ctx.keepMountedMode}
         exitDuration={
           typeof ctx.transitionProps?.exitDuration === 'number'
             ? ctx.transitionProps.exitDuration

@@ -24,10 +24,10 @@ export function Usage() {
   );
 }
 
-export function Horizontal() {
+export function Vertical() {
   return (
     <div style={{ padding: 40 }}>
-      <DataList orientation="horizontal">
+      <DataList orientation="vertical">
         {data.map((item) => (
           <DataList.Item key={item.label}>
             <DataList.ItemLabel>{item.label}</DataList.ItemLabel>
@@ -54,10 +54,10 @@ export function WithDivider() {
   );
 }
 
-export function HorizontalWithDivider() {
+export function VerticalWithDivider() {
   return (
     <div style={{ padding: 40 }}>
-      <DataList orientation="horizontal" withDivider>
+      <DataList orientation="vertical" withDivider>
         {data.map((item) => (
           <DataList.Item key={item.label}>
             <DataList.ItemLabel>{item.label}</DataList.ItemLabel>

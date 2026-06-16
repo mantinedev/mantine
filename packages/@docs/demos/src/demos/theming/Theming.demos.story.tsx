@@ -127,3 +127,8 @@ export const Demo_virtualColors = {
   name: '⭐ Demo: virtualColors',
   render: renderDemo(demos.virtualColors),
 };
+
+export const Demo_virtualColorsAutoContrast = {
+  name: '⭐ Demo: virtualColorsAutoContrast',
+  render: renderDemo(demos.virtualColorsAutoContrast),
+};

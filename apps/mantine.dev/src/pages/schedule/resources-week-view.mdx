@@ -13,6 +13,15 @@ via the `resourceId` property on event data.
 
 <Demo data={ResourcesWeekViewDemos.usage} />
 
+## All-day events
+
+Events that span a whole day (start at `00:00:00` and end at the next day `00:00:00`) are
+rendered as full-width bars within their day column. Foreground all-day events are pinned to
+the top of the column and stack when there are several; all-day events with
+`display: 'background'` tint the whole day column.
+
+<Demo data={ResourcesWeekViewDemos.allDayEvents} />
+
 ## Drag and drop
 
 Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback

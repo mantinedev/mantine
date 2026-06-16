@@ -1,5 +1,6 @@
 import { cloneElement, use } from 'react';
-import { createEventHandler, getSingleElementChild, useProps } from '../../../core';
+import { useMergedRef } from '@mantine/hooks';
+import { createEventHandler, getRefProp, getSingleElementChild, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
 import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
@@ -34,6 +35,7 @@ export function HoverCardTarget(props: HoverCardTargetProps) {
 
   const ctx = useHoverCardContext();
   const groupContext = use(HoverCardGroupContext);
+  const targetRef = useMergedRef(getRefProp(child), ctx.assignTarget);
 
   if (groupContext.withinGroup && ctx.getReferenceProps && ctx.reference) {
     const referenceProps = ctx.getReferenceProps();
@@ -55,12 +57,14 @@ export function HoverCardTarget(props: HoverCardTargetProps) {
 
   const eventListeners = { onMouseEnter, onMouseLeave };
 
+  const clonedProps: any = {
+    ...(eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners),
+    ref: targetRef,
+  };
+
   return (
     <Popover.Target refProp={refProp} {...others}>
-      {cloneElement(
-        child,
-        eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners
-      )}
+      {cloneElement(child, clonedProps)}
     </Popover.Target>
   );
 }

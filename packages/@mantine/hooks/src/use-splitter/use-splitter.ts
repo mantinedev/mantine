@@ -709,10 +709,15 @@ export function useSplitter<T extends HTMLElement = any>(
   );
 
   const emitCollapseTransitions = useCallback(
-    (prev: number[], next: number[], indices: number[], preCollapseSnapshot: number[]) => {
+    (
+      prev: SplitterPaneSize[],
+      next: number[],
+      indices: number[],
+      preCollapseSnapshot: SplitterPaneSize[]
+    ) => {
       const onChange = optionsRef.current.onCollapseChange;
       for (const idx of indices) {
-        const wasCollapsed = prev[idx] === 0;
+        const wasCollapsed = sizeMagnitude(prev[idx]) === 0;
         const nowCollapsed = next[idx] === 0;
         if (!wasCollapsed && nowCollapsed) {
           preCollapseSizesRef.current = [...preCollapseSnapshot];
@@ -727,31 +732,43 @@ export function useSplitter<T extends HTMLElement = any>(
 
   const reset = useCallback(
     (handleIndex: number) => {
-      const prev = currentSizesRef.current;
-      const currentPanels = optionsRef.current.panels;
+      const raw = currentSizesRef.current;
 
       const beforeIdx = handleIndex;
       const afterIdx = handleIndex + 1;
-      if (beforeIdx < 0 || afterIdx >= prev.length) {
+      if (beforeIdx < 0 || afterIdx >= raw.length) {
         return;
       }
 
-      const total = prev[beforeIdx] + prev[afterIdx];
-      const defBefore = currentPanels[beforeIdx].defaultSize;
-      const defAfter = currentPanels[afterIdx].defaultSize;
+      const container = pixelMode ? containerSizeRef.current || measureContainer() : 0;
+      const rootFontSize = rootFontSizeRef.current;
+      const working = resolveWorkingSizes(raw, pixelMode, container, rootFontSize);
+      const resolvedPanels = optionsRef.current.panels.map((panel) =>
+        resolvePanel(panel, pixelMode, container, rootFontSize)
+      );
+
+      const total = working[beforeIdx] + working[afterIdx];
+      const defBefore = resolvedPanels[beforeIdx].defaultSize;
+      const defAfter = resolvedPanels[afterIdx].defaultSize;
       const defTotal = defBefore + defAfter;
       const targetBefore = defTotal === 0 ? total / 2 : total * (defBefore / defTotal);
 
       const next = applyAdjacentOnly(
-        prev,
-        currentPanels,
+        working,
+        resolvedPanels,
         beforeIdx,
-        targetBefore - prev[beforeIdx]
+        targetBefore - working[beforeIdx]
       );
-      emitCollapseTransitions(prev, next, [beforeIdx, afterIdx], prev);
-      updateSizes(next);
+      emitCollapseTransitions(raw, next, [beforeIdx, afterIdx], raw);
+      updateSizes(
+        next.map((value, i) =>
+          Math.abs(value - working[i]) > 1e-6
+            ? encodeSize(value, raw[i], pixelMode, container, rootFontSize)
+            : raw[i]
+        )
+      );
     },
-    [emitCollapseTransitions, updateSizes]
+    [emitCollapseTransitions, updateSizes, pixelMode, measureContainer]
   );
 
   const containerRefCallback: React.RefCallback<T | null> = useCallback((node) => {

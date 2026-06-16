@@ -1,4 +1,5 @@
 export { usage } from './PieChart.demo.usage';
+export { legend } from './PieChart.demo.legend';
 export { angle } from './PieChart.demo.angle';
 export { color } from './PieChart.demo.color';
 export { tooltip } from './PieChart.demo.tooltip';

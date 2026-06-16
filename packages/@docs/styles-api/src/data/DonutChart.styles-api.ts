@@ -5,6 +5,10 @@ export const DonutChartStylesApi: StylesApiData<DonutChartFactory> = {
   selectors: {
     root: 'Root element',
     label: 'Chart label, controlled by `chartLabel` prop',
+    legend: 'Legend root element',
+    legendItem: 'Legend item representing data series',
+    legendItemColor: 'Legend item color',
+    legendItemName: 'Legend item name',
     tooltip: 'Tooltip root element',
     tooltipBody: 'Tooltip wrapper around all items',
     tooltipItem: 'Tooltip item representing data series',

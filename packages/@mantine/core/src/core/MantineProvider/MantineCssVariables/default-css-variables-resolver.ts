@@ -1,5 +1,9 @@
 import { keys, rem } from '../../utils';
-import { getPrimaryContrastColor, getPrimaryShade } from '../color-functions';
+import {
+  getPrimaryContrastColor,
+  getPrimaryShade,
+  getVirtualColorContrast,
+} from '../color-functions';
 import { ConvertCSSVariablesInput } from '../convert-css-variables';
 import { MantineTheme } from '../theme.types';
 import { getCSSColorVariables } from './get-css-color-variables';
@@ -129,6 +133,18 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
           colorScheme: 'dark',
           withColorValues: true,
         })
+      );
+
+      result.light[`--mantine-color-${value.name}-contrast`] = getVirtualColorContrast(
+        value,
+        theme,
+        'light'
+      );
+
+      result.dark[`--mantine-color-${value.name}-contrast`] = getVirtualColorContrast(
+        value,
+        theme,
+        'dark'
       );
 
       return;

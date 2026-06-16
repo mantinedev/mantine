@@ -21,7 +21,7 @@ export interface ThumbProps extends Omit<React.ComponentProps<'div'>, 'value'> {
   children?: React.ReactNode;
   disabled: boolean | undefined;
   orientation?: 'horizontal' | 'vertical';
-  className?: string;
+  className?: string | undefined;
   style?: React.CSSProperties;
 }
 

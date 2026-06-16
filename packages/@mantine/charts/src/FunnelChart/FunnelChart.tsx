@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import {
   Funnel,
   FunnelProps,
   LabelList,
+  Legend,
+  LegendProps,
   FunnelChart as RechartsFunnelChart,
   ResponsiveContainer,
   Tooltip,
@@ -23,6 +26,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import classes from './FunnelChart.module.css';
 
@@ -33,7 +37,7 @@ export interface FunnelChartCell {
   color: MantineColor;
 }
 
-export type FunnelChartStylesNames = 'root' | ChartTooltipStylesNames;
+export type FunnelChartStylesNames = 'root' | ChartTooltipStylesNames | ChartLegendStylesNames;
 export type FunnelChartCssVariables = {
   root: '--chart-stroke-color' | '--chart-labels-color' | '--chart-size';
 };
@@ -45,6 +49,12 @@ export interface FunnelChartProps
 
   /** Determines whether the tooltip should be displayed when a section is hovered @default true */
   withTooltip?: boolean;
+
+  /** Determines whether the legend should be displayed @default false */
+  withLegend?: boolean;
+
+  /** Props passed down to recharts `Legend` component */
+  legendProps?: Omit<LegendProps, 'ref'>;
 
   /** Tooltip animation duration in ms @default 0 */
   tooltipAnimationDuration?: number;
@@ -123,6 +133,8 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
     vars,
     data,
     withTooltip,
+    withLegend,
+    legendProps,
     tooltipAnimationDuration,
     tooltipProps,
     strokeWidth,
@@ -141,6 +153,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
   } = props;
 
   const theme = useMantineTheme();
+  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
 
   const getStyles = useStyles<FunnelChartFactory>({
     name: 'FunnelChart',
@@ -170,6 +183,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
             data={data.map((entry) => ({
               ...entry,
               fill: getThemeColor(entry.color, theme),
+              fillOpacity: highlightedArea ? (highlightedArea === entry.name ? 1 : 0.2) : 1,
             }))}
             dataKey="value"
             isAnimationActive={false}
@@ -215,6 +229,28 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
                 />
               )}
               {...tooltipProps}
+            />
+          )}
+
+          {withLegend && (
+            <Legend
+              verticalAlign="bottom"
+              content={() => (
+                <ChartLegend
+                  payload={data.map((item) => ({
+                    value: item.name,
+                    color: getThemeColor(item.color, theme),
+                    dataKey: item.name,
+                  }))}
+                  onHighlight={setHighlightedArea}
+                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  centered
+                  attributes={attributes}
+                />
+              )}
+              {...legendProps}
             />
           )}
 

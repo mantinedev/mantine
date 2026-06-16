@@ -14,6 +14,7 @@ import { events } from './data';
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const weekStart = dayjs(date).subtract((dayjs(date).day() + 6) % 7, 'day');
 
   return (
     <div>
@@ -21,7 +22,7 @@ function Demo() {
         <Button onClick={() => setDate(dayjs(date).subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss'))}>
           Previous Week
         </Button>
-        <Text fw={500}>{dayjs(date).startOf('week').format('MMM D')} – {dayjs(date).endOf('week').format('MMM D, YYYY')}</Text>
+        <Text fw={500}>{weekStart.format('MMM D')} – {weekStart.add(6, 'day').format('MMM D, YYYY')}</Text>
         <Button onClick={() => setDate(dayjs(date).add(1, 'week').format('YYYY-MM-DD HH:mm:ss'))}>
           Next Week
         </Button>
@@ -41,6 +42,7 @@ function Demo() {
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const weekStart = dayjs(date).subtract((dayjs(date).day() + 6) % 7, 'day');
 
   return (
     <div>
@@ -51,8 +53,7 @@ function Demo() {
           Previous Week
         </Button>
         <Text fw={500}>
-          {dayjs(date).startOf('week').format('MMM D')} –{' '}
-          {dayjs(date).endOf('week').format('MMM D, YYYY')}
+          {weekStart.format('MMM D')} – {weekStart.add(6, 'day').format('MMM D, YYYY')}
         </Text>
         <Button onClick={() => setDate(dayjs(date).add(1, 'week').format('YYYY-MM-DD HH:mm:ss'))}>
           Next Week

@@ -76,13 +76,13 @@ export function getAgendaViewEvents({ rangeStart, rangeEnd, events }: GetAgendaV
       continue;
     }
 
-    groupEventByDate(validateEvent(event), groupedEvents, start, end);
-
     if (!ids.has(event.id)) {
       ids.add(event.id);
     } else {
       throw new Error(`[@mantine/schedule] AgendaView: Duplicated event ids found: ${event.id}`);
     }
+
+    groupEventByDate(validateEvent(event), groupedEvents, start, end);
   }
 
   return groupedEvents;

@@ -1,4 +1,4 @@
 export { usage } from './DataList.demo.usage';
 export { divider } from './DataList.demo.divider';
-export { horizontal } from './DataList.demo.horizontal';
+export { vertical } from './DataList.demo.vertical';
 export { stylesApi } from './DataList.demo.stylesApi';

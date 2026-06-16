@@ -8,6 +8,11 @@ export const Demo_usage = {
   render: renderDemo(demos.usage),
 };
 
+export const Demo_legend = {
+  name: '⭐ Demo: legend',
+  render: renderDemo(demos.legend),
+};
+
 export const Demo_angle = {
   name: '⭐ Demo: angle',
   render: renderDemo(demos.angle),
