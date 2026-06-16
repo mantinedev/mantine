@@ -414,10 +414,10 @@
     "package": "@mantine/core",
     "route": "/core/combobox",
     "description": "Create custom select, autocomplete or multiselect inputs",
-    "propsCount": 59,
+    "propsCount": 60,
     "llmUrl": "https://mantine.dev/llms/core-combobox.md",
     "componentDataUrl": "/mcp/components/core-combobox.json",
-    "searchText": "combobox create custom select, autocomplete or multiselect inputs @mantine/core /core/combobox arrowoffset arrowposition arrowradius arrowsize children disabled dropdownpadding floatingheight floatingstrategy hidedetached keepmounted middlewares offset onclose ondismiss onentertransitionend onexittransitionend onopen onoptionsubmit onpositionchange overlayprops portalprops position preventpositionchangewhenvisible radius readonly resetselectiononoptionhover returnfocus shadow size store transitionprops width witharrow withoverlay withinportal zindex active disabled selected value autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation children refprop autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation hidden label"
+    "searchText": "combobox create custom select, autocomplete or multiselect inputs @mantine/core /core/combobox arrowoffset arrowposition arrowradius arrowsize children disabled dropdownpadding floatingheight floatingstrategy hidedetached keepmounted keepmountedmode middlewares offset onclose ondismiss onentertransitionend onexittransitionend onopen onoptionsubmit onpositionchange overlayprops portalprops position preventpositionchangewhenvisible radius readonly resetselectiononoptionhover returnfocus shadow size store transitionprops width witharrow withoverlay withinportal zindex active disabled selected value autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation children refprop autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation hidden label"
   },
   {
     "id": "charts-composite-chart",
@@ -726,10 +726,10 @@
     "package": "@mantine/core",
     "route": "/core/hover-card",
     "description": "Display popover section when target element is hovered",
-    "propsCount": 47,
+    "propsCount": 48,
     "llmUrl": "https://mantine.dev/llms/core-hover-card.md",
     "componentDataUrl": "/mcp/components/core-hover-card.json",
-    "searchText": "hovercard display popover section when target element is hovered @mantine/core /core/hover-card arrowoffset arrowposition arrowradius arrowsize children clickoutsideevents closedelay closeonclickoutside closeonescape defaultopened disabled floatingstrategy hidedetached id initiallyopened keepmounted middlewares offset onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus width witharrow withoverlay withroles withinportal zindex children eventpropswrappername popuptype refprop children closedelay opendelay"
+    "searchText": "hovercard display popover section when target element is hovered @mantine/core /core/hover-card arrowoffset arrowposition arrowradius arrowsize children clickoutsideevents closedelay closeonclickoutside closeonescape defaultopened disabled floatingstrategy hidedetached id initiallyopened keepmounted keepmountedmode middlewares offset onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus width witharrow withoverlay withroles withinportal zindex children eventpropswrappername popuptype refprop children closedelay opendelay"
   },
   {
     "id": "core-hue-slider",
@@ -906,10 +906,10 @@
     "package": "@mantine/core",
     "route": "/core/menu",
     "description": "Combine a list of secondary actions into single interactive area",
-    "propsCount": 151,
+    "propsCount": 153,
     "llmUrl": "https://mantine.dev/llms/core-menu.md",
     "componentDataUrl": "/mcp/components/core-menu.json",
-    "searchText": "menu combine a list of secondary actions into single interactive area @mantine/core /core/menu alignitemslabels arrowoffset arrowposition arrowradius arrowsize checkicon children clickoutsideevents closedelay closeonclickoutside closeonescape closeonitemclick defaultopened disabled floatingstrategy hidedetached id keepmounted loop menuitemtabindex middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus trigger width witharrow withinitialfocusplaceholder withoverlay withinportal zindex children refprop children closemenuonclick color disabled leftsection rightsection clearsearchonclose disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size witharia witherrorstyles wrapperprops checkicon checked children closemenuonclick color defaultchecked disabled onchange rightsection value children defaultvalue onchange value checkicon checked children closemenuonclick color disabled onchange rightsection value children defaultvalue onchange value children disabled longpressdelay arrowoffset arrowposition arrowradius arrowsize closedelay disabled floatingstrategy hidedetached keepmounted middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus safeareapolygon shadow transitionprops width witharrow withoverlay withinportal zindex children closemenuonclick color disabled leftsection rightsection children refprop"
+    "searchText": "menu combine a list of secondary actions into single interactive area @mantine/core /core/menu alignitemslabels arrowoffset arrowposition arrowradius arrowsize checkicon children clickoutsideevents closedelay closeonclickoutside closeonescape closeonitemclick defaultopened disabled floatingstrategy hidedetached id keepmounted keepmountedmode loop menuitemtabindex middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus trigger width witharrow withinitialfocusplaceholder withoverlay withinportal zindex children refprop children closemenuonclick color disabled leftsection rightsection clearsearchonclose disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size witharia witherrorstyles wrapperprops checkicon checked children closemenuonclick color defaultchecked disabled onchange rightsection value children defaultvalue onchange value checkicon checked children closemenuonclick color disabled onchange rightsection value children defaultvalue onchange value children disabled longpressdelay arrowoffset arrowposition arrowradius arrowsize closedelay disabled floatingstrategy hidedetached keepmounted keepmountedmode middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus safeareapolygon shadow transitionprops width witharrow withoverlay withinportal zindex children closemenuonclick color disabled leftsection rightsection children refprop"
   },
   {
     "id": "dates-mini-calendar",
@@ -1206,10 +1206,10 @@
     "package": "@mantine/core",
     "route": "/core/popover",
     "description": "Display popover section relative to given target element",
-    "propsCount": 45,
+    "propsCount": 46,
     "llmUrl": "https://mantine.dev/llms/core-popover.md",
     "componentDataUrl": "/mcp/components/core-popover.json",
-    "searchText": "popover display popover section relative to given target element @mantine/core /core/popover arrowoffset arrowposition arrowradius arrowsize children clickoutsideevents closeonclickoutside closeonescape defaultopened disabled floatingstrategy hidedetached id keepmounted middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus width witharrow withoverlay withroles withinportal zindex children popuptype refprop children disabled longpressdelay"
+    "searchText": "popover display popover section relative to given target element @mantine/core /core/popover arrowoffset arrowposition arrowradius arrowsize children clickoutsideevents closeonclickoutside closeonescape defaultopened disabled floatingstrategy hidedetached id keepmounted keepmountedmode middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus width witharrow withoverlay withroles withinportal zindex children popuptype refprop children disabled longpressdelay"
   },
   {
     "id": "core-portal",
@@ -1482,10 +1482,10 @@
     "package": "@mantine/core",
     "route": "/core/splitter",
     "description": "Resizable split pane layout",
-    "propsCount": 15,
+    "propsCount": 16,
     "llmUrl": "https://mantine.dev/llms/core-splitter.md",
     "componentDataUrl": "/mcp/components/core-splitter.json",
-    "searchText": "splitter resizable split pane layout @mantine/core /core/splitter children handlecolor handleicon linesize oncollapsechange onresizeend onresizestart onsizechange orientation redistribute shiftstep sizes splitterref step withhandle"
+    "searchText": "splitter resizable split pane layout @mantine/core /core/splitter children handlecolor handleicon linesize oncollapsechange onresizeend onresizestart onsizechange orientation redistribute resetondoubleclick shiftstep sizes splitterref step withhandle"
   },
   {
     "id": "core-spoiler",
@@ -1686,10 +1686,10 @@
     "package": "@mantine/dates",
     "route": "/dates/time-picker",
     "description": "Captures time value from the user",
-    "propsCount": 71,
+    "propsCount": 72,
     "llmUrl": "https://mantine.dev/llms/dates-time-picker.md",
     "componentDataUrl": "/mcp/components/dates-time-picker.json",
-    "searchText": "timepicker captures time value from the user @mantine/dates /dates/time-picker ampminputlabel ampmlabels ampmref ampmselectprops clearbuttonprops clearsectionmode clearable defaultvalue description descriptionprops disabled error errorprops form format hiddeninputprops hoursinputlabel hoursinputprops hoursplaceholder hoursref hoursstep inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition max maxdropdowncontentheight min minhoursdigits minutesinputlabel minutesinputprops minutesplaceholder minutesref minutesstep name onblur onchange onfocus pastesplit pointer popoverprops presets radius readonly required reversetimecontrolslist rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops secondsinputlabel secondsinputprops secondsplaceholder secondsref secondsstep size type value withasterisk withdropdown witherrorstyles withseconds wrapperprops"
+    "searchText": "timepicker captures time value from the user @mantine/dates /dates/time-picker ampminputlabel ampmlabels ampmref ampmselectprops clearbuttonprops clearsectionmode clearable closedropdownonpresetselect defaultvalue description descriptionprops disabled error errorprops form format hiddeninputprops hoursinputlabel hoursinputprops hoursplaceholder hoursref hoursstep inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition max maxdropdowncontentheight min minhoursdigits minutesinputlabel minutesinputprops minutesplaceholder minutesref minutesstep name onblur onchange onfocus pastesplit pointer popoverprops presets radius readonly required reversetimecontrolslist rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops secondsinputlabel secondsinputprops secondsplaceholder secondsref secondsstep size type value withasterisk withdropdown witherrorstyles withseconds wrapperprops"
   },
   {
     "id": "dates-time-value",
@@ -1734,10 +1734,10 @@
     "package": "@mantine/core",
     "route": "/core/transition",
     "description": "Animate presence of component with pre-made animations",
-    "propsCount": 13,
+    "propsCount": 14,
     "llmUrl": "https://mantine.dev/llms/core-transition.md",
     "componentDataUrl": "/mcp/components/core-transition.json",
-    "searchText": "transition animate presence of component with pre-made animations @mantine/core /core/transition children duration enterdelay exitdelay exitduration keepmounted mounted onenter onentered onexit onexited timingfunction transition"
+    "searchText": "transition animate presence of component with pre-made animations @mantine/core /core/transition children duration enterdelay exitdelay exitduration keepmounted keepmountedmode mounted onenter onentered onexit onexited timingfunction transition"
   },
   {
     "id": "core-tree",

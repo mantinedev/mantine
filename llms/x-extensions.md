@@ -40,6 +40,7 @@ Community extensions list:
 * [MantineReactTable](https://v2.mantine-react-table.com/) – data table component based on TanStack table package
 * [Audio](https://gfazioli.github.io/mantine-audio/) – audio player with waveform visualization and live spectrum analyzer, built on Web Audio API
 * [BorderAnimate](https://gfazioli.github.io/mantine-border-animate/) – border animation styles (beam, glow, more...)
+* [Book](https://gfazioli.github.io/mantine-book/) – realistic iBooks-style book with draggable page curl – grab any point of the edge to turn pages, flat DOM fold or true 3D WebGL curl
 * [Clock](https://gfazioli.github.io/mantine-clock/) – analog clock component
 * [Compare](https://gfazioli.github.io/mantine-compare/) – image comparison slider component
 * [DepthSelect](https://gfazioli.github.io/mantine-depth-select/) – 3D stack select component inspired by macOS Time Machine

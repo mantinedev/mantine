@@ -92,8 +92,9 @@ with a number (for example `55`, `1.28`, `-100`, etc.). But there are several ca
 it is not possible to represent the value as a number:
 
 * Empty state is represented as an empty string – `''`
+* A standalone minus sign is represented as a string – `'-'`
 * Numbers that are larger than `Number.MAX_SAFE_INTEGER - 1` or smaller than `Number.MIN_SAFE_INTEGER + 1` are represented as strings – `'90071992547409910'`
-* Numbers with trailing decimal separators or trailing decimal zeros are represented as strings – `0.`, `0.0`, `-0.00`, etc.
+* Numbers with trailing decimal separators or trailing decimal zeros are represented as strings – `'0.'`, `'0.0'`, `'-0.00'`, etc.
 
 ## BigInt values
 

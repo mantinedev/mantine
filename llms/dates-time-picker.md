@@ -283,6 +283,26 @@ function Demo() {
 ```
 
 
+## Close dropdown on preset select
+
+Set `closeDropdownOnPresetSelect` prop to close the dropdown once a value is selected from the presets list:
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <TimePicker
+      label="Enter time"
+      withDropdown
+      closeDropdownOnPresetSelect
+      presets={['12:30', '15:45', '18:00', '20:15', '22:30']}
+    />
+  );
+}
+```
+
+
 ## Dropdown position
 
 By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
@@ -545,6 +565,7 @@ Keyboard interactions:
 | clearButtonProps | CloseButtonProps | - | Props passed down to clear button |
 | clearSectionMode | ClearSectionMode | - | Determines how the clear button and rightSection are rendered |
 | clearable | boolean | - | Determines whether the clear button should be displayed |
+| closeDropdownOnPresetSelect | boolean | - | If set, the dropdown is closed when a value is selected from the presets list |
 | defaultValue | string | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |

@@ -613,6 +613,7 @@ Other elements will not support `Space` and `Enter` key presses.
 | hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
 | id | string | - | Id base to create accessibility connections |
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the dropdown is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
 | offset | number \| FloatingAxesOffsets | - | Offset of the dropdown element |
 | onChange | (opened: boolean) => void | - | Called with current state when dropdown opens or closes |

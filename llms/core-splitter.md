@@ -337,6 +337,7 @@ If you need more control over the layout and styling, you can use the hook direc
 | onSizeChange | (sizes: number[]) => void | - | Called during resize with updated sizes |
 | orientation | "horizontal" \| "vertical" | - | Layout direction |
 | redistribute | "nearest" \| "equal" \| UseSplitterRedistributeFn | - | How to redistribute space when immediate neighbor is at its min/max |
+| resetOnDoubleClick | boolean | - | Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked |
 | shiftStep | number | - | Shift+arrow step size in percentage |
 | sizes | number[] | - | Controlled sizes (percentages summing to 100) |
 | splitterRef | RefObject<UseSplitterReturnValue<any> \| null> | - | Ref to imperative splitter API (sizes, collapse, expand, etc.) |

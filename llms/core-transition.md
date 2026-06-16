@@ -260,6 +260,7 @@ This is useful when you want to:
 | exitDelay | number | - | Delay in ms before exit transition starts |
 | exitDuration | number | - | Exit transition duration in ms |
 | keepMounted | boolean | - | If set, the element is kept in the DOM when hidden. React 19 `Activity` is used to preserve state while the element is not visible. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the element is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | mounted | boolean | required | Determines whether component should be mounted to the DOM |
 | onEnter | () => void | - | Called when enter transition starts |
 | onEntered | () => void | - | Called when enter transition ends |

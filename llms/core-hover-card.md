@@ -191,6 +191,7 @@ that is not required to understand the context.
 | id | string | - | Id base to create accessibility connections |
 | initiallyOpened | boolean | - | Initial opened state |
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the dropdown is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
 | offset | number \| FloatingAxesOffsets | - | Offset of the dropdown element |
 | onClose | () => void | - | Called when the dropdown is closed |

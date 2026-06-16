@@ -39,6 +39,30 @@ function Demo() {
 }
 ```
 
+## Read only
+
+Set the `readOnly` prop to prevent the checkbox value from being changed by user
+interaction. The checkbox still displays its current value and reflects programmatic
+updates to the `checked` prop, but clicking it (or pressing ) does not
+toggle its state and does not call the `onChange` handler:
+
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(true);
+  return (
+    <>
+      <Checkbox checked={checked} readOnly label="Read only checkbox" />
+      <button type="button" onClick={() => setChecked((c) => !c)}>
+        Toggle from outside
+      </button>
+    </>
+  );
+}
+```
+
 ## Checkbox with @mantine/form
 
 Example of using `Checkbox` with [@mantine/form](https://mantine.dev/llms/form-use-form.md):

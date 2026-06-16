@@ -32,7 +32,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -82,6 +82,7 @@ import { events } from './data';
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const weekStart = dayjs(date).subtract((dayjs(date).day() + 6) % 7, 'day');
 
   return (
     <div>
@@ -89,7 +90,7 @@ function Demo() {
         <Button onClick={() => setDate(dayjs(date).subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss'))}>
           Previous Week
         </Button>
-        <Text fw={500}>{dayjs(date).startOf('week').format('MMM D')} – {dayjs(date).endOf('week').format('MMM D, YYYY')}</Text>
+        <Text fw={500}>{weekStart.format('MMM D')} – {weekStart.add(6, 'day').format('MMM D, YYYY')}</Text>
         <Button onClick={() => setDate(dayjs(date).add(1, 'week').format('YYYY-MM-DD HH:mm:ss'))}>
           Next Week
         </Button>
@@ -109,7 +110,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -204,7 +205,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -267,6 +268,7 @@ function Demo() {
 Set `firstDayOfWeek` to control which day starts the week. 0 is Sunday, 1 is Monday (default), etc.
 
 ```tsx
+// Demo.tsx
 import { WeekView } from '@mantine/schedule';
 import { events } from './data';
 
@@ -281,6 +283,37 @@ function Demo() {
     />
   );
 }
+
+// data.ts
+import dayjs from 'dayjs';
+
+const startOfWeek = dayjs().subtract(dayjs().day(), 'day').format('YYYY-MM-DD');
+const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
+const twoDaysAfterStartOfWeek = dayjs(startOfWeek).add(2, 'day').format('YYYY-MM-DD');
+
+const events = [
+  {
+    id: 1,
+    title: 'Morning Standup',
+    start: `${startOfWeek} 09:00:00`,
+    end: `${startOfWeek} 09:30:00`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Team Meeting',
+    start: `${dayAfterStartOfWeek} 10:00:00`,
+    end: `${dayAfterStartOfWeek} 11:30:00`,
+    color: 'green',
+  },
+  {
+    id: 3,
+    title: 'Code Review',
+    start: `${twoDaysAfterStartOfWeek} 14:00:00`,
+    end: `${twoDaysAfterStartOfWeek} 15:00:00`,
+    color: 'violet',
+  },
+];
 ```
 
 
@@ -518,7 +551,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 const twoDaysAfter = dayjs(startOfWeek).add(2, 'day').format('YYYY-MM-DD');
 
@@ -633,7 +666,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -754,7 +787,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -887,7 +920,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -1011,7 +1044,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -1157,7 +1190,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const initialEvents: ScheduleEventData[] = [
@@ -1531,7 +1564,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const initialEvents: ScheduleEventData[] = [
@@ -1697,7 +1730,7 @@ import { ClockIcon, MapPinIcon } from '@phosphor-icons/react';
 import { Group, Text } from '@mantine/core';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events: ScheduleEventData[] = [
@@ -2039,7 +2072,7 @@ function Demo() {
 // data.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [
@@ -2327,7 +2360,7 @@ export function EventForm({
 // events.ts
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [

@@ -432,6 +432,30 @@ function Demo() {
 }
 ```
 
+## Usage with Next.js Pages Router
+
+```tsx
+// For file /tabs/[activeTab].tsx
+import { useRouter } from 'next/router';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const router = useRouter();
+
+  return (
+    <Tabs
+      value={router.query.activeTab as string}
+      onChange={(value) => router.push(`/tabs/${value}`)}
+    >
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
 ## Example with Scroller component
 
 Use [Scroller](https://mantine.dev/llms/core-scroller.md) component to make the tabs list scrollable when there are too many tabs to fit in the available space:

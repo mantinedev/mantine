@@ -1,0 +1,23 @@
+__turbopack_load_page_chunks__("/charts/line-chart", [
+  "static/chunks/0trdlhil42~fv.js",
+  "static/chunks/04qlxbvnx~vmc.js",
+  "static/chunks/0sg1zg79-nlb5.js",
+  "static/chunks/0z2rulusjp3i2.js",
+  "static/chunks/0z.z.jyp5r0tk.js",
+  "static/chunks/0eo7ibgt3bnj..js",
+  "static/chunks/17va0mqejdin-.js",
+  "static/chunks/03meww1q4i6l8.js",
+  "static/chunks/0l.5~uqv9223n.js",
+  "static/chunks/06p-lpq2vu721.js",
+  "static/chunks/13i2nbs9.bfs_.js",
+  "static/chunks/07x3_hebxirgp.js",
+  "static/chunks/04o9hrfv7mxwg.js",
+  "static/chunks/0co2l4h6.mlzz.js",
+  "static/chunks/058-ithi61vnw.js",
+  "static/chunks/0olqil9nq6ser.js",
+  "static/chunks/06a-l9d4ae-~y.js",
+  "static/chunks/0~x3crfcns5r..css",
+  "static/chunks/0nwh6cog1rjyz.css",
+  "static/chunks/0bhh5m6n92r1r.css",
+  "static/chunks/turbopack-08eej2r99hs52.js"
+])

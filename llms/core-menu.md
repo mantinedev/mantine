@@ -819,6 +819,7 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
 | id | string | - | Id base to create accessibility connections |
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the dropdown is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | loop | boolean | - | If set, arrow key presses wrap around from last item to first and vice versa |
 | menuItemTabIndex | 0 \| -1 | - | Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
@@ -964,6 +965,7 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | floatingStrategy | FloatingStrategy | - | Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) |
 | hideDetached | boolean | - | If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen |
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the dropdown is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
 | offset | number \| FloatingAxesOffsets | - | Offset of the dropdown element |
 | onChange | (opened: boolean) => void | - | Called with current state when dropdown opens or closes |
