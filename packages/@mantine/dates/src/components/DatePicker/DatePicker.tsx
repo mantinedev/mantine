@@ -141,6 +141,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     size,
     vars,
     attributes,
+    fullWidth,
     ...rest
   } = props;
 
@@ -188,6 +189,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       __staticSelector={__staticSelector || 'DatePicker'}
       onMouseLeave={onRootMouseLeave}
       size={size}
+      fullWidth={fullWidth}
       {...calendarProps}
       {...(!presets ? others : {})}
       __stopPropagation={__stopPropagation}
