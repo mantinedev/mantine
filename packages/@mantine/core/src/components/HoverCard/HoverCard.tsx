@@ -68,6 +68,7 @@ export function HoverCard(props: HoverCardProps) {
       value={{
         openDropdown: hoverCard.openDropdown,
         closeDropdown: hoverCard.closeDropdown,
+        assignTarget: hoverCard.assignTarget,
         getReferenceProps: hoverCard.getReferenceProps,
         getFloatingProps: hoverCard.getFloatingProps,
         reference: hoverCard.reference,

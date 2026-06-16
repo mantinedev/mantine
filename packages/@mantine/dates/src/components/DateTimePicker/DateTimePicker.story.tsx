@@ -117,6 +117,45 @@ export function RangeControlled() {
   );
 }
 
+export function RangePresets() {
+  const [value, setValue] = useState<[string | null, string | null]>([null, null]);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker
+        type="range"
+        placeholder="Date time range picker"
+        withSeconds
+        value={value}
+        onChange={setValue}
+        presets={[
+          {
+            value: [
+              dayjs().subtract(4, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+              dayjs().format('YYYY-MM-DD HH:mm:ss'),
+            ],
+            label: 'Last 4 hours',
+          },
+          {
+            value: [
+              dayjs().subtract(1, 'day').hour(9).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss'),
+              dayjs().subtract(1, 'day').hour(18).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss'),
+            ],
+            label: 'Yesterday 9:00 – 18:00',
+          },
+          {
+            value: [
+              dayjs().startOf('week').format('YYYY-MM-DD HH:mm:ss'),
+              dayjs().endOf('week').format('YYYY-MM-DD HH:mm:ss'),
+            ],
+            label: 'This week',
+          },
+        ]}
+      />
+      <div style={{ marginTop: 20 }}>Selected value: {JSON.stringify(value)}</div>
+    </div>
+  );
+}
+
 export function RangeWithSeconds() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>

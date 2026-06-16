@@ -47,8 +47,8 @@ export interface DataListProps
   /** Key of `theme.spacing` or any valid CSS value to set gap between items @default 'sm' */
   gap?: MantineSpacing;
 
-  /** Controls arrangement of label and value within each item. `vertical` renders label and value side by side, `horizontal` stacks label on top of value @default 'vertical' */
-  orientation?: 'vertical' | 'horizontal';
+  /** Controls arrangement of label and value within each item. `horizontal` renders label and value side by side, `vertical` stacks label on top of value @default 'horizontal' */
+  orientation?: 'horizontal' | 'vertical';
 
   /** Adds border between items @default false */
   withDivider?: boolean;
@@ -70,7 +70,7 @@ export type DataListFactory = Factory<{
 }>;
 
 const defaultProps = {
-  orientation: 'vertical',
+  orientation: 'horizontal',
 } satisfies Partial<DataListProps>;
 
 const varsResolver = createVarsResolver<DataListFactory>((_, { size, gap, labelWidth }) => ({

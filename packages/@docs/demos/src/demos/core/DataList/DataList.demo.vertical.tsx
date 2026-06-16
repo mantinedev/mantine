@@ -6,7 +6,7 @@ import { DataList } from '@mantine/core';
 
 function Demo() {
   return (
-    <DataList orientation="horizontal" withDivider>
+    <DataList orientation="vertical" withDivider>
       <DataList.Item>
         <DataList.ItemLabel>Name</DataList.ItemLabel>
         <DataList.ItemValue>John Doe</DataList.ItemValue>
@@ -26,7 +26,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <DataList orientation="horizontal" withDivider>
+    <DataList orientation="vertical" withDivider>
       <DataList.Item>
         <DataList.ItemLabel>Name</DataList.ItemLabel>
         <DataList.ItemValue>John Doe</DataList.ItemValue>
@@ -43,7 +43,7 @@ function Demo() {
   );
 }
 
-export const horizontal: MantineDemo = {
+export const vertical: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

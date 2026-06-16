@@ -8,6 +8,14 @@ export interface TransitionProps {
   /** If set, the element is kept in the DOM when hidden. React 19 `Activity` is used to preserve state while the element is not visible. */
   keepMounted?: boolean;
 
+  /**
+   * Controls how the element is hidden when `keepMounted` is set:
+   * `'activity'` – hidden with React 19 `Activity` component,
+   * `'display-none'` – hidden with `display: none` styles
+   * @default 'activity'
+   */
+  keepMountedMode?: 'activity' | 'display-none';
+
   /** Transition name or object */
   transition?: MantineTransition;
 
@@ -49,6 +57,7 @@ export type TransitionOverride = Partial<Omit<TransitionProps, 'mounted'>>;
 
 export function Transition({
   keepMounted,
+  keepMountedMode = 'activity',
   transition = 'fade',
   duration = 250,
   exitDuration = duration,
@@ -82,6 +91,10 @@ export function Transition({
 
   if (transitionDuration === 0) {
     if (keepMounted) {
+      if (keepMountedMode === 'display-none') {
+        return mounted ? <>{children({})}</> : children({ display: 'none' });
+      }
+
       return <Activity mode={mounted ? 'visible' : 'hidden'}>{children({})}</Activity>;
     }
     return mounted ? <>{children({})}</> : null;
@@ -90,20 +103,24 @@ export function Transition({
   const isExited = transitionStatus === 'exited';
 
   if (keepMounted) {
-    return (
-      <Activity mode={isExited ? 'hidden' : 'visible'}>
-        {children(
-          isExited
-            ? {}
-            : getTransitionStyles({
-                transition,
-                duration: transitionDuration,
-                state: transitionStatus,
-                timingFunction: transitionTimingFunction,
-              })
-        )}
-      </Activity>
+    const keepMountedChildren = children(
+      isExited
+        ? keepMountedMode === 'display-none'
+          ? { display: 'none' }
+          : {}
+        : getTransitionStyles({
+            transition,
+            duration: transitionDuration,
+            state: transitionStatus,
+            timingFunction: transitionTimingFunction,
+          })
     );
+
+    if (keepMountedMode === 'display-none') {
+      return keepMountedChildren;
+    }
+
+    return <Activity mode={isExited ? 'hidden' : 'visible'}>{keepMountedChildren}</Activity>;
   }
 
   return isExited ? null : (

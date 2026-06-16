@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const initialEvents: ScheduleEventData[] = [
@@ -36,7 +38,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const initialEvents: ScheduleEventData[] = [

@@ -4,6 +4,7 @@
   --resources-day-view-slot-width: 80px;
   --resources-day-view-row-height: 64px;
   --resources-day-view-group-label-width: 80px;
+  --resources-day-view-all-day-height: 20px;
 
   @mixin where-light {
     --resources-day-view-border-color: var(--mantine-color-gray-3);
@@ -351,6 +352,13 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+}
+
+.resourcesDayViewAllDayEvent {
+  position: absolute;
+  inset-inline: 1px;
+  height: var(--resources-day-view-all-day-height);
+  z-index: 3;
 }
 
 .resourcesDayViewResizeHandle {

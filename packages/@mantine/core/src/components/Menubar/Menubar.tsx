@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { useIsomorphicEffect, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useId, useIsomorphicEffect, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -95,6 +95,7 @@ export const Menubar = factory<MenubarFactory>((_props) => {
   });
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const menubarId = useId();
 
   const [_openIndex, setOpenIndex] = useUncontrolled<number | null>({
     value: openIndex,
@@ -179,7 +180,7 @@ export const Menubar = factory<MenubarFactory>((_props) => {
         const controls = target?.getAttribute('aria-controls');
         const dropdown = controls
           ? document.getElementById(controls)
-          : document.querySelector<HTMLElement>('[data-menubar-dropdown]');
+          : document.querySelector<HTMLElement>(`[data-menubar-dropdown="${menubarId}"]`);
         const items = dropdown?.querySelectorAll<HTMLElement>(
           '[data-menu-item]:not([data-disabled])'
         );
@@ -237,6 +238,7 @@ export const Menubar = factory<MenubarFactory>((_props) => {
 
   const contextValue: MenubarContextValue = {
     getStyles,
+    id: menubarId,
     openIndex: _openIndex,
     setOpenIndex,
     openMenu,

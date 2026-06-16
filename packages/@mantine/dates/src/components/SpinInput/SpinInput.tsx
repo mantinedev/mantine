@@ -67,7 +67,11 @@ export function SpinInput({
     }
 
     if (event.key === '0' || event.key === 'Num0') {
-      if (value === 0) {
+      const { selectionStart, selectionEnd, value: inputValue } = event.currentTarget;
+      const isEntireValueSelected =
+        inputValue.length > 0 && selectionStart === 0 && selectionEnd === inputValue.length;
+
+      if (value === 0 && !isEntireValueSelected) {
         event.preventDefault();
         onNextInput?.();
       }
