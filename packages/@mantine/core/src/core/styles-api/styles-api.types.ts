@@ -4,7 +4,7 @@ import type { MantineTheme } from '../MantineProvider';
 import { PartialVarsResolver } from './create-vars-resolver/create-vars-resolver';
 
 export interface GetStylesApiOptions {
-  className?: string;
+  className?: string | undefined;
   style?: MantineStyleProp;
   focusable?: boolean;
   active?: boolean;
@@ -33,7 +33,10 @@ export type StylesApiRecord<
     : never;
 
 export type Styles<Payload extends FactoryPayload> = StylesApiRecord<Payload, CSSProperties>;
-export type ClassNames<Payload extends FactoryPayload> = StylesApiRecord<Payload, string>;
+export type ClassNames<Payload extends FactoryPayload> = StylesApiRecord<
+  Payload,
+  string | undefined
+>;
 export type ClassNamesArray<Payload extends FactoryPayload> = (
   | StylesApiRecord<Payload, string>
   | undefined
