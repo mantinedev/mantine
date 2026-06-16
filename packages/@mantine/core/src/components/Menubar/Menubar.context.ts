@@ -5,6 +5,9 @@ import type { MenubarFactory } from './Menubar';
 export interface MenubarContextValue {
   getStyles: GetStylesApi<MenubarFactory>;
 
+  /** Unique id of the menubar instance, used to scope dropdown lookups across multiple menubars */
+  id: string;
+
   /** Index of the currently opened menu, `null` when all menus are closed */
   openIndex: number | null;
 

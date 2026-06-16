@@ -50,6 +50,19 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-am-pm')).toHaveFocus();
   });
 
+  // https://github.com/mantinedev/mantine/issues/8967
+  it('allows entering 01-09 hours over a selected 00 value', async () => {
+    render(<TimePicker {...defaultProps} format="24h" defaultValue="00:00" />);
+
+    const hoursInput = screen.getByLabelText('test-hours');
+    await userEvent.click(hoursInput);
+    await userEvent.keyboard('02');
+
+    expect(hoursInput).toHaveValue('02');
+    expect(screen.getByLabelText('test-minutes')).toHaveFocus();
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('00');
+  });
+
   it('handles backspace key correctly', async () => {
     render(<TimePicker {...defaultProps} withSeconds format="24h" />);
 
@@ -713,7 +726,7 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.type(screen.getByLabelText('test-hours'), '0');
     expect(screen.getByLabelText('test-hours')).toHaveFocus();
 
-    await userEvent.type(screen.getByLabelText('test-hours'), '0');
+    await userEvent.keyboard('0');
     expect(screen.getByLabelText('test-minutes')).toHaveFocus();
   });
 

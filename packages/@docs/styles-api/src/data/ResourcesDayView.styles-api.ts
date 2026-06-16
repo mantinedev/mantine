@@ -15,6 +15,7 @@ export const ResourcesDayViewStylesApi: StylesApiData<ResourcesDayViewFactory> =
     resourcesDayViewRowSlot: 'Individual time slot element',
     resourcesDayViewRowSlots: 'Container for all slots in a row',
     resourcesDayViewBackgroundEvent: 'Background event element',
+    resourcesDayViewAllDayEvent: 'All-day event element',
     resourcesDayViewCurrentTimeIndicator: 'Current time indicator container',
     resourcesDayViewCurrentTimeIndicatorLine: 'Current time indicator line',
     resourcesDayViewCurrentTimeIndicatorThumb: 'Current time indicator thumb',

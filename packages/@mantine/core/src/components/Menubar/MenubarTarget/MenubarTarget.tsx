@@ -59,6 +59,11 @@ export function MenubarTarget(props: MenubarTargetProps) {
   const isDisabled = disabled || dataDisabled;
   const isActive = ctx.activeIndex === menuCtx.index;
 
+  // Before the menu indexes resolve from the DOM (first render / SSR HTML), every target
+  // would otherwise compute `tabIndex={-1}`, leaving the menubar with no tab stop until
+  // effects run. Keep unresolved targets focusable so keyboard users can enter the menubar.
+  const isUnresolvedTabStop = menuCtx.index === -1 && !isDisabled;
+
   const moveToAdjacent = (direction: 1 | -1) => {
     const nextIndex = ctx.getAdjacentIndex(menuCtx.index, direction);
     ctx.setActiveIndex(nextIndex);
@@ -188,7 +193,7 @@ export function MenubarTarget(props: MenubarTargetProps) {
         {...others}
         unstyled={ctx.unstyled}
         role="menuitem"
-        tabIndex={isActive ? 0 : -1}
+        tabIndex={isActive || isUnresolvedTabStop ? 0 : -1}
         disabled={disabled}
         data-menubar-target
         data-menubar-id={menuCtx.id}

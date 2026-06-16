@@ -486,7 +486,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
     expansionLimit: recurrenceExpansionLimit,
   });
 
-  const eventsData = getDayViewEvents({ events: expandedEvents, date, startTime, endTime });
+  const eventsData = getDayViewEvents({
+    events: expandedEvents,
+    date,
+    startTime,
+    endTime,
+    intervalMinutes,
+  });
 
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, slotIndex: number) => {
@@ -640,6 +646,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           slotsRef.current[index] = node!;
         }}
         mod={{
+          first: index === 0,
           'hour-start': slot.isHourStart,
           ...getBusinessHoursMod({
             time: slot.startTime,

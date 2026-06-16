@@ -54,6 +54,7 @@ export interface ResourcesWeekViewRowProps {
   renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
   scrolledX?: boolean;
   groupInfo?: ResourceGroupInfo | null;
+  allDayCount?: number;
 }
 
 export function ResourcesWeekViewRow({
@@ -84,6 +85,7 @@ export function ResourcesWeekViewRow({
   renderGroupLabel,
   scrolledX,
   groupInfo,
+  allDayCount,
 }: ResourcesWeekViewRowProps) {
   const slotGroup = String(resource.id);
 
@@ -99,11 +101,20 @@ export function ResourcesWeekViewRow({
         <UnstyledButton
           key={`${day}-${slot.startTime}`}
           ref={(node) => {
-            if (node && slotsRef?.current) {
-              if (!slotsRef.current[resourceIndex]) {
-                slotsRef.current[resourceIndex] = [];
+            if (!slotsRef?.current) {
+              return;
+            }
+            if (!slotsRef.current[resourceIndex]) {
+              slotsRef.current[resourceIndex] = [];
+            }
+            const row = slotsRef.current[resourceIndex];
+            if (node) {
+              row[flatIndex] = node;
+            } else {
+              delete row[flatIndex];
+              while (row.length > 0 && row[row.length - 1] == null) {
+                row.length -= 1;
               }
-              slotsRef.current[resourceIndex][flatIndex] = node;
             }
           }}
           {...getStyles('resourcesWeekViewRowSlot')}
@@ -186,7 +197,13 @@ export function ResourcesWeekViewRow({
       </Box>
       <Box
         ref={rowSlotsContainerRef}
-        {...getStyles('resourcesWeekViewRowSlots')}
+        {...getStyles('resourcesWeekViewRowSlots', {
+          style: allDayCount
+            ? {
+                minHeight: `max(var(--resources-week-view-row-height), calc(${allDayCount} * (var(--resources-week-view-all-day-height) + 2px) + 4px))`,
+              }
+            : undefined,
+        })}
         onDragOver={
           withEventsDragAndDrop && mode !== 'static'
             ? (e) => onRowSlotsDragOver?.(e, resource.id, resourceIndex)

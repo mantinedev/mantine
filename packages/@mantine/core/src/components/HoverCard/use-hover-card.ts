@@ -28,6 +28,11 @@ export function useHoverCard(settings: UseHoverCard) {
 
   const openTimeout = useRef(-1);
   const closeTimeout = useRef(-1);
+  const targetRef = useRef<HTMLElement | null>(null);
+
+  const assignTarget = useCallback((node: HTMLElement | null) => {
+    targetRef.current = node;
+  }, []);
 
   const clearTimeouts = useCallback(() => {
     window.clearTimeout(openTimeout.current);
@@ -90,12 +95,37 @@ export function useHoverCard(settings: UseHoverCard) {
     }
   }, [withinGroup, clearTimeouts, settings.closeDelay, onChange]);
 
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
   useEffect(() => () => clearTimeouts(), [clearTimeouts]);
+
+  useEffect(() => {
+    if (!opened || withinGroup || typeof IntersectionObserver === 'undefined') {
+      return undefined;
+    }
+
+    const node = targetRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(() => {
+      if (!node.isConnected || node.getClientRects().length === 0) {
+        clearTimeouts();
+        onChangeRef.current(false);
+      }
+    });
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [opened, withinGroup, clearTimeouts]);
 
   return {
     opened,
     reference: refs.setReference,
     floating: refs.setFloating,
+    assignTarget,
     getReferenceProps,
     getFloatingProps,
     openDropdown,

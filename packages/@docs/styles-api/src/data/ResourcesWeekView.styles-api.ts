@@ -19,6 +19,7 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
     resourcesWeekViewRowSlot: 'Individual time slot element',
     resourcesWeekViewRowSlots: 'Container for all slots in a row',
     resourcesWeekViewBackgroundEvent: 'Background event element',
+    resourcesWeekViewAllDayEvent: 'All-day event element',
     resourcesWeekViewCurrentTimeIndicator: 'Current time indicator container',
     resourcesWeekViewCurrentTimeIndicatorLine: 'Current time indicator line',
     resourcesWeekViewCurrentTimeIndicatorThumb: 'Current time indicator thumb',

@@ -28,7 +28,7 @@ export interface UseStylesInput<Payload extends FactoryPayload> {
   classes: Payload['stylesNames'] extends string ? Record<string, string> : never;
   props: Payload['props'];
   stylesCtx?: Payload['ctx'];
-  className?: string;
+  className?: string | undefined;
   style?: MantineStyleProp;
   rootSelector?: Payload['stylesNames'];
   unstyled?: boolean;

@@ -39,6 +39,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
   },
   {
     type: 'next',
+    name: 'fumadocs-documentation-template',
+    link: 'https://github.com/gfazioli/next-app-fumadocs-template',
+    description: 'Fumadocs + Mantine template',
+  },
+  {
+    type: 'next',
     name: 'next-saas-template',
     link: 'https://github.com/AshutoshDash1999/nextjs-mantine-boilerplate',
     description: 'Next.js SaaS boilerplate with Mantine',

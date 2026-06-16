@@ -65,6 +65,14 @@ export interface __PopoverProps {
   /** If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. */
   keepMounted?: boolean;
 
+  /**
+   * Controls how the dropdown is hidden when `keepMounted` is set:
+   * `'activity'` – hidden with React 19 `Activity` component,
+   * `'display-none'` – hidden with `display: none` styles
+   * @default 'activity'
+   */
+  keepMountedMode?: 'activity' | 'display-none';
+
   /** Props passed down to the `Transition` component. Use to configure duration and animation type. @default { duration: 150, transition: 'fade' } */
   transitionProps?: TransitionOverride;
 
@@ -245,6 +253,7 @@ export function Popover(_props: PopoverProps) {
     returnFocus,
     variant,
     keepMounted,
+    keepMountedMode,
     vars,
     floatingStrategy,
     withOverlay,
@@ -377,6 +386,7 @@ export function Popover(_props: PopoverProps) {
         unstyled,
         variant,
         keepMounted,
+        keepMountedMode,
         getStyles,
         resolvedStyles,
         floatingStrategy,

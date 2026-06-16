@@ -5,7 +5,9 @@ import { Group, Text } from '@mantine/core';
 import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events: ScheduleEventData[] = [
@@ -42,7 +44,7 @@ import { ClockIcon, MapPinIcon } from '@phosphor-icons/react';
 import { Group, Text } from '@mantine/core';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events: ScheduleEventData[] = [

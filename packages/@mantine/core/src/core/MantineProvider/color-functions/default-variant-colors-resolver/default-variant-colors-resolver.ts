@@ -1,4 +1,5 @@
 import { rem } from '../../../utils';
+import { isVirtualColor } from '../../MantineCssVariables/virtual-color/virtual-color';
 import { MantineColor, MantineGradient, MantineTheme } from '../../theme.types';
 import { darken } from '../darken/darken';
 import { getGradient } from '../get-gradient/get-gradient';
@@ -46,10 +47,16 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
   }
 
   if (variant === 'filled') {
+    const isVirtual =
+      parsed.isThemeColor &&
+      parsed.shade === undefined &&
+      isVirtualColor(theme.colors[parsed.color]);
     const textColor = _autoContrast
-      ? parsed.isLight
-        ? 'var(--mantine-color-black)'
-        : 'var(--mantine-color-white)'
+      ? isVirtual
+        ? `var(--mantine-color-${parsed.color}-contrast)`
+        : parsed.isLight
+          ? 'var(--mantine-color-black)'
+          : 'var(--mantine-color-white)'
       : 'var(--mantine-color-white)';
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {
