@@ -104,6 +104,16 @@ the `weekendDays` prop (or `DatesProvider`, `[0, 6]` by default).
 
 <Demo data={MonthViewDemos.withoutWeekendDays} />
 
+## DayView and WeekView sub-hour grid lines
+
+[DayView](/schedule/day-view) and [WeekView](/schedule/week-view) now support `withSubHourGridLines`
+prop. When `intervalMinutes` is smaller than `60`, set `withSubHourGridLines={false}` to display only
+one grid line per hour while keeping the smaller interval for creating and resizing events. This is
+useful to achieve a Google Calendar like layout: events snap to 15 or 30 minutes increments, but the
+grid stays clean with hourly lines.
+
+<Demo data={WeekViewDemos.subHourGridLines} />
+
 ## Input success state
 
 All inputs based on `Input` and `Input.Wrapper` now support a `success` prop. When set, it changes the
