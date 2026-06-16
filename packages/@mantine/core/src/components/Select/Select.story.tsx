@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createTheme, MantineThemeProvider } from '../../core';
 import { Autocomplete } from '../Autocomplete';
 import { Button } from '../Button';
+import { HoverCard } from '../HoverCard';
 import { Input } from '../Input';
 import { Modal } from '../Modal';
 import { MultiSelect } from '../MultiSelect';
@@ -22,6 +23,25 @@ export function Usage() {
         autoSelectOnBlur
         rightSection="right"
         onChange={console.log}
+      />
+    </div>
+  );
+}
+
+export function WithHoverCardOption() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+        placeholder="Select something"
+        renderOption={({ option }) => (
+          <HoverCard width={200} position="right" withArrow shadow="md">
+            <HoverCard.Target>
+              <div style={{ width: '100%' }}>{option.label}</div>
+            </HoverCard.Target>
+            <HoverCard.Dropdown>Details about {option.label}</HoverCard.Dropdown>
+          </HoverCard>
+        )}
       />
     </div>
   );

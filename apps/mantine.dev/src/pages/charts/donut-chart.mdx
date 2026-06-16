@@ -10,6 +10,16 @@ export default Layout(MDX_DATA.DonutChart);
 
 <Demo data={DonutChartDemos.usage} />
 
+## Legend
+
+To display the legend, set the `withLegend` prop. The legend displays the name and color
+of each segment. Hover over a legend item to highlight the corresponding segment:
+
+<Demo data={DonutChartDemos.legend} />
+
+You can pass props down to the recharts `Legend` component with the `legendProps` prop.
+For example, set `legendProps={{ verticalAlign: 'top' }}` to display the legend above the chart.
+
 ## Segments labels
 
 Set the `withLabels` prop to display labels next to each segment:

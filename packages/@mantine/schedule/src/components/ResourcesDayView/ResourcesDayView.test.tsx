@@ -66,6 +66,26 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     expect(screen.getByText('Event in Room B')).toBeInTheDocument();
   });
 
+  it('renders all-day events as full-width bars', () => {
+    const events = [
+      {
+        id: 'all-day-1',
+        title: 'All Day in Room A',
+        start: '2025-01-15 00:00:00',
+        end: '2025-01-16 00:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const { container } = render(<ResourcesDayView {...defaultProps} events={events} />);
+    expect(screen.getByText('All Day in Room A')).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewAllDayEvent')
+    ).not.toBe(null);
+  });
+
   it('renders with mode="static" (slots not interactive)', () => {
     const { container } = render(<ResourcesDayView {...defaultProps} mode="static" />);
     const slots = container.querySelectorAll('.mantine-ResourcesDayView-resourcesDayViewRowSlot');

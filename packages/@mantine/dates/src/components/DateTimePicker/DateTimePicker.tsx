@@ -260,11 +260,9 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
 
   const shouldClear = isRange ? Array.isArray(_value) && !!_value[0] : !!_value;
 
-  const handlePresetSelect = !isRange
-    ? (val: any) => {
-        setValue(val);
-      }
-    : undefined;
+  const handlePresetSelect = (val: any) => {
+    setValue(val);
+  };
 
   return (
     <PickerInputBase

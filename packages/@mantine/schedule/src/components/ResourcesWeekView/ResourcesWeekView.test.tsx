@@ -82,6 +82,26 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     expect(screen.getByText('Event in Room B Thu')).toBeInTheDocument();
   });
 
+  it('renders all-day events as full-width bars', () => {
+    const events = [
+      {
+        id: 'all-day-1',
+        title: 'All Day in Room A',
+        start: '2025-01-15 00:00:00',
+        end: '2025-01-16 00:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const { container } = render(<ResourcesWeekView {...defaultProps} events={events} />);
+    expect(screen.getByText('All Day in Room A')).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewAllDayEvent')
+    ).not.toBe(null);
+  });
+
   it('calls onTimeSlotClick with slotStart, slotEnd, and resourceId', async () => {
     const spy = jest.fn();
     render(<ResourcesWeekView {...defaultProps} onTimeSlotClick={spy} />);

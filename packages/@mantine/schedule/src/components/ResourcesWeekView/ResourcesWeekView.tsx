@@ -82,6 +82,7 @@ export type ResourcesWeekViewStylesNames =
   | 'resourcesWeekViewRowSlot'
   | 'resourcesWeekViewRowSlots'
   | 'resourcesWeekViewBackgroundEvent'
+  | 'resourcesWeekViewAllDayEvent'
   | 'resourcesWeekViewCurrentTimeIndicator'
   | 'resourcesWeekViewCurrentTimeIndicatorLine'
   | 'resourcesWeekViewCurrentTimeIndicatorThumb'
@@ -352,11 +353,13 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
 
   const [timeIndicatorOffset, setTimeIndicatorOffset] = useState(
-    getCurrentTimePosition({ startTime, endTime })
+    getCurrentTimePosition({ startTime, endTime, intervalMinutes })
   );
-  useInterval(() => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime })), 60000, {
-    autoInvoke: true,
-  });
+  useInterval(
+    () => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime, intervalMinutes })),
+    60000,
+    { autoInvoke: true }
+  );
 
   const todayDayIndex = weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'day'));
   const showTimeIndicator =
@@ -626,6 +629,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const rows = orderedResources.map((resource, resourceIndex) => {
     const eventNodes: React.ReactNode[] = [];
+    let maxAllDayCount = 0;
 
     weekdays.forEach((day, dayIndex) => {
       const dayEvents = weekViewEvents.byDay[day];
@@ -633,7 +637,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         return;
       }
 
-      const bgEvents = dayEvents.backgroundTimedEvents[resource.id] || [];
+      const bgEvents = [
+        ...(dayEvents.backgroundTimedEvents[resource.id] || []),
+        ...(dayEvents.backgroundAllDayEvents[resource.id] || []),
+      ];
       for (const event of bgEvents) {
         const colors = theme.variantColorResolver({
           color: event.color || theme.primaryColor,
@@ -724,6 +731,40 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         );
       }
 
+      const dayAllDayEvents = dayEvents.allDayEvents[resource.id] || [];
+      if (dayAllDayEvents.length > 0) {
+        maxAllDayCount = Math.max(maxAllDayCount, dayAllDayEvents.length);
+        const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
+        const dayWidthPercent = 100 / weekdays.length;
+
+        dayAllDayEvents.forEach((event, index) => {
+          eventNodes.push(
+            <div
+              key={`all-day-${event.id}-${day}`}
+              {...getStyles('resourcesWeekViewAllDayEvent', {
+                style: {
+                  left: `calc(${dayOffsetPercent}% + 1px)`,
+                  width: `calc(${dayWidthPercent}% - 2px)`,
+                  top: `calc(${index} * (var(--resources-week-view-all-day-height) + 2px) + 2px)`,
+                },
+              })}
+            >
+              <ScheduleEvent
+                event={event}
+                autoSize
+                nowrap
+                renderEventBody={renderEventBody}
+                renderEvent={renderEvent}
+                radius={radius}
+                mode={mode}
+                onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+          );
+        });
+      }
+
       if (maxEventsPerTimeSlot !== undefined) {
         const clusters = getOverlapClusters(allRegularEvents);
         for (const cluster of clusters) {
@@ -810,6 +851,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         renderGroupLabel={renderGroupLabel}
         scrolledX={scrolledX}
         groupInfo={hasGroups ? resourceGroupMap[resourceIndex] : undefined}
+        allDayCount={maxAllDayCount}
       >
         {eventNodes}
       </ResourcesWeekViewRow>

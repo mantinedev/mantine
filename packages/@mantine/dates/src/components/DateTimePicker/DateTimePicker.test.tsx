@@ -470,6 +470,30 @@ describe('@mantine/dates/DateTimePicker', () => {
       expectNoPopover(container);
     });
 
+    it('preserves time component of range presets', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <DateTimePicker
+          {...rangeProps}
+          withSeconds
+          defaultValue={['2022-04-11 10:00:00', '2022-04-15 12:00:00']}
+          onChange={spy}
+          presets={[
+            {
+              value: ['2022-04-12 09:15:30', '2022-04-16 18:45:00'],
+              label: 'Custom range',
+            },
+          ]}
+        />
+      );
+
+      await clickInput(container);
+      await userEvent.click(screen.getByText('Custom range'));
+
+      expect(spy).toHaveBeenLastCalledWith(['2022-04-12 09:15:30', '2022-04-16 18:45:00']);
+      expectValue(container, '12/04/2022 09:15:30 – 16/04/2022 18:45:00');
+    });
+
     it('render hidden input with range value', () => {
       const { container } = render(
         <DateTimePicker

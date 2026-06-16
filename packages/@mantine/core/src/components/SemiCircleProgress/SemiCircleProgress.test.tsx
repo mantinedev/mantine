@@ -50,6 +50,16 @@ describe('@mantine/core/SemiCircleProgress', () => {
     expect(circles[1]).toHaveAttribute('style', expect.stringContaining(String(circumference)));
   });
 
+  it('hides the filled segment when value is 0 to avoid a sliver', () => {
+    const { container, rerender } = render(<SemiCircleProgress {...defaultProps} value={0} />);
+    let filledSegment = container.querySelectorAll('circle')[1];
+    expect(filledSegment).toHaveStyle({ strokeOpacity: '0' });
+
+    rerender(<SemiCircleProgress {...defaultProps} value={40} />);
+    filledSegment = container.querySelectorAll('circle')[1];
+    expect(filledSegment).not.toHaveStyle({ strokeOpacity: '0' });
+  });
+
   it('assigns orientation to label data-orientation attribute', () => {
     render(<SemiCircleProgress {...defaultProps} label="test-label" orientation="down" />);
     expect(screen.getByText('test-label')).toHaveAttribute('data-orientation', 'down');

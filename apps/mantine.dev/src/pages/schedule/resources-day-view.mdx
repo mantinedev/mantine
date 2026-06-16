@@ -12,6 +12,15 @@ resource via the `resourceId` property on event data.
 
 <Demo data={ResourcesDayViewDemos.usage} />
 
+## All-day events
+
+Events that span the entire day (start at `00:00:00` and end at the next day `00:00:00`)
+are rendered as full-width bars. Foreground all-day events are pinned to the top of the
+resource row and stack when there are several; all-day events with `display: 'background'`
+tint the whole row.
+
+<Demo data={ResourcesDayViewDemos.allDayEvents} />
+
 ## Time range and intervals
 
 Use `startTime`, `endTime` and `intervalMinutes` props to control the visible time range

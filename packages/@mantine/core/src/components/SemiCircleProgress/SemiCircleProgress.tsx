@@ -192,7 +192,12 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
           stroke="var(--scp-filled-segment-color)"
           strokeWidth={thickness}
           strokeDasharray={circumference}
-          {...getStyles('filledSegment', { style: { strokeDashoffset: semiCirclePercentage } })}
+          {...getStyles('filledSegment', {
+            style: {
+              strokeDashoffset: semiCirclePercentage,
+              ...(semiCirclePercentage === 0 ? { strokeOpacity: 0 } : null),
+            },
+          })}
         />
       </svg>
     </Box>

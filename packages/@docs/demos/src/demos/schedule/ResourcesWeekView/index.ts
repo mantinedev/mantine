@@ -1,4 +1,5 @@
 export { usage } from './ResourcesWeekView.demo.usage';
+export { allDayEvents } from './ResourcesWeekView.demo.allDayEvents';
 export { dragDrop } from './ResourcesWeekView.demo.dragDrop';
 export { eventForm } from './ResourcesWeekView.demo.eventForm';
 export { staticMode } from './ResourcesWeekView.demo.staticMode';
