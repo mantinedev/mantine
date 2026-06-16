@@ -13,9 +13,12 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartLegend.module.css';
 
-function updateChartLegendPayload(payload: Record<string, any>[]): Record<string, any>[] {
+function updateChartLegendPayload(
+  payload: Record<string, any>[],
+  splitNestedKeys: boolean
+): Record<string, any>[] {
   return payload.map((item) => {
-    const newDataKey = item.dataKey?.split('.').pop();
+    const newDataKey = splitNestedKeys ? item.dataKey?.split('.').pop() : item.dataKey;
     return {
       ...item,
       dataKey: newDataKey,
@@ -28,8 +31,14 @@ function updateChartLegendPayload(payload: Record<string, any>[]): Record<string
   });
 }
 
-export function getFilteredChartLegendPayload(payload: readonly Record<string, any>[]) {
-  return updateChartLegendPayload(payload.filter((item) => item.color !== 'none'));
+export function getFilteredChartLegendPayload(
+  payload: readonly Record<string, any>[],
+  splitNestedKeys = true
+) {
+  return updateChartLegendPayload(
+    payload.filter((item) => item.color !== 'none'),
+    splitNestedKeys
+  );
 }
 
 export type ChartLegendStylesNames = 'legendItem' | 'legendItemColor' | 'legendItemName' | 'legend';
@@ -98,7 +107,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props) => {
     return null;
   }
 
-  const filteredPayload = getFilteredChartLegendPayload(payload);
+  const filteredPayload = getFilteredChartLegendPayload(payload, series != null);
   const labels = getSeriesLabels(series);
 
   const items = filteredPayload.map((item, index) => (

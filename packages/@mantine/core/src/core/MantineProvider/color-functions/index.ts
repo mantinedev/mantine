@@ -8,7 +8,11 @@ export { rgba, alpha } from './rgba/rgba';
 export { darken } from './darken/darken';
 export { lighten } from './lighten/lighten';
 export { luminance, isLightColor } from './luminance/luminance';
-export { getContrastColor, getPrimaryContrastColor } from './get-contrast-color/get-contrast-color';
+export {
+  getContrastColor,
+  getPrimaryContrastColor,
+  getVirtualColorContrast,
+} from './get-contrast-color/get-contrast-color';
 export { getAutoContrastValue } from './get-auto-contrast-value/get-auto-contrast-value';
 export { colorsTuple } from './colors-tuple/colors-tuple';
 

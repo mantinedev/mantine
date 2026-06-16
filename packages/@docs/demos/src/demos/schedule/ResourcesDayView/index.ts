@@ -1,4 +1,5 @@
 export { usage } from './ResourcesDayView.demo.usage';
+export { allDayEvents } from './ResourcesDayView.demo.allDayEvents';
 export { dragDrop } from './ResourcesDayView.demo.dragDrop';
 export { eventResize } from './ResourcesDayView.demo.eventResize';
 export { eventForm } from './ResourcesDayView.demo.eventForm';

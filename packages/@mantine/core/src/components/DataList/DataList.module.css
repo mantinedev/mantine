@@ -24,7 +24,7 @@
   gap: var(--mantine-spacing-xs);
 }
 
-.root:where([data-orientation='horizontal']) > .item {
+.root:where([data-orientation='vertical']) > .item {
   flex-direction: column;
   gap: 0;
 }
@@ -37,7 +37,7 @@
   margin: 0;
 }
 
-.root:where([data-orientation='horizontal']) .itemLabel {
+.root:where([data-orientation='vertical']) .itemLabel {
   min-width: 100%;
 }
 

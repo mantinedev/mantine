@@ -23,3 +23,4 @@ export { autoContrast } from './Theming.demo.autoContrast';
 export { luminanceThreshold } from './Theming.demo.luminanceThreshold';
 export { oklch } from './Theming.demo.oklch';
 export { virtualColors } from './Theming.demo.virtualColors';
+export { virtualColorsAutoContrast } from './Theming.demo.virtualColorsAutoContrast';

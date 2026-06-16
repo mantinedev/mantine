@@ -53,6 +53,7 @@ export interface ResourcesDayViewRowProps {
   renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
   scrolledX?: boolean;
   groupInfo?: ResourceGroupInfo | null;
+  allDayCount?: number;
 }
 
 export function ResourcesDayViewRow({
@@ -83,6 +84,7 @@ export function ResourcesDayViewRow({
   renderGroupLabel,
   scrolledX,
   groupInfo,
+  allDayCount,
 }: ResourcesDayViewRowProps) {
   const slotGroup = String(resource.id);
 
@@ -96,11 +98,20 @@ export function ResourcesDayViewRow({
       <UnstyledButton
         key={slot.startTime}
         ref={(node) => {
-          if (node && slotsRef?.current) {
-            if (!slotsRef.current[resourceIndex]) {
-              slotsRef.current[resourceIndex] = [];
+          if (!slotsRef?.current) {
+            return;
+          }
+          if (!slotsRef.current[resourceIndex]) {
+            slotsRef.current[resourceIndex] = [];
+          }
+          const row = slotsRef.current[resourceIndex];
+          if (node) {
+            row[slotIndex] = node;
+          } else {
+            delete row[slotIndex];
+            while (row.length > 0 && row[row.length - 1] == null) {
+              row.length -= 1;
             }
-            slotsRef.current[resourceIndex][slotIndex] = node;
           }
         }}
         {...getStyles('resourcesDayViewRowSlot')}
@@ -179,7 +190,13 @@ export function ResourcesDayViewRow({
       </Box>
       <Box
         ref={rowSlotsContainerRef}
-        {...getStyles('resourcesDayViewRowSlots')}
+        {...getStyles('resourcesDayViewRowSlots', {
+          style: allDayCount
+            ? {
+                minHeight: `max(var(--resources-day-view-row-height), calc(${allDayCount} * (var(--resources-day-view-all-day-height) + 2px) + 4px))`,
+              }
+            : undefined,
+        })}
         onDragOver={
           withEventsDragAndDrop && mode !== 'static'
             ? (e) => onRowSlotsDragOver?.(e, resource.id, resourceIndex)
