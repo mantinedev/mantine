@@ -74,7 +74,8 @@
 }
 
 .monthViewWeekday {
-  flex: 0 0 calc(100% / var(--month-view-columns) - var(--week-numbers-offset) / var(--month-view-columns));
+  flex: 0 0
+    calc(100% / var(--month-view-columns) - var(--week-numbers-offset) / var(--month-view-columns));
   min-width: var(--min-day-width);
   height: 36px;
   font-size: var(--mantine-font-size-sm);
@@ -114,7 +115,8 @@
 
 .monthViewDay {
   min-width: var(--min-day-width);
-  flex: 0 0 calc(100% / var(--month-view-columns) - var(--week-numbers-offset) / var(--month-view-columns));
+  flex: 0 0
+    calc(100% / var(--month-view-columns) - var(--week-numbers-offset) / var(--month-view-columns));
   height: calc(52px + var(--month-view-max-events, 2) * 24px);
   padding: 4px;
   font-weight: var(--mantine-font-weight-medium);
