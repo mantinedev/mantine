@@ -81,9 +81,7 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
 
   /** If defined, called with preset value, suppresses `onChange` call */
   __onPresetSelect?: (
-    preset: Type extends 'range'
-      ? [DateStringValue | null, DateStringValue | null]
-      : DateStringValue | null
+    preset: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
   ) => void;
 }
 
@@ -233,7 +231,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     if (_val !== undefined) {
       setDateRef.current?.(_val);
       setLevelRef.current?.('month');
-      __onPresetSelect ? __onPresetSelect(_val) : setValue(val);
+      __onPresetSelect ? __onPresetSelect(val) : setValue(val);
     }
   };
 
