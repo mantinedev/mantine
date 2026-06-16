@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import { ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 const dayAfterDayAfterStartOfWeek = dayjs(startOfWeek).add(2, 'day').format('YYYY-MM-DD');
 
@@ -129,7 +131,7 @@ export const businessEvents: ScheduleEventData[] = [
 export const dataCode = `
 import dayjs from 'dayjs';
 
-const startOfWeek = dayjs().startOf('week').add(2, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 
 const events = [

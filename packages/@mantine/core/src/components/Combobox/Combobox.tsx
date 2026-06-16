@@ -112,6 +112,7 @@ export type ComboboxFactory = Factory<{
 
 const defaultProps = {
   keepMounted: true,
+  keepMountedMode: 'display-none',
   withinPortal: true,
   resetSelectionOnOptionHover: false,
   width: 'target',

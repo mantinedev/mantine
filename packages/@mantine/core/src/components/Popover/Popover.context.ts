@@ -52,6 +52,7 @@ export interface PopoverContextValue {
   __staticSelector: string;
   variant: string | undefined;
   keepMounted: boolean | undefined;
+  keepMountedMode: 'activity' | 'display-none' | undefined;
   getStyles: GetStylesApi<PopoverFactory>;
   resolvedStyles: Record<string, any> | undefined;
   floatingStrategy: FloatingStrategy | undefined;

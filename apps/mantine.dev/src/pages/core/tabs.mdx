@@ -318,7 +318,7 @@ function Demo() {
 }
 ```
 
-## Usage with Next.js router
+## Usage with Next.js Pages Router
 
 ```tsx
 // For file /tabs/[activeTab].tsx
@@ -331,6 +331,40 @@ function Demo() {
   return (
     <Tabs
       value={router.query.activeTab as string}
+      onChange={(value) => router.push(`/tabs/${value}`)}
+    >
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Usage with Next.js App Router
+
+In the App Router, get the current tab value from the pathname with the `usePathname`
+hook and change tabs with the router returned by `useRouter`. Both hooks are imported
+from `next/navigation`. Note that components that use these hooks must be
+[Client Components](https://nextjs.org/docs/app/building-your-application/rendering/client-components)
+(add the `'use client'` directive at the top of the file).
+
+```tsx
+// For file /tabs/[activeTab]/page.tsx
+'use client';
+
+import { usePathname, useRouter } from 'next/navigation';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const activeTab = pathname.split('/').pop();
+
+  return (
+    <Tabs
+      value={activeTab}
       onChange={(value) => router.push(`/tabs/${value}`)}
     >
       <Tabs.List>

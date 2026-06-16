@@ -2,7 +2,7 @@ interface FileIconProps {
   fileName: string | undefined;
   getFileIcon?: ((fileName: string) => React.ReactNode) | undefined;
   fileIcon: React.ReactNode | undefined;
-  className?: string;
+  className?: string | undefined;
   style?: React.CSSProperties;
 }
 

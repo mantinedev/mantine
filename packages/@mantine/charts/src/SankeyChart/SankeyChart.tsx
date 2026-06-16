@@ -384,7 +384,7 @@ export const SankeyChart = factory<SankeyChartFactory>((_props) => {
                     );
                   }
 
-                  const sourceNode = item.payload?.source;
+                  const sourceNode = item.payload?.payload?.source ?? item.payload?.source;
                   if (sourceNode) {
                     const sourceIndex = data.nodes.findIndex((n) => n.name === sourceNode.name);
                     if (sourceIndex !== -1) {
