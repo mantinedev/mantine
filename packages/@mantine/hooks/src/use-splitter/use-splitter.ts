@@ -187,6 +187,30 @@ function resolveSize(
   return 0;
 }
 
+/** Down-scaling factor applied to fixed panes when their combined pixel size overflows the
+ * container, so they shrink to fit (matching `resolveWorkingSizes`). Returns `1` when nothing
+ * overflows or the layout is not in pixel mode. Encoders divide by this to invert the scaling and
+ * persist the original absolute sizes instead of the shrunk-to-fit ones. */
+function getFixedScale(
+  sizes: SplitterPaneSize[],
+  pixelMode: boolean,
+  containerPx: number,
+  rootFontSize: number
+): number {
+  if (!pixelMode) {
+    return 1;
+  }
+
+  let fixedTotal = 0;
+  sizes.forEach((size) => {
+    if (isFixedSize(size)) {
+      fixedTotal += resolveSize(size, true, containerPx, rootFontSize);
+    }
+  });
+
+  return fixedTotal > containerPx && fixedTotal > 0 ? containerPx / fixedTotal : 1;
+}
+
 /** Resolves all sizes to pixels at once. Fixed panes get their absolute pixel size, flexible panes
  * share the leftover space by their weight ratio – matching how the layout is rendered with
  * `flex-grow`, so drag math operates on the same pixel sizes the user sees. */
@@ -211,7 +235,7 @@ function resolveWorkingSizes(
   });
 
   const leftover = Math.max(0, containerPx - fixedTotal);
-  const fixedScale = fixedTotal > containerPx && fixedTotal > 0 ? containerPx / fixedTotal : 1;
+  const fixedScale = getFixedScale(sizes, pixelMode, containerPx, rootFontSize);
 
   return sizes.map((size) => {
     if (isFixedSize(size)) {
@@ -226,7 +250,8 @@ function encodeSize(
   original: SplitterPaneSize,
   pixelMode: boolean,
   containerPx: number,
-  rootFontSize: number
+  rootFontSize: number,
+  fixedScale: number = 1
 ): SplitterPaneSize {
   if (!pixelMode) {
     return typeof original === 'string' && PERCENT_RE.test(original) ? `${value}%` : value;
@@ -240,11 +265,47 @@ function encodeSize(
     return `${containerPx > 0 ? (value / containerPx) * 100 : parseFloat(original)}%`;
   }
 
+  const absolute = fixedScale > 0 ? value / fixedScale : value;
+
   if (REM_RE.test(original)) {
-    return `${rootFontSize > 0 ? value / rootFontSize : 0}rem`;
+    return `${rootFontSize > 0 ? absolute / rootFontSize : 0}rem`;
   }
 
-  return `${value}px`;
+  return `${absolute}px`;
+}
+
+/** Encodes working pixel sizes back to raw sizes after a resize, keeping the unit each pane was
+ * declared in. Panes whose working size did not change keep their original raw value. When fixed
+ * panes overflow the container they render down-scaled, so their working sizes are scaled back up to
+ * absolute sizes (preserving their declared sizes). If the resize instead hands space to a flexible
+ * pane the overflow clears and the layout leaves the down-scaled regime: every pane is then encoded
+ * from its current working size – including untouched fixed panes (so they do not jump back to their
+ * over-sized value) and untouched flexible panes (so a pane that was squeezed to `0` does not keep a
+ * stale weight and steal the freed space on the next render). */
+function encodeWorkingSizes(
+  nextWorking: number[],
+  baseWorking: number[],
+  baseRaw: SplitterPaneSize[],
+  pixelMode: boolean,
+  containerPx: number,
+  rootFontSize: number
+): SplitterPaneSize[] {
+  const fixedScale = getFixedScale(baseRaw, pixelMode, containerPx, rootFontSize);
+
+  let fixedWorkingSum = 0;
+  nextWorking.forEach((value, i) => {
+    if (isFixedSize(baseRaw[i])) {
+      fixedWorkingSum += value;
+    }
+  });
+  const overflowCleared = fixedScale < 1 && fixedWorkingSum < containerPx - 1e-6;
+  const encodeScale = overflowCleared ? 1 : fixedScale;
+
+  return nextWorking.map((value, i) =>
+    overflowCleared || Math.abs(value - baseWorking[i]) > 1e-6
+      ? encodeSize(value, baseRaw[i], pixelMode, containerPx, rootFontSize, encodeScale)
+      : baseRaw[i]
+  );
 }
 
 function resolvePanel(
@@ -760,13 +821,7 @@ export function useSplitter<T extends HTMLElement = any>(
         targetBefore - working[beforeIdx]
       );
       emitCollapseTransitions(raw, next, [beforeIdx, afterIdx], raw);
-      updateSizes(
-        next.map((value, i) =>
-          Math.abs(value - working[i]) > 1e-6
-            ? encodeSize(value, raw[i], pixelMode, container, rootFontSize)
-            : raw[i]
-        )
-      );
+      updateSizes(encodeWorkingSizes(next, working, raw, pixelMode, container, rootFontSize));
     },
     [emitCollapseTransitions, updateSizes, pixelMode, measureContainer]
   );
@@ -919,10 +974,13 @@ export function useSplitter<T extends HTMLElement = any>(
             s.startSizes
           );
 
-          const encoded = newSizes.map((value, i) =>
-            Math.abs(value - s.startSizes[i]) > 1e-6
-              ? encodeSize(value, s.startRaw[i], s.pixelMode, s.containerSize, s.rootFontSize)
-              : s.startRaw[i]
+          const encoded = encodeWorkingSizes(
+            newSizes,
+            s.startSizes,
+            s.startRaw,
+            s.pixelMode,
+            s.containerSize,
+            s.rootFontSize
           );
           currentSizesRef.current = encoded;
           setCurrentSizes(encoded);
@@ -1093,10 +1151,13 @@ export function useSplitter<T extends HTMLElement = any>(
             const newSizes = applyConstraints(liveWorking, livePanels, index, delta, redistribute);
             emitCollapseTransitions(currentSizes, newSizes, [index, index + 1], currentSizes);
             updateSizes(
-              newSizes.map((value, i) =>
-                Math.abs(value - liveWorking[i]) > 1e-6
-                  ? encodeSize(value, currentSizes[i], pixelMode, container, liveRootFontSize)
-                  : currentSizes[i]
+              encodeWorkingSizes(
+                newSizes,
+                liveWorking,
+                currentSizes,
+                pixelMode,
+                container,
+                liveRootFontSize
               )
             );
           }
