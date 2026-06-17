@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu } from '../Menu';
+import { Modal } from '../Modal';
 import { Menubar, MenubarProps, MenubarStylesNames } from './Menubar';
 import { MenubarDropdown } from './MenubarDropdown/MenubarDropdown';
 import { MenubarMenu } from './MenubarMenu/MenubarMenu';
@@ -414,5 +415,61 @@ describe('@mantine/core/Menubar', () => {
 
     await userEvent.click(getTarget('File'));
     expect(onOpenChange).toHaveBeenLastCalledWith(null);
+  });
+
+  describe('Escape inside an ancestor Modal', () => {
+    function ModalContainer({ onClose }: { onClose: () => void }) {
+      return (
+        <Modal opened onClose={onClose} title="Modal" transitionProps={{ duration: 0 }}>
+          <Menubar>
+            <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+              <Menubar.Target>File</Menubar.Target>
+              <Menubar.Dropdown>
+                <Menu.Item>New file</Menu.Item>
+                <Menu.Item>Open</Menu.Item>
+              </Menubar.Dropdown>
+            </Menubar.Menu>
+          </Menubar>
+        </Modal>
+      );
+    }
+
+    it('closes only the menu, not the Modal, when Escape is pressed on an open target', async () => {
+      const onClose = jest.fn();
+      render(<ModalContainer onClose={onClose} />);
+
+      await userEvent.click(getTarget('File'));
+      expectMenuOpen('New file');
+
+      focusElement(getTarget('File'));
+      fireEvent.keyDown(getTarget('File'), { key: 'Escape' });
+
+      expectAllClosed();
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('closes only the menu, not the Modal, when Escape is pressed on the dropdown', async () => {
+      const onClose = jest.fn();
+      render(<ModalContainer onClose={onClose} />);
+
+      await userEvent.click(getTarget('File'));
+      expectMenuOpen('New file');
+
+      const dropdown = document.querySelector<HTMLElement>('[data-menu-dropdown]')!;
+      focusElement(dropdown);
+      fireEvent.keyDown(dropdown, { key: 'Escape' });
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('still closes the Modal on Escape when no menu is open', async () => {
+      const onClose = jest.fn();
+      render(<ModalContainer onClose={onClose} />);
+
+      focusElement(getTarget('File'));
+      fireEvent.keyDown(getTarget('File'), { key: 'Escape' });
+
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
   });
 });

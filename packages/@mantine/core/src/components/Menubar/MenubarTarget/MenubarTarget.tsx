@@ -199,6 +199,7 @@ export function MenubarTarget(props: MenubarTargetProps) {
         data-menubar-id={menuCtx.id}
         data-disabled={dataDisabled || undefined}
         data-expanded={menuCtx.opened || undefined}
+        data-mantine-stop-propagation={menuCtx.opened || undefined}
         {...ctx.getStyles('target', { className, style })}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
