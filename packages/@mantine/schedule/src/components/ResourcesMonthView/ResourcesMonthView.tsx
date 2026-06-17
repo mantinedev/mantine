@@ -43,7 +43,7 @@ import {
   toDateString,
 } from '../../utils';
 import { DragContext } from '../DragContext/DragContext';
-import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
+import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
@@ -67,6 +67,7 @@ export type ResourcesMonthViewStylesNames =
   | 'resourcesMonthViewInner'
   | 'resourcesMonthViewGroupColumn'
   | 'resourcesMonthViewGroupColumnEmpty'
+  | MoreEventsStylesNames
   | CombinedScheduleHeaderStylesNames;
 
 export type ResourcesMonthViewCssVariables = {
@@ -827,6 +828,10 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             events={dayEvents}
             moreEventsCount={hiddenEventsCount}
             mode={mode}
+            labels={labels}
+            renderEventBody={renderEventBody}
+            renderEvent={renderEvent}
+            onEventClick={onEventClick}
             style={{
               position: 'absolute',
               bottom: 1,
@@ -835,6 +840,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               height: 18,
               zIndex: 4,
             }}
+            {...stylesApiProps}
             {...moreEventsProps}
           />
         );

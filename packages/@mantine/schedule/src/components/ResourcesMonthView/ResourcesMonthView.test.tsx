@@ -815,6 +815,109 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     expect(screen.getByRole('heading', { name: 'All Events' })).toBeInTheDocument();
   });
 
+  describe('MoreEvents prop forwarding', () => {
+    const overflowEvents = [
+      {
+        id: 'e1',
+        title: 'Event 1',
+        start: '2025-01-10 08:00:00',
+        end: '2025-01-10 09:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 'e2',
+        title: 'Event 2',
+        start: '2025-01-10 09:00:00',
+        end: '2025-01-10 10:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 'e3',
+        title: 'Event 3',
+        start: '2025-01-10 10:00:00',
+        end: '2025-01-10 11:00:00',
+        color: 'green',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    it('forwards renderEventBody to MoreEvents', async () => {
+      render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={overflowEvents}
+          renderEventBody={(event) => <span>Body[{event.title}]</span>}
+        />
+      );
+
+      await userEvent.click(screen.getByText('+1 more'));
+      expect(screen.getByText('Body[Event 3]')).toBeInTheDocument();
+    });
+
+    it('forwards renderEvent to MoreEvents', async () => {
+      render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={overflowEvents}
+          renderEvent={(event, props) => (
+            <a href={`#event-${event.id}`} data-testid={`custom-event-${event.id}`}>
+              {props.children}
+            </a>
+          )}
+        />
+      );
+
+      await userEvent.click(screen.getByText('+1 more'));
+
+      const customized = screen.getByTestId('custom-event-e3');
+      expect(customized.tagName).toBe('A');
+      expect(customized).toHaveAttribute('href', '#event-e3');
+    });
+
+    it('forwards onEventClick to MoreEvents', async () => {
+      const spy = jest.fn();
+      render(<ResourcesMonthView {...defaultProps} events={overflowEvents} onEventClick={spy} />);
+
+      await userEvent.click(screen.getByText('+1 more'));
+      await userEvent.click(screen.getByText('Event 3'));
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'e3', title: 'Event 3' }),
+        expect.any(Object)
+      );
+    });
+
+    it('forwards labels to MoreEvents', () => {
+      render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={overflowEvents}
+          labels={{ moreLabel: (count) => `${count} hidden` }}
+        />
+      );
+
+      expect(screen.getByText('1 hidden')).toBeInTheDocument();
+    });
+
+    it('forwards styles api classNames to MoreEvents', () => {
+      render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={overflowEvents}
+          classNames={{ moreEventsButton: 'test-more-button' }}
+        />
+      );
+
+      expect(screen.getByText('+1 more')).toHaveClass('test-more-button');
+    });
+  });
+
   it('withEventsDragAndDrop makes events draggable', () => {
     const events = [
       {

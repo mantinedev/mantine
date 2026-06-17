@@ -48,7 +48,7 @@ import {
   toDateString,
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
-import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
+import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -84,6 +84,7 @@ export type ResourcesDayViewStylesNames =
   | 'resourcesDayViewResizeHandle'
   | 'resourcesDayViewGroupColumn'
   | 'resourcesDayViewGroupColumnEmpty'
+  | MoreEventsStylesNames
   | CombinedScheduleHeaderStylesNames;
 
 export type ResourcesDayViewCssVariables = {
@@ -868,6 +869,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                   events={cluster}
                   moreEventsCount={hiddenCount}
                   mode={mode}
+                  labels={labels}
+                  renderEventBody={renderEventBody}
+                  renderEvent={renderEvent}
+                  onEventClick={onEventClick}
                   style={{
                     position: 'absolute',
                     left: `calc(${leftPercent}% + 1px)`,
@@ -877,6 +882,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                     paddingInline: 4,
                     zIndex: 4,
                   }}
+                  {...stylesApiProps}
                   {...moreEventsProps}
                 />
               );

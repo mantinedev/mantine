@@ -50,7 +50,7 @@ import {
   toDateString,
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
-import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
+import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { getOverlapClusters } from '../ResourcesDayView/get-overlap-clusters/get-overlap-clusters';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
@@ -91,6 +91,7 @@ export type ResourcesWeekViewStylesNames =
   | 'resourcesWeekViewResizeHandle'
   | 'resourcesWeekViewGroupColumn'
   | 'resourcesWeekViewGroupColumnEmpty'
+  | MoreEventsStylesNames
   | CombinedScheduleHeaderStylesNames;
 
 export type ResourcesWeekViewCssVariables = {
@@ -756,6 +757,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                 events={cluster}
                 moreEventsCount={hiddenCount}
                 mode={mode}
+                labels={labels}
+                renderEventBody={renderEventBody}
+                renderEvent={renderEvent}
+                onEventClick={onEventClick}
                 style={{
                   position: 'absolute',
                   left: `calc(${leftPercent}% + 1px)`,
@@ -765,6 +770,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                   paddingInline: 4,
                   zIndex: 4,
                 }}
+                {...stylesApiProps}
                 {...moreEventsProps}
               />
             );

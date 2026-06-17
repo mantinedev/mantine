@@ -808,6 +808,88 @@ describe('@mantine/schedule/ResourcesDayView', () => {
 
       expect(screen.getByRole('heading', { name: 'Hidden events' })).toBeInTheDocument();
     });
+
+    it('forwards renderEventBody to MoreEvents', async () => {
+      render(
+        <ResourcesDayView
+          {...defaultProps}
+          events={overlappingEvents}
+          maxEventsPerTimeSlot={1}
+          renderEventBody={(event) => <span>Body[{event.title}]</span>}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+      expect(screen.getByText('Body[Event 3]')).toBeInTheDocument();
+    });
+
+    it('forwards renderEvent to MoreEvents', async () => {
+      render(
+        <ResourcesDayView
+          {...defaultProps}
+          events={overlappingEvents}
+          maxEventsPerTimeSlot={1}
+          renderEvent={(event, props) => (
+            <a href={`#event-${event.id}`} data-testid={`custom-event-${event.id}`}>
+              {props.children}
+            </a>
+          )}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+
+      const customized = screen.getByTestId('custom-event-3');
+      expect(customized.tagName).toBe('A');
+      expect(customized).toHaveAttribute('href', '#event-3');
+    });
+
+    it('forwards onEventClick to MoreEvents', async () => {
+      const spy = jest.fn();
+      render(
+        <ResourcesDayView
+          {...defaultProps}
+          events={overlappingEvents}
+          maxEventsPerTimeSlot={1}
+          onEventClick={spy}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: /more/ }));
+      await userEvent.click(screen.getByText('Event 3'));
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 3, title: 'Event 3' }),
+        expect.any(Object)
+      );
+    });
+
+    it('forwards labels to MoreEvents', () => {
+      render(
+        <ResourcesDayView
+          {...defaultProps}
+          events={overlappingEvents}
+          maxEventsPerTimeSlot={1}
+          labels={{ moreLabel: (count) => `${count} hidden` }}
+        />
+      );
+
+      expect(screen.getByRole('button', { name: '2 hidden' })).toBeInTheDocument();
+    });
+
+    it('forwards styles api classNames to MoreEvents', () => {
+      render(
+        <ResourcesDayView
+          {...defaultProps}
+          events={overlappingEvents}
+          maxEventsPerTimeSlot={1}
+          classNames={{ moreEventsButton: 'test-more-button' }}
+        />
+      );
+
+      expect(screen.getByRole('button', { name: /more/ })).toHaveClass('test-more-button');
+    });
   });
 
   it('renders group labels when groups prop is provided', () => {
