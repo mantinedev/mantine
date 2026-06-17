@@ -49,7 +49,7 @@ export interface ChartLegendProps
   payload: readonly Record<string, any>[] | undefined;
 
   /** Function called when mouse enters/leaves one of the legend items */
-  onHighlight: (area: string | null) => void;
+  onHighlight: (area: string | number | null) => void;
 
   /** Position of the legend relative to the chart, used to apply margin on the corresponding side */
   legendPosition: 'top' | 'bottom' | 'middle';
@@ -114,7 +114,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props) => {
     <div
       key={index}
       {...getStyles('legendItem')}
-      onMouseEnter={() => onHighlight(item.dataKey)}
+      onMouseEnter={() => onHighlight(item.highlightKey ?? item.dataKey)}
       data-without-color={showColor === false || undefined}
     >
       <ColorSwatch
