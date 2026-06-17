@@ -99,4 +99,53 @@ describe('@mantine/core/InputWrapper', () => {
     );
     expect(container.querySelector('.mantine-InputWrapper-root')).toHaveAttribute('data-error');
   });
+
+  it('does not reference the success id in aria-describedby when the "error" slot is omitted from inputWrapperOrder', () => {
+    const { container } = render(
+      <InputWrapper {...successProps} inputWrapperOrder={['label', 'description', 'input']}>
+        <Input />
+      </InputWrapper>
+    );
+
+    expect(inputWrapperQueries.getSuccess(container)).toBe(null);
+    const input = container.querySelector('input')!;
+    expect(input.getAttribute('aria-describedby') || '').not.toContain('test-id-success');
+  });
+
+  it('does not reference the error id in aria-describedby when the "error" slot is omitted from inputWrapperOrder', () => {
+    const { container } = render(
+      <InputWrapper {...defaultProps} inputWrapperOrder={['label', 'description', 'input']}>
+        <Input />
+      </InputWrapper>
+    );
+
+    expect(inputWrapperQueries.getError(container)).toBe(null);
+    const input = container.querySelector('input')!;
+    expect(input.getAttribute('aria-describedby') || '').not.toContain('test-id-error');
+  });
+
+  it('does not reference the description id in aria-describedby when the "description" slot is omitted from inputWrapperOrder', () => {
+    const { container } = render(
+      <InputWrapper {...defaultProps} inputWrapperOrder={['label', 'input', 'error']}>
+        <Input />
+      </InputWrapper>
+    );
+
+    expect(inputWrapperQueries.getDescription(container)).toBe(null);
+    const input = container.querySelector('input')!;
+    expect(input.getAttribute('aria-describedby') || '').not.toContain('test-id-description');
+  });
+
+  it('references rendered element ids in aria-describedby with the default order', () => {
+    const { container } = render(
+      <InputWrapper {...successProps}>
+        <Input />
+      </InputWrapper>
+    );
+
+    const input = container.querySelector('input')!;
+    const describedBy = input.getAttribute('aria-describedby') || '';
+    expect(describedBy).toContain('test-id-success');
+    expect(describedBy).toContain('test-id-description');
+  });
 });

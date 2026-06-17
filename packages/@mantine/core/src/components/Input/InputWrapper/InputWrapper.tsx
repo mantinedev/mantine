@@ -206,7 +206,10 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
   const hasError = !!error && typeof error !== 'boolean';
   const hasSuccess = !!success && typeof success !== 'boolean' && !error;
   const hasDescription = !!description;
-  const _describedBy = `${hasError ? errorId : ''} ${hasSuccess ? successId : ''} ${hasDescription ? descriptionId : ''}`;
+  const errorRendered = hasError && inputWrapperOrder.includes('error');
+  const successRendered = hasSuccess && inputWrapperOrder.includes('error');
+  const descriptionRendered = hasDescription && inputWrapperOrder.includes('description');
+  const _describedBy = `${errorRendered ? errorId : ''} ${successRendered ? successId : ''} ${descriptionRendered ? descriptionId : ''}`;
   const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
   const labelId = labelProps?.id || `${idBase}-label`;
 
