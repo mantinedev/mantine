@@ -331,7 +331,7 @@
 .resourcesWeekViewAllDayEvent {
   position: absolute;
   height: var(--resources-week-view-all-day-height);
-  z-index: 3;
+  z-index: 2;
 }
 
 .resourcesWeekViewResizeHandle {

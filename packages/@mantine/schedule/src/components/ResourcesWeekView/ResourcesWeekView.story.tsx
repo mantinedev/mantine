@@ -87,6 +87,54 @@ export function Usage() {
   );
 }
 
+export function MultidayEvents() {
+  // Monday of the current week, independent of locale.
+  const monday = dayjs().subtract((dayjs().day() + 6) % 7, 'day');
+  const mon = monday.format('YYYY-MM-DD');
+  const tue = monday.add(1, 'day').format('YYYY-MM-DD');
+  const wed = monday.add(2, 'day').format('YYYY-MM-DD');
+
+  const events: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'Conference (Mon 22:00 → Wed 02:00)',
+      start: `${mon} 22:00:00`,
+      end: `${wed} 02:00:00`,
+      color: 'grape',
+      resourceId: 'tokyo',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Overnight shift (Tue 23:00 → Wed 01:00)',
+      start: `${tue} 23:00:00`,
+      end: `${wed} 01:00:00`,
+      color: 'orange',
+      resourceId: 'paris',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Standup',
+      start: `${tue} 09:00:00`,
+      end: `${tue} 09:30:00`,
+      color: 'blue',
+      resourceId: 'tokyo',
+      payload: {},
+    },
+  ];
+
+  return (
+    <Stack p="md">
+      <Text size="sm" c="dimmed">
+        The Conference spans Mon→Wed and the Overnight shift spans Tue→Wed. Both must appear on
+        every day they cover as all-day events, not only on their start day.
+      </Text>
+      <ResourcesWeekView date={mon} resources={resources} events={events} />
+    </Stack>
+  );
+}
+
 export function IntervalMinutes() {
   const [date, setDate] = useState(toDateString(new Date()));
   return (

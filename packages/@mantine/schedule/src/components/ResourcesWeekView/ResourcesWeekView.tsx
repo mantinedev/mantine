@@ -629,7 +629,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const rows = orderedResources.map((resource, resourceIndex) => {
     const eventNodes: React.ReactNode[] = [];
-    let maxAllDayCount = 0;
+    const resourceAllDayBars = weekViewEvents.allDayBars[resource.id] ?? [];
+    const maxAllDayCount = resourceAllDayBars.reduce((max, bar) => Math.max(max, bar.row + 1), 0);
 
     weekdays.forEach((day, dayIndex) => {
       const dayEvents = weekViewEvents.byDay[day];
@@ -731,40 +732,6 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         );
       }
 
-      const dayAllDayEvents = dayEvents.allDayEvents[resource.id] || [];
-      if (dayAllDayEvents.length > 0) {
-        maxAllDayCount = Math.max(maxAllDayCount, dayAllDayEvents.length);
-        const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
-        const dayWidthPercent = 100 / weekdays.length;
-
-        dayAllDayEvents.forEach((event, index) => {
-          eventNodes.push(
-            <div
-              key={`all-day-${event.id}-${day}`}
-              {...getStyles('resourcesWeekViewAllDayEvent', {
-                style: {
-                  left: `calc(${dayOffsetPercent}% + 1px)`,
-                  width: `calc(${dayWidthPercent}% - 2px)`,
-                  top: `calc(${index} * (var(--resources-week-view-all-day-height) + 2px) + 2px)`,
-                },
-              })}
-            >
-              <ScheduleEvent
-                event={event}
-                autoSize
-                nowrap
-                renderEventBody={renderEventBody}
-                renderEvent={renderEvent}
-                radius={radius}
-                mode={mode}
-                onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
-                style={{ width: '100%', height: '100%' }}
-              />
-            </div>
-          );
-        });
-      }
-
       if (maxEventsPerTimeSlot !== undefined) {
         const clusters = getOverlapClusters(allRegularEvents);
         for (const cluster of clusters) {
@@ -804,6 +771,61 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           }
         }
       }
+    });
+
+    const stickyLabelOffset = hasGroups
+      ? 'calc(var(--resources-week-view-group-label-width) + var(--resources-week-view-resource-label-width) + 5px)'
+      : 'calc(var(--resources-week-view-resource-label-width) + 5px)';
+
+    resourceAllDayBars.forEach((bar) => {
+      const dayWidthPercent = 100 / weekdays.length;
+      const leftPercent = bar.startDayIndex * dayWidthPercent;
+      const widthPercent = (bar.endDayIndex - bar.startDayIndex + 1) * dayWidthPercent;
+
+      eventNodes.push(
+        <div
+          key={`all-day-${bar.event.id}-${bar.startDayIndex}`}
+          {...getStyles('resourcesWeekViewAllDayEvent', {
+            style: {
+              left: `calc(${leftPercent}% + 1px)`,
+              width: `calc(${widthPercent}% - 2px)`,
+              top: `calc(${bar.row} * (var(--resources-week-view-all-day-height) + 2px) + 2px)`,
+            },
+          })}
+        >
+          <ScheduleEvent
+            event={bar.event}
+            autoSize
+            nowrap
+            renderEventBody={(barEvent) => (
+              <span
+                style={{
+                  position: 'sticky',
+                  insetInlineStart: stickyLabelOffset,
+                  display: 'inline-block',
+                  maxWidth: '100%',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {renderEventBody ? renderEventBody(barEvent) : barEvent.title}
+              </span>
+            )}
+            renderEvent={renderEvent}
+            radius={radius}
+            mode={mode}
+            onClick={onEventClick ? (e) => onEventClick(bar.event, e) : undefined}
+            style={{ width: '100%', height: '100%', overflow: 'visible' }}
+            styles={{
+              eventInner: {
+                display: 'block',
+                overflow: 'visible',
+                lineHeight: 'var(--resources-week-view-all-day-height)',
+              },
+            }}
+          />
+        </div>
+      );
     });
 
     return (
