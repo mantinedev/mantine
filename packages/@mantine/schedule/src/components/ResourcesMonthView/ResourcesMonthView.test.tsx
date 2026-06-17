@@ -15,6 +15,14 @@ const defaultProps: ResourcesMonthViewProps = {
   resources,
 };
 
+function eventRoot(node: HTMLElement): HTMLElement {
+  return node.closest('.mantine-ScheduleEvent-event') as HTMLElement;
+}
+
+function spanWidthPercent(node: HTMLElement): number {
+  return parseFloat(eventRoot(node).style.width.match(/([\d.]+)%/)![1]);
+}
+
 describe('@mantine/schedule/ResourcesMonthView', () => {
   it('renders resource labels', () => {
     render(<ResourcesMonthView {...defaultProps} />);
@@ -435,7 +443,7 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     });
   });
 
-  it('multi-day events render in each applicable day cell', () => {
+  it('renders a multi-day event as a single spanning bar', () => {
     const events = [
       {
         id: 'multi',
@@ -449,8 +457,126 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     ];
 
     render(<ResourcesMonthView {...defaultProps} events={events} />);
-    const eventElements = screen.getAllByText('Multi Day');
-    expect(eventElements.length).toBe(3);
+    const bars = screen.getAllByText('Multi Day');
+    expect(bars).toHaveLength(1);
+    expect(spanWidthPercent(bars[0])).toBeCloseTo((3 / 31) * 100, 1);
+    expect(eventRoot(bars[0]).style.height).not.toContain('18px');
+  });
+
+  it('keeps a multi-day event visible across all its days regardless of declaration order', () => {
+    const events = [
+      {
+        id: 's1',
+        title: 'Morning Sync',
+        start: '2025-01-15 08:00:00',
+        end: '2025-01-15 09:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 's2',
+        title: 'Midday Sync',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 'conf',
+        title: 'Conference',
+        start: '2025-01-14 10:00:00',
+        end: '2025-01-16 12:00:00',
+        color: 'green',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(<ResourcesMonthView {...defaultProps} events={events} />);
+
+    const bars = screen.getAllByText('Conference');
+    expect(bars).toHaveLength(1);
+    expect(spanWidthPercent(bars[0])).toBeCloseTo((3 / 31) * 100, 1);
+    expect(screen.getByText('+1 more')).toBeInTheDocument();
+    // The span crosses a "+1 more" day, so the bar compresses to align with the shrunk rows below
+    // it instead of overlapping them.
+    expect(eventRoot(bars[0]).style.height).toContain('100% - 18px');
+  });
+
+  it('keeps a short multi-day event visible across its days over longer same-day events', () => {
+    const events = [
+      {
+        id: 'long-a',
+        title: 'Long A',
+        start: '2025-01-21 08:00:00',
+        end: '2025-01-21 18:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 'long-b',
+        title: 'Long B',
+        start: '2025-01-21 09:00:00',
+        end: '2025-01-21 17:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 'night',
+        title: 'Night Shift',
+        start: '2025-01-20 23:00:00',
+        end: '2025-01-21 01:00:00',
+        color: 'green',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(<ResourcesMonthView {...defaultProps} events={events} />);
+
+    const bars = screen.getAllByText('Night Shift');
+    expect(bars).toHaveLength(1);
+    expect(spanWidthPercent(bars[0])).toBeCloseTo((2 / 31) * 100, 1);
+    expect(screen.getByText('+1 more')).toBeInTheDocument();
+  });
+
+  it('keeps overlapping multi-day events on stable rows across their spans', () => {
+    const events = [
+      {
+        id: 'b',
+        title: 'Conf B',
+        start: '2025-01-02 09:00:00',
+        end: '2025-01-04 17:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+      {
+        id: 'a',
+        title: 'Conf A',
+        start: '2025-01-01 09:00:00',
+        end: '2025-01-03 17:00:00',
+        color: 'red',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    render(<ResourcesMonthView {...defaultProps} events={events} />);
+
+    const barA = screen.getAllByText('Conf A');
+    const barB = screen.getAllByText('Conf B');
+
+    expect(barA).toHaveLength(1);
+    expect(barB).toHaveLength(1);
+    expect(spanWidthPercent(barA[0])).toBeCloseTo((3 / 31) * 100, 1);
+    expect(spanWidthPercent(barB[0])).toBeCloseTo((3 / 31) * 100, 1);
+    expect(eventRoot(barA[0]).style.top).toBe('calc(0% + 1px)');
+    expect(eventRoot(barB[0]).style.top).toBe('calc(50% + 1px)');
   });
 
   it('recurring events render instances', () => {

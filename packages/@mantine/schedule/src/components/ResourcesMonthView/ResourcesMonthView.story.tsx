@@ -267,3 +267,62 @@ export function ManyEventsPerDay() {
     />
   );
 }
+
+export function MultidayBarContinuity() {
+  const [date, setDate] = useState('2025-06-15');
+
+  const hallResources: ScheduleResourceData[] = [{ id: 'main-hall', label: 'Main Hall' }];
+
+  // The two single-day events are declared before the multi-day conference on purpose: with the
+  // old per-day chunk rendering the conference was sliced into one pill per day and could even be
+  // pushed into "+1 more" on June 11. Multi-day events now render as one continuous bar across the
+  // days they span (single-day events still overflow into "+N more" as before).
+  const conferenceEvents: ScheduleEventData[] = [
+    {
+      id: 's1',
+      title: 'Morning Sync',
+      start: '2025-06-11 08:00:00',
+      end: '2025-06-11 09:00:00',
+      color: 'blue',
+      resourceId: 'main-hall',
+      payload: {},
+    },
+    {
+      id: 's2',
+      title: 'Vendor Call',
+      start: '2025-06-11 09:30:00',
+      end: '2025-06-11 10:30:00',
+      color: 'orange',
+      resourceId: 'main-hall',
+      payload: {},
+    },
+    {
+      id: 'conf',
+      title: 'Annual Conference',
+      start: '2025-06-10 10:00:00',
+      end: '2025-06-12 16:00:00',
+      color: 'grape',
+      resourceId: 'main-hall',
+      payload: {},
+    },
+  ];
+
+  return (
+    <Stack gap="md" p="md">
+      <Text size="sm" c="dimmed">
+        The "Annual Conference" spans June 10–12 and renders as one continuous bar across all three
+        days — even on June 11, where two other events compete for the two visible slots and
+        collapse one of them into "+1 more". Previously the event was drawn as a separate pill per
+        day and could be pushed into "+1 more" on the crowded middle day, breaking the bar into
+        pieces.
+      </Text>
+      <ResourcesMonthView
+        date={date}
+        onDateChange={setDate}
+        resources={hallResources}
+        events={conferenceEvents}
+        maxEventsPerTimeSlot={2}
+      />
+    </Stack>
+  );
+}
