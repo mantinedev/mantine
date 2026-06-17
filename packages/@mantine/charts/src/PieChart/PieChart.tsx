@@ -28,6 +28,7 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
+import { getPieChartData } from '../utils';
 import classes from './PieChart.module.css';
 
 export interface PieChartCell {
@@ -274,15 +275,7 @@ export const PieChart = factory<PieChartFactory>((_props) => {
     props,
   });
 
-  const pieData = data.map((item, index) => ({
-    ...item,
-    __segmentIndex: index,
-    fill: getThemeColor(item.color, theme),
-    stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
-    strokeWidth,
-    fillOpacity: highlightedIndex !== null ? (highlightedIndex === index ? 1 : 0.2) : 1,
-    ...(typeof cellProps === 'function' ? cellProps(item) : cellProps),
-  }));
+  const pieData = getPieChartData({ data, theme, strokeWidth, highlightedIndex, cellProps });
 
   return (
     <Box size={size} {...getStyles('root')} {...others}>
