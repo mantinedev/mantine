@@ -1,4 +1,4 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEvent, ScheduleEventProps, ScheduleEventStylesNames } from './ScheduleEvent';
 
 const defaultProps: ScheduleEventProps = {
@@ -83,6 +83,28 @@ describe('@mantine/schedule/ScheduleEvent', () => {
       'data-hanging',
       'start'
     );
+  });
+
+  it('uses event.title as the default title but lets consumer props override it', () => {
+    const { rerender } = render(<ScheduleEvent {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveAttribute('title', 'Test event');
+
+    rerender(<ScheduleEvent {...defaultProps} title="Custom title" />);
+    expect(screen.getByRole('button')).toHaveAttribute('title', 'Custom title');
+  });
+
+  it('forwards onClick in default mode', async () => {
+    const spy = jest.fn();
+    render(<ScheduleEvent {...defaultProps} onClick={spy} />);
+    await userEvent.click(screen.getByRole('button'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('suppresses consumer onClick in static mode', async () => {
+    const spy = jest.fn();
+    render(<ScheduleEvent {...defaultProps} mode="static" onClick={spy} />);
+    await userEvent.click(screen.getByRole('button'));
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it('supports renderEvent prop for full customization', () => {
