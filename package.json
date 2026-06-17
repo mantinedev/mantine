@@ -131,10 +131,6 @@
     "type-fest": "^5.7.0"
   },
   "devDependencies": {
-    "@babel/core": "7.29.7",
-    "@babel/preset-env": "7.29.7",
-    "@babel/preset-react": "^7.29.7",
-    "@babel/preset-typescript": "7.29.7",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
@@ -209,7 +205,6 @@
     "zx": "^8.8.5"
   },
   "resolutions": {
-    "@babel/core": "7.26.0",
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
     "prosemirror-model": "1.18.1",
