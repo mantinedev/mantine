@@ -81,7 +81,16 @@ Filter the output to show only major version bumps (where the major version numb
 
 ### 8. Generate report
 
-Create `claude/{YYYY-month-DD}-dependencies-update.md` where month is lowercase full name (e.g., `2026-march-08-dependencies-update.md`).
+Write the report into the central **llm-output** repo (managed by the `llm-output-notes` skill), not the local project. Resolve the destination with its helper, which maps the current repo to `<llm-output>/<repo-name>` by git remote (e.g. `mantine`):
+
+```bash
+HELPER=/Users/vitalyrtishchev/.claude/skills/llm-output-notes/scripts/llm-doc.sh
+BASE=$(bash "$HELPER" dir)
+mkdir -p "$BASE/dependencies"
+# write the report to: $BASE/dependencies/{YYYY-month-DD}-dependencies-update.md
+```
+
+where month is lowercase full name (e.g., `2026-march-08-dependencies-update.md`). After writing, commit and push it: `bash "$HELPER" commit "Add dependencies update report {YYYY-month-DD}"`.
 
 Report format:
 

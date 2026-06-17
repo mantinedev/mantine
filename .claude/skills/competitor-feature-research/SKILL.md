@@ -107,17 +107,30 @@ claims waste the team's time.
 
 ### Step 5 — Report
 
-Write the report to a markdown file at:
+Write the report into the central **llm-output** repo (managed by the
+`llm-output-notes` skill), not the local project. Resolve the destination with
+its helper, which maps the current repo to `<llm-output>/<repo-name>` by git
+remote (e.g. `mantine`):
 
-```
-./claude/competitor-feature-research/<TODAY>-report.md
+```bash
+HELPER=/Users/vitalyrtishchev/.claude/skills/llm-output-notes/scripts/llm-doc.sh
+BASE=$(bash "$HELPER" dir)
+mkdir -p "$BASE/competitor-feature-research"
+# write the report to: $BASE/competitor-feature-research/<TODAY>-report.md
 ```
 
 where `<TODAY>` is the run date in `YYYY-MM-DD` form (the date the scan is run, not `SINCE`).
-Create the `./claude/competitor-feature-research/` directory if it doesn't exist; overwrite an
-existing same-day report. Use the template in "Report format". Lead with the **Missing** items
-grouped across libraries — that's the highest-value output — then per-library detail. After
-writing, tell the user the file path and give a 2–3 line summary of the top gaps.
+Overwrite an existing same-day report. Use the template in "Report format". Lead with the
+**Missing** items grouped across libraries — that's the highest-value output — then per-library
+detail.
+
+After writing, commit and push it to the llm-output repo:
+
+```bash
+bash "$HELPER" commit "Add competitor feature research report <TODAY>"
+```
+
+Then tell the user the file path and give a 2–3 line summary of the top gaps.
 
 ## Parallelizing
 
