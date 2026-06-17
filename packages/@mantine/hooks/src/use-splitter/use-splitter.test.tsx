@@ -808,6 +808,46 @@ describe('useSplitter', () => {
       expect(splitter!.collapsed).toEqual([false, false]);
     });
 
+    it('restores a fixed pane to its original px after it collapses mid-drag (not as a percentage)', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[
+            { defaultSize: '240px', collapsible: true, collapseThreshold: '120px', min: '0px' },
+            { defaultSize: 60, min: 0 },
+          ]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      // Drag handle-0 far enough left to cross the 120px collapse threshold -> pane 0 collapses to 0.
+      const handle = screen.getByTestId('handle-0');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 300, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 100, clientY: 100 })
+        );
+      });
+
+      expect(splitter!.sizes[0]).toBe('0px');
+
+      // Expanding must restore the original 240px. The pre-collapse snapshot taken mid-drag must be
+      // the raw size, not the resolved working pixels: a numeric 240 snapshot is read back as 240%
+      // of the container and would blow the pane up to the full container width.
+      act(() => {
+        splitter!.expand(0);
+      });
+
+      expect(splitter!.sizes[0]).toBe('240px');
+    });
+
     it('respects RTL when dragging a fixed pane', () => {
       let splitter: UseSplitterReturnValue;
       render(

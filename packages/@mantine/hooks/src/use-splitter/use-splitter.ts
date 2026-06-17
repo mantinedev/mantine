@@ -89,6 +89,9 @@ export interface UseSplitterReturnValue<T extends HTMLElement = any> {
   ref: React.RefCallback<T | null>;
   /** Current panel sizes, each value keeps the unit it was declared in */
   sizes: SplitterPaneSize[];
+  /** Whether sizes are tracked in pixels because any pane size, `min`, `max`, `step`, `shiftStep`
+   * or `collapseThreshold` uses a fixed `px`/`rem` unit */
+  pixelMode: boolean;
   /** Which panels are currently collapsed */
   collapsed: boolean[];
   /** Index of handle being dragged, or -1 */
@@ -971,7 +974,7 @@ export function useSplitter<T extends HTMLElement = any>(
             prevSizes,
             newSizes,
             [s.handleIndex, s.handleIndex + 1],
-            s.startSizes
+            s.startRaw
           );
 
           const encoded = encodeWorkingSizes(
@@ -1215,6 +1218,7 @@ export function useSplitter<T extends HTMLElement = any>(
   return {
     ref: containerRefCallback,
     sizes: currentSizes,
+    pixelMode,
     collapsed,
     activeHandle,
     getHandleProps,
