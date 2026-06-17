@@ -32,7 +32,7 @@ const testEvents: ScheduleEventData[] = [
     id: '4',
     title: 'All Day Event',
     start: '2025-11-15 00:00:00',
-    end: '2025-11-15 00:00:00',
+    end: '2025-11-16 00:00:00',
     color: 'orange',
     payload: {},
   },
@@ -104,6 +104,22 @@ describe('@mantine/schedule/AgendaView', () => {
     render(<AgendaView rangeStart="2025-11-10" rangeEnd="2025-11-10" events={allDayEvents} />);
     expect(screen.getByText('All day')).toBeInTheDocument();
     expect(screen.queryByText('00:00 – 00:00')).not.toBeInTheDocument();
+  });
+
+  it('renders "All day" for events ending at 23:59:59 the same day', () => {
+    const allDayEvents: ScheduleEventData[] = [
+      {
+        id: 'allday-eod',
+        title: 'End Of Day All Day',
+        start: '2025-11-10 00:00:00',
+        end: '2025-11-10 23:59:59',
+        color: 'red',
+        payload: {},
+      },
+    ];
+    render(<AgendaView rangeStart="2025-11-10" rangeEnd="2025-11-10" events={allDayEvents} />);
+    expect(screen.getByText('All day')).toBeInTheDocument();
+    expect(screen.queryByText('00:00 – 23:59')).not.toBeInTheDocument();
   });
 
   it('does not duplicate a one-day all-day event onto the next date', () => {

@@ -57,3 +57,10 @@ export type {
   OrderedResourcesResult,
   ResourceGroupInfo,
 } from './get-ordered-resources/get-ordered-resources';
+export { handleResourcesGridKeyDown } from './handle-resources-grid-key-down/handle-resources-grid-key-down';
+export type {
+  HandleResourcesGridKeyDownInput,
+  ResourcesGridControlsRef,
+} from './handle-resources-grid-key-down/handle-resources-grid-key-down';
+export { getGroupToResourceIdMap } from './get-group-to-resource-id-map/get-group-to-resource-id-map';
+export { getIndexFromDragPoint } from './get-index-from-drag-point/get-index-from-drag-point';

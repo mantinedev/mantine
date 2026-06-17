@@ -39,6 +39,8 @@ import {
   calculateMonthDropDate,
   expandRecurringEvents,
   formatDate,
+  getGroupToResourceIdMap,
+  getIndexFromDragPoint,
   getOrderedResources,
   toDateString,
 } from '../../utils';
@@ -396,24 +398,26 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const ctx = useDatesContext();
   const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
-  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(
-    resources,
-    groups
+  const { orderedResources, groupRanges, resourceGroupMap } = useMemo(
+    () => getOrderedResources(resources, groups),
+    [resources, groups]
   );
   const hasGroups = groupRanges.length > 0;
 
-  const monthStart = dayjs(date).startOf('month');
-  const monthEnd = dayjs(date).endOf('month');
-  const daysInMonth = monthEnd.date();
-
-  const monthDays: string[] = [];
-  for (let d = 1; d <= daysInMonth; d++) {
-    const day = monthStart.date(d);
-    if (!withWeekendDays && resolvedWeekendDays.includes(day.day() as DayOfWeek)) {
-      continue;
+  const monthDays = useMemo(() => {
+    const start = dayjs(date).startOf('month');
+    const daysCount = start.endOf('month').date();
+    const weekendDayList = ctx.getWeekendDays(weekendDays);
+    const days: string[] = [];
+    for (let d = 1; d <= daysCount; d++) {
+      const day = start.date(d);
+      if (!withWeekendDays && weekendDayList.includes(day.day() as DayOfWeek)) {
+        continue;
+      }
+      days.push(day.format('YYYY-MM-DD'));
     }
-    monthDays.push(day.format('YYYY-MM-DD'));
-  }
+    return days;
+  }, [date, withWeekendDays, weekendDays, ctx]);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
@@ -451,157 +455,168 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     }
   }, []);
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: monthStart.toDate(),
-    rangeEnd: monthEnd.toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const expandedEvents = useMemo(
+    () =>
+      expandRecurringEvents({
+        events,
+        rangeStart: dayjs(date).startOf('month').toDate(),
+        rangeEnd: dayjs(date).endOf('month').toDate(),
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, date, recurrenceExpansionLimit]
+  );
 
-  const eventsByResourceAndDay: Record<string | number, Record<string, ScheduleEventData[]>> = {};
-  for (const resource of resources) {
-    eventsByResourceAndDay[resource.id] = {};
-    for (const day of monthDays) {
-      eventsByResourceAndDay[resource.id][day] = [];
-    }
-  }
-
-  if (expandedEvents) {
-    for (const event of expandedEvents) {
-      if (event.resourceId === undefined || !(event.resourceId in eventsByResourceAndDay)) {
-        continue;
-      }
-
-      const eventStart = dayjs(event.start);
-      const eventEnd = dayjs(event.end);
-
+  const { eventsByResourceAndDay, eventLayoutByResource } = useMemo(() => {
+    const eventsByResourceAndDay: Record<string | number, Record<string, ScheduleEventData[]>> = {};
+    for (const resource of resources) {
+      eventsByResourceAndDay[resource.id] = {};
       for (const day of monthDays) {
-        const dayStart = dayjs(day).startOf('day');
-        const dayEnd = dayjs(day).endOf('day');
-
-        if (eventStart.isBefore(dayEnd) && eventEnd.isAfter(dayStart)) {
-          eventsByResourceAndDay[event.resourceId][day].push(event);
-        }
+        eventsByResourceAndDay[resource.id][day] = [];
       }
     }
-  }
 
-  const eventLayoutByResource: Record<string | number, ResourcesMonthViewResourceLayout> = {};
-  const monthRangeStart = dayjs(monthDays[0]).startOf('day');
-  const monthEndExclusive = dayjs(monthDays[monthDays.length - 1])
-    .add(1, 'day')
-    .startOf('day');
-
-  for (const resource of resources) {
-    const byDay: Record<string, ResourcesMonthViewCellLayout> = {};
-    const lastRow = new Map<string | number, number>();
-    const rowByEventDay = new Map<string | number, Map<number, number>>();
-    const overlapByEvent = new Map<string | number, { event: ScheduleEventData; days: number[] }>();
-
-    monthDays.forEach((day, dayIndex) => {
-      const dayEvents = eventsByResourceAndDay[resource.id][day];
-      dayEvents.sort(compareCellEvents);
-
-      for (const event of dayEvents) {
-        const overlap = overlapByEvent.get(event.id);
-        if (overlap) {
-          overlap.days.push(dayIndex);
-        } else {
-          overlapByEvent.set(event.id, { event, days: [dayIndex] });
-        }
-      }
-
-      const usedRows = new Set<number>();
-      const visible: ResourcesMonthViewCellLayout['visible'] = [];
-      let hiddenCount = 0;
-
-      for (const event of dayEvents) {
-        let row: number | null | undefined = lastRow.get(event.id);
-
-        if (row === undefined || row >= maxEventsPerTimeSlot || usedRows.has(row)) {
-          row = getFirstAvailableRow(usedRows, maxEventsPerTimeSlot);
-        }
-
-        if (row === null) {
-          hiddenCount += 1;
+    if (expandedEvents) {
+      for (const event of expandedEvents) {
+        if (event.resourceId === undefined || !(event.resourceId in eventsByResourceAndDay)) {
           continue;
         }
 
-        usedRows.add(row);
-        visible.push({ event, row });
-        if (!rowByEventDay.has(event.id)) {
-          rowByEventDay.set(event.id, new Map());
-        }
-        rowByEventDay.get(event.id)!.set(dayIndex, row);
-        lastRow.set(event.id, row);
-      }
+        const eventStart = dayjs(event.start);
+        const eventEnd = dayjs(event.end);
 
-      byDay[day] = { visible, hiddenCount };
-    });
+        for (const day of monthDays) {
+          const dayStart = dayjs(day).startOf('day');
+          const dayEnd = dayjs(day).endOf('day');
 
-    const segments: ResourcesMonthViewSegment[] = [];
-
-    for (const { event, days } of overlapByEvent.values()) {
-      if (!isMultiDayEvent(event)) {
-        continue;
-      }
-
-      const firstOverlap = days[0];
-      const lastOverlap = days[days.length - 1];
-      const rows = rowByEventDay.get(event.id);
-      const extendsBefore = dayjs(event.start).isBefore(monthRangeStart);
-      const extendsAfter = dayjs(event.end).isAfter(monthEndExclusive);
-      let run: { startDayIndex: number; endDayIndex: number; row: number } | null = null;
-
-      const flushRun = () => {
-        if (!run) {
-          return;
-        }
-        const clipStart = run.startDayIndex > firstOverlap;
-        const clipEnd = run.endDayIndex < lastOverlap;
-        const hangStart = !clipStart && extendsBefore;
-        const hangEnd = !clipEnd && extendsAfter;
-        let hiddenInSpan = false;
-        for (let dayIndex = run.startDayIndex; dayIndex <= run.endDayIndex; dayIndex += 1) {
-          if ((byDay[monthDays[dayIndex]]?.hiddenCount ?? 0) > 0) {
-            hiddenInSpan = true;
-            break;
+          if (eventStart.isBefore(dayEnd) && eventEnd.isAfter(dayStart)) {
+            eventsByResourceAndDay[event.resourceId][day].push(event);
           }
         }
-        segments.push({
-          event,
-          startDayIndex: run.startDayIndex,
-          endDayIndex: run.endDayIndex,
-          row: run.row,
-          clipStart,
-          clipEnd,
-          hanging: hangStart && hangEnd ? 'both' : hangStart ? 'start' : hangEnd ? 'end' : 'none',
-          hiddenInSpan,
-        });
-        run = null;
-      };
+      }
+    }
 
-      for (let dayIndex = firstOverlap; dayIndex <= lastOverlap; dayIndex += 1) {
-        const row = rows?.get(dayIndex);
+    const eventLayoutByResource: Record<string | number, ResourcesMonthViewResourceLayout> = {};
+    const monthRangeStart = dayjs(monthDays[0]).startOf('day');
+    const monthEndExclusive = dayjs(monthDays[monthDays.length - 1])
+      .add(1, 'day')
+      .startOf('day');
 
-        if (row === undefined) {
-          flushRun();
+    for (const resource of resources) {
+      const byDay: Record<string, ResourcesMonthViewCellLayout> = {};
+      const lastRow = new Map<string | number, number>();
+      const rowByEventDay = new Map<string | number, Map<number, number>>();
+      const overlapByEvent = new Map<
+        string | number,
+        { event: ScheduleEventData; days: number[] }
+      >();
+
+      monthDays.forEach((day, dayIndex) => {
+        const dayEvents = eventsByResourceAndDay[resource.id][day];
+        dayEvents.sort(compareCellEvents);
+
+        for (const event of dayEvents) {
+          const overlap = overlapByEvent.get(event.id);
+          if (overlap) {
+            overlap.days.push(dayIndex);
+          } else {
+            overlapByEvent.set(event.id, { event, days: [dayIndex] });
+          }
+        }
+
+        const usedRows = new Set<number>();
+        const visible: ResourcesMonthViewCellLayout['visible'] = [];
+        let hiddenCount = 0;
+
+        for (const event of dayEvents) {
+          let row: number | null | undefined = lastRow.get(event.id);
+
+          if (row === undefined || row >= maxEventsPerTimeSlot || usedRows.has(row)) {
+            row = getFirstAvailableRow(usedRows, maxEventsPerTimeSlot);
+          }
+
+          if (row === null) {
+            hiddenCount += 1;
+            continue;
+          }
+
+          usedRows.add(row);
+          visible.push({ event, row });
+          if (!rowByEventDay.has(event.id)) {
+            rowByEventDay.set(event.id, new Map());
+          }
+          rowByEventDay.get(event.id)!.set(dayIndex, row);
+          lastRow.set(event.id, row);
+        }
+
+        byDay[day] = { visible, hiddenCount };
+      });
+
+      const segments: ResourcesMonthViewSegment[] = [];
+
+      for (const { event, days } of overlapByEvent.values()) {
+        if (!isMultiDayEvent(event)) {
           continue;
         }
 
-        if (run && run.row === row && run.endDayIndex === dayIndex - 1) {
-          run.endDayIndex = dayIndex;
-        } else {
-          flushRun();
-          run = { startDayIndex: dayIndex, endDayIndex: dayIndex, row };
+        const firstOverlap = days[0];
+        const lastOverlap = days[days.length - 1];
+        const rows = rowByEventDay.get(event.id);
+        const extendsBefore = dayjs(event.start).isBefore(monthRangeStart);
+        const extendsAfter = dayjs(event.end).isAfter(monthEndExclusive);
+        let run: { startDayIndex: number; endDayIndex: number; row: number } | null = null;
+
+        const flushRun = () => {
+          if (!run) {
+            return;
+          }
+          const clipStart = run.startDayIndex > firstOverlap;
+          const clipEnd = run.endDayIndex < lastOverlap;
+          const hangStart = !clipStart && extendsBefore;
+          const hangEnd = !clipEnd && extendsAfter;
+          let hiddenInSpan = false;
+          for (let dayIndex = run.startDayIndex; dayIndex <= run.endDayIndex; dayIndex += 1) {
+            if ((byDay[monthDays[dayIndex]]?.hiddenCount ?? 0) > 0) {
+              hiddenInSpan = true;
+              break;
+            }
+          }
+          segments.push({
+            event,
+            startDayIndex: run.startDayIndex,
+            endDayIndex: run.endDayIndex,
+            row: run.row,
+            clipStart,
+            clipEnd,
+            hanging: hangStart && hangEnd ? 'both' : hangStart ? 'start' : hangEnd ? 'end' : 'none',
+            hiddenInSpan,
+          });
+          run = null;
+        };
+
+        for (let dayIndex = firstOverlap; dayIndex <= lastOverlap; dayIndex += 1) {
+          const row = rows?.get(dayIndex);
+
+          if (row === undefined) {
+            flushRun();
+            continue;
+          }
+
+          if (run && run.row === row && run.endDayIndex === dayIndex - 1) {
+            run.endDayIndex = dayIndex;
+          } else {
+            flushRun();
+            run = { startDayIndex: dayIndex, endDayIndex: dayIndex, row };
+          }
         }
+
+        flushRun();
       }
 
-      flushRun();
+      eventLayoutByResource[resource.id] = { byDay, segments };
     }
 
-    eventLayoutByResource[resource.id] = { byDay, segments };
-  }
+    return { eventsByResourceAndDay, eventLayoutByResource };
+  }, [resources, monthDays, expandedEvents, maxEventsPerTimeSlot]);
 
   type DropTargetCell = { day: string; resourceId: string | number };
 
@@ -639,13 +654,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
 
-  const groupToResourceId = useMemo(() => {
-    const map = new Map<string, string | number>();
-    for (const resource of resources) {
-      map.set(String(resource.id), resource.id);
-    }
-    return map;
-  }, [resources]);
+  const groupToResourceId = useMemo(() => getGroupToResourceIdMap(resources), [resources]);
 
   const slotDragSelect = useSlotDragSelect({
     enabled: withDragSlotSelect && mode !== 'static',
@@ -690,38 +699,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
   const cellsRef = useRef<HTMLButtonElement[][]>([]);
 
   const getDayIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
-    const resourceCells = cellsRef.current[resourceIndex] ?? [];
-    const dayIndex = resourceCells.findIndex((cellNode) => {
-      if (!cellNode) {
-        return false;
-      }
-      const rect = cellNode.getBoundingClientRect();
-      return event.clientX >= rect.left && event.clientX <= rect.right;
-    });
-
-    if (dayIndex >= 0) {
-      return dayIndex;
-    }
-
-    const firstCell = resourceCells[0];
-    const lastCell = resourceCells[resourceCells.length - 1];
-
-    if (!firstCell || !lastCell) {
-      return null;
-    }
-
-    const firstRect = firstCell.getBoundingClientRect();
-    const lastRect = lastCell.getBoundingClientRect();
-
-    if (event.clientX < firstRect.left) {
-      return 0;
-    }
-
-    if (event.clientX > lastRect.right) {
-      return resourceCells.length - 1;
-    }
-
-    return null;
+    return getIndexFromDragPoint(cellsRef.current[resourceIndex] ?? [], event.clientX);
   }, []);
 
   const handleCellKeyDown = (

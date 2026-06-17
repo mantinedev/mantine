@@ -41,12 +41,16 @@ import {
   getBusinessHoursMod,
   getCurrentTimePosition,
   getDayTimeIntervals,
+  getGroupToResourceIdMap,
+  getIndexFromDragPoint,
   getOrderedResources,
   getWeekDays,
+  handleResourcesGridKeyDown,
   isAllDayEvent,
   isInTimeRange,
   nextWeek,
   previousWeek,
+  ResourcesGridControlsRef,
   toDateString,
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
@@ -58,10 +62,6 @@ import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getWeekLabel } from '../WeekView/get-week-label/get-week-label';
 import { getResourcesWeekViewEvents } from './get-resources-week-view-events/get-resources-week-view-events';
-import {
-  handleResourcesWeekViewKeyDown,
-  ResourcesWeekViewControlsRef,
-} from './handle-resources-week-view-key-down';
 import { ResourcesWeekViewRow } from './ResourcesWeekViewRow';
 import classes from './ResourcesWeekView.module.css';
 
@@ -335,18 +335,22 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
-  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(
-    resources,
-    groups
+  const { orderedResources, groupRanges, resourceGroupMap } = useMemo(
+    () => getOrderedResources(resources, groups),
+    [resources, groups]
   );
   const hasGroups = groupRanges.length > 0;
 
-  const weekdays = getWeekDays({
-    week: date,
-    withWeekendDays,
-    weekendDays: ctx.getWeekendDays(weekendDays),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-  });
+  const weekdays = useMemo(
+    () =>
+      getWeekDays({
+        week: date,
+        withWeekendDays,
+        weekendDays: ctx.getWeekendDays(weekendDays),
+        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+      }),
+    [date, withWeekendDays, weekendDays, firstDayOfWeek, ctx]
+  );
 
   const totalSlotsPerDay = slots.length;
 
@@ -429,13 +433,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
 
-  const groupToResourceId = useMemo(() => {
-    const map = new Map<string, string | number>();
-    for (const resource of resources) {
-      map.set(String(resource.id), resource.id);
-    }
-    return map;
-  }, [resources]);
+  const groupToResourceId = useMemo(() => getGroupToResourceIdMap(resources), [resources]);
 
   const slotDragSelect = useSlotDragSelect({
     enabled: withDragSlotSelect && mode !== 'static',
@@ -484,14 +482,18 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     });
   };
 
-  const weekViewEvents = getResourcesWeekViewEvents({
-    events,
-    resources,
-    weekdays,
-    startTime,
-    endTime,
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const weekViewEvents = useMemo(
+    () =>
+      getResourcesWeekViewEvents({
+        events,
+        resources,
+        weekdays,
+        startTime,
+        endTime,
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, resources, weekdays, startTime, endTime, recurrenceExpansionLimit]
+  );
 
   const dayLabels = weekdays.map((day) => {
     const d = dayjs(day);
@@ -539,7 +541,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     })
   );
 
-  const slotsRef: ResourcesWeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
+  const slotsRef: ResourcesGridControlsRef = useRef<HTMLButtonElement[][]>([]);
   const rowSlotsContainersRef = useRef<(HTMLDivElement | null)[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
@@ -581,38 +583,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   }, []);
 
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
-    const resourceSlots = slotsRef.current[resourceIndex] ?? [];
-    const slotIndex = resourceSlots.findIndex((slotNode) => {
-      if (!slotNode) {
-        return false;
-      }
-      const rect = slotNode.getBoundingClientRect();
-      return event.clientX >= rect.left && event.clientX <= rect.right;
-    });
-
-    if (slotIndex >= 0) {
-      return slotIndex;
-    }
-
-    const firstSlot = resourceSlots[0];
-    const lastSlot = resourceSlots[resourceSlots.length - 1];
-
-    if (!firstSlot || !lastSlot) {
-      return null;
-    }
-
-    const firstRect = firstSlot.getBoundingClientRect();
-    const lastRect = lastSlot.getBoundingClientRect();
-
-    if (event.clientX < firstRect.left) {
-      return 0;
-    }
-
-    if (event.clientX > lastRect.right) {
-      return resourceSlots.length - 1;
-    }
-
-    return null;
+    return getIndexFromDragPoint(slotsRef.current[resourceIndex] ?? [], event.clientX);
   }, []);
 
   const handleSlotKeyDown = (
@@ -620,13 +591,15 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     resourceIndex: number,
     slotIndex: number
   ) => {
-    handleResourcesWeekViewKeyDown({
+    handleResourcesGridKeyDown({
       controlsRef: slotsRef,
       resourceIndex,
       slotIndex,
       event,
     });
   };
+
+  const dayWidthPercent = 100 / weekdays.length;
 
   const rows = orderedResources.map((resource, resourceIndex) => {
     const eventNodes: React.ReactNode[] = [];
@@ -638,6 +611,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       if (!dayEvents) {
         return;
       }
+
+      const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
 
       const bgEvents = [
         ...(dayEvents.backgroundTimedEvents[resource.id] || []),
@@ -653,9 +628,6 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
         const bgEventBody =
           typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-        const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
-        const dayWidthPercent = 100 / weekdays.length;
 
         const bgEventProps = {
           key: `bg-${event.id}-${day}`,
@@ -692,9 +664,6 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
       for (const event of visibleEvents) {
         const isDraggable = dragDrop.isDraggableEvent(event);
-
-        const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
-        const dayWidthPercent = 100 / weekdays.length;
 
         const eventLeft = dayOffsetPercent + (event.position.top / 100) * dayWidthPercent;
         const eventWidth = (event.position.height / 100) * dayWidthPercent;
@@ -741,8 +710,6 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           ).length;
 
           if (hiddenCount > 0 && mode !== 'static') {
-            const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
-            const dayWidthPercent = 100 / weekdays.length;
             const leftPercent =
               dayOffsetPercent +
               (Math.min(...cluster.map((e) => e.position.top)) / 100) * dayWidthPercent;
@@ -784,7 +751,6 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       : 'calc(var(--resources-week-view-resource-label-width) + 5px)';
 
     resourceAllDayBars.forEach((bar) => {
-      const dayWidthPercent = 100 / weekdays.length;
       const leftPercent = bar.startDayIndex * dayWidthPercent;
       const widthPercent = (bar.endDayIndex - bar.startDayIndex + 1) * dayWidthPercent;
 

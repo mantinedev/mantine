@@ -42,9 +42,13 @@ import {
   getBusinessHoursMod,
   getCurrentTimePosition,
   getDayTimeIntervals,
+  getGroupToResourceIdMap,
+  getIndexFromDragPoint,
   getOrderedResources,
+  handleResourcesGridKeyDown,
   isAllDayEvent,
   isInTimeRange,
+  ResourcesGridControlsRef,
   toDateString,
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
@@ -55,10 +59,6 @@ import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getOverlapClusters } from './get-overlap-clusters/get-overlap-clusters';
 import { getResourcesDayViewEvents } from './get-resources-day-view-events/get-resources-day-view-events';
-import {
-  handleResourcesDayViewKeyDown,
-  ResourcesDayViewControlsRef,
-} from './handle-resources-day-view-key-down';
 import { ResourcesDayViewRow } from './ResourcesDayViewColumn';
 import classes from './ResourcesDayView.module.css';
 
@@ -406,9 +406,9 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
-  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(
-    resources,
-    groups
+  const { orderedResources, groupRanges, resourceGroupMap } = useMemo(
+    () => getOrderedResources(resources, groups),
+    [resources, groups]
   );
   const hasGroups = groupRanges.length > 0;
 
@@ -463,13 +463,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
 
-  const groupToResourceId = useMemo(() => {
-    const map = new Map<string, string | number>();
-    for (const resource of resources) {
-      map.set(String(resource.id), resource.id);
-    }
-    return map;
-  }, [resources]);
+  const groupToResourceId = useMemo(() => getGroupToResourceIdMap(resources), [resources]);
 
   const slotDragSelect = useSlotDragSelect({
     enabled: withDragSlotSelect && mode !== 'static',
@@ -540,20 +534,28 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: slotLabelFormat })
     : '';
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(date).startOf('day').toDate(),
-    rangeEnd: dayjs(date).endOf('day').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const expandedEvents = useMemo(
+    () =>
+      expandRecurringEvents({
+        events,
+        rangeStart: dayjs(date).startOf('day').toDate(),
+        rangeEnd: dayjs(date).endOf('day').toDate(),
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, date, recurrenceExpansionLimit]
+  );
 
-  const resourceEvents = getResourcesDayViewEvents({
-    date,
-    events: expandedEvents,
-    resources,
-    startTime,
-    endTime,
-  });
+  const resourceEvents = useMemo(
+    () =>
+      getResourcesDayViewEvents({
+        date,
+        events: expandedEvents,
+        resources,
+        startTime,
+        endTime,
+      }),
+    [date, expandedEvents, resources, startTime, endTime]
+  );
 
   const timeLabels = slots.map((interval) => {
     const intervalTime = dayjs(`${dateStr} ${interval.startTime}`);
@@ -581,7 +583,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     );
   });
 
-  const slotsRef: ResourcesDayViewControlsRef = useRef<HTMLButtonElement[][]>([]);
+  const slotsRef: ResourcesGridControlsRef = useRef<HTMLButtonElement[][]>([]);
   const rowSlotsContainersRef = useRef<(HTMLDivElement | null)[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
@@ -619,39 +621,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   }, []);
 
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
-    const resourceSlots = slotsRef.current[resourceIndex] ?? [];
-    const slotIndex = resourceSlots.findIndex((slotNode) => {
-      if (!slotNode) {
-        return false;
-      }
-
-      const rect = slotNode.getBoundingClientRect();
-      return event.clientX >= rect.left && event.clientX <= rect.right;
-    });
-
-    if (slotIndex >= 0) {
-      return slotIndex;
-    }
-
-    const firstSlot = resourceSlots[0];
-    const lastSlot = resourceSlots[resourceSlots.length - 1];
-
-    if (!firstSlot || !lastSlot) {
-      return null;
-    }
-
-    const firstRect = firstSlot.getBoundingClientRect();
-    const lastRect = lastSlot.getBoundingClientRect();
-
-    if (event.clientX < firstRect.left) {
-      return 0;
-    }
-
-    if (event.clientX > lastRect.right) {
-      return resourceSlots.length - 1;
-    }
-
-    return null;
+    return getIndexFromDragPoint(slotsRef.current[resourceIndex] ?? [], event.clientX);
   }, []);
 
   const handleSlotKeyDown = (
@@ -659,7 +629,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     resourceIndex: number,
     slotIndex: number
   ) => {
-    handleResourcesDayViewKeyDown({
+    handleResourcesGridKeyDown({
       controlsRef: slotsRef,
       resourceIndex,
       slotIndex,
