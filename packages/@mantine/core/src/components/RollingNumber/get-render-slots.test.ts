@@ -118,6 +118,21 @@ describe('getRenderSlots', () => {
     expect(signSlot).toMatchObject({ char: '-', empty: true });
   });
 
+  it('does not add a sign when a negative value rounds to zero', () => {
+    const current = getDigitParts({ value: -0.4, decimalScale: 0 });
+    const slots = getRenderSlots({ current, previous: current });
+    const signSlot = charSlots(slots).find((c) => c.key === 'sign');
+    expect(signSlot).toBeUndefined();
+  });
+
+  it('marks the sign as empty when transitioning to a value that rounds to zero', () => {
+    const prev = getDigitParts({ value: -5 });
+    const current = getDigitParts({ value: -0.4, decimalScale: 0 });
+    const slots = getRenderSlots({ current, previous: prev });
+    const signSlot = charSlots(slots).find((c) => c.key === 'sign');
+    expect(signSlot).toMatchObject({ char: '-', empty: true });
+  });
+
   it('adds decimal separator and fractional digits', () => {
     const current = getDigitParts({ value: 3.14, decimalScale: 2, fixedDecimalScale: true });
     const slots = getRenderSlots({ current, previous: current });
