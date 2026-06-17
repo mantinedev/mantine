@@ -255,6 +255,13 @@
   }
 }
 
+.monthView:where([data-event-interaction])
+  .monthViewDay:hover:where(
+    :not([data-drop-target], [data-drag-selected], [data-weekend], [data-outside])
+  ) {
+  background-color: transparent;
+}
+
 .monthViewDayLabel {
   width: 26px;
   aspect-ratio: 1;

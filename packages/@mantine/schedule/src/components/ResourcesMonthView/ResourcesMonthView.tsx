@@ -795,6 +795,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         {
           static: mode === 'static',
           'slot-dragging': slotDragSelect.isDragging,
+          'event-interaction': dragDrop.dragContextValue.isDragging,
         },
         mod,
       ]}

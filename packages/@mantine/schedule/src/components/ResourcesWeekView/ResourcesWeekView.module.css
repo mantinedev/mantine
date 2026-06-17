@@ -384,6 +384,10 @@
   }
 }
 
+.resourcesWeekView:where([data-event-interaction]) .resourcesWeekViewRowSlot {
+  pointer-events: none;
+}
+
 .resourcesWeekView:where([data-resizing]) {
   & * {
     cursor: ew-resize !important;

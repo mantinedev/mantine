@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -555,6 +556,35 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       '.mantine-ResourcesDayView-resourcesDayViewResizeHandle'
     );
     expect(resizeHandles).toHaveLength(2);
+  });
+
+  it('does not fire onEventClick for the click that ends a resize gesture', async () => {
+    const spy = jest.fn();
+    const events = [
+      {
+        id: 1,
+        title: 'Resizable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const { container } = render(
+      <ResourcesDayView {...defaultProps} events={events} withEventResize onEventClick={spy} />
+    );
+
+    const handle = container.querySelector<HTMLElement>(
+      '.mantine-ResourcesDayView-resourcesDayViewResizeHandle[data-edge="end"]'
+    )!;
+
+    fireEvent.pointerDown(handle);
+    fireEvent.pointerUp(document);
+    fireEvent.click(screen.getByText('Resizable Event'));
+
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it('mode="static" suppresses slot clicks, event clicks, keyboard nav, draggable, resize handles', async () => {

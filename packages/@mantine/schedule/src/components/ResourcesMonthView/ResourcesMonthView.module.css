@@ -279,3 +279,7 @@
     pointer-events: none;
   }
 }
+
+.resourcesMonthView:where([data-event-interaction]) .resourcesMonthViewCell {
+  pointer-events: none;
+}

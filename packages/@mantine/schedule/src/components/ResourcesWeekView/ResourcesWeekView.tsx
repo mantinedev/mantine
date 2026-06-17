@@ -874,6 +874,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       mod={{
         static: mode === 'static',
         'slot-dragging': slotDragSelect.isDragging,
+        'event-interaction': dragDrop.dragContextValue.isDragging,
       }}
       {...others}
     >

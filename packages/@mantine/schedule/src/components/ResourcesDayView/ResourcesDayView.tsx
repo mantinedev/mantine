@@ -767,7 +767,15 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
             renderEvent={renderEvent}
             radius={radius}
             mode={mode}
-            onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+            onClick={
+              onEventClick
+                ? (e) => {
+                    if (!eventResize.wasResizing()) {
+                      onEventClick(event, e);
+                    }
+                  }
+                : undefined
+            }
             style={{ width: '100%', height: '100%' }}
           />
           {isResizable && mode !== 'static' && (
@@ -943,6 +951,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         static: mode === 'static',
         'slot-dragging': slotDragSelect.isDragging,
         resizing: eventResize.isResizing,
+        'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
       }}
       {...others}
     >
