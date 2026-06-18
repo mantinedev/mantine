@@ -93,6 +93,54 @@ describe('@mantine/core/Accordion', () => {
     expect(screen.getAllByRole('button')[0]).toHaveFocus();
   });
 
+  it('moves focus to the first enabled control on Home when the first control is disabled', async () => {
+    render(
+      <Accordion defaultValue="item-2" transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control disabled>Label 1</Accordion.Control>
+          <Accordion.Panel>test-item-1</Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item value="item-2">
+          <Accordion.Control>Label 2</Accordion.Control>
+          <Accordion.Panel>test-item-2</Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item value="item-3">
+          <Accordion.Control>Label 3</Accordion.Control>
+          <Accordion.Panel>test-item-3</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    const buttons = screen.getAllByRole('button');
+    buttons[2].focus();
+    await userEvent.keyboard('{Home}');
+    expect(buttons[1]).toHaveFocus();
+  });
+
+  it('moves focus to the last enabled control on End when the last control is disabled', async () => {
+    render(
+      <Accordion defaultValue="item-2" transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Label 1</Accordion.Control>
+          <Accordion.Panel>test-item-1</Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item value="item-2">
+          <Accordion.Control>Label 2</Accordion.Control>
+          <Accordion.Panel>test-item-2</Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item value="item-3">
+          <Accordion.Control disabled>Label 3</Accordion.Control>
+          <Accordion.Panel>test-item-3</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    const buttons = screen.getAllByRole('button');
+    buttons[0].focus();
+    await userEvent.keyboard('{End}');
+    expect(buttons[1]).toHaveFocus();
+  });
+
   it('supports controlled state (multiple: false, default)', async () => {
     const spy = jest.fn();
     render(<Accordion {...defaultProps} value="item-2" onChange={spy} />);
