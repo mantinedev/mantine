@@ -186,6 +186,93 @@ describe('@mantine/core/Accordion', () => {
     expect(document.body).toHaveFocus();
   });
 
+  it('does not toggle a disabled control and sets disabled attributes', async () => {
+    const spy = jest.fn();
+    render(
+      <Accordion onChange={spy} transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control disabled>Label 1</Accordion.Control>
+          <Accordion.Panel>test-item-1</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    const control = screen.getByRole('button');
+    expect(control).toBeDisabled();
+    expect(control).toHaveAttribute('data-disabled');
+
+    await userEvent.click(control);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('sets data-rotate on the chevron of the opened item', () => {
+    const { container } = render(<Accordion {...defaultProps} defaultValue="item-1" />);
+    const chevrons = container.querySelectorAll('.mantine-Accordion-chevron');
+    expect(chevrons[0]).toHaveAttribute('data-rotate');
+    expect(chevrons[1]).not.toHaveAttribute('data-rotate');
+  });
+
+  it('does not set data-rotate when disableChevronRotation is set', () => {
+    const { container } = render(
+      <Accordion {...defaultProps} defaultValue="item-1" disableChevronRotation />
+    );
+    expect(container.querySelector('.mantine-Accordion-chevron')).not.toHaveAttribute(
+      'data-rotate'
+    );
+  });
+
+  it('sets chevron position data attributes based on chevronPosition prop', () => {
+    const { container } = render(<Accordion {...defaultProps} chevronPosition="left" />);
+    expect(screen.getAllByRole('button')[0]).toHaveAttribute('data-chevron-position', 'left');
+    expect(container.querySelector('.mantine-Accordion-chevron')).toHaveAttribute(
+      'data-position',
+      'left'
+    );
+  });
+
+  it('wraps controls in heading tags based on the order prop', () => {
+    const { container } = render(<Accordion {...defaultProps} order={3} />);
+    expect(container.querySelectorAll('h3.mantine-Accordion-itemTitle')).toHaveLength(3);
+  });
+
+  it('does not wrap controls in heading tags when order is not set', () => {
+    const { container } = render(<Accordion {...defaultProps} />);
+    expect(container.querySelector('.mantine-Accordion-itemTitle')).toBe(null);
+  });
+
+  it('renders a custom chevron icon', () => {
+    render(<Accordion {...defaultProps} chevron={<span data-testid="custom-chevron" />} />);
+    expect(screen.getAllByTestId('custom-chevron')).toHaveLength(3);
+  });
+
+  it('removes the chevron when chevron is set to null', () => {
+    const { container } = render(<Accordion {...defaultProps} chevron={null} />);
+    expect(container.querySelector('.mantine-Accordion-chevron')).toBeEmptyDOMElement();
+  });
+
+  it('supports controlled state (multiple: true)', async () => {
+    const spy = jest.fn();
+    render(
+      <Accordion multiple value={['item-1']} onChange={spy} transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Label 1</Accordion.Control>
+          <Accordion.Panel>test-item-1</Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item value="item-2">
+          <Accordion.Control>Label 2</Accordion.Control>
+          <Accordion.Panel>test-item-2</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    await userEvent.click(screen.getAllByRole('button')[1]);
+    expect(spy).toHaveBeenCalledWith(['item-1', 'item-2']);
+
+    spy.mockClear();
+    await userEvent.click(screen.getAllByRole('button')[0]);
+    expect(spy).toHaveBeenCalledWith([]);
+  });
+
   it('exposes internal components as static properties', () => {
     expect(Accordion.Item).toBe(AccordionItem);
     expect(Accordion.Control).toBe(AccordionControl);
