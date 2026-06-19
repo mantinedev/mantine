@@ -1,5 +1,6 @@
 export { useForm } from './use-form.js';
 export { createFormContext } from './FormProvider/FormProvider.js';
+export type { FormProviderProps } from './FormProvider/FormProvider';
 export { createFormActions } from './actions/index.js';
 export { FORM_INDEX } from './form-index.js';
 export * from './validators/index.js';
