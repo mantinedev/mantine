@@ -24,7 +24,8 @@ export default Layout(MDX_DATA.Flex);
 
 The `Flex` component is an alternative to [Group](/core/group/) and [Stack](/core/stack/).
 `Flex` is more flexible – it allows creating both horizontal and vertical flexbox layouts, but requires more configuration.
-Unlike [Group](/core/group/) and [Stack](/core/stack/), `Flex` is [polymorphic](/guides/polymorphic/) and supports responsive props.
+Unlike [Group](/core/group/) and [Stack](/core/stack/), `Flex` is [polymorphic](/guides/polymorphic/).
+Both `Flex` and [Stack](/core/stack/) support responsive flexbox props, while [Group](/core/group/) does not.
 
 <DataTable
   head={['', 'Group', 'Stack', 'Flex']}
@@ -32,7 +33,7 @@ Unlike [Group](/core/group/) and [Stack](/core/stack/), `Flex` is [polymorphic](
     ['Direction', 'horizontal', 'vertical', 'both'],
     ['Equal width children', '✅', '❌', '❌'],
     ['flex-wrap support', '✅', '❌', '✅'],
-    ['Responsive flexbox props', '❌', '❌', '✅'],
+    ['Responsive flexbox props', '❌', '✅', '✅'],
     ['Polymorphic component', '❌', '❌', '✅'],
   ]}
 />

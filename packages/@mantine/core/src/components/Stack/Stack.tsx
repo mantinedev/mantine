@@ -1,14 +1,21 @@
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
-  factory,
   Factory,
-  getSpacing,
+  factory,
+  filterProps,
+  hashStyleProps,
+  InlineStyles,
   MantineSpacing,
+  parseStyleProps,
+  StyleProp,
   StylesApiProps,
+  SystemPropData,
+  useMantineDeduplicateInlineStyles,
+  useMantineTheme,
   useProps,
+  useRandomClassName,
   useStyles,
 } from '../../core';
 import classes from './Stack.module.css';
@@ -20,13 +27,13 @@ export type StackCssVariables = {
 
 export interface StackProps extends BoxProps, StylesApiProps<StackFactory>, ElementProps<'div'> {
   /** Key of `theme.spacing` or any valid CSS value to set `gap` property, numbers are converted to rem @default 'md' */
-  gap?: MantineSpacing;
+  gap?: StyleProp<MantineSpacing>;
 
   /** Controls `align-items` CSS property @default 'stretch' */
-  align?: React.CSSProperties['alignItems'];
+  align?: StyleProp<React.CSSProperties['alignItems']>;
 
   /** Controls `justify-content` CSS property @default 'flex-start' */
-  justify?: React.CSSProperties['justifyContent'];
+  justify?: StyleProp<React.CSSProperties['justifyContent']>;
 }
 
 export type StackFactory = Factory<{
@@ -42,13 +49,11 @@ const defaultProps = {
   justify: 'flex-start',
 } satisfies Partial<StackProps>;
 
-const varsResolver = createVarsResolver<StackFactory>((_, { gap, align, justify }) => ({
-  root: {
-    '--stack-gap': getSpacing(gap),
-    '--stack-align': align,
-    '--stack-justify': justify,
-  },
-}));
+const STACK_STYLE_PROPS_DATA: Record<string, SystemPropData> = {
+  gap: { type: 'spacing', property: '--stack-gap' },
+  align: { type: 'identity', property: '--stack-align' },
+  justify: { type: 'identity', property: '--stack-justify' },
+};
 
 export const Stack = factory<StackFactory>((_props) => {
   const props = useProps('Stack', defaultProps, _props);
@@ -78,14 +83,45 @@ export const Stack = factory<StackFactory>((_props) => {
     unstyled,
     attributes,
     vars,
-    varsResolver,
   });
 
-  return <Box {...getStyles('root')} variant={variant} {...others} />;
+  const theme = useMantineTheme();
+  const randomClassName = useRandomClassName();
+  const parsedStyleProps = parseStyleProps({
+    styleProps: { gap, align, justify },
+    theme,
+    data: STACK_STYLE_PROPS_DATA,
+  });
+
+  const deduplicateInlineStyles = useMantineDeduplicateInlineStyles();
+  const responsiveClassName =
+    deduplicateInlineStyles && parsedStyleProps.hasResponsiveStyles
+      ? hashStyleProps(parsedStyleProps.styles, parsedStyleProps.media)
+      : randomClassName;
+
+  return (
+    <>
+      {parsedStyleProps.hasResponsiveStyles && (
+        <InlineStyles
+          selector={`.${responsiveClassName}`}
+          styles={parsedStyleProps.styles}
+          media={parsedStyleProps.media}
+          deduplicate={deduplicateInlineStyles}
+        />
+      )}
+      <Box
+        {...getStyles('root', {
+          className: responsiveClassName,
+          style: filterProps(parsedStyleProps.inlineStyles),
+        })}
+        variant={variant}
+        {...others}
+      />
+    </>
+  );
 });
 
 Stack.classes = classes;
-Stack.varsResolver = varsResolver;
 Stack.displayName = '@mantine/core/Stack';
 
 export namespace Stack {
