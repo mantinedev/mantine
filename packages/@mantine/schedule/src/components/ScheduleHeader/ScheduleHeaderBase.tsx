@@ -65,6 +65,12 @@ export interface ScheduleHeaderBaseProps {
 
   /** Styles API props to pass through */
   stylesApiProps?: StylesApiProps<any>;
+
+  /** Called when agenda button is clicked */
+  onAgendaClick?: () => void;
+
+  /** Whether the agenda view is currently active */
+  agendaActive?: boolean;
 }
 
 const VIEW_LEVELS: ScheduleViewLevel[] = ['day', 'week', 'month', 'year'];
@@ -81,6 +87,8 @@ export function ScheduleHeaderBase({
   todayControlProps,
   viewSelectProps,
   stylesApiProps,
+  onAgendaClick,
+  agendaActive,
 }: ScheduleHeaderBaseProps) {
   const centralControl = control.monthYearSelect ? (
     <ScheduleHeader.MonthYearSelect
@@ -127,16 +135,41 @@ export function ScheduleHeaderBase({
           labels={labels}
           {...todayControlProps}
         />
+        {onAgendaClick && (
+          <ScheduleHeader.Control
+            {...stylesApiProps}
+            data-type="agenda"
+            active={agendaActive}
+            onClick={onAgendaClick}
+            aria-label={getLabel('agenda', labels) as string}
+          >
+            {getLabel('agenda', labels)}
+          </ScheduleHeader.Control>
+        )}
       </div>
 
-      <NativeSelect
-        className={classes.compactViewSelect}
-        data={compactViewSelectData}
-        value={view}
-        onChange={(event) => onViewChange?.(event.currentTarget.value as ScheduleViewLevel)}
-        aria-label={getLabel('viewSelectLabel', labels) as string}
-        size="sm"
-      />
+      <div className={classes.compactControls}>
+        {onAgendaClick && (
+          <ScheduleHeader.Control
+            {...stylesApiProps}
+            data-type="agenda"
+            active={agendaActive}
+            onClick={onAgendaClick}
+            aria-label={getLabel('agenda', labels) as string}
+            className={classes.compactAgendaControl}
+          >
+            {getLabel('agenda', labels)}
+          </ScheduleHeader.Control>
+        )}
+        <NativeSelect
+          className={classes.compactViewSelect}
+          data={compactViewSelectData}
+          value={view}
+          onChange={(event) => onViewChange?.(event.currentTarget.value as ScheduleViewLevel)}
+          aria-label={getLabel('viewSelectLabel', labels) as string}
+          size="sm"
+        />
+      </div>
 
       <div className={classes.viewSelect} style={{ marginInlineStart: 'auto' }}>
         <ScheduleHeader.ViewSelect

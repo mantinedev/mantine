@@ -185,6 +185,14 @@
   }
 }
 
+.dayView:where([data-hide-sub-hour-grid-lines]) .dayViewSlot:not([data-hour-start]) {
+  border-top-color: transparent;
+}
+
+.dayView:where([data-event-interaction]) .dayViewSlot:not([data-all-day]) {
+  pointer-events: none;
+}
+
 .dayViewBackgroundEvent {
   position: absolute;
   border-radius: 0;

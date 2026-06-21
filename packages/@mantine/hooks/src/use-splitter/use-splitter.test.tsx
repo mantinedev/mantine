@@ -1,5 +1,5 @@
 import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
-import { useSplitter, UseSplitterOptions } from './use-splitter';
+import { useSplitter, UseSplitterOptions, UseSplitterReturnValue } from './use-splitter';
 
 function TestComponent(props: UseSplitterOptions) {
   const splitter = useSplitter(props);
@@ -639,6 +639,506 @@ describe('useSplitter', () => {
 
     expect(screen.getByTestId('panel-0').style.width).toBe('50%');
     expect(screen.getByTestId('panel-1').style.width).toBe('50%');
+  });
+
+  describe('CSS units', () => {
+    let rectSpy: jest.SpyInstance;
+
+    function UnitHarness({
+      onSplitter,
+      ...props
+    }: UseSplitterOptions & { onSplitter: (splitter: UseSplitterReturnValue) => void }) {
+      const splitter = useSplitter(props);
+      onSplitter(splitter);
+
+      return (
+        <div ref={splitter.ref} data-testid="container">
+          <div data-testid="pane-0" />
+          <div data-testid="handle-0" {...splitter.getHandleProps({ index: 0 })} />
+          <div data-testid="pane-1" />
+        </div>
+      );
+    }
+
+    beforeAll(() => {
+      rectSpy = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+        width: 1000,
+        height: 600,
+        top: 0,
+        left: 0,
+        right: 1000,
+        bottom: 600,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      } as DOMRect);
+    });
+
+    afterAll(() => {
+      rectSpy.mockRestore();
+    });
+
+    it('preserves declared units in returned sizes', () => {
+      const { result } = renderHook(() =>
+        useSplitter({ panels: [{ defaultSize: '240px' }, { defaultSize: 60 }] })
+      );
+      expect(result.current.sizes).toEqual(['240px', 60]);
+    });
+
+    it('reports fixed pixel pane size via aria-valuenow', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '240px' }, { defaultSize: 60 }]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+      expect(screen.getByTestId('handle-0').getAttribute('aria-valuenow')).toBe('240');
+      expect(splitter!.sizes).toEqual(['240px', 60]);
+    });
+
+    it('resolves rem sizes to pixels using root font-size', () => {
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '10rem' }, { defaultSize: 50 }]}
+          onSplitter={() => {}}
+        />
+      );
+      expect(screen.getByTestId('handle-0').getAttribute('aria-valuenow')).toBe('160');
+    });
+
+    it('applies a pixel keyboard step to a fixed pane', () => {
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '240px' }, { defaultSize: 60, min: 0 }]}
+          step="10px"
+          onSplitter={() => {}}
+        />
+      );
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+      expect(handle.getAttribute('aria-valuenow')).toBe('250');
+    });
+
+    it('treats a bare-number step as a percentage of the container in pixel mode', () => {
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '240px' }, { defaultSize: 60, min: 0 }]}
+          step={1}
+          onSplitter={() => {}}
+        />
+      );
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+      expect(handle.getAttribute('aria-valuenow')).toBe('250');
+    });
+
+    it('clamps a fixed pane to its pixel max', () => {
+      render(
+        <UnitHarness
+          panels={[
+            { defaultSize: '240px', max: '300px' },
+            { defaultSize: 60, min: 0 },
+          ]}
+          step="100px"
+          onSplitter={() => {}}
+        />
+      );
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+      expect(handle.getAttribute('aria-valuenow')).toBe('300');
+    });
+
+    it('updates the fixed pane in pixels and the flexible neighbor in percent on drag', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '200px' }, { defaultSize: 60, min: 0 }]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 150, clientY: 100 })
+        );
+      });
+
+      expect(splitter!.sizes[0]).toBe('250px');
+      expect(splitter!.sizes[1] as number).toBeCloseTo(75);
+    });
+
+    it('collapses and expands a fixed pane preserving its unit', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[
+            { defaultSize: '240px', collapsible: true },
+            { defaultSize: 60, min: 0 },
+          ]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      act(() => {
+        splitter!.collapse(0);
+      });
+
+      expect(splitter!.sizes[0]).toBe('0px');
+      expect(splitter!.collapsed).toEqual([true, false]);
+
+      act(() => {
+        splitter!.expand(0);
+      });
+
+      expect(splitter!.sizes[0]).toBe('240px');
+      expect(splitter!.collapsed).toEqual([false, false]);
+    });
+
+    it('restores a fixed pane to its original px after it collapses mid-drag (not as a percentage)', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[
+            { defaultSize: '240px', collapsible: true, collapseThreshold: '120px', min: '0px' },
+            { defaultSize: 60, min: 0 },
+          ]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      // Drag handle-0 far enough left to cross the 120px collapse threshold -> pane 0 collapses to 0.
+      const handle = screen.getByTestId('handle-0');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 300, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 100, clientY: 100 })
+        );
+      });
+
+      expect(splitter!.sizes[0]).toBe('0px');
+
+      // Expanding must restore the original 240px. The pre-collapse snapshot taken mid-drag must be
+      // the raw size, not the resolved working pixels: a numeric 240 snapshot is read back as 240%
+      // of the container and would blow the pane up to the full container width.
+      act(() => {
+        splitter!.expand(0);
+      });
+
+      expect(splitter!.sizes[0]).toBe('240px');
+    });
+
+    it('respects RTL when dragging a fixed pane', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          dir="rtl"
+          panels={[{ defaultSize: '200px' }, { defaultSize: 60, min: 0 }]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 150, clientY: 100 })
+        );
+      });
+
+      expect(splitter!.sizes[0]).toBe('150px');
+    });
+
+    it('moves the handle by the pointer delta between two flexible panes next to a fixed pane', () => {
+      let splitter: UseSplitterReturnValue;
+
+      function ThreePaneHarness(props: UseSplitterOptions) {
+        const s = useSplitter(props);
+        splitter = s;
+        return (
+          <div ref={s.ref} data-testid="container">
+            <div data-testid="pane-0" />
+            <div data-testid="handle-0" {...s.getHandleProps({ index: 0 })} />
+            <div data-testid="pane-1" />
+            <div data-testid="handle-1" {...s.getHandleProps({ index: 1 })} />
+            <div data-testid="pane-2" />
+          </div>
+        );
+      }
+
+      render(
+        <ThreePaneHarness
+          panels={[
+            { defaultSize: '240px' },
+            { defaultSize: 50, min: 0 },
+            { defaultSize: 50, min: 0 },
+          ]}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-1');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 200, clientY: 100 })
+        );
+      });
+
+      expect(splitter!.sizes[0]).toBe('240px');
+      expect(splitter!.sizes[1] as number).toBeCloseTo(48);
+      expect(splitter!.sizes[2] as number).toBeCloseTo(28);
+    });
+
+    it('enables pixel mode when only collapseThreshold uses a fixed unit', () => {
+      render(
+        <UnitHarness
+          panels={[
+            { defaultSize: 30, collapsible: true, collapseThreshold: '120px' },
+            { defaultSize: 70 },
+          ]}
+          onSplitter={() => {}}
+        />
+      );
+      expect(screen.getByTestId('handle-0').getAttribute('aria-valuenow')).toBe('300');
+    });
+
+    it('does not rewrite fixed sizes on a no-op drag when panes overflow the container', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '600px' }, { defaultSize: '600px' }]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 100, clientY: 100 })
+        );
+      });
+
+      expect(splitter!.sizes).toEqual(['600px', '600px']);
+    });
+
+    it('does not shrink overflowing fixed panes on a real drag (keeps the unscaled total)', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '600px' }, { defaultSize: '600px' }]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      // container is 1000px wide, fixed total is 1200px -> scale 1000/1200, both panes render at 500px.
+      const handle = screen.getByTestId('handle-0');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 150, clientY: 100 })
+        );
+      });
+
+      // +50px in rendered space -> rendered [550, 450] -> unscaled [660, 540]; total stays 1200px,
+      // only the dragged delta moves. Without the fix both panes collapse toward ~500px.
+      expect(splitter!.sizes[0]).toBe('660px');
+      expect(splitter!.sizes[1]).toBe('540px');
+    });
+
+    it('does not shrink overflowing fixed panes on keyboard resize (keeps the unscaled total)', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '600px' }, { defaultSize: '600px' }]}
+          step="10px"
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      const handle = screen.getByTestId('handle-0');
+      fireEvent.keyDown(handle, { key: 'ArrowRight' });
+
+      // container 1000px, fixed total 1200px -> scale 1000/1200; +10px rendered -> +12px unscaled each side.
+      expect(splitter!.sizes[0]).toBe('612px');
+      expect(splitter!.sizes[1]).toBe('588px');
+    });
+
+    it('encodes the absolute fixed size when a drag hands space to a flexible pane', () => {
+      let splitter: UseSplitterReturnValue;
+      render(
+        <UnitHarness
+          panels={[{ defaultSize: '1200px' }, { defaultSize: 1, min: 0 }]}
+          onSplitter={(s) => {
+            splitter = s;
+          }}
+        />
+      );
+
+      // container 1000px, fixed pane overflows alone (scale 1000/1200): renders 1000px, flex 0.
+      const handle = screen.getByTestId('handle-0');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 300, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 100, clientY: 100 })
+        );
+      });
+
+      // Dragging 200px left gives the flex pane real space, so the fixed pane is no longer
+      // down-scaled: it must persist its true 800px, not 800/scale = 960px (which would starve flex).
+      expect(splitter!.sizes[0]).toBe('800px');
+      expect(splitter!.sizes[1] as number).toBeCloseTo(20);
+    });
+
+    it('re-encodes unchanged fixed panes when a drag clears the overflow', () => {
+      let splitter: UseSplitterReturnValue;
+
+      function ThreePaneHarness(props: UseSplitterOptions) {
+        const s = useSplitter(props);
+        splitter = s;
+        return (
+          <div ref={s.ref} data-testid="container">
+            <div data-testid="pane-0" />
+            <div data-testid="handle-0" {...s.getHandleProps({ index: 0 })} />
+            <div data-testid="pane-1" />
+            <div data-testid="handle-1" {...s.getHandleProps({ index: 1 })} />
+            <div data-testid="pane-2" />
+          </div>
+        );
+      }
+
+      render(
+        <ThreePaneHarness
+          panels={[{ defaultSize: '600px' }, { defaultSize: '600px' }, { defaultSize: 1, min: 0 }]}
+        />
+      );
+
+      // container 1000px, two fixed panes overflow (total 1200px, scale 1000/1200): each renders
+      // 500px, flex 0. Dragging handle-1 left hands 200px to the flex pane and clears the overflow.
+      const handle = screen.getByTestId('handle-1');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 300, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 100, clientY: 100 })
+        );
+      });
+
+      // The untouched first pane must drop from its over-sized 600px to its rendered 500px, otherwise
+      // it would expand to 600px and starve the flex pane on the next render.
+      expect(splitter!.sizes[0]).toBe('500px');
+      expect(splitter!.sizes[1]).toBe('300px');
+      expect(splitter!.sizes[2] as number).toBeCloseTo(20);
+    });
+
+    it('re-encodes untouched flex panes when a drag clears the overflow', () => {
+      let splitter: UseSplitterReturnValue;
+
+      function FourPaneHarness(props: UseSplitterOptions) {
+        const s = useSplitter(props);
+        splitter = s;
+        return (
+          <div ref={s.ref} data-testid="container">
+            <div data-testid="pane-0" />
+            <div data-testid="handle-0" {...s.getHandleProps({ index: 0 })} />
+            <div data-testid="pane-1" />
+            <div data-testid="handle-1" {...s.getHandleProps({ index: 1 })} />
+            <div data-testid="pane-2" />
+            <div data-testid="handle-2" {...s.getHandleProps({ index: 2 })} />
+            <div data-testid="pane-3" />
+          </div>
+        );
+      }
+
+      render(
+        <FourPaneHarness
+          panels={[
+            { defaultSize: '600px' },
+            { defaultSize: '600px' },
+            { defaultSize: 1, min: 0 },
+            { defaultSize: 1, min: 0 },
+          ]}
+        />
+      );
+
+      // Two fixed panes overflow (1200px in 1000px), both flex panes render at 0. Dragging handle-1
+      // hands 200px only to flex pane 2; flex pane 3 stays at 0 and must not reclaim space afterwards.
+      const handle = screen.getByTestId('handle-1');
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 300, clientY: 100 })
+      );
+
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: 100, clientY: 100 })
+        );
+      });
+
+      expect(splitter!.sizes[0]).toBe('500px');
+      expect(splitter!.sizes[1]).toBe('300px');
+      expect(splitter!.sizes[2] as number).toBeCloseTo(20);
+      // The untouched flex pane stays collapsed instead of stealing half of the freed 200px.
+      expect(splitter!.sizes[3] as number).toBeCloseTo(0);
+    });
   });
 
   describe('redistribute preserves sum', () => {

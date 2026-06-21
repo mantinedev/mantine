@@ -69,6 +69,62 @@ describe('@mantine/core/Splitter', () => {
     expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'horizontal');
   });
 
+  it('renders percentage panes with percent flex-basis', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize={30}>Left</Splitter.Pane>
+        <Splitter.Pane defaultSize={70}>Right</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Left')).toHaveStyle({ flexBasis: '30%' });
+    expect(screen.getByText('Right')).toHaveStyle({ flexBasis: '70%' });
+  });
+
+  it('renders fixed pixel pane with pixel flex-basis and flexible neighbor with flex-grow', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize="240px">Sidebar</Splitter.Pane>
+        <Splitter.Pane defaultSize={60}>Content</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Sidebar')).toHaveStyle({ flexGrow: '0', flexBasis: '240px' });
+    expect(screen.getByText('Content')).toHaveStyle({ flexGrow: '60' });
+  });
+
+  it('renders fixed rem pane with rem flex-basis', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize="15rem">Sidebar</Splitter.Pane>
+        <Splitter.Pane defaultSize={60}>Content</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Sidebar')).toHaveStyle({ flexGrow: '0', flexBasis: '15rem' });
+  });
+
+  it('uses pixel-mode flex styles when only the step uses a fixed unit (matches the hook)', () => {
+    render(
+      <Splitter step="10px">
+        <Splitter.Pane defaultSize={1}>Left</Splitter.Pane>
+        <Splitter.Pane defaultSize={1}>Right</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Left')).toHaveStyle({ flexGrow: '1' });
+    expect(screen.getByText('Right')).toHaveStyle({ flexGrow: '1' });
+  });
+
+  it('uses pixel-mode flex styles when only a min uses a fixed unit (matches the hook)', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize={1} min="100px">
+          Left
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={1}>Right</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Left')).toHaveStyle({ flexGrow: '1' });
+    expect(screen.getByText('Right')).toHaveStyle({ flexGrow: '1' });
+  });
+
   it('resets adjacent panes to their default ratio when their handle is double-clicked', () => {
     const ref = createRef<UseSplitterReturnValue>();
     render(

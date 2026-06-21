@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import {
+  Legend,
+  LegendProps,
   Pie,
   PieLabel,
   PieProps,
@@ -23,7 +26,9 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
+import { getPieChartData } from '../utils';
 import classes from './DonutChart.module.css';
 
 export interface DonutChartCell {
@@ -32,7 +37,11 @@ export interface DonutChartCell {
   color: MantineColor;
 }
 
-export type DonutChartStylesNames = 'root' | 'label' | ChartTooltipStylesNames;
+export type DonutChartStylesNames =
+  | 'root'
+  | 'label'
+  | ChartTooltipStylesNames
+  | ChartLegendStylesNames;
 export type DonutChartCssVariables = {
   root: '--chart-stroke-color' | '--chart-labels-color' | '--chart-size';
 };
@@ -44,6 +53,12 @@ export interface DonutChartProps
 
   /** Determines whether the tooltip should be displayed when one of the section is hovered @default true */
   withTooltip?: boolean;
+
+  /** Determines whether the legend should be displayed @default false */
+  withLegend?: boolean;
+
+  /** Props passed down to recharts `Legend` component */
+  legendProps?: Omit<LegendProps, 'ref'>;
 
   /** Tooltip animation duration in ms @default 0 */
   tooltipAnimationDuration?: number;
@@ -129,11 +144,11 @@ const defaultProps = {
 } satisfies Partial<DonutChartProps>;
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
-  (theme, { strokeColor, labelColor, withLabels, size }) => ({
+  (theme, { strokeColor, labelColor, withLabels, withLegend, size }) => ({
     root: {
       '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
       '--chart-labels-color': labelColor ? getThemeColor(labelColor, theme) : undefined,
-      '--chart-size': withLabels ? rem(size! + 80) : rem(size),
+      '--chart-size': rem(size! + (withLabels ? 80 : 0) + (withLegend ? 80 : 0)),
     },
   })
 );
@@ -193,6 +208,8 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
     vars,
     data,
     withTooltip,
+    withLegend,
+    legendProps,
     tooltipAnimationDuration,
     tooltipProps,
     pieProps,
@@ -217,6 +234,7 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
   } = props;
 
   const theme = useMantineTheme();
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
 
   const getStyles = useStyles<DonutChartFactory>({
     name: 'DonutChart',
@@ -238,13 +256,7 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
     props,
   });
 
-  const pieData = data.map((item) => ({
-    ...item,
-    fill: getThemeColor(item.color, theme),
-    stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
-    strokeWidth,
-    ...(typeof cellProps === 'function' ? cellProps(item) : cellProps),
-  }));
+  const pieData = getPieChartData({ data, theme, strokeWidth, highlightedIndex, cellProps });
 
   return (
     <Box size={size} {...getStyles('root')} {...others}>
@@ -294,13 +306,39 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
                   styles={resolvedStyles}
                   type="radial"
                   segmentId={
-                    tooltipDataSource === 'segment' ? (payload?.[0]?.name as string) : undefined
+                    tooltipDataSource === 'segment'
+                      ? (payload?.[0]?.payload?.__segmentIndex as number)
+                      : undefined
                   }
                   valueFormatter={valueFormatter}
                   attributes={attributes}
                 />
               )}
               {...tooltipProps}
+            />
+          )}
+
+          {withLegend && (
+            <Legend
+              verticalAlign="bottom"
+              content={(payload) => (
+                <ChartLegend
+                  payload={payload.payload?.map((item) => ({
+                    ...item,
+                    dataKey: (item.payload as any)?.name,
+                    highlightKey: (item.payload as any)?.__segmentIndex,
+                  }))}
+                  onHighlight={(value) =>
+                    setHighlightedIndex(typeof value === 'number' ? value : null)
+                  }
+                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  centered
+                  attributes={attributes}
+                />
+              )}
+              {...legendProps}
             />
           )}
 

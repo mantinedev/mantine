@@ -19,6 +19,10 @@ export interface ScheduleLabels {
   viewSelectLabel: string;
   noEvents: string;
   moreLabel: (hiddenEventsCount: number) => string;
+  resource?: string;
+  resources?: string;
+  resourceSlot?: string;
+  agenda?: string;
 }
 
 export const DEFAULT_SCHEDULE_LABELS: ScheduleLabels = {
@@ -42,6 +46,10 @@ export const DEFAULT_SCHEDULE_LABELS: ScheduleLabels = {
   viewSelectLabel: 'Calendar view',
   noEvents: 'No events',
   moreLabel: (hiddenEventsCount: number) => `+${hiddenEventsCount} more`,
+  resource: 'Resource',
+  resources: 'Resources',
+  resourceSlot: 'Resource time slot',
+  agenda: 'Agenda',
 };
 
 export type ScheduleLabelsOverride = Partial<ScheduleLabels>;

@@ -81,6 +81,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     vars,
     required,
     error,
+    success,
     leftSection,
     disabled,
     id,
@@ -90,6 +91,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     label,
     size,
     errorProps,
+    successProps,
     descriptionProps,
     labelProps,
     withAsterisk,
@@ -109,6 +111,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     leftSectionProps,
     leftSectionPointerEvents,
     withErrorStyles,
+    withSuccessStyles,
     mod,
     attributes,
     dir,
@@ -148,10 +151,12 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const errorId = errorProps?.id || `${uuid}-error`;
+  const successId = successProps?.id || `${uuid}-success`;
   const descriptionId = descriptionProps?.id || `${uuid}-description`;
   const hasError = !!error && typeof error !== 'boolean';
+  const hasSuccess = !!success && typeof success !== 'boolean';
   const hasDescription = !!description;
-  const _describedBy = `${hasError ? errorId : ''} ${hasDescription ? descriptionId : ''}`;
+  const _describedBy = `${hasError ? errorId : ''} ${hasSuccess && !hasError ? successId : ''} ${hasDescription ? descriptionId : ''}`;
   const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
 
   const visibilityToggleButton = (
@@ -194,6 +199,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       id={uuid}
       label={label}
       error={error}
+      success={success}
       description={description}
       size={size}
       classNames={resolvedClassNames}
@@ -208,6 +214,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       labelProps={{ ...labelProps, htmlFor: uuid }}
       descriptionProps={{ ...descriptionProps, id: descriptionId }}
       errorProps={{ ...errorProps, id: errorId }}
+      successProps={{ ...successProps, id: successId }}
       mod={mod}
       attributes={attributes}
       {...getStyles('root')}
@@ -218,6 +225,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         component="div"
         dir={dir}
         error={error}
+        success={success}
         leftSection={leftSection}
         size={size}
         classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
@@ -237,6 +245,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         leftSectionPointerEvents={leftSectionPointerEvents}
         withAria={false}
         withErrorStyles={withErrorStyles}
+        withSuccessStyles={withSuccessStyles}
         attributes={attributes}
       >
         <input

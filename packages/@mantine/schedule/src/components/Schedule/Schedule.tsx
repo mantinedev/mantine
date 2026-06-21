@@ -65,6 +65,7 @@ type ScheduleCommonProps =
   | 'view'
   | 'onViewChange'
   | 'mode'
+  | 'withAgenda'
   | 'onExternalEventDrop'
   | 'withEventResize'
   | 'onEventResize'
@@ -198,6 +199,9 @@ export interface ScheduleProps
 
   /** Props specific to MobileMonthView (used in responsive layout) */
   mobileMonthViewProps?: ScheduleViewProps<MobileMonthViewProps>;
+
+  /** If set, displays an Agenda button in the header of DayView, WeekView and MonthView @default false */
+  withAgenda?: boolean;
 }
 
 export type ScheduleFactory = Factory<{
@@ -255,6 +259,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     monthViewProps,
     yearViewProps,
     mobileMonthViewProps,
+    withAgenda,
     __staticSelector,
     mod,
     ...others
@@ -325,6 +330,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     canResizeEvent,
     recurrenceExpansionLimit,
     mode,
+    withAgenda,
   };
 
   const desktopContent = (() => {

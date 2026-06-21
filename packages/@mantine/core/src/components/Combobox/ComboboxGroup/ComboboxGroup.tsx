@@ -36,14 +36,16 @@ export const ComboboxGroup = factory<ComboboxGroupFactory>((props) => {
   const ctx = useComboboxContext();
   const _id = useId(id);
 
+  const hasLabel = label !== undefined && label !== null && label !== false && label !== '';
+
   return (
     <Box
       role="group"
-      aria-labelledby={label ? _id : undefined}
+      aria-labelledby={hasLabel ? _id : undefined}
       {...ctx.getStyles('group', { className, classNames, style, styles })}
       {...others}
     >
-      {label && (
+      {hasLabel && (
         <div id={_id} {...ctx.getStyles('groupLabel', { classNames, styles })}>
           {label}
         </div>

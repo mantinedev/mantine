@@ -83,6 +83,61 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     searchTags:
       'calendar, agenda, appointments, events, planner, timetable, booking, meetings, big calendar, scheduler',
   },
+  ResourcesDayView: {
+    title: 'ResourcesDayView',
+    package: '@mantine/schedule',
+    slug: '/schedule/resources-day-view',
+    description: 'Day view with resource columns for scheduling across resources',
+    props: ['ResourcesDayView'],
+    styles: ['ResourcesDayView'],
+    source: '@mantine/schedule/src/components/ResourcesDayView/ResourcesDayView.tsx',
+    docs: 'schedule/resources-day-view.mdx',
+  },
+
+  ResourcesWeekView: {
+    title: 'ResourcesWeekView',
+    package: '@mantine/schedule',
+    slug: '/schedule/resources-week-view',
+    description: 'Week view with resource rows for scheduling across resources',
+    props: ['ResourcesWeekView'],
+    styles: ['ResourcesWeekView'],
+    source: '@mantine/schedule/src/components/ResourcesWeekView/ResourcesWeekView.tsx',
+    docs: 'schedule/resources-week-view.mdx',
+  },
+
+  ResourcesMonthView: {
+    title: 'ResourcesMonthView',
+    package: '@mantine/schedule',
+    slug: '/schedule/resources-month-view',
+    description: 'Month view with resource lanes for scheduling across resources',
+    props: ['ResourcesMonthView'],
+    styles: ['ResourcesMonthView'],
+    source: '@mantine/schedule/src/components/ResourcesMonthView/ResourcesMonthView.tsx',
+    docs: 'schedule/resources-month-view.mdx',
+  },
+
+  ResourcesSchedule: {
+    title: 'ResourcesSchedule',
+    package: '@mantine/schedule',
+    slug: '/schedule/resources-schedule',
+    description: 'Schedule wrapper component that combines resource day, week and month views',
+    props: ['ResourcesSchedule'],
+    styles: ['ResourcesSchedule'],
+    source: '@mantine/schedule/src/components/ResourcesSchedule/ResourcesSchedule.tsx',
+    docs: 'schedule/resources-schedule.mdx',
+  },
+
+  AgendaView: {
+    title: 'AgendaView',
+    package: '@mantine/schedule',
+    slug: '/schedule/agenda-view',
+    description: 'Vertical list view of events grouped by date',
+    props: ['AgendaView'],
+    styles: ['AgendaView'],
+    source: '@mantine/schedule/src/components/AgendaView/AgendaView.tsx',
+    docs: 'schedule/agenda-view.mdx',
+  },
+
   RecurringEventsSchedule: {
     title: 'Recurring events',
     package: '@mantine/schedule',

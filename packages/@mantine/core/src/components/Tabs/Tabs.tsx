@@ -1,4 +1,5 @@
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useCallback, useRef } from 'react';
+import { useForceUpdate, useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -155,6 +156,19 @@ export const Tabs = factory<TabsFactory>((_props) => {
   } = props;
 
   const uid = useId(id);
+  const mountedPanels = useRef(new Set<string>());
+  const forceUpdate = useForceUpdate();
+
+  const setMountedPanel = useCallback((panelValue: string, mounted: boolean) => {
+    const panels = mountedPanels.current;
+    if (mounted && !panels.has(panelValue)) {
+      panels.add(panelValue);
+      forceUpdate();
+    } else if (!mounted && panels.has(panelValue)) {
+      panels.delete(panelValue);
+      forceUpdate();
+    }
+  }, []);
 
   const [currentTab, setCurrentTab] = useUncontrolled({
     value,
@@ -198,6 +212,8 @@ export const Tabs = factory<TabsFactory>((_props) => {
         keepMountedMode,
         unstyled,
         getStyles,
+        mountedPanels,
+        setMountedPanel,
       }}
     >
       <Box

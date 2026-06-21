@@ -1,5 +1,7 @@
 import { Children, cloneElement, useImperativeHandle } from 'react';
 import {
+  SplitterPaneSize,
+  SplitterStep,
   useMergedRef,
   useSplitter,
   UseSplitterRedistributeFn,
@@ -29,6 +31,27 @@ import {
 } from './SplitterPane/SplitterPane';
 import classes from './Splitter.module.css';
 
+const PX_RE = /^(-?[\d.]+)px$/;
+const REM_RE = /^(-?[\d.]+)rem$/;
+
+function isFixedPaneSize(size: SplitterPaneSize): boolean {
+  return typeof size === 'string' && (PX_RE.test(size) || REM_RE.test(size));
+}
+
+function getPaneFlexStyle(size: SplitterPaneSize, pixelMode: boolean): React.CSSProperties {
+  const magnitude = typeof size === 'number' ? size : parseFloat(size);
+
+  if (!pixelMode) {
+    return { flexBasis: `${magnitude}%` };
+  }
+
+  if (isFixedPaneSize(size)) {
+    return { flexGrow: 0, flexShrink: 1, flexBasis: size as string };
+  }
+
+  return { flexGrow: magnitude, flexShrink: 1, flexBasis: 0 };
+}
+
 export type SplitterStylesNames = 'root' | 'handle' | 'thumb' | SplitterPaneStylesNames;
 
 export type SplitterCssVariables = {
@@ -40,17 +63,17 @@ export interface SplitterProps
   /** Layout direction @default 'horizontal' */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Controlled sizes (percentages summing to 100) */
-  sizes?: number[];
+  /** Controlled sizes, each value keeps the unit it was declared in (number/`%` flexible, `px`/`rem` fixed) */
+  sizes?: SplitterPaneSize[];
 
-  /** Called during resize with updated sizes */
-  onSizeChange?: (sizes: number[]) => void;
+  /** Called during resize with updated sizes, each value keeps its declared unit */
+  onSizeChange?: (sizes: SplitterPaneSize[]) => void;
 
   /** Called when drag starts */
   onResizeStart?: (handleIndex: number) => void;
 
   /** Called when drag ends */
-  onResizeEnd?: (handleIndex: number, sizes: number[]) => void;
+  onResizeEnd?: (handleIndex: number, sizes: SplitterPaneSize[]) => void;
 
   /** Called when a panel collapses or expands */
   onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
@@ -58,11 +81,11 @@ export interface SplitterProps
   /** How to redistribute space when immediate neighbor is at its min/max */
   redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
 
-  /** Keyboard step size in percentage @default 1 */
-  step?: number;
+  /** Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 1 */
+  step?: SplitterStep;
 
-  /** Shift+arrow step size in percentage @default 10 */
-  shiftStep?: number;
+  /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 10 */
+  shiftStep?: SplitterStep;
 
   /** CSS value for separator line thickness between panes @default 2 */
   lineSize?: number | string;
@@ -170,6 +193,9 @@ export const Splitter = factory<SplitterFactory>((_props) => {
 
   useImperativeHandle(splitterRef, () => splitter, [splitter]);
 
+  const getPaneStyle = (index: number) =>
+    getPaneFlexStyle(splitter.sizes[index], splitter.pixelMode);
+
   const mergedRef = useMergedRef(ref, splitter.ref);
 
   const getStyles = useStyles<SplitterFactory>({
@@ -225,6 +251,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
         sizes: splitter.sizes,
         collapsed: splitter.collapsed,
         orientation: orientation!,
+        getPaneStyle,
       }}
     >
       <Box ref={mergedRef} {...getStyles('root')} mod={[{ orientation }, mod]} {...others}>

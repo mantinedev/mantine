@@ -216,10 +216,12 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     labelProps,
     descriptionProps,
     errorProps,
+    successProps,
     wrapperProps,
     description,
     label,
     error,
+    success,
     maxValues,
     searchable,
     nothingFoundMessage,
@@ -228,6 +230,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     checkIconPosition,
     hidePickedOptions,
     withErrorStyles,
+    withSuccessStyles,
     name,
     form,
     id,
@@ -481,11 +484,14 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
             labelProps={labelProps}
             descriptionProps={descriptionProps}
             errorProps={errorProps}
+            successProps={successProps}
             wrapperProps={wrapperProps}
             description={description}
             label={label}
             error={error}
+            success={success}
             withErrorStyles={withErrorStyles}
+            withSuccessStyles={withSuccessStyles}
             __stylesApiProps={{
               ...props,
               rightSectionPointerEvents: rightSectionPointerEvents || 'none',

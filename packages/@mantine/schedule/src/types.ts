@@ -1,6 +1,30 @@
 import dayjs from 'dayjs';
 import { MantineColor } from '@mantine/core';
 
+/** Resource data object passed to resource view components */
+export interface ScheduleResourceData {
+  /** Unique resource identifier */
+  id: string | number;
+
+  /** Resource display label */
+  label: React.ReactNode;
+
+  /** Optional color for the resource */
+  color?: MantineColor;
+
+  /** Additional resource data, defined by the user, not used internally by the library */
+  payload?: Record<PropertyKey, any>;
+}
+
+/** Group definition for resource views, groups are displayed as a rowspan-style column */
+export interface ScheduleResourceGroup {
+  /** Group display label */
+  label: React.ReactNode;
+
+  /** Resource IDs that belong to this group */
+  resourceIds: (string | number)[];
+}
+
 /** Date value type used by internal package utils */
 export type AnyDateValue = DateStringValue | Date | dayjs.Dayjs;
 
@@ -77,6 +101,9 @@ interface ScheduleEventBase<Payload extends EventPayload = EventPayload> {
 
   /** Additional event data, defined by the user, not used internally by the library */
   payload?: Payload;
+
+  /** Resource ID that this event belongs to, used by resource view components */
+  resourceId?: string | number;
 }
 
 /** One-off event without recurrence */

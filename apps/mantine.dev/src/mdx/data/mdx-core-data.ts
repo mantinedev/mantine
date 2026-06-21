@@ -548,6 +548,35 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/visually-hidden.mdx',
     searchTags: 'sr-only, screen reader, a11y, accessibility, hidden text',
   },
+  DataList: {
+    title: 'DataList',
+    package: '@mantine/core',
+    slug: '/core/data-list',
+    componentPrefix: 'DataList',
+    props: ['DataList', 'DataListItem', 'DataListItemLabel', 'DataListItemValue'],
+    styles: ['DataList'],
+    description: 'Display label-value pairs as a description list',
+    source: '@mantine/core/src/components/DataList/DataList.tsx',
+    docs: 'core/data-list.mdx',
+  },
+  EmptyState: {
+    title: 'EmptyState',
+    package: '@mantine/core',
+    slug: '/core/empty-state',
+    componentPrefix: 'EmptyState',
+    props: [
+      'EmptyState',
+      'EmptyStateIndicator',
+      'EmptyStateTitle',
+      'EmptyStateDescription',
+      'EmptyStateActions',
+    ],
+    styles: ['EmptyState'],
+    description: 'Display a placeholder for no data, empty results and first-run states',
+    source: '@mantine/core/src/components/EmptyState/EmptyState.tsx',
+    docs: 'core/empty-state.mdx',
+    searchTags: 'no data, no results, placeholder, nothing found, blank state, first run',
+  },
   Divider: {
     title: 'Divider',
     package: '@mantine/core',
@@ -777,6 +806,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'multi dropdown, multiple select, multiselect, tags picker, checkbox list',
   },
 
+  ComboboxPopover: {
+    title: 'ComboboxPopover',
+    package: '@mantine/core',
+    slug: '/core/combobox-popover',
+    props: ['ComboboxPopover'],
+    styles: ['ComboboxPopover'],
+    description: 'Add combobox dropdown to any button element',
+    source: '@mantine/core/src/components/ComboboxPopover/ComboboxPopover.tsx',
+    docs: 'core/combobox-popover.mdx',
+  },
+
   Pagination: {
     title: 'Pagination',
     package: '@mantine/core',
@@ -889,6 +929,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/menu.mdx',
     searchTags:
       'dropdown menu, context menu, popup menu, options menu, overflow menu, kebab menu, actions menu',
+  },
+
+  Menubar: {
+    title: 'Menubar',
+    package: '@mantine/core',
+    slug: '/core/menubar',
+    props: ['Menubar', 'MenubarMenu', 'MenubarTarget', 'MenubarDropdown'],
+    styles: ['Menubar'],
+    componentPrefix: 'Menubar',
+    description: 'Desktop application style menubar with a row of menu triggers',
+    source: '@mantine/core/src/components/Menubar/Menubar.tsx',
+    docs: 'core/menubar.mdx',
+    searchTags: 'menu bar, application menu, desktop menu, top menu, menubar, file edit view',
   },
 
   Progress: {

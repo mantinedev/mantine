@@ -8,6 +8,7 @@ export { disabled } from './TagsInput.demo.disabled';
 export { readOnly } from './TagsInput.demo.readOnly';
 export { disabledOptions } from './TagsInput.demo.disabledOptions';
 export { error } from './TagsInput.demo.error';
+export { success } from './TagsInput.demo.success';
 export { groups } from './TagsInput.demo.groups';
 export { limit } from './TagsInput.demo.limit';
 export { search } from './TagsInput.demo.search';

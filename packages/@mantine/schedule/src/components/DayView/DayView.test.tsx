@@ -118,6 +118,18 @@ describe('@mantine/schedule/DayView', () => {
     ).not.toBeInTheDocument();
   });
 
+  it('supports withSubHourGridLines={false}', () => {
+    const { container, rerender } = render(<DayView {...defaultProps} />);
+    expect(container.querySelector('.mantine-DayView-dayView')).not.toHaveAttribute(
+      'data-hide-sub-hour-grid-lines'
+    );
+
+    rerender(<DayView {...defaultProps} withSubHourGridLines={false} />);
+    expect(container.querySelector('.mantine-DayView-dayView')).toHaveAttribute(
+      'data-hide-sub-hour-grid-lines'
+    );
+  });
+
   it('supports custom slotLabelFormat (dayjs string)', () => {
     render(<DayView {...defaultProps} slotLabelFormat="h:mm A" />);
     expect(screen.getByText('1:00 AM')).toBeInTheDocument();
@@ -778,6 +790,49 @@ describe('@mantine/schedule/DayView', () => {
 
       expect(scrollToSpy).not.toHaveBeenCalled();
       Element.prototype.scrollTo = originalScrollTo;
+    });
+  });
+
+  describe('withAgenda prop', () => {
+    it('does not render agenda button by default', () => {
+      render(<DayView {...defaultProps} />);
+      expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
+    });
+
+    it('renders agenda button when withAgenda is true', () => {
+      render(<DayView {...defaultProps} withAgenda />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+    });
+
+    it('shows AgendaView when agenda button is clicked', async () => {
+      const { container } = render(<DayView {...defaultProps} withAgenda />);
+
+      expect(container.querySelector('.mantine-DayView-agendaView')).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+
+      expect(container.querySelector('.mantine-DayView-agendaView')).toBeInTheDocument();
+    });
+
+    it('toggles AgendaView off when agenda button is clicked again', async () => {
+      const { container } = render(<DayView {...defaultProps} withAgenda />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(container.querySelector('.mantine-DayView-agendaView')).toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(container.querySelector('.mantine-DayView-agendaView')).not.toBeInTheDocument();
+    });
+
+    it('passes the current day as the agenda range', async () => {
+      render(<DayView {...defaultProps} withAgenda />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(screen.getByText('November 3, 2025 – November 3, 2025')).toBeInTheDocument();
+    });
+
+    it('renders both regular and compact agenda buttons', () => {
+      const { container } = render(<DayView {...defaultProps} withAgenda />);
+      const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
+      expect(agendaButtons).toHaveLength(2);
     });
   });
 });

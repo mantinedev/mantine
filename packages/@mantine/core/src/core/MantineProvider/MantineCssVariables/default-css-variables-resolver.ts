@@ -1,5 +1,9 @@
 import { keys, rem } from '../../utils';
-import { getPrimaryContrastColor, getPrimaryShade } from '../color-functions';
+import {
+  getPrimaryContrastColor,
+  getPrimaryShade,
+  getVirtualColorContrast,
+} from '../color-functions';
 import { ConvertCSSVariablesInput } from '../convert-css-variables';
 import { MantineTheme } from '../theme.types';
 import { getCSSColorVariables } from './get-css-color-variables';
@@ -59,6 +63,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-text': theme.black,
       '--mantine-color-body': theme.white,
       '--mantine-color-error': 'var(--mantine-color-red-6)',
+      '--mantine-color-success': 'var(--mantine-color-teal-8)',
       '--mantine-color-placeholder': 'var(--mantine-color-gray-5)',
       '--mantine-color-anchor': `var(--mantine-color-${theme.primaryColor}-${lightPrimaryShade})`,
       '--mantine-color-default': 'var(--mantine-color-white)',
@@ -77,6 +82,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-text': 'var(--mantine-color-dark-0)',
       '--mantine-color-body': 'var(--mantine-color-dark-7)',
       '--mantine-color-error': 'var(--mantine-color-red-8)',
+      '--mantine-color-success': 'var(--mantine-color-teal-8)',
       '--mantine-color-placeholder': 'var(--mantine-color-dark-3)',
       '--mantine-color-anchor': `var(--mantine-color-${theme.primaryColor}-4)`,
       '--mantine-color-default': 'var(--mantine-color-dark-6)',
@@ -127,6 +133,18 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
           colorScheme: 'dark',
           withColorValues: true,
         })
+      );
+
+      result.light[`--mantine-color-${value.name}-contrast`] = getVirtualColorContrast(
+        value,
+        theme,
+        'light'
+      );
+
+      result.dark[`--mantine-color-${value.name}-contrast`] = getVirtualColorContrast(
+        value,
+        theme,
+        'dark'
       );
 
       return;

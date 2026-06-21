@@ -150,6 +150,14 @@
     --input-section-color: var(--mantine-color-error);
   }
 
+  [data-mantine-color-scheme] &[data-success] {
+    &:not([data-variant='unstyled']) {
+      --input-bd: var(--mantine-color-success);
+    }
+
+    --input-section-color: var(--mantine-color-success);
+  }
+
   @mixin where-rtl {
     --left-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
     --right-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
@@ -202,8 +210,12 @@
     outline: none;
     --input-bd: var(--input-bd-focus);
 
-    [data-error] & {
+    .wrapper[data-error] & {
       --input-bd: var(--mantine-color-error);
+    }
+
+    .wrapper[data-success] & {
+      --input-bd: var(--mantine-color-success);
     }
   }
 
@@ -322,7 +334,7 @@
 .placeholder {
   color: var(--input-placeholder-color, var(--mantine-color-placeholder));
 
-  [data-error] & {
+  .wrapper[data-error] & {
     --input-placeholder-color: var(--input-color, var(--mantine-color-placeholder));
   }
 }
@@ -346,6 +358,7 @@
 }
 
 .error,
+.success,
 .description {
   word-wrap: break-word;
   line-height: 1.2;
@@ -357,6 +370,11 @@
 .error {
   color: var(--mantine-color-error);
   font-size: var(--input-error-size, calc(var(--mantine-font-size-sm) - rem(2px)));
+}
+
+.success {
+  color: var(--mantine-color-success);
+  font-size: var(--input-success-size, calc(var(--mantine-font-size-sm) - rem(2px)));
 }
 
 .description {

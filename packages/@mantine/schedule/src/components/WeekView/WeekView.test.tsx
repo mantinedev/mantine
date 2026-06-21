@@ -83,6 +83,48 @@ describe('@mantine/schedule/WeekView', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders one slot label per hour for sub-hour intervals', () => {
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        startTime="08:00:00"
+        endTime="12:00:00"
+        withAllDaySlots={false}
+        intervalMinutes={15}
+      />
+    );
+
+    // 4 hour labels (08:00, 09:00, 10:00, 11:00), not one per 15 minutes interval
+    expect(container.querySelectorAll('.mantine-WeekView-weekViewSlotLabel')).toHaveLength(4);
+  });
+
+  it('scales slot height to the interval with the --slot-size variable', () => {
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        startTime="08:00:00"
+        endTime="12:00:00"
+        withAllDaySlots={false}
+        intervalMinutes={15}
+      />
+    );
+
+    const slot = container.querySelector('.mantine-WeekView-weekViewDaySlot') as HTMLElement;
+    expect(slot.style.getPropertyValue('--slot-size')).toBe('0.25');
+  });
+
+  it('supports withSubHourGridLines={false}', () => {
+    const { container, rerender } = render(<WeekView {...defaultProps} />);
+    expect(container.querySelector('.mantine-WeekView-weekViewRoot')).not.toHaveAttribute(
+      'data-hide-sub-hour-grid-lines'
+    );
+
+    rerender(<WeekView {...defaultProps} withSubHourGridLines={false} />);
+    expect(container.querySelector('.mantine-WeekView-weekViewRoot')).toHaveAttribute(
+      'data-hide-sub-hour-grid-lines'
+    );
+  });
+
   it('supports custom slotLabelFormat (dayjs string)', () => {
     render(
       <WeekView
@@ -861,6 +903,49 @@ describe('@mantine/schedule/WeekView', () => {
 
       expect(scrollToSpy).not.toHaveBeenCalled();
       Element.prototype.scrollTo = originalScrollTo;
+    });
+  });
+
+  describe('withAgenda prop', () => {
+    it('does not render agenda button by default', () => {
+      render(<WeekView {...defaultProps} />);
+      expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
+    });
+
+    it('renders agenda button when withAgenda is true', () => {
+      render(<WeekView {...defaultProps} withAgenda />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+    });
+
+    it('shows AgendaView when agenda button is clicked', async () => {
+      const { container } = render(<WeekView {...defaultProps} withAgenda />);
+
+      expect(container.querySelector('.mantine-WeekView-agendaView')).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+
+      expect(container.querySelector('.mantine-WeekView-agendaView')).toBeInTheDocument();
+    });
+
+    it('toggles AgendaView off when agenda button is clicked again', async () => {
+      const { container } = render(<WeekView {...defaultProps} withAgenda />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(container.querySelector('.mantine-WeekView-agendaView')).toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(container.querySelector('.mantine-WeekView-agendaView')).not.toBeInTheDocument();
+    });
+
+    it('passes the visible week as the agenda range', async () => {
+      render(<WeekView {...defaultProps} withAgenda />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(screen.getByText('November 3, 2025 – November 9, 2025')).toBeInTheDocument();
+    });
+
+    it('renders both regular and compact agenda buttons', () => {
+      const { container } = render(<WeekView {...defaultProps} withAgenda />);
+      const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
+      expect(agendaButtons).toHaveLength(2);
     });
   });
 });

@@ -1,6 +1,7 @@
 export { usage } from './DayView.demo.usage';
 export { timeRange } from './DayView.demo.timeRange';
 export { intervalMinutes } from './DayView.demo.intervalMinutes';
+export { subHourGridLines } from './DayView.demo.subHourGridLines';
 export { allDayEvents } from './DayView.demo.allDayEvents';
 export { overlappingEvents } from './DayView.demo.overlappingEvents';
 export { currentTimeIndicator } from './DayView.demo.currentTimeIndicator';
@@ -31,3 +32,4 @@ export { backgroundEventsCustomStyle } from './DayView.demo.backgroundEventsCust
 export { customHeader } from './DayView.demo.customHeader';
 export { localization } from './DayView.demo.localization';
 export { getTimeSlotProps } from './DayView.demo.getTimeSlotProps';
+export { withAgenda } from './DayView.demo.withAgenda';

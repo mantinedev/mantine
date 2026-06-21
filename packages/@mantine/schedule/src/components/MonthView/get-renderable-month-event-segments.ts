@@ -1,4 +1,5 @@
 import { DateStringValue, MonthEventPositionData, MonthPositionedEventData } from '../../types';
+import { getVisibleColumnMap } from './get-visible-columns';
 
 const DAYS_IN_WEEK = 7;
 const DAY_WIDTH = 100 / DAYS_IN_WEEK;
@@ -8,6 +9,12 @@ interface GetRenderableMonthEventSegmentsInput {
   groupedByDay: Record<string, MonthPositionedEventData[]>;
   maxEventsPerDay: number;
   week: DateStringValue[];
+
+  /** Week-relative indices (0–6) of hidden columns, e.g. weekend days */
+  hiddenColumns?: number[];
+
+  /** Number of visible columns, defaults to 7 */
+  columnsCount?: number;
 }
 
 interface EventDayRange {
@@ -74,15 +81,19 @@ function getSegmentHanging(
 function getSegmentPosition(
   event: MonthPositionedEventData,
   segment: SegmentRange,
-  eventRange: EventDayRange
+  eventRange: EventDayRange,
+  visibleColumnMap: number[],
+  columnsCount: number
 ): MonthEventPositionData {
   const touchesStart = segment.startDayIndex === eventRange.startDayIndex;
   const touchesEnd = segment.endDayIndex === eventRange.endDayIndex;
+  const startColumn = visibleColumnMap[segment.startDayIndex];
+  const endColumn = visibleColumnMap[segment.endDayIndex];
 
   return {
     ...event.position,
-    startOffset: (segment.startDayIndex / DAYS_IN_WEEK) * 100,
-    width: ((segment.endDayIndex - segment.startDayIndex + 1) / DAYS_IN_WEEK) * 100,
+    startOffset: (startColumn / columnsCount) * 100,
+    width: ((endColumn - startColumn + 1) / columnsCount) * 100,
     row: segment.row,
     hanging: getSegmentHanging(event.position.hanging, touchesStart, touchesEnd),
   };
@@ -97,7 +108,11 @@ export function getRenderableMonthEventSegments({
   groupedByDay,
   maxEventsPerDay,
   week,
+  hiddenColumns = [],
+  columnsCount = DAYS_IN_WEEK,
 }: GetRenderableMonthEventSegmentsInput): RenderableMonthEventSegment[] {
+  const hiddenColumnSet = new Set(hiddenColumns);
+  const visibleColumnMap = getVisibleColumnMap(hiddenColumns);
   const eventIndexes = new Map<MonthPositionedEventData, number>();
   const eventRanges = new Map<MonthPositionedEventData, EventDayRange>();
   const renderRows = new Map<MonthPositionedEventData, Map<number, number>>();
@@ -115,7 +130,16 @@ export function getRenderableMonthEventSegments({
     renderRows.get(event)!.set(dayIndex, row);
   };
 
+  // Each event remembers the row it was last placed on, so a multi-day bar reuses that row on every
+  // day it covers and stays continuous instead of jumping rows between adjacent days. A different row
+  // is only picked when the preferred one is already taken on that day.
+  const lastRow = new Map<MonthPositionedEventData, number>();
+
   for (let dayIndex = 0; dayIndex < week.length; dayIndex += 1) {
+    if (hiddenColumnSet.has(dayIndex)) {
+      continue;
+    }
+
     const dayEvents = groupedByDay[week[dayIndex]] || [];
     const dayEventIds = new Set(dayEvents.map((event) => getEventKey(event)));
     const dayWeekEvents = events.filter((event) => {
@@ -127,29 +151,21 @@ export function getRenderableMonthEventSegments({
       );
     });
 
-    if (dayEvents.length > maxEventsPerDay) {
-      dayWeekEvents.forEach((event) => {
-        if (event.position.row < maxEventsPerDay) {
-          setRenderRow(event, dayIndex, event.position.row);
-        }
-      });
-
-      continue;
-    }
+    // On a truncated day only the events whose stable row fits are shown; the rest collapse into the
+    // "+N more" indicator. Other days show every event, compacting overflow rows down to fit.
+    const candidates =
+      dayEvents.length > maxEventsPerDay
+        ? dayWeekEvents.filter((event) => event.position.row < maxEventsPerDay)
+        : dayWeekEvents;
 
     const usedRows = new Set<number>();
-    const sortedDayEvents = [...dayWeekEvents].sort((a, b) => {
+    const sortedDayEvents = [...candidates].sort((a, b) => {
       const rowDiff = a.position.row - b.position.row;
-
-      if (rowDiff !== 0) {
-        return rowDiff;
-      }
-
-      return eventIndexes.get(a)! - eventIndexes.get(b)!;
+      return rowDiff !== 0 ? rowDiff : eventIndexes.get(a)! - eventIndexes.get(b)!;
     });
 
     sortedDayEvents.forEach((event) => {
-      let row = event.position.row;
+      let row = lastRow.get(event) ?? event.position.row;
 
       if (row >= maxEventsPerDay || usedRows.has(row)) {
         const availableRow = getFirstAvailableRow(usedRows, maxEventsPerDay);
@@ -163,6 +179,7 @@ export function getRenderableMonthEventSegments({
 
       usedRows.add(row);
       setRenderRow(event, dayIndex, row);
+      lastRow.set(event, row);
     });
   }
 
@@ -173,7 +190,13 @@ export function getRenderableMonthEventSegments({
     let currentSegment: SegmentRange | null = null;
 
     const addSegment = (segment: SegmentRange) => {
-      const position = getSegmentPosition(event, segment, eventRange);
+      const position = getSegmentPosition(
+        event,
+        segment,
+        eventRange,
+        visibleColumnMap,
+        columnsCount
+      );
 
       segments.push({
         event,

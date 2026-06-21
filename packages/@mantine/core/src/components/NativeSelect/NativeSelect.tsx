@@ -1,5 +1,5 @@
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
-import { ComboboxChevron, ComboboxData, getParsedComboboxData } from '../Combobox';
+import { ComboboxChevron, ComboboxStringGroupData, getParsedComboboxData } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 import { NativeSelectOption } from './NativeSelectOption';
@@ -14,7 +14,7 @@ export interface NativeSelectProps
    * Data used to render options. Accepts strings, objects with label/value,
    * or grouped options. If `children` prop is provided, `data` will be ignored.
    */
-  data?: ComboboxData;
+  data?: ComboboxStringGroupData;
 }
 
 export type NativeSelectFactory = Factory<{

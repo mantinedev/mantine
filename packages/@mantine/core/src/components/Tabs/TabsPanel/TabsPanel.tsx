@@ -1,4 +1,4 @@
-import { Activity } from 'react';
+import { Activity, useEffect } from 'react';
 import {
   Box,
   BoxProps,
@@ -40,6 +40,13 @@ export const TabsPanel = factory<TabsPanelFactory>((_props) => {
 
   const env = useMantineEnv();
   const ctx = useTabsContext();
+
+  useEffect(() => {
+    ctx.setMountedPanel(value, true);
+    return () => {
+      ctx.setMountedPanel(value, false);
+    };
+  }, [value]);
 
   const active = ctx.value === value;
   const shouldKeepMounted = ctx.keepMounted || keepMounted;
