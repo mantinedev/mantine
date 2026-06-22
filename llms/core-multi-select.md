@@ -972,6 +972,33 @@ function Demo() {
 ```
 
 
+## Error state
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <MultiSelect
+        label="Boolean error"
+        placeholder="Boolean error"
+        error
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+      <MultiSelect
+        mt="md"
+        label="With error message"
+        placeholder="With error message"
+        error="Invalid name"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+    </>
+  );
+}
+```
+
+
 ## Backspace key
 
 When the search input is empty and the user presses the `Backspace` key, the last selected item is removed. This behavior is built-in and cannot be disabled.
@@ -1024,7 +1051,7 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | onClear | () => void | - | Called when the clear button is clicked |
 | onDropdownClose | () => void | - | Called when dropdown closes |
 | onDropdownOpen | () => void | - | Called when dropdown opens |
-| onMaxValues | () => void | - | Called when user attemps to select more values than allowed |
+| onMaxValues | () => void | - | Called when user attempts to select more values than allowed |
 | onOptionSubmit | (value: Value) => void | - | Called when option is submitted from dropdown with mouse click or `Enter` key |
 | onRemove | (value: Value) => void | - | Called with `value` of the removed item |
 | onSearchChange | (value: string) => void | - | Called when search changes |
@@ -1044,6 +1071,8 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, `false` by default |
 | selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | Value[] | - | Controlled component value |
 | withAlignedLabels | boolean | - | If set, unchecked labels are aligned with checked ones |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
@@ -1051,6 +1080,7 @@ When the search input is empty and the user presses the `Backspace` key, the las
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withPillsReorder | boolean | - | If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. |
 | withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -1071,6 +1101,7 @@ MultiSelect component supports Styles API. With Styles API, you can customize st
 | required | .mantine-MultiSelect-required | Required asterisk element, rendered inside label |
 | description | .mantine-MultiSelect-description | Description element |
 | error | .mantine-MultiSelect-error | Error element |
+| success | .mantine-MultiSelect-success | Success element |
 | pill | .mantine-MultiSelect-pill | Value pill |
 | inputField | .mantine-MultiSelect-inputField | Input field |
 | pillsList | .mantine-MultiSelect-pillsList | List of pills, also contains input field |

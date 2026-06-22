@@ -1,0 +1,23 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,648863,e=>{"use strict";var t=Object.defineProperty;e.s(["__exportAll",0,(e,n)=>{let o={};for(var s in e)t(o,s,{get:e[s],enumerable:!0});return n||t(o,Symbol.toStringTag,{value:"Module"}),o}])},702542,e=>{"use strict";var t=e.i(391398),n=e.i(38856),o=e.i(648863),s=e.i(232471),i=e.i(485108),r=e.i(883364),c=e.i(841209),u=e.i(114108),l=e.i(191788);let a={type:"code",component:function(){let{ref:e,focused:n}=function({onBlur:e,onFocus:t}={}){let[n,o]=(0,l.useState)(!1),s=(0,l.useRef)(!1),i=(0,l.useRef)(null),r=(0,u.useCallbackRef)(t),c=(0,u.useCallbackRef)(e),a=(0,l.useCallback)(e=>{o(e),s.current=e},[]),d=(0,l.useCallback)(e=>{s.current||(a(!0),r(e))},[]),h=(0,l.useCallback)(e=>{s.current&&!(e.currentTarget instanceof HTMLElement&&e.relatedTarget instanceof HTMLElement&&e.currentTarget.contains(e.relatedTarget))&&(a(!1),c(e))},[]),p=(0,l.useCallback)(e=>{e&&(i.current&&(i.current.removeEventListener("focusin",d),i.current.removeEventListener("focusout",h)),e.addEventListener("focusin",d),e.addEventListener("focusout",h),i.current=e)},[d,h]);return(0,l.useEffect)(()=>()=>{i.current&&(i.current.removeEventListener("focusin",d),i.current.removeEventListener("focusout",h))},[]),{ref:p,focused:n}}();return(0,t.jsx)("div",{ref:e,children:(0,t.jsxs)(s.Box,{p:"xl",style:{backgroundColor:n?"var(--mantine-color-blue-light)":"transparent"},children:[(0,t.jsxs)(r.Text,{size:"sm",children:["One of elements has focus: ",n.toString()]}),(0,t.jsx)(c.TextInput,{label:"Focus this input",placeholder:"Styles will be added to parent"}),(0,t.jsx)(i.Button,{mt:"md",children:"Button"})]})})},code:`
+import { useFocusWithin } from '@mantine/hooks';
+import { TextInput, Button, Box, Text } from '@mantine/core';
+
+function Demo() {
+  const { ref, focused } = useFocusWithin();
+
+  return (
+    <div ref={ref}>
+      <Box
+        p="xl"
+        style={{
+          backgroundColor: focused ? 'var(--mantine-color-blue-light)' : 'transparent',
+        }}
+      >
+        <Text size="sm">One of elements has focus: {focused.toString()}</Text>
+        <TextInput label="Focus this input" placeholder="Styles will be added to parent" />
+        <Button mt="md">Button</Button>
+      </Box>
+    </div>
+  );
+}
+`};var d=(0,o.__exportAll)({usage:()=>a});e.i(603441);var h=e.i(62558);e.i(457450);var p=e.i(418026);let f=(0,h.Layout)(p.MDX_DATA.useFocusWithin);function m(e){let o={code:"code",h2:"h2",p:"p",pre:"pre",...(0,n.useMDXComponents)(),...e.components},{Demo:s}=o;return s||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(o.h2,{id:"usage",children:"Usage"}),"\n",(0,t.jsxs)(o.p,{children:["The ",(0,t.jsx)(o.code,{children:"use-focus-within"})," hook detects if any element within another element has focus.\nIt works the same way as the ",(0,t.jsx)(o.code,{children:":focus-within"})," CSS selector:"]}),"\n",(0,t.jsx)(s,{data:d.usage}),"\n",(0,t.jsx)(o.h2,{id:"definition",children:"Definition"}),"\n",(0,t.jsx)(o.pre,{children:(0,t.jsx)(o.code,{className:"language-tsx",children:"interface UseFocusWithinOptions {\n  onFocus?: (event: FocusEvent) => void;\n  onBlur?: (event: FocusEvent) => void;\n}\n\ninterface UseFocusWithinReturnValue<T extends HTMLElement = any> {\n  ref: React.RefCallback<T | null>;\n  focused: boolean;\n}\n\nfunction useFocusWithin<T extends HTMLElement = any>(\n  options?: UseFocusWithinOptions,\n): UseFocusWithinReturnValue<T>\n"})}),"\n",(0,t.jsx)(o.h2,{id:"exported-types",children:"Exported types"}),"\n",(0,t.jsxs)(o.p,{children:[(0,t.jsx)(o.code,{children:"UseFocusWithinOptions"})," and ",(0,t.jsx)(o.code,{children:"UseFocusWithinReturnValue"})," types are exported from the ",(0,t.jsx)(o.code,{children:"@mantine/hooks"})," package;\nyou can import them in your application:"]}),"\n",(0,t.jsx)(o.pre,{children:(0,t.jsx)(o.code,{className:"language-tsx",children:"import type { UseFocusWithinOptions, UseFocusWithinReturnValue } from '@mantine/hooks';\n"})})]})}e.s(["default",0,function(e={}){return(0,t.jsx)(f,{...e,children:(0,t.jsx)(m,{...e})})}],702542)},388057,(e,t,n)=>{let o="/hooks/use-focus-within";(window.__NEXT_P=window.__NEXT_P||[]).push([o,()=>e.r(702542)]),t.hot&&t.hot.dispose(function(){window.__NEXT_P.push([o])})},648761,e=>{e.v(t=>Promise.all(["static/chunks/22379_btw709h.js"].map(t=>e.l(t))).then(()=>t(493594)))},828805,e=>{e.v(t=>Promise.all(["static/chunks/4558t_0mgc5j4.js"].map(t=>e.l(t))).then(()=>t(879466)))}]);

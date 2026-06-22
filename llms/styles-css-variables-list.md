@@ -243,6 +243,7 @@ This page contains a list of all Mantine CSS variables that are generated from d
 | `--mantine-color-text` | `#000` |
 | `--mantine-color-body` | `#fff` |
 | `--mantine-color-error` | `var(--mantine-color-red-6)` |
+| `--mantine-color-success` | `var(--mantine-color-teal-8)` |
 | `--mantine-color-placeholder` | `var(--mantine-color-gray-5)` |
 | `--mantine-color-anchor` | `var(--mantine-color-blue-6)` |
 | `--mantine-color-default` | `var(--mantine-color-white)` |
@@ -376,6 +377,7 @@ This page contains a list of all Mantine CSS variables that are generated from d
 | `--mantine-color-text` | `var(--mantine-color-dark-0)` |
 | `--mantine-color-body` | `var(--mantine-color-dark-7)` |
 | `--mantine-color-error` | `var(--mantine-color-red-8)` |
+| `--mantine-color-success` | `var(--mantine-color-teal-8)` |
 | `--mantine-color-placeholder` | `var(--mantine-color-dark-3)` |
 | `--mantine-color-anchor` | `var(--mantine-color-blue-4)` |
 | `--mantine-color-default` | `var(--mantine-color-dark-6)` |

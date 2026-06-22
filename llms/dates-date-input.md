@@ -356,6 +356,8 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | size | MantineSize | - | Component size |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | DateValue | - | Controlled component value |
 | valueFormat | string | - | `dayjs` format to display input value, `"MMMM D, YYYY"` by default |
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
@@ -365,6 +367,7 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withNext | boolean | - | Determines whether next control should be rendered |
 | withPrevious | boolean | - | Determines whether previous control should be rendered |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | withTime | boolean | - | If set to `true`, the time part of the value is preserved. Set this to `true` when `valueFormat` includes time (e.g. `"YYYY-MM-DD HH:mm"`). |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |

@@ -868,6 +868,7 @@ Checkbox component supports Styles API. With Styles API, you can customize style
 | required | .mantine-CheckboxGroup-required | Required asterisk element, rendered inside label |
 | description | .mantine-CheckboxGroup-description | Description element |
 | error | .mantine-CheckboxGroup-error | Error element |
+| success | .mantine-CheckboxGroup-success | Success element |
 
 **Checkbox.Indicator selectors**
 

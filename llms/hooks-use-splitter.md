@@ -6,8 +6,8 @@ Import: import { UseSplitter } from '@mantine/hooks';
 
 `use-splitter` hook provides resizable split-pane functionality. It handles pointer drag
 on resize handles, keyboard navigation following the WAI-ARIA Window Splitter pattern,
-collapsible panels and min/max constraints. All sizes are percentages to avoid
-SSR/hydration issues.
+collapsible panels and min/max constraints. Sizes can be percentages (flexible panes) or
+`px`/`rem` (fixed panes).
 
 ```tsx
 import React from 'react';
@@ -84,7 +84,107 @@ function Demo() {
               gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size)}%)
+            {labels[i]} ({Math.round(size as number)}%)
+          </div>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+```
+
+
+## CSS units
+
+`defaultSize`, `min` and `max` accept CSS units. A plain `number` or `%` string is a flexible size
+that shares the leftover space, while a `px` or `rem` string is a fixed size that stays constant
+when the container is resized. Sizes are reported back in the unit they were declared in, so a
+`'240px'` pane stays `'240px'` in `sizes` and `onSizeChange`. When at least one pane uses a fixed
+unit, the hook resolves the layout in pixels using the measured container size:
+
+```tsx
+import React from 'react';
+import { DotsSixVerticalIcon } from '@phosphor-icons/react';
+import { SplitterPaneSize, useSplitter } from '@mantine/hooks';
+
+const colors = ['var(--mantine-color-blue-filled)', 'var(--mantine-color-teal-filled)'];
+
+function getPaneStyle(size: SplitterPaneSize): React.CSSProperties {
+  if (typeof size === 'string' && (size.endsWith('px') || size.endsWith('rem'))) {
+    return { flexGrow: 0, flexShrink: 1, flexBasis: size };
+  }
+  const weight = typeof size === 'number' ? size : parseFloat(size);
+  return { flexGrow: weight, flexShrink: 1, flexBasis: 0 };
+}
+
+function Demo() {
+  const splitter = useSplitter({
+    panels: [
+      { defaultSize: '240px', min: '160px', max: '50%' },
+      { defaultSize: 100 },
+    ],
+  });
+
+  const labels = ['Fixed 240px sidebar', 'Flexible content'];
+
+  return (
+    <div
+      ref={splitter.ref}
+      style={{
+        display: 'flex',
+        height: 200,
+        borderRadius: 'var(--mantine-radius-md)',
+        overflow: 'hidden',
+      }}
+    >
+      {splitter.sizes.map((size, i) => (
+        <React.Fragment key={i}>
+          {i > 0 && (
+            <div
+              {...splitter.getHandleProps({ index: i - 1 })}
+              style={{
+                width: 4,
+                flexShrink: 0,
+                cursor: 'col-resize',
+                touchAction: 'none',
+                backgroundColor: 'var(--mantine-color-default-border)',
+                position: 'relative',
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 8,
+                  height: 40,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 'var(--mantine-radius-xs)',
+                  backgroundColor: 'var(--mantine-color-default)',
+                  border: '1px solid var(--mantine-color-default-border)',
+                  color: 'var(--mantine-color-dimmed)',
+                }}
+              >
+                <DotsSixVerticalIcon />
+              </div>
+            </div>
+          )}
+          <div
+            style={{
+              ...getPaneStyle(size),
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: colors[i],
+              color: 'var(--mantine-color-white)',
+              fontWeight: 500,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {labels[i]}
           </div>
         </React.Fragment>
       ))}
@@ -176,7 +276,7 @@ function Demo() {
               gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size)}%)
+            {labels[i]} ({Math.round(size as number)}%)
           </div>
         </React.Fragment>
       ))}
@@ -233,7 +333,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          {!splitter.collapsed[0] && `Panel A (${Math.round(splitter.sizes[0])}%)`}
+          {!splitter.collapsed[0] && `Panel A (${Math.round(splitter.sizes[0] as number)}%)`}
         </div>
         <div
           {...splitter.getHandleProps({ index: 0 })}
@@ -280,7 +380,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(splitter.sizes[1])}%)
+          Panel B ({Math.round(splitter.sizes[1] as number)}%)
         </div>
       </div>
       <Group mt="md">
@@ -379,7 +479,7 @@ function Demo() {
               gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size)}%)
+            {labels[i]} ({Math.round(size as number)}%)
           </div>
         </React.Fragment>
       ))}
@@ -485,7 +585,7 @@ function Demo() {
               gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size)}%)
+            {labels[i]} ({Math.round(size as number)}%)
           </div>
         </React.Fragment>
       ))}
@@ -584,7 +684,7 @@ function Demo() {
               gap: 2,
             }}
           >
-            {labels[i]} ({Math.round(size)}%)
+            {labels[i]} ({Math.round(size as number)}%)
           </div>
         </React.Fragment>
       ))}
@@ -666,7 +766,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel A ({Math.round(splitter.sizes[0])}%)
+        Panel A ({Math.round(splitter.sizes[0] as number)}%)
       </div>
       <div
         {...splitter.getHandleProps({ index: 0 })}
@@ -713,7 +813,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel B ({Math.round(splitter.sizes[1])}%)
+        Panel B ({Math.round(splitter.sizes[1] as number)}%)
       </div>
       <div
         {...splitter.getHandleProps({ index: 1 })}
@@ -760,7 +860,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel C ({Math.round(splitter.sizes[2])}%)
+        Panel C ({Math.round(splitter.sizes[2] as number)}%)
       </div>
     </div>
   );
@@ -810,7 +910,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel A ({Math.round(splitter.sizes[0])}%)
+        Panel A ({Math.round(splitter.sizes[0] as number)}%)
       </div>
       <div
         style={{
@@ -858,7 +958,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel B ({Math.round(splitter.sizes[1])}%)
+        Panel B ({Math.round(splitter.sizes[1] as number)}%)
       </div>
     </div>
   );
@@ -916,7 +1016,7 @@ function Demo() {
           gap: 2,
         }}
       >
-        Panel A ({Math.round(horizontal.sizes[0])}%)
+        Panel A ({Math.round(horizontal.sizes[0] as number)}%)
       </div>
       <div
         {...horizontal.getHandleProps({ index: 0 })}
@@ -971,7 +1071,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(vertical.sizes[0])}%)
+          Panel B ({Math.round(vertical.sizes[0] as number)}%)
         </div>
         <div
           {...vertical.getHandleProps({ index: 0 })}
@@ -1018,7 +1118,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel C ({Math.round(vertical.sizes[1])}%)
+          Panel C ({Math.round(vertical.sizes[1] as number)}%)
         </div>
       </div>
     </div>
@@ -1303,7 +1403,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel A ({Math.round(splitter.sizes[0])}%)
+          Panel A ({Math.round(splitter.sizes[0] as number)}%)
         </div>
         <div
           {...splitter.getHandleProps({ index: 0 })}
@@ -1350,7 +1450,7 @@ function Demo() {
             gap: 2,
           }}
         >
-          Panel B ({Math.round(splitter.sizes[1])}%)
+          Panel B ({Math.round(splitter.sizes[1] as number)}%)
         </div>
       </div>
       <Text size="sm" mt="sm">
@@ -1395,22 +1495,37 @@ interpreting touch drag as scroll:
 ## Definition
 
 ```tsx
+/** A bare number/`%` is a flexible size, `px`/`rem` is a fixed size */
+type SplitterPaneSize = number | `${number}%` | `${number}px` | `${number}rem`;
+
+/** A bare number/`%` is a percentage of the container, `px`/`rem` is resolved to pixels */
+type SplitterStep = number | `${number}%` | `${number}px` | `${number}rem`;
+
 interface UseSplitterPanel {
-  /** Initial size as percentage (0-100). All panels must sum to 100. */
-  defaultSize: number;
-  /** Minimum size percentage, `0` by default */
-  min?: number;
-  /** Maximum size percentage, `100` by default */
-  max?: number;
+  /** Initial size, a `number`/`%` is flexible, `px`/`rem` is fixed. A bare number is a percentage. */
+  defaultSize: SplitterPaneSize;
+  /** Minimum size in the same units as `defaultSize`, `0` by default */
+  min?: SplitterPaneSize;
+  /** Maximum size in the same units as `defaultSize`, no limit by default */
+  max?: SplitterPaneSize;
   /** Whether this panel can be collapsed, `false` by default */
   collapsible?: boolean;
-  /** Size below which the panel snaps to collapsed (percentage), defaults to `min` */
+  /** Size below which the panel snaps to collapsed, defaults to `min` */
+  collapseThreshold?: SplitterPaneSize;
+}
+
+/** Panel config resolved to numeric units (percent or pixels) */
+interface UseSplitterResolvedPanel {
+  defaultSize: number;
+  min?: number;
+  max?: number;
+  collapsible?: boolean;
   collapseThreshold?: number;
 }
 
 type UseSplitterRedistributeFn = (input: {
   sizes: number[];
-  panels: UseSplitterPanel[];
+  panels: UseSplitterResolvedPanel[];
   handleIndex: number;
   delta: number;
 }) => number[];
@@ -1420,22 +1535,22 @@ interface UseSplitterOptions {
   panels: UseSplitterPanel[];
   /** Layout direction, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
-  /** Controlled sizes (percentages summing to 100) */
-  sizes?: number[];
-  /** Called during resize with updated sizes */
-  onSizeChange?: (sizes: number[]) => void;
+  /** Controlled sizes, each value keeps the unit it was declared in */
+  sizes?: SplitterPaneSize[];
+  /** Called during resize with updated sizes, each value keeps its declared unit */
+  onSizeChange?: (sizes: SplitterPaneSize[]) => void;
   /** Called when drag starts */
   onResizeStart?: (handleIndex: number) => void;
   /** Called when drag ends */
-  onResizeEnd?: (handleIndex: number, sizes: number[]) => void;
+  onResizeEnd?: (handleIndex: number, sizes: SplitterPaneSize[]) => void;
   /** Called when a panel collapses or expands */
   onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
   /** How to borrow space from non-adjacent panels */
   redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
-  /** Keyboard step size in percentage, `1` by default */
-  step?: number;
-  /** Shift+arrow step size in percentage, `10` by default */
-  shiftStep?: number;
+  /** Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is pixels, `1` by default */
+  step?: SplitterStep;
+  /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is pixels, `10` by default */
+  shiftStep?: SplitterStep;
   /** Text direction for keyboard nav, `'ltr'` by default */
   dir?: 'ltr' | 'rtl';
   /** Enable/disable the hook, `true` by default */
@@ -1445,8 +1560,11 @@ interface UseSplitterOptions {
 interface UseSplitterReturnValue<T extends HTMLElement = any> {
   /** Ref callback for the container element */
   ref: React.RefCallback<T | null>;
-  /** Current panel sizes as percentages */
-  sizes: number[];
+  /** Current panel sizes, each value keeps the unit it was declared in */
+  sizes: SplitterPaneSize[];
+  /** Whether sizes are tracked in pixels because any pane size, `min`, `max`, `step`, `shiftStep`
+   * or `collapseThreshold` uses a fixed `px`/`rem` unit */
+  pixelMode: boolean;
   /** Which panels are currently collapsed */
   collapsed: boolean[];
   /** Index of handle being dragged, or -1 */
@@ -1454,7 +1572,7 @@ interface UseSplitterReturnValue<T extends HTMLElement = any> {
   /** Get props to spread on each resize handle */
   getHandleProps: (input: { index: number }) => HandleProps;
   /** Programmatically set sizes */
-  setSizes: (sizes: number[]) => void;
+  setSizes: (sizes: SplitterPaneSize[]) => void;
   /** Collapse a panel */
   collapse: (panelIndex: number) => void;
   /** Expand a collapsed panel */
@@ -1470,15 +1588,19 @@ function useSplitter<T extends HTMLElement = any>(
 
 ## Exported types
 
-`UseSplitterPanel`, `UseSplitterOptions`, `UseSplitterReturnValue`, `UseSplitterRedistributeInput`
-and `UseSplitterRedistributeFn` types are exported from the `@mantine/hooks` package:
+`UseSplitterPanel`, `UseSplitterOptions`, `UseSplitterReturnValue`, `UseSplitterRedistributeInput`,
+`UseSplitterRedistributeFn`, `UseSplitterResolvedPanel`, `SplitterPaneSize` and `SplitterStep` types
+are exported from the `@mantine/hooks` package:
 
 ```tsx
 import type {
+  SplitterPaneSize,
+  SplitterStep,
   UseSplitterPanel,
   UseSplitterOptions,
   UseSplitterReturnValue,
   UseSplitterRedistributeInput,
   UseSplitterRedistributeFn,
+  UseSplitterResolvedPanel,
 } from '@mantine/hooks';
 ```

@@ -126,6 +126,49 @@ export function Demo() {
 ```
 
 
+Virtual colors support [autoContrast](https://mantine.dev/llms/theming-theme-object.md#autocontrast): the text color of `filled`
+components is calculated separately for each color scheme based on the resolved background color. Enable
+`autoContrast` on the theme or component and switch between light and dark color schemes (`Ctrl + J`) to
+see the text color adjust to the underlying virtual color:
+
+```tsx
+// App.tsx
+import { Button, colorsTuple, createTheme, MantineProvider, virtualColor } from '@mantine/core';
+import { Demo } from './Demo';
+
+const theme = createTheme({
+  colors: {
+    white: colorsTuple('#FFFFFF'),
+    black: colorsTuple('#000000'),
+    adaptive: virtualColor({
+      name: 'adaptive',
+      dark: 'white',
+      light: 'black',
+    }),
+  },
+});
+
+function App() {
+  return (
+    <MantineProvider theme={theme}>
+      <Demo />
+    </MantineProvider>
+  );
+}
+
+// Demo.tsx
+import { Button } from '@mantine/core';
+
+export function Demo() {
+  return (
+    <Button color="adaptive" autoContrast>
+      Button
+    </Button>
+  );
+}
+```
+
+
 ## colorsTuple
 
 Use the `colorsTuple` function to:

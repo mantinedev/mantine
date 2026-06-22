@@ -321,6 +321,27 @@ function Demo() {
 ```
 
 
+## Error state
+
+```tsx
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <NativeSelect error label="Boolean error" data={['React', 'Angular']} />
+      <NativeSelect
+        error="Error message"
+        label="React node error"
+        data={['React', 'Angular']}
+        mt="md"
+      />
+    </>
+  );
+}
+```
+
+
 
 #### Props
 
@@ -328,7 +349,7 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| data | ComboboxData | - | Data used to render options. Accepts strings, objects with label/value, or grouped options. If `children` prop is provided, `data` will be ignored. |
+| data | ComboboxStringGroupData | - | Data used to render options. Accepts strings, objects with label/value, or grouped options. If `children` prop is provided, `data` will be ignored. |
 | description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
 | descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
 | disabled | boolean | - | Sets `disabled` attribute on the `input` element |
@@ -352,8 +373,11 @@ function Demo() {
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -370,6 +394,7 @@ NativeSelect component supports Styles API. With Styles API, you can customize s
 | required | .mantine-NativeSelect-required | Required asterisk element, rendered inside label |
 | description | .mantine-NativeSelect-description | Description element |
 | error | .mantine-NativeSelect-error | Error element |
+| success | .mantine-NativeSelect-success | Success element |
 | wrapper | .mantine-NativeSelect-wrapper | Root element of the Input |
 | input | .mantine-NativeSelect-input | Input element |
 | section | .mantine-NativeSelect-section | Left and right sections |

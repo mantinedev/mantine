@@ -1,0 +1,19 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,648863,e=>{"use strict";var t=Object.defineProperty;e.s(["__exportAll",0,(e,r)=>{let n={};for(var l in e)t(n,l,{get:e[l],enumerable:!0});return r||t(n,Symbol.toStringTag,{value:"Module"}),n}])},726435,e=>{"use strict";var t=e.i(114108),r=e.i(191788);function n(e,n){let l=(0,t.useCallbackRef)(e),o=(0,r.useRef)(null),a=(0,r.useRef)(null),u=(0,r.useRef)(!0),s=(0,r.useRef)(n),c=(0,r.useRef)(-1),i=(0,r.useCallback)((...e)=>{l(...e),o.current=e,a.current=e,u.current=!1},[l]),d=(0,r.useCallback)(()=>{o.current&&o.current!==a.current?(i(...o.current),c.current=window.setTimeout(d,s.current)):u.current=!0},[i]),h=(0,r.useCallback)((...e)=>{u.current?(i(...e),c.current=window.setTimeout(d,s.current)):o.current=e},[i,d]);return(0,r.useEffect)(()=>{s.current=n},[n]),[h,()=>window.clearTimeout(c.current)]}e.s(["useThrottledCallback",0,function(e,t){let[l,o]=n(e,t);return(0,r.useEffect)(()=>o,[]),l},"useThrottledCallbackWithClearTimeout",0,n])},117924,e=>{"use strict";var t=e.i(648863),r=e.i(191788),n=e.i(883364),l=e.i(841209),o=e.i(391398),a=e.i(726435);let u={type:"code",component:function(){let[e,t]=(0,r.useState)(""),u=(0,a.useThrottledCallback)(e=>t(e),1e3);return(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(l.TextInput,{placeholder:"Search",onChange:e=>u(e.currentTarget.value)}),(0,o.jsxs)(n.Text,{children:["Throttled value: ",e||"–"]})]})},code:`
+import { Text, TextInput } from '@mantine/core';
+import { useThrottledCallback } from '@mantine/hooks';
+
+function Demo() {
+  const [throttledValue, setValue] = useState('');
+  const throttledSetValue = useThrottledCallback((value) => setValue(value), 1000);
+
+  return (
+    <>
+      <TextInput
+        placeholder="Search"
+        onChange={(event) => throttledSetValue(event.currentTarget.value)}
+      />
+      <Text>Throttled value: {throttledValue || '–'}</Text>
+    </>
+  );
+}
+`};var s=(0,t.__exportAll)({usage:()=>u});e.s(["UseThrottledCallbackDemos",0,s],117924)},518444,e=>{"use strict";var t=e.i(391398),r=e.i(38856),n=e.i(117924);e.i(603441);var l=e.i(62558);e.i(457450);var o=e.i(418026);let a=(0,l.Layout)(o.MDX_DATA.useThrottledCallback);function u(e){let l={code:"code",h2:"h2",p:"p",pre:"pre",...(0,r.useMDXComponents)(),...e.components},{Demo:o}=l;return o||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(l.h2,{id:"usage",children:"Usage"}),"\n",(0,t.jsxs)(l.p,{children:["The ",(0,t.jsx)(l.code,{children:"useThrottledCallback"})," hook accepts a function and a wait time in milliseconds.\nIt returns a throttled version of the function that will only be called at most once every ",(0,t.jsx)(l.code,{children:"wait"})," milliseconds."]}),"\n",(0,t.jsx)(o,{data:n.UseThrottledCallbackDemos.usage}),"\n",(0,t.jsx)(l.h2,{id:"definition",children:"Definition"}),"\n",(0,t.jsx)(l.pre,{children:(0,t.jsx)(l.code,{className:"language-tsx",children:"function useThrottledCallback<T extends (...args: any[]) => any>(\n  callback: T,\n  wait: number\n): (...args: Parameters<T>) => void;\n"})})]})}e.s(["default",0,function(e={}){return(0,t.jsx)(a,{...e,children:(0,t.jsx)(u,{...e})})}])},396481,(e,t,r)=>{let n="/hooks/use-throttled-callback";(window.__NEXT_P=window.__NEXT_P||[]).push([n,()=>e.r(518444)]),t.hot&&t.hot.dispose(function(){window.__NEXT_P.push([n])})},648761,e=>{e.v(t=>Promise.all(["static/chunks/22379_btw709h.js"].map(t=>e.l(t))).then(()=>t(493594)))},828805,e=>{e.v(t=>Promise.all(["static/chunks/4558t_0mgc5j4.js"].map(t=>e.l(t))).then(()=>t(879466)))}]);

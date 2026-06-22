@@ -1,0 +1,20 @@
+__turbopack_load_page_chunks__("/charts/radial-bar-chart", [
+  "static/chunks/0f6me72kaa9x7.js",
+  "static/chunks/2x06magc1tm9-.js",
+  "static/chunks/09628yvtr3jjm.js",
+  "static/chunks/050l3md8cosel.js",
+  "static/chunks/334kmx_sa3py_.js",
+  "static/chunks/0dlwjb-xzalqu.js",
+  "static/chunks/2dvraztvid35h.js",
+  "static/chunks/12brcszww88nz.js",
+  "static/chunks/05pyv83k7jbck.js",
+  "static/chunks/2831tbeo944q2.js",
+  "static/chunks/19cgrlgqa71y7.js",
+  "static/chunks/3u33zrj68_w5k.js",
+  "static/chunks/0uz3bm3u838-q.js",
+  "static/chunks/0si_cckotainz.js",
+  "static/chunks/3ccec4kk3_4if.css",
+  "static/chunks/21hvpvux84e_7.css",
+  "static/chunks/0-7wdzp76gmz_.css",
+  "static/chunks/turbopack-1hgpzw8wpl_od.js"
+])

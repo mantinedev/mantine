@@ -1,0 +1,20 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,648863,e=>{"use strict";var t=Object.defineProperty;e.s(["__exportAll",0,(e,n)=>{let i={};for(var o in e)t(i,o,{get:e[o],enumerable:!0});return n||t(i,Symbol.toStringTag,{value:"Module"}),i}])},133938,e=>{"use strict";var t=e.i(391398),n=e.i(38856),i=e.i(648863),o=e.i(191788),c=e.i(485108),r=e.i(725695),s=e.i(417241);let a={ico:"image/x-icon",png:"image/png",svg:"image/svg+xml",gif:"image/gif"},u={type:"code",component:function(){let e,[n,i]=(0,o.useState)("https://mantine.dev/favicon.svg");return e=(0,o.useRef)(null),(0,s.useIsomorphicEffect)(()=>{if(!n)return;if(!e.current){document.querySelectorAll('link[rel*="icon"]').forEach(e=>document.head.removeChild(e));let t=document.createElement("link");t.rel="shortcut icon",e.current=t,document.querySelector("head").appendChild(t)}let t=n.split("."),i=a[t[t.length-1].toLowerCase()];i?e.current.setAttribute("type",i):e.current.removeAttribute("type"),e.current.setAttribute("href",n)},[n]),(0,t.jsxs)(r.Group,{justify:"center",children:[(0,t.jsx)(c.Button,{onClick:()=>i("https://mantine.dev/favicon.svg"),children:"Mantine favicon"}),(0,t.jsx)(c.Button,{onClick:()=>i("https://ui.mantine.dev/favicon.svg"),children:"Mantine UI favicon"})]})},code:`
+import { useState } from 'react';
+import { useFavicon } from '@mantine/hooks';
+import { Group, Button } from '@mantine/core';
+
+function Demo() {
+  const [favicon, setFavicon] = useState('https://mantine.dev/favicon.svg');
+  const setMantineFavicon = () => setFavicon('https://mantine.dev/favicon.svg');
+  const setMantineUIFavicon = () => setFavicon('https://ui.mantine.dev/favicon.svg');
+
+  useFavicon(favicon);
+
+  return (
+    <Group justify="center">
+      <Button onClick={setMantineFavicon}>Mantine favicon</Button>
+      <Button onClick={setMantineUIFavicon}>Mantine UI favicon</Button>
+    </Group>
+  );
+}
+`};var l=(0,i.__exportAll)({usage:()=>u});e.i(603441);var d=e.i(62558);e.i(457450);var h=e.i(418026);let v=(0,d.Layout)(h.MDX_DATA.useFavicon);function p(e){let i={code:"code",h2:"h2",p:"p",pre:"pre",...(0,n.useMDXComponents)(),...e.components},{Demo:o}=i;return o||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(i.h2,{id:"usage",children:"Usage"}),"\n",(0,t.jsxs)(i.p,{children:["The ",(0,t.jsx)(i.code,{children:"use-favicon"})," hook appends a ",(0,t.jsx)(i.code,{children:"<link />"})," element to the head component with the given favicon in ",(0,t.jsx)(i.code,{children:"useLayoutEffect"}),".\nThe hook is not called during server-side rendering."]}),"\n",(0,t.jsxs)(i.p,{children:["Call the hook with a favicon URL (supported formats: ",(0,t.jsx)(i.code,{children:".ico"}),", ",(0,t.jsx)(i.code,{children:".png"}),", ",(0,t.jsx)(i.code,{children:".svg"}),", and ",(0,t.jsx)(i.code,{children:".gif"}),") that should be set as the favicon.\nThe hook is triggered every time the URL changes and the value is not an empty string (trailing whitespace is trimmed) or ",(0,t.jsx)(i.code,{children:"null"}),"."]}),"\n",(0,t.jsx)(o,{data:l.usage}),"\n",(0,t.jsx)(i.h2,{id:"definition",children:"Definition"}),"\n",(0,t.jsx)(i.pre,{children:(0,t.jsx)(i.code,{className:"language-tsx",children:"function useFavicon(url: string): void;\n"})})]})}e.s(["default",0,function(e={}){return(0,t.jsx)(v,{...e,children:(0,t.jsx)(p,{...e})})}],133938)},74888,(e,t,n)=>{let i="/hooks/use-favicon";(window.__NEXT_P=window.__NEXT_P||[]).push([i,()=>e.r(133938)]),t.hot&&t.hot.dispose(function(){window.__NEXT_P.push([i])})},648761,e=>{e.v(t=>Promise.all(["static/chunks/22379_btw709h.js"].map(t=>e.l(t))).then(()=>t(493594)))},828805,e=>{e.v(t=>Promise.all(["static/chunks/4558t_0mgc5j4.js"].map(t=>e.l(t))).then(()=>t(879466)))}]);

@@ -118,6 +118,7 @@ import {
 * `onClose` – called when the notification is unmounted
 * `onOpen` – called when the notification is mounted
 * `autoClose` – defines timeout in ms after which the notification will be automatically closed; use `false` to disable auto close
+* `priority` – display priority used when the number of active notifications exceeds `limit`; higher numbers are shown first, defaults to `0`
 * `message` – required notification body
 * `color, icon, title, radius, className, style, loading` – props passed down to the [Notification](https://mantine.dev/llms/core-notification.md) component
 
@@ -343,6 +344,86 @@ function Demo() {
     >
       Show 10 notifications
     </Button>
+  );
+}
+```
+
+
+## Priority
+
+By default, notifications are distributed between the visible state and the queue in
+insertion order (FIFO): the first `limit` notifications are visible and the rest wait
+in the queue. Set the `priority` property in `notifications.show` or `notifications.update`
+to control which notifications take the visible slots when there are more active
+notifications than the `limit` allows.
+
+* Notifications with a higher `priority` are shown before notifications with a lower one.
+* Notifications with equal `priority` keep insertion order (FIFO).
+* `priority` defaults to `0`, so notifications without it behave exactly as before.
+* Within the visible set, higher priority notifications are rendered first.
+
+When a high priority notification is added while the visible state is already at `limit`,
+it takes a visible slot and the lowest priority visible notification is moved into the queue –
+even if it was already displayed. Priority is applied independently for each position.
+
+Note that a notification that is moved from the visible state back into the queue is unmounted
+and mounted again when it returns to a visible slot, so its `onOpen` callback runs each time it
+becomes visible.
+
+In the following example the `Notifications` component uses `limit={1}`. Show a low priority
+notification first, then a high priority one: the high priority notification replaces the
+low priority one, which is moved to the queue and shown again once the high priority
+notification is closed.
+
+```tsx
+import { Button, Group } from '@mantine/core';
+import { createNotificationsStore, notifications, Notifications } from '@mantine/notifications';
+
+// Dedicated store with limit={1} so the priority behavior is easy to see
+const store = createNotificationsStore();
+
+function Demo() {
+  return (
+    <>
+      <Notifications store={store} limit={1} position="top-center" />
+
+      <Group justify="center">
+        <Button
+          color="gray"
+          onClick={() =>
+            notifications.show(
+              {
+                title: 'Low priority',
+                message: 'I am pushed to the queue when an urgent notification arrives',
+                autoClose: false,
+                priority: 0,
+              },
+              store
+            )
+          }
+        >
+          Show low priority
+        </Button>
+
+        <Button
+          color="red"
+          onClick={() =>
+            notifications.show(
+              {
+                title: 'High priority',
+                message: 'I take the visible slot even when the limit is reached',
+                color: 'red',
+                autoClose: false,
+                priority: 10,
+              },
+              store
+            )
+          }
+        >
+          Show high priority
+        </Button>
+      </Group>
+    </>
   );
 }
 ```

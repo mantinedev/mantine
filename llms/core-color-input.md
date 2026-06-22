@@ -302,6 +302,17 @@ function Demo() {
 ```
 
 
+## Success state
+
+```tsx
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return <ColorInput label="Color" placeholder="Color" success="Color accepted" />;
+}
+```
+
+
 ## Disabled state
 
 ```tsx
@@ -354,6 +365,8 @@ function Demo() {
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | swatches | string[] | - | A list of colors used to display swatches list below the color picker |
 | swatchesPerRow | number | - | Number of swatches per row |
 | value | string | - | Controlled component value |
@@ -362,6 +375,7 @@ function Demo() {
 | withEyeDropper | boolean | - | If set, the eye dropper button is displayed in the right section |
 | withPicker | boolean | - | If `false`, the component displays only swatches |
 | withPreview | boolean | - | If set, the preview color swatch is displayed in the left section of the input |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -382,6 +396,7 @@ ColorInput component supports Styles API. With Styles API, you can customize sty
 | required | .mantine-ColorInput-required | Required asterisk element, rendered inside label |
 | description | .mantine-ColorInput-description | Description element |
 | error | .mantine-ColorInput-error | Error element |
+| success | .mantine-ColorInput-success | Success element |
 | preview | .mantine-ColorInput-preview | Color preview, displayed only when `format` supports alpha channel |
 | body | .mantine-ColorInput-body | Contains alpha/hue sliders and color preview |
 | slider | .mantine-ColorInput-slider | Alpha and hue sliders root |

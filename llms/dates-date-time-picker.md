@@ -351,6 +351,8 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | size | MantineSize | - | Component size |
 | sortDates | boolean | - | Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" |
 | submitButtonProps | ActionIconProps & ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> | - | Props passed down to the submit button |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | timePickerProps | Omit<TimePickerProps, "value" \| "defaultValue"> | - | Props passed down to `TimePicker` component |
 | type | "range" \| "multiple" \| "default" | - | Picker type: range or default |
 | value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Controlled component value |
@@ -361,6 +363,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withSeconds | boolean | - | Determines whether the seconds input should be displayed |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |

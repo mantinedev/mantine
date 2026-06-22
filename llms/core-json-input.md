@@ -150,6 +150,17 @@ function Demo() {
 ```
 
 
+## Success state
+
+```tsx
+import { JsonInput } from '@mantine/core';
+
+function Demo() {
+  return <JsonInput label="JSON config" placeholder="JSON config" success="Valid JSON" />;
+}
+```
+
+
 
 #### Props
 
@@ -193,10 +204,13 @@ function Demo() {
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | serialize | { (value: any, replacer?: ((this: any, key: string, value: any) => any), space?: string \| number \| undefined): string; (value: any, replacer?: (string \| number)[] \| null \| undefined, space?: string \| ... 1 more ... \| undefined): string; } \| undefined | - | Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level. |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | validationError | React.ReactNode | - | Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the `error` prop when validation fails. |
 | value | string | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -217,3 +231,4 @@ JsonInput component supports Styles API. With Styles API, you can customize styl
 | required | .mantine-JsonInput-required | Required asterisk element, rendered inside label |
 | description | .mantine-JsonInput-description | Description element |
 | error | .mantine-JsonInput-error | Error element |
+| success | .mantine-JsonInput-success | Success element |

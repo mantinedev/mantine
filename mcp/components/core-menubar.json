@@ -1,0 +1,141 @@
+{
+  "id": "core-menubar",
+  "name": "Menubar",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/menubar",
+  "description": "Desktop application style menubar with a row of menu triggers",
+  "propsCount": 7,
+  "llmUrl": "https://mantine.dev/llms/core-menubar.md",
+  "componentDataUrl": "/mcp/components/core-menubar.json",
+  "searchText": "menubar desktop application style menubar with a row of menu triggers @mantine/core /core/menubar children defaultopenindex loop onopenchange openindex position trigger",
+  "source": "@mantine/core/src/components/Menubar/Menubar.tsx",
+  "docs": "core/menubar.mdx",
+  "markdown": "# Menubar\nPackage: @mantine/core\nImport: import { Menubar } from '@mantine/core';\nDescription: Desktop application style menubar with a row of menu triggers\n\n## Usage\n\n`Menubar` is a desktop-application style menu bar: a horizontal row of top-level menu triggers\n(File, Edit, View, …) where each trigger opens a dropdown. Arrow keys move between the top-level\nmenus, and once one menu is opened, moving to a sibling opens it immediately. `Menubar` follows the\n[WAI-ARIA menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/).\n\n`Menubar` is built on top of [Menu](https://mantine.dev/llms/core-menu.md) – each `Menubar.Menu` is a separate `Menu`\ninstance, and the dropdown content is composed from the usual `Menu.Item`, `Menu.Divider`,\n`Menu.Label`, `Menu.Sub`, `Menu.CheckboxItem` and `Menu.RadioItem` components.\n\n```tsx\nimport { Menu, Menubar, Text } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menubar>\n      <Menubar.Menu width={220}>\n        <Menubar.Target>File</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item rightSection={<Text size=\"xs\" c=\"dimmed\">⌘N</Text>}>New file</Menu.Item>\n          <Menu.Item rightSection={<Text size=\"xs\" c=\"dimmed\">⌘⇧N</Text>}>New window</Menu.Item>\n          <Menu.Sub>\n            <Menu.Sub.Target>\n              <Menu.Sub.Item>Open recent</Menu.Sub.Item>\n            </Menu.Sub.Target>\n            <Menu.Sub.Dropdown>\n              <Menu.Item>project-alpha</Menu.Item>\n              <Menu.Item>project-beta</Menu.Item>\n              <Menu.Item>project-gamma</Menu.Item>\n            </Menu.Sub.Dropdown>\n          </Menu.Sub>\n          <Menu.Divider />\n          <Menu.Item rightSection={<Text size=\"xs\" c=\"dimmed\">⌘S</Text>}>Save</Menu.Item>\n          <Menu.Item>Save as…</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n\n      <Menubar.Menu width={220}>\n        <Menubar.Target>Edit</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item rightSection={<Text size=\"xs\" c=\"dimmed\">⌘Z</Text>}>Undo</Menu.Item>\n          <Menu.Item rightSection={<Text size=\"xs\" c=\"dimmed\">⌘⇧Z</Text>}>Redo</Menu.Item>\n          <Menu.Divider />\n          <Menu.Item>Cut</Menu.Item>\n          <Menu.Item>Copy</Menu.Item>\n          <Menu.Item>Paste</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n\n      <Menubar.Menu width={220}>\n        <Menubar.Target>Help</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item>Documentation</Menu.Item>\n          <Menu.Item>Keyboard shortcuts</Menu.Item>\n          <Menu.Item>About</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n    </Menubar>\n  );\n}\n```\n\n\n## How it differs from Menu\n\n[Menu](https://mantine.dev/llms/core-menu.md) is a single disclosure widget – one target that toggles one dropdown.\n`Menubar` coordinates multiple menus:\n\n* The root renders `role=\"menubar\"` and `Menubar.Target` renders `role=\"menuitem\"` triggers with\n  `aria-haspopup=\"menu\"`.\n* Only one menu in the bar is open at a time. Moving to a sibling while a menu is open switches\n  which menu is open.\n* The whole bar is a single tab stop (roving `tabindex`) – `Tab` moves focus into and out of the\n  menu bar as a single unit, arrow keys move between triggers.\n\nIf you need a single dropdown attached to one button, use [Menu](https://mantine.dev/llms/core-menu.md) instead.\n\n## Composition\n\n`Menubar` consists of the following components:\n\n* `Menubar` – root element, owns the open/active state of all menus\n* `Menubar.Menu` – wraps a single menu, renders a `Menu` instance under the hood\n* `Menubar.Target` – top-level trigger button (`role=\"menuitem\"`)\n* `Menubar.Dropdown` – dropdown container, accepts the same children as `Menu.Dropdown`\n\n```tsx\nimport { Menu, Menubar } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menubar>\n      <Menubar.Menu>\n        <Menubar.Target>File</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item>New file</Menu.Item>\n          <Menu.Item>Open…</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n\n      <Menubar.Menu>\n        <Menubar.Target>Edit</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item>Undo</Menu.Item>\n          <Menu.Item>Redo</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n    </Menubar>\n  );\n}\n```\n\n## Trigger and loop\n\n`trigger` controls how a menu is opened when none of the menus is currently open:\n\n* `click` (default) – a menu opens when its target is clicked. Once any menu is open, hovering a\n  sibling target switches to it immediately. This matches the behavior of native desktop\n  application menu bars.\n* `hover` – a menu opens as soon as its target is hovered, even when all menus are closed.\n\nWith `trigger=\"hover\"`, a menu opens as soon as its target is hovered and closes when the pointer\nleaves the bar:\n\n```tsx\nimport { Menu, Menubar } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menubar trigger=\"hover\">\n      <Menubar.Menu width={220}>\n        <Menubar.Target>File</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item>New file</Menu.Item>\n          <Menu.Item>New window</Menu.Item>\n          <Menu.Item>Save</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n\n      <Menubar.Menu width={220}>\n        <Menubar.Target>Edit</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item>Undo</Menu.Item>\n          <Menu.Item>Redo</Menu.Item>\n          <Menu.Item>Cut</Menu.Item>\n          <Menu.Item>Copy</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n\n      <Menubar.Menu width={220}>\n        <Menubar.Target>View</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item>Zoom in</Menu.Item>\n          <Menu.Item>Zoom out</Menu.Item>\n          <Menu.Item>Reset zoom</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n    </Menubar>\n  );\n}\n```\n\n\n`loop` (default `true`) controls whether arrow key navigation wraps around from the last menu to\nthe first and vice versa.\n\n## Submenus\n\nUse `Menu.Sub` inside `Menubar.Dropdown` to create nested submenus. `ArrowRight` opens a submenu\nand moves focus to its first item, `ArrowLeft` closes it and returns focus to the parent item.\nSee the [Menu submenus documentation](https://mantine.dev/llms/core-menu.md#submenus) for more information.\n\nThe [usage demo](#usage) above includes a submenu in the File menu.\n\n## Checkbox and radio items\n\n`Menubar.Dropdown` supports the same selectable items as `Menu`: `Menu.CheckboxItem` for toggles\nand `Menu.RadioGroup` with `Menu.RadioItem` for single-choice options. By default, clicking a\ncheckbox or radio item does not close the menu.\n\n```tsx\nimport { Menu, Menubar } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menubar>\n      <Menubar.Menu width={220}>\n        <Menubar.Target>View</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.CheckboxItem defaultChecked>Show sidebar</Menu.CheckboxItem>\n          <Menu.CheckboxItem>Show status bar</Menu.CheckboxItem>\n          <Menu.Divider />\n          <Menu.Label>Appearance</Menu.Label>\n          <Menu.RadioGroup defaultValue=\"comfortable\">\n            <Menu.RadioItem value=\"compact\">Compact</Menu.RadioItem>\n            <Menu.RadioItem value=\"comfortable\">Comfortable</Menu.RadioItem>\n            <Menu.RadioItem value=\"spacious\">Spacious</Menu.RadioItem>\n          </Menu.RadioGroup>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n\n      <Menubar.Menu width={220}>\n        <Menubar.Target>Window</Menubar.Target>\n        <Menubar.Dropdown>\n          <Menu.Item>Minimize</Menu.Item>\n          <Menu.Item>Zoom</Menu.Item>\n          <Menu.Item>Bring all to front</Menu.Item>\n        </Menubar.Dropdown>\n      </Menubar.Menu>\n    </Menubar>\n  );\n}\n```\n\n\n## Controlled\n\nSet `openIndex` and `onOpenChange` to control which menu is open. `openIndex` is the zero-based\nindex of the opened `Menubar.Menu` (in DOM order) or `null` when all menus are closed:\n\n```tsx\nimport { useState } from 'react';\nimport { Button, Group, Menu, Menubar, Stack } from '@mantine/core';\n\nfunction Demo() {\n  const [openIndex, setOpenIndex] = useState<number | null>(null);\n\n  return (\n    <Stack>\n      <Group>\n        <Button variant=\"default\" onClick={() => setOpenIndex(0)}>Open File</Button>\n        <Button variant=\"default\" onClick={() => setOpenIndex(1)}>Open Edit</Button>\n        <Button variant=\"default\" onClick={() => setOpenIndex(null)}>Close all</Button>\n      </Group>\n\n      <Menubar openIndex={openIndex} onOpenChange={setOpenIndex}>\n        <Menubar.Menu width={220}>\n          <Menubar.Target>File</Menubar.Target>\n          <Menubar.Dropdown>\n            <Menu.Item>New file</Menu.Item>\n            <Menu.Item>Save</Menu.Item>\n          </Menubar.Dropdown>\n        </Menubar.Menu>\n\n        <Menubar.Menu width={220}>\n          <Menubar.Target>Edit</Menubar.Target>\n          <Menubar.Dropdown>\n            <Menu.Item>Undo</Menu.Item>\n            <Menu.Item>Redo</Menu.Item>\n          </Menubar.Dropdown>\n        </Menubar.Menu>\n      </Menubar>\n    </Stack>\n  );\n}\n```\n\n\nFor uncontrolled usage with an initially open menu, use the `defaultOpenIndex` prop instead.\n\n## Position\n\nBy default, dropdowns are positioned at `bottom-start` relative to their target. Change the\n`position` prop to use a different [Floating UI position](https://mantine.dev/llms/core-popover.md#position-and-placement)\nfor all menus in the bar:\n\n```tsx\nimport { Menubar } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Menubar position=\"bottom-end\">\n      {/* ...menus */}\n    </Menubar>\n  );\n}\n```\n\nIndividual menus accept the same props as [Menu](https://mantine.dev/llms/core-menu.md) – pass them to `Menubar.Menu` to\noverride settings for a single menu, for example `position`, `withinPortal`, `closeOnItemClick`,\n`shadow`, `width` or `transitionProps`.\n\n## Accessibility\n\n`Menubar` follows the [WAI-ARIA menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/):\n\n* The root element has `role=\"menubar\"` and `aria-orientation=\"horizontal\"`.\n* Each `Menubar.Target` has `role=\"menuitem\"`, `aria-haspopup=\"menu\"` and `aria-expanded`.\n* The menu bar is a single tab stop – only the active trigger is included in the tab sequence,\n  arrow keys move focus between the triggers.\n\nThe labels you pass to `Menubar.Target` are used as accessible names for the triggers, so make\nsure they describe the menu content.\n\n\n#### Props\n\n**Menubar props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | `Menubar.Menu` components |\n| defaultOpenIndex | number \\| null | - | Index of the opened menu for uncontrolled component |\n| loop | boolean | - | If set, arrow key navigation wraps from last to first menu and vice versa |\n| onOpenChange | (index: number \\| null) => void | - | Called when the opened menu changes with its index or `null` when all menus are closed |\n| openIndex | number \\| null | - | Index of the controlled opened menu, `null` closes all menus |\n| position | FloatingPosition | - | Dropdown position relative to the target element |\n| trigger | \"hover\" \\| \"click\" | - | Event that opens a menu when none of the menus is opened. `'click'` opens a menu on target click and then switches menus on hover (desktop application pattern), `'hover'` opens a menu when the target is hovered |\n\n\n#### Styles API\n\nMenubar component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Menubar selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-Menubar-root | Root element with `role=\"menubar\"` |\n| target | .mantine-Menubar-target | `Menubar.Target` top-level trigger button |\n\n**Menubar data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| target | data-expanded | Associated menu is opened | - |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "<code>Menubar.Menu</code> components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Menubar"
+    },
+    {
+      "name": "defaultOpenIndex",
+      "description": "Index of the opened menu for uncontrolled component",
+      "required": false,
+      "defaultValue": "`null`",
+      "type": {
+        "name": "number | null"
+      },
+      "sourceComponent": "Menubar"
+    },
+    {
+      "name": "loop",
+      "description": "If set, arrow key navigation wraps from last to first menu and vice versa",
+      "required": false,
+      "defaultValue": "`true`",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Menubar"
+    },
+    {
+      "name": "onOpenChange",
+      "description": "Called when the opened menu changes with its index or <code>null</code> when all menus are closed",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(index: number | null) => void"
+      },
+      "sourceComponent": "Menubar"
+    },
+    {
+      "name": "openIndex",
+      "description": "Index of the controlled opened menu, <code>null</code> closes all menus",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number | null"
+      },
+      "sourceComponent": "Menubar"
+    },
+    {
+      "name": "position",
+      "description": "Dropdown position relative to the target element",
+      "required": false,
+      "defaultValue": "`'bottom-start'`",
+      "type": {
+        "name": "FloatingPosition",
+        "raw": "FloatingPosition | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          },
+          {
+            "value": "\"bottom\""
+          },
+          {
+            "value": "\"top\""
+          },
+          {
+            "value": "\"left-end\""
+          },
+          {
+            "value": "\"left-start\""
+          },
+          {
+            "value": "\"right-end\""
+          },
+          {
+            "value": "\"right-start\""
+          },
+          {
+            "value": "\"bottom-end\""
+          },
+          {
+            "value": "\"bottom-start\""
+          },
+          {
+            "value": "\"top-end\""
+          },
+          {
+            "value": "\"top-start\""
+          }
+        ]
+      },
+      "sourceComponent": "Menubar"
+    },
+    {
+      "name": "trigger",
+      "description": "Event that opens a menu when none of the menus is opened. <code>'click'</code> opens a menu on target click and then switches menus on hover (desktop application pattern), <code>'hover'</code> opens a menu when the target is hovered",
+      "required": false,
+      "defaultValue": "`'click'`",
+      "type": {
+        "name": "\"hover\" | \"click\"",
+        "raw": "\"hover\" | \"click\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"hover\""
+          },
+          {
+            "value": "\"click\""
+          }
+        ]
+      },
+      "sourceComponent": "Menubar"
+    }
+  ]
+}

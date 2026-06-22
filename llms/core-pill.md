@@ -56,8 +56,11 @@ function Demo() {
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 **Pill.Group props**
@@ -125,6 +128,7 @@ Pill component supports Styles API. With Styles API, you can customize styles of
 | required | .mantine-Pillsinput-required | Required asterisk element, rendered inside label |
 | description | .mantine-Pillsinput-description | Description element |
 | error | .mantine-Pillsinput-error | Error element |
+| success | .mantine-Pillsinput-success | Success element |
 
 **Pillsinputfield selectors**
 

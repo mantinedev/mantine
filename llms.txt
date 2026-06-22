@@ -112,12 +112,15 @@ For a single consolidated file with all content, use:
 - [ColorPicker](https://mantine.dev/llms/core-color-picker.md): Pick colors in hex(a), rgb(a), hsl(a) and hsv(a) formats
 - [ColorSwatch](https://mantine.dev/llms/core-color-swatch.md): Displays color
 - [Combobox](https://mantine.dev/llms/core-combobox.md): Create custom select, autocomplete or multiselect inputs
+- [ComboboxPopover](https://mantine.dev/llms/core-combobox-popover.md): Add combobox dropdown to any button element
 - [Container](https://mantine.dev/llms/core-container.md): Center content with padding and max-width
 - [CopyButton](https://mantine.dev/llms/core-copy-button.md): Copies given text to clipboard
 - [CorePackage](https://mantine.dev/llms/core-package.md)
+- [DataList](https://mantine.dev/llms/core-data-list.md): Display label-value pairs as a description list
 - [Dialog](https://mantine.dev/llms/core-dialog.md): Display a fixed overlay dialog at any side of the screen
 - [Divider](https://mantine.dev/llms/core-divider.md): Horizontal line with optional label or vertical divider
 - [Drawer](https://mantine.dev/llms/core-drawer.md): Display overlay area at any side of the screen
+- [EmptyState](https://mantine.dev/llms/core-empty-state.md): Display a placeholder for no data, empty results and first-run states
 - [Fieldset](https://mantine.dev/llms/core-fieldset.md): Group related elements in a form
 - [FileButton](https://mantine.dev/llms/core-file-button.md): Open file picker with a button click
 - [FileInput](https://mantine.dev/llms/core-file-input.md): Capture files from user
@@ -142,6 +145,7 @@ For a single consolidated file with all content, use:
 - [Marquee](https://mantine.dev/llms/core-marquee.md): Create continuous scrolling animation for content
 - [MaskInput](https://mantine.dev/llms/core-mask-input.md): Input with mask pattern for formatted text entry
 - [Menu](https://mantine.dev/llms/core-menu.md): Combine a list of secondary actions into single interactive area
+- [Menubar](https://mantine.dev/llms/core-menubar.md): Desktop application style menubar with a row of menu triggers
 - [Modal](https://mantine.dev/llms/core-modal.md): An accessible overlay dialog
 - [MultiSelect](https://mantine.dev/llms/core-multi-select.md): Custom searchable multi select
 - [NativeSelect](https://mantine.dev/llms/core-native-select.md): Native select element based on Input
@@ -342,11 +346,16 @@ For a single consolidated file with all content, use:
 
 ## Schedule
 
+- [AgendaView](https://mantine.dev/llms/schedule-agenda-view.md): Vertical list view of events grouped by date
 - [DayView](https://mantine.dev/llms/schedule-day-view.md): Standalone schedule day view component
 - [GettingStartedSchedule](https://mantine.dev/llms/schedule-getting-started.md)
 - [MobileMonthView](https://mantine.dev/llms/schedule-mobile-month-view.md): Mobile-optimized schedule month view component
 - [MonthView](https://mantine.dev/llms/schedule-month-view.md): Standalone schedule month view component
 - [RecurringEventsSchedule](https://mantine.dev/llms/schedule-recurring-events.md)
+- [ResourcesDayView](https://mantine.dev/llms/schedule-resources-day-view.md): Day view with resource columns for scheduling across resources
+- [ResourcesMonthView](https://mantine.dev/llms/schedule-resources-month-view.md): Month view with resource lanes for scheduling across resources
+- [ResourcesSchedule](https://mantine.dev/llms/schedule-resources-schedule.md): Schedule wrapper component that combines resource day, week and month views
+- [ResourcesWeekView](https://mantine.dev/llms/schedule-resources-week-view.md): Week view with resource rows for scheduling across resources
 - [Schedule](https://mantine.dev/llms/schedule-schedule.md): Schedule component with day, week, month and year views
 - [ScheduleEventsData](https://mantine.dev/llms/schedule-events-data.md)
 - [WeekView](https://mantine.dev/llms/schedule-week-view.md): Standalone schedule week view component
@@ -452,6 +461,7 @@ For a single consolidated file with all content, use:
 - [Changelog910](https://mantine.dev/llms/changelog-9-1-0.md)
 - [Changelog920](https://mantine.dev/llms/changelog-9-2-0.md)
 - [Changelog930](https://mantine.dev/llms/changelog-9-3-0.md)
+- [Changelog940](https://mantine.dev/llms/changelog-9-4-0.md)
 - [Contribute](https://mantine.dev/llms/contribute.md)
 - [EslintConfig](https://mantine.dev/llms/eslint-config-mantine.md)
 - [GettingStarted](https://mantine.dev/llms/getting-started.md)

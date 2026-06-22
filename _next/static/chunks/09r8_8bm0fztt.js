@@ -1,0 +1,20 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,648863,e=>{"use strict";var n=Object.defineProperty;e.s(["__exportAll",0,(e,t)=>{let r={};for(var o in e)n(r,o,{get:e[o],enumerable:!0});return t||n(r,Symbol.toStringTag,{value:"Module"}),r}])},692385,e=>{"use strict";var n=e.i(852361),t=e.i(191788);let r={min:-1/0,max:1/0};e.s(["useCounter",0,function(e=0,o){let{min:s,max:i,step:u=1}={...r,...o},c=Math.abs(u),[l,a]=(0,t.useState)((0,n.clamp)(e,s,i));return[l,{increment:(0,t.useCallback)(()=>a(e=>(0,n.clamp)(e+c,s,i)),[s,i,c]),decrement:(0,t.useCallback)(()=>a(e=>(0,n.clamp)(e-c,s,i)),[s,i,c]),set:(0,t.useCallback)(e=>a((0,n.clamp)(e,s,i)),[s,i]),reset:(0,t.useCallback)(()=>a((0,n.clamp)(e,s,i)),[e,s,i])}]}])},46775,e=>{"use strict";var n=e.i(391398),t=e.i(38856),r=e.i(648863),o=e.i(485108),s=e.i(725695),i=e.i(883364),u=e.i(692385);let c={type:"code",code:`
+import { Group, Button, Text } from '@mantine/core';
+import { useCounter } from '@mantine/hooks';
+
+function Demo() {
+  const [count, handlers] = useCounter(0, { min: 0, max: 10 });
+
+  return (
+    <>
+      <Text>Count: {count}</Text>
+      <Group justify="center">
+        <Button onClick={handlers.increment}>Increment</Button>
+        <Button onClick={handlers.decrement}>Decrement</Button>
+        <Button onClick={handlers.reset}>Reset</Button>
+        <Button onClick={() => handlers.set(5)}>Set 5</Button>
+      </Group>
+    </>
+  );
+}
+`,component:function(){let[e,t]=(0,u.useCounter)(0,{min:0,max:10});return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsxs)(i.Text,{size:"md",ta:"center",py:"xs",children:["Count: ",e]}),(0,n.jsxs)(s.Group,{justify:"center",children:[(0,n.jsx)(o.Button,{size:"xs",onClick:t.increment,children:"Increment"}),(0,n.jsx)(o.Button,{size:"xs",onClick:t.decrement,children:"Decrement"}),(0,n.jsx)(o.Button,{size:"xs",onClick:t.reset,children:"Reset"}),(0,n.jsx)(o.Button,{size:"xs",onClick:()=>t.set(5),children:"Set 5"})]})]})}};var l=(0,r.__exportAll)({usage:()=>c});e.i(603441);var a=e.i(62558);e.i(457450);var d=e.i(418026);let m=(0,a.Layout)(d.MDX_DATA.useCounter);function p(e){let r={code:"code",h2:"h2",p:"p",pre:"pre",...(0,t.useMDXComponents)(),...e.components},{Demo:o}=r;return o||function(e,n){throw Error("Expected "+(n?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(r.h2,{id:"usage",children:"Usage"}),"\n",(0,n.jsx)(o,{data:l.usage}),"\n",(0,n.jsx)(r.h2,{id:"definition",children:"Definition"}),"\n",(0,n.jsx)(r.pre,{children:(0,n.jsx)(r.code,{className:"language-tsx",children:"interface UseCounterOptions {\n  min?: number;\n  max?: number;\n  step?: number;\n}\n\ninterface UseCounterHandlers {\n  increment: () => void;\n  decrement: () => void;\n  set: (value: number) => void;\n  reset: () => void;\n}\n\ntype UseCounterReturnValue = [number, UseCounterHandlers];\n\nfunction useCounter(\n  initialValue?: number,\n  options?: UseCounterOptions,\n): UseCounterReturnValue\n"})}),"\n",(0,n.jsx)(r.h2,{id:"exported-types",children:"Exported types"}),"\n",(0,n.jsxs)(r.p,{children:["The ",(0,n.jsx)(r.code,{children:"UseCounterOptions"}),", ",(0,n.jsx)(r.code,{children:"UseCounterHandlers"}),", and ",(0,n.jsx)(r.code,{children:"UseCounterReturnValue"})," types are exported from the ",(0,n.jsx)(r.code,{children:"@mantine/hooks"})," package;\nyou can import them in your application:"]}),"\n",(0,n.jsx)(r.pre,{children:(0,n.jsx)(r.code,{className:"language-tsx",children:"import type { UseCounterOptions, UseCounterHandlers, UseCounterReturnValue } from '@mantine/hooks';\n"})})]})}e.s(["default",0,function(e={}){return(0,n.jsx)(m,{...e,children:(0,n.jsx)(p,{...e})})}],46775)},232991,(e,n,t)=>{let r="/hooks/use-counter";(window.__NEXT_P=window.__NEXT_P||[]).push([r,()=>e.r(46775)]),n.hot&&n.hot.dispose(function(){window.__NEXT_P.push([r])})},648761,e=>{e.v(n=>Promise.all(["static/chunks/22379_btw709h.js"].map(n=>e.l(n))).then(()=>n(493594)))},828805,e=>{e.v(n=>Promise.all(["static/chunks/4558t_0mgc5j4.js"].map(n=>e.l(n))).then(()=>n(879466)))}]);

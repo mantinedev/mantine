@@ -1,0 +1,13 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,648863,e=>{"use strict";var t=Object.defineProperty;e.s(["__exportAll",0,(e,n)=>{let o={};for(var i in e)t(o,i,{get:e[i],enumerable:!0});return n||t(o,Symbol.toStringTag,{value:"Module"}),o}])},85155,e=>{"use strict";var t=e.i(391398),n=e.i(38856),o=e.i(648863),i=e.i(266181),s=e.i(191788);let r={type:"code",component:function(){let e=function(){let e=(0,i.useForceUpdate)(),[t,n]=(0,s.useState)(null),o=(0,s.useEffectEvent)(()=>{n(document.getSelection()),e()});return(0,s.useEffect)(()=>(n(document.getSelection()),document.addEventListener("selectionchange",o),()=>document.removeEventListener("selectionchange",o)),[]),t}();return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)("div",{children:"Select some text here or anywhere on the page and it will be displayed below"}),(0,t.jsxs)("div",{children:["Selected text: ",(0,t.jsx)("b",{children:e?.toString()})]})]})},code:`
+import { useTextSelection } from '@mantine/hooks';
+
+function Demo() {
+  const selection = useTextSelection();
+  return (
+    <>
+      <div>Select some text here or anywhere on the page and it will be displayed below</div>
+      <div>Selected text: {selection?.toString()}</div>
+    </>
+  );
+}
+`};var c=(0,o.__exportAll)({usage:()=>r});e.i(603441);var l=e.i(62558);e.i(457450);var d=e.i(418026);let u=(0,l.Layout)(d.MDX_DATA.useTextSelection);function a(e){let o={code:"code",h2:"h2",p:"p",pre:"pre",...(0,n.useMDXComponents)(),...e.components},{Demo:i}=o;return i||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(o.h2,{id:"usage",children:"Usage"}),"\n",(0,t.jsxs)(o.p,{children:["The ",(0,t.jsx)(o.code,{children:"use-text-selection"})," hook returns the current text selection:"]}),"\n",(0,t.jsx)(i,{data:c.usage}),"\n",(0,t.jsx)(o.h2,{id:"definition",children:"Definition"}),"\n",(0,t.jsx)(o.pre,{children:(0,t.jsx)(o.code,{className:"language-tsx",children:"function useTextSelection(): Selection | null;\n"})})]})}e.s(["default",0,function(e={}){return(0,t.jsx)(u,{...e,children:(0,t.jsx)(a,{...e})})}],85155)},785508,(e,t,n)=>{let o="/hooks/use-text-selection";(window.__NEXT_P=window.__NEXT_P||[]).push([o,()=>e.r(85155)]),t.hot&&t.hot.dispose(function(){window.__NEXT_P.push([o])})},648761,e=>{e.v(t=>Promise.all(["static/chunks/22379_btw709h.js"].map(t=>e.l(t))).then(()=>t(493594)))},828805,e=>{e.v(t=>Promise.all(["static/chunks/4558t_0mgc5j4.js"].map(t=>e.l(t))).then(()=>t(879466)))}]);

@@ -274,6 +274,31 @@ function Demo() {
 ```
 
 
+## success prop
+
+All inputs that use `Input.Wrapper` under the hood support the `success` prop.
+When set to `true`, it will add a green border to the input. You can also pass a React node to display
+a success message below the input. If both `error` and `success` props are set, `error` takes precedence:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <TextInput placeholder="Success as boolean" label="Success as boolean" success />
+      <TextInput
+        mt="md"
+        placeholder="Success as react node"
+        label="Success as react node"
+        success="Username is available"
+      />
+    </>
+  );
+}
+```
+
+
 ## Input.Label, Input.Description and Input.Error components
 
 `Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom
@@ -629,8 +654,10 @@ function Demo() {
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | rootRef | Ref<HTMLDivElement> | - | Root element ref |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Determines whether the input should have success styles |
 | withAria | boolean | - | Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element of the `Input` component |
 
 **Input.Base props**
@@ -662,9 +689,12 @@ function Demo() {
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | withAria | boolean | - | If set, `aria-` and other accessibility attributes are added to the input |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the root element (`Input.Wrapper` component) |
 
 **Input.Label props**
@@ -691,6 +721,8 @@ function Demo() {
 | labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | size | MantineFontSize | - | Controls size of `Input.Label`, `Input.Description` and `Input.Error` components |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 
 **Input.Description props**
@@ -740,6 +772,7 @@ Input component supports Styles API. With Styles API, you can customize styles o
 | required | .mantine-Inputwrapper-required | Required asterisk element, rendered inside label |
 | description | .mantine-Inputwrapper-description | Description element |
 | error | .mantine-Inputwrapper-error | Error element |
+| success | .mantine-Inputwrapper-success | Success element |
 
 **Inputwrapper CSS variables**
 
@@ -761,3 +794,4 @@ Input component supports Styles API. With Styles API, you can customize styles o
 | required | .mantine-Inputbase-required | Required asterisk element, rendered inside label |
 | description | .mantine-Inputbase-description | Description element |
 | error | .mantine-Inputbase-error | Error element |
+| success | .mantine-Inputbase-success | Success element |

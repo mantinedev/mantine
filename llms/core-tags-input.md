@@ -916,6 +916,33 @@ function Demo() {
 ```
 
 
+## Error state
+
+```tsx
+import { TagsInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <TagsInput
+        label="Boolean error"
+        placeholder="Boolean error"
+        error
+        defaultValue={['React', 'Angular']}
+      />
+      <TagsInput
+        mt="md"
+        label="With error message"
+        placeholder="With error message"
+        error="Invalid name"
+        defaultValue={['React', 'Angular']}
+      />
+    </>
+  );
+}
+```
+
+
 
 #### Props
 
@@ -983,11 +1010,14 @@ function Demo() {
 | selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
 | splitChars | string[] | - | Characters that should trigger tags split, `[',']` by default |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | string[] | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withPillsReorder | boolean | - | If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. |
 | withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -1008,6 +1038,7 @@ TagsInput component supports Styles API. With Styles API, you can customize styl
 | required | .mantine-TagsInput-required | Required asterisk element, rendered inside label |
 | description | .mantine-TagsInput-description | Description element |
 | error | .mantine-TagsInput-error | Error element |
+| success | .mantine-TagsInput-success | Success element |
 | pill | .mantine-TagsInput-pill | Value pill |
 | inputField | .mantine-TagsInput-inputField | Input field |
 | pillsList | .mantine-TagsInput-pillsList | List of pills, also contains input field |

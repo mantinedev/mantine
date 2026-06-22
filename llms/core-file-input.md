@@ -226,6 +226,17 @@ function Demo() {
 ```
 
 
+## Success state
+
+```tsx
+import { FileInput } from '@mantine/core';
+
+function Demo() {
+  return <FileInput label="Upload file" success="File is valid" />;
+}
+```
+
+
 ## FileInputProps type
 
 `FileInputProps` type is a generic interface which accepts a single type argument:
@@ -283,10 +294,13 @@ type MultipleInputProps = FileInputProps<true>;
 | rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | File \| File[] \| null | - | Controlled component value |
 | valueComponent | FC<{ value: File \| File[] \| null; }> | - | Value renderer. By default, displays file name. |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -307,4 +321,5 @@ FileInput component supports Styles API. With Styles API, you can customize styl
 | required | .mantine-FileInput-required | Required asterisk element, rendered inside label |
 | description | .mantine-FileInput-description | Description element |
 | error | .mantine-FileInput-error | Error element |
+| success | .mantine-FileInput-success | Success element |
 | placeholder | .mantine-FileInput-placeholder | Placeholder text |

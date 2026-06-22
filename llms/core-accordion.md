@@ -62,7 +62,7 @@ export const data = [
 ## order prop
 
 The `order` prop (used in all demos on this page) sets the heading level for the `Accordion.Control` root element.
-According to [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html),
+According to [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/),
 it is required to use `h2`-`h6` heading levels to fit correctly within the outline of the page.
 
 All examples on this page use `order={3}`, which means that all `button` elements of
@@ -476,7 +476,7 @@ The Accordion component implements the [WAI-ARIA accessibility pattern](https://
 | loop | boolean | - | If set, arrow keys loop through items (first to last and last to first) |
 | multiple | boolean | - | If set, multiple items can be opened at the same time |
 | onChange | (value: AccordionValue<Multiple>) => void | - | Called when value changes, payload type depends on `multiple` prop |
-| order | 2 \| 3 \| 4 \| 5 \| 6 | - | Sets heading level (h2-h6) for `Accordion.Control` elements to meet WAI-ARIA requirements. Has no visual effect. |
+| order | 2 \| 3 \| 4 \| 5 \| 6 | - | Sets heading level (h2-h6) for `Accordion.Control` elements. Wraps each control in the corresponding heading tag, recommended to meet WAI-ARIA accessibility requirements. Has no visual effect. |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. |
 | transitionDuration | number | - | Transition duration in ms |
 | value | string \| string[] \| null | - | Controlled component value |

@@ -207,6 +207,78 @@ export const events = [
 ```
 
 
+## Hide weekend days
+
+Set `withWeekendDays={false}` to hide weekend days. The grid shrinks to the
+remaining columns and events that span hidden days are clipped to the visible
+days. The days that are considered weekend are controlled by the `weekendDays`
+prop (or [DatesProvider](https://mantine.dev/llms/dates-getting-started.md#datesprovider), `[0, 6]` by
+default).
+
+```tsx
+// Demo.tsx
+import { MonthView } from '@mantine/schedule';
+import { events } from './data';
+
+function Demo() {
+  return <MonthView date={new Date()} events={events} withWeekendDays={false} />;
+}
+
+// data.ts
+import dayjs from 'dayjs';
+
+const today = dayjs().format('YYYY-MM-DD');
+const startOfMonth = dayjs().startOf('month').format('YYYY-MM-DD');
+const midMonth = dayjs().date(15).format('YYYY-MM-DD');
+const endOfMonth = dayjs().endOf('month').format('YYYY-MM-DD');
+
+export const events = [
+  {
+    id: 1,
+    title: 'Team Meeting',
+    start: \`\${startOfMonth} 09:00:00\`,
+    end: \`\${startOfMonth} 10:30:00\`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Project Deadline',
+    start: \`\${midMonth} 00:00:00\`,
+    end: dayjs(midMonth).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'red',
+  },
+  {
+    id: 3,
+    title: 'Client Call',
+    start: \`\${today} 14:00:00\`,
+    end: \`\${today} 15:00:00\`,
+    color: 'green',
+  },
+  {
+    id: 4,
+    title: 'Monthly Review',
+    start: \`\${endOfMonth} 00:00:00\`,
+    end: dayjs(endOfMonth).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'violet',
+  },
+  {
+    id: 5,
+    title: 'Workshop',
+    start: dayjs().add(3, 'day').format('YYYY-MM-DD 10:00:00'),
+    end: dayjs().add(3, 'day').format('YYYY-MM-DD 12:00:00'),
+    color: 'orange',
+  },
+  {
+    id: 6,
+    title: 'Conference',
+    start: dayjs().add(5, 'day').format('YYYY-MM-DD 00:00:00'),
+    end: dayjs().add(6, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'cyan',
+  },
+];
+```
+
+
 ## First day of week
 
 Set `firstDayOfWeek` to control which day starts the week.
@@ -1193,19 +1265,33 @@ function Demo() {
 }
 
 // EventDetails.tsx
+import dayjs from 'dayjs';
 import { Badge, Group, Stack, Text } from '@mantine/core';
-import { ScheduleEventData } from '@mantine/schedule';
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
 
 interface EventDetailsProps {
   event: ScheduleEventData;
+  resources?: ScheduleResourceData[];
 }
 
-export function EventDetails({ event }: EventDetailsProps) {
+export function EventDetails({ event, resources }: EventDetailsProps) {
+  const resource = resources?.find((r) => r.id === event.resourceId);
+
   return (
     <Stack gap="xs">
       <Text fw={600} size="sm">
         {event.title}
       </Text>
+
+      <Text size="xs" c="dimmed">
+        {dayjs(event.start).format('MMM D, YYYY HH:mm')} – {dayjs(event.end).format('HH:mm')}
+      </Text>
+
+      {resource && (
+        <Text size="xs" c="dimmed">
+          {resource.label}
+        </Text>
+      )}
 
       {event.payload?.description && (
         <Text size="xs" c="dimmed">
@@ -1428,6 +1514,71 @@ function Demo() {
       events={events}
       withEventsDragAndDrop
       onEventDrop={handleEventDrop}
+    />
+  );
+}
+```
+
+
+## Agenda view
+
+Set `withAgenda` prop to display an "Agenda" button in the header. When clicked, it opens
+an `AgendaView` showing events for the current month as a list.
+
+```tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { MonthView } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+const startOfMonth = dayjs().startOf('month').format('YYYY-MM-DD');
+
+const events = [
+  {
+    id: 'team-meeting',
+    title: 'Team Meeting',
+    start: `${startOfMonth} 09:00:00`,
+    end: `${startOfMonth} 10:30:00`,
+    color: 'blue',
+  },
+  {
+    id: 'client-call',
+    title: 'Client Call',
+    start: `${today} 14:00:00`,
+    end: `${today} 15:00:00`,
+    color: 'green',
+  },
+  {
+    id: 'daily-sync-series',
+    title: 'Daily sync',
+    start: `${startOfMonth} 09:30:00`,
+    end: `${startOfMonth} 10:00:00`,
+    color: 'grape',
+    recurrence: {
+      rrule: 'FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=30',
+    },
+  },
+  {
+    id: 'weekly-review-series',
+    title: 'Weekly review',
+    start: `${startOfMonth} 16:00:00`,
+    end: `${startOfMonth} 17:00:00`,
+    color: 'orange',
+    recurrence: {
+      rrule: 'FREQ=WEEKLY;COUNT=8',
+    },
+  },
+];
+
+function Demo() {
+  const [date, setDate] = useState(today);
+
+  return (
+    <MonthView
+      date={date}
+      onDateChange={setDate}
+      events={events}
+      withAgenda
     />
   );
 }
@@ -1947,12 +2098,14 @@ Each day button has an `aria-label` attribute with the full date in the format "
 | viewSelectProps | Partial<ViewSelectProps> & DataAttributes | - | Props passed to view level select |
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names. By default, the first letter of the weekday. |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
+| withAgenda | boolean | - | If set, displays an Agenda button in the header that opens an agenda list view |
 | withDragSlotSelect | boolean | - | If set, enables drag-to-select day ranges |
 | withEventsDragAndDrop | boolean | - | If true, events can be dragged and dropped |
 | withHeader | boolean | - | If set, the header is displayed |
 | withOutsideDays | boolean | - | If set, days from the previous and next months are displayed to fill the weeks |
 | withWeekDays | boolean | - | If set, weekdays names are displayed in the first row |
 | withWeekNumbers | boolean | - | If set, week numbers are displayed in the first column |
+| withWeekendDays | boolean | - | If set, weekend days are displayed. When `false`, days defined by `weekendDays` are hidden and the grid shrinks to the remaining columns |
 
 
 #### Styles API
@@ -1983,6 +2136,18 @@ MonthView component supports Styles API. With Styles API, you can customize styl
 | monthYearSelectControl | .mantine-MonthView-monthYearSelectControl | Month/year select control, part of MonthYearSelect |
 | monthYearSelectList | .mantine-MonthView-monthYearSelectList | Month/year select list, part of MonthYearSelect |
 | monthYearSelectLabel | .mantine-MonthView-monthYearSelectLabel | Month/year select label, part of MonthYearSelect |
+| agendaView | .mantine-MonthView-agendaView | AgendaView root element, shown when agenda is open |
+| agendaViewHeader | .mantine-MonthView-agendaViewHeader | AgendaView header container |
+| agendaViewHeaderLabel | .mantine-MonthView-agendaViewHeaderLabel | AgendaView date range label |
+| agendaViewBody | .mantine-MonthView-agendaViewBody | AgendaView body container |
+| agendaViewDateGroup | .mantine-MonthView-agendaViewDateGroup | AgendaView date group container |
+| agendaViewDateHeader | .mantine-MonthView-agendaViewDateHeader | AgendaView date header text |
+| agendaViewEvent | .mantine-MonthView-agendaViewEvent | AgendaView event item button |
+| agendaViewEventBody | .mantine-MonthView-agendaViewEventBody | AgendaView event body container |
+| agendaViewEventColor | .mantine-MonthView-agendaViewEventColor | AgendaView event color indicator |
+| agendaViewEventTitle | .mantine-MonthView-agendaViewEventTitle | AgendaView event title text |
+| agendaViewEventTime | .mantine-MonthView-agendaViewEventTime | AgendaView event time label |
+| agendaViewNoEvents | .mantine-MonthView-agendaViewNoEvents | AgendaView no events message |
 
 **MonthView CSS variables**
 

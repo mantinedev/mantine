@@ -460,6 +460,20 @@ function Demo() {
 ```
 
 
+`ActionIcon.Group` renders with `role="group"`. When the group represents a meaningful set of actions, give it an accessible name with `aria-label` (or `aria-labelledby`) so screen readers can announce its purpose:
+
+```tsx
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionIcon.Group aria-label="Text formatting">
+      {/* ...ActionIcon components */}
+    </ActionIcon.Group>
+  );
+}
+```
+
 Note that you must not wrap child `ActionIcon` components with any additional elements:
 
 ```tsx

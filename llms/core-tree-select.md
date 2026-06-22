@@ -748,6 +748,18 @@ function Demo() {
 ```
 
 
+## Success state
+
+```tsx
+import { TreeSelect } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return <TreeSelect label="Tree Select" placeholder="Tree Select" data={data} success="Looks good!" />;
+}
+```
+
+
 ## Accessibility
 
 TreeSelect provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
@@ -842,10 +854,13 @@ function Demo() {
 | searchValue | string | - | Controlled search value |
 | searchable | boolean | - | Enables search filtering |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | string \| string[] \| null | - | Controlled value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withLines | boolean | - | Show tree connection lines between parent and child nodes |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -866,6 +881,7 @@ TreeSelect component supports Styles API. With Styles API, you can customize sty
 | required | .mantine-TreeSelect-required | Required asterisk element, rendered inside label |
 | description | .mantine-TreeSelect-description | Description element |
 | error | .mantine-TreeSelect-error | Error element |
+| success | .mantine-TreeSelect-success | Success element |
 | pill | .mantine-TreeSelect-pill | Value pill |
 | inputField | .mantine-TreeSelect-inputField | Input field |
 | pillsList | .mantine-TreeSelect-pillsList | List of pills, also contains input field |

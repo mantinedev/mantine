@@ -27,6 +27,40 @@ function Demo() {
 ```
 
 
+## CSS units
+
+`Splitter.Pane` `defaultSize`, `min` and `max` props accept CSS units in addition to plain numbers:
+
+* A plain `number` or a `%` string (`'30%'`) is a **flexible** size – the pane shares the leftover
+  space with other flexible panes.
+* A `px` or `rem` string (`'240px'`, `'15rem'`) is a **fixed** size – the pane keeps its pixel size
+  when the container is resized and only changes when its own handle is dragged.
+
+This makes it possible to mix a fixed-width sidebar with a fluid content pane that absorbs the
+remaining space:
+
+```tsx
+import { Splitter } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Splitter h={200}>
+      <Splitter.Pane defaultSize="240px" min="160px" max="50%" bg="blue">
+        Fixed 240px sidebar
+      </Splitter.Pane>
+      <Splitter.Pane defaultSize={100} bg="teal">
+        Flexible content
+      </Splitter.Pane>
+    </Splitter>
+  );
+}
+```
+
+
+Sizes are reported back in the unit they were declared in: a `'240px'` pane stays `'240px'` in
+`sizes` / `onSizeChange`, while a flexible pane reports its resolved percentage. When the container
+becomes smaller than the sum of the fixed panes, fixed panes shrink proportionally.
+
 ## Vertical orientation
 
 Set `orientation="vertical"` to split panes vertically:
@@ -332,16 +366,16 @@ If you need more control over the layout and styling, you can use the hook direc
 | handleIcon | React.ReactNode | - | Custom icon displayed in the handle thumb, by default uses grip icon based on orientation |
 | lineSize | string \| number | - | CSS value for separator line thickness between panes |
 | onCollapseChange | (panelIndex: number, collapsed: boolean) => void | - | Called when a panel collapses or expands |
-| onResizeEnd | (handleIndex: number, sizes: number[]) => void | - | Called when drag ends |
+| onResizeEnd | (handleIndex: number, sizes: SplitterPaneSize[]) => void | - | Called when drag ends |
 | onResizeStart | (handleIndex: number) => void | - | Called when drag starts |
-| onSizeChange | (sizes: number[]) => void | - | Called during resize with updated sizes |
+| onSizeChange | (sizes: SplitterPaneSize[]) => void | - | Called during resize with updated sizes, each value keeps its declared unit |
 | orientation | "horizontal" \| "vertical" | - | Layout direction |
 | redistribute | "nearest" \| "equal" \| UseSplitterRedistributeFn | - | How to redistribute space when immediate neighbor is at its min/max |
 | resetOnDoubleClick | boolean | - | Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked |
-| shiftStep | number | - | Shift+arrow step size in percentage |
-| sizes | number[] | - | Controlled sizes (percentages summing to 100) |
+| shiftStep | SplitterStep | - | Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels |
+| sizes | SplitterPaneSize[] | - | Controlled sizes, each value keeps the unit it was declared in (number/`%` flexible, `px`/`rem` fixed) |
 | splitterRef | RefObject<UseSplitterReturnValue<any> \| null> | - | Ref to imperative splitter API (sizes, collapse, expand, etc.) |
-| step | number | - | Keyboard step size in percentage |
+| step | SplitterStep | - | Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels |
 | withHandle | boolean | - | Determines whether the thumb with grip icon is displayed on the handle |
 
 

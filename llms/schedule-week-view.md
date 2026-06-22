@@ -263,6 +263,73 @@ function Demo() {
 ```
 
 
+## Sub-hour grid lines
+
+By default, `WeekView` displays a grid line for every time slot. When `intervalMinutes` is smaller
+than `60`, set `withSubHourGridLines={false}` to display only one grid line per hour while keeping
+the smaller interval for creating and resizing events. This is useful to achieve a Google Calendar
+like layout: events snap to 15 or 30 minutes increments, but the grid stays clean with hourly lines.
+
+```tsx
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import { WeekView, ScheduleEventData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
+
+const initialEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Morning Standup',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:30:00`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Team Meeting',
+    start: `${tomorrow} 11:15:00`,
+    end: `${tomorrow} 12:00:00`,
+    color: 'green',
+  },
+  {
+    id: 3,
+    title: 'Code Review',
+    start: `${today} 14:00:00`,
+    end: `${today} 14:45:00`,
+    color: 'violet',
+  },
+];
+
+function Demo() {
+  const [events, setEvents] = useState(initialEvents);
+
+  const handleEventResize = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
+    setEvents((prev) =>
+      prev.map((event) =>
+        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
+      )
+    );
+  };
+
+  // Events snap to 15 minutes increments, but only one grid line per hour is displayed
+  return (
+    <WeekView
+      date={new Date()}
+      events={events}
+      startTime="08:00:00"
+      endTime="18:00:00"
+      intervalMinutes={15}
+      withSubHourGridLines
+      withEventResize
+      onEventResize={handleEventResize}
+    />
+  );
+}
+```
+
+
 ## First day of week
 
 Set `firstDayOfWeek` to control which day starts the week. 0 is Sunday, 1 is Monday (default), etc.
@@ -1674,19 +1741,33 @@ function Demo() {
 }
 
 // EventDetails.tsx
+import dayjs from 'dayjs';
 import { Badge, Group, Stack, Text } from '@mantine/core';
-import { ScheduleEventData } from '@mantine/schedule';
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
 
 interface EventDetailsProps {
   event: ScheduleEventData;
+  resources?: ScheduleResourceData[];
 }
 
-export function EventDetails({ event }: EventDetailsProps) {
+export function EventDetails({ event, resources }: EventDetailsProps) {
+  const resource = resources?.find((r) => r.id === event.resourceId);
+
   return (
     <Stack gap="xs">
       <Text fw={600} size="sm">
         {event.title}
       </Text>
+
+      <Text size="xs" c="dimmed">
+        {dayjs(event.start).format('MMM D, YYYY HH:mm')} – {dayjs(event.end).format('HH:mm')}
+      </Text>
+
+      {resource && (
+        <Text size="xs" c="dimmed">
+          {resource.label}
+        </Text>
+      )}
 
       {event.payload?.description && (
         <Text size="xs" c="dimmed">
@@ -2001,6 +2082,71 @@ function Demo() {
       withEventsDragAndDrop
       onEventDrop={handleEventDrop}
       classNames={{ weekViewBackgroundEvent: classes.backgroundEvent }}
+    />
+  );
+}
+```
+
+
+## Agenda view
+
+Set `withAgenda` prop to display an "Agenda" button in the header. When clicked, it opens
+an `AgendaView` showing events for the current week as a list.
+
+```tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { WeekView } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+const startOfWeek = dayjs().startOf('week').add(1, 'day').format('YYYY-MM-DD');
+
+const events = [
+  {
+    id: 'standup',
+    title: 'Morning Standup',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:30:00`,
+    color: 'blue',
+  },
+  {
+    id: 'team-meeting',
+    title: 'Team Meeting',
+    start: `${today} 10:00:00`,
+    end: `${today} 11:30:00`,
+    color: 'green',
+  },
+  {
+    id: 'daily-sync-series',
+    title: 'Daily sync',
+    start: `${dayjs(startOfWeek).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
+    end: `${dayjs(startOfWeek).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
+    color: 'grape',
+    recurrence: {
+      rrule: 'FREQ=DAILY;COUNT=14',
+    },
+  },
+  {
+    id: 'weekly-review-series',
+    title: 'Weekly review',
+    start: `${startOfWeek} 16:00:00`,
+    end: `${startOfWeek} 17:00:00`,
+    color: 'orange',
+    recurrence: {
+      rrule: 'FREQ=WEEKLY;COUNT=8',
+    },
+  },
+];
+
+function Demo() {
+  const [date, setDate] = useState(today);
+
+  return (
+    <WeekView
+      date={date}
+      onDateChange={setDate}
+      events={events}
+      withAgenda
     />
   );
 }
@@ -2476,6 +2622,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | weekLabelFormat | string \| ((date: string) => string) | - | Format for week label |
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names. |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
+| withAgenda | boolean | - | If set, displays an Agenda button in the header that opens an agenda list view |
 | withAllDaySlots | boolean | - | If set, displays all-day slots at the top of the view |
 | withCurrentTimeBubble | boolean | - | If set, the time indicator displays the current time in the bubble |
 | withCurrentTimeIndicator | boolean | - | If set, displays a line indicating the current time |
@@ -2483,6 +2630,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | withEventResize | boolean | - | If true, events can be resized by dragging their edges |
 | withEventsDragAndDrop | boolean | - | If true, events can be dragged and dropped |
 | withHeader | boolean | - | If set, the header is displayed |
+| withSubHourGridLines | boolean | - | If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals |
 | withWeekNumber | boolean | - | If set, the week number is displayed at the top left corner |
 | withWeekendDays | boolean | - | If set to false, weekend days are hidden |
 
@@ -2528,6 +2676,18 @@ WeekView component supports Styles API. With Styles API, you can customize style
 | currentTimeIndicator | .mantine-WeekView-currentTimeIndicator | Current time indicator container, part of CurrentTimeIndicator |
 | currentTimeIndicatorLine | .mantine-WeekView-currentTimeIndicatorLine | Current time indicator line, part of CurrentTimeIndicator |
 | currentTimeIndicatorThumb | .mantine-WeekView-currentTimeIndicatorThumb | Current time indicator thumb, part of CurrentTimeIndicator |
+| agendaView | .mantine-WeekView-agendaView | AgendaView root element, shown when agenda is open |
+| agendaViewHeader | .mantine-WeekView-agendaViewHeader | AgendaView header container |
+| agendaViewHeaderLabel | .mantine-WeekView-agendaViewHeaderLabel | AgendaView date range label |
+| agendaViewBody | .mantine-WeekView-agendaViewBody | AgendaView body container |
+| agendaViewDateGroup | .mantine-WeekView-agendaViewDateGroup | AgendaView date group container |
+| agendaViewDateHeader | .mantine-WeekView-agendaViewDateHeader | AgendaView date header text |
+| agendaViewEvent | .mantine-WeekView-agendaViewEvent | AgendaView event item button |
+| agendaViewEventBody | .mantine-WeekView-agendaViewEventBody | AgendaView event body container |
+| agendaViewEventColor | .mantine-WeekView-agendaViewEventColor | AgendaView event color indicator |
+| agendaViewEventTitle | .mantine-WeekView-agendaViewEventTitle | AgendaView event title text |
+| agendaViewEventTime | .mantine-WeekView-agendaViewEventTime | AgendaView event time label |
+| agendaViewNoEvents | .mantine-WeekView-agendaViewNoEvents | AgendaView no events message |
 
 **WeekView CSS variables**
 

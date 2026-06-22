@@ -1,0 +1,110 @@
+{
+  "id": "core-data-list",
+  "name": "DataList",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/data-list",
+  "description": "Display label-value pairs as a description list",
+  "propsCount": 6,
+  "llmUrl": "https://mantine.dev/llms/core-data-list.md",
+  "componentDataUrl": "/mcp/components/core-data-list.json",
+  "searchText": "datalist display label-value pairs as a description list @mantine/core /core/data-list children gap labelwidth orientation size withdivider",
+  "source": "@mantine/core/src/components/DataList/DataList.tsx",
+  "docs": "core/data-list.mdx",
+  "markdown": "# DataList\nPackage: @mantine/core\nImport: import { DataList } from '@mantine/core';\nDescription: Display label-value pairs as a description list\n\n## Usage\n\n`DataList` component renders a description list (`dl`) element with label-value pairs.\nIt uses semantic `dt` and `dd` HTML elements.\n\n```tsx\nimport { DataList } from '@mantine/core';\n\nconst data = [\n  { label: 'Name', value: 'John Doe' },\n  { label: 'Email', value: 'john@example.com' },\n  { label: 'Role', value: 'Software Engineer' },\n  { label: 'Location', value: 'San Francisco, CA' },\n];\n\nfunction Demo() {\n  return (\n    <DataList size=\"md\" orientation=\"vertical\" withDivider={false}>\n      {data.map((item) => (\n        <DataList.Item key={item.label}>\n          <DataList.ItemLabel>{item.label}</DataList.ItemLabel>\n          <DataList.ItemValue>{item.value}</DataList.ItemValue>\n        </DataList.Item>\n      ))}\n    </DataList>\n  );\n}\n```\n\n\n## With divider\n\nSet `withDivider` prop to add a border between items:\n\n```tsx\nimport { DataList } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <DataList withDivider>\n      <DataList.Item>\n        <DataList.ItemLabel>Name</DataList.ItemLabel>\n        <DataList.ItemValue>John Doe</DataList.ItemValue>\n      </DataList.Item>\n      <DataList.Item>\n        <DataList.ItemLabel>Email</DataList.ItemLabel>\n        <DataList.ItemValue>john@example.com</DataList.ItemValue>\n      </DataList.Item>\n      <DataList.Item>\n        <DataList.ItemLabel>Role</DataList.ItemLabel>\n        <DataList.ItemValue>Software Engineer</DataList.ItemValue>\n      </DataList.Item>\n    </DataList>\n  );\n}\n```\n\n\n## Vertical orientation\n\nSet `orientation=\"vertical\"` to stack label on top of value within each item:\n\n```tsx\nimport { DataList } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <DataList orientation=\"vertical\" withDivider>\n      <DataList.Item>\n        <DataList.ItemLabel>Name</DataList.ItemLabel>\n        <DataList.ItemValue>John Doe</DataList.ItemValue>\n      </DataList.Item>\n      <DataList.Item>\n        <DataList.ItemLabel>Email</DataList.ItemLabel>\n        <DataList.ItemValue>john@example.com</DataList.ItemValue>\n      </DataList.Item>\n      <DataList.Item>\n        <DataList.ItemLabel>Role</DataList.ItemLabel>\n        <DataList.ItemValue>Software Engineer</DataList.ItemValue>\n      </DataList.Item>\n    </DataList>\n  );\n}\n```\n\n\n\n#### Props\n\n**DataList props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | DataList.Item components |\n| gap | MantineSpacing | - | Key of `theme.spacing` or any valid CSS value to set gap between items |\n| labelWidth | MinWidth<string \\| number> | - | Controls min-width of the label (dt) element, any valid CSS value |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Controls arrangement of label and value within each item. `horizontal` renders label and value side by side, `vertical` stacks label on top of value |\n| size | MantineSize | - | Controls `font-size` and `line-height` |\n| withDivider | boolean | - | Adds border between items |\n\n\n#### Styles API\n\nDataList component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**DataList selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-DataList-root | Root `dl` element |\n| item | .mantine-DataList-item | DataList.Item root element |\n| itemLabel | .mantine-DataList-itemLabel | DataList.ItemLabel `dt` element |\n| itemValue | .mantine-DataList-itemValue | DataList.ItemValue `dd` element |\n\n**DataList CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --data-list-fz | Controls `font-size` |\n| root | --data-list-lh | Controls `line-height` |\n| root | --data-list-gap | Controls gap between items |\n| root | --data-list-label-width | Controls `min-width` of `DataList.ItemLabel` |\n\n**DataList data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-orientation | - | Value of `orientation` prop |\n| root | data-with-divider | `withDivider` prop is set | - |\n",
+  "props": [
+    {
+      "name": "children",
+      "description": "DataList.Item components",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "DataList"
+    },
+    {
+      "name": "gap",
+      "description": "Key of <code>theme.spacing</code> or any valid CSS value to set gap between items",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSpacing"
+      },
+      "sourceComponent": "DataList"
+    },
+    {
+      "name": "labelWidth",
+      "description": "Controls min-width of the label (dt) element, any valid CSS value",
+      "required": false,
+      "defaultValue": "'120px'",
+      "type": {
+        "name": "MinWidth<string | number>"
+      },
+      "sourceComponent": "DataList"
+    },
+    {
+      "name": "orientation",
+      "description": "Controls arrangement of label and value within each item. <code>horizontal</code> renders label and value side by side, <code>vertical</code> stacks label on top of value",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "DataList"
+    },
+    {
+      "name": "size",
+      "description": "Controls <code>font-size</code> and <code>line-height</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "DataList"
+    },
+    {
+      "name": "withDivider",
+      "description": "Adds border between items",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "DataList"
+    }
+  ]
+}

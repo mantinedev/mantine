@@ -356,6 +356,8 @@ function GoodLabel() {
 | readOnly | boolean | - | If set, value cannot be changed |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | size | MantineSize | - | Controls size of the `Input.Wrapper` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | Primitive \| null | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | wrapperProps | React.ComponentProps<"div"> | - | Props passed down to the `Input.Wrapper` |
@@ -433,6 +435,7 @@ Radio component supports Styles API. With Styles API, you can customize styles o
 | required | .mantine-RadioGroup-required | Required asterisk element, rendered inside label |
 | description | .mantine-RadioGroup-description | Description element |
 | error | .mantine-RadioGroup-error | Error element |
+| success | .mantine-RadioGroup-success | Success element |
 
 **Radio.Indicator selectors**
 

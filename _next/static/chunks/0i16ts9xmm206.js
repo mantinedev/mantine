@@ -1,0 +1,43 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,648863,e=>{"use strict";var a=Object.defineProperty;e.s(["__exportAll",0,(e,t)=>{let r={};for(var n in e)a(r,n,{get:e[n],enumerable:!0});return t||a(r,Symbol.toStringTag,{value:"Module"}),r}])},823439,e=>{"use strict";var a=e.i(191788),t=e.i(171481);let r=new Map([["bold",a.createElement(a.Fragment,null,a.createElement("path",{d:"M216,48H180V36A28,28,0,0,0,152,8H104A28,28,0,0,0,76,36V48H40a12,12,0,0,0,0,24h4V208a20,20,0,0,0,20,20H192a20,20,0,0,0,20-20V72h4a12,12,0,0,0,0-24ZM100,36a4,4,0,0,1,4-4h48a4,4,0,0,1,4,4V48H100Zm88,168H68V72H188ZM116,104v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Zm48,0v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Z"}))],["duotone",a.createElement(a.Fragment,null,a.createElement("path",{d:"M200,56V208a8,8,0,0,1-8,8H64a8,8,0,0,1-8-8V56Z",opacity:"0.2"}),a.createElement("path",{d:"M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"}))],["fill",a.createElement(a.Fragment,null,a.createElement("path",{d:"M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM112,168a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm0-120H96V40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8Z"}))],["light",a.createElement(a.Fragment,null,a.createElement("path",{d:"M216,50H174V40a22,22,0,0,0-22-22H104A22,22,0,0,0,82,40V50H40a6,6,0,0,0,0,12H50V208a14,14,0,0,0,14,14H192a14,14,0,0,0,14-14V62h10a6,6,0,0,0,0-12ZM94,40a10,10,0,0,1,10-10h48a10,10,0,0,1,10,10V50H94ZM194,208a2,2,0,0,1-2,2H64a2,2,0,0,1-2-2V62H194ZM110,104v64a6,6,0,0,1-12,0V104a6,6,0,0,1,12,0Zm48,0v64a6,6,0,0,1-12,0V104a6,6,0,0,1,12,0Z"}))],["regular",a.createElement(a.Fragment,null,a.createElement("path",{d:"M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"}))],["thin",a.createElement(a.Fragment,null,a.createElement("path",{d:"M216,52H172V40a20,20,0,0,0-20-20H104A20,20,0,0,0,84,40V52H40a4,4,0,0,0,0,8H52V208a12,12,0,0,0,12,12H192a12,12,0,0,0,12-12V60h12a4,4,0,0,0,0-8ZM92,40a12,12,0,0,1,12-12h48a12,12,0,0,1,12,12V52H92ZM196,208a4,4,0,0,1-4,4H64a4,4,0,0,1-4-4V60H196ZM108,104v64a4,4,0,0,1-8,0V104a4,4,0,0,1,8,0Zm48,0v64a4,4,0,0,1-8,0V104a4,4,0,0,1,8,0Z"}))]]),n=a.forwardRef((e,n)=>a.createElement(t.default,{ref:n,...e,weights:r}));n.displayName="TrashIcon",e.s(["TrashIcon",0,n],823439)},37930,e=>{"use strict";var a=e.i(191788),t=e.i(171481);let r=new Map([["bold",a.createElement(a.Fragment,null,a.createElement("path",{d:"M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z"}))],["duotone",a.createElement(a.Fragment,null,a.createElement("path",{d:"M216,56V200a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V56A16,16,0,0,1,56,40H200A16,16,0,0,1,216,56Z",opacity:"0.2"}),a.createElement("path",{d:"M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"}))],["fill",a.createElement(a.Fragment,null,a.createElement("path",{d:"M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM184,136H136v48a8,8,0,0,1-16,0V136H72a8,8,0,0,1,0-16h48V72a8,8,0,0,1,16,0v48h48a8,8,0,0,1,0,16Z"}))],["light",a.createElement(a.Fragment,null,a.createElement("path",{d:"M222,128a6,6,0,0,1-6,6H134v82a6,6,0,0,1-12,0V134H40a6,6,0,0,1,0-12h82V40a6,6,0,0,1,12,0v82h82A6,6,0,0,1,222,128Z"}))],["regular",a.createElement(a.Fragment,null,a.createElement("path",{d:"M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"}))],["thin",a.createElement(a.Fragment,null,a.createElement("path",{d:"M220,128a4,4,0,0,1-4,4H132v84a4,4,0,0,1-8,0V132H40a4,4,0,0,1,0-8h84V40a4,4,0,0,1,8,0v84h84A4,4,0,0,1,220,128Z"}))]]),n=a.forwardRef((e,n)=>a.createElement(t.default,{ref:n,...e,weights:r}));n.displayName="PlusIcon",e.s(["PlusIcon",0,n],37930)},986470,e=>{"use strict";var a=e.i(648863),t=e.i(37930),r=e.i(823439),n=e.i(658109),l=e.i(725695),o=e.i(245745),c=e.i(391398),s=e.i(266181),i=e.i(191788);let h={type:"code",component:function(){var e;let a,h,d=(e=[["/hooks/use-media-query",4124],["/hooks/use-clipboard",8341],["/hooks/use-fetch",9001]],a=(0,i.useRef)(new Map(e)),h=(0,s.useForceUpdate)(),a.current.set=(...e)=>(Map.prototype.set.apply(a.current,e),h(),a.current),a.current.clear=(...e)=>{Map.prototype.clear.apply(a.current,e),h()},a.current.delete=(...e)=>{let t=Map.prototype.delete.apply(a.current,e);return h(),t},a.current),u=Array.from(d.entries()).map(([e,a])=>(0,c.jsxs)(o.Table.Tr,{children:[(0,c.jsx)(o.Table.Td,{children:e}),(0,c.jsx)(o.Table.Td,{children:a}),(0,c.jsx)(o.Table.Td,{children:(0,c.jsxs)(l.Group,{children:[(0,c.jsx)(n.ActionIcon,{variant:"default",onClick:()=>d.set(e,a+1),fw:500,children:(0,c.jsx)(t.PlusIcon,{size:18})}),(0,c.jsx)(n.ActionIcon,{variant:"default",onClick:()=>d.delete(e),c:"red",children:(0,c.jsx)(r.TrashIcon,{size:18})})]})})]},e));return(0,c.jsxs)(o.Table,{layout:"fixed",children:[(0,c.jsx)(o.Table.Thead,{children:(0,c.jsxs)(o.Table.Tr,{children:[(0,c.jsx)(o.Table.Th,{children:"Page"}),(0,c.jsx)(o.Table.Th,{children:"Views last month"}),(0,c.jsx)(o.Table.Th,{})]})}),(0,c.jsx)(o.Table.Tbody,{children:u})]})},code:`
+import { PlusIcon, TrashIcon } from '@phosphor-icons/react';
+import { ActionIcon, Group, Table } from '@mantine/core';
+import { useMap } from '@mantine/hooks';
+
+function Demo() {
+  const map = useMap([
+    ['/hooks/use-media-query', 4124],
+    ['/hooks/use-clipboard', 8341],
+    ['/hooks/use-fetch', 9001],
+  ]);
+
+  const rows = Array.from(map.entries()).map(([key, value]) => (
+    <Table.Tr key={key}>
+      <Table.Td>{key}</Table.Td>
+      <Table.Td>{value}</Table.Td>
+      <Table.Td>
+        <Group>
+          <ActionIcon variant="default" onClick={() => map.set(key, value + 1)} fw={500}>
+            <PlusIcon size={18} />
+          </ActionIcon>
+          <ActionIcon variant="default" onClick={() => map.delete(key)} c="red">
+            <TrashIcon size={18} />
+          </ActionIcon>
+        </Group>
+      </Table.Td>
+    </Table.Tr>
+  ));
+
+  return (
+    <Table layout="fixed">
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Page</Table.Th>
+          <Table.Th>Views last month</Table.Th>
+          <Table.Th />
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
+    </Table>
+  );
+}
+`};var d=(0,a.__exportAll)({usage:()=>h});e.s(["UseMapDemos",0,d],986470)},458751,e=>{"use strict";var a=e.i(391398),t=e.i(38856),r=e.i(986470);e.i(603441);var n=e.i(62558);e.i(457450);var l=e.i(418026);let o=(0,n.Layout)(l.MDX_DATA.useMap);function c(e){let n={a:"a",code:"code",h2:"h2",p:"p",pre:"pre",...(0,t.useMDXComponents)(),...e.components},{Demo:l}=n;return l||function(e,a){throw Error("Expected "+(a?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,a.jsxs)(a.Fragment,{children:[(0,a.jsx)(n.h2,{id:"usage",children:"Usage"}),"\n",(0,a.jsxs)(n.p,{children:["The ",(0,a.jsx)(n.code,{children:"useMap"})," hook returns a ",(0,a.jsx)(n.a,{href:"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",children:"Map"}),"\nobject that can be used as React state – the ",(0,a.jsx)(n.code,{children:"set"}),", ",(0,a.jsx)(n.code,{children:"clear"}),", and ",(0,a.jsx)(n.code,{children:"delete"})," methods update state and trigger rerender."]}),"\n",(0,a.jsx)(l,{data:r.UseMapDemos.usage}),"\n",(0,a.jsx)(n.h2,{id:"definition",children:"Definition"}),"\n",(0,a.jsx)(n.pre,{children:(0,a.jsx)(n.code,{className:"language-tsx",children:"function useMap<T, V>(initialState?: [T, V][]): Map<T, V>;\n"})})]})}e.s(["default",0,function(e={}){return(0,a.jsx)(o,{...e,children:(0,a.jsx)(c,{...e})})}])},728219,(e,a,t)=>{let r="/hooks/use-map";(window.__NEXT_P=window.__NEXT_P||[]).push([r,()=>e.r(458751)]),a.hot&&a.hot.dispose(function(){window.__NEXT_P.push([r])})},648761,e=>{e.v(a=>Promise.all(["static/chunks/22379_btw709h.js"].map(a=>e.l(a))).then(()=>a(493594)))},828805,e=>{e.v(a=>Promise.all(["static/chunks/4558t_0mgc5j4.js"].map(a=>e.l(a))).then(()=>a(879466)))}]);

@@ -72,6 +72,20 @@ function Demo() {
 ```
 
 
+## One time code
+
+Some operating systems expose the last received SMS code to be used by applications like your keyboard.
+If the current form input asks for this code, your keyboard adapts and proposes the code as a keyboard suggestion.
+The `oneTimeCode` prop makes your input set `autocomplete="one-time-code"` which allows using that feature.
+
+```tsx
+import { PinInput } from '@mantine/core';
+
+function OneTimeCodeInput() {
+  return <PinInput oneTimeCode />;
+}
+```
+
 ## Accessibility
 
 Inputs do not have associated labels. Set `aria-label` to make the component visible to screen readers:
@@ -115,6 +129,7 @@ function Accessibility() {
 | readOnly | boolean | - | If set, the user cannot edit the value |
 | rootRef | Ref<HTMLDivElement> | - | Assigns ref of the root element |
 | size | MantineSize | - | Controls inputs `width` and `height` |
+| success | boolean | - | Applies success styles to all inputs |
 | type | "number" \| RegExp \| "alphanumeric" | - | Determines which values can be entered |
 | value | string | - | Controlled component value |
 

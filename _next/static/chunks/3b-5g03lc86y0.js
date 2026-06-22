@@ -1,0 +1,20 @@
+__turbopack_load_page_chunks__("/form/use-form", [
+  "static/chunks/0-mxf43lyujuq.js",
+  "static/chunks/27g9sg9-mamuz.js",
+  "static/chunks/0f6me72kaa9x7.js",
+  "static/chunks/3u33zrj68_w5k.js",
+  "static/chunks/0gkb9_s__phlq.js",
+  "static/chunks/2zschqjroygok.js",
+  "static/chunks/0pswdog7ut0bu.js",
+  "static/chunks/19cgrlgqa71y7.js",
+  "static/chunks/050l3md8cosel.js",
+  "static/chunks/1vg0-viyv_2i2.js",
+  "static/chunks/0pyr1xt0h0btg.js",
+  "static/chunks/0si_cckotainz.js",
+  "static/chunks/2cv0djuiga-ag.js",
+  "static/chunks/42-ao0bzjkvw9.js",
+  "static/chunks/3ccec4kk3_4if.css",
+  "static/chunks/21hvpvux84e_7.css",
+  "static/chunks/0-7wdzp76gmz_.css",
+  "static/chunks/turbopack-0mtmbxk2bgcbz.js"
+])

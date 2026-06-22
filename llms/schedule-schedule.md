@@ -294,6 +294,74 @@ The following props are shared across all views:
 These props are automatically passed to all views. For view-specific customization, use the
 `dayViewProps`, `weekViewProps`, `monthViewProps`, and `yearViewProps` props.
 
+## Agenda view
+
+Set `withAgenda` prop to display an "Agenda" button in the header of DayView, WeekView
+and MonthView. When clicked, it opens an `AgendaView` showing events for the currently
+visible date range.
+
+```tsx
+import dayjs from 'dayjs';
+import { Schedule } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
+
+const events = [
+  {
+    id: 'standup',
+    title: 'Morning Standup',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:30:00`,
+    color: 'blue',
+  },
+  {
+    id: 'team-meeting',
+    title: 'Team Meeting',
+    start: `${today} 10:00:00`,
+    end: `${today} 11:30:00`,
+    color: 'green',
+  },
+  {
+    id: 'code-review',
+    title: 'Code Review',
+    start: `${tomorrow} 14:00:00`,
+    end: `${tomorrow} 15:00:00`,
+    color: 'violet',
+  },
+  {
+    id: 'daily-sync-series',
+    title: 'Daily sync',
+    start: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
+    end: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
+    color: 'grape',
+    recurrence: {
+      rrule: 'FREQ=DAILY;COUNT=14',
+    },
+  },
+  {
+    id: 'weekly-review-series',
+    title: 'Weekly review',
+    start: `${dayjs(today).startOf('week').format('YYYY-MM-DD')} 16:00:00`,
+    end: `${dayjs(today).startOf('week').format('YYYY-MM-DD')} 17:00:00`,
+    color: 'orange',
+    recurrence: {
+      rrule: 'FREQ=WEEKLY;COUNT=8',
+    },
+  },
+];
+
+function Demo() {
+  return (
+    <Schedule
+      events={events}
+      withAgenda
+    />
+  );
+}
+```
+
+
 ## Drag and drop
 
 Enable event drag and drop by setting `withEventsDragAndDrop` prop. Events can be dragged
@@ -1192,6 +1260,7 @@ For more control over individual views, use the view components directly:
 | renderEventBody | RenderEventBody | - | Custom event body renderer |
 | view | ScheduleViewLevel | - | Current view level (controlled) |
 | weekViewProps | Partial<Omit<WeekViewProps, ScheduleCommonProps>> | - | Props specific to WeekView (includes `startTime`, `endTime`, `intervalMinutes`, etc.) |
+| withAgenda | boolean | - | If set, displays an Agenda button in the header of DayView, WeekView and MonthView |
 | withDragSlotSelect | boolean | - | If set, enables drag-to-select slot ranges |
 | withEventResize | boolean | - | If true, events can be resized by dragging their edges |
 | withEventsDragAndDrop | boolean | - | Enable drag and drop for events |
@@ -1305,3 +1374,15 @@ Schedule component supports Styles API. With Styles API, you can customize style
 | currentTimeIndicatorLine | .mantine-Schedule-currentTimeIndicatorLine | CurrentTimeIndicator line |
 | currentTimeIndicatorThumb | .mantine-Schedule-currentTimeIndicatorThumb | CurrentTimeIndicator thumb |
 | currentTimeIndicatorTimeBubble | .mantine-Schedule-currentTimeIndicatorTimeBubble | CurrentTimeIndicator time bubble |
+| agendaView | .mantine-Schedule-agendaView | AgendaView root element, shown when agenda is open |
+| agendaViewHeader | .mantine-Schedule-agendaViewHeader | AgendaView header container |
+| agendaViewHeaderLabel | .mantine-Schedule-agendaViewHeaderLabel | AgendaView date range label |
+| agendaViewBody | .mantine-Schedule-agendaViewBody | AgendaView body container |
+| agendaViewDateGroup | .mantine-Schedule-agendaViewDateGroup | AgendaView date group container |
+| agendaViewDateHeader | .mantine-Schedule-agendaViewDateHeader | AgendaView date header text |
+| agendaViewEvent | .mantine-Schedule-agendaViewEvent | AgendaView event item button |
+| agendaViewEventBody | .mantine-Schedule-agendaViewEventBody | AgendaView event body container |
+| agendaViewEventColor | .mantine-Schedule-agendaViewEventColor | AgendaView event color indicator |
+| agendaViewEventTitle | .mantine-Schedule-agendaViewEventTitle | AgendaView event title text |
+| agendaViewEventTime | .mantine-Schedule-agendaViewEventTime | AgendaView event time label |
+| agendaViewNoEvents | .mantine-Schedule-agendaViewNoEvents | AgendaView no events message |

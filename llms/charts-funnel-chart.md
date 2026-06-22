@@ -26,6 +26,33 @@ export const data = [
 ```
 
 
+## Legend
+
+To display the legend, set the `withLegend` prop. The legend displays the name and color
+of each segment. Hover over a legend item to highlight the corresponding segment:
+
+```tsx
+// Demo.tsx
+import { FunnelChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <FunnelChart data={data} withLegend />;
+}
+
+// data.ts
+export const data = [
+  { name: 'USA', value: 400, color: 'indigo.6' },
+  { name: 'India', value: 300, color: 'yellow.6' },
+  { name: 'Japan', value: 100, color: 'teal.6' },
+  { name: 'Other', value: 200, color: 'gray.6' },
+];
+```
+
+
+You can pass props down to the recharts `Legend` component with the `legendProps` prop.
+For example, set `legendProps={{ verticalAlign: 'top' }}` to display the legend above the chart.
+
 ## Segments labels
 
 Set the `withLabels` prop to display labels next to each segment.
@@ -245,6 +272,7 @@ export const data = [
 | funnelProps | Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Pie` component |
 | labelColor | MantineColor | - | Controls text color of all labels |
 | labelsPosition | "left" \| "right" \| "inside" | - | Controls labels position relative to the segment |
+| legendProps | RechartsProps | - | Props passed down to recharts `Legend` component |
 | size | number | - | Controls chart width and height |
 | strokeColor | MantineColor | - | Controls color of the segments stroke, by default depends on color scheme |
 | strokeWidth | number | - | Controls width of segments stroke |
@@ -253,6 +281,7 @@ export const data = [
 | tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
 | valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and labels |
 | withLabels | boolean | - | Determines whether each segment should have associated label |
+| withLegend | boolean | - | Determines whether the legend should be displayed |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed when a section is hovered |
 
 
@@ -265,6 +294,10 @@ FunnelChart component supports Styles API. With Styles API, you can customize st
 | Selector | Static selector | Description |
 |----------|----------------|-------------|
 | root | .mantine-FunnelChart-root | Root element |
+| legend | .mantine-FunnelChart-legend | Legend root element |
+| legendItem | .mantine-FunnelChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-FunnelChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-FunnelChart-legendItemName | Legend item name |
 | tooltip | .mantine-FunnelChart-tooltip | Tooltip root element |
 | tooltipBody | .mantine-FunnelChart-tooltipBody | Tooltip wrapper around all items |
 | tooltipItem | .mantine-FunnelChart-tooltipItem | Tooltip item representing data series |

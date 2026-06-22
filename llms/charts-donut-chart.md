@@ -26,6 +26,33 @@ export const data = [
 ```
 
 
+## Legend
+
+To display the legend, set the `withLegend` prop. The legend displays the name and color
+of each segment. Hover over a legend item to highlight the corresponding segment:
+
+```tsx
+// Demo.tsx
+import { DonutChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <DonutChart data={data} withLegend />;
+}
+
+// data.ts
+export const data = [
+  { name: 'USA', value: 400, color: 'indigo.6' },
+  { name: 'India', value: 300, color: 'yellow.6' },
+  { name: 'Japan', value: 100, color: 'teal.6' },
+  { name: 'Other', value: 200, color: 'gray.6' },
+];
+```
+
+
+You can pass props down to the recharts `Legend` component with the `legendProps` prop.
+For example, set `legendProps={{ verticalAlign: 'top' }}` to display the legend above the chart.
+
 ## Segments labels
 
 Set the `withLabels` prop to display labels next to each segment:
@@ -320,6 +347,7 @@ export const data = [
 | endAngle | number | - | Controls angle at which charts ends. Set to `0` to render the chart as semicircle. |
 | labelColor | MantineColor | - | Controls text color of all labels, by default depends on color scheme |
 | labelsType | "value" \| "name" \| "percent" | - | Type of labels to display, `'value'` by default |
+| legendProps | RechartsProps | - | Props passed down to recharts `Legend` component |
 | paddingAngle | number | - | Controls padding between segments |
 | pieChartProps | (PolarChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `PieChart` component |
 | pieProps | Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Pie` component |
@@ -334,6 +362,7 @@ export const data = [
 | valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |
 | withLabels | boolean | - | Determines whether each segment should have associated label |
 | withLabelsLine | boolean | - | Determines whether segments labels should have lines that connect the segment with the label |
+| withLegend | boolean | - | Determines whether the legend should be displayed |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed when one of the section is hovered |
 
 
@@ -347,6 +376,10 @@ DonutChart component supports Styles API. With Styles API, you can customize sty
 |----------|----------------|-------------|
 | root | .mantine-DonutChart-root | Root element |
 | label | .mantine-DonutChart-label | Chart label, controlled by `chartLabel` prop |
+| legend | .mantine-DonutChart-legend | Legend root element |
+| legendItem | .mantine-DonutChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-DonutChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-DonutChart-legendItemName | Legend item name |
 | tooltip | .mantine-DonutChart-tooltip | Tooltip root element |
 | tooltipBody | .mantine-DonutChart-tooltipBody | Tooltip wrapper around all items |
 | tooltipItem | .mantine-DonutChart-tooltipItem | Tooltip item representing data series |

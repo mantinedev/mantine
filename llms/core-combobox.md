@@ -1592,10 +1592,12 @@ export interface UseVirtualizedComboboxOptions {
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | rootRef | Ref<HTMLDivElement> | - | Root element ref |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Determines whether the input should have success styles |
 | withAria | boolean | - | Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. |
 | withAriaAttributes | boolean | - | if set, the search input has `aria-` attribute |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withKeyboardNavigation | boolean | - | if set, the search input handles keyboard navigation |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element of the `Input` component |
 
 **Combobox..Empty props**
@@ -1659,6 +1661,43 @@ export interface UseVirtualizedComboboxOptions {
 |------|------|---------|-------------|
 | value | Primitive \| Primitive[] \| null | required | Input value |
 | valuesDivider | string | - | Divider character to join array values into string |
+
+**Combobox.Popover props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| allowDeselect | boolean | - | Allows deselecting the selected option by clicking it (only for single mode) |
+| checkIconPosition | "left" \| "right" | - | Position of the check icon relative to the option label |
+| children | React.ReactNode | - | Content of the component |
+| comboboxProps | ComboboxProps | - | Props passed down to Combobox component |
+| data | ComboboxData<Value> | - | Data used to generate options |
+| defaultDropdownOpened | boolean | - | Uncontrolled dropdown initial opened state |
+| defaultSearchValue | string | - | Default search value |
+| defaultValue | Primitive \| Value[] \| null | - | Uncontrolled component default value |
+| dropdownOpened | boolean | - | Controlled dropdown opened state |
+| filter | OptionsFilter<Value> | - | Function based on which items are filtered and sorted |
+| form | string | - | Hidden input form for form submission |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
+| hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input value attribute |
+| limit | number | - | Maximum number of options displayed at a time |
+| maxDropdownHeight | string \| number | - | max-height of the dropdown |
+| multiple | boolean | - | If set, multiple items can be selected at the same time |
+| name | string | - | Hidden input name for form submission |
+| nothingFoundMessage | React.ReactNode | - | Message displayed when no options match the search query or when there is no data |
+| onChange | (value: ComboboxPopoverValue<Multiple, Value>) => void | - | Called when value changes |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onOptionSubmit | (value: Value) => void | - | Called when option is submitted from dropdown with mouse click or Enter key |
+| onSearchChange | (value: string) => void | - | Called when search changes |
+| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem<string>>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
+| scrollAreaProps | ScrollAreaProps | - | Props passed down to the underlying ScrollArea component in the dropdown |
+| searchValue | string | - | Controlled search value |
+| searchable | boolean | - | Allows searching through options |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens |
+| value | Primitive \| Value[] \| null | - | Controlled component value |
+| withAlignedLabels | boolean | - | Aligns unchecked labels with the checked one |
+| withCheckIcon | boolean | - | Displays check icon near the selected option label |
+| withScrollArea | boolean | - | Determines whether the options should be wrapped with ScrollArea.AutoSize |
 
 **Combobox.Option props**
 

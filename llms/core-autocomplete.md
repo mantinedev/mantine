@@ -748,6 +748,33 @@ function Demo() {
 ```
 
 
+## Error state
+
+```tsx
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Autocomplete
+        label="Boolean error"
+        placeholder="Boolean error"
+        error
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+      <Autocomplete
+        mt="md"
+        label="With error message"
+        placeholder="With error message"
+        error="Invalid name"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+    </>
+  );
+}
+```
+
+
 
 #### Props
 
@@ -801,10 +828,13 @@ function Demo() {
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, `false` by default |
 | selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | string | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -825,6 +855,7 @@ Autocomplete component supports Styles API. With Styles API, you can customize s
 | required | .mantine-Autocomplete-required | Required asterisk element, rendered inside label |
 | description | .mantine-Autocomplete-description | Description element |
 | error | .mantine-Autocomplete-error | Error element |
+| success | .mantine-Autocomplete-success | Success element |
 
 **Autocomplete data attributes**
 

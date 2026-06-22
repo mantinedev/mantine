@@ -623,12 +623,15 @@ Keyboard interactions:
 | secondsRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the seconds input |
 | secondsStep | number | - | Number by which seconds are incremented/decremented |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | type | TimePickerType | - | TimePicker type, `'time'` for regular time input, `'duration'` for duration input that allows values greater than 24 hours |
 | value | string | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withDropdown | boolean | - | Determines whether the dropdown with time controls list should be visible when the input has focus |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withSeconds | boolean | - | Determines whether the seconds input should be displayed |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -649,6 +652,7 @@ TimePicker component supports Styles API. With Styles API, you can customize sty
 | required | .mantine-TimePicker-required | Required asterisk element, rendered inside label |
 | description | .mantine-TimePicker-description | Description element |
 | error | .mantine-TimePicker-error | Error element |
+| success | .mantine-TimePicker-success | Success element |
 | control | .mantine-TimePicker-control | Button in the dropdown which is used to select hours/minutes/seconds/am-pm |
 | controlsList | .mantine-TimePicker-controlsList | List of buttons with hours/minutes/seconds/am-pm |
 | controlsListGroup | .mantine-TimePicker-controlsListGroup | Group of controlsLists |

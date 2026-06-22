@@ -568,6 +568,17 @@ function Demo() {
 ```
 
 
+## Success state
+
+```tsx
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return <NumberInput label="Number Input" placeholder="Number Input" success="Looks good!" />;
+}
+```
+
+
 
 #### Props
 
@@ -622,6 +633,8 @@ function Demo() {
 | step | NumberInputNumericType | - | Number by which value will be incremented/decremented with up/down controls and keyboard arrows |
 | stepHoldDelay | number | - | Initial delay in milliseconds before stepping the value. |
 | stepHoldInterval | number \| ((stepCount: number) => number) | - | Interval in milliseconds between value steps when increment/decrement button is held down. Can be a number or a function `(stepCount) => number` for dynamic intervals. Requires `stepHoldDelay` to be set. |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | suffix | string | - | Suffix added after the input value |
 | thousandSeparator | string \| boolean | - | A character used to separate thousands |
 | thousandsGroupStyle | "none" \| "thousand" \| "lakh" \| "wan" | - | Defines the thousand grouping style. 'thousand' (1,000), 'lakh' (1,00,000), 'wan' (1,0000), 'none'. |
@@ -632,6 +645,7 @@ function Demo() {
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withKeyboardEvents | boolean | - | If set, up/down keyboard events increment/decrement value |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -652,6 +666,7 @@ NumberInput component supports Styles API. With Styles API, you can customize st
 | required | .mantine-NumberInput-required | Required asterisk element, rendered inside label |
 | description | .mantine-NumberInput-description | Description element |
 | error | .mantine-NumberInput-error | Error element |
+| success | .mantine-NumberInput-success | Success element |
 | controls | .mantine-NumberInput-controls | Increment and decrement buttons wrapper |
 | control | .mantine-NumberInput-control | Increment and decrement buttons |
 

@@ -420,3 +420,4 @@ Switch component supports Styles API. With Styles API, you can customize styles 
 | required | .mantine-SwitchGroup-required | Required asterisk element, rendered inside label |
 | description | .mantine-SwitchGroup-description | Description element |
 | error | .mantine-SwitchGroup-error | Error element |
+| success | .mantine-SwitchGroup-success | Success element |

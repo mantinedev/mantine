@@ -315,6 +315,72 @@ const events = [
 ```
 
 
+## Sub-hour grid lines
+
+When `intervalMinutes` is smaller than `60`, set `withSubHourGridLines={false}` to display only one
+grid line per hour while keeping the smaller interval for creating and resizing events. This is useful
+to achieve a Google Calendar like layout: events snap to 15 or 30 minutes increments, but the grid
+stays clean with hourly lines.
+
+```tsx
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import { DayView, ScheduleEventData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+
+const initialEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Morning Standup',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:30:00`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Team Meeting',
+    start: `${today} 11:15:00`,
+    end: `${today} 12:00:00`,
+    color: 'green',
+  },
+  {
+    id: 3,
+    title: 'Code Review',
+    start: `${today} 14:00:00`,
+    end: `${today} 14:45:00`,
+    color: 'violet',
+  },
+];
+
+function Demo() {
+  const [events, setEvents] = useState(initialEvents);
+
+  const handleEventResize = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
+    setEvents((prev) =>
+      prev.map((event) =>
+        event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
+      )
+    );
+  };
+
+  // Events snap to 15 minutes increments, but only one grid line per hour is displayed
+  return (
+    <DayView
+      date={new Date()}
+      events={events}
+      startTime="08:00:00"
+      endTime="18:00:00"
+      intervalMinutes={15}
+      withSubHourGridLines={false}
+      withEventResize
+      onEventResize={handleEventResize}
+    />
+  );
+}
+```
+
+
 ## All-day events
 
 Events that span the entire day are displayed in a dedicated all-day section at the top.
@@ -1827,19 +1893,33 @@ function Demo() {
 }
 
 // EventDetails.tsx
+import dayjs from 'dayjs';
 import { Badge, Group, Stack, Text } from '@mantine/core';
-import { ScheduleEventData } from '@mantine/schedule';
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
 
 interface EventDetailsProps {
   event: ScheduleEventData;
+  resources?: ScheduleResourceData[];
 }
 
-export function EventDetails({ event }: EventDetailsProps) {
+export function EventDetails({ event, resources }: EventDetailsProps) {
+  const resource = resources?.find((r) => r.id === event.resourceId);
+
   return (
     <Stack gap="xs">
       <Text fw={600} size="sm">
         {event.title}
       </Text>
+
+      <Text size="xs" c="dimmed">
+        {dayjs(event.start).format('MMM D, YYYY HH:mm')} – {dayjs(event.end).format('HH:mm')}
+      </Text>
+
+      {resource && (
+        <Text size="xs" c="dimmed">
+          {resource.label}
+        </Text>
+      )}
 
       {event.payload?.description && (
         <Text size="xs" c="dimmed">
@@ -2079,6 +2159,70 @@ function Demo() {
       withEventsDragAndDrop
       onEventDrop={handleEventDrop}
       classNames={{ dayViewBackgroundEvent: classes.backgroundEvent }}
+    />
+  );
+}
+```
+
+
+## Agenda view
+
+Set `withAgenda` prop to display an "Agenda" button in the header. When clicked, it opens
+an `AgendaView` showing events for the current day as a list.
+
+```tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { DayView } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+
+const events = [
+  {
+    id: 'standup',
+    title: 'Morning Standup',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:30:00`,
+    color: 'blue',
+  },
+  {
+    id: 'team-meeting',
+    title: 'Team Meeting',
+    start: `${today} 10:00:00`,
+    end: `${today} 11:30:00`,
+    color: 'green',
+  },
+  {
+    id: 'daily-sync-series',
+    title: 'Daily sync',
+    start: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
+    end: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
+    color: 'grape',
+    recurrence: {
+      rrule: 'FREQ=DAILY;COUNT=10',
+    },
+  },
+  {
+    id: 'weekly-review-series',
+    title: 'Weekly review',
+    start: `${dayjs(today).startOf('week').format('YYYY-MM-DD')} 16:00:00`,
+    end: `${dayjs(today).startOf('week').format('YYYY-MM-DD')} 17:00:00`,
+    color: 'orange',
+    recurrence: {
+      rrule: 'FREQ=WEEKLY;COUNT=8',
+    },
+  },
+];
+
+function Demo() {
+  const [date, setDate] = useState(today);
+
+  return (
+    <DayView
+      date={date}
+      onDateChange={setDate}
+      events={events}
+      withAgenda
     />
   );
 }
@@ -2866,6 +3010,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | startTime | string | - | Time slots start time, in `HH:mm:ss` format |
 | todayControlProps | React.ComponentProps<'button'> | - | Props passed to today control |
 | viewSelectProps | Partial<ViewSelectProps> & DataAttributes | - | Props passed to view level select |
+| withAgenda | boolean | - | If set, displays an Agenda button in the header that opens an agenda list view |
 | withAllDaySlot | boolean | - | If set, the all-day slot is displayed below the header |
 | withCurrentTimeBubble | boolean | - | If set, the time indicator displays the current time in the bubble |
 | withCurrentTimeIndicator | boolean | - | If set, displays a line indicating the current time. By default, displayed only for the current day. |
@@ -2873,6 +3018,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | withEventResize | boolean | - | If true, events can be resized by dragging their edges |
 | withEventsDragAndDrop | boolean | - | If true, events can be dragged and dropped |
 | withHeader | boolean | - | If set, the header is displayed |
+| withSubHourGridLines | boolean | - | If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals |
 
 
 #### Styles API
@@ -2906,6 +3052,18 @@ DayView component supports Styles API. With Styles API, you can customize styles
 | currentTimeIndicator | .mantine-DayView-currentTimeIndicator | Current time indicator container, part of CurrentTimeIndicator |
 | currentTimeIndicatorLine | .mantine-DayView-currentTimeIndicatorLine | Current time indicator line, part of CurrentTimeIndicator |
 | currentTimeIndicatorThumb | .mantine-DayView-currentTimeIndicatorThumb | Current time indicator thumb, part of CurrentTimeIndicator |
+| agendaView | .mantine-DayView-agendaView | AgendaView root element, shown when agenda is open |
+| agendaViewHeader | .mantine-DayView-agendaViewHeader | AgendaView header container |
+| agendaViewHeaderLabel | .mantine-DayView-agendaViewHeaderLabel | AgendaView date range label |
+| agendaViewBody | .mantine-DayView-agendaViewBody | AgendaView body container |
+| agendaViewDateGroup | .mantine-DayView-agendaViewDateGroup | AgendaView date group container |
+| agendaViewDateHeader | .mantine-DayView-agendaViewDateHeader | AgendaView date header text |
+| agendaViewEvent | .mantine-DayView-agendaViewEvent | AgendaView event item button |
+| agendaViewEventBody | .mantine-DayView-agendaViewEventBody | AgendaView event body container |
+| agendaViewEventColor | .mantine-DayView-agendaViewEventColor | AgendaView event color indicator |
+| agendaViewEventTitle | .mantine-DayView-agendaViewEventTitle | AgendaView event title text |
+| agendaViewEventTime | .mantine-DayView-agendaViewEventTime | AgendaView event time label |
+| agendaViewNoEvents | .mantine-DayView-agendaViewNoEvents | AgendaView no events message |
 
 **DayView CSS variables**
 

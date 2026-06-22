@@ -155,6 +155,24 @@ function Demo() {
 ```
 
 
+## Success state
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MaskInput
+      label="Phone number"
+      placeholder="(___) ___-____"
+      mask="(999) 999-9999"
+      success="Looks good!"
+    />
+  );
+}
+```
+
+
 ## Reset value
 
 `MaskInput` is uncontrolled internally – setting `value` from a parent will not clear it.
@@ -292,10 +310,13 @@ Prefix a token character with `\` to treat it as a literal:
 | showMaskOnFocus | boolean | - | Show mask placeholder on focus, `true` by default |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
 | slotChar | string \| null | - | Character displayed in unfilled slots, `"_"` by default |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | tokens | Record<string, RegExp> | - | Override or extend the default token map |
 | transform | (char: string) => string | - | Transform each character before validation and insertion |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -316,3 +337,4 @@ MaskInput component supports Styles API. With Styles API, you can customize styl
 | required | .mantine-MaskInput-required | Required asterisk element, rendered inside label |
 | description | .mantine-MaskInput-description | Description element |
 | error | .mantine-MaskInput-error | Error element |
+| success | .mantine-MaskInput-success | Success element |

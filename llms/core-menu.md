@@ -850,6 +850,18 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | withinPortal | boolean | - | Determines whether dropdown should be rendered within the `Portal` |
 | zIndex | string \| number | - | Dropdown `z-index` |
 
+**Menu.bar props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | `Menubar.Menu` components |
+| defaultOpenIndex | number \| null | - | Index of the opened menu for uncontrolled component |
+| loop | boolean | - | If set, arrow key navigation wraps from last to first menu and vice versa |
+| onOpenChange | (index: number \| null) => void | - | Called when the opened menu changes with its index or `null` when all menus are closed |
+| openIndex | number \| null | - | Index of the controlled opened menu, `null` closes all menus |
+| position | FloatingPosition | - | Dropdown position relative to the target element |
+| trigger | "hover" \| "click" | - | Event that opens a menu when none of the menus is opened. `'click'` opens a menu on target click and then switches menus on hover (desktop application pattern), `'hover'` opens a menu when the target is hovered |
+
 **Menu.Item props**
 
 | Prop | Type | Default | Description |
@@ -893,8 +905,10 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | rootRef | Ref<HTMLDivElement> | - | Root element ref |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Determines whether the input should have success styles |
 | withAria | boolean | - | Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element of the `Input` component |
 
 **Menu.CheckboxItem props**
@@ -1059,3 +1073,16 @@ Menu component supports Styles API. With Styles API, you can customize styles of
 | Selector | Attribute | Condition | Value |
 |----------|-----------|-----------|-------|
 | item | data-disabled | `disabled` prop is set on `Menu.Item` | - |
+
+**Menubar selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Menubar-root | Root element with `role="menubar"` |
+| target | .mantine-Menubar-target | `Menubar.Target` top-level trigger button |
+
+**Menubar data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| target | data-expanded | Associated menu is opened | - |

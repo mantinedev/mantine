@@ -1,0 +1,449 @@
+{
+  "id": "schedule-resources-month-view",
+  "name": "ResourcesMonthView",
+  "kind": "component",
+  "package": "@mantine/schedule",
+  "route": "/schedule/resources-month-view",
+  "description": "Month view with resource lanes for scheduling across resources",
+  "propsCount": 42,
+  "llmUrl": "https://mantine.dev/llms/schedule-resources-month-view.md",
+  "componentDataUrl": "/mcp/components/schedule-resources-month-view.json",
+  "searchText": "resourcesmonthview month view with resource lanes for scheduling across resources @mantine/schedule /schedule/resources-month-view candragevent date daywidth events grouplabelwidth groups highlighttoday labels locale maxeventspertimeslot mode monthyearselectprops moreeventsprops nextcontrolprops ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop onexternaleventdrop onslotdragend onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel resources rowheight scrollareaprops startscrolldate todaycontrolprops viewselectprops weekdayformat weekenddays withdragslotselect witheventsdraganddrop withheader withweekenddays",
+  "source": "@mantine/schedule/src/components/ResourcesMonthView/ResourcesMonthView.tsx",
+  "docs": "schedule/resources-month-view.mdx",
+  "markdown": "# ResourcesMonthView\nPackage: @mantine/schedule\nImport: import { ResourcesMonthView } from '@mantine/schedule';\nDescription: Month view with resource lanes for scheduling across resources\n\n## Usage\n\nResourcesMonthView displays a month grid where each day cell contains resource lanes.\nEvents are shown within their resource's lane, making it easy to see resource utilization\nacross the month.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Static mode\n\nSet `mode=\"static\"` to disable all interactions.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      mode=\"static\"\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Drag and drop\n\nEnable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives\nthe `resourceId` of the target resource, allowing you to update the event's resource assignment.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView, ScheduleEventData } from '@mantine/schedule';\nimport { events as initialEvents, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      withEventsDragAndDrop\n      onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {\n        setEvents((current) =>\n          current.map((event) =>\n            event.id === eventId\n              ? { ...event, start: newStart, end: newEnd, resourceId }\n              : event\n          )\n        );\n      }}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Event form\n\nClick a day cell to create a new event, or click an existing event to edit it. Use `withDragSlotSelect`\nand `onSlotDragEnd` to allow drag-to-create across day cells. The `onSlotDragEnd` callback includes\nthe `resourceId` of the resource where the drag started.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { Select } from '@mantine/core';\nimport { ResourcesMonthView, ScheduleEventData } from '@mantine/schedule';\nimport { EventData, EventForm } from './EventForm';\nimport { events as initialEvents, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);\n  const [formOpened, setFormOpened] = useState(false);\n  const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);\n  const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null);\n\n  const handleDayClick = ({\n    date: clickedDate,\n    resourceId,\n  }: {\n    date: string;\n    nativeEvent: React.MouseEvent<HTMLButtonElement>;\n    resourceId?: string | number;\n  }) => {\n    setSelectedResourceId(resourceId ? String(resourceId) : null);\n    setSelectedEventData({\n      title: '',\n      start: dayjs(clickedDate).startOf('day').toDate(),\n      end: dayjs(clickedDate).endOf('day').toDate(),\n      color: 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleEventClick = (event: ScheduleEventData) => {\n    setSelectedResourceId(event.resourceId ? String(event.resourceId) : null);\n    setSelectedEventData({\n      id: event.id,\n      title: event.title,\n      start: new Date(event.start),\n      end: new Date(event.end),\n      color: event.color || 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleSlotDragEnd = ({\n    rangeStart,\n    rangeEnd,\n    resourceId,\n  }: {\n    rangeStart: string;\n    rangeEnd: string;\n    resourceId?: string | number;\n  }) => {\n    setSelectedResourceId(resourceId ? String(resourceId) : null);\n    setSelectedEventData({\n      title: '',\n      start: new Date(rangeStart),\n      end: new Date(rangeEnd),\n      color: 'blue',\n    });\n    setFormOpened(true);\n  };\n\n  const handleSubmit = (values: EventData) => {\n    if (values.id) {\n      setEvents((prev) =>\n        prev.map((event) =>\n          event.id === values.id\n            ? {\n                ...event,\n                title: values.title,\n                start: dayjs(values.start).toISOString(),\n                end: dayjs(values.end).toISOString(),\n                color: values.color || 'blue',\n                resourceId: selectedResourceId || event.resourceId,\n              }\n            : event\n        )\n      );\n    } else {\n      setEvents((prev) => [\n        ...prev,\n        {\n          id: Math.random().toString(36).substring(2, 11),\n          title: values.title,\n          start: dayjs(values.start).toISOString(),\n          end: dayjs(values.end).toISOString(),\n          color: values.color || 'blue',\n          resourceId: selectedResourceId || undefined,\n        },\n      ]);\n    }\n  };\n\n  const handleDeleteEvent = () => {\n    if (selectedEventData?.id) {\n      setEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));\n    }\n  };\n\n  return (\n    <>\n      <ResourcesMonthView\n        date={date}\n        onDateChange={setDate}\n        resources={resources}\n        events={events}\n        withDragSlotSelect\n        onDayClick={handleDayClick}\n        onSlotDragEnd={handleSlotDragEnd}\n        onEventClick={handleEventClick}\n        startScrollDate={dayjs().format('YYYY-MM-DD')}\n      />\n\n      <EventForm\n        opened={formOpened}\n        onClose={() => setFormOpened(false)}\n        onExitTransitionEnd={() => setSelectedEventData(null)}\n        values={selectedEventData}\n        onSubmit={handleSubmit}\n        onDelete={selectedEventData?.id ? handleDeleteEvent : undefined}\n      >\n        <Select\n          label=\"Resource\"\n          placeholder=\"Select resource\"\n          radius=\"md\"\n          data={resources.map((r) => ({ value: String(r.id), label: r.label }))}\n          value={selectedResourceId}\n          onChange={setSelectedResourceId}\n        />\n      </EventForm>\n    </>\n  );\n}\n\n// EventForm.tsx\nimport { useEffect } from 'react';\nimport { Modal, TextInput, Button, Stack, Group, Checkbox } from '@mantine/core';\nimport { DateTimePicker } from '@mantine/dates';\nimport { useForm } from '@mantine/form';\n\ninterface EventData {\n  id?: string | number;\n  title: string;\n  start: Date;\n  end: Date;\n  color?: string;\n  isAllDay?: boolean;\n}\n\ninterface EventFormProps {\n  opened: boolean;\n  onClose: () => void;\n  initialData: EventData | null;\n  onSave: (data: EventData) => void;\n  onDelete?: () => void;\n}\n\nexport function EventForm({\n  opened,\n  onClose,\n  values,\n  onSubmit,\n  onDelete,\n  ...others\n}: EventFormProps) {\n  const form = useForm({\n    initialValues: {\n      id: values?.id,\n      title: values?.title || '',\n      start: values?.start || new Date(),\n      end: values?.end || new Date(),\n      color: values?.color || 'blue',\n    },\n    validate: {\n      title: isNotEmpty('Event title is required'),\n      start: isNotEmpty('Start time is required'),\n      end: (value, { start }) => {\n        if (!value) {\n          return 'End time is required';\n        }\n\n        if (dayjs(value).isBefore(dayjs(start))) {\n          return 'End time must be after start time';\n        }\n\n        return null;\n      },\n    },\n  });\n\n  useEffect(() => {\n    form.setValues({\n      id: values?.id,\n      title: values?.title || '',\n      start: values?.start || new Date(),\n      end: values?.end || new Date(),\n      color: values?.color || 'blue',\n    });\n  }, [values]);\n\n  const handleSubmit = (values: EventData) => {\n    onSubmit({\n      id: values.id,\n      title: values.title,\n      start: values.start,\n      end: values.end,\n      color: values.color,\n    });\n    onClose();\n  };\n\n  const handleDelete = () => {\n    onDelete?.();\n    onClose();\n  };\n\n  return (\n    <Modal\n      opened={opened}\n      onClose={onClose}\n      title={form.values.id ? 'Edit Event' : 'Create Event'}\n      {...others}\n    >\n      <form onSubmit={form.onSubmit(handleSubmit)}>\n        <Stack gap=\"md\">\n          <TextInput\n            label=\"Event Title\"\n            placeholder=\"Enter event title\"\n            data-autofocus\n            {...form.getInputProps('title')}\n          />\n\n          <DateTimePicker\n            label=\"Start Time\"\n            clearable\n            {...form.getInputProps('start')}\n          />\n          <DateTimePicker label=\"End Time\" {...form.getInputProps('end')} clearable />\n\n          <Group justify=\"flex-end\" gap=\"sm\">\n            {form.values.id && onDelete && (\n              <Button color=\"red\" onClick={handleDelete} mie=\"auto\">\n                Delete\n              </Button>\n            )}\n\n            <Button variant=\"default\" onClick={onClose}>\n              Cancel\n            </Button>\n            <Button type=\"submit\">\n              {form.values.id ? 'Update' : 'Create'}\n            </Button>\n          </Group>\n        </Stack>\n      </form>\n    </Modal>\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Custom event rendering\n\nUse `renderEvent` prop to customize how events are rendered. The example below uses `HoverCard`\nto display event details on hover.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { HoverCard, UnstyledButton } from '@mantine/core';\nimport { ResourcesMonthView, ScheduleEventData } from '@mantine/schedule';\nimport { EventDetails } from './EventDetails';\nimport { events as initialEvents, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n  const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      withEventsDragAndDrop\n      onEventDrop={({ eventId, newStart, newEnd, resourceId }) => {\n        setEvents((current) =>\n          current.map((event) =>\n            event.id === eventId\n              ? { ...event, start: newStart, end: newEnd, resourceId }\n              : event\n          )\n        );\n      }}\n      renderEvent={(event, props) => (\n        <HoverCard width={280} position=\"right\" closeDelay={0} transitionProps={{ duration: 0 }}>\n          <HoverCard.Target>\n            <UnstyledButton {...props} />\n          </HoverCard.Target>\n          <HoverCard.Dropdown>\n            <EventDetails event={event} resources={resources} />\n          </HoverCard.Dropdown>\n        </HoverCard>\n      )}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// EventDetails.tsx\nimport dayjs from 'dayjs';\nimport { Badge, Group, Stack, Text } from '@mantine/core';\nimport { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';\n\ninterface EventDetailsProps {\n  event: ScheduleEventData;\n  resources?: ScheduleResourceData[];\n}\n\nexport function EventDetails({ event, resources }: EventDetailsProps) {\n  const resource = resources?.find((r) => r.id === event.resourceId);\n\n  return (\n    <Stack gap=\"xs\">\n      <Text fw={600} size=\"sm\">\n        {event.title}\n      </Text>\n\n      <Text size=\"xs\" c=\"dimmed\">\n        {dayjs(event.start).format('MMM D, YYYY HH:mm')} – {dayjs(event.end).format('HH:mm')}\n      </Text>\n\n      {resource && (\n        <Text size=\"xs\" c=\"dimmed\">\n          {resource.label}\n        </Text>\n      )}\n\n      {event.payload?.description && (\n        <Text size=\"xs\" c=\"dimmed\">\n          {event.payload.description}\n        </Text>\n      )}\n\n      {event.payload?.location && (\n        <Group gap={4}>\n          <Badge size=\"sm\" variant=\"light\">\n            {event.payload.location}\n          </Badge>\n        </Group>\n      )}\n\n      {event.payload?.attendees && (\n        <div>\n          <Text size=\"xs\" fw={500} mb={4}>\n            Attendees:\n          </Text>\n          <Text size=\"xs\" c=\"dimmed\">\n            {event.payload.attendees.join(', ')}\n          </Text>\n        </div>\n      )}\n    </Stack>\n  );\n}\n```\n\n\n## Custom resource label\n\nUse `renderResourceLabel` prop to customize how resource labels are rendered in the row headers.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { Stack, Text } from '@mantine/core';\nimport { ResourcesMonthView, ScheduleResourceData } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      renderResourceLabel={(resource: ScheduleResourceData) => (\n        <Stack gap={0} align=\"flex-start\">\n          <Text fw={600} size=\"sm\">\n            {resource.label}\n          </Text>\n          <Text size=\"xs\" c=\"dimmed\">\n            Office\n          </Text>\n        </Stack>\n      )}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Resource groups\n\nUse `groups` prop to group resources under labeled headers. The group labels are displayed\nas a column to the left of resource labels, spanning vertically across their resources.\nUse `renderGroupLabel` to customize group label rendering and `groupLabelWidth` to control\nthe group column width.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView, ScheduleResourceGroup } from '@mantine/schedule';\nimport { events } from './data';\n\nconst resources = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n  { id: 'overflow', label: 'Overflow room' },\n];\n\nconst groups: ScheduleResourceGroup[] = [\n  { label: 'Floor 1', resourceIds: ['tokyo', 'paris'] },\n  { label: 'Floor 2', resourceIds: ['new-york'] },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      groups={groups}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n```\n\n\n## Localization\n\nSet `locale` prop to change the language. Use `labels` prop to override built-in labels.\n\n```tsx\n// Demo.tsx\nimport 'dayjs/locale/es';\n\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      locale=\"es\"\n      labels={{\n        day: 'Día',\n        week: 'Semana',\n        month: 'Mes',\n        year: 'Año',\n        today: 'Hoy',\n        previous: 'Anterior',\n        next: 'Siguiente',\n        more: 'Más',\n        resources: 'Recursos',\n        moreLabel: (hiddenEventsCount) => `+${hiddenEventsCount} más`,\n      }}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Recurring events\n\nResourcesMonthView automatically expands recurring events for the visible month.\nSee [Recurring events guide](https://mantine.dev/llms/schedule-recurring-events.md) for full documentation.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\n\nconst resources = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n];\n\nconst events = [\n  {\n    id: 'daily-sync-series',\n    title: 'Daily sync (series)',\n    start: `${dayjs(today).subtract(2, 'day').format('YYYY-MM-DD')} 09:00:00`,\n    end: `${dayjs(today).subtract(2, 'day').format('YYYY-MM-DD')} 09:30:00`,\n    color: 'blue',\n    resourceId: 'tokyo',\n    recurrence: {\n      rrule: 'FREQ=DAILY;COUNT=10',\n      exdate: [`${today} 09:00:00`],\n    },\n  },\n  {\n    id: 'daily-sync-override',\n    title: 'Daily sync (moved today)',\n    start: `${today} 14:00:00`,\n    end: `${today} 14:30:00`,\n    color: 'grape',\n    resourceId: 'tokyo',\n    recurringEventId: 'daily-sync-series',\n    recurrenceId: `${today} 09:00:00`,\n  },\n  {\n    id: 'one-off',\n    title: 'One-off planning',\n    start: `${today} 11:00:00`,\n    end: `${today} 12:00:00`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState(today);\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      startScrollDate={today}\n    />\n  );\n}\n```\n\n\n## Max events per cell\n\nUse `maxEventsPerTimeSlot` prop to limit the number of events visible in each cell.\nWhen there are more events than the limit, a \"+more\" indicator is shown.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView, ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n];\n\nconst events: ScheduleEventData[] = [\n  { id: 1, title: 'Team Meeting', start: `${today} 09:00:00`, end: `${today} 10:00:00`, color: 'blue', resourceId: 'tokyo' },\n  { id: 2, title: 'Code Review', start: `${today} 11:00:00`, end: `${today} 12:00:00`, color: 'green', resourceId: 'tokyo' },\n  { id: 3, title: 'Design Review', start: `${today} 13:00:00`, end: `${today} 14:00:00`, color: 'violet', resourceId: 'tokyo' },\n  { id: 4, title: 'Sprint Planning', start: `${today} 15:00:00`, end: `${today} 16:00:00`, color: 'orange', resourceId: 'tokyo' },\n  { id: 5, title: 'Retrospective', start: `${today} 16:30:00`, end: `${today} 17:30:00`, color: 'cyan', resourceId: 'tokyo' },\n  { id: 6, title: 'Client Call', start: `${today} 09:00:00`, end: `${today} 10:00:00`, color: 'pink', resourceId: 'paris' },\n  { id: 7, title: 'Workshop', start: `${today} 11:00:00`, end: `${today} 12:00:00`, color: 'grape', resourceId: 'paris' },\n  { id: 8, title: 'Standup', start: `${today} 14:00:00`, end: `${today} 15:00:00`, color: 'red', resourceId: 'paris' },\n  { id: 9, title: 'Demo', start: `${today} 16:00:00`, end: `${today} 17:00:00`, color: 'teal', resourceId: 'paris' },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      maxEventsPerTimeSlot={3}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n```\n\n\n## Day width and row height\n\nUse `dayWidth` and `rowHeight` props to customize the dimensions of day columns and resource rows.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      dayWidth={60}\n      rowHeight={64}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Start scroll date\n\nUse `startScrollDate` prop to scroll to a specific date on initial render. This is useful\nwhen the month has many days and you want the view to start at a specific date, for example today.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Without weekend days\n\nSet `withWeekendDays={false}` to hide weekend day columns from the month grid.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      withWeekendDays={false}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## More events indicator\n\nWhen a day cell has more events than `maxEventsPerTimeSlot`, a \"+X more\" indicator is shown.\nClick the indicator to see all events for that day.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView, ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n];\n\nconst events: ScheduleEventData[] = [\n  { id: 1, title: 'Team Standup', start: `${today} 08:00:00`, end: `${today} 08:30:00`, color: 'blue', resourceId: 'tokyo' },\n  { id: 2, title: 'Sprint Planning', start: `${today} 09:00:00`, end: `${today} 10:00:00`, color: 'green', resourceId: 'tokyo' },\n  { id: 3, title: 'Design Review', start: `${today} 10:30:00`, end: `${today} 11:30:00`, color: 'violet', resourceId: 'tokyo' },\n  { id: 4, title: 'Code Review', start: `${today} 13:00:00`, end: `${today} 14:00:00`, color: 'orange', resourceId: 'tokyo' },\n  { id: 5, title: 'Retrospective', start: `${today} 14:30:00`, end: `${today} 15:30:00`, color: 'cyan', resourceId: 'tokyo' },\n  { id: 6, title: 'Client Call', start: `${today} 16:00:00`, end: `${today} 17:00:00`, color: 'pink', resourceId: 'tokyo' },\n  { id: 7, title: 'Workshop', start: `${today} 10:00:00`, end: `${today} 11:00:00`, color: 'grape', resourceId: 'paris' },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      maxEventsPerTimeSlot={2}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n```\n\n\n## More events props\n\nUse `moreEventsProps` to customize the more events dropdown, for example to use a modal\ninstead of a popover.\n\n```tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView, ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n];\n\nconst events: ScheduleEventData[] = [\n  { id: 1, title: 'Team Standup', start: `${today} 08:00:00`, end: `${today} 08:30:00`, color: 'blue', resourceId: 'tokyo' },\n  { id: 2, title: 'Sprint Planning', start: `${today} 09:00:00`, end: `${today} 10:00:00`, color: 'green', resourceId: 'tokyo' },\n  { id: 3, title: 'Design Review', start: `${today} 10:30:00`, end: `${today} 11:30:00`, color: 'violet', resourceId: 'tokyo' },\n  { id: 4, title: 'Code Review', start: `${today} 13:00:00`, end: `${today} 14:00:00`, color: 'orange', resourceId: 'tokyo' },\n  { id: 5, title: 'Retrospective', start: `${today} 14:30:00`, end: `${today} 15:30:00`, color: 'cyan', resourceId: 'tokyo' },\n  { id: 6, title: 'Client Call', start: `${today} 16:00:00`, end: `${today} 17:00:00`, color: 'pink', resourceId: 'tokyo' },\n  { id: 7, title: 'Workshop', start: `${today} 10:00:00`, end: `${today} 11:00:00`, color: 'grape', resourceId: 'paris' },\n];\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      maxEventsPerTimeSlot={2}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n      moreEventsProps={{ dropdownType: 'modal', modalTitle: 'All Events' }}\n    />\n  );\n}\n```\n\n\n## Custom header\n\nSet `withHeader={false}` to hide the default header and use `ScheduleHeader` to build\na custom header with navigation controls.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { DateStringValue, ResourcesMonthView, ScheduleHeader } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState<DateStringValue>(\n    dayjs().format('YYYY-MM-DD')\n  );\n\n  return (\n    <div>\n      <ScheduleHeader>\n        <ScheduleHeader.Previous\n          onClick={() =>\n            setDate(\n              dayjs(date)\n                .subtract(1, 'month')\n                .startOf('month')\n                .format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.MonthYearSelect\n          yearValue={dayjs(date).year()}\n          monthValue={dayjs(date).month()}\n          onYearChange={(year) =>\n            setDate(\n              dayjs(date)\n                .year(year)\n                .startOf('month')\n                .format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n          onMonthChange={(month) =>\n            setDate(\n              dayjs(date)\n                .month(month)\n                .startOf('month')\n                .format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Next\n          onClick={() =>\n            setDate(\n              dayjs(date)\n                .add(1, 'month')\n                .startOf('month')\n                .format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n        <ScheduleHeader.Today\n          onClick={() =>\n            setDate(\n              dayjs().format('YYYY-MM-DD') as DateStringValue\n            )\n          }\n        />\n      </ScheduleHeader>\n\n      <ResourcesMonthView\n        date={date}\n        onDateChange={setDate}\n        resources={resources}\n        events={events}\n        withHeader={false}\n      />\n    </div>\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Radius\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      radius=\"md\"\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n## Scroll area props\n\nUse `scrollAreaProps` to customize the scroll area behavior.\n\n```tsx\n// Demo.tsx\nimport dayjs from 'dayjs';\nimport { useState } from 'react';\nimport { ResourcesMonthView } from '@mantine/schedule';\nimport { events, resources } from './data';\n\nfunction Demo() {\n  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));\n\n  return (\n    <ResourcesMonthView\n      date={date}\n      onDateChange={setDate}\n      resources={resources}\n      events={events}\n      scrollAreaProps={{\n        scrollbarSize: 10,\n        offsetScrollbars: true,\n        type: 'always',\n        scrollbars: 'x',\n      }}\n      startScrollDate={dayjs().format('YYYY-MM-DD')}\n    />\n  );\n}\n\n// data.ts\nimport dayjs from 'dayjs';\nimport { ScheduleResourceData } from '@mantine/schedule';\n\nconst today = dayjs().format('YYYY-MM-DD');\nconst tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');\nconst nextWeek = dayjs().add(5, 'day').format('YYYY-MM-DD');\n\nconst resources: ScheduleResourceData[] = [\n  { id: 'tokyo', label: 'Meeting room: Tokyo' },\n  { id: 'paris', label: 'Meeting room: Paris' },\n  { id: 'new-york', label: 'Meeting room: New York' },\n];\n\nconst events = [\n  {\n    id: 1,\n    title: 'Team Standup',\n    start: \\`\\${today} 09:00:00\\`,\n    end: \\`\\${today} 09:30:00\\`,\n    color: 'blue',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 2,\n    title: 'Sprint Planning',\n    start: \\`\\${today} 10:00:00\\`,\n    end: \\`\\${today} 11:30:00\\`,\n    color: 'green',\n    resourceId: 'paris',\n  },\n  {\n    id: 3,\n    title: 'Design Review',\n    start: \\`\\${tomorrow} 13:00:00\\`,\n    end: \\`\\${tomorrow} 14:00:00\\`,\n    color: 'orange',\n    resourceId: 'tokyo',\n  },\n  {\n    id: 4,\n    title: 'Client Call',\n    start: \\`\\${tomorrow} 09:30:00\\`,\n    end: \\`\\${tomorrow} 10:30:00\\`,\n    color: 'violet',\n    resourceId: 'new-york',\n  },\n  {\n    id: 5,\n    title: 'Workshop',\n    start: \\`\\${nextWeek} 14:00:00\\`,\n    end: \\`\\${nextWeek} 16:00:00\\`,\n    color: 'pink',\n    resourceId: 'paris',\n  },\n];\n```\n\n\n\n#### Props\n\n**ResourcesMonthView props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| canDragEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be dragged |\n| date | string \\| Date | required | Date to display, Date object or date string in `YYYY-MM-DD` format |\n| dayWidth | React.CSSProperties[\"width\"] | - | Width of each day column |\n| events | ScheduleEventData[] | - | Events to display |\n| groupLabelWidth | React.CSSProperties[\"width\"] | - | Width of the group label column |\n| groups | ScheduleResourceGroup[] | - | List of resource groups to display as a column to the left of resource labels |\n| highlightToday | boolean | - | If set, highlights the current day |\n| labels | Partial<ScheduleLabels> | - | Labels override for i18n |\n| locale | string | - | Locale passed down to dayjs |\n| maxEventsPerTimeSlot | number | - | Maximum number of events visible per cell before \"+more\" indicator |\n| mode | ScheduleMode | - | Interaction mode |\n| monthYearSelectProps | Partial<MonthYearSelectProps> | - | Props passed down to `MonthYearSelect` component |\n| moreEventsProps | Partial<MoreEventsProps> | - | Props passed down to `MoreEvents` component |\n| nextControlProps | React.ComponentProps<'button'> | - | Props passed to next control |\n| onDateChange | (value: string) => void | - | Called with the new date value when a date is selected |\n| onDayClick | ((data: { date: string; nativeEvent: MouseEvent<HTMLButtonElement, MouseEvent>; resourceId?: string \\| number; }) => void) \\| undefined | - | Called when a cell is clicked, includes resourceId |\n| onEventClick | (event: ScheduleEventData, e: MouseEvent<HTMLButtonElement, MouseEvent>) => void | - | Called when event is clicked |\n| onEventDragEnd | () => void | - | Called when any event drag ends |\n| onEventDragStart | (event: ScheduleEventData) => void | - | Called when any event drag starts |\n| onEventDrop | ((data: { eventId: string \\| number; newStart: string; newEnd: string; event: ScheduleEventData; resourceId?: string \\| number; }) => void) \\| undefined | - | Called when event is dropped, includes target resourceId |\n| onExternalEventDrop | ((data: { dataTransfer: DataTransfer; dropDateTime: string; resourceId?: string \\| number; }) => void) \\| undefined | - | Called when an external item is dropped |\n| onSlotDragEnd | ((data: { rangeStart: string; rangeEnd: string; resourceId?: string \\| number; }) => void) \\| undefined | - | Called when a day range is selected by dragging, includes resourceId |\n| onViewChange | (view: ScheduleViewLevel) => void | - | Called when view level select button is clicked |\n| previousControlProps | React.ComponentProps<'button'> | - | Props passed to previous control |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius` |\n| recurrenceExpansionLimit | number | - | Max number of generated recurring instances |\n| renderEvent | RenderEvent | - | Function to fully customize event rendering |\n| renderEventBody | RenderEventBody | - | Function to customize event body |\n| renderGroupLabel | (group: ScheduleResourceGroup) => ReactNode | - | Function to customize group label rendering |\n| renderResourceLabel | (resource: ScheduleResourceData) => ReactNode | - | Function to customize resource label rendering |\n| resources | ScheduleResourceData[] | required | List of resources to display as rows |\n| rowHeight | Height<string \\| number> | - | Height of each resource row |\n| scrollAreaProps | Partial<ScrollAreaProps> & DataAttributes | - | Props passed down to `ScrollArea` component |\n| startScrollDate | string | - | Date to scroll to on initial render, in `YYYY-MM-DD` format |\n| todayControlProps | React.ComponentProps<'button'> | - | Props passed to today control |\n| viewSelectProps | Partial<ViewSelectProps> & DataAttributes | - | Props passed to view level select |\n| weekdayFormat | string \\| ((date: string) => string) | - | `dayjs` format for weekdays in day column headers |\n| weekendDays | (0 \\| 1 \\| 2 \\| 3 \\| 4 \\| 5 \\| 6)[] | - | Indices of weekend days |\n| withDragSlotSelect | boolean | - | If set, enables drag-to-select day ranges |\n| withEventsDragAndDrop | boolean | - | If true, events can be dragged and dropped |\n| withHeader | boolean | - | If set, the header is displayed |\n| withWeekendDays | boolean | - | If set to false, weekend days are hidden |\n\n\n#### Styles API\n\nResourcesMonthView component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**ResourcesMonthView selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| resourcesMonthView | .mantine-ResourcesMonthView-resourcesMonthView | Root element |\n| resourcesMonthViewRoot | .mantine-ResourcesMonthView-resourcesMonthViewRoot | Root container wrapping scroll area |\n| resourcesMonthViewScrollArea | .mantine-ResourcesMonthView-resourcesMonthViewScrollArea | Scroll area component |\n| resourcesMonthViewDayLabelsRow | .mantine-ResourcesMonthView-resourcesMonthViewDayLabelsRow | Row containing day labels |\n| resourcesMonthViewCorner | .mantine-ResourcesMonthView-resourcesMonthViewCorner | Top-left corner element |\n| resourcesMonthViewDayLabel | .mantine-ResourcesMonthView-resourcesMonthViewDayLabel | Individual day label element |\n| resourcesMonthViewDayLabelWeekday | .mantine-ResourcesMonthView-resourcesMonthViewDayLabelWeekday | Weekday text inside day label |\n| resourcesMonthViewDayLabelNumber | .mantine-ResourcesMonthView-resourcesMonthViewDayLabelNumber | Day number inside day label |\n| resourcesMonthViewRow | .mantine-ResourcesMonthView-resourcesMonthViewRow | Resource row element |\n| resourcesMonthViewResourceLabel | .mantine-ResourcesMonthView-resourcesMonthViewResourceLabel | Resource label element |\n| resourcesMonthViewRowSlots | .mantine-ResourcesMonthView-resourcesMonthViewRowSlots | Container for all day cells in a row |\n| resourcesMonthViewCell | .mantine-ResourcesMonthView-resourcesMonthViewCell | Individual day cell element |\n| resourcesMonthViewInner | .mantine-ResourcesMonthView-resourcesMonthViewInner | Inner container wrapping day labels and rows |\n| resourcesMonthViewGroupColumn | .mantine-ResourcesMonthView-resourcesMonthViewGroupColumn | Group label column element |\n| resourcesMonthViewGroupColumnEmpty | .mantine-ResourcesMonthView-resourcesMonthViewGroupColumnEmpty | Empty group column cell for ungrouped resources |\n| moreEventsButton | .mantine-ResourcesMonthView-moreEventsButton | More events button, part of MoreEvents |\n| moreEventsList | .mantine-ResourcesMonthView-moreEventsList | More events list, part of MoreEvents |\n| moreEventsDropdown | .mantine-ResourcesMonthView-moreEventsDropdown | More events dropdown, part of MoreEvents |\n| header | .mantine-ResourcesMonthView-header | Header container, part of ScheduleHeader |\n| headerControl | .mantine-ResourcesMonthView-headerControl | Header control element, part of ScheduleHeader |\n| viewSelect | .mantine-ResourcesMonthView-viewSelect | View select element, part of ScheduleHeader |\n| monthYearSelectTarget | .mantine-ResourcesMonthView-monthYearSelectTarget | MonthYearSelect target button, part of ScheduleHeader |\n| monthYearSelectDropdown | .mantine-ResourcesMonthView-monthYearSelectDropdown | MonthYearSelect dropdown, part of ScheduleHeader |\n| monthYearSelectControl | .mantine-ResourcesMonthView-monthYearSelectControl | MonthYearSelect control, part of ScheduleHeader |\n| monthYearSelectList | .mantine-ResourcesMonthView-monthYearSelectList | MonthYearSelect list, part of ScheduleHeader |\n| monthYearSelectLabel | .mantine-ResourcesMonthView-monthYearSelectLabel | MonthYearSelect label, part of ScheduleHeader |\n\n**ResourcesMonthView CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| resourcesMonthView | --resources-month-view-radius | Controls `border-radius` of the view |\n| resourcesMonthView | --resources-month-view-day-width | Controls `width` of each day column |\n| resourcesMonthView | --resources-month-view-row-height | Controls `height` of each resource row |\n| resourcesMonthView | --resources-month-view-group-label-width | Controls `width` of the group label column |\n\n**ResourcesMonthView data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| resourcesMonthViewDayLabel | data-weekend | Day label represents a weekend day | - |\n| resourcesMonthViewDayLabel | data-today | Day label represents today and `highlightToday` is true | - |\n| resourcesMonthViewCell | data-weekend | Cell represents a weekend day | - |\n| resourcesMonthViewCell | data-drop-target | Cell is the current drag drop target | - |\n| resourcesMonthViewCell | data-drag-selected | Cell is selected during drag-to-select | - |\n| resourcesMonthViewCell | data-static | `mode=\"static\"` is set | - |\n| resourcesMonthView | data-static | `mode=\"static\"` is set | - |\n",
+  "props": [
+    {
+      "name": "canDragEvent",
+      "description": "Function to determine if event can be dragged",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData) => boolean"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "date",
+      "description": "Date to display, Date object or date string in <code>YYYY-MM-DD</code> format",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "string | Date"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "dayWidth",
+      "description": "Width of each day column",
+      "required": false,
+      "defaultValue": "40px",
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "events",
+      "description": "Events to display",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleEventData[]"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "groupLabelWidth",
+      "description": "Width of the group label column",
+      "required": false,
+      "defaultValue": "80px",
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "groups",
+      "description": "List of resource groups to display as a column to the left of resource labels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleResourceGroup[]"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "highlightToday",
+      "description": "If set, highlights the current day",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "labels",
+      "description": "Labels override for i18n",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ScheduleLabels>"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "locale",
+      "description": "Locale passed down to dayjs",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "maxEventsPerTimeSlot",
+      "description": "Maximum number of events visible per cell before \"+more\" indicator",
+      "required": false,
+      "defaultValue": "2",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "mode",
+      "description": "Interaction mode",
+      "required": false,
+      "defaultValue": "default",
+      "type": {
+        "name": "ScheduleMode",
+        "raw": "ScheduleMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"default\""
+          },
+          {
+            "value": "\"static\""
+          }
+        ]
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "monthYearSelectProps",
+      "description": "Props passed down to <code>MonthYearSelect</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<MonthYearSelectProps>"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "moreEventsProps",
+      "description": "Props passed down to <code>MoreEvents</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<MoreEventsProps>"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "nextControlProps",
+      "description": "Props passed to next control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<'button'>"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onDateChange",
+      "description": "Called with the new date value when a date is selected",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onDayClick",
+      "description": "Called when a cell is clicked, includes resourceId",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((data: { date: string; nativeEvent: MouseEvent<HTMLButtonElement, MouseEvent>; resourceId?: string | number; }) => void) | undefined"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onEventClick",
+      "description": "Called when event is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData, e: MouseEvent<HTMLButtonElement, MouseEvent>) => void"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onEventDragEnd",
+      "description": "Called when any event drag ends",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onEventDragStart",
+      "description": "Called when any event drag starts",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(event: ScheduleEventData) => void"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onEventDrop",
+      "description": "Called when event is dropped, includes target resourceId",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((data: { eventId: string | number; newStart: string; newEnd: string; event: ScheduleEventData; resourceId?: string | number; }) => void) | undefined"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onExternalEventDrop",
+      "description": "Called when an external item is dropped",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((data: { dataTransfer: DataTransfer; dropDateTime: string; resourceId?: string | number; }) => void) | undefined"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onSlotDragEnd",
+      "description": "Called when a day range is selected by dragging, includes resourceId",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((data: { rangeStart: string; rangeEnd: string; resourceId?: string | number; }) => void) | undefined"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "onViewChange",
+      "description": "Called when view level select button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(view: ScheduleViewLevel) => void"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "previousControlProps",
+      "description": "Props passed to previous control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<'button'>"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "recurrenceExpansionLimit",
+      "description": "Max number of generated recurring instances",
+      "required": false,
+      "defaultValue": "2000",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "renderEvent",
+      "description": "Function to fully customize event rendering",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RenderEvent"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "renderEventBody",
+      "description": "Function to customize event body",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RenderEventBody"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "renderGroupLabel",
+      "description": "Function to customize group label rendering",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(group: ScheduleResourceGroup) => ReactNode"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "renderResourceLabel",
+      "description": "Function to customize resource label rendering",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(resource: ScheduleResourceData) => ReactNode"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "resources",
+      "description": "List of resources to display as rows",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "ScheduleResourceData[]"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "rowHeight",
+      "description": "Height of each resource row",
+      "required": false,
+      "defaultValue": "48px",
+      "type": {
+        "name": "Height<string | number>"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "scrollAreaProps",
+      "description": "Props passed down to <code>ScrollArea</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ScrollAreaProps> & DataAttributes"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "startScrollDate",
+      "description": "Date to scroll to on initial render, in <code>YYYY-MM-DD</code> format",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "todayControlProps",
+      "description": "Props passed to today control",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<'button'>"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "viewSelectProps",
+      "description": "Props passed to view level select",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<ViewSelectProps> & DataAttributes"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "weekdayFormat",
+      "description": "<code>dayjs</code> format for weekdays in day column headers",
+      "required": false,
+      "defaultValue": "'dd'",
+      "type": {
+        "name": "string | ((date: string) => string)"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "weekendDays",
+      "description": "Indices of weekend days",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(0 | 1 | 2 | 3 | 4 | 5 | 6)[]"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "withDragSlotSelect",
+      "description": "If set, enables drag-to-select day ranges",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "withEventsDragAndDrop",
+      "description": "If true, events can be dragged and dropped",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "withHeader",
+      "description": "If set, the header is displayed",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    },
+    {
+      "name": "withWeekendDays",
+      "description": "If set to false, weekend days are hidden",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "ResourcesMonthView"
+    }
+  ]
+}

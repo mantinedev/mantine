@@ -1,0 +1,133 @@
+{
+  "id": "core-empty-state",
+  "name": "EmptyState",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/empty-state",
+  "description": "Display a placeholder for no data, empty results and first-run states",
+  "propsCount": 8,
+  "llmUrl": "https://mantine.dev/llms/core-empty-state.md",
+  "componentDataUrl": "/mcp/components/core-empty-state.json",
+  "searchText": "emptystate display a placeholder for no data, empty results and first-run states @mantine/core /core/empty-state align children color description icon size title withindicatorbackground",
+  "source": "@mantine/core/src/components/EmptyState/EmptyState.tsx",
+  "docs": "core/empty-state.mdx",
+  "markdown": "# EmptyState\nPackage: @mantine/core\nImport: import { EmptyState } from '@mantine/core';\nDescription: Display a placeholder for no data, empty results and first-run states\n\n## Usage\n\n`EmptyState` displays a placeholder for \"no data\" situations: empty search results, empty\ntables and lists, first-run states or error illustrations with an optional call to action.\nThe simplest way to use it is with `icon`, `title` and `description` props:\n\n```tsx\nimport { Button, EmptyState } from '@mantine/core';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <EmptyState\n      icon={<MagnifyingGlassIcon />}\n      title=\"No results found\"\n      description=\"We couldn't find anything matching your search. Try adjusting your filters or searching with different keywords to see more results.\" size=\"md\" align=\"center\" withIndicatorBackground={false}\n    >\n      <EmptyState.Actions>\n        <Button variant=\"default\">Reset filters</Button>\n      </EmptyState.Actions>\n    </EmptyState>\n  );\n}\n```\n\n\n## Compound components\n\nFor full control over the content, use compound components instead of (or together with)\nthe shorthand props. Available components:\n\n* `EmptyState.Indicator` – icon or illustration\n* `EmptyState.Title` – title text\n* `EmptyState.Description` – description text\n* `EmptyState.Actions` – wrapper for action buttons\n\n```tsx\nimport { Button, EmptyState } from '@mantine/core';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <EmptyState>\n      <EmptyState.Indicator>\n        <MagnifyingGlassIcon />\n      </EmptyState.Indicator>\n      <EmptyState.Title>No results found</EmptyState.Title>\n      <EmptyState.Description>\n        We couldn't find anything matching your search. Try adjusting your filters or searching with\n        different keywords to see more results.\n      </EmptyState.Description>\n      <EmptyState.Actions>\n        <Button variant=\"default\">Reset filters</Button>\n        <Button variant=\"default\">Create new</Button>\n      </EmptyState.Actions>\n    </EmptyState>\n  );\n}\n```\n\n\nShorthand props and compound components can be mixed. When both are provided, the content\nfrom `icon`, `title` and `description` props is rendered first, followed by `children`:\n\n```tsx\nimport { Button, EmptyState } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <EmptyState icon={<Icon />} title=\"No results found\">\n      {/* Rendered after the title */}\n      <EmptyState.Actions>\n        <Button variant=\"default\">Reset filters</Button>\n      </EmptyState.Actions>\n    </EmptyState>\n  );\n}\n```\n\n## Alignment\n\nSet the `align` prop to control how the content is arranged:\n\n* `center` (default) – indicator, title, description and actions are stacked in a centered column\n* `left` – indicator is placed on the left, the content is aligned next to it on the right\n* `right` – indicator is placed on the right, the content is aligned next to it on the left\n\nChange the `align` prop in the configurator above to see how it works. With `left` and `right`\nalignment the indicator is aligned to the top of the content.\n\n## Variant\n\nSet the `variant` prop to `filled` or `light` to display the icon inside a colored circular\nindicator. Use the `color` prop to change the indicator color. If `variant` is not set, the icon\nis displayed with a dimmed color:\n\n```tsx\nimport { EmptyState } from '@mantine/core';\nimport { MagnifyingGlassIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <EmptyState\n      icon={<MagnifyingGlassIcon />}\n      title=\"No results found\"\n      description=\"We couldn't find anything matching your search. Try adjusting your filters or searching with different keywords to see more results.\" variant=\"light\" color=\"blue\"\n    />\n  );\n}\n```\n\n\n## Indicator background\n\nSet `withIndicatorBackground` prop to display a neutral circular background behind the indicator\nwithout setting a `variant`:\n\n```tsx\nimport { Button, EmptyState } from '@mantine/core';\nimport { ShoppingCartSimpleIcon } from '@phosphor-icons/react';\n\nfunction Demo() {\n  return (\n    <EmptyState withIndicatorBackground icon={<ShoppingCartSimpleIcon />} title=\"Your cart is empty\">\n      <EmptyState.Description>\n        Your shopping cart is empty right now. Browse our catalog and add the items you like to get\n        started with your first order.\n      </EmptyState.Description>\n      <EmptyState.Actions>\n        <Button variant=\"default\">Browse products</Button>\n      </EmptyState.Actions>\n    </EmptyState>\n  );\n}\n```\n\n\n## Size\n\n`EmptyState` supports `xs`, `sm`, `md`, `lg` and `xl` sizes. The `size` prop controls the\nindicator size, gap between elements and font sizes of the title and description. Change the\n`size` prop in the configurator above to see how it scales.\n\n## Accessibility\n\n* The root element is a plain `div`, it is not assigned a landmark role.\n* `EmptyState.Title` renders a non-heading `div` by default. Set the `order` prop if the title\n  should be exposed as a heading to assistive technologies.\n* Action buttons are rendered as provided – make sure they have accessible labels.\n\n\n#### Props\n\n**EmptyState props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| align | \"center\" \\| \"left\" \\| \"right\" | - | Content alignment. `center` stacks the content in a centered column, `left`/`right` place the indicator on the side with the content next to it |\n| children | React.ReactNode | - | `EmptyState` compound components, rendered after the shorthand props content |\n| color | MantineColor | - | Key of `theme.colors` or any valid CSS color, used by `filled` and `light` variants |\n| description | React.ReactNode | - | Description content, rendered inside `EmptyState.Description` |\n| icon | React.ReactNode | - | Icon or illustration, rendered inside `EmptyState.Indicator` |\n| size | MantineSize | - | Controls indicator size, gap between elements and font sizes of title and description |\n| title | React.ReactNode | - | Title content, rendered inside `EmptyState.Title` |\n| withIndicatorBackground | boolean | - | If set, a neutral circular background is displayed behind the indicator. Setting `variant` always displays a colored background regardless of this prop |\n\n\n#### Styles API\n\nEmptyState component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**EmptyState selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-EmptyState-root | Root element |\n| body | .mantine-EmptyState-body | Wrapper around `title`, `description` and `actions` |\n| indicator | .mantine-EmptyState-indicator | Wrapper around the icon or illustration |\n| title | .mantine-EmptyState-title | Title element |\n| description | .mantine-EmptyState-description | Description element |\n| actions | .mantine-EmptyState-actions | Wrapper around action buttons |\n\n**EmptyState CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --empty-state-indicator-size | Controls indicator icon size |\n| root | --empty-state-gap | Controls gap between elements |\n| root | --empty-state-title-fz | Controls title `font-size` |\n| root | --empty-state-description-fz | Controls description `font-size` |\n| root | --empty-state-indicator-color | Controls indicator color of `filled` and `light` variants |\n\n**EmptyState data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| root | data-align | - | Value of `align` prop |\n| root | data-variant | - | Value of `variant` prop |\n| indicator | data-with-background | `withIndicatorBackground` prop is set or `variant` is set | - |\n",
+  "props": [
+    {
+      "name": "align",
+      "description": "Content alignment. <code>center</code> stacks the content in a centered column, <code>left</code>/<code>right</code> place the indicator on the side with the content next to it",
+      "required": false,
+      "defaultValue": "'center'",
+      "type": {
+        "name": "\"center\" | \"left\" | \"right\"",
+        "raw": "\"center\" | \"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"center\""
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "EmptyState"
+    },
+    {
+      "name": "children",
+      "description": "<code>EmptyState</code> compound components, rendered after the shorthand props content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "EmptyState"
+    },
+    {
+      "name": "color",
+      "description": "Key of <code>theme.colors</code> or any valid CSS color, used by <code>filled</code> and <code>light</code> variants",
+      "required": false,
+      "defaultValue": "theme.primaryColor",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "EmptyState"
+    },
+    {
+      "name": "description",
+      "description": "Description content, rendered inside <code>EmptyState.Description</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "EmptyState"
+    },
+    {
+      "name": "icon",
+      "description": "Icon or illustration, rendered inside <code>EmptyState.Indicator</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "EmptyState"
+    },
+    {
+      "name": "size",
+      "description": "Controls indicator size, gap between elements and font sizes of title and description",
+      "required": false,
+      "defaultValue": "'md'",
+      "type": {
+        "name": "MantineSize",
+        "raw": "MantineSize | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"xs\""
+          },
+          {
+            "value": "\"sm\""
+          },
+          {
+            "value": "\"md\""
+          },
+          {
+            "value": "\"lg\""
+          },
+          {
+            "value": "\"xl\""
+          }
+        ]
+      },
+      "sourceComponent": "EmptyState"
+    },
+    {
+      "name": "title",
+      "description": "Title content, rendered inside <code>EmptyState.Title</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "EmptyState"
+    },
+    {
+      "name": "withIndicatorBackground",
+      "description": "If set, a neutral circular background is displayed behind the indicator. Setting <code>variant</code> always displays a colored background regardless of this prop",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "EmptyState"
+    }
+  ]
+}

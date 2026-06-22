@@ -603,6 +603,12 @@ function Demo() {
 ```
 
 
+The `group` property accepts any React node, so you can render custom markup
+(icons, badges, styled text) as a group label instead of a plain string. This
+also applies to `MultiSelect`, `Autocomplete` and `TagsInput`. Note that
+`NativeSelect` renders native `optgroup` elements and only supports string
+group labels.
+
 ## Disabled options
 
 When an option is disabled, it cannot be selected and is ignored in keyboard navigation.
@@ -951,6 +957,33 @@ function Demo() {
 ```
 
 
+## Error state
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Select
+        label="Boolean error"
+        placeholder="Boolean error"
+        error
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+      <Select
+        mt="md"
+        label="With error message"
+        placeholder="With error message"
+        error="Invalid name"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+      />
+    </>
+  );
+}
+```
+
+
 
 #### Props
 
@@ -1014,12 +1047,15 @@ function Demo() {
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, `false` by default |
 | selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, `false` by default |
 | size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | value | Primitive \| null | - | Controlled component value |
 | withAlignedLabels | boolean | - | Aligns unchecked labels with the checked one |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCheckIcon | boolean | - | Displays check icon near the selected option label |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
 | withScrollArea | boolean | - | Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 
 
@@ -1040,6 +1076,7 @@ Select component supports Styles API. With Styles API, you can customize styles 
 | required | .mantine-Select-required | Required asterisk element, rendered inside label |
 | description | .mantine-Select-description | Description element |
 | error | .mantine-Select-error | Error element |
+| success | .mantine-Select-success | Success element |
 
 **Select data attributes**
 

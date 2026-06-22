@@ -36,6 +36,18 @@
     "searchText": "affix renders children inside portal at fixed position @mantine/core /core/affix portalprops position withinportal zindex"
   },
   {
+    "id": "schedule-agenda-view",
+    "name": "AgendaView",
+    "kind": "component",
+    "package": "@mantine/schedule",
+    "route": "/schedule/agenda-view",
+    "description": "Vertical list view of events grouped by date",
+    "propsCount": 0,
+    "llmUrl": "https://mantine.dev/llms/schedule-agenda-view.md",
+    "componentDataUrl": "/mcp/components/schedule-agenda-view.json",
+    "searchText": "agendaview vertical list view of events grouped by date @mantine/schedule /schedule/agenda-view "
+  },
+  {
     "id": "core-alert",
     "name": "Alert",
     "kind": "component",
@@ -126,10 +138,10 @@
     "package": "@mantine/core",
     "route": "/core/autocomplete",
     "description": "Autocomplete user input with any list of options",
-    "propsCount": 51,
+    "propsCount": 54,
     "llmUrl": "https://mantine.dev/llms/core-autocomplete.md",
     "componentDataUrl": "/mcp/components/core-autocomplete.json",
-    "searchText": "autocomplete autocomplete user input with any list of options @mantine/core /core/autocomplete autoselectonblur clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight onchange onclear ondropdownclose ondropdownopen onoptionsubmit openonfocus radius renderoption required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops selectfirstoptiononchange selectfirstoptionondropdownopen size value withasterisk witherrorstyles withscrollarea wrapperprops"
+    "searchText": "autocomplete autocomplete user input with any list of options @mantine/core /core/autocomplete autoselectonblur clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight onchange onclear ondropdownclose ondropdownopen onoptionsubmit openonfocus radius renderoption required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops selectfirstoptiononchange selectfirstoptionondropdownopen size success successprops value withasterisk witherrorstyles withscrollarea withsuccessstyles wrapperprops"
   },
   {
     "id": "core-avatar",
@@ -378,10 +390,10 @@
     "package": "@mantine/core",
     "route": "/core/color-input",
     "description": "Capture color from user",
-    "propsCount": 43,
+    "propsCount": 46,
     "llmUrl": "https://mantine.dev/llms/core-color-input.md",
     "componentDataUrl": "/mcp/components/core-color-input.json",
-    "searchText": "colorinput capture color from user @mantine/core /core/color-input closeoncolorswatchclick defaultvalue description descriptionprops disabled disallowinput error errorprops eyedropperbuttonprops eyedroppericon fixonblur format inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition onchange onchangeend pointer popoverprops radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size swatches swatchesperrow value withasterisk witherrorstyles witheyedropper withpicker withpreview wrapperprops"
+    "searchText": "colorinput capture color from user @mantine/core /core/color-input closeoncolorswatchclick defaultvalue description descriptionprops disabled disallowinput error errorprops eyedropperbuttonprops eyedroppericon fixonblur format inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition onchange onchangeend pointer popoverprops radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops swatches swatchesperrow value withasterisk witherrorstyles witheyedropper withpicker withpreview withsuccessstyles wrapperprops"
   },
   {
     "id": "core-color-picker",
@@ -420,6 +432,18 @@
     "searchText": "combobox create custom select, autocomplete or multiselect inputs @mantine/core /core/combobox arrowoffset arrowposition arrowradius arrowsize children disabled dropdownpadding floatingheight floatingstrategy hidedetached keepmounted keepmountedmode middlewares offset onclose ondismiss onentertransitionend onexittransitionend onopen onoptionsubmit onpositionchange overlayprops portalprops position preventpositionchangewhenvisible radius readonly resetselectiononoptionhover returnfocus shadow size store transitionprops width witharrow withoverlay withinportal zindex active disabled selected value autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation children refprop autocomplete children refprop targettype withariaattributes withexpandedattribute withkeyboardnavigation hidden label"
   },
   {
+    "id": "core-combobox-popover",
+    "name": "ComboboxPopover",
+    "kind": "component",
+    "package": "@mantine/core",
+    "route": "/core/combobox-popover",
+    "description": "Add combobox dropdown to any button element",
+    "propsCount": 32,
+    "llmUrl": "https://mantine.dev/llms/core-combobox-popover.md",
+    "componentDataUrl": "/mcp/components/core-combobox-popover.json",
+    "searchText": "comboboxpopover add combobox dropdown to any button element @mantine/core /core/combobox-popover allowdeselect checkiconposition children comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue dropdownopened filter form hiddeninputprops hiddeninputvaluesdivider limit maxdropdownheight multiple name nothingfoundmessage onchange ondropdownclose ondropdownopen onoptionsubmit onsearchchange renderoption scrollareaprops searchvalue searchable selectfirstoptionondropdownopen value withalignedlabels withcheckicon withscrollarea"
+  },
+  {
     "id": "charts-composite-chart",
     "name": "CompositeChart",
     "kind": "component",
@@ -456,16 +480,28 @@
     "searchText": "copybutton copies given text to clipboard @mantine/core /core/copy-button children timeout value"
   },
   {
+    "id": "core-data-list",
+    "name": "DataList",
+    "kind": "component",
+    "package": "@mantine/core",
+    "route": "/core/data-list",
+    "description": "Display label-value pairs as a description list",
+    "propsCount": 6,
+    "llmUrl": "https://mantine.dev/llms/core-data-list.md",
+    "componentDataUrl": "/mcp/components/core-data-list.json",
+    "searchText": "datalist display label-value pairs as a description list @mantine/core /core/data-list children gap labelwidth orientation size withdivider"
+  },
+  {
     "id": "dates-date-input",
     "name": "DateInput",
     "kind": "component",
     "package": "@mantine/dates",
     "route": "/dates/date-input",
     "description": "Free form date input",
-    "propsCount": 92,
+    "propsCount": 95,
     "llmUrl": "https://mantine.dev/llms/dates-date-input.md",
     "componentDataUrl": "/mcp/components/dates-date-input.json",
-    "searchText": "dateinput free form date input @mantine/dates /dates/date-input allowdeselect arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date dateparser decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled error errorprops excludedate firstdayofweek fixonblur fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops hasnextlevel headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate monthlabelformat monthslistformat nextdisabled nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onlevelclick onnext onnextdecade onnextmonth onnextyear onprevious onpreviousdecade onpreviousmonth onpreviousyear pointer popoverprops presets previousdisabled previousicon previouslabel radius renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withnext withprevious withtime withweeknumbers wrapperprops yearlabelformat yearslistformat"
+    "searchText": "dateinput free form date input @mantine/dates /dates/date-input allowdeselect arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date dateparser decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled error errorprops excludedate firstdayofweek fixonblur fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops hasnextlevel headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate monthlabelformat monthslistformat nextdisabled nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onlevelclick onnext onnextdecade onnextmonth onnextyear onprevious onpreviousdecade onpreviousmonth onpreviousyear pointer popoverprops presets previousdisabled previousicon previouslabel radius renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withnext withprevious withsuccessstyles withtime withweeknumbers wrapperprops yearlabelformat yearslistformat"
   },
   {
     "id": "dates-date-picker",
@@ -486,10 +522,10 @@
     "package": "@mantine/dates",
     "route": "/dates/date-picker-input",
     "description": "Date, multiple dates and dates range picker input",
-    "propsCount": 97,
+    "propsCount": 100,
     "llmUrl": "https://mantine.dev/llms/dates-date-picker-input.md",
     "componentDataUrl": "/mcp/components/dates-date-picker-input.json",
-    "searchText": "datepickerinput date, multiple dates and dates range picker input @mantine/dates /dates/date-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype enablekeyboardnavigation error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates type value valueformat valueformatter weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withweeknumbers wrapperprops yearlabelformat yearslistformat"
+    "searchText": "datepickerinput date, multiple dates and dates range picker input @mantine/dates /dates/date-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype enablekeyboardnavigation error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withsuccessstyles withweeknumbers wrapperprops yearlabelformat yearslistformat"
   },
   {
     "id": "dates-date-time-picker",
@@ -498,10 +534,10 @@
     "package": "@mantine/dates",
     "route": "/dates/date-time-picker",
     "description": "Capture datetime from the user",
-    "propsCount": 96,
+    "propsCount": 99,
     "llmUrl": "https://mantine.dev/llms/dates-date-time-picker.md",
     "componentDataUrl": "/mcp/components/dates-date-time-picker.json",
-    "searchText": "datetimepicker capture datetime from the user @mantine/dates /dates/date-time-picker allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date decadelabelformat defaultdate defaultlevel defaulttimevalue defaultvalue description descriptionprops disabled dropdowntype endtimepickerprops error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates submitbuttonprops timepickerprops type value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withseconds withweeknumbers wrapperprops yearlabelformat yearslistformat"
+    "searchText": "datetimepicker capture datetime from the user @mantine/dates /dates/date-time-picker allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date decadelabelformat defaultdate defaultlevel defaulttimevalue defaultvalue description descriptionprops disabled dropdowntype endtimepickerprops error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates submitbuttonprops success successprops timepickerprops type value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withseconds withsuccessstyles withweeknumbers wrapperprops yearlabelformat yearslistformat"
   },
   {
     "id": "schedule-day-view",
@@ -510,10 +546,10 @@
     "package": "@mantine/schedule",
     "route": "/schedule/day-view",
     "description": "Standalone schedule day view component",
-    "propsCount": 47,
+    "propsCount": 49,
     "llmUrl": "https://mantine.dev/llms/schedule-day-view.md",
     "componentDataUrl": "/mcp/components/schedule-day-view.json",
-    "searchText": "dayview standalone schedule day view component @mantine/schedule /schedule/day-view alldayslotheight businesshours candragevent canresizeevent date endtime events getcurrenttime gettimeslotprops headerformat highlightbusinesshours intervalminutes labels locale mode moreeventsprops nextcontrolprops onalldayslotclick ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody scrollareaprops slotheight slotlabelformat startscrolltime starttime todaycontrolprops viewselectprops withalldayslot withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader"
+    "searchText": "dayview standalone schedule day view component @mantine/schedule /schedule/day-view alldayslotheight businesshours candragevent canresizeevent date endtime events getcurrenttime gettimeslotprops headerformat highlightbusinesshours intervalminutes labels locale mode moreeventsprops nextcontrolprops onalldayslotclick ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody scrollareaprops slotheight slotlabelformat startscrolltime starttime todaycontrolprops viewselectprops withagenda withalldayslot withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader withsubhourgridlines"
   },
   {
     "id": "core-dialog",
@@ -546,10 +582,10 @@
     "package": "@mantine/charts",
     "route": "/charts/donut-chart",
     "description": "Donut chart component",
-    "propsCount": 22,
+    "propsCount": 24,
     "llmUrl": "https://mantine.dev/llms/charts-donut-chart.md",
     "componentDataUrl": "/mcp/components/charts-donut-chart.json",
-    "searchText": "donutchart donut chart component @mantine/charts /charts/donut-chart cellprops chartlabel children data endangle labelcolor labelstype paddingangle piechartprops pieprops size startangle strokecolor strokewidth thickness tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withtooltip"
+    "searchText": "donutchart donut chart component @mantine/charts /charts/donut-chart cellprops chartlabel children data endangle labelcolor labelstype legendprops paddingangle piechartprops pieprops size startangle strokecolor strokewidth thickness tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withlegend withtooltip"
   },
   {
     "id": "core-drawer",
@@ -574,6 +610,18 @@
     "llmUrl": "https://mantine.dev/llms/x-dropzone.md",
     "componentDataUrl": "/mcp/components/x-dropzone.json",
     "searchText": "dropzone capture files from user with drag and drop @mantine/dropzone /x/dropzone accept acceptcolor activateonclick activateondrag activateonkeyboard autofocus disabled drageventsbubbling enablepointerevents getfilesfromevent inputprops loaderprops loading maxfiles maxsize multiple name ondragenter ondragleave ondragover ondrop ondropany onfiledialogcancel onfiledialogopen onreject openref preventdropondocument radius rejectcolor usefsaccessapi validator"
+  },
+  {
+    "id": "core-empty-state",
+    "name": "EmptyState",
+    "kind": "component",
+    "package": "@mantine/core",
+    "route": "/core/empty-state",
+    "description": "Display a placeholder for no data, empty results and first-run states",
+    "propsCount": 8,
+    "llmUrl": "https://mantine.dev/llms/core-empty-state.md",
+    "componentDataUrl": "/mcp/components/core-empty-state.json",
+    "searchText": "emptystate display a placeholder for no data, empty results and first-run states @mantine/core /core/empty-state align children color description icon size title withindicatorbackground"
   },
   {
     "id": "core-fieldset",
@@ -606,10 +654,10 @@
     "package": "@mantine/core",
     "route": "/core/file-input",
     "description": "Capture files from user",
-    "propsCount": 43,
+    "propsCount": 46,
     "llmUrl": "https://mantine.dev/llms/core-file-input.md",
     "componentDataUrl": "/mcp/components/core-file-input.json",
-    "searchText": "fileinput capture files from user @mantine/core /core/file-input accept capture clearbuttonprops clearsectionmode clearable defaultvalue description descriptionprops disabled error errorprops fileinputprops form inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiple name onchange placeholder pointer radius readonly required resetref rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size value valuecomponent withasterisk witherrorstyles wrapperprops"
+    "searchText": "fileinput capture files from user @mantine/core /core/file-input accept capture clearbuttonprops clearsectionmode clearable defaultvalue description descriptionprops disabled error errorprops fileinputprops form inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiple name onchange placeholder pointer radius readonly required resetref rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops value valuecomponent withasterisk witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-flex",
@@ -666,10 +714,10 @@
     "package": "@mantine/charts",
     "route": "/charts/funnel-chart",
     "description": "Funnel chart component",
-    "propsCount": 15,
+    "propsCount": 17,
     "llmUrl": "https://mantine.dev/llms/charts-funnel-chart.md",
     "componentDataUrl": "/mcp/components/charts-funnel-chart.json",
-    "searchText": "funnelchart funnel chart component @mantine/charts /charts/funnel-chart children data funnelchartprops funnelprops labelcolor labelsposition size strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withtooltip"
+    "searchText": "funnelchart funnel chart component @mantine/charts /charts/funnel-chart children data funnelchartprops funnelprops labelcolor labelsposition legendprops size strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlegend withtooltip"
   },
   {
     "id": "core-grid",
@@ -786,10 +834,10 @@
     "package": "@mantine/core",
     "route": "/core/input",
     "description": "Base component to create custom inputs",
-    "propsCount": 41,
+    "propsCount": 45,
     "llmUrl": "https://mantine.dev/llms/core-input.md",
     "componentDataUrl": "/mcp/components/core-input.json",
-    "searchText": "input base component to create custom inputs @mantine/core /core/input disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size witharia witherrorstyles wrapperprops description descriptionprops error errorprops id inputcontainer inputwrapperorder label labelelement labelprops required size withasterisk labelelement required size size size"
+    "searchText": "input base component to create custom inputs @mantine/core /core/input disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size success witharia witherrorstyles withsuccessstyles wrapperprops description descriptionprops error errorprops id inputcontainer inputwrapperorder label labelelement labelprops required size success successprops withasterisk labelelement required size size size"
   },
   {
     "id": "core-json-input",
@@ -798,10 +846,10 @@
     "package": "@mantine/core",
     "route": "/core/json-input",
     "description": "Capture json data from user",
-    "propsCount": 41,
+    "propsCount": 44,
     "llmUrl": "https://mantine.dev/llms/core-json-input.md",
     "componentDataUrl": "/mcp/components/core-json-input.json",
-    "searchText": "jsoninput capture json data from user @mantine/core /core/json-input autosize bottomsection bottomsectionprops defaultvalue description descriptionprops deserialize disabled error errorprops formatonblur indentspaces inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxrows minrows onchange pointer radius required resize rightsection rightsectionpointerevents rightsectionprops rightsectionwidth serialize size validationerror value withasterisk witherrorstyles wrapperprops"
+    "searchText": "jsoninput capture json data from user @mantine/core /core/json-input autosize bottomsection bottomsectionprops defaultvalue description descriptionprops deserialize disabled error errorprops formatonblur indentspaces inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxrows minrows onchange pointer radius required resize rightsection rightsectionpointerevents rightsectionprops rightsectionwidth serialize size success successprops validationerror value withasterisk witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-kbd",
@@ -894,10 +942,10 @@
     "package": "@mantine/core",
     "route": "/core/mask-input",
     "description": "Input with mask pattern for formatted text entry",
-    "propsCount": 40,
+    "propsCount": 43,
     "llmUrl": "https://mantine.dev/llms/core-mask-input.md",
     "componentDataUrl": "/mcp/components/core-mask-input.json",
-    "searchText": "maskinput input with mask pattern for formatted text entry @mantine/core /core/mask-input alwaysshowmask autoclear beforemaskedstatechange description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition mask modify onchangeraw oncomplete pointer radius required resetref rightsection rightsectionpointerevents rightsectionprops rightsectionwidth separate showmaskonfocus size slotchar tokens transform withasterisk witherrorstyles wrapperprops"
+    "searchText": "maskinput input with mask pattern for formatted text entry @mantine/core /core/mask-input alwaysshowmask autoclear beforemaskedstatechange description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition mask modify onchangeraw oncomplete pointer radius required resetref rightsection rightsectionpointerevents rightsectionprops rightsectionwidth separate showmaskonfocus size slotchar success successprops tokens transform withasterisk witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-menu",
@@ -906,10 +954,22 @@
     "package": "@mantine/core",
     "route": "/core/menu",
     "description": "Combine a list of secondary actions into single interactive area",
-    "propsCount": 153,
+    "propsCount": 155,
     "llmUrl": "https://mantine.dev/llms/core-menu.md",
     "componentDataUrl": "/mcp/components/core-menu.json",
-    "searchText": "menu combine a list of secondary actions into single interactive area @mantine/core /core/menu alignitemslabels arrowoffset arrowposition arrowradius arrowsize checkicon children clickoutsideevents closedelay closeonclickoutside closeonescape closeonitemclick defaultopened disabled floatingstrategy hidedetached id keepmounted keepmountedmode loop menuitemtabindex middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus trigger width witharrow withinitialfocusplaceholder withoverlay withinportal zindex children refprop children closemenuonclick color disabled leftsection rightsection clearsearchonclose disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size witharia witherrorstyles wrapperprops checkicon checked children closemenuonclick color defaultchecked disabled onchange rightsection value children defaultvalue onchange value checkicon checked children closemenuonclick color disabled onchange rightsection value children defaultvalue onchange value children disabled longpressdelay arrowoffset arrowposition arrowradius arrowsize closedelay disabled floatingstrategy hidedetached keepmounted keepmountedmode middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus safeareapolygon shadow transitionprops width witharrow withoverlay withinportal zindex children closemenuonclick color disabled leftsection rightsection children refprop"
+    "searchText": "menu combine a list of secondary actions into single interactive area @mantine/core /core/menu alignitemslabels arrowoffset arrowposition arrowradius arrowsize checkicon children clickoutsideevents closedelay closeonclickoutside closeonescape closeonitemclick defaultopened disabled floatingstrategy hidedetached id keepmounted keepmountedmode loop menuitemtabindex middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus shadow transitionprops trapfocus trigger width witharrow withinitialfocusplaceholder withoverlay withinportal zindex children refprop children closemenuonclick color disabled leftsection rightsection clearsearchonclose disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size success witharia witherrorstyles withsuccessstyles wrapperprops checkicon checked children closemenuonclick color defaultchecked disabled onchange rightsection value children defaultvalue onchange value checkicon checked children closemenuonclick color disabled onchange rightsection value children defaultvalue onchange value children disabled longpressdelay arrowoffset arrowposition arrowradius arrowsize closedelay disabled floatingstrategy hidedetached keepmounted keepmountedmode middlewares offset onchange onclose ondismiss onentertransitionend onexittransitionend onopen onpositionchange opendelay opened overlayprops portalprops position preventpositionchangewhenvisible radius returnfocus safeareapolygon shadow transitionprops width witharrow withoverlay withinportal zindex children closemenuonclick color disabled leftsection rightsection children refprop"
+  },
+  {
+    "id": "core-menubar",
+    "name": "Menubar",
+    "kind": "component",
+    "package": "@mantine/core",
+    "route": "/core/menubar",
+    "description": "Desktop application style menubar with a row of menu triggers",
+    "propsCount": 7,
+    "llmUrl": "https://mantine.dev/llms/core-menubar.md",
+    "componentDataUrl": "/mcp/components/core-menubar.json",
+    "searchText": "menubar desktop application style menubar with a row of menu triggers @mantine/core /core/menubar children defaultopenindex loop onopenchange openindex position trigger"
   },
   {
     "id": "dates-mini-calendar",
@@ -978,10 +1038,10 @@
     "package": "@mantine/dates",
     "route": "/dates/month-picker-input",
     "description": "Month, multiple months and months range picker input",
-    "propsCount": 75,
+    "propsCount": 78,
     "llmUrl": "https://mantine.dev/llms/dates-month-picker-input.md",
     "componentDataUrl": "/mcp/components/dates-month-picker-input.json",
-    "searchText": "monthpickerinput month, multiple months and months range picker input @mantine/dates /dates/month-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getmonthcontrolprops getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthslistformat nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onnextdecade onnextyear onpreviousdecade onpreviousyear placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates type value valueformat valueformatter withasterisk withcellspacing witherrorstyles wrapperprops yearlabelformat yearslistformat"
+    "searchText": "monthpickerinput month, multiple months and months range picker input @mantine/dates /dates/month-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getmonthcontrolprops getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthslistformat nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onnextdecade onnextyear onpreviousdecade onpreviousyear placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter withasterisk withcellspacing witherrorstyles withsuccessstyles wrapperprops yearlabelformat yearslistformat"
   },
   {
     "id": "schedule-month-view",
@@ -990,10 +1050,10 @@
     "package": "@mantine/schedule",
     "route": "/schedule/month-view",
     "description": "Standalone schedule month view component",
-    "propsCount": 41,
+    "propsCount": 43,
     "llmUrl": "https://mantine.dev/llms/schedule-month-view.md",
     "componentDataUrl": "/mcp/components/schedule-month-view.json",
-    "searchText": "monthview standalone schedule month view component @mantine/schedule /schedule/month-view candragevent consistentweeks date events firstdayofweek getdayprops getweeknumberprops highlighttoday labels locale maxeventsperday mode monthyearselectprops moreeventsprops nextcontrolprops ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop onexternaleventdrop onslotdragend onviewchange onweeknumberclick previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody scrollareaprops todaycontrolprops viewselectprops weekdayformat weekenddays withdragslotselect witheventsdraganddrop withheader withoutsidedays withweekdays withweeknumbers"
+    "searchText": "monthview standalone schedule month view component @mantine/schedule /schedule/month-view candragevent consistentweeks date events firstdayofweek getdayprops getweeknumberprops highlighttoday labels locale maxeventsperday mode monthyearselectprops moreeventsprops nextcontrolprops ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop onexternaleventdrop onslotdragend onviewchange onweeknumberclick previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody scrollareaprops todaycontrolprops viewselectprops weekdayformat weekenddays withagenda withdragslotselect witheventsdraganddrop withheader withoutsidedays withweekdays withweeknumbers withweekenddays"
   },
   {
     "id": "core-multi-select",
@@ -1002,10 +1062,10 @@
     "package": "@mantine/core",
     "route": "/core/multi-select",
     "description": "Custom searchable multi select",
-    "propsCount": 69,
+    "propsCount": 72,
     "llmUrl": "https://mantine.dev/llms/core-multi-select.md",
     "componentDataUrl": "/mcp/components/core-multi-select.json",
-    "searchText": "multiselect custom searchable multi select @mantine/core /core/multi-select checkiconposition chevroncolor clearbuttonprops clearsearchonchange clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight hiddeninputprops hiddeninputvaluesdivider hidepickedoptions inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight maxvalues nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onmaxvalues onoptionsubmit onremove onsearchchange openonfocus pointer radius renderoption renderpill required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable selectfirstoptiononchange selectfirstoptionondropdownopen size value withalignedlabels withasterisk withcheckicon witherrorstyles withpillsreorder withscrollarea wrapperprops"
+    "searchText": "multiselect custom searchable multi select @mantine/core /core/multi-select checkiconposition chevroncolor clearbuttonprops clearsearchonchange clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight hiddeninputprops hiddeninputvaluesdivider hidepickedoptions inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight maxvalues nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onmaxvalues onoptionsubmit onremove onsearchchange openonfocus pointer radius renderoption renderpill required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable selectfirstoptiononchange selectfirstoptionondropdownopen size success successprops value withalignedlabels withasterisk withcheckicon witherrorstyles withpillsreorder withscrollarea withsuccessstyles wrapperprops"
   },
   {
     "id": "core-native-select",
@@ -1014,10 +1074,10 @@
     "package": "@mantine/core",
     "route": "/core/native-select",
     "description": "Native select element based on Input",
-    "propsCount": 27,
+    "propsCount": 30,
     "llmUrl": "https://mantine.dev/llms/core-native-select.md",
     "componentDataUrl": "/mcp/components/core-native-select.json",
-    "searchText": "nativeselect native select element based on input @mantine/core /core/native-select data description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size withasterisk witherrorstyles wrapperprops"
+    "searchText": "nativeselect native select element based on input @mantine/core /core/native-select data description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops withasterisk witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "x-nprogress",
@@ -1086,10 +1146,10 @@
     "package": "@mantine/core",
     "route": "/core/number-input",
     "description": "Capture number from user",
-    "propsCount": 58,
+    "propsCount": 61,
     "llmUrl": "https://mantine.dev/llms/core-number-input.md",
     "componentDataUrl": "/mcp/components/core-number-input.json",
-    "searchText": "numberinput capture number from user @mantine/core /core/number-input allowdecimal allowleadingzeros allownegative alloweddecimalseparators clampbehavior decimalscale decimalseparator defaultvalue description descriptionprops disabled error errorprops fixeddecimalscale handlersref hidecontrols inputcontainer inputsize inputwrapperorder isallowed label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition max min onchange onmaxreached onminreached onvaluechange prefix radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth selectallonfocus size startvalue step stepholddelay stepholdinterval suffix thousandseparator thousandsgroupstyle trimleadingzeroesonblur type value valueisnumericstring withasterisk witherrorstyles withkeyboardevents wrapperprops"
+    "searchText": "numberinput capture number from user @mantine/core /core/number-input allowdecimal allowleadingzeros allownegative alloweddecimalseparators clampbehavior decimalscale decimalseparator defaultvalue description descriptionprops disabled error errorprops fixeddecimalscale handlersref hidecontrols inputcontainer inputsize inputwrapperorder isallowed label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition max min onchange onmaxreached onminreached onvaluechange prefix radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth selectallonfocus size startvalue step stepholddelay stepholdinterval success successprops suffix thousandseparator thousandsgroupstyle trimleadingzeroesonblur type value valueisnumericstring withasterisk witherrorstyles withkeyboardevents withsuccessstyles wrapperprops"
   },
   {
     "id": "core-overflow-list",
@@ -1146,10 +1206,10 @@
     "package": "@mantine/core",
     "route": "/core/password-input",
     "description": "Capture password data from user",
-    "propsCount": 31,
+    "propsCount": 34,
     "llmUrl": "https://mantine.dev/llms/core-password-input.md",
     "componentDataUrl": "/mcp/components/core-password-input.json",
-    "searchText": "passwordinput capture password data from user @mantine/core /core/password-input defaultvisible description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition onvisibilitychange radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size visibilitytogglebuttonprops visibilitytoggleicon visible withasterisk witherrorstyles wrapperprops"
+    "searchText": "passwordinput capture password data from user @mantine/core /core/password-input defaultvisible description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition onvisibilitychange radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops visibilitytogglebuttonprops visibilitytoggleicon visible withasterisk witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "charts-pie-chart",
@@ -1158,10 +1218,10 @@
     "package": "@mantine/charts",
     "route": "/charts/pie-chart",
     "description": "Pie chart component",
-    "propsCount": 21,
+    "propsCount": 23,
     "llmUrl": "https://mantine.dev/llms/charts-pie-chart.md",
     "componentDataUrl": "/mcp/components/charts-pie-chart.json",
-    "searchText": "piechart pie chart component @mantine/charts /charts/pie-chart cellprops children data endangle labelcolor labelsposition labelstype paddingangle piechartprops pieprops size startangle strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withtooltip"
+    "searchText": "piechart pie chart component @mantine/charts /charts/pie-chart cellprops children data endangle labelcolor labelsposition labelstype legendprops paddingangle piechartprops pieprops size startangle strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withlegend withtooltip"
   },
   {
     "id": "core-pill",
@@ -1182,10 +1242,10 @@
     "package": "@mantine/core",
     "route": "/core/pills-input",
     "description": "Base component for custom tags inputs and multi selects",
-    "propsCount": 29,
+    "propsCount": 32,
     "llmUrl": "https://mantine.dev/llms/core-pills-input.md",
     "componentDataUrl": "/mcp/components/core-pills-input.json",
-    "searchText": "pillsinput base component for custom tags inputs and multi selects @mantine/core /core/pills-input description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size withasterisk witherrorstyles wrapperprops pointer type"
+    "searchText": "pillsinput base component for custom tags inputs and multi selects @mantine/core /core/pills-input description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops withasterisk witherrorstyles withsuccessstyles wrapperprops pointer type"
   },
   {
     "id": "core-pin-input",
@@ -1194,10 +1254,10 @@
     "package": "@mantine/core",
     "route": "/core/pin-input",
     "description": "Capture pin code or one time password from the user",
-    "propsCount": 26,
+    "propsCount": 27,
     "llmUrl": "https://mantine.dev/llms/core-pin-input.md",
     "componentDataUrl": "/mcp/components/core-pin-input.json",
-    "searchText": "pininput capture pin code or one time password from the user @mantine/core /core/pin-input arialabel autofocus defaultvalue disabled error form gap getinputprops hiddeninputprops id inputmode inputtype length managefocus mask name onchange oncomplete onetimecode placeholder radius readonly rootref size type value"
+    "searchText": "pininput capture pin code or one time password from the user @mantine/core /core/pin-input arialabel autofocus defaultvalue disabled error form gap getinputprops hiddeninputprops id inputmode inputtype length managefocus mask name onchange oncomplete onetimecode placeholder radius readonly rootref size success type value"
   },
   {
     "id": "core-popover",
@@ -1266,10 +1326,10 @@
     "package": "@mantine/core",
     "route": "/core/radio",
     "description": "Wrapper for input type radio",
-    "propsCount": 47,
+    "propsCount": 49,
     "llmUrl": "https://mantine.dev/llms/core-radio.md",
     "componentDataUrl": "/mcp/components/core-radio.json",
-    "searchText": "radio wrapper for input type radio @mantine/core /core/radio autocontrast color description error icon iconcolor label labelposition radius rootref size witherrorstyles wrapperprops children defaultvalue description descriptionprops disabled error errorprops id inputcontainer inputwrapperorder label labelelement labelprops name onchange readonly required size value withasterisk wrapperprops autocontrast checked color disabled icon iconcolor radius size checked name radius value withborder"
+    "searchText": "radio wrapper for input type radio @mantine/core /core/radio autocontrast color description error icon iconcolor label labelposition radius rootref size witherrorstyles wrapperprops children defaultvalue description descriptionprops disabled error errorprops id inputcontainer inputwrapperorder label labelelement labelprops name onchange readonly required size success successprops value withasterisk wrapperprops autocontrast checked color disabled icon iconcolor radius size checked name radius value withborder"
   },
   {
     "id": "core-range-slider",
@@ -1294,6 +1354,54 @@
     "llmUrl": "https://mantine.dev/llms/core-rating.md",
     "componentDataUrl": "/mcp/components/core-rating.json",
     "searchText": "rating pick and display rating @mantine/core /core/rating allowclear color count defaultvalue emptysymbol fractions fullsymbol getsymbollabel highlightselectedonly name onchange onhover readonly size value"
+  },
+  {
+    "id": "schedule-resources-day-view",
+    "name": "ResourcesDayView",
+    "kind": "component",
+    "package": "@mantine/schedule",
+    "route": "/schedule/resources-day-view",
+    "description": "Day view with resource columns for scheduling across resources",
+    "propsCount": 49,
+    "llmUrl": "https://mantine.dev/llms/schedule-resources-day-view.md",
+    "componentDataUrl": "/mcp/components/schedule-resources-day-view.json",
+    "searchText": "resourcesdayview day view with resource columns for scheduling across resources @mantine/schedule /schedule/resources-day-view businesshours candragevent canresizeevent date endtime events grouplabelwidth groups headerformat highlightbusinesshours intervalminutes labels locale maxeventspertimeslot mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolltime starttime todaycontrolprops viewselectprops withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader"
+  },
+  {
+    "id": "schedule-resources-month-view",
+    "name": "ResourcesMonthView",
+    "kind": "component",
+    "package": "@mantine/schedule",
+    "route": "/schedule/resources-month-view",
+    "description": "Month view with resource lanes for scheduling across resources",
+    "propsCount": 42,
+    "llmUrl": "https://mantine.dev/llms/schedule-resources-month-view.md",
+    "componentDataUrl": "/mcp/components/schedule-resources-month-view.json",
+    "searchText": "resourcesmonthview month view with resource lanes for scheduling across resources @mantine/schedule /schedule/resources-month-view candragevent date daywidth events grouplabelwidth groups highlighttoday labels locale maxeventspertimeslot mode monthyearselectprops moreeventsprops nextcontrolprops ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop onexternaleventdrop onslotdragend onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel resources rowheight scrollareaprops startscrolldate todaycontrolprops viewselectprops weekdayformat weekenddays withdragslotselect witheventsdraganddrop withheader withweekenddays"
+  },
+  {
+    "id": "schedule-resources-schedule",
+    "name": "ResourcesSchedule",
+    "kind": "component",
+    "package": "@mantine/schedule",
+    "route": "/schedule/resources-schedule",
+    "description": "Schedule wrapper component that combines resource day, week and month views",
+    "propsCount": 32,
+    "llmUrl": "https://mantine.dev/llms/schedule-resources-schedule.md",
+    "componentDataUrl": "/mcp/components/schedule-resources-schedule.json",
+    "searchText": "resourcesschedule schedule wrapper component that combines resource day, week and month views @mantine/schedule /schedule/resources-schedule candragevent canresizeevent date dayviewprops defaultdate defaultview events labels locale mode monthviewprops ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange radius recurrenceexpansionlimit rendereventbody renderresourcelabel resources view weekviewprops withdragslotselect witheventresize witheventsdraganddrop"
+  },
+  {
+    "id": "schedule-resources-week-view",
+    "name": "ResourcesWeekView",
+    "kind": "component",
+    "package": "@mantine/schedule",
+    "route": "/schedule/resources-week-view",
+    "description": "Week view with resource rows for scheduling across resources",
+    "propsCount": 52,
+    "llmUrl": "https://mantine.dev/llms/schedule-resources-week-view.md",
+    "componentDataUrl": "/mcp/components/schedule-resources-week-view.json",
+    "searchText": "resourcesweekview week view with resource rows for scheduling across resources @mantine/schedule /schedule/resources-week-view businesshours candragevent date endtime events firstdayofweek grouplabelwidth groups highlightbusinesshours highlighttoday intervalminutes labels locale maxeventspertimeslot mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel renderweeklabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolldatetime starttime todaycontrolprops viewselectprops weeklabelformat weekdayformat weekenddays withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventsdraganddrop withheader withweekenddays"
   },
   {
     "id": "x-tiptap",
@@ -1362,10 +1470,10 @@
     "package": "@mantine/schedule",
     "route": "/schedule/schedule",
     "description": "Schedule component with day, week, month and year views",
-    "propsCount": 34,
+    "propsCount": 35,
     "llmUrl": "https://mantine.dev/llms/schedule-schedule.md",
     "componentDataUrl": "/mcp/components/schedule-schedule.json",
-    "searchText": "schedule schedule component with day, week, month and year views @mantine/schedule /schedule/schedule candragevent canresizeevent date dayviewprops defaultdate defaultview events labels layout locale mobilemonthviewprops mode monthviewprops onalldayslotclick ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange radius recurrenceexpansionlimit rendereventbody view weekviewprops withdragslotselect witheventresize witheventsdraganddrop yearviewprops"
+    "searchText": "schedule schedule component with day, week, month and year views @mantine/schedule /schedule/schedule candragevent canresizeevent date dayviewprops defaultdate defaultview events labels layout locale mobilemonthviewprops mode monthviewprops onalldayslotclick ondatechange ondayclick oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange radius recurrenceexpansionlimit rendereventbody view weekviewprops withagenda withdragslotselect witheventresize witheventsdraganddrop yearviewprops"
   },
   {
     "id": "core-scroll-area",
@@ -1410,10 +1518,10 @@
     "package": "@mantine/core",
     "route": "/core/select",
     "description": "Custom searchable select",
-    "propsCount": 63,
+    "propsCount": 66,
     "llmUrl": "https://mantine.dev/llms/core-select.md",
     "componentDataUrl": "/mcp/components/core-select.json",
-    "searchText": "select custom searchable select @mantine/core /core/select allowdeselect autoselectonblur checkiconposition chevroncolor clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight hiddeninputprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onoptionsubmit onsearchchange openonfocus pointer radius renderoption required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable selectfirstoptiononchange selectfirstoptionondropdownopen size value withalignedlabels withasterisk withcheckicon witherrorstyles withscrollarea wrapperprops"
+    "searchText": "select custom searchable select @mantine/core /core/select allowdeselect autoselectonblur checkiconposition chevroncolor clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight hiddeninputprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onoptionsubmit onsearchchange openonfocus pointer radius renderoption required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable selectfirstoptiononchange selectfirstoptionondropdownopen size success successprops value withalignedlabels withasterisk withcheckicon witherrorstyles withscrollarea withsuccessstyles wrapperprops"
   },
   {
     "id": "core-semi-circle-progress",
@@ -1506,10 +1614,10 @@
     "package": "@mantine/spotlight",
     "route": "/x/spotlight",
     "description": "Command center for your application",
-    "propsCount": 126,
+    "propsCount": 128,
     "llmUrl": "https://mantine.dev/llms/x-spotlight.md",
     "componentDataUrl": "/mcp/components/x-spotlight.json",
-    "searchText": "spotlight command center for your application @mantine/spotlight /x/spotlight actions centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled filter forceopened fullscreen highlightquery id keepmounted limit lockscroll maxheight nothingfound onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollareaprops scrollable searchprops shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled forceopened fullscreen id keepmounted lockscroll maxheight onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollable shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex children closespotlightontrigger description dimmedsections highlightcolor highlightquery keywords label leftsection rightsection children label disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size witharia witherrorstyles wrapperprops"
+    "searchText": "spotlight command center for your application @mantine/spotlight /x/spotlight actions centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled filter forceopened fullscreen highlightquery id keepmounted limit lockscroll maxheight nothingfound onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollareaprops scrollable searchprops shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled forceopened fullscreen id keepmounted lockscroll maxheight onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollable shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex children closespotlightontrigger description dimmedsections highlightcolor highlightquery keywords label leftsection rightsection children label disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size success witharia witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-stack",
@@ -1590,10 +1698,10 @@
     "package": "@mantine/core",
     "route": "/core/tags-input",
     "description": "Capture a list of values from user with free input and suggestions",
-    "propsCount": 66,
+    "propsCount": 69,
     "llmUrl": "https://mantine.dev/llms/core-tags-input.md",
     "componentDataUrl": "/mcp/components/core-tags-input.json",
-    "searchText": "tagsinput capture a list of values from user with free input and suggestions @mantine/core /core/tags-input acceptvalueonblur allowduplicates clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight hiddeninputprops hiddeninputvaluesdivider inputcontainer inputsize inputwrapperorder isduplicate label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight maxtags onchange onclear ondropdownclose ondropdownopen onduplicate onmaxtags onoptionsubmit onremove onsearchchange openonfocus pointer radius renderoption renderpill required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue selectfirstoptiononchange selectfirstoptionondropdownopen size splitchars value withasterisk witherrorstyles withpillsreorder withscrollarea wrapperprops"
+    "searchText": "tagsinput capture a list of values from user with free input and suggestions @mantine/core /core/tags-input acceptvalueonblur allowduplicates clearbuttonprops clearsectionmode clearable comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops filter floatingheight hiddeninputprops hiddeninputvaluesdivider inputcontainer inputsize inputwrapperorder isduplicate label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth limit loading loadingposition maxdropdownheight maxtags onchange onclear ondropdownclose ondropdownopen onduplicate onmaxtags onoptionsubmit onremove onsearchchange openonfocus pointer radius renderoption renderpill required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue selectfirstoptiononchange selectfirstoptionondropdownopen size splitchars success successprops value withasterisk witherrorstyles withpillsreorder withscrollarea withsuccessstyles wrapperprops"
   },
   {
     "id": "core-text",
@@ -1614,10 +1722,10 @@
     "package": "@mantine/core",
     "route": "/core/textarea",
     "description": "Autosize or regular textarea",
-    "propsCount": 33,
+    "propsCount": 36,
     "llmUrl": "https://mantine.dev/llms/core-textarea.md",
     "componentDataUrl": "/mcp/components/core-textarea.json",
-    "searchText": "textarea autosize or regular textarea @mantine/core /core/textarea autosize bottomsection bottomsectionprops description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxrows minrows pointer radius required resize rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size withasterisk witherrorstyles wrapperprops"
+    "searchText": "textarea autosize or regular textarea @mantine/core /core/textarea autosize bottomsection bottomsectionprops description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxrows minrows pointer radius required resize rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops withasterisk witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-text-input",
@@ -1626,10 +1734,10 @@
     "package": "@mantine/core",
     "route": "/core/text-input",
     "description": "Capture string input from user",
-    "propsCount": 27,
+    "propsCount": 30,
     "llmUrl": "https://mantine.dev/llms/core-text-input.md",
     "componentDataUrl": "/mcp/components/core-text-input.json",
-    "searchText": "textinput capture string input from user @mantine/core /core/text-input description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size withasterisk witherrorstyles wrapperprops"
+    "searchText": "textinput capture string input from user @mantine/core /core/text-input description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops withasterisk witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-theme-icon",
@@ -1662,10 +1770,10 @@
     "package": "@mantine/dates",
     "route": "/dates/time-input",
     "description": "Capture time from the user",
-    "propsCount": 30,
+    "propsCount": 33,
     "llmUrl": "https://mantine.dev/llms/dates-time-input.md",
     "componentDataUrl": "/mcp/components/dates-time-input.json",
-    "searchText": "timeinput capture time from the user @mantine/dates /dates/time-input description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxtime mintime pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size withasterisk witherrorstyles withseconds wrapperprops"
+    "searchText": "timeinput capture time from the user @mantine/dates /dates/time-input description descriptionprops disabled error errorprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxtime mintime pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops withasterisk witherrorstyles withseconds withsuccessstyles wrapperprops"
   },
   {
     "id": "core-timeline",
@@ -1686,10 +1794,10 @@
     "package": "@mantine/dates",
     "route": "/dates/time-picker",
     "description": "Captures time value from the user",
-    "propsCount": 72,
+    "propsCount": 75,
     "llmUrl": "https://mantine.dev/llms/dates-time-picker.md",
     "componentDataUrl": "/mcp/components/dates-time-picker.json",
-    "searchText": "timepicker captures time value from the user @mantine/dates /dates/time-picker ampminputlabel ampmlabels ampmref ampmselectprops clearbuttonprops clearsectionmode clearable closedropdownonpresetselect defaultvalue description descriptionprops disabled error errorprops form format hiddeninputprops hoursinputlabel hoursinputprops hoursplaceholder hoursref hoursstep inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition max maxdropdowncontentheight min minhoursdigits minutesinputlabel minutesinputprops minutesplaceholder minutesref minutesstep name onblur onchange onfocus pastesplit pointer popoverprops presets radius readonly required reversetimecontrolslist rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops secondsinputlabel secondsinputprops secondsplaceholder secondsref secondsstep size type value withasterisk withdropdown witherrorstyles withseconds wrapperprops"
+    "searchText": "timepicker captures time value from the user @mantine/dates /dates/time-picker ampminputlabel ampmlabels ampmref ampmselectprops clearbuttonprops clearsectionmode clearable closedropdownonpresetselect defaultvalue description descriptionprops disabled error errorprops form format hiddeninputprops hoursinputlabel hoursinputprops hoursplaceholder hoursref hoursstep inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition max maxdropdowncontentheight min minhoursdigits minutesinputlabel minutesinputprops minutesplaceholder minutesref minutesstep name onblur onchange onfocus pastesplit pointer popoverprops presets radius readonly required reversetimecontrolslist rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops secondsinputlabel secondsinputprops secondsplaceholder secondsref secondsstep size success successprops type value withasterisk withdropdown witherrorstyles withseconds withsuccessstyles wrapperprops"
   },
   {
     "id": "dates-time-value",
@@ -1770,10 +1878,10 @@
     "package": "@mantine/core",
     "route": "/core/tree-select",
     "description": "Select with hierarchical tree data",
-    "propsCount": 69,
+    "propsCount": 72,
     "llmUrl": "https://mantine.dev/llms/core-tree-select.md",
     "componentDataUrl": "/mcp/components/core-tree-select.json",
-    "searchText": "treeselect select with hierarchical tree data @mantine/core /core/tree-select allowdeselect checkstrictly checkedstrategy chevronarialabels chevroncolor clearbuttonprops clearsearchonchange clearsectionmode clearable comboboxprops data defaultdropdownopened defaultexpandall defaultexpandedvalues defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops expandonclick expandedvalues filter hiddeninputprops hiddeninputvaluesdivider inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxdisplayedvalues maxdisplayedvaluescontent maxdropdownheight maxvalues mode nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onexpandedchange onremove onsearchchange openonfocus pointer radius rendernode required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable size value withasterisk witherrorstyles withlines wrapperprops"
+    "searchText": "treeselect select with hierarchical tree data @mantine/core /core/tree-select allowdeselect checkstrictly checkedstrategy chevronarialabels chevroncolor clearbuttonprops clearsearchonchange clearsectionmode clearable comboboxprops data defaultdropdownopened defaultexpandall defaultexpandedvalues defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops expandonclick expandedvalues filter hiddeninputprops hiddeninputvaluesdivider inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxdisplayedvalues maxdisplayedvaluescontent maxdropdownheight maxvalues mode nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onexpandedchange onremove onsearchchange openonfocus pointer radius rendernode required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable size success successprops value withasterisk witherrorstyles withlines withsuccessstyles wrapperprops"
   },
   {
     "id": "schedule-week-view",
@@ -1782,10 +1890,10 @@
     "package": "@mantine/schedule",
     "route": "/schedule/week-view",
     "description": "Standalone schedule week view component",
-    "propsCount": 54,
+    "propsCount": 56,
     "llmUrl": "https://mantine.dev/llms/schedule-week-view.md",
     "componentDataUrl": "/mcp/components/schedule-week-view.json",
-    "searchText": "weekview standalone schedule week view component @mantine/schedule /schedule/week-view alldayslotheight businesshours candragevent canresizeevent date endtime events firstdayofweek forcecurrenttimeindicator getcurrenttime gettimeslotprops highlightbusinesshours highlighttoday intervalminutes labels locale mode nextcontrolprops onalldayslotclick ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody renderweeklabel scrollareaprops slotheight slotlabelformat startscrolltime starttime todaycontrolprops viewselectprops weeklabelformat weekdayformat weekenddays withalldayslots withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader withweeknumber withweekenddays"
+    "searchText": "weekview standalone schedule week view component @mantine/schedule /schedule/week-view alldayslotheight businesshours candragevent canresizeevent date endtime events firstdayofweek forcecurrenttimeindicator getcurrenttime gettimeslotprops highlightbusinesshours highlighttoday intervalminutes labels locale mode nextcontrolprops onalldayslotclick ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody renderweeklabel scrollareaprops slotheight slotlabelformat startscrolltime starttime todaycontrolprops viewselectprops weeklabelformat weekdayformat weekenddays withagenda withalldayslots withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader withsubhourgridlines withweeknumber withweekenddays"
   },
   {
     "id": "dates-year-picker",
@@ -1806,10 +1914,10 @@
     "package": "@mantine/dates",
     "route": "/dates/year-picker-input",
     "description": "Inline year, multiple years and years range picker",
-    "propsCount": 66,
+    "propsCount": 69,
     "llmUrl": "https://mantine.dev/llms/dates-year-picker-input.md",
     "componentDataUrl": "/mcp/components/dates-year-picker-input.json",
-    "searchText": "yearpickerinput inline year, multiple years and years range picker @mantine/dates /dates/year-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition locale maxdate mindate modalprops nextlabel numberofcolumns onchange ondatechange ondropdownclose onnextdecade onpreviousdecade placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates type value valueformat valueformatter withasterisk withcellspacing witherrorstyles wrapperprops yearslistformat"
+    "searchText": "yearpickerinput inline year, multiple years and years range picker @mantine/dates /dates/year-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition locale maxdate mindate modalprops nextlabel numberofcolumns onchange ondatechange ondropdownclose onnextdecade onpreviousdecade placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter withasterisk withcellspacing witherrorstyles withsuccessstyles wrapperprops yearslistformat"
   },
   {
     "id": "schedule-year-view",

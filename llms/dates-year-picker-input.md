@@ -383,6 +383,8 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
 | size | MantineSize | - | Component size |
 | sortDates | boolean | - | Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
 | value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Value for controlled component |
 | valueFormat | string | - | `dayjs` format to display input value |
@@ -390,6 +392,7 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearsListFormat | string | - | dayjs format for years list |
 
