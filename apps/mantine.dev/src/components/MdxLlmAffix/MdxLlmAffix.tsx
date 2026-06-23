@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckIcon, CopyIcon, LightbulbFilamentIcon, RobotIcon } from '@phosphor-icons/react';
 import { ActionIcon, Affix, Card, Stack, Text, Tooltip } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { Frontmatter } from '@/types';
 import classes from './MdxLlmAffix.module.css';
+import { useWindowScroll } from '@mantine/hooks';
 
 interface MdxLlmAffixProps {
   meta: Frontmatter;
@@ -16,6 +17,16 @@ function getLlmUrl(slug: string) {
 export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
   const [copied, setCopied] = useState(false);
   const llmUrl = getLlmUrl(meta.slug);
+  const [scroll] = useWindowScroll();
+  const [bottomOffset, setBottomOffset] = useState(20);
+
+  useEffect(() => {
+    if (llmUrl.includes('affix') && scroll.y > 0) {
+      setBottomOffset(80);
+    } else {
+      setBottomOffset(20);
+    }
+  }, [llmUrl, scroll.y]);
 
   const handleCopy = async () => {
     try {
@@ -34,7 +45,11 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
   };
 
   return (
-    <Affix position={{ bottom: 20, right: 20 }} visibleFrom="sm">
+    <Affix
+      position={{ bottom: bottomOffset, right: 20 }}
+      visibleFrom="sm"
+      className={classes.affix}
+    >
       <Card className={classes.root}>
         <Text className={classes.title}>LLM</Text>
 
