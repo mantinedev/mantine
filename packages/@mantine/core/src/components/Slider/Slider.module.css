@@ -261,6 +261,10 @@
   cursor: pointer;
   user-select: none;
 
+  @mixin where-rtl {
+    transform: translate(calc(50% - var(--slider-size) / 2), calc(var(--mantine-spacing-xs) / 2));
+  }
+
   @mixin where-light {
     color: var(--mantine-color-gray-6);
   }
