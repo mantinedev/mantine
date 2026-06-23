@@ -108,8 +108,28 @@ describe('@mantine/schedule/get-resources-day-view-events', () => {
         resourceId: 'room-a',
       }),
     ];
-
+  
     const result = getResourcesDayViewEvents({ events, resources, date: testDate });
+    expect(result.regularEvents['room-a']).toHaveLength(1);
+    expect(result.regularEvents['room-a'][0].id).toBe(1);
+  });
+  
+  it('includes multi-day events that overlap the current day', () => {
+    const events = [
+      testUtils.createEvent({
+        id: 1,
+        start: '2025-01-14 10:00:00',
+        end: '2025-01-16 18:00:00',
+        resourceId: 'room-a',
+      }),
+    ];
+  
+    const result = getResourcesDayViewEvents({
+      events,
+      resources,
+      date: '2025-01-15',
+    });
+  
     expect(result.regularEvents['room-a']).toHaveLength(1);
     expect(result.regularEvents['room-a'][0].id).toBe(1);
   });
