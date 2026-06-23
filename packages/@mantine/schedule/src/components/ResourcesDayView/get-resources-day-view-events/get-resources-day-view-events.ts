@@ -72,17 +72,17 @@ export function getResourcesDayViewEvents({
 
     const eventStart = dayjs(event.start);
     const eventEnd = dayjs(event.end);
-    const isOnDay = eventStart.isSame(dayStart, 'day');
-    const spansIntoDay =
-      !isOnDay &&
-      event.display === 'background' &&
-      eventStart.isBefore(dayEnd) &&
-      eventEnd.isAfter(dayStart);
 
-    if (isOnDay || spansIntoDay) {
+    const isOnDay = eventStart.isSame(dayStart, 'day');
+
+    const overlapsDay =
+      !eventStart.isAfter(dayEnd) &&
+      !eventEnd.isBefore(dayStart);
+
+    if (overlapsDay) {
       if (isOnDay && !isEventInTimeRange({ event, startTime, endTime })) {
         continue;
-      }
+  }
 
       const validated = validateEvent(event);
 
