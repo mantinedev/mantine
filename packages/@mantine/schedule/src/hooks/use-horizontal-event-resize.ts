@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { clampIntervalMinutes } from '../utils/clamp-interval-minutes/clamp-interval-minutes';
+import { getDayRelativePercent } from '../utils/get-day-relative-percent/get-day-relative-percent';
 import { parseTimeString } from '../utils/parse-time-string/parse-time-string';
 
 type ResizeEdge = 'start' | 'end';
@@ -18,6 +19,8 @@ interface ResizeState {
   eventDate: string;
   originalStart: DateTimeStringValue;
   originalEnd: DateTimeStringValue;
+  dayIndex: number;
+  dayCount: number;
 }
 
 export interface UseHorizontalEventResizeInput {
@@ -95,6 +98,8 @@ export function useHorizontalEventResize({
       originalLeft,
       originalWidth,
       eventDate,
+      dayIndex = 0,
+      dayCount = 1,
       pointerEvent,
     }: {
       event: ScheduleEventData;
@@ -103,6 +108,8 @@ export function useHorizontalEventResize({
       originalLeft: number;
       originalWidth: number;
       eventDate: string;
+      dayIndex?: number;
+      dayCount?: number;
       pointerEvent: React.PointerEvent;
     }) => {
       if (!enabled || mode === 'static') {
@@ -124,6 +131,8 @@ export function useHorizontalEventResize({
         eventDate,
         originalStart: dayjs(event.start).format('YYYY-MM-DD HH:mm:ss'),
         originalEnd: dayjs(event.end).format('YYYY-MM-DD HH:mm:ss'),
+        dayIndex,
+        dayCount,
       };
 
       resizeRef.current = state;
@@ -151,8 +160,13 @@ export function useHorizontalEventResize({
       }
 
       const containerRect = state.container.getBoundingClientRect();
-      const relativeX = e.clientX - containerRect.left;
-      const rawPercent = Math.max(0, Math.min(100, (relativeX / containerRect.width) * 100));
+      const rawPercent = getDayRelativePercent({
+        clientX: e.clientX,
+        containerLeft: containerRect.left,
+        containerWidth: containerRect.width,
+        dayIndex: state.dayIndex,
+        dayCount: state.dayCount,
+      });
       const snappedPercent = snapPercent(rawPercent);
 
       let newLeft = state.originalLeft;

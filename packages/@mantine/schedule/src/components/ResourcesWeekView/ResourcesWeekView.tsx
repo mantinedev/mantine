@@ -22,6 +22,7 @@ import {
 import { useDatesContext } from '@mantine/dates';
 import { useInterval, useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
@@ -179,6 +180,21 @@ export interface ResourcesWeekViewProps
     dropDateTime: DateTimeStringValue;
     resourceId?: string | number;
   }) => void;
+
+  /** If true, events can be resized by dragging their left/right edges @default false */
+  withEventResize?: boolean;
+
+  /** Called when event is resized */
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
+
+  /** Function to determine if event can be resized */
+  canResizeEvent?: (event: ScheduleEventData) => boolean;
+
   recurrenceExpansionLimit?: number;
 
   /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 */
@@ -213,6 +229,7 @@ const defaultProps = {
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
   withEventsDragAndDrop: false,
+  withEventResize: false,
   withDragSlotSelect: false,
   withWeekendDays: true,
   withCurrentTimeBubble: true,
@@ -281,6 +298,9 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
+    withEventResize,
+    onEventResize,
+    canResizeEvent,
     onTimeSlotClick,
     onEventClick,
     withDragSlotSelect,
@@ -455,6 +475,16 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         });
       }
     },
+  });
+
+  const eventResize = useHorizontalEventResize({
+    enabled: withEventResize,
+    mode,
+    startTime,
+    endTime,
+    intervalMinutes,
+    onEventResize,
+    canResizeEvent,
   });
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
@@ -664,17 +694,37 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
       for (const event of visibleEvents) {
         const isDraggable = dragDrop.isDraggableEvent(event);
+        const isResizable = eventResize.isResizableEvent(event);
+        const resizePosition = eventResize.getResizePosition(event.id);
+        const isThisEventResizing = resizePosition !== null;
+        const activeEdge =
+          isThisEventResizing && eventResize.resizingEdge ? eventResize.resizingEdge : null;
 
-        const eventLeft = dayOffsetPercent + (event.position.top / 100) * dayWidthPercent;
-        const eventWidth = (event.position.height / 100) * dayWidthPercent;
+        const effectiveTop = resizePosition ? resizePosition.left : event.position.top;
+        const effectiveHeight = resizePosition ? resizePosition.width : event.position.height;
+        const eventLeft = dayOffsetPercent + (effectiveTop / 100) * dayWidthPercent;
+        const eventWidth = (effectiveHeight / 100) * dayWidthPercent;
+
+        const eventColors = isResizable
+          ? theme.variantColorResolver({
+              color: event.color || theme.primaryColor,
+              theme,
+              variant: event.variant || 'light',
+              autoContrast: true,
+            })
+          : null;
 
         const adjustPosition =
           maxEventsPerTimeSlot !== undefined && event.position.overlaps > maxEventsPerTimeSlot;
 
+        const eventDate = dayjs(day).format('YYYY-MM-DD');
+
         eventNodes.push(
-          <div
+          <Box
             key={`${event.id}-${day}`}
             {...getStyles('resourcesWeekViewEventWrapper')}
+            __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
+            data-resizing={isThisEventResizing || undefined}
             style={{
               left: `calc(${eventLeft}% + 1px)`,
               top: adjustPosition
@@ -691,14 +741,69 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
               autoSize
               nowrap
               draggable={isDraggable}
+              isResizing={isThisEventResizing}
               renderEventBody={renderEventBody}
               renderEvent={renderEvent}
               radius={radius}
               mode={mode}
-              onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
+              onClick={
+                onEventClick
+                  ? (e) => {
+                      if (!eventResize.wasResizing()) {
+                        onEventClick(event, e);
+                      }
+                    }
+                  : undefined
+              }
               style={{ width: '100%', height: '100%' }}
             />
-          </div>
+            {isResizable && mode !== 'static' && (
+              <>
+                <div
+                  {...getStyles('resourcesWeekViewResizeHandle')}
+                  data-edge="start"
+                  data-active={activeEdge === 'start' || undefined}
+                  onPointerDown={(e) => {
+                    const container = rowSlotsContainersRef.current[resourceIndex];
+                    if (container) {
+                      eventResize.handleResizeStart({
+                        event,
+                        edge: 'start',
+                        container,
+                        originalLeft: event.position.top,
+                        originalWidth: event.position.height,
+                        eventDate,
+                        dayIndex,
+                        dayCount: weekdays.length,
+                        pointerEvent: e,
+                      });
+                    }
+                  }}
+                />
+                <div
+                  {...getStyles('resourcesWeekViewResizeHandle')}
+                  data-edge="end"
+                  data-active={activeEdge === 'end' || undefined}
+                  onPointerDown={(e) => {
+                    const container = rowSlotsContainersRef.current[resourceIndex];
+                    if (container) {
+                      eventResize.handleResizeStart({
+                        event,
+                        edge: 'end',
+                        container,
+                        originalLeft: event.position.top,
+                        originalWidth: event.position.height,
+                        eventDate,
+                        dayIndex,
+                        dayCount: weekdays.length,
+                        pointerEvent: e,
+                      });
+                    }
+                  }}
+                />
+              </>
+            )}
+          </Box>
         );
       }
 
@@ -868,7 +973,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       mod={{
         static: mode === 'static',
         'slot-dragging': slotDragSelect.isDragging,
-        'event-interaction': dragDrop.dragContextValue.isDragging,
+        resizing: eventResize.isResizing,
+        'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
       }}
       {...others}
     >
