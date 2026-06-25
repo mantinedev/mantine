@@ -84,4 +84,40 @@ describe('@mantine/hooks/use-set', () => {
     expect(symmetricDifferenceResult.has(5)).toBe(true);
     expect(symmetricDifferenceResult.size).toBe(4);
   });
+
+  /*
+   * React Compiler compatibility guard.
+   *
+   * The hook must return a NEW Set instance after every mutation. React Compiler memoizes
+   * consumer-side values derived from the set (e.g. `set.size`, `[...set]`) keyed on the set's
+   * identity; a stable identity (the previous ref-based implementation) let it serve stale derived
+   * values forever. We cannot run the compiler in jest, but we can assert the identity invariant it
+   * relies on, plus that synchronous multi-mutation still accumulates (the in-place mutation that
+   * the clone-per-mutation approach must not regress).
+   */
+  it('returns a new instance identity after each mutation', () => {
+    const hook = renderHook(() => useSet([1]));
+
+    const afterInit = hook.result.current;
+    act(() => hook.result.current.add(2));
+    expect(hook.result.current).not.toBe(afterInit);
+
+    const afterAdd = hook.result.current;
+    act(() => hook.result.current.delete(2));
+    expect(hook.result.current).not.toBe(afterAdd);
+
+    const afterDelete = hook.result.current;
+    act(() => hook.result.current.clear());
+    expect(hook.result.current).not.toBe(afterDelete);
+  });
+
+  it('accumulates multiple synchronous mutations', () => {
+    const hook = renderHook(() => useSet<number>());
+    act(() => {
+      hook.result.current.add(1);
+      hook.result.current.add(2);
+    });
+    expect(hook.result.current.has(1)).toBe(true);
+    expect(hook.result.current.has(2)).toBe(true);
+  });
 });
