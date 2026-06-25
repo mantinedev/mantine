@@ -117,9 +117,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
       {...collapse.getCollapseProps({
         style: {
           opacity: expanded || !animateOpacity ? 1 : 0,
-          transition: animateOpacity
-            ? `opacity ${duration}ms ${transitionTimingFunction}`
-            : 'none',
+          transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
           ...getStyleObject(style, theme),
         },
         ref,
