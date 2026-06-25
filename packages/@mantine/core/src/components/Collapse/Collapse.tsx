@@ -86,11 +86,18 @@ export const Collapse = factory<CollapseFactory>((props) => {
     if (keepMounted === true && env !== 'test') {
       return (
         <Activity mode={expanded ? 'visible' : 'hidden'}>
-          <Box {...others}>{children}</Box>
+          <Box {...others} style={style} ref={ref}>
+            {children}
+          </Box>
         </Activity>
       );
     }
-    return expanded ? <Box {...others}>{children}</Box> : null;
+
+    return expanded ? (
+      <Box {...others} style={style} ref={ref}>
+        {children}
+      </Box>
+    ) : null;
   }
 
   const isExited = collapse.state === 'exited';
@@ -110,7 +117,9 @@ export const Collapse = factory<CollapseFactory>((props) => {
       {...collapse.getCollapseProps({
         style: {
           opacity: expanded || !animateOpacity ? 1 : 0,
-          transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
+          transition: animateOpacity
+            ? `opacity ${duration}ms ${transitionTimingFunction}`
+            : 'none',
           ...getStyleObject(style, theme),
         },
         ref,
