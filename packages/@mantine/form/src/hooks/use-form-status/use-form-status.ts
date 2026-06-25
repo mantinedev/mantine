@@ -115,6 +115,15 @@ export function useFormStatus<Values extends Record<string, any>>({
     setDirty(clearedState, currentDirty !== dirty);
   }, []);
 
+  /*
+   * The getters below intentionally include `ref.current` in their dependency arrays.
+   * They read mutable refs that the form reassigns to fresh objects on every change
+   * (e.g. setPath returns a deep clone via klona). Keying useCallback on `ref.current`
+   * makes the getter identity change exactly when its underlying data changes, and stay
+   * stable otherwise. React Compiler memoizes a call expression by callee identity, so a
+   * `[]` dependency array (or a state-mirror dep that does not update in uncontrolled mode)
+   * would let it cache and serve a stale value. Do NOT "simplify" these deps to `[]`.
+   */
   const isTouched: GetFieldStatus<Values> = useCallback(
     (path) => getStatus(touchedRef.current, path),
     [touchedRef.current]
