@@ -120,4 +120,15 @@ describe('@mantine/hooks/use-set', () => {
     expect(hook.result.current.has(1)).toBe(true);
     expect(hook.result.current.has(2)).toBe(true);
   });
+
+  it('applies a retained mutator to the latest instance', () => {
+    const hook = renderHook(() => useSet<number>());
+    const retainedAdd = hook.result.current.add;
+    act(() => hook.result.current.add(1));
+    act(() => hook.result.current.add(2));
+    act(() => retainedAdd(3));
+    expect(hook.result.current.has(1)).toBe(true);
+    expect(hook.result.current.has(2)).toBe(true);
+    expect(hook.result.current.has(3)).toBe(true);
+  });
 });

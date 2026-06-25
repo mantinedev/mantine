@@ -1,25 +1,24 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export function useMap<T, V>(initialState?: [T, V][]): Map<T, V> {
   const [map, setMap] = useState(() => new Map<T, V>(initialState));
+  const mapRef = useRef(map);
+  mapRef.current = map;
 
-  // Mutate the live instance in place (so synchronous multi-mutations accumulate), then commit a
-  // fresh clone. The new instance identity is what lets React Compiler invalidate consumer-side
-  // values derived from the map (e.g. `map.size`); a stable identity served stale values forever.
   map.set = (...args) => {
-    Map.prototype.set.apply(map, args);
-    setMap(new Map(map));
-    return map;
+    Map.prototype.set.apply(mapRef.current, args);
+    setMap(new Map(mapRef.current));
+    return mapRef.current;
   };
 
   map.clear = (...args) => {
-    Map.prototype.clear.apply(map, args);
-    setMap(new Map(map));
+    Map.prototype.clear.apply(mapRef.current, args);
+    setMap(new Map(mapRef.current));
   };
 
   map.delete = (...args) => {
-    const res = Map.prototype.delete.apply(map, args);
-    setMap(new Map(map));
+    const res = Map.prototype.delete.apply(mapRef.current, args);
+    setMap(new Map(mapRef.current));
 
     return res;
   };
