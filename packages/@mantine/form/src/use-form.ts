@@ -400,12 +400,7 @@ export function useForm<
 
   const key: Key<Values> = (path) => `${formKey}-${String(path)}-${fieldKeys[String(path)] || 0}`;
 
-  /*
-   * Plain function (not useCallback): this performs a live DOM query, so its result must never
-   * be memoized. A stable identity would let React Compiler cache the returned node and serve a
-   * stale element after the DOM changes. There is no ref value to key a useCallback on here, so
-   * a fresh identity each render is the correct way to keep the query live under the compiler.
-   */
+  // Plain function (not useCallback): a live DOM query must never be memoized by React Compiler.
   const getInputNode: GetInputNode<Values> = (path) =>
     document.querySelector(`[data-path="${getDataPath(name, path)}"]`);
 
