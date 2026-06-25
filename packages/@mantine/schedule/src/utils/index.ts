@@ -64,3 +64,4 @@ export type {
 } from './handle-resources-grid-key-down/handle-resources-grid-key-down';
 export { getGroupToResourceIdMap } from './get-group-to-resource-id-map/get-group-to-resource-id-map';
 export { getIndexFromDragPoint } from './get-index-from-drag-point/get-index-from-drag-point';
+export { getDayRelativePercent } from './get-day-relative-percent/get-day-relative-percent';

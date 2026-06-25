@@ -28,16 +28,6 @@ const eventsData = [
     color: 'violet',
   },
   {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
-    end: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;COUNT=14',
-    },
-  },
-  {
     id: 'weekly-review-series',
     title: 'Weekly review',
     start: `${dayjs(today).startOf('week').format('YYYY-MM-DD')} 16:00:00`,
@@ -77,16 +67,6 @@ const events = [
     start: \`\${tomorrow} 14:00:00\`,
     end: \`\${tomorrow} 15:00:00\`,
     color: 'violet',
-  },
-  {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: \`\${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00\`,
-    end: \`\${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00\`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;COUNT=14',
-    },
   },
   {
     id: 'weekly-review-series',

@@ -217,6 +217,42 @@ export function DragAndDrop() {
   );
 }
 
+export function EventResize() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  const [events, setEvents] = useState<ScheduleEventData[]>(regularEvents);
+  const [lastAction, setLastAction] = useState('');
+
+  return (
+    <div>
+      <ResourcesWeekView
+        date={date}
+        onDateChange={setDate}
+        resources={resources}
+        events={events}
+        startTime="08:00:00"
+        endTime="18:00:00"
+        withEventResize
+        onEventResize={({ eventId, newStart, newEnd }) => {
+          setEvents((prev) =>
+            prev.map((event) =>
+              event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
+            )
+          );
+          const resizedEvent = events.find((e) => e.id === eventId);
+          setLastAction(
+            `Resized "${resizedEvent?.title}" to ${dayjs(newStart).format('HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
+          );
+        }}
+      />
+      {lastAction && (
+        <div style={{ marginTop: 20, padding: 12, backgroundColor: '#f0f0f0', borderRadius: 4 }}>
+          Last action: {lastAction}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function SlotDragSelect() {
   const [date, setDate] = useState(toDateString(new Date()));
   const [lastAction, setLastAction] = useState('');
