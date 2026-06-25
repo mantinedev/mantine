@@ -10,13 +10,13 @@ export const TEMPLATES_DATA: Template[] = [
     type: 'next',
     name: 'next-app-template',
     link: 'https://github.com/mantinedev/next-app-template',
-    description: 'Next.js template with app router and full setup: Jest, Storybook, ESLint',
+    description: 'Next.js template with app router and full setup: Jest, Storybook, oxlint',
   },
   {
     type: 'next',
     name: 'next-pages-template',
     link: 'https://github.com/mantinedev/next-pages-template',
-    description: 'Next.js template with pages router and full setup: Jest, Storybook, ESLint',
+    description: 'Next.js template with pages router and full setup: Jest, Storybook, oxlint',
   },
   {
     type: 'next',
@@ -42,7 +42,7 @@ export const TEMPLATES_DATA: Template[] = [
     type: 'vite',
     name: 'vite-template',
     link: 'https://github.com/mantinedev/vite-template',
-    description: 'Vite template with full setup: Vitest, Prettier, Storybook, ESLint',
+    description: 'Vite template with full setup: Vitest, oxfmt, Storybook, oxlint',
   },
   {
     type: 'vite',
