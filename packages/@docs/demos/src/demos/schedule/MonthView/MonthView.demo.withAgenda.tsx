@@ -22,16 +22,6 @@ const eventsData = [
     color: 'green',
   },
   {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${startOfMonth} 09:30:00`,
-    end: `${startOfMonth} 10:00:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=30',
-    },
-  },
-  {
     id: 'weekly-review-series',
     title: 'Weekly review',
     start: `${startOfMonth} 16:00:00`,
@@ -65,16 +55,6 @@ const events = [
     start: \`\${today} 14:00:00\`,
     end: \`\${today} 15:00:00\`,
     color: 'green',
-  },
-  {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: \`\${startOfMonth} 09:30:00\`,
-    end: \`\${startOfMonth} 10:00:00\`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=30',
-    },
   },
   {
     id: 'weekly-review-series',

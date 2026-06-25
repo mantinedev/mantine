@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -559,6 +560,109 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     const draggable = screen.getByText('Draggable').closest('button');
     expect(nonDraggable).not.toHaveAttribute('draggable', 'true');
     expect(draggable).toHaveAttribute('draggable', 'true');
+  });
+
+  describe('event resize', () => {
+    const resizeEvents = [
+      {
+        id: 1,
+        title: 'Resizable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    it('withEventResize renders resize handles', () => {
+      const { container } = render(
+        <ResourcesWeekView {...defaultProps} events={resizeEvents} withEventResize />
+      );
+
+      expect(
+        container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewResizeHandle')
+          .length
+      ).toBeGreaterThan(0);
+    });
+
+    it('does not render resize handles when withEventResize is not set', () => {
+      const { container } = render(<ResourcesWeekView {...defaultProps} events={resizeEvents} />);
+
+      expect(
+        container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewResizeHandle')
+      ).toHaveLength(0);
+    });
+
+    it('canResizeEvent suppresses resize handles for blocked events', () => {
+      const events = [
+        {
+          id: 1,
+          title: 'No Resize',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 10:00:00',
+          color: 'blue',
+          payload: {},
+          resourceId: 'room-a',
+        },
+        {
+          id: 2,
+          title: 'Can Resize',
+          start: '2025-01-15 10:00:00',
+          end: '2025-01-15 11:00:00',
+          color: 'red',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      const { container } = render(
+        <ResourcesWeekView
+          {...defaultProps}
+          events={events}
+          withEventResize
+          canResizeEvent={(event) => event.id !== 1}
+        />
+      );
+
+      // Only the "Can Resize" event renders its two (start/end) handles
+      expect(
+        container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewResizeHandle')
+      ).toHaveLength(2);
+    });
+
+    it('does not fire onEventClick for the click that ends a resize gesture', async () => {
+      const spy = jest.fn();
+
+      const { container } = render(
+        <ResourcesWeekView
+          {...defaultProps}
+          events={resizeEvents}
+          withEventResize
+          onEventClick={spy}
+        />
+      );
+
+      const handle = container.querySelector<HTMLElement>(
+        '.mantine-ResourcesWeekView-resourcesWeekViewResizeHandle[data-edge="end"]'
+      )!;
+
+      fireEvent.pointerDown(handle);
+      fireEvent.pointerUp(document);
+      fireEvent.click(screen.getByText('Resizable Event'));
+
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('mode="static" suppresses resize handles', () => {
+      const { container } = render(
+        <ResourcesWeekView {...defaultProps} mode="static" events={resizeEvents} withEventResize />
+      );
+
+      expect(
+        container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewResizeHandle')
+      ).toHaveLength(0);
+    });
   });
 
   describe('mode="static"', () => {
