@@ -400,7 +400,6 @@ export function useForm<
 
   const key: Key<Values> = (path) => `${formKey}-${String(path)}-${fieldKeys[String(path)] || 0}`;
 
-  // Plain function (not useCallback): a live DOM query must never be memoized by React Compiler.
   const getInputNode: GetInputNode<Values> = (path) =>
     document.querySelector(`[data-path="${getDataPath(name, path)}"]`);
 

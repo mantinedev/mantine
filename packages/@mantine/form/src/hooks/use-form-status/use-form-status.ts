@@ -115,8 +115,6 @@ export function useFormStatus<Values extends Record<string, any>>({
     setDirty(clearedState, currentDirty !== dirty);
   }, []);
 
-  // Getters key on `ref.current` so identity updates when the data does. Do not simplify to `[]`:
-  // that serves stale values under React Compiler.
   const isTouched: GetFieldStatus<Values> = useCallback(
     (path) => getStatus(touchedRef.current, path),
     [touchedRef.current]
