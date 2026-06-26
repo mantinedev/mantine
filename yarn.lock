@@ -14214,6 +14214,7 @@ __metadata:
     new-github-release-url: "npm:^2.0.0"
     next: "npm:16.2.9"
     open: "npm:^11.0.0"
+    oxc-config-mantine: "npm:^1.0.0"
     oxfmt: "npm:^0.55.0"
     oxlint: "npm:^1.70.0"
     postcss: "npm:^8.5.15"
@@ -15648,6 +15649,16 @@ __metadata:
   version: 0.3.0
   resolution: "os-browserify@npm:0.3.0"
   checksum: 10c0/6ff32cb1efe2bc6930ad0fd4c50e30c38010aee909eba8d65be60af55efd6cbb48f0287e3649b4e3f3a63dce5a667b23c187c4293a75e557f0d5489d735bcf52
+  languageName: node
+  linkType: hard
+
+"oxc-config-mantine@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "oxc-config-mantine@npm:1.0.0"
+  peerDependencies:
+    oxfmt: ^0.55.0
+    oxlint: ^1.70.0
+  checksum: 10c0/0adcb4872a889984b2f8f3cd60a105c23d3902a50ba9545a35c312de02b2768fefe9a2cd245134b4efb5442a63848299607d537912feff9844450c6c7c0ba9a8
   languageName: node
   linkType: hard
 
