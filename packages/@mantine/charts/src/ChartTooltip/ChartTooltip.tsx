@@ -168,8 +168,8 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props) => {
   const labels = getSeriesLabels(series);
   const _label = label || scatterLabel;
 
-  const items = filteredPayload.map((item) => (
-    <div key={item?.key ?? item.name} data-type={type} {...getStyles('tooltipItem')}>
+  const items = filteredPayload.map((item, index) => (
+    <div key={item?.key ?? `${item.name}-${index}`} data-type={type} {...getStyles('tooltipItem')}>
       <div {...getStyles('tooltipItemBody')}>
         {showColor && (
           <svg {...getStyles('tooltipItemColor')}>
