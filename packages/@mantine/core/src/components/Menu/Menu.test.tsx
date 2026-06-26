@@ -161,6 +161,13 @@ describe('@mantine/core/Menu', () => {
     expect(document.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(0);
   });
 
+  it('assigns role="presentation" to non-semantic dropdown children (#8971)', () => {
+    render(<TestContainer defaultOpened withArrow />);
+    const menu = screen.getByRole('menu');
+    expect(menu.querySelector('[data-autofocus]')).toHaveAttribute('role', 'presentation');
+    expect(menu.querySelector('.mantine-Menu-arrow')).toHaveAttribute('role', 'presentation');
+  });
+
   it('exposes related components as static properties', () => {
     expect(Menu.Item).toBe(MenuItem);
     expect(Menu.Dropdown).toBe(MenuDropdown);
