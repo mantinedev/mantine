@@ -23,6 +23,18 @@ export const MonthViewStylesApi: StylesApiData<MonthViewFactory> = {
     monthYearSelectControl: 'Month/year select control, part of MonthYearSelect',
     monthYearSelectList: 'Month/year select list, part of MonthYearSelect',
     monthYearSelectLabel: 'Month/year select label, part of MonthYearSelect',
+    agendaView: 'AgendaView root element, shown when agenda is open',
+    agendaViewHeader: 'AgendaView header container',
+    agendaViewHeaderLabel: 'AgendaView date range label',
+    agendaViewBody: 'AgendaView body container',
+    agendaViewDateGroup: 'AgendaView date group container',
+    agendaViewDateHeader: 'AgendaView date header text',
+    agendaViewEvent: 'AgendaView event item button',
+    agendaViewEventBody: 'AgendaView event body container',
+    agendaViewEventColor: 'AgendaView event color indicator',
+    agendaViewEventTitle: 'AgendaView event title text',
+    agendaViewEventTime: 'AgendaView event time label',
+    agendaViewNoEvents: 'AgendaView no events message',
   },
 
   vars: {

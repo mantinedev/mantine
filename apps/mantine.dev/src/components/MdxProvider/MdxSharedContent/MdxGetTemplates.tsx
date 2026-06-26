@@ -18,7 +18,7 @@ export function MdxGetTemplates({ type }: MdxGetTemplatesProps) {
         <MdxLink href="/theming/color-schemes">ColorSchemeScript</MdxLink> and other essential
         features. Some templates also include additional features like{' '}
         <MdxLink href="/guides/jest">Jest</MdxLink>,{' '}
-        <MdxLink href="/guides/storybook">Storybook</MdxLink> and ESLint.
+        <MdxLink href="/guides/storybook">Storybook</MdxLink> and oxlint.
       </MdxParagraph>
 
       <MdxParagraph>

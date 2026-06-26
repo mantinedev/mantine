@@ -1,0 +1,54 @@
+.root {
+  --data-list-fz: var(--mantine-font-size-sm);
+  --data-list-lh: var(--mantine-line-height-sm);
+  --data-list-gap: var(--mantine-spacing-sm);
+  --data-list-label-width: rem(120px);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--data-list-gap);
+  font-size: var(--data-list-fz);
+  line-height: var(--data-list-lh);
+  margin: 0;
+  padding: 0;
+
+  &:where([data-with-divider]) {
+    gap: 0;
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--mantine-spacing-xs);
+}
+
+.root:where([data-orientation='vertical']) > .item {
+  flex-direction: column;
+  gap: 0;
+}
+
+.itemLabel {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--data-list-fz);
+  line-height: var(--data-list-lh);
+  min-width: var(--data-list-label-width);
+  margin: 0;
+}
+
+.root:where([data-orientation='vertical']) .itemLabel {
+  min-width: 100%;
+}
+
+.itemValue {
+  font-size: var(--data-list-fz);
+  line-height: var(--data-list-lh);
+  margin: 0;
+}
+
+.root:where([data-with-divider]) > .item:where(:not(:first-of-type)) {
+  border-top: rem(1px) solid var(--mantine-color-default-border);
+  padding-top: var(--data-list-gap);
+  margin-top: var(--data-list-gap);
+}

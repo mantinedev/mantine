@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -42,6 +42,7 @@ import {
   isSameMonth,
   toDateString,
 } from '../../utils';
+import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
@@ -50,6 +51,7 @@ import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHea
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getRenderableMonthEventSegments } from './get-renderable-month-event-segments';
+import { clipSpanToVisibleColumns, getVisibleColumnMap } from './get-visible-columns';
 import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
 import { handleMonthViewKeyDown, MonthViewControlsRef } from './handle-month-view-key-down';
 import classes from './MonthView.module.css';
@@ -67,7 +69,8 @@ export type MonthViewStylesNames =
   | 'monthViewWeekdaysCorner'
   | 'monthViewEvents'
   | 'monthViewBackgroundEvent'
-  | CombinedScheduleHeaderStylesNames;
+  | CombinedScheduleHeaderStylesNames
+  | AgendaViewStylesNames;
 
 export type MonthViewCssVariables = {
   monthView: '--month-view-radius' | '--month-view-max-events';
@@ -88,6 +91,9 @@ export interface MonthViewProps
 
   /** If set, weekdays names are displayed in the first row @default true */
   withWeekDays?: boolean;
+
+  /** If set, weekend days are displayed. When `false`, days defined by `weekendDays` are hidden and the grid shrinks to the remaining columns @default true */
+  withWeekendDays?: boolean;
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
@@ -204,6 +210,9 @@ export interface MonthViewProps
 
   /** Maximum number of events visible per day before "+more" indicator shows, value is clamped between 1 and 10 @default 2 */
   maxEventsPerDay?: number;
+
+  /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
+  withAgenda?: boolean;
 }
 
 export type MonthViewFactory = Factory<{
@@ -226,6 +235,7 @@ const varsResolver = createVarsResolver<MonthViewFactory>(
 const defaultProps = {
   __staticSelector: 'MonthView',
   withWeekDays: true,
+  withWeekendDays: true,
   consistentWeeks: true,
   highlightToday: true,
   withOutsideDays: true,
@@ -251,6 +261,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     onDateChange,
     withWeekNumbers,
     withWeekDays,
+    withWeekendDays,
     locale,
     weekdayFormat,
     firstDayOfWeek,
@@ -289,9 +300,11 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     onExternalEventDrop,
     recurrenceExpansionLimit,
     maxEventsPerDay: _maxEventsPerDay,
+    withAgenda,
     ...others
   } = props;
 
+  const [agendaOpen, setAgendaOpen] = useState(false);
   const maxEventsPerDay = Math.min(10, Math.max(1, _maxEventsPerDay ?? 2));
 
   const getStyles = useStyles<MonthViewFactory>({
@@ -325,6 +338,17 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
   const theme = useMantineTheme();
   const ctx = useDatesContext();
+
+  const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
+  const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
+  const hiddenColumns = withWeekendDays
+    ? []
+    : Array.from({ length: 7 }, (_, index) => index).filter((index) =>
+        resolvedWeekendDays.includes(((resolvedFirstDayOfWeek + index) % 7) as DayOfWeek)
+      );
+  const hiddenColumnSet = new Set(hiddenColumns);
+  const columnsCount = 7 - hiddenColumns.length;
+  const visibleColumnMap = getVisibleColumnMap(hiddenColumns);
 
   const range = getMonthRange({
     month: date,
@@ -406,11 +430,16 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const firstDayIndex = (() => {
     for (let weekIndex = 0; weekIndex < monthDays.length; weekIndex++) {
       const week = monthDays[weekIndex];
+      let visibleDayIndex = -1;
       for (let dayIndex = 0; dayIndex < week.length; dayIndex++) {
+        if (hiddenColumnSet.has(dayIndex)) {
+          continue;
+        }
+        visibleDayIndex += 1;
         const day = week[dayIndex];
         const outside = !isSameMonth(date, day);
         if (!outside || withOutsideDays) {
-          return { weekIndex, dayIndex };
+          return { weekIndex, dayIndex: visibleDayIndex };
         }
       }
     }
@@ -421,148 +450,170 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
         format: weekdayFormat,
-        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-      }).map((day, index) => (
-        <div {...getStyles('monthViewWeekday')} key={index}>
-          {day}
-        </div>
-      ))
+        firstDayOfWeek: resolvedFirstDayOfWeek,
+      })
+        .map((day, index) => ({ day, index }))
+        .filter(({ index }) => !hiddenColumnSet.has(index))
+        .map(({ day, index }) => (
+          <div {...getStyles('monthViewWeekday')} key={index}>
+            {day}
+          </div>
+        ))
     : null;
 
   const monthGroup = 'month';
-  flatDaysRef.current = monthDays.flat();
+  flatDaysRef.current = monthDays
+    .map((week) => week.filter((_, index) => !hiddenColumnSet.has(index)))
+    .flat();
 
   const weeks = monthDays.map((week, weekIndex) => {
-    if (!daysRef.current[weekIndex]) {
-      daysRef.current[weekIndex] = [];
-    }
+    daysRef.current[weekIndex] = [];
 
-    const days = week.map((day, dayIndex) => {
-      const outside = !isSameMonth(date, day);
-      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day());
-      const ariaLabel = dayjs(day)
-        .locale(locale || ctx.locale)
-        .format('MMMM D, YYYY');
+    const days = week
+      .map((day, columnIndex) => ({ day, columnIndex }))
+      .filter(({ columnIndex }) => !hiddenColumnSet.has(columnIndex))
+      .map(({ day }, dayIndex) => {
+        const outside = !isSameMonth(date, day);
+        const weekend = resolvedWeekendDays.includes(dayjs(day).day());
+        const ariaLabel = dayjs(day)
+          .locale(locale || ctx.locale)
+          .format('MMMM D, YYYY');
 
-      const dayProps = getDayProps?.(dayjs(day).format('YYYY-MM-DD')) || {};
-      const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday;
+        const dayProps = getDayProps?.(dayjs(day).format('YYYY-MM-DD')) || {};
+        const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday;
 
-      if (outside && !withOutsideDays) {
+        if (outside && !withOutsideDays) {
+          return (
+            <div key={day} data-static {...getStyles('monthViewDay', { style: dayProps.style })} />
+          );
+        }
+
+        const isFirstDay =
+          weekIndex === firstDayIndex.weekIndex && dayIndex === firstDayIndex.dayIndex;
+
+        const isDropTarget = dragDrop.isDropTarget(day);
+        const flatIndex = weekIndex * columnsCount + dayIndex;
+        const isDragSelected = slotDragSelect.isSlotSelected(flatIndex, monthGroup);
+
         return (
-          <div key={day} data-static {...getStyles('monthViewDay', { style: dayProps.style })} />
-        );
-      }
-
-      const isFirstDay =
-        weekIndex === firstDayIndex.weekIndex && dayIndex === firstDayIndex.dayIndex;
-
-      const isDropTarget = dragDrop.isDropTarget(day);
-      const flatIndex = weekIndex * 7 + dayIndex;
-      const isDragSelected = slotDragSelect.isSlotSelected(flatIndex, monthGroup);
-
-      return (
-        <UnstyledButton
-          aria-label={ariaLabel}
-          {...dayProps}
-          {...getStyles('monthViewDay', { className: dayProps.className, style: dayProps.style })}
-          key={day}
-          ref={(node) => {
-            if (node) {
-              if (!daysRef.current[weekIndex]) {
-                daysRef.current[weekIndex] = [];
-              }
-              daysRef.current[weekIndex][dayIndex] = node;
-            }
-          }}
-          data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? flatIndex : undefined}
-          data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? monthGroup : undefined}
-          onClick={
-            mode === 'static'
-              ? undefined
-              : (event) => {
-                  onDayClick?.(dayjs(day).format('YYYY-MM-DD'), event);
-                  dayProps.onClick?.(event);
+          <UnstyledButton
+            aria-label={ariaLabel}
+            {...dayProps}
+            {...getStyles('monthViewDay', { className: dayProps.className, style: dayProps.style })}
+            key={day}
+            ref={(node) => {
+              if (node) {
+                if (!daysRef.current[weekIndex]) {
+                  daysRef.current[weekIndex] = [];
                 }
-          }
-          onPointerDown={
-            withDragSlotSelect && mode !== 'static'
-              ? (e) =>
-                  slotDragSelect.handleSlotPointerDown(
-                    e as React.PointerEvent<HTMLButtonElement>,
-                    flatIndex,
-                    monthGroup
-                  )
-              : undefined
-          }
-          onKeyDown={(event) => {
-            handleMonthViewKeyDown({
-              controlsRef: daysRef,
-              weekIndex,
-              dayIndex,
-              event,
-            });
-            dayProps.onKeyDown?.(event);
-          }}
-          mod={[
-            {
-              outside,
-              weekend,
-              today,
-              'drop-target': isDropTarget,
-              'drag-selected': isDragSelected,
-              static: mode === 'static',
-            },
-            dayProps.mod,
-          ]}
-          data-outside={outside || undefined}
-          tabIndex={mode === 'static' ? -1 : isFirstDay ? 0 : -1}
-          onDragOver={withDragHandlers ? (e) => dragDrop.handleDragOver(e, day) : undefined}
-          onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
-          onDrop={withDragHandlers ? (e) => dragDrop.handleDrop(e, day) : undefined}
-        >
-          <span data-today={today || undefined} {...getStyles('monthViewDayLabel')}>
-            {dayjs(day).format('D')}
-          </span>
-        </UnstyledButton>
-      );
-    });
+                daysRef.current[weekIndex][dayIndex] = node;
+              }
+            }}
+            data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? flatIndex : undefined}
+            data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? monthGroup : undefined}
+            onClick={
+              mode === 'static'
+                ? undefined
+                : (event) => {
+                    onDayClick?.(dayjs(day).format('YYYY-MM-DD'), event);
+                    dayProps.onClick?.(event);
+                  }
+            }
+            onPointerDown={
+              withDragSlotSelect && mode !== 'static'
+                ? (e) =>
+                    slotDragSelect.handleSlotPointerDown(
+                      e as React.PointerEvent<HTMLButtonElement>,
+                      flatIndex,
+                      monthGroup
+                    )
+                : undefined
+            }
+            onKeyDown={(event) => {
+              handleMonthViewKeyDown({
+                controlsRef: daysRef,
+                weekIndex,
+                dayIndex,
+                event,
+              });
+              dayProps.onKeyDown?.(event);
+            }}
+            mod={[
+              {
+                outside,
+                weekend,
+                today,
+                'drop-target': isDropTarget,
+                'drag-selected': isDragSelected,
+                static: mode === 'static',
+              },
+              dayProps.mod,
+            ]}
+            data-outside={outside || undefined}
+            tabIndex={mode === 'static' ? -1 : isFirstDay ? 0 : -1}
+            onDragOver={withDragHandlers ? (e) => dragDrop.handleDragOver(e, day) : undefined}
+            onDragLeave={withDragHandlers ? dragDrop.handleDragLeave : undefined}
+            onDrop={withDragHandlers ? (e) => dragDrop.handleDrop(e, day) : undefined}
+          >
+            <span data-today={today || undefined} {...getStyles('monthViewDayLabel')}>
+              {dayjs(day).format('D')}
+            </span>
+          </UnstyledButton>
+        );
+      });
 
     const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
 
-    const backgroundEventNodes = (monthEvents.backgroundByWeek[weekIndex] || []).map((event) => {
-      const colors = theme.variantColorResolver({
-        color: event.color || theme.primaryColor,
-        theme,
-        variant: 'light',
-        autoContrast: true,
-      });
+    const backgroundEventNodes = (monthEvents.backgroundByWeek[weekIndex] || []).flatMap(
+      (event) => {
+        const colors = theme.variantColorResolver({
+          color: event.color || theme.primaryColor,
+          theme,
+          variant: 'light',
+          autoContrast: true,
+        });
 
-      const bgEventBody =
-        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+        const bgEventBody =
+          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
 
-      const bgEventProps = {
-        key: `bg-${event.id}-${weekIndex}`,
-        ...getStyles('monthViewBackgroundEvent', {
-          style: {
-            left: `calc(${event.position.startOffset}% + 2px)`,
-            width: `calc(${event.position.width}% - 3px)`,
-          },
-        }),
-        __vars: {
-          '--bg-event-bg': colors.background,
-          '--bg-event-color': colors.color,
-        },
-        children: bgEventBody,
-      };
+        const startColumn = Math.round(event.position.startOffset / (100 / 7));
+        const span = Math.max(1, Math.round(event.position.width / (100 / 7)));
+        const spans =
+          hiddenColumns.length === 0
+            ? [{ startOffset: event.position.startOffset, width: event.position.width }]
+            : clipSpanToVisibleColumns(
+                startColumn,
+                startColumn + span - 1,
+                visibleColumnMap,
+                columnsCount
+              );
 
-      if (typeof renderEvent === 'function') {
-        return renderEvent(event, bgEventProps as any);
+        return spans.map((spanPosition, spanIndex) => {
+          const bgEventProps = {
+            key: `bg-${event.id}-${weekIndex}-${spanIndex}`,
+            ...getStyles('monthViewBackgroundEvent', {
+              style: {
+                left: `calc(${spanPosition.startOffset}% + 2px)`,
+                width: `calc(${spanPosition.width}% - 3px)`,
+              },
+            }),
+            __vars: {
+              '--bg-event-bg': colors.background,
+              '--bg-event-color': colors.color,
+            },
+            children: bgEventBody,
+          };
+
+          if (typeof renderEvent === 'function') {
+            return renderEvent(event, bgEventProps as any);
+          }
+
+          const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
+          return <Box key={bgEventKey} {...restBgEventProps} />;
+        });
       }
-
-      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-      return <Box key={bgEventKey} {...restBgEventProps} />;
-    });
+    );
 
     const rowHeightPercent = 100 / maxEventsPerDay;
 
@@ -571,6 +622,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       groupedByDay: monthEvents.groupedByDay,
       maxEventsPerDay,
       week,
+      hiddenColumns,
+      columnsCount,
     });
 
     const events = eventSegments.map((segment) => {
@@ -602,6 +655,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     });
 
     const moreEventsNodes = week.map((day, dayIndex) => {
+      if (hiddenColumnSet.has(dayIndex)) {
+        return null;
+      }
+
       const dayEvents = monthEvents.groupedByDay[day] || [];
       const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerDay);
 
@@ -609,9 +666,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         return null;
       }
 
-      // Calculate position based on day's position within the week (each day is 1/7 of the week)
-      const dayStartOffset = (dayIndex / 7) * 100;
-      const dayWidth = (1 / 7) * 100;
+      const dayStartOffset = (visibleColumnMap[dayIndex] / columnsCount) * 100;
+      const dayWidth = (1 / columnsCount) * 100;
 
       return (
         <MoreEvents
@@ -681,11 +737,14 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         {
           'with-week-numbers': withWeekNumbers,
           'with-weekdays': withWeekDays,
+          'without-weekend-days': hiddenColumns.length > 0,
           static: mode === 'static',
           'slot-dragging': slotDragSelect.isDragging,
+          'event-interaction': dragDrop.dragContextValue.isDragging,
         },
         mod,
       ]}
+      __vars={hiddenColumns.length > 0 ? { '--month-view-columns': `${columnsCount}` } : undefined}
       {...getStyles('monthView')}
       {...others}
     >
@@ -717,28 +776,46 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           todayControlProps={todayControlProps}
           viewSelectProps={viewSelectProps}
           stylesApiProps={stylesApiProps}
+          onAgendaClick={withAgenda ? () => setAgendaOpen((v) => !v) : undefined}
+          agendaActive={agendaOpen}
         />
       )}
 
-      <ScrollArea
-        scrollbarSize={4}
-        {...scrollAreaProps}
-        {...getStyles('monthViewScrollArea', {
-          className: scrollAreaProps?.className,
-          style: scrollAreaProps?.style,
-        })}
-      >
-        <div {...getStyles('monthViewInner')}>
-          {weekdays && (
-            <div {...getStyles('monthViewWeekdays')}>
-              {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
-              {weekdays}
-            </div>
-          )}
+      {agendaOpen && (
+        <AgendaView
+          rangeStart={dayjs(date).startOf('month').format('YYYY-MM-DD')}
+          rangeEnd={dayjs(date).endOf('month').format('YYYY-MM-DD')}
+          events={events}
+          locale={locale}
+          labels={labels}
+          mode={mode}
+          onEventClick={onEventClick}
+          recurrenceExpansionLimit={recurrenceExpansionLimit}
+          {...stylesApiProps}
+        />
+      )}
 
-          {weeks}
-        </div>
-      </ScrollArea>
+      {!agendaOpen && (
+        <ScrollArea
+          scrollbarSize={4}
+          {...scrollAreaProps}
+          {...getStyles('monthViewScrollArea', {
+            className: scrollAreaProps?.className,
+            style: scrollAreaProps?.style,
+          })}
+        >
+          <div {...getStyles('monthViewInner')}>
+            {weekdays && (
+              <div {...getStyles('monthViewWeekdays')}>
+                {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
+                {weekdays}
+              </div>
+            )}
+
+            {weeks}
+          </div>
+        </ScrollArea>
+      )}
     </Box>
   );
 

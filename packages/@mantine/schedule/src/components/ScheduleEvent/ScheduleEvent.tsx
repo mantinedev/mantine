@@ -242,12 +242,12 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
       },
       mod,
     ],
+    ...others,
     draggable: draggable && mode !== 'static',
     tabIndex: mode === 'static' ? -1 : 0,
     onDragStart: mode === 'static' ? undefined : handleDragStart,
     onDragEnd: mode === 'static' ? undefined : handleDragEnd,
     onClick: mode === 'static' ? undefined : others.onClick,
-    ...others,
     children: eventChildren,
   };
 

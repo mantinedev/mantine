@@ -1,0 +1,126 @@
+import { ComboboxPopoverDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ComboboxPopover);
+
+## Usage
+
+`ComboboxPopover` allows adding a combobox dropdown with selectable options to any button element.
+Unlike `Select` and `MultiSelect`, it does not render an input – instead, you provide your own
+target element (typically a `Button`) via `ComboboxPopover.Target`.
+
+`ComboboxPopover.Target` child must be a single element or component that accepts a `ref`.
+Fragments, strings, and other primitive values are not supported.
+
+<Demo data={ComboboxPopoverDemos.usage} />
+
+## Data format
+
+`ComboboxPopover` supports the same `data` format as [Select](/core/select) component:
+an array of strings, objects with `value` and `label`, or grouped items.
+
+<ComboboxData component="ComboboxPopover" />
+
+## Searchable
+
+Set `searchable` prop to enable a search input inside the dropdown that filters options as you type.
+Use `nothingFoundMessage` to display a message when no options match the search query.
+
+<Demo data={ComboboxPopoverDemos.searchable} />
+
+## Controlled search value
+
+Use `searchValue` and `onSearchChange` props to control the search input value:
+
+<Demo data={ComboboxPopoverDemos.controlledSearch} />
+
+## Sort options
+
+Use `filter` prop with `searchable` to provide a custom filtering and sorting function:
+
+<Demo data={ComboboxPopoverDemos.sort} />
+
+## Limit options
+
+Use `limit` prop with `searchable` to limit the number of options displayed at a time.
+This is useful for large data sets to improve performance:
+
+<Demo data={ComboboxPopoverDemos.limit} />
+
+## Multiple selection
+
+Set `multiple` prop to allow selecting multiple values. When `multiple` is set,
+`value` type changes from `string | null` to `string[]`, and `onChange` callback
+receives an array of selected values.
+
+<Demo data={ComboboxPopoverDemos.multiple} />
+
+## Check icon
+
+<Demo data={ComboboxPopoverDemos.checkIcon} />
+
+## Allow deselect
+
+By default, the selected option can be deselected by clicking it again.
+Set `allowDeselect={false}` to prevent this behavior.
+
+<Demo data={ComboboxPopoverDemos.allowDeselect} />
+
+## Nothing found message
+
+Set `nothingFoundMessage` prop to display a message when no options are available:
+
+<Demo data={ComboboxPopoverDemos.nothingFound} />
+
+## Disabled options
+
+<Demo data={ComboboxPopoverDemos.disabledOptions} />
+
+## Groups
+
+<Demo data={ComboboxPopoverDemos.groups} />
+
+## Render option
+
+Use `renderOption` prop to customize option rendering:
+
+<Demo data={ComboboxPopoverDemos.renderOption} />
+
+## Large data sets
+
+By default, the dropdown is wrapped with `ScrollArea.Autosize`.
+Use `maxDropdownHeight` to control the maximum height:
+
+<Demo data={ComboboxPopoverDemos.scrollArea} />
+
+## Control dropdown opened state
+
+Use `dropdownOpened` prop to control the dropdown state.
+Additionally, you can use `onDropdownOpen` and `onDropdownClose` callbacks
+to react to dropdown state changes.
+
+<Demo data={ComboboxPopoverDemos.dropdownOpened} />
+
+## Dropdown position
+
+<Demo data={ComboboxPopoverDemos.dropdownPosition} />
+
+## Dropdown width
+
+By default, the dropdown width matches the target element. Use `comboboxProps`
+to set a custom width:
+
+<Demo data={ComboboxPopoverDemos.dropdownWidth} />
+
+## Dropdown animation
+
+<Demo data={ComboboxPopoverDemos.dropdownAnimation} />
+
+## Form submission
+
+`ComboboxPopover` renders a hidden input with the selected value for native form submission.
+Use `name` prop to set the input name. For multiple selection, values are joined with a comma
+by default – use `hiddenInputValuesDivider` to change the separator.
+
+<Demo data={ComboboxPopoverDemos.formSubmission} />

@@ -1,5 +1,6 @@
 export { usage } from './ColorInput.demo.usage';
 export { error } from './ColorInput.demo.error';
+export { success } from './ColorInput.demo.success';
 export { disabled } from './ColorInput.demo.disabled';
 export { stylesApi } from './ColorInput.demo.stylesApi';
 export { formatsConfigurator } from './ColorInput.demo.formatsConfigurator';

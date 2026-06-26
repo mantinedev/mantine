@@ -1,0 +1,169 @@
+import { AgendaViewDemos, ComboboxPopoverDemos, DataListDemos, DayViewDemos, EmptyStateDemos, InputDemos, MenubarDemos, MonthViewDemos, NotificationsDemos, PieChartDemos, ResourcesDayViewDemos, ResourcesMonthViewDemos, ResourcesScheduleDemos, ResourcesWeekViewDemos, ScheduleDemos, SplitterDemos, ThemingDemos, WeekViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog940);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## ComboboxPopover component
+
+New [ComboboxPopover](/core/combobox-popover) component allows adding a combobox dropdown
+with selectable options to any button element. Unlike `Select` and `MultiSelect`, it does not
+render an input – you provide your own target element via `ComboboxPopover.Target`. Supports
+single and multiple selection modes with the same `data` format as `Select`.
+
+<Demo data={ComboboxPopoverDemos.usage} />
+
+## DataList component
+
+New [DataList](/core/data-list) component displays label-value pairs as a semantic description
+list using `dl`, `dt`, and `dd` HTML elements. Supports vertical and horizontal orientations,
+dividers between items, and all standard Mantine features like Styles API and size prop.
+
+<Demo data={DataListDemos.usage} />
+
+## EmptyState component
+
+New [EmptyState](/core/empty-state) component displays a placeholder for "no data" situations:
+empty search results, empty tables and lists, first-run states or error illustrations with an
+optional call to action. It can be used with `icon`, `title` and `description` shorthand props
+or with `EmptyState.Indicator`, `EmptyState.Title`, `EmptyState.Description` and
+`EmptyState.Actions` compound components for full control.
+
+<Demo data={EmptyStateDemos.compound} />
+
+## Menubar component
+
+New [Menubar](/core/menubar) component adds a desktop-application style menu bar: a horizontal row
+of top-level menu triggers (File, Edit, View, …) where each trigger opens a dropdown. Arrow keys
+move between the top-level menus, and once one menu is opened, moving to a sibling opens it
+immediately. `Menubar` is built on top of `Menu` and follows the WAI-ARIA menubar pattern.
+
+<Demo data={MenubarDemos.usage} />
+
+## ResourcesDayView component
+
+New [ResourcesDayView](/schedule/resources-day-view) component displays resources as rows and
+time slots as columns. Each row represents a resource (conference room, person, equipment) and
+shows events assigned to that resource. Supports drag and drop across resources, business hours
+highlighting, and slot drag select.
+
+<Demo data={ResourcesDayViewDemos.usage} />
+
+## ResourcesWeekView component
+
+New [ResourcesWeekView](/schedule/resources-week-view) component displays resources as rows
+and a full week of time slots as columns with a two-level header showing day names and time
+labels. Supports drag and drop, slot selection, business hours, and current time indicator.
+
+<Demo data={ResourcesWeekViewDemos.usage} />
+
+## ResourcesMonthView component
+
+New [ResourcesMonthView](/schedule/resources-month-view) component displays resources as rows
+and days of the month as columns. Events are shown as colored indicators within each
+resource-day cell for easy visualization of resource utilization across the month.
+
+<Demo data={ResourcesMonthViewDemos.usage} />
+
+## ResourcesSchedule component
+
+New [ResourcesSchedule](/schedule/resources-schedule) wrapper component combines `ResourcesDayView`,
+`ResourcesWeekView` and `ResourcesMonthView` into a single component with view switching, similar
+to how `Schedule` combines day, week, month and year views.
+
+<Demo data={ResourcesScheduleDemos.usage} />
+
+## AgendaView component
+
+New [AgendaView](/schedule/agenda-view) component renders a vertical list of events for a specified
+time period. Events are grouped by date in chronological order.
+
+<Demo data={AgendaViewDemos.usage} />
+
+## withAgenda prop for DayView, WeekView, MonthView and Schedule
+
+`DayView`, `WeekView`, `MonthView` and `Schedule` components now support `withAgenda` prop.
+When enabled, an "Agenda" button is displayed in the header. Clicking it opens an `AgendaView`
+for the currently visible date range.
+
+<Demo data={MonthViewDemos.withAgenda} />
+
+## MonthView hide weekend days
+
+[MonthView](/schedule/month-view) now supports `withWeekendDays` prop. Set it to `false`
+to hide weekend days: the grid shrinks to the remaining columns and events that span hidden
+days are clipped to the visible days. The days that are considered weekend are controlled by
+the `weekendDays` prop (or `DatesProvider`, `[0, 6]` by default).
+
+<Demo data={MonthViewDemos.withoutWeekendDays} />
+
+## DayView and WeekView sub-hour grid lines
+
+[DayView](/schedule/day-view) and [WeekView](/schedule/week-view) now support `withSubHourGridLines`
+prop. When `intervalMinutes` is smaller than `60`, set `withSubHourGridLines={false}` to display only
+one grid line per hour while keeping the smaller interval for creating and resizing events. This is
+useful to achieve a Google Calendar like layout: events snap to 15 or 30 minutes increments, but the
+grid stays clean with hourly lines.
+
+<Demo data={WeekViewDemos.subHourGridLines} />
+
+## Input success state
+
+All inputs based on `Input` and `Input.Wrapper` now support a `success` prop. When set, it changes the
+input border color to green (`--mantine-color-success`). You can also pass a React node to display
+a success message below the input. If both `error` and `success` props are set, `error` takes precedence.
+
+New `--mantine-color-success` CSS variable has been added (resolves to `teal-6` in light mode and `teal-8` in dark mode).
+
+<Demo data={InputDemos.success} />
+
+## Splitter CSS units
+
+[Splitter.Pane](/core/splitter) `defaultSize`, `min` and `max` props now accept CSS units in
+addition to plain numbers. A plain `number` or `%` string is a flexible size that shares the
+leftover space, while a `px` or `rem` string is a fixed size that keeps its pixel size when the
+container is resized. This makes it possible to mix a fixed-width sidebar with a fluid content pane:
+
+<Demo data={SplitterDemos.cssUnits} />
+
+## Notifications priority
+
+Notifications now support a `priority` property. When the number of active notifications exceeds
+the `limit`, notifications with a higher `priority` take the visible slots and lower priority ones
+are pushed into the queue. Notifications with equal priority keep insertion order (FIFO), so the
+default behavior is unchanged (`priority` defaults to `0`).
+
+<Demo data={NotificationsDemos.priority} />
+
+## Legend support for PieChart, DonutChart and FunnelChart
+
+[PieChart](/charts/pie-chart), [DonutChart](/charts/donut-chart) and [FunnelChart](/charts/funnel-chart)
+now support the `withLegend` prop. When enabled, a legend with the name and color of each segment
+is displayed. Hovering over a legend item highlights the corresponding segment. Use the `legendProps`
+prop to pass props down to the underlying recharts `Legend` component.
+
+<Demo data={PieChartDemos.legend} />
+
+## autoContrast support for virtual colors
+
+[Virtual colors](/theming/colors/#virtual-colors) now support [autoContrast](/theming/theme-object/#autocontrast).
+Previously, `filled` components with a virtual color always used white text because the underlying color
+could not be resolved on the JavaScript side. The contrast color is now calculated separately for each
+color scheme based on the resolved background color, so text stays readable when the virtual color resolves
+to a light color in one scheme and a dark color in another. Switch between light and dark color schemes
+(`Ctrl + J`) to see the text color adjust:
+
+<Demo data={ThemingDemos.virtualColorsAutoContrast} />
+
+## Other changes
+
+- [Splitter](/core/splitter) now supports `resetOnDoubleClick` prop. When enabled, double-clicking a resize handle restores the adjacent panes to their default ratio.
+- [TimePicker](/dates/time-picker) now supports `closeDropdownOnPresetSelect` prop. When set, the dropdown is closed once a value is selected from the presets list.
+- [useLongPress](/hooks/use-long-press) hook now handles `onTouchCancel` events: the returned handlers include an `onTouchCancel` callback so that a long press is correctly canceled when the touch is interrupted by the system (incoming call, browser gesture, etc.).

@@ -49,10 +49,10 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  EslintConfig: {
-    title: 'eslint-config-mantine',
-    slug: '/eslint-config-mantine',
-    search: 'Linting configuration for Mantine projects',
+  OxcConfig: {
+    title: 'oxc-config-mantine',
+    slug: '/oxc-config-mantine',
+    search: 'Linting and formatting configuration for Mantine projects',
     hideSiblings: true,
     hideHeader: true,
   },
@@ -276,5 +276,13 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     release: 'https://github.com/mantinedev/mantine/releases/tag/9.3.0',
     date: 'June 2nd, 2026',
     searchTags: '9-3-0, 930',
+  },
+
+  Changelog940: {
+    title: 'Version v9.4.0',
+    slug: '/changelog/9-4-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.4.0',
+    date: 'June 23rd, 2026',
+    searchTags: '9-4-0, 940',
   },
 };

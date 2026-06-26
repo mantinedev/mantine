@@ -311,11 +311,14 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     labelProps,
     descriptionProps,
     errorProps,
+    successProps,
     wrapperProps,
     description,
     label,
     error,
+    success,
     withErrorStyles,
+    withSuccessStyles,
     name,
     form,
     id,
@@ -857,11 +860,14 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
               labelProps={labelProps}
               descriptionProps={descriptionProps}
               errorProps={errorProps}
+              successProps={successProps}
               wrapperProps={wrapperProps}
               description={description}
               label={label}
               error={error}
+              success={success}
               withErrorStyles={withErrorStyles}
+              withSuccessStyles={withSuccessStyles}
               __stylesApiProps={{
                 ...props,
                 rightSectionPointerEvents: rightSectionPointerEvents || 'none',
@@ -995,6 +1001,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
             unstyled={unstyled}
             pointer={!searchable}
             error={error}
+            success={success}
             attributes={attributes}
             className={className}
             style={style}
@@ -1012,10 +1019,12 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
             labelProps={labelProps}
             descriptionProps={descriptionProps}
             errorProps={errorProps}
+            successProps={successProps}
             wrapperProps={wrapperProps}
             description={description}
             label={label}
             withErrorStyles={withErrorStyles}
+            withSuccessStyles={withSuccessStyles}
             placeholder={placeholder}
             required={required}
             mod={mod}

@@ -253,4 +253,7 @@ export type {
   UseSplitterReturnValue,
   UseSplitterRedistributeInput,
   UseSplitterRedistributeFn,
+  UseSplitterResolvedPanel,
+  SplitterPaneSize,
+  SplitterStep,
 } from './use-splitter/use-splitter';

@@ -1,0 +1,161 @@
+import { ResourcesWeekViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ResourcesWeekView);
+
+## Usage
+
+ResourcesWeekView displays resources as rows and a full week of time slots as columns
+with a two-level header showing day names and time labels. Each row represents a resource
+(e.g., conference room, person, equipment) and shows events assigned to that resource
+via the `resourceId` property on event data.
+
+<Demo data={ResourcesWeekViewDemos.usage} />
+
+## All-day events
+
+Events that span a whole day (start at `00:00:00` and end at the next day `00:00:00`) are
+rendered as full-width bars within their day column. Foreground all-day events are pinned to
+the top of the column and stack when there are several; all-day events with
+`display: 'background'` tint the whole day column.
+
+<Demo data={ResourcesWeekViewDemos.allDayEvents} />
+
+## Drag and drop
+
+Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback
+receives the target `resourceId` as the fifth argument, allowing you to update the event's resource
+assignment. Events can be dragged across both resources and days.
+
+<Demo data={ResourcesWeekViewDemos.dragDrop} />
+
+## Event form
+
+Use `onTimeSlotClick`, `onSlotDragEnd`, and `onEventClick` callbacks to open a form
+for creating or editing events. Combine with `withDragSlotSelect` to allow selecting
+a time range by dragging across slots.
+
+<Demo data={ResourcesWeekViewDemos.eventForm} />
+
+## Time range and intervals
+
+Use `startTime`, `endTime` and `intervalMinutes` props to control the visible time range
+and slot granularity.
+
+<Demo data={ResourcesWeekViewDemos.timeRange} />
+
+## Current time indicator
+
+Use `withCurrentTimeIndicator` to display a line at the current time. Set `withCurrentTimeBubble={false}`
+to hide the time bubble label.
+
+<Demo data={ResourcesWeekViewDemos.currentTimeIndicator} />
+
+## First day of week
+
+Use `firstDayOfWeek` to set the first day of the week. Set `weekdayFormat` to customize
+the day label format.
+
+<Demo data={ResourcesWeekViewDemos.firstDayOfWeek} />
+
+## Custom week label
+
+Use `renderWeekLabel` to fully customize the week label in the header. When provided,
+it takes full control of the label. Use `weekLabelFormat` instead if you only need to change the date format.
+
+<Demo data={ResourcesWeekViewDemos.renderWeekLabel} />
+
+## Business hours
+
+Use `highlightBusinessHours` prop to visually distinguish business hours from non-business hours
+across all time slot columns.
+
+<Demo data={ResourcesWeekViewDemos.businessHours} />
+
+## Without weekend days
+
+Set `withWeekendDays={false}` to hide weekend days from the view.
+
+<Demo data={ResourcesWeekViewDemos.withoutWeekendDays} />
+
+## Custom resource label
+
+Use `renderResourceLabel` prop to customize how resource labels are rendered.
+
+<Demo data={ResourcesWeekViewDemos.renderResourceLabel} />
+
+## Resource groups
+
+Use `groups` prop to group resources under labeled headers. The group labels are displayed
+as a column to the left of resource labels, spanning vertically across their resources.
+Use `renderGroupLabel` to customize group label rendering and `groupLabelWidth` to control
+the group column width.
+
+<Demo data={ResourcesWeekViewDemos.resourceGroups} />
+
+## Custom event rendering
+
+Use `renderEvent` prop to customize how events are rendered. The example below
+shows event details in a hover card.
+
+<Demo data={ResourcesWeekViewDemos.renderEvent} />
+
+## Recurring events
+
+ResourcesWeekView automatically expands recurring events for the visible week.
+See [Recurring events guide](/schedule/recurring-events) for full documentation.
+
+<Demo data={ResourcesWeekViewDemos.recurringEvents} />
+
+## Max events per time slot
+
+Use `maxEventsPerTimeSlot` prop to limit the number of visible overlapping events per time slot.
+When events exceed the limit, a "+N more" indicator is displayed. Clicking the indicator opens
+a popover with all events in the group. Use `moreEventsProps` to customize the popover behavior.
+
+<Demo data={ResourcesWeekViewDemos.maxEventsPerTimeSlot} />
+
+## Localization
+
+Use `locale` prop to set the locale for date formatting and `labels` prop to override
+default labels.
+
+<Demo data={ResourcesWeekViewDemos.localization} />
+
+## Radius
+
+Use `radius` prop to change the border radius of events.
+
+<Demo data={ResourcesWeekViewDemos.radius} />
+
+## Start scroll date time
+
+Use `startScrollDateTime` prop to scroll to a specific time on mount.
+
+<Demo data={ResourcesWeekViewDemos.startScrollDateTime} />
+
+## Scroll area props
+
+Use `scrollAreaProps` to pass props to the underlying ScrollArea component.
+
+<Demo data={ResourcesWeekViewDemos.scrollAreaProps} />
+
+## Event resize
+
+Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
+right edges, and the `onEventResize` callback is called with the updated event start and end times.
+
+<Demo data={ResourcesWeekViewDemos.eventResize} />
+
+Resizing is constrained to the day the event belongs to: an event cannot be resized to span multiple
+days. To make an event cover several days, update its `start` and `end` dates directly in your data.
+
+Use `canResizeEvent` to control which events can be resized.
+
+## Static mode
+
+Set `mode="static"` to disable all interactions. Events and time slots become non-interactive,
+useful for display-only views.
+
+<Demo data={ResourcesWeekViewDemos.staticMode} />

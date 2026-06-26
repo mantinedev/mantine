@@ -401,4 +401,197 @@ describe('@mantine/core/Notifications', () => {
     });
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  describe('priority', () => {
+    function createStoreWithLimit(limit: number) {
+      const store = createNotificationsStore();
+      store.setState((current) => ({ ...current, limit }));
+      return store;
+    }
+
+    it('keeps higher priority notifications visible and pushes lower priority ones into the queue', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show({ id: 'low', message: 'low', priority: 0 }, store);
+      notifications.show({ id: 'high', message: 'high', priority: 10 }, store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['high']);
+      expect(state.queue.map((n) => n.id)).toEqual(['low']);
+    });
+
+    it('sorts visible notifications by priority descending', () => {
+      const store = createStoreWithLimit(3);
+
+      notifications.show({ id: 'a', message: 'a', priority: 1 }, store);
+      notifications.show({ id: 'b', message: 'b', priority: 5 }, store);
+      notifications.show({ id: 'c', message: 'c', priority: 3 }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['b', 'c', 'a']);
+    });
+
+    it('preserves insertion order (FIFO) for notifications with equal priority', () => {
+      const store = createStoreWithLimit(5);
+
+      notifications.show({ id: 'first', message: 'first', priority: 2 }, store);
+      notifications.show({ id: 'second', message: 'second', priority: 2 }, store);
+      notifications.show({ id: 'third', message: 'third', priority: 2 }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['first', 'second', 'third']);
+    });
+
+    it('preserves FIFO order when no priority is set (backwards compatible)', () => {
+      const store = createStoreWithLimit(2);
+
+      notifications.show({ id: 'one', message: 'one' }, store);
+      notifications.show({ id: 'two', message: 'two' }, store);
+      notifications.show({ id: 'three', message: 'three' }, store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['one', 'two']);
+      expect(state.queue.map((n) => n.id)).toEqual(['three']);
+    });
+
+    it('evicts the lowest priority visible notification when a higher priority one arrives at limit', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show({ id: 'normal', message: 'normal', priority: 1 }, store);
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['normal']);
+
+      notifications.show({ id: 'urgent', message: 'urgent', priority: 5 }, store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['urgent']);
+      expect(state.queue.map((n) => n.id)).toEqual(['normal']);
+    });
+
+    it('applies priority independently per position', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show(
+        { id: 'tl-low', message: 'tl-low', position: 'top-left', priority: 0 },
+        store
+      );
+      notifications.show(
+        { id: 'tl-high', message: 'tl-high', position: 'top-left', priority: 9 },
+        store
+      );
+      notifications.show(
+        { id: 'br-low', message: 'br-low', position: 'bottom-right', priority: 0 },
+        store
+      );
+      notifications.show(
+        { id: 'br-high', message: 'br-high', position: 'bottom-right', priority: 9 },
+        store
+      );
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id).sort()).toEqual(['br-high', 'tl-high']);
+      expect(state.queue.map((n) => n.id).sort()).toEqual(['br-low', 'tl-low']);
+    });
+
+    it('preserves true insertion order (FIFO) for equal priority after a priority update', () => {
+      const store = createStoreWithLimit(2);
+
+      notifications.show({ id: 'a', message: 'a', priority: 10 }, store);
+      notifications.show({ id: 'b', message: 'b', priority: 0 }, store);
+      notifications.show({ id: 'c', message: 'c', priority: 10 }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['a', 'c']);
+      expect(store.getState().queue.map((n) => n.id)).toEqual(['b']);
+
+      notifications.update({ id: 'b', message: 'b', priority: 10 }, store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['a', 'b']);
+      expect(state.queue.map((n) => n.id)).toEqual(['c']);
+    });
+
+    it('redistributes notifications when priority is changed via update', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show({ id: 'low', message: 'low', priority: 0 }, store);
+      notifications.show({ id: 'high', message: 'high', priority: 5 }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['high']);
+
+      notifications.update({ id: 'low', message: 'low', priority: 10 }, store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['low']);
+      expect(state.queue.map((n) => n.id)).toEqual(['high']);
+    });
+  });
+
+  describe('cleanQueue', () => {
+    function createStoreWithLimit(limit: number) {
+      const store = createNotificationsStore();
+      store.setState((current) => ({ ...current, limit }));
+      return store;
+    }
+
+    it('removes queued notifications and keeps the visible ones', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show({ id: 'visible', message: 'visible' }, store);
+      notifications.show({ id: 'queued', message: 'queued' }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['visible']);
+      expect(store.getState().queue.map((n) => n.id)).toEqual(['queued']);
+
+      notifications.cleanQueue(store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['visible']);
+      expect(state.queue).toEqual([]);
+    });
+
+    it('keeps visible notifications of every position (limit is applied per position)', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show({ id: 'tl-visible', message: 'tl-visible', position: 'top-left' }, store);
+      notifications.show({ id: 'tl-queued', message: 'tl-queued', position: 'top-left' }, store);
+      notifications.show(
+        { id: 'br-visible', message: 'br-visible', position: 'bottom-right' },
+        store
+      );
+      notifications.show(
+        { id: 'br-queued', message: 'br-queued', position: 'bottom-right' },
+        store
+      );
+
+      expect(
+        store
+          .getState()
+          .notifications.map((n) => n.id)
+          .sort()
+      ).toEqual(['br-visible', 'tl-visible']);
+
+      notifications.cleanQueue(store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id).sort()).toEqual(['br-visible', 'tl-visible']);
+      expect(state.queue).toEqual([]);
+    });
+
+    it('clears the queue and caps visible notifications when the limit was lowered', () => {
+      const store = createStoreWithLimit(3);
+
+      notifications.show({ id: 'a', message: 'a' }, store);
+      notifications.show({ id: 'b', message: 'b' }, store);
+      notifications.show({ id: 'c', message: 'c' }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['a', 'b', 'c']);
+
+      // Lowering the limit (as the Notifications component does) does not redistribute on its own
+      store.setState((current) => ({ ...current, limit: 1 }));
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['a', 'b', 'c']);
+
+      notifications.cleanQueue(store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['a']);
+      expect(state.queue).toEqual([]);
+    });
+  });
 });

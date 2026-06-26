@@ -29,6 +29,11 @@ export const InputStylesApi: StylesApiData<InputFactory> = {
 
   modifiers: [
     { modifier: 'data-error', selector: ['wrapper', 'input'], condition: '`error` prop is set' },
+    {
+      modifier: 'data-success',
+      selector: ['wrapper', 'input'],
+      condition: '`success` prop is set and `error` is not set',
+    },
     { modifier: 'data-disabled', selector: 'input', condition: '`disabled` prop is set' },
     {
       modifier: 'data-with-right-section',
@@ -53,6 +58,7 @@ export const InputWrapperStylesApi: StylesApiData<InputWrapperFactory> = {
     required: 'Required asterisk element, rendered inside label',
     description: 'Description element',
     error: 'Error element',
+    success: 'Success element',
   },
 
   vars: {
@@ -63,6 +69,10 @@ export const InputWrapperStylesApi: StylesApiData<InputWrapperFactory> = {
 
     error: {
       '--input-error-size': 'Controls error `font-size`',
+    },
+
+    success: {
+      '--input-success-size': 'Controls success `font-size`',
     },
 
     description: {

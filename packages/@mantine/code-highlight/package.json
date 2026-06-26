@@ -1,6 +1,6 @@
 {
   "name": "@mantine/code-highlight",
-  "version": "9.3.2",
+  "version": "9.4.0",
   "description": "Code highlight with Mantine theme",
   "homepage": "https://mantine.dev/x/code-highlight/",
   "license": "MIT",
@@ -45,8 +45,8 @@
     "directory": "packages/@mantine/code-highlight"
   },
   "peerDependencies": {
-    "@mantine/core": "9.3.2",
-    "@mantine/hooks": "9.3.2",
+    "@mantine/core": "9.4.0",
+    "@mantine/hooks": "9.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -57,7 +57,7 @@
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
   }
 }

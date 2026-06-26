@@ -23,6 +23,11 @@ export const Demo_error = {
   render: renderDemo(demos.error),
 };
 
+export const Demo_success = {
+  name: '⭐ Demo: success',
+  render: renderDemo(demos.success),
+};
+
 export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),

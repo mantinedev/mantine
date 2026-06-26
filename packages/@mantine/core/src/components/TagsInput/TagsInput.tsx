@@ -205,11 +205,14 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     labelProps,
     descriptionProps,
     errorProps,
+    successProps,
     wrapperProps,
     description,
     label,
     error,
+    success,
     withErrorStyles,
+    withSuccessStyles,
     name,
     form,
     id,
@@ -520,11 +523,14 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             labelProps={labelProps}
             descriptionProps={descriptionProps}
             errorProps={errorProps}
+            successProps={successProps}
             wrapperProps={wrapperProps}
             description={description}
             label={label}
             error={error}
+            success={success}
             withErrorStyles={withErrorStyles}
+            withSuccessStyles={withSuccessStyles}
             __stylesApiProps={{ ...props, multiline: true }}
             id={_id}
             mod={mod}

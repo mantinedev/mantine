@@ -161,6 +161,136 @@ describe('@mantine/schedule/MonthView', () => {
     });
   });
 
+  describe('withWeekendDays', () => {
+    it('renders all 7 columns by default', () => {
+      const { container } = render(<MonthView {...defaultProps} withWeekDays />);
+      expect(container.querySelectorAll('.mantine-MonthView-monthViewWeekday')).toHaveLength(7);
+      expect(container.querySelectorAll('.mantine-MonthView-monthViewDay')).toHaveLength(42);
+    });
+
+    it('hides weekend days when withWeekendDays is false', () => {
+      const { container } = render(
+        <MonthView {...defaultProps} withWeekDays withWeekendDays={false} weekdayFormat="dddd" />
+      );
+      const weekdays = container.querySelectorAll('.mantine-MonthView-monthViewWeekday');
+      const days = container.querySelectorAll('.mantine-MonthView-monthViewDay');
+
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toStrictEqual('Monday');
+      expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Friday');
+      expect(days).toHaveLength(30);
+      days.forEach((day) => {
+        expect(day).not.toHaveAttribute('data-weekend');
+      });
+    });
+
+    it('sets --month-view-columns variable to the number of visible columns', () => {
+      const { container } = render(<MonthView {...defaultProps} withWeekendDays={false} />);
+      const root = container.querySelector('.mantine-MonthView-monthView') as HTMLElement;
+      expect(root).toHaveAttribute('data-without-weekend-days');
+      expect(root.style.getPropertyValue('--month-view-columns')).toBe('5');
+    });
+
+    it('respects custom weekendDays when hiding weekend days', () => {
+      const { container } = render(
+        <MonthView
+          {...defaultProps}
+          withWeekDays
+          withWeekendDays={false}
+          weekendDays={[1, 2]}
+          weekdayFormat="dddd"
+        />
+      );
+      const weekdays = container.querySelectorAll('.mantine-MonthView-monthViewWeekday');
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toStrictEqual('Wednesday');
+      expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Sunday');
+      expect(container.querySelectorAll('.mantine-MonthView-monthViewDay')).toHaveLength(30);
+    });
+
+    it('hides weekend days relative to firstDayOfWeek', () => {
+      const { container } = render(
+        <MonthView
+          {...defaultProps}
+          withWeekDays
+          withWeekendDays={false}
+          firstDayOfWeek={0}
+          weekdayFormat="dddd"
+        />
+      );
+      const weekdays = container.querySelectorAll('.mantine-MonthView-monthViewWeekday');
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toStrictEqual('Monday');
+      expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Friday');
+    });
+
+    it('does not render events that occur only on hidden weekend days', () => {
+      const events = [
+        {
+          id: 'weekday',
+          title: 'Standup',
+          start: '2025-11-05 10:00:00',
+          end: '2025-11-05 11:00:00',
+          color: 'blue',
+          payload: {},
+        },
+        {
+          id: 'weekend-only',
+          title: 'Weekend Brunch',
+          start: '2025-11-08 10:00:00',
+          end: '2025-11-08 11:00:00',
+          color: 'red',
+          payload: {},
+        },
+      ];
+
+      render(<MonthView {...defaultProps} withWeekendDays={false} events={events} />);
+
+      expect(screen.getByText('Standup')).toBeInTheDocument();
+      expect(screen.queryByText('Weekend Brunch')).not.toBeInTheDocument();
+    });
+
+    it('keeps keyboard navigation working after toggling withWeekendDays at runtime', async () => {
+      const { rerender } = render(<MonthView {...defaultProps} />);
+      rerender(<MonthView {...defaultProps} withWeekendDays={false} />);
+
+      // Nov 7 is Friday, the last visible column in a Monday-start week
+      const friday = screen.getByRole('button', { name: 'November 7, 2025' });
+      friday.focus();
+      await userEvent.keyboard('{ArrowRight}');
+
+      expect(screen.getByRole('button', { name: 'November 10, 2025' })).toHaveFocus();
+    });
+
+    it('clips events that span a hidden day within a week to the visible days', () => {
+      // Hide Wednesday (Nov 5), an interior column, and span an event Tue–Thu across it
+      const events = [
+        {
+          id: 'trip',
+          title: 'Trip',
+          start: '2025-11-04 10:00:00',
+          end: '2025-11-06 11:00:00',
+          color: 'blue',
+          payload: {},
+        },
+      ];
+
+      render(
+        <MonthView {...defaultProps} withWeekendDays={false} weekendDays={[3]} events={events} />
+      );
+
+      const fragments = screen
+        .getAllByText('Trip')
+        .map((node) => node.closest('.mantine-ScheduleEvent-event'));
+
+      expect(fragments).toHaveLength(2);
+      expect(fragments[0]).toHaveAttribute('data-clip-end');
+      expect(fragments[0]).not.toHaveAttribute('data-clip-start');
+      expect(fragments[1]).toHaveAttribute('data-clip-start');
+      expect(fragments[1]).not.toHaveAttribute('data-clip-end');
+    });
+  });
+
   it('supports __staticSelector prop', () => {
     const { container } = render(
       <MonthView {...defaultProps} __staticSelector="Test" withWeekDays withWeekNumbers />
@@ -769,6 +899,64 @@ describe('@mantine/schedule/MonthView', () => {
       expect(daySpy).not.toHaveBeenCalled();
       // Note: We don't test event clicks in static mode because ScheduleEvent
       // handles that internally by setting onClick to undefined when mode is static
+    });
+  });
+
+  describe('withAgenda prop', () => {
+    const agendaEvents = [
+      {
+        id: 1,
+        title: 'Test Event',
+        start: '2025-11-05 10:00:00',
+        end: '2025-11-05 11:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    it('does not render agenda button by default', () => {
+      render(<MonthView {...defaultProps} />);
+      expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
+    });
+
+    it('renders agenda button when withAgenda is true', () => {
+      render(<MonthView {...defaultProps} withAgenda />);
+      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
+    });
+
+    it('shows AgendaView when agenda button is clicked', async () => {
+      const { container } = render(
+        <MonthView {...defaultProps} withAgenda events={agendaEvents} />
+      );
+
+      expect(container.querySelector('.mantine-MonthView-agendaView')).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+
+      expect(container.querySelector('.mantine-MonthView-agendaView')).toBeInTheDocument();
+    });
+
+    it('toggles AgendaView off when agenda button is clicked again', async () => {
+      const { container } = render(
+        <MonthView {...defaultProps} withAgenda events={agendaEvents} />
+      );
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(container.querySelector('.mantine-MonthView-agendaView')).toBeInTheDocument();
+
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(container.querySelector('.mantine-MonthView-agendaView')).not.toBeInTheDocument();
+    });
+
+    it('passes the visible month as the agenda range', async () => {
+      render(<MonthView {...defaultProps} withAgenda events={agendaEvents} />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(screen.getByText('November 1, 2025 – November 30, 2025')).toBeInTheDocument();
+    });
+
+    it('renders both regular and compact agenda buttons', () => {
+      const { container } = render(<MonthView {...defaultProps} withAgenda />);
+      const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
+      expect(agendaButtons).toHaveLength(2);
     });
   });
 });

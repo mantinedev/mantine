@@ -1,0 +1,430 @@
+.resourcesDayView {
+  --resources-day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --resources-day-view-resource-label-width: 120px;
+  --resources-day-view-slot-width: 80px;
+  --resources-day-view-row-height: 64px;
+  --resources-day-view-group-label-width: 80px;
+  --resources-day-view-all-day-height: 20px;
+
+  @mixin where-light {
+    --resources-day-view-border-color: var(--mantine-color-gray-3);
+    --resources-day-view-business-hours-bg: var(--mantine-color-white);
+    --resources-day-view-non-business-hours-bg: var(--mantine-color-gray-0);
+  }
+
+  @mixin where-dark {
+    --resources-day-view-border-color: var(--mantine-color-dark-4);
+    --resources-day-view-business-hours-bg: var(--mantine-color-dark-7);
+    --resources-day-view-non-business-hours-bg: var(--mantine-color-dark-6);
+  }
+}
+
+.resourcesDayViewRoot {
+  border: 1px solid var(--resources-day-view-border-color);
+  border-radius: var(--resources-day-view-radius);
+  overflow: hidden;
+  max-width: fit-content;
+  position: relative;
+}
+
+.resourcesDayViewScrollArea {
+  :where([data-mantine-scrollbar]) {
+    z-index: 20;
+  }
+
+  :where([data-scrollarea-viewport]) {
+    overscroll-behavior-x: none;
+  }
+}
+
+.resourcesDayViewInner {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.resourcesDayViewTimeLabelsRow {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid var(--resources-day-view-border-color);
+  margin-bottom: -1px;
+  transition: box-shadow 100ms ease;
+
+  &:where([data-scrolled]) {
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
+.resourcesDayViewCorner {
+  flex: 0 0 var(--resources-day-view-resource-label-width);
+  min-width: var(--resources-day-view-resource-label-width);
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
+  position: sticky;
+  left: 0;
+  z-index: 11;
+  background-color: var(--mantine-color-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+}
+
+.resourcesDayViewTimeLabel {
+  flex: 0 0 var(--resources-day-view-slot-width);
+  min-width: var(--resources-day-view-slot-width);
+  max-width: var(--resources-day-view-slot-width);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
+  user-select: none;
+  cursor: default;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
+
+  &:where(:last-of-type) {
+    border-inline-end: none;
+  }
+
+  &:where([data-business-hours]) {
+    background-color: var(--resources-day-view-business-hours-bg);
+  }
+
+  &:where([data-non-business-hours]) {
+    background-color: var(--resources-day-view-non-business-hours-bg);
+  }
+}
+
+.resourcesDayViewRow {
+  display: flex;
+  border-top: 1px solid var(--resources-day-view-border-color);
+}
+
+.resourcesDayViewResourceLabel {
+  flex: 0 0 var(--resources-day-view-resource-label-width);
+  min-width: var(--resources-day-view-resource-label-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
+  min-height: var(--resources-day-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 11;
+  background-color: var(--mantine-color-body);
+  transition: box-shadow 100ms ease;
+
+  &:where([data-scrolled-x]) {
+    box-shadow: var(--mantine-shadow-sm);
+  }
+
+  &:where([data-has-groups]) {
+    left: var(--resources-day-view-group-label-width);
+  }
+}
+
+.resourcesDayViewGroupColumn {
+  flex: 0 0 var(--resources-day-view-group-label-width);
+  min-width: var(--resources-day-view-group-label-width);
+  min-height: var(--resources-day-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background-color: var(--mantine-color-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  user-select: none;
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
+  overflow: visible;
+
+  &:where([data-group-position='first']),
+  &:where([data-group-position='only']) {
+    z-index: 13;
+  }
+
+  &:where([data-group-position='middle']),
+  &:where([data-group-position='last']) {
+    margin-top: -1px;
+    min-height: calc(var(--resources-day-view-row-height) + 1px);
+  }
+}
+
+.resourcesDayViewGroupColumnEmpty {
+  flex: 0 0 var(--resources-day-view-group-label-width);
+  min-width: var(--resources-day-view-group-label-width);
+  min-height: var(--resources-day-view-row-height);
+  position: sticky;
+  left: 0;
+  z-index: 12;
+  background-color: var(--mantine-color-body);
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
+}
+
+.resourcesDayViewRowSlots {
+  display: flex;
+  position: relative;
+  min-height: var(--resources-day-view-row-height);
+}
+
+.resourcesDayViewRowSlot {
+  flex: 0 0 var(--resources-day-view-slot-width);
+  min-width: var(--resources-day-view-slot-width);
+  max-width: var(--resources-day-view-slot-width);
+  min-height: var(--resources-day-view-row-height);
+  border-inline-end: 1px solid var(--resources-day-view-border-color);
+  cursor: pointer;
+  position: relative;
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+
+  &:where(:last-of-type) {
+    border-inline-end: none;
+  }
+
+  &:where(:focus) {
+    z-index: 1;
+  }
+
+  &:where([data-business-hours]) {
+    background-color: var(--resources-day-view-business-hours-bg);
+  }
+
+  &:where([data-non-business-hours]) {
+    background-color: var(--resources-day-view-non-business-hours-bg);
+  }
+
+  &:where([data-drop-target]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-blue-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
+    }
+  }
+
+  &:where([data-drag-selected]) {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-light);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+
+      @mixin where-light {
+        border-color: var(--mantine-primary-color-2);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-primary-color-9);
+      }
+    }
+  }
+
+  &:where([data-drag-slot-index]) {
+    touch-action: none;
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.resourcesDayViewCurrentTimeIndicator {
+  --_indicator-color: var(--resources-day-view-indicator-color, var(--mantine-color-red-7));
+  --_time-bubble-height: 18px;
+  --_thumb-size: 12px;
+
+  position: absolute;
+  pointer-events: none;
+  top: 37px;
+  bottom: 0;
+  left: var(--indicator-left-offset);
+  width: 2px;
+  z-index: 3;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--_indicator-color);
+    opacity: 0.2;
+  }
+}
+
+.resourcesDayViewCurrentTimeIndicatorLine {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: var(--_indicator-color);
+}
+
+.resourcesDayViewCurrentTimeIndicatorThumb {
+  position: absolute;
+  top: calc(-1 * (var(--_thumb-size) / 2 - 1px));
+  width: var(--_thumb-size);
+  height: var(--_thumb-size);
+  border-radius: 50%;
+  border: 1px solid var(--mantine-color-body);
+  background-color: var(--_indicator-color);
+  left: calc(-1 * (var(--_thumb-size) / 2 - 1px));
+}
+
+.resourcesDayViewCurrentTimeIndicatorTimeBubble {
+  position: absolute;
+  height: var(--_time-bubble-height);
+  width: var(--_time-bubble-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+  background-color: var(--_indicator-color);
+  color: var(--mantine-color-white);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  box-shadow: var(--mantine-shadow-sm);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  top: 0;
+  left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
+  z-index: 3;
+}
+
+.resourcesDayViewBackgroundEvent {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: var(--resources-day-view-radius);
+  background-color: var(--bg-event-bg);
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  padding: 3px 4px;
+  color: var(--bg-event-color);
+}
+
+.resourcesDayViewAllDayEvent {
+  position: absolute;
+  inset-inline: 1px;
+  height: var(--resources-day-view-all-day-height);
+  z-index: 3;
+}
+
+.resourcesDayViewResizeHandle {
+  position: absolute;
+  top: 20%;
+  width: 4px;
+  height: 60%;
+  cursor: ew-resize;
+  z-index: 5;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 100ms ease;
+  pointer-events: all;
+  background-color: var(--event-color);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px -6px;
+  }
+
+  &:where([data-edge='start']) {
+    left: -2px;
+  }
+
+  &:where([data-edge='end']) {
+    right: -2px;
+  }
+}
+
+.resourcesDayViewEventWrapper {
+  position: absolute;
+  z-index: 3;
+
+  &:hover .resourcesDayViewResizeHandle {
+    opacity: 0.5;
+  }
+
+  & .resourcesDayViewResizeHandle:hover {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesDayViewResizeHandle:where([data-active]) {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesDayViewResizeHandle:not([data-active]) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.resourcesDayView:where([data-event-interaction]) .resourcesDayViewRowSlot {
+  pointer-events: none;
+}
+
+.resourcesDayView:where([data-resizing]) {
+  & * {
+    cursor: ew-resize !important;
+  }
+
+  & .resourcesDayViewEventWrapper:not([data-resizing]) {
+    pointer-events: none;
+
+    & .resourcesDayViewResizeHandle {
+      opacity: 0;
+    }
+  }
+}

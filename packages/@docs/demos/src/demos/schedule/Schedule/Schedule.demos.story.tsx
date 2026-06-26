@@ -53,3 +53,8 @@ export const Demo_customHeader = {
   name: '⭐ Demo: customHeader',
   render: renderDemo(demos.customHeader),
 };
+
+export const Demo_withAgenda = {
+  name: '⭐ Demo: withAgenda',
+  render: renderDemo(demos.withAgenda),
+};

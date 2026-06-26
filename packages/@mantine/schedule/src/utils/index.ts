@@ -51,3 +51,17 @@ export type {
   BusinessHoursValue,
   GetBusinessHoursModInput,
 } from './get-business-hours-mod/get-business-hours-mod';
+export { getOrderedResources } from './get-ordered-resources/get-ordered-resources';
+export type {
+  GroupRange,
+  OrderedResourcesResult,
+  ResourceGroupInfo,
+} from './get-ordered-resources/get-ordered-resources';
+export { handleResourcesGridKeyDown } from './handle-resources-grid-key-down/handle-resources-grid-key-down';
+export type {
+  HandleResourcesGridKeyDownInput,
+  ResourcesGridControlsRef,
+} from './handle-resources-grid-key-down/handle-resources-grid-key-down';
+export { getGroupToResourceIdMap } from './get-group-to-resource-id-map/get-group-to-resource-id-map';
+export { getIndexFromDragPoint } from './get-index-from-drag-point/get-index-from-drag-point';
+export { getDayRelativePercent } from './get-day-relative-percent/get-day-relative-percent';

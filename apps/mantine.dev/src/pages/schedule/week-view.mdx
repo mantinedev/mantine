@@ -37,6 +37,15 @@ open at a specific time (e.g., business hours start) instead of midnight.
 
 <Demo data={WeekViewDemos.intervalMinutes} />
 
+## Sub-hour grid lines
+
+By default, `WeekView` displays a grid line for every time slot. When `intervalMinutes` is smaller
+than `60`, set `withSubHourGridLines={false}` to display only one grid line per hour while keeping
+the smaller interval for creating and resizing events. This is useful to achieve a Google Calendar
+like layout: events snap to 15 or 30 minutes increments, but the grid stays clean with hourly lines.
+
+<Demo data={WeekViewDemos.subHourGridLines} />
+
 ## First day of week
 
 Set `firstDayOfWeek` to control which day starts the week. 0 is Sunday, 1 is Monday (default), etc.
@@ -271,6 +280,13 @@ to indicate lunch breaks across the entire week and rejects drops that overlap
 with background events.
 
 <Demo data={WeekViewDemos.backgroundEventsCustomStyle} />
+
+## Agenda view
+
+Set `withAgenda` prop to display an "Agenda" button in the header. When clicked, it opens
+an `AgendaView` showing events for the current week as a list.
+
+<Demo data={WeekViewDemos.withAgenda} />
 
 ## Static mode
 

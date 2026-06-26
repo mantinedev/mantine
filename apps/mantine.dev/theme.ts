@@ -1,9 +1,12 @@
-import { createTheme, DEFAULT_THEME, virtualColor } from '@mantine/core';
+import { colorsTuple, createTheme, DEFAULT_THEME, virtualColor } from '@mantine/core';
 
 export const theme = createTheme({
   fontFamilyMonospace: `Menlo, Monaco, ${DEFAULT_THEME.fontFamilyMonospace}`,
   colors: {
     virtual: virtualColor({ name: 'virtual', dark: 'pink', light: 'cyan' }),
+    white: colorsTuple('#FFFFFF'),
+    black: colorsTuple('#000000'),
+    adaptive: virtualColor({ name: 'adaptive', dark: 'white', light: 'black' }),
     'ocean-blue': [
       '#7AD1DD',
       '#5FCCDB',

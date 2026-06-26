@@ -12,13 +12,13 @@ export interface ComboboxItem<Value extends Primitive = string> extends Combobox
   label: string;
 }
 
-export interface ComboboxItemGroup<T> {
-  group: string;
+export interface ComboboxItemGroup<T, Group extends React.ReactNode = React.ReactNode> {
+  group: Group;
   items: T[];
 }
 
 export interface ComboboxParsedItemGroup<Value extends Primitive = string> {
-  group: string;
+  group: React.ReactNode;
   items: ComboboxItem<Value>[];
 }
 
@@ -40,6 +40,18 @@ export type ComboboxData<Value extends Primitive = string> =
       | Value
       | ComboboxItem<Value>
       | ComboboxItemGroup<Value | ComboboxGenericItem<Value> | ComboboxItem<Value>>
+    >;
+
+export type ComboboxStringGroupData<Value extends Primitive = string> =
+  | Array<
+      | Value
+      | ComboboxItem<Value>
+      | ComboboxItemGroup<Value | ComboboxGenericItem<Value> | ComboboxItem<Value>, string>
+    >
+  | ReadonlyArray<
+      | Value
+      | ComboboxItem<Value>
+      | ComboboxItemGroup<Value | ComboboxGenericItem<Value> | ComboboxItem<Value>, string>
     >;
 
 export type ComboboxParsedItem<Value extends Primitive = string> =

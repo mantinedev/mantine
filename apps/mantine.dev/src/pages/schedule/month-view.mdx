@@ -22,6 +22,16 @@ Set `withWeekDays={false}` to hide the weekday names row.
 
 <Demo data={MonthViewDemos.withoutWeekDays} />
 
+## Hide weekend days
+
+Set `withWeekendDays={false}` to hide weekend days. The grid shrinks to the
+remaining columns and events that span hidden days are clipped to the visible
+days. The days that are considered weekend are controlled by the `weekendDays`
+prop (or [DatesProvider](/dates/getting-started/#datesprovider), `[0, 6]` by
+default).
+
+<Demo data={MonthViewDemos.withoutWeekendDays} />
+
 ## First day of week
 
 Set `firstDayOfWeek` to control which day starts the week.
@@ -139,6 +149,13 @@ non-interactive block behind regular events. Background events span the full hei
 the day cell in the month view.
 
 <Demo data={MonthViewDemos.backgroundEvents} />
+
+## Agenda view
+
+Set `withAgenda` prop to display an "Agenda" button in the header. When clicked, it opens
+an `AgendaView` showing events for the current month as a list.
+
+<Demo data={MonthViewDemos.withAgenda} />
 
 ## Static mode
 

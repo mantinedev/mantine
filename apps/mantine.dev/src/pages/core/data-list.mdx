@@ -1,0 +1,24 @@
+import { DataListDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataList);
+
+## Usage
+
+`DataList` component renders a description list (`dl`) element with label-value pairs.
+It uses semantic `dt` and `dd` HTML elements.
+
+<Demo data={DataListDemos.usage} />
+
+## With divider
+
+Set `withDivider` prop to add a border between items:
+
+<Demo data={DataListDemos.divider} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to stack label on top of value within each item:
+
+<Demo data={DataListDemos.vertical} />

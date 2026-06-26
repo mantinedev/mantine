@@ -13,9 +13,12 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartLegend.module.css';
 
-function updateChartLegendPayload(payload: Record<string, any>[]): Record<string, any>[] {
+function updateChartLegendPayload(
+  payload: Record<string, any>[],
+  splitNestedKeys: boolean
+): Record<string, any>[] {
   return payload.map((item) => {
-    const newDataKey = item.dataKey?.split('.').pop();
+    const newDataKey = splitNestedKeys ? item.dataKey?.split('.').pop() : item.dataKey;
     return {
       ...item,
       dataKey: newDataKey,
@@ -28,8 +31,14 @@ function updateChartLegendPayload(payload: Record<string, any>[]): Record<string
   });
 }
 
-export function getFilteredChartLegendPayload(payload: readonly Record<string, any>[]) {
-  return updateChartLegendPayload(payload.filter((item) => item.color !== 'none'));
+export function getFilteredChartLegendPayload(
+  payload: readonly Record<string, any>[],
+  splitNestedKeys = true
+) {
+  return updateChartLegendPayload(
+    payload.filter((item) => item.color !== 'none'),
+    splitNestedKeys
+  );
 }
 
 export type ChartLegendStylesNames = 'legendItem' | 'legendItemColor' | 'legendItemName' | 'legend';
@@ -40,7 +49,7 @@ export interface ChartLegendProps
   payload: readonly Record<string, any>[] | undefined;
 
   /** Function called when mouse enters/leaves one of the legend items */
-  onHighlight: (area: string | null) => void;
+  onHighlight: (area: string | number | null) => void;
 
   /** Position of the legend relative to the chart, used to apply margin on the corresponding side */
   legendPosition: 'top' | 'bottom' | 'middle';
@@ -98,14 +107,14 @@ export const ChartLegend = factory<ChartLegendFactory>((_props) => {
     return null;
   }
 
-  const filteredPayload = getFilteredChartLegendPayload(payload);
+  const filteredPayload = getFilteredChartLegendPayload(payload, series != null);
   const labels = getSeriesLabels(series);
 
   const items = filteredPayload.map((item, index) => (
     <div
       key={index}
       {...getStyles('legendItem')}
-      onMouseEnter={() => onHighlight(item.dataKey)}
+      onMouseEnter={() => onHighlight(item.highlightKey ?? item.dataKey)}
       data-without-color={showColor === false || undefined}
     >
       <ColorSwatch
