@@ -338,6 +338,9 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
           <ResourcesWeekView
             {...commonProps}
             onTimeSlotClick={onTimeSlotClick}
+            withEventResize={mode === 'static' ? false : withEventResize}
+            onEventResize={onEventResize}
+            canResizeEvent={canResizeEvent}
             {...weekViewProps}
           />
         );

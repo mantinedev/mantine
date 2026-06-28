@@ -93,7 +93,13 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
       onKeyDown={handleKeyDown}
     >
       {ctx.withInitialFocusPlaceholder && !ctx.hasSearch && (
-        <div tabIndex={-1} data-autofocus data-mantine-stop-propagation style={{ outline: 0 }} />
+        <div
+          role="presentation"
+          tabIndex={-1}
+          data-autofocus
+          data-mantine-stop-propagation
+          style={{ outline: 0 }}
+        />
       )}
       {children}
     </Popover.Dropdown>

@@ -3,7 +3,12 @@ import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, DateTimeStringValue, DayOfWeek, ScheduleMode } from '../../types';
-import { BusinessHoursValue, DayTimeInterval, getBusinessHoursMod } from '../../utils';
+import {
+  BusinessHoursValue,
+  clampIntervalMinutes,
+  DayTimeInterval,
+  getBusinessHoursMod,
+} from '../../utils';
 import type { WeekViewControlsRef } from './handle-week-view-key-down';
 import type { WeekViewFactory } from './WeekView';
 
@@ -16,6 +21,9 @@ export interface WeekViewDayProps {
 
   /** Slots intervals */
   slots: DayTimeInterval[];
+
+  /** Number of minutes for each interval, used to calculate slot height */
+  intervalMinutes: number;
 
   /** `useStyles` return value of `WeekView` */
   getStyles: GetStylesApi<WeekViewFactory>;
@@ -99,6 +107,7 @@ export function WeekViewDay({
   day,
   dayIndex,
   slots,
+  intervalMinutes,
   getStyles,
   weekendDays,
   children,
@@ -171,6 +180,7 @@ export function WeekViewDay({
           'drag-selected': isDragSelected,
           static: mode === 'static',
         }}
+        __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
         aria-label={`${getLabel('timeSlot', labels)} ${dayGroup} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? slotIndex : undefined}

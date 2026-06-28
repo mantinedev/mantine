@@ -740,6 +740,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           'without-weekend-days': hiddenColumns.length > 0,
           static: mode === 'static',
           'slot-dragging': slotDragSelect.isDragging,
+          'event-interaction': dragDrop.dragContextValue.isDragging,
         },
         mod,
       ]}

@@ -153,6 +153,61 @@ export function Usage() {
   );
 }
 
+export function MultidayRowContinuity() {
+  // The violet "Conference" spans Mon–Fri. Wednesday is full (Sync A + Sync B push it over
+  // maxEventsPerDay), so the Conference collapses into Wednesday's "+1 more". Before the fix the
+  // surrounding days re-packed the bar onto different rows (e.g. Monday on row 1, the rest on row 0),
+  // splitting it into misaligned fragments. Now every visible segment stays on the same row.
+  // Order matters: the single-day events are declared before the Conference so the Conference is
+  // assigned a high row (it overlaps Kickoff on Monday and both Syncs on Wednesday). That high row is
+  // what made the bar jump between rows on adjacent days before the fix.
+  const continuityEvents: ScheduleEventData[] = [
+    {
+      id: 2,
+      title: 'Kickoff',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 10:00:00',
+      color: 'blue',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Sync A',
+      start: '2025-11-05 09:00:00',
+      end: '2025-11-05 10:00:00',
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 4,
+      title: 'Sync B',
+      start: '2025-11-05 10:30:00',
+      end: '2025-11-05 11:30:00',
+      color: 'orange',
+      payload: {},
+    },
+    {
+      id: 1,
+      title: 'Conference (Mon–Fri)',
+      start: '2025-11-03 08:00:00',
+      end: '2025-11-07 17:00:00',
+      color: 'violet',
+      payload: {},
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Text size="sm" c="dimmed" mb="xs">
+        The violet "Conference" spans Mon–Fri and stays on one row across the whole span. Wednesday
+        is full (Sync A, Sync B + "+1 more"), so the bar has a gap there — but the segments before
+        and after the gap remain aligned on the same row instead of jumping rows.
+      </Text>
+      <MonthView date={month} events={continuityEvents} maxEventsPerDay={2} />
+    </div>
+  );
+}
+
 export function AllDayEvents() {
   const allDayEvents: ScheduleEventData[] = [
     {

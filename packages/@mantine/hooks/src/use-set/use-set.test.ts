@@ -84,4 +84,41 @@ describe('@mantine/hooks/use-set', () => {
     expect(symmetricDifferenceResult.has(5)).toBe(true);
     expect(symmetricDifferenceResult.size).toBe(4);
   });
+
+  it('returns a new instance identity after each mutation', () => {
+    const hook = renderHook(() => useSet([1]));
+
+    const afterInit = hook.result.current;
+    act(() => hook.result.current.add(2));
+    expect(hook.result.current).not.toBe(afterInit);
+
+    const afterAdd = hook.result.current;
+    act(() => hook.result.current.delete(2));
+    expect(hook.result.current).not.toBe(afterAdd);
+
+    const afterDelete = hook.result.current;
+    act(() => hook.result.current.clear());
+    expect(hook.result.current).not.toBe(afterDelete);
+  });
+
+  it('accumulates multiple synchronous mutations', () => {
+    const hook = renderHook(() => useSet<number>());
+    act(() => {
+      hook.result.current.add(1);
+      hook.result.current.add(2);
+    });
+    expect(hook.result.current.has(1)).toBe(true);
+    expect(hook.result.current.has(2)).toBe(true);
+  });
+
+  it('applies a retained mutator to the latest instance', () => {
+    const hook = renderHook(() => useSet<number>());
+    const retainedAdd = hook.result.current.add;
+    act(() => hook.result.current.add(1));
+    act(() => hook.result.current.add(2));
+    act(() => retainedAdd(3));
+    expect(hook.result.current.has(1)).toBe(true);
+    expect(hook.result.current.has(2)).toBe(true);
+    expect(hook.result.current.has(3)).toBe(true);
+  });
 });

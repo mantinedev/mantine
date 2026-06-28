@@ -143,7 +143,15 @@ Use `scrollAreaProps` to pass props to the underlying ScrollArea component.
 
 ## Event resize
 
-Note that event resize is not supported in the week view.
+Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
+right edges, and the `onEventResize` callback is called with the updated event start and end times.
+
+<Demo data={ResourcesWeekViewDemos.eventResize} />
+
+Resizing is constrained to the day the event belongs to: an event cannot be resized to span multiple
+days. To make an event cover several days, update its `start` and `end` dates directly in your data.
+
+Use `canResizeEvent` to control which events can be resized.
 
 ## Static mode
 

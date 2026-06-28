@@ -167,3 +167,8 @@ export const Demo_withAgenda = {
   name: '⭐ Demo: withAgenda',
   render: renderDemo(demos.withAgenda),
 };
+
+export const Demo_subHourGridLines = {
+  name: '⭐ Demo: subHourGridLines',
+  render: renderDemo(demos.subHourGridLines),
+};

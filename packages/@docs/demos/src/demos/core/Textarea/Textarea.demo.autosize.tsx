@@ -11,7 +11,7 @@ function Demo() {
         placeholder="Autosize with no rows limit"
         label="Autosize with no rows limit"
         autosize
-        minRows={2}
+        minRows={4}
       />
 
       <Textarea
@@ -34,7 +34,7 @@ function Demo() {
         placeholder="Autosize with no rows limit"
         label="Autosize with no rows limit"
         autosize
-        minRows={2}
+        minRows={4}
       />
 
       <Textarea

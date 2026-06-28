@@ -117,7 +117,7 @@ export function useFormStatus<Values extends Record<string, any>>({
 
   const isTouched: GetFieldStatus<Values> = useCallback(
     (path) => getStatus(touchedRef.current, path),
-    []
+    [touchedRef.current]
   );
 
   const clearFieldDirty: ClearFieldDirty = useCallback(
@@ -139,28 +139,31 @@ export function useFormStatus<Values extends Record<string, any>>({
     []
   );
 
-  const isDirty: GetFieldStatus<Values> = useCallback((path) => {
-    if (path) {
-      const overriddenValue = getPath(path, dirtyRef.current);
-      if (typeof overriddenValue === 'boolean') {
-        return overriddenValue;
+  const isDirty: GetFieldStatus<Values> = useCallback(
+    (path) => {
+      if (path) {
+        const overriddenValue = getPath(path, dirtyRef.current);
+        if (typeof overriddenValue === 'boolean') {
+          return overriddenValue;
+        }
+
+        const sliceOfValues = getPath(path, $values.refValues.current);
+        const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current);
+        return !isEqual(sliceOfValues, sliceOfInitialValues);
       }
 
-      const sliceOfValues = getPath(path, $values.refValues.current);
-      const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current);
-      return !isEqual(sliceOfValues, sliceOfInitialValues);
-    }
+      const isOverridden = Object.keys(dirtyRef.current).length > 0;
+      if (isOverridden) {
+        return getStatus(dirtyRef.current);
+      }
 
-    const isOverridden = Object.keys(dirtyRef.current).length > 0;
-    if (isOverridden) {
-      return getStatus(dirtyRef.current);
-    }
+      return !isEqual($values.refValues.current, $values.valuesSnapshot.current);
+    },
+    [dirtyRef.current, $values.refValues.current, $values.valuesSnapshot.current]
+  );
 
-    return !isEqual($values.refValues.current, $values.valuesSnapshot.current);
-  }, []);
-
-  const getDirty = useCallback(() => dirtyRef.current, []);
-  const getTouched = useCallback(() => touchedRef.current, []);
+  const getDirty = useCallback(() => dirtyRef.current, [dirtyRef.current]);
+  const getTouched = useCallback(() => touchedRef.current, [touchedRef.current]);
 
   return {
     touchedState,

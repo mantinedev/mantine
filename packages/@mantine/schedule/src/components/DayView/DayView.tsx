@@ -111,6 +111,9 @@ export interface DayViewProps
   /** Number of minutes for each time slot @default 15 */
   intervalMinutes?: number;
 
+  /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true */
+  withSubHourGridLines?: boolean;
+
   /** If set, the all-day slot is displayed below the header @default true */
   withAllDaySlot?: boolean;
 
@@ -267,6 +270,7 @@ const defaultProps = {
   startTime: '00:00:00',
   endTime: '23:59:59',
   intervalMinutes: 15,
+  withSubHourGridLines: true,
   withAllDaySlot: true,
   slotLabelFormat: 'HH:mm',
   headerFormat: 'MMMM D, YYYY',
@@ -304,6 +308,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
+    withSubHourGridLines,
     withAllDaySlot,
     date,
     locale,
@@ -770,7 +775,12 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const content = (
     <Box
       {...getStyles('dayView')}
-      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging }}
+      mod={{
+        static: mode === 'static',
+        'slot-dragging': slotDragSelect.isDragging,
+        'hide-sub-hour-grid-lines': !withSubHourGridLines,
+        'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
+      }}
       {...others}
     >
       {withHeader && (

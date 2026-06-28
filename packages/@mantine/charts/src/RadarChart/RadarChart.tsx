@@ -197,7 +197,7 @@ export const RadarChart = factory<RadarChartFactory>((_props) => {
     varsResolver,
   });
 
-  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const [highlightedArea, setHighlightedArea] = useState<string | number | null>(null);
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<RadarChartFactory>({
     classNames,

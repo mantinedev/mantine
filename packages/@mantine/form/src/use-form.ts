@@ -395,15 +395,13 @@ export function useForm<
       }
       return !result.hasErrors;
     },
-    [rules, resolveValidationError]
+    [rules, resolveValidationError, $values.refValues.current]
   );
 
   const key: Key<Values> = (path) => `${formKey}-${String(path)}-${fieldKeys[String(path)] || 0}`;
 
-  const getInputNode: GetInputNode<Values> = useCallback(
-    (path) => document.querySelector(`[data-path="${getDataPath(name, path)}"]`),
-    []
-  );
+  const getInputNode: GetInputNode<Values> = (path) =>
+    document.querySelector(`[data-path="${getDataPath(name, path)}"]`);
 
   const resetField = useCallback(
     (path: PropertyKey) => {

@@ -1,6 +1,7 @@
 import { RefObject } from 'react';
 
-export type ResourcesWeekViewControlsRef = RefObject<HTMLButtonElement[][]>;
+/** Reference to a 2D array of slot buttons: [resourceIndex][slotIndex] */
+export type ResourcesGridControlsRef = RefObject<HTMLButtonElement[][]>;
 
 type Direction = 'up' | 'down' | 'left' | 'right';
 
@@ -24,7 +25,7 @@ function getDirection(key: KeyboardEvent['key']): Direction | null {
   }
 }
 
-function getControlsSize(controlsRef: ResourcesWeekViewControlsRef): number[] | null {
+function getControlsSize(controlsRef: ResourcesGridControlsRef): number[] | null {
   if (!controlsRef.current) {
     return null;
   }
@@ -92,7 +93,7 @@ function getNextPosition({
 }
 
 interface FocusOnNextControlInput {
-  controlsRef: ResourcesWeekViewControlsRef;
+  controlsRef: ResourcesGridControlsRef;
   direction: Direction;
   resourceIndex: number;
   slotIndex: number;
@@ -132,19 +133,19 @@ function focusOnNextFocusableControl({
   }
 }
 
-export interface HandleResourcesWeekViewKeyDownInput {
-  controlsRef: ResourcesWeekViewControlsRef;
+export interface HandleResourcesGridKeyDownInput {
+  controlsRef: ResourcesGridControlsRef;
   resourceIndex: number;
   slotIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
 }
 
-export function handleResourcesWeekViewKeyDown({
+export function handleResourcesGridKeyDown({
   controlsRef,
   resourceIndex,
   slotIndex,
   event,
-}: HandleResourcesWeekViewKeyDownInput): void {
+}: HandleResourcesGridKeyDownInput): void {
   const direction = getDirection(event.key);
 
   if (direction) {

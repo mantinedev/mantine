@@ -26,15 +26,18 @@ export function useFormValidating(): $FormValidating {
     setFormValidatingState(value);
   }, []);
 
-  const isValidating = useCallback((path?: string) => {
-    if (path) {
-      return !!validatingRef.current[path];
-    }
-    if (formValidatingRef.current) {
-      return true;
-    }
-    return Object.values(validatingRef.current).some(Boolean);
-  }, []);
+  const isValidating = useCallback(
+    (path?: string) => {
+      if (path) {
+        return !!validatingRef.current[path];
+      }
+      if (formValidatingRef.current) {
+        return true;
+      }
+      return Object.values(validatingRef.current).some(Boolean);
+    },
+    [validatingRef.current, formValidatingRef.current]
+  );
 
   const getAbortSignal = useCallback((path: string) => {
     abortControllers.current[path]?.abort();

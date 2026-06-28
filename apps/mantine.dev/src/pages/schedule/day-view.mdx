@@ -33,6 +33,15 @@ Common values are 15, 30, or 60 minutes.
 
 <Demo data={DayViewDemos.intervalMinutes} />
 
+## Sub-hour grid lines
+
+When `intervalMinutes` is smaller than `60`, set `withSubHourGridLines={false}` to display only one
+grid line per hour while keeping the smaller interval for creating and resizing events. This is useful
+to achieve a Google Calendar like layout: events snap to 15 or 30 minutes increments, but the grid
+stays clean with hourly lines.
+
+<Demo data={DayViewDemos.subHourGridLines} />
+
 ## All-day events
 
 Events that span the entire day are displayed in a dedicated all-day section at the top.

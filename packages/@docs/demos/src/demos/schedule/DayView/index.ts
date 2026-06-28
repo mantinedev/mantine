@@ -1,6 +1,7 @@
 export { usage } from './DayView.demo.usage';
 export { timeRange } from './DayView.demo.timeRange';
 export { intervalMinutes } from './DayView.demo.intervalMinutes';
+export { subHourGridLines } from './DayView.demo.subHourGridLines';
 export { allDayEvents } from './DayView.demo.allDayEvents';
 export { overlappingEvents } from './DayView.demo.overlappingEvents';
 export { currentTimeIndicator } from './DayView.demo.currentTimeIndicator';

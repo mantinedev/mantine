@@ -43,7 +43,7 @@ export interface AccordionProps<Multiple extends boolean = false>
     BoxProps,
     StylesApiProps<AccordionFactory>,
     ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
-  /** If set, multiple items can be opened at the same time */
+  /** If set, multiple items can be opened at the same time @default false */
   multiple?: Multiple;
 
   /** Controlled component value */
@@ -61,7 +61,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Transition duration in ms @default 200 */
   transitionDuration?: number;
 
-  /** If set, chevron rotation is disabled */
+  /** If set, chevron rotation is disabled @default false */
   disableChevronRotation?: boolean;
 
   /** Position of the chevron relative to the item label @default right */
@@ -73,7 +73,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Size of the default chevron icon. Ignored when `chevron` prop is set. Use `chevronSize` instead when using custom chevron. @default 16 */
   chevronIconSize?: number | string;
 
-  /** Sets heading level (h2-h6) for `Accordion.Control` elements to meet WAI-ARIA requirements. Has no visual effect. */
+  /** Sets heading level (h2-h6) for `Accordion.Control` elements. Wraps each control in the corresponding heading tag, recommended to meet WAI-ARIA accessibility requirements. Has no visual effect. */
   order?: AccordionHeadingOrder;
 
   /** Custom chevron icon */
@@ -82,7 +82,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. */
+  /** If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. @default true */
   keepMounted?: boolean;
 }
 
@@ -105,6 +105,7 @@ export type AccordionFactory = Factory<{
 
 const defaultProps = {
   multiple: false,
+  loop: true,
   disableChevronRotation: false,
   chevronPosition: 'right',
   variant: 'default',

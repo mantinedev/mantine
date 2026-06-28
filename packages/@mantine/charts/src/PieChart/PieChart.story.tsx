@@ -78,3 +78,29 @@ export function SegmentTooltip() {
     </div>
   );
 }
+
+// Three segments share the name "Other" (a perfectly valid label for categorical data). Highlight
+// and the segment tooltip are keyed by the data index, not the name, so each "Other" slice is
+// isolated on its own: hovering one "Other" legend row dims the other two, and hovering one "Other"
+// slice shows only that slice's value in the tooltip (120 / 80 / 60), not all three at once.
+const duplicateNamesData: PieChartCell[] = [
+  { name: 'Chrome', value: 350, color: 'indigo.6' },
+  { name: 'Safari', value: 220, color: 'cyan.6' },
+  { key: 'other-1', name: 'Other', value: 120, color: 'teal.6' },
+  { key: 'other-2', name: 'Other', value: 80, color: 'orange.6' },
+  { key: 'other-3', name: 'Other', value: 60, color: 'pink.6' },
+];
+
+export function DuplicateNames() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PieChart
+        data={duplicateNamesData}
+        size={220}
+        withLegend
+        withTooltip
+        tooltipDataSource="segment"
+      />
+    </div>
+  );
+}
